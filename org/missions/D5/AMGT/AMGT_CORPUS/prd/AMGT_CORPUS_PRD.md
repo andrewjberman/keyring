@@ -324,6 +324,29 @@ the corpus is a static local library and every artifact below is derived by a ru
          ACCEPT     An analyst can tell the team's own thesis from a machine's
                     and can reach the sentence it came from.
          SOURCE     brief O1 :48
+         ADDENDUM   1.0.0_SA_CTO~Z, 2026-09-26 ~04:2xZ. THE RENDER HALF OF THIS
+                    FENCE IS A DUPLICATE AND IS NOT THIS PROJECT'S TO CLOSE.
+                    "renders ... as bold lead plus paragraph" and "each openable
+                    to the report and the passage it came from" are ALREADY
+                    FENCED, and better, on AMGT_RESAPP's endpoint: its FWD-21
+                    ("the Thesis renders as a recommendation line, a summary
+                    paragraph and headed sections with evidence FOLDED",
+                    bandContainersTopLevel == 1) and its FWD-23 ("opening it
+                    reveals the passage and accession line FROM THE DOM; and a
+                    census prints ZERO passages carried in a native title=
+                    tooltip"). Those fences name DOM-level measurable states;
+                    this one names prose. THE HALF THIS PROJECT OWNS AND WHICH
+                    IS THE GRADED HALF: the pack's pillars exist in the served
+                    substrate as lead phrase + paragraph + citation
+                    (report_key, locator, passage, extract_key), marked as the
+                    team's, with a name carrying none reading ABSENT with a
+                    reason. THAT HALF IS EXERCISED AND MET -- IMB_LN_Equity
+                    serves it and AMD_US_Equity is the negative arm. NO
+                    ENDPOINT CHANGE: the outcome is unchanged; its PLANE is
+                    stated so the outcome is falsifiable from inside the
+                    project that holds it. NOTE ON IDS: both projects number
+                    FWD-1..FWD-30, so every cross-project reference here names
+                    its project. "FWD-21" alone is ambiguous across this seam.
   FWD-11 The pack's MANAGEMENT / BOARD passage appears on Exec Management as the
          team's own cited text
          DONE WHEN  EXERCISED -- the passage renders labelled as the team's,
@@ -332,6 +355,26 @@ the corpus is a static local library and every artifact below is derived by a ru
          ACCEPT     The team's view of management is readable without displacing
                     the filing record.
          SOURCE     brief O2 :57; C-EXEC-MANAGEMENT is authority and is untouched
+         ADDENDUM   1.0.0_SA_CTO~Z, 2026-09-26 ~04:2xZ. THIS ONE IS THE GENUINE
+                    GAP, AND IT IS NOT NARROWED. Unlike FWD-10 and FWD-15, the
+                    render half here has NO home on AMGT_RESAPP's endpoint. I
+                    read that endpoint's nearest outcome, its FWD-17 ("An
+                    analyst sees who runs the company, and how long they have
+                    run it"), and it fences the FILING ROSTER -- executives,
+                    roles, tenure against the pool, filings-unconfirmed said so
+                    -- and says NOTHING about the team's own passage, its
+                    placement BESIDE the roster, or the roster being unchanged
+                    by its presence. So the clause STANDS HERE and this outcome
+                    stays NOT REALIZED. What it owes: a new outcome on
+                    AMGT_RESAPP's endpoint for the team's passage beside the
+                    roster with the roster unchanged. That is an L2 append at
+                    this seat which RE-OPENS AMGT_RESAPP's L4-R ratified-text
+                    half, so it is its own act with 3.0.0_SA_CVO~Z notified,
+                    NOT a rider on this addendum. THE HALF THIS PROJECT OWNS IS
+                    MET (the MANAGEMENT passage is served and cited for
+                    IMB_LN_Equity; AMD_US_Equity reads ABSENT with a reason);
+                    the outcome is graded on the whole fence, so it is the
+                    render half alone that holds it open.
   FWD-12 The Model tab's rows are the typecast's mnemonic core plus the sector
          template's KPI set, and the team's own cases are readable
          DONE WHEN  EXERCISED -- rows come from the typecast and the template for
@@ -368,6 +411,19 @@ the corpus is a static local library and every artifact below is derived by a ru
                     judgment.
          SOURCE     brief O6 :84 (marked PROPOSAL by its author); Andrew: "Posture
                     is still up to us", so this is an INPUT and never the verdict
+         ADDENDUM   1.0.0_SA_CTO~Z, 2026-09-26 ~04:2xZ. SAME SPLIT AS FWD-10.
+                    "both render cited on the header posture line and the
+                    Posture tab" is ALREADY FENCED on AMGT_RESAPP's endpoint by
+                    its FWD-26 ("the verdict renders as a Stat with the
+                    comparable beside it; each reason is a numbered card with
+                    cites folded; an UNRESOLVED cite renders a status.warning
+                    ICON beside navy text"). THE HALF THIS PROJECT OWNS: the
+                    fund of record and the last stated position are served,
+                    each carrying report_key + locator + passage, and the
+                    machine verdict is BYTE-UNCHANGED by their presence -- a
+                    no-regression claim on the SERVED OBJECT, which this
+                    project can measure and RESAPP's render cannot. THAT HALF
+                    IS MET for IMB_LN_Equity. NO ENDPOINT CHANGE.
   FWD-16 A PDF-only pack gets the same fold, or the tab states which shape the
          PDF could not be read to and why
          DONE WHEN  EXERCISED -- a PDF-only name renders pillars, management and
