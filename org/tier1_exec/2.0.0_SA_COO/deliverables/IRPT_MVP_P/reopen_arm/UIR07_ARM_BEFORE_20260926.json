@@ -1,5 +1,5 @@
 {
- "at": "2026-09-26T22:16:34.776740+00:00",
+ "at": "2026-09-26T22:40:04.009278+00:00",
  "phase": "before",
  "browse_pages": {
   "49financial": 100,
@@ -424,6 +424,19 @@
    "browse_full_matches_ahead": 0
   },
   {
+   "firm": "GLOBAL",
+   "kind": "case-as-reported",
+   "target": "e0e188cb8b6ce08c",
+   "per_firm_first_page": {
+    "49financial": 11,
+    "cottonwood": 2,
+    "inflection": 0
+   },
+   "global_rank_min": 2,
+   "global_rank_max": 13,
+   "merged_set": "9da5b06dfffbcbab"
+  },
+  {
    "firm": "cottonwood",
    "kind": "case-reversed",
    "target": "e0e188cb8b6ce08c",
@@ -435,6 +448,19 @@
    "browse_set": "61490b414dc5eb64",
    "browse_rank": 2,
    "browse_full_matches_ahead": 0
+  },
+  {
+   "firm": "GLOBAL",
+   "kind": "case-reversed",
+   "target": "e0e188cb8b6ce08c",
+   "per_firm_first_page": {
+    "49financial": 11,
+    "cottonwood": 2,
+    "inflection": 0
+   },
+   "global_rank_min": 2,
+   "global_rank_max": 13,
+   "merged_set": "9da5b06dfffbcbab"
   }
  ]
 }

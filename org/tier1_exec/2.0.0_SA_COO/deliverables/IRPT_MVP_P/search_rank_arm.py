@@ -109,6 +109,28 @@ def _row(firm, kind, ident, q):
             "browse_full_matches_ahead": bahead}
 
 
+def _global_row(kind, ident, q):
+    """The page's GLOBAL request (ClientSearch.tsx:93-106; 4.0.0_SA_CRO 101550): one browse(q) per permitted firm,
+    limit 100 (PAGE_LIMIT), the answers concatenated in the contexts' order and never re-ranked (search.ts toOptions).
+    The contexts' firm order is not fixed in that file, so the target's merged rank is taken over all 6 orders."""
+    import itertools
+    firsts = {}
+    for firm in SAMPLE:
+        event = {"version": "2.0", "routeKey": "GET /api/scoped/investor-reporting/directory/browse",
+                 "headers": dict(HEADERS), "queryStringParameters": {"q": q, "limit": "100", "selected_tenant": firm}}
+        body = json.loads(LAMBDA.invoke(FunctionName="irpt-directory-search", Payload=json.dumps(event).encode())
+                          ["Payload"].read())
+        firsts[firm] = [doc_id(d) for d in (body.get("data") or {}).get("entries") or []]
+    ranks = []
+    for order in itertools.permutations(SAMPLE):
+        merged = [i for firm in order for i in firsts[firm]]
+        ranks.append(merged.index(ident) + 1 if ident in merged else None)
+    known = [r for r in ranks if r is not None]
+    return {"firm": "GLOBAL", "kind": kind, "target": ident, "per_firm_first_page": {f: len(v) for f, v in firsts.items()},
+            "global_rank_min": min(known) if known else None, "global_rank_max": max(known) if known else None,
+            "merged_set": _digest([i for v in firsts.values() for i in v])}
+
+
 def run():
     rows, pages = [], {}
     for firm, n in SAMPLE.items():
@@ -135,13 +157,16 @@ def run():
             raise SystemExit("STOP: the reported case matches %d documents, not 1" % len(exact))
         for order, q in (("case-as-reported", case), ("case-reversed", " ".join(reversed(tokens(case))))):
             rows.append(_row("cottonwood", order, exact[0], q))
+            rows.append(_global_row(order, exact[0], q))
     return {"browse_pages": pages, "rows": rows}
 
 
 def compare(before, after):
     key = lambda r: (r["firm"], r["kind"], r["target"])  # noqa: E731
-    b = {key(r): r for r in before["rows"]}
-    a = {key(r): r for r in after["rows"]}
+    gb = {key(r): r for r in before["rows"] if r["firm"] == "GLOBAL"}
+    ga = {key(r): r for r in after["rows"] if r["firm"] == "GLOBAL"}
+    b = {key(r): r for r in before["rows"] if r["firm"] != "GLOBAL"}
+    a = {key(r): r for r in after["rows"] if r["firm"] != "GLOBAL"}
     checks = [
         ("the same targets in both phases", set(a) == set(b) and len(a) > 0),
         ("every search result SET identical", all(a[t]["result_set"] == b[t]["result_set"] for t in a if t in b)),
@@ -162,6 +187,12 @@ def compare(before, after):
             print("moved: %s %s search %s -> %s; browse(q) %s -> %s" % (
                 t[0], t[1], b[t]["rank"], (a.get(t) or {}).get("rank"), b[t]["browse_rank"],
                 (a.get(t) or {}).get("browse_rank")))
+    for t in sorted(ga):
+        print("GLOBAL (the page's merge, CRO 101550) %s: merged set %s; rank over the 6 firm orders %s-%s -> %s-%s%s" % (
+            t[1], "identical" if ga[t]["merged_set"] == (gb.get(t) or {}).get("merged_set") else "DIFFERENT",
+            (gb.get(t) or {}).get("global_rank_min"), (gb.get(t) or {}).get("global_rank_max"),
+            ga[t]["global_rank_min"], ga[t]["global_rank_max"],
+            "" if ga[t]["global_rank_max"] == 1 else "  -> UIR-07 OPEN at the page merge (ClientSearch.tsx:98-106)"))
     return all(ok for _, ok in checks)
 
 
@@ -170,6 +201,10 @@ def main(argv):
         before, after = (json.load(open(p, encoding="utf-8")) for p in argv[2:4])
         raise SystemExit(0 if compare(before, after) else 3)
     out = run()
+    for r in out["rows"]:
+        if r["firm"] == "GLOBAL":
+            print("%s GLOBAL %s: per-firm first page %s; merged rank over 6 firm orders %s-%s" % (
+                argv[1], r["kind"], r["per_firm_first_page"], r["global_rank_min"], r["global_rank_max"]))
     for firm in out["browse_pages"]:
         for kind in ("deterministic", "collision", "case-as-reported", "case-reversed"):
             rows = [r for r in out["rows"] if r["firm"] == firm and r["kind"] == kind]
