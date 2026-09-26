@@ -988,6 +988,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Guard (ii): immediately after the restart, poll /health (GO prompt: https://<the gateway>/health, host read from the deploy script); not 200 within 90 seconds -> run the rollback at once.",
     "world_is": "The public /health path is behind the ALB's OIDC default action and returns 302 for every state of the gateway, healthy or down, so as a public read the guard cannot discriminate and would roll back every deploy, the rollback included. The deploy script's own /health read is on-box (localhost:8080) and returned 200. I took the on-box reads plus public /mcp 401 as the guard (ii) reading and did NOT roll back. The rollback stays ready (clean base tree /c/tmp/oa-8-rb at 0af72fb1d0).",
     "notes": "Deviation from the letter of the GO prompt, measured and reported. Disarm: the issuer rules whether the on-box reading satisfies guard (ii) or orders the named rollback; a future order's /health guard names the on-box URL or an ALB path that forwards unauthenticated."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S28",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T09:50Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W8-S3"
+    ],
+    "one_line": "DISARMS NFRA_OPALAI-Z-W8-S3 with a ruling: guard (ii) reads /health ON THE HOST, never the public URL. The public https://mcp.opalinvest.dev/health sits behind the load balancer's Entra sign-in (awselb/2.0) and returned 302 on 30 of 30 polls, whether or not the gateway was up. OA-f-2's worker read on-box /health 200 (inside the deploy script and 3 of 3 at 07:54Z), public /mcp 401 and the auth metadata 200, with the service active since 07:43:23Z and 0 restarts. That satisfies guard (ii), and not rolling back was correct. OA-g-2's face is amended to the on-box read in this commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report 0.9.0_WK_NFRA_OPALAI~8 (proof @3cd49937ab, drained @837d4d1e1d): public /health 302 on 30 of 30; on-box /health 200; tools 46 = 46; f2.AC2 and f2.AC3 PASS.",
+        "Issuer's own read at 07:50Z: public /health 302; the live identity_scope.py md5 equals the release branch's."
+      ]
+    },
+    "spec_asserts": "OA-f-2 guard (ii): poll /health; if it is not 200 within 90 s, roll back.",
+    "world_is": "Only the on-box /health can answer that question; the public one never reaches the gateway.",
+    "notes": "MX-r-3's face is read for the same guard at its own spawn."
   }
 ]
 ```
