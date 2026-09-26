@@ -9694,3 +9694,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Options for the owner: (1) an explicit Deny on ssm:GetParameter* for the runner role outside /irpt/render-token/* and the parameters the host already needs (a census first); (2) a dedicated render host role/instance profile without the managed policy. Export render stays OFF until one lands; D1/D2 (adapter render ports, grant read) stand."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S149",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-26T17:35:00Z",
+  "one_line": "ESTATE-WIDE (not an IRPT cell): every EC2 host whose role carries the AWS-managed AmazonSSMManagedInstanceCore may ssm:GetParameter* ANY Parameter Store name, SecureStrings on the default aws/ssm key included -- IRPT fenced only its own render host (S148); the other hosts are the cloud-ops owner's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "iam simulate-principal-policy irpt-ycharts-runner-role (before the S148 fence): ssm:GetParameter on parameter/opal/other and parameter/irpt/walk-principal/x/password -> allowed, MatchedStatements [AmazonSSMManagedInstanceCore]",
+      "the managed policy is AWS's own: its grant is not scoped, so the reach follows the attachment, not any IRPT file",
+      "CTO 101347: 'AmazonSSMManagedInstanceCore gives every host carrying it this reach, so file an estate-wide row for the cloud-ops owner'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Parameter Store SecureStrings (e.g. /irpt/render-token/*, per-use credentials) are readable only by the roles their own policies name.",
+  "world_is": "Any instance role with AmazonSSMManagedInstanceCore can read any parameter; only the IRPT render host now carries a fence (irpt-export-render-host-parameter-fence-policy, Deny NotResource /irpt/render-token/*).",
+  "notes": "For the cloud-ops owner: census the roles carrying AmazonSSMManagedInstanceCore (iam list-entities-for-policy) and each host's real parameter reads (CloudTrail GetParameter* by role, with a positive control), then a per-role Deny with NotResource as S148's, or a customer-managed replacement for the managed policy."
+}
+```
