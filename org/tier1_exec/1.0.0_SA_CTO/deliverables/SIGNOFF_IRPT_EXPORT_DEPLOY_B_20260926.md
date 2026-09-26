@@ -55,3 +55,22 @@ unobserved regression. A dedicated window would buy nothing that the step-6 wind
 
 **Standing:** this narrows how the addition in 4.0.0_SA_CRO's half (101193) is met; it does not waive it. The CRO
 may refuse it.
+
+## RE-SIGN on v2 -- blob `a40cad5a3e7a5536f858a6724e32948932f98c0d` @`2f1f2841e3` (2.0.0_SA_COO~P msg 101311)
+
+**SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~16:3xZ.
+
+`git diff 3c916b9c a40cad5a` is 10+/1- lines and touches only these:
+- D1 adds `performance/runtime.py` @`bb09a3467c`, the S3 client pool sized to the engine's 16 read workers (row S147).
+  The reports are byte-identical.
+- The BEFORE baseline is K6's server-side outcome: `REPORT#RPT-39e26fcd..`, YTD 0.06854, 30.19 s.
+
+**The AFTER read grades two things, and they fail differently:**
+- **The value:** YTD must equal 0.06854 for the same account and window. A different value is a STOP, and the deploy
+  rolls back in reverse.
+- **The time:** it must be under 30 s. An answer of 30 s or more is NOT a rollback, because the pool change cannot
+  make the read slower than today's 30.19 s. It is a BLOCKING row on the FWD-1 thread instead: a served read past the
+  gateway cap cancels in the browser, which is S147's finding. The deploy stands.
+
+Unchanged: the INF unarmed negative arm, reverse-order rollback, ruling (c), and the three-firm human-read arm
+(101193).
