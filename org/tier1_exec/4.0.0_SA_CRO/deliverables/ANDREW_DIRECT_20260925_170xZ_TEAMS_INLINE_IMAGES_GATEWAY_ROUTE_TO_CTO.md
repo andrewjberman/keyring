@@ -76,3 +76,14 @@ The owner is `1.0.0_SA_CTO`: either fix changes the live gateway on EC2.
 - **Done-when 1 OPEN:** `read_chat_message_images` is not in this session's tool list (the client connection predates
   the deploy). The CTO reports it unit-tested only. Un-parks when Andrew reconnects `opalgateway` with `/mcp`.
 - Still open (the CTO's): `read_workbook` returns 404 on a workbook in another user's drive.
+
+## Done-when 1 MET (~19:0xZ) -- both done-whens now met
+
+After Andrew reconnected `opalgateway` with `/mcp`, `read_chat_message_images` returned the pasted image of each of Lauren
+Harmon's two messages, on Andrew's identity:
+- 1790348926941 (15:08:46Z): 1 of 1 hosted image, image/png, 64,125 bytes. It is the Portfolio Management "Upload
+  Portfolio Optimization Files" dialog, with only the XLSX slot filled (`PFOE_Model_20260925.xlsx`).
+- 1790349407951 (15:16:47Z): 1 of 1 hosted image, image/png, 43,220 bytes. It is the Trade Submission "Upload Trade
+  File" refusal, "This is the new Vident model template ...".
+
+Both match the screenshots Andrew pasted by hand on 2026-09-25. The live read is exercised, and this record is closed.
