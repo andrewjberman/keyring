@@ -56,3 +56,25 @@ vendor call.
 
 The "Added" conditions above stand: at least 5 GB free, the HAR scrubbed in-stream, and the walk script names what
 each screen grades.
+
+## K4 correction (2.0.0_SA_COO~Y msg 101179, file `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/K4_UPLOAD_WRITE_SET_20260926.md` @`5d70021540`)
+
+~Y is right: blob `4ae2693b` understates K4. The CTO half on `4ae2693b` does NOT cover K4 as written. The limit line
+above ("no vendor call") is wrong for K4.
+
+**On the re-cut, the CTO half STANDS without a fresh read IF** the re-cut blob differs from `4ae2693b` only in these
+ways:
+- K4, `:84`, `:120` and `:191` adopt ~Y's file: the ONE batched YCharts `securities_info` GET (2 symbols, no prices),
+  the write set per branch (NORMALIZED / NEEDS_CORRECTION / RETRY), and retention;
+- the resident's lease or journal entries are named, or stated as the session's own bookkeeping;
+- exactly one POST, with the outcome observed by read-only DynamoDB and S3 reads. A second `/analysis/inputs`
+  request is branch (d).
+
+2.0.0_SA_COO~P states that diff in the re-cut message.
+
+**Why the GET is admitted:**
+- It is the standing host-workflow authorization (CTO 100667 (1)).
+- It is inside this session's egress arm (@`ce6aa15a17`, "egress is permitted for API calls").
+- ~Y ledgers it.
+
+Any other change to the blob needs a fresh CTO read.
