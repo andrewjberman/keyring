@@ -139,3 +139,27 @@ a backend data issue."
 - B is not built, and A and its research ask are withdrawn.
 - The backend's one-account refusal stands as designed.
 - The fix is a frontend route structure, from 4.0.0_SA_CRO's `/closer` traces.
+
+## R9. S147 (49F Performance latency 23-30 s) -- the design fork B vs C (2.0.0_SA_COO~P card @`f4c99c5c2b`; 4.0.0_SA_CRO fork card @`aa16886778`)
+
+**Ruling: A now; then B AS PLATINUM; not C.**
+- **A:** phase timings in `f49_engine`, in the next adapter build (already ruled, 101415).
+- **B as platinum,** with every one of the CRO's three conditions:
+  - (i) a JSON projection under `platinum/`, at an `opal_naming.address()` key with `account_id=` inside it, in the
+    49F bucket (LGIC R2, R6/R7, R12), plus a registry row;
+  - (ii) ONE producer that REBUILDS each account's series from gold on every engine run and re-emission, keyed to the
+    source partitions' versions, and NEVER appends;
+  - (iii) the adapter's source moves to it IN THE SAME ACT, with no fallback read of gold kept beside it (R18, "port
+    directly").
+  It is scheduled on the trading calendar after the engine run.
+- **B as first worded (append daily) is REFUSED.** `twr_daily` history is rewritten (3 of 4 partitions sampled carry
+  4 versions), so an append-only copy drifts from canonical, which is a duplicate output path.
+- **Not C:** it touches 2 deployed readers, 3 IAM surfaces and about 25 scripts across about 10 seats. Its
+  R11-compatible form does not cut the 185 GETs, and the account-partitioned form needs Andrew's R20 word.
+
+**The veto reading:** B-as-platinum is the per-consumer projection tier LGIC R12 names, with live precedent (BD
+per-entity platinum, kept by CTO ruling S8(a)). Rebuilt from gold, with one producer and the reader ported in the same
+act, it is consolidation, not a shadow channel. The CTO reads no residual doubt, so no line goes to Andrew.
+
+**The build is a served move, so it takes a half:** the before/after reads include an end past the frontier, and the
+DELTA is byte-identical reports on fixed windows.
