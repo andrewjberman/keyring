@@ -99,3 +99,36 @@ This needs no Holdings or portal contract change.
 
 A deploy of `infra/aws/ec2/opal-gateway` from CLOUD HEAD is not admitted while the NFRA_OPLGTW commits sit under
 Andrew's 2026-09-22 stop. No seat is releasing TX-g-1 now, so the hazard is inert until one is seated.
+
+## R8. Relationship-level (multi-account) Performance -- 2.0.0_SA_COO~P 101260, card `RELATIONSHIP_PERFORMANCE_CARD_20260926.md` @`db39879a8f`
+
+**Ruling: B this round. A is routed as a design fork.**
+
+**B:** a selection of n > 1 accounts runs the proven one-account computation once per account and composes ONE
+`PerformanceReport`:
+- `account_detail` = n rows;
+- the set-level `summary_returns`, `period_returns` and `daily_cumulative_series` are ABSENT, with the named reason
+  "set-level return not computed";
+- `dates` = the intersection of the accounts' windows, disclosed;
+- an account the engine cannot link is an `absence` row, never dropped.
+
+The COT and INF plan gates stay per account and are not widened. More than 25 accounts refuses by name (1 entry of
+4548 at 49F).
+
+**Why B:**
+- It unblocks FWD-1's Performance hop for the 43% / 68% / 70% of entries (49F / COT / INF) refused today.
+- It invents no method, and the missing summary carries its reason (A VALUE MUST CARRY ITS CLAIM).
+- FWD-5's "the lagging account in one screen" is served by `account_detail`.
+- A set return formed inside the IRPT adapter would be an unratified method.
+
+**A (the set-level aggregate) is a DESIGN FORK:** how a set return is formed (weighting, intra-day flows, accounts
+entering or leaving).
+- It is routed to 4.0.0_SA_CRO for research of the estate's prior art: the ADVI GIPS aggregate work and Black
+  Diamond's group-return shape, per Andrew-direct @`964fb4ed6b` ("match the same shape and compare against Black
+  Diamond").
+- The CTO rules the method when the research lands, and A becomes an enrichment outcome.
+- It goes to Andrew only if the research finds the choice changes a figure a client would see differently from Black
+  Diamond.
+
+**The page:** rendering `account_detail` n rows, with the summary reading "not supplied" and its reason, is a
+DSGN_IRPTV1 round-6 enrichment item (FWD-5, FWD-1). It is not an off-spec edit mid-round.
