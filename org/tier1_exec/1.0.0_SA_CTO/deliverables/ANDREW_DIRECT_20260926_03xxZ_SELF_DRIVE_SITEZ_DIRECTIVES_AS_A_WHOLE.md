@@ -29,16 +29,44 @@ resolution is mine; the terms are his.
 
 | term | value |
 |---|---|
-| scope | `sitez directives as a whole` -- **6 of 15 live directives**: D1, D4, D5, D6, D7, D12 |
-| projects | **20**, of which D5's `AMGT_RESAPP`, `AMGT_HARVST`, `AMGT_CORPUS` are the **PRIORITY** |
-| open TOs at arm | **21** across the 6 (D5 10, D6 4, D12 4, D4 2, D1 1, D7 0) |
+| scope | `sitez directives as a whole` -- **5 of 15 live directives**: D1, D4, D5, D7, D12. **D6 CARVED OUT at 03:4xZ, section 2a** |
+| projects | **18**, of which D5's `AMGT_RESAPP`, `AMGT_HARVST`, `AMGT_CORPUS` are the **PRIORITY** |
+| open TOs at arm | **17** across the 5 (D5 10, D12 4, D4 2, D1 1, D7 0); D6's 4 left with the ~O fabric |
 | cadence | 30m |
 | device | SITEZ (`agentbus-sqs.sh device`); the 9 LAPTOP directives are REFUSED by 0.2 and are not in scope |
 | paired_with | the COO loops named in term 5, per-segment rather than one `/drive` half |
 | stop condition | DONE read from the register / HELD-AT-STOP / Andrew's stand-down |
 | log cadence | substantive delta, or the one-hour floor |
 
-**Denominator printed as the skill requires:** 6 of 15 live directives; the other 9 are the laptop's.
+**Denominator printed as the skill requires:** 5 of 15 live directives; 9 are the laptop's, 1 (D6) is the
+~O fabric's.
+
+---
+
+## 2a. AMENDMENT 03:4xZ -- D6 CARVED OUT, ON MY OWN GROUND RATHER THAN THE ONE OFFERED
+
+`1.0.0_SA_CTO~O` (msg 25997, READ-acked) asked me to carve D6 -- `NFRA_OPALAI`, `NFRA_MCPORTAL` -- out of
+this scope, *"so that one CTO rules on each project"*, citing Andrew 09-24 (*"your fabric will be the ~O
+fabric"*) and its own arming @`56050d290d`.
+
+**GRANTED. Both of its facts verified on a plane other than the message:**
+`ANDREW_DIRECT_20260924_185xZ_CTO_O_NEW_PROJECT_O_FABRIC.md:10` carries the quote, and `56050d290d` is a
+real arming commit (`2026-09-26T03:31Z`, scope D6 + `NFRA_MCPINDEX` + `NFRA_OPLGTW`).
+
+**But NOT on the ground the ask offered, and the distinction is load-bearing.** The quoted line is addressed
+TO `1.0.0_SA_CTO~O`: it tells that seat to work the ~O fabric and not to be distracted by AMGT. **It does not
+say this seat shall not drive D6.** CLAUDE.md section 2 forbids exactly that conversion -- *"NEVER convert
+Andrew's word to ONE agent into a gate/stop on another -- verbatim scope; relay, never adjudicate wider or
+narrower."* Reading a scoping word given to one seat as a prohibition on a second is how an inferred gate
+gets built out of a real quote.
+
+**The ground I grant on is mine and needs no one's word:** D6 entered this scope because *I* resolved
+"every live directive on your device" to include it. That resolution was my act, so narrowing it is my act,
+and Rule 27's collision is sufficient reason on its own -- `1.0.0_SA_CTO~O` is actively driving D6 with its
+own COO and CVO, and two CTOs ruling one project is the collision whoever's word put them there.
+
+**Consequence:** D6 is out at 03:4xZ. No governance fork to `3.0.0_SA_CVO~O` is needed. **Nothing here binds
+`1.0.0_SA_CTO~O`** -- it is a narrowing of my own scope, not a ruling on its.
 
 ---
 
