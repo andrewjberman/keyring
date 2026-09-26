@@ -1,0 +1,298 @@
+[
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/original_holdings/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "uploads.py resolve_deferred -> repository.py:472"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/original_holdings/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:472 get_object(VersionId)"
+ },
+ {
+  "action": "s3:PutObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "uploads.py:256 artifacts.put (the frozen input)"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:464/:472 (verify; job read of the input)"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/normalized_portfolios/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:472"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "resident reads the accepted composition"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/request_compositions/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:472"
+ },
+ {
+  "action": "s3:PutObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "resident retains ORIGINAL_VENDOR_PDF (repository.py:458)"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:464/:472 verify"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/vendor_documents/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:472"
+ },
+ {
+  "action": "s3:PutObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/extraction_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "resident retains EXTRACTION_EVIDENCE (repository.py:458)"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/extraction_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:464/:472 verify"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/extraction_evidence/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:472"
+ },
+ {
+  "action": "s3:PutObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "resident retains ANALYSIS (repository.py:458)"
+ },
+ {
+  "action": "s3:GetObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:464/:472 verify"
+ },
+ {
+  "action": "s3:GetObjectVersion",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "repository.py:472"
+ },
+ {
+  "action": "dynamodb:GetItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "durable_job.py:65; resident_session.py:30; acceptance.py:69; repository.py:416"
+ },
+ {
+  "action": "dynamodb:PutItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "acceptance/report_index transactions; repository.py:421; retention.py:275"
+ },
+ {
+  "action": "dynamodb:UpdateItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "durable_job.py:75-232; resident_session.py:53; host_capture.py:95; acceptance.py:144"
+ },
+ {
+  "action": "dynamodb:Query",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "acceptance.py:184; owned_requests.py:164; repository.py:439"
+ },
+ {
+  "action": "dynamodb:ConditionCheckItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "report_index.py:65 transaction condition items"
+ },
+ {
+  "action": "dynamodb:GetItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "durable_job.py:65; resident_session.py:30; acceptance.py:69; repository.py:416"
+ },
+ {
+  "action": "dynamodb:PutItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "acceptance/report_index transactions; repository.py:421; retention.py:275"
+ },
+ {
+  "action": "dynamodb:UpdateItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "durable_job.py:75-232; resident_session.py:53; host_capture.py:95; acceptance.py:144"
+ },
+ {
+  "action": "dynamodb:Query",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "acceptance.py:184; owned_requests.py:164; repository.py:439"
+ },
+ {
+  "action": "dynamodb:ConditionCheckItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "report_index.py:65 transaction condition items"
+ },
+ {
+  "action": "dynamodb:Query",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/opal-users-v2/index/email-index",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "current_authority -> canonical_profile_reads.py:71"
+ },
+ {
+  "action": "dynamodb:GetItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/opal-users-v2",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "canonical_profile_reads.py:86, :134"
+ },
+ {
+  "action": "sqs:ReceiveMessage",
+  "resource": "arn:aws:sqs:us-east-1:313476888478:irpt-generation",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "resident_worker.py:313"
+ },
+ {
+  "action": "sqs:ChangeMessageVisibility",
+  "resource": "arn:aws:sqs:us-east-1:313476888478:irpt-generation",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "resident_worker.py:320"
+ },
+ {
+  "action": "sqs:DeleteMessage",
+  "resource": "arn:aws:sqs:us-east-1:313476888478:irpt-generation",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "resident_worker.py:331"
+ },
+ {
+  "action": "secretsmanager:GetSecretValue",
+  "resource": "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/session/current-AbCdEf",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "resident_session.py:72; broker.py:108"
+ },
+ {
+  "action": "secretsmanager:PutSecretValue",
+  "resource": "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/session/current-AbCdEf",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "broker.py:113 (a refreshed session)"
+ },
+ {
+  "action": "secretsmanager:GetSecretValue",
+  "resource": "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/login/credentials-AbCdEf",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "sign-in credentials (ReadYChartsAndSharedVisionSecrets)"
+ },
+ {
+  "action": "kms:GenerateDataKey",
+  "resource": "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "SSE-KMS writes on opal-data-irpt, irpt-requests, irpt-jobs"
+ },
+ {
+  "action": "kms:Decrypt",
+  "resource": "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "SSE-KMS reads incl. the irpt-generation messages"
+ },
+ {
+  "action": "kms:Decrypt",
+  "resource": "arn:aws:kms:us-east-1:313476888478:key/64f25291-4015-42c5-ad41-40e42325deb7",
+  "expect": "allowed",
+  "path": "hop3",
+  "source": "opal-users-v2 CMK through DynamoDB (conditioned grant)",
+  "context": [
+   {
+    "ContextKeyName": "kms:ViaService",
+    "ContextKeyValues": [
+     "dynamodb.us-east-1.amazonaws.com"
+    ],
+    "ContextKeyType": "string"
+   },
+   {
+    "ContextKeyName": "kms:EncryptionContext:aws:dynamodb:tableName",
+    "ContextKeyValues": [
+     "opal-users-v2"
+    ],
+    "ContextKeyType": "string"
+   }
+  ]
+ },
+ {
+  "action": "s3:DeleteObject",
+  "resource": "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/ART-0000000000000000000000000000000000000000000000000000000000000000/x.json",
+  "expect": "denied",
+  "path": "control-negative",
+  "source": "no code deletes; must be denied"
+ },
+ {
+  "action": "dynamodb:DeleteItem",
+  "resource": "arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs",
+  "expect": "denied",
+  "path": "control-negative",
+  "source": "no code deletes; must be denied"
+ },
+ {
+  "action": "sqs:SendMessage",
+  "resource": "arn:aws:sqs:us-east-1:313476888478:irpt-generation",
+  "expect": "denied",
+  "path": "control-negative",
+  "source": "the resident never sends to its own queue"
+ }
+]

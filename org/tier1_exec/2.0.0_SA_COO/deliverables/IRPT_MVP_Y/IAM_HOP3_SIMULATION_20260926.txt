@@ -1,0 +1,76 @@
+run 2026-09-26T16:23:13Z
+OK   allowed       s3:PutObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObjectVersion            hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObjectVersion            control-positive -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:PutObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObjectVersion            control-positive -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       dynamodb:GetItem               hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   allowed       dynamodb:PutItem               hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   allowed       dynamodb:PutItem               hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs
+OK   allowed       dynamodb:UpdateItem            hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs
+OK   allowed       dynamodb:Query                 hop3       ws:dynamodb:us-east-1:313476888478:table/opal-users-v2/index/email-index
+OK   allowed       dynamodb:GetItem               hop3       arn:aws:dynamodb:us-east-1:313476888478:table/opal-users-v2
+OK   implicitDeny  dynamodb:Query                 closure-unreachable arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   allowed       sqs:SendMessage                hop3       arn:aws:sqs:us-east-1:313476888478:irpt-generation
+OK   allowed       kms:GenerateDataKey            hop3       :aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111
+OK   allowed       kms:Decrypt                    hop3       :aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111
+OK   allowed       kms:Decrypt                    hop3       :aws:kms:us-east-1:313476888478:key/64f25291-4015-42c5-ad41-40e42325deb7
+OK   allowed       s3:GetObject                   closure    arn:aws:s3:::opal-data-cot/investor-reporting/directory/directory.json
+OK   allowed       s3:GetObject                   closure    arn:aws:s3:::opal-data-cot/platinum/cottonwood/ownership_map.json
+OK   allowed       secretsmanager:GetSecretValue  closure    retsmanager:us-east-1:313476888478:secret:ycharts/session/current-AbCdEf
+OK   implicitDeny  s3:DeleteObject                control-negative -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   implicitDeny  dynamodb:DeleteItem            control-negative arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   implicitDeny  s3:PutObject                   control-negative -0000000000000000000000000000000000000000000000000000000000000000/x.json
+irpt-ycharts-generate-role: 21 of 25 allowed; 25 of 25 met their expectation
+   path closure           3 of 3 met
+   path closure-unreachable 1 of 1 met
+   path control-negative  3 of 3 met
+   path control-positive  2 of 2 met
+   path hop3              16 of 16 met
+OK   allowed       s3:GetObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObjectVersion            hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:PutObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObjectVersion            hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObjectVersion            hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:PutObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObjectVersion            hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:PutObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObjectVersion            hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:PutObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObject                   hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       s3:GetObjectVersion            hop3       -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   allowed       dynamodb:GetItem               hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs
+OK   allowed       dynamodb:PutItem               hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs
+OK   allowed       dynamodb:UpdateItem            hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs
+OK   allowed       dynamodb:Query                 hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs
+OK   allowed       dynamodb:ConditionCheckItem    hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs
+OK   allowed       dynamodb:GetItem               hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   allowed       dynamodb:PutItem               hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   allowed       dynamodb:UpdateItem            hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   allowed       dynamodb:Query                 hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   allowed       dynamodb:ConditionCheckItem    hop3       arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests
+OK   allowed       dynamodb:Query                 hop3       ws:dynamodb:us-east-1:313476888478:table/opal-users-v2/index/email-index
+OK   allowed       dynamodb:GetItem               hop3       arn:aws:dynamodb:us-east-1:313476888478:table/opal-users-v2
+OK   allowed       sqs:ReceiveMessage             hop3       arn:aws:sqs:us-east-1:313476888478:irpt-generation
+OK   allowed       sqs:ChangeMessageVisibility    hop3       arn:aws:sqs:us-east-1:313476888478:irpt-generation
+OK   allowed       sqs:DeleteMessage              hop3       arn:aws:sqs:us-east-1:313476888478:irpt-generation
+OK   allowed       secretsmanager:GetSecretValue  hop3       retsmanager:us-east-1:313476888478:secret:ycharts/session/current-AbCdEf
+OK   allowed       secretsmanager:PutSecretValue  hop3       retsmanager:us-east-1:313476888478:secret:ycharts/session/current-AbCdEf
+OK   allowed       secretsmanager:GetSecretValue  hop3       tsmanager:us-east-1:313476888478:secret:ycharts/login/credentials-AbCdEf
+OK   allowed       kms:GenerateDataKey            hop3       :aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111
+OK   allowed       kms:Decrypt                    hop3       :aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111
+OK   allowed       kms:Decrypt                    hop3       :aws:kms:us-east-1:313476888478:key/64f25291-4015-42c5-ad41-40e42325deb7
+OK   implicitDeny  s3:DeleteObject                control-negative -0000000000000000000000000000000000000000000000000000000000000000/x.json
+OK   implicitDeny  dynamodb:DeleteItem            control-negative arn:aws:dynamodb:us-east-1:313476888478:table/irpt-jobs
+OK   implicitDeny  sqs:SendMessage                control-negative arn:aws:sqs:us-east-1:313476888478:irpt-generation
+irpt-ycharts-runner-role: 37 of 40 allowed; 40 of 40 met their expectation
+   path control-negative  3 of 3 met
+   path hop3              37 of 37 met
+rc=0
