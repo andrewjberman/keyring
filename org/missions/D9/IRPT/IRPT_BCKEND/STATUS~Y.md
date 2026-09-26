@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 2f72865f), per CTO 101100 (Andrew-direct ~03:0xZ, 09-26; record
 `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Lease FAST until 2026-09-26T15:01:17Z. Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T16:25Z. Lease FAST until 2026-09-27T01:52:21Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
+As of 2026-09-26T19:00Z. Lease FAST until 2026-09-27T01:52:21Z. Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Pins
 
@@ -71,6 +71,21 @@ After the Andrew-direct pause (15:27Z-16:03Z; CTO 101280 and 101297; loop re-arm
   - resident: 40/40 met their expectation (hop3 37/37 allowed; 3 negatives denied).
 - Next: P's own simulator run, then ONE window packet (hop 3 plus the export-B BEFORE read).
 
+WINDOW 3 (17:12Z, v8 `acca1b3e`):
+- K4 NORMALIZED: input `portfolio_d188498e..`, handled=1 at 17:15:35Z.
+- K5 answered UNEXPECTED "maintained recipe title descriptor required" (corr-85a852bf59dd); nothing written.
+- CTO 101367 ruled the default title per template.
+
+HOP 3 PROVED OFFLINE (CTO 101355) @24a87c9d53, `HOP3_OFFLINE_PROOF_20260926.md`: the served zip plus the fix patch ACCEPTS
+(26 stages, 0 refusals, stopped at the queue send), and the resident's own admission ADMITS to the vendor boundary. The
+proof found 2 more live defects:
+- recipe.py's settings.json path;
+- submission.py refusing template-lane inputs, in generate AND the resident.
+
+The patch `P_HOP3_SUBMISSION_FIXES_20260926.patch` has 8 files. Y branch pins: e5113f815e (title) and 895c7ade1d (lane).
+ASK of P (101436): apply, and redeploy generate AND the resident. Then Y re-runs the proof on the new zip with no overlay,
+and window 4 re-runs K4+K5 (+R1).
+
 ## Acceptance IDs
 
 | ID | State | Evidence |
@@ -122,6 +137,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |
 | generate reads `irpt-common` by name (latest), not pinned (P `08d9f2f0b1`); a new layer version moves generate at that root's next apply | 2.0.0_SA_COO~P | irpt-common v6 is built |
+| request_composition.py:88 binds the recipe title source to the INPUT owner, so a null-title submission by a DIFFERENT Opal viewer than the uploader is refused SOURCE_OWNER_BINDING (proof run 4) | 2.0.0_SA_COO~M | cross-viewer submission is in scope |
 | The Y worktree is a sparse checkout (`firm_destination_policy.json` is S), so two `test_broker_recovery_evidence` arms fail only here | 2.0.0_SA_COO~Y | a suite needs that file on this worktree |
 
 ## Limits
