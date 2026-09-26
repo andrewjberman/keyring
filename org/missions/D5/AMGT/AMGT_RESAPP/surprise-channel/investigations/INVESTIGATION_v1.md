@@ -14784,6 +14784,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "N was 95 at the run, not 94, because the live library gained a folder between the cut and the act. The new member has no minted canonical identity, so it cannot be captured at all and the sweep records CAPTURE_FAILED 1 -- a value the criterion forbids. Every measurable axis is clean: OK 94, NOT_OK 0, cases 282/282 missing=0 extra=0. A criterion whose denominator is a LIVE, GROWING population can be failed by an addition nobody in the cell touched, and the failure is indistinguishable in the exit code from a genuine served-plane regression. The two are only separable by reading WHERE the failure is raised, which here is a local identity lookup, not the deployed function.",
     "disarm_owner": "2.0.0_SA_COO~Z -- INERT, so nothing to disarm. Two shapes, and choosing between them is the issuer's: (a) mint a canonical identity for 'AIA Group' so the 95th member becomes capturable, which is an identity act outside this lane's <paths> and reserved on the picks question to 3.0.0_SA_CVO~Z; or (b) re-cut AC2 so its population is PINNED at a named read rather than read live at the run, which is what makes the criterion stable against additions. This lane took neither and held ledger leg L2 on gate (a).",
     "notes": "Filed by the deploying lane at rr-3, ON-task. The deploy itself is sound and is left landed: AC1 passes, all three stop limbs were graded clear before the apply, and the cases axis the act exists to move reads 282/282. The instrument lesson worth keeping is that A LIVE POPULATION IS NOT A FIXED DENOMINATOR: rq-2's AC2 swept a PINNED 89-name snapshot and was stable, while rr-3's AC2 reads the library fresh at the run, so the same cell shape acquires a failure mode that has nothing to do with its own act. The tell was that the printed denominator (95) disagreed with the denominator the order recorded (94) -- which is only visible because the sweep prints its population and read time on the first line."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S285",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-25T23:58:00Z",
+    "one_line": "The LIVE research library grew to 95 during round 43: 'AIA Group' was added after the cut and has no canonical identity (harvester_key security-a49e6fe67bebe3a9), so it has no page, no Model block and no export -- rr-3's served sweep over the live library held on it (0.7.0_AE_CloudOps~A).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "library.list_folders(library.library_root()) at ~23:5xZ: 95 folders; the round-42 close run read 94 at 18:42:56Z; the one added is 'AIA Group'.",
+        "rr-3's NEVER-2 entry (org/critical_paths/.open_deploys/amgt-rr-3-the-redeploy.json): HELD-SOVEREIGN-GATED at 23:47:58Z, gate 'a canonical identity for the research folder AIA Group (harvester_key security-a49e6fe67bebe3a9), which has none'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER: the population is the live research folder, read fresh.",
+    "world_is": "The folder is a moving population: one name arrived mid-round with no identity. rr-3's AC2 is amended to the 94 the cut measured (population_at_cut.txt); AIA Group needs an identity registration and a Model block, which is round 44's.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- INERT; round 44 input (identity for AIA Group, then the rr-1 pull shape for its block).",
+    "notes": "Found by the AE lane's served sweep, which held rather than grading a name with no page as an export failure."
   }
 ]
 ```
