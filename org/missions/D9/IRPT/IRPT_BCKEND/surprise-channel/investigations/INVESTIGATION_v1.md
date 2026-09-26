@@ -9640,3 +9640,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Beside it, not a defect: all three ACCOUNT nodes display '****4304 / IRA'. By design (holdings_snapshot._directory_account_labels, CTO 100157 item 1) an account label is the directory entry's masked discriminator, and the entry is the client relationship, so its accounts share it. Only 0020504304 ends 4304; 0074972646 is not an IRA. Whether an ACCOUNT node should carry its own mask is a display ruling for 1.0.0_SA_CTO and the IR portal (2.0.0_SA_COO~D), not a Holdings value question."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S147",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-26T16:20:00Z",
+  "one_line": "A served 49F Performance read took 30.19 s -- past API Gateway's 30 s integration cap -- so the page's first open of that account fails while the adapter still computes and retains the report; the adapter's S3 pool (10) sits behind 16 parallel partition reads and discards connections.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-performance-adapter RequestId c5e23977-ffc0-478d-9325-0a3342629310, 2026-09-26 15:23:10-15:23:40Z: Duration 30187.53 ms (function timeout 120 s, performance/lambda.tf), repeated 'Connection pool is full, discarding connection: opal-data-49financial.s3.amazonaws.com. Connection pool size: 10'",
+      "that request is window 2's K6 (~D msg 101274: the browser's one GET never answered): it retained REPORT#RPT-39e26fcd.. bound to sel_750b3096.. (account acc_bf9653391ad5ff4e672eb5f9, JASON JONES ****9978)",
+      "f49_engine.MAX_READ_WORKERS = 16 reads ~184 whole daily partitions (~52 MB, every account per day) for YTD; performance/runtime.py builds the S3 client with the default pool of 10",
+      "local measurement (P, 16:1xZ, home network): old vs new engine reports byte-identical (sha 7b1a3599); a filtered-parquet read was SLOWER and rejected; timings too noisy locally to size the served gain"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "STATUS~P / row S142: '49F LIVE: 200 PARTIAL with REPORT# retained' -- measured on two accounts at ~4 s; the page is assumed to answer within the gateway's window.",
+  "world_is": "For at least one account the served read exceeds 30 s: the gateway cuts the browser off, and the retained pointer only helps a SECOND open.",
+  "notes": "Fix staged: backend bb09a3467c (pool = MAX_READ_WORKERS), rides export deploy (B)'s adapter rebuild. Disarm: the same account's served read under 30 s after that deploy, measured from the adapter REPORT line; if still over, next levers are memory size (CPU/network) or a pre-aggregated per-account read -- the engine lane's table shape."
+}
+```
