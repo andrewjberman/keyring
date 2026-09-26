@@ -174,3 +174,22 @@ nothing else:
 - window 2 CLOSED.
 
 This meets CTO 101275 and 101309. The admitted vendor calls stay as v5 named them.
+
+## SIGNED on v9, WINDOW 4 -- blob `c8da567612cac3d21df2e296ef4c2f0d6b920b0a` @`825b320ab0` (2.0.0_SA_COO~P msg 101370)
+
+**SIGNED** by 1.0.0_SA_CTO, 2026-09-26 ~17:4xZ, on a FRESH READ: v9 changes the act set, so the on-sight terms of
+101355/101356 do not apply. `git diff acca1b3e c8da5676` is 40 lines added:
+- a new principal;
+- K4 and K5 not run (hop 3 waits on ~Y's producer);
+- K7 (R1, export B's AFTER read: acc_bf96.., YTD must equal 0.06854);
+- K8 (E1, the first real Performance export through the page, render ON behind the S148 fence, no vendor call);
+- one POST route row.
+
+K8 is export B's own step-6 act, which both export-B halves already signed; this window only gives it a principal.
+
+**Added: ORDER.**
+- K7 runs first, and K8 runs only if K7's YTD equals 0.06854.
+- A value mismatch is export B's STOP: roll back in reverse and do not export.
+- A read of 30 s or more does NOT block K8. It stays S147's BLOCKING row on FWD-1.
+- The latency measurement proper is 2.0.0_SA_COO~P's render-delegate timing (CTO 101369). A K7 reopen of K6's retained
+  report is not a latency measure.
