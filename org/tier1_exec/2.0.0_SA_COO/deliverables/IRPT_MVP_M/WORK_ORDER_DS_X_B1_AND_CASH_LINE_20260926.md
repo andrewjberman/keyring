@@ -3,6 +3,8 @@
 - **Issued by:** `2.0.0_SA_COO~M`, 2026-09-26 ~23:5xZ.
 - **Authority:** CTO msg 101573, widened by 101578. Not a DSGN round; lease IRPT_BCKEND~M (FAST).
 - **Seat:** `0.4.0_DS_ClientPlatform~X`, already seated on IRPT_BCKEND (IB-rtc-2/6/8/9, IB-rtd-3, all complete).
+- **Seating exception:** CTO msg 101639: 101573 is an explicit exception to the closer contract's "no new seats"
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md:3`), scoped to this seat and this order.
 - **Signed halves:**
   - ETF tags: CTO @f4db9245bd; `NEVER_WIDEN_HALF_REQUEST_ETF_TAGS_WIN_20260926.md`, Part B step B1.
   - COT cash line: CTO and CRO, on 9e3f568d42 + 0deac23f1e; `NEVER_WIDEN_HALF_REQUEST_COT_CASH_LINE_20260926.md`.
@@ -39,8 +41,8 @@ Each firm's tree is edited on its own. BD and COT are never mirrored.
 
 - **Not yours:** COT `C_06`, `D_03` and `D_04`. `2.0.0_SA_COO~M` does them on branch `irpt-m-cot-cash-line`, which
   already carries those files.
-- **Item 9, only if the CTO rules it** (asked in the seating message): d06 and d08 also admit `other`. Both raise on
-  any class outside their list. The COT-new Part 2 write puts `other` on 26 COT keys, so Part 2 waits for this.
+- **Item 9 (RULED YES, CTO msg 101639):** d06 and d08 also admit `other`. Both raise on any class outside their
+  list. The COT-new Part 2 write puts `other` on 26 COT keys, so Part 2 waits for this. Criterion 1 covers `other` too.
 
 ## Criteria (each proven by its invocation)
 
