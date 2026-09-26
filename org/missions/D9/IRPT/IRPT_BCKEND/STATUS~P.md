@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: /canonical-drive loop (cron 57c0067c, every 10m) on Andrew-direct; lease FAST until 2026-09-26T00:24:51Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-25T23:5xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T00:3xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -43,7 +43,9 @@ None building. Next surface: the adapter package + performance root (deploy B), 
    `irpt-performance-inf-one-use-b-20260925` S1 (INF) and `irpt-f49-bucket-adapter-read-20260925` N1 (49F 200 -> disarm S140).
 2. Deploy (B) after plan b is spent or expires (12:00Z): upload the adapter (publish 4872b28043), apply render_grant.tf +
    IRPT_EVIDENCE_BUCKET, export_render=on; ledger with the CTO's negative arm (another attempt's token name refused, read
-   after delete refused).
+   after delete refused). REHEARSED 00:3xZ (plan only, CLOUD tree, live plan values as vars): 1 add
+   (performance_render_grant_read) / 1 change (env + IRPT_EVIDENCE_BUCKET = the same bucket irpt-export-render writes
+   grants to; 8 env elements unchanged, code unchanged until the upload) / 0 destroy.
 3. First end-to-end Performance export (submit -> render -> receipt) on the first retained report.
 4. Holdings export kind (card B4), after 3.
 5. COT: ask Andrew for a new per-use word ("calls approved" is unresolved as vendor authorization).
