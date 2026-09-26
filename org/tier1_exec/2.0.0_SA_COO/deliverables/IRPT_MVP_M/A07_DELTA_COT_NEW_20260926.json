@@ -1,0 +1,1551 @@
+{
+ "part": "all",
+ "written_keys": 967,
+ "population_keys": 4059,
+ "changed_keys": 123,
+ "changed_not_via_written_key": [],
+ "per_firm": {
+  "cot": {
+   "keys": 122,
+   "usd": 62603923.9,
+   "moves": {
+    "UNCLASSIFIED-LOUD -> equity": 21,
+    "UNCLASSIFIED-LOUD -> other": 24,
+    "UNCLASSIFIED-LOUD -> fixed_income": 8,
+    "equity -> fixed_income": 51,
+    "equity -> alternatives": 14,
+    "alternatives -> other": 1,
+    "UNCLASSIFIED-LOUD -> alternatives": 3
+   }
+  },
+  "49f": {
+   "keys": 10,
+   "usd": 56952.06,
+   "moves": {
+    "equity -> alternatives": 2,
+    "equity -> fixed_income": 8
+   }
+  },
+  "inf": {
+   "keys": 8,
+   "usd": 0.0,
+   "moves": {
+    "equity -> alternatives": 4,
+    "UNCLASSIFIED-LOUD -> other": 1,
+    "equity -> fixed_income": 3
+   }
+  }
+ },
+ "changed": [
+  {
+   "security_key": "009CVR036",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "037CVR01",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "4175_GGHC",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 2350519.32
+   }
+  },
+  {
+   "security_key": "4175_VOYA",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 25973104.32
+   }
+  },
+  {
+   "security_key": "438CVR02",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "714920113",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "715ESC01",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "715ESC026",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "857444624",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "85744A687",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "85744W226",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "857480552",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "909218125",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 320.05
+   }
+  },
+  {
+   "security_key": "ACTSX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 433378.36
+   }
+  },
+  {
+   "security_key": "ADLYX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "ANGIX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 21466.26
+   }
+  },
+  {
+   "security_key": "ARKB",
+   "firms": [
+    "49f",
+    "cot"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "49f": 5598.0,
+    "cot": 6232.48
+   }
+  },
+  {
+   "security_key": "BDC9XDME",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "BDTUV999",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 36.38
+   }
+  },
+  {
+   "security_key": "BRW",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 7866.32
+   }
+  },
+  {
+   "security_key": "BTT",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 272888.0
+   }
+  },
+  {
+   "security_key": "CGMU",
+   "firms": [
+    "49f",
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "49f": 6652.26,
+    "cot": 76308.25
+   }
+  },
+  {
+   "security_key": "CSHI",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 149663.12
+   }
+  },
+  {
+   "security_key": "CSQ",
+   "firms": [
+    "cot",
+    "inf"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 227321.64,
+    "inf": 0.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_401K",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 279900.55
+   }
+  },
+  {
+   "security_key": "CXMANUAL_529PLAN",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 73860.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_ALTERNATIVES",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 191564.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_ANNUITY",
+   "firms": [
+    "cot"
+   ],
+   "before": "alternatives",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 317000.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_BANKACCOUNT",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 309069.26
+   }
+  },
+  {
+   "security_key": "CXMANUAL_BROKERAGE",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 953620.36
+   }
+  },
+  {
+   "security_key": "CXMANUAL_CAR",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 382979.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_CREDITCARD",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 815.22
+   }
+  },
+  {
+   "security_key": "CXMANUAL_DEFINEDBENEFITPLAN(PENSION)",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 28915.07
+   }
+  },
+  {
+   "security_key": "CXMANUAL_HEALTHSAVINGSACCOUNT",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 2041.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_HOME",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 8378664.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_INSURANCE",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 568016.86
+   }
+  },
+  {
+   "security_key": "CXMANUAL_INVESTMENTPROPERTY",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 386872.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_IRA",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 294054.19
+   }
+  },
+  {
+   "security_key": "CXMANUAL_JEWELRY",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 26040.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_JOINTINVESTMENT",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_LIMITEDLIABILITYCOMPANY",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 4125000.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_LIMITEDLIABILITYPARTNERSHIP",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_MORTGAGE",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": -213597.89
+   }
+  },
+  {
+   "security_key": "CXMANUAL_OTHERASSET",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 221000.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_PRIMARYRESIDENCE",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 900000.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_SAVINGS",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "CXMANUAL_TRUSTACCOUNTS",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "cot": 3173684.09
+   }
+  },
+  {
+   "security_key": "DTF",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 252382.65
+   }
+  },
+  {
+   "security_key": "EIHYX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 2212098.3
+   }
+  },
+  {
+   "security_key": "EQU011850",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "EROK",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 216280.8
+   }
+  },
+  {
+   "security_key": "ESIIX",
+   "firms": [
+    "49f",
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "49f": 12078.76,
+    "cot": 6674.11
+   }
+  },
+  {
+   "security_key": "ETH",
+   "firms": [
+    "cot",
+    "inf"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 79.08,
+    "inf": 0.0
+   }
+  },
+  {
+   "security_key": "ETHA",
+   "firms": [
+    "49f",
+    "cot"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "49f": 162.64,
+    "cot": 44322.6
+   }
+  },
+  {
+   "security_key": "EVMO",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 2931.6
+   }
+  },
+  {
+   "security_key": "FAX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 9360.96
+   }
+  },
+  {
+   "security_key": "FBKWX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 30533.39
+   }
+  },
+  {
+   "security_key": "FCSTX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 70831.73
+   }
+  },
+  {
+   "security_key": "FDIC91232",
+   "firms": [
+    "inf"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "other",
+   "via_written_key": true,
+   "usd": {
+    "inf": 0.0
+   }
+  },
+  {
+   "security_key": "FESGX",
+   "firms": [
+    "cot",
+    "inf"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 41782.76,
+    "inf": 0.0
+   }
+  },
+  {
+   "security_key": "FFC",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 179322.6
+   }
+  },
+  {
+   "security_key": "FRCZX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 204524.38
+   }
+  },
+  {
+   "security_key": "GENIX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 13887.19
+   }
+  },
+  {
+   "security_key": "GPPIX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 176342.2
+   }
+  },
+  {
+   "security_key": "HIO",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 6908.8
+   }
+  },
+  {
+   "security_key": "HWHZX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 1025.04
+   }
+  },
+  {
+   "security_key": "HYMAX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 25585.63
+   }
+  },
+  {
+   "security_key": "INIYX",
+   "firms": [
+    "cot",
+    "inf"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 190972.1,
+    "inf": 0.0
+   }
+  },
+  {
+   "security_key": "ISVDT",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 21721.5
+   }
+  },
+  {
+   "security_key": "JCBUX",
+   "firms": [
+    "49f",
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "49f": 6279.11,
+    "cot": 73749.82
+   }
+  },
+  {
+   "security_key": "JSOSX",
+   "firms": [
+    "49f",
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "49f": 657.75,
+    "cot": 25726.99
+   }
+  },
+  {
+   "security_key": "LAND",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LBNYX",
+   "firms": [
+    "49f",
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "49f": 680.4,
+    "cot": 7388.98
+   }
+  },
+  {
+   "security_key": "LNEHV4I3L",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4J6F",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4K11",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4K1N",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4K22",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4K4D",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4L54",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4N96",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4Q1E",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4Q53",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4S0L",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNEHV4U0K",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "LNGX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 66254.48
+   }
+  },
+  {
+   "security_key": "MCR",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "MHF",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 233826.95
+   }
+  },
+  {
+   "security_key": "MMT",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 18839.83
+   }
+  },
+  {
+   "security_key": "MSD",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 35166.06
+   }
+  },
+  {
+   "security_key": "MWTSX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "NCHRX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 69711.37
+   }
+  },
+  {
+   "security_key": "NSIOX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 309198.51
+   }
+  },
+  {
+   "security_key": "NUW",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 342474.0
+   }
+  },
+  {
+   "security_key": "NVG",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 4278.56
+   }
+  },
+  {
+   "security_key": "OLCYX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 71258.17
+   }
+  },
+  {
+   "security_key": "OPBIX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 131977.53
+   }
+  },
+  {
+   "security_key": "PFL",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 39672.0
+   }
+  },
+  {
+   "security_key": "PFMIX",
+   "firms": [
+    "cot",
+    "inf"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 1024971.16,
+    "inf": 0.0
+   }
+  },
+  {
+   "security_key": "PFUIX",
+   "firms": [
+    "cot",
+    "inf"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0,
+    "inf": 0.0
+   }
+  },
+  {
+   "security_key": "PHK",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 41500.0
+   }
+  },
+  {
+   "security_key": "PML",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 54823.08
+   }
+  },
+  {
+   "security_key": "PMUPX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 372.77
+   }
+  },
+  {
+   "security_key": "PRTMX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 1780419.53
+   }
+  },
+  {
+   "security_key": "PRU019715",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "PRU019721",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "PRU019732",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "PRU026560",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "equity",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "PRUG01000",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "PRUGA1000",
+   "firms": [
+    "cot"
+   ],
+   "before": "UNCLASSIFIED-LOUD",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "PZA",
+   "firms": [
+    "49f",
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "49f": 18890.58,
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "RGVGX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "SBI",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 77408.25
+   }
+  },
+  {
+   "security_key": "SHYD",
+   "firms": [
+    "49f",
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "49f": 5942.21,
+    "cot": 175965.3
+   }
+  },
+  {
+   "security_key": "SPLB",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 142588.16
+   }
+  },
+  {
+   "security_key": "TMNIX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 14378.04
+   }
+  },
+  {
+   "security_key": "TOIXX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "TORIX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "alternatives",
+   "via_written_key": true,
+   "usd": {
+    "cot": 52941.34
+   }
+  },
+  {
+   "security_key": "VBITX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 174795.04
+   }
+  },
+  {
+   "security_key": "VTIFX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 46970.11
+   }
+  },
+  {
+   "security_key": "VVR",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 0.0
+   }
+  },
+  {
+   "security_key": "WITIX",
+   "firms": [
+    "cot"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "cot": 451193.06
+   }
+  },
+  {
+   "security_key": "WOBDX",
+   "firms": [
+    "49f",
+    "cot",
+    "inf"
+   ],
+   "before": "equity",
+   "after": "fixed_income",
+   "via_written_key": true,
+   "usd": {
+    "49f": 10.35,
+    "cot": 3509905.18,
+    "inf": 0.0
+   }
+  }
+ ]
+}
