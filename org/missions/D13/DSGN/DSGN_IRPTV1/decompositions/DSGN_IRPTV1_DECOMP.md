@@ -204,3 +204,14 @@ on the issuer's live DEV walk. Shared portal libraries (src/lib, src/ui, src/com
 
 **Parked, not in round 7:** C34 (v0.14), the portal mapping for UIR-50's new asset classes (label and colour), which the PRD
 cuts once 2.0.0_SA_COO~M's producer half lands.
+
+**v7 addendum 1 (issuer, 2026-09-26 ~23:1xZ):** `IV-e-46`, workstream AI-TAGS, outside the rounds (CTO 101579: "a single cell in its own
+workstream, not a DSGN_IRPTV1 round"). Advisor Intelligence's composition and the four partner `ordered` lists admit UIR-50's
+`structured` and `commodities` classes, labelled and coloured distinctly from the models, before 2.0.0_SA_COO~M writes any value.
+Writes composition.ts, PartnerAnalytics.tsx, the four partner layout.ts files, new keys in src/lib/chartColors.ts, two new tests.
+Slot ~30, direct act, LOCAL; the CTO reviews it before DEV. Disjoint from every round-7 chain.
+
+**v7 addendum 2 (issuer, 2026-09-26 ~23:1xZ):** `IV-e-47`, UIR-07's Global merge (CTO 101590/101594, PRD v0.16): full-name matches
+first by the server's predicate, in Global only, each firm's served order kept otherwise. Writes header/ClientSearch.tsx,
+header/search.ts, one new test. Queued on slot ~25 after IV-e-38, on top of IV-e-37's ClientSearch changes. Direct act, LOCAL.
+
