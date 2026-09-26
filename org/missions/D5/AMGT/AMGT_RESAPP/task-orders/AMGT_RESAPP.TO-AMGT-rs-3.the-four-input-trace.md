@@ -64,7 +64,15 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** s.4 item 5, measure-first: the four inputs sit in other projects' surfaces, and round 45 cuts them where the trace says they live. One mechanical criterion; the trace's content is read at L9 and by the CTO's analysis.
 
-<status>pending</status>
+<status>complete</status>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_RESAPP~162`):** FOUR_INPUTS_TRACE.json written with the four required inputs (spans, unit_sign,
+social_chatter, universe), each carrying producer/commit/owner_project/write_surface/served_evidence/proposed_cell. Producers
+resolved: lib/research/filings/drafting_build.py:303 (spans), integrations/bloomberg/research/model_block_pull.py:700 (unit_sign,
+shared AMGT_RESAPP/AMGT_CORPUS), lib/research/api/scoped_amgt.py:1999-2000 (social_chatter), lib/research/identity/build_universe.py:846-855
+(universe) -- all AMGT_RESAPP-owned except unit_sign's, all resolving at HEAD 705dd96375d016310f6b0afc8acb538ddfe78fe0. AC1: inputs
+traced 4 of 4, missing [], extra [], citation defects 0, exit=0. No surprise row filed (no premise failure, no missing writer, no
+capability gap encountered).
 <round>44</round>
 <slot>~162</slot>
 <fabric>site-z</fabric>

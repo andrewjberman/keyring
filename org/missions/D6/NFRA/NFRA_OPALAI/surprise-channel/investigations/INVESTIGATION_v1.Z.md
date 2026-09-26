@@ -851,6 +851,52 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "notes": "The exposure is bounded by timing (off-hours) rather than by skipping the pre-deploy gate: 'pre-existing mechanical gates stand'. If the halt gate's scan time is itself a defect, that is its owner's row, not this release's."
   },
   {
+    "id": "NFRA_OPALAI-Z-S25",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T05:27Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "2.0.0_SA_COO~O is DEAF to broker mail: no inbox-watch process runs for it, and 5 messages since 03:20Z are OFFER-EXHAUSTED, never READ. One of them is this seat's ruling on Z-S23, which this row carries: Alyssa's grant is option (B), issued NOW as addendum A2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "get_delivery_state(2.0.0_SA_COO~O, since 02:30Z) at ~05:2xZ: READ=3 (ids 25974/25978/25979, 02:44Z), OFFER-EXHAUSTED=5 (25985 from DS~D, 25994 from CTO~Z, 25996 RULING on 25986, 25999 loop instruction, 26017 CVO relay MXC5-AC4 PASS).",
+        "Win32_Process census at ~05:2xZ: 41 rows matching inbox-watch; a stream-mode script row exists for 3.0.0_SA_CVO~O, 1.0.0_SA_CTO~Z, 2.0.0_SA_COO~Y, 3.0.0_SA_CVO~Z, 2.0.0_SA_COO~X, 0.4.0_DS_ClientPlatform~D, 0.0.0_AB_MSTR~Z, 2.0.0_SA_COO~Z, 1.0.0_SA_CTO~O, 0.7.0_AE_CloudOps~I -- and NONE for 2.0.0_SA_COO~O.",
+        "The seat is working: commits c7ca5fb03f (04:01Z) and 8fc747bc09 (04:41Z); 3.0.0_SA_CVO~O cites COO~O msg 26012 sent ~05:0xZ. It sends; it does not receive."
+      ]
+    },
+    "spec_asserts": "Every live ~O seat receives its mail (the /watcher Monitor is its standing mechanism).",
+    "world_is": "COO~O receives nothing sent after ~02:44Z. The Z-S23 ruling, the /canonical-drive loop instruction and CVO~O's MXC5-AC4 PASS have not reached it.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "THE RULING THIS ROW CARRIES (1.0.0_SA_CTO~O, msg 25996, on COO~O msg 25986 / row Z-S23): option (B). (A) names Schwab accounts, which breaks Andrew's 'portal figures only'. Issue it NOW as addendum A2, not in round 2. Design direction: extend the existing grant grammar so a grant may carry zero Schwab masters plus a portal-dataset scope opal_asker_query honours; never a second grant store; the OPLGTW stop is lifted. Resolve Alyssa's Entra oid from the directory by the operator path. ALSO WAITING IN YOUR read/ DIR: the /canonical-drive 30m loop instruction (msg 25999) and 3.0.0_SA_CVO~O's MXC5-AC4 PASS @0cf61b5bbe (msg 26017), which unblocks the wk-nfra_mcpindex-1-1d drain. Disarm: re-arm the watcher (/watcher 2.0.0_SA_COO~O) and ack the 5 ids."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S26",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T07:22Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "CORRECTS NFRA_OPALAI-Z-S25 (this seat's own row): its limb 'the Z-S23 ruling has not reached COO~O' was FALSE when filed. 2.0.0_SA_COO~O issued addendum A2 on that ruling at 05:28:49Z (@9ba4ca286f: OA-g-1, OA-g-2, OA-g-3), 7 minutes before Z-S25 landed at 05:36:22Z. The missing inbox-watch process was real; the inference drawn from it was not checked against the task-order tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --diff-filter=A on NFRA_OPALAI.TO-OA-g-1.portal-only-grant.md: 9ba4ca286f 2.0.0_SA_COO~O 2026-09-26T05:28:49Z issue(NFRA_OPALAI addendum A2 ... on the CTO's ruling (B) (msg 25996 ...).",
+        "git log -1 --format=%aI 8833cafab2 (Z-S25) = 2026-09-26T05:36:22Z.",
+        "The same wrong 'A2 not issued' statement is in this seat's tick-7 log @cffa8e5603 and its tick-8 report; both read commits by grep on seat names and never listed the order files."
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-S25: COO~O had not received the Z-S23 ruling (msg 25996).",
+    "world_is": "COO~O had read and acted on it (A2 issued 05:28:49Z) before the row was filed. It read the file in its read/ directory without acking it; the broker ack came at 05:33:21Z. Only the watcher-process census in Z-S25 stands.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "notes": "Inert: nothing was re-issued and no second COO was spawned on the wrong limb. Lesson carried in the commit: before stating an order was not issued, list the task-order files, not the commit log."
+  },
+  {
     "id": "NFRA_OPALAI-Z-W9-S1",
     "project": "NFRA_OPALAI",
     "fabric": "site-z",
@@ -894,6 +940,78 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-g-1 item 5: the owner's read-back carries portal_channels, so a portal-only grant never reads back as empty.",
     "world_is": "It does, at 9a28cfbbe6 on branch wk-NFRA_OPALAI-9 (LOCAL; not drained, not deployed). The live gateway still runs the pre-item-5 bytes until OA-g-2 deploys.",
     "notes": "This row does not disarm W9-S1; the issuer does. A side observation: the safe-commit call for 9a28cfbbe6 ran past a 120 s bound. The harness moved it to the background and it exited 0 with the commit landed, so the rc 124 shape did not arise."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S27",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T09:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W9-S1"
+    ],
+    "one_line": "DISARMS NFRA_OPALAI-Z-W9-S1. OA-g-1 was amended with item 5 (@fb7efc02b8) and built at 9a28cfbbe6: app/admin_grants.py _grant_json now returns portal_channels whenever the grant carries them, so a portal-only grant no longer reads back as empty on the owner dashboard. g1.AC3 passes 3 of 3 on the issuer's re-run, and the work is drained to CLOUD @45ddd8d948.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "g1.AC3 on wk-NFRA_OPALAI-9 @c0d5df8623: 'pytest rc=0; named tests passed 3 of 3; failed/error lines 0' (includes test_admin_readback_shows_portal_channels).",
+        "Worker report: tests/test_admin_grants.py 5 passed (no moto needed)."
+      ]
+    },
+    "spec_asserts": "W9-S1: the owner's read-back omits portal_channels, so the grant OA-g-3 will write reads back as empty.",
+    "world_is": "The read-back carries portal_channels; Schwab-only grants read back unchanged.",
+    "notes": "The fix reaches the host with OA-g-2's release."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W8-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~8",
+    "surfaced_at": "2026-09-26T07:55Z",
+    "one_line": "TO-OA-f-2 guard (ii), as relayed at GO, polls https://<the gateway>/health and rolls back on anything but 200 within 90 s. The public https://mcp.opalinvest.dev/health can never read 200: the ALB answers it with a 302 to Entra login (Server awselb/2.0), so the request never reaches the gateway. It read 302 on 30 of 30 polls after the forward deploy while the gateway served healthy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Poll log /c/tmp/oa-8/.scratch/act.log: 30 polls of https://mcp.opalinvest.dev/health from 07:44:44Z to 07:47:23Z (the act exited 07:44:41Z), 30 of 30 http_code=302.",
+        "curl -D at 07:54:40Z: 'HTTP/1.1 302 Moved Temporarily', 'Server: awselb/2.0', 'Location: https://login.microsoftonline.com/<tenant>/oauth2/v2.0/authorize?...'. This is the ALB's authenticate-oidc default action (EC2_MANIFEST opal-gateway _status: 'default-action 302 to Entra'); the gateway process is not in the path.",
+        "Discriminators, same minute: public /mcp unauth 401 and public /.well-known/oauth-authorization-server 200 (both forwarded to the gateway); on-box http://localhost:8080/health 200 on 3 of 3 (ssm:0e97c001-f7b7-48e1-adbe-2bcd07418ef6); opal-gateway active since 07:43:23Z, NRestarts=0.",
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh@c5f8099440:230-235 polls http://localhost:${GATEWAY_PORT}/health on the box right after the restart; it returned {\"ok\":true} inside its 30 s loop (ssm:6861b726-9f08-4a9f-9e0c-e870c5d5c373)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Guard (ii): immediately after the restart, poll /health (GO prompt: https://<the gateway>/health, host read from the deploy script); not 200 within 90 seconds -> run the rollback at once.",
+    "world_is": "The public /health path is behind the ALB's OIDC default action and returns 302 for every state of the gateway, healthy or down, so as a public read the guard cannot discriminate and would roll back every deploy, the rollback included. The deploy script's own /health read is on-box (localhost:8080) and returned 200. I took the on-box reads plus public /mcp 401 as the guard (ii) reading and did NOT roll back. The rollback stays ready (clean base tree /c/tmp/oa-8-rb at 0af72fb1d0).",
+    "notes": "Deviation from the letter of the GO prompt, measured and reported. Disarm: the issuer rules whether the on-box reading satisfies guard (ii) or orders the named rollback; a future order's /health guard names the on-box URL or an ALB path that forwards unauthenticated."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S28",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T09:50Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W8-S3"
+    ],
+    "one_line": "DISARMS NFRA_OPALAI-Z-W8-S3 with a ruling: guard (ii) reads /health ON THE HOST, never the public URL. The public https://mcp.opalinvest.dev/health sits behind the load balancer's Entra sign-in (awselb/2.0) and returned 302 on 30 of 30 polls, whether or not the gateway was up. OA-f-2's worker read on-box /health 200 (inside the deploy script and 3 of 3 at 07:54Z), public /mcp 401 and the auth metadata 200, with the service active since 07:43:23Z and 0 restarts. That satisfies guard (ii), and not rolling back was correct. OA-g-2's face is amended to the on-box read in this commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report 0.9.0_WK_NFRA_OPALAI~8 (proof @3cd49937ab, drained @837d4d1e1d): public /health 302 on 30 of 30; on-box /health 200; tools 46 = 46; f2.AC2 and f2.AC3 PASS.",
+        "Issuer's own read at 07:50Z: public /health 302; the live identity_scope.py md5 equals the release branch's."
+      ]
+    },
+    "spec_asserts": "OA-f-2 guard (ii): poll /health; if it is not 200 within 90 s, roll back.",
+    "world_is": "Only the on-box /health can answer that question; the public one never reaches the gateway.",
+    "notes": "MX-r-3's face is read for the same guard at its own spawn."
   }
 ]
 ```

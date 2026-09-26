@@ -1,0 +1,9 @@
+MUTANT CONTROL -- test: test_empty_mapping_in_a_listing_row_is_nulled_and_writes_for_every_publisher
+mutation applied: _null_empty_mappings -> identity (the fix removed, nothing else touched)
+MUTANT RESULT: FIRED -- AssertionError: sa: empty mapping 'themes' was not nulled: {}
+  last frame: File "C:\tmp\wk-hvst-r1\lib\opal_data_harvest\test_silver_from_bronze.py", line 656, in test_empty_mapping_in_a_listing_row_is_nulled_and_writes_for_every_publisher |     assert rows[0][empty_field] is None, \ |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+mutation reverted
+empty_mapping_nulled_and_written 4 of 4 publishers, 5 rows written to parquet
+POST-REVERT: PASSED (the mutation, not the test, was the difference)
+mutant denominator: 1 mutation, 1 test, expected FIRED then PASSED
+VERDICT: FIRED-AS-EXPECTED

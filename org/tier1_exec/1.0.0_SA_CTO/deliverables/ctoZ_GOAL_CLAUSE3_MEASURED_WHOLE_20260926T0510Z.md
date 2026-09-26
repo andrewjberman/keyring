@@ -45,6 +45,91 @@ exactly ONE channel.**
 
 ---
 
+## 2a. AMENDMENT A1, 05:5xZ -- SECTION 2's HEADLINE CLAIM IS WRONG ON BOTH CHANNELS
+
+**`2.0.0_SA_COO~Y` corrected this (msg 26023, READ-acked) and it is right.** Section 2 below says the lift's
+value is *"92 names x 2 channels."* **It is neither 92 nor 2.**
+
+**`seekingalpha`'s ceiling is 25, not 92, and the binding constraint is NOT egress.** Measured from the
+producer's own selection path (`__main__.py:136`): `--all-securities` resolves 89; usable `sa_symbol` **25**;
+ticker 32; **NEITHER 45**. **A name with no `sa_symbol` cannot be queried on sa at all.** So the 25-to-92 gap
+is the **IDENTITY BACKLOG**, which sits UPSTREAM of the vendor word and is untouched by it. Also **89 != 95**:
+a different population, so its criterion prints its own denominator.
+
+**`serp` is not a run at all, for two independent reasons.** `lib/research/harvest/bright_data_serp` is
+imported by nothing across 75,455 files but its own test, so it is a **BUILD**, not a backfill. And **Bright
+Data is METERED, which makes 92 names SPEND -- excluded BY NAME from Andrew's term** (*"Spend, contracts,
+entitlements and hold-lifts are NOT covered"*). **RULING: serp is CARDED to Andrew, not cut.** The citation is
+his own sentence, so it passes the RESERVED test on its face.
+
+**THE SHAPE OF MY ERROR, because the numbers around it were sound.** The channel counts in section 1 are
+measured and stand. **The claim about what the lift unblocks was NOT measured** -- I inferred it from "these
+are vendor channels, and vendor channels needed the word." **An unmeasured direction borrows credibility from
+the real numbers beside it.** The fix costs one read of the producer's selection path, which is what COO~Y did
+and I did not.
+
+**What the lift actually buys tonight: up to 25 names on ONE channel.** Real, and an order of magnitude
+smaller than section 2 claims. **Clause 3's true long pole is the identity backlog (45 names with NEITHER
+symbol nor ticker) plus a serp BUILD that needs Andrew's spend word** -- neither of which egress touches.
+
+Section 2 is left standing below with this amendment above it rather than rewritten, so the superseded claim
+and its correction are read together.
+
+---
+
+## 2b. AMENDMENT A2, 06:2xZ -- A1's OWN DIRECTION WAS ALSO UNMEASURED, AND I ADOPTED IT ONE MESSAGE AFTER CONFESSING THE IDENTICAL ERROR
+
+**`2.0.0_SA_COO~Y` self-corrected (msg 26028, READ-acked): the identity backlog is NOT "untouched by the
+word."** A1 above says the 25-to-92 gap *"sits UPSTREAM of the vendor word and is untouched by it."* **The
+second half is wrong, and it was COO~Y's unmeasured direction which I adopted into my own record without
+measuring -- one message after confessing that exact failure about my own claim.** COO~Y named it first:
+*"I made the mirror of the error `1.0.0_SA_CTO~Z` had just confessed -- an unmeasured direction beside real
+numbers, one message later."*
+
+> **A lesson written down is not a lesson applied.** I confessed the class, accepted a correction containing
+> the same class, and reproduced it in the fix. **An instrument arriving in a message carries its sender's
+> blind spot, and a CORRECTION is an instrument.** A peer's correction earns the same one query on a different
+> plane that a peer's claim does.
+
+**VERIFIED AT THE SOURCE** (`org/tier1_exec/4.0.0_SA_CRO/deliverables/IDENTITY_SA_SYMBOL_DENSITY_PASS_20260913_Z.json`),
+and it is richer than either of our summaries:
+
+| field | value |
+|---|---|
+| `universe` | 89 |
+| `ASKED` | **18** |
+| `NOT_ASKED_vendor_refusal` | **71** |
+| `resolved_of_asked` | **18** -- every name ASKED resolved |
+| `refused_on_evidence_of_asked` | **0** |
+| **`serveable_at_the_density_bar`** | **8** |
+| `search_http` per record | `{200: 18, 403: 71}` |
+| `provider` | `seekingalpha.com/api/v3 -- DIRECT, unauthenticated, NO VENDOR, no quota` |
+
+**So COO~Y's correction is right: the 71 are NOT known-unresolvable.** The artifact's own `partition_note`
+warns against precisely the misreading: *"A VENDOR REFUSAL AND A REFUSAL ON EVIDENCE ARE DIFFERENT FACTS. The
+first run printed 'RESOLVED 17 of 89 / REFUSED 72 of 89' when those 72 were never asked -- which reads as
+'Costco, Netflix, Visa and Mastercard have no SA symbol'."* **ABSENT is not EXERCISED-AGAINST, stated by the
+producer about its own output.**
+
+**TWO THINGS NEITHER OF US CITED, and they change the remedy:**
+
+1. **The 403 DECAYS WITHOUT AUTHENTICATION.** The blocker reads: *"HTTP 403 ... INTERMITTENT, not a clean
+   per-window budget"* and *"blocked at 06:08Z; a single probe per endpoint at 08:19Z (131 min later) returned
+   200 on BOTH. The block DECAYS over hours."* **Against an endpoint its own provider line calls
+   unauthenticated.** So the measured remedy is RATE AND TIMING, not primarily a session -- an authenticated
+   session may help and has not been shown to.
+2. **`serveable_at_the_density_bar` is 8 of the 18 resolved, 44%.** Every asked name resolved a symbol, and
+   fewer than half cleared the density bar. **So asking all 89 does not yield 89 usable names; at that rate it
+   yields roughly 40.** This is a SECOND ceiling, below the 25 and below the 92, and no message in this thread
+   had named it.
+
+**Corrected statement of what tonight can buy on clause 3:** the 71 unasked names are askable, the 403 is a
+timing problem that decays, and the density bar will cut whatever resolves by roughly half. **That is a real
+and worthwhile block of work and it is not 92 names.** The honest number is unknown until the 71 are asked,
+which is the point -- **A1 and section 2 both named a number where the answer was "ask and see."**
+
+---
+
 ## 2. WHY THIS IS NOW ANDREW'S EGRESS LIFT'S LARGEST TARGET
 
 `seekingalpha` and `serp` are **vendor** channels. They are empty for the reason `AMGT_HARVST`'s AC1a was

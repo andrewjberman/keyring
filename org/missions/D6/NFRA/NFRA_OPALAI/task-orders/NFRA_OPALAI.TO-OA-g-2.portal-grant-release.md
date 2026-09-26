@@ -62,7 +62,9 @@ In order:
 4. **Guards (from the 2026-09-25 outage, row `NFRA_MCPORTAL-Z-W2-S7`):**
    - (i) render the release tree's `.env` `printf` line locally with a distinct marker per `%s`, and show every marker
      on its own key (markers only, no secrets). Any misalignment: STOP.
-   - (ii) immediately after the restart, poll `/health`; not 200 within 90 seconds -> run the rollback at once, close
+   - (ii) immediately after the restart, poll `/health` ON THE HOST over SSM (`curl -s -o /dev/null -w %{http_code}
+     http://127.0.0.1:<port>/health`; the public URL sits behind the load balancer's Entra sign-in and always returns 302,
+     row NFRA_OPALAI-Z-W8-S3); not 200 within 90 seconds -> run the rollback at once, close
      the entry as rolled back, and stop.
    - (iii) list the registered MCP tool names on the host before and after (on-box, the service's own venv and
      `.env`). The difference must be empty; a non-empty difference means roll back.

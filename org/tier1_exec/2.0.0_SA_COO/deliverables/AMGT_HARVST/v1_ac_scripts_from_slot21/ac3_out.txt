@@ -1,0 +1,15 @@
+    [0mdj().check()[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mcheck[39;49;00m([96mself[39;49;00m):[90m[39;49;00m
+>       value = [96mself[39;49;00m.session.get([96mself[39;49;00m.base + [33m"[39;49;00m[33m/client?legacy=false[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                ^^^^^^^^^^^^^^^^[90m[39;49;00m
+                                 headers={[33m"[39;49;00m[33mReferer[39;49;00m[33m"[39;49;00m: [96mself[39;49;00m.base + [33m"[39;49;00m[33m/[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mAccept[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mapplication/json[39;49;00m[33m"[39;49;00m}).json()[90m[39;49;00m
+[1m[31mE       AttributeError: 'NoneType' object has no attribute 'get'[0m
+
+[1m[31mlib\opal_data_harvest\publishers.py[0m:672: AttributeError
+[36m[1m=========================== short test summary info ===========================[0m
+[31mFAILED[0m lib/opal_data_harvest/test_verification.py::[1mTests::test_disabled_barrons_contract_defers_before_opening_a_browser[0m - FileExistsError: [WinError 183] Cannot create a file when that file already...
+[31mSUBFAILED(failures=1)[0m lib/opal_data_harvest/test_worker.py::[1mTests::test_single_broken_dow_jones_article_is_skipped_but_repeated_server_failure_stops[0m - AttributeError: 'NoneType' object has no attribute 'get'
+[31mSUBFAILED(failures=2)[0m lib/opal_data_harvest/test_worker.py::[1mTests::test_single_broken_dow_jones_article_is_skipped_but_repeated_server_failure_stops[0m - AttributeError: 'NoneType' object has no attribute 'get'
+[31m[31m[1m3 failed[0m, [32m161 passed[0m, [32m4 subtests passed[0m[31m in 5.35s[0m[0m

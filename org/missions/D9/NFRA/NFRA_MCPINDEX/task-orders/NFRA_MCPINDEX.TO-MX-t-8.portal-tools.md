@@ -142,7 +142,7 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once:
 `wk-nfra_mcpindex-1-1d`'s head; the issuer merges this branch back INTO the held branch. The catalog regeneration can
 conflict with MX-d-2's; resolve by re-running the emitter at the merge (the round-1 bound).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

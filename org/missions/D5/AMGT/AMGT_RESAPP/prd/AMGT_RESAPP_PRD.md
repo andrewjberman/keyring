@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.26",
+  "prd_version": "v0.27",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -38,7 +38,8 @@
     "FWD-27",
     "FWD-28",
     "FWD-29",
-    "FWD-30"
+    "FWD-30",
+    "FWD-31"
   ],
   "status": "RATIFIED"
 }
@@ -754,6 +755,41 @@ disputable, by rule, and carry no technical language.*
                     THE "OR" IS HIS AND IS NOT COLLAPSED: either branch
                     satisfies; the 2-page cap binds branch (a) only; "functional"
                     means an artifact a person opens, not a button that resolves.
+  FWD-31 The team's own MANAGEMENT passage reads on Exec Management BESIDE the
+         filing roster, and the roster is unchanged by its presence
+         DONE WHEN  EXERCISED -- for a name whose pack carries a MANAGEMENT
+                    passage, the Exec Management tab renders that passage
+                    LABELLED AS THE TEAM'S and cited to its report, positioned
+                    BESIDE the filing roster rather than in place of it; the
+                    roster's own rows are BYTE-UNCHANGED against the same tab
+                    captured without the passage; and a name whose pack carries
+                    none renders the roster alone with the passage slot ABSENT
+                    WITH ITS REASON. The rendered state carries a POSITIVE
+                    CONTROL in the same capture -- the location is the
+                    application route and the tab's own label is present -- so a
+                    zero on the absence clauses cannot be a blind read
+         ACCEPT     An analyst reads the team's view of management without the
+                    filing record moving under it. TODAY: the passage is SERVED
+                    and CITED in the substrate (AMGT_CORPUS FWD-11's own half is
+                    MET) and NOTHING renders it on this tab.
+         SOURCE     NOT from a brief -- found by SUBTRACTION at the
+                    AMGT_CORPUS/AMGT_RESAPP seam, 2026-09-26, and it is the ONE
+                    clause of that seam's three with NO home on either endpoint.
+                    AMGT_CORPUS FWD-11's DONE WHEN carries it
+                    ("BESIDE the filing roster, with the roster unchanged") and
+                    AMGT_CORPUS cannot close a render; this endpoint's nearest
+                    outcome, FWD-17, fences the FILING ROSTER ITSELF --
+                    executives, roles, tenure against the pool -- and says
+                    NOTHING about the team's passage, its placement beside the
+                    roster, or the roster surviving its arrival. So the
+                    obligation existed with no owner. Records:
+                    ctoZ_CORPUS_ROUND5_NINETEEN_OUTCOME_PASS_20260926T0215Z.md
+                    section 3 (@95b6f068ed); AMGT_CORPUS PRD FWD-11's ADDENDUM
+                    and CORRECTION (@64d0a493ac, @1c1735a226);
+                    ROUND_ANALYSIS.round5.md section 0. A CROSS-PROJECT
+                    DEPENDENCY TRANSFERS THE OBLIGATION, NEVER THE SATISFACTION
+                    -- 3.0.0_SA_CVO~Z's refusal @dbcf788466 is why this is a NEW
+                    OUTCOME here rather than a narrowing there.
                     ⚠ If branch (a) needs a field no route serves, that is a
                     ROUTE change and returns to 1.0.0_SA_CTO~Z before it is
                     built (C-PRESENTATION-ONLY names this exception).

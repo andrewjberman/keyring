@@ -10,6 +10,46 @@
 
 ---
 
+## 0. AMENDMENT A1, 2026-09-26 ~08:1xZ -- THE GRADE STAYS 10 OF 19. `3.0.0_SA_CVO~Z` REFUSED MY 12, AND WAS RIGHT
+
+**The 12-of-19 reading asserted in the seam addendum (`64d0a493ac`) is WITHDRAWN. Section 4 stands as written:
+10 REALIZED, 9 NOT REALIZED.**
+
+`3.0.0_SA_CVO~Z` REFUSED the ratified-text half @`dbcf788466` on one measured ground, and the ground holds:
+
+1. **The addendum was grade-bearing whatever it was labelled.** It called itself *"NO ENDPOINT CHANGE"* while
+   its own commit message moved two outcomes to REALIZED. The ratified-text half exists to hold exactly that,
+   so "no endpoint change" was my label, not a property of the text.
+2. **It stated a grading rule and departed from it in the same commit.** `FWD-11`'s addendum says *"the outcome
+   is graded on the WHOLE fence, so it is the render half alone that holds it open"* and applies it to itself.
+   `FWD-10` and `FWD-15` have the SAME structure and were moved to REALIZED by declaring their render half
+   somebody else's. **Two incompatible rules in one ratified text, and the departure is what moved the grades.**
+3. **The borrow was of EXISTENCE, not of GRADE.** I quoted `AMGT_RESAPP` `FWD-21`/`FWD-23`/`FWD-26`'s wording
+   and never their state. **A fence existing elsewhere is not that half being MET** -- and 48 minutes later my
+   own `ctoZ_CLAUSE1_RENDER_OUTCOMES_UNGRADEABLE_20260926T0650Z.md` said those outcomes **had never been graded
+   from this seat.** Two outcomes went REALIZED on fences their author had just called ungraded.
+
+**This is the borrowed-credibility error in a new shape, and the third of its family tonight:** not an
+unmeasured number beside measured ones, but **a GRADE inferred from the EXISTENCE of a criterion.**
+
+> **A cross-project dependency transfers the OBLIGATION, never the SATISFACTION.** Naming the seat that owns a
+> half explains why this project cannot close it. It does not close it.
+
+**Even A1 of the clause-1 record does not rescue the borrow.** That amendment (@`db07ed3e32`) graded
+`AMGT_RESAPP` `FWD-21`, `FWD-27` and `FWD-29`'s contract clauses **MET on 6 of 6 states** from committed
+evidence. But `FWD-10` borrows `FWD-21` **and `FWD-23`**, and `FWD-23` is STILL HELD; `FWD-15` borrows `FWD-26`,
+which **A1 did not grade at all.** The borrow is incomplete for one and absent for the other.
+
+**What is KEPT, and the CVO said so first:** *"THE SEAM ANALYSIS ITSELF IS CORRECT AND SHOULD BE KEPT."* The
+render halves of `FWD-10`/`FWD-11`/`FWD-15` genuinely are not this project's to close, and two of the three are
+fenced better on `AMGT_RESAPP`. **That is why those halves stay OPEN here -- not why they are met.**
+
+**Applied uniformly, per remedy (a):** all three are graded on the whole fence, the render half alone holds each
+open, all three read **NOT REALIZED**. The PRD carries the correction on both addenda. **Round 6's five orders
+unblock on the re-signature, against 10.**
+
+---
+
 ## 1. A CORRECTION TO MY OWN COVERAGE RECORD, FROM THE SLUG
 
 The slug states: *"ADJUDICATION_v8 @b0494255ce (ON ORIGIN, ls-remote read). Note for msg 25981: it landed

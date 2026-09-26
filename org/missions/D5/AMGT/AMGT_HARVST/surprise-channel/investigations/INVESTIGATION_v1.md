@@ -1310,6 +1310,80 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Round 6's causal chain: a listing_hit row is what gives a publisher a coverage SPAN, so capturing sa's listing pages moves data_status DENIED -> PARTIAL.",
     "world_is": "The capture works and the pages are held, but they cannot be WRITTEN. sa's listing payload contains a field the silver writer cannot serialise at all, so the chain breaks one step after the vendor -- at our own parquet writer rather than at seeking-alpha.",
     "notes": "FILED WHILE THE REMEDY IS AT ANDREW. The fix is one line in the silver path -- coerce an empty dict to None before the table is built, which is information-preserving (an empty dict carries nothing) and leaves a POPULATED themes writing normally as a struct. It is NOT applied here: lib/opal_data_harvest is a shared production writer used by every publisher, and patching it is a change this lane asked for a word on rather than took. FORWARD-LOOKING, and this is why the row is BLOCKING rather than an observation: ft, barrons and bbg have NEVER written a listing_hit row, so none of their payloads has met this writer either. Any one of them carrying an empty dict fails identically, and the failure is invisible until the upload step -- the capture succeeds and reports rc=0. NEGATIVE CONTROL ALREADY RUN: this is an EXPOSURE with one measured firing, not a silent history -- sa is the first publisher whose payload ever reached this writer with an empty dict, and its very first attempt is the one that raised."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W21-S1",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~21",
+    "surfaced_at": "2026-09-26T06:09:54Z",
+    "one_line": "AC3's LITERAL INVOCATION CANNOT PRODUCE ONE CLAUSE OF ITS OWN EXPECTATION: `pytest -q` never prints a PASSING test's nodeid, so 'your new test ... is named in the output' is unsatisfiable by `python -m pytest lib/opal_data_harvest/ -q | tail -15` no matter what the worker writes. Only FAILING tests are named under -q.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, not reasoned, on the criterion's own literal invocation at this worktree (C:/tmp/wk-hvst-r1, branch wk-harvst-7-21 @d0171ffe4f): `python -m pytest lib/opal_data_harvest/ -q 2>&1 | tail -15` written to .scratch/r1/ac3_tail.txt, then `grep -c test_empty_mapping_in_a_listing_row_is_nulled_and_writes_for_every_publisher` on that file = 0.",
+        "IT IS NOT THE `tail -15` TRUNCATION -- the same grep over the UNTAILED full -q output is also 0 hits. The name is absent from the whole stream, not cut off the end of it.",
+        "THE TEST EXISTS AND PASSES, so the zero is the instrument's, not the work's: `python -m pytest lib/opal_data_harvest/test_silver_from_bronze.py -v -p no:cacheprovider -k empty_mapping` rc=0 prints `lib/opal_data_harvest/test_silver_from_bronze.py::test_empty_mapping_in_a_listing_row_is_nulled_and_writes_for_every_publisher PASSED`, 1 passed, 16 deselected.",
+        "THE DISCRIMINATOR between 'not named' and 'not present': the AC3 output DOES name the three PRE-EXISTING failures by nodeid in its short test summary (test_verification.py::Tests::test_disabled_barrons_contract_defers_before_opening_a_browser and two test_worker.py SUBFAILED lines). -q names a test iff it failed, so a green test can never be named by this invocation.",
+        "NO CONFIG ROUTE EXISTS AT THIS VINTAGE: pytest.ini at the repo root carries only `pythonpath` and `markers` -- no `addopts`, so nothing raises the default verbosity that would print passing nodeids.",
+        "The BOUND half of the same criterion WAS produced: pre-change 3 failed / 160 passed / 4 subtests passed; post-change 3 failed / 161 passed / 4 subtests passed -- +1 passed, zero regressions."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3's <expect>: 'the opal_data_harvest suite runs and its pass/fail counts are printed as a BOUND -- the number of tests passing, stated with the count, and zero regressions against the pre-change run of the same command (print BOTH numbers). Your new test for the empty-mapping case is part of this suite and is named in the output', against the LITERAL invocation `cd \"$(git rev-parse --show-toplevel)\" && python -m pytest lib/opal_data_harvest/ -q 2>&1 | tail -15`.",
+    "world_is": "The counts clause is produced by that invocation and the naming clause cannot be, because `-q` prints a nodeid only for a test that FAILED. Satisfying the naming clause as written would require either a different invocation (-v, or -rA), or making the new test fail, or emitting a warning purely to get the nodeid printed -- i.e. gaming the instrument. The worker graded the criterion on the clause its invocation can produce (counts and zero regressions, both PASS by output) and filed this row for the clause it cannot, rather than reporting the criterion as fully met by output.",
+    "notes": "DISARM OPTIONS, all the issuer's and none a worker's -- the issuer amends its own task-order criteria without a CTO ruling (rule 27, L6): (a) re-cut the invocation as `python -m pytest lib/opal_data_harvest/ -q -rA 2>&1 | tail -30` or `-v ... | grep empty_mapping`, which names a passing test and keeps the counts; (b) drop the naming clause and keep the BOUND, taking the +1 passed delta as the evidence that the new test joined the suite; (c) accept the auxiliary -v run recorded in the proof-of-spec instance as the naming evidence. GENERAL, not specific to this cell: any future build TO whose criterion asks a `-q` run to NAME a green test reproduces this exactly, which is why the standing is ARMED rather than INERT."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W21-S2",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~21",
+    "surfaced_at": "2026-09-26T06:09:54Z",
+    "one_line": "THE SUITE AC3 GRADES AGAINST IS ALREADY RED AT HEAD -- 3 failed / 160 passed BEFORE this cell touched anything -- and one of those failures changed its CAUSE between two runs minutes apart (KeyError 'bundle' then FileExistsError WinError 183) while keeping the same nodeid, so 'zero regressions' is stable on COUNTS but not on causes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRE-CHANGE run of AC3's own literal command, before any edit in this worktree (@d0171ffe4f): `3 failed, 160 passed, 4 subtests passed in 5.73s`, pytest rc=1 (read via PIPESTATUS, not the pipeline's tail rc).",
+        "POST-CHANGE run of the same command: `3 failed, 161 passed, 4 subtests passed in 4.35s` -- the +1 is this cell's new test, and the 3 failures are the SAME three nodeids, so the regression count is zero.",
+        "THE THREE FAILING NODEIDS, identical in both runs and none of them in this cell's write grant: lib/opal_data_harvest/test_verification.py::Tests::test_disabled_barrons_contract_defers_before_opening_a_browser, and lib/opal_data_harvest/test_worker.py::Tests::test_single_broken_dow_jones_article_is_skipped_but_repeated_server_failure_stops (SUBFAILED twice).",
+        "THE UNSTABLE CAUSE, both lines verbatim from the two runs of the same command on the same bytes: run 1 `FAILED ...test_disabled_barrons_contract_defers_before_opening_a_browser - KeyError: 'bundle'`; run 2 `FAILED ...test_disabled_barrons_contract_defers_before_opening_a_browser - FileExistsError: [WinError 183] Cannot create a file when that file already...`. Same test, two different errors, no intervening edit to that file.",
+        "The test_worker failure is an attempted NETWORK read in the suite's own path -- `self.session.get(self.base + '/client?legacy=false')` at lib/opal_data_harvest/publishers.py:672 raising AttributeError: 'NoneType' object has no attribute 'get' -- i.e. it depends on state this cell's standing clause 1 (no network) forbids creating."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3 asks for 'zero regressions against the pre-change run of the same command (print BOTH numbers)', which presumes the pre-change run is a stable baseline to compare against.",
+    "world_is": "The pre-change baseline is 3 failed / 160 passed, and one of those three failures is not deterministic in its cause across two runs of the identical command on identical bytes (WinError 183 is a leftover-file condition, i.e. the failure depends on filesystem state a prior run left behind). The count comparison AC3 names still worked here (160 -> 161 passed, 3 -> 3 failed), but a baseline that can move on its own makes a future 'zero regressions' read on this suite ambiguous in both directions.",
+    "notes": "NOT FIXED AND NOT IN THIS CELL'S WRITE GRANT -- test_verification.py and test_worker.py are outside the <paths> of HVST-v-1, and fixing a neighbouring defect is expressly refused to a worker. Recorded so the round-7 analysis reads the 161 as '+1 on a red-but-unchanged baseline' rather than as a green suite. The ARMED standing is about the INSTRUMENT, not about this cell: left alone, the next worker graded on this suite compares against a baseline that can shift without a code change."
+  },
+  {
+    "id": "AMGT_HARVST-Z-W21-S3",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~21",
+    "surfaced_at": "2026-09-26T06:09:54Z",
+    "one_line": "ONE OF THE TWO HELD wsj LISTING PAGES YIELDS ZERO ROWS: wsj_p2's captured bytes carry `searchResults` as an EMPTY LIST, so the wsj control population is 20 rows from ONE page, not 40 from two -- a denominator any sibling cell counting 'wsj: 2 held pages' would over-state by a factor of two.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured through the real row builder on the held bytes (read-only, from the main tree's device-local .runtime): wsj_p1_45058f937f5eff24.html (598358 bytes) -> 20 listing rows; wsj_p2_bfec5a47fe3ed50b.html (529261 bytes) -> 0 listing rows. sa_p1_990943eddbd5a172.json -> 20 rows.",
+        "THE CAUSE IS IN THE CAPTURED BYTES, not in the extractor's branch selection: parsing p2's own script#__NEXT_DATA__ directly prints `NEXT_DATA node present: True`, `searchResults type: list len: 0`. silver_from_bronze._dowjones_listing_hits:282-285 takes the `isinstance(props.get('searchResults'), list)` branch and returns [] for an empty list -- it never reaches the a[href] fallback, though the page does carry 65 anchors.",
+        "The page is otherwise a full page, not a truncated capture: pageProps carries the usual 20+ config keys (aceConfigs, adsConfig, advancedSearchFields, apolloGraphqlClientName, ... isUsingSemanticSearch, mostPopularData).",
+        "CONSEQUENCE FOR THIS CELL, stated because it bounds AC2's own denominator: the byte-identity and schema comparison for wsj rests on p1's 20 rows; p2 contributes a true-but-empty comparison (both arms 0 rows, canonical digest of `[]` on both sides) and no schema to compare."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's section 3 names the held payloads as 'sa and wsj pages already on disk' and AC2 speaks of 'wsj's held listing payload' as the positive control, without distinguishing the two wsj pages.",
+    "world_is": "Only one of the two held wsj pages produces listing rows. The second is a real captured page whose search result set is empty, so it can serve as a control for row-set identity (0 == 0) but carries no schema and no rows. AC2 was run over BOTH and states the per-page counts and the 20-row denominator explicitly rather than reporting '2 wsj pages compared'.",
+    "notes": "NOT A DEFECT CLAIM ABOUT THE EXTRACTOR -- an empty searchResults is faithfully zero hits, and returning [] is the correct reading of those bytes. INERT because nothing operates on this automatically; it is a denominator correction for whoever counts wsj listing coverage, and for the round-7 analysis, which will otherwise read two held wsj pages as two populated ones."
   }
 ]
 ```
