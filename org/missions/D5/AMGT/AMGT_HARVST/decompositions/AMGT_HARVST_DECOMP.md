@@ -967,9 +967,9 @@ until cell 1 lands.** Two further cells are independent of that path and run bes
 ruled cuttable by the CTO at msg 25928 (@`9f0201abd2`) and are carried here because THIS SEAT TOLD THE CTO
 they would land in the next issuance. 5 + 2 = SEVEN candidates.**
 
-- Item 1, **Z-S28 disarm** -> **CELL `HVST-r-1`.** BLOCKING and it leads: everything else fires into a path
+- Item 1, **Z-S28 disarm** -> **CELL `HVST-v-1`.** BLOCKING and it leads: everything else fires into a path
   that cannot reach silver.
-- Item 2, **the bounded vendor act** -> **CELL `HVST-r-2`.** ⚠ **AND ITS SHAPE CHANGED BETWEEN THE ANALYSIS
+- Item 2, **the bounded vendor act** -> **CELL `HVST-v-2`.** ⚠ **AND ITS SHAPE CHANGED BETWEEN THE ANALYSIS
   AND THIS CUT, which the cut must not paper over:** the analysis was written believing AC1a had never run.
   It ran at `02:17:52Z` under Andrew's SEPARATE per-use word, rc 0, `accepted: 5`, and **20 listing rows are
   already held in the local outbox**. So cell 2's first criterion needs NO vendor call at all -- it drains
@@ -977,19 +977,19 @@ they would land in the next issuance. 5 + 2 = SEVEN candidates.**
 - Item 3, **the 8 ungraded judgment criteria** -> **NOT A CELL. A CONSTRAINT ON THE CUT.** L9 is the CVO's
   act and is never self-graded; what a decomposition controls is whether L9 has anything TO grade. Round 6
   gave it zero and had no plausibility oracle. **Round 7 carries a judgment criterion on the cell that can
-  be wrong in a way no mechanical column shows** -- `r-2`, where a green delta over the wrong rows reads
+  be wrong in a way no mechanical column shows** -- `v-2`, where a green delta over the wrong rows reads
   identical to a green delta over the right ones.
 - Item 4, **the COO drain-end packet** -> **NOT A WORKER CELL. THE ISSUER'S OWN ARTIFACT**, produced at
   drain-end. Its absence is what bounded the slug's scope to the channel and the order; no worker can
   produce it, because it is a record OF the issuer's acts.
 - Item 5, **the 3 carried channel rows** -> **NOT A CELL.** Disposition is the CVO's L9 act.
-- **PLUS the timeline BUILD cell** (gate vacated as agent-made) -> **CELL `HVST-r-3`**, write surface
+- **PLUS the timeline BUILD cell** (gate vacated as agent-made) -> **CELL `HVST-v-3`**, write surface
   disjoint from the sa path.
 - **PLUS the ft/barrons DIAGNOSTIC** (authorization settled, what remains is diagnosis) -> **CELL
-  `HVST-r-4`**, write surface disjoint.
+  `HVST-v-4`**, write surface disjoint.
 
 ⛔ **THE TWO CARRIED CELLS ARE NOT ON THE ANALYSIS'S LIST AND THAT IS STATED, NOT SMUGGLED.** The analysis is
-the authoritative recut input and it names five items. `r-3` and `r-4` come from the CTO's own earlier
+the authoritative recut input and it names five items. `v-3` and `v-4` come from the CTO's own earlier
 ruling, and this seat answered that ruling by saying both would land in the NEXT issuance -- this one.
 Including them silently would be the COO widening a round; excluding them silently would be dropping a
 commitment. **They are cut, they are named as additions, and they sit OFF the critical path.**
@@ -998,15 +998,15 @@ commitment. **They are cut, they are named as additions, and they sit OFF the cr
 
 | cell | write set | risk | depends on |
 |---|---|---|---|
-| `HVST-r-1` | `lib/opal_data_harvest/` + its tests | LOCAL | -- |
-| `HVST-r-2` | S3 bronze/silver `sa`; the local outbox; the vendor ledger | **WORLD** | `r-1` |
-| `HVST-r-3` | the timeline build surface | LOCAL | -- |
-| `HVST-r-4` | diagnostic evidence only, no producer change | **WORLD** (a live ft/barrons call) | -- |
+| `HVST-v-1` | `lib/opal_data_harvest/` + its tests | LOCAL | -- |
+| `HVST-v-2` | S3 bronze/silver `sa`; the local outbox; the vendor ledger | **WORLD** | `v-1` |
+| `HVST-v-3` | the timeline build surface | LOCAL | -- |
+| `HVST-v-4` | diagnostic evidence only, no producer change | **WORLD** (a live ft/barrons call) | -- |
 
-**Fan-out: 3 chains, cap 8.** `r-1 -> r-2` serial; `r-3` and `r-4` independent. Derived from the dependency
+**Fan-out: 3 chains, cap 8.** `v-1 -> v-2` serial; `v-3` and `v-4` independent. Derived from the dependency
 graph above, not chosen.
 
-### 18c. `HVST-r-1` -- make sa's listing pages reach silver
+### 18c. `HVST-v-1` -- make sa's listing pages reach silver
 
 **The defect, already isolated (`Z-S28`):** sa's payload carries `themes` = `{}` on all 20 rows; arrow types
 it `struct<>`; parquet refuses *"Cannot write struct type themes with no child field"*. **Emptiness, not
@@ -1021,10 +1021,10 @@ appears in a silver row, for every publisher.
 identical arrow schema before and after the change. A fix that quietly re-types a column wsj already writes
 is a silver schema change wearing a bug fix's clothes.
 
-### 18d. `HVST-r-2` -- drain what is held, then capture, then measure
+### 18d. `HVST-v-2` -- drain what is held, then capture, then measure
 
 **Criterion order is load-bearing and is the correction round 6 paid for:** drain the ALREADY-HELD pages
-FIRST. They need no vendor call, they exercise `r-1` against real sa bytes, and if the fix is wrong the cell
+FIRST. They need no vendor call, they exercise `v-1` against real sa bytes, and if the fix is wrong the cell
 learns it before spending a vendor act rather than after.
 
 ⛔ **THE VENDOR WORD IS SESSION-SCOPED AND EXPIRES SILENTLY.** Nothing refuses when it lapses; the seat
@@ -1040,35 +1040,58 @@ re-authenticate.** Re-auth is a human act and is not this cell's to perform.
 
 **Its JUDGMENT criterion (the CVO's, at L9):** are the listing rows that reached silver ABOUT the security
 they are filed under? A mechanical delta counts rows; it cannot see rows counted against the wrong name,
-and `r-2` is exactly where round 6 had no oracle.
+and `v-2` is exactly where round 6 had no oracle.
 
-### 18e. AMENDMENT AT THE CUT -- ROUND 7 IS TWO CELLS, NOT FOUR. `r-3` AND `r-4` MOVE TO ROUND 8
+### 18e. AMENDMENT AT THE CUT -- ROUND 7 IS TWO CELLS, NOT FOUR. `v-3` AND `v-4` MOVE TO ROUND 8
 
 **This amends 18a/18b, written forty minutes earlier by this same seat, and the superseded text stands above
 rather than being edited away.** The subtraction there is unchanged and still correct; what changes is which
 of its cells this round CUTS.
 
 **REASON 1 -- THE VENDOR WORD IS SESSION-SCOPED AND IT IS THE ONLY PERISHABLE THING IN THE ROUND.**
-`r-1 -> r-2` is the critical path and `r-2` holds the only act that expires. `r-3` and `r-4` are independent
+`v-1 -> v-2` is the critical path and `v-2` holds the only act that expires. `v-3` and `v-4` are independent
 and lose nothing by waiting; the sa path loses its authorization if it waits. Cutting four orders delays the
 two that are on a clock in order to start two that are not.
 
-**REASON 2, AND IT IS THE ONE THAT WOULD HAVE BITTEN -- I HAVE NOT READ THE TIMELINE SPEC.** `r-3` is the
+**REASON 2, AND IT IS THE ONE THAT WOULD HAVE BITTEN -- I HAVE NOT READ THE TIMELINE SPEC.** `v-3` is the
 timeline BUILD cell. To cut it competently I need `SPEC_SECTION_timeline.md` at HEAD and the round-1 build
 context, and I have read neither. ⛔ **TONIGHT THIS PROJECT PAID TWICE FOR CRITERIA WRITTEN AGAINST A SURFACE
 THE ISSUER HAD NOT READ** -- `HVST-s-1` AC1 named a flag shape never exercised, and its AC2 measured an S3
-surface the named command does not write (17g). **Cutting `r-3` now to honour a delivery promise would be
+surface the named command does not write (17g). **Cutting `v-3` now to honour a delivery promise would be
 committing that same defect a third time, knowingly, in the same round that exists to clean up the second.**
 A promise to cut a cell is not a promise to cut it badly.
 
-**REASON 3 -- `r-4` IS A SECOND WORLD CELL AND IT WOULD SHARE THE LEDGER AND THE SESSION SURFACE WITH `r-2`.**
+**REASON 3 -- `v-4` IS A SECOND WORLD CELL AND IT WOULD SHARE THE LEDGER AND THE SESSION SURFACE WITH `v-2`.**
 Two live vendor cells in one round, both writing vendor-ledger rows, both touching the device-local session
 vault, is avoidable contention on the one surface whose failure mode is a silent credentialed login.
 
 **WHAT IS OWED AND TO WHOM:** this seat told `1.0.0_SA_CTO~Z` (msg 25928 reply) that both cells would land in
 the NEXT issuance. **They are not landing in it, and the CTO is told that in the issuance commit rather than
-discovering it from a cell list.** Both are cut in round 8 off the round-7 analysis, `r-3` after this seat
+discovering it from a cell list.** Both are cut in round 8 off the round-7 analysis, `v-3` after this seat
 reads the timeline spec.
 
-**FAN-OUT, restated for what is actually cut: 1 chain, cap 8.** `r-1 -> r-2`, strictly serial. Cell 2's
+**FAN-OUT, restated for what is actually cut: 1 chain, cap 8.** `v-1 -> v-2`, strictly serial. Cell 2's
 output is unreadable until cell 1 lands, which is the analysis's own reasoning and not a choice made here.
+
+### 18f. CELL ID COLLISION -- the round-7 cells were cut as `HVST-r-1..r-4` and those ids WERE ALREADY TAKEN
+
+**`HVST-r-1` through `HVST-r-5` belong to an earlier round of this project** -- `r-1` is the timeline-spec
+cell (`AMGT_HARVST.TO-HVST-r-1.timeline-spec-failed-call-state-and-error-envelope.md`), the very cell whose
+BUILD the CTO vacated a gate over. Round 7's cells are renamed to the unused **`v`** series: `HVST-v-1`,
+`HVST-v-2`, with the deferred pair as `HVST-v-3` and `HVST-v-4`. Sections 18a-18e above are read with that
+substitution; the ids there were wrong when written.
+
+⛔ **AND THE GATE PASSED THE COLLISION, WHICH IS THE PART TO KEEP.** `to-pipeline-gate` reported
+*"1 owned cell(s) and 3 criterion reference(s) RESOLVE against ... (20 cell ids, index)"* for both orders --
+**TRUE, and about the WRONG OBJECT.** `cell_refs="HVST-r-1"` resolved perfectly, against a cell cut in a
+previous round. A reference check answers *does this id exist*, never *is this id YOURS*, and a reused id is
+the one case where those two questions come apart. **A green resolve line is not an ownership check.**
+
+⭐ **THE DISCRIMINATOR COSTS ONE COMMAND AND IT IS NOT A SEARCH FOR YOUR OWN ID -- IT IS A LISTING OF THE
+DENOMINATOR:** `ls task-orders/ | cut -d. -f1 | sort -u` prints every id already spent (here: `h-1..h-10`,
+`r-1..r-5`, `s-1`, `t-1`, `t-2`, `u-1`). Grepping for the id you intend to use is the wrong instrument --
+finding it is exactly the outcome that should stop you, and a careless reader reads a hit as confirmation.
+**Found only because a fresh worktree listed two files matching `TO-HVST-r-1*`.**
+
+**COST:** one `ls` before naming a cell. **NON-APPLICATION:** the first round of a project, where no id is
+spent yet.
