@@ -1620,6 +1620,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Z-S45 disarms when the one writer holds; it closes when both readers pick the current-method object and a /2 rewrite serves /2 on every resolved name.",
     "world_is": "Held from 16:41Z.",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S11",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-26T14:35:00Z",
+    "one_line": "CRPS-i-3's selection rule (right-in-row, else below-in-column, skip years/negatives) is mechanically correct as specified but finds the team's TRUE Base-case number in 0 of the 42 selections with a computable served-base ratio -- the common one-pager layout puts 'Base Case' as a section title spanning several columns, with the real numbers several rows below in a FLANKING column, never the label's own row or column. Separately, neither of round 6's two hypothesised causes for the 196-of-200 empty `right` (stale read_only dimension, uncached formula) explains the residual: the dimension fix is measurably active (47 of 366 sheets corrected) but recovers 0 net-new cases over the 4/200 baseline.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/CASE_EVIDENCE_ROUND7.json (this cell's own producer, run 2026-09-26 over the live corpus): workbook.selections has 61 entries (53 names), ALL 61 via direction 'below' (0 via 'right'); of the 42 selections carrying a computable workbook_to_served, the range is -0.0057 to 57.17, 0 fall in [0.5, 2.0] and only 2 of 42 fall in the broader [0.2, 5.0] (CPA_US_Equity 0.207, UBER_US_Equity 0.490).",
+        "Direct read of the source bytes (s3://opal-data-harvest/.../security_key=8306_JP_Equity/e347a627dc4201f8/MUFG FactSet Based ONE PAGER TEMPLATE 2026 03 30_v1.xlsx, sheet 'Model NEW VERSION'): K43 'Base Case' is a title spanning columns K:M with years/EPS/Price/Return rows below at K44-K50; column K below K43 is genuinely empty of numbers (right of K43 is also empty -- L43='', row45 onward blank in K) so this instance simply yields no selection; contrast security_key=2317_TT_Equity, sheet 'Overview', where F45 'Base Case' and F53 'Base Case' both select the SAME unrelated cell F61=0.0341 (a values row far below two section headers, with 'EPS'/'Multiple'/'Price'/'Return' text labels at F47-F50 skipped as non-numeric on the way down) against a served_base of 197.47 (ratio 0.000173) -- the actual Base-case PRICE for this name sits at D49/E49 (338.87 / 391.45), diagonally left-and-below the label, outside the rule's own row/column.",
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/case_evidence.py `_fix_dimensions` verified live (scratch instrumentation, not committed): of 366 sheets opened across the 79 xlsx extracts, 47 had their read_only max_row/max_column corrected by reset_dimensions()+calculate_dimension(force=True); base_labels stayed 200 and right_recovered_by_dimension_fix stayed 4 (round 6's own baseline) before and after -- the corrected max_column was already sufficient in every sheet the fix touched, so it cannot be the cause of the other 196."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-i-3 section 1: the round-6 empty `right` was attributed to two hypothesised causes (stale read_only dimension; an uncached formula), and the selection rule (right-in-row else below-in-column, skip years/negatives) was RULED as the mechanism to locate 'the team's own Base-case number for that name' (section 5 AC4).",
+    "world_is": "Neither hypothesised cause explains the 196 residual empty `right` cells (measured: 0 net recovery from the dimension fix, 0 uncached-formula hits); the true cause is a 2D header layout the rule's own row/column scan cannot reach. Applied over the whole corpus, the rule's OWN selections read as the team's true Base-case number in 0 of 42 computable cases -- the mechanism is exactly as specified, and the specification does not fit this corpus's dominant template.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Not a defect in this cell's code: `_select_right`/`_select_below` implement section 1's rule literally and CRPS-i-3's own mechanical criteria (AC1-AC3, all PASS) test structure (coverage, coordinates, venue floor), never value correctness -- AC4 is the CVO's judgment and this row is exactly the evidence AC4 needs to read against. A remedy (locating the value via the row-label column, e.g. matching a 'Price' row under the same section header) is a round-8 cell, not this one's to build (section 4 BOUNDS: no producer edit beyond this order's own paths, no Base/Upside/Downside figure computed)."
   }
 ]
 ```

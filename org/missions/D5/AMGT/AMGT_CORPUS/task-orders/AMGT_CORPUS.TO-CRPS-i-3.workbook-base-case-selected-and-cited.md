@@ -98,3 +98,7 @@ extraction). Checks dry-run at the base: AC1/AC2/AC3 FAIL (no ROUND7 evidence, n
 <round>7</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_CORPUS~2`):** AC1 PASS (census_rows 97 keys_with_block 97 base_labels 200 right_nonempty 4 names_with_selection 53 selections_without_coord 0); AC2 PASS (determinism identical sha 4ee6e8a934e6); AC3 PASS (floor LN 9 US 16 ASIA 7); AC4 evidence produced, no verdict (CVO judgment) -- filed AMGT_CORPUS-Z-W2-S11 (BLOCKING/ARMED): 0 of 42 computable selections land in a plausible [0.5, 2.0] band against the served Base case, and neither round-6 hypothesis (stale dimension, uncached formula) explains the residual 196 empty `right` cells.
+
+<status>complete</status>
