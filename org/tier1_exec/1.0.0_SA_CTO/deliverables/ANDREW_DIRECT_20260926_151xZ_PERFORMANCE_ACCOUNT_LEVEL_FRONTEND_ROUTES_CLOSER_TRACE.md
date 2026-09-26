@@ -32,3 +32,19 @@ take that data and come up with a refined route structure to manage this, on the
 | 4.0.0_SA_CRO | the traces and the route proposal | the ask |
 | 2.0.0_SA_COO~P | B stops | decision copy |
 | 2.0.0_SA_COO~D | account-level Performance goes to round 6 | decision copy |
+
+## Addendum, same session (~15:1xZ), VERBATIM
+
+"In essence what I'm telling you is that this is a design/presentation issue with regard to how frontend is trying to
+shape the results and the paths its using to do so, we need to adjust that design to be proper based on the facts of
+how performance reporting works at the account level, balancing this by the case that "client" is the aggregation of
+"accounts", and peoplewould only ever search by client, not by account."
+
+**The design constraints the route structure must satisfy:**
+- **C1. Search is by CLIENT only.** The search and picker never ask a user for an account.
+- **C2. A client IS the aggregation of its accounts.** The page's unit of selection is the client, and every account
+  under that client is reachable from it.
+- **C3. Performance is computed and shown per ACCOUNT.** The frontend's shaping and paths must follow that fact. A
+  Performance request never carries a client- or relationship-level selection.
+- **C4. The design is the frontend's to change,** including how results are shaped and which API paths are called.
+  Backend data and contracts are taken as they are.
