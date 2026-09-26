@@ -9613,3 +9613,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Found off-task during the 4.0.0_SA_CRO /closer trace of the Holdings tab (IRPT_HOLDINGS_TAB_END_TO_END_GAP_BRIEF_20260926.md). The frontend renders the value faithfully. Disarm: read the three accounts' custody rows for business date 2026-09-22 in the 49F holdings input and state which case holds; if the value is missing, a READY state over it is the defect."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S146",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-26T16:20:00Z",
+  "one_line": "DISPOSITION of IRPT_BCKEND-S145: a TRUE ZERO, not a missing value -- the three accounts of the 49F snapshot sel_4c196ab6... are $0.00 in every field of Schwab's own dim_balance on 2026-09-22 (and on 06-30, 08-31, 09-24), so READY with custody total 0.0 states the custody value faithfully. No producer change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (Holdings backend, 49F)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "HAR prod-uiwalk-20260926.har entry 256 response body (read in place): scope account_ids acc_5392e575..., acc_6d9c5b7a..., acc_c1973df0...; custody_totals unique_account_count 3, unique_position_count 0, total 0.0; provenance 'schwab dim_balance net_mv_plus_cash (custody) x smartx account map', join 1/1 per account; revision 9ab377ce (49financial@2026-09-22).",
+      "holdings_snapshot.opaque_id('account','49financial', n) over s3://opal-data-assets/schwab/08335338/silver/dim_balance/date=2026-09-22 (7,522 rows) maps them to 0020504304 (IRA), 0039442668 (IRA), 0074972646 (S1).",
+      "Those rows: net_mv_positions 0.00, net_mv_plus_cash 0.00, cash_balance_settled_only 0.00, mkt_value_long 0.00, bank_sweep_ibf 0.00, bank_cash 0.00, money_mkt_funds 0.00. net_mv_plus_cash is also 0.00 for all three on 2026-06-30, 2026-08-31 and 2026-09-24."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The value is supplied and is zero: Schwab dim_balance reports all three accounts at 0.00 in every field on the served business date 2026-09-22 and on 06-30, 08-31 and 09-24, so the READY snapshot's 0.0 is the custodian's own figure, not a gap in the 49F input.",
+  "spec_asserts": "IRPT_BCKEND-S145 world_is: 'That is either a true zero (empty or closed accounts) or a value the 49F holdings input did not supply; the snapshot does not say which.'",
+  "world_is": "The custodian reports all three accounts empty on the served business date and for at least three months before it. The value is supplied and is zero; READY over it is correct.",
+  "notes": "Beside it, not a defect: all three ACCOUNT nodes display '****4304 / IRA'. By design (holdings_snapshot._directory_account_labels, CTO 100157 item 1) an account label is the directory entry's masked discriminator, and the entry is the client relationship, so its accounts share it. Only 0020504304 ends 4304; 0074972646 is not an IRA. Whether an ACCOUNT node should carry its own mask is a display ruling for 1.0.0_SA_CTO and the IR portal (2.0.0_SA_COO~D), not a Holdings value question."
+}
+```
