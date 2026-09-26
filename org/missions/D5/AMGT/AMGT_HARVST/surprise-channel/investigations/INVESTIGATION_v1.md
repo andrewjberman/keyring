@@ -1530,6 +1530,32 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "The limb's own docstring: a recorded invocation matches the criterion's 'modulo the declared placeholders and trailing/leading whitespace ONLY', which presumes a declared placeholder's expansion is a single whitespace-free token.",
     "world_is": "On this device the expansion contains one space, so `(\\S+)` cannot match it and a TRUTHFUL record is refused. The only records that would pass are false ones (a path not used, or the placeholder left unexpanded contrary to the face's instruction), which is the failure mode the limb exists to prevent, pointed the other way.",
     "notes": "ARMED and NOT FIXABLE HERE: `.tools/proof-of-spec-check.py` is outside this cell's write grant and this cell may not widen. DISARM OPTIONS: (a) the checker's placeholder group becomes non-greedy `(.+?)` anchored on the literal tail -- one character, and the limb keeps its whole purpose since the literal tail still has to match; (b) the ISSUER stops declaring a path placeholder and writes the absolute path into the criterion, which costs the order's device-portability; (c) the issuer declares the placeholder but quotes the expansion in the criterion as `\"<MAIN_TREE>\"` including the quotes, so the space sits inside a literal segment. (a) is the fabric's to make and is the only one that fixes every future order; the issuer can escalate it as a gate finding rather than absorb it per-order. Until one of these lands, no faithful instance for an order declaring a path placeholder can reach rc=0 on site Z."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S29",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-26T14:27:20Z",
+    "one_line": "FOUR CORRECT MECHANISMS COMPOSE INTO A DEADLOCK: HVST-v-2's order cannot be amended because its instance is INVALID, the instance is INVALID on one annotated field, only the worker may edit that field, and the worker cannot be resumed. No act available to the issuer closes the cell.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIMB 1 -- to-pipeline-gate REFUSES the order edit: 'REFUSED -- 3 violation(s) across 0 newly-added TO file(s) and 1 modified declaring TO file(s) ... instance VIOLATION: invocation-alignment[AC1]'. So while the instance is INVALID the order file cannot be modified AT ALL -- including to record the verdict that it is invalid",
+        "LIMB 2 -- the instance is INVALID on exactly ONE row now. AC2 was fixed by the issuer (the <MAIN_TREE> placeholder replaced with the literal path and <placeholders> set to NONE, so the limb compares literal-to-literal and the (\\S+) space defect cannot fire); AC3 was already aligned. Measured after the fix: 'invocation-alignment 2/3 comparable row(s) match; 1 diverge', VIOLATION on AC1 only",
+        "LIMB 3 -- AC1's recorded `invocation` field is 342 characters where the command is ~136; the remainder is the worker's own bracketed annotation. The limb compares the WHOLE string, so it can never match. The fix is to relocate the annotation to a notes field, changing NO output, count or denominator",
+        "LIMB 4 -- ONLY the worker may make that edit. owned-paths lane TREE_DELIVERABLES permits exactly the serial named by the sub-folder (ADHC_OWNPTH.004), measured earlier this round when four of this issuer's file copies were REFUSED at deliverables/0.9.0_WK_AMGT_HARVST~21/scripts/. A NEW worker serial cannot fix it either -- the grant follows the path, not the round",
+        "LIMB 5 -- the worker cannot be resumed: 'No transcript found for agent ID'. It reported NEXT: ready for the next task order and then became unreachable. Its worktree C:/tmp/wk-hvst-v2 is intact and can now commit (the gitlink hook was repaired ~12:5xZ), but no agent exists to commit from it",
+        "EACH MECHANISM IS CORRECT IN ISOLATION and I am not proposing any of them be weakened: the gate should refuse an order whose instance is invalid; the limb should compare the whole field; owned-paths should keep an issuer out of a worker's evidence; a completed agent should not be silently resumable"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An issuer amends its own task-order criteria under Rule 27, and a proof instance is repaired by the worker that owns it.",
+    "world_is": "Both are true and neither is reachable here. The issuer's amendment is blocked BY the instance's invalidity; the instance's repair is blocked by the worker's absence; and the one field at fault carries no measurement -- it is an annotation in a compared field.",
+    "notes": "THE AUDITED ESCAPE EXISTS AND I HAVE NOT USED IT. GIT_COMMIT_AUTHOR_OVERRIDE would let this seat commit past the lane refusal, and earlier this round I declined it on the ground that writing into another serial's folder is the precise sweep that rule prevents. That ground has NOT changed just because the cost is now higher, so the call is ROUTED to 1.0.0_SA_CTO~Z rather than taken. THE COMPOSITION IS THE KEEPABLE FINDING, not any one limb: a gate that refuses an edit while a record is invalid, plus a record only one absent party may fix, is a deadlock that NO PARTICIPANT CAN SEE FROM ITS OWN SIDE -- each mechanism reports a correct refusal and none reports a cycle. COST OF THE CHEAP PREVENTION, measured against what actually happened: the annotation was the worker's own editorial addition to a FIELD THE CHECKER COMPARES. An instance format that separated `invocation` (compared) from `invocation_note` (never compared) makes this class impossible; today nothing stops a worker annotating a compared field, and the annotation was a genuinely useful finding about the face-vs-file divergence."
   }
 ]
 ```
