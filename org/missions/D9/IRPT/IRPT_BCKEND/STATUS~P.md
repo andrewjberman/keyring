@@ -1,100 +1,71 @@
 # IRPT_BCKEND~P (Performance) -- status
 
 Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`.
-Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
-Drive: /closer-drive loop RESUMED 16:0xZ on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c every 30m.
-`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T17:4xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
+Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
+Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
+As of 2026-09-26T20:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
-## Pins
+## Pins (served)
 
-| What | Value |
-|---|---|
-| Backend branch | `irpt-smoke-p-backend-20260923` MERGED into CLOUD as 949c6524fa (2 parents; directory/refresh.py + .owned-paths.yaml kept at CLOUD's content, merge diff 0). Suites on CLOUD rc=0: holdings 147, _authz 160, performance 188, export 106, directory 162, _render_identity 36 |
-| Publish worktree | `C:/Users/AndrewBerman/Desktop/irpt-p-publish-20260923`; adapter row for deploy (B) at 4872b28043 (NOT uploaded) |
-| irpt-performance-adapter | CodeSha256 jbojclF39H.. (LastModified 23:11:47Z = env-only re-arm, INF plan b) |
-| irpt-export-render | CodeSha256 ryEMGlRu.., layers irpt-common:5 + irpt-render-deps-layer:1, IRPT_EXPORT_RENDER=off |
-| 49F bucket | S140 fix f942df9ab4 APPLIED (-target): adapter role READ-ONLY on the engine twr_daily/twr_periods prefixes only |
-| Push state | CLOUD LOCAL (not pushed; MSTR pushes) |
+| What | Value | Ledger |
+|---|---|---|
+| irpt-performance-adapter | `8a6zq+x9..` since 20:17:50Z = Zs2OK7C5 + entry.py @260399e940 (P-REOPEN-01) + f49_engine.py @8d7a8b10fe (timings); INF one-use plan env kept as live | irpt-reopen-authz-20260926 CLOSED |
+| irpt-ycharts-generate | `/iFhTAvT..` since 19:33:52Z = 85TXFzzv + ~Y's six hop-3 files (a219094b1a) | irpt-hop3-generate-resident-20260926 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb` since 19:15:19Z = f624e8a72f + the same six; rollback root f624e8a72f kept | same |
+| irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
+| irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
+| Backend branch | `irpt-smoke-p-backend-20260923` @aede6418c6 (not pushed) |  |
+| Publish worktree | `irpt-p-publish-20260923` @d25a491d9e (not pushed) |  |
+| Push state | LOCAL, unread against origin this turn; MSTR pushes |  |
 
 ## Live thread
 
-- AGENT WALK DONE (Andrew-direct ~02:1xZ; CTO 101109 split it: backend acts by API on the SAME principal). Walk principal
-  irpt-walk-1790391192@opal.test lived [02:53:17Z, 03:39:08Z last token exp], deleted 03:30:33Z, ~D's reload landed
-  /login; ledger irpt-walk-principal-20260926 CLOSED. Log: IRPT_MVP_P/WALK_API_LOG_20260926.jsonl @ff0a6c63bb.
-- 49F LIVE: 200 PARTIAL (actual 01-02..09-24 disclosed) with REPORT# retained -- first retained reports at any firm.
-  S140 DISARMED (row S142); ledger irpt-f49-bucket-adapter-read-20260925 CLOSED.
-- INF FAILED: plan 01209afb SPENT 03:20:31Z; Orion 404 "Object does not exist" to the Scope body (replayed once,
-  ledger irpt-orion-scope-diagnostic-20260926). Row S143 ARMED, owner P: the entity/grouping grammar is wrong.
-- UI walk deferred: /investor-reporting admits only admin + internal + Dev (portal App.tsx) -- to Andrew as a card (CTO).
-- ~Y's upload: irpt-ycharts-generate zip lacks interactive_access / template_reader / security_resolution (~Y 101125,
-  IRPT_MVP_Y/P_GENERATE_PACKAGE_MISSING_MODULES_20260926.md @f12cd8bb52) -> P's item.
-- C: drive hit 0 bytes free at 03:4xZ (a ledger write truncated; restored from HEAD); ~2.6 GB free after. [STUCK] to MSTR.
+- **49F Performance, account-level:** served. A second authorized viewer now reopens a retained report (arm 1 PASS);
+  window 4's K7 refusal was this defect.
+- **Hop 3 (Analysis generate):** the title producer, the packaged settings path and template-lane admission are served
+  in generate AND the resident, content-proven 6/6 (`IRPT_MVP_P/HOP3_DEPLOYED_CONTENT_PROOF_20260926.md`).
+- **Hops 8-9 (status reads):** served; ~Y's no-overlay proof 4/4; IAM 10/10.
+- **Next window (CTO 101441/101466):** ONE window runs upload, generate, READY, sections and history for Analysis. It
+  is cut once ~Y's offline pre-flight of hops 5-9 is pinned. K5's measured write set: ~Y 101484 @f36c5ee4c4.
 
 ## Acceptance (goal Done criteria)
 
 | # | Criterion | State |
 |---|---|---|
-| 1 | Signed-in journey per firm | INF armed (plan b); 49F served, bucket fixed, awaiting retry; COT plan expired unspent (needs a new per-use word). Export: B1 + deploy (A) live, render OFF until deploy (B). 0 retained reports at any firm |
+| 1 | Signed-in journey per firm | 49F served (account-level, reopen fixed). INF: S143 fix served in the adapter; needs a one-use plan + a signed-in run. COT: needs a new per-use word. Export: render ON; the first real export is not run yet (K8) |
 | 2 | Every active account resolvable | MEASURED: COT 843/843, INF 878/878, 49F 6698/7497 (9 funded non-computable) |
 | 3 | COT structurally sound, window disclosed | CODE + portal render; proof on real data = a COT run |
 
 ## Write claims
 
-None building. Next surface: the adapter package + performance root (deploy B), export root `export_render`.
+None building. Waiting on the CTO's S147 decision (sent 20:26Z).
 
 ## Next-list (in order)
 
-0. EXPORT DEPLOY (B) LIVE 17:3xZ -- D1+D2+D3 (ledger irpt-export-deploy-b-20260926, R1 open):
-   - D1+D2: adapter Zs2OK7C5 (render ports + grant.py, S143 Orion household, S147 S3 pool), render-grant read policy,
-     IRPT_EVIDENCE_BUCKET; human-read arm IDENTICAL before/after (49F/COT/INF incl. INF unarmed).
-   - D3 export_render ON: first on, N1 FAILED (the render host read ANY SSM parameter via AmazonSSMManagedInstanceCore),
-     rolled back the same turn with 0 tokens minted; CTO ruled (1) 101347 -> fence LIVE (ledger
-     irpt-render-host-parameter-fence-20260926 CLOSED: Deny ssm:GetParameter* outside /irpt/render-token/*; host 7/7,
-     export role 4/4, resident 40/40) -> D3 back ON @f35dfe003c. Rows S148 (IRPT, owner CTO), S149 (estate-wide, cloud-ops).
-   - R1 OPEN: the AFTER read -- K6's account acc_bf96.. YTD must equal 0.06854 (else STOP + rollback reverse); >= 30 s is a
-     BLOCKING row (S147), not a rollback. Needs the next principal window (a page read).
-   - The first real export render: one of the retained 49F reports, by an Opal login in a principal window.
-1. HOP 3 (FWD-1 generate): window 3 K4 NORMALIZED again; K5 refused "maintained recipe title descriptor required" (no
-   producer; ~Y builds it, CTO 101353). The generate package + grants are proven: jsonschema LIVE (85TXFzzv +
-   irpt-common:5, census 59/0), submission grants LIVE (be7647e48f), full-path IAM 0 denied (Y @2789ac3bbd, P
-   @c2349731ac). Windows 1-3 CLOSED (ledgers irpt-ui-walk-principal[-w2,-w3]-20260926).
-2. S147: 49F served reads near/over the 30 s gateway cap; pool fix LIVE in D1 -- measure on R1.
-1. S143 FIX PROVEN LIVE 05:07Z (ledger irpt-orion-household-scope-proof-20260926 CLOSED; receipt
-   IRPT_MVP_P/ORION_HOUSEHOLD_SCOPE_PROOF_20260926.json): the household-scoped Scope body (entity 5, one-account household)
-   -> Orion 200 -> orion_selected.calculate returns a contract-validated Purfeerst report (YTD 0.0682, 01-01..09-25 exact,
-   268 points, Account group == 1098). CODE COMMITTED a7e9f51c77 on the backend branch (orion_account_mapping household check,
-   orion_selected entity 5, orion_live HTTP status in the error; tests perf 189 / _authz 160 / reports 87 pass). Adapter row re-pinned for it on the publish branch 55c42208a9. Then: ledgered deploy (rides deploy (B)), a new
-   one-use plan on a one-account-household client, and one signed-in run (needs a principal window).
-1b. DONE 13:29Z: irpt-ycharts-generate LIVE at IJD6bd1I.. (ledger irpt-generate-closure-fix-20260926 CLOSED): closure
-   0 missing (was 3), CodeSha256 == artifact, CONTRACT_VERSION arm before/after, replan No changes. ~Y's upload rides the
-   admin+Dev window as K4.
-1c. ADMIN+DEV UI WALK LIVE: principal irpt-uiwalk-1790430787@opal.test created 13:53:14Z under packet v3 07b7a000 (CTO
-   b70ede1756, CRO a157c45762); ledger irpt-ui-walk-principal-20260926 OPEN (C1 closed). ~D walks (HAR), ~Y makes ONE
-   upload (K4). P deletes on both "done" or at 14:53Z (cron 3d36d71d), then the route-graded audit vs the 13:51Z census.
-   K4 DONE: ~Y's ONE POST 13:54:56Z -> resident handled=1 13:55:02Z -> NORMALIZED 12.03 (first live Analysis upload;
-   IRPT_MVP_Y/LIVE_UPLOAD_1203_EVIDENCE_20260926.md @3cc73f2b79) -> ledger irpt-upload-hop2-20260924 CLOSED (S1).
-2. Deploy (B) -- packet blob 3c916b9c: CTO half SIGNED b70ede1756 (+ INF-unarmed before/after arm, reverse-order
-   rollback); CRO half SIGNED f8fc5ff21d (+ a three-firm human-read arm). CTO ruling (c) @ca0b3b6ecb, CRO accepted:
-   synthetic arm before D1 / after D2 (deploy_b_human_arm.py; before-run recorded); the real 49F 200 BEFORE from ~D's
-   walk HAR, AFTER in the step-6 principal window; D1 starts after the walk closes. Was: upload the adapter (publish 4872b28043), apply render_grant.tf +
-   IRPT_EVIDENCE_BUCKET, export_render=on; ledger with the CTO's negative arm (another attempt's token name refused, read
-   after delete refused). REHEARSED 00:3xZ (plan only, CLOUD tree, live plan values as vars): 1 add
-   (performance_render_grant_read) / 1 change (env + IRPT_EVIDENCE_BUCKET = the same bucket irpt-export-render writes
-   grants to; 8 env elements unchanged, code unchanged until the upload) / 0 destroy.
-3. First end-to-end Performance export (submit -> render -> receipt) on the first retained report.
-4. Holdings export kind (card B4), after 3.
-5. COT: egress now permitted this session (CTO 101098, each call ledgered) -> re-arm ONE COT one-use plan and a signed-in
-   COT run (a walk; the current walk principal's limits exclude a second vendor call).
+1. **S147 (DECISION at CTO):** ruling A measured the engine read at 4.0 s of a 26.7 s fresh read
+   (`S147_LATENCY_CARD_20260926.md` section 6). About 22.7 s is outside the engine; the hypothesis is repeated
+   `_authorize_release` rebuilds. REC: hold R9's B; ship a second timing line (authorize, persist, retention), then
+   re-rank.
+2. **Window (next):** K7 re-run (reopen now fixed), K8 the first export on a retained 49F report, plus the Analysis
+   chain (CTO 101466). Principal packet cut after ~Y's pre-flight pins.
+3. **M's cross-viewer title-binding patch** (`IRPT_MVP_Y/M_CROSS_VIEWER_TITLE_BINDING_20260926.patch`; reports/** is
+   lane IRPT_COMPLETION_P). It is not on the window path.
+4. **INF:** a new one-use plan on a one-account-household client, then one signed-in run.
+5. **COT:** re-arm ONE one-use plan on a new per-use word, then a signed-in run.
+6. Holdings export kind (card B4), after the first export.
 
 ## Parked
 
 | Question | Owner | Un-parks when |
 |---|---|---|
-| `build-and-upload.sh` deletes tracked performance/*.py from the publish working tree on each adapter build | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
+| `build-and-upload.sh` deletes tracked performance/*.py from the publish tree on each adapter build | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
+| `build-and-upload.sh` zips a source_dir JSON with the checkout's EOL (CRLF here), and its artifact record passes through MSYS path conversion (`/iFh..` became `C:/Program Files/Git/iFh..`) | 1.0.0_SA_CTO to route (ci/ owner) | the next build of a function whose hash starts with `/`, or that hashes a JSON member |
+| The performance root's per-apply `approved_performance_plan` variable: an apply without it disarms INF's plan and destroys its session policy | 2.0.0_SA_COO~P | the INF plan's expiry (1790424000) or the next INF arm |
 | 49F engine: 9 funded non-computable accounts; 219 of 5194 divergent vs BD | 1.0.0_SA_CTO to route (49F engine lane) | the engine lane's next c02 act |
 | 49F directory lists 790 not-terminated accounts the custodian shows empty/absent | 2.0.0_SA_COO~M | M's next directory refresh |
 
 ## Limits
 
-No vendor call is made by this seat; the INF use fires only on Andrew's signed-in request. Nothing here is pushed.
+No vendor call is made by this seat without its per-use word; the INF use fires only on a signed-in request. Nothing
+here is pushed.
