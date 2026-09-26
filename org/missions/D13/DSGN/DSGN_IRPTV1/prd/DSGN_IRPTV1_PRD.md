@@ -5,10 +5,10 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.12",
+ "prd_version": "v0.13",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
  "status": "DRAFT"
 }
 ```
@@ -225,6 +225,28 @@ The L5/L6 issuer is `2.0.0_SA_COO~D` by Andrew's name.
          SOURCE     Andrew-direct 2026-09-26 ~16:0xZ, "recs approved for all" on the open-calls frame of ~15:5xZ,
                     Call 2, record @`a6700b211e`; it builds on FWD-19 and restores FWD-5's "lagging account in one
                     screen" at account level
+  FWD-21 Every holdings view shows every account the client holds
+         DONE WHEN  EXERCISED -- an advisor opens a real client with several accounts and finds every account in each
+                    holdings view
+         ACCEPT     the allocation bars, the pie, the table and the securities map each include every one of the
+                    client's accounts; a client with two accounts shows two, never one; no view silently leaves an
+                    account out
+         SOURCE     the UI review brief @`fd463341e3` O6 (Andrew-direct 2026-09-26); finding UIR-39
+
+  FWD-22 An advisor reads the securities map at a glance
+         DONE WHEN  EXERCISED -- an advisor finds one security on the map and reads its total holding
+         ACCEPT     each security appears once with its total, and its split across models is one click away; every
+                    tile can be read, with small holdings grouped into one labelled "other" tile; the filters are
+                    grouped by account and each says what it is
+         SOURCE     the UI review brief @`fd463341e3` O9; findings UIR-41, UIR-42, UIR-43
+
+  FWD-23 An advisor can trust the holdings figures
+         DONE WHEN  EXERCISED -- an advisor reads a real client's holdings and they are as of the last trading day,
+                    with model amounts that are what the client actually holds
+         ACCEPT     holdings are dated the last trading day; a model's amount is the sum of the positions actually
+                    held in it, or is plainly labelled as a target; the amount outside any model is the true
+                    remainder
+         SOURCE     the UI review brief @`fd463341e3` O10; findings UIR-23, UIR-48
 ```
 
 Not promised (brief Part II, VII): the PDF / print package; the narrative page; the Global-view entitlement model's
@@ -321,6 +343,96 @@ value, and is keyed by the snapshot's account id (`drill_refs`), never by the la
 the PATHS (every file the proposal's section 5 names is under `portal/src/pages/InvestorReporting/**`); rounds already
 cut.
 
+## UI REVIEW FINDINGS (v0.13 -- Andrew-direct UI review, brief `docs/briefs/irpt-ui-review-brief-20260926.md` @`fd463341e3`)
+
+**Andrew, verbatim** (at the 4.0.0_SA_CRO terminal, ~21:0xZ): "make sure every single point is covered in
+machine-readable form, because i dont want any of these slipping through the cracks" and "so there are 49 issues you
+caught, all of them should be included."
+
+**The register is the source:** `docs/briefs/irpt-ui-review-findings-20260926.json` (49 findings).
+- The table below is generated from it: each id with its outcome, the FWD it is graded under, its owner and its
+  criterion, which is the register's acceptance line.
+- 3.0.0_SA_CVO grades each id.
+- Coverage check: `python docs/briefs/irpt-ui-review-coverage-check.py` must read 49 of 49.
+
+**Outcome -> FWD:**
+
+| Outcome | Graded under |
+|---|---|
+| O1 search | FWD-3 (FWD-17 for UIR-06, UIR-11) |
+| O2 identity | FWD-2, FWD-15 |
+| O3 accounts told apart | FWD-19 |
+| O4 one account's performance | FWD-19, FWD-5 (FWD-9 for UIR-20) |
+| O5 the drill and its bases | FWD-14, FWD-6 |
+| O6 every account shown | new FWD-21 |
+| O7 one colour, one meaning | FWD-12, FWD-13 |
+| O8 client facts on the face | FWD-11, FWD-15, FWD-16, FWD-18 |
+| O9 the securities map | new FWD-22 |
+| O10 trustworthy figures | new FWD-23 |
+
+**The CTO's rulings on the brief's open points** (1.0.0_SA_CTO, ~21:2xZ):
+- **UIR-07, search ranking: SERVER-SIDE.** The IRPT_BCKEND directory search (2.0.0_SA_COO~P's surface) ranks an
+  exact full-name match first, in either name order. The page renders results in served order and never re-ranks,
+  because it sees only one page of results and a client-side re-rank would bury a match on page two.
+- **UIR-03, UIR-23, UIR-26 and UIR-48 are IRPT_BCKEND (2.0.0_SA_COO~M).**
+  - UIR-26 is met when the own-mask labels publish, which rides the R4 enable.
+  - UIR-23 is met by the R4 scheduled publication (T-1).
+  - UIR-48: ~M states how model amounts are formed. Until then, no view presents them as held positions.
+- **UIR-39's cause** (`AllocationBars.rootOf` takes the FIRST parentless node) implies a census of every caller of
+  `slices.ts rootNode`. That census is part of FWD-21's cell.
+
+| Id | Outcome | FWD | Owner | Criterion (the register's acceptance line) |
+|---|---|---|---|---|
+| UIR-01 | O1 | FWD-3 | DSGN_IRPTV1 | With the search box focused and empty, no result list shows; results appear only for typed text (Browse stays the listing). |
+| UIR-02 | O1 | FWD-3 | DSGN_IRPTV1 | With the dropdown open over the tabs, every option is fully visible and the tab strip is underneath it. |
+| UIR-03 | O1 | FWD-3 | IRPT_BCKEND ~M | Each option names a client in client language; a client with several registrations appears once; no raw type code in the option. |
+| UIR-04 | O2 | FWD-2, FWD-15 | DSGN_IRPTV1 | Every option shows the firm's display name (e.g. 'Cottonwood'), laid out the same on every row. |
+| UIR-05 | O8 | FWD-11, FWD-15, FWD-16, FWD-18 | DSGN_IRPTV1 | The empty-state line uses client language only (no 'Resolution'). |
+| UIR-06 | O1 | FWD-17 | DSGN_IRPTV1 | With no client chosen, the page shows no number that reads like client data. |
+| UIR-07 | O1 | FWD-3 | IRPT_BCKEND ~P (ranking) + DSGN_IRPTV1 (render) | A full-name query in either order ('anna thiessen', 'thiessen anna') puts the exact client first. The CTO rules whether ranking is server-side (IRPT_BCKEND directory search) or client-side. |
+| UIR-08 | O1 | FWD-3 | DSGN_IRPTV1 | No option is ever hidden under another element. |
+| UIR-09 | O1 | FWD-3 | DSGN_IRPTV1 | The client search input shows no spell-check underline. |
+| UIR-10 | O1 | FWD-3 | DSGN_IRPTV1 | In Global mode results are grouped (or clearly marked) by firm and the list states how many matched. |
+| UIR-11 | O1 | FWD-17 | DSGN_IRPTV1 | No sample content renders while the live search is in use. |
+| UIR-12 | O2 | FWD-2, FWD-15 | DSGN_IRPTV1 | WHO shows the client's name only; accounts appear under Over what. |
+| UIR-13 | O2 | FWD-2, FWD-15 | DSGN_IRPTV1 | The line reads the firm's display name with normal punctuation. |
+| UIR-14 | O2 | FWD-2, FWD-15 | DSGN_IRPTV1 | After choosing a client the firm control shows that client's firm (or clearly says the list is all firms). |
+| UIR-15 | O3 | FWD-19 | DSGN_IRPTV1 | Each picker entry shows a distinct label and the account's value. |
+| UIR-16 | O4 | FWD-19, FWD-5 | DSGN_IRPTV1 | The Performance picker has no 'All accounts' option; it lists accounts only. |
+| UIR-17 | O3 | FWD-19 | DSGN_IRPTV1 | Over what lists every account distinctly, and each opens that account's Performance. |
+| UIR-18 | O4 | FWD-19, FWD-5 | DSGN_IRPTV1 | The refusal says in plain words why the figure is not available for this account and what makes it available; no raw code on the face. |
+| UIR-19 | O4 | FWD-19, FWD-5 | DSGN_IRPTV1 | A canvas-level refusal is a status icon beside navy text, never a tinted block. |
+| UIR-20 | O4 | FWD-9 | DSGN_IRPTV1 | Export is disabled whenever the active tab has no answer-bearing report. |
+| UIR-21 | O4 | FWD-19, FWD-5 | DSGN_IRPTV1 | The account picker and the period controls sit together inside one panel. |
+| UIR-22 | O8 | FWD-11, FWD-15, FWD-16, FWD-18 | DSGN_IRPTV1 | The disclosure uses client language, or moves behind the system-facts click. |
+| UIR-23 | O10 | FWD-23 | IRPT_BCKEND ~M | Holdings read as of the last trading day (T-1), on a scheduled publication. |
+| UIR-24 | O3 | FWD-19 | DSGN_IRPTV1 | The pie labels each slice with the same name the table shows. |
+| UIR-25 | O7 | FWD-12, FWD-13 | DSGN_IRPTV1 | No two slices in one chart share a colour. |
+| UIR-26 | O3 | FWD-19 | IRPT_BCKEND ~M | Each account row shows its own masked tail and type. |
+| UIR-27 | O8 | FWD-11, FWD-15, FWD-16, FWD-18 | DSGN_IRPTV1 | Supervision and Advisory are one click away (or hidden when withheld on every row). |
+| UIR-28 | O8 | FWD-11, FWD-15, FWD-16, FWD-18 | DSGN_IRPTV1 | The summary card shows client facts; source dates and coverage are one click away, in one date format. |
+| UIR-29 | O8 | FWD-11, FWD-15, FWD-16, FWD-18 | DSGN_IRPTV1 | One money format across the page; the client total appears once. |
+| UIR-30 | O2 | FWD-2, FWD-15 | DSGN_IRPTV1 | The firm shows by display name, once. |
+| UIR-31 | O5 | FWD-14, FWD-6 | DSGN_IRPTV1 | Drilling into an account sets the account focus, and choosing an account opens its drill; the two always agree. |
+| UIR-32 | O5 | FWD-14, FWD-6 | DSGN_IRPTV1 | The breadcrumb names the account, the account and its strategy show the same tail, and one masking style is used. |
+| UIR-33 | O5 | FWD-14, FWD-6 | DSGN_IRPTV1 | Every percentage states its base (of this account / of the client), or both views use one base. |
+| UIR-34 | O5 | FWD-14, FWD-6 | DSGN_IRPTV1 | A level with one child shows no pie (or shows the next level down). |
+| UIR-35 | O8 | FWD-11, FWD-15, FWD-16, FWD-18 | DSGN_IRPTV1 | No amount wraps at 1440 px. |
+| UIR-36 | O5 | FWD-14, FWD-6 | DSGN_IRPTV1 | As UIR-33. |
+| UIR-37 | O7 | FWD-12, FWD-13 | DSGN_IRPTV1 | No hue means both a model and an asset class; every Opal model draws its canonical colour. |
+| UIR-38 | O8 | FWD-11, FWD-15, FWD-16, FWD-18 | DSGN_IRPTV1 | No classification chip on the face (or client-language chips that never wrap). |
+| UIR-39 | O6 | FWD-21 | DSGN_IRPTV1 | Every holdings view lists every account (Allocation shows 2 of 2 bars for a two-account client). |
+| UIR-40 | O8 | FWD-11, FWD-15, FWD-16, FWD-18 | DSGN_IRPTV1 | One band per page. |
+| UIR-41 | O9 | FWD-22 | DSGN_IRPTV1 | Chips are grouped by account (or de-duplicated by model), and each chip says what it is. |
+| UIR-42 | O9 | FWD-22 | DSGN_IRPTV1 | Every tile is legible, or small items group into one labelled 'other' tile. |
+| UIR-43 | O9 | FWD-22 | DSGN_IRPTV1 | Each security appears once with its total (per-model splits one click away). |
+| UIR-44 | O7 | FWD-12, FWD-13 | DSGN_IRPTV1 | Every colour in the map is in the legend, and no two legend colours are near-identical. |
+| UIR-45 | O8 | FWD-11, FWD-15, FWD-16, FWD-18 | DSGN_IRPTV1 | One date format across the page; the source line names the actual source. |
+| UIR-46 | O7 | FWD-12, FWD-13 | DSGN_IRPTV1 | As UIR-25. |
+| UIR-47 | O5 | FWD-14, FWD-6 | DSGN_IRPTV1 | As UIR-33. |
+| UIR-48 | O10 | FWD-23 | IRPT_BCKEND ~M | Model amounts are the sum of the positions held in that model (or are labelled as target allocations), and the residual is the true unassigned remainder. |
+| UIR-49 | O5 | FWD-14, FWD-6 | DSGN_IRPTV1 | As UIR-31 and UIR-32. |
+
 ## THE THREAD (FWD-1) -- round 1 builds it end to end
 
 One person: an Opal internal user (Global view). One journey, coarse grain, live, default window, no export, no analysis.
@@ -381,6 +493,17 @@ v0.6 additions. The CTO's order is a suggestion; the sequence is the COO's at L5
 v0.9 addition, FIRST in round 6 because it is the FWD-1 blocker (every client-set Performance read is refused today):
 23. FWD-19 the client context and per-account Performance route structure (ROUTE STRUCTURE above) -- C25
 24. FWD-20 every account's YTD beside its name in the chooser, loaded progressively; the round after C25 -- C26
+
+v0.13 additions (the UI review, UIR-01..UIR-49; the COO sequences; FWD-21's cell goes first, because it drops real
+accounts):
+25. FWD-21 every account in every holdings view (UIR-39, plus the `rootNode` census) -- C27
+26. O1 search (UIR-01, 02, 06, 08, 09, 10, 11, and UIR-07's render half) -- C28
+27. O2/O8 client facts on the face (UIR-04, 05, 12, 13, 14, 22, 27, 28, 29, 30, 35, 38, 40, 45) -- C29
+28. O3/O4 accounts told apart and one account's performance (UIR-15, 16, 17, 18, 19, 20, 21, 24) -- C30
+29. O5 the drill, with every percentage's base labelled (UIR-31, 32, 33, 34, 36, 47, 49) -- C31
+30. O7 one colour, one meaning (UIR-25, 37, 44, 46) -- C32
+31. FWD-22 the securities map (UIR-41, 42, 43) -- C33
+IRPT_BCKEND, not DSGN cells: UIR-03, UIR-23, UIR-26, UIR-48 (~M), and UIR-07's ranking (~P).
 
 ## CELL CANDIDATES (the COO's decomposition; not task orders)
 
@@ -459,6 +582,8 @@ v0.6 candidates (brief @20f90739bd Part IV F1-F10; C9, C10's rail and C11's hist
   one account at a time (a one-account `POST /selections`, cached, then `GET /performance`), and fills in
   progressively without blocking the tab. A refusal shows in words in the account's row. There is no client
   aggregate. Built on C25's account list. Serves FWD-20 and FWD-5.
+- C27-C33 (v0.13): one cell per backlog item 25-31. Each cell's criteria are the named UIR rows of the UI REVIEW
+  FINDINGS table, verbatim. C27 carries the `slices.ts rootNode` caller census.
 
 ## PATHS (the write surface)
 
@@ -633,6 +758,16 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
 - v0.12, 2026-09-26 ~18:5xZ, `1.0.0_SA_CTO` (Claude): on `4.0.0_SA_CRO` 101443. ROUTE STRUCTURE and C25 re-pin the
   proposal to @`713a49f7b8` (its label correction), and add the label-and-value, keyed-by-id account list line. Brief
   half only: the ENDPOINT, including FWD-19's SOURCE pin, is byte-unchanged, so the ratified-text stamp stands.
+- v0.13, 2026-09-26 ~21:2xZ, `1.0.0_SA_CTO` (Claude): the `/endpoint` re-entry on the Andrew-direct UI review brief
+  @`fd463341e3` (4.0.0_SA_CRO 101498):
+  - ENDPOINT: FWD-21 (every account in every holdings view), FWD-22 (the securities map) and FWD-23 (trustworthy
+    figures) are ADDED. FWD-1..20 are unchanged.
+  - The UI REVIEW FINDINGS section is added, generated from the register: all 49 UIR ids with outcome, FWD, owner and
+    criterion.
+  - Rulings: UIR-07 ranking is server-side; the backend's four ids are routed.
+  - Backlog items 25-31 and C27-C33 are added.
+  - The ENDPOINT change re-signs the ratified-text half at 3.0.0_SA_CVO. The brief half is accepted, because the CRO
+    wrote the brief.
 
 ## SURFACE MANIFEST
 
