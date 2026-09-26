@@ -145,3 +145,18 @@ dependency, not cut); (5) the admin + Dev walk is the round's DRAIN ACT, not a c
 | `IV-e-32` | S7 by class (R/G/H/Q) over every failing IR test, the class table at `ledger/S7_CLASS_TABLE.json` | FWD-11, S7 | `src/pages/InvestorReporting/**`, the class table | the ENDPOINT, the PRD | LOCAL |
 
 **Chains:** ONE -- IV-e-31 then IV-e-32 on slot ~21; the batch cell's grant covers the narrow cell's files, so it runs last.
+
+## v6 -- round 6 (issuer, 2026-09-26 ~17:5xZ)
+
+From PRD v0.11 @e13fed2413 (ADMITTED: the CVO's ratified-text half signed; CTO 101294/101298): ENRICHMENT BACKLOG item 23 / C25 (FWD-19, the
+client context and per-account Performance route structure, spec'd by 4.0.0_SA_CRO's proposal @889160ce2c sections 2-5). C26 (FWD-20)
+is the round after. Andrew pre-authorized the C25 DEV->PROD promote on 3.0.0_SA_CVO's PASS of the pinned candidate after its live DEV
+walk (CTO 101383). Issued while round 5's batch cell IV-e-32 still runs on slot ~21 (issuer ruling: C25's files do not overlap IV-e-31's;
+test conflicts with IV-e-32's re-scopes are resolved at round 5's drain).
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `IV-e-33` | R0/R1: the client is the page unit (one selection, one shared snapshot, one account list keyed by drill_refs id); "Client" everywhere; clear empties the card | FWD-19, FWD-1, FWD-2 | `index.tsx`, `header/*` (IdentityCard, BrowseDrawer, ScopeSummary, HeaderSelectionContext, ClientSearch, search, selectionRequest), `state/selection.ts`, tests | the proposal, the PRD | LOCAL |
+| `IV-e-34` | R2a/R3a: tab-local account focus; Performance always one account (largest preselected, chooser always shown); refusals in words; export follows the focused account | FWD-19, FWD-1, FWD-5, FWD-9 | `tabs/reporting/*`, `tabs/holdings/AccountFilter.tsx`, `HoldingsTab.tsx`, `TabShell.tsx`, `export/{ExportButton,resolveBundle,submit}`, plus the shared `IdentityCard`/`HeaderSelectionContext`/`index.tsx` after IV-e-33 | IV-e-33's account list | LOCAL |
+
+**Chains:** ONE -- IV-e-33 then IV-e-34 on slot ~22 (IV-e-34 consumes IV-e-33's account list and re-touches its shared header files).
