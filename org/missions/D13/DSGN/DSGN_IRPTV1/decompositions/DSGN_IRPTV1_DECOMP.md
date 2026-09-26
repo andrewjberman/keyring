@@ -63,6 +63,16 @@ Ids continue from round 3. Paths portal-relative; `IR/` = `src/pages/InvestorRep
 
 `IV-e-24` is reserved for IVE16 (section 7) and not cut.
 
+**Addendum (issuer, 2026-09-25 ~19:5xZ; the issuer rules inside its own decomposition, /canonical-drive obligation 7):**
+one DIRECT-ACT cell, on 2.0.0_SA_COO~M's written ask 101020 (Andrew-direct 2026-09-25 ~14:4xZ: personal and held-away
+assets are the class `other`, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260925_144xZ_CLASSIFIER_OTHER_OPENAI_RUN_AND_DEV_PUSH.md`
+@705be61575; the v1 contract admits it, ~P @3d5a590ad0). The CTO's sign-off @8214723353 holds M's bd-securities batch B
+until the portal maps it, so it is cut now, not at round 5.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `IV-e-27` | DIRECT-ACT: the served asset class `other` maps to its own class "Other" (never folded into Unclassified), with a label and a colour distinct from every other class and from Unclassified; an unknown class still reads Unclassified | FWD-13 | `IR/contracts/adapt.ts` (`ASSET_CLASS_FOR_WIRE`), `IR/contracts/index.ts` (the `assetClass` union), `IR/tabs/holdings/assetClass.ts`, `IR/__tests__/dsgn-irptv1/iv-e-27.*` | `src/lib/chartColors.ts` (READ ONLY: a PALETTE token no ASSET_CLASS entry uses) | LOCAL |
+
 ## 3. PLACEMENT AND BASE
 
 Every cell is a portal cell on a worktree pair provisioned by `.tools/wk-provision.sh provision DSGN_IRPTV1 <n> --portal-ref
@@ -94,3 +104,28 @@ round 3's IV-e-11 and IV-e-12 criteria and stay unchanged).
 - **IVE16 (FWD-9, Export on Holdings): PARKED on the producer.** `render/manifest.ts` `ReportKind` is `'performance' |
   'analysis'`; `index.tsx` `EXPORT_KIND_BY_TAB.holdings = null`. The fix is a Holdings report kind the export producer
   (2.0.0_SA_COO~P) serves; the FE hookup is one map line at the merge once it exists. Routing asked of 1.0.0_SA_CTO.
+
+**Addendum 2 (issuer, 2026-09-25 ~20:4xZ):** one DIRECT-ACT cell routed by 1.0.0_SA_CTO (101030) under
+`SIGNOFF_COT_OTHER_20260925.md` @4fdc4284c9, act 2 precondition 3: the Advisor Intelligence Cottonwood views render `other`,
+the reader of IV-e-27's class outside the IR page. The PROD promotion (Andrew allows a full /prod-deploy) is a separate act
+after the drain; the proof is one real read of z09305589 on PROD after batch B.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `IV-e-28` | DIRECT-ACT: an opt-in `other` class on the Advisor Intelligence mix (the `includesCash` pattern), ON for Cottonwood only, coloured PALETTE.purple600, labelled "Other"; 49financial and Inflection unchanged | FWD-13 (reader: Advisor Intelligence) | `src/pages/AdvisorIntelligence/_shared/lib/composition.ts`, `_shared/types/TenantLayoutConfig.ts`, `_shared/hooks/useTenantLayout.ts`, `_shared/AdvisorBookView.tsx`, `_shared/components/PartnerAnalytics.tsx`, `_partners/cottonwood/layout.ts`, `__tests__/cot-other/` | `src/lib/chartColors.ts` | LOCAL |
+
+**Addendum 3 (issuer, 2026-09-25 ~22:0xZ):** one DIRECT-ACT cell routed by 1.0.0_SA_CTO (101039) under
+`SIGNOFF_COT_CASH_S138_20260925.md` @d257eb67aa (render first: cash must show on PROD before M's C_06 cash deploy), plus row
+W18-S1 (the client-drill legend in ConsolidatedOverviewPanel hardcodes its classes). Same PROD release as IV-e-28.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `IV-e-29` | DIRECT-ACT: cash ON for Cottonwood in ASSET_CLASS.cash green beside `other`; the client-drill legend lists every served class incl. Other and Cash; 49financial and Inflection unchanged | FWD-13 (reader: Advisor Intelligence) | `src/pages/AdvisorIntelligence/_partners/cottonwood/layout.ts`, `_shared/panels/ConsolidatedOverviewPanel.tsx`, `_shared/lib/composition.ts`, `__tests__/cot-other/` | `src/lib/chartColors.ts` | LOCAL |
+
+**Addendum 4 (issuer, 2026-09-25 ~23:0xZ):** one DIRECT-ACT cell disarming row W19-S1 (ARMED): IV-e-29's tenant-palette
+prop on ConsolidatedOverviewPanel reaches no product caller, so Cottonwood's real client drill colours cash by the MIX_PIE
+fallback. Same PROD release as IV-e-28 and IV-e-29.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `IV-e-30` | DIRECT-ACT: CanonicalBookView and AdvisorBookClientDetail take an optional `tenantLayout` and forward it; every caller passes the viewed firm's layout, so the client drill colours cash and other by the tenant palette | FWD-13 (reader: Advisor Intelligence) | `_shared/panels/CanonicalBookView.tsx`, `_shared/AdvisorBookClientDetail.tsx`, `_shared/AdvisorBookView.tsx`, `_shared/tabs/ClientsTab.tsx`, `__tests__/cot-other/` | `_shared/panels/ConsolidatedOverviewPanel.tsx` | LOCAL |

@@ -9383,3 +9383,103 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does not: CLOUD declares cron(30 9 ? * MON-FRI *) America/New_York, equal to live."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S137",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T19:50:00Z",
+  "one_line": "DISPOSITION of IRPT_BCKEND-S131/S134: REMEDIED -- a full-firm COT build screens each account through the source controls (holdings_snapshot.cot_screen_accounts, ce64116275, on CLOUD since de042e1e4b) and refuses the account, never the firm; the live run reproduces the accepted census and the served account set exactly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the Holdings producer, CTO R4)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run_firm('cottonwood', qa, no upload, cutoff 2026-09-24) on CLOUD: 981 source accounts, 841 supported, 140 refused (138 'custody missing required actual fields/rows', 2 'repeated row within relationship grain'); valid; reconciled $548,412,662.59.",
+      "The 841 built ACCOUNT nodes equal, as a set, the served COT revision fc199c8e's 841 accounts.",
+      "The 40-member holdings package built COT from its extracted tree alone with rc=0 (refresh_dispatch host script, local run)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "IRPT_BCKEND-S134 world_is: 'The full-firm COT build that a daily schedule needs refuses the whole firm on 2 accounts' duplicate rows.'",
+  "world_is": "It builds the 841 supported accounts and carries the 140 others explicitly refused with their reasons in actual_custody_controls.account_screen."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S138",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T20:35:00Z",
+  "one_line": "COT C_06's MIX_ASSET_CLASSES has no `cash`: bd-securities carries `cash` items, so any client holding a security the classifier calls `cash` has that money dropped from the published mix, and the mix fractions sum below 1. This predates the `other` admission and is not moved by it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (CTO 101029: file it, owned by ~M)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/C_06.client_mix_timeseries.py:169 lists equity, fixed_income, alternatives and (since 7889280827) other; no cash. The mix is built as `for ac in MIX_ASSET_CLASSES: mix[ac] = mix_agg.get(ac)/total_mv` (:473-474) after a pct_sum check over ALL classes (:466-470).",
+      "The live bd-securities scan includes items classed `cash` (8 of the 41 existing keys from the one classification run read `cash`, BD_SECURITIES_WRITE_SET_20260925.json).",
+      "D_04:525 iterates ('equity','fixed_income','alternatives','cash'); C_06 alone omits cash."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The C_06 client mix is a complete partition of a client's market value by asset class.",
+  "world_is": "It omits cash. Measure the affected clients and dollars, then add cash under its own never-widen half, since the served mix changes."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S139",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-25T21:25:00Z",
+  "one_line": "IRPT_BCKEND-S138 measured: C_06 drops $19,230,791 of `cash` from the published COT mix across 178 client relationships (310 holdings, 3.5% of $549.96M); two clients are 100% cash, so their published mix is all zeros.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the fix is C_06 admitting `cash` and the AI Cottonwood views rendering it, under its own never-widen half)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C_06.classify_holding (the deployed code, CLOUD 68a732b792) over COT fact_holdings date=2026-09-22, deduplicated on (AccountID, AssetID, Relationship ID): equity 10,830 ($350.97M), fixed_income 7,373 ($130.40M), alternatives 1,044 ($49.36M), cash 310 ($19.23M).",
+      "cash held in 178 relationships; the largest cash shares are z09326138 1.00, z09308511 1.00, z09308463 0.37. MIX_ASSET_CLASSES (C_06:169) has no cash, so mix[cash] is never published."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S138: 'Measure the affected clients and dollars'.",
+  "world_is": "178 clients, $19.23M; two are all-cash clients whose mix is empty. The next step is a fix packet (C_06 admits cash, plus the AI Cottonwood views render cash), the same shape as the `other` packet."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S140",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-25T23:30:00Z",
+  "one_line": "49 Financial Performance cannot run: opal-data-49financial's bucket policy DenyForeignFirmPrincipals denies s3:* to every principal outside its allow-list, and irpt-performance-adapter-role is not on it (irpt-holdings-role is) -- the 49F engine read (f49_engine.EngineSource.partition_dates) fails AccessDenied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-performance-adapter log 2026-09-25T23:25:05Z corr-ce840e1463fb: AccessDenied ListObjectsV2 ... not authorized to perform s3:ListBucket on arn:aws:s3:::opal-data-49financial with an explicit deny in a resource-based policy",
+      "get-bucket-policy opal-data-49financial: Sid DenyForeignFirmPrincipals, Principal *, Action s3:*, ArnNotLike aws:PrincipalArn [role/*-49f-*, ..., role/irpt-holdings-role] -- the adapter role absent",
+      "The adapter's retention grants (performance/retained.tf ReadEngineTwrDailyPartition*) allow the read in IAM; the resource policy's explicit deny wins."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "STATUS~P.md: '49F Performance SERVED on our engine (21:28Z 09-24) ... awaiting a signed-in run' -- the engine read was never exercised by the served role.",
+  "world_is": "Every 49F Performance request fails before any calculation (the first signed-in 49F run, 23:25Z, answered UNEXPECTED). COT and INF are unaffected (their reads are other buckets). Goal criterion 1 at 49F is blocked until the allow-list admits the adapter role for the engine prefix.",
+  "disarm_owner": "the firm-separation bucket-policy owner (shared-infra registry-derived allow-list, e229f49515 lineage) -- add irpt-performance-adapter-role, ideally scoped to the advi gold_root canonical/twr_daily prefix; P routes it to 1.0.0_SA_CTO",
+  "notes": "Found by P while waiting on the INF re-arm run; the INF plan 01209afb is unspent (the 23:25Z request was a 49F client)."
+}
+```

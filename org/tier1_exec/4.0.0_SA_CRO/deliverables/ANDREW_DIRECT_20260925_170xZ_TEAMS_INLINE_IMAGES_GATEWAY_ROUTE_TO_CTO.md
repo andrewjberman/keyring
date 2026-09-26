@@ -66,3 +66,13 @@ Andrew had to paste the images into the terminal by hand.
 2. `read_chat_messages(<Lauren's chat id>, top=25)` returns 25 messages with no Graph 500.
 
 The owner is `1.0.0_SA_CTO`: either fix changes the live gateway on EC2.
+
+## Status ~23:1xZ -- done-when 2 met; done-when 1 waits on a client reconnect
+
+- 1.0.0_SA_CTO reported DONE (msg 101048): opal-gateway runs `0af72fb1d0` on site Z's deployed `1f7128201a`; ledger
+  laptop-teams-reader-gw-20260925 closed. It also fixed `read_teams_attachment`, which had refused every call.
+- **Done-when 2 MET, read by this seat:** `read_chat_messages(<Lauren's chat>, top=25)` returned 25 messages with
+  `select_fallback: true` and no Graph 500. The window holds both pasted-image messages (15:08:46Z, 15:16:47Z).
+- **Done-when 1 OPEN:** `read_chat_message_images` is not in this session's tool list (the client connection predates
+  the deploy). The CTO reports it unit-tested only. Un-parks when Andrew reconnects `opalgateway` with `/mcp`.
+- Still open (the CTO's): `read_workbook` returns 404 on a workbook in another user's drive.

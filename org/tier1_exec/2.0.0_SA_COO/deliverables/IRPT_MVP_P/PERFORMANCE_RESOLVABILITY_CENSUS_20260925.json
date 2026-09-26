@@ -1,0 +1,46 @@
+{
+ "schema_version": "irpt-performance-resolvability-census-v1",
+ "by": "2.0.0_SA_COO~P",
+ "criterion": "goal (2): every active client account at each firm resolvable in Performance",
+ "as_of": "2026-09-24",
+ "ytd_end": "2026-09-24",
+ "firms": {
+  "cottonwood": {
+   "directory_as_of": "2026-09-22",
+   "directory_entries": 258,
+   "entry_indicators": {
+    "UNKNOWN": 258
+   },
+   "accounts_not_terminated": 843,
+   "source_date": "2026-09-24",
+   "RESOLVED": 843,
+   "UNMAPPED": 0,
+   "DUPLICATE": 0,
+   "IDENTITY_INVALID": 0
+  },
+  "49financial": {
+   "directory_as_of": "2026-09-24",
+   "directory_entries": 4620,
+   "entry_indicators": {
+    "ACTIVE": 4548,
+    "TERMINATED": 72
+   },
+   "accounts_not_terminated": 7497,
+   "engine_latest_partition": "2026-09-24",
+   "UNMAPPED": 38,
+   "COMPUTED": 6698,
+   "UNAVAILABLE-NO-LINKABLE-DAYS": 761
+  },
+  "inflection": {
+   "directory_as_of": "2026-09-25",
+   "directory_entries": 292,
+   "entry_indicators": {
+    "ACTIVE": 292
+   },
+   "accounts_not_terminated": 878,
+   "source_date": "2026-09-24",
+   "RESOLVED": 878,
+   "UNMAPPED": 0
+  }
+ }
+}

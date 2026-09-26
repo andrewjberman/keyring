@@ -133,3 +133,5 @@ instruction on this issue.
   template_version vident-active-manager-2026-07, 26 model_securities, cash_trade_indicated Y.
 - Open (the CTO's): CUSIP, SEDOL, ISIN and RecentPrice are blank on all 26 model rows (measured here). Whether her file
   leaves them blank is UNREAD. Andrew decides whether that matters for Vident before approval.
+- CLOSED 23:09Z (1.0.0_SA_CTO msg 101052): Andrew opened the file himself. The blanks are in Lauren's sheet and are
+  intentional; the parser carried the file faithfully. Nothing to fix on the submission.

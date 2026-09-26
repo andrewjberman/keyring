@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-25T19:4xZ (tick 11). Loop: /canonical-drive cron 6f699621 (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-26T00:3xZ (tick 18). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -60,12 +60,31 @@ branch. No code edit is open.
      bd-securities-batch-a-m-20260925 is CLOSED @f99c664dd0: 204 of 204 put, 0 condition refusals, read-back 204,
      and a fresh loader classifies 204 of 204 by name. Census sha e7b289a26d08a3f4; receipt 9f84ff97ee (M branch).
      Holdings classes these at its next publication; COT C_06 moves about $21.6M out of equity at its next run.
-   - **Batch B (37 `other`) stays held** until: C_06 admits `other`; D_03 and D_04 separate their unknown sentinel;
-     the Holdings enum and the v1 contract admit `other`; ~D maps it.
-   - ORDER: Holdings must admit `other` (ASSET_CLASS_VALUES and the v1 contract) BEFORE the write, because
-     classify_security refuses a class outside its enum. ~D colours it.
-   - The two defects (COT `B_01b` scanning an empty prefix; the loader skipping rows without a ticker) are ~M's under
-     exact-file grants on request.
+   - **Batch B (37 `other`) stays held.** Its prerequisites:
+     - Holdings enum and contract: DONE (~P @3d5a590ad0; ~M @82eaf1a581).
+     - ~D's IR `other` mapping: on local DEV 959a59a2 (TO-IV-e-27); origin DEV follows via the CTO and MSTR.
+     - COT gold (CTO 101022, ~M owns it): census @c2aa94d8c8; code: C_06 admits `other`, D_03/D_04 unknown ->
+       `unclassified` (7889280827, CLOUD 68a732b792, NOT deployed); per client: 22 relationships, $48.5M
+       (COT_OTHER_PER_CLIENT_20260925.json).
+     - SIGNED: act 1 by the CTO @4fdc4284c9. ACT 1 DEPLOYED and verified (ledger cot-other-admission-m-20260925:
+       D1 closed; R1 HELD for the first scheduled COT run, Mon 2026-09-28).
+     - Act 2 (the batch B write) is held on: act 1 read back (Monday's first COT run); ~D's IR mapping on origin
+       DEV. The CTO-added render condition is MET: PROD 36a37afc (tag portal-v2.1.188, ~D msg 101054), whose
+       cottonwood/layout.ts:125-128 turns on cash and other. ~D reads z09305589's Other slice once batch B lands.
+     - S138 cash is DEPLOYED as its own act (CTO @d257eb67aa). Re-applied 7fd8149448, merged to CLOUD 75cc52a285, and
+       C_06 is on s3://opal-data-cot/code/gold/ at version LmvfjXlB... (read-back: line 173 carries cash; rollback is
+       prior version HJa2V4VY..., the act-1 bytes). Ledger cot-cash-admission-m-20260925: D1 closed; R1 HELD for
+       Monday's first COT run: z09308463 (0.37 cash at 09-22) shows a cash slice with shares summing to 1, and
+       z09326138 or z09308511 shows 100% cash.
+   - Preferred stock = fixed_income, standing (Andrew-direct ~17:3xZ, @42def02a36).
+   - The two R5 defects (IRPT_MVP_M/R5_CLASSIFIER_DEFECTS_20260926.md):
+     - The loader skip is CLOSED with no change: `ticker` is bd-securities' HASH key, and batch A's 204 name-keyed
+       items classify by name.
+     - COT `B_01b` should list `gold/canonical/holdings/` (121 partitions). On 09-22 it would find 574 new keys
+       ($145.07M of $549.14M). FIXED in code under the CTO grant @930e0f348f: 8f67065e50, CLOUD e20b0990d5. The prompt
+       now follows Andrew's rules (REIT -> alternatives, preferred -> fixed_income, held-away -> other). The dry run
+       over 121 partitions finds 1,253 new securities. Not deployed, not uploaded: that needs Andrew's per-use OpenAI
+       word, then a never-widen half on the classified file, then the write and the deploy under ledgers.
 3. **The scheduled daily Holdings producer is ~M's** (CTO R4, msg 100947;
    `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_IRPT_20260925.md` @75156f2b18):
    - Plan: `HOLDINGS_SCHEDULED_PRODUCER_PLAN_20260925.md` @875dc1f64b (M branch). 7 prerequisites are measured;
@@ -105,7 +124,9 @@ branch. No code edit is open.
        artifact's; 4 of 4 policies equal the planned JSON.
      - N1 (the exercised negative arm) is HELD until the host's next window, Mon 2026-09-28 ~12:52Z. Interim
        simulation: cross-firm reads are implicitDeny, own reads allowed.
-     NEXT, Monday in the window: N1 over SSM as each principal; one --qa fire (the dispatch function invoked with
+     Monday is PRE-STAGED: r4_monday_negative_arm.py (--send / --read), and the exclusive trust is already shown
+     (Andrew_Berman's AssumeRole on the 3 firm roles -> AccessDenied, 3 of 3). NEXT, Monday in the window: N1 over SSM
+     as each principal; one --qa fire (the dispatch function invoked with
      the runner writing holdings_qa); then the ENABLE half to the CTO (R4 step 4). ~P is told that the holdings/
      resolve.py pin drift refuses its next build.
      Then the never-widen packet (both halves), the apply, one --qa fire, and the enable half.
@@ -118,7 +139,7 @@ branch. No code edit is open.
      exports the firm principal, and is stateless (the previous outcome comes from SSM history). The local host-script
      run from the extracted 40-member COT package built with rc=0. Owed: Terraform (function, schedule DISABLED,
      roles) with row 4b. Merge to CLOUD is waiting on other seats' staged files.
-   - **S131 / S134 explained** (9c0fb0c8f2): the served COT revision is a BOUNDED publication of 841 of 981 accounts.
+   - **S131 / S134 DISPOSED** (S137 @d3ab268cb0, GRADUATED). Explained at 9c0fb0c8f2: the served COT revision is a BOUNDED publication of 841 of 981 accounts.
      The 53 repeated relationship groups sit in 2 unserved accounts ($729,826.75). The source is unchanged (same
      version and sha as served). A full-firm (scheduled) COT build refuses the whole firm for those 2 accounts.
      **DONE** @ce64116275 (M branch): a full-firm COT build screens each account and refuses the account, not the

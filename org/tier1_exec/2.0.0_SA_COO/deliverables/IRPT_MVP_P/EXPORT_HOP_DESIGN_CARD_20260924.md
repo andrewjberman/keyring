@@ -106,6 +106,24 @@ B. IN P'S LANE (`export/`, `_render_identity/`, `_authz`), buildable now, dark u
       Authorization: Bearer <renderToken> on its scoped reads, and never persists it.
       CORRECTED 17:5xZ: the window is the REQUESTED one -- the retained reopen matches the accepted request's
       start/end (retained.py reopen), so the actual window would miss the report (backend print_query 523890feda).
+   B4 HOLDINGS REPORT KIND (CTO 100993 from ~D 100992; DSGN_IRPTV1 decomp v4 s.7 IVE16). MEASURED 21:1xZ: Holdings
+      retains one immutable, version-pinned manifest per business date (holdings/publication.py HoldingsPublication:
+      "one accepted manifest per business date; immutable prior revisions stay in history"); the Enforcer's
+      RENDER_DELEGATE_OPERATIONS are performance_report / analysis_report / narrative_packet only; the render package
+      (portal render/) has performance, analysis and narrative documents and NO holdings document; manifest.ts
+      ReportKind = 'performance' | 'analysis'.
+      PRODUCER HALF (P): (1) submit accepts kind=holdings: the body names ONE published snapshot (business date +
+      revision), resolved through the publication index under the current principal -- the same authorizer rule as
+      B1 (caller is covered for every account on it NOW); the grant pins the snapshot's account set and revision;
+      (2) Enforcer RENDER_DELEGATE_OPERATIONS += holdings_snapshot (key-grammar spelled, the existing op-list test
+      extended); (3) irpt-holdings installs render ports (served.render_ports_from_env + the grant read IAM, as the
+      adapter); (4) the print query carries kind=holdings and the snapshot's business date.
+      PORTAL HALF (render-package owner, via ~D): manifest.ts ReportKind += 'holdings' with supportedContracts
+      HoldingsSnapshot; a HoldingsDocument under render/; resolveBundle's holdings branch (getHoldingsSnapshot with
+      the render Bearer, already sent by api-client 5c2fc34d); then ~D's one EXPORT_KIND_BY_TAB line.
+      ORDER: after the Performance export is proven end to end (deploy (B) + the first retained report) -- the same
+      freeze/render/finalize path, so a Holdings kind built before that path runs once would stack two unproven
+      halves.
 C. PROOF: one real run per firm. COT and 49F each export a retained report; INF follows its own per-use word.
 
 ## What this card does not move

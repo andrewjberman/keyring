@@ -1,4 +1,11 @@
-# DSGN_IRPTV1 -- status (FULL: round 4 drained; the signed-in walk owed, /canonical-drive)
+# DSGN_IRPTV1 -- status (FULL: round 4 + IV-e-27..30 on PROD portal-v2.1.188; drive loop closed, reads parked)
+
+**At close, 2026-09-25 ~23:5xZ:** PROD 36a37afc = portal-v2.1.188 (peeled; Deploy to Production run 36200152208
+success) carries round 4 (IV-e-21..26) and the direct acts IV-e-27..30, promoted by `2.0.0_SA_COO~D` on CTO GO 101049
+(Andrew's allowance relayed in CTO 101030); rollback base cb48eff8. origin DEV 1e821a6e (the lint fix; CI 36200546242
+success). Every order is terminal and every worker slot is torn down. What remains is READS, parked below with their
+trigger; the /canonical-drive loop is closed per Andrew-direct ~17:2xZ ("drive your responsibiklities to completion and
+then you can close loop").
 
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.8
 @31a61d0466 (ADMITTED). Round 3: issuance @9e13e294c1 (12 orders IV-e-9..20, decomp v3 @2af10e4cd0), amendment
@@ -10,7 +17,8 @@ Build place: the main portal checkout on DEV (Andrew-direct ~18:3xZ). As of 2026
 | What | Value |
 |---|---|
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal DEV / PROD | PROD cb48eff8 (portal-v2.1.187) includes round 3 (CTO 100986); DEV `8242412d` = origin DEV (ls-remote read 2026-09-25 ~15:0xZ; CTO review 100953, pushed by 0.0.0_AB_MSTR on Andrew's word) |
+| Portal DEV / PROD | PROD `36a37afc` (portal-v2.1.188) carries round 4 + IV-e-27..30; origin DEV `1e821a6e` (ls-remote reads 2026-09-25 ~23:2xZ). Earlier: PROD cb48eff8 (portal-v2.1.187) carried round 3 |
+| Direct acts | IV-e-27 `959a59a2` (IR "Other"); IV-e-28 `7eec611a` (AI Cottonwood `other`); IV-e-29 `b997c9e5` (AI Cottonwood `cash`, drill legend); IV-e-30 `4d6c8aaa` (drill by tenant palette, row W19-S1 disarmed). CLOUD records `b8281039d8`, `e02ad3773b`, `91c8f5ba82`, `16cc97aa6e` |
 | Round-3 merges on DEV | chain D `f9df6ab5` (+ repair `62055f14`); chain A `00806e0c` (+ repair `89a6d4f4`); chain B `16c11701`; chain C `d3d93838`; hookups `8cd2dab2`; join `6de269cc` (ff) + `f9a954b3`; repairs `ecfd327a`, `8242412d` |
 | CLOUD records | chain D `1588e5c247`; A `b2c65c13d0`; B `8c2235aa08`; C `cb7bd249c9`; join `4c8d0f570e`; IV-e-16 close `4047bdbea7` + `a109a7e0a9`; IV-e-20 close `6c8a16b536` + `0eb458269a` |
 | Screen | `localhost:5174` from the main checkout, serving local DEV |
@@ -25,11 +33,15 @@ round 3's five NOT_EVALUATED wait on Andrew's signed-in walk on 5174, asked thro
 IVE16 (Holdings export) waits on P's 'holdings' ReportKind (CTO 100994). origin DEV is 8242412d; the round-4 candidate
 reaches origin through the CTO's review and 0.0.0_AB_MSTR's push.
 
+Direct act IV-e-27 (M 101020, asset class `other` -> "Other", PALETTE.purple600) merged on local DEV 959a59a2 (CLOUD
+b8281039d8); unblocks M's batch B once origin DEV carries it. Local DEV also carries P's render-token commit 5c2fc34d.
+
 ## Round-5 candidates
 
 1. The firm chip and identity card read the firm catalogue's name (ResolvedScope carries no display name: adapt.ts:696-705).
 2. The print route's render token: P's own (api-client.ts reads it on the print route; PrintEntry needs nothing, P 101011).
 3. IVE16's one-line EXPORT_KIND_BY_TAB hookup when P serves 'holdings'.
+4. iv-e-17.regenerated / iv-e-26.wire-regen run gen-wire IN PLACE: a suite run rewrites contracts/wire/** with LF endings (0 content lines, 25 files shown modified in the main checkout); regenerate into a temp dir and compare.
 
 ## Round-3 drain checks
 
@@ -70,9 +82,13 @@ disarmed. The DEV landing 13b5356f..8242412d is under the CTO's review; the push
 |---|---|---|
 | DEV CI does not run `bun test` | `1.0.0_SA_CTO` | a ruling on ci.yml |
 | No `.owned-paths.yaml` row for `org/missions/*/*/*/STATUS.md` | `1.0.0_SA_CTO` | the row lands |
-| Git's credential manager refuses non-interactively; pushes use `gh auth git-credential` per command | Andrew | he re-signs it, or keeps the gh route |
+| Git's credential manager refuses non-interactively; pushes use `gh auth git-credential` per command | Andrew | he re-signs it at his keyboard (his option (a), ~17:2xZ) |
 | A completed worker cannot be continued (row S12); each queue handoff is a fresh spawn | the /dispatch skill's owner | the skill says so |
-| Leftover folders `C:/tmp/dsgn-irptv1-fast`, `-base` | Andrew | his OK for a recursive delete |
+| IVE29-AC4 on PROD: z09308463's cash slice (0.37 at 09-22) with shares summing to 1; all-cash z09326138 or z09308511 at 100% cash | the COO seat holding DSGN_IRPTV1 (`2.0.0_SA_COO~D` at close) | 2.0.0_SA_COO~M reports Monday 2026-09-28's first scheduled COT gold run (C_06 cash deployed 23:44Z, version LmvfjXlB; M 101064) |
+| IVE28-AC4 on PROD: z09305589 shows Other at $19.65M | same | 2.0.0_SA_COO~M reports batch B written (held until act 1 reads back on that Monday run; M 101064) |
+| IVE30-AC3, round 4's AC4 judgments, round 3's five NOT_EVALUATED: a signed-in look (the stubbed page 401s all 24 AI data calls) | Andrew (asked through 1.0.0_SA_CTO, 100986 / 101005) | his signed-in walk on 5174 or PROD |
+| Round 5 cut (candidates above) | `1.0.0_SA_CTO`, then the issuing COO | the CTO's round-4 analysis arrives |
+| The drain checks omitted `bun run lint`; one unused import reached DEV (fixed 1e821a6e) | the COO seat holding DSGN_IRPTV1 | next drain: run lint beside tsc and the suite |
 
 ## Limits
 

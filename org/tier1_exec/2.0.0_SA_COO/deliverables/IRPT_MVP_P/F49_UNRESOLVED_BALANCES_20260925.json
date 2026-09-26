@@ -1,0 +1,46 @@
+{
+ "schema_version": "irpt-f49-unresolved-balances-v1",
+ "by": "2.0.0_SA_COO~P",
+ "criterion": "goal (2), 49F: the accounts Performance cannot compute, by custodian market value",
+ "directory_as_of": "2026-09-17",
+ "directory_entries": 4576,
+ "accounts_not_terminated": 7454,
+ "engine_latest_partition": "2026-09-23",
+ "balance_date": "2026-09-23",
+ "balance_columns": [
+  "net_mv_positions",
+  "net_mv_plus_cash"
+ ],
+ "balance_accounts": 7534,
+ "unresolved_by_outcome_and_band": {
+  "UNAVAILABLE-NO-LINKABLE-DAYS": {
+   "net_mv_positions": {
+    "ABSENT": 0,
+    "ZERO": 723,
+    "POSITIVE": 1,
+    "positive_total": 103648.11
+   },
+   "net_mv_plus_cash": {
+    "ABSENT": 0,
+    "ZERO": 722,
+    "POSITIVE": 2,
+    "positive_total": 105440.08
+   }
+  },
+  "UNMAPPED": {
+   "net_mv_positions": {
+    "ABSENT": 38,
+    "ZERO": 0,
+    "POSITIVE": 0,
+    "positive_total": 0.0
+   },
+   "net_mv_plus_cash": {
+    "ABSENT": 38,
+    "ZERO": 0,
+    "POSITIVE": 0,
+    "positive_total": 0.0
+   }
+  }
+ },
+ "identifiers": "no account id is written"
+}
