@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: /canonical-drive loop (cron 57c0067c, every 10m) on Andrew-direct; lease FAST until 2026-09-26T00:24:51Z. Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T00:3xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T02:5xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -18,6 +18,12 @@ As of 2026-09-26T00:3xZ. The prior long form of this file (B0-B3 build history) 
 | Push state | CLOUD LOCAL (not pushed; MSTR pushes) |
 
 ## Live thread
+
+- AGENT WALK (Andrew-direct ~02:1xZ "have an agent do those walks and record HAR"; "Yes, use the Opal login"):
+  walk principal irpt-walk-1790391192@opal.test LIVE since 02:53:17Z (packet blob fe8e8d89, CTO ba29004a1b,
+  CRO 909dd40acc; ledger irpt-walk-principal-20260926 OPEN 47ac618a50, C1 closed). 2.0.0_SA_COO~D walks: 49F retry,
+  Purfeerst Performance (spends plan b), ONE ~Y upload; HAR committed scrubbed. P deletes on ~D's word or at 04:00Z at
+  the latest (`walk_principal.py delete 1790391192`), then the audit leg; a refused delete = branch (c) + escalate.
 
 - INF plan b ARMED (Andrew "go"): plan 01209afb.., account acc_5510a3054a409d548a12c57d = "Purfeerst ****4944 / INDIVIDUAL"
   (a single-account directory entry), expires 2026-09-26T12:00Z. Receipt `IRPT_MVP_P/INF_ONE_USE_PLAN_20260925b.json`.
