@@ -165,3 +165,11 @@ test conflicts with IV-e-32's re-scopes are resolved at round 5's drain).
 suite fails only the class table's Q rows; public-status.ts stays producer-faithful. Writes `IR/__tests__/{fe-s-*, m-*, mvp-*,
 submission-request}`, `IR/fixtures/`, `IR/render/fixtures/`, `iv-e-17.regenerated.test.ts`, `s7-table-check.ts`, the class table. Slot ~23, in
 parallel with IV-e-34 (disjoint write sets). Serves FWD-11 and S7. LOCAL.
+
+**v6 addendum 2 (issuer, 2026-09-26 ~21:0xZ):** `IV-e-36` -- row W22-S6 (surfaced by IV-e-34's worker): Export's PREVIEW fetches
+Performance without the tab's focused account and window, so the rule "Performance is always one account" (PRD v0.12 R3/R3a) holds
+for the tab and the submission but not the preview. Threads the account set id and window from ReportingTab's export target through
+index.tsx and ExportButton into Preview's resolveBundle call. Writes `tabs/reporting/ReportingTab.tsx`, `index.tsx`,
+`export/ExportButton.tsx`, `export/Preview.tsx` and two new tests. Slot ~24, in parallel with IV-e-35 (disjoint write sets). Serves
+FWD-19 (C25). LOCAL, direct act.
+
