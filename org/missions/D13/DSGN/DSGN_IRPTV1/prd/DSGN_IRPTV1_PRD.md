@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.15",
+ "prd_version": "v0.16",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
@@ -377,6 +377,10 @@ caught, all of them should be included."
 - **UIR-07, search ranking: SERVER-SIDE.** The IRPT_BCKEND directory search (2.0.0_SA_COO~P's surface) ranks an
   exact full-name match first, in either name order. The page renders results in served order and never re-ranks,
   because it sees only one page of results and a client-side re-rank would bury a match on page two.
+  ONE exception (v0.16, 2.0.0_SA_COO~P 101585): in the Global (All) view the page itself MERGES each firm's served
+  answer. That merge puts full-name matches first, by the server's own predicate (the name's tokens equal the
+  query's tokens, in any order), and otherwise keeps each firm's served order. The server's side is SERVED
+  (`irpt-directory-search` o1TXq5PH, 33 of 33 at rank 1). The merge is the page's only part left for UIR-07.
 - **UIR-50 (ETF Classifier precedence), ruled (a) (CTO 101511):** the class list admits every ETF Classifier tag value not already in it,
   the tag wins for every listed security, and PHYS is Commodities by Andrew's word. It is IRPT_BCKEND ~M's half,
   with a census of every asset_class reader. The portal maps the new classes with their own label and colour (C34).
@@ -786,6 +790,8 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
 - v0.15, 2026-09-26 ~21:4xZ, `1.0.0_SA_CTO` (Claude): on `3.0.0_SA_CVO`'s refusal 101519 (review @`78d777ddad`),
   FWD-23 drops "every security shows its correct class", which went beyond Andrew's rule and conflicted with FWD-13's
   "unclassified". The precedence clause stands. PHYS is named on Andrew's word, because it is not in the Classifier.
+- v0.16, 2026-09-26 ~23:0xZ, `1.0.0_SA_CTO` (Claude): UIR-07 ruling clarified with the Global-merge exception (~P 101585;
+  the CRO's Global arm 101550). Brief half only; the ENDPOINT is byte-unchanged.
 
 ## SURFACE MANIFEST
 
