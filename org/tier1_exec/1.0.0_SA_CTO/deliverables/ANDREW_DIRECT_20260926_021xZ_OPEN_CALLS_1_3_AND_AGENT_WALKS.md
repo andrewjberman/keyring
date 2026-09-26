@@ -48,3 +48,23 @@ actually signed. Put to Andrew at the 1.0.0_SA_CTO terminal, verbatim:
 
 This binds: the walk principal is ONE bounded Opal-class login, per packet blob `fe8e8d89` and both halves
 (CTO @`ba29004a1b`, CRO @`909dd40acc`).
+
+## Addendum ~03:1xZ -- the UI walk runs on an admin + Dev walk login (Andrew chooses)
+
+The Opal-class principal could not open `/investor-reporting`: ProtectedRoute requires admin + internal + Dev
+(App.tsx:105,436; Andrew-direct 2026-09-22), per 2.0.0_SA_COO~D msg 101105. The backend acts ran by API instead
+(2.0.0_SA_COO~P 101129). Put to Andrew at the 1.0.0_SA_CTO terminal, verbatim:
+
+> "UI walk-through: the Investor Reporting page only admits admin + developer accounts (your 09-22 rule), so the
+> temporary staff login couldn't open it. ... How should the page walk-through happen?"
+
+The options offered:
+- "I'll walk it myself (Recommended)";
+- "Agent on an admin+dev login";
+- "Open the page to staff".
+
+**Answer, verbatim:** "Agent on an admin+dev login"
+
+This binds: ONE temporary admin + Dev login, created, walked by an agent, then deleted and verified, under a NEW
+two-half packet. It is much wider than the Opal-class login, since admin bypasses apply everywhere for its life.
+Nothing else about the page's gate changes.
