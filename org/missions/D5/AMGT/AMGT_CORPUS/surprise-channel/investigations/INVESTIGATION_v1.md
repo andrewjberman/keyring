@@ -1463,6 +1463,73 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "ADJUDICATION_v8 asserts AC4's workbook half is ungraded partly because the comparator read is a gateway call, written at 02:24Z under the standing rule that no vendor API call is made without Andrew's explicit per-use word.",
     "world_is": "As of 03:29Z that standing rule is lifted for this session for API calls, under a per-seat ledgering condition, with spend, contracts, entitlements and hold-lifts excluded and the scripted-producer mechanism unchanged. The bound as written is now wider than the world; the grade it supports is unchanged.",
     "notes": "OWNER: 1.0.0_SA_CTO~Z for the round-5 analysis, which is being cut now and would otherwise read my bound as saying the workbook cell needs Andrew's word. It does not. What it needs is a comparator that does not yet exist, a scripted producer rather than an agent turn, and its own ledger leg per call. FILED AGAINST MY OWN WORK, five minutes after the slug: a bound is a claim and ages like any other, and this one aged in eight minutes."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S41",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-26T05:47:00Z",
+    "one_line": "FWD-17 (b) IS VIOLATED, but not on the name that raised it: dossier.read_dossier picks the newest object by KEY NAME, as_of=<date>.<inputs_sha16>, so on a date holding several objects it serves the one with the GREATEST INPUTS HASH, not the last written. write_one then compares fresh inputs against that stale pick, finds them different, and writes again: 37 of 95 names carry a 2026-09-26 object whose inputs hash repeats an earlier object's -- a rebuild that WROTE on unchanged inputs -- and replaying history, 58 names were served a stale dossier in 86 windows of 3.4 to 19.3 hours. IMB_LN_Equity, the candidate, is NOT a violation: its three 09-24 objects differ on fund_form and typecast inputs, and its hash order happened to match time order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/dossier_order_census_20260926.txt (checks/round6/dossier_order_census.py, read-only, 05:46Z): 'partitions 95 objects 373 | rewrites_on_unchanged_inputs 37 | read_dossier serves the last write 95 of 95'. Every stale window is CLOSED now: the 09-26 rewrite put each name's last object on a date of its own.",
+        "evidence/dossier_order_census_20260926.json: the 37 rewrites (all dated 2026-09-26, the AIA production sequence at 00:4xZ) and the 86 replayed stale windows over 58 names, min/median/max 3.4/7.5/19.3 h. Same-date pairs over the table: 195, name order agrees with time order on 100 and disagrees on 95 -- a coin flip, as a hash must be.",
+        "Worked case 2317_TT_Equity: as_of=2026-09-25.e247c75f77eccb17 written 20:21Z, as_of=2026-09-25.f038b913c5406c26 written 05:11Z; read_dossier served f038 (the greater hash) from 20:21Z until as_of=2026-09-26.e247c75f77eccb17 -- the SAME inputs hash -- was written at 00:49Z.",
+        "Cause at the bytes: lib/research/corpus/dossier.py read_dossier takes sorted(keys)[-1]; its docstring says 'a later hash on the SAME date after an earlier one -- a same-day rebuild', which a sha256 prefix does not order. write_one compares fresh inputs to read_dossier's pick only.",
+        "IMB_LN_Equity (the round-5 candidate): 5 objects; consecutive by write time the inputs differ on research-fund-form + research-model-typecast (09-24 x2), those plus model_rows (09-24 -> 09-25), and the derived Model block (09-25). Fresh current_inputs equal the served object's inputs, so a write now would print 'unchanged ... wrote 0'.",
+        "Reader census: in the portal submodule, 0 files name the dossier table, against a positive control of 214 matching useState (git -C portal grep; a parent-repo census reads zero across a gitlink). comp-find 'read_dossier|research-dossier' across 43,651 files names lib/research/corpus/dossier.py and backlog.py as the code readers. No page reads the dossier today; the stale serve reached the CORPUS census and CLI."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-17 (b): a rebuild with UNCHANGED inputs writes NOTHING; C-DOSSIER-REBUILD-IS-A-NO-OP-ON-UNCHANGED-INPUTS; read_dossier returns the newest object for the security.",
+    "world_is": "The no-op guard is correct; the object it compares against is not the newest one. It fires correctly whenever the served pick happens to be the last write and wrongly otherwise -- 37 extra writes and 86 stale windows on the table as it stands.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "ARMED because the next same-day rebuild re-opens it on roughly half the names. Remedy is round-6 cell CRPS-h-1 (the newest object is the last WRITTEN on the newest as_of date; the census above is its seam probe). The extra 37 objects are additive gold, never served over a newer one; no delete is proposed. Owner's same-turn disarm is Z-S42."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S42",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-26T05:48:00Z",
+    "one_line": "DISARM BY HOLD of AMGT_CORPUS-Z-S41 by its owner: this seat runs NO dossier --write (no production sequence, no single-name write) until CRPS-h-1 drains and its census reads 'read_dossier serves the last write N of N' with 'rewrites_on_unchanged_inputs' unchanged across a --write of one name. The writer census is this seat alone: every dossier write in the table's history came from this seat's production sequences (evidence/production_sequence_*.log) and no scheduled producer writes the table.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/dossier_order_census_20260926.txt: every stale window is closed now (95 of 95 serve the last write), so holding the only writer holds the hazard at zero.",
+        "comp-find 'read_dossier|research-dossier' --corpus default: the dossier writers are dossier.py's --write and the production sequence logs under deliverables/2.0.0_SA_COO~X/evidence/, all this seat's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S41 disarms when the only writer holds, and closes when read_dossier selects the last write and a second --write on unchanged inputs writes 0.",
+    "world_is": "Held from 05:48Z.",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S43",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-26T05:49:00Z",
+    "one_line": "FWD-2's one bronze-without-silver row is EXPLAINED, not a loss: bronze holds 356 objects for 355 report_ids, because two PDFs are byte-identical copies ('Copa Holdings - 2025 Investor Day Presentation.pdf' and '... (1).pdf', content ff0e11955cb266f4), and silver writes ONE row per report_id by CRPS-f-3's design. 355 of 356 is the fence working. The round-5 analysis read 354/353 at an earlier vintage; the one-row gap is the same object.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/bronze_silver_one_row_20260926.txt: typed --census 'silver_rows 355 of 356 bronze'; extract --duplicates 'objects 356 report_ids 355 duplicates 1' and 'duplicate-content ff0e11955cb266f4 Copa Holdings - 2025 Investor Day Presentation (1).pdf Copa Holdings - 2025 Investor Day Presentation.pdf'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round-5 analysis s.5 item 8: 'the 1 is unexplained and outside the fence's own clause.'",
+    "world_is": "Explained: one report_id with two byte-identical files; FWD-2's bronze-to-silver count is per report_id, and the census's two denominators differ by the one duplicate.",
+    "notes": "No cell. The census could print the duplicate beside its two denominators so the next reader does not re-ask; that is a one-line enrichment for whoever next owns typed.py, not a round-6 cell."
   }
 ]
 ```
