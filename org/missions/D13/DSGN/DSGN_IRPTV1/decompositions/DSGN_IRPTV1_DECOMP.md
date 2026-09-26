@@ -173,3 +173,34 @@ index.tsx and ExportButton into Preview's resolveBundle call. Writes `tabs/repor
 `export/ExportButton.tsx`, `export/Preview.tsx` and two new tests. Slot ~24, in parallel with IV-e-35 (disjoint write sets). Serves
 FWD-19 (C25). LOCAL, direct act.
 
+## v7 -- round 7 (issuer, 2026-09-26 ~21:5xZ), over PRD v0.15 @f12fcbb16e (ADMITTED; v0.13 is Andrew's UI review, v0.14/v0.15 add UIR-50 and C34)
+
+**Rectangle:** CTO 101505 -- round 7 cuts from v0.13 (Andrew's UI review, 49 UIR ids; backlog items 25-31 = C27-C33) with C26
+(FWD-20, the round after C25, CTO 101294). C27 goes first. DSGN_IRPTV1 owns 45 of the 49 rows (UIR-03, 23, 26, 48 are IRPT_BCKEND ~M;
+UIR-07's ranking is ~P's, its render half is here).
+
+**Re-cut by write set.** A read-only map of C26-C33 at DEV fdccc6e6 found the PRD's cells overlap heavily (C29 shares files with six
+of the other seven; DrillTree, AllocationBars, SliceTable, slices.ts and AccountFilter each sit in three or more). Cells are re-cut so
+each parallel chain owns disjoint files; each cell names the PRD cell and the UIR rows it carries. Every DSGN_IRPTV1 row lands in
+exactly one cell (45 rows + FWD-20):
+
+| cell | PRD | rows | chain / slot | files (IR-relative unless src/) |
+|---|---|---|---|---|
+| IV-e-37 | C28 + UIR-04 | 01 02 04 06 07r 08 09 10 11 | S ~25, 1 of 2 | src/components/ui/SearchSelect.tsx, header/ClientSearch, header/search, header/BrowseDrawer, tabs/SampleView, tabs/TabShell |
+| IV-e-38 | C29 header | 05 12 13 14 22 30 | S ~25, 2 of 2 | index.tsx (two named places), header/IdentityCard, header/FirmDropdown, global/FirmAttribution |
+| IV-e-39 | C30 | 15 16 18 19 21 | P ~26, 1 of 2 | tabs/holdings/AccountFilter, tabs/reporting/ReportingTab, tabs/StatusPanel, tabs/reporting/PerformanceControls |
+| IV-e-40 | C26 | FWD-20 | P ~26, 2 of 2 | AccountFilter, ReportingTab, tabs/reporting/accountFocus, tabs/reporting/period |
+| IV-e-41 | C27 | 39 + rootNode census | H ~27, 1 of 2 | tabs/holdings/AllocationBars, slices, DrillTree, SecurityList |
+| IV-e-42 | C31 + UIR-24 | 24 31 32 33 34 36 47 49 | H ~27, 2 of 2 | DrillTree, SliceTable, slices, AllocationBars, HoldingsTab |
+| IV-e-44 | C33 | 41 42 43 | T ~28, 1 of 1 | tabs/holdings/HoldingsTreemap |
+| IV-e-43 | C32 | 25 37 44 46 | Z ~29, 1 of 2 | DrillTree, AllocationBars, HoldingsTreemap, assetClass, palette (new) |
+| IV-e-45 | C29 face + 17 + 20 (batch, last) | 17 20 27 28 29 35 38 40 45 | Z ~29, 2 of 2 | index, IdentityCard, HeaderSelectionContext, TabShell, ReportingTab, PerformanceHeadline, SliceTable, HoldingsSummary, AllocationBars, HoldingsTreemap, SecurityList, slices, format (new) |
+
+**Edges (data or shared-file order, not contention inside a chain):** chain P starts after TO-IV-e-36 (direct act, ReportingTab)
+drains; chain Z starts after chains S, P, H and T drain, because C32's colours and the batch rows re-touch every holdings file. Chains
+S, H and T start now at fdccc6e6. IV-e-38 edits index.tsx at two named places while TO-IV-e-36 edits its export-target mount: the
+issuer merges both. Every cell: LOCAL; one mechanical criterion (a test, one arm per row) and one judgment criterion graded by the CVO
+on the issuer's live DEV walk. Shared portal libraries (src/lib, src/ui, src/components except SearchSelect) are read only.
+
+**Parked, not in round 7:** C34 (v0.14), the portal mapping for UIR-50's new asset classes (label and colour), which the PRD
+cuts once 2.0.0_SA_COO~M's producer half lands.
