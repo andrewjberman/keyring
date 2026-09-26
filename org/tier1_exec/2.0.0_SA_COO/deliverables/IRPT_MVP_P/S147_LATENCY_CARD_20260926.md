@@ -55,3 +55,27 @@ open of every new account and window fails in the browser.
 
 **ONE ASK of `1.0.0_SA_CTO`:** rule A+B, or name another. B needs an LGIC registry row and a schedule (success-of-upstream
 is not the only trigger: it runs on the trading calendar after the engine's daily run).
+
+## 6. Measured -- ruling A's phase split (2026-09-26 20:1xZ, adapter 8a6zq+x9, ledger irpt-reopen-authz-20260926 T1)
+
+One fresh 49F read (acc_0030c178.., 2026-01-01..2026-09-19; Lambda Duration **26,729.57 ms**, 1536 MB):
+
+```
+{"event": "irpt_engine_phases", "list_ms": 99.2, "map_ms": 225.9, "frame_ms": 3685.4, "link_ms": 4.5,
+ "objects": 181, "bytes": 51423897, "get_ms_p50": 92.8, "get_ms_p95": 176.4, "get_ms_sum": 18739.5,
+ "parse_ms_sum": 36260.0, "partitions": 180, "listed": 559}
+```
+
+- **The engine read is about 4.0 s of 26.7 s.** The frame phase spreads 18.7 s of GETs and 36.3 s of parse across 16
+  workers in 3.7 s of wall time. Section 2's inference ("the Lambda time is the S3 object fan-out") is **refuted** by
+  this measurement.
+- **About 22.7 s is spent OUTSIDE `f49_engine.calculate`,** and it is not measured yet.
+  - HYPOTHESIS (inferred from the code, not measured): the authorize closure runs `_authorize_release` on every call.
+    Each call rebuilds an Enforcer (directory, ownership and policy loads), re-resolves scope and re-loads the
+    selection with a directory-revision digest.
+  - The fresh path calls it about 8-12 times: `retained.compute` :88 and :153, then every `_allow` inside
+    `artifacts.put`, `retention.promote`/`reserve`, `reports.persist` and its readback `get`, then `entry.py`'s final
+    release.
+  - A reopen makes about 3 such calls, and warm reopens measured 0.17-4.8 s.
+- **Consequence for R9 (B as platinum):** B removes at most the ~4 s engine read. On this measurement it cannot bring
+  a 26.7 s read under the 30 s cap with margin by itself.

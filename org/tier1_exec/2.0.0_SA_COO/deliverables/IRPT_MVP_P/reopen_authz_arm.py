@@ -111,16 +111,22 @@ def run(phase):
     return rows
 
 
+def served(r):
+    """A served answer carries data and no function error; a success envelope has no `ok` key (only a refusal
+    carries ok=false), so `ok is True` is never the test."""
+    return r["function_error"] is None and r["ok"] is not False and r["data_sha256"] is not None
+
+
 def compare(before, after):
     checks = []
     b1, a1, a2, a0 = before["V1"], after["V1"], after["V2"], after["V0"]
-    checks.append(("(1) V2 reopens V1's report", a2["ok"] is True and a2["retained_ref"] == a1["retained_ref"]
+    checks.append(("(1) V2 reopens V1's report", served(a2) and a2["retained_ref"] == a1["retained_ref"]
                    and a2["data_sha256"] == a1["data_sha256"]))
     checks.append(("(1) negative control: before, V2 answered OBJECT_NOT_COVERED", before["V2"]["reason"] ==
                    "OBJECT_NOT_COVERED" and before["V2"]["ok"] is False))
     checks.append(("(2) V0 refused, no data", a0["ok"] is False and a0["data_sha256"] is None))
     checks.append(("(3) owner row unchanged", before["owner"] == after["owner"] and after["owner"]["owner_sha256"]))
-    checks.append(("(4) past-frontier read identical before/after", b1["ok"] is True and a1["ok"] is True
+    checks.append(("(4) past-frontier read identical before/after", served(b1) and served(a1)
                    and b1["retained_ref"] == a1["retained_ref"] and b1["data_sha256"] == a1["data_sha256"]))
     for name, ok in checks:
         print("%s %s" % ("PASS" if ok else "FAIL", name))
