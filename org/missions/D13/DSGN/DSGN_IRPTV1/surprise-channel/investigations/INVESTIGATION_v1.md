@@ -1219,6 +1219,77 @@
   "spec_asserts": "This cell's own Build text (c) and CRO route proposal section 5: 'IdentityCard.tsx:145-156, BrowseDrawer.tsx:272, ScopeSummary.tsx:81-82: the kind word becomes \"Client\".'",
   "world_is": "iv-e-8.browse-drawer.test.ts (a different cell's committed test, outside this cell's <paths> and named criteria) asserts the pre-C1 per-row kind words ('Account', 'Relationship'). C1 retires them in favour of the literal 'Client' on every row, exactly as the proposal's own retirement list names this line. This worker implemented the change in-bounds and left the sibling test unedited.",
   "notes": "Not blocking IVE33-AC2 (PASS-by-output, VERDICT: CLIENT-WORDS-OK, recorded in this worker's report, which exercises BrowseDrawer's row detail directly and confirms it now says 'Client')."
+},
+{
+  "id": "DSGN_IRPTV1-W22-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~22",
+  "surfaced_at": "2026-09-26T20:30:16Z",
+  "one_line": "Rows W22-S1, W22-S2 and W22-S3 are DISARMED: this cell (IV-e-34, TO amendment 2) re-scoped the three named sibling tests to the current R1 spec exactly as each row's own disarm_owner clause instructed. `bun run typecheck` now reads 0 errors and all three tests read VERDICT: OK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal `bun run typecheck` (tsc -b --noEmit) on this worker's branch, after re-scoping: 0 errors (previously exactly 7, all in iv-e-3.card-fed.test.ts, per W22-S1)",
+      "portal `bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-3.card-fed.test.ts src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-23.identity-firm.test.ts src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-8.browse-drawer.test.ts`: 3 pass, 0 fail -- `VERDICT: CARD-FED`, `VERDICT: IDENTITY-FIRM-OK`, `VERDICT: DRAWER-OK`",
+      "iv-e-3.card-fed.test.ts re-scoped to `fetchIdentityCardData(api, scopeRef)` (2 args, R1 shape), dropped its `directory-search`/`accountEntries` assertions in favour of `accountListFromSnapshot`, per S1's own disarm clause",
+      "iv-e-23.identity-firm.test.ts re-scoped `EXPECTED_KIND_WORD` from the per-kind table to the literal 'Client' (C1), per S2's own disarm clause",
+      "iv-e-8.browse-drawer.test.ts re-scoped its per-row kind-word assertions to expect 'Client' on every row (distinguishing the two fixture rows by their own account COUNT instead), per S3's own disarm clause",
+      "each re-scoped test's header comment names the retiring FWD/version (FWD-19, PRD v0.12 ROUTE STRUCTURE / CRO route proposal @713a49f7b8) and the disarmed row id, per this cell's own instruction (f)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Re-scoped in-bounds per this cell's own instruction (f) and amendment 2; all three tests now pass and typecheck is clean -- nothing further to disarm at this worker's level. A worker's disposition cannot be GRADUATED (a CVO-only L9 transfer, LGIC_ENFORCE-C-S24); this row is the completion record, not a transfer.",
+  "spec_asserts": "This cell's own Build text (f): 'Disarm rows W22-S1..S3 ... Re-scope each to the R1 spec ... never weaken what the current ENDPOINT still requires.'",
+  "world_is": "All three re-scoped tests now assert the CURRENT R1 endpoint (never the retired one) and all three pass; `bun run typecheck` is clean. Nothing named by IVE3-AC1/IVE23-AC2/IVE8-AC1's own criterion text was weakened -- each test still asserts every fact its own header names (one fetch call, no id leak, display name + kind word, terminated/active, filter narrowing, page-walk-to-completion), only the STALE per-kind vocabulary was updated to the literal 'Client'.",
+  "notes": "S1/S2/S3 stay filed as they are (append-only); this row is the disarm record amendment 2 assigned to this worker rather than to 2.0.0_SA_COO~D."
+},
+{
+  "id": "DSGN_IRPTV1-W22-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~22",
+  "surfaced_at": "2026-09-26T20:30:16Z",
+  "one_line": "The wider `src/pages/InvestorReporting/` suite (bun test over the whole tree, not just __tests__/dsgn-irptv1/) reads 763 pass / 27 skip / 79 fail / 2 errors on this worktree, stable across two independent runs -- every failing test named lives in an FE-s-* module (envelope parsing, LiveClient routing, cohort/withheld facts, unprojected_grant, export resolveBundle) this cell never touches, none importing IdentityCard/AccountFilter/HoldingsTab/ReportingTab/TabShell/index.tsx/HeaderSelectionContext/period.ts/accountFocus.ts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D (drain) -- confirm by diffing against the SAME suite at c55c4e29 (this cell's own base commit, before any IV-e-34 edit) that the 79-failure population is identical in membership, so the drain's own typecheck/suite grade does not mistakenly attribute a pre-existing, unrelated failure population to this cell's changes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal `bun test src/pages/InvestorReporting/` (whole tree) on this worker's branch, two separate runs: both '763 pass / 27 skip / 79 fail / 2 errors, 3335 expect() calls, Ran 869 tests across 221 files' -- identical counts",
+      "junit reporter output (`--reporter=junit`) lists every failing testcase by name: F14-AC13/AC14/AC15/AC8, F19-AC2/AC6, F25-AC2..AC7, F26-AC4/AC7, F30-AC2..AC4, F31-AC4/AC7/AC8/AC11, F34-AC8/AC9/AC11, F35-AC4, F39-AC3/AC4/AC6/AC7, F41-AC3..AC5, F42-AC2..AC4, F45-AC9, F48-AC2/AC3/AC5, F57-AC2..AC5, F75-AC4, F78-AC2/AC3, F81-AC3/AC4, F9-AC9, FE-s-54, FIELD_MAP, FirmDropdown colour, LiveClient (x3), authorized directory browse boundary, fields as given, fixture set, job states, source bounds, the operation table -- none of these test ids/files are named anywhere in this cell's own decomp cell text, <paths> grant or acceptance criteria",
+      "`git status --porcelain` on the portal worktree at the time of this run shows this worker's edits confined to header/IdentityCard.tsx, header/HeaderSelectionContext.ts, index.tsx, tabs/TabShell.tsx, tabs/holdings/AccountFilter.tsx, tabs/holdings/HoldingsTab.tsx, tabs/reporting/ReportingTab.tsx, tabs/reporting/period.ts, tabs/reporting/accountFocus.ts (new), and the three re-scoped __tests__/dsgn-irptv1/ files -- none of the 79 failing tests' own files or their production imports appear in that list"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell text (f): '`bun run typecheck` must read 0 errors on your branch. These are graded at the drain (typecheck and the suite), not as a criterion here.'",
+  "world_is": "typecheck is 0 errors (confirmed). The wider `bun test` suite carries a large, STABLE, pre-existing failure population entirely outside this cell's <paths> and named criteria -- neither introduced nor fixed by this cell, which BOUNDS forbids widening scope to touch ('never widen the order or fix a neighbouring defect').",
+  "notes": "Not blocking any of this order's named criteria (IVE34-AC1/AC2/AC4 all PASS-by-output on `bun test`, scoped invocations). Filed so the drain's own suite read is not surprised by a large fail count that predates this cell."
+},
+{
+  "id": "DSGN_IRPTV1-W22-S6",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~22",
+  "surfaced_at": "2026-09-26T20:30:16Z",
+  "one_line": "Rule 5 ('export follows the tab') is satisfied for the SUBMISSION identifying fields (tenant/scopeFingerprint/revision, wired via index.tsx -> ExportButton.tsx -> submit.ts, all in this cell's grant) but NOT for the underlying live REPORT FETCH inside the preview/print flow: `export/Preview.tsx`'s `runPreview` never forwards the pre-existing IV-e-26 `accountSelection`/`start`/`end` fields to `resolveBundle`, and `Preview.tsx` is outside this cell's <paths> grant to edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "a future cell holding export/Preview.tsx in its <paths> grant -- thread PerformanceExportTarget's account-scoped ref (or an equivalent) through `PreviewRequestState` into `runPreview`'s call to `resolveBundle`'s `accountSelection`/`start`/`end` params (already declared in `resolveBundle.ts`, IV-e-26, unedited by this cell), so the PREVIEW'S OWN performance-report fetch also targets R3a's account set rather than falling back to `resolveBundle`'s no-accountSetId branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`export/resolveBundle.ts` `ResolveBundleDeps.accountSelection`/`start`/`end` (IV-e-26, P 100987) are read only inside `resolveBundle` itself; its only caller, `export/Preview.tsx`'s `runPreview`, calls `resolveBundle(supported, {api, cache, reportKind, tenant, scopeFingerprint, includeNarrative})` -- none of the three fields -- confirmed by reading `Preview.tsx` at this worktree's HEAD (c55c4e29), a file this cell's <paths> grant does not name",
+      "`export/ExportButton.tsx` (in this cell's grant) already receives `PerformanceExportTarget`'s account-scoped `tenant`/`scopeFingerprint`/`sourceRevision`/`reportRefs` from `index.tsx` on the Performance tab (this cell's own change) and threads them into `buildSubmitRequest` (submission) and `composeExportBundle` (bundle envelope) correctly -- proven by `iv-e-34.focus-refusal-export.test.tsx`'s export arm -- but the PREVIEW route's own report fetch (inside `runPreview` -> `resolveBundle`) is a SEPARATE code path this cell cannot reach"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell rule 5 (proposal section 4, PRD v0.12): 'Export follows the tab's scope. On Performance, the page Export targets R3a's account set and its report revision, never clientSetId.'",
+  "world_is": "The SUBMISSION (what the advisor's Export click actually posts) carries R3a's account set and report revision -- graded and PASS-by-output (IVE34-AC2). The PREVIEW shown inside the export modal before that submit, when it fetches its own performance report copy (a cache-miss path), still falls back to `resolveBundle`'s no-`accountSetId` branch because `Preview.tsx` is out of this cell's grant to wire -- a live-stack gap this cell cannot close.",
+  "notes": "Not blocking IVE34-AC2 (the criterion's own text is about the export SUBMISSION, which this cell does correctly target at the focused account; PASS-by-output, VERDICT: FOCUS-REFUSAL-EXPORT-OK)."
 }
 ]
 ```
