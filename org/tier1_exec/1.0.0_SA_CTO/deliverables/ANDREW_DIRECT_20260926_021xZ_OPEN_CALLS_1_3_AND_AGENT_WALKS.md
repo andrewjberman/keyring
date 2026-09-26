@@ -33,3 +33,18 @@ personally, have an agent do those walks and record HAR."
 
    The agent signs in as IRPT_BCKEND's approved bounded test principal (IB-rtf-3: create, exercise, delete; never a
    standing login). No sign-in as Andrew. The HAR and the screenshots are committed as the drain artifacts.
+
+## Addendum ~02:5xZ -- the walk principal is Opal-class (Andrew confirms)
+
+The IB-rtf-3 principal named above is a 49financial FIRM_ADVISOR, and it reaches only one of the five acts
+(2.0.0_SA_COO~P 101078). 4.0.0_SA_CRO's half (@909dd40acc) named the gap between that wording and the principal
+actually signed. Put to Andrew at the 1.0.0_SA_CTO terminal, verbatim:
+
+> "For the agent walk you delegated, the existing 49F test account can only reach one of the five acts. So the plan
+> uses a temporary Opal staff login instead: it can read every firm's Investor Reporting data for up to an hour, is
+> limited by script to the walk, is recorded in full, and is deleted and verified afterward. OK to proceed?"
+
+**Answer, verbatim:** "Yes, use the Opal login (Recommended)"
+
+This binds: the walk principal is ONE bounded Opal-class login, per packet blob `fe8e8d89` and both halves
+(CTO @`ba29004a1b`, CRO @`909dd40acc`).
