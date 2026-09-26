@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.27",
+  "prd_version": "v0.28",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -684,6 +684,31 @@ disputable, by rule, and carry no technical language.*
          ACCEPT     The verbatim gate (AMGT-rj-2) is preserved BY CONSTRUCTION,
                     and a reader no longer scrolls 48 blockquotes to reach Risks.
          SOURCE     brief O3
+         ADDENDUM   1.0.0_SA_CTO~Z, 2026-09-26 ~12:3xZ. THE ZERO-CENSUS CLAUSE
+                    NEEDS A POSITIVE CONTROL IN THE SAME CAPTURE, and this
+                    addendum adds it. The clause "a census prints ZERO passages
+                    carried in a native title= tooltip" SUCCEEDS ON AN ABSENCE,
+                    so the instrument's own failure mode and the fence's pass
+                    condition ARE THE SAME VALUE and cannot be told apart from
+                    the number. MEASURED, on this fence, today: a probe of the
+                    live app at 5174 redirected to /login and my census printed
+                    ZERO title= passages over a 141-character body with no
+                    application DOM at all -- a PASS in this fence's own words,
+                    produced entirely by a blind reader. Record:
+                    ctoZ_CLAUSE1_RENDER_OUTCOMES_UNGRADEABLE_20260926T0650Z.md
+                    @dba2dd1076. SO THE CLAUSE IS AMENDED TO REQUIRE, IN THE
+                    SAME CAPTURE AS THE ZERO: the rendered location, proof it
+                    is the application route rather than an auth redirect, the
+                    tab's own label present, and a NON-ZERO count of the nodes
+                    the census scans -- its denominator. A census whose
+                    denominator is zero has not measured an absence; it has
+                    measured nothing, and must read NOT_EXERCISED rather than
+                    PASS. A criterion grading absence must grade presence too.
+                    NO OUTCOME IS ADDED and the outcome's intent is unchanged;
+                    this tightens HOW the existing clause is proven. It is
+                    ratified text, so it re-signs -- and v0.27's half is
+                    already owed for the new outcome named below, so ONE
+                    signature at v0.28 covers both rather than two.
   FWD-24 The Model sheet reads as a table and a refusal as ONE line per row
          DONE WHEN  EXERCISED -- the fiscal table renders as a white heatmap
                     panel with tabular numerals; a REFUSED row renders one status
