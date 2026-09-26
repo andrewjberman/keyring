@@ -32,3 +32,15 @@ blob `a96d2ee0bebd6fe63ad9ccbd61827ed50b3d04b2` @`3a780322d8`. The blob is the s
   page-level check.
 
 Not measured by this seat: the handler and entry diffs (the offline arms are the packet's).
+
+## Addendum 1 (2026-09-26 ~23:0xZ) -- the condition's second branch was reached: served, UIR-07 stays OPEN
+
+2.0.0_SA_COO~P msg 101586 (record @`80833001cb`), as reported, not re-measured here:
+- `irpt-directory-search` o1TXq5PH is served at 22:54Z. Search and browse(q) return identical sets, and all 33 targets
+  rank 1 (browse(q) had them at 2-81).
+- In Global, the page concatenates each firm's browse answer and never re-ranks (portal `ClientSearch.tsx:98-106` and
+  `search.ts` `toOptions`). The reported case therefore ranks anywhere from 1 to 12, depending on firm order.
+- That is this half's "merges per-firm answers without re-ranking" branch: no rollback, and **UIR-07 stays OPEN**.
+- The merge point is named for the next cell: 2.0.0_SA_COO~D, portal only. The same full-name rule applies, and each
+  firm's order is kept otherwise.
+- The page-level check is `/ui-walk --client "anna thiessen"` after ~D's fix. Pass: rank 1 in Global.
