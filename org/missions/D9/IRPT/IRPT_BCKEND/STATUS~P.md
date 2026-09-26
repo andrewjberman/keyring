@@ -4,15 +4,15 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T20:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-26T22:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
 | What | Value | Ledger |
 |---|---|---|
-| irpt-performance-adapter | `8a6zq+x9..` since 20:17:50Z = Zs2OK7C5 + entry.py @260399e940 (P-REOPEN-01) + f49_engine.py @8d7a8b10fe (timings); INF one-use plan env kept as live | irpt-reopen-authz-20260926 CLOSED |
+| irpt-performance-adapter | `Ll6t4VPa..` since 21:28:13Z: P-REOPEN-01 (260399e940), both timing lines (8d7a8b10fe, b18cb77c7d), S147 fix M (52604d790b); INF one-use plan env kept as live | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 CLOSED |
 | irpt-ycharts-generate | `/iFhTAvT..` since 19:33:52Z = 85TXFzzv + ~Y's six hop-3 files (a219094b1a) | irpt-hop3-generate-resident-20260926 CLOSED |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb` since 19:15:19Z = f624e8a72f + the same six; rollback root f624e8a72f kept | same |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-h7` since 21:20:44Z = f624e8a72f + the hop-3 six + hop-7 certify.py (ad817b55ea); rollback roots fe64236bbb, f624e8a72f kept | irpt-hop3-... / irpt-hop7-certify-resident-20260926 CLOSED |
 | irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
 | irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
 | Backend branch | `irpt-smoke-p-backend-20260923` @aede6418c6 (not pushed) |  |
@@ -39,21 +39,21 @@ As of 2026-09-26T20:3xZ. Earlier forms of this file are in git (`git log -p -- <
 
 ## Write claims
 
-None building. Waiting on the CTO's S147 decision (sent 20:26Z).
+Window 5 principal live (P operates the delete). UIR-07 build waits on the CRO half.
 
 ## Next-list (in order)
 
-1. **S147 (DECISION at CTO):** ruling A measured the engine read at 4.0 s of a 26.7 s fresh read
-   (`S147_LATENCY_CARD_20260926.md` section 6). About 22.7 s is outside the engine; the hypothesis is repeated
-   `_authorize_release` rebuilds. REC: hold R9's B; ship a second timing line (authorize, persist, retention), then
-   re-rank.
-2. **Window (next):** K7 re-run (reopen now fixed), K8 the first export on a retained 49F report, plus the Analysis
-   chain (CTO 101466). Principal packet cut after ~Y's pre-flight pins.
-3. **M's cross-viewer title-binding patch** (`IRPT_MVP_Y/M_CROSS_VIEWER_TITLE_BINDING_20260926.patch`; reports/** is
-   lane IRPT_COMPLETION_P). It is not on the window path.
-4. **INF:** a new one-use plan on a one-account-household client, then one signed-in run.
-5. **COT:** re-arm ONE one-use plan on a new per-use word, then a signed-in run.
-6. Holdings export kind (card B4), after the first export.
+1. **Window 5 (LIVE):** principal irpt-uiwalk-1790459579 created 21:53:51Z for ~D's read-only C25 walk; delete on
+   ~D's "done" or at 22:53Z (cron a8967004), then the A1 audit. Ledger irpt-ui-walk-principal-w5-20260926.
+2. **UIR-07 (v2 packet a96d2ee0):** CTO signed 101545; CRO half pending. Source committed (backend 49b935c213,
+   publish 177719486c), NOT built. Then the ledger, build, census (2 members), apply, and search_rank_arm after +
+   compare.
+3. **The cross-viewer title binding** (f8c72944f3) ships in generate + the resident with the next Analysis deploy;
+   not on the window path.
+4. **Window 6 (Analysis chain):** upload, generate, READY, sections, history (CTO 101466), after ~Y's pre-flights of
+   hops 5-9 are pinned. K8 (the first export) also rides a later window.
+5. **INF:** a new one-use plan on a one-account-household client, then one signed-in run. **COT:** a new per-use word.
+6. S147 is closed on measurement (fresh 6.2-6.9 s); R9's B is held as an enrichment.
 
 ## Parked
 
