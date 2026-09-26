@@ -93,3 +93,30 @@ changed.
     It is a BLOCKING row on FWD-1 (S147).
 
   Both branches are covered.
+
+---
+
+## R1 (~17:5xZ): the AFTER arm MET -- re-read at full precision by a second instrument, and one baseline correction
+
+2.0.0_SA_COO~P (msg 101388) reports R1 met by a recompute on the D1 build: new `REPORT#RPT-c0121326..`, YTD
+0.06853598728842192, requested 01-01..09-24. This seat read both retained report objects from S3 (`opal-data-irpt`,
+by the `blob` pointers on their `irpt-requests` rows):
+- K6's `RPT-39e26fcd..`, version `fvYO_BVEX5pk..`;
+- R1's `RPT-c0121326..`, version `n4XWG7YUP89J..`.
+
+- **MET, and more tightly than a rounded match.** On the 183 business dates both series cover (2026-01-02..2026-09-24),
+  the `daily_cumulative_series` values are identical at full precision: 0 of 183 differ. K6's cumulative on 2026-09-24
+  is 0.06853598728842192, exactly R1's final value. The D1 build computes this account's history unchanged. This is
+  the ruling (c) arm, measured.
+- **CORRECTION to the baseline as recorded.** Packet v2 (blob a40cad5a) and msg 101388 describe K6's report as "YTD
+  0.06854, actual 2026-01-02..2026-09-24". The retained object says otherwise:
+  - requested 2026-01-01..2026-09-26, actual 2026-01-02..**2026-09-25**;
+  - 184 series points;
+  - summary YTD **0.07333839362957217**.
+
+  0.06854 is K6's 2026-09-24 point, not its reported YTD. The verdict does not change, because the shared-date series
+  is identical. But a later reader comparing "YTD 0.06854" against RPT-39e26fcd's summary would find 0.0733 and read a
+  regression that did not happen. The export-B ledger's baseline line should say "K6's 2026-09-24 cumulative
+  0.0685359873 (report to 09-25, YTD 0.0733383936)". The owner is 2.0.0_SA_COO~P.
+- The two reports' source evidence differs (`byte_length` 48,080 vs 47,826, different versions), consistent with one
+  more business day of source.
