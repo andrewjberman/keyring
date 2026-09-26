@@ -82,6 +82,15 @@ branch. No code edit is open.
      has 26 `other` keys (COT $48.72M, 20 relationships). Half requested of the CTO:
      IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_COT_NEW_WRITE_20260926.md; it replaces batch B act 2. The B_01b auto-deploy
      is DISARMED (S141).
+     - SIGNED by the CTO @ab4a2e41bb, with an a07 precondition. a07 measured: 49F 10 keys $56,952, INF 8 keys $0,
+       COT 122 keys, 0 outside the keys. **PART 1 WRITTEN** @aaef2843a8: 941 of 941, 0 refused, read back 941. The loader
+       agrees on 935; 6 NAME:: duplicates serve fixed_income through a ticker sibling, +$149,663 vs the half, and the
+       CTO is asked whether to align them. Ledger bd-securities-cot-new-p1-m-20260926: R1 HELD for Monday's COT and BD
+       runs.
+     - Part 2 (26 `other`) is signed and waits on the act-1 read-back (Monday) plus ~D's mapping on origin DEV.
+     - **B_01b deploy HELD by ~M.** Deployed, its first --upload re-sends every key not in the table: the 52 excluded
+       by R1/R2b/R3 and Part 2's 26. The excluded keys need a table answer first (their C_06 class today, or a skip
+       list), then the rule-2 prompt amendment and a dry run.
    - Preferred stock = fixed_income, standing (Andrew-direct ~17:3xZ, @42def02a36).
    - The two R5 defects (IRPT_MVP_M/R5_CLASSIFIER_DEFECTS_20260926.md):
      - The loader skip is CLOSED with no change: `ticker` is bd-securities' HASH key, and batch A's 204 name-keyed
