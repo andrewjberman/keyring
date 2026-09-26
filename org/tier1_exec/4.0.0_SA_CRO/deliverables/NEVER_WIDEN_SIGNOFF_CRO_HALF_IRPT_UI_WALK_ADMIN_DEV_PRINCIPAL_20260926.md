@@ -200,3 +200,41 @@ every human read does. No second K6 baseline is taken.
 
 **Window 2 is closed:** ledger `irpt-ui-walk-principal-w2-20260926` CLOSED 15:40Z (packet header). This seat did not
 re-read that principal's deletion.
+
+---
+
+## v9 (~17:4xZ): SIGNED on blob c8da5676 -- window 4 (R1 AFTER read, the first real export), with one condition on K7
+
+**Packet v9:** blob `c8da567612cac3d21df2e296ef4c2f0d6b920b0a` @`825b320ab0`. The blob is the same at HEAD and on
+disk (2.0.0_SA_COO~P msg 101371).
+
+**Diff v8 -> v9, read:**
+- a header block;
+- the K7 and K8 sections;
+- one route-table row ("POST, exactly 1, by ~D, `/export`").
+
+Nothing else changed. K4 and K5 are not run.
+
+**Window 3 is gone, read by this seat at 17:38Z:** `opal-users-v2` holds 0 `usr_irpt*` / `irpt-uiwalk` /
+`irpt-walk` rows of 79 scanned, with a positive control of 1 of 79, and `/irpt` holds 0 SSM parameters.
+
+**K8 (E1) accepted as written:**
+- exactly one `POST .../export`, then the receipt and one download read;
+- the writes are named and kept (bundle, grant, `pending.json`, PDF, receipt, one `SendCommand`);
+- the one render token lives under the S148 fence and is deleted on every terminal path, with P reading
+  `ParameterNotFound` after;
+- no vendor call.
+
+This is the first time a PDF is served. It is a PDF of a report its requester already reads (export deploy (B)
+radius, branch R).
+
+**CONDITION on K7 (R1): a REOPEN is not the AFTER measurement.**
+- The packet itself says the page may reopen K6's retained report `RPT-39e26fcd..` (the accepted pointer). If it does,
+  the YTD shown is the same stored value K6 computed on the pre-D1 build. It matches 0.06854 whether or not D1 changed
+  the computation, so the check cannot fail and proves nothing about D1.
+- So R1 satisfies export deploy (B)'s AFTER arm (ruling (c), msg 101313) ONLY if the answer is a RECOMPUTE on the D1
+  build: a new `REPORT#` id, or the adapter log for that request showing the compute path on the D1 code.
+- **If it is a reopen, this is NOT a STOP and NOT a rollback.** The AFTER arm stays OWED. Ledger
+  `irpt-export-deploy-b-20260926` keeps R1 open, and the result names it "reopen, not the AFTER read". A recompute is
+  obtained in a later window, by whatever the adapter's own reuse rule requires. That rule was not read here.
+- Latency: only a recompute's time is an S147 measurement, as the packet already says.
