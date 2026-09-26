@@ -1108,6 +1108,95 @@
     "spec_asserts": "IVE29-AC3 (as written): 'ConsolidatedOverviewPanel's vertical legend, rendered from a Cottonwood composition carrying `other` and `cash`, lists an \"Other\" entry and a \"Cash\" entry with their formatted amounts and each class's own colour' -- graded by a test this worker writes against the component directly, which is what cot-drill-legend.test.ts does and PASSES. The cell's (b) instruction separately says 'colour every entry by its served class through the layout's palette', describing the intended real-page behaviour.",
     "world_is": "The component-level fix (optional `tenantLayout` prop, strictly additive) is built, wired to the tenant `colorPalette` override the same way PartnerAnalytics.tsx's `resolveMixClassMeta` already does, and passes AC3 exactly as specified. Reaching PROD's actual client-drill donut/legend requires four additional files this TO's <paths> grant does not cover; per the refusal clause this worker did not widen its grant to touch them. Until a follow-on cell threads the prop, Cottonwood's real client-drill view keeps showing cash amber and other grey (the pre-existing W18-S1 gap), even though 'other' now lists in the legend at all (that structural gain -- the hardcoded array now including 'other' -- IS live on PROD once merged, since it needs no new prop: composition.mix already carries 'other' for Cottonwood via AdvisorBookView.tsx's existing tenant-driven normalizeMixTo4Class call).",
     "notes": "Not blocking IVE29-AC1/AC2/AC3, all of which PASS-by-output as literally written. Filed ARMED because AC4's PROD read (one named relationship's cash slice, one all-cash client at 100%) is graded on the REAL page, where the colour half of this fix is not yet live -- the amounts/shares will be correct (driven by C_06 + the already-wired includeCash/includeOther options), but cash will render amber and other grey instead of green/purple600 until the follow-on wiring lands."
+  },
+  {
+    "id": "DSGN_IRPTV1-W21-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~21",
+    "surfaced_at": "2026-09-26T18:53:51Z",
+    "one_line": "A necessary S7 fix to fe-s-41/one-writer.test.ts (reading PublicStatusEnvelope.schema.json instead of the internal StatusEnvelope.schema.json, needed so its own status-shape grading agrees with the real parser it also calls) is a genuine content change fe-s-46/timeouts.test.ts polices as changing ONLY test( third-argument timeout literals in that exact file, relative to DEV 1f3ce9f0 -- the two files' invariants now conflict and fe-s-46 fails.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- a ruling on whether fe-s-46's DEV-diff bound for fe-s-41/one-writer.test.ts (and fe-s-40/window.test.ts) needs an acknowledged exception for this fix, or whether the STATUS_SCHEMA read should move to a shared helper fe-s-46 does not track.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bun test src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts before this cell's fix to fe-s-41/one-writer.test.ts: 5 pass, 0 fail; after: 4 pass, 1 fail, VERDICT-bearing test 'against DEV 1f3ce9f0: every changed line closes a test( call...' -- expect(only).toBe(true) received false",
+        "the check's own logic (timeouts.test.ts:~768): `only = changed > 0 && closing === changed && equal === diffs.length` -- a changed line that does not itself close a test( call (the STATUS_SCHEMA declaration line, plus its explanatory comment) makes closing < changed, so `only` is false regardless of the change's correctness",
+        "the S7 fix itself is load-bearing: STATUS_SCHEMA read from StatusEnvelope.schema.json (required list includes internal_correlation_id, StatusEnvelope.schema.json's own x-server-only field) while this file's own parseIrEnvelope call feeds it a WIRE status that requirePublicStatus (contracts/public-status.ts) correctly refuses for carrying that same field -- the file's holdingsProblems() could never simultaneously satisfy both checks before this fix (verified: reverting the fix reproduces F41-AC3/BOUND/CONTROL failures this same round's base measurement showed)"
+      ]
+    },
+    "spec_asserts": "The task order's bounds are silent on fe-s-46/timeouts.test.ts (not named in <paths>, not read as part of this cell); S7's own action rule is 'Fix the harness; the assertion stays' for class-H rows and 'Fix the CODE' for class-G, with no exemption for a DEV-diff-purity check on the file being fixed.",
+    "world_is": "fe-s-46/timeouts.test.ts's DEV-diff-purity bound and this cell's necessary status-schema fix to the SAME file cannot both hold: fixing the file's genuine bug (an internally self-contradictory status-shape check) is, by fe-s-46's own instrument, indistinguishable from an unauthorized non-timeout edit. Left as-is: fe-s-46 fails on this one file.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking IVE32-AC1/AC2 directly (fe-s-46 was never in the S7 base-79 denominator), but IVE32-AC2's live suite run shows it as a NEW failure this round's fixes introduced. Filed rather than reverted, per the refusal clause: reverting the STATUS_SCHEMA fix would restore fe-s-41's own class-H defect."
+  },
+  {
+    "id": "DSGN_IRPTV1-W21-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~21",
+    "surfaced_at": "2026-09-26T18:53:51Z",
+    "one_line": "S7_CLASS_TABLE.json's IVE32-AC2 (the live suite's failing set equals exactly the table's <=5 Q rows) does not hold: after every fix this round plus the portal commit, 19 of the original 77 real-testcase base rows and parts of both former crash-file rows still fail, far beyond the 5-Q cap -- IVE32-AC1 (table structure) passes; IVE32-AC2 does not.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- a ruling on whether the remaining ~19-24 rows (each root-caused in the table's own action text: mostly contracts/public-status.ts's business_date obligation on intentionally-dateless status fixtures across fe-s-19/fe-s-25/fe-s-31/fe-s-39, plus two open production-render questions in fe-s-15/fe-s-31, plus the selection-create/directory-browse adapter-vs-fixture mismatch shared with the table's own Q rows) is closed by a follow-on repair cell, a wider Q allowance, or a different disposition of DSGN_IRPTV1.TO-IV-e-32 itself.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/s7-suite-check.ts (this cell's own IVE32-AC2 instrument), run against portal commit 03f48301: CHILD PROCESS rc=1, PASS COUNT 831, FAILING (live run) 28, Q ROWS (table) 4, VERDICT: S7-SUITE-FAIL -- 24 of the 28 live failures are not any of the table's 4 Q rows",
+        "cross-referencing the live failing set against the ORIGINAL 77-row base measurement (failures.json) shows 19 rows genuinely unresolved from the base denominator (not new): fe-s-14/envelope.test.ts (1), fe-s-15/job-states.test.ts (2), fe-s-19/pre-envelope.test.ts (1), fe-s-25/* (6), fe-s-31/every-page.test.ts (2), fe-s-39/adapter-plane.test.ts (3), plus fe-s-1/fixtures.test.ts and fe-s-1/source-bounds.test.ts and fe-s-57/carry.test.ts's F57-AC2 (the table's own 4th Q row, counted once)",
+        "a repeat run of the same live suite ~15 minutes later (used while diagnosing the fe-s-46 conflict, W21-S1) showed a DIFFERENT specific subset failing within fe-s-33/fe-s-39/fe-s-46 (each does real filesystem writes and/or spawns real child bun/git processes) -- filed separately as W21-S3, but it means the exact live-failing SET is not perfectly stable run-to-run even though the ~19-24 count and root causes are"
+      ]
+    },
+    "spec_asserts": "The task order's ACCEPTANCE for IVE32-AC2: 'running bun test src/pages/InvestorReporting as a child process, the set of failing tests equals exactly the table's Q rows... It prints VERDICT: S7-SUITE-OK only when every arm holds' -- and the cell's own class rule: 'at most 5 Q rows -- more than that means the classing is too loose'.",
+    "world_is": "After genuinely fixing the shared bug family across ~60 of the base 79 rows (verified: base 79 -> 27-31 fail across several full-suite runs, then 19 confirmed-original + a handful of not-fully-clean crash-file subtests after the portal commit), a residual population beyond 5 remains actually failing, each with a diagnosed but not completed root cause recorded in the table's own `action` text. IVE32-AC1 passes (VERDICT: S7-TABLE-OK); IVE32-AC2 does not (VERDICT: S7-SUITE-FAIL). Per the proof-of-spec discipline this is recorded as a FAIL row, and DSGN_IRPTV1.TO-IV-e-32's <status> is not flipped to complete.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "DSGN_IRPTV1-W21-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~21",
+    "surfaced_at": "2026-09-26T18:53:51Z",
+    "one_line": "Three test files that spawn real subprocesses / do real filesystem writes (fe-s-33/fixtures-reach.test.ts, fe-s-39/adapter-plane.test.ts, fe-s-46/timeouts.test.ts) showed a DIFFERENT specific sub-test failing across consecutive full-suite runs at the SAME commit, with no source edit between them -- the exact live-failing set for this project's suite is not perfectly run-to-run stable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "run16 (junit) at portal commit 03f48301: fe-s-33/fixtures-reach.test.ts failing sub-tests = {FROZEN MAP, FE-s-26 STATUSES, CONTROL -- one changed field, GLOBAL}; a later same-commit run's own instrument (s7-suite-check.ts) additionally/differently showed {THE DENOMINATOR, CONTROL -- the round-4 frozen map} failing and {FE-s-26 STATUSES} not -- same file, same commit, different result set",
+        "fe-s-46/timeouts.test.ts: run16 showed 1 of 8 sub-tests failing (the DEV-diff-purity check, W21-S1); the later run showed a DIFFERENT 2 of its sub-tests failing (a ledger-cost-vs-timeout-floor check and a load-vs-census-arm check), neither of them the DEV-diff-purity one",
+        "no source file under this cell's <paths> was edited between the two runs; both ran `bun test src/pages/InvestorReporting` (or a named subset of it) against the identical committed tree"
+      ]
+    },
+    "spec_asserts": "N/A -- an OBSERVATION about instrument reliability, not a spec-vs-world mismatch on any one criterion.",
+    "world_is": "fe-s-33/fe-s-39/fe-s-46 each measure real wall-clock costs, spawn real bun/git/vite child processes, and/or write to real scratch directories under load that varies with whatever else is running on the box at the time; at least one of their own assertions appears sensitive to that variance in a way this worker did not fully characterize before time ran out on this cell.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not separately blocking beyond W21-S2 (IVE32-AC2's FAIL already covers these files' contribution to the residual failing count). Filed so whichever seat picks up W21-S2's repair work knows the exact failing NAMES in these three files may differ run to run even though the FILES and the approximate COUNT do not."
+  },
+  {
+    "id": "DSGN_IRPTV1-W21-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~21",
+    "surfaced_at": "2026-09-26T18:53:51Z",
+    "one_line": "fe-s-1/source-bounds.test.ts's one remaining S7 failure (a 'ycharts' forbidden-token hit) has its fix in api/endpoints/investor-reporting.ts, a file this cell's BOUNDS puts out of grant for anything but a class-G fix 'only under portal/src/pages/InvestorReporting/' -- api/endpoints/ is a sibling directory, not under that path, so no class this cell's rubric offers can both fix the root cause and stay in grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the hit: api/endpoints/investor-reporting.ts:200, a route-table provenance comment naming the backend handler 'irpt-ycharts-generate' -- a comment, not vendor-session/cookie code; the FORBIDDEN list's own stated purpose (this test file's header) is 'no vendor session, no vendor cookie... fails the build the moment someone reaches for a stored session value or names a provider inside the CONSUMER boundary', which this comment does not do",
+        "the file's own path, portal/src/api/endpoints/investor-reporting.ts, does not fall under portal/src/pages/InvestorReporting/ (the BOUNDS clause's own words: 'contracts/** and api/** edits are OUT unless a REGRESSION fix (S7 class G) needs them, and then only under portal/src/pages/InvestorReporting/')",
+        "classed Q in S7_CLASS_TABLE.json for this reason (query text names the exact fix and the exact grant gap)"
+      ]
+    },
+    "spec_asserts": "BOUNDS: 'contracts/** and api/** edits are OUT unless a REGRESSION fix (S7 class G) needs them, and then only under portal/src/pages/InvestorReporting/'.",
+    "world_is": "The one line that would resolve this specific S7 failure sits in a file the grant structurally cannot admit a fix to, regardless of how small or clearly-a-G-fix the edit would be, because the file's PATH -- not the nature of the change -- is what the clause gates on.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking beyond its own row in S7_CLASS_TABLE.json (classed Q, one of the 4 used this round). Filed so a future cell naming api/endpoints/investor-reporting.ts in its own <paths> can close this with a one-line comment edit."
   }
 ]
 ```

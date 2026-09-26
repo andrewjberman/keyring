@@ -1,0 +1,488 @@
+{
+  "base": "72ed12569066eab4373a2a831efe5f44d2f39b63",
+  "base_failures": 79,
+  "rows": [
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-13\\field-map.test.ts",
+      "test": "covers every field of every view type, in both directions",
+      "class": "G",
+      "action": "contracts/adapt.ts FIELD_MAP was missing 4 fields the adapter already produces (beginningValue, endingValue, retainedReport, valuationCurrency); added the 4 rows"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-13\\routes.test.ts",
+      "test": "the live client ISSUES the holdings route, at the path the contract declares",
+      "class": "H",
+      "action": "added the accountSetId selectedReference now requires on every getPerformanceReport/getHoldingsSnapshot call, and the requestId PATH_PARAMS entry the 17-route table now needs"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\envelope.test.ts",
+      "test": "ENVELOPES PARSED -- 11 of 11, each built from its own response contract",
+      "class": "H",
+      "action": "extended dataFor() to read oneOf (resolve-scope) and PublicStatusEnvelope (no committed fixture of its own; projected from StatusEnvelope); 2 of the 17 routes (selection-create, directory-browse) still fail their adapter's own field-equality check against the committed SelectedAccounts/DirectoryPage fixtures -- not resolved this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\envelope.test.ts",
+      "test": "POSITIVE CONTROL -- a well-formed envelope is NOT refused",
+      "class": "H",
+      "action": "aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\envelope.test.ts",
+      "test": "REFUSALS -- v2, a foreign operation, and a CONTRACT_VERSION status",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\envelope.test.ts",
+      "test": "ROUTE_UNKNOWN renders the same way, and the codes are the contract's two",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\envelope.test.ts",
+      "test": "the analysis-requests slice carries identity and stage, and its status is REQUIRED",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\header.test.ts",
+      "test": "the LIVE CLIENT hands it to the transport, on an exercised call",
+      "class": "H",
+      "action": "added the accountSetId selectedReference now requires on every getPerformanceReport/getHoldingsSnapshot call, and the requestId PATH_PARAMS entry the 17-route table now needs"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\one-firm.test.ts",
+      "test": "GLOBAL PATH -- the header renders no firm dropdown at all",
+      "class": "H",
+      "action": "aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\one-firm.test.ts",
+      "test": "POSITIVE CONTROL -- a TWO-firm catalogue does render the control and does admit Global",
+      "class": "H",
+      "action": "aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\one-firm.test.ts",
+      "test": "the three candidate origins each resolve to the single permitted firm",
+      "class": "H",
+      "action": "aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-15\\job-states.test.ts",
+      "test": "queued, preparing, generating, ready and needs-attention each render ONE distinct label",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser; the fe-s-15/job.*.json fixtures parse clean now, but this specific label-render assertion still disagrees with tabs/analysis/composer.ts's current output -- not resolved this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-15\\job-states.test.ts",
+      "test": "the WAF-refresh state preserves the composition, deep-equal to its pre-submit value",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser; the data-job-state=\"needs-attention\" markup assertion still fails against composer.ts's current render -- not resolved this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-19\\network-state.test.ts",
+      "test": "every StatusEnvelope state a producer can send arrives at both tab documents",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-19/_wire.ts's statusWire()/v1Envelope()"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-19\\pre-envelope.test.ts",
+      "test": "four bodies, four named refusals, each rendering as a state",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser; STILL FAILING for a state carrying no `state` field via requirePublicStatus's business_date obligation on an empty source_dates object -- diagnosed, not resolved this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-1\\adapter.test.ts",
+      "test": "a 403 from the transport clears the protected cache and raises a typed error carrying no upstream text",
+      "class": "H",
+      "action": "added the accountSetId selectedReference now requires on every getPerformanceReport/getHoldingsSnapshot call, and the requestId PATH_PARAMS entry the 17-route table now needs"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-1\\adapter.test.ts",
+      "test": "every DECLARED route is buildable, and the two unserved operations refuse BY NAME",
+      "class": "H",
+      "action": "added the accountSetId selectedReference now requires on every getPerformanceReport/getHoldingsSnapshot call, and the requestId PATH_PARAMS entry the 17-route table now needs; the hardcoded expect(built).toBe(12) was FE-s-15 R2's count, now read dynamically off IR_ROUTE_TABLE (17 DECLARED)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-1\\adapter.test.ts",
+      "test": "targets the DECLARED route -- method and path template from the route table",
+      "class": "H",
+      "action": "added the accountSetId selectedReference now requires on every getPerformanceReport/getHoldingsSnapshot call, and the requestId PATH_PARAMS entry the 17-route table now needs"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-1\\fixtures.test.ts",
+      "test": "the smoke map covers every scoped route, one entry each",
+      "class": "Q",
+      "action": null,
+      "query": "default.json's PUBLISHED MAP has one key for 12 of the 17 DECLARED routes; the 5 new ones (selection-create, directory-browse, analysis-input-upload, analysis-request-history, analysis-request-read) need generatePublishedMap's DATA_FOR_OPERATION extended and their own committed producer fixtures -- 3 of the 5 authored this round (AnalysisUploadResult/OwnedAnalysisRequest/OwnedAnalysisRequestHistory), 2 remain (selection-create/directory-browse's own adapters additionally reject the pre-existing SelectedAccounts/DirectoryPage fixtures on an unrelated field-equality rule) -- ruling needed on whether that adapter rule or the fixture is the defect"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-1\\source-bounds.test.ts",
+      "test": "neither source carries any forbidden token",
+      "class": "Q",
+      "action": null,
+      "query": "api/endpoints/investor-reporting.ts:200's comment (route-table provenance, \"irpt-ycharts-generate\") trips the 'ycharts' forbidden-token scan; the fix is a one-line comment edit in api/endpoints/investor-reporting.ts, outside this cell's grant (api/** only editable under portal/src/pages/InvestorReporting/ for a G-fix)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\absent-vs-null.test.ts",
+      "test": "on every no-answer state the two render differently, on the path the tabs render",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts; STILL FAILING via requirePublicStatus's business_date obligation on an intentionally-empty HELD_SOURCE_DATES -- diagnosed, not resolved this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\absent-vs-null.test.ts",
+      "test": "the scan finds none, and the scan can fire",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts (same root)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\absent-vs-null.test.ts",
+      "test": "the two renderings are the RIGHT two, and the fact survives on the view document alone",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts (same root)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\source-age-field.test.ts",
+      "test": "ONE declaration, both call sites, and the behaviour agrees on the tab path",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\source-age-field.test.ts",
+      "test": "the REQUIRED business date dates the payload, with no as_of at all",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\source-age-field.test.ts",
+      "test": "the anomaly is still an anomaly -- READY with NO business date",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts; same requirePublicStatus business_date obligation as above -- not resolved this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\state-planes.test.ts",
+      "test": "nine responses differing ONLY in `state`, rendered and compared pairwise",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts; same requirePublicStatus business_date obligation -- not resolved this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\state-planes.test.ts",
+      "test": "the domain of every partition in this cell is stated, not assumed",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts; same root -- not resolved this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-26\\fixtures-carry-status.test.ts",
+      "test": "all 27 parse through the shipped `parseIrEnvelope`, nine per map",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser and aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site in the three fe-s-18-holdings-*.json maps"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-26\\fixtures-carry-status.test.ts",
+      "test": "the status this cell added is the one the parser reads back, per map",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser and aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site in the three fe-s-18-holdings-*.json maps"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-26\\renders-differently.test.ts",
+      "test": "CONTROL -- with the status stripped, all three collapse to ONE rendering",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser and aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site in the three fe-s-18-holdings-*.json maps"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-26\\renders-differently.test.ts",
+      "test": "NEGATIVE CONTROL -- the same map rendered twice is IDENTICAL",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser and aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site in the three fe-s-18-holdings-*.json maps"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-26\\renders-differently.test.ts",
+      "test": "driven wire -> adapter -> view, the three Holdings renders are distinct, each in the slot ruling I assigns",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser and aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site in the three fe-s-18-holdings-*.json maps"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-30\\predicate.test.ts",
+      "test": "QUEUED, RUNNING, UNAVAILABLE, FAILED",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-30/_scenarios.ts"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-30\\predicate.test.ts",
+      "test": "READY, PARTIAL, STALE, NEEDS_CORRECTION, UNCERTAIN",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-30/_scenarios.ts"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-30\\predicate.test.ts",
+      "test": "a status carrying no state, beside a producer UNCERTAIN with the SAME view state",
+      "class": "G",
+      "action": "contracts/public-status.ts's requirePublicStatus hard-required `state`; a status carrying no state is a producer-legal shape the codebase's own adaptStatusEnvelope already handles (NO_STATUS_REASON) -- made `state` optional"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-31\\every-page.test.ts",
+      "test": "a PARTIAL report: the bundle envelope is labelled the bundle's own, and both scope rows print one count",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser; STILL FAILING -- not yet root-caused this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-31\\every-page.test.ts",
+      "test": "the header scope line agrees with the document account table",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser; STILL FAILING -- not yet root-caused this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-31\\submit.test.ts",
+      "test": "four no-answer producer states: zero submit-export requests; PARTIAL control: one",
+      "class": "H",
+      "action": "added the accountSetId selectedReference now requires on every getPerformanceReport/getHoldingsSnapshot call, and the requestId PATH_PARAMS entry the 17-route table now needs in fe-s-31/submit.test.ts"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-31\\submit.test.ts",
+      "test": "through LiveClient and a transport serving an ExportReceipt envelope (W2-S12 / W3-S5)",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-31/_scenarios.ts"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-34\\no-status.test.ts",
+      "test": "both paths, the business date ABSENT and, separately, NULL",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-34's own wireStatus()"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-34\\no-status.test.ts",
+      "test": "businessDateOf on both no-status paths, and a status-carried control",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-34's own wireStatus()"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-34\\no-status.test.ts",
+      "test": "path 1 the view fixture via FixtureAdapter, path 2 a whole v1 body via the one parser",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-34's own wireStatus()"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-35\\no-identity.test.ts",
+      "test": "POSITIVE CONTROL: the same document inside a whole v1 envelope still becomes a view",
+      "class": "H",
+      "action": "added the accountSetId selectedReference now requires on every getPerformanceReport/getHoldingsSnapshot call, and the requestId PATH_PARAMS entry the 17-route table now needs in fe-s-35's BASE constant"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-35\\no-identity.test.ts",
+      "test": "every operation whose request reaches the transport refuses the no-identity body",
+      "class": "H",
+      "action": "added the accountSetId selectedReference now requires on every getPerformanceReport/getHoldingsSnapshot call, and the requestId PATH_PARAMS entry the 17-route table now needs in fe-s-35's BASE constant"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-39\\adapter-plane.test.ts",
+      "test": "ADVISED, RESIDUAL and UNKNOWN, each set on every node of a copy of the observed map",
+      "class": "H",
+      "action": "aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site in fe-s-18-holdings-observed.json (committed, HEAD-read); STILL FAILING -- not fully root-caused this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-39\\adapter-plane.test.ts",
+      "test": "a no-status document served by FixtureAdapter, and a v1 body whose status carries the date",
+      "class": "H",
+      "action": "STILL FAILING -- not root-caused this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-39\\adapter-plane.test.ts",
+      "test": "a whole v1 body whose status carries business_date: null; and a no-status body whose document does",
+      "class": "H",
+      "action": "STILL FAILING -- not root-caused this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-39\\adapter-plane.test.ts",
+      "test": "the observed map, through parseIrEnvelope into the rendered Holdings markup",
+      "class": "H",
+      "action": "aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site in fe-s-18-holdings-observed.json (committed, HEAD-read)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-3\\dropdown-class.test.ts",
+      "test": "the option list itself is untouched -- a one-firm scope renders no control at all",
+      "class": "R",
+      "retired_by": "FWD-4 v0.8",
+      "action": "FirmDropdown's one-firm path now renders a verified-firm identity slot (commit dcf5e177 \"show verified firm and page authorized initial clients\"), not nothing; re-scoped to assert no <select> plus the verified-firm slot's presence"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-41\\one-writer.test.ts",
+      "test": "BOUND -- read from the committed frozen map and from each Holdings map generated from it",
+      "class": "H",
+      "action": "STATUS_SCHEMA read PublicStatusEnvelope.schema.json instead of the internal StatusEnvelope.schema.json (whose required list wrongly demanded internal_correlation_id on the WIRE status this same function's own parseIrEnvelope call refuses it on)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-41\\one-writer.test.ts",
+      "test": "CONTROL -- an UNCOMMITTED in-place edit naming perf-9 moves the checkout read and NOT the committed read",
+      "class": "H",
+      "action": "STATUS_SCHEMA read PublicStatusEnvelope.schema.json instead of the internal StatusEnvelope.schema.json (whose required list wrongly demanded internal_correlation_id on the WIRE status this same function's own parseIrEnvelope call refuses it on)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-41\\one-writer.test.ts",
+      "test": "F41-AC3 -- the output carries one valid v1 Holdings envelope per firm its catalogue names",
+      "class": "H",
+      "action": "STATUS_SCHEMA read PublicStatusEnvelope.schema.json instead of the internal StatusEnvelope.schema.json (whose required list wrongly demanded internal_correlation_id on the WIRE status this same function's own parseIrEnvelope call refuses it on)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-42\\every-site.test.ts",
+      "test": "ADVISED, RESIDUAL and UNKNOWN, each on the committed wire instance; the supervision axis beside them",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-18-holdings-observed.json (committed, HEAD-read)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-42\\every-site.test.ts",
+      "test": "a whole v1 directory-search body, through parseIrEnvelope and toOptionRow, into ScopeSummary",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-18-holdings-observed.json (committed, HEAD-read)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-42\\every-site.test.ts",
+      "test": "the directory cohort and the Holdings classification, each both ways; the flagged shape on supervision refused",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-18-holdings-observed.json (committed, HEAD-read)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-45\\residuals.test.ts",
+      "test": "the reach by subtraction, each disposition, each kept loader run under a watch; the old dev script writes",
+      "class": "Q",
+      "action": null,
+      "query": "scripts/dev-live.mjs is counted among the 5 'kept' config loaders (its `loaders` classification is 'runner') but the test's `arms` map only defines measurement arms for the 3 npm scripts (dev/build/preview) and the ONE named 'programmatic' resolver, so dev-live.mjs always reads NOT MEASURED / clean=4 of 5 -- needs a ruling on whether dev-live.mjs gets its own measurement arm or is excluded from the kept-and-measured count"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-48\\withheld.test.ts",
+      "test": "ADVISED, RESIDUAL and UNKNOWN in turn, on the committed wire instance",
+      "class": "H",
+      "action": "the census's HOLDER_ROLE map was missing contracts/directory-browse.ts (a new wire-cohort checker, candidate 4/5's arrival), leaving it UNCLASSIFIED; named it"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-48\\withheld.test.ts",
+      "test": "git grep -l -i -w CohortFact|cohorts|authoritative over HEAD:src, outside __tests__/",
+      "class": "H",
+      "action": "the census's HOLDER_ROLE map was missing contracts/directory-browse.ts (a new wire-cohort checker, candidate 4/5's arrival), leaving it UNCLASSIFIED; named it"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-48\\withheld.test.ts",
+      "test": "the committed unknown-cohort fixture, and a whole v1 wire body through the real adapter, into ScopeSummary",
+      "class": "H",
+      "action": "the census's HOLDER_ROLE map was missing contracts/directory-browse.ts (a new wire-cohort checker, candidate 4/5's arrival), leaving it UNCLASSIFIED; named it"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-4\\fields.test.ts",
+      "test": "every top-level field of the performance fixture reaches the markup",
+      "class": "H",
+      "action": "render/fixtures/bundle.performance.json stored whole-percent numbers (7.42) predating commit a0fa8137's percent() display transform (value*100); rescaled to fractions (0.0742) and kept fe-s-4-performance.json's byte-identical smoke-map copy in sync; the walk also now accepts a percent-rendered alternate for a fraction leaf"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-4\\fields.test.ts",
+      "test": "the summary prints the values as given and derives nothing from them",
+      "class": "R",
+      "retired_by": "FWD-5 v0.8",
+      "action": "the period-return figure is now percent-formatted (commit a0fa8137), not printed as given; the fixture's rescaled fraction now round-trips through percent() to the same figure"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-54\\stated-state-wins.test.ts",
+      "test": "F54-AC-CROSS -- fe-s-47/no-status-reason.test.ts F47-AC7's printed \"OTHER PROBLEMS\" (row IRPT_FNTEND-W3-S38) is resolved by this fix",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-54\\stated-state-wins.test.ts",
+      "test": "F54-AC3 -- a status-summary response stating PARTIAL renders PARTIAL, not a default",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-54\\stated-state-wins.test.ts",
+      "test": "F54-AC2 -- the first-act trace: how many production render sites consume status-summary/status-job",
+      "class": "R",
+      "retired_by": "FWD-8 v0.8",
+      "action": "tabs/analysis/ProspectJobStatus.tsx is now a real production consumer of getJobStatus (commits 940333df/586cca01/8dbc742b, \"read issued prospect job status without resubmission\"); the \"no screen reads it [yet]\" assertion (0 production call sites) no longer holds -- re-scoped to 2"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-57\\carry.test.ts",
+      "test": "HOLDINGS ROUTE, count:0, NO THROW: yes",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser and aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-57\\carry.test.ts",
+      "test": "MISSING KEY ON A NON-REFUSED RESPONSE THROWS EnvelopeMismatch('unprojected_grant')",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser and aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-57\\carry.test.ts",
+      "test": "REFUSED RESPONSE: unprojectedGrant KEY ABSENT, NO THROW: yes",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser and aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-57\\carry.test.ts",
+      "test": "UNPROJECTED_GRANT PRESENT-AT-ZERO CARRIED ON 12 of 12 OPERATIONS",
+      "class": "Q",
+      "action": null,
+      "query": "2 of the (now 17, denominator unchanged at 12 carried-availability operations) declared routes -- selection-create, directory-browse -- fail their own adapter's field-equality checks against the pre-existing committed SelectedAccounts/DirectoryPage fixtures (e.g. SelectedAccounts.valid.json's account_ids/selected_account_ids are a superset/subset, which adaptSelectedAccounts's equality check refuses); same open question as fe-s-1/fixtures.test.ts's row"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-75\\parse-control.test.ts",
+      "test": "every declared entry parses through parseIrEnvelope without throwing",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fixtures/smoke/default.json (regenerated via the fixed gen-corpus.ts)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-78\\cohort-chip.test.ts",
+      "test": "ScopeSummary mounts data-slot=\"cohort-chip\" at an admitted radius (never rounded-md/6px) when row carries it",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in the two fe-s-78 committed fixtures"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-78\\cohort-chip.test.ts",
+      "test": "the fixture entry parses through the REAL adapter with an authoritative cohort",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in the two fe-s-78 committed fixtures"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-81\\generator-output-carries-unprojected-grant.test.ts",
+      "test": "default.json: every entry carries unprojected_grant and parses clean through parseIrEnvelope",
+      "class": "H",
+      "action": "gen-corpus.ts's envelope() built NO_UNPROJECTED_GRANT.kinds as an array; fixed to Record<string, number> and regenerated the 3 files"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-81\\generator-output-carries-unprojected-grant.test.ts",
+      "test": "fe-s-13-wire.json: every entry carries unprojected_grant and parses clean through parseIrEnvelope",
+      "class": "H",
+      "action": "gen-corpus.ts's envelope() built NO_UNPROJECTED_GRANT.kinds as an array; fixed to Record<string, number> and regenerated the 3 files"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-81\\generator-output-carries-unprojected-grant.test.ts",
+      "test": "fe-s-14-print-v1.json: every entry carries unprojected_grant and parses clean through parseIrEnvelope",
+      "class": "H",
+      "action": "gen-corpus.ts's envelope() built NO_UNPROJECTED_GRANT.kinds as an array; fixed to Record<string, number> and regenerated the 3 files"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-9\\resolve.test.ts",
+      "test": "every referenced report resolves (REFS RESOLVED: n of n) and the document shows the summary values",
+      "class": "R",
+      "retired_by": "FWD-5 v0.8",
+      "action": "the YTD return is now percent-formatted (commit a0fa8137); re-scoped the literal check from the bare fraction \"0.0917\" to the percent-rendered \"9.17%\""
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\mvp-selection\\directory-browse.test.ts",
+      "test": "directory revision is distinct from entitlement and absent stays absent",
+      "class": "H",
+      "action": "aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site (positiveScope's own verified_request_firm_id, read dynamically)"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-33\\fixtures-reach.test.ts",
+      "test": "(module load) TypeError: STATUS_SCHEMA.allOf[0].if.properties.state -- the whole file failed to load, refusing every test in it",
+      "class": "H",
+      "action": "IRPT-Y-DATES-01 nested the flat if.properties.state.enum condition one level deeper (inside if.allOf[0]) to add a sibling arm; read whichever shape is present. The module now loads and its other tests run; 4 of its OWN test bodies still fail this round (byte-for-byte comparisons against the committed HEAD blob of the 3 fe-s-18-holdings-*.json maps, whose content this cell also touched for the shared kinds/icid/firm_id fixes) -- not resolved this round"
+    },
+    {
+      "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-47\\no-status-reason.test.ts",
+      "test": "(module load) EnvelopeMismatch('unprojected_grant') on directory-search -- the whole file failed to load, refusing every test in it",
+      "class": "H",
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in envelopeBody()'s own literal and status default; the module now loads and 5 of its 8 tests pass. 3 remain failing this round: F47-AC5 (a `validate.ts` git-diff check, unrelated to this bug family), F47-AC6/AC7 (the selection-create adapter mismatch, same open question as fe-s-1/fixtures.test.ts's row)"
+    }
+  ]
+}
