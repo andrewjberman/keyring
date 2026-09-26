@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` (grades landed pins after the fact while the lease is FAST).
 Drive: /closer-drive loop (cron 7a9ea1ce, every 30m at :17/:47; CTO 101098, Andrew-direct ~03:0xZ; replaced /canonical-drive 57c0067c); lease FAST re-armed to 15:01Z. Egress: vendor API calls permitted this session, each ledgered (CTO 101098). Goal:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T13:3xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
+As of 2026-09-26T13:5xZ. The prior long form of this file (B0-B3 build history) is in git: `git log -p -- <this file>`.
 
 ## Pins
 
@@ -54,11 +54,11 @@ None building. Next surface: the adapter package + performance root (deploy B), 
 1b. DONE 13:29Z: irpt-ycharts-generate LIVE at IJD6bd1I.. (ledger irpt-generate-closure-fix-20260926 CLOSED): closure
    0 missing (was 3), CodeSha256 == artifact, CONTRACT_VERSION arm before/after, replan No changes. ~Y's upload rides the
    admin+Dev window as K4.
-1c. ADMIN+DEV UI WALK (Andrew-direct "Agent on an admin+dev login", CTO 101151): packet v3 blob 07b7a000 @5c7787839b
-   (route-graded HAR, K3 selections kept, K4 ~Y's one upload incl. the ONE resident YCharts GET it causes). CTO signed
-   v1 and v2; CRO refused v1; v3 re-sign of both halves asked 13:43Z. Create only after both halves at HEAD.
-2. Deploy (B) -- packet blob 3c916b9c @5c7787839b sent for the CTO half 13:43Z (CTO 101098: served move); build
-   + apply after the half lands. Was: upload the adapter (publish 4872b28043), apply render_grant.tf +
+1c. ADMIN+DEV UI WALK LIVE: principal irpt-uiwalk-1790430787@opal.test created 13:53:14Z under packet v3 07b7a000 (CTO
+   b70ede1756, CRO a157c45762); ledger irpt-ui-walk-principal-20260926 OPEN (C1 closed). ~D walks (HAR), ~Y makes ONE
+   upload (K4). P deletes on both "done" or at 14:53Z (cron 3d36d71d), then the route-graded audit vs the 13:51Z census.
+2. Deploy (B) -- packet blob 3c916b9c: CTO half SIGNED b70ede1756 (+ INF-unarmed before/after arm, reverse-order
+   rollback); CRO second half asked by the CTO. Build + apply after the CRO half lands. Was: upload the adapter (publish 4872b28043), apply render_grant.tf +
    IRPT_EVIDENCE_BUCKET, export_render=on; ledger with the CTO's negative arm (another attempt's token name refused, read
    after delete refused). REHEARSED 00:3xZ (plan only, CLOUD tree, live plan values as vars): 1 add
    (performance_render_grant_read) / 1 change (env + IRPT_EVIDENCE_BUCKET = the same bucket irpt-export-render writes
