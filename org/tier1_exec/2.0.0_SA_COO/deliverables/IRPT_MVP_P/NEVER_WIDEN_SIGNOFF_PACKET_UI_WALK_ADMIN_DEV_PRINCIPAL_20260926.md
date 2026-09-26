@@ -5,6 +5,15 @@
 **Walkers:** `2.0.0_SA_COO~D`: one signed-in PROD walk of `/investor-reporting` with a HAR scrubbed in-stream. In the
 same window, `2.0.0_SA_COO~Y`: ONE Analysis upload of its v2 input, logged and scrubbed (Y msg 101161). This saves a
 second create under a second packet.
+**v6 (14:5xZ) -- WINDOW 2 (CTO 101240 YES).** The first principal (`irpt-uiwalk-1790430787`) was created 13:53:14Z,
+deleted 14:22:22Z and audited; ledger `irpt-ui-walk-principal-20260926` is CLOSED. The diff against v5 is:
+- a NEW principal: the same K1 shape under a new `<epoch>`, created only after both halves name this blob;
+- its times;
+- K6, the export-B BEFORE read, below.
+K4 and K5 run again as signed in v5: the first K4 input is owned by the deleted principal, and the generate function
+now carries `jsonschema` (85TXFzzv + irpt-common:5, LIVE 14:52:47Z, ledger `irpt-generate-jsonschema-fix-20260926`
+CLOSED, deployed import census 59 modules / 0 failed). Export deploy (B) stays OUT of this window, so the superadmin
+session never spans a deploy. Relationship-level Performance is NOT fixed yet, so no FWD-1 re-trace rides this window.
 **AMENDED (v5, 14:1xZ): K5 also names the hop-6/7 recipe's YCharts reads and queue redelivery of at most 5 receives
 (~Y 101209).**
 **AMENDED (v4, 14:1xZ): K5 added -- runbook hop 3, ONE `POST /analysis` (Overview) by ~Y on K4's input (CTO 101204 YES,
@@ -132,8 +141,20 @@ producer's own code.
 - **What it writes (Opal side):** the submission's own request, job and report rows and objects, which are the
   product's record. ~Y names every row and object key.
 - **The YCharts objects it creates** (the holdings upload, portfolio, report and PDF) are named in the ledger and KEPT.
-- **Cutoff:** it runs only if both halves name this blob at HEAD by 14:35Z. Otherwise K5 is skipped, and hop 3 goes to
-  Andrew's own upload and Generate.
+- **Order (window 2):** K4 first, then K5 on K4's new input, one POST each. No cutoff: both run inside the principal's
+  60-min life, or not at all.
+
+## K6 -- the export-B BEFORE read (CTO rulings (c) and 101240)
+
+- **The act:** ONE account-level 49F Performance read by the PAGE, by `2.0.0_SA_COO~D`: a single-account 49F client
+  selected, Performance opened (YTD).
+  - Two requests: the page's own `POST /selections` (K3) and one `GET .../performance/{accountSetId}`.
+  - The answer is recorded (HTTP status, `ok`, state, reason, and for a 200 the section count and completeness) as
+    deploy (B)'s real BEFORE baseline.
+- **What it writes:** a successful Performance read RETAINS its report, as every human read does: `REPORT#` and
+  `RETENTION#` rows in `irpt-requests` plus the retained report object. These are named in the ledger and KEPT, since
+  they are the product's record. A refusal writes nothing.
+- **No vendor call:** 49F computes on Opal's own engine.
 
 ## K2 -- the session, never recorded
 
@@ -180,7 +201,7 @@ its denominator printed. Every request must fall in exactly one admitted class:
 | POST | `/api/scoped/investor-reporting/directory/resolve` (page load); `/api/scoped/investor-reporting/selections` (each selection -> K3) |
 | POST, exactly 1, by ~Y | `/api/scoped/investor-reporting/analysis/inputs` (K4) |
 | POST, exactly 1, by ~Y | `/api/scoped/investor-reporting/analysis` (K5) |
-| GET / HEAD | any page read |
+| GET / HEAD | any page read, including K6's ONE 49F account-level Performance GET |
 
 Any request outside these classes is branch (d). This includes, explicitly:
 - any request of any method to `/auth/admin/`;
@@ -247,5 +268,6 @@ The census prints the count per class, the count outside the classes (must be 0)
 
 ## WHAT THE HALVES SIGN AGAINST
 
-This file's committed blob, the key list K1 + K1-CRED + K2 + K3 (retained) + K4 (retained, strike-able) + K5 (retained, cutoff 14:35Z) above, the stated superadmin radius, and the sequence's
+This file's committed blob, the key list K1 + K1-CRED + K2 + K3 (retained) + K4 (retained, strike-able) + K5 (retained) + K6 (the BEFORE read; its retained report kept) above, for window 2's NEW
+principal, the stated superadmin radius, and the sequence's
 rollback and audit.
