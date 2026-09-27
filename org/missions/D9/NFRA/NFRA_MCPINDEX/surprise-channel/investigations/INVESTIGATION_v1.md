@@ -1504,6 +1504,53 @@ carries none.
     },
     "spec_asserts": "The MX-r-3 face's counts and worktrees are complete as written.",
     "world_is": "Three face imprecisions, each resolved without touching the shipped set."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S21",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T05:05Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each hazard is measured closed at CLOUD. W3-S7: portal_index/integration.py landed at bc0cde67f0, so the feared phase-2 refusal did not hold the module. W3-S10: tests/test_entitlement_admin.py test_ogz2_ac08 names portal_index and opal_discover by name and pins 51 (:347-360). Z-S10: MX-s-2 was SUPERSEDED @8668dd09a5 and its AC3 retired with it; MX-s-6 grades the bridge. Z-S4 and Z-S5: MX-s-3 complete @d9efea9be2 with AC PASS on 'converter occurrences>=1' (the deployed bundle carries the converter) and 'funds whose guard counts the holdings feed 2 of 2'.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W3-S7",
+      "NFRA_MCPINDEX-Z-W3-S10",
+      "NFRA_MCPINDEX-Z-S10",
+      "NFRA_MCPINDEX-Z-S4",
+      "NFRA_MCPINDEX-Z-S5"
+    ],
+    "one_line": "The issuer closes five ARMED rows whose hazard is gone at CLOUD: two overtaken by the held-branch drain, one retired with its superseded order, two repaired by MX-s-3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree CLOUD shows portal_index/integration.py (bc0cde67f0); test_entitlement_admin.py:347-360 at CLOUD; order faces MX-s-2 (8668dd09a5) and MX-s-3 (d9efea9be2)"
+      ]
+    },
+    "spec_asserts": "Each target row's hazard stands until disarmed.",
+    "world_is": "All five are disarmed by acts already landed; the gate's fold still read them open because no adjudicating row existed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S22",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T05:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "one_line": "record-terraform-deploy.sh:218 picks its JSON tool by a hardcoded path to one device's bun (/c/Users/AndrewBerman/.bun/bin/bun), so the same deploy record runs bun on that device and python everywhere else. The two paths have different encoding behaviour, which is how Z-S13's loop stayed invisible on the laptop.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 216-229 infra/aws/lambda/ci/record-terraform-deploy.sh at CLOUD 3cc88e7b7d"
+      ]
+    },
+    "spec_asserts": "CLAUDE.md: NEVER write device-specific logic into ajb_workspace -- derive, don't hardcode.",
+    "world_is": "Pre-existing. Kept out of MX-s-7's scope (bound 2); MX-s-7 makes the python path correct, which is the path site Z takes."
   }
 ]
 ```
