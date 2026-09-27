@@ -9,6 +9,7 @@ Prints LOGGED_IN once the token is held, so the operator can tell P; K4 starts o
 ParameterNotFound. The outcome of each POST is read from DynamoDB, never by a second POST.
 """
 import base64
+import hashlib
 import json
 import os
 import subprocess
@@ -67,9 +68,28 @@ def k5_body(input_id):
     return body
 
 
+def k4_body():
+    """The ONE K4 body. The Y2 arms (P_Y2_UPLOAD_ARMS_ACT_20260927.md) set WALK_UPLOAD_FILE, WALK_FILE_TYPE and
+    WALK_REFERENCE_NOTIONAL; unset, it is window 15's Dollars CSV exactly."""
+    upload = os.environ.get("WALK_UPLOAD_FILE", lu.CSV)
+    file_type = os.environ.get("WALK_FILE_TYPE", "csv")
+    if file_type not in ("csv", "xlsx") or not upload.endswith("." + file_type):
+        raise ValueError("WALK_FILE_TYPE must be csv or xlsx and match the file's extension")
+    data = open(upload, "rb").read()
+    body = {"upload_token": "y-live-1203-" + lu.now().strftime("%Y%m%dT%H%M%S"),
+            "filename": os.path.basename(upload), "file_base64": base64.b64encode(data).decode(),
+            "file_type": file_type, "declared_currency": "USD"}
+    if os.environ.get("WALK_REFERENCE_NOTIONAL"):
+        body["reference_notional"] = os.environ["WALK_REFERENCE_NOTIONAL"]
+    return body, data
+
+
 def main():
     out = sys.argv[1]
     if "--dry" in sys.argv:
+        body, data = k4_body()
+        print("OK: K4 body", json.dumps(dict(body, file_base64="<%d bytes base64>" % len(data))),
+              "sha256", hashlib.sha256(data).hexdigest()[:16])
         print("OK: K5 body validates;", json.dumps(k5_body("portfolio_" + "0" * 64)), "| no network call")
         return 0
     deadline = lu.DEADLINE
@@ -97,10 +117,13 @@ def main():
         time.sleep(10)
     say("PASSWORD_DELETED", name, "reads absent")
     headers = {"Content-Type": "application/json", "Authorization": "Bearer " + token, "X-Contract-Version": "v1"}
-    data = open(lu.CSV, "rb").read()
-    body = {"upload_token": "y-live-1203-" + lu.now().strftime("%Y%m%dT%H%M%S"),
-            "filename": "aapl-vnq-12.03.csv", "file_base64": base64.b64encode(data).decode(),
-            "file_type": "csv", "declared_currency": "USD"}
+    try:
+        body, data = k4_body()
+    except ValueError as exc:
+        say("ERROR:", exc, "; no POST made")
+        return 1
+    result.update(upload_file=body["filename"], upload_sha256=hashlib.sha256(data).hexdigest(),
+                  reference_notional=body.get("reference_notional"))
     if lu.now() >= deadline:
         say("ERROR: past the deadline; no POST made")
         dump()
