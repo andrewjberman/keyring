@@ -10066,3 +10066,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Recording on S159 (P's row, not adjudicated here; it stays UNDER_INVESTIGATION). Per 102021, R10 applies to Analysis: a certified section's printed as-of must be the holdings as-of or carry the exception label, so the certifier fails any section whose printed date is neither. S159's 5 of 51 sections dated Sunday 09-27 are that client-visible case, open until the certifier enforces it. Existing rows are not edited: the row gate refuses in-place mutation."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S163",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-27T18:31:00Z",
+  "one_line": "CTO 102024 closes S159. For Analysis sections, the vendor's printed 'Data as of' line is R10's label, so the Sunday 09-27 sections are labelled, not silent. No certifier change: the hop-7 check that the line is present stays, and a section without it still fails.",
+  "class": "OBSERVATION",
+  "adjudicates": [
+    "IRPT_BCKEND-S159"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO 102024 (18:28:19Z, RE 102023): 'the vendor's printed \"Data as of\" line IS R10's label for Analysis sections; no certifier change'; 'S159 closes on this, with no new rule to build'",
+      "the advisor's own report creates send as_of_date_option=latest in 6 of 6 (HAR 01 #165/#186/#211, HAR 02 #276, HAR 03 #425/#452; read locally, 0 vendor calls), as recipe.py:744 does",
+      "RPT-5288c06d's PDF prints 23 'Data as of' lines, each on its section's page; certify.py's hop-7 rule (Y @74b4368bef, served since resident h7) requires them"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "S159: a client-visible date differs from what was requested (prior_close) on 5 of 51 sections dated Sunday 09-27.",
+  "world_is": "Those dates are the vendor's generation-day labels for as_of_date_option=latest, which the advisors' own reports use too. They are printed on the face, and R10 requires labelling, not a single date. The portal page header stays the holdings as-of.",
+  "notes": "GRADUATED into CTO 102024 (R10 applied to Analysis: labelled, never silent). With S162 (S160, S161), the level_as_of_type thread from window 15 is closed: W15-3 is Static-only as built, and P ships it on the next resident version."
+}
+```
