@@ -157,3 +157,22 @@ Queued after MX-s-3 on the same lane (0.7.0_AE_CloudOps~I). MX-s-3 has the 23:30
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+<!-- self-marked by the assignee 0.7.0_AE_CloudOps~I 2026-09-27T22:3xZ, on the order as amended A5
+     @fc2001d2a6 (step 1 and AC1 left this order; MX-s-4 is step 2 only, graded on AC4 alone).
+     Step 2, the honest wrapper exit, landed at 4b3a757410 and its Z-S17 ordering repair at 03e744ec3f;
+     SSM document opal-bd-asset-dim-download is at DocumentVersion 3, Active and default, Hash
+     490af5249f84285f037cd200b210283e8f57edfa383a316234fede1008b77d66 (describe-document re-read by
+     this seat, not taken from the update call).
+     Deploy ledger nfra-mcpindex-bd-asset-dim-shutdown-order CLOSED, all 5 legs proven, sentinel removed.
+     L4 closed on a PLANTED ordering probe, which AC4 admits in terms: ssm:e77e84c7-6e1f-4772-9dae-d00dc52b9965
+     Status=Failed rc=1, stdout shutdown-before-error, stderr carrying the OS's own 'Shutdown scheduled for
+     Sun 2026-09-27 22:17:03 UTC', and the instance stopped 22:17:38Z. The probe made NO vendor contact.
+     AC4 is JUDGMENT: recorded UNVERIFIABLE-BY-INSTRUMENT, NOT self-graded -- 3.0.0_SA_CVO~O grades it at L9.
+     Instance: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~I/
+       NFRA_MCPINDEX.TO-MX-s-4.bd-asset-dim-login.proof_of_spec.json -- proof-of-spec-check VALID (rc=0),
+       acceptance rows=1, violations=0.
+     Rows: Z-S15 and Z-S17 (both the issuer's to disarm; Z-S17's two conditions are now both met) and
+       Z-S30 (BLOCKING, @e8fcf04e58, ruled (c) by the issuer at 215826Z). Step 1.2 is 1.0.0_SA_CTO~O's to
+       design. The asset-dim data freeze is NOT lifted by this order and never was in it. -->
