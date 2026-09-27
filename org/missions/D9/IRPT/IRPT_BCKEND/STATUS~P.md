@@ -4,113 +4,88 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T16:4xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T20:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+**MSTR freeze (102065):** no commit, push or worktree add from about 03:00Z to 05:00Z (the S19 history purge);
+re-sync each worktree on DONE.
 
 ## Pins (served)
 
 | What | Value | Ledger |
 |---|---|---|
-| irpt-performance-adapter | `bOefL9nx..` since 05:22:03Z (09-27) = Ll6t4VPa + COT actual_start (backend 05778597eb, publish f360e6c80e); earlier: P-REOPEN-01, both timing lines, S147 fix M; NO armed plan since 04:34:55Z (`approved_performance_plan = null`, no session grant) | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 / irpt-performance-cot-one-use-1-20260927 / irpt-cot-actual-window-20260927 CLOSED |
-| irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) = hop-3 six + the cross-viewer title binding (f8c72944f3) | irpt-cross-viewer-title-20260927 CLOSED |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-lt` since 15:51:47Z = rs + the level_as_of_type tolerance (49b85eacd2); rs = dx + release-and-resume (38ee23deaa); rollback roots rs, dx, cw, wf, rb, xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-waf-refresh-20260927 / irpt-resident-capture-env-20260927 / irpt-resident-w13-diagnostics-20260927 / irpt-resident-release-resume-20260927 / irpt-resident-level-tolerated-20260927 CLOSED |
-| irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
-| irpt-directory-search | `o1TXq5PH..` since 22:54:12Z: UIR-07 exact full-name match first in search AND browse(q) (49b935c213); -target apply | irpt-uir07-search-rank-20260926 CLOSED |
-| irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
-| Backend branch | `irpt-smoke-p-backend-20260923` @3aa870163d (not pushed) |  |
-| Publish worktree | `irpt-p-publish-20260923` (source-map record after f360e6c80e; not pushed) |  |
-| Push state | LOCAL, unread against origin this turn; MSTR pushes |  |
+| irpt-performance-adapter | `bOefL9nx..` since 05:22:03Z (09-27); NO armed plan (`approved_performance_plan = null`) | irpt-cot-actual-window-20260927 CLOSED |
+| irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) | irpt-cross-viewer-title-20260927 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-lt` since 15:51:47Z | irpt-resident-level-tolerated-20260927 CLOSED |
+| irpt-status | `bMMJ/bQ+5..` | irpt-status-reads-20260926 CLOSED |
+| irpt-directory-search | `o1TXq5PH..` | irpt-uir07-search-rank-20260926 CLOSED |
+| irpt-export-render | **`Ulim/gmf..`** since 20:0xZ. Async submit (the POST answers QUEUED with an `exr_` id; ONE marked self-invoke builds; retries 0), withheld rejected prose with client copy, the async leg bound to accept's principal and permitted-set digest, and the reopen-rule authorizer (3EST/hewG) | irpt-export-async-submit-20260927 (A1 open) / irpt-export-async-binding-20260927 CLOSED / irpt-export-reopen-rule-20260927 (A1 open) |
+| Backend branch | `irpt-smoke-p-backend-20260923` @118612b599 (not pushed) |  |
+| Publish worktree | `irpt-p-publish-20260923` @842156ee01 (not pushed) |  |
+| Push state | LOCAL; MSTR pushes |  |
 
 ## Live thread
 
-- **49F Performance, account-level:** served. A second authorized viewer now reopens a retained report (arm 1 PASS);
-  window 4's K7 refusal was this defect.
-- **Hop 3 (Analysis generate):** the title producer, the packaged settings path and template-lane admission are served
-  in generate AND the resident, content-proven 6/6 (`IRPT_MVP_P/HOP3_DEPLOYED_CONTENT_PROOF_20260926.md`).
-- **Hops 8-9 (status reads):** served; ~Y's no-overlay proof 4/4; IAM 10/10.
-- **Next window (CTO 101441/101466):** ONE window runs upload, generate, READY, sections and history for Analysis. It
-  is cut once ~Y's offline pre-flight of hops 5-9 is pinned. K5's measured write set: ~Y 101484 @f36c5ee4c4.
+- **Performance:** served at 49F, INF and COT; a second authorized viewer reopens a retained report.
+- **Analysis:** the first READY report (window 15, RPT-5288c06d). K10 (the page read) waits on ~D's selected_tenant fix
+  and ~Y's irpt-status rebuild (item 4).
+- **Export:** window 17's K8 reached the narrative build and failed there after 60 s (CTO 102026). Both defects are
+  fixed and SERVED: the rejected prose is withheld, and the submit is async. Window 18 runs the five arms.
 
 ## Acceptance (goal Done criteria)
 
 | # | Criterion | State |
 |---|---|---|
-| 1 | Signed-in journey per firm | Performance DONE at all three: 49F (account-level, reopen fixed); INF RPT-df47a1fc (one Orion call, 7.98%); COT RPT-b683f188 (one claim, 2 BD requests, -1.18%, reopen served). Analysis: breaks at hop 6 (YCharts WAF on the read-back). Export: render ON; the first real export is not run (K8) |
+| 1 | Signed-in journey per firm | Performance DONE at all three. Analysis READY once (49F). Export: the async path is served, and the first real export is window 18's K8 |
 | 2 | Every active account resolvable | MEASURED: COT 843/843, INF 878/878, 49F 6698/7497 (9 funded non-computable) |
-| 3 | COT structurally sound, window disclosed | Next-list item 3. Real-data run RPT-b683f188 exposed an overstated window (actual 01-02 = the provider's calendar grid; the account's series starts 07-21). FIXED and served (bOefL9nx): the recorded bytes now give actual 07-21..09-22. The retained RPT-b683f188 is immutable and still shows 01-02; a corrected COT report on real data needs ONE new COT use: both halves and a ledger (Andrew's session egress word, MSTR 101850) |
+| 3 | COT structurally sound, window disclosed | The fix is served (bOefL9nx). A real-data corrected report needs ONE use: the S157R packet is out for halves, on the session refreshed 18:42Z (AWSCURRENT 9da4e781) |
 
 ## Write claims
 
-None. Window 8 CLOSED 04:46:35Z (ledger @f293962a58).
+Window 18 (`irpt-ui-walk-principal-w18-20260927`, OPEN): both halves SIGNED on blob b74de7e4 (CTO @7ffe09ff0b 102078;
+CRO @8d09b3994c 102079). It opens after the CRO's ui-walker reports DISARMED (about 20:55Z).
+- CRO citation fix for part C: its authority is CTO 102028 (1) on Andrew's 09-26 word "egress is permitted for API
+  calls". It is not MSTR 101850 via CTO 101854.
+- CTO item: part C's audit prints the resident journal's host re-capture and session_refresh counts; either
+  non-zero is BLOCKING.
 
 ## Next-list (in order)
 
-Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (window 7; INF; COT). Andrew at ~Y 04:01Z
-"yes, run the Analysis window" (W8-2): USED. Any further window or vendor use needs a new word.
+1. **Window 18:** create on the CRO's DISARMED report, then:
+   - A. ~D's round-8 walk;
+   - B. K7/K8 async export with five arms (the POST timed from the HAR; 2 invocations);
+   - C. ~Y's four securities_info reads by `comparison_identity_read_20260927.sh`, with the evidence file path sent to ~Y.
+   It closes the A1s of the async-submit and reopen-rule ledgers.
+2. **S157R, a corrected COT report:** packet blob 049ea241 (@95f271b30a), out for halves (CTO 102081, CRO 102082).
+   Plan 4 b20d69b2 (01-01..09-21), expiring 02:00Z. Arm, read, reopen and disarm in one tick, before 02:00Z.
+3. **Resident Static tolerance** (CTO 101971 item 2): ~Y's P_STATIC_TOLERANCE_20260927.patch, applied but UNCOMMITTED
+   in the backend worktree (extract.py, recipe.py, resident_worker.py, test_resident_worker.py, new
+   test_calculation_settings.py). Ship as the next resident version under its own ledger; run its suites separately.
+4. **irpt-status rebuild** (~Y 102050, 102067): HEAD's submission.py + P_TEMPLATE_STATUS_DATES_20260927.patch + the
+   entry.py render_ports line. Three changes, under its own ledger and halves, before K10.
+5. **Next round's enrichment** (CTO 102041 item 2): filter each causal headline before composition, not the whole
+   prose.
+6. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
-1. **Analysis (the live thread): READY.** Window 15's REQ-67e12718 on resident lt reached READY at 16:23:00Z:
-   - one release (calculating), then READ_BACK_DONE on the saved portfolio (7/7, tolerated level_as_of_type=custom_date);
-   - certified, READY;
-   - REPORT#RPT-5288c06d6c9799f5251f3a27632ffc1b retained, with the vendor PDF, 2 extraction-evidence objects and the
-     platinum analysis report.
-   This is the FIRST READY Analysis report, FWD-1's Analysis hop end to end. Bounds held (2 receives, 3 status GETs,
-   1 saved GET, 0 re-captures).
-   Finding (with ~Y): the vendor stored custom_date against the prior_close sent; 5 of 51 PDF sections are dated
-   2026-09-27 (a Sunday).
-   K10 in the page (amendment 1, 16:34-16:47Z): the history LISTS the job, but its status and item reads omit
-   selected_tenant, so irpt-status refused IdRefused (UNEXPECTED) and the report was not reached in the page. ~D is
-   cutting the portal fix. Window 15 is CLOSED at 16:47:34Z (0 outside the classes). CTO 101972 narrowed W15-3 to
-   Static portfolios on the next resident version; ~Y's prior_close saved-GET test runs in its own packet.
-2. **K8, the first real export:** window 14 (15:03-15:12Z): the tenant hop HOLDS, since the POST carried
-   selected_tenant=49financial. The server refused ReportRefused "invalid report reference", because the page sent
-   report_id = the revision hash (39c11079..) instead of RPT-b5e0a16e... Nothing was exported. The fix IV-e-65 is
-   drained at local portal DEV e8a00b23 (21ec94d8). The window-16 packet (blob 907073b1, @c1e5b8d1b5) is out for both
-   halves, and it is created after window 15 closes.
-3. **A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** plan 63cf95e9 (01-01..09-21) was built with
-   no vendor call. The 01-01..09-22 as-of window reopens RPT-b683f188 through the retained pointer (12:29:54Z), so that
-   window would never spend a plan. The plan-off pre-check refused with 0 vendor calls (P0). The packet (blob 9c807347,
-   @ac1490eb22) was signed by both halves and RUN at 15:40-15:43Z. The claim was spent, then BDRequestFailed HTTPError:
-   NO report, disarmed to null (ledger irpt-performance-cot-one-use-s157-20260927 CLOSED). The COT BD session likely
-   expired after K12 at 04:31Z (IRPT_BCKEND-S158, ARMED). CTO 101946 RULED: the refresh is the scheduled automated
-   `opal-cot-bd-session-fetch` (scheduler cot-bd-session-daily-et, 07:30 ET), owned by 0.6.2_AE_PartnerETL (ADVI_COTETL;
-   the lane is not registered, and MSTR is seating it). It last succeeded 09-16 and failed 09-24..09-27. S158's disarm
-   owner is that lane. Nobody signs in by hand. S157 re-arms only on a NEW AWSCURRENT of blackdiamond/cot/session, as a
-   new signed use. The page's COT YTD view keeps RPT-b683f188's face until the holdings as-of advances.
-4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
-
-**DONE this stretch:**
-- Window 13 (the fifth Analysis attempt) opened 14:11:33Z and closed 14:33:10Z: 0 outside the classes; writes = K4/K5; bounds held.
-- Window 12 (K8 re-cut) opened 13:35:19Z and closed 14:03:20Z: the export refused at submit, nothing written; 0 outside the classes.
-- Window 11 (the fourth Analysis attempt) opened 12:56:51Z and closed 13:22:00Z: 0 outside the classes; writes = K4/K5 only; bounds held (@ledger irpt-ui-walk-principal-w11-20260927).
-- Andrew-direct "rec approved" (/open-calls CALL 1): ledger irpt-p-live-scope-20260923 CLOSED on the agent walks (@22c2fc699d).
-- Window 10 opened 06:19:10Z and closed 06:32:17Z. K7 reopened a 49F report (8.05%); K8 was not run (the page refused); 0 outside the classes; 0 new media in git.
-- S157 filed (COT retained face overstates its window) and named in the release item (@52f078fe1e).
-- Window 9 (~D's read-only round-7 walk) opened 05:37:40Z and closed 05:48:24Z: 0 outside the classes (@eade2ba0f5).
-- Resident wf served 05:54:14Z (@f57a08f106 OPEN; CLOSED this commit).
-- COT window disclosure (criterion 3): actual_start is now the account's first series point; served bOefL9nx,
-  DELTA=0 on every reachable surface (ledger irpt-cot-actual-window-20260927).
-- INF signed-in Performance: plan 7f64b166, ONE Orion call, RPT-df47a1fc PARTIAL, 7.98% (01-01..09-22).
-- COT signed-in Performance: plan 22f0a988, arm-OFF pre-check 3/3, armed 04:29:10Z (1/1/1), ONE claim 04:31:30Z,
-  2 BD requests (provider evidence ART-36a64d88), RPT-b683f188 PARTIAL, -1.18%, reopen served; disarmed to null
-  04:34:55Z (0/1/1). Ledger @ffe4269b12.
-- Window 8 closed: route audit 0 outside the classes; write set traced; users equal (@f293962a58). Finding: the
-  auth-log by-name read is blind (the handler logs method+path only), so K1 absent is the proof.
+**DONE this stretch (20:3xZ):**
+- W16 and W17 CLOSED @ca5ae4f5ea. W17's K8 passed the reopen-rule authorizer (arm 1 live) and failed at the narrative
+  build; nothing was written; arm 3 held.
+- Narrative fix (ac4eb443b3) and async submit (f3995c0d31) served as 8nkjGpT0 (D1 @d43edd47cd). A no-write live
+  probe: a marked event with no pointer was refused.
+- Binding plus client copy (118612b599) served as Ulim/gmf; ledger CLOSED @ad0590b8f1.
+- TO-IB-s158: AC1 amended (@9fa6a3c5d8); ~S flipped it complete (@fe23038617, 3/3). CTO 102044 accepts AC1 as refused
+  with an absence proof. S158 closes.
 
 ## Parked
 
 | Question | Owner | Un-parks when |
 |---|---|---|
-| The kept test inputs and reports from windows 1-6 in cottonwood (UPLOAD#/INPUT#/analysis#/REPORT# rows and objects owned by deleted walk principals) must be excluded from any firm viewer's lists, or removed, before the route opens to firm users; include by KEY irpt-jobs cottonwood / REQ-3a1b73a8dead02a17a09043b, the window-6 job left SUBMITTING, since a tenant-wide job listing would show it as never finishing (CTO 101678); and by KEY cottonwood REPORT#RPT-b683f188c2e13da7865eeceace6334c3, COT's K12 report whose retained face overstates its window (IRPT_BCKEND-S157, CTO 101825); and by KEY cottonwood PERFORMANCE_USE#63cf95e9defc2385c7314f193cf211ea5a6d25a3426ece07654b7bcf8d31fb44, the S157 use's spent claim (V1, no report; CTO 101937); closes as not needed only if EVERY reader lists by owner (4.0.0_SA_CRO 101609) | the release cutter | the route opening to firm users |
-| MSTR removed the backend worktree's Terraform provider caches (101858): run `terraform init` in a root before its next safe-apply | 2.0.0_SA_COO~P | the next apply in irpt-smoke-p-backend-20260923 |
-| The backend worktree's directory Terraform root predates M's holdings resources (a full plan would destroy 11); UIR-07 used -target | 2.0.0_SA_COO~P | the next directory-root apply: merge CLOUD into the backend worktree first |
-| `build-and-upload.sh` deletes tracked performance/*.py from the publish tree on each adapter build | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
-| `build-and-upload.sh` zips a source_dir JSON with the checkout's EOL (CRLF here), and its artifact record passes through MSYS path conversion (`/iFh..` became `C:/Program Files/Git/iFh..`) | 1.0.0_SA_CTO to route (ci/ owner) | the next build of a function whose hash starts with `/`, or that hashes a JSON member |
-| The performance root's per-apply `approved_performance_plan` variable is null now; any later arm passes its plan file, and the disarm is null | 2.0.0_SA_COO~P | the next per-use word |
-| 49F engine: 9 funded non-computable accounts; 219 of 5194 divergent vs BD | 1.0.0_SA_CTO to route (49F engine lane) | the engine lane's next c02 act |
-| ~D's COT card read HOW MUCH -$40,348.28 (a negative client total) on ****0441 | 2.0.0_SA_COO~D | ~D's next COT face review |
-| The adapter answers an internal viewer's Performance GET that lacks `selected_tenant` with UNAVAILABLE/UNEXPECTED (BucketUnmapped at the directory-bucket map), not a named refusal (w10 06:25:22Z, corr-27a7339e0e20) | 2.0.0_SA_COO~P | the next adapter deploy, or a firm user seeing UNEXPECTED |
-| 49F directory lists 790 not-terminated accounts the custodian shows empty/absent | 2.0.0_SA_COO~M | M's next directory refresh |
+| Kept test inputs and reports from windows 1-6 in cottonwood, plus RPT-b683f188 (S157) and the spent claim PERFORMANCE_USE#63cf95e9, must be excluded from firm viewers' lists or removed (CTO 101678, 101825, 101937; CRO 101609) | the release cutter | the route opening to firm users |
+| The backend worktree's directory Terraform root predates M's holdings resources; UIR-07 used -target | 2.0.0_SA_COO~P | the next directory-root apply: merge CLOUD in first |
+| `build-and-upload.sh` deletes tracked performance/*.py on each adapter build, and zips JSON with checkout EOL | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
+| 49F engine: 9 funded non-computable accounts; 219 of 5194 divergent vs BD | 1.0.0_SA_CTO to route | the engine lane's next act |
+| The adapter answers an internal viewer's GET without `selected_tenant` as UNAVAILABLE/UNEXPECTED, not a named refusal | 2.0.0_SA_COO~P | the next adapter deploy |
+| `run_async_submit` logs stage FAILED for a refused replay whose pointer it did not change; the pointer is the record | 2.0.0_SA_COO~P | the next export change |
+| The tree-order template's `<proof_of_spec>` path is flat; the gate globs `<project>/deliverables/<serial>/<TO stem>.proof_of_spec.json` (~S 102053, row S167) | 2.0.0_SA_COO~P | the next tree order this seat cuts |
 
 ## Limits
 
-No vendor call is made by this seat without its per-use word; the INF use fires only on a signed-in request. Nothing
-here is pushed.
+No vendor call is made by this seat without its per-use word under both halves and a ledger. Nothing here is pushed.
