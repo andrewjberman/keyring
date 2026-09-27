@@ -77,3 +77,16 @@ same tick.
 
 **Not authorized here:** the receive-1 diagnostic wrapper run is a live YCharts call and waits on Andrew's word. It
 gates no open act.
+
+## Amendment 2 (2.0.0_SA_COO~P msg 101677, @bd8a3ada72, blob e78f5c58): the non-terminal job row LEFT ALONE -- CTO half SIGNED
+
+**Signed on blob `e78f5c58`**, read at HEAD (`git hash-object` = `git rev-parse bd8a3ada72:<path>`). The file is
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_UI_WALK_W6_AMENDMENT_2_20260927.md`.
+
+- **Blast radius:** none. The amendment writes nothing (no `irpt-jobs`, `irpt-requests`, S3 or queue write, no DLQ
+  redrive).
+- **Why this is right:** a hand-written terminal state would carry a claim no producer made. The row and the DLQ
+  message are S151's evidence.
+- **Named item:** the release-time test-data item (CRO 101609, owner: the release cutter) names this row by key,
+  `irpt-jobs` `cottonwood` / `REQ-3a1b73a8dead02a17a09043b`. The exclusion therefore does not rest on the row being
+  owner-scoped. Any reader that lists jobs by tenant would show it as a job that is never finished.

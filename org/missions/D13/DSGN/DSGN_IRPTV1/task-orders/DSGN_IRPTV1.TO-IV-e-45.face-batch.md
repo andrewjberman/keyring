@@ -43,6 +43,8 @@ below is the register's acceptance line, verbatim, and it is this cell's bar:
 - UIR-45: `HoldingsSummary.tsx` :69/:73, `slices.ts` `HOLDINGS_FOOTER_SOURCE` :287, `tabs/reporting/PerformanceHeadline.tsx`:150.
 - Line numbers are at DEV fdccc6e6; this cell runs after TO-IV-e-43 on DEV with every other round-7 cell merged, so re-read them.
 
+**Amendment 1 (issuer, 2026-09-27 ~02:2xZ; disarms row W29-S1):** three earlier tests assert colours the round has since retired on purpose, and this cell re-scopes them (class R: keep each test's intent, drop the retired pin, name the retiring ruling in the test's own comment). `__tests__/dsgn-irptv1/iv-e-12.cash-green.test.ts` (IVE12-AC1) and `iv-e-12.positioning-reader.test.ts` (IVE12-AC2) pin every `ASSET_CLASS` key but cash to its base hex, and IV-e-51 moved `ASSET_CLASS.commodities` to `PALETTE.green900` by CTO ruling 101681; `iv-e-12.unclassified.test.ts` (IVE12-AC3) breaks under IV-e-43's page-local move of Equity / Fixed Income / Alternatives off the model colours (UIR-37). Cash stays its own distinct green in the fixed-income family: that intent stays asserted.
+
 **Environment:** the portal worktree is based on the portal DEV the issuer names when this slot is provisioned (DEV after round 7 chains S/P/H/T); `git -C <WS>/portal log -1` is your base. The test file does not exist at the base: write it from the rows above against
 fixtures (`IR/fixtures`, discovered from disk) and a stubbed api (the pattern in `__tests__/dsgn-irptv1/iv-e-33.*` and `iv-e-34.*`), one
 named arm per row (UIR-17, UIR-20, UIR-27, UIR-28, UIR-29, UIR-35, UIR-38, UIR-40, UIR-45); a row a render cannot decide (layout, overlap, wrapping) is asserted on the markup contract that produces
@@ -60,7 +62,10 @@ code path that produces it. It prints `VERDICT: FACE-BATCH-OK` only when every a
 `IVE45-AC2` -- graded at L9 by `3.0.0_SA_CVO` (PRD v0.15: "3.0.0_SA_CVO grades each id") on the issuer's live walk of portal DEV after
 the drain: each row above, read on the running page at 1440 px. RECORD; never self-graded.
 
-<expected_criteria>IVE45-AC1, IVE45-AC2</expected_criteria>
+<criterion id="IVE45-AC3" cell_refs="IV-e-45"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-29/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_IRPTV1~29; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-12.cash-green.test.ts src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-12.positioning-reader.test.ts src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-12.unclassified.test.ts 2>&1 | tail -15</invocation><expect>0 fail</expect></criterion>
+`IVE45-AC3` -- amendment 1: the three re-scoped IV-e-12 tests pass on the merged colours, each still asserting its non-retired intent.
+
+<expected_criteria>IVE45-AC1, IVE45-AC2, IVE45-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -90,6 +95,9 @@ portal/src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx
 portal/src/pages/InvestorReporting/tabs/holdings/slices.ts
 portal/src/pages/InvestorReporting/tabs/holdings/format.ts
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-45.face-batch.test.tsx
+portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-12.cash-green.test.ts
+portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-12.positioning-reader.test.ts
+portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-12.unclassified.test.ts
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -99,8 +107,8 @@ org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IVE45-AC1, IVE45-AC2. Instance at `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~29/DSGN_IRPTV1.TO-IV-e-45.face-batch.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> IVE45-AC1,IVE45-AC2` BEFORE the flip.
+Criterion ids: IVE45-AC1, IVE45-AC2, IVE45-AC3. Instance at `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~29/DSGN_IRPTV1.TO-IV-e-45.face-batch.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> IVE45-AC1,IVE45-AC2,IVE45-AC3` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape; surprise rows in the investigation file (id

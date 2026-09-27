@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-27T00:0xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-27T01:5xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -38,7 +38,12 @@ a0690a03 parser reads READY at every firm.
 
 `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/*` and `data/assets/scripts/gold/investor_reporting/*` on the M
 branch. COT `C_06`, `D_03`, `D_04` and their tests on branch `irpt-m-cot-cash-line` (`../ajb_irpt_m_cashline`,
-head ccb9b38dd8, NOT merged). `0.4.0_DS_ClientPlatform~X` holds the 8+1 paths of its work order.
+head ccb9b38dd8, NOT merged). ~X's order is DONE: `ds-x-b1-cashline` @146876e75a (~X msg 101682); ~M's `irpt-m-s152`
+(`../ajb_irpt_m_s152`) is cut from it and adds 41115a70aa (S152: COT mix_views admits cash/other) and 9135feae97
+(comp-constants patch). S152 rides the cash-line act ALONE as re-cut `irpt-m-s152-cloud` @ff63895521 (CTO
+101688, CRO 101686; name it in the Monday ledger entry). Read-back per period row: |cash + other + unclassified_after -
+unclassified_before| <= $0.02 and total EXACT, else roll back (CTO 101700 @7eb19f44e3; s152_period_view_identity.py); ~X's B1 commits go under ETF Part B's own ledger. No branch is
+merged; the drain is Monday after R1, COT gold last.
 
 ## Next list (in order)
 
@@ -191,6 +196,7 @@ Done this lease:
 | The FULL -> FAST line to the CVO ("FAST from 18:1xZ; pins graded after the fact") | 2.0.0_SA_COO~M | 3.0.0_SA_CVO registers live |
 | `directory/tests` on CLOUD has 6 failures that predate the refresh port (control: unmodified HEAD, the same 6): test_custody_owner.py x4, test_entry.py x2, AttributeError 'NoneType' has no attribute 'headers' | 2.0.0_SA_COO~P (directory-search entry and custody owner) | the next change to directory/entry.py or the custody owner read |
 | COT serves 6 stale D_03 composition files (data_as_of 08-25, 08-28, 09-18; 2 each) that D_03 no longer rewrites (COT_SERVED_COMPOSITION_BASELINE_20260927.json) | 2.0.0_SA_COO~M (COT gold grant) | after Monday's run: if they are still stale, a delete needs a human confirmation |
+| d08 (runners_cot, QA emit only) refuses its byte-schema identity once the LIVE `platinum/firm/mix_summary.json` carries `cash` (Monday's run onward) and, after the drain, the new classes; S151 (its frozen 3-class `mix{}`) is the same shape | runners_cot owner (none live; 1.0.0_SA_CTO routes) | a runners owner is seated, or d08's refusal blocks a served act |
 | IRPT_BCKEND-S124: the bundle mint reads working-tree bytes | owner of .tools/safe_deploy_core.py | next bundle re-mint |
 | COT B_01b deploy. The skip list (52 ruled-out keys + Part 2's 26) and the rule-2 prompt are BUILT on branch irpt-m-b01b-skip @c993550, NOT merged, because a CLOUD commit deploys on the next push. Dry run: 0 new securities, so a first upload makes no OpenAI call. S3 still serves the no-op (S141) | 2.0.0_SA_COO~M | COT's chain adds B_01b: merge + safe-deploy as ONE act under a ledger |
 

@@ -1628,6 +1628,96 @@
     "spec_asserts": "IV-e-43's own criterion (UIR-37, this cell): no ASSET_CLASS_COLOR entry may equal a canonical MODEL_PORTFOLIO_COLORS primary. IV-e-12's own criterion (IVE12-AC3, a different, prior cell): a classified security control (equity) must resolve to exactly lib/chartColors.ts's ASSET_CLASS.equity hex on HoldingsTreemap.",
     "world_is": "Both criteria cannot hold simultaneously for Equity (and, by the same shape, Fixed Income and Alternatives): IVE12-AC3 pins the page's rendered asset-class colour to the shared registry's exact hex, and that exact hex is one of the five canonical model colours (measured true for all three at the base commit fdccc6e6/HEAD before this cell). This cell's own <paths> grant does not include iv-e-12.unclassified.test.ts, so it was left untouched, unweakened and unfixed; IVE43-AC1 (this cell's own criterion) passes at rc0 with every arm holding.",
     "notes": "Not blocking IVE43-AC1 (passes, VERDICT: ONE-COLOUR-OK, own proof instance VALID). Filed because a silent drain-time fix to iv-e-12.unclassified.test.ts without a ruling would either re-introduce the UIR-37 collision (if reverted back to the shared hex) or silently redefine IV-e-12's own acceptance criterion (if changed to the page-local value) -- the CTO/CVO should rule which of the two pins is authoritative for Equity/Fixed Income/Alternatives going forward."
+  },
+  {
+    "id": "DSGN_IRPTV1-W30-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~30",
+    "surfaced_at": "2026-09-26T21:00:00Z",
+    "one_line": "IVE46-AC2's mechanical census (every asset-class key list under AdvisorIntelligence/) turned up a live reader outside this TO's <paths> grant that carries the SAME contract as the four edited partner layouts and still drops structured/commodities: `_shared/types/TenantLayoutConfig.ts:369`'s `DEFAULT_LAYOUT.assetClasses.ordered`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "a future cell holding portal/src/pages/AdvisorIntelligence/_shared/types/TenantLayoutConfig.ts in its <paths> grant -- add 'structured' and 'commodities' to DEFAULT_LAYOUT.assetClasses.ordered (:369), same shape as the four partner layouts this TO edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types/TenantLayoutConfig.ts:369 (this worktree's portal HEAD, base 6757223a unchanged there): `ordered: ['fixed_income', 'equity', 'alternatives'] as const,` inside `export const DEFAULT_LAYOUT` -- the identical `assetClasses.ordered` field this TO edited on all four partner layout.ts files, feeding the same `normalizeMixTo4Class` options and `resolveMixClassMeta` colour/label resolution (PartnerAnalytics.tsx) those layouts feed",
+        "portal/src/pages/AdvisorIntelligence/_shared/hooks/useTenantLayout.ts:68 `const layoutFirm = (firmId && LAYOUTS[firmId]) || DEFAULT_LAYOUT` -- a live fallback for any firmId absent from LAYOUTS, not a dead/unused export",
+        "this TO's <paths> block names only the four partner layout.ts files, composition.ts, PartnerAnalytics.tsx and chartColors.ts -- TenantLayoutConfig.ts is not in it, so editing it would be an act outside the write grant",
+        "no firmId used by any live partner in this codebase (49financial, cottonwood, inflection, demo) is absent from LAYOUTS, so no currently-served mix renders through DEFAULT_LAYOUT today -- confirmed by reading _shared/hooks/useTenantLayout.ts's LAYOUTS map construction (keyed off the four discovered partner dirs) against the discovered set in discover-layouts.ts"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell text: 'every reader above admits structured and commodities' naming composition.ts, the four partner ordered lists, and PartnerAnalytics.tsx's labels/colour resolver as the readers to fix; BOUNDS: 'A needed edit outside the grant is a surprise row, not an edit.'",
+    "world_is": "DEFAULT_LAYOUT.assetClasses.ordered is mechanically the same reader shape as the four edited partner layouts and would drop structured/commodities the identical way IF a firmId ever resolved through it, but no live partner does today (each has its own explicit layout file) and the file is outside this TO's <paths> grant, so this worker left it unedited rather than widen scope.",
+    "notes": "Not blocking either IVE46-AC1 or IVE46-AC2 (both PASS-by-output; IVE46-AC2's test names this exact file:line as a NAMED, not-admitting reader with this reason, so the census accounts for it rather than silently missing it). Filed so a later cell/round closes the same gap on the scaffolding default the four live partners already got."
+  },
+  {
+    "id": "DSGN_IRPTV1-W30-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~30",
+    "surfaced_at": "2026-09-26T22:45:00Z",
+    "one_line": "Moving ASSET_CLASS.commodities off PALETTE.yellow500 (CTO 101649) leaves two nearby comments/data in chartColors.ts describing a mapping that no longer holds: SUB_ASSET_COLORS's inline comment still calls yellow500 the 'class base', and getAssetClassTextColor's lightBackgrounds array + its WCAG doc table still carry a yellow500 row for 'Commodities' that ASSET_CLASS can no longer produce as an input -- both are now DEAD/STALE rather than wrong-answer (the function's own fallback happens to return the correct white-on-dark text for the new gray900 background), so nothing this cell's criteria exercise catches it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/lib/chartColors.ts:340 (this worktree, post-edit): '// Commodities -- yellow (class base PALETTE.yellow500, the ruled gold; NEVER amber)' -- ASSET_CLASS.commodities (the class base) is now PALETTE.gray900 (this cell's own edit, :127); SUB_ASSET_COLORS.Commodities/Metals deliberately stay PALETTE.yellow500 per this cell's Build directive ('No other existing colour value changes'), so the VALUE is correctly unchanged but the comment's claim about what the class base IS is now false",
+        "src/lib/chartColors.ts:361-368 (getAssetClassTextColor's own doc comment, 'Measured (WCAG 2.x...)') and :376 (its lightBackgrounds array) still list 'yellow500 ... (Commodities)' as a live case; since ASSET_CLASS.commodities is now gray900 (not in that array), the function's fallback branch returns PALETTE.white for it -- the CORRECT answer for a dark background by luck of the fallback's own design (return dark text only for a recognised LIGHT bg, else white), not because the array or its doc were updated",
+        "no criterion on this cell (IVE49-AC1/AC2) calls getAssetClassTextColor or reads SUB_ASSET_COLORS, so neither test surface would catch a future edit that broke this accidental correctness (e.g. a next commodities re-colour to a LIGHT hue, which the stale array/doc would not protect against)"
+      ]
+    },
+    "spec_asserts": "The cell's Build directive: 'No other existing colour value changes' -- read as bounding this cell to the two named colour VALUES (MIX_PIE.commodities, ASSET_CLASS.commodities), not extending to comments or the text-contrast helper function.",
+    "world_is": "Two prose/data sites in chartColors.ts now describe a commodities-colour mapping (yellow500) that the class no longer uses; the live BEHAVIOUR is still correct today only because getAssetClassTextColor's un-updated array happens to fall through to the right branch for a DARK replacement colour -- a property of gray900 being chosen, not of the array being current.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: IVE49-AC1/AC2 do not exercise getAssetClassTextColor or SUB_ASSET_COLORS. Left both untouched deliberately rather than editing them on this worker's own judgment: the cell's grant covers chartColors.ts, but its Build directive names only the two ASSET_CLASS/MIX_PIE commodities values, and 'no other existing colour value changes' reads as a scope fence, not an invitation to also correct nearby prose. Filed so a later round choosing to touch commodities colour again re-reads getAssetClassTextColor's array rather than trusting its current fallback to stay correct by coincidence."
+  },
+  {
+    "id": "DSGN_IRPTV1-W30-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~30",
+    "surfaced_at": "2026-09-26T23:10:00Z",
+    "one_line": "IVE51-AC2's own invocation names `src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-48.new-classes.test.tsx`, but this slot's portal worktree (`wk-DSGN_IRPTV1-30-portal` @888215a7 = DEV 6757223a + IV-e-46 + IV-e-49) does not carry that file at all -- it exists on DEV/`wk-DSGN_IRPTV1-29-portal` (commit cc1d3419, IV-e-48) but that line was never merged into this slot's branch, so `bun test` silently runs 4 of the 5 named files (8 pass/0 fail, rc=0) rather than erroring on the missing path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git -C <WS>/portal merge-base --is-ancestor cc1d3419 HEAD` (the commit that adds iv-e-48.new-classes.test.tsx per DEV/29's log) prints 'NOT-ANCESTOR-OF-HEAD' against this worktree's HEAD 888215a7",
+        "`git -C <WS>/portal log --oneline --all -- '**/iv-e-48*'` finds the file only via commits cc1d3419 (feat, worker ~31) and a28c0172 (drain-repair) -- `git branch --contains cc1d3419` lists DEV and wk-DSGN_IRPTV1-29-portal, not this slot's branch",
+        "running IVE51-AC2's exact invocation (all 5 named paths) against this worktree: rc=0, '8 pass / 0 fail', 'Ran 8 tests across 4 files' -- bun silently drops the one nonexistent path rather than failing the run, so the literal '0 fail' expectation still holds even though only 4/5 named files were exercised"
+      ]
+    },
+    "spec_asserts": "IVE51-AC2's invocation lists 5 test file paths as this cell's regression set, implying all 5 exist and run in this slot's portal worktree.",
+    "world_is": "Only 4 of the 5 named files exist on this worktree's branch; iv-e-48.new-classes.test.tsx belongs to a sibling worker's cell (IV-e-48) that has not been drained/merged into this slot's build line as of 888215a7. The criterion's literal text ('0 fail') is still met (ABSENT != EXERCISED-AGAINST, rule 22): this worker never exercised its own chartColors.ts edit against IV-e-48's holdings-portal readers.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: this cell's own <paths> grant does not include IV-e-48's file, and the CTO 101681 ruling (this cell's whole subject) only touches ASSET_CLASS.commodities/MIX_PIE.commodities, which IVE48-AC's own test (per its title 'admit structured/commodities asset classes') would need to read dynamically the same way iv-e-12/Positioning/HoldingsTab do -- if it does, it is unaffected by this cell's value change regardless. Filed so the round's drain re-runs IVE51-AC2 against the POST-MERGE tree (where all 5 files coexist) rather than trusting this worker's per-slot run as the full regression proof."
+  },
+  {
+    "id": "DSGN_IRPTV1-W30-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~30",
+    "surfaced_at": "2026-09-26T23:15:00Z",
+    "one_line": "This cell's mechanical winner, PALETTE.green900, is already assigned elsewhere in the portal to a DIFFERENT meaning -- `src/pages/Attribution/constants/holdings-shared.tsx`'s 'Hedge' sub-asset-class colour (a comment on chartColors.ts's own SUB_ASSET_COLORS.Hedge -- PALETTE.pink600 -- names green900 as the token it was deliberately re-bound OFF OF) -- the same one-hue/two-meanings shape CTO 101681 ruled OUT for gray900, but IVE51-AC1's own 3-condition population (MIX_PIE + ASSET_CLASS + model primaries) does not check Attribution's per-page colour maps, so this reuse is invisible to the criterion as written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`src/pages/Attribution/constants/holdings-shared.tsx:87` (this worktree, pre-existing): `'Hedge': PALETTE.green900,`",
+        "`src/lib/chartColors.ts:324` (pre-existing comment, this worktree): `'Hedge': PALETTE.pink600, // not Fixed Income; re-bound off green900` -- confirms green900 was ALREADY a live, deliberately-avoided sub-asset colour for a different class family before this cell's edit",
+        "IVE51-AC1's population (`iv-e-51.commodities-chromatic.test.ts`) is built only from MIX_PIE, ASSET_CLASS and MODEL_PORTFOLIO_COLORS/EXTENDED_MODEL_COLORS primaries -- exactly the three populations CTO 101681's rule names; it does not read holdings-shared.tsx or any other page-level colour map, so a candidate already in use THERE clears the test's rule 1-3 checks without the test ever seeing the collision"
+      ]
+    },
+    "spec_asserts": "The cell's own motivation (CTO 101681, UIR-37, O7): 'No hue means both a model and an asset class' / one colour, one meaning -- and IVE51-AC1's 3 numbered conditions, which name only MIX_PIE/ASSET_CLASS/model-primary as the checked population.",
+    "world_is": "PALETTE.green900 now carries TWO live meanings in the portal: ASSET_CLASS/MIX_PIE.commodities (this cell) and Attribution holdings-shared.tsx's 'Hedge' sub-asset colour (pre-existing, a different chart/page). The cell's own literal 3-condition rule does not check page-level sub-asset maps outside chartColors.ts's own MIX_PIE/ASSET_CLASS/MODEL_PORTFOLIO_COLORS exports, so the mechanical winner it selects can still collide with a meaning the rule never looks at.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: this worker followed the cell's literal, CTO-authored 3-condition rule exactly (mechanical, no added judgment) rather than widening it with its own semantic exclusion; the two colours sit in DIFFERENT chart contexts (Attribution holdings treemap vs. Positioning/AdvisorIntelligence class chips/pies), so unlike the gray900/text-ink case there is no single component that could render both meanings side-by-side today. Filed so the CTO/COO can decide whether the population this rule checks should widen to page-level sub-asset maps."
   }
 ]
 ```
