@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T18:24Z. Lease FAST until 2026-09-27T18:54:38Z.
+As of 2026-09-27T18:33Z. Lease FAST until 2026-09-27T18:58:49Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
@@ -23,8 +23,8 @@ Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` 
 - **The discriminator is answered from the advisor's recorded HAR, with no vendor call** (S161 @ea7f5e9291). The advisor's
   create stored `prior_close` (date 2026-07-01), so the vendor does not normalise it. The advisor's create had no upload;
   ours always upload. **RULED (CTO 102021): keep W15-3 Static-only as built**; the vendor GET is withdrawn (row S162
-  @e2c240c2d1). Open under R10 (S159): the certifier should fail a section whose printed as-of is neither the holdings
-  as-of nor labelled.
+  @e2c240c2d1). **R10 CLOSED (CTO 102024):** the vendor's printed "Data as of" line is the label, so there is no
+  certifier change. The advisors send as_of_date_option=latest (6/6), as the recipe does. S163 @5465f7dcd1 closes S159.
 - **Next:** P ships `P_STATIC_TOLERANCE_20260927.patch`. Enrichment candidate: check the saved `model_portfolio_type`
   at read-back, before the report is generated.
 
