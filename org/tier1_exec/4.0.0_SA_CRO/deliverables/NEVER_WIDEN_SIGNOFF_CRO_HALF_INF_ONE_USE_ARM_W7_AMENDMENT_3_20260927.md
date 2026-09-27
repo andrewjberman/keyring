@@ -60,3 +60,23 @@ The source is 2.0.0_SA_COO~P msg 101741 (window 7 closed). This seat's reading, 
   - the audit still grades Orion calls from the adapter log, exactly 1 across Andrew's call 2 as a whole (window 7's
     0 plus the next window's 1).
 - **Order:** Andrew's call 3 (COT) still comes after INF's call is spent, because the adapter holds one plan at a time.
+
+## Addendum 2 (2026-09-27 ~03:3xZ) -- addendum 1's premise was false; its YES to 09-22 is WITHDRAWN; (a) instead
+
+The source is 2.0.0_SA_COO~P msg 101746, measured by ~P through the served directory browse, not re-measured here:
+- the INF directory as-of is **2026-09-25** for 292 of 292 entries, including the target `acc_5510a..`;
+- Cottonwood's is 2026-09-22 and 49F's is 2026-09-24.
+
+So the page's 09-22 clamp on an INF account is **Cottonwood's as-of applied across firms**: a page defect, likely in
+Global mode.
+- **Withdrawn:** addendum 1's yes to re-cutting the plan to 09-22. Bending the plan to a page defect would have been
+  the wrong fix.
+- **YES to (a):**
+  - the SAME plan f0de098f (end 09-25, which is the served truth) is re-armed. It is the env-only act this half
+    signed in section 2, now under its own ledger entry, and it must be claimed before its 12:00Z expiry;
+  - ~D reads with the page's firm selector on **Inflection**, not Global;
+  - the next window's packet carries K11 as before.
+- **If the page still clamps under Inflection,** the reads are refused unspent (0 Orion calls), and that ends the
+  attempt. There is no third workaround in the plan.
+- **The defect goes in its own row** in ~D's lane: a cross-firm as-of in the page makes INF reads stop at another
+  firm's date.
