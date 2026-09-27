@@ -1,0 +1,111 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+index 14a118d..0464715 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+@@ -617,6 +617,12 @@ def reconcile_owned(collection, name, fingerprint):
+ READ_BACK_POLLS = 2  # CTO 101917 (b): the WAF challenged the 3rd status GET in 4 of 4 runs
+ READ_BACK_SPACING_S = 15.0
+ READ_BACK_LEASE_TTL_S = 900
++# Settings compared and RECORDED but not gating (window 13, 14:30:33Z: 6 of 7 matched on the saved portfolio,
++# level_as_of_type alone differed). The recipe sends `prior_close`, exactly what the advisor's own YCharts form
++# sends in all 5 captured creates (INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910); the vendor stores another
++# representation whose meaning is not on record. It is a level-display basis, not an input to the returns, and the
++# certifier still reads every as-of date off the PDF itself. The stored value is printed so it can be pinned.
++READ_BACK_TOLERATED = frozenset({"level_as_of_type"})
+ 
+ 
+ def step_read_back(transport, portfolio_id, settings, *, polls=READ_BACK_POLLS,
+@@ -682,15 +688,18 @@ def step_read_back(transport, portfolio_id, settings, *, polls=READ_BACK_POLLS,
+         expected = VENDOR_VALUE.get(raw, raw) if isinstance(raw, str) else raw
+         actual = effective.get(vendor_field)
+         rows.append({"setting": key, "vendor_field": vendor_field,
+-                     "expected": expected, "actual": actual, "matches": actual == expected})
+-    matched = sum(1 for r in rows if r["matches"])
++                     "expected": expected, "actual": actual, "matches": actual == expected,
++                     "tolerated": (key in READ_BACK_TOLERATED and source == "saved_portfolio"
++                                   and vendor_field in effective and actual != expected)})
++    matched = sum(1 for r in rows if r["matches"] or r["tolerated"])
+     return {**_recovery_ref(info), "step": "read_back", "ok": info["status"] == 200 and matched == len(rows),
+             "status": info["status"], "portfolio_status": portfolio_status, "polls": poll,
+             "settings_source": source,
+             "absent": [r["setting"] for r in rows if r["vendor_field"] not in effective],
+             "wall_s": round(clock() - started, 1), "waf_action": info.get("waf_action"),
+             "matched": matched, "denominator": len(rows), "rows": rows,
+-            "drifted": [r["setting"] for r in rows if not r["matches"]]}
++            "drifted": [r["setting"] for r in rows if not (r["matches"] or r["tolerated"])],
++            "tolerated": [r["setting"] for r in rows if r["tolerated"]]}
+ 
+ 
+ # --------------------------------------------------------------------------- steps 5 and 6
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+index f5cb276..b850709 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+@@ -62,15 +62,17 @@ def refusal_line(result, tag="STEP_REFUSED"):
+         return value if isinstance(value, str) and _VALUE.fullmatch(value) else "?"
+     drifted = [name + ("=" + setting_value(actual[name]) if name in actual else "")
+                for name in result.get("drifted") or [] if name in recipe.SETTING_TO_VENDOR_FIELD]
++    tolerated = [name + ("=" + setting_value(actual[name]) if name in actual else "")
++                 for name in result.get("tolerated") or [] if name in recipe.SETTING_TO_VENDOR_FIELD]
+     absent = [name for name in result.get("absent") or [] if name in recipe.SETTING_TO_VENDOR_FIELD]
+     polls, wall = result.get("polls"), result.get("wall_s")
+     return ("IRPT_RESIDENT_%s step=%s status=%s portfolio_status=%s source=%s polls=%s wall_s=%s drifted=%s "
+-            "absent=%s") % (
++            "absent=%s tolerated=%s") % (
+         tag if tag in ("STEP_REFUSED", "STEP_WAF_REFRESH", "READ_BACK_DONE", "READ_BACK_RELEASE") else "STEP",
+         token(result.get("step")), status if type(status) is int else "-",
+         token(result.get("portfolio_status")), token(result.get("settings_source")),
+         polls if type(polls) is int else "-", wall if type(wall) in (int, float) else "-",
+-        ",".join(drifted) or "-", ",".join(absent) or "-")
++        ",".join(drifted) or "-", ",".join(absent) or "-", ",".join(tolerated) or "-")
+ 
+ 
+ class ResidentGenerationWorker:
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
+index 97d3f93..f209ad4 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
+@@ -111,20 +111,39 @@ def test_refusal_line_carries_closed_tokens_only():
+                                          "settings_source": "saved_portfolio", "polls": 1,
+                                          "drifted": ["management_fee", "https://x?sig=1"], "absent": ["tax_status"]})
+     assert line == ("IRPT_RESIDENT_STEP_REFUSED step=read_back status=200 portfolio_status=available "
+-                    "source=saved_portfolio polls=1 wall_s=- drifted=management_fee absent=tax_status")
++                    "source=saved_portfolio polls=1 wall_s=- drifted=management_fee absent=tax_status tolerated=-")
+     stored = resident_worker.refusal_line({"step": "read_back", "status": 200, "portfolio_status": "available",
+                                            "settings_source": "saved_portfolio", "polls": 1,
+                                            "drifted": ["level_as_of_type", "benchmark", "tax_status", "management_fee"],
+                                            "absent": [], "rows": [
+         {"setting": "level_as_of_type", "actual": "latest"}, {"setting": "benchmark", "actual": "^SPX"},
+         {"setting": "tax_status", "actual": "https://x/?sig=secret"}, {"setting": "management_fee", "actual": None}]})
+-    assert stored.endswith("drifted=level_as_of_type=latest,benchmark=^SPX,tax_status=?,management_fee=null absent=-")
++    assert stored.endswith("drifted=level_as_of_type=latest,benchmark=^SPX,tax_status=?,management_fee=null absent=- tolerated=-")
+     done = resident_worker.refusal_line({"step": "read_back", "status": 200, "portfolio_status": "available",
+                                          "settings_source": "saved_portfolio", "polls": 3, "wall_s": 31.4,
+                                          "drifted": [], "absent": []}, "READ_BACK_DONE")
+     assert done == ("IRPT_RESIDENT_READ_BACK_DONE step=read_back status=200 portfolio_status=available "
+-                    "source=saved_portfolio polls=3 wall_s=31.4 drifted=- absent=-")
++                    "source=saved_portfolio polls=3 wall_s=31.4 drifted=- absent=- tolerated=-")
+     leaky = resident_worker.refusal_line({"step": "Read Back <x>", "status": "200", "portfolio_status": "a b@c",
+                                           "drifted": None, "absent": ["x@y"]})
+     assert leaky == ("IRPT_RESIDENT_STEP_REFUSED step=- status=- portfolio_status=- source=- polls=- wall_s=- "
+-                     "drifted=- absent=-")
++                     "drifted=- absent=- tolerated=-")
++
++
++def test_level_as_of_type_is_recorded_not_gating_and_a_real_drift_still_refuses():
++    """Window 13: level_as_of_type alone differed on the saved portfolio (we send the advisor UI's prior_close)."""
++    other = {"portfolio": dict(SETTINGS, level_as_of_type="latest"), "items": []}
++    result, _ = read_back(Replay((200, AVAILABLE), saved=(200, other)))
++    assert result["ok"] is True and result["drifted"] == [] and result["tolerated"] == ["level_as_of_type"]
++    done = resident_worker.refusal_line(result, "READ_BACK_DONE")
++    assert "drifted=- absent=- tolerated=level_as_of_type=latest" in done
++    both = {"portfolio": dict(SETTINGS, level_as_of_type="latest", management_fee=0.01), "items": []}
++    result, _ = read_back(Replay((200, AVAILABLE), saved=(200, both)))
++    assert result["ok"] is False and result["drifted"] == ["management_fee"] and result["tolerated"] == ["level_as_of_type"]
++
++
++def test_a_missing_level_as_of_type_is_absent_and_drifted_not_tolerated():
++    missing = {"portfolio": {k: v for k, v in SETTINGS.items() if k != "level_as_of_type"}, "items": []}
++    result, _ = read_back(Replay((200, AVAILABLE), saved=(200, missing)))
++    assert result["ok"] is False and result["tolerated"] == []
++    assert result["drifted"] == ["level_as_of_type"] and result["absent"] == ["level_as_of_type"]

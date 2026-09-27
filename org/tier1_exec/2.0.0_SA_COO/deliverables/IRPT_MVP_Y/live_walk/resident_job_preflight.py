@@ -53,6 +53,8 @@ def main(argv=None):
     ap.add_argument("--waf-shape", choices=("research", "window8"), default="research",
                     help="research: the decision_branches 202 (body says calculating); window8: the live 202 whose "
                          "body carried no status (the journal's portfolio_status=-)")
+    ap.add_argument("--saved-level-as-of", default=None,
+                    help="the saved portfolio stores this level_as_of_type instead of the recipe's (window 13 live)")
     ap.add_argument("--deliveries", type=int, default=1,
                     help="re-run poll_once up to N times while the job is not terminal (the queue's redelivery)")
     ap.add_argument("--available-bare", action="store_true",
@@ -101,8 +103,9 @@ def main(argv=None):
             + [fixture("decision_branches")["WAF_REFRESH_REQUIRED"] if a.waf_shape == "research" else
                {"status": 202, "body": {}, "content_type": "application/json", "waf_action": "challenge"}] * a.waf_read
             + [{"status": 200, "body": {"status": "available"}} if a.available_bare else fixture("status_ok")]),
-        ("GET", "/model_portfolios/fixed/2332060"): {"status": 200, "body": {"portfolio": {
-            k: v for k, v in fixture("status_ok")["body"].items() if k != "status"}, "items": []}},
+        ("GET", "/model_portfolios/fixed/2332060"): {"status": 200, "body": {"portfolio": dict(
+            {k: v for k, v in fixture("status_ok")["body"].items() if k != "status"},
+            **({"level_as_of_type": a.saved_level_as_of} if a.saved_level_as_of else {})), "items": []}},
         ("POST", "/custom_pdf_reports/validate_report_securities/14141822"): fixture("validate_200"),
         ("POST", "/custom_pdf_reports/14141822"): fixture("generate_201")}
     replay = ReplayTransport(script)

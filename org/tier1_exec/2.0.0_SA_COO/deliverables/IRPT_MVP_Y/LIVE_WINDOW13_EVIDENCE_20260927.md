@@ -86,3 +86,24 @@ Tests:
 - ONE saved-portfolio GET;
 - 0 re-captures on a read challenge;
 - the principal must outlive 5 x 900 s, which fits the 120-min cap.
+
+## level_as_of_type: recorded, not gating (for window 15's packet, asked by P 101934 per CTO 101929)
+
+Fix: Y branch `1b6a267faa`, `P_LEVEL_AS_OF_TYPE_TOLERATED_20260927.patch`. The patch is cut against P's `38a8abec85`
+(resident rs) and applies cleanly (apply-check rc=0). Its runtime files are content-identical to the proved overlay.
+
+**The packet line:**
+- The resident compares `level_as_of_type` on the saved portfolio and records the stored value in the journal
+  (`tolerated=level_as_of_type=<stored>`), but does not refuse on it.
+- The reason: the recipe sends `prior_close`, exactly what the advisor's own YCharts form sends in all 5 captured
+  creates.
+- It is a level-display basis, not an input to the returns. The other six settings match live, and the certifier
+  reads every as-of date off the PDF.
+- An absent `level_as_of_type`, or any other drift, still refuses.
+
+Proof at the real entry point (`--deliveries 3`, window 13's shape, the saved portfolio storing a different value):
+
+| Run | Result |
+|---|---|
+| deployed rs | release, then `STEP_REFUSED ... drifted=level_as_of_type=latest` and ATTENTION (window 13's refusal) |
+| rs plus this change | release, then `READ_BACK_DONE ... tolerated=level_as_of_type=latest` and **READY**, 1 REPORT#, 0 captures |
