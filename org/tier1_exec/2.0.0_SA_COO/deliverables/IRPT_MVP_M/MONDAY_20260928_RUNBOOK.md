@@ -55,6 +55,11 @@ Gate: A.1 passed, AND d08 (and d06) admit `other`. That is ~X's commit 88bf469eb
 
 ## D. R4 in the host window (~12:52Z onward)
 
+0. **Before the QA fire, re-mint the Holdings packages from CLOUD** (irpt_holdings_{49f,inf,cot}, STANDALONE_BUNDLES,
+   manifest-stamped) under their own ledger. Do it after B has merged `holdings_snapshot.py` (the cash rule on
+   `display.description`). The scheduled producer runs the S3 package, not CLOUD, so without a re-mint the rule is not
+   served. Read back members-sha256 and confirm it changed from 83f6a81aab34.
+
 1. N1: `python r4_monday_negative_arm.py --send`, then `--read`. COT must be refused on opal-data-bd and 49F refused
    on opal-data-cot, while own reads are allowed. Close leg N1 of `irpt-holdings-principals-dispatch-m-20260925`.
 2. The QA fire: `aws lambda invoke --function-name irpt-holdings-refresh-lambda --payload '{"qa": true}'`, then read
@@ -79,3 +84,9 @@ Gate: A.1 passed, AND d08 (and d06) admit `other`. That is ~X's commit 88bf469eb
   drain, drop the branch's copies; CLOUD's S150-S152 stay. The COT mix_views row is S155.
 - After D.3's first enabled publication, check that INF holdings as-of is at or after 09-25; that disarms CLOUD S152
   (~P's). INF upstream is complete through 09-26.
+
+## G. Merge order (Andrew-direct 12:4xZ 09-27, "rec approved"; ANDREW_DIRECT_20260927_124xZ_MERGE_TO_CLOUD_AFTER_MONDAY_R1.md)
+
+Everything on ~M's branches reaches CLOUD. Gold paths go only after A's R1, each under its ledger: first B (cash-line
+act plus S155), then B1 (`ds-x-b1-cashline`, `irpt-m-cot-b1`, and comp-constants 9135feae97 with ~X's BD commit). ~X's
+four records ride the `ds-x-b1-cashline` merge (only ~X may commit its deliverables folder).
