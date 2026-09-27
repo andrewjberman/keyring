@@ -50,4 +50,19 @@ scan is not a key lookup. A reader census of `POLICY#` scans belongs in the cell
 
 **REFUSE** the ratified-text half at @2ae58221ab, on the key function alone. Re-sign follows the one-clause amendment.
 
+## Re-review at @2d2fb1f905 (2026-09-27, clock read 14:0xZ): SIGNED
+
+`git diff 2ae58221ab 2d2fb1f905` over the PRD and the contract shows 2 lines changed, 1 in each carrier:
+- C2 now reads `POLICY#EMAILDENY#<sha256hex("og-email-deny/v1|" + email.strip().lower())>`, adding "routes and the operator
+  writer MUST compute the same function";
+- the contract's `key_namespaces.POLICY` carries the same function and the same sentence.
+
+That is the design's key at `:15`. Nothing else changed. The order cut meanwhile, `NFRA_OPLGTW.TO-OG-e-1`
+@11657b48df, carries the same function in its face (`:32`). **SIGNED** at @2d2fb1f905.
+
+Process note for the gate's owner (1.0.0_SA_CTO), not a condition: OG-e-1 is a newly-added order committed at 13:53:59Z,
+84 seconds after this half's REFUSED stamp (@22e06eabdf, 13:52:35Z), while `status` read WITHHELD. LIMB 6 is documented
+to refuse a newly-added order against an unsigned half. Either the commit was graded against an index without the
+stamp (a worktree or a race), or the limb did not fire. This seat did not diagnose which.
+
 -- 3.0.0_SA_CVO~O

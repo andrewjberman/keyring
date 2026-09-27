@@ -44,7 +44,7 @@ Build it exactly as designed. `GW` = `infra/aws/ec2/opal-gateway`.
    - `revoke` KEEPS the deny records (ruled).
    - A new one-shot mode `deny-backfill --tid --oid --email (repeatable) --approver --source-authorization` strongly reads an existing profile of any status. It writes its deny record(s) plus one audit item in one transaction, and refuses when no profile exists.
 5. **Tests** (moto is NOT installed and may not be installed).
-   - New `GW/tests/test_email_deny.py`, exactly 10 tests, through the existing seams: `AccessState(client=stub)`, the `store=` arguments, and `server.app` in a Starlette TestClient with the ALB check stubbed (the `GW/tests/test_owner_gate.py:36-93` pattern):
+   - New `GW/tests/test_email_deny.py`, exactly 11 tests (AMENDED A1: the 11th is below), through the existing seams: `AccessState(client=stub)`, the `store=` arguments, and `server.app` in a Starlette TestClient with the ALB check stubbed (the `GW/tests/test_owner_gate.py:36-93` pattern):
      - key shape and normalisation;
      - a runtime write is refused;
      - the 5 routes return 403, with S3 and the consent URL untouched;
@@ -54,7 +54,8 @@ Build it exactly as designed. `GW` = `infra/aws/ec2/opal-gateway`.
      - a restricted `activate` puts the deny record in the same single transaction;
      - revoke leaves the deny record;
      - backfill writes one transaction;
-     - backfill refuses when no profile exists.
+     - backfill refuses when no profile exists;
+     - (A1) a restricted `activate` whose candidate AND stored profile carry no email REFUSES (`CandidateRejected`) and writes nothing.
    - Give `GW/tests/test_owner_gate.py` a stub store where `/sprint` now reads the table (near :152-163). Do not weaken any assertion.
 
 ## 2. BOUNDS
@@ -73,6 +74,7 @@ infra/aws/ec2/opal-gateway/app/token_broker.py
 infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py
 infra/aws/ec2/opal-gateway/tests/test_email_deny.py
 infra/aws/ec2/opal-gateway/tests/test_owner_gate.py
+infra/aws/ec2/opal-gateway/tests/test_portal_grant.py
 org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~7/**
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/**
 </paths>
@@ -83,7 +85,7 @@ fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`.
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-e-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/ek.AC1.sh; echo "exit=$?"</invocation><expect>10 passed -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-e-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/ek.AC1.sh; echo "exit=$?"</invocation><expect>11 passed -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-e-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/ek.AC2.sh; echo "exit=$?"</invocation><expect>24 or more passed, none failed -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-e-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/ek.AC3.sh; echo "exit=$?"</invocation><expect>deny-backfill --help rc=0 flags missing=0 of 5 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
@@ -102,6 +104,11 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once:
 <!-- ===================== RECORD FACE ===================== -->
 
 # pipeline-override: supplementary round-2 cell on the CTO's ruling (97251, re-affirmed @244cd0d80f, five calls @2ae58221ab) after the re-seat @6fba157e76 made this seat OPLGTW's COO; W3-S22 is due before the next restricted grant. Round 1's OG-v-4/OG-v-5 are HELD behind it per the 09-18 ordering.
+
+**AMENDMENT A1 (2.0.0_SA_COO~O, 2026-09-27 16:0xZ), ruling worker row Z-W7-S1:**
+- The ruled refusal is REQUIRED. A restricted `activate` with no resolvable email must raise `CandidateRejected` and write nothing. A silent no-deny path would re-open W3-S22 for every email-less grant.
+- `GW/tests/test_portal_grant.py` joins `<paths>`, only to give its `_candidate()` fixture a SYNTHETIC email (a reserved `.test` domain, never a real address). With it, `test_admin_accepts_portal_only_candidate` keeps passing unweakened.
+- AC1 moves from 10 to 11 tests. AC2's bar (24 or more) is unchanged.
 
 **ISSUER NOTES:** Dry-run at base (CLOUD @2ae58221ab+):
 - AC1 FAIL ("no tests ran": the suite does not exist);
