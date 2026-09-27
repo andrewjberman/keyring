@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.17",
+ "prd_version": "v0.18",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
@@ -460,6 +460,38 @@ verbatim.
 | UIW-0927-06 | holdings / allocation | FWD-18 | DSGN_IRPTV1 | No label is ellipsized at 1440 px. |
 | UIW-0927-07 | securities map / legend | FWD-22, FWD-13 | DSGN_IRPTV1 | The grouped small-items tile reads 'Smaller holdings' (or similar) in a colour no class uses. |
 
+## UI CLEANUP FINDINGS (v0.18 -- Andrew-direct /ui-walk cleanup brief, `docs/briefs/irpt-ui-cleanup-brief-20260927.md` + register `irpt-ui-cleanup-findings-20260927.json` @`97cb8bf734`)
+
+The walk of local DEV `3b98939b` found 23 findings (UIC-01..23) in six outcomes: O1 Performance reads as a finished answer; O2 every period answers or says why not; O3 Holdings charts stay legible at any account count; O4 no system word reaches the face; O5 Analysis setup behaves like a form; O6 the request list is the viewer's own. Each row is graded under an existing FWD; the ENDPOINT is unchanged. 3.0.0_SA_CVO grades each id; the criterion is the register's acceptance line, verbatim. Rows owned by 2.0.0_SA_COO~P / ~M are IRPT_BCKEND work, carried here so the page criterion stays whole.
+
+| Id | Surface | FWD | Outcome | Owner | Criterion (the register's acceptance line) |
+|---|---|---|---|---|---|
+| UIC-01 | performance | FWD-5, FWD-15 | O1 | 2.0.0_SA_COO~D | A computed report shows only the figures it has; a missing benchmark or value is one plain line, never three 'not supplied' tiles. |
+| UIC-02 | performance | FWD-16, FWD-5 | O1 | 2.0.0_SA_COO~D | The daily series is one click away (or paged); the default view is the chart and the period figures. |
+| UIC-03 | performance / report details | FWD-15 | O4 | 2.0.0_SA_COO~D | Report details states the method and source in client words (for example 'Time-weighted, net of fees; Opal's performance engine'); codes and hashes stay out of the page. (known: UIW-0927-05 (round 9)) |
+| UIC-04 | performance / monthly table | FWD-5, FWD-15 | O1 | 2.0.0_SA_COO~D | The monthly table lists only rows it can fill, or states once what is not available. |
+| UIC-05 | performance / account picker | FWD-19, FWD-20 | O1 | 2.0.0_SA_COO~D | The picker's figure follows the selected period and updates when it computes. |
+| UIC-06 | performance / period presets | FWD-11, FWD-15 | O2 | 2.0.0_SA_COO~P | A window the service cannot answer says so in words (what is supported, what to choose instead); no code on the face. Owner of the capability: IRPT_BCKEND (~P). |
+| UIC-07 | performance / period presets | FWD-5 | O2 | 2.0.0_SA_COO~D | 'Since inception' starts at the account's first data point (or its opening date). |
+| UIC-08 | performance / refusal | FWD-11 | O4 | 2.0.0_SA_COO~D | The refusal names, in client words, why the figure is missing and who can make it available. |
+| UIC-09 | performance / loading | FWD-11, FWD-15 | O4 | 2.0.0_SA_COO~D | Loading is a loading state with no system words; 'source age' never shows before a source exists. |
+| UIC-10 | holdings / accounts pie | FWD-14, FWD-21 | O3 | 2.0.0_SA_COO~D | Labels never overlap: small slices move to the legend (or a leader line). |
+| UIC-11 | holdings / accounts pie | FWD-18, FWD-21 | O3 | 2.0.0_SA_COO~D | Adjacent slices are distinguishable at a glance (a palette with enough separation for 11+ accounts). (known: UIR-25 (met for 2 accounts)) |
+| UIC-12 | holdings / accounts pie | FWD-21, FWD-23 | O3 | 2.0.0_SA_COO~D | A negative account is shown as a separate, labelled line (never as a pie slice), and the pie's shares sum to the positive total it states. |
+| UIC-13 | identity / over what | FWD-2, FWD-19 | O3 | 2.0.0_SA_COO~D | Every account is reachable from Over what (a 'show all' or a scroll affordance); no row is clipped. |
+| UIC-14 | holdings / footer | FWD-15 | O4 | 2.0.0_SA_COO~D | The source line names the data source in client words (for example 'Black Diamond, as of ...'). (known: UIR-45 (not met)) |
+| UIC-15 | holdings / models dialog | FWD-6, FWD-22 | O3 | 2.0.0_SA_COO~M | Every security shows its name beside its ticker. (known: R4 enable (INF name fill, Monday 09-28)) |
+| UIC-16 | identity / account label | FWD-2, FWD-15 | O3 | 2.0.0_SA_COO~M | An account's type reads in full ('Individual Retirement Account'). (known: UIR-26 labels (Monday)) |
+| UIC-17 | identity / about this scope | FWD-11, FWD-15 | O4 | 2.0.0_SA_COO~D | The scope panel shows a real date or omits the field. |
+| UIC-18 | analysis / variant cards | FWD-7 | O5 | 2.0.0_SA_COO~D | Pressing a card selects it visibly and the form asks for what that variant needs (for example 'Add at least two models'); no system sentence. |
+| UIC-19 | analysis / report title | FWD-7, FWD-8 | O5 | 2.0.0_SA_COO~D | The default title names the client (and the variant), never one account of several. |
+| UIC-20 | analysis / prepared for | FWD-7 | O5 | 2.0.0_SA_COO~D | Required-field messages appear after the user tries to generate (or leaves the field), not on load. |
+| UIC-21 | analysis / comparisons | FWD-18 | O5 | 2.0.0_SA_COO~D | No placeholder or label is truncated at 1440 px. |
+| UIC-22 | analysis / holdings snapshot | FWD-7, FWD-11 | O5 | 2.0.0_SA_COO~D | Analysis shows a loading state until the snapshot read answers; a refusal only after it answers. |
+| UIC-23 | analysis / your analysis requests | FWD-7, FWD-15 | O6 | 2.0.0_SA_COO~D | The list shows the viewer's own requests (or is labelled as all requests for an admin), each by client name, variant and date, with a status in words; a READY job reads Ready. (known: ~D known gap (irpt-status redeploy)) |
+
+The re-grade of the 2026-09-26 review on `3b98939b` (register `regrade_of_irpt_ui_review_20260926`) leaves 8 rows NOT MET (UIR-17, UIR-30, UIR-32, UIR-34, UIR-37, UIR-40, UIR-45, UIR-49); they stay open under their own UIR rows above. UIW-0927-01/02/03/06/07 read MET.
+
 ## THE THREAD (FWD-1) -- round 1 builds it end to end
 
 One person: an Opal internal user (Global view). One journey, coarse grain, live, default window, no export, no analysis.
@@ -812,6 +844,9 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   verification's 7 new findings (UIW-0927-01..07, @`236fd94d73`), each under an existing FWD with its acceptance line
   verbatim, so a cell may carry them (~D 101876). The ENDPOINT is byte-unchanged; no half re-opens (proportionate
   sign-off).
+- v0.18, 2026-09-27 ~21:0xZ, `1.0.0_SA_CTO` (Claude): the UI CLEANUP FINDINGS section is added: the CRO's cleanup brief
+  (Andrew-direct /ui-walk, 4.0.0_SA_CRO 102100, @`97cb8bf734`), 23 findings UIC-01..23 each under an existing FWD with
+  its acceptance line verbatim, for round 9. The ENDPOINT is byte-unchanged; no half re-opens (proportionate sign-off).
 
 ## SURFACE MANIFEST
 
