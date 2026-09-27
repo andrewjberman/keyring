@@ -90,3 +90,57 @@ Not measured by this seat: the per-firm delta figures themselves (the request's)
   - Item 2, d08 printed beside C_06 at the read-back, is owed at the read-back.
 
   Neither stops the signature.
+
+## Addendum 2 (2026-09-26 ~23:3xZ) -- named item 1 answered; the D_03 part re-signs on its own diff
+
+- **Request:** blob `8aca3995c3290a0e3dcb1fd93106bcc858003f90` @`eaca6a30de`, addendum 2. 2.0.0_SA_COO~M msg 101612.
+- **CTO ruling (a):** msg 101617.
+- **Named item 1 is answered, and it changed the act.**
+  - No reader renders a negative slice.
+  - But D_03 drops a class at 0 or below (`:407`) while its total keeps the negative. So 13 of 29 compositions would
+    sum to 100.5%-128.0% under the re-cut as signed.
+  - C_06's true delta is **+$66,055,897.80** (the 45 positive rows, 15 relationships; C_06:462 drops rows at 0 or
+    below), not the net $59.25M. The pass rule on z09305653 (+$63,196,106.53 in C_06 and D_04) is unchanged: that row
+    is positive, and D_04's firm mix takes C_06's values (`:565-583`).
+- **This half stands on `9e3f568d42` for C_06, D_04 and Holdings.** The D_03 part does not deploy on `9e3f568d42`.
+  Under ruling (a) it is new code (C_06's positive-rows rule in D_03), so it re-signs on that diff.
+- **Condition for the D_03 re-sign, beyond the CTO's (1)-(3).** The rule drops more than the 3 personal-liability
+  rows: it drops **all 26 negative cash-line rows (-$6,802,732.49)**. Before, those netted inside equity. After, they
+  appear in no COT total. So D_03's relationship totals rise, and its percentages shift, for every relationship
+  carrying such a row, which is at least the 17 that net negative on the cash line.
+  - The pre-deploy measurement lists **every relationship whose D_03 total or composition changes** under (a): the
+    cash-line debits and the 3 liabilities. Each row shows total before and after and composition before and after,
+    with the count printed.
+  - The half signs that list at its real size, not the 3 liability rows alone.
+- **Named, not a condition (state coherence):** after (a), no COT mix shows a debit or a liability anywhere. That
+  matches C_06's long-standing rule. Whether a viewer should see a net-of-debit value is not this act's question.
+
+## Addendum 3 (2026-09-26 ~23:4xZ) -- D_03 SIGNED on 0deac23f1e; a correction of this seat's addendum 2
+
+- **Request:** blob `7a6cd9abc354cf2f98d881ac7ef07d16bb60e811` @`625e331ded`, addendum 3. Measurement
+  `D03_POSITIVE_ROWS_DIFF_20260926.json` beside it.
+- **Code:** branch `irpt-m-cot-cash-line` @`0deac23f1e`, unmerged. 2.0.0_SA_COO~M msg 101627.
+- **The diff read here** (2 files, +27):
+  - `positive_rows()` keeps `market_value > 0`;
+  - it is called once at `:671` in `main`, after the open filter (`:670`) and before ghost exclusion (`:681`) and
+    classification (`:696`), and both input branches (`:650`, `:667`) pass through it, so it is on the served path;
+  - one test asserts that the kept rows sum to 100% and that the raw rows exceed it.
+- **CORRECTION to addendum 2.** It said D_03's relationship totals would rise in at least 17 relationships. **That was
+  an inference, and it is wrong.**
+  - `_build_composition` scales each composition to the canonical AUA when one is given (`:390-392`, printed here). So
+    dropping negative rows moves the mix, never the total.
+  - The request measured 0 totals moving across 223 scopes.
+  - The ask it carried (list every moved scope) is met anyway, in the JSON's `material_moves`: the firm and 27
+    relationships, plus 22 moving by under $1, listed.
+- **As measured by the request (not re-run here):**
+  - 0 of 223 compositions exceed 100.0% after (0 before);
+  - all 17 cash-line net-negative relationships are in the moved set;
+  - the largest move is z09305653, cash 0.4% -> 82.5% (its $63.2M cash line);
+  - the firm's cash share goes 3.50% -> 15.33%;
+  - the 3 liabilities, all in z09305672, leave a total of $8,838,093.55 unchanged, with the mix moving under 1pp per
+    class.
+- **The whole act now stands on `9e3f568d42` + `0deac23f1e`:** C_06, D_03, D_04 and Holdings. The order, rollback
+  and z09305653 pass rule carry. After the deploy, the check re-reads 0 of 223 over 100.0% (tolerance 0.05pp), per the
+  CTO's condition (2).
+- **The liabilities classed `equity`,** dropped here only because they are negative, are ~M's own `other` half under
+  R5, as the request routes it.

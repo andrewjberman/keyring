@@ -215,3 +215,13 @@ Slot ~30, direct act, LOCAL; the CTO reviews it before DEV. Disjoint from every 
 first by the server's predicate, in Global only, each firm's served order kept otherwise. Writes header/ClientSearch.tsx,
 header/search.ts, one new test. Queued on slot ~25 after IV-e-38, on top of IV-e-37's ClientSearch changes. Direct act, LOCAL.
 
+**v7 addendum 3 (issuer, 2026-09-26 ~23:2xZ):** `IV-e-48` = PRD C34, cut on its trigger: 2.0.0_SA_COO~P's contract enum admits
+`structured` and `commodities` (CLOUD d3c5467ce1 + ae32ac98d7). The page maps both (regenerated wire, contracts union, adapt.ts,
+assetClass.ts CLASS_FOR_SERVED) with their existing colours; ~M writes the values after it drains. Slot ~31, direct act, LOCAL;
+disjoint from every running chain. Chain Z's TO-IV-e-43 (colours) runs after it on merged DEV.
+
+**v7 addendum 4 (issuer, 2026-09-27 ~00:5xZ):** `IV-e-49`, the CTO's one change to IV-e-46 before DEV (101649): one commodities colour at
+least CIEDE2000 dE 20 from every MIX_PIE, ASSET_CLASS and model primary, shared by MIX_PIE and ASSET_CLASS.commodities (UIR-44). Writes
+src/lib/chartColors.ts, IV-e-46's reader-census test, one new test. Slot ~30 after IV-e-46, direct act, LOCAL. Round 7's harness cell
+(CTO 101651, the deterministic suite) and chain Z (IV-e-43, IV-e-45) seat when C: allows a worktree.
+

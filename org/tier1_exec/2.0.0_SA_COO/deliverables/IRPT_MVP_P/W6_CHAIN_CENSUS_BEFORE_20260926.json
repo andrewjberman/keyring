@@ -1,0 +1,72 @@
+{
+ "at": "2026-09-26T23:21:02.723318+00:00",
+ "rows": {
+  "irpt-requests/cottonwood": [
+   "ARTIFACT#ART-390ffa94fb4e6f11f35b6ffaf5a6a35cba957fd8188f4956a30c7cbf4d1a32bd",
+   "ARTIFACT#ART-499722d8ce4e7184d9bd98a83e1c723743f0a7d4b4348c6bd9dd280216b0c3fd",
+   "ARTIFACT#ART-7966916b15e6a8eedac7ceb80fef0ccdfc6078b323bea0d866b2f2d3bc356201",
+   "ARTIFACT#ART-8485fe3bf549f7c02a3f9b9c6ce9d91d9945a5a66e5b56f0be269c761a4b8be9",
+   "ARTIFACT#ART-ba54d4dc1bc3e59932da47d45c30198450a557bd691d489846f8ab2c867e4bfd",
+   "ARTIFACT#ART-be862c46a61f47b9e2a5ea2ab47f1e7355db87ea82f8851570e0b9bc24056ddf",
+   "INPUT#portfolio_99e76df8b63be3bccbaa0903586d46269dc13d7befd25a6b5983460d8444d68a",
+   "INPUT#portfolio_d188498ed12466f72431cb45199997ee457d7efc94f70bd8d35e0e64bcdae512",
+   "INPUT#portfolio_f40b800ea2217cf4c126b43faab6d21e7239ff33e02fc126aa93fd5685b56f29",
+   "NORMALIZATION#UP-a0046a8a81c2e66a5bb2b1e654d3fc2c5174ac09fc12562cbb46dde2163d864e#21d47c44de4c5caade3b879a6520826391bbf5579cf199fdbd13e4176ed05721",
+   "NORMALIZATION#UP-af6e0669b7c5a0abddcc9f015dd45b4cf17b231ed680d918ff5fe5b1af31a12d#21d47c44de4c5caade3b879a6520826391bbf5579cf199fdbd13e4176ed05721",
+   "NORMALIZATION#UP-efdc729f1337356a32419b7486d0fddecc251421ab14906fe28b39b213947397#21d47c44de4c5caade3b879a6520826391bbf5579cf199fdbd13e4176ed05721",
+   "PERFORMANCE_USE#106eaa0e9ed064d301659ca9ad5d148a4a7f2b1dbbf7b2c95cd8320cc46b1a65",
+   "RETENTION#RET-390ffa94fb4e6f11f35b6ffaf5a6a35cba957fd8188f4956a30c7cbf4d1a32bd",
+   "RETENTION#RET-499722d8ce4e7184d9bd98a83e1c723743f0a7d4b4348c6bd9dd280216b0c3fd",
+   "RETENTION#RET-7966916b15e6a8eedac7ceb80fef0ccdfc6078b323bea0d866b2f2d3bc356201",
+   "RETENTION#RET-8485fe3bf549f7c02a3f9b9c6ce9d91d9945a5a66e5b56f0be269c761a4b8be9",
+   "RETENTION#RET-ba54d4dc1bc3e59932da47d45c30198450a557bd691d489846f8ab2c867e4bfd",
+   "RETENTION#RET-be862c46a61f47b9e2a5ea2ab47f1e7355db87ea82f8851570e0b9bc24056ddf",
+   "SELECTION#sel_179c94c46e8b39417cb71c92d4173e469ad524d5e57d2c1b6eca7739135cefa2",
+   "SELECTION#sel_193629bdb550e875f05a9003c1ced3aff6d4ecb9f1185876e6a4e22231a6936e",
+   "SELECTION#sel_2e1468877cca074ba6455a274461f4d10ad2be073dd0b88c512247017e684fc8",
+   "SELECTION#sel_2f4d070124d5328bc9c761f4d1d263fa50b2696c3e089a276011434dddb25f55",
+   "SELECTION#sel_3169a90afe38ffe7e33c3a101255e3a064ff355bb9ce9c2548b49479b414232d",
+   "SELECTION#sel_32ef85af95d4f3aa3aa580d0ebd21655114b11add61cd1dc9a668978fe2a9e75",
+   "SELECTION#sel_45c31b36b92d3f5fae7b2638fa7f78be4b85a828961644bf5c728acc1b0ac48c",
+   "SELECTION#sel_4ebbfc019b450b955bb9575ab379f8fd8e29104aab1a3f89fcc0f3c064c5aa93",
+   "SELECTION#sel_57bc41394d7c5f58c800ff84069d53b59508a4cd01e577db85e2c47440efcdea",
+   "SELECTION#sel_717a61ed8bd424ce4e60216d8c740bb4c3491c722047ee959917ac1fc162b247",
+   "SELECTION#sel_76e18e382512f690eece6e8526b216f12e450dc80bd097871aad8f64e471b2ba",
+   "SELECTION#sel_85779d7531543007317ee93e5da1b78be3bc2bc66009a383b680554428c16b48",
+   "SELECTION#sel_8710f0c281f40142cb899f05988469c5278c1e469586f57c258a26bcabe0ea5b",
+   "SELECTION#sel_9b294751008117b4319b3961df583a4cd64e24f8baf019203cc71b4d226801b7",
+   "SELECTION#sel_abeb175200bef7a1bba69bcabd50e47afea7ff4ae18f9851738b282db1423977",
+   "SELECTION#sel_cac09624bd021736e36a9a80a89033acafc271aeb375aa6dc667d3e180066cac",
+   "SELECTION#sel_f97c759a128548bd2986aa99195ad3112934ace407fa7c6ca95dc2fb49ba626a",
+   "SELECTION#sel_fa678137036038f31edd27fecdb52f728d0907e4f1b3f3d17c82cb9f7ef41812",
+   "UPLOAD#UP-a0046a8a81c2e66a5bb2b1e654d3fc2c5174ac09fc12562cbb46dde2163d864e",
+   "UPLOAD#UP-af6e0669b7c5a0abddcc9f015dd45b4cf17b231ed680d918ff5fe5b1af31a12d",
+   "UPLOAD#UP-efdc729f1337356a32419b7486d0fddecc251421ab14906fe28b39b213947397"
+  ],
+  "irpt-jobs/cottonwood": [],
+  "irpt-jobs/_opal": [
+   "PROVIDER_OPERATION#971ab38a7724c3f637f4c8788fbc479b9fa504bcd6f8fc92208485c1288e2ffa",
+   "ycharts-session"
+  ]
+ },
+ "objects": {
+  "irpt/cottonwood/state/original_holdings/": [
+   "irpt/cottonwood/state/original_holdings/ART-499722d8ce4e7184d9bd98a83e1c723743f0a7d4b4348c6bd9dd280216b0c3fd/bb079cbf53aaa2be7ce3fb6beb44e55eaeb0695cd168661d5fb78488a0960ddc.csv",
+   "irpt/cottonwood/state/original_holdings/ART-8485fe3bf549f7c02a3f9b9c6ce9d91d9945a5a66e5b56f0be269c761a4b8be9/bb079cbf53aaa2be7ce3fb6beb44e55eaeb0695cd168661d5fb78488a0960ddc.csv",
+   "irpt/cottonwood/state/original_holdings/ART-be862c46a61f47b9e2a5ea2ab47f1e7355db87ea82f8851570e0b9bc24056ddf/bb079cbf53aaa2be7ce3fb6beb44e55eaeb0695cd168661d5fb78488a0960ddc.csv"
+  ],
+  "irpt/cottonwood/state/normalized_portfolios/": [
+   "irpt/cottonwood/state/normalized_portfolios/ART-390ffa94fb4e6f11f35b6ffaf5a6a35cba957fd8188f4956a30c7cbf4d1a32bd/99e76df8b63be3bccbaa0903586d46269dc13d7befd25a6b5983460d8444d68a.json",
+   "irpt/cottonwood/state/normalized_portfolios/ART-7966916b15e6a8eedac7ceb80fef0ccdfc6078b323bea0d866b2f2d3bc356201/d188498ed12466f72431cb45199997ee457d7efc94f70bd8d35e0e64bcdae512.json",
+   "irpt/cottonwood/state/normalized_portfolios/ART-ba54d4dc1bc3e59932da47d45c30198450a557bd691d489846f8ab2c867e4bfd/f40b800ea2217cf4c126b43faab6d21e7239ff33e02fc126aa93fd5685b56f29.json"
+  ],
+  "irpt/cottonwood/state/request_compositions/": [],
+  "irpt/cottonwood/state/vendor_documents/": [],
+  "irpt/cottonwood/state/extraction_evidence/": [],
+  "irpt/cottonwood/platinum/analysis_reports/": []
+ },
+ "queue": {
+  "ApproximateNumberOfMessages": "0",
+  "ApproximateNumberOfMessagesNotVisible": "0"
+ }
+}

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~25</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-26</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -92,3 +92,5 @@ lane: the <paths> block IS the grant; same slot as IV-e-37 (which last edited Cl
 
 Seating: slot ~25, queue position 3 of 3, after IV-e-38 on the same worktree (CTO 101594: "after IV-e-37 drains" is met by building on
 IV-e-37's commit in the same worktree; the chain drains once).
+
+**Issuer flip (2.0.0_SA_COO~D, 2026-09-27 ~00:5xZ; disarms row W25-S5):** the worker could not flip this order because its slot was provisioned before this order's commit (dca01c9765) -- an issuer seating defect, not the worker's. IVE47-AC1 PASS-by-output (VERDICT: GLOBAL-MERGE-OK); the proof instance validates at CLOUD (proof-of-spec-check rc=0). Merged at portal DEV 6bbf4141.
