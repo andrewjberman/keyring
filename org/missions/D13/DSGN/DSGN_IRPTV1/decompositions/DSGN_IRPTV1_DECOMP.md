@@ -240,3 +240,10 @@ card's "$" format page-wide, one client total = the identity card's HOW MUCH, Ho
 and UIR-27 (the ordinary case one click away), re-goldening the pinned money sets, F39-AC7, and the two tests IV-e-45 broke (fe-s-30
 F30-AC5, fe-s-55), each re-golden commit naming its UIR row. Slot ~29 before IV-e-50. Direct act, LOCAL.
 
+**v7 addendum 8 (issuer, 2026-09-27 ~07:1xZ):** `IV-e-53`, the repair of IV-e-36's seam that rows S20 / S22 ground (window 10 K8;
+2.0.0_SA_COO~P 101835): the Export preview's Performance request drops `selectedTenant`, which the tab's own request carries, so an
+internal viewer gets UNAVAILABLE and resolveBundle throws MissingPayloadError. Thread the export target's `selectedTenant` through
+index.tsx, ExportButton and PreviewRequestState into resolveBundle's deps and onto both getPerformanceReport request shapes; the print
+path (render/PrintEntry.tsx) passes an optional `selected_tenant` URL parameter the same way. Additive; the analysis path and a call
+without a tenant are unchanged. Same class as IV-e-36 (issuer repair of its own cell, row-driven). Slot ~33, direct act, LOCAL; it seats
+when C: allows a worktree (0.0.0_AB_MSTR 101618). Thread-breaking (the export hop), so it precedes round 8.
