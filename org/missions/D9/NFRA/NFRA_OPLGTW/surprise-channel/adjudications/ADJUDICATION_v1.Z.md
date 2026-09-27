@@ -70,6 +70,27 @@ from 2026-09-15..20, appends here when the round goes terminal.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "A post-act verification record. The missing GO re-read is noted for the round's L8 (a condition met but not evidenced by the act); it opens no hazard."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-C-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T21:35:00Z",
+    "one_line": "OG-s-1 never-widen SECOND (non-acting) half: SIGNED. Release 6a98a0553a = live fe94911257 + deploy-to-ec2.sh (one .env key, SPRINT_VIEW_ALLOWED_EMAILS, one entry = the owner). The narrowing reaches /sprint* only, exactly Andrew's word.",
+    "class": "OBSERVATION",
+    "spec_asserts": "Andrew-direct @785fc4d71f: /sprint for Andrew only. COO ask 20260927T212047Z; order @95e499c916.",
+    "world_is": "S3 latest = fe94911257 (d67a7435). The diff over the gateway is deploy-to-ec2.sh only (+2/-1). Parsed .env literal: 27 -> 28 entries, 9 -> 9 %s placeholders, one key added, no other value changed. The roster entry equals OTP_MAILBOX / MASTER_ADMIN_EMAILS / DASHBOARD_OWNER_EMAILS. Readers: config.py:103-104 (lower+strip) and sprint_view._allowed, called by sprint_page and sprint_archive only; /login and /mcp never read it. All identity providers lower-case the email, so the owner cannot be locked out by case. The GO step reads the host .env before the act (46 tools, the ENABLED literal, roster count 0).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_OPLGTW_OG-s-1_NEVER_WIDEN_SECOND_HALF_20260927.md",
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh at fe94911257 and 6a98a0553a",
+        "infra/aws/ec2/opal-gateway/app/sprint_view.py:173-182, :222; config.py:103-104; identity.py at fe94911257"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A sign-off record carried onto the channel. It opens and adjudicates no investigation item."
   }
 ]
 ```
