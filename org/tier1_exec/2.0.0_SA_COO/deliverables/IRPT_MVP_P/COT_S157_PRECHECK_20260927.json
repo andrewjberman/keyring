@@ -1,0 +1,35 @@
+{
+ "phase": "precheck",
+ "firm": "cottonwood",
+ "account": "acc_81d92b2b7e971a76bac96cea",
+ "selection": "sel_66e6034cd164fb0f141b662babd962a65b17e37670281b4800c85a85ebd565e6",
+ "window": [
+  "2026-01-01",
+  "2026-09-22"
+ ],
+ "result": {
+  "at": "2026-09-27T12:29:54.559719+00:00",
+  "function_error": null,
+  "state": "PARTIAL",
+  "reason": "PERFORMANCE_PARTIAL",
+  "retained_ref": {
+   "revision": "8ac387dc96d4b380a8c5f54891a7ea357f04dca66229412590572888c5196934",
+   "sha256": "8ac387dc96d4b380a8c5f54891a7ea357f04dca66229412590572888c5196934",
+   "report_kind": "PERFORMANCE",
+   "immutable": true,
+   "report_id": "RPT-b683f188c2e13da7865eeceace6334c3"
+  },
+  "report_id": null,
+  "requested": [
+   "2026-01-01",
+   "2026-09-22"
+  ],
+  "actual": [
+   "2026-01-02",
+   "2026-09-22"
+  ],
+  "series_points": 45,
+  "series_first": "2026-07-21",
+  "series_last": "2026-09-22"
+ }
+}

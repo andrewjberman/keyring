@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T12:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T12:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -65,6 +65,14 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
    ONE new COT use: plan 2 on the same account through cot_one_use_plan.py (no vendor call), a packet, both halves,
    a ledger, the arm, ONE read, and a disarm to null. The read is bOefL9nx's first real-data COT report, and it must
    disclose 07-21 as the actual start.
+   MEASURED 12:29:54Z (COT_S157_PRECHECK_20260927.json, cot_direct_read.py, plan OFF, V1 direct invoke): the same
+   account and window 01-01..09-22 REOPENED RPT-b683f188 through the retained pointer (PERFORMANCE_ACCEPTED is keyed
+   by selection and window, not by viewer). It showed actual 01-02..09-22 with the series from 07-21, and made 0
+   vendor calls (COT claims 2 -> 2). So:
+   - plan 2 as built (sha 8bd7774e, 01-01..09-22) would never be spent;
+   - the corrected read needs a different window, e.g. 01-01..09-21, re-built and signed;
+   - the page's COT YTD view keeps the overstated face for 01-01..09-22 until the holdings as-of advances
+     (S152/R4, Monday), or until the pointer is superseded, which is a served move needing its own half.
 4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
