@@ -135,3 +135,6 @@ GO: both halves SIGNED, off-hours, and "deploying" announced by the issuer via `
 <fabric>site-z</fabric>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+<!-- flipped by the issuer 2026-09-27T19:5xZ after the drain @cc8561cc9e (worker commits 76b70d4fbe, b7ced70bfe, d3b0d04b4d, 3a5de98b2e; release fe94911257). Re-graded on CLOUD: rl.AC1, rl.AC2 (8 files shipped, 0 outside OG-e-1's set) and rl.AC3 (health 200, email_denial on host 1, ENABLED_INTEGRATIONS unchanged) all PASS; instance VALID. GO condition (a) EMAILDENY = 0 of 163 before the upload (proof), and 0 of 167 re-scanned by the issuer after (no delete path exists, so after-0 bounds before-0). Tools 46 = 46, diff EMPTY. opal-gateway serves fe94911257 since 18:43:56Z. No rollback. -->

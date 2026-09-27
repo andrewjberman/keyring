@@ -3794,6 +3794,30 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "'flip the task order's <status> to complete and commit instance, deliverables and flip together' (standing worker rule).",
     "world_is": "The proof-of-spec instance is VALID (rc=0) and every mechanical criterion is PASS, but the flip itself is left to the issuer since this cell's <paths> grant excludes task-orders/.",
     "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T19:55Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "W8-S2: the worker's own step-12 re-verify ran at restart+375 s instead of within 90 s. The wrapper's embedded health check and its 90-second automatic rollback ran inside the window, and every late reading (md5 4/4, tools 46 = 46, ENABLED_INTEGRATIONS) was PASS, so no served state went unverified. W8-S3: the <status> flip is the issuer's by design (task-orders/ is outside a worker's paths); the issuer flipped it in this commit.",
+    "adjudicates": [
+      "NFRA_OPLGTW-Z-W8-S2",
+      "NFRA_OPLGTW-Z-W8-S3"
+    ],
+    "one_line": "The issuer closes the two INERT OG-e-2 rows: a late but PASSING re-verify, and the status flip that is the issuer's own act.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ledger 20260927T1815Z_nfra-oplgtw-email-deny-release_deploy_completion.md; rl.AC1-3 PASS on CLOUD after drain cc8561cc9e"
+      ]
+    },
+    "spec_asserts": "OG-e-2 step 12: verify within 90 s; the worker flips status.",
+    "world_is": "Verified at +375 s with all PASS; the status is flipped by the issuer."
   }
 ]
 ```
