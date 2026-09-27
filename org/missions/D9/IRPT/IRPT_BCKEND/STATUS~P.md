@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T23:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T00:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -40,18 +40,21 @@ As of 2026-09-26T23:2xZ. Earlier forms of this file are in git (`git log -p -- <
 
 ## Write claims
 
-Window 6 LIVE: principal irpt-uiwalk-1790464832 created 23:22:09Z; ~Y K4 -> K5, ~D K10; delete on both "done" or 00:20Z (cron b5a7fb99).
+None building. Window 6's residue is read at the 01:17Z tick.
 
 ## Next-list (in order)
 
-1. **Window 6 (Analysis chain end to end):** packet blob fffdca65 @e9c283801f sent 23:1xZ (CTO 101601, CRO 101602).
-   On both halves at HEAD: the ledger, the pre-read (the cottonwood row census, `_opal` jobs, queue 0/0, resident
-   on fe64236bbb-h7), create, hand the NAME to ~Y (K4, then K5) and ~D (K10), delete at 60 min, audit.
-2. **UIR-07:** the server side is SERVED and PASS. The Global merge is ruled to ~D's portal (CTO 101591, PRD v0.16).
-   P's part is done.
+1. **Window 6 residue (CTO 101673):** principal deleted 00:21:32Z.
+   - K4 NORMALIZED (00:10:04Z, input portfolio_4c5c85d0..); K5 QUEUED (00:12:05Z).
+   - Job REQ-3a1b73a8 is stuck at hop 6: receive 1's session capture failed (S151), and receives 2+ fail because the
+     principal was deleted (S150; branch (e) is struck).
+   - It reaches the DLQ at about 01:12Z. At the 01:17Z tick: read the row; if it stays non-terminal, bring a one-line
+     packet amendment naming how the row is closed or why it is left alone (the CTO signs it the same tick). Then close
+     ledger legs V1/A1 (the route audit of ~Y's logs + ~D's HAR c25-rewalk; K9 already traced, 49F REPORT# 17 -> 19).
+2. **The next Analysis window** is BLOCKED on S151: one live YCharts wrapper run to find why the capture fails, on
+   Andrew's word (owner ~Y). Future packets keep the principal until every job is terminal (CTO 101673).
 3. **The cross-viewer title binding** (f8c72944f3) ships in generate + the resident with the next Analysis deploy.
-4. **INF:** a new one-use plan on a one-account-household client, then one signed-in run. **COT:** a new per-use
-   word. (Window 5 saw their first opens refused VendorEgressRefused, as designed while unarmed.)
+4. **INF:** a new one-use plan on a one-account-household client, then one signed-in run. **COT:** a new per-use word.
 5. **K8, the first real export**, rides a later Performance window.
 
 ## Parked
