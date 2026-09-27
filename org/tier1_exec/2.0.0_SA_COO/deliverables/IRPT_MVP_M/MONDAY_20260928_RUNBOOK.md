@@ -108,3 +108,13 @@ four records ride the `ds-x-b1-cashline` merge (only ~X may commit its deliverab
 
 - "2.0.0_SA_COO~M validates" the Comparison/Multi-Comp permission. It waits on 2.0.0_SA_COO~Y versioning
   `templates.json` comparison_catalog after ~P's identity reads (4 read-only securities_info GETs) in ~P's next window.
+
+## J. Added 09-27 evening
+
+- **UIC-16** (`irpt-m-uic16` @9ddc01dbc5): Holdings `account_mask` and directory `masked_discriminator` keep the
+  source's full type (INF "Individual Retirement Account"). It merges with D (R4): the Holdings re-mint at D.0 must
+  include it. The directory side reaches the served directory at ~P's next directory package; tell ~P at the merge.
+  List it in the R4 enable half as a label change.
+- **Comparison consumer** (`irpt-m-comparison-consumer` @5dede2f029): ~P's release, not an ~M deploy. It merges when
+  ~P packages it with ~Y's templates.json v2.
+- Both branches existed before the purge freeze, so MSTR's rewrite covers them too.
