@@ -9772,3 +9772,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Diagnosis needs ONE wrapper run, which is a live YCharts call and waits on Andrew's word (CTO 101673: it gates nothing now). It blocks the next Analysis window's K5; the un-park condition is Andrew's word for that run."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S152",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T03:43:00Z",
+  "one_line": "The served INF holdings snapshot is as-of 2026-09-22 while the INF directory and the trading frontier are 2026-09-25 -- 3 trading days behind; because the page ends every Performance window on the holdings as-of (CTO 101422), INF Performance can never be read past 09-22 until holdings catch up.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served irpt-holdings GET for INF acc_5510a.. (selection sel_366d4891..) at 03:3xZ: state READY, source_dates business_date 2026-09-22, source_completion_date 2026-09-22",
+      "served irpt-directory-search browse, inflection: 292/292 entries as_of_business_date 2026-09-25, source accounts_v2@2026-09-25",
+      "trading frontier 2026-09-25 (Friday; 09-27 is a Sunday)",
+      "window 7 K11: the page sent end=09-22 for all 3 INF Performance GETs (~D 101739/101750)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "INF holdings are current to the INF source frontier (T-1 trading day), as the directory is.",
+  "world_is": "INF holdings lag the INF directory by 3 trading days (09-22 vs 09-25); the INF one-use plan had to be re-cut to end 09-22 (plan 7f64b166, CTO 101756).",
+  "notes": "Filed on CTO 101756 item 3. The disarm owner is the holdings producer (irpt-holdings-refresh-lambda, M's lane): confirm whether the INF holdings refresh ran on 09-23..09-25 or is gated on an upstream INF positions date. Whether Performance should end on its own source's as-of rather than holdings' is with the CRO (CTO 101756)."
+}
+```
