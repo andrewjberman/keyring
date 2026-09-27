@@ -552,6 +552,32 @@
     "spec_asserts": "NFRA_MCPORTAL-Z-W2-S8 is ARMED: the 90-second trigger's rollback is not fast.",
     "world_is": "No rollback is pending. The next gateway release faces (NFRA_OPALAI's Z-S18 fix, NFRA_MCPINDEX MX-r-3) carry the pre-acked rollback line.",
     "notes": "The halt gate is safe-ec2-deploy.sh's, read-only to every cell. Pre-acking at arm time keeps the gate's purpose (a STOP still halts) while removing the 12-minute delay from an emergency path."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S9",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T07:40Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each measured closed at CLOUD HEAD by a read-only audit, and re-cited here. Z-W1-S3: build_package.py:8-14 mirrors the repo layout, so parents[5] resolves inside the zip; MP-b-1 is complete @c09110fefc. Z-W1-S4: the checks were amended @051240c792 (Z-S6) so dotenv no longer breaks them. Z-W2-S7: deploy-to-ec2.sh:196 carries the space before REGION; the broken branch rel-nfra-mcportal-r2-gateway @c97839d7c8 stays on origin under the standing never-deploy rule. Z-W2-S8: ruled at Z-S8 -- later deploy faces pre-acknowledge the halt gate for the rollback (HALT_ACK=1), exercised in OA-g-2 and MX-r-3.",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-W1-S3",
+      "NFRA_MCPORTAL-Z-W1-S4",
+      "NFRA_MCPORTAL-Z-W2-S7",
+      "NFRA_MCPORTAL-Z-W2-S8"
+    ],
+    "one_line": "The issuer closes four ARMED rows whose hazard is gone or ruled at CLOUD. Z-W2-S3 stays open, carried by Z-S5's round-2 enrichment (a conftest fixture pointing AUDIT_PATH at a tmp file).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "build_package.py:8-14, deploy-to-ec2.sh:196 at CLOUD; commits c09110fefc, 051240c792; MX-r-3 ledger 20260927T0438Z (HALT_ACK=1 rollback command)"
+      ]
+    },
+    "spec_asserts": "Each target row's hazard stands until disarmed.",
+    "world_is": "The fold read them open only because no adjudicating row existed."
   }
 ]
 ```
