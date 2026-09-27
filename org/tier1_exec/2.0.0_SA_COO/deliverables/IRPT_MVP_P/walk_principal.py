@@ -204,16 +204,33 @@ def delete(n):
     print("AT %s" % dt.datetime.now(dt.timezone.utc).isoformat())
 
 
+def credoff(n):
+    """K1-CRED off once the walker has logged in (row IRPT_BCKEND-S172, CRO 102121): boto3 only -- a Git-Bash
+    `aws ssm ... --name /irpt/...` is MSYS-path-converted and deletes nothing -- then a read-back of the REAL name.
+    Done only on ParameterNotFound, printed with its timestamp."""
+    try:
+        _ssm().delete_parameter(Name=n["param"])
+        print("K1-CRED delete-parameter: OK %s" % n["param"])
+    except ClientError as e:
+        print("K1-CRED delete-parameter: %s %s" % (e.response["Error"]["Code"], n["param"]))
+    try:
+        _ssm().get_parameter(Name=n["param"])
+        print("K1-CRED READ-BACK: STILL PRESENT -- NOT DONE")
+        raise SystemExit(3)
+    except ClientError as e:
+        print("K1-CRED READ-BACK: %s at %s" % (e.response["Error"]["Code"], dt.datetime.now(dt.timezone.utc).isoformat()))
+
+
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--kind=")]
     for a in sys.argv[1:]:
         if a.startswith("--kind="):
             KIND = a.split("=", 1)[1]
-    if KIND not in ("walk", "uiwalk") or len(args) != 2 or args[0] not in ("preread", "create", "recred", "delete", "census"):
-        raise SystemExit("usage: walk_principal.py [--kind=walk|uiwalk] preread|create|recred|delete|census <epoch|out.json>")
+    if KIND not in ("walk", "uiwalk") or len(args) != 2 or args[0] not in ("preread", "create", "recred", "credoff", "delete", "census"):
+        raise SystemExit("usage: walk_principal.py [--kind=walk|uiwalk] preread|create|recred|credoff|delete|census <epoch|out.json>")
     if args[0] == "census":
         with open(args[1], "w", encoding="utf-8", newline=chr(10)) as f:
             json.dump(census(), f, indent=1)
     else:
         n = names(args[1])
-        {"preread": preread, "create": create, "recred": recred, "delete": delete}[args[0]](n)
+        {"preread": preread, "create": create, "recred": recred, "credoff": credoff, "delete": delete}[args[0]](n)
