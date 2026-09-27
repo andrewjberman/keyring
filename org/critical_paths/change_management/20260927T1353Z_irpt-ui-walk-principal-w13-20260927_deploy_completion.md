@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| C1 | activation | K1 + K1-CRED | both halves at HEAD naming the blob; pins (resident cw) re-read equal; pre-read + censuses; put + read-back |  | OPEN |
+| C1 | activation | K1 + K1-CRED | both halves at HEAD naming the blob; pins (resident cw) re-read equal; pre-read + censuses; put + read-back | both halves at HEAD naming blob 49ee40b0 (CTO @99311001d3 101903, CRO @ce115a43f1 101904: window 11's conditions carry; create only after window 12 closes -- W12 closed 14:03:20Z @d187e201b2); pins re-read 14:1xZ equal: generate G/TqLPdL, irpt-status bMMJ/bQ+5, adapter bOefL9nx no plan; resident (SSM) active on /opt/irpt-resident/fe64236bbb-cw, irpt-generation 0/0; ycharts/session/current AWSCURRENT d38f6941.. AWSPREVIOUS 02e53a44..; C: 12 GB free; pre-read epoch 1790518192 K1/email/K1-CRED ABSENT; censuses before: users 51 digest 76cbe66b, SELECTION# 49, REPORT# 49F 20 / COT 1 / INF 1, W13 chain census; K1-CRED then K1 put USER#usr_irptuiwalk_1790518192 at 14:11:33Z, read-back EQUAL; cap cron 49acdd12 at 16:05Z (120 min = 16:11Z). RUNNING WAF re-capture total: 0 completed before W13. | CLOSED 20260927T141239Z |
 | K1C | verify | K1-CRED deleted after ~Y's login | ParameterNotFound |  | OPEN |
 | K5 | verify | ONE Analysis job | terminal state; status GETs <= 6, re-captures <= 1, saved-portfolio GET <= 1, from the journal; running re-capture total |  | OPEN |
 | D1 | verify | K1 delete after every job terminal (<= 120 min) | failing consistent read |  | OPEN |
@@ -21,3 +21,4 @@
 ## Log
 
 - 20260927T135343Z OPENED by 2.0.0_SA_COO~P with 5 leg(s)
+- 20260927T141239Z LEG C1 closed: both halves at HEAD naming blob 49ee40b0 (CTO @99311001d3 101903, CRO @ce115a43f1 101904: window 11's conditions carry; 
