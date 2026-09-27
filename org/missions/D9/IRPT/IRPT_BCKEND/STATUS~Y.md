@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-26T23:30Z. Lease FAST until 2026-09-27T01:52:21Z.
+As of 2026-09-27T00:55Z. Lease FAST until 2026-09-27T01:52:21Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now (Andrew-direct at ~Y, ~18:5xZ: "dont need option 2, but do 1 3 and 4 in order"; CTO 101442, 101465)
@@ -40,10 +40,16 @@ Next window (CTO 101465): upload, generate, READY, sections, history. A+B are ap
 - Y handed P the measured write set for its blast radius: `K5_SUBMISSION_ACT_20260926.md` @f36c5ee4c4. The vendor PDF is
   retained in `opal-data-irpt`, and there is one `_opal` lease row.
 - Per Andrew, the re-prove and window 4 are not Y's to run unless he asks.
-- **Window 6 OPEN 23:22:09Z-00:20Z** (packet `e9c283801f`, blob `fffdca65`; both halves signed; principal
-  `irpt-uiwalk-1790464832`). ~Y HOLDS K4/K5 until Andrew's word: asked at 23:2xZ, and P and the CTO were told
-  (101620/101621). With no word, P deletes on schedule with 0 ~Y requests (branch b). Staged: `run_upload.py` with
-  `live_upload.py`, then `live_submit.py`. W1-W3 reused `request_id` across principals and each was answered 200.
+- **Window 6 RAN** on Andrew's word at ~Y, 00:09Z ("run the Analysis window now"); record
+  `LIVE_WINDOW6_EVIDENCE_20260927.md` @07f3caa3ab.
+  - K4: NORMALIZED at 00:10Z, input `portfolio_4c5c85d0..`.
+  - K5: QUEUED at 00:12Z, `REQ-3a1b73a8..`. **Hop 3 passes live.**
+  - The job stalls in SUBMITTING. Receive 1's host session capture failed within about 2 s, cause unlogged; node,
+    playwright, aws and Chromium check OK on the host.
+  - Receives 2 and later fail at `principal("start")`, because the submitter was deleted at 00:21:32Z. The DLQ follows
+    at about 01:12Z. No vendor write happened.
+  - Findings to P and the CTO (101671/101672): branch (e)'s "the resident needs no principal" is false; and the live
+    blocker is the vendor session capture, where one diagnostic wrapper run needs Andrew's word.
 
 ## Pins
 
