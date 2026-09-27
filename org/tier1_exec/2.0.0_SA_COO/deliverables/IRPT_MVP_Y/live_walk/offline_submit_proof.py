@@ -46,6 +46,8 @@ def main(argv=None):
     ap.add_argument("--input-id", required=True)
     ap.add_argument("--viewer", default="irpt-offline-proof@opal.test")
     ap.add_argument("--out", help="directory to write the captured composition and queue message (for a resident replay)")
+    ap.add_argument("--comparison-keys", default="",
+                    help="comma-separated catalogue keys: 1 selects the Comparison variant, 2-5 Multi-Comp (none: Overview)")
     a = ap.parse_args(argv)
 
     extract = tempfile.mkdtemp(prefix="irpt-proof-")
@@ -101,8 +103,10 @@ def main(argv=None):
     ports = gi.compose_ports(clients={"dynamodb": ddb, "table": table, "s3": s3, "sqs": sqs}, environ=env,
                              clock=time.time)
     boundary = gi.build_boundary(ports)
+    keys = [k for k in a.comparison_keys.split(",") if k]
+    variant = "overview" if not keys else "comparison" if len(keys) == 1 else "multicomp"
     body = {"request_id": "y-offline-proof-%d" % int(time.time()), "client_id": None, "account_ids": [],
-            "snapshot_id": None, "variant": "overview", "comparison_keys": [], "report_title": None,
+            "snapshot_id": None, "variant": variant, "comparison_keys": keys, "report_title": None,
             "prepared_for": "IRPT offline proof", "input_id": a.input_id}
     headers = {"x-contract-version": "v1", "x-origin-verify": "cloudfront", "x-user-email": a.viewer,
                "x-user-role": "admin", "x-user-type": "Dev", "x-firm-id": "opal-capital", "x-user-name": "Offline Proof Viewer"}
@@ -135,6 +139,9 @@ def main(argv=None):
         print("\nCOMPOSITION: report_title=%r from source %r (kind %s); prepared_by=%r; organization=%r"
               % (prof.get("report_title"), title_src, resolved.get("source_descriptors", {}).get(title_src, {}).get("source_kind"),
                  prof.get("prepared_by"), prof.get("organization")))
+        print("COMPARISONS: variant=%r catalog=%s" % (composition.get("browser", {}).get("variant"), json.dumps(
+            {k: [v.get("vendor_id"), v.get("name"), v.get("security_type")]
+             for k, v in (resolved.get("comparison_catalog") or {}).items()})))
     print("QUEUE MESSAGES:", [json.loads(m).get("kind") for m in sqs.sent])
     if a.out and composition:
         os.makedirs(a.out, exist_ok=True)
