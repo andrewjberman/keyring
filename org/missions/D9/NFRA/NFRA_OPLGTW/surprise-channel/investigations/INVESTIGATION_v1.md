@@ -3607,6 +3607,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "This lane's own standing report, every tick since the walkthrough orders opened: \"round 1 at 31 of 33, blocked on two orders\" -- a framing in which the project is nearly finished and two items remain.",
     "world_is": "Both halves of that are true and together they mislead. The BUILD is 31 of 33 terminal. The PROOF is 0 of 8 outcomes, with no grading machinery ever invoked, and the two open orders are the sole route to all eight. A reader given only the order count would conclude the project is ~94% closable; the outcome count says the closing work has not begun.",
     "notes": "INERT -- nothing armed; no cell cut (round 1 open, LD-0521); no remedy proposed, because the remedy is the two orders already cut and the human acts they wait on. The drive log's double-counted limb row is corrected IN PLACE BY APPENDED CORRECTION quoting the wrong text, never by silent replacement. ⭐ THE CARRY: **A PROGRESS METRIC AND A COMPLETION METRIC CAN BOTH BE HONEST AND POINT OPPOSITE WAYS, AND THE ONE THAT IS CHEAP TO COMPUTE IS THE ONE THAT GETS REPORTED.** Orders have a status field and count themselves; outcomes require reading the endpoint text and asking which artifact would grade them, so a loop that reports every tick drifts toward the countable half. ⚠ THE TELL IS A RATIO THAT NEVER MOVES WHILE THE WORK IS BLOCKED: 31 of 33 was as true the night the last build order closed as it is now, because the remaining orders cannot close without a person. COST: one read of the endpoint's DONE WHEN lines against the open order set, once per round, not once per tick. NON-APPLICATION: a project whose outcomes are graded by the same artifacts the orders produce -- there the two metrics genuinely track."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-27T14:15Z",
+    "one_line": "A newly-added order (OG-e-1, @11657b48df) landed 84 s after a REFUSED ratified-text stamp while prd-signoff status read the PRD WITHHELD. to-pipeline-gate LIMB 6 did not refuse it, although OG-e-1's parent IS the refusal commit 22e06eabdf, so the stamp was in the committed tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GIT: 11657b48df (2.0.0_SA_COO~O, 09:53:59-04:00) adds task-orders/NFRA_OPLGTW.TO-OG-e-1*; its only parent is 22e06eabdf (3.0.0_SA_CVO~O, 09:52:35-04:00, 'L4-R refused(NFRA_OPLGTW ratified-text half)'), which adds prd/signoff/3.0.0_SA_CVO~O.json.",
+        "TREE @22e06eabdf: prd/signoff/ holds TWO ratified-text files, 3.0.0_SA_CVO.json (the base seat's old SIGNED) and 3.0.0_SA_CVO~O.json (REFUSED), plus 4.0.0_SA_CRO.json.",
+        "SOURCE: .tools/to-pipeline-gate.py _signoff_violations and check_prd_signoff call the same prd_signoff_lib.evaluate() that prd-signoff.py status uses, so the RULE is shared and the INPUTS differ. check_prd_signoff reads the sign-off files from disk under the committing root (os.path.isfile), and it returns [] silently on several lookup misses (no project row, no PRD path, dep_stage None or REGISTERED)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 27 L4-R: '.tools/to-pipeline-gate.py LIMB 6 refuses a NEWLY-ADDED task order against a PRD with an unsigned half'.",
+    "world_is": "A refused half did not stop a newly-added order. Undiagnosed candidates: (a) evaluate() lets the base seat's legacy SIGNED file satisfy the half beside the lane's REFUSED file, and status differs only in how it resolves the lane; (b) the commit ran in a worktree whose disk lacked 3.0.0_SA_CVO~O.json; (c) an early silent return in check_prd_signoff. The consequence is INERT for OG-e-1 (CVO~O re-signed @2e371ea304 on the amended text, so the order now stands against an ADMITTED PRD). The class stays ARMED: the next refusal may not hold.",
+    "notes": "Reported by 3.0.0_SA_CVO~O (file 20260927T140900Z, detail in its review addendum @cc775d6f86), who named this seat as the gate's owner. Disarm = a reproduction on a scratch estate with two same-half files (base SIGNED + ~lane REFUSED), then the fix or a named non-defect."
   }
 ]
 ```
