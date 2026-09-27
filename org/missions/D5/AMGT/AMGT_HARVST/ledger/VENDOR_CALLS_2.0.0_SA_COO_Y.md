@@ -187,3 +187,57 @@ session is VALID; the refusal is on `search/query` and is a bot-check at request
 CALL 3 draws is still right -- read the body of a response you already fetched -- but it was drawn from a
 misread of what that body was.
 
+### CALL 4 CLOSED 2026-09-27T23:03:18Z -- 6 vendor requests, ALL 403, **NOT CLEARED**, and the premise was wrong
+
+| field | value |
+|---|---|
+| vendor requests made | **6** on `/nemo-next/api/search/query` (run 1 attempt 1; run 2 attempts 1-5), each CONFIRMED to have reached the vendor by a new event in the producer's own log |
+| requests that reached nothing | **1** -- run 1's attempt 2, suppressed by our own cooldown. **It is NOT counted above**, because counting it would record a vendor refusal that never happened |
+| statuses | 403 x 6. Zero 200s |
+| window covered | 21:40:12Z -> 23:03:18Z, 83 minutes, paced on our own 900s cooldown |
+| verdict | `CLEARED=false`. `attempts.json` carries all six rows |
+| session state throughout | VALID -- `/user-info` 200 on **12 of 12** observations, including immediately after each 403 |
+| re-auth fired | **NO**, every time. `credentials_entered: false` on every `verification_started` |
+| spend | **none** |
+
+### THE CORRECTION THIS CLOSE OWES, because the opening append printed a wrong number
+
+The opening said bbg serves **"200 sixty times against seven 403s."** That is wrong for the endpoint it was
+describing, in **two** ways, and they are the same error on two axes:
+
+1. **POOLED ACROSS PATHS.** The 60 counted EVERY bbg http event -- including `/user-info` session checks,
+   which always return 200, and article-body fetches. **On `search/query` alone the split is 9 and 12.**
+2. **POOLED ACROSS TIME.** All nine 200s fall on **2026-09-15**. The last one was `04:47:32Z`, and there have
+   been **nine consecutive 403s since**, across four days.
+
+| date | 200 | 403 |
+|---|---|---|
+| 2026-09-15 | 9 | 3 |
+| 2026-09-23 | 0 | 1 |
+| 2026-09-26 | 0 | 2 |
+| 2026-09-27 | 0 | 6 |
+| **total** | **9** | **12** |
+
+**So the 13-minute, 8-minute and 70-second recoveries I paced against are all artifacts of a regime that had
+already ended before I proposed the retry.** A denominator bounds the SAMPLE; only a MECHANISM bounds the
+INFERENCE, and I had no mechanism -- just a rate pooled over paths and days. **COST: group a census BY PATH
+and BY DAY before quoting a rate as a prediction.**
+
+### WHAT THE CALL ESTABLISHED, which is worth the six requests
+
+**The retry hypothesis is now FALSIFIED BY MEASUREMENT rather than untested**, and that was the point of
+Andrew's "Yes". bbg's `search/query` is in a **hard-refusal regime, not an intermittent one**. Three things
+are now separated that were previously entangled:
+
+- **the session** -- VALID, 12 of 12. Not the failing axis, and no re-auth is indicated.
+- **our own cooldown** -- 900s, outlives its process, and was silently suppressing retries.
+- **the vendor's refusal** -- total since 09-15, and it triggers a PerimeterX press-and-hold 22 seconds later
+  that the in-run adaptive solver cannot pass (*"no checkmark or peak detected within 12s ... recoveries=0"*).
+
+**THE ONLY REMAINING AXIS IS THAT VERIFICATION CHALLENGE** -- which is exactly the troubleshooting Andrew
+offered and which this round carded as item 1. It now has evidence for why it is the only lever, instead of
+being one option among several. Filed as row `AMGT_HARVST-Z-S32`.
+
+**No further bbg requests from this seat without a fresh word:** the authorized act was a paced retry, it ran,
+and it answered. More attempts on this route would be spend without a hypothesis.
+

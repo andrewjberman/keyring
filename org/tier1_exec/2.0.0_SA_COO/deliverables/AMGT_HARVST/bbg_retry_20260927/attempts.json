@@ -1,0 +1,57 @@
+{
+ "cleared": false,
+ "attempts": [
+  {
+   "attempt": 1,
+   "rc": 2,
+   "elapsed_s": 69,
+   "new_search_events": 1,
+   "statuses": [
+    403
+   ],
+   "at": "2026-09-27T21:57:46Z"
+  },
+  {
+   "attempt": 2,
+   "rc": 2,
+   "elapsed_s": 65,
+   "new_search_events": 1,
+   "statuses": [
+    403
+   ],
+   "at": "2026-09-27T22:14:10Z"
+  },
+  {
+   "attempt": 3,
+   "rc": 2,
+   "elapsed_s": 69,
+   "new_search_events": 1,
+   "statuses": [
+    403
+   ],
+   "at": "2026-09-27T22:30:38Z"
+  },
+  {
+   "attempt": 4,
+   "rc": 2,
+   "elapsed_s": 63,
+   "new_search_events": 1,
+   "statuses": [
+    403
+   ],
+   "at": "2026-09-27T22:47:01Z"
+  },
+  {
+   "attempt": 5,
+   "rc": 2,
+   "elapsed_s": 57,
+   "new_search_events": 1,
+   "statuses": [
+    403
+   ],
+   "at": "2026-09-27T23:03:18Z"
+  }
+ ],
+ "gap_s": 0,
+ "max_jobs": 8
+}

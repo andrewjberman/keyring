@@ -1605,6 +1605,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "The `articles` table is the authority for which articles this device already holds, and `--new-only` builds known_ids from it.",
       "world_is": "For four of five publishers rows and distinct ids agree exactly. For ft they differ by one, and no constraint in the schema would have prevented it.",
       "notes": "ID COLLISION, CORRECTED: this row was first written as Z-S30, which 3.0.0_SA_CVO~Z had already used on 2026-09-26T17:45Z. I chose the next id by COUNTING ROWS (64 rows -> 'next is S30') instead of reading which ids were SPENT -- the SAME error as the HVST-r-1/v-1 cell-id collision earlier the same night, on a different id space. The surprise-row gate caught it ('an id is one row'); the cell-id gate had not. The CVO's row is untouched. THE DISCRIMINATOR IS A SPENT-ID DENOMINATOR, NEVER A COUNT: the spent Z-S numbers here run 1..30 contiguously, so max+1 is the only safe next id, and a row count equals it only until someone files out of order or a row is removed. FILED, NOT CHASED, ON ANDREW'S WORD -- 2026-09-27, verbatim: \"im not perturbed by the FT duplicate either\". So this row exists to keep the discrepancy from being silently absorbed into a later claim, NOT as work. \u2b50 THE KEEPABLE FORM: a row COUNT is not an ENTITY count until a uniqueness constraint or a measured group-by says so, and I quoted 15 ft rows as 15 articles before checking distinctness -- the same class as reading a constructor default as a runtime state, which I did in the same hour. COST: one COUNT(DISTINCT) beside any COUNT(*) that is about to be called a number of things. NON-APPLICATION: a table whose key is declared unique."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S32",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~Y",
+      "surfaced_at": "2026-09-27T23:05:00Z",
+      "one_line": "bbg's search/query is in a HARD-REFUSAL regime, not an intermittent one: its last HTTP 200 was 2026-09-15T04:47Z and every one of the 9 observations since -- across 4 days and 6 genuine paced attempts tonight -- returned 403, while the session check /user-info returned 200 on 12 of 12. So retrying is now MEASURED not to be the lever, and the only remaining axis is the press-and-hold verification the in-run solver cannot pass.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~Y",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED on the producer's own .runtime/opal-data-harvest/events.jsonl, path /nemo-next/api/search/query, 21 events: 2026-09-15 = 9x200 and 3x403; 09-23 = 0x200, 1x403; 09-26 = 0x200, 2x403; 09-27 = 0x200, 6x403. TOTAL 9x200 / 12x403, and EVERY 200 is on 09-15. Nine consecutive 403s since the last 200.",
+          "THE SESSION IS NOT THE FAILING AXIS, measured on the same instrument: /user-info returned 200 on 12 of 12 observations, including immediately after each 403. A 549-byte 200 there is a valid session check, not an interstitial (that misreading is corrected in CALL 3 of org/missions/D5/AMGT/AMGT_HARVST/ledger/VENDOR_CALLS_2.0.0_SA_COO_Y.md).",
+          "THE PACED RETRY IS THE POSITIVE CONTROL AND IT WAS AUTHORIZED: Andrew-direct 2026-09-27 /open-calls Call 2, verbatim 'Yes'. 5 attempts spanning 21:57Z-23:03Z, each one confirmed to REACH the vendor by a new search/query event in the producer's log, every one 403. CLEARED=false. Artifacts: org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/bbg_retry_20260927/.",
+          "EACH ATTEMPT HAD TO WAIT OUT OUR OWN 900s PUBLISHER COOLDOWN (worker.py:310, request_rejected_without_verified_auth_expiry) which OUTLIVES the process that sets it. A first run with a 300s gap produced an attempt that reached NOTHING -- every job `cooldown` in under a second, no session load, no http event -- which would have been ledgered as a second vendor refusal it never made. The driver now paces on progress.sqlite3's cooldown row.",
+          "WHAT THE 403 TRIGGERS, from the same logs: 22s after each 403 the producer opens a PerimeterX press-and-hold with credentials_entered:false (so it is a bot check, NOT a sign-in), the adaptive solver reports 'no checkmark or peak detected within 12s ... recoveries=0 -- releasing anyway', job 1 returns request_rejected, and that cools the publisher so the remaining 7-8 jobs of the same invocation never attempt."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "bbg's 403 is intermittent and burst-sensitive, so a retry within a window clears it -- the premise this seat used to justify the paced retry, resting on 09-15's measured 403->200 recoveries at 13 min, 8 min and 70 seconds.",
+      "world_is": "Those recoveries are ALL from 09-15 and nothing has returned 200 since. Six genuine attempts tonight over 66 minutes were refused without exception. The endpoint's behaviour CHANGED between 09-15 and 09-23; it is not a window that decays.",
+      "notes": "TWO DENOMINATOR ERRORS OF MINE ARE CORRECTED BY THIS ROW, and they are the same mistake on two axes. I reported bbg as serving '200 sixty times against seven 403s'. (1) POOLED ACROSS PATHS: that 60 counted EVERY bbg http event -- /user-info session checks, which always return 200, and article-body fetches -- not the endpoint under discussion. On search/query alone it is 9 and 12. (2) POOLED ACROSS TIME: all 9 of those 200s fall on one day, so a figure I used to predict tonight's behaviour was drawn entirely from a regime that had already ended. A denominator bounds the SAMPLE; only a MECHANISM bounds the INFERENCE, and I had no mechanism -- just a pooled rate. COST: group the census BY PATH and BY DAY before quoting a rate as a prediction. ID: next safe id read as MAX+1 over spent Z-S ids (1..31 contiguous -> Z-S32). The row count equals max here only because nothing has been removed, so it is not the discriminator."
     }
   ]
 ```

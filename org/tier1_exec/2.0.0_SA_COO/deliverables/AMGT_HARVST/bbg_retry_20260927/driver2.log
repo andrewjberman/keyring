@@ -1,0 +1,22 @@
+BASELINE: 16 bbg search/query event(s) already logged
+  our own bbg cooldown has 311s left; sleeping 331s (+20s margin) so this attempt can actually reach the vendor
+=== ATTEMPT 1 of 5 ===
+  rc=2 elapsed=69s  NEW search/query event(s): 1  statuses=[403]
+  gap: sleeping 0s before the next attempt (the recovery window)
+  our own bbg cooldown has 899s left; sleeping 919s (+20s margin) so this attempt can actually reach the vendor
+=== ATTEMPT 2 of 5 ===
+  rc=2 elapsed=65s  NEW search/query event(s): 1  statuses=[403]
+  gap: sleeping 0s before the next attempt (the recovery window)
+  our own bbg cooldown has 899s left; sleeping 919s (+20s margin) so this attempt can actually reach the vendor
+=== ATTEMPT 3 of 5 ===
+  rc=2 elapsed=69s  NEW search/query event(s): 1  statuses=[403]
+  gap: sleeping 0s before the next attempt (the recovery window)
+  our own bbg cooldown has 899s left; sleeping 919s (+20s margin) so this attempt can actually reach the vendor
+=== ATTEMPT 4 of 5 ===
+  rc=2 elapsed=63s  NEW search/query event(s): 1  statuses=[403]
+  gap: sleeping 0s before the next attempt (the recovery window)
+  our own bbg cooldown has 899s left; sleeping 919s (+20s margin) so this attempt can actually reach the vendor
+=== ATTEMPT 5 of 5 ===
+  rc=2 elapsed=57s  NEW search/query event(s): 1  statuses=[403]
+NOT CLEARED: 5 attempt(s), every one refused. The window read here does NOT decay.
+CLEARED=False  attempts=5
