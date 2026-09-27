@@ -47,6 +47,8 @@ def main(argv=None):
     ap.add_argument("--census", required=True)
     ap.add_argument("--overlay")
     ap.add_argument("--out", help="directory to dump the post-job world (for the hop 8-10 read-path proof)")
+    ap.add_argument("--status-calculating", type=int, default=0,
+                    help="answer the portfolio status `calculating` N times before `available` (window 7 live)")
     a = ap.parse_args(argv)
 
     root = os.path.join(tempfile.mkdtemp(prefix="irpt-resident-job-"), "pkg")
@@ -56,7 +58,8 @@ def main(argv=None):
         src = os.path.join(a.overlay, name)
         if os.path.isfile(src):
             for dp, _, fn in os.walk(root):
-                if name in fn and "tests" not in dp.split(os.sep):
+                # Test and fixture trees are recorded evidence, never code: an overlay never lands there.
+                if name in fn and not {"tests", "fixtures"} & set(dp.split(os.sep)):
                     shutil.copyfile(src, os.path.join(dp, name))
                     overlaid.append(os.path.relpath(os.path.join(dp, name), root))
     print("resident package copy", root, "| overlay", overlaid or "none")
@@ -81,7 +84,8 @@ def main(argv=None):
         ("GET", "/custom_pdf_reports/generate/14141822"): {"status": 200, "body": fixture("templates")["14141822"]},
         ("POST", "/model_portfolios/fixed/holdings_upload/client"): upload,
         ("POST", "/model_portfolios/fixed/"): fixture("create_201"),
-        ("GET", "/model_portfolios/2332060/status"): fixture("status_ok"),
+        ("GET", "/model_portfolios/2332060/status"): (
+            [{"status": 200, "body": {"status": "calculating"}}] * a.status_calculating + [fixture("status_ok")]),
         ("POST", "/custom_pdf_reports/validate_report_securities/14141822"): fixture("validate_200"),
         ("POST", "/custom_pdf_reports/14141822"): fixture("generate_201")}
     replay = ReplayTransport(script)
