@@ -921,3 +921,20 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
 5. **The chain count and the constraint table are readings.** M = 64 follows from the 45 edges this document declares; a
    missing edge would show as false width.
 6. **The emulator for DynamoDB conditional semantics is not chosen here.** `OG-d-1` names it; the build ladder applies.
+
+## ADDENDUM R2-k (2.0.0_SA_COO~O, 2026-09-27, on the re-seat @6fba157e76) -- the email-keyed deny cell (row W3-S22)
+
+Ruled: CTO ruling 97251 (row S17) placed W3-S22 in round 2's email-keyed authorization cell. `1.0.0_SA_CTO~O` re-affirmed
+it @244cd0d80f and ruled the five design calls @2ae58221ab (`deliverables/1.0.0_SA_CTO~O/RULING_R2-k_FIVE_CALLS_20260927.md`;
+contract v1.3 adds `email_deny`; PRD v1.0 C2 and C6 each gain one clause). The design is
+`deliverables/2.0.0_SA_COO~O/R2-k_EMAIL_DENY_CELL_DESIGN_20260927.md` @500aac7e4d. Ordered before `OG-v-4`/`OG-v-5`
+(the 09-18 ruling), which stay HELD behind it.
+
+| cell | what it is | serves | writes | status |
+|---|---|---|---|---|
+| `OG-e-1` | BUILD: the hashed-email deny record, its guard on `/login` + `/sprint*` + legacy `/callback`, the writer's same-transaction put, and `deny-backfill` | C2, C6 (PRD v1.0 @2ae58221ab); row W3-S22 | `GW/app/access_state.py`, `GW/app/data_entitlement.py`, `GW/app/server.py`, `GW/app/token_broker.py`, `GW/ops/schwab_entitlement_admin.py`, `GW/tests/test_email_deny.py` (new), `GW/tests/test_owner_gate.py` | ISSUED |
+
+The SERVED steps follow as their own cells, each under never-widen:
+- a narrow gateway release from the live commit plus OG-e-1;
+- the grant-writer Lambda rebuilt and applied, before any dashboard grant;
+- the OA-g-3 backfill, which WAITS on Andrew's open card.
