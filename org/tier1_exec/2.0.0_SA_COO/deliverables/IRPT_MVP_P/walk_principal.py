@@ -139,6 +139,30 @@ def create(n):
     print("HANDOVER: email %s ; password by NAME %s" % (n["email"], n["param"]))
 
 
+def recred(n):
+    """ONE fresh one-use credential for a LIVE principal (a signed amendment's later login): K1 present, K1-CRED absent.
+    Resets only K1's passwordHash (conditional on K1 existing); every other K1 attribute reads back unchanged."""
+    before = get_k1(n)
+    if before is None or param_exists(n):
+        raise SystemExit("STOP: recred needs K1 PRESENT and K1-CRED ABSENT")
+    password = secrets.token_urlsafe(32)
+    pw_hash = bcrypt.hashpw(password.encode("ascii"), bcrypt.gensalt(SALT_ROUNDS)).decode("ascii")
+    _ssm().put_parameter(Name=n["param"], Value=password, Type="SecureString", Overwrite=False,
+                         Description="IRPT walk principal password (recred); deleted after the login")
+    del password
+    print("OK: K1-CRED put (value not printed) %s" % n["param"])
+    _ddb().update_item(TableName=TABLE, Key={"PK": before["PK"], "SK": before["SK"]},
+                       UpdateExpression="SET passwordHash = :h", ExpressionAttributeValues={":h": {"S": pw_hash}},
+                       ConditionExpression="attribute_exists(PK)")
+    back = get_k1(n)
+    same = back is not None and digest(back) == digest(before) and back["passwordHash"]["S"] == pw_hash
+    print("OK: K1 passwordHash reset at %s; read-back digest %s (passwordHash excluded) %s the pre-reset digest"
+          % (dt.datetime.now(dt.timezone.utc).isoformat(), digest(back or {}), "EQUAL to" if same else "DIFFERENT from"))
+    if not same:
+        raise SystemExit("STOP: K1 read-back differs -- run delete now")
+    print("HANDOVER: email %s ; password by NAME %s" % (n["email"], n["param"]))
+
+
 def _login_refused(email, password):
     body = json.dumps({"email": email, "password": password}).encode("ascii")
     req = urllib.request.Request(AUTH_API + "/auth/login", data=body, method="POST",
@@ -185,11 +209,11 @@ if __name__ == "__main__":
     for a in sys.argv[1:]:
         if a.startswith("--kind="):
             KIND = a.split("=", 1)[1]
-    if KIND not in ("walk", "uiwalk") or len(args) != 2 or args[0] not in ("preread", "create", "delete", "census"):
-        raise SystemExit("usage: walk_principal.py [--kind=walk|uiwalk] preread|create|delete|census <epoch|out.json>")
+    if KIND not in ("walk", "uiwalk") or len(args) != 2 or args[0] not in ("preread", "create", "recred", "delete", "census"):
+        raise SystemExit("usage: walk_principal.py [--kind=walk|uiwalk] preread|create|recred|delete|census <epoch|out.json>")
     if args[0] == "census":
         with open(args[1], "w", encoding="utf-8", newline=chr(10)) as f:
             json.dump(census(), f, indent=1)
     else:
         n = names(args[1])
-        {"preread": preread, "create": create, "delete": delete}[args[0]](n)
+        {"preread": preread, "create": create, "recred": recred, "delete": delete}[args[0]](n)

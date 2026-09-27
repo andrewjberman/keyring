@@ -9959,3 +9959,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "ARMED because every further COT use spends a plan for nothing until the session is live. Likely an expired BD session between 04:31Z and 15:41Z, NOT proven (the transport records only the class). Disarm = the owner of the COT session capture refreshes blackdiamond/cot/session (a vendor sign-in, needing its own word and halves), then ONE new COT use for S157. Also: the adapter classifies BDRequestFailed as UNEXPECTED, where DEPENDENCY_UNAVAILABLE would name it (P's parked classification line). The spent claim PERFORMANCE_USE#63cf95e9 is test data for the release item (CTO 101937)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S159",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T16:35:00Z",
+  "one_line": "The first READY Analysis report (window 15, REQ-67e12718, RPT-5288c06d) was made on a model portfolio YCharts stored with level_as_of_type=custom_date, although the recipe sent prior_close; 5 of the certified PDF's 51 sections are dated 2026-09-27, a Sunday, where prior_close would presumably read 09-25.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "resident journal (lt) READ_BACK_DONE ... source=saved_portfolio drifted=- absent=- tolerated=level_as_of_type=custom_date",
+      "retained report RPT-5288c06d (opal-data-irpt platinum): effective_inputs.settings.level_as_of_type = custom_date",
+      "section as_of_date counts: 2026-09-27 x5, 2026-09-25 x7, 2026-08-31 x39 (51 sections)",
+      "the five dated 09-27: S01.advisory_fee.c0, S07.chart.expanded_region_exposure, S24.chart.annualized_returns_market_price, S25.chart.annualized_returns_nav, S26.chart.expense_ratios_sales_charges_standardized_yields",
+      "the recipe sends prior_close, as the advisor's own YCharts form does in all 5 HAR creates (~Y 101938)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The saved portfolio's settings equal what the recipe sent; W15-3 tolerates level_as_of_type only as a recorded display basis.",
+  "world_is": "YCharts stored custom_date for level_as_of_type (sent prior_close), and the certified PDF shows a Sunday (2026-09-27) as-of date on 5 sections, a client-visible date that differs from the requested prior-close basis.",
+  "notes": "Filed on CTO 101962 condition 1 (window 15's condition 2 fired) and CRO 101948/101963 (name the PDF's level basis). It does not void READY. Not ARMED: every other setting matched live and the certifier accepted the PDF. For ~Y's recipe lane: why the vendor stores custom_date for a prior_close request (an ignored field on create, or a default overwrite), and whether the recipe should set it by a second call or the reports should name the as-of basis."
+}
+```
