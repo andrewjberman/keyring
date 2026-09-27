@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T15:4xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T16:0xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -65,8 +65,11 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
    window would never spend a plan. The plan-off pre-check refused with 0 vendor calls (P0). The packet (blob 9c807347,
    @ac1490eb22) was signed by both halves and RUN at 15:40-15:43Z. The claim was spent, then BDRequestFailed HTTPError:
    NO report, disarmed to null (ledger irpt-performance-cot-one-use-s157-20260927 CLOSED). The COT BD session likely
-   expired after K12 at 04:31Z (IRPT_BCKEND-S158, ARMED, disarm owner the CTO): a session refresh (a vendor sign-in) must come
-   before ONE more COT use. The page's COT YTD view keeps RPT-b683f188's face until the holdings as-of advances.
+   expired after K12 at 04:31Z (IRPT_BCKEND-S158, ARMED). CTO 101946 RULED: the refresh is the scheduled automated
+   `opal-cot-bd-session-fetch` (scheduler cot-bd-session-daily-et, 07:30 ET), owned by 0.6.2_AE_PartnerETL (ADVI_COTETL;
+   the lane is not registered, and MSTR is seating it). It last succeeded 09-16 and failed 09-24..09-27. S158's disarm
+   owner is that lane. Nobody signs in by hand. S157 re-arms only on a NEW AWSCURRENT of blackdiamond/cot/session, as a
+   new signed use. The page's COT YTD view keeps RPT-b683f188's face until the holdings as-of advances.
 4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
