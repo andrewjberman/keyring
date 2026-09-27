@@ -2241,3 +2241,31 @@
   "notes": "Not blocking IV-e-65 (this cell's own acceptance criterion command was run standalone and passed cleanly, denominator 1 of 1). Left UNDER_INVESTIGATION for whichever seat next needs suite-wide stability; this worker's <paths> grant does not cover whichever file is flaking."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S25",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-27T16:41:48Z",
+  "one_line": "Window 15 K10 on local DEV e8a00b23: the Analysis tab's owner history lists the READY job (REQ-67e12718), but every row reads 'Status unavailable' and opening it fails -- the item read GET /analysis/requests/{id} omits selected_tenant and answers 200 UNAVAILABLE / UNEXPECTED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "a direct act whose <paths> grant covers portal/src/api/endpoints/investor-reporting.ts (owned item/report reads) and tabs/analysis/OwnedRequestHistory.tsx (TO-IV-e-66)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w15k10-20260927.har (gitignored, sha256 582683b5..; 461 entries, 0 /__mockcot/, 78 GET + 3 admitted POST): GET /analysis/requests?limit=25&selected_tenant=cottonwood 200 x2 listing 6 owner requests incl. REQ-67e12718b0ba7c0c70ebb45b; GET /analysis/requests/REQ-67e12718b0ba7c0c70ebb45b (no selected_tenant) 200, state UNAVAILABLE, public_reason_code UNEXPECTED",
+      "portal e8a00b23 src/api/endpoints/investor-reporting.ts:1031-1037 listOwnedAnalysisRequests takes selectedTenant (IV-e-62); getOwnedAnalysisRequest (:1041) and getOwnedAnalysisReport take none; tabs/analysis/OwnedRequestHistory.tsx:21 calls api.getOwnedAnalysisRequest(id)",
+      "with no client chosen the history does not mount (IV-e-62 scoped it to the hasClient branch per fe-s-72); window 15's job is a prospect Overview (client_id null)",
+      "walk byte-proof: start 16:35:19Z and end 16:41:48Z both HEAD e8a00b23, 0 tracked changes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An advisor can see the state of an Analysis request (including a failed one) in the page, and open a READY one to its report.",
+  "world_is": "The list shows the requests, but each row's state and the open read are refused for an internal viewer because the item and report reads drop the tenant.",
+  "notes": "Same class as S22/S23 (a read that drops selected_tenant). Also carried to round 9: a prospect job (no client) is invisible until some client is chosen, because the history mounts only with a client."
+}
+```

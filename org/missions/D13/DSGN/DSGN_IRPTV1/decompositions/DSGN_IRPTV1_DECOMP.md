@@ -291,3 +291,9 @@ act, LOCAL; export/submit.ts, ExportButton.tsx, ReceiptPanel.tsx belong to no ru
 revision hash (ReportingTab.tsx:214-228), so the renderer refuses 'invalid report reference'. Name it by retainedReport {reportId,
 revision}. Direct act, LOCAL, slot ~36; ReportingTab.tsx belongs to no running round-8 cell. Thread-breaking (the export hop).
 
+**v8 addendum 3 (issuer, 2026-09-27 ~16:4xZ):** `IV-e-66`, the Analysis-hop repair row S25 grounds (window 15 K10 on local DEV
+e8a00b23): the owner history (IV-e-62) lists the READY job, but the per-request and report reads omit selected_tenant, so every row reads
+'Status unavailable' and opening fails (200 UNAVAILABLE/UNEXPECTED). Thread the tenant into getOwnedAnalysisRequest /
+getOwnedAnalysisReport and OwnedRequestHistory's reads. Direct act, LOCAL, slot ~36; no running cell holds these files. Carried to round 9:
+a prospect job (no client) is invisible until a client is chosen (the history mounts only with a client).
+
