@@ -96,6 +96,27 @@ reads. The round's full L8 compile appends here when round 2 goes terminal.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "A post-act verification record. It opens and adjudicates no investigation item."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S20",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T09:55:00Z",
+    "one_line": "MX-s-8 never-widen SECOND (non-acting) half: SIGNED. The build ships only the two mirror_conversion.py hunks to the 4 silver Lambdas. Its one served change: an exactly-empty float64 cell now writes a typed NULL instead of failing the unit, and the retained logs show no unit that would move at deploy.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The issuer's ask 20260927T092019Z and the order as amended @a296ac3598: build-and-upload x4, then safe-apply with Plan 0/4/0, under the NEVER-2 ledger nfra-mcpindex-silver-mirror-guard.",
+    "world_is": "Build input (lambda-source-map.json file lists) vs the deployed zips: identical except mirror_conversion.py, which differs by exactly 5 lines in each of the 4. Live CodeSha256 is unchanged. N = 5 writers of the rule (4 Lambdas + the source), all fixed after the act. 0 VendorDriftError in 14 days across the 4 log groups (positive control: 72 etf invocations); sweep status reads holes 0 in 5 scopes. The 4 known pathfinder units land only via DS's separate backfill.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPINDEX_MX-s-8_NEVER_WIDEN_SECOND_HALF_20260927.md (the signed half)",
+        "infra/aws/lambda/ci/lambda-source-map.json functions.opal-assets-silver-{blackdiamond,etf,eclipse,orion}",
+        "infra/aws/lambda/opal-assets/opal-assets-silver-etf/mirror_conversion.py:283-308 (the rule) and etf_conversion.py:214"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A sign-off record carried onto the channel. It opens and adjudicates no investigation item."
   }
 ]
 ```
