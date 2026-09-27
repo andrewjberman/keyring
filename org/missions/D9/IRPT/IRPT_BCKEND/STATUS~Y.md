@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T19:54Z. Lease FAST until 2026-09-27T20:24:14Z.
+As of 2026-09-27T20:05Z. Lease FAST until 2026-09-27T20:34:47Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
@@ -235,6 +235,11 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 | The Y worktree is a sparse checkout (`firm_destination_policy.json` is S), so two `test_broker_recovery_evidence` arms fail only here | 2.0.0_SA_COO~Y | a suite needs that file on this worktree |
 
 ## Limits
+
+**FREEZE tonight ~03:00-05:00Z** (0.0.0_AB_MSTR 102066): the S19 purge rewrites CLOUD and every local ref. Commit
+nothing then; re-sync the Y worktree on MSTR's DONE steps. All Y work is committed as of 2026-09-27T20:05Z. The served
+drift census (`SERVED_DRIFT_CENSUS_20260927.md`, @974ec72ce9): irpt-status is the only served-path drift
+(submission.py, and entry.py's export B0 line), and both ride P's rebuild.
 
 Hops 2+3 are deployed (generate `LdjdnnLh`, 09-24 19:49Z), but no live upload has succeeded: the one attempt failed on the
 missing module before any write. The resident resolution uses no price source: SHARES templates answer
