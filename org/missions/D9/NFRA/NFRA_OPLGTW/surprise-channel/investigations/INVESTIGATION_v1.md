@@ -3680,6 +3680,29 @@ name the one known failure instead of silently inheriting it.
     ],
     "spec_asserts": "CLAUDE.md 27 L4-R: LIMB 6 refuses a NEWLY-ADDED task order against a PRD with an unsigned half.",
     "world_is": "It now does so even when the order carries '# pipeline-override:'."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T16:35Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Ruled by the issuer's amendment A1 to OG-e-1 @9cd9d6fb2b and disarmed in code @2d0f2dda83. A restricted activate/prepare with no resolvable email now raises CandidateRejected and writes nothing (ops/schwab_entitlement_admin.py prepare() :332-334). The 11th test, test_activate_refuses_with_no_resolvable_email, asserts zero writes. The test fixture carries a synthetic .test email, so no real identifier was added and no assertion was weakened.",
+    "adjudicates": [
+      "NFRA_OPLGTW-Z-W7-S1"
+    ],
+    "one_line": "The issuer closes Z-W7-S1: the silent no-deny path for email-less restricted grants is replaced by the ruled refusal (OG-e-1 A1).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ek.AC1 11 passed on CLOUD after drain 2d0f2dda83; prepare() :332-334"
+      ]
+    },
+    "spec_asserts": "Z-W7-S1: an email-less restricted activate writes a profile with no deny record.",
+    "world_is": "It is refused before any write."
   }
 ]
 ```

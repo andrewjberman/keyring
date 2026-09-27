@@ -123,3 +123,6 @@ The checks isolate AUDIT_PATH; the tree was clean after the dry run. The prd-sig
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+<!-- flipped by the issuer 2026-09-27T16:3xZ after the drain @2d0f2dda83 (worker commits 06eff3b73f, 744e4468e1 A1, 0fa99ba7d8). Re-graded on CLOUD: ek.AC1 11 passed, ek.AC2 24 passed, ek.AC3 rc=0 flags 5 of 5; instance VALID. The A1 refusal is at ops/schwab_entitlement_admin.py prepare() :332-334. GW/audit.jsonl clean. BUILD only: nothing is deployed; the narrow release and the grant-writer Lambda rebuild are separate SERVED cells. -->
