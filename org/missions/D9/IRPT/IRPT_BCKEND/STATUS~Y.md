@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T18:46Z. Lease FAST until 2026-09-27T19:16:41Z.
+As of 2026-09-27T18:59Z. Lease FAST until 2026-09-27T19:29:23Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
@@ -219,6 +219,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
+| Comparison / Multi-Comp: the served generate refuses every selection (identity and entitlement unverified). The Y catalogue `templates.json` comparison_catalog (candidate 20260923.v1) needs (1) 4 read-only securities_info GETs for current identity and (2) a firm reporting-permission word; asked of the CTO at 18:59Z | 1.0.0_SA_CTO (routes (2) to Andrew); P cuts (1) | both land; then Y versions the catalogue with the evidence and M validates |
 | Shares price source (Y2 Shares cells): CTO 100887 ruled (c), refused by name for v1; (b) has no known estate table; (a) goes to Andrew | 2.0.0_SA_COO~Y (re-ask the CTO) | the Dollars journey is graded |
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |
