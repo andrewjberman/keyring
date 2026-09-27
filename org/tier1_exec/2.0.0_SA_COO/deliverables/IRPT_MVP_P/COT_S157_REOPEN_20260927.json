@@ -1,0 +1,29 @@
+{
+ "phase": "reopen",
+ "firm": "cottonwood",
+ "account": "acc_81d92b2b7e971a76bac96cea",
+ "selection": "sel_66e6034cd164fb0f141b662babd962a65b17e37670281b4800c85a85ebd565e6",
+ "window": [
+  "2026-01-01",
+  "2026-09-21"
+ ],
+ "result": {
+  "at": "2026-09-27T15:41:04.161362+00:00",
+  "function_error": null,
+  "state": "UNAVAILABLE",
+  "reason": "DEPENDENCY_UNAVAILABLE",
+  "retained_ref": null,
+  "report_id": null,
+  "requested": [
+   null,
+   null
+  ],
+  "actual": [
+   null,
+   null
+  ],
+  "series_points": 0,
+  "series_first": null,
+  "series_last": null
+ }
+}

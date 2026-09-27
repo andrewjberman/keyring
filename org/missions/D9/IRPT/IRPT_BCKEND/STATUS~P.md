@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T15:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T15:4xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -62,8 +62,10 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 3. **A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** plan 63cf95e9 (01-01..09-21) was built with
    no vendor call. The 01-01..09-22 as-of window reopens RPT-b683f188 through the retained pointer (12:29:54Z), so that
    window would never spend a plan. The plan-off pre-check refused with 0 vendor calls (P0). The packet (blob 9c807347,
-   @ac1490eb22) is out for both halves: a direct invoke as V1, arm 1/1/0, ONE read + reopen, disarm to null. The page's
-   COT YTD view keeps RPT-b683f188's face until the holdings as-of advances.
+   @ac1490eb22) was signed by both halves and RUN at 15:40-15:43Z. The claim was spent, then BDRequestFailed HTTPError:
+   NO report, disarmed to null (ledger irpt-performance-cot-one-use-s157-20260927 CLOSED). The COT BD session likely
+   expired after K12 at 04:31Z (IRPT_BCKEND-S158, ARMED, disarm owner the CTO): a session refresh (a vendor sign-in) must come
+   before ONE more COT use. The page's COT YTD view keeps RPT-b683f188's face until the holdings as-of advances.
 4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
@@ -88,7 +90,7 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 
 | Question | Owner | Un-parks when |
 |---|---|---|
-| The kept test inputs and reports from windows 1-6 in cottonwood (UPLOAD#/INPUT#/analysis#/REPORT# rows and objects owned by deleted walk principals) must be excluded from any firm viewer's lists, or removed, before the route opens to firm users; include by KEY irpt-jobs cottonwood / REQ-3a1b73a8dead02a17a09043b, the window-6 job left SUBMITTING, since a tenant-wide job listing would show it as never finishing (CTO 101678); and by KEY cottonwood REPORT#RPT-b683f188c2e13da7865eeceace6334c3, COT's K12 report whose retained face overstates its window (IRPT_BCKEND-S157, CTO 101825); closes as not needed only if EVERY reader lists by owner (4.0.0_SA_CRO 101609) | the release cutter | the route opening to firm users |
+| The kept test inputs and reports from windows 1-6 in cottonwood (UPLOAD#/INPUT#/analysis#/REPORT# rows and objects owned by deleted walk principals) must be excluded from any firm viewer's lists, or removed, before the route opens to firm users; include by KEY irpt-jobs cottonwood / REQ-3a1b73a8dead02a17a09043b, the window-6 job left SUBMITTING, since a tenant-wide job listing would show it as never finishing (CTO 101678); and by KEY cottonwood REPORT#RPT-b683f188c2e13da7865eeceace6334c3, COT's K12 report whose retained face overstates its window (IRPT_BCKEND-S157, CTO 101825); and by KEY cottonwood PERFORMANCE_USE#63cf95e9defc2385c7314f193cf211ea5a6d25a3426ece07654b7bcf8d31fb44, the S157 use's spent claim (V1, no report; CTO 101937); closes as not needed only if EVERY reader lists by owner (4.0.0_SA_CRO 101609) | the release cutter | the route opening to firm users |
 | MSTR removed the backend worktree's Terraform provider caches (101858): run `terraform init` in a root before its next safe-apply | 2.0.0_SA_COO~P | the next apply in irpt-smoke-p-backend-20260923 |
 | The backend worktree's directory Terraform root predates M's holdings resources (a full plan would destroy 11); UIR-07 used -target | 2.0.0_SA_COO~P | the next directory-root apply: merge CLOUD into the backend worktree first |
 | `build-and-upload.sh` deletes tracked performance/*.py from the publish tree on each adapter build | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |

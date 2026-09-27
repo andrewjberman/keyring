@@ -9931,3 +9931,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Filed on CTO 101825. Not ARMED: nothing breaks today, and every new COT report computes the right window. It resolves by either (a) ONE new COT use after Andrew's per-use word, producing a corrected report that supersedes it, or (b) the release cutter excluding or removing it with the other kept test-window artifacts (STATUS~P parked row 'kept test inputs and reports', now naming RPT-b683f188 by key). Owner of the choice: 2.0.0_SA_COO~P until the release cutter takes the parked row."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S158",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T15:45:00Z",
+  "one_line": "A fresh Cottonwood Performance read now fails at the provider: the S157 one-use (plan 63cf95e9) claimed, then BDRequestFailed 'provider request failed: HTTPError' at 15:41:03Z, with no report; the same COT BD session (blackdiamond/cot/session, AWSCURRENT created 2026-09-16) served K12 at 04:31Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "adapter log 15:41:03Z corr-dbfad6652d1f: path=refused:BDRequestFailed, exception_text 'provider request failed: HTTPError', public UNEXPECTED",
+      "cottonwood PERFORMANCE_USE#63cf95e9.. claimed (2 -> 3); REPORT# 1 -> 1; reopen refused 'already spent'",
+      "blackdiamond/cot/session versions: AWSCURRENT created 1789558415 (2026-09-16), AWSPREVIOUS 1788867153",
+      "K12 at 04:31:30Z made 2 BD requests with that session and retained RPT-b683f188 (ledger irpt-performance-cot-one-use-1-20260927)",
+      "ledger irpt-performance-cot-one-use-s157-20260927 (CLOSED, disarmed to null 15:43:11Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A signed, armed COT one-use makes its 2 BD requests and retains a report (goal criteria 1 and 3 at COT).",
+  "world_is": "The provider refused the session at the first request (the ClientView token GET or the performancePeriod POST, not distinguished: urllib HTTPError under _NoRedirect covers a redirect or a non-2xx); the one use is spent and no fresh COT Performance read can succeed until the COT session is refreshed.",
+  "notes": "ARMED because every further COT use spends a plan for nothing until the session is live. Likely an expired BD session between 04:31Z and 15:41Z, NOT proven (the transport records only the class). Disarm = the owner of the COT session capture refreshes blackdiamond/cot/session (a vendor sign-in, needing its own word and halves), then ONE new COT use for S157. Also: the adapter classifies BDRequestFailed as UNEXPECTED, where DEPENDENCY_UNAVAILABLE would name it (P's parked classification line). The spent claim PERFORMANCE_USE#63cf95e9 is test data for the release item (CTO 101937)."
+}
+```
