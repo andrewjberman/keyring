@@ -96,8 +96,10 @@ four records ride the `ds-x-b1-cashline` merge (only ~X may commit its deliverab
 - 0.0.0_AB_MSTR rewrites history to purge 34 client PNGs. Every commit after 9b5eed8f9d gets a new hash, and all six
   ~M branches contain it (is-ancestor read 19:5xZ).
 - NEVER merge an old-history branch into the rewritten CLOUD: it re-introduces the PNGs.
-- Before G: confirm that MSTR's rewrite covered these refs (asked 19:57Z). If it did not, re-cut each branch by
-  cherry-picking its own commits onto the rewritten CLOUD (scratch branches; this is not a shared-branch rebase).
+- MSTR's filter-repo rewrites ALL local refs, including these six branches (MSTR 102063; freeze ~03:00-05:00Z
+  Monday). Before G: MSTR has announced DONE; re-sync `../ajb_irpt_m_cashline` and `../ajb_irpt_m_s152c` with MSTR's
+  posted steps; check each branch's own diff is unchanged and the 34 PNGs are absent. ~M had no uncommitted work in
+  those worktrees at 20:0xZ.
 - Map every cited hash (0deac23f1e, ff63895521, ccb9b38dd8, 146876e75a, 9135feae97) through MSTR's committed commit-map,
   and put the new hashes in the ledger entry. Sign-offs verify blobs, and blobs do not change.
 - The enable packet reaches the CRO ~15:00Z Monday, latest 18:00Z (CRO 102054, answered 19:57Z).
