@@ -1946,6 +1946,32 @@
     "spec_asserts": "IV-e-62's Build text: 'The Analysis tab lists the owner's requests from the served history read (not only this browser's), each with its state...' -- stated with no explicit hasClient/no-client qualifier.",
     "world_is": "A separate, already-ruled ADR (the 2026-09-24 design notes, enforced by a committed fe-s-72 test this cell's <paths> grant does not cover) requires the no-client state to carry no request panel at all. This worker read the two together and scoped the new mount to the hasClient branch so both hold; the cell text alone, taken in isolation, would have allowed a reader to mount it unconditionally and break the existing rule.",
     "notes": "Not blocking: resolved within this task order, both tests pass, no criterion was weakened. Filed so an L9/L10 reader sees this scoping was a deliberate reconciliation of two rules, not an oversight of either."
+  },
+  {
+    "id": "DSGN_IRPTV1-W35-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~35",
+    "surfaced_at": "2026-09-27T14:15:00Z",
+    "one_line": "IV-e-56's own BUILD text directs a new per-firm literal display-name map (header/firmDisplay.ts); the live naming commit limb (.tools/naming-gate.py, LGIC_ENFORCE) REFUSES a NEW hand-typed firm-token literal outside a registry lookup() in any file it grades, and its JS/TS scanner has no builder-call exemption to route through instead -- resolved in-lane by making the file a general title-case transform with no firm/product token literal at all, never a registry change.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO (Rule 30 registry authority) or 0.0.0_AB_MSTR (naming-gate.py maintainer) -- either an R20 register entry giving the portal a sanctioned firm-display-name source, or a JS/TS builder-call exemption in naming-gate.py's js_literals/judge() path (today it has none: py_literals honours BUILDERS={key,address,name,lookup} via ast.Call context, js_literals is a plain tokenizer with zero call-context analysis, so even the tool's own suggested canonical form 'lookup(...)' would not itself pass).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-56.firm-display-names.md 'Build:' paragraph: 'One page-local display-name source (a new header/firmDisplay.ts), keyed by tenant key ... Copy the names from the existing maps'",
+        "first attempt: portal/src/pages/InvestorReporting/header/firmDisplay.ts with KNOWN_FIRM_DISPLAY_NAMES={'49financial':'49 Financial', cottonwood:'Cottonwood Capital Advisors', ...} -- .tools/safe-commit.sh (from wk-DSGN_IRPTV1-35, .tools @4bf38f0fdb) refused: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)'; org/mcp/naming-gate-verdicts.log (wk-DSGN_IRPTV1-35 copy) line 3: '2026-09-27T14:12:38Z 0.9.0_WK_DSGN_IRPTV1~35 ENFORCE NAMING REFUSE src/pages/InvestorReporting/header/firmDisplay.ts:32 49financial -> lookup('49financial')'",
+        "org/mcp/naming-gate.enforce @d181e0ac5a (2026-09-17, 2.0.0_SA_COO~G, LGIC_ENFORCE issuer act 2b): present, so the limb REFUSEs rather than WARNs",
+        "direct inspection of .tools/naming-gate.py @4bf38f0fdb: js_literals() (:413) is 'return [Lit(v, r, ln) for kind, v, r, ln in scan(src, \"js\") if kind == \"str\" and ln in added]' -- no BUILDERS/call-context check, unlike py_literals()'s ast.Call handling (:296-298); GRADED_EXT (:78) is ('.py','.js','.mjs','.ts','.tf','.json','.yaml','.yml') -- .tsx is not graded, which is why the portal's two EXISTING sibling maps (src/pages/ModelPortfolios.tsx:244 ALL_MDPF_PARTNER_FIRMS, src/pages/AdvisorIntelligence/index.tsx:23 ALL_PARTNER_FIRMS), both .tsx, hand-type the identical tokens with no prior friction",
+        "quoted vs. unquoted object keys confirmed the mechanism: js_literals() only tokenizes QUOTED string literals, so unquoted identifier keys (cottonwood, inflection, demo) in the same object were never even extracted as candidates -- only '49financial' and 'opal-capital' (quoted, since neither is a valid bare identifier) were graded, and nm.carrier('opal-capital') returned None (its hyphen-split segments 'opal'/'capital' are not registered FIRM tokens), leaving '49financial' as the one REFUSE",
+        "resolved commit e88b2c4559 on wk-DSGN_IRPTV1-35-portal: firmDisplay.ts rewritten as a general title-case transform (split on separators and digit/letter boundary, capitalize, join) -- zero firm/product token literals; naming-gate.py re-run on the same diff printed 'NAMING-GATE: PASS 0 graded'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's Build paragraph: a new header/firmDisplay.ts keyed by tenant key, with names copied from the portal's own existing partner-name maps.",
+    "world_is": "A NEW file hand-typing a registered firm token as a bare string literal is REFUSE under the currently-enforced naming-gate, in every file type it grades (.ts included), with no per-line waiver route for anything but .py (NAMING_LEGACY_READS.json only applies when path.endswith('.py')) -- so the literal-map shape the BUILD text describes cannot be committed as written; a general, token-free title-case transform satisfies the same acceptance rows (UIR-04/13/30) without the conflict.",
+    "notes": "Not blocking this delivery: resolved in-lane by dropping the literal map entirely (the BUILD text's own fallback clause, 'a tenant with no entry shows a neutral title-cased form of its key', is what this now does universally). Filed because a FUTURE cell that needs a genuine per-firm literal (a token this transform cannot spell correctly, e.g. an acronym or a name whose title-case does not match the marketing spelling) will hit the identical REFUSE with the identical missing exemption."
   }
 ]
 ```
