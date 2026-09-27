@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T13:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T13:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -12,7 +12,7 @@ As of 2026-09-27T13:3xZ. Earlier forms of this file are in git (`git log -p -- <
 |---|---|---|
 | irpt-performance-adapter | `bOefL9nx..` since 05:22:03Z (09-27) = Ll6t4VPa + COT actual_start (backend 05778597eb, publish f360e6c80e); earlier: P-REOPEN-01, both timing lines, S147 fix M; NO armed plan since 04:34:55Z (`approved_performance_plan = null`, no session grant) | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 / irpt-performance-cot-one-use-1-20260927 / irpt-cot-actual-window-20260927 CLOSED |
 | irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) = hop-3 six + the cross-viewer title binding (f8c72944f3) | irpt-cross-viewer-title-20260927 CLOSED |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-wf` since 05:54:14Z = rb + ~Y's read-back WAF refresh (e2fdd01015: recipe, resident_worker, session/broker); rollback roots rb, xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-waf-refresh-20260927 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-cw` since 13:51:07Z = wf + ~Y's W11 fixes (b6739556ea: recipe, resident_worker, session/host_capture); rollback roots wf, rb, xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-waf-refresh-20260927 / irpt-resident-capture-env-20260927 CLOSED |
 | irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
 | irpt-directory-search | `o1TXq5PH..` since 22:54:12Z: UIR-07 exact full-name match first in search AND browse(q) (49b935c213); -target apply | irpt-uir07-search-rank-20260926 CLOSED |
 | irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
@@ -47,16 +47,11 @@ None. Window 8 CLOSED 04:46:35Z (ledger @f293962a58).
 Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (window 7; INF; COT). Andrew at ~Y 04:01Z
 "yes, run the Analysis window" (W8-2): USED. Any further window or vendor use needs a new word.
 
-1. **Analysis hop 6 (the live-thread break):** window 11 (12:56-13:22Z) ran the fourth attempt on resident wf.
-   REQ-717c91a5 went ATTENTION VENDOR_READ_BACK_REFUSED, and portfolio 2363812 is kept. Two defects, sent to ~Y for
-   diagnosis (P 13:20:55Z):
-   (a) the WAF refresh fired on the 3rd poll's 202, but the host capture refused CAPTURE_FAILED:LEASE_NOT_HELD
-       before any sign-in (session secret unchanged);
-   (b) on redelivery the read-back got portfolio_status=available and still refused, with the same 7 settings
-       fields "drifted" as windows 7 and 8, so the compare, not the timing, is wrong.
-   Bounds held: 4 status GETs, 0 completed re-captures. Next: ~Y's fixes, then a fifth attempt under Andrew's
-   standing word, each in a signed window.
-2. **K8, the first real export:** UNBLOCKED. The fix TO-IV-e-53 is on local portal DEV 1f149d69 (~D 101887). The
+1. **Analysis hop 6 (the live-thread break):** window 11's two defects were diagnosed by ~Y (@647f229b23): the
+   capture env, and the read-back reading the status body. Both are fixed (backend b6739556ea) and SERVED as resident
+   `fe64236bbb-cw` since 13:51:07Z (@45c9ac981e). The window-13 packet (blob 49ee40b0, @eea3452029) is out for both
+   halves; K5 adds ONE saved-portfolio GET. Create after window 12 closes, then hand to ~Y.
+2. **K8, the first real export:** IN FLIGHT: window 12 opened 13:35:19Z, ~D logged in 13:42:26Z, K1-CRED deleted. The fix TO-IV-e-53 is on local portal DEV 1f149d69 (~D 101887). The
    window-12 packet (blob 36c196ed, @c92a2c4c36) re-cuts window 10 on that page and is out for both halves. Create on
    both halves, then hand to ~D.
 3. **A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** unblocked. Andrew-direct relayed by MSTR
