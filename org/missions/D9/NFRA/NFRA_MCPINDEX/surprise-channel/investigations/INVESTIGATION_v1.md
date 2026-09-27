@@ -1576,6 +1576,32 @@ carries none.
     },
     "spec_asserts": "An ARMED row is disarmed by its disarm_owner.",
     "world_is": "Both hazards remain in the world, now owned by a named DS seat outside this project."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S24",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-27T06:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THIRD instance of Z-S3's pattern, and the one with the sharpest consequence: convert_assets_to_silver.py:153 wraps its FLOAT_COLS cleaning AND its pd.to_numeric in `df[col].dtype == object`, and pandas 3's read_excel hands a text column the `str` dtype, so on a pandas-3 runner the whole block is skipped and price / coupon_rate / last_dividend would land in silver as STRINGS rather than doubles. INERT today: the scheduled runner's own output proves it is not firing in production.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GUARD, read at its only call site: data/black_diamond/scripts/silver/convert_assets_to_silver.py:153 is `if col in df.columns and df[col].dtype == object:` and the block it guards does BOTH the $ , % stripping AND `df[col] = pd.to_numeric(df[col], errors='coerce')`. So a False guard skips the numeric conversion itself, not merely a cleaning nicety. FLOAT_COLS = Price, Coupon Rate, Last Dividend.",
+        "THE PREDICATE, measured on this device rather than reasoned about: on pandas 3.0.3, `pd.read_excel` of a column holding '$1,234.50' returns dtype `str` -- `dtype == object` is False and `pd.api.types.is_string_dtype` is True. That is the exact input path load_xlsx uses (pd.read_excel(BytesIO(body), sheet_name=0)).",
+        "WHY IT IS INERT, AND THE ORACLE IS THE PRODUCER'S OWN OUTPUT, not a version guess: s3://opal-data-bd/silver/assets/2026-06-18.parquet, written by the SCHEDULED runner on 2026-06-19, carries price, coupon_rate and last_dividend all as physical type `double`. So on the runner the block DID run, and the runner is not on a pandas that reproduces this. The defect is latent, not live.",
+        "WHAT WOULD ARM IT: a pandas upgrade on the bd-assets runner (i-0e6f6dc014fdcf1cd, t3.medium, per row Z-S17). The runner's pandas version is NOT measured in this row -- named as the missing number rather than assumed, because it is the only thing standing between INERT and live.",
+        "IT IS ONE PATTERN, THREE TIMES. data/assets/scripts/silver/etf_conversion.py:209 already carries the corrected form with the comment 'NOT `dtype == object`: pandas 3 infers a column of strings as the `str`' plus a belt at test_etf_conversion.py:445; mirror_conversion.py:330 was the second and is fixed at 8ba0d6645b under row Z-S3; this is the third. A repo-wide read of `dtype == object` shows further hits in convert_fees_to_silver.py:131, convert_eclipse_portfolios_to_silver.py:179, _canonical_silver_lib.py:146 and INF_D_08.nmec_nmnc_nna.py:89 that are NOT graded here -- they were seen, not assessed, and saying so is the point.",
+        "AN ASYMMETRY IN MY OWN MX-s-6 CHANGE, recorded so nobody assumes the compaction fix covers this: merge_compacted casts each run onto the compacted file's stored arrow schema via _align_to_schema, so silver/bd_assets.parquet would stay `double` even on a pandas-3 runner. The DATE PARTITIONS from write_silver_partitions would not -- they take the frame's dtypes as they are. The compaction path is accidentally robust here and the partition path is not."
+      ]
+    },
+    "spec_asserts": "convert_assets_to_silver.py's own FLOAT_COLS contract: the listed columns are numeric in silver, with vendor text ('$1,234.50', '-3.99E-05') cleaned and converted by pd.to_numeric before the parquet write.",
+    "world_is": "On pandas 2 that holds. On pandas 3 the guard's `== object` is False for the `str` dtype read_excel now produces, so the cleaning and the to_numeric are both skipped and the columns would be written as strings -- a physical TYPE divergence in served silver, which is a harder failure than Z-S3's (there the physical type stayed double and only the error quality and pandas metadata were wrong). Production evidence says this is not happening today.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "NOT FIXED HERE, and the reason is class rather than difficulty: MX-s-6's step 1 is a compaction-condition fix under a 'no served key moves' bound, and this is a different defect in the same file that changes the dtypes of served silver columns -- it needs its own cell, its own test, and a deploy, not a rider on a lint-adjacent commit. The one-line remedy is the same as Z-S3's: add `or pd.api.types.is_string_dtype(df[col].dtype)`, with a test that plants a `str`-dtype FLOAT_COL and asserts the written column is double. RECOMMENDATION to the issuer: cut it together with a measurement of the bd-assets runner's pandas version, because that number decides whether this is a repair or a pre-emption, and cut the four ungraded sibling hits named above into the same read."
   }
 ]
 ```
