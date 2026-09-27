@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T15:1xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T15:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -47,30 +47,23 @@ None. Window 8 CLOSED 04:46:35Z (ledger @f293962a58).
 Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (window 7; INF; COT). Andrew at ~Y 04:01Z
 "yes, run the Analysis window" (W8-2): USED. Any further window or vendor use needs a new word.
 
-1. **Analysis hop 6 (the live-thread break):** window 13 (14:11-14:33Z) ran the fifth attempt on resident cw.
-   REQ-2119def4 went ATTENTION VENDOR_READ_BACK_REFUSED, and portfolio 2363820 is kept. It got CLOSER:
-   - capture_env worked (no LEASE_NOT_HELD), but the form sign-in met CAPTURE_FAILED:UNEXPECTED_CHALLENGE and stored
-     nothing;
-   - on redelivery the saved-portfolio read worked (7 of 7 fields present), and ONE value differs: level_as_of_type.
-   Bounds held (4 status GETs, 1 saved GET, 1 attempted re-capture). Running re-capture total: 1 attempted, 0 completed.
-   ~Y's W13 diagnostics (ec5804f6e0: the journal names the stored value and the capture's runner reason) are SERVED as
-   resident `fe64236bbb-dx` since 14:50:22Z (@cfbc1989ff). Next: window 14 on ~Y's ask, cut on window 13's te2. *2. **K8, the first real export:** window 14 (15:03-15:12Z): the tenant hop HOLDS, since the POST carried
+1. **Analysis hop 6 (the live-thread break):** windows 11 and 13 (the fourth and fifth attempts) went ATTENTION, each
+   closer than the last. In window 13 the saved-portfolio read worked (7 of 7 fields present), and ONE value differs:
+   level_as_of_type. The capture met UNEXPECTED_CHALLENGE and stored nothing. Resident fixes shipped this stretch:
+   - cw (W11 fixes, 13:51Z);
+   - dx (W13 diagnostics, 14:50Z);
+   - rs (~Y's read-back release-and-resume, 38ee23deaa, 15:18:44Z, @2d0e50c0f3).
+   Next: window 15 (CTO 101929): K5 at most 2 status GETs x 5 receives, ONE saved GET, 0 read re-captures. The packet
+   must name how level_as_of_type is treated, fixed or tolerated with a reason (asked of ~Y, P 15:21Z).
+2. **K8, the first real export:** window 14 (15:03-15:12Z): the tenant hop HOLDS, since the POST carried
    selected_tenant=49financial. The server refused ReportRefused "invalid report reference", because the page sent
-   report_id = the revision hash (39c11079..) instead of RPT-b5e0a16e... The fix is a portal wire mapping (~D, P
-   15:12:37Z): take report_id, revision and sha256 from the adapter's retained_ref. Nothing exported. Re-cut on ~D's pin.
-*A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** unblocked. Andrew-direct relayed by MSTR
-   101850 reads "they have egress for full session", and the loop prompt permits vendor uses, each ledgered. It needs
-   ONE new COT use: plan 2 on the same account through cot_one_use_plan.py (no vendor call), a packet, both halves,
-   a ledger, the arm, ONE read, and a disarm to null. The read is bOefL9nx's first real-data COT report, and it must
-   disclose 07-21 as the actual start.
-   MEASURED 12:29:54Z (COT_S157_PRECHECK_20260927.json, cot_direct_read.py, plan OFF, V1 direct invoke): the same
-   account and window 01-01..09-22 REOPENED RPT-b683f188 through the retained pointer (PERFORMANCE_ACCEPTED is keyed
-   by selection and window, not by viewer). It showed actual 01-02..09-22 with the series from 07-21, and made 0
-   vendor calls (COT claims 2 -> 2). So:
-   - plan 2 as built (sha 8bd7774e, 01-01..09-22) would never be spent;
-   - the corrected read needs a different window, e.g. 01-01..09-21, re-built and signed;
-   - the page's COT YTD view keeps the overstated face for 01-01..09-22 until the holdings as-of advances
-     (S152/R4, Monday), or until the pointer is superseded, which is a served move needing its own half.
+   report_id = the revision hash (39c11079..) instead of RPT-b5e0a16e... Nothing was exported. The fix is TO-IV-e-65
+   (~D, @71383ccd8f: take report_id, revision and sha256 from the adapter's retained_ref). Re-cut on ~D's pin.
+3. **A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** plan 63cf95e9 (01-01..09-21) was built with
+   no vendor call. The 01-01..09-22 as-of window reopens RPT-b683f188 through the retained pointer (12:29:54Z), so that
+   window would never spend a plan. The plan-off pre-check refused with 0 vendor calls (P0). The packet (blob 9c807347,
+   @ac1490eb22) is out for both halves: a direct invoke as V1, arm 1/1/0, ONE read + reopen, disarm to null. The page's
+   COT YTD view keeps RPT-b683f188's face until the holdings as-of advances.
 4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
