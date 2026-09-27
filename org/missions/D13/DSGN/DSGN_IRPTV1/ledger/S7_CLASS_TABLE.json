@@ -42,7 +42,7 @@
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\envelope.test.ts",
       "test": "the analysis-requests slice carries identity and stage, and its status is REQUIRED",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser"
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): F14-AC13's resolve-scope arm used the generic FIRM_ID for every route, but resolve-scope carries its own firm_id-match rule (envelope.ts) requiring equality with data.verified_request_firm_id (ResolvedScope.valid.json's own id, 'F-49F', not FIRM_ID) -- the loop now reads the built ResolvedScope's own verified_request_firm_id for that one route."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\header.test.ts",
@@ -114,33 +114,31 @@
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-1\\fixtures.test.ts",
       "test": "the smoke map covers every scoped route, one entry each",
       "class": "Q",
-      "action": null,
       "query": "default.json's PUBLISHED MAP has one key for 12 of the 17 DECLARED routes; the 5 new ones (selection-create, directory-browse, analysis-input-upload, analysis-request-history, analysis-request-read) need generatePublishedMap's DATA_FOR_OPERATION extended and their own committed producer fixtures -- 3 of the 5 authored this round (AnalysisUploadResult/OwnedAnalysisRequest/OwnedAnalysisRequestHistory), 2 remain (selection-create/directory-browse's own adapters additionally reject the pre-existing SelectedAccounts/DirectoryPage fixtures on an unrelated field-equality rule) -- ruling needed on whether that adapter rule or the fixture is the defect"
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-1\\source-bounds.test.ts",
       "test": "neither source carries any forbidden token",
       "class": "Q",
-      "action": null,
       "query": "api/endpoints/investor-reporting.ts:200's comment (route-table provenance, \"irpt-ycharts-generate\") trips the 'ycharts' forbidden-token scan; the fix is a one-line comment edit in api/endpoints/investor-reporting.ts, outside this cell's grant (api/** only editable under portal/src/pages/InvestorReporting/ for a G-fix)"
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\absent-vs-null.test.ts",
       "test": "on every no-answer state the two render differently, on the path the tabs render",
-      "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts; STILL FAILING via requirePublicStatus's business_date obligation on an intentionally-empty HELD_SOURCE_DATES -- diagnosed, not resolved this round"
+      "class": "Q",
+      "query": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): this arm (and the next) construct a NO-ANSWER-state status with business_date PRESENT-BUT-NULL to compare against ABSENT. CTO ruling 101449 (contracts/public-status.ts, out of this cell's grant): a status whose business_date key is present but null is now refused at the envelope boundary (requirePublicStatus), never loosened -- the same pattern this cell resolved at fe-s-39/F39-AC3 by asserting the refusal itself. Here the test's OWN assertions read DOWNSTREAM rendered fields (panel slot text, DOM attributes) the refusal prevents ever being computed -- asserting only the refusal would answer a narrower question than the test states, and fabricating the downstream fields the code never actually produced would be weakening the test, not fixing it. Ruling needed: is this arm's premise retired (cite the FWD/PRD version that superseded it) or does it need a differently-shaped wire fixture this cell has not found."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\absent-vs-null.test.ts",
       "test": "the scan finds none, and the scan can fire",
-      "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts (same root)"
+      "class": "Q",
+      "query": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): a DIFFERENT root than the two rows above -- the F25-AC3 pattern scan (over contracts/ and state/) finds 2 live '?? null' occurrences on a distinguished field in contracts/adapt.ts (status?.state ?? null; section.value ?? null), out of this cell's grant. A ruling is needed on whether these two sites are the ABSENT/NULL distinction's own defect (contracts/adapt.ts, a G-class fix outside this grant) or the scan's own pattern is now over-broad; not diagnosed further this round."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\absent-vs-null.test.ts",
       "test": "the two renderings are the RIGHT two, and the fact survives on the view document alone",
-      "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts (same root)"
+      "class": "Q",
+      "query": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): this arm (and the next) construct a NO-ANSWER-state status with business_date PRESENT-BUT-NULL to compare against ABSENT. CTO ruling 101449 (contracts/public-status.ts, out of this cell's grant): a status whose business_date key is present but null is now refused at the envelope boundary (requirePublicStatus), never loosened -- the same pattern this cell resolved at fe-s-39/F39-AC3 by asserting the refusal itself. Here the test's OWN assertions read DOWNSTREAM rendered fields (panel slot text, DOM attributes) the refusal prevents ever being computed -- asserting only the refusal would answer a narrower question than the test states, and fabricating the downstream fields the code never actually produced would be weakening the test, not fixing it. Ruling needed: is this arm's premise retired (cite the FWD/PRD version that superseded it) or does it need a differently-shaped wire fixture this cell has not found."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\source-age-field.test.ts",
@@ -224,13 +222,13 @@
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-31\\every-page.test.ts",
       "test": "a PARTIAL report: the bundle envelope is labelled the bundle's own, and both scope rows print one count",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser; STILL FAILING -- not yet root-caused this round"
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): both fe-s-31 rows shared one root -- getPerformanceReport now requires an accepted account selection (selectedReference, api/endpoints/investor-reporting.ts), and frozenPrintBundle (the print route's own resolveBundle path) supplied none, so every arm on it hit MissingPayloadError (masking the real cause, resolveOne's own catch-all). frozenPrintBundle now supplies accountSelection/start/end, mirroring PrintEntry.tsx:186-193's own printWindow.ok spread (a synthetic sel_+64-hex id, never a real client figure; start/end from the frozen fixture's own data.dates.requested_start/_end)."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-31\\every-page.test.ts",
       "test": "the header scope line agrees with the document account table",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser; STILL FAILING -- not yet root-caused this round"
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): both fe-s-31 rows shared one root -- getPerformanceReport now requires an accepted account selection (selectedReference, api/endpoints/investor-reporting.ts), and frozenPrintBundle (the print route's own resolveBundle path) supplied none, so every arm on it hit MissingPayloadError (masking the real cause, resolveOne's own catch-all). frozenPrintBundle now supplies accountSelection/start/end, mirroring PrintEntry.tsx:186-193's own printWindow.ok spread (a synthetic sel_+64-hex id, never a real client figure; start/end from the frozen fixture's own data.dates.requested_start/_end)."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-31\\submit.test.ts",
@@ -278,25 +276,25 @@
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-39\\adapter-plane.test.ts",
       "test": "ADVISED, RESIDUAL and UNKNOWN, each set on every node of a copy of the observed map",
       "class": "H",
-      "action": "aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site in fe-s-18-holdings-observed.json (committed, HEAD-read); STILL FAILING -- not fully root-caused this round"
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm), F39-AC7): the control's golden markup (before()) was written before IV-e-18 (commit df5e41b5, N4) taught SliceTable.tsx's AdvisoryCell to render advisor words in Title Case, never the raw lowercase partition value -- the golden is now the Title-Case words IV-e-18 shipped (still hand-typed, never imported from the rule it grades)."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-39\\adapter-plane.test.ts",
       "test": "a no-status document served by FixtureAdapter, and a v1 body whose status carries the date",
       "class": "H",
-      "action": "STILL FAILING -- not root-caused this round"
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm), F39-AC4): wireStatus() baked in internal_correlation_id (SERVER-ONLY, refused by requirePublicStatus's closed-shape check as an extra key) unrelated to whatever source_dates shape the caller under test actually varies -- removed from the helper."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-39\\adapter-plane.test.ts",
       "test": "a whole v1 body whose status carries business_date: null; and a no-status body whose document does",
       "class": "H",
-      "action": "STILL FAILING -- not root-caused this round"
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm), F39-AC3): requirePublicStatus's own rule (business_date in dates AND not date(dates.business_date)) now refuses, at the envelope boundary, a status whose business_date is PRESENT but null -- before availability/panel logic ever sees it. The status arm now asserts that refusal (field 'status') IS 'still reads malformed' for a status-carried null, never loosening the consumer to admit the shape instead; the document arm (no status, clocks.business_date=null) is unaffected."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-39\\adapter-plane.test.ts",
       "test": "the observed map, through parseIrEnvelope into the rendered Holdings markup",
       "class": "H",
-      "action": "aligned the envelope's firm_id with data.verified_request_firm_id per resolve-scope's own firm_id-match rule (envelope.ts), binding the same id on both sides at the call site in fe-s-18-holdings-observed.json (committed, HEAD-read)"
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): resolved as a side effect of the wireStatus() internal_correlation_id removal above (F39-AC4) -- the same helper builds this arm's envelope."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-3\\dropdown-class.test.ts",
@@ -344,9 +342,8 @@
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-45\\residuals.test.ts",
       "test": "the reach by subtraction, each disposition, each kept loader run under a watch; the old dev script writes",
-      "class": "Q",
-      "action": null,
-      "query": "scripts/dev-live.mjs is counted among the 5 'kept' config loaders (its `loaders` classification is 'runner') but the test's `arms` map only defines measurement arms for the 3 npm scripts (dev/build/preview) and the ONE named 'programmatic' resolver, so dev-live.mjs always reads NOT MEASURED / clean=4 of 5 -- needs a ruling on whether dev-live.mjs gets its own measurement arm or is excluded from the kept-and-measured count"
+      "class": "H",
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): not observed failing in any of this cell's measurements (isolated or full-suite, s7-suite-check.ts or a plain bun test, repeated across the round) -- resolved upstream of this cell's own edits; not re-diagnosed, since nothing in this cell's grant touches scripts/dev-live.mjs or its own measurement arms."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-48\\withheld.test.ts",
@@ -383,13 +380,13 @@
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-54\\stated-state-wins.test.ts",
       "test": "F54-AC-CROSS -- fe-s-47/no-status-reason.test.ts F47-AC7's printed \"OTHER PROBLEMS\" (row IRPT_FNTEND-W3-S38) is resolved by this fix",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser"
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): resolved as a side effect of F54-AC3's own fix below (both read the same committed StatusEnvelope.valid.json fixture through status-summary)."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-54\\stated-state-wins.test.ts",
       "test": "F54-AC3 -- a status-summary response stating PARTIAL renders PARTIAL, not a default",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser"
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): the CONTROL built a status-summary/status-job body with public_reason_code: null to exercise adaptStatusEnvelope's NO_STATUS_REASON fallback -- CTO ruling 101449 (public_reason_code REQUIRED and non-null, never loosened) now refuses that shape at the envelope boundary (field 'data', since data IS the status for this operation family, envelope.ts:299) before the fallback ever runs; the arm now asserts the refusal instead of a graceful NO_STATUS_REASON read."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-54\\stated-state-wins.test.ts",
@@ -419,9 +416,8 @@
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-57\\carry.test.ts",
       "test": "UNPROJECTED_GRANT PRESENT-AT-ZERO CARRIED ON 12 of 12 OPERATIONS",
-      "class": "Q",
-      "action": null,
-      "query": "2 of the (now 17, denominator unchanged at 12 carried-availability operations) declared routes -- selection-create, directory-browse -- fail their own adapter's field-equality checks against the pre-existing committed SelectedAccounts/DirectoryPage fixtures (e.g. SelectedAccounts.valid.json's account_ids/selected_account_ids are a superset/subset, which adaptSelectedAccounts's equality check refuses); same open question as fe-s-1/fixtures.test.ts's row"
+      "class": "H",
+      "action": "S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): the field-equality defect this row originally queried (SelectedAccounts.valid.json/DirectoryPage.valid.json fixture mismatches vs adaptSelectedAccounts/readDirectoryBrowse) is fixed (both fixtures corrected) -- selection-create and directory-browse now PARSE. A residual remains, NOT fixed this round and outside this cell's Q budget (5 already used by fe-s-1 x2 and fe-s-25 x3 above): carryUnprojectedGrant (contracts/adapt.ts, out of grant) only attaches the grant when the adapted document already carries `.availability`, which adaptSelectedAccounts (contracts/envelope.ts) and readDirectoryBrowse (contracts/directory-browse.ts) never populate -- both out of grant. Filed to the surprise channel, not Q'd."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-75\\parse-control.test.ts",
@@ -476,13 +472,13 @@
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-33\\fixtures-reach.test.ts",
       "test": "(module load) TypeError: STATUS_SCHEMA.allOf[0].if.properties.state -- the whole file failed to load, refusing every test in it",
       "class": "H",
-      "action": "IRPT-Y-DATES-01 nested the flat if.properties.state.enum condition one level deeper (inside if.allOf[0]) to add a sibling arm; read whichever shape is present. The module now loads and its other tests run; 4 of its OWN test bodies still fail this round (byte-for-byte comparisons against the committed HEAD blob of the 3 fe-s-18-holdings-*.json maps, whose content this cell also touched for the shared kinds/icid/firm_id fixes) -- not resolved this round"
+      "action": "IRPT-Y-DATES-01 nested the flat if.properties.state.enum condition one level deeper (inside if.allOf[0]) to add a sibling arm; read whichever shape is present. The module now loads and its other tests run; 4 of its OWN test bodies still fail this round (byte-for-byte comparisons against the committed HEAD blob of the 3 fe-s-18-holdings-*.json maps, whose content this cell also touched for the shared kinds/icid/firm_id fixes) -- not resolved this round S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): the 4 of its own test bodies still failing this round (per the note above) are now resolved -- STATUS_SCHEMA re-pointed to PublicStatusEnvelope.schema.json (the wire-legal shape; internal_correlation_id is SERVER-ONLY and StatusEnvelope.schema.json wrongly demanded it on WIRE fixtures) and compareStatus (F33-AC5) now excludes that same SERVER-ONLY field BY NAME from its byte-for-byte history comparison (a correct, intentional S7 strip, not the regeneration-drops-a-field hazard this control was built to catch)."
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-47\\no-status-reason.test.ts",
       "test": "(module load) EnvelopeMismatch('unprojected_grant') on directory-search -- the whole file failed to load, refusing every test in it",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in envelopeBody()'s own literal and status default; the module now loads and 5 of its 8 tests pass. 3 remain failing this round: F47-AC5 (a `validate.ts` git-diff check, unrelated to this bug family), F47-AC6/AC7 (the selection-create adapter mismatch, same open question as fe-s-1/fixtures.test.ts's row)"
+      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in envelopeBody()'s own literal and status default; the module now loads and 5 of its 8 tests pass. 3 remain failing this round: F47-AC5 (a `validate.ts` git-diff check, unrelated to this bug family), F47-AC6/AC7 (the selection-create adapter mismatch, same open question as fe-s-1/fixtures.test.ts's row) S7 residual (IV-e-35 (0.9.0_WK_DSGN_IRPTV1~23, row DSGN_IRPTV1-W21-S2 disarm)): the 3 remaining failures this round (F47-AC5, F47-AC6, F47-AC7) are now resolved, none of them the shared bug family: (1) two 'quiet' arms fed public_reason_code: null (CTO ruling 101449: required, non-null, never loosened) -- reused the committed instance's own code, since the arm reads the DOCUMENT's own partialReason, never the status's publicReasonCode; (2) operationWires()'s indexOf('readonly data:') never matched IV-e-26's own 'readonly data?:' (submit-export's data made optional, CTO ruling R2 @75156f2b18), silently dropping the operation; (3) the census's RULES table predates public-status.ts and its generated wire type (commit c09fea54) -- two new rules classify the previously-UNCLASSIFIED lines the same as the existing StatusEnvelope-shaped ones. committedInstance() also gained PublicStatusEnvelope's special case (StatusEnvelope minus internal_correlation_id, matching fe-s-14's instanceOf()) and the one naked parseIrEnvelope call against a state-less status is now caught and asserted as a refusal."
     }
   ]
 }
