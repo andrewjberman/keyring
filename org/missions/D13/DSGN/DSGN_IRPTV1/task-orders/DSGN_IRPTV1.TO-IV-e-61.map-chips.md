@@ -35,6 +35,8 @@ names its kind ("Model: <name>"). With one account, the group heading may be omi
 
 **Amendment 1 (issuer, 2026-09-27 ~13:0xZ; CTO 101880, PRD v0.17 @fc21988bce, CRO walk docs/briefs/irpt-ui-review-verification-20260927.md):** this cell also carries UIW-0927-07 "The grouped small-items tile reads 'Smaller holdings' (or similar) in a colour no class uses." (CRO walk: the grouped small-items tile and the 'Other' asset class share one purple and one word.) Build: in `tabs/holdings/HoldingsTreemap.tsx` the grouped tile is labelled 'Smaller holdings' and drawn in a neutral colour that no ASSET_CLASS entry uses. AC1 gains the arm: the grouped tile's label is not 'Other' and its fill equals no ASSET_CLASS colour.
 
+**Amendment 2 (issuer, 2026-09-27 ~14:4xZ; UIR-33/36/47 carried from IV-e-60):** IV-e-60 (complete) fixed the breadcrumb and the one-slice pie, but its UIR-33 arm only re-asserted the existing strings '% of total' and '% of parent'. Those name no base a client reads, and the CVO graded UIR-33 FAIL on them. This cell also carries UIR-33 "Every percentage states its base (of this account / of the client), or both views use one base." (UIR-36 and UIR-47 "As UIR-33.") Build: every percentage the holdings drill shows (the `tabs/holdings/SliceTable.tsx` column header :207 and row hover :224, and the `tabs/holdings/DrillTree.tsx` donut tooltip :221-238 and in-slice label :121-145) states its base in client words: 'of this account' when the level sits under one account, 'of the client' at the client level (or both views use one base and say it once). No '% of parent' or '% of total' remains on the face. AC1 gains the arm: the table header, the row hover and the tooltip at an account level read 'of this account', at the client level 'of the client', and none reads 'of parent' or 'of total'.
+
 ### ACCEPTANCE
 
 <criterion id="IVE61-AC1" cell_refs="IV-e-61"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-38/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-61.map-chips.test.tsx 2>&1 | tail -15</invocation><expect>VERDICT: MAP-CHIPS-OK</expect></criterion>
@@ -56,6 +58,9 @@ Each mechanical criterion prints its expect string only when every arm holds. AC
 portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTreemap.tsx
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-61.map-chips.test.tsx
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
+portal/src/pages/InvestorReporting/tabs/holdings/SliceTable.tsx
+portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx
+portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-60.drill-bases.test.tsx
 </paths>
 
 <decomp_ref>
