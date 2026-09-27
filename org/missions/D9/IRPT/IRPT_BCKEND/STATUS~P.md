@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T01:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T01:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -40,7 +40,7 @@ As of 2026-09-27T01:3xZ. Earlier forms of this file are in git (`git log -p -- <
 
 ## Write claims
 
-None building. Every open item is gated (S151 on Andrew's word; INF/COT per-use words).
+None building. The cross-viewer deploy waits on its halves; S151, INF and COT wait on Andrew's word.
 
 ## Next-list (in order)
 
@@ -48,10 +48,11 @@ None building. Every open item is gated (S151 on Andrew's word; INF/COT per-use 
    unmeasured. The resident now logs a retained failure's closed reason code (fe64236bbb-rr), so the next capture
    attempt names its cause. That attempt is a live YCharts call and waits on Andrew's word (owner ~Y). Future
    packets keep the principal until every job is terminal (CTO 101673; S150).
-2. **The cross-viewer title binding** (f8c72944f3) ships in generate + the resident, paired, with the next Analysis
-   deploy.
-3. **INF:** a new one-use plan on a one-account-household client, then one signed-in run. **COT:** a new per-use
-   word.
+2. **The cross-viewer title binding** (f8c72944f3): packet blob 474495c0 @64e7b8fbd7 sent 01:5xZ (CTO 101690, CRO 101691).
+   On both halves: generate + resident, one member each, paired; ~Y's second-viewer re-proof on the new zip.
+3. **INF:** the armed plan 01209afb is SPENT (2026-09-26 03:20:31Z). A new Orion one-use needs Andrew's per-use
+   word, asked via MSTR 01:51Z. Then: the plan (the inf_one_use_plan.py rule), the arm under halves, and one signed-in
+   window. **COT:** a new per-use word.
 4. **K8, the first real export**, rides a later Performance window.
 
 Window 6 CLOSED (ledger irpt-ui-walk-principal-w6-20260926):
