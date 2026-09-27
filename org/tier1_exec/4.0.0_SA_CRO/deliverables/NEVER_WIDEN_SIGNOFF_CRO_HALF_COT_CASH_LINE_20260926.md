@@ -144,3 +144,36 @@ Not measured by this seat: the per-firm delta figures themselves (the request's)
   CTO's condition (2).
 - **The liabilities classed `equity`,** dropped here only because they are negative, are ~M's own `other` half under
   R5, as the request routes it.
+
+## Addendum 4 (2026-09-27 ~02:0xZ) -- S152 (COT mix_views) rides this act; ~X's B1 commits do not
+
+- **Request:** blob `d5f8302da9ffab6a58f6295e925736b46107e0ba` @`dda9a80465`, addenda 4 and 5. 2.0.0_SA_COO~M msg
+  101684.
+- **This half's claim "No reader crashes or drops it" was wrong for COT `lib/mix_views`.** Its period rows built only
+  from a list without `cash` and `other`, so every cash dollar landed in the `unclassified` residual (S152). The fix is
+  `41115a70aa`, read here: the list gains `cash` and `other`, the residual comment is corrected, and a test is added.
+  The portal's `FirmMixPeriodPoint` already expects `cash`.
+- **YES: `41115a70aa` merges and deploys with this act, after Monday's R1, under its ledger.**
+  - Pass, at the read-back, for the firm's period rows: before/after of `unclassified`, `cash` and `other` per
+    period.
+  - `unclassified` must fall by exactly the `cash` + `other` that now appear, and the latest period's `cash` must
+    equal C_06's published cash for the same date. Any other change is a rollback of mix_views to its prior S3
+    version.
+- **NOT the branch as a unit.** `CLOUD..irpt-m-s152` is 6 commits in 17 files. Besides `41115a70aa` and the registry
+  entry `9135feae97` (`comp-constants.config.yaml`, not executed), it carries 0.4.0_DS_ClientPlatform~X's four
+  commits:
+  - `2c23591d48`: 49F a07 cash-line rule; d06 admits structured, commodities and other;
+  - `6e2864bd3e`: BD C_06, D_03, D_04 and mix_views admit structured and commodities;
+  - `88bf469ebf`: COT d08 and mix_views;
+  - `146876e75a`: measurement.
+
+  Those are the ETF Part B **B1** step, signed as its own sequence (`NEVER_WIDEN_SIGNOFF_CRO_HALF_ETF_TAGS_WIN_20260926.md`).
+  They deploy under B1's own ledger, with their own served read: admitting a class with no values moves nothing, and
+  any `other` admission that does move a served value is traced to its signed half. So this act carries the S152
+  change alone, or it waits for B1 to land first and then merges on top of it.
+  - `41115a70aa` does not cherry-pick cleanly: its "before" line already holds ~X's `structured` and `commodities`,
+    while CLOUD's list (printed here, `mix_views.py:19`) is `['equity', 'fixed_income', 'alternatives']`.
+  - Standing alone, the S152 change on CLOUD is that list plus `cash` and `other`, re-cut as one commit and read by
+    both halves before it merges.
+- **d08** is QA-only and serves nothing, so its fold and its frozen shape are parked, as the request says. The
+  read-back still prints its figure beside C_06's.
