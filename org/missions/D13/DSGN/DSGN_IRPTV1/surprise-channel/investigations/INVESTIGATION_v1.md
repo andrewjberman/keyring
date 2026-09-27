@@ -1916,3 +1916,57 @@
   "notes": "Disarm (owner ~D, same turn): stop committing walk shots (an ignore rule for *.shots/ beside *.har) and untrack the 34 files (git rm --cached, files kept locally). Whether to purge them from pushed history is a destructive rewrite and Andrew's call; 4.0.0_SA_CRO has told Andrew. Not measured: the push state of the other two folders (only 4f632208c5, prod-uiwalk's commit, was checked) and whether other projects' deliverables carry walk shots."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S20",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-27T06:30:00Z",
+  "one_line": "Window 10 K8: the Export preview on portal DEV 200d257a refuses the Performance report client-side (MissingPayloadError at export/resolveBundle.ts:255) for an answer-bearing report the tab had just rendered; 0 export POSTs were sent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "a round-8 cell whose <paths> grant covers portal/src/pages/InvestorReporting/export/resolveBundle.ts and the Performance tab's cache write",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "window-10 walk (driver .runtmp/walk/owner10.mjs, exactly one POST /export admitted): K7 reopened the report (8.05%), the Export dialog read the report ref 'absent' and made 0 export POSTs in 30 s (k8probe); HAR w10-20260927.har (gitignored) sha256 488da2d7.., 451 entries",
+      "2.0.0_SA_COO~P 101833: revision 39c11079.. is the report's own revision (irpt-requests REPORT#<report>#39c11079..), so the preview asked for the right report; resolveOne (resolveBundle.ts:236-257) missed the cache and its fetcher threw before any request",
+      "2.0.0_SA_COO~P @16f05ab61c: window-10 principal deleted 06:32:17Z, 0 writes outside the classes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Export on Performance with an answer-bearing report renders a preview of that report and lets the advisor export it (UIR-20; IRPT export path).",
+  "world_is": "The preview cannot resolve the report the tab shows and refuses before sending anything, so no export can be made from the page.",
+  "notes": "P's likely causes: the tab caches under a different reportCacheKey (op or scopeFingerprint), or the Performance fetch lacks selection/start/end (MissingPrintWindowError). Mid-round spec is frozen; carried to the round-7 L8 packet as a round-8 candidate. P re-cuts window 10 as window 11 when the fix is on DEV."
+}
+```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S21",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-27T06:34:00Z",
+  "one_line": "Closing evidence for DSGN_IRPTV1-S19: the 34 walk screenshots are untracked and *.shots/ is ignored in the ~D deliverables folder; local copies kept; history not rewritten.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".gitignore '*.shots/' in deliverables/2.0.0_SA_COO~D @01d82f1550",
+      "34 deletions from the index @cfed2c067b (mass-deletion gate ATTRIBUTED to the CRO never-widen record ..._IRPT_UI_WALK_W10_K8_EXPORT_20260927.md); git ls-files of the three .shots folders = 0 after; files on disk 20/8/6",
+      "push state of cfed2c067b: LOCAL (origin/CLOUD fac5133475 does not contain it, read 06:36Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S19's disarm: stop committing walk shots and untrack the 34 files, keeping local copies.",
+  "world_is": "Done as asserted; the pushed history still carries prod-uiwalk-20260926.shots (4f632208c5).",
+  "notes": "This row is closing evidence, not a disposition change to S19. Purging history is a destructive rewrite and Andrew's call (CRO 101827)."
+}
+```
