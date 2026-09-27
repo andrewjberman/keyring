@@ -1379,6 +1379,30 @@
     "spec_asserts": "Cell rule 5 (proposal section 4, PRD v0.12): 'Export follows the tab's scope. On Performance, the page Export targets R3a's account set and its report revision, never clientSetId.'",
     "world_is": "The SUBMISSION (what the advisor's Export click actually posts) carries R3a's account set and report revision -- graded and PASS-by-output (IVE34-AC2). The PREVIEW shown inside the export modal before that submit, when it fetches its own performance report copy (a cache-miss path), still falls back to `resolveBundle`'s no-`accountSetId` branch because `Preview.tsx` is out of this cell's grant to wire -- a live-stack gap this cell cannot close.",
     "notes": "Not blocking IVE34-AC2 (the criterion's own text is about the export SUBMISSION, which this cell does correctly target at the focused account; PASS-by-output, VERDICT: FOCUS-REFUSAL-EXPORT-OK)."
+  },
+  {
+    "id": "DSGN_IRPTV1-W30-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~30",
+    "surfaced_at": "2026-09-26T21:00:00Z",
+    "one_line": "IVE46-AC2's mechanical census (every asset-class key list under AdvisorIntelligence/) turned up a live reader outside this TO's <paths> grant that carries the SAME contract as the four edited partner layouts and still drops structured/commodities: `_shared/types/TenantLayoutConfig.ts:369`'s `DEFAULT_LAYOUT.assetClasses.ordered`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "a future cell holding portal/src/pages/AdvisorIntelligence/_shared/types/TenantLayoutConfig.ts in its <paths> grant -- add 'structured' and 'commodities' to DEFAULT_LAYOUT.assetClasses.ordered (:369), same shape as the four partner layouts this TO edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types/TenantLayoutConfig.ts:369 (this worktree's portal HEAD, base 6757223a unchanged there): `ordered: ['fixed_income', 'equity', 'alternatives'] as const,` inside `export const DEFAULT_LAYOUT` -- the identical `assetClasses.ordered` field this TO edited on all four partner layout.ts files, feeding the same `normalizeMixTo4Class` options and `resolveMixClassMeta` colour/label resolution (PartnerAnalytics.tsx) those layouts feed",
+        "portal/src/pages/AdvisorIntelligence/_shared/hooks/useTenantLayout.ts:68 `const layoutFirm = (firmId && LAYOUTS[firmId]) || DEFAULT_LAYOUT` -- a live fallback for any firmId absent from LAYOUTS, not a dead/unused export",
+        "this TO's <paths> block names only the four partner layout.ts files, composition.ts, PartnerAnalytics.tsx and chartColors.ts -- TenantLayoutConfig.ts is not in it, so editing it would be an act outside the write grant",
+        "no firmId used by any live partner in this codebase (49financial, cottonwood, inflection, demo) is absent from LAYOUTS, so no currently-served mix renders through DEFAULT_LAYOUT today -- confirmed by reading _shared/hooks/useTenantLayout.ts's LAYOUTS map construction (keyed off the four discovered partner dirs) against the discovered set in discover-layouts.ts"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell text: 'every reader above admits structured and commodities' naming composition.ts, the four partner ordered lists, and PartnerAnalytics.tsx's labels/colour resolver as the readers to fix; BOUNDS: 'A needed edit outside the grant is a surprise row, not an edit.'",
+    "world_is": "DEFAULT_LAYOUT.assetClasses.ordered is mechanically the same reader shape as the four edited partner layouts and would drop structured/commodities the identical way IF a firmId ever resolved through it, but no live partner does today (each has its own explicit layout file) and the file is outside this TO's <paths> grant, so this worker left it unedited rather than widen scope.",
+    "notes": "Not blocking either IVE46-AC1 or IVE46-AC2 (both PASS-by-output; IVE46-AC2's test names this exact file:line as a NAMED, not-admitting reader with this reason, so the census accounts for it rather than silently missing it). Filed so a later cell/round closes the same gap on the scaffolding default the four live partners already got."
   }
 ]
 ```
