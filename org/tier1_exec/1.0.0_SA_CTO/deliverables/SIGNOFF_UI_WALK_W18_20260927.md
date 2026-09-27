@@ -34,3 +34,13 @@
 prints both counts from the journal. A non-zero count is a BLOCKING row the same tick.
 
 **CTO half: SIGNED on blob b74de7e4.** The CRO half is separate.
+
+## RE-SIGN, part C only: runner `cf3f4c5d` -> `3373f308` (~P 102093, @8b62d16176), ~20:5xZ
+
+- Read at HEAD: `git hash-object` equals `git rev-parse 8b62d16176:<runner>` = `3373f308`.
+- `git diff cf3f4c5d 3373f308` is ONE line: `UNIT=irpt-resident` becomes `UNIT=irpt-analysis-resident.service`. The
+  request loop, the stop rule and the write set are byte-unchanged.
+- The unit resolves read-only to the W18-2 pin `/opt/irpt-resident/fe64236bbb-lt`.
+- Parts A and B are unaffected. The named item above carries.
+
+**CTO half, part C: RE-SIGNED on runner blob 3373f308.**
