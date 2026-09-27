@@ -1858,6 +1858,71 @@
     "spec_asserts": "IVE52-AC2 ('the eight pinned files pass on the new behaviour ... 0 fail') and CTO 101449 ('re-classed H or R ... in the follow-on cell that carries the residual').",
     "world_is": "F30-AC4 is a standing, pre-existing failure this task order did not name and this worker's <paths> grant cannot reach; IVE52-AC2's invocation therefore measures 1 fail, not 0, though every failure this task order DID name (F30-AC5, fe-s-55) is fixed. The 'follow-on cell' CTO 101449 named for this residual has not yet carried it out.",
     "notes": "BLOCKING for IVE52-AC2 read literally (0 fail); this worker did not weaken the test or work outside grant to force a pass. Refusal clause invoked: the criterion's invocation is run and recorded verbatim in the proof-of-spec instance; the row above is the reason."
+  },
+  {
+    "id": "DSGN_IRPTV1-W29-S8",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~29",
+    "surfaced_at": "2026-09-27T06:00:00Z",
+    "one_line": "IV-e-50 fixed 8 real, root-caused non-Q S7 residuals (fe-s-14, fe-s-15 x2, fe-s-19, fe-s-25 x2, fe-s-30/F30-AC4) at the fixture/test level, but two more non-Q residuals genuinely require an out-of-grant PRODUCT-code fix and remain failing after this cell: fe-s-45/residuals.test.ts's F45-AC9 (scripts/dev-live.mjs's write measurement) and fe-s-57/carry.test.ts's F57-AC2 (contracts/adapt.ts's carryUnprojectedGrant) -- the suite therefore still does not read exactly the table's 5 Q rows.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- a ruling on these two specific residuals: a follow-on cell with a <paths> grant covering scripts/dev-live.mjs (F45-AC9) and contracts/adapt.ts (F57-AC2), a wider Q allowance (the 5-Q cap this cell's own bar holds to), or a different disposition.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bun test src/pages/InvestorReporting/__tests__/fe-s-45/residuals.test.ts at this worker's tip, twice back to back: F45-AC9 fails both times identically -- 'DISPOSITION scripts/dev-live.mjs:23: runner; -1 write(s) under .vite-temp; NOT MEASURED' (a -1 sentinel the test's own code reads as a measurement failure, not a clean pass) -- 4 clean among 5 kept loaders, not 5; the table's own pre-existing action text for this row already says 'nothing in this cell's grant touches scripts/dev-live.mjs or its own measurement arms', and portal/src/pages/InvestorReporting/__tests__/fe-s-45/ is under this cell's <paths> grant but scripts/dev-live.mjs is not",
+        "bun test src/pages/InvestorReporting/__tests__/fe-s-57/carry.test.ts at this worker's tip: 'CARRY PROBLEMS: selection-create: unprojectedGrant not carried as expected (0 members, slice=false) | directory-browse: unprojectedGrant not carried as expected (0 members, slice=false)' -- UNPROJECTED_GRANT PRESENT-AT-ZERO CARRIED ON 15 of 17 OPERATIONS (the denominator itself moved from 12 to 17 since fe-s-14's routes.json grew, but the same 2-route defect this cell's own class table already named -- contracts/adapt.ts's carryUnprojectedGrant only attaches the grant when the adapted document already carries `.availability`, which adaptSelectedAccounts/readDirectoryBrowse never populate -- is unresolved and contracts/adapt.ts is out of this cell's <paths> grant",
+        "this cell's own 3-full-run baseline (portal .scratch_runs/run{1,2,3}.xml, taken at this worker's tip before any edit) shows both files in the STABLE (identical across all 3 runs) failing set alongside the 5 Q rows -- neither is flaky, both are deterministic real defects"
+      ]
+    },
+    "spec_asserts": "IVE50-AC2 ('the failing set equals exactly the table's Q rows... VERDICT: S7-SUITE-OK only when every arm holds') and the cell's own bar ('no raised Q cap, at most 5 Q rows').",
+    "world_is": "After this cell's 8 real fixes the live-failing set is the 5 Q rows plus these 2 out-of-grant residuals -- smaller than any prior round's residual count, but not zero beyond Q. Per the refusal clause this is recorded as a FAIL row on IVE50-AC2 rather than a table or a test that pretends to a cleanliness the live suite does not have; DSGN_IRPTV1.TO-IV-e-50's <status> reflects the mechanical outcome of the proof-of-spec check.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "DSGN_IRPTV1-W29-S9",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~29",
+    "surfaced_at": "2026-09-27T06:05:00Z",
+    "one_line": "A file never named by W21-S3 or W23-S1, src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-26.wire-regen.test.ts, showed genuine run-to-run instability in this cell's own 3-full-run baseline (failed run 1, passed runs 2 and 3, identical committed tree) -- a NEW flaky file this cell's <paths> grant does not cover (dsgn-irptv1/ is only granted iv-e-17.regenerated.test.ts, the s7-*.ts instruments and iv-e-45.face-batch.test.tsx by name).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "a cell whose <paths> grant covers portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-26.wire-regen.test.ts -- characterize the shared-state source (real subprocess/filesystem work is this project's established pattern for this class of flake, per W21-S3) and remove it at the root, or a CTO ruling folding it into the same disposition as W21-S2/W23-S1.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell's own 3-full-run baseline (portal .scratch_runs/run{1,2,3}.xml, taken at this worker's tip before any edit, junit XML parsed with xml.etree.ElementTree): run1 FAILING includes 'src\\\\pages\\\\InvestorReporting\\\\__tests__\\\\dsgn-irptv1\\\\iv-e-26.wire-regen.test.ts :: every arm holds'; run2 and run3 do NOT -- same committed tree, no edit between runs",
+        "not one of W21-S3's three named files (fe-s-33/fixtures-reach.test.ts, fe-s-39/adapter-plane.test.ts, fe-s-46/timeouts.test.ts) or W23-S1's eight (submission-request.test.ts, fe-s-1/fixtures.test.ts, fe-s-1/source-bounds.test.ts, fe-s-14/envelope.test.ts, fe-s-19/network-state.test.ts, fe-s-2/dropdown.test.ts, fe-s-27/precondition.test.ts, fe-s-40/reason-codes.test.ts, fe-s-46/timeouts.test.ts's F46-AC3) -- none of those eleven reproduced as flaky in this cell's own 3 runs (either stably passing, or, for fe-s-14/fe-s-19, stably failing on a real defect this cell then fixed at the fixture level)"
+      ]
+    },
+    "spec_asserts": "IVE50-AC1 ('3 consecutive full runs ... give IDENTICAL pass/fail sets').",
+    "world_is": "The corpus-wide run-to-run instability W21-S3/W23-S1 characterized (9+ files, 'strongly suggesting ... bun's own test scheduling/concurrency under this corpus size', never fully root-caused per file) has NARROWED since those rows were filed -- only 1 of 240 files showed any instability across this cell's own 3 runs, and it is a file neither prior row named -- but it has not reached zero. This cell's own s7-determinism-check.ts (IVE50-AC1's instrument) will read this file's instability directly if it recurs on the graded 3 runs.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "DSGN_IRPTV1-W29-S10",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~29",
+    "surfaced_at": "2026-09-27T06:45:00Z",
+    "one_line": "A SECOND 3-full-run baseline (this cell's own graded s7-determinism-check.ts invocation, taken ~40 minutes after the first, no edit to any test/fixture file between the two baselines) shows a DIFFERENT internally-stable 7-test failing set than the FIRST baseline's stable 15 -- row W29-S9's own claim ('only 1 of 240 files showed any instability... it has not reached zero [for just that one file]') is SUPERSEDED: the instability is corpus-wide across BOTH baselines, it is just that each individual 3-run sample can land in one of (at least) two internally-self-consistent regimes, not that any one run is internally inconsistent.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO -- this is evidence for the SAME standing ask W21-S2/W23-S1 already made (a follow-on cell, a wider Q allowance, or a different disposition), now with a second independent measurement proving the instability is a genuine REGIME-LEVEL property of this corpus/machine, not a per-file defect any test-only cell can fix: `IVE50-AC1`'s own instrument (3 consecutive runs, back to back) can and did read S7-DETERMINISTIC-OK on BOTH baselines even though the two baselines' failing sets differ from EACH OTHER -- 3-in-a-row is not sufficient evidence of TRUE suite determinism when the underlying regime can shift between samples.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BASELINE 1 (portal .scratch_runs/run{1,2,3}.xml, ~05:4x-05:5xZ, this worker's tip before edits, verified identical across 3 runs): stable 15 fail = the table's 5 Q rows + fe-s-14/fe-s-15x2/fe-s-19/fe-s-25x2/fe-s-30 (all since fixed this cell) + fe-s-45/F45-AC9 + fe-s-57/F57-AC2",
+        "BASELINE 2 (s7-determinism-check.ts's own graded run, ~06:3x-06:4xZ, after this cell's fixes, verified identical across 3 runs, VERDICT: S7-DETERMINISTIC-OK): stable 7 fail = fe-s-1/fixtures.test.ts's CREDENTIAL sub-test (not its Q row, which now PASSES), fe-s-25/absent-vs-null.test.ts's 2 of its 3 Q rows (the 3rd now PASSES), fe-s-2/dropdown.test.ts, fe-s-40/reason-codes.test.ts, fe-s-46/timeouts.test.ts's F46-AC3, submission-request.test.ts -- NONE of these 7 overlap with BASELINE 1's stable 15 by (file, test) pair except the fe-s-25/absent-vs-null.test.ts overlap (2 of 3 rows) -- fe-s-45 and fe-s-57, confirmed failing TWICE in isolated single-file runs by this same worker (see rows/evidence in DSGN_IRPTV1-W29-S8), read CLEAN in BASELINE 2's full-suite context",
+        "immediately confirmed with s7-suite-check.ts (IVE50-AC2's own instrument) run once more, same tip: VERDICT: S7-SUITE-FAIL, 'FAILING BUT NOT A Q ROW' names exactly BASELINE 2's 5 non-fe-s-25 files, 'Q ROW BUT NOT CURRENTLY FAILING' names 3 of the table's 5 Q rows -- reproducing BASELINE 2 a third time, at rest, no concurrent load from this worker's own tool calls"
+      ]
+    },
+    "spec_asserts": "IVE50-AC1's own bar ('the flakiness source is removed at its root') and IVE50-AC2 ('the failing set equals exactly the table's Q rows').",
+    "world_is": "This cell fixed 8 real, root-caused, verified-in-BOTH-baselines defects (fe-s-14, fe-s-15 x2, fe-s-19, fe-s-25 x2, fe-s-30/F30-AC4) at the fixture level -- genuine, durable progress. The remaining instability is NOT per-file: it is a property of the whole 240-file/905-test corpus under bun's own scheduler, which lands on one of at least two different stable failing-set regimes depending on machine/timing conditions this cell cannot control or characterize further from inside a fixture-only grant. IVE50-AC1's own instrument mechanically read S7-DETERMINISTIC-OK on its one graded invocation (a true, unmanipulated result of that one real 3-run sample) -- recorded verbatim in the proof-of-spec instance -- but this row records that the BAR THE CELL TEXT NAMES IN PROSE ('the flakiness source is removed at its root') is NOT actually met: the source is corpus-wide scheduling variance, still present, not removed. IVE50-AC2 reads S7-SUITE-FAIL on this same tip, per the refusal clause, honestly.",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
