@@ -692,7 +692,32 @@ def _self_test():
                "for name, verdict in results:\n    print(f'  {verdict:4s} {name}')\n"
                "print('[x] RESULT: %d arm(s) failed of %d' % (0, len(results)))\n"
                "print('BATTERY PASS -- every arm as expected')\n")
+    def _ov_limb6(stub_v):
+        """Z-S1: run the REAL check_file on an order carrying '# pipeline-override:', with LIMB 6 stubbed to stub_v."""
+        import shutil
+        import tempfile
+        g = globals()
+        real = g["check_prd_signoff"]
+        g["check_prd_signoff"] = lambda root, rel: (list(stub_v), [])
+        d = tempfile.mkdtemp(prefix="tpg-z-s1-")
+        try:
+            rel = "org/missions/D0/X/X_PRJ/task-orders/X_PRJ.TO-1.md"
+            p = os.path.join(d, rel)
+            os.makedirs(os.path.dirname(p))
+            with open(p, "w", encoding="utf-8") as fh:
+                fh.write("# X_PRJ TO-1" + chr(10) + chr(10) + "# pipeline-override: self-test" + chr(10))
+            return check_file(d, rel)
+        finally:
+            g["check_prd_signoff"] = real
+            shutil.rmtree(d, ignore_errors=True)
+
+    _refused = ["t: project X_PRJ PRD prd/X_PRJ_PRD.md ratified-text half reads REFUSED (3.0.0_SA_CVO~O)"]
     arms = [
+        # Z-S1 (3.0.0_SA_CVO~O verdict @c6d6f60d62): '# pipeline-override:' does NOT bypass LIMB 6
+        ("override RED (Z-S1): an order carrying '# pipeline-override:' against a REFUSED half is STILL refused",
+         lambda: _ov_limb6(_refused)[0] == _refused),
+        ("override GREEN (Z-S1): the same order against a SIGNED PRD (LIMB 6 clean) is admitted by the override",
+         lambda: _ov_limb6([])[0] == [] and any("OVERRIDE taken" in n for n in _ov_limb6([])[1])),
         # LIMB 6 -- the PRD sign-off gate (L4-R), pure arms; the tilde signer counts for its base serial
         ("signoff RED: no files -> refused naming BOTH reviewers",
          lambda: len(SO({})) == 2 and all("NO sign-off" in x for x in SO({}))),
@@ -2708,7 +2733,11 @@ def check_file(root, rel):
         except Exception as exc:  # noqa: BLE001
             notes.append("OVERRIDE taken on %s -- reason: %s (AUDIT SINK UNWRITABLE: %s -- the override stands, the record does not)"
                          % (rel, reason, exc))
-        return ([], notes)
+        # LIMB 6 IS NOT OVERRIDABLE (3.0.0_SA_CVO~O verdict @c6d6f60d62, row NFRA_OPLGTW-Z-S1): the override's written
+        # scope is pipeline SHAPE (:511, :1994), and CLAUDE.md 27 L4-R names no exception. An issuer's own line must not
+        # void another seat's L4-R refusal -- OG-e-1 @11657b48df was cut 84 s after a REFUSED stamp this way.
+        so_v, so_notes = check_prd_signoff(root, rel)
+        return (so_v, notes + so_notes)
 
     # THE <decomp_ref> PRESENCE CHECK IS NOT DUPLICATED HERE, DELIBERATELY.
     # .tools/git-hooks/to-proof-of-spec-check.sh:60-71 already refuses a NEW TO that lacks
