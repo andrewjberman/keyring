@@ -193,7 +193,7 @@ What it changes for this half:
   Monday's run the live file carries `cash` (and later more classes) that d08's frozen three-class `mix{}` lacks, so d08
   will refuse. Parked in STATUS~M with the runners' owner; it serves nothing.
 
-## Addendum 6 (02:1xZ 09-27): S152 re-cut ALONE on CLOUD, and the CTO's five terms (CTO 101685/101688, CRO 101686)
+## Addendum 6 (01:5xZ 09-27): S152 re-cut ALONE on CLOUD, and the CTO's five terms (CTO 101685/101688, CRO 101686)
 
 **Re-cut:** branch `irpt-m-s152-cloud` @**ff63895521** (worktree `../ajb_irpt_m_s152c`), one commit on CLOUD 6a51c423fb,
 2 files. It supersedes 41115a70aa. The diff is:
