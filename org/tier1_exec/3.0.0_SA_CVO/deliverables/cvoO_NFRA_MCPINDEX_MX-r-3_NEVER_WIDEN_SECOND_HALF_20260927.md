@@ -48,9 +48,21 @@ Code: redeploy `opal-gateway-df724ef284.tar.gz` (ETag f9bd0d48, present in S3), 
 the order's step 4 requires; the 90-second health rollback reads `/health` on the host. Data: none written.
 The `.env` is rewritten to the same literal by the rollback deploy.
 
+## Addendum 2026-09-27 ~03:4xZ: the dashboard bundle, a second served surface in the artifact
+
+The worker's row NFRA_MCPINDEX-Z-W1-S9 showed that `deploy-to-ec2.sh` (df724ef284, `:69-99`) builds the NESTED mcportal
+checkout at whatever commit it holds, then ships its `dist/` inside the gateway artifact (`:84-92`). Neither half named
+that. The live artifact's bundle is mcportal **a3bff71ffa3f5c73aa0fb7ea1e7386434e233054** (`EC2_MANIFEST.json`
+`services.opal-gateway.mcportal_commit`; the OA-g-2 ledger's L1 leg `INFO: building mcportal @ a3bff71ffa...`). The
+worker cloned that same commit into both `/c/tmp/mx-rel` and `/c/tmp/mx-rb`, so DELTA = 0 holds on the bundle as well.
+**Second condition:** before the upload, `git -C /c/tmp/mx-rel/mcportal rev-parse HEAD` must print
+a3bff71ffa3f5c73aa0fb7ea1e7386434e233054, and the build's `INFO: building mcportal @` line must name it. Any other
+commit is a dashboard change this half does not sign.
+
 ## Verdict
 
-**SIGNED** for the act above as bounded here, with the pre-upload `.env` read as its one condition. Nothing else is
+**SIGNED** for the act above as bounded here, with two pre-upload conditions: the host `.env` read, and the mcportal
+pin in the addendum. Nothing else is
 added: the CTO half's guards (on-host `/health` 200, tool list 46 = 46, the NEVER-2 ledger, off-hours GO, the
 announcement) stand as written.
 

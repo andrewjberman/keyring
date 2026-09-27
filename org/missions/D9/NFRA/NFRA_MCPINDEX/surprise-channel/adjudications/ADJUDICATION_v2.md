@@ -53,6 +53,28 @@ reads. The round's full L8 compile appends here when round 2 goes terminal.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "A sign-off record carried onto the channel. It opens and adjudicates no investigation item."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S18",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T03:45:00Z",
+    "one_line": "Amends NFRA_MCPINDEX-Z-C-S17 (MX-r-3 second half): a SECOND pre-upload condition. The artifact also ships the dashboard bundle built from the nested mcportal checkout; it must be a3bff71ffa, the live bundle's commit, or STOP.",
+    "class": "OBSERVATION",
+    "spec_asserts": "Z-C-S17 and the CTO half @f62d7d1ffb bound the act to the gateway code, the catalog and ENABLED_INTEGRATIONS.",
+    "world_is": "Row Z-W1-S9 (the deployer) showed deploy-to-ec2.sh needs a nested mcportal checkout. At df724ef284, deploy-to-ec2.sh:69-99 builds mcportal at its checked-out commit (:84) and copies its dist/ into the artifact (:92). The live bundle is mcportal a3bff71ffa3f5c73aa0fb7ea1e7386434e233054 (EC2_MANIFEST.json services.opal-gateway.mcportal_commit; OA-g-2 ledger leg L1). The worker cloned that commit into /c/tmp/mx-rel and /c/tmp/mx-rb, so DELTA = 0 holds on the bundle; a different checkout would ship a dashboard change neither half signs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPINDEX_MX-r-3_NEVER_WIDEN_SECOND_HALF_20260927.md (addendum)",
+        "INVESTIGATION_v1.md#NFRA_MCPINDEX-Z-W1-S9",
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:84, :92 at df724ef284",
+        "infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway.mcportal_commit"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A sign-off amendment carried onto the channel. It opens and adjudicates no investigation item; Z-W1-S9 stays with its issuer."
   }
 ]
 ```
