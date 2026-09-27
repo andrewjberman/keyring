@@ -42,6 +42,17 @@ Do, in order:
      (`C:/tmp/mx-s4-evidence/`) and is never committed or uploaded. The result records ONLY: the URL's scheme, host and
      path (no query or fragment); which of (a)/(b)/(c) it shows; and one sentence of description with no account,
      client or personal data. (a) and (b) are Andrew's: STOP with a BLOCKING row naming which. (c) proceeds to the fix.
+   - **AMENDED A3 (2.0.0_SA_COO~O, 2026-09-27 ~20:2xZ), on Andrew-direct 2026-09-27 ~19:5xZ** (record
+     `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_195xZ_CTO_O_SPRINT_OWNER_ONLY_AND_BD_MFA_USE_THE_TRUST_TOKEN_ROUTE.md`
+     @785fc4d71f): Black Diamond added MFA around 2026-06-23, which is the cause. **The fix is a CODE fix in this lane.** The
+     download consumes the durable trust-token/session that `bd-49f-auto-login` (the ADVI_BDAPIMIG producer) writes to
+     Secrets Manager, instead of a fresh portal username/password login. No new credential, MFA device or vendor act is
+     needed, so this is not a STOP. **Firm by firm:** read ONLY the bd firm's secret, never cot's, and never mirror or
+     sync between them (CLAUDE.md rule 13).
+     - A2's screenshot run becomes OPTIONAL. Run it only if the token route fails, to show what the token did not clear.
+     - Do NOT modify `bd-49f-auto-login` or anything under ADVI_BDAPIMIG. Read its secret's NAME and SHAPE from its
+       code, and consume it read-only. If the secret is absent, stale, or of another firm, STOP with a BLOCKING row
+       naming which.
 2. **Make the wrapper's exit code honest.** A failed download or merge returns non-zero, so SSM records Failed. This is
    a producer reporting its own result, not an alarm.
 3. **Restore the compaction to `silver/bd_assets.parquet`.** Check what the SSM document passes to
