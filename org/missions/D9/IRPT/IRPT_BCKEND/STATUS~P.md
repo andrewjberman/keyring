@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T05:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T06:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -50,11 +50,16 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 1. **Analysis hop 6 (the live-thread break):** the WAF-refresh fix is SERVED in the resident (wf). The live proof is
    a fourth Analysis attempt, which needs Andrew's word at ~Y; its packet names up to 6 status GETs 15 s apart plus
    ONE host re-capture on a challenge (~Y 101809).
-2. **K8, the first real export:** retained reports exist at all three firms; no vendor call. It needs a window packet
-   and both halves.
+2. **K8, the first real export:** window 10 (06:19-06:32Z) did not reach it. The page's Export preview refuses
+   before any request ("cannot render reportKind performance-report: 39c11079.. is absent"), and 39c11079 is K7's own
+   report revision (RPT-b5e0a16e). The throw site is portal `export/resolveBundle.ts:255` (a cache miss, then a
+   client-side fetch failure) at DEV 200d257a. That is ~D's lane (DSGN_IRPTV1), and ~D is filing it. Re-cut window
+   10's packet as window 11 once ~D's fix is on DEV.
 3. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
+- Window 10 opened 06:19:10Z and closed 06:32:17Z. K7 reopened a 49F report (8.05%); K8 was not run (the page refused); 0 outside the classes; 0 new media in git.
+- S157 filed (COT retained face overstates its window) and named in the release item (@52f078fe1e).
 - Window 9 (~D's read-only round-7 walk) opened 05:37:40Z and closed 05:48:24Z: 0 outside the classes (@eade2ba0f5).
 - Resident wf served 05:54:14Z (@f57a08f106 OPEN; CLOSED this commit).
 - COT window disclosure (criterion 3): actual_start is now the account's first series point; served bOefL9nx,
