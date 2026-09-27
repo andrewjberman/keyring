@@ -68,3 +68,20 @@ at 00:12:08Z and no checkpoints. So **no vendor write happened**: no holdings up
    - The next act is one diagnostic wrapper run, on Andrew's word, by the host's owner, with the capture's output kept.
 3. The job, the vendor objects and the rows written so far are retained per the packet. There is nothing to roll back:
    no vendor write happened.
+
+## Receive-1 capture failure: static causes ruled out (01:3xZ, read-only, no YCharts contact)
+
+| Checked | Result |
+|---|---|
+| Host role `irpt-ycharts-runner-role`, simulated on the runner's own AWS CLI calls | 8/8 allowed: GetSecretValue on login, session and kimi; PutSecretValue and DescribeSecret on session; DescribeSecret on login; DynamoDB UpdateItem and GetItem on irpt-jobs. The DeleteSecret control is implicitDeny |
+| Secrets' KMS | the default key (KmsKeyId None), so no grant is needed |
+| `secret-ids.env` | ASCII with LF endings, 240 bytes; the sourced names are exactly `ycharts/login/credentials`, `ycharts/session/current` and `astn/kimi/api-key` |
+| Login secret shape (keys and non-empty flags only; no value read out) | a dict with `password` and `username`, both non-empty. So `acquireSession`'s three pre-browser AuthErrors (`:956-966`) cannot fire |
+| Session secret shape | `schema_version` 1, fence 11, captured 2026-09-24 04:56Z. The Python broker reads it OK, so the first identity step found it evicted and triggered the refresh |
+| Egress | DNS resolves ycharts.com; HTTPS to checkip.amazonaws.com returns 200 |
+| Runtime | node 18.20.8, playwright resolves, headless Chromium launches and renders |
+
+What remains is the runner's live interaction with YCharts after its lease: seeding the stored cookies, the probe, the
+sign-in form, or a challenge. Only a run whose receipt is kept can name it.
+`P_RESIDENT_RETAINED_REASON_20260927.patch` (Y branch 9c6626e1be) makes the next attempt's journal line carry the
+runner's `failure_class`.
