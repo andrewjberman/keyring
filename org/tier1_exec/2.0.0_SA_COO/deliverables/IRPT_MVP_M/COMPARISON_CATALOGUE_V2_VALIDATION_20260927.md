@@ -66,3 +66,33 @@ selection. The admitting consumer is ~M's to write. It must:
 - require an entitlement that is granted, with the viewer's firm in `permitted_firm_ids`;
 - never read `security_id` or `live_proven` as a fallback.
 It follows the ruling on section 3.
+
+## Addendum 1 (~21:5xZ): CTO ruling (a), then the proof, re-validated by ~M; all three firms admitted
+
+- **CTO 102141, ruling (a):** 49financial admits now. inflection and cottonwood admit when ~Y proves the benchmark
+  field never renders, and "M re-validates and admits ... with no new word needed".
+- **The proof:** ~Y msg 102147, `IRPT_MVP_Y/COMPARISON_BENCHMARK_NEVER_RENDERS_20260927.md` @2e79ddb62d.
+- **~M's own re-read** of both certified PDFs from `s3://opal-data-ycharts/research/20260911/variants/` (3 report.pdf
+  under the prefix; the two matched by sha256):
+
+| Report | sha256 | Pages | "49F" | "49 Financial" | "Benchmark" | lowercase "benchmark" | control: model name |
+|---|---|---|---|---|---|---|---|
+| Comparison 14141824 | f01cbd48a577.. | 31 | 0 | 0 | 0 | 2, both glossary prose (ETN definition; style-box "size-specific benchmarks") | Opal Long-Term x31 |
+| Multi-Comp 14141847 | 0a67ecf76732.. | 35 | 0 | 0 | 0 | 2, both glossary prose (active-investing definition; style box) | Opal Short-Term x29, Intermediate-Term x28 |
+
+- **Result:** the benchmark field does not render on these templates. **`permitted_firm_ids = ["49financial",
+  "inflection", "cottonwood"]`** for all 4 entries.
+- **Limit carried from ~Y's record:** a YCharts template change could start printing it. The certifier guard ("fail
+  any non-49financial report carrying 49F") is not built; it waits on its own word.
+
+## The values ~M's consumer will require (sent to ~Y to set in templates.json)
+
+- `candidate_version` = `irpt-ycharts-comparison-candidate.20260927.v2`.
+- Per entry:
+  - `identity_status` = `VERIFIED`;
+  - `entitlement_status` = `GRANTED`;
+  - `permitted_firm_ids` = the 3 firms above;
+  - `permitted_principal_classes` = `["FIRM_ADVISOR", "FIRM_OPERATIONS", "OPAL_GLOBAL"]`;
+  - `verification_ref.evidence_sha256` = `424eb3bf70d9975250cc8351de025930f72715b76b8586cad936515e86250194`.
+- The consumer also pins the validated (key, vendor_id, evidence sha, firms) set in code, so an edit to the catalogue
+  alone widens nothing.
