@@ -237,7 +237,8 @@ disposed REMEDIED (S129).
   branch; D_04's firm mix now reads every C_06 class). `0.4.0_DS_ClientPlatform~X` SEATED under
   IRPT_MVP_M/WORK_ORDER_DS_X_B1_AND_CASH_LINE_20260926.md (amendment 1 @8b45af0917): a07/d08 cash line, d06/d08/BD
   C_06/D_03/D_04/both mix_views admit, d06/d08 admit `other`. Seating exception to CONTRACT.md:3 (CTO 101639). ~P:
-  contract enum admits both (d3c5467ce1, ae32ac98d7). B2 still waits on ~D's C34 and a re-census at 0 RAISE / 0 drop.
+  contract enum admits both (d3c5467ce1, ae32ac98d7). B2 still waits on: ~X's and ~M's B1 code landed; ~D's C34 SERVED (on LOCAL portal DEV a28c0172 only,
+  not origin DEV or PROD, ~D 101648; the AI half TO-IV-e-46 is at CTO review); then a re-census at 0 RAISE / 0 drop.
 
 ## Limits
 
