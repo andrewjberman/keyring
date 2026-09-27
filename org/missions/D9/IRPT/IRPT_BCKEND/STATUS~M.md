@@ -217,8 +217,9 @@ disposed REMEDIED (S129).
 
 - **ETF Classifier tags win (Andrew-direct ~21:2xZ; CTO 101511 ruled (a)):** `structured` and `commodities` become
   classes. Half @09cd2a3e50, with a reader census (69 paths plus those added since). CTO signed (101540):
-  - Part A: 15 puts SIGNED (ride R4). VNQ HELD for Andrew; the tag is alternatives, which agrees with the REIT rule
-    and conflicts only with "established equities stay". CASH HELD.
+  - Part A: 16 keys SIGNED (CTO @c516dab84b, msg 101547; CRO msg 101552), riding R4: the 15 puts plus VNQ to
+    alternatives. Andrew-direct 00:1xZ 09-27: "VNQ is alternatives, it's a REIT"
+    (ANDREW_DIRECT_20260927_001xZ_VNQ_IS_ALTERNATIVES_REIT.md). CASH is dropped (Pathward stock).
   - CASH is a ticker collision: bd = Pathward Financial stock (49F, CUSIP 59100U108); ETF row = a synthetic cash row;
     COT's 620 "CASH -- CASH" nodes ($2.87M) are BD's cash line, served as equity. REC to the CTO: drop CASH, and fix
     COT's cash line by row (~M's C_06 grant, own half).
