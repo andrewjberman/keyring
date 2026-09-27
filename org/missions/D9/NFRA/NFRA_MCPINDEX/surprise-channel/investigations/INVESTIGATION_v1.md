@@ -1411,6 +1411,74 @@ carries none.
     },
     "spec_asserts": "The DSFLOW.004 sweep's 'from __future__ import annotations' line holds across data/*/scripts.",
     "world_is": "59 files lost it in a log commit; the sweep is routed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-27T03:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The issuer's MX-r-3 hand-off counts 14 NFRA_MCPINDEX worker commits on the gateway path; the author-anchored census reads 12, and the other 2 are clean drain merges by 2.0.0_SA_COO~O whose SUBJECT names the worker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --full-history --no-merges --format=%an CLOUD@cb5f440613 -- infra/aws/ec2/opal-gateway | grep -c '^0\\.9\\.0_WK_NFRA_MCPINDEX~' = 12 (the same 12 without --full-history): 650c9a99cb 119a49eef0 37f208249f 4bfab1bcf2 8829b066d1 81d37aafda 2c25c4c831 84a725073b d36d31f8c5 bc0cde67f0 e1cdb12550 bcb48cf626.",
+        "An unanchored grep of '%H %an | %s' for '0.9.0_WK_NFRA_MCPINDEX~' returns 14 lines: the 2 extra are b10111278c (parents 9dd139a74d bf5cb6b2fa) and fe618516f3 (parents feaefee0ed cd7a4fedfe), both authored 2.0.0_SA_COO~O, subjects 'drain(... merge 0.9.0_WK_NFRA_MCPINDEX~3/~2 ...)'.",
+        "git show --remerge-diff b10111278c / fe618516f3 -- infra/aws/ec2/opal-gateway prints nothing: neither merge carries a resolution of its own, so the 12 commits carry all of their gateway content.",
+        "Release census on rel-nfra-mcpindex-r2-gateway@110d93fb73: 19 gateway files, equal to the union of the 12 commits' gateway files (0 extra, 0 missing)."
+      ]
+    },
+    "spec_asserts": "Issuer ruling 2 for MX-r-3: the commits on CLOUD touching infra/aws/ec2/opal-gateway whose author is 0.9.0_WK_NFRA_MCPINDEX~<n> -- 'there are 14'.",
+    "world_is": "By author there are 12. The count of 14 matches a substring grep that also hits 2 drain merges authored 2.0.0_SA_COO~O. Those merges have no content of their own. The release carries the 12.",
+    "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-27T03:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "In the release tree, 2 of the 6 named test files fail: test_portal_index (1 of 7) and test_portal_grant (2 of 7). Both read repo files outside the gateway path, and the narrow release pins those files to the base. The same files pass 7 of 7 each on CLOUD@cb5f440613.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release tree /c/tmp/mx-rel @110d93fb73, `timeout 120 python -m pytest tests/<f>.py -q` from infra/aws/ec2/opal-gateway: test_portal_index rc=1 '1 failed, 6 passed'. The failure is test_portal_tools_catalog_refs_resolve at tests/test_portal_index.py:264, `assert sorted(refs.values()) == sources`, and sources is [] because workflows/atom_decomposition/catalog_entries/portal_*.yaml is absent at the base df724ef284.",
+        "test_portal_grant rc=1 '2 failed, 5 passed': test_admin_accepts_portal_only_candidate (KeyError 'portal_grant') and test_admin_rejects_unknown_portal_channel ('... not admitted by this contract (no portal_grant)'). The repo contract org/standards/NFRA_OPLGTW_CONTRACT.json at the base has no portal_grant section. The OA-g-2 release showed the same pair (its row NFRA_OPALAI-Z-W9-S4).",
+        "Control, the same invocation in /c/tmp/mx-r3 @cb5f440613 (CLOUD): test_portal_index rc=0 '7 passed'; test_portal_grant rc=0 '7 passed'.",
+        "Neither the tests nor those repo files ship: deploy-to-ec2.sh:94-98 tars only app, deploy, requirements.txt and identity_tool_allowlist.txt, plus the dashboard bundle."
+      ]
+    },
+    "spec_asserts": "Pre-GO step 2: run the release tree's own relevant tests (test_tool_classification_composition, test_portal_index, test_opal_discover, test_identity_scope, test_portal_grant, test_asker_scope).",
+    "world_is": "4 of 6 pass whole: 7, 4, 9 and 4 passed. 2 of 6 fail on their repo-file reads (3 tests), because the narrow release holds non-gateway paths at the base. The shipped app code is not implicated. test_entitlement_admin was not run because moto is not installed.",
+    "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-27T03:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The face names two worktrees, but deploy-to-ec2.sh needs a nested mcportal checkout it does not name. I cloned mcportal at a3bff71ffa into both /c/tmp/mx-rel and a rollback tree /c/tmp/mx-rb, and copied node_modules so that bun install makes no network fetch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deploy-to-ec2.sh:77-80 (release tree @110d93fb73): 'ERROR: no mcportal checkout at $MCPORTAL_DIR' fails closed when $WORKSPACE_ROOT/mcportal/package.json is absent. mcportal is not tracked in the parent repo, and the fresh worktree had none.",
+        "The manifest's services.opal-gateway.mcportal_commit is a3bff71ffa3f5c73aa0fb7ea1e7386434e233054. Both clones were cloned from the workspace's own mcportal repo and checked out at that commit. bun.lock md5 aaeb8134651c4914d5fa124e96f39df8 is the same in both and in /c/tmp/oa-9-rb/mcportal, whose node_modules was copied.",
+        "Build log: 'bun install ... Checked 77 installs across 128 packages (no changes)'. The rollback artifact built this way matches the live S3 object ec2/opal-gateway/opal-gateway-df724ef284.tar.gz in 75 of 75 files by md5 (63 of 63 .py)."
+      ]
+    },
+    "spec_asserts": "Face step 2/4: `git worktree add ... /c/tmp/mx-rel <deployed_commit>`; rebuild the deployed commit's artifact from a clean tree WITHOUT uploading.",
+    "world_is": "Neither tree can build the artifact until a nested mcportal clone exists. I added one at the manifest's mcportal_commit, following the OA-g-2 precedent at /c/tmp/oa-9-rb.",
+    "disarm_owner": "2.0.0_SA_COO~O"
   }
 ]
 ```
