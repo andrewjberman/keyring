@@ -1718,6 +1718,77 @@
     "world_is": "PALETTE.green900 now carries TWO live meanings in the portal: ASSET_CLASS/MIX_PIE.commodities (this cell) and Attribution holdings-shared.tsx's 'Hedge' sub-asset colour (pre-existing, a different chart/page). The cell's own literal 3-condition rule does not check page-level sub-asset maps outside chartColors.ts's own MIX_PIE/ASSET_CLASS/MODEL_PORTFOLIO_COLORS exports, so the mechanical winner it selects can still collide with a meaning the rule never looks at.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not blocking: this worker followed the cell's literal, CTO-authored 3-condition rule exactly (mechanical, no added judgment) rather than widening it with its own semantic exclusion; the two colours sit in DIFFERENT chart contexts (Attribution holdings treemap vs. Positioning/AdvisorIntelligence class chips/pies), so unlike the gray900/text-ink case there is no single component that could render both meanings side-by-side today. Filed so the CTO/COO can decide whether the population this rule checks should widen to page-level sub-asset maps."
+  },
+  {
+    "id": "DSGN_IRPTV1-W29-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~29",
+    "surfaced_at": "2026-09-27T00:10:00Z",
+    "one_line": "UIR-27's 'one click away' half (Supervision/Advisory) cannot be met for the ordinary (not-every-row-withheld) case without breaking `fe-s-39/adapter-plane.test.ts`'s F39-AC7 golden, which pins the Advisory `<td>`'s rendered markup BYTE-FOR-BYTE; this cell implements only the parenthetical alternative ('hidden when withheld on every row') and leaves the ordinary case's markup unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO or 3.0.0_SA_CVO -- either re-scope F39-AC7's golden to tolerate a one-click-away wrapper (a cell holding fe-s-39/adapter-plane.test.ts in its <paths>), or rule that 'hidden when withheld on every row' is the accepted resolution for UIR-27 and the 'one click away' half never applies to the ordinary case.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "fe-s-39/adapter-plane.test.ts F39-AC7 ('an in-enum advisory renders exactly as before'): `const same = ... cells.every((cell) => cell.td === before(expected))` where `before(value) = '<td class=\"py-1 pr-3 text-slate-700\" data-slot=\"slice-advisory\" data-classification-authoritative=\"true\">' + value + '</td>'` -- a byte-exact equality on the WHOLE <td>, not a substring/content check",
+        "fe-s-32/holdings-driver.mjs and iv-e-18.census.test.ts (both out of this cell's <paths> grant) also read `[data-slot=\"slice-supervision\"]`/`[data-slot=\"slice-advisory\"]` directly off each `<tr>`, requiring the elements to exist in the row's own markup on the FIRST static render (no click simulated) whenever a row carries a real classification",
+        "any wrapper (a per-row <details>, a table-level toggle defaulting closed) that makes the ordinary case's Advisory/Supervision cells NOT visible on the first render breaks F39-AC6/AC7 structurally (cells.length would read 0, not 3) or breaks F39-AC7's byte-exact comparison (extra markup inside the <td>) -- confirmed by attempting a <details>-wrapped cell locally (not committed) and re-running F39-AC7: FAIL, cell.td included the <details>/<summary> tags",
+        "this cell's actual fix (`SliceTable.tsx`, `classificationAllWithheld` + `hideClassification`) re-ran F39-AC6/AC7/adapter-plane.test.ts's full suite after landing: 0 fail (verified this worker's own run, tail of this report)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IV-e-45 cell text (UIR-27): 'Supervision and Advisory are one click away (or hidden when withheld on every row).'",
+    "world_is": "The two halves of UIR-27 are mutually exclusive for the ordinary case given F39-AC7's existing byte-exact pin: 'one click away' requires the ordinary-case markup to change (collapsed by default), while F39-AC7 requires it to stay byte-identical. This worker implemented the achievable half ('hidden when withheld on every row', a NEW, additive branch that never touches the pinned markup) and left the ordinary case exactly as it was, rather than breaking an out-of-grant golden or weakening either test.",
+    "notes": "Not blocking IVE45-AC1 (this cell's own test asserts exactly the implemented half, both arms, plus the unchanged ordinary case -- all pass). Filed so a later round can decide which of the two pins yields."
+  },
+  {
+    "id": "DSGN_IRPTV1-W29-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~29",
+    "surfaced_at": "2026-09-27T00:15:00Z",
+    "one_line": "UIR-29 ('one money format across the page; the client total appears once') cannot be fully met: two out-of-grant pinned test sets require CONTRADICTORY money formats (IdentityCard's $-symbol style vs. the Holdings tab's sign-adjacent-to-digit style), and a third pinned test requires the custody total's own digits to remain present in HoldingsSummary's markup, blocking its removal as a duplicate of IdentityCard's 'How much'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO or 3.0.0_SA_CVO -- a ruling on which format wins (then a cell holding the three out-of-grant test files re-goldens them), and whether 'the client total appears once' means literally one DOM occurrence or one AUTHORITATIVE occurrence (IdentityCard's, always-visible) with a per-tab restatement tolerated.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Attempt 1 (measured, then reverted): unifying every money site on `Intl.NumberFormat({style:'currency'})` (the '$1,234.56' shape) broke `fe-s-7/slices.test.ts`'s own negative-sign control -- `expect(html).toContain('-150,000.00')` -- because the symbol format renders '-$150,000.00' (the '$' sits between the sign and the first digit, breaking the substring)",
+        "the SAME three tests (`iv-t-1.identity-card.test.ts`, `iv-e-3.card-fed.test.ts`, `iv-e-33.client-words.test.tsx`, none in this cell's <paths>) independently re-derive `IdentityCard`'s expected 'How much' text with `Intl.NumberFormat({style:'currency'})`, so `formatCustodyTotal` cannot move to the OTHER (code-prefix) style either without breaking all three",
+        "Attempt 2 (measured, then reverted): removing HoldingsSummary's 'Current value' tile (to make the client total appear exactly once, since IdentityCard's header is always visible above every tab) broke `fe-s-7/slices.test.ts`'s own `HoldingsSummary -- unique account count` test: `expect(html).toContain('1,000,000.00')` on `holdings.duplicate-relationship.json`'s own custody total -- a pinned assertion that the FIGURE is present in THIS component's own rendered markup, not merely somewhere on the page",
+        "this cell's landed fix: `format.ts` unifies the FOUR Holdings-tab files (`SliceTable`/`AllocationBars`/`HoldingsTreemap`/`SecurityList`) onto ONE shared formatter (the code-prefix style, matching their own pre-existing shape and passing every one of their own pinned tests), leaves `IdentityCard.formatCustodyTotal` untouched (still `$`-symbol), and keeps HoldingsSummary's 'Current value' tile (now sharing the ONE Holdings-tab formatter) -- re-run of `fe-s-7/*`, `fe-s-39/*`, `fe-s-32/*` and the full `dsgn-irptv1` suite: 0 fail (this worker's own measured run)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IV-e-45 cell text (UIR-29): 'One money format across the page; the client total appears once.'",
+    "world_is": "The page carries TWO money formats after this cell (IdentityCard's $-symbol; the Holdings tab's code-prefix, now unified across its own four files), and the client total appears TWICE when the Holdings tab is open unfocused (IdentityCard's header 'How much' + HoldingsSummary's 'Current value', the SAME custody-total figure) -- both because the alternative in each case is measured to break an out-of-grant golden this cell's <paths> grant does not extend to. This worker achieved the largest reduction possible without touching a file outside grant: FOUR formatters collapsed to one, zero regressions.",
+    "notes": "Not blocking IVE45-AC1 (this cell's own test asserts exactly what was achieved: the four Holdings-tab formatters share one function and keep the sign-adjacency property; it does not assert page-wide format unity or single-occurrence, since neither holds). Filed so a later round's decomp can carry the three out-of-grant test files in its own <paths> alongside a ruling on which format/occurrence-count wins."
+  },
+  {
+    "id": "DSGN_IRPTV1-W29-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~29",
+    "surfaced_at": "2026-09-27T00:20:00Z",
+    "one_line": "A full `bun test src/pages/InvestorReporting` run at this worker's tip (after this cell's own commit) shows 17 pre-existing failures, all in fe-s-1/14/15/19/25/30/45/55/57 -- envelope/contract-parsing, job-state rendering and unrelated adapter checks -- none touching tabs/holdings/*, header/IdentityCard.tsx or this cell's own new test; the whole dsgn-irptv1 suite (94 test files including this cell's own) is 0 fail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`bun test src/pages/InvestorReporting` at this worker's worktree HEAD printed '860 pass / 27 skip / 17 fail' across 904 tests in 239 files; every failing test's containing file (mapped from its own printed 'src\\pages\\...' header line back to the nearest preceding error) is one of fe-s-1/fixtures.test.ts, fe-s-1/source-bounds.test.ts, fe-s-14/envelope.test.ts, fe-s-15/job-states.test.ts (x2), fe-s-19/pre-envelope.test.ts, fe-s-25/absent-vs-null.test.ts, fe-s-30/predicate.test.ts, fe-s-45/residuals.test.ts, fe-s-55/withheld-vs-unknown.test.ts, fe-s-57/carry.test.ts",
+        "none of those nine files reference HoldingsSummary/SliceTable/AllocationBars/HoldingsTreemap/SecurityList/IdentityCard/ReportingTab/TabShell/format.ts/index.tsx by name (checked by direct read/grep of each failing file)",
+        "`git status --porcelain` on this worktree's portal shows only this cell's own nine edited files + the new format.ts + the three re-scoped iv-e-12 tests as real (non-CRLF) changes; the contracts/wire/*.ts files also listed as modified are CRLF/LF normalization noise only (git diff shows zero content difference, matching the pre-existing row DSGN_IRPTV1-W4-S3 finding on this same worktree pattern), never opened or written by this worker",
+        "`bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1` alone: 0 fail across every dsgn-irptv1 file including this cell's own iv-e-45.face-batch.test.tsx and the three amended iv-e-12 files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 22 (EVIDENCE LAW): a worker verifies its own fresh change against live artifacts; this cell's <paths> grant does not extend to fe-s-1/14/15/19/25/30/45/55/57's own test/source files.",
+    "world_is": "The InvestorReporting suite carries 17 failing tests unrelated to this cell's own grant or edits, pre-dating this worker's changes (a sibling row, surfaced by a prior worker at an earlier round-7 tip, already documented ~30 failures in a related but not identical file set -- fe-s-1/14/15/19/25/30/31/33/39 -- the exact count and file set shift between worker tips as sibling round-7 chains merge underneath, which this row's own denominator is scoped to THIS worker's HEAD, printed above). This worker did not attempt to fix them (out of grant; fixing a neighbouring defect is an explicit non-goal).",
+    "notes": "Not blocking IVE45-AC1/AC2/AC3 (all pass/are recorded on this cell's own scope). Filed as a fresh, printed denominator at this specific worktree tip so the round's drain does not have to re-discover it, and so a reader does not read the earlier ~30-count row as still current."
   }
 ]
 ```
