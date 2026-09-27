@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T22:39Z. Lease FAST until 2026-09-27T23:08:08Z.
+As of 2026-09-27T23:02Z. Lease FAST until 2026-09-27T23:31:08Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
@@ -171,6 +171,9 @@ and window 4 re-runs K4+K5 (+R1).
 
 ## Write claims
 
+**Release catv2+static VERIFIED (P ledger CLOSED 22:47Z):** the served generate `ykJltfTd` ACCEPTS the Overview. The resident `st`
+equals the proved files, and with no overlay it runs window 15's shape: Static READY, a foreign row ATTENTION, no tolerance READY.
+
 **Re-cut, at P (CTO 102169):** P's naming gate refused the typed firm ids. The check (Y @14568b9ec1) now reads every client firm's
 printed names from the registry. The grant (Y @0a24edfe38) types no firm; M's consumer resolves them through lookup() and re-pins.
 Both patches pass the naming gate in ENFORCE with apply-check rc=0 on P `c296cdff9c`. P applied the status-dates patch (`c296cdff9c`).
@@ -234,7 +237,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Comparison / Multi-Comp (FWD-4 arms): catalogue v2 GRANTED to 49financial, inflection and cottonwood (M 102154, CTO 102151). M's consumer is ready (@5dede2f029) and pins Y's values (all 4 hashes MATCH) | 2.0.0_SA_COO~P ships M's consumer, the grant patch and the 49F check in one generate+resident release | that release lands; then Y runs the Comparison variant live in a window |
+| Comparison / Multi-Comp (FWD-4 arms): composition is PROVED on the served generate plus three changes: M's consumer @d7c97910d9 (hashes 4/4 MATCH Y @0a24edfe38), Y's grant patch, and P's get_catalogue wiring. Comparison and Multi-Comp are ACCEPTED, an unknown key is REFUSED (`COMPARISON_RELEASE_READINESS_20260927.md`) | 2.0.0_SA_COO~P ships those three plus the name check in one generate+resident release | that release lands; then Y runs the first live Comparison window |
 | Shares price source (Y2 Shares cells): CTO 100887 ruled (c), refused by name for v1; (b) has no known estate table; (a) goes to Andrew | 2.0.0_SA_COO~Y (re-ask the CTO) | the Dollars journey is graded |
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |
