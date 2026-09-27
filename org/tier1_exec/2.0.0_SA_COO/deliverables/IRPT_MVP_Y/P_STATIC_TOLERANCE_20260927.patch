@@ -1,0 +1,230 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/extract/extract.py b/infra/aws/lambda/investor-reporting/ycharts/extract/extract.py
+index 248602e..9467c22 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/extract/extract.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/extract/extract.py
+@@ -299,6 +299,49 @@ def read_pages(pdf_bytes, *, maps=None):
+     return pages
+ 
+ 
++# ---------------------------------------------------------------- the printed calculation settings
++# The vendor's own vocabulary for the 'As Of' column, from the methodology note printed beside the
++# table ("The As of setting determines which allocation snapshot is applied throughout the
++# historical performance calculation"). A Static portfolio is "a fixed set of holdings and weights
++# as of its creation date", so it has one allocation snapshot whatever As Of says (CTO 101971).
++SETTINGS_TABLE = "Performance Calculation Settings"
++AS_OF_OPTIONS = ("Initial", "Custom", "Latest Rebalance", "Last Close")
++PORTFOLIO_TYPES = ("Static", "Dynamic")
++_SETTINGS_ROW = re.compile(r"[A-Z][a-z]{2,8}\.? \d{1,2}, \d{4} (%s) .+? (%s)"
++                           % ("|".join(PORTFOLIO_TYPES), "|".join(AS_OF_OPTIONS)))
++
++
++def settings_row(text, name):
++    """The row `name` has in the page text's settings table, as {"type", "as_of"}; None if absent or ambiguous.
++
++    Selected by the portfolio's own name, never by position: a comparison report prints the
++    comparison models' Dynamic rows beside it, and the Fee Assumptions table repeats the name.
++    """
++    at = text.find(SETTINGS_TABLE)
++    if at < 0:
++        return None
++    rows = []
++    for line in text[at:].splitlines():
++        if line.startswith(name + " "):
++            match = _SETTINGS_ROW.fullmatch(line[len(name) + 1:].strip())
++            if match:
++                rows.append({"type": match.group(1), "as_of": match.group(2)})
++    return rows[0] if len(rows) == 1 else None
++
++
++def calculation_settings(pdf_bytes, name):
++    """The Type and As Of the vendor PRINTED for portfolio `name`, or None; the saved portfolio has no type on record."""
++    import io as _io
++    pdfplumber = _plumber()
++    found = []
++    with pdfplumber.open(_io.BytesIO(pdf_bytes)) as pdf:
++        for page in pdf.pages:
++            row = settings_row(page.extract_text() or "", name)
++            if row:
++                found.append(row)
++    return found[0] if len(found) == 1 else None
++
++
+ def _find_label(words, label):
+     """Contiguous run of words rendering `label`. Returns every occurrence with its box."""
+     want = label.split()
+diff --git b/infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_calculation_settings.py b/infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_calculation_settings.py
+new file mode 100644
+index 0000000..74dd99f
+--- /dev/null
++++ b/infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_calculation_settings.py
+@@ -0,0 +1,64 @@
++"""The Type and As Of the vendor prints for one portfolio (CTO 101971: a tolerated setting holds only on Static).
++
++The table lines are pdfplumber's text of the real PDFs, verbatim: window 15's Overview (RPT-5288c06d, sha256 6e753361..)
++and the research-era overview/comparison/multicomp (opal-data-ycharts research/20260911, overview sha256 abab2ffe..).
++"""
++from pathlib import Path
++import sys
++
++import fitz
++
++HERE = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(HERE))
++import extract  # noqa: E402
++
++W15 = "IRPT REQ-67e12718b0ba7c0c70ebb45b r1 3f4a32561f5c"
++RESEARCH = "IRPT-5c25486fd34e29cdddebbf43"
++HEADER = ["Performance Calculation Settings Data as of: June 30, 2026", "Rebalance",
++          "Name Inception Date Type Frequency Start As Of"]
++FEES = ["Fee Assumptions Data as of: June 30, 2026", "Advisory Advisory", "Fee Fee Max Fee Max Fee",
++        "Name (Annualized) Frequency (Annualized) Frequency"]
++WINDOW_15 = "\n".join(HEADER + [W15 + " Jan. 2, 1990 Static Quarterly Earliest Custom"]
++                      + FEES + [W15 + " 0.30% Annually -- --"])
++MULTICOMP = "\n".join(HEADER + [RESEARCH + " Jan. 29, 1993 Static Quarterly Earliest Custom",
++                                "Opal Short-Term Jan. 1, 2024 Dynamic Never Earliest Initial",
++                                "Opal Intermediate-Term Jan. 1, 2024 Dynamic Never Earliest Initial"])
++
++
++def test_the_portfolios_own_row_not_the_fee_row_that_repeats_its_name():
++    assert extract.settings_row(WINDOW_15, W15) == {"type": "Static", "as_of": "Custom"}
++
++
++def test_a_comparison_reports_dynamic_rows_are_selected_only_by_their_own_names():
++    assert extract.settings_row(MULTICOMP, RESEARCH) == {"type": "Static", "as_of": "Custom"}
++    assert extract.settings_row(MULTICOMP, "Opal Intermediate-Term") == {"type": "Dynamic", "as_of": "Initial"}
++
++
++def test_absent_truncated_or_ambiguous_is_none():
++    assert extract.settings_row("\n".join(FEES + [W15 + " 0.30% Annually -- --"]), W15) is None
++    assert extract.settings_row(WINDOW_15, W15.rsplit(" ", 1)[0]) is None
++    assert extract.settings_row(WINDOW_15, RESEARCH) is None
++    doubled = WINDOW_15 + "\n" + W15 + " Jan. 2, 1990 Dynamic Quarterly Earliest Custom"
++    assert extract.settings_row(doubled, W15) is None
++
++
++def test_every_as_of_option_the_vendor_names_including_two_word_ones():
++    for as_of in extract.AS_OF_OPTIONS:
++        text = "\n".join(HEADER + [W15 + " Jan. 2, 1990 Static Quarterly First Common " + as_of])
++        assert extract.settings_row(text, W15) == {"type": "Static", "as_of": as_of}
++
++
++def pdf(lines):
++    doc = fitz.open()
++    page = doc.new_page(width=900, height=400)
++    for i, line in enumerate(lines):
++        page.insert_text((20, 30 + 14 * i), line, fontsize=8)
++    data = doc.tobytes()
++    doc.close()
++    return data
++
++
++def test_read_from_pdf_bytes_and_the_committed_synthetic_overview_prints_no_table_row():
++    assert extract.calculation_settings(pdf(WINDOW_15.splitlines()), W15) == {"type": "Static", "as_of": "Custom"}
++    synthetic = (HERE / "fixtures/synthetic_pdf/overview.pdf").read_bytes()
++    assert extract.calculation_settings(synthetic, W15) is None
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+index 0464715..d9cd926 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+@@ -617,11 +617,12 @@ def reconcile_owned(collection, name, fingerprint):
+ READ_BACK_POLLS = 2  # CTO 101917 (b): the WAF challenged the 3rd status GET in 4 of 4 runs
+ READ_BACK_SPACING_S = 15.0
+ READ_BACK_LEASE_TTL_S = 900
+-# Settings compared and RECORDED but not gating (window 13, 14:30:33Z: 6 of 7 matched on the saved portfolio,
+-# level_as_of_type alone differed). The recipe sends `prior_close`, exactly what the advisor's own YCharts form
+-# sends in all 5 captured creates (INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910); the vendor stores another
+-# representation whose meaning is not on record. It is a level-display basis, not an input to the returns, and the
+-# certifier still reads every as-of date off the PDF itself. The stored value is printed so it can be pinned.
++# Settings compared and RECORDED, and gating only on a Static portfolio (CTO 101971). The recipe sends `prior_close`,
++# as the advisor's own YCharts form does in all 5 captured creates (INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910);
++# the vendor stored `custom_date` (window 15), and every certified PDF on record prints "As Of: Custom", the research
++# worker's included. As Of chooses the allocation snapshot used throughout the performance calculation (the PDF's own
++# methodology text), so it IS a returns input; a Static portfolio has one allocation, so no snapshot choice moves it.
++# resident_worker.tolerance_requires_static reads the printed Type before the PDF is retained.
+ READ_BACK_TOLERATED = frozenset({"level_as_of_type"})
+ 
+ 
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+index b850709..6061f0b 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+@@ -15,6 +15,7 @@ import time
+ from broker import _RecoveryObserver, eviction_verdict, waf_read_verdict
+ from current_authority import decide
+ from durable_job import DynamoGenerationStore
++import extract
+ from frozen_worker import FrozenCompositionWorker
+ from normalized_input import bind_normalized_upload
+ from owned_requests import _storage_kwargs
+@@ -215,6 +216,8 @@ class ResidentGenerationWorker:
+                 sha = hashlib.sha256(data).hexdigest()
+                 if evidence.get("sha256") != sha or evidence.get("bytes") != len(data):
+                     raise WorkerAttention("PDF_DOWNLOAD_RECEIPT")
++                if any(r.get("tolerated") for r in readback["rows"]):
++                    tolerance_requires_static(data, name)
+                 artifacts = self.requests.artifacts
+                 pdf_ref = artifacts.put(principal, record["owner"], "ORIGINAL_VENDOR_PDF",
+                     request_id + "-" + sha, data, "application/pdf",
+@@ -253,6 +256,21 @@ class ResidentGenerationWorker:
+                     pass
+ 
+ 
++def tolerance_requires_static(pdf_bytes, name):
++    """A tolerated setting (recipe.READ_BACK_TOLERATED) holds only on a Static portfolio (CTO 101971).
++
++    The saved portfolio carries no type on record, so the type is the one the vendor PRINTED for
++    this portfolio's own row. Checked before the PDF is retained: a refusal here leaves no PDF
++    checkpoint for a redelivery to publish from."""
++    printed = extract.calculation_settings(pdf_bytes, name) or {}
++    kind, as_of = printed.get("type"), printed.get("as_of")
++    print("IRPT_RESIDENT_TOLERANCE_TYPE type=%s as_of=%s" % (
++        kind if kind in extract.PORTFOLIO_TYPES else "-",
++        as_of.replace(" ", "_") if as_of in extract.AS_OF_OPTIONS else "-"), flush=True)
++    if kind != "Static":
++        raise WorkerAttention("TOLERANCE_REQUIRES_STATIC")
++
++
+ class ResidentAssembly:
+     """Construct real per-job components from the installed shared repositories.
+ 
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
+index f209be3..7d67075 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
+@@ -295,6 +295,36 @@ def test_a_read_challenge_or_calculating_releases_and_the_redelivery_resumes(wor
+     assert sum(c['route'] == '/model_portfolios/2332060/status' for c in calls) == len(first) + 1
+ 
+ 
++@pytest.mark.parametrize('printed, state', [
++    ({'type': 'Static', 'as_of': 'Custom'}, 'READY'),        # window 15's PDF, p.14
++    ({'type': 'Dynamic', 'as_of': 'Initial'}, 'ATTENTION'),  # a comparison model's row shape
++    ('parse', 'ATTENTION')])                                 # the offline PDF prints no settings table
++def test_a_tolerated_setting_holds_only_on_a_portfolio_the_pdf_prints_static(world, monkeypatch, capsys, printed, state):
++    """CTO 101971: level_as_of_type=custom_date (window 15) is tolerated on a Static portfolio only; the type is
++    the one the vendor printed for this portfolio's row, read before the PDF is retained."""
++    r = installed(world, monkeypatch)
++    saved = r.replay.script['GET', '/model_portfolios/fixed/2332060'][0]
++    saved['body']['portfolio']['level_as_of_type'] = 'custom_date'
++    if printed != 'parse':
++        monkeypatch.setattr(resident_worker.extract, 'calculation_settings', lambda data, name: printed)
++    result = r.assembly.execute(r.message, lambda: None)
++    out = capsys.readouterr().out
++    assert result['state'] == state and len(r.downloads) == 1
++    assert 'tolerated=level_as_of_type=custom_date' in out
++    if state == 'READY':
++        assert 'IRPT_RESIDENT_TOLERANCE_TYPE type=Static as_of=Custom' in out and len(r.transactions) == 1
++    else:
++        assert 'TOLERANCE_REQUIRES_STATIC' in json.dumps(r.row) and 'checkpoint_pdf' not in r.row
++        assert not r.transactions
++        assert ('type=Dynamic as_of=Initial' if printed != 'parse' else 'type=- as_of=-') in out
++
++
++def test_no_tolerated_setting_never_reads_the_printed_type(world, monkeypatch):
++    r = installed(world, monkeypatch)
++    monkeypatch.setattr(resident_worker.extract, 'calculation_settings', Mock(side_effect=AssertionError('not tolerated')))
++    assert r.assembly.execute(r.message, lambda: None)['state'] == 'READY'
++
++
+ def test_generic_auth_error_cannot_trigger_login(world, monkeypatch):
+     r = installed(world, monkeypatch)
+     # The first vendor request is now the template GET (the liveness gate).
