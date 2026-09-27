@@ -1,0 +1,137 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/extract/publication.py b/infra/aws/lambda/investor-reporting/ycharts/extract/publication.py
+index 5a12a30..74f1669 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/extract/publication.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/extract/publication.py
+@@ -75,6 +75,26 @@ def _chart(row, pages):
+             "_source_title": title, "_date_provenance": provenance, "_emitted_values": 0}
+ 
+ 
++# Another firm's name on a client's report is the cross-firm data rule on the product's own output (CTO 102151).
++# Each firm's printed names, matched case-sensitively and not inside a longer token: our own portfolio names carry
++# lowercase hex (REQ-<hex>), where "49f" is common, and they must never trip it.
++FIRM_NAME_MARKERS = {"49financial": re.compile(r"(?<![0-9A-Za-z])49F(?![0-9A-Za-z])|(?<![0-9A-Za-z])49 Financial")}
++
++
++def foreign_firm_names(pdf_bytes, firm):
++    """Every other firm's printed name found in the PDF's extracted text, as sorted closed firm ids."""
++    import io as _io
++    markers = {other: pattern for other, pattern in FIRM_NAME_MARKERS.items() if other != firm}
++    if not markers:
++        return []
++    found = set()
++    with extract._plumber().open(_io.BytesIO(pdf_bytes)) as pdf:
++        for page in pdf.pages:
++            text = page.extract_text() or ""
++            found |= {other for other, pattern in markers.items() if pattern.search(text)}
++    return sorted(found)
++
++
+ def build_publication(pdf_bytes, census, *, specimen_label, specimen_id):
+     """Invoke the actual extractor and independent certifier on original bytes."""
+     result = extract.extract(pdf_bytes, census, specimen_label=specimen_label,
+diff --git b/infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_foreign_firm_names.py b/infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_foreign_firm_names.py
+new file mode 100644
+index 0000000..5026507
+--- /dev/null
++++ b/infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_foreign_firm_names.py
+@@ -0,0 +1,40 @@
++"""CTO 102151: a report whose firm is not 49financial fails certification if its text carries "49F" or "49 Financial"."""
++from pathlib import Path
++import sys
++
++import fitz
++import pytest
++
++HERE = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(HERE))
++import publication  # noqa: E402
++
++
++def pdf(*lines):
++    doc = fitz.open()
++    page = doc.new_page(width=700, height=300)
++    for i, line in enumerate(lines):
++        page.insert_text((20, 30 + 14 * i), line, fontsize=9)
++    data = doc.tobytes()
++    doc.close()
++    return data
++
++
++@pytest.mark.parametrize("line", ["Benchmark: 49F Long Term Benchmark", "Prepared with 49 Financial", "(49F)"])
++def test_another_firms_name_is_found_on_a_non_49financial_report(line):
++    data = pdf("Portfolio Overview", line)
++    assert publication.foreign_firm_names(data, "cottonwood") == ["49financial"]
++    assert publication.foreign_firm_names(data, "inflection") == ["49financial"]
++
++
++def test_a_firms_own_name_is_never_foreign():
++    assert publication.foreign_firm_names(pdf("49F Long Term Benchmark"), "49financial") == []
++
++
++@pytest.mark.parametrize("line", [
++    "IRPT REQ-67e12718b0ba7c0c70ebb49f r1 3f4a3256149f",  # our own portfolio names are lowercase hex
++    "Security A49F0 and 149F and 49Fx",                    # 49F inside a longer token
++    "49 financial planning"])                               # the firm's name is matched as printed
++def test_hex_ids_and_longer_tokens_never_trip_it(line):
++    assert publication.foreign_firm_names(pdf(line), "cottonwood") == []
++
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py b/infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py
+index 9b48770..6c8aa8a 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py
+@@ -17,7 +17,7 @@ for _relative in ("ops", "reports", os.path.join("ycharts", "extract")):
+         sys.path.insert(0, _path)
+ 
+ from owned_requests import RequestReadRefused, _data_firm, _request_id, _storage_kwargs  # noqa: E402
+-from publication import build_publication  # noqa: E402
++from publication import PublicationRefused, build_publication, foreign_firm_names  # noqa: E402
+ from report_index import FencedReportIndex  # noqa: E402
+ from repository import _report_identity  # noqa: E402
+ from submission import canonical_bytes, input_repository_owner  # noqa: E402
+@@ -110,6 +110,8 @@ class CertifiedReportPublisher:
+             raise RequestReadRefused("PUBLICATION_PDF_RECEIPT_BINDING")
+         # Read actual immutable bytes before extracting; caller fragments/verdicts
+         # are never accepted as certification and cannot become report sections.
++        if foreign_firm_names(data, firm):
++            raise PublicationRefused("FOREIGN_FIRM_NAME_IN_REPORT")
+         built = build_publication(data, census, specimen_label="retained-vendor-report",
+                                   specimen_id=pdf_ref["artifact_id"])
+         report = {**metadata, **built["fragment"]}
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
+index 7d67075..7d4e7f6 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
+@@ -536,3 +536,33 @@ def test_step_identity_validates_the_captured_identity_against_the_enrolled_pin(
+     impersonating = ReplayTransport({('GET', '/custom_pdf_reports/generate/14141822'): template})
+     impersonating.bundle['identity']['impersonationState'] = {'adminImpersonating': True}
+     assert recipe.step_identity(impersonating)['checks']['no_impersonation'] is False
++
++
++
++@pytest.mark.parametrize("printed, foreign", [
++    ("Benchmark: 49F Long Term Benchmark", False),  # the test world IS 49financial: its own name is never foreign
++    ("Prepared by Cottonwood Wealth", True)])       # another firm's printed name on this firm's report
++def test_another_firms_name_on_the_vendor_pdf_fails_publication(world, monkeypatch, printed, foreign):
++    """CTO 102151, through the real publisher: the retained vendor PDF's own text, the report's own firm."""
++    import re
++    import fitz
++    import publication
++    from publication import PublicationRefused
++    monkeypatch.setitem(publication.FIRM_NAME_MARKERS, "cottonwood", re.compile(r"Cottonwood Wealth"))
++    original = publication_support.source.pdf
++
++    def printed_pdf():
++        doc = fitz.open(stream=original(), filetype="pdf")
++        doc.new_page().insert_text((40, 60), printed)
++        data = doc.tobytes()
++        doc.close()
++        return data
++    monkeypatch.setattr(publication_support.source, "pdf", printed_pdf)
++    r = installed(world, monkeypatch)
++    assert r.store.tenant == "49financial"
++    if not foreign:
++        assert r.assembly.execute(r.message, lambda: None)["state"] == "READY"
++        return
++    with pytest.raises(PublicationRefused, match="FOREIGN_FIRM_NAME_IN_REPORT"):
++        r.assembly.execute(r.message, lambda: None)
++    assert r.row["state"]["S"] != "READY" and not r.transactions and len(r.downloads) == 1

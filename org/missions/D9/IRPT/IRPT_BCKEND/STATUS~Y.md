@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T21:44Z. Lease FAST until 2026-09-27T22:14:19Z.
+As of 2026-09-27T22:09Z. Lease FAST until 2026-09-27T22:39:06Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
@@ -171,6 +171,10 @@ and window 4 re-runs K4+K5 (+R1).
 
 ## Write claims
 
+**Built, at P (CTO 102151):** the certifier's cross-firm name check, Y @ecc0cb6a29, `P_FOREIGN_FIRM_NAME_CHECK_20260927.patch`. The
+comparison grant: Y @991ee7fca9, `P_COMPARISON_CATALOGUE_GRANT_20260927.patch`; all 4 hashes MATCH M's consumer pins.
+Both apply-check rc=0 on P `65957b8afc`. Record: `FOREIGN_FIRM_NAME_CHECK_20260927.md`. One P release with M's consumer.
+
 **Y2 arms ready for a window:** `P_Y2_UPLOAD_ARMS_ACT_20260927.md` (@5d371a403e) covers an XLSX template (`aapl-vnq-12.03.xlsx`) and
 Target Weight at notional 1000 (`aapl-vnq-target-weight.csv`). `live_chain.py` takes WALK_UPLOAD_FILE, WALK_FILE_TYPE and
 WALK_REFERENCE_NOTIONAL; unset, it is window 15 exactly. It runs when P cuts a window that carries them.
@@ -230,7 +234,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Comparison / Multi-Comp (FWD-4 arms): identity graded 4/4 and catalogue v2 (Y @c5aa93d60e). M VALIDATED v2 (102139). CTO 102142 ruled (a): 49financial admitted now. Y proved that no benchmark field renders on the certified Comparison and Multi-Comp reports (`COMPARISON_BENCHMARK_NEVER_RENDERS_20260927.md` @2e79ddb62d) | 2.0.0_SA_COO~M re-validates and admits inflection+cottonwood; P ships templates.json and M's consumer | M's consumer admits a selection; then Y runs the Comparison variant live |
+| Comparison / Multi-Comp (FWD-4 arms): catalogue v2 GRANTED to 49financial, inflection and cottonwood (M 102154, CTO 102151). M's consumer is ready (@5dede2f029) and pins Y's values (all 4 hashes MATCH) | 2.0.0_SA_COO~P ships M's consumer, the grant patch and the 49F check in one generate+resident release | that release lands; then Y runs the Comparison variant live in a window |
 | Shares price source (Y2 Shares cells): CTO 100887 ruled (c), refused by name for v1; (b) has no known estate table; (a) goes to Andrew | 2.0.0_SA_COO~Y (re-ask the CTO) | the Dollars journey is graded |
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |

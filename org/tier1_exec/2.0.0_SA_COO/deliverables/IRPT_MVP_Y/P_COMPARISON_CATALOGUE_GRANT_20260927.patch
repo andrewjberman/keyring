@@ -1,0 +1,100 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json b/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json
+index 998a1b3..ef001ea 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json
+@@ -112,9 +112,9 @@
+           "security_type": "model_portfolio",
+           "mapping_evidence": "Historical templates.json blob ed18c59c86ef89b33eb4759f0d2a939b964e5ac8; Comparison 14141824, 31 pages",
+           "identity_status": "VERIFIED",
+-          "entitlement_status": "WORD_GRANTED_FIRMS_PENDING_M",
+-          "permitted_firm_ids": [],
+-          "permitted_principal_classes": [],
++          "entitlement_status": "GRANTED",
++          "permitted_firm_ids": ["49financial", "inflection", "cottonwood"],
++          "permitted_principal_classes": ["FIRM_ADVISOR", "FIRM_OPERATIONS", "OPAL_GLOBAL"],
+           "verification_ref": {
+             "evidence": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/COMPARISON_IDENTITY_READS_W18_20260927.json",
+             "evidence_sha256": "424eb3bf70d9975250cc8351de025930f72715b76b8586cad936515e86250194",
+@@ -125,7 +125,7 @@
+             "detailed_security_type": "model_portfolio",
+             "instance_id": 1728413,
+             "permission_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_195xZ_COMPARISON_PERMISSION_YES_AND_PURGE_S19_SCREENSHOTS.md @fce766f6ed (Andrew-direct \"call 1 yes\", CTO 102046)",
+-            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11); M resolves permitted_firm_ids"
++            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11): 49financial, inflection, cottonwood (M 102139/102154; CTO 102142/102151 after COMPARISON_BENCHMARK_NEVER_RENDERS_20260927)"
+           }
+         }
+       },
+@@ -143,9 +143,9 @@
+           "security_type": "model_portfolio",
+           "mapping_evidence": "Historical templates.json blob ed18c59c86ef89b33eb4759f0d2a939b964e5ac8; Multi-Comp 14141847 first comparison, 35 pages",
+           "identity_status": "VERIFIED",
+-          "entitlement_status": "WORD_GRANTED_FIRMS_PENDING_M",
+-          "permitted_firm_ids": [],
+-          "permitted_principal_classes": [],
++          "entitlement_status": "GRANTED",
++          "permitted_firm_ids": ["49financial", "inflection", "cottonwood"],
++          "permitted_principal_classes": ["FIRM_ADVISOR", "FIRM_OPERATIONS", "OPAL_GLOBAL"],
+           "verification_ref": {
+             "evidence": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/COMPARISON_IDENTITY_READS_W18_20260927.json",
+             "evidence_sha256": "424eb3bf70d9975250cc8351de025930f72715b76b8586cad936515e86250194",
+@@ -156,7 +156,7 @@
+             "detailed_security_type": "model_portfolio",
+             "instance_id": 1728415,
+             "permission_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_195xZ_COMPARISON_PERMISSION_YES_AND_PURGE_S19_SCREENSHOTS.md @fce766f6ed (Andrew-direct \"call 1 yes\", CTO 102046)",
+-            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11); M resolves permitted_firm_ids"
++            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11): 49financial, inflection, cottonwood (M 102139/102154; CTO 102142/102151 after COMPARISON_BENCHMARK_NEVER_RENDERS_20260927)"
+           }
+         }
+       },
+@@ -174,9 +174,9 @@
+           "security_type": "model_portfolio",
+           "mapping_evidence": "Historical templates.json blob ed18c59c86ef89b33eb4759f0d2a939b964e5ac8; Multi-Comp 14141847 second comparison",
+           "identity_status": "VERIFIED",
+-          "entitlement_status": "WORD_GRANTED_FIRMS_PENDING_M",
+-          "permitted_firm_ids": [],
+-          "permitted_principal_classes": [],
++          "entitlement_status": "GRANTED",
++          "permitted_firm_ids": ["49financial", "inflection", "cottonwood"],
++          "permitted_principal_classes": ["FIRM_ADVISOR", "FIRM_OPERATIONS", "OPAL_GLOBAL"],
+           "verification_ref": {
+             "evidence": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/COMPARISON_IDENTITY_READS_W18_20260927.json",
+             "evidence_sha256": "424eb3bf70d9975250cc8351de025930f72715b76b8586cad936515e86250194",
+@@ -187,7 +187,7 @@
+             "detailed_security_type": "model_portfolio",
+             "instance_id": 1728315,
+             "permission_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_195xZ_COMPARISON_PERMISSION_YES_AND_PURGE_S19_SCREENSHOTS.md @fce766f6ed (Andrew-direct \"call 1 yes\", CTO 102046)",
+-            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11); M resolves permitted_firm_ids"
++            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11): 49financial, inflection, cottonwood (M 102139/102154; CTO 102142/102151 after COMPARISON_BENCHMARK_NEVER_RENDERS_20260927)"
+           }
+         }
+       },
+@@ -205,9 +205,9 @@
+           "security_type": "model_portfolio",
+           "mapping_evidence": "Historical templates.json blob ed18c59c86ef89b33eb4759f0d2a939b964e5ac8; named in the catalog; NOT exercised in the live variant run",
+           "identity_status": "VERIFIED",
+-          "entitlement_status": "WORD_GRANTED_FIRMS_PENDING_M",
+-          "permitted_firm_ids": [],
+-          "permitted_principal_classes": [],
++          "entitlement_status": "GRANTED",
++          "permitted_firm_ids": ["49financial", "inflection", "cottonwood"],
++          "permitted_principal_classes": ["FIRM_ADVISOR", "FIRM_OPERATIONS", "OPAL_GLOBAL"],
+           "verification_ref": {
+             "evidence": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/COMPARISON_IDENTITY_READS_W18_20260927.json",
+             "evidence_sha256": "424eb3bf70d9975250cc8351de025930f72715b76b8586cad936515e86250194",
+@@ -218,14 +218,14 @@
+             "detailed_security_type": "model_portfolio",
+             "instance_id": 1728420,
+             "permission_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_195xZ_COMPARISON_PERMISSION_YES_AND_PURGE_S19_SCREENSHOTS.md @fce766f6ed (Andrew-direct \"call 1 yes\", CTO 102046)",
+-            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11); M resolves permitted_firm_ids"
++            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11): 49financial, inflection, cottonwood (M 102139/102154; CTO 102142/102151 after COMPARISON_BENCHMARK_NEVER_RENDERS_20260927)"
+           }
+         }
+       }
+     ],
+     "candidate_version": "irpt-ycharts-comparison-candidate.20260927.v2",
+     "maintainer": "2.0.0_SA_COO~Y",
+-    "admission": "IDENTITY_VERIFIED_PERMISSION_WORD_GRANTED_M_VALIDATION_PENDING",
++    "admission": "IDENTITY_VERIFIED_ENTITLEMENT_GRANTED_M_VALIDATED",
+     "verification_requirements": [
+       "Obtain separate authorization for exact bounded vendor identity verification; this candidate authorizes no network call.",
+       "Record actual namespace, typed vendor ID, returned name/type and immutable response evidence; refuse disagreement or ambiguity without label matching.",
