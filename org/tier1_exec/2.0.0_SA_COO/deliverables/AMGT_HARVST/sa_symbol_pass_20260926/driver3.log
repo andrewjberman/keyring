@@ -1,3 +1,12 @@
 === BATCH 18  exclude-done=batch17.json ===
   rc=0 elapsed=144s  asked=61 of 88  resolved=56  search_refused=27  never_reached=23  serveable=19
   gap: sleeping 7800s before the next batch (the decay window)
+=== BATCH 19  exclude-done=batch18.json ===
+  rc=0 elapsed=102s  asked=60 of 88  resolved=56  search_refused=28  never_reached=23  serveable=19
+  newly RESOLVED this batch: 0  (asked=60 of 88 -- both non-monotonic by design)
+  gap: sleeping 7800s before the next batch (the decay window)
+=== BATCH 20  exclude-done=batch19.json ===
+  rc=0 elapsed=41s  asked=59 of 88  resolved=56  search_refused=29  never_reached=25  serveable=19
+  newly RESOLVED this batch: 0  (asked=59 of 88 -- both non-monotonic by design)
+  STALLED: two consecutive batches RESOLVED nothing new. The block is not decaying on this cadence -- stopping rather than re-extending it.
+LAST GOOD POPULATION: C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier1_exec\2.0.0_SA_COO\deliverables\AMGT_HARVST\sa_symbol_pass_20260926\batch20.json
