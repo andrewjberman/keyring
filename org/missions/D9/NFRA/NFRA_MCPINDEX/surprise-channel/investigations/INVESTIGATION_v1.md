@@ -1763,6 +1763,30 @@ carries none.
     "world_is": "A literal password is committed in two docs. BD's MFA and the device-trust token (added ~2026-06-23, Andrew 2026-09-27) limit, but do not remove, the exposure. Disarm: Andrew rotates the BD 49F password (a vendor-account act), the new value goes to Secrets Manager only, and the literal is replaced by a SECRET-ID pointer in both docs. The history rewrite is destructive git and needs Andrew's word; it is not proposed here.",
     "disarm_owner": "1.0.0_SA_CTO~O",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S30",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-27T21:48Z",
+    "one_line": "MX-s-4 amendment A4's REST replacement for the asset-dim download cannot be built inside this order's <paths>: two of the three files it must change are outside them (one DS-owned under rule 13), and the asset dim's three classification columns have no route in the documented DataMining catalog.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "openpyxl header read, both live artifacts: s3://opal-data-bd/forwardfill_v2/assets/AssetDimTXNs_OpalCapital_Daily_2026-06-17_to_2026-06-17.xlsx = 31 columns including 'Asset SuperClass', 'Class', 'Segment', 'CUSIP', 'Symbol', 'Ticker', 'Alternative Identifier', 'Original Asset Name', 'Coupon Rate', 'First Payment Date', 'Last Payment Date'; s3://opal-data-bd/forwardfill_v2/transactions/TRANSACTIONS_DAILY_2026-09-18.xlsx (the live REST pull, LastModified 2026-09-27T00:07:42Z) = 71 columns carrying AssetID, Asset Name, Asset Display Name and Custodial Cost Basis Sync but NONE of those 11.",
+        "comp-read data/black_diamond/API/domains/datamining/endpoints/payloads/field_dictionary.md --enumerate 'Super|super_class|superClass|Alternative|alternative' = 16 hits over a printed denominator of 963 lines / 46 sections: zero hits for a super-class dimension (every 'Super' hit is 'Supervised'); 'Alternative Identifier' id 44 and Classification 'Class' id 1 / 'Segment' id 1138 appear on qt3 and qt4 only, isSelected blank. QUALIFIER, stated: this dictionary's domain is qt1-qt6 as catalogued 2026-07-08 and QUERY_TYPES.md line 13 records qt1 (Snapshot/holdings) as never dumped, so this is an absence in the DOCUMENTED catalog, not a proven absence at the vendor. The saved template proves the fields are obtainable -- the xlsx carries them.",
+        "data/cot/scripts/bronze/cot_bronze_ingest.py:106-115 TABLE_QUERY_TYPE and :131-138 TABLE_DATE_MODE are per-table CODE dicts, and :374 keys the body at TEMPLATE_PREFIX (:65 = 'code/bronze/templates')/{table}.json -- so an 'assets' table needs BOTH a new S3 template object AND edits to that module. Its own comment at :106 ('the table set is config-driven via the template JSONs') understates it: the JSON alone is not sufficient.",
+        "infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py:63-64 -- BD_REST_TABLES = ('transactions','allocations','realized','unrealized') under the comment 'holdings/assets dims are out of scope for this runner'."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 1 as amended A4: replace the asset-dim Playwright portal download with a REST pull following the bd-49f-runner / bd-49f-fees-runner pattern, build no new crawler and no new login, and treat a path this needs outside <paths> as a BLOCKING row the issuer grants.",
+    "world_is": "A4's answer to its own step 1.1 is NO: REST does not already cover the asset-dim table, so the downloader is not merely redundant. Executing step 1.2 requires three write surfaces, and MX-s-4's <paths> names none of them: (1) data/cot/scripts/bronze/cot_bronze_ingest.py -- a rule-13 DS-owned silver/bronze script in cot's tree, needing an 'assets' entry in two per-table dicts; (2) infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py -- <paths> admits infra/aws/lambda/bd-asset-dim-trigger/ only; (3) s3://opal-data-bd/code/bronze/templates/assets.json -- a new S3 template object, which must be a CAPTURED query body, i.e. one read of the persisted 'AssetDimTXNs_OpalCapital_Daily' template from BD. Separately, three of the dim's own columns (asset_super_class, asset_class, asset_segment, read by data/black_diamond/scripts/silver/build_bd_assets_dim.py:109-113) have no documented qt2 route, so the captured body is the only known carrier for them.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a refusal of A4 -- the REST route looks buildable and cheaper than a crawler, and no new login is needed: bd-49f-runner already authenticates from Secrets Manager blackdiamond/49f/session read-only and the assets template is qt2, the same query type it already pulls. The ask is which of three routes the issuer wants: (a) grant this lane the two repo paths (the cot module edit still needs the DS lane's word under rule 13); (b) re-cut step 1.2 as a cell on the DS lane that owns cot_bronze_ingest.py, leaving this lane the bd-49f-runner and template legs; or (c) leave step 1.2 unbuilt this round and close MX-s-4 on step 2 alone, which is already landed and world-verified. This seat took none of them. MX-s-4 step 2 is unaffected: it landed at 03e744ec3f with SSM DocumentVersion 3 Active, legs L1-L3 and L5 closed in org/critical_paths/.open_deploys/nfra-mcpindex-bd-asset-dim-shutdown-order.json; only L4 (one failing run recording Failed with the instance stopped) is open, and i-0e6f6dc014fdcf1cd read State=stopped at 2026-09-27T20:59Z, which lifts the Z-S17 no-interaction constraint."
   }
 ]
 ```
