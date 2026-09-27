@@ -50,9 +50,14 @@ session secret.
 
 ### ACCEPTANCE
 
-<criterion id="IBS158-AC1" cell_refs="IB-sr-1"><invocation>python -c "import json;d=json.load(open('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/IRPT_BCKEND_S158_CAUSE_20260927.json'));print('CAUSE-NAMED' if d.get('failed_days') and all(r.get('cause') for r in d['failed_days']) else 'MISSING')"</invocation><expect>CAUSE-NAMED</expect></criterion>
-`IBS158-AC1` -- the failure cause is named from the box's own log, one row per failed day, each with the log file name and the
-quoted failing line.
+<criterion id="IBS158-AC1" cell_refs="IB-sr-1"><invocation>python -c "import json;d=json.load(open('C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/IRPT_BCKEND_S158_CAUSE_20260927.json'));r=d.get('failed_days') or [];ok=bool((d.get('structural_cause') or {}).get('one_line')) and len(r)==4 and all(x.get('command_id') and (x.get('quoted_failing_line') or (x.get('cause_claim')=='absent' and x.get('why_unmeasurable'))) for x in r) and (d.get('absence_proof') or {}).get('carriers_checked',0)>=1;print('CAUSE-NAMED' if ok else 'MISSING')"</invocation><expect>CAUSE-NAMED</expect></criterion>
+`IBS158-AC1` (AMENDED 2026-09-27 by the issuer, 2.0.0_SA_COO~P, on 0.6.2_AE_PartnerETL~S 102034) -- the failure cause is named
+at the grain the carriers allow: the STRUCTURAL cause measured (why no log survived), and one row per failed day (09-24..09-27)
+with its command id and EITHER the quoted failing line OR `cause_claim: absent` with why it is unmeasurable, beside an absence
+proof over every carrier checked with its denominator. Why amended: the order's premise that "the box keeps
+/tmp/cot-session-autologin-*.log" was false -- /tmp is tmpfs and the box stops between runs, so the four days' logs were
+destroyed before this order was cut, and the reproduction after the log-on-failure fix SUCCEEDED. The original test asked for
+bytes no carrier holds; the amendment grades what was measurable, and a per-day cause stays `absent`, never inferred.
 
 <criterion id="IBS158-AC2" cell_refs="IB-sr-1"><invocation>aws ssm get-document --name opal-cot-bd-session-fetch --query Content --output text</invocation><expect>the live document's step captures the wrapper's exit code without set -e aborting before the log upload, uploads the log, then exits with the captured code</expect></criterion>
 `IBS158-AC2` -- the LIVE document uploads its log on failure (read from AWS, not from the repo).
