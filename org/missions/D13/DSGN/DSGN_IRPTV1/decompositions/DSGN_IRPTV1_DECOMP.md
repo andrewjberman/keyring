@@ -247,3 +247,36 @@ index.tsx, ExportButton and PreviewRequestState into resolveBundle's deps and on
 path (render/PrintEntry.tsx) passes an optional `selected_tenant` URL parameter the same way. Additive; the analysis path and a call
 without a tenant are unchanged. Same class as IV-e-36 (issuer repair of its own cell, row-driven). Slot ~33, direct act, LOCAL; it seats
 when C: allows a worktree (0.0.0_AB_MSTR 101618). Thread-breaking (the export hop), so it precedes round 8.
+
+## v8 -- round 8 (issuer, 2026-09-27 ~08:2xZ), over PRD v0.16 @f3026103f0 (ADMITTED; both halves signed)
+
+**Rectangle:** the ENRICHMENT LIST of 1.0.0_SA_CTO's round-N analysis
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_N_ANALYSIS_DSGN_IRPTV1_ROUND7_20260927.md` @36e18bf320 (msg 101845), E1-E11, one cell
+per item; E10 splits into its two ruled cells. Each cell keeps its UIR rows' acceptance lines verbatim on its face. A read-only write-set
+map at portal DEV 3f76cdb2 found five shared files (IdentityCard: E1/E3/E7; contracts/adapt.ts: E1/E10a; DrillTree: E4/E5; slices.ts:
+E5/E7; HoldingsTreemap: E6/E7), so the chains are cut to keep every parallel write set disjoint:
+
+| cell | item | rows | chain / slot | files (IR = portal/src/pages/InvestorReporting) |
+|---|---|---|---|---|
+| IV-e-54 | E10a | W29-S8 (F45-AC9, F57-AC2) | A ~34, 1 of 2 | scripts/dev-live.mjs, IR/contracts/adapt.ts, fe-s-45 test + driver, fe-s-57 test |
+| IV-e-55 | E10b | W29-S10, W29-S9 (supersedes IV-e-50) | A ~34, 2 of 2 | s7-*.ts/json, iv-e-26 test, suite-complete-check.mjs, IR/__tests__ (test fixes), S7_CLASS_TABLE |
+| IV-e-56 | E1 | UIR-04, 13, 30 | H ~35, 1 of 2 | header/firmDisplay (new), contracts/adapt.ts, header/search, ClientSearch, BrowseDrawer, IdentityCard, index.tsx, global/FirmAttribution |
+| IV-e-57 | E2 | UIR-11 | H ~35, 2 of 2 | src/components/ui/SearchSelect, index.tsx, tabs/TabShell, tabs/SampleView, ClientSearch |
+| IV-e-58 | E3 | UIR-15 (+FWD-20) | P ~36, 1 of 1 | tabs/holdings/AccountFilter, tabs/reporting/ReportingTab |
+| IV-e-59 | E4 | UIR-25, 46, 37 | V ~38, 1 of 3 | tabs/holdings/DrillTree, palette |
+| IV-e-60 | E5 | UIR-31, 32, 33, 34, 36, 47, 49 | V ~38, 2 of 3 | DrillTree, SliceTable, slices.ts |
+| IV-e-61 | E6 | UIR-41 | V ~38, 3 of 3 | tabs/holdings/HoldingsTreemap |
+| IV-e-62 | E9 | S18 | N ~39, 1 of 1 | src/api/endpoints/investor-reporting.ts (owned history only), tabs/analysis/AnalysisTab, RequestList, OwnedRequestHistory |
+| IV-e-63 | E7 (batch, last) | UIR-45, R10 | Z ~40, 1 of 1 | PerformanceHeadline, MethodAndSources, IdentityCard, HoldingsSummary, slices.ts, SecurityList, AllocationBars, HoldingsTreemap, IR/format.ts |
+| IV-e-53 | E11 | S20, S22 | X ~33 (direct act, cut @fd78957113) | export/resolveBundle, Preview, ExportButton, index.tsx, render/PrintEntry |
+
+**E8 is not a cell:** it is the round-8 walk's scope (the issuer's one real run at close): OVER WHAT expansion (UIR-17), a refusal state
+(UIR-18, UIR-19; a fixture or a named refused account, read-only) and "About this scope" (UIR-22); UIR-50 grades when 2.0.0_SA_COO~M's
+values land.
+
+**Edges:** chain A runs first (CTO: E10 first, so the round's mechanical grades are trustworthy); chain H seats after IV-e-54 drains
+(contracts/adapt.ts). Chain Z seats after H, P and V drain (it re-touches IdentityCard, slices.ts and HoldingsTreemap). X (IV-e-53) and
+IV-e-56/57 both edit index.tsx: X drains before H seats. Chains P, V, N and X have no unmet dependency. E9's route is served
+(2.0.0_SA_COO~P 101849). TO-IV-e-50 is superseded by IV-e-55 (CTO 101845). Every cell is `<risk>LOCAL</risk>` (local portal DEV only).
+Seating waits on C: above 15 GB (0.0.0_AB_MSTR 101618; 14 GB at the cut).
+

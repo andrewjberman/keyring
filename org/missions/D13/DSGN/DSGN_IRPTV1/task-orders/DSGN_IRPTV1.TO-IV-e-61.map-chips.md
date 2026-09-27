@@ -1,0 +1,82 @@
+# TO DSGN_IRPTV1.TO-IV-e-61 -- Securities-map chips grouped by account, de-duplicated by model, each saying what it is (UIR-41)
+
+<to_id>DSGN_IRPTV1.TO-IV-e-61</to_id>
+<project>DSGN_IRPTV1</project>
+<issued_to>0.9.0_WK_DSGN_IRPTV1~38</issued_to>
+<issued_by>2.0.0_SA_COO~D</issued_by>
+<issued_date>2026-09-27</issued_date>
+<status>pending</status>
+<round>8</round>
+<risk>LOCAL</risk>
+<worker_class>worker</worker_class>
+<placeholders>WS</placeholders>
+
+**Directive:** D13 | **Fabric:** laptop | **PRD:** v0.16 @f3026103f0 | **Round:** 8 (CTO analysis @36e18bf320, msg 101845) | **Decomp cell:** `IV-e-61` (decomp v8) | **outcome_ref:** FWD-22 | **depends_on:** IV-e-60 (same slot) | **slot:** ~38, queue position 3 of 3
+
+---
+
+## WORKER FACE
+
+### THE CELL
+
+`IV-e-61` -- Rows (verbatim, PRD v0.16): UIR-41 "Chips are grouped by account (or de-duplicated by model), and each chip says what it is."
+
+Window 9: the securities-map chips repeat "Model: Opal Long Term" x3 and "Model: Opal Ultra Long Term" x2 (one per sleeve).
+`tabs/holdings/HoldingsTreemap.tsx` `modelOptionsFrom` :155-167 de-duplicates by the model's NODE id, so one model under several
+sleeves gives several chips; chips render at :376-405. The filter takes one model node at a time (`selectedModel` :366;
+`treemapLeavesFrom(snapshot, modelRef)` :246).
+
+**Build:** Chips are grouped under their account (one group per account, the account's masked label as the group name) and, within an
+account, one chip per model; a chip selects the SET of that model's nodes in that account (the filter takes a set of ids). Each chip
+names its kind ("Model: <name>"). With one account, the group heading may be omitted. Leave `HOLDINGS_FOOTER_SOURCE` usage (:444) as it is
+(IV-e-63 owns it).
+
+**Environment:** the portal worktree is based on your slot after IV-e-60. Other round-8 workers run in parallel in their own worktrees on disjoint files; edit only your `<paths>`. Do not start any server.
+
+### ACCEPTANCE
+
+<criterion id="IVE61-AC1" cell_refs="IV-e-61"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-38/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-61.map-chips.test.tsx 2>&1 | tail -15</invocation><expect>VERDICT: MAP-CHIPS-OK</expect></criterion>
+<criterion id="IVE61-AC2" cell_refs="IV-e-61" judgment="true"/>
+`IVE61-AC2` -- judgment: UIR-41 read on the running page (round-8 walk), graded by 3.0.0_SA_CVO at L9. Record it in your instance as UNVERIFIABLE-BY-INSTRUMENT with a status_reason naming the CVO; never PASS or FAIL.
+
+Each mechanical criterion prints its expect string only when every arm holds. AC1 arms: a snapshot with one model under three sleeves of one account gives ONE chip in that account; two accounts holding the same model give one chip in each group; choosing a chip filters to all of that model's leaves in that account (control: a single-sleeve model filters as before).
+
+<expected_criteria>IVE61-AC1, IVE61-AC2</expected_criteria>
+
+## BOUNDS
+
+- **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. `src/lib/**`, `contracts/**` (unless named), other pages and every file not named are read, never edited.
+- **Two repos, one worktree pair** (`<WS>`, `<WS>/portal`). Commit through `.tools/safe-commit.sh`. Never push, merge, rebase, `checkout --` or `clean`. Never stage the workspace `portal` gitlink.
+- **Fixtures:** discover fixture names from disk; never type a firm token or a real client figure into a new file.
+- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row, and do not weaken the test to pass.
+
+<paths>
+portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTreemap.tsx
+portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-61.map-chips.test.tsx
+org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md</decomp_doc> v8, cell `IV-e-61`.
+<owned_cells>IV-e-61</owned_cells>
+</decomp_ref>
+
+<proof_of_spec>
+Criterion ids: IVE61-AC1, IVE61-AC2. Instance at `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~38/DSGN_IRPTV1.TO-IV-e-61.map-chips.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> IVE61-AC1,IVE61-AC2` BEFORE the flip.
+</proof_of_spec>
+
+**REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape; surprise rows in the investigation file (id `DSGN_IRPTV1-W38-S<k>`).
+
+---
+
+## RECORD FACE
+
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE no scheduled producer or schedule surface is touched.
+comp-iam: DECLARED-NOT-APPLICABLE -- no cell writes an AWS surface.
+comp-adversary: RUN -- read-only write-set map at portal DEV 3f76cdb2 (issuer, 2026-09-27 ~08:1xZ); file:line facts above are from that read.
+lane: the <paths> block IS the grant; disjoint from every parallel round-8 chain (decomp v8 table).
+</preflight>
+
+Seating: slot ~38, queue position 3 of 3; worktree pair provisioned by `.tools/wk-provision.sh provision DSGN_IRPTV1 38 --portal-ref <DEV at seating>` when C: allows (0.0.0_AB_MSTR 101618).
