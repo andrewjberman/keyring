@@ -2382,3 +2382,29 @@
   "notes": "The backend now accepts (tenant, report ref, owner check and async submit all hold). The page fix: accept the QUEUED status envelope, take the exr_ id from status.operation.revision and poll export-receipt to READY. Round-9 candidate, thread-breaking."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W41-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~41",
+  "surfaced_at": "2026-09-27T22:33:46Z",
+  "one_line": "Closing IV-e-67 (S26) by widening export/submit.ts's SubmitOutcome with a queued (`receipt: null`) variant breaks TS narrowing in two pre-existing tests this cell's <paths> grant does not name (fe-s-31/submit.test.ts:102, iv-e-64.submit-tenant.test.tsx:147,175) -- both read `.receipt` right after `if (outcome.submitted)` with no null guard, which `bun run typecheck` now flags because both submitted:true arms merge on that check alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- disarmed same-turn by this row's own act",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`bun run typecheck` (tsc -b --noEmit) at portal 3b98939b + this cell's uncommitted edits, BEFORE the guard fix: 3 errors -- iv-e-64.submit-tenant.test.tsx(147,39) and (175,39) 'ExportReceipt | null is not assignable to ExportReceipt', fe-s-31/submit.test.ts(102,56) ''control.outcome.receipt' is possibly null'",
+      "the task order's <paths> grant lists only portal/src/pages/InvestorReporting/export/{submit.ts,ExportButton.tsx,ReceiptPanel.tsx}, contracts/envelope.ts, api/endpoints/investor-reporting.ts, the new test file and __tests__/ broadly -- fe-s-31/submit.test.ts and iv-e-64.submit-tenant.test.tsx are inside the broad __tests__/ grant but were not the pinned test the REPORT note named ('re-goldening a pinned test that asserted data is always required, each naming S26')",
+      "fix applied: both call sites gained an explicit `&& outcome.receipt` (or `.receipt`) guard beside their existing `outcome.submitted` check, changing no assertion's meaning (neither test's fake ever answers the queued shape, so `.receipt` was never actually null at runtime) -- `bun run typecheck` after the fix: 0 errors; `bun test` on both files: unchanged pass output, byte-identical console lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The `__tests__/` grant covers re-goldening ONE named pinned test (a 'data is always required' assertion, naming S26).",
+  "world_is": "Adding a `submitted: true` variant to a discriminated union always merges with every other `submitted: true` variant under a bare `if (x.submitted)` narrow (TypeScript narrows on the checked discriminant only), so ANY caller that read `.receipt` straight after that check -- regardless of whether it mentions 'data is always required' -- needed the same one-line guard once `SubmitOutcome` gained a null-receipt arm. Two such callers existed beyond the one the REPORT note anticipated.",
+  "notes": "Not blocking: the fix is a one-line, behavior-preserving type guard at each site (both tests still pass, byte-identical console output, per the evidence above); `bun run typecheck` is green project-wide after it. Filed because the ripple's SHAPE (a second, unnamed test needing the same class of fix) was not itself named, even though the mechanism (discriminated-union widening) is a normal, foreseeable consequence of this cell's own Build text ('SubmitOutcome / submitUnderGate ... have no queued variant')."
+}
+```
