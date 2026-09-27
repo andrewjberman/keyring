@@ -134,3 +134,56 @@ owner, not a change made here.
 gitignored**, one `git add -A` from being committed. It was imported to DPAPI and then deleted, with absence
 verified by a read. The harvester's ROE says the only persisted artifact is the session bundle; it does not
 say the bundle's default home is safe.
+
+---
+
+## CALL 4 -- bloomberg, PACED RETRY, opened 2026-09-27T21:40:12Z -- **RUN IN FLIGHT AT THIS APPEND**
+
+**Opened now rather than at completion, because per-seat ledgering is the CONDITION of the word and vendor
+requests have already gone out.** The closing counts are appended below when the driver stops.
+
+| field | value |
+|---|---|
+| seat | `2.0.0_SA_COO~Y` |
+| vendor | bloomberg (`www.bloomberg.com`) |
+| endpoint class | REST, `/nemo-next/api/search/query` (listing search), plus `login.bloomberg.com/user-info` (session check) |
+| mechanism | `python -m lib.opal_data_harvest run --publishers bbg --harvest-grammar --runtime-root <main>/.runtime/opal-data-harvest --all-securities --max-jobs 8`, paced by `org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/bbg_retry_20260927/drive_bbg_retry.py` |
+| agent-turn fetch? | **NO.** The driver only paces the existing producer and makes no request of its own |
+| scope | `--max-jobs 8`, UNCHANGED from the bound already exercised on 09-26. The driver does not widen it |
+| authorization | **Andrew-direct 2026-09-27, `/open-calls` Call 2, verbatim: "Yes"** to a paced bbg retry |
+| credential used | the parked session envelope, `captured_at=2026-09-26T22:07:12Z` |
+| re-auth fired? | **NO.** Every `verification_started` event carries `credentials_entered: false` -- a PerimeterX press-and-hold bot check is not a sign-in, and no headed login ran |
+| spend | none -- no metered endpoint. (Contrast CALL 3, which recorded Kimi vision spend; no vision solver was invoked here) |
+| S3 written | **NONE.** `run` writes only the local outbox |
+| evidence | `bbg_retry_20260927/driver.log`, `driver2.log`, `attempt*.log`, `attempts.json` |
+
+### THE MEASUREMENT THIS CALL ALREADY PRODUCED, which is worth more than the capture would have been
+
+**Run 1 (`--gap 300`, 2 invocations): attempt 1 reached the vendor and took a 403; ATTEMPT 2 REACHED NOTHING.**
+Every job returned `cooldown` in under one second, no session was loaded, and `events.jsonl` logged **no http
+event at all**. Cause, at the bytes: `worker.py:310` writes a **900-second publisher cooldown**
+(`request_rejected_without_verified_auth_expiry`) into `progress.sqlite3`, and **that cooldown outlives the
+process that set it.** My 300-second gap fired inside it.
+
+⛔ **A RETRY INSIDE OUR OWN COOLDOWN IS NOT A RETRY -- it is a no-op that reads EXACTLY like a second vendor
+refusal, and it would have been ledgered as one.** Two vendor requests would have been recorded where one was
+made. **That is the ledger integrity point, not just a pacing bug.**
+
+**Run 2 paces on the cooldown table itself** (`SELECT until FROM cooldown WHERE publisher='bbg'`, +20s
+margin) rather than on a gap I choose, so every attempt provably reaches the vendor. Attempt 1 of run 2: one
+new search event, 403, then a correctly observed 899s wait.
+
+**THE DENOMINATOR THAT MADE A RETRY THE RIGHT ACT:** across all 67 logged bbg http events the endpoint served
+**200 sixty times against seven 403s**, and on 09-15 it recovered 403->200 in 13 min, 8 min, and once in
+**70 seconds**. So the bound that guaranteed failure was ours, not the vendor's -- though not the bound I
+first named.
+
+### CORRECTION TO CALL 3 IN THIS SAME LEDGER -- the 549-byte 200 is NOT "an interstitial"
+
+CALL 3's entry says the 549-byte HTTP 200 *"is not a signed-in search response -- that is an interstitial."*
+**That is wrong and it inverts the meaning of the one line proving the session works.** The 549-byte 200 is
+`login.bloomberg.com/user-info`, a **session check**, and it has returned 200 on every observation. The
+session is VALID; the refusal is on `search/query` and is a bot-check at request time. The free-check lesson
+CALL 3 draws is still right -- read the body of a response you already fetched -- but it was drawn from a
+misread of what that body was.
+
