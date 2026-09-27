@@ -52,3 +52,17 @@ for a title source absent from `sources`. The patch is unchanged, because the gu
 - With the guard, the same absent id raises KeyError at the profile loop (`sources[fact["source_id"]]`, :115).
 - In both cases, `except (KeyError, TypeError, ValueError)` at :250-253 converts it to a `COMPOSITION_BINDING` refusal,
   not a crash.
+
+## Served re-proof (2026-09-27 02:2xZ, asked by 2.0.0_SA_COO~P in 101706)
+
+The served generate is `G/TqLPdLz+n84hvDpe5nwR3YEEyj3LixSKcwW2qqVXs=`: downloaded, with its b64 sha256 equal to
+CodeSha256. Its `request_composition.py` sha256 `eecca9cf..` equals P's fix commit `f8c72944f3`.
+
+The proof ran with no overlay, on window 6's real input `portfolio_4c5c85d0..` (uploader `irpt-uiwalk-1790464832`):
+
+| Arm | Result |
+|---|---|
+| (1) a SECOND Opal viewer, null title | **ACCEPTED**, QUEUED; title 'Portfolio Overview' from `maintained-recipe-title` (RECIPE_CONFIGURATION); 31/31 modules from the extract |
+| (2) the uploader, null title | **ACCEPTED**, QUEUED |
+| (3) the CRO's refusal arm: arm 1's and arm 2's captured compositions with the title source re-bound to another principal, through the served `validate_bindings` (`live_walk/title_binding_refusal_arm.py`) | **REFUSED `SOURCE_OWNER_BINDING`** on both; each composition as captured validates (the positive control) |
+| Negative control: arm 1 with only the pre-fix `request_composition.py` (`b82c1ad7..`, `f8c72944f3^`) | REFUSED `SOURCE_OWNER_BINDING` (INVALID_INPUT), so the served fix is what admits the second viewer |
