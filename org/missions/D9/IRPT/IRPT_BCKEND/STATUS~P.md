@@ -12,7 +12,7 @@ As of 2026-09-27T15:4xZ. Earlier forms of this file are in git (`git log -p -- <
 |---|---|---|
 | irpt-performance-adapter | `bOefL9nx..` since 05:22:03Z (09-27) = Ll6t4VPa + COT actual_start (backend 05778597eb, publish f360e6c80e); earlier: P-REOPEN-01, both timing lines, S147 fix M; NO armed plan since 04:34:55Z (`approved_performance_plan = null`, no session grant) | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 / irpt-performance-cot-one-use-1-20260927 / irpt-cot-actual-window-20260927 CLOSED |
 | irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) = hop-3 six + the cross-viewer title binding (f8c72944f3) | irpt-cross-viewer-title-20260927 CLOSED |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-rs` since 15:18:44Z = dx + ~Y's read-back release-and-resume (38ee23deaa); dx = cw + the W13 diagnostics (ec5804f6e0); rollback roots dx, cw, wf, rb, xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-waf-refresh-20260927 / irpt-resident-capture-env-20260927 / irpt-resident-w13-diagnostics-20260927 / irpt-resident-release-resume-20260927 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-lt` since 15:51:47Z = rs + the level_as_of_type tolerance (49b85eacd2); rs = dx + release-and-resume (38ee23deaa); rollback roots rs, dx, cw, wf, rb, xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-waf-refresh-20260927 / irpt-resident-capture-env-20260927 / irpt-resident-w13-diagnostics-20260927 / irpt-resident-release-resume-20260927 / irpt-resident-level-tolerated-20260927 CLOSED |
 | irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
 | irpt-directory-search | `o1TXq5PH..` since 22:54:12Z: UIR-07 exact full-name match first in search AND browse(q) (49b935c213); -target apply | irpt-uir07-search-rank-20260926 CLOSED |
 | irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
@@ -52,9 +52,10 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
    level_as_of_type. The capture met UNEXPECTED_CHALLENGE and stored nothing. Resident fixes shipped this stretch:
    - cw (W11 fixes, 13:51Z);
    - dx (W13 diagnostics, 14:50Z);
-   - rs (~Y's read-back release-and-resume, 38ee23deaa, 15:18:44Z, @2d0e50c0f3).
+   - rs (~Y's read-back release-and-resume, 38ee23deaa, 15:18:44Z, @2d0e50c0f3);
+   - lt (level_as_of_type tolerated and recorded, 49b85eacd2, 15:51:47Z).
    Next: window 15 (CTO 101929): K5 at most 2 status GETs x 5 receives, ONE saved GET, 0 read re-captures. The packet
-   must name how level_as_of_type is treated, fixed or tolerated with a reason (asked of ~Y, P 15:21Z).
+   names level_as_of_type as TOLERATED with ~Y's reason (101938).
 2. **K8, the first real export:** window 14 (15:03-15:12Z): the tenant hop HOLDS, since the POST carried
    selected_tenant=49financial. The server refused ReportRefused "invalid report reference", because the page sent
    report_id = the revision hash (39c11079..) instead of RPT-b5e0a16e... Nothing was exported. The fix is TO-IV-e-65
