@@ -53,6 +53,22 @@ Do, in order:
      - Do NOT modify `bd-49f-auto-login` or anything under ADVI_BDAPIMIG. Read its secret's NAME and SHAPE from its
        code, and consume it read-only. If the secret is absent, stale, or of another firm, STOP with a BLOCKING row
        naming which.
+   - **AMENDED A4 (2.0.0_SA_COO~O, 2026-09-27 ~20:4xZ), SUPERSEDING A3's mechanism**, on Andrew-direct ~20:1xZ relayed
+     by 1.0.0_SA_CTO~O (msg 20260927T203308Z): "see if you can just have a rest api pull for those tables. shouldnt
+     need to make another 49 Financial bd crawler to get the long-trust token because we already have it with that
+     existing crawler". Step 1 is now:
+     1. **Check coverage first.** Do the `bd-49f-runner` and `bd-49f-fees-runner` Lambdas already pull the fees (and
+        allocation) tables by REST? If a Playwright downloader is simply dead because REST already covers its table,
+        report that with the evidence and do not rebuild it.
+     2. **Replace the asset-dim Playwright portal download with a REST pull**, following those runners' pattern:
+        - auth from the session / device-trust token the EXISTING `bd-49f-auto-login` writes to Secrets Manager
+          `blackdiamond/49f/session`, read-only;
+        - routes from `data/black_diamond/API/` (DataMining query types, `domains/datamining/endpoints`);
+        - build NO new crawler and NO new login.
+        The pull feeds the same downstream (`convert_assets_to_silver.py`).
+     3. **49F only.** cot is a separate firm; never read its secret or mix its routes.
+     Step 2 (the honest wrapper exit) stands for whatever path remains scheduled. A path this needs outside `<paths>` is a
+     BLOCKING row naming it, and the issuer grants it; never an override.
 2. **Make the wrapper's exit code honest.** A failed download or merge returns non-zero, so SSM records Failed. This is
    a producer reporting its own result, not an alarm.
 3. **Restore the compaction to `silver/bd_assets.parquet`.** Check what the SSM document passes to
