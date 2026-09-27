@@ -167,10 +167,10 @@ It reads every SERVED D_03 composition in s3://opal-data-cot: the firm file plus
 `0.4.0_DS_ClientPlatform~X` finished its work order.
 - **Branch:** `ds-x-b1-cashline` @146876e75a, not merged.
 - **Record:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/B1_AND_CASH_LINE_CRITERIA_20260926.md`.
-- **Rows:** S150-S153.
+- **Rows:** S153-S156 (renumbered from the branch ids S153-S153, CTO 101771; CLOUD @92244581d2).
 
 What it changes for this half:
-- **Correction to "No reader crashes or drops it" (S152, ARMED on ~M, now DISARMED in code).** COT `lib/mix_views`
+- **Correction to "No reader crashes or drops it" (S155, ARMED on ~M, now DISARMED in code).** COT `lib/mix_views`
   built its period rows (quarterly, monthly, annually) only from its own list, and that list left out `cash` and
   `other`. So every cash dollar fell into the `unclassified` residual. That includes today's sweeps and, after the
   deploy, the BD cash line.
@@ -179,11 +179,11 @@ What it changes for this half:
   - The portal already expects `cash` (and optional `other`) in each period point (`FirmMixPeriodPoint`,
     portal `types.ts:1601-1611`), so the served period rows start matching the page's type.
   - It merges and deploys with this act, after Monday's R1.
-- **a07 (S150):** the BD cash-line rule in a07 changes 0 of 4,053 dim rows. The dim has one row per upper-cased
+- **a07 (S153):** the BD cash-line rule in a07 changes 0 of 4,053 dim rows. The dim has one row per upper-cased
   ticker, and `CASH` is held by 49F's Pathward row with a null name. The operative guard therefore sits in d08's own
   lookup, as it does in the COT gold readers.
 - **d08** only emits to QA; nothing served reads it.
-  - It folds cash into fixed_income, a declared rule, and its `mix{}` is shape-frozen at three classes (S151). So the
+  - It folds cash into fixed_income, a declared rule, and its `mix{}` is shape-frozen at three classes (S154). So the
     BD cash line moves equity -> fixed_income there: **-$59,253,165.31 / +$59,253,165.31**. That is the signed net;
     d08 keeps negative rows.
   - C_06 books the same line as `cash`, **+$66,055,897.80** (positive rows only).
@@ -193,7 +193,7 @@ What it changes for this half:
   Monday's run the live file carries `cash` (and later more classes) that d08's frozen three-class `mix{}` lacks, so d08
   will refuse. Parked in STATUS~M with the runners' owner; it serves nothing.
 
-## Addendum 6 (01:5xZ 09-27): S152 re-cut ALONE on CLOUD, and the CTO's five terms (CTO 101685/101688, CRO 101686)
+## Addendum 6 (01:5xZ 09-27): S155 re-cut ALONE on CLOUD, and the CTO's five terms (CTO 101685/101688, CRO 101686)
 
 **Re-cut:** branch `irpt-m-s152-cloud` @**ff63895521** (worktree `../ajb_irpt_m_s152c`), one commit on CLOUD 6a51c423fb,
 2 files. It supersedes 41115a70aa. The diff is:
@@ -238,3 +238,10 @@ No reader raises on the new keys.
 lib/mix_views, and the Holdings revision; then a D_04 re-run so that `mix_periods` drops the keys again.
 
 **Term 5:** the CRO re-admitted it (101686); the CTO concurs (101688).
+
+## Addendum 7 (03:5xZ 09-27): row ids renumbered (CTO 101771)
+
+~X's four rows were minted as S150-S153 on the unmerged branch and collided with CLOUD's S150-S152 (CLOUD S152 is
+2.0.0_SA_COO~P's INF holdings-lag row). They are landed on CLOUD @92244581d2 as S153 (a07), S154 (d06/d08 shape
+freeze), **S155 (COT mix_views; ARMED on ~M, the fix is ff63895521)** and S156 (BD C_06 gate). Addenda 5 and 6 above
+now cite the new ids. The sign-offs cite the fix by commit, so nothing re-signs.

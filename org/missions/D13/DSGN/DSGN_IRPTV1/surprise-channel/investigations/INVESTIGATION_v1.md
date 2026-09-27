@@ -1792,3 +1792,29 @@
   }
 ]
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-S18",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T03:34:00Z",
+  "one_line": "The page cannot show an Analysis job submitted from another session: AnalysisTab lists requests only for a selected client scope and no live route serves a request list, so window 7's terminal job REQ-e2fc5dd5 (ATTENTION VENDOR_READ_BACK_REFUSED) was invisible to the signed-in viewer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D 101736 (window-7 K10, HAR k10-w7-20260927.har): the Analysis tab reads 'No job submitted from this browser yet.' and made 0 analysis requests",
+      "AnalysisTab.tsx:112-146 fetches the request list only for a selected client scope; its FE-s-13 comment says no route serves a request list (the live client refuses by name)",
+      "the job row irpt-jobs cottonwood / REQ-e2fc5dd5dc2e050cc82a57e4 state ATTENTION job_detail {code: VENDOR_READ_BACK_REFUSED} (P read 03:01Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An advisor can see the state of an Analysis request (including a failed one) in the page.",
+  "world_is": "Only a request submitted from the same browser session is visible; a job from another session, or one that failed, has no view.",
+  "notes": "Filed by P on CTO 101742 item 3 for ~D's lane. The history route (irpt-status history) exists server-side (hops 8-9 served 4/4); the gap is the page's request-list read."
+}
+```

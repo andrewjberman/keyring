@@ -4,15 +4,15 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T01:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T03:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
 | What | Value | Ledger |
 |---|---|---|
 | irpt-performance-adapter | `Ll6t4VPa..` since 21:28:13Z: P-REOPEN-01 (260399e940), both timing lines (8d7a8b10fe, b18cb77c7d), S147 fix M (52604d790b); INF one-use plan env kept as live | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 CLOSED |
-| irpt-ycharts-generate | `/iFhTAvT..` since 19:33:52Z = 85TXFzzv + ~Y's six hop-3 files (a219094b1a) | irpt-hop3-generate-resident-20260926 CLOSED |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-rr` since 01:29:55Z = f624e8a72f + the hop-3 six + hop-7 certify.py (ad817b55ea) + ~Y's retained-reason resident_main/host_capture (746ddee18a); rollback roots fe64236bbb-h7, fe64236bbb, f624e8a72f kept | irpt-resident-retained-reason-20260927 CLOSED |
+| irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) = hop-3 six + the cross-viewer title binding (f8c72944f3) | irpt-cross-viewer-title-20260927 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-rb` since 03:41:53Z = f624e8a72f + hop-3 six + hop-7 certify + retained-reason + cross-viewer + the read-back poll (07f1982ab9); rollback roots xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-read-back-poll-20260927 CLOSED |
 | irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
 | irpt-directory-search | `o1TXq5PH..` since 22:54:12Z: UIR-07 exact full-name match first in search AND browse(q) (49b935c213); -target apply | irpt-uir07-search-rank-20260926 CLOSED |
 | irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
@@ -40,26 +40,22 @@ As of 2026-09-27T01:5xZ. Earlier forms of this file are in git (`git log -p -- <
 
 ## Write claims
 
-None building. The cross-viewer deploy waits on its halves; S151, INF and COT wait on Andrew's word.
+None building. Window 8 waits on its halves.
 
 ## Next-list (in order)
 
-1. **The next Analysis window is BLOCKED on S151:** window 6's receive-1 YCharts session capture failed, cause
-   unmeasured. The resident now logs a retained failure's closed reason code (fe64236bbb-rr), so the next capture
-   attempt names its cause. That attempt is a live YCharts call and waits on Andrew's word (owner ~Y). Future
-   packets keep the principal until every job is terminal (CTO 101673; S150).
-2. **The cross-viewer title binding** (f8c72944f3): packet blob 474495c0 @64e7b8fbd7 sent 01:5xZ (CTO 101690, CRO 101691).
-   On both halves: generate + resident, one member each, paired; ~Y's second-viewer re-proof on the new zip.
-3. **INF:** the armed plan 01209afb is SPENT (2026-09-26 03:20:31Z). A new Orion one-use needs Andrew's per-use
-   word, asked via MSTR 01:51Z. Then: the plan (the inf_one_use_plan.py rule), the arm under halves, and one signed-in
-   window. **COT:** a new per-use word.
-4. **K8, the first real export**, rides a later Performance window.
+Andrew-direct 02:5xZ: "yes to all three" (@6039c2f680) -- the window-7 go (used), ONE INF Orion one-use, ONE COT one-use.
 
-Window 6 CLOSED (ledger irpt-ui-walk-principal-w6-20260926):
-- K4 NORMALIZED; K5 QUEUED, then stuck at hop 6; the message is in irpt-generation-dlq and the row is left alone
-  (amendment 2, CTO signed);
-- 0 requests outside the admitted classes; every new key traced to K4/K5;
-- ~D's C25 re-walk rode the same principal (amendment 1).
+1. **Window 8 (INF's ONE Orion read):** packet blob e2462004 @1282a22bf5, sent 03:5xZ for halves.
+   - Plan 7f64b166, end 09-22, READ from the served INF holdings (CTO 101756).
+   - The arm-OFF pre-check first; then the arm, ONE read, and a disarm.
+   - Optional W8-2: a third Analysis attempt on resident rb, only on Andrew's word at ~Y.
+2. **COT one-use** (call 3): after INF's plan is spent. A COT plan builder is needed (none exists), then an arm packet
+   and a window read.
+3. **The Analysis chain:** the window-7 read-back cause was fixed and served (resident rb). The next attempt is W8-2.
+   The page cannot list a job from another session (DSGN_IRPTV1-S18, ~D).
+4. **K8, the first real export**, rides a later Performance window.
+5. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on R4's Monday enable (runbook D).
 
 ## Parked
 

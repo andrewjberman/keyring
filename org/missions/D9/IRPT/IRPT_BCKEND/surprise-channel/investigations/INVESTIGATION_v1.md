@@ -9772,3 +9772,137 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Diagnosis needs ONE wrapper run, which is a live YCharts call and waits on Andrew's word (CTO 101673: it gates nothing now). It blocks the next Analysis window's K5; the un-park condition is Andrew's word for that run."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S152",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T03:43:00Z",
+  "one_line": "The served INF holdings snapshot is as-of 2026-09-22 while the INF directory and the trading frontier are 2026-09-25 -- 3 trading days behind; because the page ends every Performance window on the holdings as-of (CTO 101422), INF Performance can never be read past 09-22 until holdings catch up.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served irpt-holdings GET for INF acc_5510a.. (selection sel_366d4891..) at 03:3xZ: state READY, source_dates business_date 2026-09-22, source_completion_date 2026-09-22",
+      "served irpt-directory-search browse, inflection: 292/292 entries as_of_business_date 2026-09-25, source accounts_v2@2026-09-25",
+      "trading frontier 2026-09-25 (Friday; 09-27 is a Sunday)",
+      "window 7 K11: the page sent end=09-22 for all 3 INF Performance GETs (~D 101739/101750)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "INF holdings are current to the INF source frontier (T-1 trading day), as the directory is.",
+  "world_is": "INF holdings lag the INF directory by 3 trading days (09-22 vs 09-25); the INF one-use plan had to be re-cut to end 09-22 (plan 7f64b166, CTO 101756).",
+  "notes": "Filed on CTO 101756 item 3. The disarm owner is the holdings producer (irpt-holdings-refresh-lambda, M's lane): confirm whether the INF holdings refresh ran on 09-23..09-25 or is gated on an upstream INF positions date. Whether Performance should end on its own source's as-of rather than holdings' is with the CRO (CTO 101756)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S153",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+  "surfaced_at": "2026-09-27T01:10:00Z",
+  "one_line": "a07's BD cash-line rule is INOPERATIVE on the served dim: dim_asset_classification is one row per security_key and security_key IS the upper-cased ticker (a07:303), so 49F's Pathward and COT's cash line share the single key `CASH` (held_by_firms `49f|cot`) whose representative asset_name is null -- 0 of 4053 rows change. The operative guard had to go into d08's own `lookup`, as the COT readers already do.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-49financial/gold/advi/dimensions/dim_asset_classification/date=2026-09-22/data.parquet: security_key CASH -> ticker CASH, cusip 59100U108, asset_name None, held_by_firms 49f|cot, asset_class equity, source dynamodb-ticker (1 row)",
+      "the same partition: 0 of 4053 rows carry an asset_name whose whitespace-collapsed upper form is CASH",
+      "both versions of a07.classify() replayed over that partition's own (ticker, asset_name) pairs: 0 rows changed -- org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/D08_D06_CASH_LINE_DELTA_20260926.json arm_a",
+      "a07:303 security_key = ticker.upper().strip(); a07:322 rep = drop_duplicates(security_key, keep=first) after sort by (security_key, firm), so 49f wins the key; a07:347-352 a STEP-A-classified key never consults its variant set"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Work order @8b45af0917 item 1: a07 `classify` gives `cash` for ticker CASH with asset name exactly CASH, checked FIRST, and item 2 says d08 'takes the cash line through a07'.",
+  "world_is": "classify() now carries the rule and is correct for any caller, but the dim it feeds cannot express it: one key, two firms, one class, and the 49F representative (asset_name null) decides. d08 resolves by ticker first off that same dim, so without a guard AT d08 the served COT mix keeps the cash line as Pathward's equity.",
+  "notes": "Filed, not fixed beyond the cell: the rule is in a07 as ordered (inert, proven inert by the 0-of-4053 replay) AND in d08's `lookup` ahead of the ticker layer, which is where the measured $59,253,165.31 actually moves. Making the DIM carry it is a key-space change (e.g. keying the BD cash line by NAME:CASH rather than by ticker) with its own readers -- d06, d08, perfrp and alias_key_expansion all join on security_key -- so it is a separate half for the a07 owner, not a rider. 49F's Pathward is unaffected either way: its asset name is not CASH. RENUMBERED from S150 (minted on unmerged branch ds-x-b1-cashline @146876e75a; id collision with CLOUD, CTO 101771) and landed on CLOUD by 2.0.0_SA_COO~M."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S154",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+  "surfaced_at": "2026-09-27T01:12:00Z",
+  "one_line": "d06 and d08 are SHAPE-FROZEN, so an admitted class cannot appear in their `mix{}` dict or their `mix_periods` rows: a new class KEY there refuses the run outright. The admitted classes ride `composition.mix` (an array) instead, and the 3-class `mix{}` under-sums by their share -- as it already does for unclassified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "d_publisher_base._diff_schema:134-136 -- a built key absent from the census schema is 'NEW FIELD (prohibited in v1 -- shape freeze)'; ShapeFrozenPublisher.check raises SystemExit on any diff",
+      "d00_census_out.json families['platinum/firm/mix_summary'] sampled schema: mix has exactly {equity, fixed_income, alternatives}; each mix_periods element has exactly {equity, fixed_income, alternatives, unclassified} plus period/label/end_date/total_aua",
+      "d_fleet_common.emit_and_verify:69 -- `if a.keys() != b.keys(): return False` against the LIVE served object, so d08's mix{}/mix_periods key set must equal the live one",
+      "_schema_of for a list reads obj[0] only (d_publisher_base:44-46; d_fleet_common.schema_of), so extra composition.mix ELEMENTS are contract-safe",
+      "test_b1_class_admission_49f.py::test_d06_payload_still_passes_the_census_shape_freeze -- PASS with structured, commodities and other panels present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Work order @8b45af0917 criterion 1: for each of paths 2-8 a structured and a commodities row 'must land in its own bucket: none raises, none drops, and pct sums to 1.0 within 0.001'.",
+  "world_is": "In d06 and d08 the class partition is exhaustive and the new classes do get their own bucket (sums/_mix_of) and their own composition.mix panel, and the identity holds to 0.00. But the two SHAPE-FROZEN surfaces keep the census/live key set, so the pct sum THERE is 1.0 minus the unclassified and new-class share. Adding the keys would have made every run refuse.",
+  "notes": "Both emitters now print the new classes' magnitude beside the fold, so the under-sum is declared and never silent, and a new class's panel appears the moment it carries value (at zero it is omitted, which is why the measured served delta is 0.00). To put a new class in the frozen surfaces the census row has to be re-cut from a served object that already carries it -- the shape owner's act (d00 for d06; the live platinum/firm/mix_summary.json producer for d08), sequenced after B2 writes the first real structured/commodities value. RENUMBERED from S151 (minted on unmerged branch ds-x-b1-cashline @146876e75a; id collision with CLOUD, CTO 101771) and landed on CLOUD by 2.0.0_SA_COO~M."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S155",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+  "surfaced_at": "2026-09-27T01:14:00Z",
+  "one_line": "COT `lib/mix_views.py` MIX_ASSET_CLASSES still lacks `cash` and `other` while COT C_06's own list admits both -- so COT's period views (quarterly/monthly/annually bars) put the cash line in the `unclassified` residual, not in `cash`, the moment the cash-line fix deploys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/C_06.client_mix_timeseries.py:173 MIX_ASSET_CLASSES = ['equity','fixed_income','alternatives','cash','other']",
+      "data/cot/scripts/gold/lib/mix_views.py:24 MIX_ASSET_CLASSES = ['equity','fixed_income','alternatives','structured','commodities'] -- no cash, no other (this cell added the last two per work order item 8; cash/other were already absent)",
+      "lib/mix_views.py:87-99 -- compute_period_views builds row[ac] only for ac in MIX_ASSET_CLASSES, then row['unclassified'] = max(0, total - classified_sum), so an admitted-but-unlisted class lands in the residual",
+      "COT C_06 calls compute_period_views for the firm, advisor and relationship views, so all three carry the residual",
+      "the moved amount, measured on the served COT plane: the 45 positive cash-line rows, +$66,055,897.80 (D08_D06_CASH_LINE_DELTA_20260926.json arm_b)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NEVER_WIDEN_HALF_REQUEST_COT_CASH_LINE_20260926.md: '`cash` is already an admitted class: C_06 MIX (deployed as its own act, cot-cash-admission-m-20260925) ... No reader crashes or drops it.'",
+  "world_is": "C_06's own mix dicts admit cash and other; the period-view builder it calls does not. The cash line will read `cash` in mix_daily_summary and `unclassified` in the period bars, which is a visible disagreement between two surfaces of the same producer.",
+  "notes": "NOT fixed here on purpose: adding cash and other to COT lib/mix_views moves served COT value out of the `unclassified` bar and into `cash`/`other`, which is a served-value move and needs its own never-widen half -- and the file is inside the COT cash-line act ~M owns. The row is ARMED because the disagreement becomes visible at the Monday read-back, so the decision is owed BEFORE that deploy: either widen COT mix_views under the same half, or state that the period bars keep the residual and say so in the read-back. Disarm = ~M's word either way. The BD twin has the same gap for `cash`/`other` but no BD cash line to expose it (BD's one CASH ticker is Pathward, equity). RENUMBERED from S152 (minted on unmerged branch ds-x-b1-cashline @146876e75a; id collision with CLOUD, CTO 101771) and landed on CLOUD by 2.0.0_SA_COO~M."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S156",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+  "surfaced_at": "2026-09-27T01:16:00Z",
+  "one_line": "BD `C_06.client_mix_timeseries.py` has never passed `.tools/commit-gate.sh`: at the branch point it fails ds-precommit (no `from __future__ import annotations`) and, behind that, five ruff errors -- one of which is that it IMPORTS MIX_ASSET_CLASSES from lib.mix_views and then shadows it, so one name carried two lists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/commit-gate.sh on the file at the branch point 977ee2b9ab: rc=1, 'BLOCKED: missing `from __future__ import annotations`'; its COT twin data/cot/scripts/gold/C_06.client_mix_timeseries.py:58 already carries the import",
+      "after that one line, ruff reported 5: F401 pathlib, F401 re, F401 sys, F401 lib.s3_layout.LEGACY, and F811 'Redefinition of unused MIX_ASSET_CLASSES from line 78'",
+      "verified unused before removal: 0 occurrences of 'pathlib.' and 'sys.'; the 2 're.' hits are 'future.result()'; the 7 other LEGACY hits are LEGACY_WATERMARK_KEY / _LEGACY_OUTPUT_PREFIX, different names; MIX_ASSET_CLASSES has no use between the import and the shadowing definition",
+      "comp-constants drift then fired: MIX_ASSET_CLASSES canonical_value was the 3-class list with BD C_06 and BD lib/mix_views as its two registered sites"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 14: every `.py` edit passes `.tools/commit-gate.sh`; work order criterion 4 repeats it for every touched file.",
+  "world_is": "The file could not be committed through safe-commit.sh at all (its fail-closed gate re-assert at :655-688), and the gate had never reached ruff on it because ds-precommit refused first. Two lists under one name is the live trap: lib.mix_views' list governs the period views while C_06's own list governs its mix dicts, and nothing made them agree.",
+  "notes": "Fixed in this cell, all of it the gate's own prescribed remedy and nothing more: the future import added (matching the COT twin), the four dead imports removed, the shadowed import of MIX_ASSET_CLASSES dropped so the name resolves to one list, and comp-constants.config.yaml's MIX_ASSET_CLASSES entry widened with its ruling cited -- which the entry's own note already required ('If BD adds a new asset class, this list must be updated'). Both lists now carry structured and commodities, so the two surfaces agree by value as well as by name. NOT done: `comp-constants index`, which was run once and reverted -- it deletes other lanes' `drift: true` markers and human comments (INF entries), so it is not a committable reindex; only the two site lines this cell's edits shifted were hand-updated. AND NOT COMMITTED, which is the live loose end: owned-paths puts comp-constants.config.yaml on lane ANY_EXEC_OR_AE and refused this serial, so the widened entry sits in the branch worktree only. Until an exec or AE lane applies org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/comp-constants-MIX_ASSET_CLASSES-widen.patch, the next commit touching EITHER registered BD site refuses on drift on CLOUD -- so it belongs with the drain of 6e2864bd3e, not after it. RENUMBERED from S153 (minted on unmerged branch ds-x-b1-cashline @146876e75a; id collision with CLOUD, CTO 101771) and landed on CLOUD by 2.0.0_SA_COO~M."
+}
+```

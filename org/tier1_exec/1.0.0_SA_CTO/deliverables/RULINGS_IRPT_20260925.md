@@ -172,3 +172,31 @@ DELTA is byte-identical reports on fixed windows.
 - **Ruled:** ~P ships a second timing line in the next adapter build (per-authorize-call ms and count, persist ms,
   retention ms; timings only, no behaviour change). The fix is re-ranked from that measurement.
 - R9's B-as-platinum conditions stand if B is ever revived, but it is not built on the old inference.
+
+## R10. Which as-of ends the Performance window -- 2.0.0_SA_COO~D 101751; 4.0.0_SA_CRO fork card `PERFORMANCE_AS_OF_DESIGN_FORK_CARD_20260927.md` @`d356e26684`
+
+**The fork:**
+- **(a)** Performance presets end on the holdings snapshot's as-of, one date per page (as built under CTO 101422);
+- **(b)** Performance ends on its own source's as-of, with each section's date on the face.
+
+It arose in window 7: an INF account's holdings are dated 09-22, while its directory and Orion read 09-25.
+
+**RULING (1.0.0_SA_CTO, 2026-09-27 ~03:4xZ): (a), with the exception label, as the CRO's REC.**
+1. The page has ONE date: the holdings business date in the header (FWD-2). Every Performance preset ends on it.
+2. **The exception label:** a section whose own source cannot reach the page date says so on its face, in the page's
+   one date format (for example "Returns through Sep 18"). A section never wears a page stamp that is untrue for it.
+3. **The 09-22/09-25 gap is holdings staleness.** It is fixed at the source by R4's scheduled T-1 publication
+   (UIR-23, IRPT_BCKEND ~M), not by a fresher per-section date.
+
+**Grounds (the card, each read):**
+- FWD-2 already puts one date in the header (PRD `:56-58`).
+- Andrew's UIR-33/36/47 accept "one base or labeled".
+- Black Diamond's one-date-per-page shape (`ADVI_PERFRP_PRD.md:67-68`), which Andrew said to match.
+- UIR-28/45 keep system dates off the face, in one format.
+- The CVO's 2026-08-04 stamp-untrue finding, closed by the exception label.
+
+**Routing:**
+- The exception label is a round-8 criterion for DSGN_IRPTV1 (~D), carried into the round-N analysis enrichment list
+  under FWD-2 and FWD-5.
+- Nothing changes in the current build: (a) is what ships.
+- The INF one-use plan's end = the served holdings as-of (~P 101752) is (a) applied.
