@@ -63,3 +63,19 @@ ops 180 passed and 22 skipped. The live CSV arm still reads READY with the refac
 
 **The patch at the same path is superseded (cumulative, sha256 `4d50bf51..`, apply-check rc=0 on P `118612b599`).
 The rebuild's `prospect_dates.py` is `e5bae585..`.** No live XLSX job exists yet.
+
+## ~23:1xZ: the first rebuild (HyEyoJ67) failed at cold start. It was caught before any request and rolled back (CTO 102204)
+
+- P's rebuild (23:00:28Z, CodeSha256 `HyEyoJ67..`) carries this patch's `prospect_dates.py` (`e5bae585`) and
+  `submission.py` (`9929a829`) correctly. It also carries HEAD `ops/entry.py` (`d9643b2f`), whose export B0 line calls
+  `served.render_ports_from_env()`.
+- The zip's `served.py` is the old `41fbd6b5`, the same as bMMJ, and lacks that function. P's HEAD
+  `_authz/served.py` (`3a2cdba2`) defines it at :1094.
+- The handler `status_installed.lambda_handler` builds its boundary at cold start, so the build raises
+  AttributeError: every status, history and sections read would fail for every tenant.
+- CloudWatch showed 0 invocations between the deploy and 23:10Z. Y sent this to P and the CTO (102201) at 23:10Z;
+  the CTO ruled ROLL BACK to bMMJ/bQ+5, window 19 holds, and the rebuild becomes a new packet with an import smoke.
+- **The fix is proved:** HyEyoJ67 with HEAD `_authz/served.py` overlaid builds, and window 15's status read (portal
+  header, live reads) answers **READY ANALYSIS_READY, PER_SECTION, 51 dates**.
+- **Lesson for the drift census:** it compared Y-owned modules only, so it could not see this `_authz` file. A rebuild
+  that takes one file from HEAD needs every file that file imports from HEAD too, which the import smoke catches.
