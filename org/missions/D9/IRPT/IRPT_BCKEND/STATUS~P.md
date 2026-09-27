@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T03:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T03:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -12,7 +12,7 @@ As of 2026-09-27T03:2xZ. Earlier forms of this file are in git (`git log -p -- <
 |---|---|---|
 | irpt-performance-adapter | `Ll6t4VPa..` since 21:28:13Z: P-REOPEN-01 (260399e940), both timing lines (8d7a8b10fe, b18cb77c7d), S147 fix M (52604d790b); INF one-use plan env kept as live | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 CLOSED |
 | irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) = hop-3 six + the cross-viewer title binding (f8c72944f3) | irpt-cross-viewer-title-20260927 CLOSED |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-xv` since 02:08:38Z = f624e8a72f + the hop-3 six + hop-7 certify + retained-reason (746ddee18a) + the cross-viewer binding (f8c72944f3); rollback roots rr, h7, fe64236bbb, f624e8a72f kept | irpt-cross-viewer-title-20260927 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-rb` since 03:41:53Z = f624e8a72f + hop-3 six + hop-7 certify + retained-reason + cross-viewer + the read-back poll (07f1982ab9); rollback roots xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-read-back-poll-20260927 CLOSED |
 | irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
 | irpt-directory-search | `o1TXq5PH..` since 22:54:12Z: UIR-07 exact full-name match first in search AND browse(q) (49b935c213); -target apply | irpt-uir07-search-rank-20260926 CLOSED |
 | irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
@@ -40,24 +40,22 @@ As of 2026-09-27T03:2xZ. Earlier forms of this file are in git (`git log -p -- <
 
 ## Write claims
 
-None building. The INF re-cut waits on the CTO (101740); the Analysis read-back is ~Y's diagnosis.
+None building. Window 8 waits on its halves.
 
 ## Next-list (in order)
 
-Andrew-direct 02:5xZ: "yes to all three" (@6039c2f680) -- the window-7 go, ONE INF Orion one-use, ONE COT one-use.
+Andrew-direct 02:5xZ: "yes to all three" (@6039c2f680) -- the window-7 go (used), ONE INF Orion one-use, ONE COT one-use.
 
-1. **INF (Andrew's ONE call, still UNUSED):** the arm f0de098f (03:07:25Z) missed. The page clamps every INF window to
-   the directory as-of (09-22), and the plan named 09-25, so 3 reads were refused unspent (0 Orion calls). Disarmed
-   03:21:34Z to the spent plan (CTO item 2). NEXT: re-cut the plan with `--end` = the INF directory as-of, under a new
-   arm packet and a window (the decision is at the CTO, 101740).
-2. **COT one-use** (Andrew's call 3): after the INF plan is spent or disarmed, which it now is. A plan, an arm packet,
-   and a window, sequenced with INF's re-cut if the CTO agrees.
-3. **The Analysis chain:** window 7's K5 is TERMINAL ATTENTION `VENDOR_READ_BACK_REFUSED` after holdings_upload +
-   portfolio_create (portfolio 2363504, kept); ~Y diagnoses. The page cannot show a job from another session (K10;
-   a product gap, ~D/CTO).
+1. **Window 8 (INF's ONE Orion read):** packet blob e2462004 @1282a22bf5, sent 03:5xZ for halves.
+   - Plan 7f64b166, end 09-22, READ from the served INF holdings (CTO 101756).
+   - The arm-OFF pre-check first; then the arm, ONE read, and a disarm.
+   - Optional W8-2: a third Analysis attempt on resident rb, only on Andrew's word at ~Y.
+2. **COT one-use** (call 3): after INF's plan is spent. A COT plan builder is needed (none exists), then an arm packet
+   and a window read.
+3. **The Analysis chain:** the window-7 read-back cause was fixed and served (resident rb). The next attempt is W8-2.
+   The page cannot list a job from another session (DSGN_IRPTV1-S18, ~D).
 4. **K8, the first real export**, rides a later Performance window.
-
-Windows 6 and 7 are CLOSED (0 requests outside the classes; every key traced).
+5. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on R4's Monday enable (runbook D).
 
 ## Parked
 
