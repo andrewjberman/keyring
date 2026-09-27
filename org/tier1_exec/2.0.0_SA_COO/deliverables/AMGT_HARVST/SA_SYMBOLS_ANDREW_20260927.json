@@ -1,0 +1,355 @@
+{
+  "artifact": "sa_symbol RESOLUTION -- ANDREW-SUPPLIED, the 33 the automated pass could not reach",
+  "author": "2.0.0_SA_COO~Y (relaying Andrew)",
+  "generated_at": "2026-09-27T18:33Z",
+  "provider": "Andrew, reading seekingalpha.com/symbol/<SYM> pages by hand. NO agent vendor call.",
+  "criterion": "A human read of the vendor's OWN symbol page is MEASURED. The pass's two automated tests (SA's company name shares a distinctive token; returned titles tie to the subject) exist to substitute for exactly this when no human is available -- so they are not applied here and their absence is not a gap.",
+  "denominator": {
+    "supplied": 33,
+    "of_the_unresolved": 33,
+    "two_values_corrected_by_measurement": [
+      "Orange ORA FP: OBT (Orange County Bancorp) and ORA (Ormat Technologies) -> ORANY, confirmed by Andrew directly"
+    ],
+    "one_value_taken_on_his_reason_with_a_watch": [
+      "QXO: QXO.PR.B, density bar unproven"
+    ]
+  },
+  "records": [
+    {
+      "folder": "Haliburton HAL",
+      "sa_symbol": {
+        "value": "HAL",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/HAL . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "Folder name is misspelled at source (one 'l'); the company is HALLIBURTON. SEARCH_NAME_FIX @e2f831d913 repairs the query."
+      }
+    },
+    {
+      "folder": "International Container Terminals",
+      "sa_symbol": {
+        "value": "ICTEF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/ICTEF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "Folder name is TRUNCATED at source; the company is International Container Terminal Services (ICTSI). SEARCH_NAME_FIX @e2f831d913 repairs the query."
+      }
+    },
+    {
+      "folder": "Nestle NESN SW",
+      "sa_symbol": {
+        "value": "NSRGY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/NSRGY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Nike NKE US",
+      "sa_symbol": {
+        "value": "NKE",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/NKE . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Novartis NOVN SW",
+      "sa_symbol": {
+        "value": "NVS",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/NVS . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Nubank NU",
+      "sa_symbol": {
+        "value": "NU",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/NU . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "SA names it 'Nu Holdings Ltd.', which is why the pass's own name test could not corroborate 'Nubank' -- a rebrand, not a defect."
+      }
+    },
+    {
+      "folder": "Orange ORA FP",
+      "sa_symbol": {
+        "value": "ORANY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/ORANY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "CONFIRMED BY ANDREW DIRECTLY: he supplied https://seekingalpha.com/symbol/ORANY after this seat flagged his two earlier values. HISTORY KEPT because it is the whole lesson: OBT is Orange County Bancorp (a US bank) and came from THIS SEAT's own flagged candidate column -- putting a warned-about value in a column that reads as answers is what made it easy to pick up; ORA on US markets is Ormat Technologies (general knowledge, never measured here). ORANY is now MEASURED twice over: Andrew's own read of the vendor's symbol page, and batch14.json's candidates_probed recording ORANY = 'Orange S.A.' at name_overlap 1.0."
+      }
+    },
+    {
+      "folder": "QXO",
+      "sa_symbol": {
+        "value": "QXO.PR.B",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/QXO.PR.B . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "Andrew's explicit choice, verbatim: 'the QXO preferred is how we have xposure to that, which i thought would be more relevant for peers potentially versus ordinary common shares, but the news should be the same either way.' SA lists it as 'QXO, Inc. 5.50 DEP PFD'. WATCH: serveability is the DENSITY bar (>=3 mentions in 30 days), not issuer identity -- if SA files most QXO stories under the common, this line may not clear it. The density measurement settles it, not an opinion."
+      }
+    },
+    {
+      "folder": "Rio Tinto RIO LN",
+      "sa_symbol": {
+        "value": "RTPPF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/RTPPF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Roche ROG SW",
+      "sa_symbol": {
+        "value": "RHHBY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/RHHBY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "SSE plc SSE LN",
+      "sa_symbol": {
+        "value": "SSEZY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SSEZY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Sanofi SAN FP",
+      "sa_symbol": {
+        "value": "SNY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SNY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Schlumberger SLB",
+      "sa_symbol": {
+        "value": "SLB",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SLB . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Shopify SHOP CA",
+      "sa_symbol": {
+        "value": "SHOP",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SHOP . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Singapore Telecom ST SP",
+      "sa_symbol": {
+        "value": "SNGNF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SNGNF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Spotify SPOT US",
+      "sa_symbol": {
+        "value": "SPOT",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SPOT . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Sumitomo Mitsui Financial Group 8316 JP",
+      "sa_symbol": {
+        "value": "SMFG",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SMFG . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Synopsys SNPS US",
+      "sa_symbol": {
+        "value": "SNPS",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SNPS . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Taiwan Semiconductor Manufacturing TSM US",
+      "sa_symbol": {
+        "value": "TSM",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/TSM . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Telefonica Brazil VIVT3 BZ",
+      "sa_symbol": {
+        "value": "VIV",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/VIV . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Tokyo Electron 8035 JP",
+      "sa_symbol": {
+        "value": "TOELF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/TOELF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Tokyo Marine 8766 JP",
+      "sa_symbol": {
+        "value": "TKOMF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/TKOMF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "Folder spells it Tokyo; the company is TOKIO Marine. TKOMF is consistent with that."
+      }
+    },
+    {
+      "folder": "Total Energies TTE FP",
+      "sa_symbol": {
+        "value": "TTE",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/TTE . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "UBS",
+      "sa_symbol": {
+        "value": "UBS",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/UBS . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Uber Technologies UBER US",
+      "sa_symbol": {
+        "value": "UBER",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/UBER . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Unilever ULVR LN",
+      "sa_symbol": {
+        "value": "UL",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/UL . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Universal Music Group UMG NL",
+      "sa_symbol": {
+        "value": "UMGNF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/UMGNF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Valero Energy VLO",
+      "sa_symbol": {
+        "value": "VLO",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/VLO . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Visa V",
+      "sa_symbol": {
+        "value": "V",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/V . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Walmart de Mexico WALMEX MM",
+      "sa_symbol": {
+        "value": "WMMVY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/WMMVY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Workday WDAY US",
+      "sa_symbol": {
+        "value": "WDAY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/WDAY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Zoetis ZTS US",
+      "sa_symbol": {
+        "value": "ZTS",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/ZTS . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Zurich Insurance ZURN SW",
+      "sa_symbol": {
+        "value": "ZURVY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/ZURVY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    }
+  ]
+}

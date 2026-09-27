@@ -1,0 +1,3372 @@
+{
+  "artifact": "sa_symbol RESOLUTION -- MERGED (automated pass + Andrew-supplied)",
+  "author": "2.0.0_SA_COO~Y",
+  "generated_at": "2026-09-27T18:33Z",
+  "provider": "two sources, each record carrying its own status and evidence",
+  "criterion": "A record's provenance travels WITH it: the pass's records keep their INFERRED status and two-test evidence; Andrew's keep MEASURED and his symbol-page read. Nothing is re-graded by being merged.",
+  "denominator": {
+    "universe": 89,
+    "from_the_automated_pass": 56,
+    "from_Andrew": 33,
+    "merged_total": 89,
+    "overlap_resolved_twice": 0
+  },
+  "records": [
+    {
+      "folder": "ASML NA",
+      "company_name": "ASML",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "ASML",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED ASML -- SA names it 'ASML Holding N.V.' (test a) and 36 of 50 returned titles name the company (test b). Window: 2026-05-13 .. 2026-09-08, 2 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "ASML",
+          "sa_company": "ASML Holding N.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 2,
+          "oldest": "2026-05-13",
+          "newest": "2026-09-08",
+          "distinct_days": 30,
+          "covers_window": true
+        },
+        {
+          "symbol": "ASMLF",
+          "sa_company": "ASML Holding N.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 44,
+          "title_of": 47,
+          "records": 47,
+          "in_window": 0,
+          "oldest": "2022-06-17",
+          "newest": "2026-07-16",
+          "distinct_days": 24,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "XNDU",
+          "sa_company": "Xanadu Quantum Technologies Limited",
+          "score": 1046.5148,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Adobe ADBE US",
+      "company_name": "Adobe",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "ADBE",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED ADBE -- SA names it 'Adobe Inc.' (test a) and 26 of 50 returned titles name the company (test b). Window: 2026-06-15 .. 2026-09-13, 26 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "ADBE",
+          "sa_company": "Adobe Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 26,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 26,
+          "oldest": "2026-06-15",
+          "newest": "2026-09-13",
+          "distinct_days": 34,
+          "covers_window": true
+        },
+        {
+          "symbol": "ADBE:CA",
+          "sa_company": "Adobe Inc.",
+          "name_overlap": 1.0,
+          "http": 404,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "IBM",
+          "sa_company": "International Business Machines Corporation",
+          "score": 1394.3208,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "NEGG",
+          "sa_company": "Newegg Commerce, Inc.",
+          "score": 1069.4747,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "IBM:CA",
+          "sa_company": "International Business Machines Corporation",
+          "score": 664.89813,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Air Liquide AI FP",
+      "company_name": "Air Liquide",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "AIQUF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED AIQUF -- SA names it \"L'Air Liquide S.A.\" (test a) and 46 of 50 returned titles name the company (test b). Window: 2020-09-02 .. 2026-08-31, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "AIQUF",
+          "sa_company": "L'Air Liquide S.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 46,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2020-09-02",
+          "newest": "2026-08-31",
+          "distinct_days": 45,
+          "covers_window": true
+        },
+        {
+          "symbol": "AIQUY",
+          "sa_company": "L'Air Liquide S.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 48,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2022-06-21",
+          "newest": "2026-08-31",
+          "distinct_days": 47,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "APD",
+          "sa_company": "Air Products and Chemicals, Inc.",
+          "score": 37054.8,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "FDX",
+          "sa_company": "FedEx Corporation",
+          "score": 33981.535,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "WAB",
+          "sa_company": "Westinghouse Air Brake Technologies Corporation",
+          "score": 33654.668,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Alibaba BABA",
+      "company_name": "Alibaba",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BABA",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BABA -- SA names it 'Alibaba Group Holding Limited' (test a) and 33 of 50 returned titles name the company (test b). Window: 2026-07-20 .. 2026-09-10, 35 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BABA",
+          "sa_company": "Alibaba Group Holding Limited",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 33,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 35,
+          "oldest": "2026-07-20",
+          "newest": "2026-09-10",
+          "distinct_days": 29,
+          "covers_window": true
+        },
+        {
+          "symbol": "BABAF",
+          "sa_company": "Alibaba Group Holding Limited",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 41,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 6,
+          "oldest": "2024-06-11",
+          "newest": "2026-09-10",
+          "distinct_days": 46,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "America Movil AXMB MM",
+      "company_name": "America Movil",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "AMX",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED AMX -- SA names it 'Am\u00e9rica M\u00f3vil, S.A.B. de C.V.' (test a) and 36 of 50 returned titles name the company (test b). Window: 2020-07-14 .. 2026-09-12, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "AMX",
+          "sa_company": "Am\u00e9rica M\u00f3vil, S.A.B. de C.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2020-07-14",
+          "newest": "2026-09-12",
+          "distinct_days": 49,
+          "covers_window": true
+        },
+        {
+          "symbol": "AMXOF",
+          "sa_company": "Am\u00e9rica M\u00f3vil, S.A.B. de C.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 1,
+          "title_of": 1,
+          "records": 1,
+          "in_window": 0,
+          "oldest": "2025-02-12",
+          "newest": "2025-02-12",
+          "distinct_days": 1,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "LILA",
+          "sa_company": "Liberty Latin America Ltd.",
+          "score": 26651.33,
+          "name_overlap": 0.25
+        },
+        {
+          "symbol": "LILAK",
+          "sa_company": "Liberty Latin America Ltd.",
+          "score": 26079.791,
+          "name_overlap": 0.25
+        },
+        {
+          "symbol": "LILAB",
+          "sa_company": "Liberty Latin America Ltd.",
+          "score": 17077.67,
+          "name_overlap": 0.25
+        }
+      ]
+    },
+    {
+      "folder": "AstraZeneca AZN",
+      "company_name": "AstraZeneca",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "AZN",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED AZN -- SA names it 'AstraZeneca PLC' (test a) and 36 of 50 returned titles name the company (test b). Window: 2026-04-29 .. 2026-09-11, 12 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "AZN",
+          "sa_company": "AstraZeneca PLC",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 12,
+          "oldest": "2026-04-29",
+          "newest": "2026-09-11",
+          "distinct_days": 37,
+          "covers_window": true
+        },
+        {
+          "symbol": "AZNH",
+          "sa_company": "AstraZeneca PLC ADRhedged ETF",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 3,
+          "title_of": 3,
+          "records": 3,
+          "in_window": 0,
+          "oldest": "2026-04-29",
+          "newest": "2026-07-27",
+          "distinct_days": 2,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "MRK",
+          "sa_company": "Merck & Co., Inc.",
+          "score": 1709.6339,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "NKTR",
+          "sa_company": "Nektar Therapeutics",
+          "score": 1315.2881,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "VYGR",
+          "sa_company": "Voyager Therapeutics, Inc.",
+          "score": 1153.4614,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "BB Seguridade BBSE3 BZ",
+      "company_name": "BB Seguridade",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BBSEY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BBSEY -- SA names it 'BB Seguridade Participa\u00e7\u00f5es S.A.' (test a) and 12 of 17 returned titles name the company (test b). Window: 2022-02-07 .. 2026-09-10, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BBSEY",
+          "sa_company": "BB Seguridade Participa\u00e7\u00f5es S.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 12,
+          "title_of": 17,
+          "records": 17,
+          "in_window": 1,
+          "oldest": "2022-02-07",
+          "newest": "2026-09-10",
+          "distinct_days": 15,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>BB</b>",
+          "sa_company": "BlackBerry Limited",
+          "score": 9255.106,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>BBY</b>",
+          "sa_company": "Best Buy Co., Inc.",
+          "score": 7612.8027,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>BBAI</b>",
+          "sa_company": "BigBear.ai Holdings, Inc.",
+          "score": 6946.7974,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "BNP Paribas BNP FP",
+      "company_name": "BNP Paribas",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BNPQF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BNPQF -- SA names it 'BNP Paribas SA' (test a) and 30 of 50 returned titles name the company (test b). Window: 2022-10-01 .. 2026-08-26, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:29Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BNPQF",
+          "sa_company": "BNP Paribas SA",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 30,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2022-10-01",
+          "newest": "2026-08-26",
+          "distinct_days": 47,
+          "covers_window": true
+        },
+        {
+          "symbol": "BNPQY",
+          "sa_company": "BNP Paribas SA",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 29,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2022-10-18",
+          "newest": "2026-08-26",
+          "distinct_days": 47,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "PDRDX",
+          "sa_company": "Principal Diversified Real Asset Fund; Inst",
+          "score": 13076.059,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "ESEFF",
+          "sa_company": "BNPPE FTSEEPRA/NAREITEurozone Capped UCITS ETF QDD",
+          "score": 12799.679,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "PRDAX",
+          "sa_company": "Principal Diversified Real Asset Fund; A",
+          "score": 9920.551,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "BP PLC",
+      "company_name": "BP",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BP",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BP -- SA names it 'BP p.l.c.' (test a) and 47 of 50 returned titles name the company (test b). Window: 2026-05-13 .. 2026-09-09, 5 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BP",
+          "sa_company": "BP p.l.c.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 47,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 5,
+          "oldest": "2026-05-13",
+          "newest": "2026-09-09",
+          "distinct_days": 35,
+          "covers_window": true
+        },
+        {
+          "symbol": "BPAQF",
+          "sa_company": "BP p.l.c.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 30,
+          "title_of": 30,
+          "records": 30,
+          "in_window": 0,
+          "oldest": "2022-02-08",
+          "newest": "2026-08-04",
+          "distinct_days": 18,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>BPOP</b>",
+          "sa_company": "Popular, Inc.",
+          "score": 22153.553,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>BPTH</b>",
+          "sa_company": "Bio-Path Holdings, Inc.",
+          "score": 22111.195,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>BPTRX</b>",
+          "sa_company": "Baron Partners Fund; Retail",
+          "score": 19618.754,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Boeing BA",
+      "company_name": "Boeing",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BA",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BA -- SA names it 'The Boeing Company' (test a) and 40 of 50 returned titles name the company (test b). Window: 2026-07-24 .. 2026-09-12, 24 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BA",
+          "sa_company": "The Boeing Company",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 40,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 24,
+          "oldest": "2026-07-24",
+          "newest": "2026-09-12",
+          "distinct_days": 27,
+          "covers_window": true
+        },
+        {
+          "symbol": "BA:CA",
+          "sa_company": "The Boeing Company",
+          "name_overlap": 1.0,
+          "http": 404,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "ALK",
+          "sa_company": "Alaska Air Group, Inc.",
+          "score": 1818.8315,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "LUV",
+          "sa_company": "Southwest Airlines Co.",
+          "score": 1623.3632,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "ANZFF",
+          "sa_company": "Air New Zealand Limited",
+          "score": 1226.7632,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "British American Tobacco",
+      "company_name": "British American Tobacco",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BTI",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BTI -- SA names it 'British American Tobacco p.l.c.' (test a) and 38 of 50 returned titles name the company (test b). Window: 2025-02-13 .. 2026-09-11, 2 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BTI",
+          "sa_company": "British American Tobacco p.l.c.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 38,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 2,
+          "oldest": "2025-02-13",
+          "newest": "2026-09-11",
+          "distinct_days": 49,
+          "covers_window": true
+        },
+        {
+          "symbol": "BTAFF",
+          "sa_company": "British American Tobacco p.l.c.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 7,
+          "title_of": 9,
+          "records": 9,
+          "in_window": 0,
+          "oldest": "2015-06-03",
+          "newest": "2026-04-21",
+          "distinct_days": 8,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "FXB",
+          "sa_company": "Invesco CurrencyShares British Pound Strlng Tr ETF",
+          "score": 10342.753,
+          "name_overlap": 0.143
+        },
+        {
+          "symbol": "JAPAF",
+          "sa_company": "Japan Tobacco Inc.",
+          "score": 9392.139,
+          "name_overlap": 0.25
+        },
+        {
+          "symbol": "JAPAY",
+          "sa_company": "Japan Tobacco Inc.",
+          "score": 9112.31,
+          "name_overlap": 0.25
+        }
+      ]
+    },
+    {
+      "folder": "Bunzl BNZL GB",
+      "company_name": "Bunzl",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "BZLFF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED BZLFF -- SA names it 'Bunzl plc' (test a) and 18 of 18 returned titles name the company (test b). Window: 2018-08-28 .. 2026-09-01, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "BZLFF",
+          "sa_company": "Bunzl plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 18,
+          "title_of": 18,
+          "records": 18,
+          "in_window": 1,
+          "oldest": "2018-08-28",
+          "newest": "2026-09-01",
+          "distinct_days": 15,
+          "covers_window": true
+        },
+        {
+          "symbol": "BZLFY",
+          "sa_company": "Bunzl plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 10,
+          "title_of": 10,
+          "records": 10,
+          "in_window": 1,
+          "oldest": "2017-02-27",
+          "newest": "2026-09-01",
+          "distinct_days": 10,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Cadence CDNS US",
+      "company_name": "Cadence",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CDNS",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CDNS -- SA names it 'Cadence Design Systems, Inc.' (test a) and 36 of 50 returned titles name the company (test b). Window: 2025-09-06 .. 2026-09-05, 5 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CDNS",
+          "sa_company": "Cadence Design Systems, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 5,
+          "oldest": "2025-09-06",
+          "newest": "2026-09-05",
+          "distinct_days": 37,
+          "covers_window": true
+        },
+        {
+          "symbol": "RARMF",
+          "sa_company": "Cadence Minerals Plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "GSIT",
+          "sa_company": "GSI Technology, Inc.",
+          "score": 1171.4158,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "PL",
+          "sa_company": "Planet Labs PBC",
+          "score": 1168.518,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "VCLD",
+          "sa_company": "Verecloud, Inc.",
+          "score": 522.42676,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Canadian National Railway CNR",
+      "company_name": "Canadian National Railway",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CNI",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CNI -- SA names it 'Canadian National Railway Company' (test a) and 36 of 50 returned titles name the company (test b). Window: 2024-10-23 .. 2026-09-03, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CNI",
+          "sa_company": "Canadian National Railway Company",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2024-10-23",
+          "newest": "2026-09-03",
+          "distinct_days": 38,
+          "covers_window": true
+        },
+        {
+          "symbol": "CNR:CA",
+          "sa_company": "Canadian National Railway Company",
+          "name_overlap": 1.0,
+          "http": 404,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "CP",
+          "sa_company": "Canadian Pacific Kansas City Limited",
+          "score": 10268.595,
+          "name_overlap": 0.2
+        },
+        {
+          "symbol": "FNMA",
+          "sa_company": "Federal National Mortgage Association",
+          "score": 9365.93,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "CNQ",
+          "sa_company": "Canadian Natural Resources Limited",
+          "score": 8937.976,
+          "name_overlap": 0.333
+        }
+      ]
+    },
+    {
+      "folder": "Celsius CELH",
+      "company_name": "Celsius",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CELH",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CELH -- SA names it 'Celsius Holdings, Inc.' (test a) and 39 of 50 returned titles name the company (test b). Window: 2025-06-04 .. 2026-09-11, 4 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CELH",
+          "sa_company": "Celsius Holdings, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 39,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 4,
+          "oldest": "2025-06-04",
+          "newest": "2026-09-11",
+          "distinct_days": 40,
+          "covers_window": true
+        },
+        {
+          "symbol": "CEL-USD",
+          "sa_company": "Celsius",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 14,
+          "title_of": 14,
+          "records": 14,
+          "in_window": 0,
+          "oldest": "2022-04-22",
+          "newest": "2025-05-09",
+          "distinct_days": 13,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "CDNS",
+          "sa_company": "Cadence Design Systems, Inc.",
+          "score": 1222.5911,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "China Construction Bank",
+      "company_name": "China Construction Bank",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CICHY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CICHY -- SA names it 'China Construction Bank Corporation' (test a) and 21 of 25 returned titles name the company (test b). Window: 2011-01-05 .. 2026-03-27, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CICHY",
+          "sa_company": "China Construction Bank Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 21,
+          "title_of": 25,
+          "records": 25,
+          "in_window": 0,
+          "oldest": "2011-01-05",
+          "newest": "2026-03-27",
+          "distinct_days": 25,
+          "covers_window": true
+        },
+        {
+          "symbol": "CICHF",
+          "sa_company": "China Construction Bank Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 9,
+          "title_of": 11,
+          "records": 11,
+          "in_window": 0,
+          "oldest": "2010-12-22",
+          "newest": "2025-03-30",
+          "distinct_days": 11,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "CIGI",
+          "sa_company": "Colliers International Group Inc.",
+          "score": 20877.186,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "CFTLF",
+          "sa_company": "Chinasoft International Limited",
+          "score": 17250.129,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "YMAIF",
+          "sa_company": "Yoma Strategic Holdings Ltd.",
+          "score": 15469.104,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Clorox CLX",
+      "company_name": "Clorox",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CLX",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CLX -- SA names it 'The Clorox Company' (test a) and 38 of 50 returned titles name the company (test b). Window: 2025-05-04 .. 2026-09-13, 4 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T03:30Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CLX",
+          "sa_company": "The Clorox Company",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 38,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 4,
+          "oldest": "2025-05-04",
+          "newest": "2026-09-13",
+          "distinct_days": 38,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "HBB",
+          "sa_company": "Hamilton Beach Brands Holding Company",
+          "score": 1117.942,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Costco COST",
+      "company_name": "Costco",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "COST",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED COST -- SA names it 'Costco Wholesale Corporation' (test a) and 34 of 50 returned titles name the company (test b). Window: 2026-03-25 .. 2026-09-12, 6 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-14T08:21Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "COST",
+          "sa_company": "Costco Wholesale Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 34,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 6,
+          "oldest": "2026-03-25",
+          "newest": "2026-09-12",
+          "distinct_days": 39,
+          "covers_window": true
+        },
+        {
+          "symbol": "COST:CA",
+          "sa_company": "Costco Wholesale Corporation",
+          "name_overlap": 1.0,
+          "http": 403,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Coca Cola Femsa",
+      "company_name": "Coca Cola Femsa",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "KOF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED KOF -- SA names it 'Coca-Cola FEMSA, S.A.B. de C.V.' (test a) and 44 of 50 returned titles name the company (test b). Window: 2019-05-31 .. 2026-09-15, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:37Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "KOF",
+          "sa_company": "Coca-Cola FEMSA, S.A.B. de C.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 44,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2019-05-31",
+          "newest": "2026-09-15",
+          "distinct_days": 46,
+          "covers_window": true
+        },
+        {
+          "symbol": "COCSF",
+          "sa_company": "Coca-Cola FEMSA, S.A.B. de C.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 6,
+          "title_of": 6,
+          "records": 6,
+          "in_window": 0,
+          "oldest": "2023-10-25",
+          "newest": "2026-07-27",
+          "distinct_days": 5,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "FMX",
+          "sa_company": "Fomento Econ\u00f3mico Mexicano, S.A.B. de C.V.",
+          "score": 32286.42,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "FMXUF",
+          "sa_company": "Fomento Econ\u00f3mico Mexicano, S.A.B. de C.V. FEMSA UBD Units",
+          "score": 27615.904,
+          "name_overlap": 0.143
+        }
+      ]
+    },
+    {
+      "folder": "Copa CPA",
+      "company_name": "Copa",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "CPA",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED CPA -- SA names it 'Copa Holdings, S.A.' (test a) and 49 of 50 returned titles name the company (test b). Window: 2024-11-20 .. 2026-09-10, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:38Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "CPA",
+          "sa_company": "Copa Holdings, S.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 49,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2024-11-20",
+          "newest": "2026-09-10",
+          "distinct_days": 39,
+          "covers_window": true
+        },
+        {
+          "symbol": "COPAF",
+          "sa_company": "CopAur Minerals Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 3,
+          "title_of": 3,
+          "records": 3,
+          "in_window": 0,
+          "oldest": "2024-07-08",
+          "newest": "2025-09-23",
+          "distinct_days": 3,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>COPA</b>",
+          "sa_company": "Themes Copper Miners ETF",
+          "score": 309864.0,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "EDVA",
+          "sa_company": "Endovia Health Sciences, Inc.",
+          "score": 1290.5767,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Enel SpA ENEL IM",
+      "company_name": "Enel SpA",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "ENLAY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED ENLAY -- SA names it 'Enel SpA' (test a) and 38 of 50 returned titles name the company (test b). Window: 2020-05-13 .. 2026-09-13, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:39Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "ENLAY",
+          "sa_company": "Enel SpA",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 38,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2020-05-13",
+          "newest": "2026-09-13",
+          "distinct_days": 48,
+          "covers_window": true
+        },
+        {
+          "symbol": "ESOCF",
+          "sa_company": "Enel SpA",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 5,
+          "title_of": 6,
+          "records": 6,
+          "in_window": 0,
+          "oldest": "2023-05-03",
+          "newest": "2026-05-26",
+          "distinct_days": 6,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "SPCX",
+          "sa_company": "Space Exploration Technologies Corp.",
+          "score": 6918.046,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "ASTS",
+          "sa_company": "AST SpaceMobile, Inc.",
+          "score": 6631.0337,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "EXR",
+          "sa_company": "Extra Space Storage Inc.",
+          "score": 6139.0513,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "GSK LN",
+      "company_name": "GSK",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "GSK",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED GSK -- SA names it 'GSK plc' (test a) and 26 of 50 returned titles name the company (test b). Window: 2026-05-14 .. 2026-09-24, 11 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-26T19:40Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "GSK",
+          "sa_company": "GSK plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 26,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 11,
+          "oldest": "2026-05-14",
+          "newest": "2026-09-24",
+          "distinct_days": 38,
+          "covers_window": true
+        },
+        {
+          "symbol": "GLAXF",
+          "sa_company": "GSK plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 6,
+          "title_of": 45,
+          "records": 45,
+          "in_window": 0,
+          "oldest": "2019-11-14",
+          "newest": "2026-07-28",
+          "distinct_days": 41,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>GSKRF</b>",
+          "sa_company": "Goldsky Resources Corp.",
+          "score": 14565.813,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>GSKR:CA</b>",
+          "sa_company": "Goldsky Resources Corp.",
+          "score": 11673.556,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>GSKPX</b>",
+          "sa_company": "Goldman Sachs Tax-Advantaged Global Eqty Ptf; P",
+          "score": 9312.886,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Global Payments GPN",
+      "company_name": "Global Payments",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "GPN",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED GPN -- SA names it 'Global Payments Inc.' (test a) and 46 of 50 returned titles name the company (test b). Window: 2025-04-25 .. 2026-09-11, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:41Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "GPN",
+          "sa_company": "Global Payments Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 46,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2025-04-25",
+          "newest": "2026-09-11",
+          "distinct_days": 34,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "GS",
+          "sa_company": "The Goldman Sachs Group, Inc.",
+          "score": 32675.273,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "IPAY",
+          "sa_company": "Amplify Digital Payments ETF",
+          "score": 32376.635,
+          "name_overlap": 0.333
+        },
+        {
+          "symbol": "AXP",
+          "sa_company": "American Express Company",
+          "score": 31829.283,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Grupo Aeroportuario del Centro OMAB MM",
+      "company_name": "Grupo Aeroportuario del Centro",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "OMAB",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED OMAB -- SA names it 'Grupo Aeroportuario del Centro Norte, S.A.B. de C.V.' (test a) and 46 of 50 returned titles name the company (test b). Window: 2019-07-25 .. 2026-07-29, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:42Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "OMAB",
+          "sa_company": "Grupo Aeroportuario del Centro Norte, S.A.B. de C.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 46,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2019-07-25",
+          "newest": "2026-07-29",
+          "distinct_days": 50,
+          "covers_window": true
+        },
+        {
+          "symbol": "GAERF",
+          "sa_company": "Grupo Aeroportuario del Centro Norte, S.A.B. de C.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 1,
+          "title_of": 1,
+          "records": 1,
+          "in_window": 0,
+          "oldest": "2024-02-23",
+          "newest": "2024-02-23",
+          "distinct_days": 1,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>DELL</b>",
+          "sa_company": "Dell Technologies Inc.",
+          "score": 10522.957,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "GGAL",
+          "sa_company": "Grupo Financiero Galicia S.A.",
+          "score": 9429.391,
+          "name_overlap": 0.2
+        },
+        {
+          "symbol": "CIB",
+          "sa_company": "Grupo Cibest S.A.",
+          "score": 9262.9795,
+          "name_overlap": 0.25
+        }
+      ]
+    },
+    {
+      "folder": "HEICO Corporation HEI US",
+      "company_name": "HEICO Corporation",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "HEI",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED HEI -- SA names it 'HEICO Corporation' (test a) and 36 of 50 returned titles name the company (test b). Window: 2024-10-21 .. 2026-09-15, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:43Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "HEI",
+          "sa_company": "HEICO Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2024-10-21",
+          "newest": "2026-09-15",
+          "distinct_days": 44,
+          "covers_window": true
+        },
+        {
+          "symbol": "HEI.A",
+          "sa_company": "HEICO Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 25,
+          "title_of": 32,
+          "records": 32,
+          "in_window": 0,
+          "oldest": "2017-04-19",
+          "newest": "2026-08-26",
+          "distinct_days": 32,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "NVDA",
+          "sa_company": "NVIDIA Corporation",
+          "score": 7020.748,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "MSFT",
+          "sa_company": "Microsoft Corporation",
+          "score": 6830.4497,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "INTC",
+          "sa_company": "Intel Corporation",
+          "score": 6692.418,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "HSBC HSBA LN",
+      "company_name": "HSBC",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "HSBC",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED HSBC -- SA names it 'HSBC Holdings plc' (test a) and 38 of 50 returned titles name the company (test b). Window: 2025-10-27 .. 2026-09-10, 2 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:44Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "HSBC",
+          "sa_company": "HSBC Holdings plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 38,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 2,
+          "oldest": "2025-10-27",
+          "newest": "2026-09-10",
+          "distinct_days": 41,
+          "covers_window": true
+        },
+        {
+          "symbol": "HBCYF",
+          "sa_company": "HSBC Holdings plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 44,
+          "title_of": 46,
+          "records": 46,
+          "in_window": 0,
+          "oldest": "2022-02-22",
+          "newest": "2026-08-04",
+          "distinct_days": 36,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Hermes RMS",
+      "company_name": "Hermes",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "FHI",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED FHI -- SA names it 'Federated Hermes, Inc.' (test a) and 48 of 50 returned titles name the company (test b). Window: 2023-08-04 .. 2026-07-31, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:45Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "FHI",
+          "sa_company": "Federated Hermes, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 48,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2023-08-04",
+          "newest": "2026-07-31",
+          "distinct_days": 44,
+          "covers_window": true
+        },
+        {
+          "symbol": "HESAY",
+          "sa_company": "Herm\u00e8s International Soci\u00e9t\u00e9 en commandite par actions",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 14,
+          "title_of": 23,
+          "records": 23,
+          "in_window": 2,
+          "oldest": "2017-09-14",
+          "newest": "2026-09-11",
+          "distinct_days": 22,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Home Depot HD",
+      "company_name": "Home Depot",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "HD",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED HD -- SA names it 'The Home Depot, Inc.' (test a) and 30 of 50 returned titles name the company (test b). Window: 2026-02-23 .. 2026-09-03, 3 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-26T19:46Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "HD",
+          "sa_company": "The Home Depot, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 30,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 3,
+          "oldest": "2026-02-23",
+          "newest": "2026-09-03",
+          "distinct_days": 35,
+          "covers_window": true
+        },
+        {
+          "symbol": "HD:CA",
+          "sa_company": "The Home Depot, Inc.",
+          "name_overlap": 1.0,
+          "http": 404,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "TREX",
+          "sa_company": "Trex Company, Inc.",
+          "score": 27819.82,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "KGFHF",
+          "sa_company": "Kingfisher plc",
+          "score": 19218.547,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "KGFHY",
+          "sa_company": "Kingfisher plc",
+          "score": 19101.455,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Hon Hai 2317 TT",
+      "company_name": "Hon Hai",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "HNHPF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED HNHPF -- SA names it 'Hon Hai Precision Industry Co., Ltd.' (test a) and 4 of 50 returned titles name the company (test b). Window: 2025-05-19 .. 2026-09-13, 3 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-26T19:48Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "HNHPF",
+          "sa_company": "Hon Hai Precision Industry Co., Ltd.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 4,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 3,
+          "oldest": "2025-05-19",
+          "newest": "2026-09-13",
+          "distinct_days": 45,
+          "covers_window": true
+        },
+        {
+          "symbol": "HNHAF",
+          "sa_company": "Hon Hai Precision Industry Co., Ltd.",
+          "name_overlap": 1.0,
+          "http": "URLError",
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>HON</b>",
+          "sa_company": "Honeywell International Inc.",
+          "score": 9762.167,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>HAIN</b>",
+          "sa_company": "The Hain Celestial Group, Inc.",
+          "score": 9631.403,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "HMC",
+          "sa_company": "Honda Motor Co., Ltd.",
+          "score": 6724.5435,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "ICICI Bank ICICIBC IN",
+      "company_name": "ICICI Bank",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "IBN",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED IBN -- SA names it 'ICICI Bank Limited' (test a) and 27 of 50 returned titles name the company (test b). Window: 2013-07-12 .. 2026-07-23, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:48Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "IBN",
+          "sa_company": "ICICI Bank Limited",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 27,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2013-07-12",
+          "newest": "2026-07-23",
+          "distinct_days": 50,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "BAC",
+          "sa_company": "Bank of America Corporation",
+          "score": 9671.061,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "TD",
+          "sa_company": "The Toronto-Dominion Bank",
+          "score": 8341.319,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "RY",
+          "sa_company": "Royal Bank of Canada",
+          "score": 8007.1724,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Iberdrola IBE SM",
+      "company_name": "Iberdrola",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "IBDSF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED IBDSF -- SA names it 'Iberdrola, S.A.' (test a) and 45 of 50 returned titles name the company (test b). Window: 2024-01-17 .. 2026-07-22, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:49Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "IBDSF",
+          "sa_company": "Iberdrola, S.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 45,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2024-01-17",
+          "newest": "2026-07-22",
+          "distinct_days": 47,
+          "covers_window": true
+        },
+        {
+          "symbol": "IBDRY",
+          "sa_company": "Iberdrola, S.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 42,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2024-01-08",
+          "newest": "2026-07-22",
+          "distinct_days": 48,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Idexx IDXX",
+      "company_name": "Idexx",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "IDXX",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED IDXX -- SA names it 'IDEXX Laboratories, Inc.' (test a) and 43 of 50 returned titles name the company (test b). Window: 2024-01-30 .. 2026-09-18, 2 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:50Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "IDXX",
+          "sa_company": "IDEXX Laboratories, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 43,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 2,
+          "oldest": "2024-01-30",
+          "newest": "2026-09-18",
+          "distinct_days": 35,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Imperial Brands IMB LN",
+      "company_name": "Imperial Brands",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "IMBBY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED IMBBY -- SA names it 'Imperial Brands PLC' (test a) and 27 of 50 returned titles name the company (test b). Window: 2020-01-29 .. 2026-08-10, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:51Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "IMBBY",
+          "sa_company": "Imperial Brands PLC",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 27,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2020-01-29",
+          "newest": "2026-08-10",
+          "distinct_days": 41,
+          "covers_window": true
+        },
+        {
+          "symbol": "IMBBF",
+          "sa_company": "Imperial Brands PLC",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 8,
+          "title_of": 10,
+          "records": 10,
+          "in_window": 0,
+          "oldest": "2018-01-23",
+          "newest": "2026-04-21",
+          "distinct_days": 9,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "AOUT",
+          "sa_company": "American Outdoor Brands, Inc.",
+          "score": 27608.475,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "PDRDF",
+          "sa_company": "Pernod Ricard SA",
+          "score": 22893.377,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "CCU",
+          "sa_company": "Compa\u00f1\u00eda Cervecer\u00edas Unidas S.A.",
+          "score": 21846.133,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Intesa Sanpaolo ISP IM",
+      "company_name": "Intesa Sanpaolo",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "ISNPY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED ISNPY -- SA names it 'Intesa Sanpaolo S.p.A.' (test a) and 29 of 37 returned titles name the company (test b). Window: 2011-06-13 .. 2026-07-29, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:53Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "ISNPY",
+          "sa_company": "Intesa Sanpaolo S.p.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 29,
+          "title_of": 37,
+          "records": 37,
+          "in_window": 0,
+          "oldest": "2011-06-13",
+          "newest": "2026-07-29",
+          "distinct_days": 36,
+          "covers_window": true
+        },
+        {
+          "symbol": "IITSF",
+          "sa_company": "Intesa Sanpaolo S.p.A.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 13,
+          "title_of": 16,
+          "records": 16,
+          "in_window": 0,
+          "oldest": "2020-03-31",
+          "newest": "2026-07-29",
+          "distinct_days": 15,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Intuit INTU",
+      "company_name": "Intuit",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "INTU",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED INTU -- SA names it 'Intuit Inc.' (test a) and 30 of 50 returned titles name the company (test b). Window: 2026-01-08 .. 2026-09-25, 5 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-26T19:54Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "INTU",
+          "sa_company": "Intuit Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 30,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 5,
+          "oldest": "2026-01-08",
+          "newest": "2026-09-25",
+          "distinct_days": 39,
+          "covers_window": true
+        },
+        {
+          "symbol": "ISRG",
+          "sa_company": "Intuitive Surgical, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 41,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2025-06-09",
+          "newest": "2026-09-18",
+          "distinct_days": 35,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "TXG",
+          "sa_company": "10x Genomics, Inc.",
+          "score": 621.6997,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "ALIT",
+          "sa_company": "Alight, Inc.",
+          "score": 577.94965,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "THG",
+          "sa_company": "The Hanover Insurance Group, Inc.",
+          "score": 446.48386,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Intuitive Surgical ISRG US",
+      "company_name": "Intuitive Surgical",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "ISRG",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED ISRG -- SA names it 'Intuitive Surgical, Inc.' (test a) and 41 of 50 returned titles name the company (test b). Window: 2025-06-09 .. 2026-09-18, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T19:55Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "ISRG",
+          "sa_company": "Intuitive Surgical, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 41,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2025-06-09",
+          "newest": "2026-09-18",
+          "distinct_days": 35,
+          "covers_window": true
+        },
+        {
+          "symbol": "ISRG:CA",
+          "sa_company": "Intuitive Surgical, Inc.",
+          "name_overlap": 1.0,
+          "http": 404,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "LUNR",
+          "sa_company": "Intuitive Machines, Inc.",
+          "score": 12279.196,
+          "name_overlap": 0.333
+        },
+        {
+          "symbol": "STAA",
+          "sa_company": "STAAR Surgical Company",
+          "score": 10697.618,
+          "name_overlap": 0.333
+        },
+        {
+          "symbol": "RBOT",
+          "sa_company": "Vicarious Surgical Inc.",
+          "score": 9598.317,
+          "name_overlap": 0.333
+        }
+      ]
+    },
+    {
+      "folder": "JD.com 9618 HK",
+      "company_name": "JD.com",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "JD",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED JD -- SA names it 'JD.com, Inc.' (test a) and 32 of 50 returned titles name the company (test b). Window: 2025-11-13 .. 2026-09-10, 2 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T20:02Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "JD",
+          "sa_company": "JD.com, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 32,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 2,
+          "oldest": "2025-11-13",
+          "newest": "2026-09-10",
+          "distinct_days": 38,
+          "covers_window": true
+        },
+        {
+          "symbol": "JDCMF",
+          "sa_company": "JD.com, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 15,
+          "title_of": 15,
+          "records": 15,
+          "in_window": 0,
+          "oldest": "2024-05-16",
+          "newest": "2026-08-13",
+          "distinct_days": 10,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>JDSPY</b>",
+          "sa_company": "JD Sports Fashion Plc",
+          "score": 6777.8237,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>JDST</b>",
+          "sa_company": "Direxion Daily Junior Gold Miners Idx Bear 2X ETF",
+          "score": 6537.274,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>JDHIF</b>",
+          "sa_company": "JD Health International Inc.",
+          "score": 5551.769,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "KDDI",
+      "company_name": "KDDI",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "KDDIY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED KDDIY -- SA names it 'KDDI Corporation' (test a) and 20 of 22 returned titles name the company (test b). Window: 2011-10-13 .. 2026-08-07, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T20:03Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "KDDIY",
+          "sa_company": "KDDI Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 20,
+          "title_of": 22,
+          "records": 22,
+          "in_window": 0,
+          "oldest": "2011-10-13",
+          "newest": "2026-08-07",
+          "distinct_days": 21,
+          "covers_window": true
+        },
+        {
+          "symbol": "KDDIF",
+          "sa_company": "KDDI Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 16,
+          "title_of": 17,
+          "records": 17,
+          "in_window": 0,
+          "oldest": "2016-11-02",
+          "newest": "2026-08-07",
+          "distinct_days": 17,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "OKCTF",
+          "sa_company": "Okinawa Cellular Telephone Company",
+          "score": 760.167,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Kimberly Clark KMB",
+      "company_name": "Kimberly Clark",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "KMB",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED KMB -- SA names it 'Kimberly-Clark Corporation' (test a) and 37 of 50 returned titles name the company (test b). Window: 2025-10-30 .. 2026-09-23, 7 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-26T20:04Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "KMB",
+          "sa_company": "Kimberly-Clark Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 37,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 7,
+          "oldest": "2025-10-30",
+          "newest": "2026-09-23",
+          "distinct_days": 37,
+          "covers_window": true
+        },
+        {
+          "symbol": "KCDMF",
+          "sa_company": "Kimberly-Clark de M\u00e9xico, S. A. B. de C. V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 11,
+          "title_of": 11,
+          "records": 11,
+          "in_window": 0,
+          "oldest": "2015-10-07",
+          "newest": "2026-04-22",
+          "distinct_days": 11,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "KPOC",
+          "sa_company": "Kimberly Parry Organics Inc.",
+          "score": 6863.441,
+          "name_overlap": 0.25
+        },
+        {
+          "symbol": "CLKFF",
+          "sa_company": "Clarke Inc.",
+          "score": 5988.284,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "CKNHF",
+          "sa_company": "Clarkson PLC",
+          "score": 5891.303,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Koninklijke KPN NA",
+      "company_name": "KPN",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "KKPNY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED KKPNY -- SA names it 'Koninklijke KPN N.V.' (test a) and 22 of 29 returned titles name the company (test b). Window: 2012-05-09 .. 2026-07-22, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T20:05Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "KKPNY",
+          "sa_company": "Koninklijke KPN N.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 22,
+          "title_of": 29,
+          "records": 29,
+          "in_window": 0,
+          "oldest": "2012-05-09",
+          "newest": "2026-07-22",
+          "distinct_days": 28,
+          "covers_window": true
+        },
+        {
+          "symbol": "KKPNF",
+          "sa_company": "Koninklijke KPN N.V.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 20,
+          "title_of": 20,
+          "records": 20,
+          "in_window": 0,
+          "oldest": "2016-07-27",
+          "newest": "2025-10-28",
+          "distinct_days": 20,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>KPNT</b>",
+          "sa_company": "Kepuni Holdings Inc.",
+          "score": 5565.706,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Lenovo 992 HK",
+      "company_name": "Lenovo",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "LNVGY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED LNVGY -- SA names it 'Lenovo Group Limited' (test a) and 27 of 50 returned titles name the company (test b). Window: 2023-11-27 .. 2026-09-15, 2 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T20:06Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "LNVGY",
+          "sa_company": "Lenovo Group Limited",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 27,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 2,
+          "oldest": "2023-11-27",
+          "newest": "2026-09-15",
+          "distinct_days": 47,
+          "covers_window": true
+        },
+        {
+          "symbol": "LNVGF",
+          "sa_company": "Lenovo Group Limited",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 29,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2019-04-10",
+          "newest": "2026-09-25",
+          "distinct_days": 47,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "NEGG",
+          "sa_company": "Newegg Commerce, Inc.",
+          "score": 1188.861,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "MSCI Inc MSCI US",
+      "company_name": "MSCI Inc",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "MSCI",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED MSCI -- SA names it 'MSCI Inc.' (test a) and 33 of 50 returned titles name the company (test b). Window: 2025-08-26 .. 2026-08-18, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T20:06Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "MSCI",
+          "sa_company": "MSCI Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 33,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2025-08-26",
+          "newest": "2026-08-18",
+          "distinct_days": 33,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "EEM",
+          "sa_company": "iShares MSCI Emerging Markets ETF",
+          "score": 141368.83,
+          "name_overlap": 0.25
+        },
+        {
+          "symbol": "EWZ",
+          "sa_company": "iShares MSCI Brazil ETF",
+          "score": 136649.67,
+          "name_overlap": 0.333
+        },
+        {
+          "symbol": "EWJ",
+          "sa_company": "iShares MSCI Japan ETF",
+          "score": 127516.13,
+          "name_overlap": 0.333
+        }
+      ]
+    },
+    {
+      "folder": "Manila MER PER",
+      "company_name": "Manila Electric",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "MAEOY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED MAEOY -- SA names it 'Manila Electric Company' (test a) and 3 of 3 returned titles name the company (test b). Window: 2023-08-25 .. 2024-08-27, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T20:07Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "MAEOY",
+          "sa_company": "Manila Electric Company",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 3,
+          "title_of": 3,
+          "records": 3,
+          "in_window": 0,
+          "oldest": "2023-08-25",
+          "newest": "2024-08-27",
+          "distinct_days": 3,
+          "covers_window": true
+        },
+        {
+          "symbol": "MERVF",
+          "sa_company": "Manila Electric Company",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "MDEVF",
+          "sa_company": "Melco International Development Limited",
+          "score": 13944.158,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "AEP",
+          "sa_company": "American Electric Power Company, Inc.",
+          "score": 10881.214,
+          "name_overlap": 0.25
+        },
+        {
+          "symbol": "EMR",
+          "sa_company": "Emerson Electric Co.",
+          "score": 9519.156,
+          "name_overlap": 0.333
+        }
+      ]
+    },
+    {
+      "folder": "Mastercard MA",
+      "company_name": "Mastercard",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "MA",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED MA -- SA names it 'Mastercard Incorporated' (test a) and 35 of 50 returned titles name the company (test b). Window: 2026-03-17 .. 2026-09-22, 5 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-26T20:08Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "MA",
+          "sa_company": "Mastercard Incorporated",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 35,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 5,
+          "oldest": "2026-03-17",
+          "newest": "2026-09-22",
+          "distinct_days": 33,
+          "covers_window": true
+        },
+        {
+          "symbol": "MA:CA",
+          "sa_company": "Mastercard Incorporated",
+          "name_overlap": 1.0,
+          "http": 404,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "HRB",
+          "sa_company": "H&R Block, Inc.",
+          "score": 1231.3143,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "FISV",
+          "sa_company": "Fiserv, Inc.",
+          "score": 1142.7573,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "RCI",
+          "sa_company": "Rogers Communications Inc.",
+          "score": 910.22064,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "MercadoLibre MELI US",
+      "company_name": "MercadoLibre",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "MELI",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED MELI -- SA names it 'MercadoLibre, Inc.' (test a) and 39 of 50 returned titles name the company (test b). Window: 2025-06-10 .. 2026-09-23, 4 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-26T20:09Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "MELI",
+          "sa_company": "MercadoLibre, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 39,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 4,
+          "oldest": "2025-06-10",
+          "newest": "2026-09-23",
+          "distinct_days": 38,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "Michelin ML FP",
+      "company_name": "Michelin",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "MGDDF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED MGDDF -- SA names it 'Compagnie G\u00e9n\u00e9rale des \u00c9tablissements Michelin Soci\u00e9t\u00e9 en commandite par actions' (test a) and 26 of 29 returned titles name the company (test b). Window: 2013-06-10 .. 2026-02-12, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T20:10Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "MGDDF",
+          "sa_company": "Compagnie G\u00e9n\u00e9rale des \u00c9tablissements Michelin Soci\u00e9t\u00e9 en commandite par actions",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 26,
+          "title_of": 29,
+          "records": 29,
+          "in_window": 0,
+          "oldest": "2013-06-10",
+          "newest": "2026-02-12",
+          "distinct_days": 29,
+          "covers_window": true
+        },
+        {
+          "symbol": "MGDDY",
+          "sa_company": "Compagnie G\u00e9n\u00e9rale des \u00c9tablissements Michelin Soci\u00e9t\u00e9 en commandite par actions",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 14,
+          "title_of": 17,
+          "records": 17,
+          "in_window": 0,
+          "oldest": "2011-12-07",
+          "newest": "2026-07-30",
+          "distinct_days": 17,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "RCKY",
+          "sa_company": "Rocky Brands, Inc.",
+          "score": 1016.4103,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Mitsubishi UFJ Financial Group 8306 JP",
+      "company_name": "Mitsubishi UFJ Financial Group",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "MUFG",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED MUFG -- SA names it 'Mitsubishi UFJ Financial Group, Inc.' (test a) and 20 of 50 returned titles name the company (test b). Window: 2021-08-19 .. 2026-09-01, 1 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T20:11Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "MUFG",
+          "sa_company": "Mitsubishi UFJ Financial Group, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 20,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 1,
+          "oldest": "2021-08-19",
+          "newest": "2026-09-01",
+          "distinct_days": 50,
+          "covers_window": true
+        },
+        {
+          "symbol": "MBFJF",
+          "sa_company": "Mitsubishi UFJ Financial Group, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 6,
+          "title_of": 8,
+          "records": 8,
+          "in_window": 0,
+          "oldest": "2021-08-02",
+          "newest": "2025-10-17",
+          "distinct_days": 8,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "PNC",
+          "sa_company": "The PNC Financial Services Group, Inc.",
+          "score": 11776.849,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "CFG",
+          "sa_company": "Citizens Financial Group, Inc.",
+          "score": 11643.274,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "PFG",
+          "sa_company": "Principal Financial Group, Inc.",
+          "score": 11064.805,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Monster MNST",
+      "company_name": "Monster",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "MNST",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED MNST -- SA names it 'Monster Beverage Corporation' (test a) and 34 of 50 returned titles name the company (test b). Window: 2025-03-28 .. 2026-09-17, 2 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T20:12Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "MNST",
+          "sa_company": "Monster Beverage Corporation",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 34,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 2,
+          "oldest": "2025-03-28",
+          "newest": "2026-09-17",
+          "distinct_days": 42,
+          "covers_window": true
+        },
+        {
+          "symbol": "APPZ",
+          "sa_company": "Monster Arts, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "MAT",
+          "sa_company": "Mattel, Inc.",
+          "score": 1649.1686,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "COKE",
+          "sa_company": "Coca-Cola Consolidated, Inc.",
+          "score": 1289.0656,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "TTWO",
+          "sa_company": "Take-Two Interactive Software, Inc.",
+          "score": 1257.9999,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "National Grid NG LN",
+      "company_name": "National Grid",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "NGG",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED NGG -- SA names it 'National Grid plc' (test a) and 40 of 50 returned titles name the company (test b). Window: 2023-06-28 .. 2026-07-01, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T20:13Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "NGG",
+          "sa_company": "National Grid plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 40,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2023-06-28",
+          "newest": "2026-07-01",
+          "distinct_days": 48,
+          "covers_window": true
+        },
+        {
+          "symbol": "NGGTF",
+          "sa_company": "National Grid plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 2,
+          "title_of": 6,
+          "records": 6,
+          "in_window": 0,
+          "oldest": "2016-12-12",
+          "newest": "2025-05-16",
+          "distinct_days": 6,
+          "covers_window": true
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "LDOS",
+          "sa_company": "Leidos Holdings, Inc.",
+          "score": 27760.697,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "FRMI",
+          "sa_company": "Fermi Inc.",
+          "score": 22718.223,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "RELL",
+          "sa_company": "Richardson Electronics, Ltd.",
+          "score": 22216.97,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Netflix NFLX",
+      "company_name": "Netflix",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "NFLX",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED NFLX -- SA names it 'Netflix, Inc.' (test a) and 34 of 50 returned titles name the company (test b). Window: 2026-07-08 .. 2026-09-22, 13 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-26T21:34Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "NFLX",
+          "sa_company": "Netflix, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 34,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 13,
+          "oldest": "2026-07-08",
+          "newest": "2026-09-22",
+          "distinct_days": 31,
+          "covers_window": true
+        },
+        {
+          "symbol": "NFLP",
+          "sa_company": "Kurv Yield Premium Strategy Netflix NFLX ETF",
+          "name_overlap": 1.0,
+          "http": 403,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "EVC",
+          "sa_company": "Entravision Communications Corporation",
+          "score": 1011.6723,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "STLFF",
+          "sa_company": "Stillfront Group AB (publ)",
+          "score": 822.10645,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "AGLXY",
+          "sa_company": "AGL Energy Limited",
+          "score": 769.566,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Nokia FH",
+      "company_name": "Nokia",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "NOK",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED NOK -- SA names it 'Nokia Oyj' (test a) and 45 of 50 returned titles name the company (test b). Window: 2025-10-23 .. 2026-09-02, 2 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T21:57Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "NOK",
+          "sa_company": "Nokia Oyj",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 45,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 2,
+          "oldest": "2025-10-23",
+          "newest": "2026-09-02",
+          "distinct_days": 38,
+          "covers_window": true
+        },
+        {
+          "symbol": "NOKBF",
+          "sa_company": "Nokia Oyj",
+          "name_overlap": 1.0,
+          "http": 403,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "ORANY",
+          "sa_company": "Orange S.A.",
+          "score": 1227.1312,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "GSIT",
+          "sa_company": "GSI Technology, Inc.",
+          "score": 1108.3624,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "PNYTF",
+          "sa_company": "Poynt Corporation",
+          "score": 690.48663,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Petrobras PETR3 BZ",
+      "company_name": "Petrobras",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "PBR",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED PBR -- SA names it 'Petr\u00f3leo Brasileiro S.A. - Petrobras' (test a) and 43 of 50 returned titles name the company (test b). Window: 2026-02-11 .. 2026-09-22, 6 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-26T22:20Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "PBR",
+          "sa_company": "Petr\u00f3leo Brasileiro S.A. - Petrobras",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 43,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 6,
+          "oldest": "2026-02-11",
+          "newest": "2026-09-22",
+          "distinct_days": 44,
+          "covers_window": true
+        },
+        {
+          "symbol": "PBR.A",
+          "sa_company": "Petr\u00f3leo Brasileiro S.A. - Petrobras",
+          "name_overlap": 1.0,
+          "http": 403,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "SPBRF",
+          "sa_company": "Seacrest Petroleo Bermuda Limited",
+          "score": 0.41707093,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "RWE AG RWE GY",
+      "company_name": "RWE",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "RWEOY",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED RWEOY -- SA names it 'RWE Aktiengesellschaft' (test a) and 46 of 50 returned titles name the company (test b). Window: 2022-10-01 .. 2026-08-13, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T22:42Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "RWEOY",
+          "sa_company": "RWE Aktiengesellschaft",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 46,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2022-10-01",
+          "newest": "2026-08-13",
+          "distinct_days": 46,
+          "covers_window": true
+        },
+        {
+          "symbol": "RWNFF",
+          "sa_company": "RWE Aktiengesellschaft",
+          "name_overlap": 1.0,
+          "http": 403,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>RWEM</b>",
+          "sa_company": "Rayliant NxtGen Multifactor Emerging Mkts Eqty ETF",
+          "score": 11646.832,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>RWEBX</b>",
+          "sa_company": "American Funds Washington Mutual Inv Fund; R2E",
+          "score": 7261.687,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "FTRE",
+          "sa_company": "Fortrea Holdings Inc.",
+          "score": 1268.1654,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Reckitt Benckiser RKT LN",
+      "company_name": "Reckitt Benckiser",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "RBGPF",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED RBGPF -- SA names it 'Reckitt Benckiser Group plc' (test a) and 38 of 50 returned titles name the company (test b). Window: 2017-10-10 .. 2026-07-29, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T22:53Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "RBGPF",
+          "sa_company": "Reckitt Benckiser Group plc",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 38,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2017-10-10",
+          "newest": "2026-07-29",
+          "distinct_days": 49,
+          "covers_window": true
+        },
+        {
+          "symbol": "RBGLY",
+          "sa_company": "Reckitt Benckiser Group plc",
+          "name_overlap": 1.0,
+          "http": 403,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": []
+    },
+    {
+      "folder": "SAP GY",
+      "company_name": "SAP",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "SAP",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED SAP -- SA names it 'SAP SE' (test a) and 36 of 50 returned titles name the company (test b). Window: 2025-10-08 .. 2026-08-26, 0 in the last 30 days -- density bar (>=3) NOT MET.",
+        "resolved_at": "2026-09-26T23:16Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "SAP",
+          "sa_company": "SAP SE",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 36,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 0,
+          "oldest": "2025-10-08",
+          "newest": "2026-08-26",
+          "distinct_days": 38,
+          "covers_window": true
+        },
+        {
+          "symbol": "SAPGF",
+          "sa_company": "SAP SE",
+          "name_overlap": 1.0,
+          "http": 403,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "<b>SAPMF</b>",
+          "sa_company": "Saipem SpA",
+          "score": 19356.564,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>SAPMY</b>",
+          "sa_company": "Saipem SpA",
+          "score": 18180.865,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "<b>SAPLF</b>",
+          "sa_company": "Sylvania Platinum Limited",
+          "score": 17393.693,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "ServiceNow NOW US",
+      "company_name": "ServiceNow",
+      "search_http": 200,
+      "sa_symbol": {
+        "value": "NOW",
+        "status": "INFERRED",
+        "evidence": "seekingalpha.com/api/v3, DIRECT and unauthenticated. ACCEPTED NOW -- SA names it 'ServiceNow, Inc.' (test a) and 25 of 50 returned titles name the company (test b). Window: 2026-04-25 .. 2026-09-11, 7 in the last 30 days -- density bar (>=3) MET.",
+        "resolved_at": "2026-09-27T03:47Z"
+      },
+      "candidates_probed": [
+        {
+          "symbol": "NOW",
+          "sa_company": "ServiceNow, Inc.",
+          "name_overlap": 1.0,
+          "http": 200,
+          "title_hits": 25,
+          "title_of": 50,
+          "records": 50,
+          "in_window": 7,
+          "oldest": "2026-04-25",
+          "newest": "2026-09-11",
+          "distinct_days": 37,
+          "covers_window": true
+        },
+        {
+          "symbol": "NOWS:CA",
+          "sa_company": "ServiceNow, Inc.",
+          "name_overlap": 1.0,
+          "http": 404,
+          "title_hits": 0,
+          "title_of": 0,
+          "records": 0,
+          "in_window": 0,
+          "oldest": null,
+          "newest": null,
+          "distinct_days": 0,
+          "covers_window": false
+        }
+      ],
+      "candidates_rejected_on_name": [
+        {
+          "symbol": "ACN",
+          "sa_company": "Accenture plc",
+          "score": 1241.1842,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "SWONF",
+          "sa_company": "SoftwareOne Holding AG",
+          "score": 763.52155,
+          "name_overlap": 0.0
+        },
+        {
+          "symbol": "DTSOF",
+          "sa_company": "DTS Corporation",
+          "score": 366.5473,
+          "name_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "folder": "Haliburton HAL",
+      "sa_symbol": {
+        "value": "HAL",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/HAL . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "Folder name is misspelled at source (one 'l'); the company is HALLIBURTON. SEARCH_NAME_FIX @e2f831d913 repairs the query."
+      }
+    },
+    {
+      "folder": "International Container Terminals",
+      "sa_symbol": {
+        "value": "ICTEF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/ICTEF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "Folder name is TRUNCATED at source; the company is International Container Terminal Services (ICTSI). SEARCH_NAME_FIX @e2f831d913 repairs the query."
+      }
+    },
+    {
+      "folder": "Nestle NESN SW",
+      "sa_symbol": {
+        "value": "NSRGY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/NSRGY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Nike NKE US",
+      "sa_symbol": {
+        "value": "NKE",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/NKE . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Novartis NOVN SW",
+      "sa_symbol": {
+        "value": "NVS",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/NVS . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Nubank NU",
+      "sa_symbol": {
+        "value": "NU",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/NU . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "SA names it 'Nu Holdings Ltd.', which is why the pass's own name test could not corroborate 'Nubank' -- a rebrand, not a defect."
+      }
+    },
+    {
+      "folder": "Orange ORA FP",
+      "sa_symbol": {
+        "value": "ORANY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/ORANY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "CONFIRMED BY ANDREW DIRECTLY: he supplied https://seekingalpha.com/symbol/ORANY after this seat flagged his two earlier values. HISTORY KEPT because it is the whole lesson: OBT is Orange County Bancorp (a US bank) and came from THIS SEAT's own flagged candidate column -- putting a warned-about value in a column that reads as answers is what made it easy to pick up; ORA on US markets is Ormat Technologies (general knowledge, never measured here). ORANY is now MEASURED twice over: Andrew's own read of the vendor's symbol page, and batch14.json's candidates_probed recording ORANY = 'Orange S.A.' at name_overlap 1.0."
+      }
+    },
+    {
+      "folder": "QXO",
+      "sa_symbol": {
+        "value": "QXO.PR.B",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/QXO.PR.B . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "Andrew's explicit choice, verbatim: 'the QXO preferred is how we have xposure to that, which i thought would be more relevant for peers potentially versus ordinary common shares, but the news should be the same either way.' SA lists it as 'QXO, Inc. 5.50 DEP PFD'. WATCH: serveability is the DENSITY bar (>=3 mentions in 30 days), not issuer identity -- if SA files most QXO stories under the common, this line may not clear it. The density measurement settles it, not an opinion."
+      }
+    },
+    {
+      "folder": "Rio Tinto RIO LN",
+      "sa_symbol": {
+        "value": "RTPPF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/RTPPF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Roche ROG SW",
+      "sa_symbol": {
+        "value": "RHHBY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/RHHBY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "SSE plc SSE LN",
+      "sa_symbol": {
+        "value": "SSEZY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SSEZY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Sanofi SAN FP",
+      "sa_symbol": {
+        "value": "SNY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SNY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Schlumberger SLB",
+      "sa_symbol": {
+        "value": "SLB",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SLB . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Shopify SHOP CA",
+      "sa_symbol": {
+        "value": "SHOP",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SHOP . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Singapore Telecom ST SP",
+      "sa_symbol": {
+        "value": "SNGNF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SNGNF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Spotify SPOT US",
+      "sa_symbol": {
+        "value": "SPOT",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SPOT . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Sumitomo Mitsui Financial Group 8316 JP",
+      "sa_symbol": {
+        "value": "SMFG",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SMFG . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Synopsys SNPS US",
+      "sa_symbol": {
+        "value": "SNPS",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/SNPS . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Taiwan Semiconductor Manufacturing TSM US",
+      "sa_symbol": {
+        "value": "TSM",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/TSM . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Telefonica Brazil VIVT3 BZ",
+      "sa_symbol": {
+        "value": "VIV",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/VIV . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Tokyo Electron 8035 JP",
+      "sa_symbol": {
+        "value": "TOELF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/TOELF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Tokyo Marine 8766 JP",
+      "sa_symbol": {
+        "value": "TKOMF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/TKOMF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y",
+        "qualifier": "Folder spells it Tokyo; the company is TOKIO Marine. TKOMF is consistent with that."
+      }
+    },
+    {
+      "folder": "Total Energies TTE FP",
+      "sa_symbol": {
+        "value": "TTE",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/TTE . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "UBS",
+      "sa_symbol": {
+        "value": "UBS",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/UBS . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Uber Technologies UBER US",
+      "sa_symbol": {
+        "value": "UBER",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/UBER . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Unilever ULVR LN",
+      "sa_symbol": {
+        "value": "UL",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/UL . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Universal Music Group UMG NL",
+      "sa_symbol": {
+        "value": "UMGNF",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/UMGNF . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Valero Energy VLO",
+      "sa_symbol": {
+        "value": "VLO",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/VLO . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Visa V",
+      "sa_symbol": {
+        "value": "V",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/V . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Walmart de Mexico WALMEX MM",
+      "sa_symbol": {
+        "value": "WMMVY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/WMMVY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Workday WDAY US",
+      "sa_symbol": {
+        "value": "WDAY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/WDAY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Zoetis ZTS US",
+      "sa_symbol": {
+        "value": "ZTS",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/ZTS . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    },
+    {
+      "folder": "Zurich Insurance ZURN SW",
+      "sa_symbol": {
+        "value": "ZURVY",
+        "status": "MEASURED",
+        "evidence": "Andrew-direct 2026-09-27: he opened each security's Seeking Alpha page himself and supplied https://seekingalpha.com/symbol/ZURVY . MEASURED ON HIS AUTHORITY -- a human read of the vendor's own symbol page, which is a STRONGER provenance than this pass's INFERRED-from-two-readings-of-one-source. Not a vendor call by any agent.",
+        "resolved_at": "2026-09-27T18:33Z",
+        "resolved_by": "Andrew (human), relayed by 2.0.0_SA_COO~Y"
+      }
+    }
+  ]
+}
