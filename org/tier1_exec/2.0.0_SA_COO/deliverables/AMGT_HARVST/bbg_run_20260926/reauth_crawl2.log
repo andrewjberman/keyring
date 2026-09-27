@@ -1,0 +1,55 @@
+[bbg-harvest 18:04:01] headless=False park=False egress=native-IP kimi=kimi-k3 google_creds=google/andrew-goldengate/credentials
+[bbg-harvest 18:04:06] baseline cookies at start: 84
+[bbg-harvest 18:04:07] modal DOM dumped -> C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier1_exec\4.0.0_SA_CRO\scripts\bbg_modal_dom_20260926T220354Z_step0.html
+C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier1_exec\4.0.0_SA_CRO\scripts\bloomberg_harvest_session.py:109: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  px = list(img.getdata())
+[bbg-harvest 18:04:17] step 0: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '__stid', '__stidv', 'personalization_id']
+[bbg-harvest 18:04:17] module matched: 'overlay_modal'
+[bbg-harvest 18:04:17] dismissed overlay via "button:has-text('Accept')"
+[bbg-harvest 18:04:28] step 1: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', 'DotomiTest', '__stid', '__stidv', 'cmpconsentmodal', 'personalization_id']
+[bbg-harvest 18:04:28] module matched: 'sign_in_needed'
+[bbg-harvest 18:04:28] clicked 'Sign In'
+[bbg-harvest 18:04:39] step 2: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', 'DotomiTest', '__stid', '__stidv', '_ga_Q3LPRFYJJ3', 'cmpconsentmodal', 'personalization_id']
+[bbg-harvest 18:04:39] module matched: 'bot_wall'
+[bbg-harvest 18:04:53] adaptive press-and-hold at (666,358) -- pixel-peak release
+[bbg-harvest 18:04:57] CHECKMARK signal: center delta jumped 19.5 -> 52.7 after 3.05s -- releasing
+[bbg-harvest 18:05:10] step 3: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '__stid', '__stidv', '_ga_Q3LPRFYJJ3', 'cmpconsentmodal', 'personalization_id']
+[bbg-harvest 18:05:10] module matched: 'bot_wall'
+[bbg-harvest 18:05:10] locate("the 'Press & Hold' human-verification button"): cache hit (perceptual match) -- no Kimi call
+[bbg-harvest 18:05:10] adaptive press-and-hold at (666,358) -- pixel-peak release
+[bbg-harvest 18:05:14] CHECKMARK signal: center delta jumped 19.4 -> 61.2 after 3.05s -- releasing
+[bbg-harvest 18:05:20] classify: cache hit (perceptual match) -> BOT_WALL -- no Kimi call
+[bbg-harvest 18:05:20] step 4: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '__stid', '__stidv', '_ga_Q3LPRFYJJ3', 'cmpconsentmodal', 'personalization_id']
+[bbg-harvest 18:05:20] module matched: 'bot_wall'
+[bbg-harvest 18:05:20] locate("the 'Press & Hold' human-verification button"): cache hit (perceptual match) -- no Kimi call
+[bbg-harvest 18:05:20] adaptive press-and-hold at (666,358) -- pixel-peak release
+[bbg-harvest 18:05:24] DRAIN signal: whole-bar delta fell from recent peak 43.4 -> 29.8 after 3.02s -- releasing for a beat, then pressing again (recovery 1/4)
+[bbg-harvest 18:05:26] fallback signal: whole-bar delta peaked at 3.4 after 5.02s (no checkmark spike seen) -- releasing
+[bbg-harvest 18:05:32] classify: cache hit (perceptual match) -> BOT_WALL -- no Kimi call
+[bbg-harvest 18:05:32] step 5: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '__stid', '__stidv', '_ga_Q3LPRFYJJ3', 'cmpconsentmodal', 'personalization_id']
+[bbg-harvest 18:05:32] module matched: 'bot_wall'
+[bbg-harvest 18:05:32] locate("the 'Press & Hold' human-verification button"): cache hit (perceptual match) -- no Kimi call
+[bbg-harvest 18:05:32] adaptive press-and-hold at (666,358) -- pixel-peak release
+[bbg-harvest 18:05:34] fallback signal: whole-bar delta peaked at 13.8 after 1.53s (no checkmark spike seen) -- releasing
+[bbg-harvest 18:05:47] step 6: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '__stid', '__stidv', '_ga_Q3LPRFYJJ3', 'cmpconsentmodal', 'personalization_id']
+[bbg-harvest 18:05:47] module matched: 'bot_wall'
+[bbg-harvest 18:05:48] locate("the 'Press & Hold' human-verification button"): cache hit (perceptual match) -- no Kimi call
+[bbg-harvest 18:05:48] adaptive press-and-hold at (666,358) -- pixel-peak release
+[bbg-harvest 18:05:51] fallback signal: whole-bar delta peaked at 59.0 after 2.55s (no checkmark spike seen) -- releasing
+[bbg-harvest 18:06:04] step 7: url='https://www.bloomberg.com/search?query=rtx' resolved=False new_cookies=['APC', '__stid', '__stidv', '_ga_Q3LPRFYJJ3', 'cmpconsentmodal', 'personalization_id']
+[bbg-harvest 18:06:04] module matched: 'signin_iframe'
+[bbg-harvest 18:06:04] clicked 'Continue with Google' INSIDE the sign-in iframe
+[bbg-harvest 18:06:07] NEW PAGE/POPUP detected (2 open total) -- switching active page to it: 'https://accounts.google.com/v3/signin/identifier?opparams=%253Fgis_par'
+[bbg-harvest 18:06:12] step 8: url='https://accounts.google.com/v3/signin/identifier?opparams=%253Fgis_par' resolved=False new_cookies=['APC', 'NID', 'OTZ', '__Host-GAPS', '__stid', '__stidv', '__stripe_mid', '__stripe_sid', '_ga_Q3LPRFYJJ3', 'cmpconsentmodal', 'g_state', 'm', 'optimizelyEndUserId', 'personalization_id']
+[bbg-harvest 18:06:12] module matched: 'google_oauth'
+[bbg-harvest 18:06:12] handing off to google_oauth_handler.handle_google_oauth
+[google-oauth 18:06:12] no DOM email field -- vision path (closed shadow root / isolated render, measured)
+[bbg-harvest 18:06:49] module 'google_oauth' error: TargetClosedError Page.screenshot: Target page, context or browser has been closed
+Call log:
+  - taking page screensho
+[bbg-harvest 18:06:49] tracked page closed (likely a completed OAuth popup closing itself) -- switching to still-open page: 'https://www.bloomberg.com/search?query=rtx'
+[bbg-harvest 18:06:49] modal DOM dumped -> C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier1_exec\4.0.0_SA_CRO\scripts\bbg_modal_dom_20260926T220354Z_step9.html
+[bbg-harvest 18:07:01] step 9: url='https://www.bloomberg.com/search?query=rtx' resolved=True new_cookies=['ACCOUNT_CHOOSER', 'APC', 'APISID', 'HSID', 'LSID', 'NID', 'OTZ', 'SAPISID', 'SID', 'SIDCC', 'SSID', '__Host-1PLSID', '__Host-3PLSID', '__Host-GAPS', '__Secure-1PAPISID', '__Secure-1PSID', '__Secure-1PSIDCC', '__Secure-1PSIDRTS', '__Secure-1PSIDTS', '__Secure-3PAPISID', '__Secure-3PSID', '__Secure-3PSIDCC', '__Secure-3PSIDRTS', '__Secure-3PSIDTS', '__stid', '__stidv', '__stripe_mid', '__stripe_sid', '_breg-uid', '_breg-user', '_ga_Q3LPRFYJJ3', '_last-refresh', '_user-id', '_user-jwt', '_user-role', '_user-token', 'cmpconsentmodal', 'g_state', 'm', 'optimizelyEndUserId', 'personalization_id']
+[bbg-harvest 18:07:01] LOGGED_IN with new cookie(s), corroborated by 35 network auth event(s) -- settling 4s
+[bbg-harvest 18:07:05] END rc=0 new_cookies=['ACCOUNT_CHOOSER', 'APC', 'APISID', 'HSID', 'LSID', 'NID', 'OTZ', 'SAPISID', 'SID', 'SIDCC', 'SSID', '__Host-1PLSID', '__Host-3PLSID', '__Host-GAPS', '__Secure-1PAPISID', '__Secure-1PSID', '__Secure-1PSIDCC', '__Secure-1PSIDRTS', '__Secure-1PSIDTS', '__Secure-3PAPISID', '__Secure-3PSID', '__Secure-3PSIDCC', '__Secure-3PSIDRTS', '__Secure-3PSIDTS', '__stid', '__stidv', '__stripe_mid', '__stripe_sid', '_breg-uid', '_breg-user', '_ga_Q3LPRFYJJ3', '_last-refresh', '_user-id', '_user-jwt', '_user-role', '_user-token', 'cmpconsentmodal', 'g_state', 'm', 'optimizelyEndUserId', 'personalization_id'] network_auth_corroborated=True network_auth_event_count=47 total_cookies=124
+[bbg-harvest 18:07:12] session bundle -> C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier1_exec\4.0.0_SA_CRO\scripts\bloomberg_session_20260926T220354Z.json (142 cookies)
