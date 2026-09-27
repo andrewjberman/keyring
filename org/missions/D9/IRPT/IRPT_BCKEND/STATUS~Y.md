@@ -225,7 +225,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Comparison / Multi-Comp (FWD-4 arms): CTO 102028 said (1) YES to 4 read-only securities_info GETs in P's next window (act spec `P_COMPARISON_IDENTITY_READ_ACT_20260927.md`; grader `live_walk/comparison_identity.py`, proved 4 arms) and (2) routed the reporting-permission word to Andrew | 2.0.0_SA_COO~P runs (1); Andrew's word for (2) | (1)'s evidence lands: Y grades and versions the catalogue. The selection stays refused until (2) and M's consumer land |
+| Comparison / Multi-Comp (FWD-4 arms): CTO 102028 said (1) YES to 4 read-only securities_info GETs in P's next window (act spec `P_COMPARISON_IDENTITY_READ_ACT_20260927.md`; grader `live_walk/comparison_identity.py`, proved 4 arms) and (2) the reporting permission is GRANTED: Andrew-direct "call 1 yes" (CTO 102046, record @fce766f6ed), for firms that already see those four models in Model Portfolios (FWD-11) | 2.0.0_SA_COO~P runs (1) | (1)'s evidence lands: Y grades and versions the catalogue. The selection stays refused until (2) and M's consumer land |
 | Shares price source (Y2 Shares cells): CTO 100887 ruled (c), refused by name for v1; (b) has no known estate table; (a) goes to Andrew | 2.0.0_SA_COO~Y (re-ask the CTO) | the Dollars journey is graded |
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |
