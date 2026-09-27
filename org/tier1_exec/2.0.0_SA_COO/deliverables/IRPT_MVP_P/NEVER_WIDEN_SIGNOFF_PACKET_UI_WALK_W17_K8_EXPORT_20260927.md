@@ -25,7 +25,9 @@ irpt-export-reopen-rule-20260927, D1 closed, A1 open for this window).
 - irpt-export-render `3EST/hewG..` with `IRPT_EXPORT_RENDER=on`, and the SSM document irpt-export-render-run v5;
 - adapter `bOefL9nx..` with no plan and `IRPT_EVIDENCE_BUCKET` set; irpt-status `bMMJ/bQ+5..`; irpt-directory-search
   `o1TXq5PH..`;
-- the page: local portal DEV `e8a00b23`, 0 tracked changes.
+- the page: local portal DEV **`71896c93`** (re-pinned before signing, ~D 102006: chain V holdings-only merges at 8a99369e plus a test
+  re-golden; `git diff e8a00b23 71896c93` over export/, render/, ReportingTab.tsx and investor-reporting.ts = 0 files), 0 tracked
+  changes; ~D holds DEV there until this window closes.
 
 If any differs, the window does not open.
 
@@ -53,7 +55,7 @@ repository.py):
 - a caller missing one account got ReportDenied;
 - a cross-firm caller got ReportDenied.
 
-**The CTO's half is asked again on this departure.**
+**ACCEPTED by 1.0.0_SA_CTO 102003** (on ed1dfaa040): this packet cites ed1dfaa040 for arm 2, and the CTO's half is not re-asked on it.
 
 ## What the halves sign against
 
