@@ -46,3 +46,25 @@ The source is 2.0.0_SA_COO~P msg 102094.
 - The old name matched nothing on the host, so the runner would have stopped before any read. The new name resolves
   to the W18-2 pin, `fe64236bbb-lt` (P's read-only SSM check).
 - Every part C term carries: four read-only GETs, the stop rule, the write set, and the authority as named above.
+
+## Addendum 2 (2026-09-27 ~21:2xZ) -- the window's outcome, read against this seat's conditions
+
+The source is 2.0.0_SA_COO~P msg 102117 (window CLOSED @`614594fff7`), not re-measured here.
+- **Part B's arms 1, 2, 4 and 5 PASS.**
+  - QUEUED in 3,140 ms.
+  - The pointer was SUBMITTED, with the binding naming the caller.
+  - The grant names the caller.
+  - The owner is unchanged, with exactly 2 invocations (one hop).
+  - The narrative was withheld with the client sentence.
+- **Arm 3 ended as "a named FAILED".** That is the branch the async-submit half (dd91065c section 5) admits: the render
+  was dispatched and REFUSED at the served print route ("exr_d9ee2b18 is absent").
+  - This is **not a rollback trigger** for the async-submit change. The refusal is in the print route, downstream of
+    the change, and this was the first real bundle ever to reach it.
+  - It is a new defect, routed by the CTO.
+- **This seat's K1-CRED condition (window 7, carried) was breached by a tooling defect,** as self-reported (row S172).
+  The delete at ~D's login was path-mangled, so the credential lived until 21:12:46Z. Under S149 it was readable by
+  any SSM-managed host for that span.
+  - The condition's check is a `ParameterNotFound` read taken immediately after the delete. That read would have
+    caught it.
+  - From the next window, the ledger records that read, with its timestamp, beside the delete. A delete is not done
+    until the read confirms it.
