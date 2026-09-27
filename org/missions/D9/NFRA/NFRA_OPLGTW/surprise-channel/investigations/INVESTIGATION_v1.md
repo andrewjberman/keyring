@@ -3630,6 +3630,32 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "CLAUDE.md rule 27 L4-R: '.tools/to-pipeline-gate.py LIMB 6 refuses a NEWLY-ADDED task order against a PRD with an unsigned half'.",
     "world_is": "A refused half did not stop a newly-added order. Undiagnosed candidates: (a) evaluate() lets the base seat's legacy SIGNED file satisfy the half beside the lane's REFUSED file, and status differs only in how it resolves the lane; (b) the commit ran in a worktree whose disk lacked 3.0.0_SA_CVO~O.json; (c) an early silent return in check_prd_signoff. The consequence is INERT for OG-e-1 (CVO~O re-signed @2e371ea304 on the amended text, so the order now stands against an ADMITTED PRD). The class stays ARMED: the next refusal may not hold.",
     "notes": "Reported by 3.0.0_SA_CVO~O (file 20260927T140900Z, detail in its review addendum @cc775d6f86), who named this seat as the gate's owner. Disarm = a reproduction on a scratch estate with two same-half files (base SIGNED + ~lane REFUSED), then the fix or a named non-defect."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-27T15:25Z",
+    "one_line": "DISARMS NFRA_OPLGTW-Z-S1: fixed @f4ce2702ab on 3.0.0_SA_CVO~O's verdict @c6d6f60d62. An order carrying '# pipeline-override:' now still runs LIMB 6, so a REFUSED or unsigned half refuses it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CAUSE: .tools/to-pipeline-gate.py check_file's override branch returned ([], notes) for the whole file; LIMB 6 never ran for OG-e-1 (order line 104 carries the override; to-pipeline-override-audit.log lines 50-51, 13:53:47Z and 13:54:13Z).",
+        "RULE CLEARED: prd_signoff_lib.evaluate() on the exact files at 22e06eabdf reads admitted=False, ratified-text REFUSED. read_signoff_files reads git HEAD, which held the REFUSED stamp at commit time.",
+        "FIX @f4ce2702ab: the override branch runs check_prd_signoff and returns its violations. RUN: to-pipeline-gate.py --self-test 0 failed of 100, with two new arms on the REAL check_file (REFUSED -> refused, SIGNED -> admitted). Negative control: the suite on a copy with only the fix reverted reads 1 failed of 100."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Fixed at the gate and proven by a RED/GREEN pair with a negative control; OG-e-1 itself stands against the re-signed PRD (@2e371ea304).",
+    "adjudicates": [
+      "NFRA_OPLGTW-Z-S1"
+    ],
+    "spec_asserts": "CLAUDE.md 27 L4-R: LIMB 6 refuses a NEWLY-ADDED task order against a PRD with an unsigned half.",
+    "world_is": "It now does so even when the order carries '# pipeline-override:'."
   }
 ]
 ```
