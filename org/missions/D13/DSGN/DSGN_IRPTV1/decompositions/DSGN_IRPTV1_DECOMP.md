@@ -302,3 +302,27 @@ optional for QUEUED/RUNNING): a data-less QUEUED submit answer yields the exr_ i
 FAILED. Files: contracts/envelope.ts (data rule for submit-export/export-receipt), investor-reporting.ts submitExport, export/submit.ts,
 ExportButton.tsx, ReceiptPanel.tsx. Direct act, LOCAL, slot ~41. The K8 re-run waits for this pin and P's kms:Decrypt grant.
 
+## v9 -- round 9 (issuer, 2026-09-27 ~22:3xZ), over PRD v0.18 @5d44d0fa62 (ADMITTED; both halves current)
+
+**Rectangle:** the ENRICHMENT LIST of 1.0.0_SA_CTO's round-N analysis
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_N_ANALYSIS_DSGN_IRPTV1_ROUND8_20260927.md` @071e09aa18 (msg 102160), E1-E12, one cell
+per item; the v0.18 UI CLEANUP FINDINGS ride E3-E8. E11 is TO-IV-e-67 (direct act, in flight); E12 is the round-9 walk's scope (no cell).
+Write sets from the prep map `deliverables/2.0.0_SA_COO~D/round9-writeset-map-20260927.md` @51ec23d744; chains keep parallel sets disjoint:
+
+| cell | item | rows | chain / slot | key files (IR = portal/src/pages/InvestorReporting) |
+|---|---|---|---|---|
+| IV-e-68 | E9 | W34-S1 (-> S7, W21-S2, W23-S1, W29-S10) | A ~34, 1 of 1 | IR/__tests__/fe-s-45/, s7-*.ts/json, S7_CLASS_TABLE |
+| IV-e-69 | E6 | UIC-01/02/04/05/07/08/09 | P ~35, 1 of 1 | tabs/reporting/* (Headline, Chart, AccountsTable, Heatmap, ReportingTab, period, AnswerStatus, MethodAndSources), AccountFilter, StatusPanel, state/status |
+| IV-e-70 | E4 | UIR-37, UIC-11 | H ~38, 1 of 3 | src/lib/chartColors.ts, holdings/palette, DrillTree |
+| IV-e-71 | E2 | UIR-32/34/49 | H ~38, 2 of 3 | DrillTree, slices, HoldingsTab, src/components/CategoryViewTree.tsx (additive prop) |
+| IV-e-72 | E7 | UIC-10/12/13 | H ~38, 3 of 3 | DrillTree, slices, SliceTable, header/IdentityCard |
+| IV-e-73 | E1 | UIR-30 | N ~36, 1 of 1 | global/FirmAttribution, export/Preview |
+| IV-e-74 | E5 | S25 diagnosis, UIC-23 | X ~39, 1 of 2 | tabs/analysis/OwnedRequestHistory |
+| IV-e-75 | E8 | UIC-18..22, W35-S2 | X ~39, 2 of 2 | tabs/analysis/*, TabShell, index.tsx, export/ExportButton + submit |
+| IV-e-76 | E10 | W35-S1 (UIR-04/13/30 labels) | Z ~40, 1 of 2 | header/firmDisplay + callers, adapt.ts, a generated module from infra/logic/registry/scopes.json |
+| IV-e-77 | E3 | UIR-45, UIC-14, UIC-17 | Z ~40, 2 of 2 | PerformanceControls, PerformanceChart, PerformanceHeadline, slices, ScopeSummary, adapt.ts, format.ts |
+
+**Edges:** A runs first (CTO: E9 first). P, H and A start now (disk: ~15 GB free, one pair ~2 GB). N and X seat when IV-e-67 drains (slot 41
+frees; X's IV-e-75 also needs IV-e-67's ExportButton/submit). Z seats last, after P, H, N and X drain (it re-touches index.tsx, IdentityCard,
+FirmAttribution, PerformanceHeadline/Chart, slices, adapt.ts) and after 1.0.0_SA_CTO commits the registry view target. Every cell is LOCAL.
+
