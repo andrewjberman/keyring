@@ -2063,3 +2063,31 @@
   "notes": "Fix shape (P): thread target.selectedTenant through the preview into resolveBundle's deps and onto the request. This row is evidence for S20, not a disposition change to it. P re-cuts window 10 as window 11 on the fix's pin."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S23",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-27T14:01:31Z",
+  "one_line": "Window 12 K8 on local DEV 1f149d69: with IV-e-53 the preview resolves, but the export SUBMIT omits selected_tenant, so the one POST /export answered 200 UNAVAILABLE / UNEXPECTED (BucketUnmapped) and nothing rendered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "a direct act whose <paths> grant covers portal/src/pages/InvestorReporting/export/submit.ts, ExportButton.tsx and ReceiptPanel.tsx (TO-IV-e-64)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w12-20260927.har (gitignored, sha256 7bfe69ac..; 462 entries, 0 /__mockcot/): exactly one POST /api/scoped/investor-reporting/export at 13:44:21Z, HTTP 200, body ok=false, state UNAVAILABLE, public_reason_code UNEXPECTED",
+      "2.0.0_SA_COO~P 101906: irpt-export-render log 13:44:22Z BucketUnmapped then submit-export UNEXPECTED (corr-83fe081e2112); no render token, no generations/ object",
+      "portal 1f149d69 export/submit.ts:64-78 buildSubmitRequest builds {tenant, scopeFingerprint, revision, bundleRef, options, wireBundle} with no selectedTenant (called at ExportButton.tsx:213); the live client sends selected_tenant only from req.selectedTenant (src/api/endpoints/investor-reporting.ts:1192-1217, submit and receipt)",
+      "walk byte-proof checks: start 13:37:54Z and end 14:01:27Z both HEAD 1f149d69, 0 tracked changes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Export on Performance with an answer-bearing report submits for the report the tab shows, with the same request scope (tenant included), and its receipt and download reads carry it too.",
+  "world_is": "The submit drops the tenant the preview now carries, so an internal viewer's export is refused server-side before any render.",
+  "notes": "Same class as S22 (IV-e-53 threaded the tenant into the preview only). K7 on the same walk read 8.05% PARTIAL with selected_tenant on both Performance GETs, and the picker showed value and YTD side by side (IV-e-58 live). P re-cuts the next window on the fix's pin."
+}
+```
