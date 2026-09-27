@@ -280,3 +280,9 @@ IV-e-56/57 both edit index.tsx: X drains before H seats. Chains P, V, N and X ha
 (2.0.0_SA_COO~P 101849). TO-IV-e-50 is superseded by IV-e-55 (CTO 101845). Every cell is `<risk>LOCAL</risk>` (local portal DEV only).
 Seating waits on C: above 15 GB (0.0.0_AB_MSTR 101618; 14 GB at the cut).
 
+**v8 addendum 1 (issuer, 2026-09-27 ~14:0xZ):** `IV-e-64`, the repair of IV-e-53's seam that row S23 grounds (window 12 K8 on local DEV
+1f149d69; 2.0.0_SA_COO~P 101906): the preview now resolves, but the export SUBMIT (submit.ts:64-78, ExportButton.tsx:213) omits
+`selectedTenant`, so the one POST /export answered UNAVAILABLE/UNEXPECTED (BucketUnmapped). Thread it into the submit, every receipt/status
+read of the flow, and the download href. Same class as IV-e-36 and IV-e-53 (row-driven issuer repair of its own seam). Slot ~41, direct
+act, LOCAL; export/submit.ts, ExportButton.tsx, ReceiptPanel.tsx belong to no running round-8 cell. Thread-breaking (the export hop).
+

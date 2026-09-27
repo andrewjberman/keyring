@@ -1,0 +1,116 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py
+index f662756..95f0677 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py
+@@ -24,7 +24,7 @@ from resident_worker import ResidentAssembly, poll_once  # noqa: E402
+ 
+ # A refusal code is a closed token by construction ('CAPTURE_FAILED', 'CAPTURE_FAILED:ChallengeError');
+ # any other message may carry a signed URL or customer data and is never printed.
+-_CODE = re.compile(r'[A-Z][A-Z0-9_]{2,63}(:[A-Za-z][A-Za-z0-9_]{0,63})?')
++_CODE = re.compile(r'[A-Z][A-Z0-9_]{2,63}(:[A-Za-z][A-Za-z0-9_]{0,63}){0,2}')
+ 
+ 
+ def retained_reason(exc):
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+index 2c499b8..70e607e 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+@@ -31,6 +31,7 @@ class WorkerAttention(RuntimeError):
+ 
+ 
+ _TOKEN = re.compile(r"[a-z][a-z0-9_]{0,31}")
++_VALUE = re.compile(r"[A-Za-z0-9_.^-]{1,32}")
+ 
+ 
+ def refusal_line(result, tag="STEP_REFUSED"):
+@@ -41,7 +42,18 @@ def refusal_line(result, tag="STEP_REFUSED"):
+     def token(value):
+         return value if isinstance(value, str) and _TOKEN.fullmatch(value) else "-"
+     status = result.get("status")
+-    drifted = [name for name in result.get("drifted") or [] if name in recipe.SETTING_TO_VENDOR_FIELD]
++    actual = {r.get("setting"): r.get("actual") for r in result.get("rows") or [] if isinstance(r, dict)}
++
++    def setting_value(value):
++        # Our own portfolio configuration as the vendor stored it (an enum, a number, a symbol),
++        # printed only as a short closed token so a drift names WHAT was stored (window 13).
++        if value is None:
++            return "null"
++        if isinstance(value, (bool, int, float)):
++            return str(value).lower() if isinstance(value, bool) else str(value)
++        return value if isinstance(value, str) and _VALUE.fullmatch(value) else "?"
++    drifted = [name + ("=" + setting_value(actual[name]) if name in actual else "")
++               for name in result.get("drifted") or [] if name in recipe.SETTING_TO_VENDOR_FIELD]
+     absent = [name for name in result.get("absent") or [] if name in recipe.SETTING_TO_VENDOR_FIELD]
+     polls, wall = result.get("polls"), result.get("wall_s")
+     return ("IRPT_RESIDENT_%s step=%s status=%s portfolio_status=%s source=%s polls=%s wall_s=%s drifted=%s "
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
+index 65c909c..f5d087b 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
+@@ -105,6 +105,13 @@ def test_refusal_line_carries_closed_tokens_only():
+                                          "drifted": ["management_fee", "https://x?sig=1"], "absent": ["tax_status"]})
+     assert line == ("IRPT_RESIDENT_STEP_REFUSED step=read_back status=200 portfolio_status=available "
+                     "source=saved_portfolio polls=1 wall_s=- drifted=management_fee absent=tax_status")
++    stored = resident_worker.refusal_line({"step": "read_back", "status": 200, "portfolio_status": "available",
++                                           "settings_source": "saved_portfolio", "polls": 1,
++                                           "drifted": ["level_as_of_type", "benchmark", "tax_status", "management_fee"],
++                                           "absent": [], "rows": [
++        {"setting": "level_as_of_type", "actual": "latest"}, {"setting": "benchmark", "actual": "^SPX"},
++        {"setting": "tax_status", "actual": "https://x/?sig=secret"}, {"setting": "management_fee", "actual": None}]})
++    assert stored.endswith("drifted=level_as_of_type=latest,benchmark=^SPX,tax_status=?,management_fee=null absent=-")
+     done = resident_worker.refusal_line({"step": "read_back", "status": 200, "portfolio_status": "available",
+                                          "settings_source": "saved_portfolio", "polls": 3, "wall_s": 31.4,
+                                          "drifted": [], "absent": []}, "READ_BACK_DONE")
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_main.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_main.py
+index 0ea45eb..3c6d105 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_main.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_main.py
+@@ -13,6 +13,8 @@ from operation_lease import OperationRefused  # noqa: E402
+ @pytest.mark.parametrize("exc, reason", [
+     (OperationRefused("CAPTURE_FAILED:ChallengeError"), "class=OperationRefused code=CAPTURE_FAILED:ChallengeError"),
+     (OperationRefused("SESSION_READ_UNAVAILABLE"), "class=OperationRefused code=SESSION_READ_UNAVAILABLE"),
++    (OperationRefused("CAPTURE_FAILED:UNEXPECTED_CHALLENGE:CHALLENGE_CAPTCHA_UNSUPPORTED"),
++     "class=OperationRefused code=CAPTURE_FAILED:UNEXPECTED_CHALLENGE:CHALLENGE_CAPTCHA_UNSUPPORTED"),
+     (ValueError("INSTALLED_RESIDENT_RUNTIME_REQUIRED"), "class=ValueError code=INSTALLED_RESIDENT_RUNTIME_REQUIRED"),
+     (KeyError("irpt-uiwalk-1790464832@opal.test"), "class=KeyError code=-"),
+     (RuntimeError("GET https://bucket.s3/key?X-Amz-Signature=abc failed"), "class=RuntimeError code=-"),
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py b/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py
+index beaffc7..e61293b 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py
+@@ -19,6 +19,7 @@ from operation_lease import OperationRefused
+ 
+ 
+ _FAILURE_CLASS = re.compile(r'[A-Za-z][A-Za-z0-9_]{0,63}')
++_REASON = re.compile(r'[A-Z][A-Z0-9_]{2,63}')
+ 
+ 
+ def failure_code(output):
+@@ -37,6 +38,11 @@ def failure_code(output):
+             return 'CAPTURE_FAILED:NOT_AUTHENTICATED'
+         failure = receipt.get('failure_class')
+         if receipt.get('ok') is False and isinstance(failure, str) and _FAILURE_CLASS.fullmatch(failure):
++            # The runner names an unexpected screen with a closed reason (CHALLENGE_CAPTCHA_UNSUPPORTED,
++            # CHALLENGE_WAF_INTERSTITIAL, ...); window 13 met one and recorded only the class.
++            reason = (receipt.get('record') or {}).get('reason')
++            if isinstance(reason, str) and _REASON.fullmatch(reason):
++                return 'CAPTURE_FAILED:' + failure + ':' + reason
+             return 'CAPTURE_FAILED:' + failure
+     return 'CAPTURE_FAILED'
+ 
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py b/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py
+index 393a038..a1204c8 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py
+@@ -101,3 +101,11 @@ def test_capture_env_drops_every_python_variable_and_keeps_the_rest():
+                                     'PYTHONHOME': '/x', 'pythonstartup': '/y', 'HOME': '/home/ec2-user',
+                                     'PATH': '/usr/local/bin:/usr/bin', 'USER': 'ec2-user'})
+     assert env == {'HOME': '/home/ec2-user', 'PATH': '/usr/local/bin:/usr/bin', 'USER': 'ec2-user'}
++
++
++def test_failure_code_carries_the_runners_closed_challenge_reason():
++    out = (b'{"ok": false, "failure_class": "UNEXPECTED_CHALLENGE", "message": "unexpected challenge screen -- x", '
++           b'"record": {"reason": "CHALLENGE_CAPTCHA_UNSUPPORTED", "sample": "secret page text"}}\n')
++    assert host_capture.failure_code(out) == 'CAPTURE_FAILED:UNEXPECTED_CHALLENGE:CHALLENGE_CAPTCHA_UNSUPPORTED'
++    leaky = b'{"ok": false, "failure_class": "UNEXPECTED_CHALLENGE", "record": {"reason": "see https://x?t=1"}}\n'
++    assert host_capture.failure_code(leaky) == 'CAPTURE_FAILED:UNEXPECTED_CHALLENGE'

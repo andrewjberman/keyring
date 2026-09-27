@@ -1923,6 +1923,29 @@
     "spec_asserts": "IVE50-AC1's own bar ('the flakiness source is removed at its root') and IVE50-AC2 ('the failing set equals exactly the table's Q rows').",
     "world_is": "This cell fixed 8 real, root-caused, verified-in-BOTH-baselines defects (fe-s-14, fe-s-15 x2, fe-s-19, fe-s-25 x2, fe-s-30/F30-AC4) at the fixture level -- genuine, durable progress. The remaining instability is NOT per-file: it is a property of the whole 240-file/905-test corpus under bun's own scheduler, which lands on one of at least two different stable failing-set regimes depending on machine/timing conditions this cell cannot control or characterize further from inside a fixture-only grant. IVE50-AC1's own instrument mechanically read S7-DETERMINISTIC-OK on its one graded invocation (a true, unmanipulated result of that one real 3-run sample) -- recorded verbatim in the proof-of-spec instance -- but this row records that the BAR THE CELL TEXT NAMES IN PROSE ('the flakiness source is removed at its root') is NOT actually met: the source is corpus-wide scheduling variance, still present, not removed. IVE50-AC2 reads S7-SUITE-FAIL on this same tip, per the refusal clause, honestly.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "DSGN_IRPTV1-W39-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~39",
+    "surfaced_at": "2026-09-27T14:09:46Z",
+    "one_line": "The cell's Build text does not qualify where OwnedRequestHistory mounts in AnalysisTab.tsx, but a pre-existing committed test (fe-s-72/reachable-states.test.ts, Andrew-direct 2026-09-24 design notes) already refuses ANY request panel -- including owned-request-history -- in the no-client-selected state, so the mount had to be scoped to the hasClient branch only, not rendered unconditionally as a first reading of the cell suggested.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/pages/InvestorReporting/__tests__/fe-s-72/reachable-states.test.ts:82-85 (pre-existing, untouched by this worker): `expect(emptyMarkup).not.toContain('data-slot=\"owned-request-history\"')` on a render with no HeaderSelectionContext (no client selected), citing 'Andrew-direct 2026-09-24 ~19:4xZ (design notes, Analysis): the empty state carries no request panel at all'",
+        "an unconditional mount of <OwnedRequestHistory> in AnalysisTab.tsx (this worker's first pass) made that exact assertion FAIL: 'Received: ...data-slot=\"owned-request-history\">...' inside the otherwise-empty markup -- rc from `bun test src/pages/InvestorReporting/__tests__/fe-s-72/reachable-states.test.ts` went from 0 to 1",
+        "moving the mount inside the `hasClient` branch (AnalysisTab.tsx, alongside generateComposer/prospect-disclosure) restored fe-s-72's PASS, and this worker's own iv-e-62.request-history.test.tsx MOUNT CONTROL arm now asserts the same no-client absence going forward",
+        "full-directory rerun after the fix: `bun test src/pages/InvestorReporting/` -> 872 pass / 27 skip / 7 fail, the 7 unrelated to this cell's files (contracts/adapt.ts ?? null census, vite config-loader script reach, selection-create/directory-browse unprojected_grant, a pre-existing 'ycharts' token at investor-reporting.ts:200 in a route-table comment this cell's <paths> grant does not touch) -- 0 fail attributable to this cell's edits"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IV-e-62's Build text: 'The Analysis tab lists the owner's requests from the served history read (not only this browser's), each with its state...' -- stated with no explicit hasClient/no-client qualifier.",
+    "world_is": "A separate, already-ruled ADR (the 2026-09-24 design notes, enforced by a committed fe-s-72 test this cell's <paths> grant does not cover) requires the no-client state to carry no request panel at all. This worker read the two together and scoped the new mount to the hasClient branch so both hold; the cell text alone, taken in isolation, would have allowed a reader to mount it unconditionally and break the existing rule.",
+    "notes": "Not blocking: resolved within this task order, both tests pass, no criterion was weakened. Filed so an L9/L10 reader sees this scoping was a deliberate reconciliation of two rules, not an oversight of either."
   }
 ]
 ```
@@ -2061,5 +2084,33 @@
   "spec_asserts": "The Export preview resolves the same report the tab shows, with the same request scope (selection, window, tenant).",
   "world_is": "The preview's request drops the tenant the tab's request carries, so an internal viewer gets UNAVAILABLE and no preview.",
   "notes": "Fix shape (P): thread target.selectedTenant through the preview into resolveBundle's deps and onto the request. This row is evidence for S20, not a disposition change to it. P re-cuts window 10 as window 11 on the fix's pin."
+}
+```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S23",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-27T14:01:31Z",
+  "one_line": "Window 12 K8 on local DEV 1f149d69: with IV-e-53 the preview resolves, but the export SUBMIT omits selected_tenant, so the one POST /export answered 200 UNAVAILABLE / UNEXPECTED (BucketUnmapped) and nothing rendered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "a direct act whose <paths> grant covers portal/src/pages/InvestorReporting/export/submit.ts, ExportButton.tsx and ReceiptPanel.tsx (TO-IV-e-64)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w12-20260927.har (gitignored, sha256 7bfe69ac..; 462 entries, 0 /__mockcot/): exactly one POST /api/scoped/investor-reporting/export at 13:44:21Z, HTTP 200, body ok=false, state UNAVAILABLE, public_reason_code UNEXPECTED",
+      "2.0.0_SA_COO~P 101906: irpt-export-render log 13:44:22Z BucketUnmapped then submit-export UNEXPECTED (corr-83fe081e2112); no render token, no generations/ object",
+      "portal 1f149d69 export/submit.ts:64-78 buildSubmitRequest builds {tenant, scopeFingerprint, revision, bundleRef, options, wireBundle} with no selectedTenant (called at ExportButton.tsx:213); the live client sends selected_tenant only from req.selectedTenant (src/api/endpoints/investor-reporting.ts:1192-1217, submit and receipt)",
+      "walk byte-proof checks: start 13:37:54Z and end 14:01:27Z both HEAD 1f149d69, 0 tracked changes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Export on Performance with an answer-bearing report submits for the report the tab shows, with the same request scope (tenant included), and its receipt and download reads carry it too.",
+  "world_is": "The submit drops the tenant the preview now carries, so an internal viewer's export is refused server-side before any render.",
+  "notes": "Same class as S22 (IV-e-53 threaded the tenant into the preview only). K7 on the same walk read 8.05% PARTIAL with selected_tenant on both Performance GETs, and the picker showed value and YTD side by side (IV-e-58 live). P re-cuts the next window on the fix's pin."
 }
 ```

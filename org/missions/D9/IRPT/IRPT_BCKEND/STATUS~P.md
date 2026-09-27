@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T12:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T14:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -12,7 +12,7 @@ As of 2026-09-27T12:5xZ. Earlier forms of this file are in git (`git log -p -- <
 |---|---|---|
 | irpt-performance-adapter | `bOefL9nx..` since 05:22:03Z (09-27) = Ll6t4VPa + COT actual_start (backend 05778597eb, publish f360e6c80e); earlier: P-REOPEN-01, both timing lines, S147 fix M; NO armed plan since 04:34:55Z (`approved_performance_plan = null`, no session grant) | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 / irpt-performance-cot-one-use-1-20260927 / irpt-cot-actual-window-20260927 CLOSED |
 | irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) = hop-3 six + the cross-viewer title binding (f8c72944f3) | irpt-cross-viewer-title-20260927 CLOSED |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-wf` since 05:54:14Z = rb + ~Y's read-back WAF refresh (e2fdd01015: recipe, resident_worker, session/broker); rollback roots rb, xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-waf-refresh-20260927 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-cw` since 13:51:07Z = wf + ~Y's W11 fixes (b6739556ea: recipe, resident_worker, session/host_capture); rollback roots wf, rb, xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-waf-refresh-20260927 / irpt-resident-capture-env-20260927 CLOSED |
 | irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
 | irpt-directory-search | `o1TXq5PH..` since 22:54:12Z: UIR-07 exact full-name match first in search AND browse(q) (49b935c213); -target apply | irpt-uir07-search-rank-20260926 CLOSED |
 | irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
@@ -47,22 +47,17 @@ None. Window 8 CLOSED 04:46:35Z (ledger @f293962a58).
 Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (window 7; INF; COT). Andrew at ~Y 04:01Z
 "yes, run the Analysis window" (W8-2): USED. Any further window or vendor use needs a new word.
 
-1. **Analysis hop 6 (the live-thread break):** the WAF-refresh fix is SERVED in the resident (wf). Andrew at ~Y
-   (@460e2ae8cb): "yes you can run as many analysis attempts as needed". The window-11 packet (blob 9ee0c7c5,
-   @7aad982d3e) is out for both halves: ONE upload and ONE Overview, at most 6 status GETs, ONE re-capture on a
-   read WAF challenge. Create on both halves, then hand to ~Y.
-2. **K8, the first real export:** window 10 (06:19-06:32Z) did not reach it. The page's Export preview refuses
-   before any request ("cannot render reportKind performance-report: 39c11079.. is absent"), and 39c11079 is K7's own
-   report revision (RPT-b5e0a16e). ROOT CAUSE (from the w10 HAR and the adapter log):
-   the preview's Performance fetch (resolveBundle.ts:292-300) omits `selected_tenant`. Its 2 GETs at 06:25:22Z answered
-   UNAVAILABLE/UNEXPECTED (BucketUnmapped for the internal viewer's own firm), and resolveOne rethrew that at :255.
-   The fix is in the portal (DSGN_IRPTV1-S20, ~D's lane, a round-8 candidate): thread the target's selectedTenant.
-   Re-cut window 10's packet as a later window once the fix is built.
-   UPDATE 12:39Z: C: reads 17 GB free after MSTR's /cleanup (101858), above the 15 GB seating floor, so ~D can seat
-   round 8 now.
-   BLOCKER CHAIN (10:2xZ): the fix is TO-IV-e-53 in DSGN_IRPTV1 round 8 (issued @83576f9dd9). It has 0 portal commits,
-   because ~D seated 0 workers: C: is at 14 GB free, under the 15 GB seating floor, awaiting Andrew. P's scratchpad
-   holds 72 MB, so it is not the lever.
+1. **Analysis hop 6 (the live-thread break):** window 13 (14:11-14:33Z) ran the fifth attempt on resident cw.
+   REQ-2119def4 went ATTENTION VENDOR_READ_BACK_REFUSED, and portfolio 2363820 is kept. It got CLOSER:
+   - capture_env worked (no LEASE_NOT_HELD), but the form sign-in met CAPTURE_FAILED:UNEXPECTED_CHALLENGE and stored
+     nothing;
+   - on redelivery the saved-portfolio read worked (7 of 7 fields present), and ONE value differs: level_as_of_type.
+   Bounds held (4 status GETs, 1 saved GET, 1 attempted re-capture). Running re-capture total: 1 attempted, 0 completed.
+   Both open items are with ~Y (P 14:34Z). Next: ~Y's fix, then window 14 under Andrew's standing word.
+2. **K8, the first real export:** window 12 (13:35-14:03Z) got further. The preview resolved on 1f149d69, and ONE
+   export POST was sent, but the server REFUSED it (UNEXPECTED, BucketUnmapped): the SUBMIT also omits
+   selected_tenant (buildSubmitRequest, submit.ts:64-78). Nothing was exported. ~D is cutting the submit, receipt
+   and download fix as a direct act (101907). Re-cut on its pin.
 3. **A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** unblocked. Andrew-direct relayed by MSTR
    101850 reads "they have egress for full session", and the loop prompt permits vendor uses, each ledgered. It needs
    ONE new COT use: plan 2 on the same account through cot_one_use_plan.py (no vendor call), a packet, both halves,
@@ -79,6 +74,9 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
+- Window 13 (the fifth Analysis attempt) opened 14:11:33Z and closed 14:33:10Z: 0 outside the classes; writes = K4/K5; bounds held.
+- Window 12 (K8 re-cut) opened 13:35:19Z and closed 14:03:20Z: the export refused at submit, nothing written; 0 outside the classes.
+- Window 11 (the fourth Analysis attempt) opened 12:56:51Z and closed 13:22:00Z: 0 outside the classes; writes = K4/K5 only; bounds held (@ledger irpt-ui-walk-principal-w11-20260927).
 - Andrew-direct "rec approved" (/open-calls CALL 1): ledger irpt-p-live-scope-20260923 CLOSED on the agent walks (@22c2fc699d).
 - Window 10 opened 06:19:10Z and closed 06:32:17Z. K7 reopened a 49F report (8.05%); K8 was not run (the page refused); 0 outside the classes; 0 new media in git.
 - S157 filed (COT retained face overstates its window) and named in the release item (@52f078fe1e).
