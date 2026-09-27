@@ -2408,3 +2408,30 @@
   "notes": "Not blocking: the fix is a one-line, behavior-preserving type guard at each site (both tests still pass, byte-identical console output, per the evidence above); `bun run typecheck` is green project-wide after it. Filed because the ripple's SHAPE (a second, unnamed test needing the same class of fix) was not itself named, even though the mechanism (discriminated-union widening) is a normal, foreseeable consequence of this cell's own Build text ('SubmitOutcome / submitUnderGate ... have no queued variant')."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W36-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~36",
+  "surfaced_at": "2026-09-27T23:28:37Z",
+  "one_line": "TO-IV-e-73's Build (FirmAttribution renders nothing by default; the four tab mounts stay unedited) is the correct fix for round-8's UIR-30 finding, but it necessarily flips FIVE pinned tests outside this cell's <paths> grant from pass to fail, because each one exercises the REAL, unedited tab mount (or FirmAttribution directly with the same firmId-only shape) and asserts the OLD default (the chip visible).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "a round-9/10 cell whose <paths> grant covers portal/src/pages/InvestorReporting/__tests__/{fe-s-10/parity.test.ts,dsgn-irptv1/iv-e-23.firm-chip.test.ts,dsgn-irptv1/iv-e-23.parity-kept.test.ts,dsgn-irptv1/iv-e-38.header-identity.test.tsx,dsgn-irptv1/iv-e-56.firm-display.test.tsx} -- to re-golden each one's FirmAttribution-shaped assertion to the new `show`-gated default (2.0.0_SA_COO~D or 1.0.0_SA_CTO to route)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/global/FirmAttribution.tsx (this cell's own edit, HEAD wk-DSGN_IRPTV1-36-portal 8808eeb6 + uncommitted): `if (!show) return null` -- default `show = false`",
+      "`timeout 120 bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-23.firm-chip.test.ts ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-38.header-identity.test.tsx ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-56.firm-display.test.tsx ./src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-23.parity-kept.test.ts` BEFORE this cell's edits (measured on the same worktree at the un-edited HEAD): 3 pass, 0 fail (iv-e-23.firm-chip, iv-e-38.header-identity, iv-e-56.firm-display all print their own OK verdicts)",
+      "the SAME invocation AFTER this cell's edits: 1 pass, 5 fail across the 6 tests these 5 files carry -- iv-e-23.firm-chip.test.ts (face no longer contains the display name), iv-e-38.header-identity.test.tsx (UIR-30 arm: name occurrences=0, expected 1), iv-e-56.firm-display.test.tsx (UIR-13d/e: 'attribution chip carries the display name' now false), fe-s-10/parity.test.ts (positive control `globalMarkup.includes('49 Financial<')` now false because ReportingTab's real, unedited mount renders no chip at all), iv-e-23.parity-kept.test.ts (its own child-process run of the now-failing parity.test.ts: rc=1, 1 fail)",
+      "fe-s-10/parity.test.ts's own header states it is 'KEPT (R6) and must stay green' and 'never itself edited here (bounds: do not edit it')' -- none of the five files are named in this task order's <paths>, so BOUNDS forbids editing any of them"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV-e-73 Build: FirmAttribution renders nothing by default in the tab bodies; the tab mounts stay as they are (no tab file is edited); export/Preview.tsx passes an explicit prop.",
+  "world_is": "Three pinned tests (iv-e-23.firm-chip, iv-e-38.header-identity's UIR-30 arm, iv-e-56.firm-display) call FirmAttribution directly with the exact same (scope, firmId) shape the unedited tab mounts use, with no distinguishing prop available, so the ONLY way to satisfy the Build's literal instruction (default hidden, no tab file touched) is a default that ALSO flips these three tests' assertions; a fourth, fe-s-10/parity.test.ts, mounts the real unedited ReportingTab and its own POSITIVE CONTROL depends on the chip being present in the raw markup before stripping, which is now false by construction of the fix; a fifth, iv-e-23.parity-kept.test.ts, is a child-process re-run of the fourth and fails identically.",
+  "notes": "Not blocking THIS task order: IVE73-AC1/AC2 are self-contained (this worker's own new test file) and both pass; the refusal clause (do not weaken a test to pass) was honoured by not touching any of the five files, since none is in <paths>. Filed ARMED because the round's own drain/CI would show 5 new failures the moment this branch merges, and no cell in the round-9 decomp (org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md v9) currently owns re-goldening any of the five files."
+}
+```
