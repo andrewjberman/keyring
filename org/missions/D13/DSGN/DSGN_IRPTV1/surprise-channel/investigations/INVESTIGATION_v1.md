@@ -2382,3 +2382,32 @@
   "notes": "The backend now accepts (tenant, report ref, owner check and async submit all hold). The page fix: accept the QUEUED status envelope, take the exr_ id from status.operation.revision and poll export-receipt to READY. Round-9 candidate, thread-breaking."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W34-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~34",
+  "surfaced_at": "2026-09-27T23:25:00Z",
+  "one_line": "Row DSGN_IRPTV1-W34-S1 is DISARMED: TO-IV-e-68 fixed fe-s-45/residuals.test.ts's real shared-state source at the root and named it. dev-script-writes.mjs's pickPort() scanned one FIXED range (5900..5939) identically in every worktree's own copy of this driver -- real OS port state shared machine-wide, not private to this file. Under this project's normal condition (dozens of round-9 workers each able to run the whole suite or this one file at the same wall-clock moment), enough OTHER worktrees' own in-flight servers could occupy that shared 40-port pool that pickPort read 'no closed port' for one arm on an unlucky sample: that arm never spawned, read NOT RUN, and F45-AC9's `clean` count dropped below `kept.length` -- the '1 of 3 runs' flake W34-S1 measured (never test order: a fixed --seed keeps file order fixed across every sample). Fixed by deriving a per-worktree port window (fe45PortWindow, RULING U's own FNV-1a-over-the-worktree-path pattern from ../fe-s-27/_dev-server.ts's portForWorktree, reimplemented locally since this script runs under node against a .ts helper with no loader registered) -- 64 disjoint 16-port buckets based at 6100, clear of fe-s-27's derived range (5400..5899), round 12's manual block (5900..5959) and its two named fixed ports (5960, 5983).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit 2372f999c3696a3ba0e263eb15e9a1405098bba5 (branch wk-DSGN_IRPTV1-34-portal, LOCAL): dev-script-writes.mjs's pickPort() now scans `fe45PortWindow(PORTAL).start..end` instead of the literal 5900..5939",
+      "portal commit dea253bb8f677a90cd67d638b66b44f4e74c875e: s7-flaky-sources.json's new fe-s-45/residuals.test.ts entry names the source and cites 2372f999 as removing_commit, per this project's own flaky-sources bar",
+      "isolated run post-fix: `bun test src/pages/InvestorReporting/__tests__/fe-s-45/residuals.test.ts` -- 6 pass, 0 fail; printed `port window for this worktree (.../portal): 6116..6131`",
+      "IVE68-AC1's own graded invocation post-fix (s7-determinism-check.ts): 3 of 3 pinned full-suite runs (886 pass, 5 failing each run, all 5 the table's Q rows, fe-s-45 not among them) identical -- VERDICT: S7-DETERMINISTIC-OK",
+      "IVE68-AC2's own graded invocation post-fix (s7-suite-check.ts): PASS COUNT 886, FAILING 5, Q ROWS 5, VERDICT: S7-SUITE-OK",
+      "org/missions/D13/DSGN/DSGN_IRPTV1/ledger/S7_CLASS_TABLE.json's fe-s-45/residuals.test.ts row action text updated to record the fix and its removing commit"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Fixed in-bounds per TO-IV-e-68's own instruction (find the shared state at its source, name the fix, prove it with the pinned checks); both pinned checks now pass with fe-s-45 clean across 3 of 3 runs. S7, W21-S2, W23-S1 and W29-S10 close together with this row per CTO C-S60's own stated condition -- that closing disposition is the CVO/CTO's, not this worker's, to record.",
+  "spec_asserts": "TO-IV-e-68's own build text: 'Find the shared state fe-s-45/residuals.test.ts depends on ... fix it at the source, name the fix in s7-flaky-sources.json, and prove it with the pinned checks. No retries, no quarantine, no wider Q.'",
+  "world_is": "The shared state was a global, unnamespaced port pool every worktree's own instance of the driver scanned identically -- now namespaced per worktree. A re-run happening to pass was explicitly not accepted as a fix: the root cause is named (in this row, the commit message, s7-flaky-sources.json and S7_CLASS_TABLE.json) and the mechanism that produced the pool collision no longer exists in the code, not merely in this one sample.",
+  "notes": "Row W34-S1 stays filed as it is (append-only); this row is the disarm record. Not a re-diagnosis by luck: the isolated single-file run, the full pinned 3-run determinism sample and the pinned suite check all independently confirm fe-s-45 clean post-fix, and the fix targets the exact mechanism (`pickPort`'s port source) that a 'NOT RUN' arm requires."
+}
+```
