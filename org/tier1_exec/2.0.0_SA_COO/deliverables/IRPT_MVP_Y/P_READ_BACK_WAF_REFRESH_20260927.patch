@@ -1,0 +1,258 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+index add5191..5544cfe 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+@@ -614,12 +614,13 @@ def reconcile_owned(collection, name, fingerprint):
+ 
+ # --------------------------------------------------------- the settings read-back
+ 
+-READ_BACK_POLLS = 12
+-READ_BACK_SPACING_S = 5.0
++READ_BACK_POLLS = 6
++READ_BACK_SPACING_S = 15.0
++READ_BACK_LEASE_TTL_S = 900
+ 
+ 
+ def step_read_back(transport, portfolio_id, settings, *, polls=READ_BACK_POLLS,
+-                   spacing=READ_BACK_SPACING_S, wait=time.sleep):
++                   spacing=READ_BACK_SPACING_S, wait=time.sleep, clock=time.monotonic):
+     """Read the EFFECTIVE settings back from the vendor and compare, field by field.
+ 
+     The comparison is per FIELD with its own verdict, not one boolean: "settings drifted" is
+@@ -630,9 +631,16 @@ def step_read_back(transport, portfolio_id, settings, *, polls=READ_BACK_POLLS,
+     calculation polling, whose body carries only `status`; decision_branches.json), and its
+     settings are readable only once it is available. Window 7 read it once, 2 s after the create,
+     and refused 7 of 7 fields against a body that held none. So a `calculating` answer is polled,
+-    bounded, and the comparison is made on the first answer that is not `calculating`; a portfolio
+-    still calculating after the bound is compared as it stands and refused with its status named.
++    and the comparison is made on the first answer that is not `calculating`.
++
++    THE POLL BACKS OFF (CTO 101792): window 8 polled every 5 s and YCharts' WAF challenged the
++    3rd poll, as it did the research run's. So the polls are 15 s apart and few, the operation
++    lease is renewed between polls (each request must fit its 780 s budget inside the lease), and
++    a WAF challenge ends the loop at once so the caller's one-refresh rule sees it. The result
++    carries `polls` and `wall_s`.
+     """
++    started = clock()
++    renew = getattr(transport, "renew", None)
+     for poll in range(1, polls + 1):
+         info, body = transport.request("/model_portfolios/%s/status" % portfolio_id)
+         try:
+@@ -641,11 +649,14 @@ def step_read_back(transport, portfolio_id, settings, *, polls=READ_BACK_POLLS,
+             effective = {}
+         if not isinstance(effective, dict):
+             effective = {}
+-        # Only a healthy `calculating` answer is waited out; anything else (available, an
+-        # eviction, an error) returns at once, so the caller's eviction and refusal rules see it.
+-        if not (info["status"] in (200, 202) and effective.get("status") == "calculating"):
++        # Only a healthy `calculating` answer is waited out; anything else (available, a WAF
++        # challenge, an eviction, an error) returns at once, so the caller's rules see it.
++        if info.get("waf_action") or not (
++                info["status"] in (200, 202) and effective.get("status") == "calculating"):
+             break
+         if poll < polls:
++            if callable(renew):
++                renew(ttl=READ_BACK_LEASE_TTL_S)
+             wait(spacing)
+     s = settings["settings"]
+     rows = []
+@@ -658,6 +669,7 @@ def step_read_back(transport, portfolio_id, settings, *, polls=READ_BACK_POLLS,
+     matched = sum(1 for r in rows if r["matches"])
+     return {**_recovery_ref(info), "step": "read_back", "ok": info["status"] == 200 and matched == len(rows),
+             "status": info["status"], "portfolio_status": effective.get("status"), "polls": poll,
++            "wall_s": round(clock() - started, 1), "waf_action": info.get("waf_action"),
+             "matched": matched, "denominator": len(rows), "rows": rows,
+             "drifted": [r["setting"] for r in rows if not r["matches"]]}
+ 
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+index 4f8ff2c..7b409a7 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+@@ -12,7 +12,7 @@ import json
+ import re
+ import time
+ 
+-from broker import _RecoveryObserver, eviction_verdict
++from broker import _RecoveryObserver, eviction_verdict, waf_read_verdict
+ from current_authority import decide
+ from durable_job import DynamoGenerationStore
+ from frozen_worker import FrozenCompositionWorker
+@@ -33,19 +33,21 @@ class WorkerAttention(RuntimeError):
+ _TOKEN = re.compile(r"[a-z][a-z0-9_]{0,31}")
+ 
+ 
+-def refusal_line(result):
+-    """A refused vendor step as closed tokens for the host journal: the step, the HTTP status, the
+-    portfolio status and the drifted SETTING names (keys of recipe.SETTING_TO_VENDOR_FIELD only).
+-    Never a value, a body or a URL, so the journal can say why without holding vendor data."""
++def refusal_line(result, tag="STEP_REFUSED"):
++    """A vendor step as closed tokens for the host journal: the step, the HTTP status, the
++    portfolio status, the poll count and wall time, and the drifted SETTING names (keys of
++    recipe.SETTING_TO_VENDOR_FIELD only). Never a value, a body or a URL, so the journal can say
++    why without holding vendor data."""
+     def token(value):
+         return value if isinstance(value, str) and _TOKEN.fullmatch(value) else "-"
+     status = result.get("status")
+     drifted = [name for name in result.get("drifted") or [] if name in recipe.SETTING_TO_VENDOR_FIELD]
+-    polls = result.get("polls")
+-    return "IRPT_RESIDENT_STEP_REFUSED step=%s status=%s portfolio_status=%s polls=%s drifted=%s" % (
++    polls, wall = result.get("polls"), result.get("wall_s")
++    return "IRPT_RESIDENT_%s step=%s status=%s portfolio_status=%s polls=%s wall_s=%s drifted=%s" % (
++        tag if tag in ("STEP_REFUSED", "STEP_WAF_REFRESH", "READ_BACK_DONE") else "STEP",
+         token(result.get("step")), status if type(status) is int else "-",
+         token(result.get("portfolio_status")), polls if type(polls) is int else "-",
+-        ",".join(drifted) or "-")
++        wall if type(wall) in (int, float) else "-", ",".join(drifted) or "-")
+ 
+ 
+ class ResidentGenerationWorker:
+@@ -84,6 +86,12 @@ class ResidentGenerationWorker:
+             if eviction_verdict({}, observer=self.transport, result=failure) is not None:
+                 self.refresh_session()
+                 return self.step(function, *args)
++            if waf_read_verdict(observer=self.transport, result=failure) is not None:
++                # CTO 101792: a WAF challenge on a status READ spends the job's ONE refresh, then the
++                # read resumes; a second challenge finds the intent used and goes ATTENTION.
++                print(refusal_line(result, "STEP_WAF_REFRESH"), flush=True)
++                self.refresh_session()
++                return self.step(function, *args)
+             # No exception body, cookie or signed URL reaches status storage.
+             print(refusal_line(result), flush=True)
+             raise WorkerAttention("VENDOR_" + result.get("step", "STEP").upper() + "_REFUSED")
+@@ -164,6 +172,7 @@ class ResidentGenerationWorker:
+                 if portfolio.get("name") != name or portfolio.get("holdings_fingerprint") != fingerprint:
+                     raise WorkerAttention("PORTFOLIO_CHECKPOINT_BINDING")
+                 readback = self.step(recipe.step_read_back, portfolio["model_portfolio_id"], plan["settings"])
++                print(refusal_line(readback, "READ_BACK_DONE"), flush=True)
+                 # Save only semantic readback fields, not volatile recovery evidence.
+                 readback = {key: readback[key] for key in ("ok", "rows", "matched", "denominator", "drifted")}
+                 self.store.put_checkpoint(request_id, "read_back", readback)
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
+index 768b2a8..2601945 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
+@@ -16,13 +16,20 @@ CALCULATING = {"status": "calculating"}
+ 
+ class Replay:
+     def __init__(self, *answers):
+-        self.answers, self.calls = list(answers), 0
++        self.answers, self.calls, self.renewals = list(answers), 0, []
+ 
+     def request(self, path, method="GET", payload=None, content_type=None):
+         assert path == "/model_portfolios/2363504/status" and method == "GET"
+-        status, body = self.answers[min(self.calls, len(self.answers) - 1)]
++        answer = self.answers[min(self.calls, len(self.answers) - 1)]
++        status, body = answer[0], answer[1]
+         self.calls += 1
+-        return {"status": status}, json.dumps(body).encode()
++        info = {"status": status}
++        if len(answer) > 2:
++            info["waf_action"] = answer[2]
++        return info, json.dumps(body).encode()
++
++    def renew(self, *, ttl):
++        self.renewals.append(ttl)
+ 
+ 
+ def read_back(transport, **kw):
+@@ -36,7 +43,15 @@ def test_calculating_then_available_compares_the_available_response():
+     result, waits = read_back(t)
+     assert result["ok"] is True and result["matched"] == result["denominator"] == 7
+     assert result["polls"] == 4 and t.calls == 4 and waits == [recipe.READ_BACK_SPACING_S] * 3
+-    assert result["portfolio_status"] == "available"
++    assert result["portfolio_status"] == "available" and recipe.READ_BACK_SPACING_S == 15.0
++    assert t.renewals == [recipe.READ_BACK_LEASE_TTL_S] * 3 and isinstance(result["wall_s"], float)
++
++
++def test_a_waf_challenge_ends_the_poll_at_once_for_the_one_refresh_rule():
++    t = Replay((200, CALCULATING), (202, CALCULATING, "challenge"), (200, AVAILABLE))
++    result, waits = read_back(t)
++    assert result["ok"] is False and result["polls"] == 2 and t.calls == 2 and len(waits) == 1
++    assert result["waf_action"] == "challenge" and result["status"] == 202
+ 
+ 
+ def test_never_available_is_refused_with_its_status_named_after_the_bound():
+@@ -62,7 +77,11 @@ def test_refusal_line_carries_closed_tokens_only():
+     line = resident_worker.refusal_line({"step": "read_back", "status": 200, "portfolio_status": "calculating",
+                                          "polls": 12, "drifted": ["management_fee", "https://x?sig=1"]})
+     assert line == ("IRPT_RESIDENT_STEP_REFUSED step=read_back status=200 portfolio_status=calculating "
+-                    "polls=12 drifted=management_fee")
++                    "polls=12 wall_s=- drifted=management_fee")
++    done = resident_worker.refusal_line({"step": "read_back", "status": 200, "portfolio_status": "available",
++                                         "polls": 3, "wall_s": 31.4, "drifted": []}, "READ_BACK_DONE")
++    assert done == ("IRPT_RESIDENT_READ_BACK_DONE step=read_back status=200 portfolio_status=available "
++                    "polls=3 wall_s=31.4 drifted=-")
+     leaky = resident_worker.refusal_line({"step": "Read Back <x>", "status": "200", "portfolio_status": "a b@c",
+                                           "drifted": None})
+-    assert leaky == "IRPT_RESIDENT_STEP_REFUSED step=- status=- portfolio_status=- polls=- drifted=-"
++    assert leaky == "IRPT_RESIDENT_STEP_REFUSED step=- status=- portfolio_status=- polls=- wall_s=- drifted=-"
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
+index 906143b..7efc106 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
+@@ -261,6 +261,35 @@ def test_causal_read_failure_recaptures_once_and_resumes_without_mutation_replay
+         assert not r.downloads
+ 
+ 
++WAF_READ = {'status': 202, 'content_type': 'application/json', 'body': {'status': 'calculating'},
++            'waf_action': 'challenge'}
++
++
++@pytest.mark.parametrize('second_challenge', [False, True])
++def test_waf_challenge_on_the_read_back_spends_the_one_refresh_and_resumes(world, monkeypatch, second_challenge):
++    """CTO 101792: window 8's read-back met YCharts' WAF challenge (a 202 during calculation polling). It
++    spends the job's ONE existing refresh and resumes AT the read-back; a second challenge goes ATTENTION."""
++    r = installed(world, monkeypatch)
++    route = ('GET', '/model_portfolios/2332060/status')
++    valid = r.replay.script[route][0]
++    r.replay.script[route] = [WAF_READ, WAF_READ if second_challenge else valid]
++    captures = []
++    def capture():
++        captures.append(True)
++        r.bundle.update(generation='offline-fresh-session', fence=2)
++    r.assembly.session.capture_workflow = SimpleNamespace(capture=capture)
++    result = r.assembly.execute(r.message, lambda: None)
++    assert captures == [True]
++    assert 'intent_session_refresh' in r.row
++    assert result['state'] == ('ATTENTION' if second_challenge else 'READY')
++    calls = r.replay.sent_headers
++    assert sum(c['route'] == '/model_portfolios/fixed/' and c['method'] == 'POST' for c in calls) == 1
++    assert sum(c['route'].endswith('holdings_upload/client') for c in calls) == 1
++    if second_challenge:
++        assert result['detail']['code'] == 'SESSION_REFRESH_ALREADY_USED'
++        assert not r.downloads
++
++
+ def test_generic_auth_error_cannot_trigger_login(world, monkeypatch):
+     r = installed(world, monkeypatch)
+     # The first vendor request is now the template GET (the liveness gate).
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/session/broker.py b/infra/aws/lambda/investor-reporting/ycharts/session/broker.py
+index 275578e..4204746 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/session/broker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/session/broker.py
+@@ -335,6 +335,25 @@ def eviction_verdict(job_record, *, observer=None, result=None):
+     return {**pull, "decision": "REFRESH"}
+ 
+ 
++def waf_read_verdict(observer=None, result=None):
++    """A WAF challenge on a status READ may spend the job's ONE existing refresh (CTO 101792).
++
++    Measured twice: YCharts' WAF challenges calculation polling after a few status GETs (the
++    research run, window 8), and the research recovered with ONE browser re-capture that earned a
++    fresh token, then resumed at the checkpoint. Only the broker's own observation counts; a
++    challenge on a MUTATION stays reconciliation and never refreshes.
++    """
++    if not isinstance(observer, _RecoveryObserver) or not isinstance(result, dict):
++        return None
++    pull = observer.failure_pull(result)
++    if not pull:
++        return None
++    if (pull["action"] != "BROWSER_ATTENTION" or pull["operation"] != "status_poll"
++            or pull["reason"] != "WAF_CHALLENGE"):
++        return None
++    return {**pull, "decision": "REFRESH_ON_WAF_READ"}
++
++
+ def run_with_recovery(broker, make_job, run_kwargs, transport_factory, job_id,
+                       store, prior_generation, resume_point=None):
+     """Drive one generation attempt; on an EVICTION, refresh ONCE and resume AT THE CHECKPOINT.

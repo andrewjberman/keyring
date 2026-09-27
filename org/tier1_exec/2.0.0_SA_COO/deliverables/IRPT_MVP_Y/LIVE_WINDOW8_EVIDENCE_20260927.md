@@ -63,3 +63,37 @@ The log is `LIVE_CHAIN_1203_20260927_W8.json` (scrubbed).
 
 **REC: (c).** (a) is the only recovery with live evidence, and (b) lowers how often it is needed. Either way the next
 window's packet names the re-sign-in as a vendor act.
+
+## RULED (c), bounded (CTO 101792) -- built and proved offline (04:5xZ)
+
+Fix: Y branch `4aaeaea3d5`, `P_READ_BACK_WAF_REFRESH_20260927.patch`. The patch is cut against P's deployed `rb` files
+(`07f1982ab9`) and applies cleanly (apply-check rc=0) to P's deploy tree `irpt-smoke-p-backend-20260923`. Its runtime
+files are content-identical to the overlay proved below.
+
+1. **The poll backs off:** 6 polls, 15 s apart, with the operation lease renewed between polls. A WAF answer ends the
+   loop at once. The result carries `polls`, `wall_s` and `waf_action`, and a successful read-back prints
+   `IRPT_RESIDENT_READ_BACK_DONE ... wall_s=`.
+2. **A WAF challenge on a status READ** (`broker.waf_read_verdict`: only a `status_poll` observation classified
+   `BROWSER_ATTENTION/WAF_CHALLENGE`) prints `IRPT_RESIDENT_STEP_WAF_REFRESH` and spends the job's ONE
+   `session_refresh` intent. It then re-runs the read. A challenge on a mutation stays reconciliation.
+3. **A second challenge** finds the intent used and goes ATTENTION `SESSION_REFRESH_ALREADY_USED`.
+
+Proof at the real entry point (`resident_job_preflight.py`): the served `rb` content plus overlays, the real Overview
+PDF and the production census, and `--capture-stub` standing in for the Linux-only host browser capture.
+
+| Run | Result |
+|---|---|
+| window 8's live shape (2 calculating, then a 202 challenge with no body status), deployed `rb` | ATTENTION `VENDOR_READ_BACK_REFUSED`; journal `step=read_back status=202 portfolio_status=- polls=3 drifted=<7>`, **identical to the live line** |
+| the same, with the fix | `STEP_WAF_REFRESH ... polls=3 wall_s=31.6`, 1 capture, `READ_BACK_DONE ... available polls=1`, **READY**, 1 REPORT# |
+| the research shape (decision_branches `WAF_REFRESH_REQUIRED`), with the fix | READY, 1 capture |
+
+Tests: `test_read_back_poll.py` 6/6. In `test_resident_worker.py` the WAF arms pass 2/2: one challenge gives one
+capture and READY with one upload and one portfolio POST; a second challenge gives ATTENTION
+`SESSION_REFRESH_ALREADY_USED`. The eviction arms still pass, and the resident suites have 46 passed and 8 skipped.
+
+Instrument limit: the pre-flight's DynamoDB double records the `session_refresh` claim's condition but does not
+evaluate it, so its two-challenge arm refreshed twice. Bound 3 is proved by the unit test, which evaluates the claim.
+
+For the next packet (ruling item 4), the K5 vendor calls add:
+- up to 6 status GETs 15 s apart;
+- on a WAF challenge, ONE host session re-capture (the S151 wrapper: a form sign-in) and then the read again.

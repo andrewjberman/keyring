@@ -47,6 +47,14 @@ def main(argv=None):
     ap.add_argument("--census", required=True)
     ap.add_argument("--overlay")
     ap.add_argument("--out", help="directory to dump the post-job world (for the hop 8-10 read-path proof)")
+    ap.add_argument("--waf-read", type=int, default=0,
+                    help="after the calculating answers, N WAF-challenge answers (the research-measured 202 from "
+                         "decision_branches.json), then available")
+    ap.add_argument("--waf-shape", choices=("research", "window8"), default="research",
+                    help="research: the decision_branches 202 (body says calculating); window8: the live 202 whose "
+                         "body carried no status (the journal's portfolio_status=-)")
+    ap.add_argument("--capture-stub", action="store_true",
+                    help="stand in for the Linux-only host browser capture: bump the session generation and fence")
     ap.add_argument("--status-calculating", type=int, default=0,
                     help="answer the portfolio status `calculating` N times before `available` (window 7 live)")
     a = ap.parse_args(argv)
@@ -85,7 +93,10 @@ def main(argv=None):
         ("POST", "/model_portfolios/fixed/holdings_upload/client"): upload,
         ("POST", "/model_portfolios/fixed/"): fixture("create_201"),
         ("GET", "/model_portfolios/2332060/status"): (
-            [{"status": 200, "body": {"status": "calculating"}}] * a.status_calculating + [fixture("status_ok")]),
+            [{"status": 200, "body": {"status": "calculating"}}] * a.status_calculating
+            + [fixture("decision_branches")["WAF_REFRESH_REQUIRED"] if a.waf_shape == "research" else
+               {"status": 202, "body": {}, "content_type": "application/json", "waf_action": "challenge"}] * a.waf_read
+            + [fixture("status_ok")]),
         ("POST", "/custom_pdf_reports/validate_report_securities/14141822"): fixture("validate_200"),
         ("POST", "/custom_pdf_reports/14141822"): fixture("generate_201")}
     replay = ReplayTransport(script)
@@ -142,6 +153,12 @@ def main(argv=None):
         put_secret_value=lambda **kw: writes.add("secrets.put") or {"VersionId": "offline-2"})
     clients = {"dynamodb": ddb, "table": rt.Table(ddb, "irpt-requests"), "s3": s3, "secretsmanager": secrets, "sqs": sqs}
     runtime = resident_installed.build_resident_runtime(bindings_path, clients=clients, clock=time.time)
+    captures = []
+    if a.capture_stub:
+        def capture():
+            captures.append(time.time())
+            bundle.update(generation="offline-recaptured-%d" % len(captures), fence=bundle["fence"] + 1)
+        runtime["assembly"].session.capture_workflow = SimpleNamespace(capture=capture)
     print("runtime built: assembly %s | queue %s | delivering %d analysis_generate message(s)"
           % (type(runtime["assembly"]).__name__, runtime["queue_url"].rsplit("/", 1)[-1], len(job_messages)))
 
@@ -192,6 +209,7 @@ def main(argv=None):
         json.dump({"tenant": message.get("tenant"), "request_id": message.get("request_id"), "report_keys": report,
                    "job_state": state}, open(os.path.join(a.out, "job.json"), "w", encoding="utf-8"))
         print("WROTE", a.out)
+    print("CAPTURES (stubbed host re-capture):", len(captures))
     print("\nRESULT:", state or "NO JOB ROW", "| handled", handled)
     return 0 if state == "READY" else 1
 
