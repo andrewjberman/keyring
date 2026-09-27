@@ -932,7 +932,8 @@ contract v1.3 adds `email_deny`; PRD v1.0 C2 and C6 each gain one clause). The d
 
 | cell | what it is | serves | writes | status |
 |---|---|---|---|---|
-| `OG-e-1` | BUILD: the hashed-email deny record, its guard on `/login` + `/sprint*` + legacy `/callback`, the writer's same-transaction put, and `deny-backfill` | C2, C6 (PRD v1.0 @2ae58221ab); row W3-S22 | `GW/app/access_state.py`, `GW/app/data_entitlement.py`, `GW/app/server.py`, `GW/app/token_broker.py`, `GW/ops/schwab_entitlement_admin.py`, `GW/tests/test_email_deny.py` (new), `GW/tests/test_owner_gate.py` | ISSUED |
+| `OG-e-1` | BUILD: the hashed-email deny record, its guard on `/login` + `/sprint*` + legacy `/callback`, the writer's same-transaction put, and `deny-backfill` | C2, C6 (PRD v1.0 @2ae58221ab); row W3-S22 | `GW/app/access_state.py`, `GW/app/data_entitlement.py`, `GW/app/server.py`, `GW/app/token_broker.py`, `GW/ops/schwab_entitlement_admin.py`, `GW/tests/test_email_deny.py` (new), `GW/tests/test_owner_gate.py` | COMPLETE @ed13cfee26 |
+| `OG-e-2` | SERVED: the narrow gateway release of OG-e-1 (live commit + OG-e-1's two gateway commits), under never-widen | C2, C6; row W3-S22 | `infra/aws/ec2/EC2_MANIFEST.json`, the NEVER-2 ledger | ISSUED |
 
 The SERVED steps follow as their own cells, each under never-widen:
 - a narrow gateway release from the live commit plus OG-e-1;
