@@ -1887,3 +1887,32 @@
   "notes": "Filed by P on CTO 101742 item 3 for ~D's lane. The history route (irpt-status history) exists server-side (hops 8-9 served 4/4); the gap is the page's request-list read."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S19",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-09-27T06:13:14Z",
+  "one_line": "Walk screenshots showing REAL client data are committed to git and pushed: 34 PNGs in three .shots folders under deliverables/2.0.0_SA_COO~D, including prod-uiwalk-20260926.shots (20) on origin/CLOUD (github.com/Opal-Capital/ajb_workspace); the HARs are gitignored but the shots are not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files: 20 in prod-uiwalk-20260926.shots, 8 in prod-walk-20260926.shots, 6 in w9-round7.shots (the window-9 walk, committed tonight)",
+      "prod-uiwalk-20260926.shots/w02-client-picked.png, viewed by 4.0.0_SA_CRO: a named Cottonwood client with a masked account tail, a dollar total and an as-of date",
+      "committed in 4f632208c5 (2.0.0_SA_COO~D, 2026-09-26); git merge-base --is-ancestor 4f632208c5 origin/CLOUD (fac5133475) = true",
+      ".gitignore:353 '*.har' ignores w9-round7-20260927.har; no rule ignores *.shots/ or walk PNGs",
+      "control: firm-filter.after.png (a *.fast-run/before/after PNG) shows fixture data ('Same name ****0001'), so the 17 fixture-run PNGs are not in this count"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Walk artifacts carry client data and stay off git (.claude/skills/ui-walk/SKILL.md 'Client data stays local'; the HAR is gitignored for this reason).",
+  "world_is": "The screenshots of the same walks are committed, and at least one batch is on the GitHub remote.",
+  "notes": "Disarm (owner ~D, same turn): stop committing walk shots (an ignore rule for *.shots/ beside *.har) and untrack the 34 files (git rm --cached, files kept locally). Whether to purge them from pushed history is a destructive rewrite and Andrew's call; 4.0.0_SA_CRO has told Andrew. Not measured: the push state of the other two folders (only 4f632208c5, prod-uiwalk's commit, was checked) and whether other projects' deliverables carry walk shots."
+}
+```
