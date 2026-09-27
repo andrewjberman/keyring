@@ -3749,6 +3749,51 @@ name the one known failure instead of silently inheriting it.
     },
     "spec_asserts": "The narrow release tree's regression modules pass as on CLOUD.",
     "world_is": "2 fail on a repo-only contract file outside the shipped set."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W8-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~8",
+    "surfaced_at": "2026-09-27T18:50Z",
+    "one_line": "PHASE B step 12's own-instrument verify (md5 of 4 app files, tool-name list AFTER, ENABLED_INTEGRATIONS) ran ~375s after the restart, not within the named 90s window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "systemctl show opal-gateway -p ActiveEnterTimestamp --value on i-07dccb1615503ac99 (ssm:822648a2-5d61-47cd-be87-db2006ba1bba) reads 'Sun 2026-09-27 18:43:56 UTC'.",
+        "The SSM send-command for this cell's own step-12 verify (ssm:822648a2-5d61-47cd-be87-db2006ba1bba) was dispatched 2026-09-27T18:50:03Z and completed 2026-09-27T18:50:11Z -- both well past 18:45:26Z (restart + 90s).",
+        "The deploy-to-ec2.sh wrapper's OWN embedded smoke check (health 200, opal-gateway active, /mcp 401, md5 of app/server.py and app/oauth_as.py) ran inside the same SSM install command (ssm:2ae27f67-2842-4c5f-9ab4-a68d859d07f0) immediately at restart time, so a within-window health signal exists; only this cell's independent 4-file md5 / tool-list / ENABLED_INTEGRATIONS re-check ran late.",
+        "The late read still shows PASS on every measured value: /health=200, all 4 app files' md5 = git show fe94911257's bytes, TOOLCOUNT=46 both before and after with sorted-name diff EMPTY, ENABLED_INTEGRATIONS unchanged -- so the delay did not conceal a divergent state, but the literal bound was not met and this row records that rather than silently treating a late read as an on-time one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 12: 'VERIFY, from the host, within 90 s of the restart' (health, md5, tool-list diff, ENABLED_INTEGRATIONS).",
+    "world_is": "The wrapper's own smoke check landed within the window; this worker's separate step-12 re-verification of the 4 named conditions landed at restart+375s, all PASS.",
+    "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W8-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~8",
+    "surfaced_at": "2026-09-27T19:00Z",
+    "one_line": "The standing worker rule to flip the governing TO's <status> to complete and commit it with the proof cannot be carried out: this cell's own <paths> grant does not list org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/, so the flip is outside the write surface this order names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_OPLGTW.TO-OG-e-2.email-deny-release.md section 3 <paths>: infra/aws/ec2/EC2_MANIFEST.json; org/critical_paths/change_management/; org/critical_paths/.open_deploys/nfra-oplgtw-email-deny-release.json; org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~8/**; org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/** -- no task-orders/ entry.",
+        "A trial edit appending <status>complete</status> was made then reverted (Edit tool, not a git operation) before any commit -- 0 diff against HEAD on that file at the time of this row.",
+        "Sibling precedent NFRA_MCPINDEX.TO-MX-r-3.narrow-release.md:118 carries 'flipped by the issuer 2026-09-27T06:0xZ', i.e. the COO issuer performed that TO's own flip rather than its worker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "'flip the task order's <status> to complete and commit instance, deliverables and flip together' (standing worker rule).",
+    "world_is": "The proof-of-spec instance is VALID (rc=0) and every mechanical criterion is PASS, but the flip itself is left to the issuer since this cell's <paths> grant excludes task-orders/.",
+    "disarm_owner": "2.0.0_SA_COO~O"
   }
 ]
 ```
