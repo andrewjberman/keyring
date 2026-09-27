@@ -311,16 +311,27 @@ try {
         for (const client of opt.clients) {
           if (!timeLeft()) break
           step = `search ${client}`
+          // Clear the box for real: after a pick the page holds the accepted label, and fill('') alone can leave the
+          // previous query in place (a 2026-09-27 walk searched both names run together).
+          await combo.click().catch(() => {})
+          await combo.press('Control+A').catch(() => {})
+          await combo.press('Backspace').catch(() => {})
           await combo.fill('').catch(() => {})
+          const left = await combo.inputValue().catch(() => '')
+          if (left) findings.push({ step: `search-${client}`, check: 'walker:input-not-cleared', claim: 'measured', observed: `the search box still held "${left}" before typing`, rule: 'each search starts from an empty box' })
           await combo.pressSequentially(client, { delay: 40 }).catch(() => {})
           await page.waitForTimeout(2500)
           await checks(page, `search-${client}`)
-          const opts = await page.getByRole('option').allInnerTexts().catch(() => [])
+          // Rank within THIS search's own listbox (aria-controls), never page-wide: the Firm <select> options also carry
+          // role=option and sit earlier in the DOM (the same walk read "#5 of 17" for a client shown first of 13).
+          const listId = await combo.getAttribute('aria-controls').catch(() => null)
+          const optLoc = listId ? page.locator(`[id="${listId}"]`).getByRole('option') : page.getByRole('listbox').last().getByRole('option')
+          const opts = await optLoc.allInnerTexts().catch(() => [])
           const tokens = client.toLowerCase().split(/[\s,]+/).filter(Boolean)
           const rank = opts.findIndex((o) => tokens.every((t) => o.toLowerCase().includes(t)))
           if (rank > 0) findings.push({ step: `search-${client}`, check: 'search:ranking', claim: 'measured', observed: `the option matching every token of "${client}" is #${rank + 1} of ${opts.length}, not first`, rule: 'the exact client comes first' })
           if (rank < 0) findings.push({ step: `search-${client}`, check: 'search:no-match', claim: 'measured', observed: `no option contains every token of "${client}" (${opts.length} options)`, rule: 'the client is findable by name' })
-          const pick = page.getByRole('option').nth(Math.max(rank, 0))
+          const pick = optLoc.nth(Math.max(rank, 0))
           if (!(await pick.count().catch(() => 0))) continue
           step = `client ${client}`
           await pick.click().catch(() => {})

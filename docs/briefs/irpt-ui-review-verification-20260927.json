@@ -1,0 +1,546 @@
+{
+ "schema_version": "1.0",
+ "kind": "verification of docs/briefs/irpt-ui-review-findings-20260926.json",
+ "walk": {
+  "stamp": "20260927T122713Z",
+  "tool": ".claude/skills/ui-walk/walk.mjs",
+  "base": "http://localhost:5174",
+  "build": "portal local DEV 3f76cdb2 (0 modified tracked files; = round 7 product code 200d257a + TO-IV-e-50 test fixes); origin/DEV c3dd9ca9 carries none of it",
+  "clients": [
+   "the Cottonwood two-account client",
+   "the 49F three-account client"
+  ],
+  "viewport": "1440 px",
+  "shots_path": "tmp/ui-walk/20260927T122713Z/shots/ (gitignored; client data)",
+  "account": "opal-ui-walker@opal.test, armed 12:27Z, disarmed 12:36:00Z, post-disarm login HTTP 401"
+ },
+ "claim": "measured on screenshots by 4.0.0_SA_CRO; a walk grades nothing (the CVO grades round 7)",
+ "totals": {
+  "register": 50,
+  "DSGN_IRPTV1": {
+   "items": 45,
+   "MET": 28,
+   "NOT_MET": 17
+  },
+  "IRPT_BCKEND": {
+   "items": 5,
+   "MET": 0,
+   "NOT_MET": 5
+  },
+  "new_findings": 7
+ },
+ "items": [
+  {
+   "id": "UIR-01",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "002",
+   "observed_on_walk": "The search box focused and empty opens no list.",
+   "acceptance": "With the search box focused and empty, no result list shows; results appear only for typed text (Browse stays the listing)."
+  },
+  {
+   "id": "UIR-02",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "003",
+   "observed_on_walk": "The open list sits above the tab strip, every option fully visible.",
+   "acceptance": "With the dropdown open over the tabs, every option is fully visible and the tab strip is underneath it."
+  },
+  {
+   "id": "UIR-03",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "verdict": "NOT_MET",
+   "shots": "003",
+   "observed_on_walk": "Options are still account registrations with raw type codes ('S1', 'IRA') and a masked tail.",
+   "acceptance": "Each option names a client in client language; a client with several registrations appears once; no raw type code in the option."
+  },
+  {
+   "id": "UIR-04",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "003",
+   "observed_on_walk": "Each option carries the firm TOKEN ('cottonwood', '49financial'), not its display name; the row layout is now uniform.",
+   "acceptance": "Every option shows the firm's display name (e.g. 'Cottonwood'), laid out the same on every row."
+  },
+  {
+   "id": "UIR-05",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "001",
+   "observed_on_walk": "The empty-state line reads 'Choose a client to see its firm and accounts.'",
+   "acceptance": "The empty-state line uses client language only (no 'Resolution')."
+  },
+  {
+   "id": "UIR-06",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "001",
+   "observed_on_walk": "Before a client is chosen the Performance area still shows figures (+10.00%, +2.00%, $2,500,000.00), now badged SAMPLE.",
+   "acceptance": "With no client chosen, the page shows no number that reads like client data."
+  },
+  {
+   "id": "UIR-07",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "003",
+   "observed_on_walk": "In Global mode, 'anna thiessen' lists the exact client first of 13 (server fix plus the page's Global merge). The reversed order was not walked.",
+   "acceptance": "A full-name query in either order ('anna thiessen', 'thiessen anna') puts the exact client first. The CTO rules whether ranking is server-side (IRPT_BCKEND directory search) or client-side."
+  },
+  {
+   "id": "UIR-08",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "003",
+   "observed_on_walk": "No option is covered; the occlusion check found 0.",
+   "acceptance": "No option is ever hidden under another element."
+  },
+  {
+   "id": "UIR-09",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "003",
+   "observed_on_walk": "No spell-check underline on the typed query.",
+   "acceptance": "The client search input shows no spell-check underline."
+  },
+  {
+   "id": "UIR-10",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "003",
+   "observed_on_walk": "The list states '13 MATCHED ACROSS FIRMS' and tags every option with its firm.",
+   "acceptance": "In Global mode results are grouped (or clearly marked) by firm and the list states how many matched."
+  },
+  {
+   "id": "UIR-11",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "003",
+   "observed_on_walk": "The SAMPLE cards still render behind the open search list.",
+   "acceptance": "No sample content renders while the live search is in use."
+  },
+  {
+   "id": "UIR-12",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "004",
+   "observed_on_walk": "WHO shows the client's name only; the accounts sit under Over what.",
+   "acceptance": "WHO shows the client's name only; accounts appear under Over what."
+  },
+  {
+   "id": "UIR-13",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "004",
+   "observed_on_walk": "The line reads 'cottonwood (Client)': the punctuation is fixed, the lower-case firm token is not.",
+   "acceptance": "The line reads the firm's display name with normal punctuation."
+  },
+  {
+   "id": "UIR-14",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "004",
+   "observed_on_walk": "The firm control reads 'Global (All)', which says the list is all firms.",
+   "acceptance": "After choosing a client the firm control shows that client's firm (or clearly says the list is all firms)."
+  },
+  {
+   "id": "UIR-15",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "007, 008, 034",
+   "observed_on_walk": "Both picker entries read '****9237 / BROKERAGE'; each shows 'value pending' or the whole refusal sentence, never a value. The 49F client's three entries are identical too.",
+   "acceptance": "Each picker entry shows a distinct label and the account's value."
+  },
+  {
+   "id": "UIR-16",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "008",
+   "observed_on_walk": "The Performance picker lists accounts only; no 'All accounts'.",
+   "acceptance": "The Performance picker has no 'All accounts' option; it lists accounts only."
+  },
+  {
+   "id": "UIR-17",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "005, 031",
+   "observed_on_walk": "Over what lists the accounts with identical labels (2 x '****9237 / BROKERAGE', 3 x '****9079 / IRA'); distinct labels wait on UIR-26's data fix.",
+   "acceptance": "Over what lists every account distinctly, and each opens that account's Performance."
+  },
+  {
+   "id": "UIR-18",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "007",
+   "observed_on_walk": "The refusal is plain words; its code sits behind 'Details'.",
+   "acceptance": "The refusal says in plain words why the figure is not available for this account and what makes it available; no raw code on the face."
+  },
+  {
+   "id": "UIR-19",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "007",
+   "observed_on_walk": "A status icon beside navy text on white; no tinted block.",
+   "acceptance": "A canvas-level refusal is a status icon beside navy text, never a tinted block."
+  },
+  {
+   "id": "UIR-20",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "026, 029",
+   "observed_on_walk": "Export is live (purple) on the Analysis tab with no report generated; it is grey on Performance and Holdings.",
+   "acceptance": "Export is disabled whenever the active tab has no answer-bearing report."
+  },
+  {
+   "id": "UIR-21",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "007",
+   "observed_on_walk": "The account picker and the period controls share one panel.",
+   "acceptance": "The account picker and the period controls sit together inside one panel."
+  },
+  {
+   "id": "UIR-22",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "005",
+   "observed_on_walk": "The system facts sit behind 'About this scope'.",
+   "acceptance": "The disclosure uses client language, or moves behind the system-facts click."
+  },
+  {
+   "id": "UIR-23",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "verdict": "NOT_MET",
+   "shots": "009",
+   "observed_on_walk": "Holdings are still as of 2026-09-22 on Sunday 2026-09-27 (T-1 is Friday 2026-09-25); R4 enables the scheduled publication Monday.",
+   "acceptance": "Holdings read as of the last trading day (T-1), on a scheduled publication."
+  },
+  {
+   "id": "UIR-24",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "009",
+   "observed_on_walk": "The pie labels its slices with the table's names.",
+   "acceptance": "The pie labels each slice with the same name the table shows."
+  },
+  {
+   "id": "UIR-25",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "009, 035",
+   "observed_on_walk": "The accounts pie draws every slice in the same cyan (#06b6d4) for both clients.",
+   "acceptance": "No two slices in one chart share a colour."
+  },
+  {
+   "id": "UIR-26",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "verdict": "NOT_MET",
+   "shots": "009, 035",
+   "observed_on_walk": "Account rows still carry identical labels; the own-mask labels ride Monday's R4 publication.",
+   "acceptance": "Each account row shows its own masked tail and type."
+  },
+  {
+   "id": "UIR-27",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "009",
+   "observed_on_walk": "Supervision and Advisory are not on the face; they sit behind the scope and report-details clicks.",
+   "acceptance": "Supervision and Advisory are one click away (or hidden when withheld on every row)."
+  },
+  {
+   "id": "UIR-28",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "009",
+   "observed_on_walk": "The card shows 'Unique accounts'; source dates and coverage are one click away, in one format there.",
+   "acceptance": "The summary card shows client facts; source dates and coverage are one click away, in one date format."
+  },
+  {
+   "id": "UIR-29",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "009, 014",
+   "observed_on_walk": "One money format; the client total appears once.",
+   "acceptance": "One money format across the page; the client total appears once."
+  },
+  {
+   "id": "UIR-30",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "009, 035",
+   "observed_on_walk": "The firm token chip ('cottonwood', '49financial') still sits at the top right of Holdings.",
+   "acceptance": "The firm shows by display name, once."
+  },
+  {
+   "id": "UIR-31",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "010",
+   "observed_on_walk": "Drilling into an account sets the account picker to it, and the two agree.",
+   "acceptance": "Drilling into an account sets the account focus, and choosing an account opens its drill; the two always agree."
+  },
+  {
+   "id": "UIR-32",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "010",
+   "observed_on_walk": "The breadcrumb reads 'All holdings > Rebalancer strategy' and skips the account; the strategy shows '*9238' against the account's '****9237'; two masking styles.",
+   "acceptance": "The breadcrumb names the account, the account and its strategy show the same tail, and one masking style is used."
+  },
+  {
+   "id": "UIR-33",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "009, 010",
+   "observed_on_walk": "Each view uses one base (the pie and the table agree at each level); the column still says only '% of total'.",
+   "acceptance": "Every percentage states its base (of this account / of the client), or both views use one base."
+  },
+  {
+   "id": "UIR-34",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "010, 040",
+   "observed_on_walk": "A level with one child still draws a one-slice pie (both clients).",
+   "acceptance": "A level with one child shows no pie (or shows the next level down)."
+  },
+  {
+   "id": "UIR-35",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "009, 014",
+   "observed_on_walk": "No amount wraps at 1440 px.",
+   "acceptance": "No amount wraps at 1440 px."
+  },
+  {
+   "id": "UIR-36",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "010",
+   "observed_on_walk": "As UIR-33.",
+   "acceptance": "As UIR-33."
+  },
+  {
+   "id": "UIR-37",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "010, 014, 040",
+   "observed_on_walk": "Blue marks a model (Opal Conservative Growth; Opal Long Term) and Equity on the same page; orange marks a model (Opal Ultra Short-Term Income; Opal Short-Term) and Alternatives.",
+   "acceptance": "No hue means both a model and an asset class; every Opal model draws its canonical colour."
+  },
+  {
+   "id": "UIR-38",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "010",
+   "observed_on_walk": "The chips are client language ('Primary', 'Custom', 'Opal model') and do not wrap.",
+   "acceptance": "No classification chip on the face (or client-language chips that never wrap)."
+  },
+  {
+   "id": "UIR-39",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "015",
+   "observed_on_walk": "With all accounts, Allocation shows 2 of 2 bars (57.17% / 42.83%).",
+   "acceptance": "Every holdings view lists every account (Allocation shows 2 of 2 bars for a two-account client)."
+  },
+  {
+   "id": "UIR-40",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "001, 014, 015",
+   "observed_on_walk": "With 'More holdings views' open the page carries four navy bands (Identity, Allocation, Securities map, Securities); the empty sample page carries three.",
+   "acceptance": "One band per page."
+  },
+  {
+   "id": "UIR-41",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "015",
+   "observed_on_walk": "With all accounts, the map's chips repeat each model once per account ('Model: Opal Conservative Growth' twice, and so on) with no account grouping. The one-account view passes.",
+   "acceptance": "Chips are grouped by account (or de-duplicated by model), and each chip says what it is."
+  },
+  {
+   "id": "UIR-42",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "014, 015",
+   "observed_on_walk": "Small items group into one labelled 'Other' tile.",
+   "acceptance": "Every tile is legible, or small items group into one labelled 'other' tile."
+  },
+  {
+   "id": "UIR-43",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "014, 015",
+   "observed_on_walk": "Each security appears once in the map.",
+   "acceptance": "Each security appears once with its total (per-model splits one click away)."
+  },
+  {
+   "id": "UIR-44",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "014, 015",
+   "observed_on_walk": "Every map colour is in the legend (Fixed Income, Equity, Alternatives, Other), and they are distinct.",
+   "acceptance": "Every colour in the map is in the legend, and no two legend colours are near-identical."
+  },
+  {
+   "id": "UIR-45",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "005, 010, 014",
+   "observed_on_walk": "Two date formats remain ('September 22nd, 2026, 5:00p ET' and '2026-09-22'); the source line still reads 'Source: Opal Capital Analysis.'",
+   "acceptance": "One date format across the page; the source line names the actual source."
+  },
+  {
+   "id": "UIR-46",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "009",
+   "observed_on_walk": "As UIR-25.",
+   "acceptance": "As UIR-25."
+  },
+  {
+   "id": "UIR-47",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "MET",
+   "shots": "010",
+   "observed_on_walk": "As UIR-33.",
+   "acceptance": "As UIR-33."
+  },
+  {
+   "id": "UIR-48",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "verdict": "NOT_MET",
+   "shots": "010",
+   "observed_on_walk": "Model amounts are still exact target shares of the account (the model rows read exactly 60.70% / 16.00% / 20.00% / 3.30% of the account).",
+   "acceptance": "Model amounts are the sum of the positions held in that model (or are labelled as target allocations), and the residual is the true unassigned remainder."
+  },
+  {
+   "id": "UIR-49",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "verdict": "NOT_MET",
+   "shots": "010",
+   "observed_on_walk": "As UIR-31 (met) and UIR-32 (not met).",
+   "acceptance": "As UIR-31 and UIR-32."
+  },
+  {
+   "id": "UIR-50",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "verdict": "NOT_MET",
+   "shots": "014, 040, 051",
+   "observed_on_walk": "PHYS still shows as Alternatives (orange) and VXX as Alternatives; the class writes ride Monday's R4 (Part A) and B2.",
+   "acceptance": "Every security the ETF Classifier table lists shows its classifier tag (VXX Structured; GLD Commodities), never a collapsed class; PHYS shows Commodities by Andrew's word; each new class value is mapped by every asset_class reader (CTO ruling (a), msg 101513)."
+  }
+ ],
+ "new_findings": [
+  {
+   "id": "UIW-0927-01",
+   "surface": "holdings / securities table",
+   "observed": "Cash rows show 'not supplied' in the Ticker column (the 49F three-account client, 3 rows).",
+   "acceptance": "Cash rows name themselves ('Cash') and never print 'not supplied'.",
+   "shots": "040",
+   "proposed_owner": "DSGN_IRPTV1 (2.0.0_SA_COO~D)"
+  },
+  {
+   "id": "UIW-0927-02",
+   "surface": "analysis / inputs",
+   "observed": "The analysis input lists the included accounts as 'Account', 'Account' with no label or tail.",
+   "acceptance": "Each included account shows the same label and value the account picker shows.",
+   "shots": "026, 029",
+   "proposed_owner": "DSGN_IRPTV1 (2.0.0_SA_COO~D)"
+  },
+  {
+   "id": "UIW-0927-03",
+   "surface": "identity / loading",
+   "observed": "Right after a client is picked, the header reads 'value pending', 'not supplied', '0 accounts' until Holdings loads; the directory search answered UNEXPECTED twice at that step.",
+   "acceptance": "While a client loads, the header shows a loading state, never words that read as missing data.",
+   "shots": "029",
+   "proposed_owner": "DSGN_IRPTV1 (2.0.0_SA_COO~D)"
+  },
+  {
+   "id": "UIW-0927-04",
+   "surface": "performance / picker",
+   "observed": "The account picker's selected entry carries the whole refusal sentence ('... temporarily unavailable right now. It becomes available again once ...').",
+   "acceptance": "A picker entry shows the account's label and value; a refusal is stated once, in the canvas.",
+   "shots": "008",
+   "proposed_owner": "DSGN_IRPTV1 (2.0.0_SA_COO~D)"
+  },
+  {
+   "id": "UIW-0927-05",
+   "surface": "holdings / report details",
+   "observed": "Report details shows the raw code 'HOLDINGS_READY' and 'Classification unknown for 41 of 41 holdings nodes -- ... partitions are shown as withheld'.",
+   "acceptance": "Report details speaks client language: no system codes, no 'nodes' or 'partitions'.",
+   "shots": "014",
+   "proposed_owner": "DSGN_IRPTV1 (2.0.0_SA_COO~D)"
+  },
+  {
+   "id": "UIW-0927-06",
+   "surface": "holdings / allocation",
+   "observed": "Allocation truncates the model label ('Rebalancer strateg...').",
+   "acceptance": "No label is ellipsized at 1440 px.",
+   "shots": "014, 015",
+   "proposed_owner": "DSGN_IRPTV1 (2.0.0_SA_COO~D)"
+  },
+  {
+   "id": "UIW-0927-07",
+   "surface": "securities map / legend",
+   "observed": "The grouped small-items tile and the 'Other' asset class share one purple and one word.",
+   "acceptance": "The grouped tile reads 'Smaller holdings' (or similar) in a colour no class uses.",
+   "shots": "014, 015",
+   "proposed_owner": "DSGN_IRPTV1 (2.0.0_SA_COO~D)"
+  }
+ ],
+ "walker_false_positives": [
+  "search:ranking '#5 of 17' for the Cottonwood query: the check counted the Firm <select> options (role=option) ahead of the list; the page showed the exact client first of 13. Fixed in walk.mjs (rank within the search's own listbox).",
+  "search:ranking '#16 of 31' for the 49F query: the walker typed the second name onto the first query, so the box held both names run together. Fixed in walk.mjs (select-all + delete, then verify empty)."
+ ]
+}
