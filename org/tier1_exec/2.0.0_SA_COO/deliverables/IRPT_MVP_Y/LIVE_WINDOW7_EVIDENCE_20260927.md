@@ -72,3 +72,18 @@ draft that polled through a 403 broke the two eviction tests and was corrected.
 - Twelve polls at 5 s give about 60 s. A portfolio that calculates longer is refused with its status named, not
   compared.
 - The live answer after `available` is not yet seen for these holdings.
+
+## The poll's lease budget (checked 03:4xZ)
+
+- Each vendor request refuses `OPERATION_DEADLINE_INVALID` when `now + request_budget (780 s) >= expires_at`
+  (`operation_lease.py:246`).
+- The transport lease is renewed to 900 s only in `guard()`, between steps.
+- The read-back's polls run inside one step, so the loop has about 120 s.
+- Twelve polls cost 11 waits x 5 s (the waits exceed the lease's 2 s SPACING), plus 12 request times.
+- In window 7 the mutations ran about 2 s apart, including spacing (intents at 03:00:05Z and 03:00:07Z), so the loop
+  ends near 70 s. That leaves about 50 s of margin. It would refuse only if each request took over 5 s.
+
+The steps after the read-back:
+- validate and the report create now run on an `available` portfolio;
+- the create is synchronous (201 with a signed `report_url`, `step_generate`), and each request has 780 s;
+- the download fetches that URL with a 120 s deadline.
