@@ -49,6 +49,27 @@ from 2026-09-15..20, appends here when the round goes terminal.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "A sign-off record carried onto the channel. It opens and adjudicates no investigation item."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-C-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T19:35:00Z",
+    "one_line": "Post-act read of OG-e-2 against this seat's signed half (Z-C-S2): inside the signed radius. The code equals the signed change set, the host bytes equal fe94911257, and the tool list and ENABLED_INTEGRATIONS are unchanged. The CTO's GO re-read of EMAILDENY is absent from the ledger; this seat's own read shows it held.",
+    "class": "OBSERVATION",
+    "spec_asserts": "Z-C-S2 and the CTO half @4f83d1a820 signed a DELTA = 0 release of 110d93fb73 + 06eff3b73f + 744e4468e1, conditioned on EMAILDENY = 0 re-read at GO, the ENABLED_INTEGRATIONS literal, and mcportal a3bff71ffa.",
+    "world_is": "S3 latest = opal-gateway-fe94911257 (ETag d67a7435, 18:43:41Z). 110d93fb73..fe94911257 over app/ + deploy-to-ec2.sh = the 4 signed files; 3 are byte-identical to 06eff3b73f, and server.py's change set equals OG-e-1's 41 lines exactly. SSM read by this seat: BEFORE 29bd1824 at 18:11Z (before the 18:43:43Z deploy) -- ENABLED_INTEGRATIONS literal, 46 tools; AFTER 822648a2 at 18:50Z -- the same 46 tool names, the same literal, host md5 of the 4 files = git show fe94911257. mcportal a3bff71ffa in ledger L1. Ledger closed @d3b0d04b4d. EMAILDENY: the completion record does not mention the GO re-read the CTO half made a condition. This seat's consistent scan at 19:33Z reads 167 items, EMAILDENY 0, and C6 gives no role policy DeleteItem, so it was 0 at GO. The condition held, but it was evidenced after the act and not by the deployer.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ssm get-command-invocation 29bd1824-f1dd-43ad-8cd3-3e5a4ffd45e1 / 822648a2-5d61-47cd-be87-db2006ba1bba on i-07dccb1615503ac99",
+        "org/critical_paths/change_management/20260927T1815Z_nfra-oplgtw-email-deny-release_deploy_completion.md (branch wk-NFRA_OPLGTW-8-e2 @d3b0d04b4d)",
+        "git diff 110d93fb73 fe94911257 -- infra/aws/ec2/opal-gateway/app"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A post-act verification record. The missing GO re-read is noted for the round's L8 (a condition met but not evidenced by the act); it opens no hazard."
   }
 ]
 ```
