@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T03:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T04:1xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -40,22 +40,30 @@ As of 2026-09-27T03:5xZ. Earlier forms of this file are in git (`git log -p -- <
 
 ## Write claims
 
-None building. Window 8 waits on its halves.
+Window 8 LIVE (principal irpt-uiwalk-1790481488 since 03:58:32Z, cap 05:58Z); COT K12 next.
 
 ## Next-list (in order)
 
-Andrew-direct 02:5xZ: "yes to all three" (@6039c2f680) -- the window-7 go (used), ONE INF Orion one-use, ONE COT one-use.
+Andrew-direct 02:5xZ: "yes to all three" (@6039c2f680). Call 1 (window 7) used; call 2 (INF) DONE; call 3 (COT) in
+flight. Andrew at ~Y 04:01Z: "yes, run the Analysis window" (W8-2, used).
 
-1. **Window 8 (INF's ONE Orion read):** packet blob e2462004 @1282a22bf5, sent 03:5xZ for halves.
-   - Plan 7f64b166, end 09-22, READ from the served INF holdings (CTO 101756).
-   - The arm-OFF pre-check first; then the arm, ONE read, and a disarm.
-   - Optional W8-2: a third Analysis attempt on resident rb, only on Andrew's word at ~Y.
-2. **COT one-use** (call 3): after INF's plan is spent. A COT plan builder is needed (none exists), then an arm packet
-   and a window read.
-3. **The Analysis chain:** the window-7 read-back cause was fixed and served (resident rb). The next attempt is W8-2.
-   The page cannot list a job from another session (DSGN_IRPTV1-S18, ~D).
-4. **K8, the first real export**, rides a later Performance window.
-5. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on R4's Monday enable (runbook D).
+1. **COT (call 3), in window 8:**
+   - plan 22f0a988 (acc_81d92b2b.., 01-01..09-22 from served holdings, built by cot_one_use_plan.py, no vendor call);
+   - packet 27434c70 sent 04:1xZ for halves; ledger OPEN;
+   - the arm-OFF pre-check requested of ~D now; then the arm (dry-planned 1/1/1), the ONE read, a reopen, and a
+     disarm. The window caps at 05:58Z.
+2. **The Analysis chain:** W8-2's K5 is also ATTENTION VENDOR_READ_BACK_REFUSED. The poll fix ran (polls=3), and a
+   YCharts WAF 202 challenged the 3rd status poll. The decision is at the CTO (~Y 101791: refresh on a read-WAF, a
+   gentler poll, or both).
+3. **K8, the first real export:** INF now has a retained report (RPT-df47a1fc); 49F has several. It rides a later
+   window.
+4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
+
+**DONE this stretch -- INF signed-in Performance journey (goal criterion 1 at INF):**
+- plan 7f64b166, armed 04:08:59Z after the arm-OFF pre-check 3/3;
+- ONE Orion call (the page's double GET was resolved by the gate's conditional claim);
+- RPT-df47a1fc PARTIAL retained, and the face shows 7.98% for 01-01..09-22;
+- ledger irpt-performance-inf-one-use-4-20260927 CLOSED.
 
 ## Parked
 
