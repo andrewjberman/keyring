@@ -2035,3 +2035,31 @@
   "notes": "This row is closing evidence, not a disposition change to S19. Purging history is a destructive rewrite and Andrew's call (CRO 101827)."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S22",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T06:55:20Z",
+  "one_line": "Root cause of DSGN_IRPTV1-S20 (corrects its 'made 0 requests'): the Export preview's Performance fetch omits selected_tenant, so the adapter cannot map the internal viewer's firm and answers UNAVAILABLE/UNEXPECTED; resolveBundle then throws MissingPayloadError.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "a round-8 cell whose <paths> grant covers portal/src/pages/InvestorReporting/export/resolveBundle.ts, the Export preview component and ReportingTab.tsx",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w10-20260927.har (gitignored, sha256 488da2d7..): 4 Performance GETs; K7's two at 06:24:35Z carry selected_tenant=<firm> and answer PARTIAL; the preview's two at 06:25:22.727Z/.729Z hit the same selection and window with NO selected_tenant and answer UNAVAILABLE/UNEXPECTED (2.0.0_SA_COO~P 101835)",
+      "adapter log: BucketUnmapped (the internal viewer's own firm token has no directory bucket) -- P 101835",
+      "portal 200d257a export/resolveBundle.ts:292-300 builds getPerformanceReport's request without selectedTenant; ResolveBundleDeps has no field for it; buildPerformanceExportTarget (ReportingTab.tsx:219-228) carries it; the live client maps it (investor-reporting.ts:1116) -- P 101835",
+      "S20's '0 requests in 30 s' came from the k8probe window, which opened after the preview's two GETs had fired; the count is correct for that window only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Export preview resolves the same report the tab shows, with the same request scope (selection, window, tenant).",
+  "world_is": "The preview's request drops the tenant the tab's request carries, so an internal viewer gets UNAVAILABLE and no preview.",
+  "notes": "Fix shape (P): thread target.selectedTenant through the preview into resolveBundle's deps and onto the request. This row is evidence for S20, not a disposition change to it. P re-cuts window 10 as window 11 on the fix's pin."
+}
+```
