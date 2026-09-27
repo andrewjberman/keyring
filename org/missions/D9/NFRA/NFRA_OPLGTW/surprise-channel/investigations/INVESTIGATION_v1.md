@@ -3818,6 +3818,28 @@ name the one known failure instead of silently inheriting it.
     },
     "spec_asserts": "OG-e-2 step 12: verify within 90 s; the worker flips status.",
     "world_is": "Verified at +375 s with all PASS; the status is flipped by the issuer."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W9-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~9",
+    "surfaced_at": "2026-09-27T20:10Z",
+    "one_line": "The pre-commit risk-reflex's cross-file HOLD advisory keyed off the basename 'deploy-to-ec2.sh' names three UNRELATED services' deploy scripts (bd-gold-layer-runner, m365-mcp-gateway, smartx-exporter) as danger nodes for this commit, all citing the SAME change_management line -- which is actually about opal-gateway's OWN OTP_BEARER history, not any of the three named files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output on commit 69fdcf1830 (wk-NFRA_OPLGTW-9-s1): '[HOLD] infra/aws/ec2/opal-gateway/deploy-to-ec2.sh -> file:infra/aws/ec2/bd-gold-layer-runner/deploy-to-ec2.sh (7 recorded claim(s)) org/critical_paths/change_management/20260626T1416Z_cot-gateway-onboard-item2_deploy.md:9', repeated identically for m365-mcp-gateway/deploy-to-ec2.sh and smartx-exporter/deploy-to-ec2.sh -- three distinct full paths, one shared basename, one shared citation line.",
+        "org/critical_paths/change_management/20260626T1416Z_cot-gateway-onboard-item2_deploy.md:9 reads '4. deploy-to-ec2.sh: OTP_BEARER now fetches BOTH 49F + cot bearers', which is opal-gateway's own OTP_BEARER history (this cell's file, line ~196 area) -- the doc names no bd-gold-layer-runner/m365-mcp-gateway/smartx-exporter fact.",
+        "This commit's own gate summary reads '[commit-gate] OK: pre-commit gate clean for 1 of 1 file(s)' -- the risk-reflex HOLD is advisory only and did not block either landed commit (69fdcf1830, 6a98a0553a)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A danger-node cross-reference in the pre-commit risk reflex identifies a claim actually made ABOUT the file being committed.",
+    "world_is": "The reflex's danger map appears to match on basename alone across distinct full paths, surfacing three false-positive cross-service citations for every opal-gateway/deploy-to-ec2.sh commit.",
+    "disarm_owner": "2.0.0_SA_COO~O"
   }
 ]
 ```
