@@ -326,3 +326,9 @@ Write sets from the prep map `deliverables/2.0.0_SA_COO~D/round9-writeset-map-20
 frees; X's IV-e-75 also needs IV-e-67's ExportButton/submit). Z seats last, after P, H, N and X drain (it re-touches index.tsx, IdentityCard,
 FirmAttribution, PerformanceHeadline/Chart, slices, adapt.ts) and after 1.0.0_SA_CTO commits the registry view target. Every cell is LOCAL.
 
+
+**v9 addendum 1 (issuer, 2026-09-27 ~23:3xZ):** `IV-e-78`, row S27 (window 19 K8: the first export-receipt read answered data-less
+UNAVAILABLE/NOT_READY and the page went silently idle). 1.0.0_SA_CTO 102222 ruled (b): the backend answers RUNNING while pending (to
+2.0.0_SA_COO~P), and the page shows any refused or non-pending receipt read BY NAME (FWD-11), with no poll-on-UNAVAILABLE. One LOCAL direct act
+on export/ExportButton + submit (+ ReceiptPanel/ExportModal if the slot needs it). It seats on the first slot to free (net-zero reuse) and
+drains BEFORE IV-e-75, which writes the same two files.
