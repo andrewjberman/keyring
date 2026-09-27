@@ -5,7 +5,7 @@
  "project": "DSGN_IRPTV1",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.16",
+ "prd_version": "v0.17",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ui-finish-design-brief-20260924.md@20f90739bd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
@@ -444,6 +444,22 @@ caught, all of them should be included."
 | UIR-49 | O5 | FWD-14, FWD-6 | DSGN_IRPTV1 | As UIR-31 and UIR-32. |
 | UIR-50 | O10 | FWD-23 | IRPT_BCKEND ~M | Every security the ETF Classifier table lists shows its classifier tag (VXX Structured; GLD, PHYS Commodities), never a collapsed class. |
 
+## UI WALK FINDINGS (v0.17 -- the CRO's /ui-walk verification, `docs/briefs/irpt-ui-review-verification-20260927.md` @`236fd94d73`)
+
+The /ui-walk of local DEV `3f76cdb2` found 7 problems the 49-item review did not name. Each row is graded under an
+existing FWD; the ENDPOINT is unchanged. 3.0.0_SA_CVO grades each id; the criterion is the register's acceptance line,
+verbatim.
+
+| Id | Surface | FWD | Owner | Criterion (the register's acceptance line) |
+|---|---|---|---|---|
+| UIW-0927-01 | holdings / securities table | FWD-11, FWD-15 | DSGN_IRPTV1 | Cash rows name themselves ('Cash') and never print 'not supplied'. |
+| UIW-0927-02 | analysis / inputs | FWD-7, FWD-19 | DSGN_IRPTV1 | Each included account shows the same label and value the account picker shows. |
+| UIW-0927-03 | identity / loading | FWD-2 | DSGN_IRPTV1 | While a client loads, the header shows a loading state, never words that read as missing data. |
+| UIW-0927-04 | performance / picker | FWD-19 | DSGN_IRPTV1 | A picker entry shows the account's label and value; a refusal is stated once, in the canvas. |
+| UIW-0927-05 | holdings / report details | FWD-11, FWD-15 | DSGN_IRPTV1 | Report details speaks client language: no system codes, no 'nodes' or 'partitions'. |
+| UIW-0927-06 | holdings / allocation | FWD-18 | DSGN_IRPTV1 | No label is ellipsized at 1440 px. |
+| UIW-0927-07 | securities map / legend | FWD-22, FWD-13 | DSGN_IRPTV1 | The grouped small-items tile reads 'Smaller holdings' (or similar) in a colour no class uses. |
+
 ## THE THREAD (FWD-1) -- round 1 builds it end to end
 
 One person: an Opal internal user (Global view). One journey, coarse grain, live, default window, no export, no analysis.
@@ -792,6 +808,10 @@ his confirmation; his word at L2 is the one gate before the loop cycles without 
   "unclassified". The precedence clause stands. PHYS is named on Andrew's word, because it is not in the Classifier.
 - v0.16, 2026-09-26 ~23:0xZ, `1.0.0_SA_CTO` (Claude): UIR-07 ruling clarified with the Global-merge exception (~P 101585;
   the CRO's Global arm 101550). Brief half only; the ENDPOINT is byte-unchanged.
+- v0.17, 2026-09-27 ~12:5xZ, `1.0.0_SA_CTO` (Claude): the UI WALK FINDINGS section is added. It holds the CRO /ui-walk
+  verification's 7 new findings (UIW-0927-01..07, @`236fd94d73`), each under an existing FWD with its acceptance line
+  verbatim, so a cell may carry them (~D 101876). The ENDPOINT is byte-unchanged; no half re-opens (proportionate
+  sign-off).
 
 ## SURFACE MANIFEST
 
