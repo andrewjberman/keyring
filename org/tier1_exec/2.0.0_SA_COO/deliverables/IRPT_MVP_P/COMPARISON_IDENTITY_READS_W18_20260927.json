@@ -1,0 +1,171 @@
+{
+ "reads": [
+  {
+   "body": [
+    {
+     "benchmark": "49F Long Term Benchmark",
+     "detailed_security_type": "model_portfolio",
+     "display_security_id": "P:1728413",
+     "end_date": "2026-09-25",
+     "features_needed": [
+      "dynamicModelPortfolios"
+     ],
+     "id": "P:1728413",
+     "inception_date": "2025-07-21",
+     "instance_id": 1728413,
+     "security_id": "P:1728413",
+     "security_name": "Opal Long-Term ",
+     "securitylist_security_id": "P1728413",
+     "sharing": {
+      "ancestor_client_group_ids": [
+       8366
+      ],
+      "client_group_id": 8366,
+      "client_group_name": "Opal Capital",
+      "is_client_group_community": false,
+      "is_client_group_public": false,
+      "is_owner": false,
+      "owner_id": 1271369,
+      "owner_name": "Menachem Goldstein",
+      "permission": "edit",
+      "public_sharing_state": "not_shared",
+      "type": "model_portfolio"
+     },
+     "start_date": "2024-01-01"
+    }
+   ],
+   "content_type": "application/json",
+   "final_url_path": "/securities/securities_info",
+   "identity": "P:1728413",
+   "login_destination": false,
+   "status": 200,
+   "waf_action": null
+  },
+  {
+   "body": [
+    {
+     "benchmark": "49F Short Term Benchmark",
+     "detailed_security_type": "model_portfolio",
+     "display_security_id": "P:1728415",
+     "end_date": "2026-09-25",
+     "features_needed": [
+      "dynamicModelPortfolios"
+     ],
+     "id": "P:1728415",
+     "inception_date": "2025-07-21",
+     "instance_id": 1728415,
+     "security_id": "P:1728415",
+     "security_name": "Opal Short-Term",
+     "securitylist_security_id": "P1728415",
+     "sharing": {
+      "ancestor_client_group_ids": [
+       8366
+      ],
+      "client_group_id": 8366,
+      "client_group_name": "Opal Capital",
+      "is_client_group_community": false,
+      "is_client_group_public": false,
+      "is_owner": false,
+      "owner_id": 1271369,
+      "owner_name": "Menachem Goldstein",
+      "permission": "edit",
+      "public_sharing_state": "not_shared",
+      "type": "model_portfolio"
+     },
+     "start_date": "2024-01-01"
+    }
+   ],
+   "content_type": "application/json",
+   "final_url_path": "/securities/securities_info",
+   "identity": "P:1728415",
+   "login_destination": false,
+   "status": 200,
+   "waf_action": null
+  },
+  {
+   "body": [
+    {
+     "benchmark": "49F Intermediate Benchmark ",
+     "detailed_security_type": "model_portfolio",
+     "display_security_id": "P:1728315",
+     "end_date": "2026-09-25",
+     "features_needed": [
+      "dynamicModelPortfolios"
+     ],
+     "id": "P:1728315",
+     "inception_date": "2025-07-21",
+     "instance_id": 1728315,
+     "security_id": "P:1728315",
+     "security_name": "Opal Intermediate-Term",
+     "securitylist_security_id": "P1728315",
+     "sharing": {
+      "ancestor_client_group_ids": [
+       8366
+      ],
+      "client_group_id": 8366,
+      "client_group_name": "Opal Capital",
+      "is_client_group_community": false,
+      "is_client_group_public": false,
+      "is_owner": false,
+      "owner_id": 1271369,
+      "owner_name": "Menachem Goldstein",
+      "permission": "edit",
+      "public_sharing_state": "not_shared",
+      "type": "model_portfolio"
+     },
+     "start_date": "2024-01-01"
+    }
+   ],
+   "content_type": "application/json",
+   "final_url_path": "/securities/securities_info",
+   "identity": "P:1728315",
+   "login_destination": false,
+   "status": 200,
+   "waf_action": null
+  },
+  {
+   "body": [
+    {
+     "benchmark": "49F Long Term Benchmark",
+     "detailed_security_type": "model_portfolio",
+     "display_security_id": "P:1728420",
+     "end_date": "2026-09-25",
+     "features_needed": [
+      "dynamicModelPortfolios"
+     ],
+     "id": "P:1728420",
+     "inception_date": "2025-07-21",
+     "instance_id": 1728420,
+     "security_id": "P:1728420",
+     "security_name": "Opal Ultra Long-Term ",
+     "securitylist_security_id": "P1728420",
+     "sharing": {
+      "ancestor_client_group_ids": [
+       8366
+      ],
+      "client_group_id": 8366,
+      "client_group_name": "Opal Capital",
+      "is_client_group_community": false,
+      "is_client_group_public": false,
+      "is_owner": false,
+      "owner_id": 1271369,
+      "owner_name": "Menachem Goldstein",
+      "permission": "edit",
+      "public_sharing_state": "not_shared",
+      "type": "model_portfolio"
+     },
+     "start_date": "2024-01-01"
+    }
+   ],
+   "content_type": "application/json",
+   "final_url_path": "/securities/securities_info",
+   "identity": "P:1728420",
+   "login_destination": false,
+   "status": 200,
+   "waf_action": null
+  }
+ ],
+ "retrieved_at": "2026-09-27T20:52:56Z",
+ "sent": 4,
+ "stopped": null
+}
