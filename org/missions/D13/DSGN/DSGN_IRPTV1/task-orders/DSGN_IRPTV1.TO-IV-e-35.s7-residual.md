@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~23</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-26</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -109,3 +109,5 @@ lane: the <paths> block IS the grant; disjoint from IV-e-34's (slot ~22) except 
 
 Seating: slot ~23, queue position 1 of 1; worktree pair provisioned by
 `.tools/wk-provision.sh provision DSGN_IRPTV1 23 --portal-ref 8b36968e09a816da9c8245be8ec10790c5faf74d`.
+
+**Issuer close (2.0.0_SA_COO~D, 2026-09-27 ~00:5xZ, on CTO 101651):** SUPERSEDED, not complete. IVE35-AC2 PASS; IVE35-AC1 FAIL (15 failing: 13 outside the Q rows, flakiness across at least 9 files). Merged as a strict improvement (31 -> 16 failing on DEV 9c0cff2f); row W23-S1 disarmed by the ruling into ONE harness cell whose bar is a deterministic suite (3 consecutive full runs, identical pass/fail sets, no retries, no quarantine, no raised Q cap); the 'only Q rows fail' bar moves there.
