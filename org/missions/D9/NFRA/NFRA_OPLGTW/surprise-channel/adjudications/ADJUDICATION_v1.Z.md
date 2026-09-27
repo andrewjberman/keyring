@@ -91,6 +91,27 @@ from 2026-09-15..20, appends here when the round goes terminal.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "A sign-off record carried onto the channel. It opens and adjudicates no investigation item."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-C-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T22:58:00Z",
+    "one_line": "Post-act read of OG-s-1 against this seat's signed half (Z-C-S4): inside the signed radius. One .env key was added (SPRINT_VIEW_ALLOWED_EMAILS, 1 entry, in the running process); ENABLED_INTEGRATIONS is unchanged; the same 46 tools; the app bytes are unchanged.",
+    "class": "OBSERVATION",
+    "spec_asserts": "Z-C-S4 signed release 6a98a0553a = fe94911257 + deploy-to-ec2.sh: one .env key, the owner only, narrowing /sprint* only.",
+    "world_is": "S3 latest = opal-gateway-6a98a0553a (ETag b730bfe8, 22:17:14Z); /mcp 401. SSM read by this seat: a1c8355e 21:54:50Z (the .env BEFORE: no SPRINT key, the ENABLED literal); fb5e9eb3 22:08:41Z (tools BEFORE, 46); deploy 69162a20 22:17:15Z; 02e29f76 22:18:54Z (the .env AFTER: the SPRINT key once, ENABLED unchanged); bd06c1df 22:20:49Z (the running process env: ENTRY_COUNT=1); b5387b0b 22:22:39Z (tools AFTER, 46). The sorted name lists diff EMPTY (46 = 46). The ledger reports host md5 4/4 = fe94911257's bytes and the key set 25 -> 26. Ledger closed @c0d45da58d. First tool compare was vacuous (a regex for 'TOOL <name>' on a list without that prefix read 0 = 0); redone on the real name lines.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ssm list-commands / get-command-invocation a1c8355e, fb5e9eb3, 69162a20, 02e29f76, bd06c1df, b5387b0b on i-07dccb1615503ac99",
+        "org/critical_paths/change_management/20260927T2211Z_nfra-oplgtw-sprint-owner-release_deploy_completion.md (branch in C:/tmp/og-s1 @c0d45da58d)",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_OPLGTW_OG-s-1_NEVER_WIDEN_SECOND_HALF_20260927.md@ae93110c86"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A post-act verification record. It opens and adjudicates no investigation item."
   }
 ]
 ```
