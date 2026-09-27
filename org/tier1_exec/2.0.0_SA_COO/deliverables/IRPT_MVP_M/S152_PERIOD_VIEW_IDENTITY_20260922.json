@@ -1,0 +1,259 @@
+{
+ "date": "2026-09-22",
+ "list_before": [
+  "equity",
+  "fixed_income",
+  "alternatives"
+ ],
+ "list_after": [
+  "equity",
+  "fixed_income",
+  "alternatives",
+  "cash",
+  "other"
+ ],
+ "added": [
+  "cash",
+  "other"
+ ],
+ "scopes": 220,
+ "rows_checked": 660,
+ "mismatches": 21,
+ "mismatch_detail": [
+  {
+   "scope": [
+    "relationship",
+    "z09305556"
+   ],
+   "gran": "quarterly",
+   "lhs": 29142.9,
+   "rhs": 29142.89,
+   "total_before": 4176200.26,
+   "total_after": 4176200.26
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305556"
+   ],
+   "gran": "monthly",
+   "lhs": 29142.9,
+   "rhs": 29142.89,
+   "total_before": 4176200.26,
+   "total_after": 4176200.26
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305556"
+   ],
+   "gran": "annually",
+   "lhs": 29142.9,
+   "rhs": 29142.89,
+   "total_before": 4176200.26,
+   "total_after": 4176200.26
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305578"
+   ],
+   "gran": "quarterly",
+   "lhs": 8709.49,
+   "rhs": 8709.48,
+   "total_before": 1387092.08,
+   "total_after": 1387092.08
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305578"
+   ],
+   "gran": "monthly",
+   "lhs": 8709.49,
+   "rhs": 8709.48,
+   "total_before": 1387092.08,
+   "total_after": 1387092.08
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305578"
+   ],
+   "gran": "annually",
+   "lhs": 8709.49,
+   "rhs": 8709.48,
+   "total_before": 1387092.08,
+   "total_after": 1387092.08
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305580"
+   ],
+   "gran": "quarterly",
+   "lhs": 2677.32,
+   "rhs": 2677.31,
+   "total_before": 531364.23,
+   "total_after": 531364.23
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305580"
+   ],
+   "gran": "monthly",
+   "lhs": 2677.32,
+   "rhs": 2677.31,
+   "total_before": 531364.23,
+   "total_after": 531364.23
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305580"
+   ],
+   "gran": "annually",
+   "lhs": 2677.32,
+   "rhs": 2677.31,
+   "total_before": 531364.23,
+   "total_after": 531364.23
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305601"
+   ],
+   "gran": "quarterly",
+   "lhs": 86004.91,
+   "rhs": 86004.9,
+   "total_before": 3270098.74,
+   "total_after": 3270098.74
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305601"
+   ],
+   "gran": "monthly",
+   "lhs": 86004.91,
+   "rhs": 86004.9,
+   "total_before": 3270098.74,
+   "total_after": 3270098.74
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305601"
+   ],
+   "gran": "annually",
+   "lhs": 86004.91,
+   "rhs": 86004.9,
+   "total_before": 3270098.74,
+   "total_after": 3270098.74
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305646"
+   ],
+   "gran": "quarterly",
+   "lhs": 37297.69,
+   "rhs": 37297.68,
+   "total_before": 3436418.99,
+   "total_after": 3436418.99
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305646"
+   ],
+   "gran": "monthly",
+   "lhs": 37297.69,
+   "rhs": 37297.68,
+   "total_before": 3436418.99,
+   "total_after": 3436418.99
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305646"
+   ],
+   "gran": "annually",
+   "lhs": 37297.69,
+   "rhs": 37297.68,
+   "total_before": 3436418.99,
+   "total_after": 3436418.99
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305678"
+   ],
+   "gran": "quarterly",
+   "lhs": 39537.48,
+   "rhs": 39537.47,
+   "total_before": 1054598.49,
+   "total_after": 1054598.49
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305678"
+   ],
+   "gran": "monthly",
+   "lhs": 39537.48,
+   "rhs": 39537.47,
+   "total_before": 1054598.49,
+   "total_after": 1054598.49
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305678"
+   ],
+   "gran": "annually",
+   "lhs": 39537.48,
+   "rhs": 39537.47,
+   "total_before": 1054598.49,
+   "total_after": 1054598.49
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305691"
+   ],
+   "gran": "quarterly",
+   "lhs": 71453.96,
+   "rhs": 71453.95,
+   "total_before": 2559438.99,
+   "total_after": 2559438.99
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305691"
+   ],
+   "gran": "monthly",
+   "lhs": 71453.96,
+   "rhs": 71453.95,
+   "total_before": 2559438.99,
+   "total_after": 2559438.99
+  },
+  {
+   "scope": [
+    "relationship",
+    "z09305691"
+   ],
+   "gran": "annually",
+   "lhs": 71453.96,
+   "rhs": 71453.95,
+   "total_before": 2559438.99,
+   "total_after": 2559438.99
+  }
+ ],
+ "firm_quarterly_added_values": {
+  "cash": 19230791.02,
+  "other": 0.0
+ }
+}

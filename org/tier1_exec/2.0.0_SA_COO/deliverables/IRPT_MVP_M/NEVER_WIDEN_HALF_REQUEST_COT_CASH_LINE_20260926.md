@@ -192,3 +192,49 @@ What it changes for this half:
 - **d08's shape identity** compares its emission with the LIVE `platinum/firm/mix_summary.json`, which D_04 writes. From
   Monday's run the live file carries `cash` (and later more classes) that d08's frozen three-class `mix{}` lacks, so d08
   will refuse. Parked in STATUS~M with the runners' owner; it serves nothing.
+
+## Addendum 6 (02:1xZ 09-27): S152 re-cut ALONE on CLOUD, and the CTO's five terms (CTO 101685/101688, CRO 101686)
+
+**Re-cut:** branch `irpt-m-s152-cloud` @**ff63895521** (worktree `../ajb_irpt_m_s152c`), one commit on CLOUD 6a51c423fb,
+2 files. It supersedes 41115a70aa. The diff is:
+- `data/cot/scripts/gold/lib/mix_views.py:21`: `MIX_ASSET_CLASSES = ['equity', 'fixed_income', 'alternatives', 'cash',
+  'other']` (CLOUD's list plus cash and other);
+- the new test `data/cot/scripts/gold/tests/test_s152_mix_views_cash_other.py` (5 COT tests pass);
+- **one more line, forced by the commit gate:** `from __future__ import annotations` (ds-precommit ADHC_DSFLOW.004
+  refuses any edit to this file without it). It affects annotations only and has no runtime effect. It is named here
+  because CTO 101688 says anything more in the diff re-opens the half.
+
+**Term 1, the written property:** every COT period row (`quarterly`, `monthly`, `annually`) gains `cash` and `other`
+({value, pct}), and `unclassified` falls by their sum. The rows are written by:
+- C_06: per-relationship `gold/entities/clients/{rel}_views.json` and advisor views;
+- D_03: `gold/artifacts/firm_mix_views.json` and advisor views.
+D_04 copies the last 5 quarterly rows into the `mix_periods` of `platinum/firm/mix_summary.json`, the advisor summaries
+and the client summaries (D_04 :549, :718, :1171).
+
+**Term 2, before/after on one COT date:** `s152_period_view_identity.py` produced
+`S152_PERIOD_VIEW_IDENTITY_20260922.json`, on canonical 2026-09-22 with CLOUD C_06's classify and positive rows. It
+covers 220 scopes (the firm and 219 relationships) x 3 granularities = 660 rows.
+- total_aua is unchanged in 660 of 660 rows.
+- `cash + other + unclassified_after == unclassified_before` holds exactly in 639 rows. In the other 21 rows it differs
+  by exactly $0.01: each class value is rounded to the cent on its own (`round(total * pct, 2)`), so the sum of two
+  rounded values can miss the rounded residual by one cent.
+- The firm quarterly row gains cash **$19,230,791.02**, and `other` $0.00; that cash sits in `unclassified` today.
+- After the cash-line act, the BD cash line adds to it (C_06 +$66,055,897.80).
+
+**Term 3, readers of `mix_periods` / period views** (denominator: 10 code paths from a repo search over data/cot,
+infra/aws/lambda, portal/src and lib):
+- producers: C_06 (:672, :778) and D_03 (:524, :566), through `compute_period_views`;
+- D_04 (:549, :718, :1171, :1948);
+- the partners-data lambda `handle_firm_mix_views`, which passes `gold/artifacts/firm_mix_views.json` through unread;
+- portal `advisor-intelligence.ts` (:894 passes `raw.mix_periods` through for COT; :1201 and :835 map INF shapes only);
+- `ConsolidatedOverviewPanel.tsx` `QuarterlyMetricsBar`, through `getClassAua` (:78-83), which reads `pt[cls]` by
+  name. So the lookbacks now **render** cash and other when that class is selected, instead of $0. `other` is a
+  selectable class for Cottonwood (:386-391); `FirmMixPeriodPoint` declares `cash` and `other?` (`types.ts:1601-1611`);
+- ClientsTab (:347, :462) and AdvisorBookView (:808, :1164) pass the rows to the same bar;
+- d08 (QA only; parked in STATUS~M).
+No reader raises on the new keys.
+
+**Term 4, rollback (5 entries plus a re-run):** the prior S3 object versions of COT C_06, D_03, D_04 and
+lib/mix_views, and the Holdings revision; then a D_04 re-run so that `mix_periods` drops the keys again.
+
+**Term 5:** the CRO re-admitted it (101686); the CTO concurs (101688).
