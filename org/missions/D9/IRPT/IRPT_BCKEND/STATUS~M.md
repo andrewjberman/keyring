@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-27T07:4xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-27T12:5xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -45,6 +45,8 @@ head ccb9b38dd8, NOT merged). ~X's order is DONE: `ds-x-b1-cashline` @146876e75a
 unclassified_before| <= $0.02 and total EXACT, else roll back (CTO 101700 @7eb19f44e3; s152_period_view_identity.py); ~X's B1 commits go under ETF Part B's own ledger. No branch is
 merged; the drain is Monday after R1, COT gold last. The cash-line ACT merges `irpt-m-cot-cash-line-act` @0deac23f1e;
 ccb9b38dd8 (COT B1) is split to `irpt-m-cot-b1` for B1's ledger. Monday order: IRPT_MVP_M/MONDAY_20260928_RUNBOOK.md.
+Andrew-direct 12:4xZ 09-27 ("rec approved", @2c0624a986): every branch reaches CLOUD, gold paths only after Monday's R1,
+each under its ledger (runbook G); the Holdings packages are re-minted from CLOUD before the QA fire (runbook D.0).
 
 ## Next list (in order)
 
