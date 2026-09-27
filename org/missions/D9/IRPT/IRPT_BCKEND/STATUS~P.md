@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T12:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T12:4xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -57,6 +57,8 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
    UNAVAILABLE/UNEXPECTED (BucketUnmapped for the internal viewer's own firm), and resolveOne rethrew that at :255.
    The fix is in the portal (DSGN_IRPTV1-S20, ~D's lane, a round-8 candidate): thread the target's selectedTenant.
    Re-cut window 10's packet as window 11 once the fix is on DEV.
+   UPDATE 12:39Z: C: reads 17 GB free after MSTR's /cleanup (101858), above the 15 GB seating floor, so ~D can seat
+   round 8 now.
    BLOCKER CHAIN (10:2xZ): the fix is TO-IV-e-53 in DSGN_IRPTV1 round 8 (issued @83576f9dd9). It has 0 portal commits,
    because ~D seated 0 workers: C: is at 14 GB free, under the 15 GB seating floor, awaiting Andrew. P's scratchpad
    holds 72 MB, so it is not the lever.
@@ -76,6 +78,7 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
+- Andrew-direct "rec approved" (/open-calls CALL 1): ledger irpt-p-live-scope-20260923 CLOSED on the agent walks (@22c2fc699d).
 - Window 10 opened 06:19:10Z and closed 06:32:17Z. K7 reopened a 49F report (8.05%); K8 was not run (the page refused); 0 outside the classes; 0 new media in git.
 - S157 filed (COT retained face overstates its window) and named in the release item (@52f078fe1e).
 - Window 9 (~D's read-only round-7 walk) opened 05:37:40Z and closed 05:48:24Z: 0 outside the classes (@eade2ba0f5).
@@ -94,6 +97,7 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 | Question | Owner | Un-parks when |
 |---|---|---|
 | The kept test inputs and reports from windows 1-6 in cottonwood (UPLOAD#/INPUT#/analysis#/REPORT# rows and objects owned by deleted walk principals) must be excluded from any firm viewer's lists, or removed, before the route opens to firm users; include by KEY irpt-jobs cottonwood / REQ-3a1b73a8dead02a17a09043b, the window-6 job left SUBMITTING, since a tenant-wide job listing would show it as never finishing (CTO 101678); and by KEY cottonwood REPORT#RPT-b683f188c2e13da7865eeceace6334c3, COT's K12 report whose retained face overstates its window (IRPT_BCKEND-S157, CTO 101825); closes as not needed only if EVERY reader lists by owner (4.0.0_SA_CRO 101609) | the release cutter | the route opening to firm users |
+| MSTR removed the backend worktree's Terraform provider caches (101858): run `terraform init` in a root before its next safe-apply | 2.0.0_SA_COO~P | the next apply in irpt-smoke-p-backend-20260923 |
 | The backend worktree's directory Terraform root predates M's holdings resources (a full plan would destroy 11); UIR-07 used -target | 2.0.0_SA_COO~P | the next directory-root apply: merge CLOUD into the backend worktree first |
 | `build-and-upload.sh` deletes tracked performance/*.py from the publish tree on each adapter build | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
 | `build-and-upload.sh` zips a source_dir JSON with the checkout's EOL (CRLF here), and its artifact record passes through MSYS path conversion (`/iFh..` became `C:/Program Files/Git/iFh..`) | 1.0.0_SA_CTO to route (ci/ owner) | the next build of a function whose hash starts with `/`, or that hashes a JSON member |
