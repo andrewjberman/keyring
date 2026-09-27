@@ -1029,3 +1029,23 @@ And the round-1 qualification stands: a live arm is an express qualification on 
 - **Whether a test principal exists** (`IB-rt-2`): the first read is the measurement; HUMAN-GATED is an admitted reading.
 - **The live YCharts arms** (arm 5 of v0.9): the CTO's qualified read on Andrew's per-use word.
 - **The DS lane's own tooling choices inside the guard** (`IB-rt-5`): the guard's shape is copied, its tests are the control.
+
+---
+
+## 12. ADDENDUM, ROUND 19 (2026-09-27, 2.0.0_SA_COO~P, on 1.0.0_SA_CTO 101946/101977) -- cell IB-sr-1, the COT BD session auto-login
+
+One cell, cut from surprise row `IRPT_BCKEND-S158` (ARMED). It is not part of any round's rectangle: it is the issuer's remediation
+cell for a row whose disarm owner the CTO named.
+
+| cell | outcome served | owner | risk | depends on |
+|---|---|---|---|---|
+| `IB-sr-1` | FWD-1's COT Performance hop (a live `blackdiamond/cot/session`), goal criteria 1 and 3 at COT | `0.6.2_AE_PartnerETL~S` (MSTR seats it on the order's commit, 101975) | SERVED | none |
+
+**What is measured (CTO 101946):** scheduler `cot-bd-session-daily-et` ENABLED (cron 07:30 America/New_York); SSM document
+`opal-cot-bd-session-fetch` last Success 2026-09-16, Failed 09-24..09-27 (latest 60650bfe, rc 1, output empty -- `set -e` aborts
+before the S3 log upload at `infra/aws/terraform/cot-pipeline/ssm.tf:63-69`); `blackdiamond/cot/session` last changed 09-16.
+
+**The cell:** name the failure cause from the box's own log, make the document upload its log on failure, and reach ONE Success
+that moves `blackdiamond/cot/session` AWSCURRENT. Vendor sign-in only through the document (its scheduler or its existing
+trigger), never by hand.
+
