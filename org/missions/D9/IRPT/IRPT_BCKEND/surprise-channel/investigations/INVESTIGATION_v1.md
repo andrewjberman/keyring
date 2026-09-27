@@ -9985,3 +9985,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Filed on CTO 101962 condition 1 (window 15's condition 2 fired) and CRO 101948/101963 (name the PDF's level basis). It does not void READY. Not ARMED: every other setting matched live and the certifier accepted the PDF. For ~Y's recipe lane: why the vendor stores custom_date for a prior_close request (an ignored field on create, or a default overwrite), and whether the recipe should set it by a second call or the reports should name the as-of basis."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S160",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-27T16:37:00Z",
+  "one_line": "Recipe-side diagnosis for S159. The certified PDF's own methodology page contradicts ~Y 101938's premise that level_as_of_type is a display basis outside the returns. The PDF's settings table reads 'As Of: Custom', and the research-era certified PDFs (Sep 11) read 'As Of: Custom' too, with the same generation-date dating.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RPT-5288c06d vendor PDF (opal-data-irpt, version 6Atpxe.., sha256 6e753361.. re-hashed locally) p.14 'Performance Calculation Settings': Name IRPT REQ-67e12718.. r1 | Inception Jan. 2, 1990 | Static | Quarterly | Start Earliest | As Of Custom",
+      "same page, the vendor's methodology text: 'The As of setting determines which allocation snapshot is applied throughout the historical performance calculation' -- Initial / Custom ('Uses allocations from a user-selected date') / Latest Rebalance / Last Close",
+      "same PDF, 'Data as of' lines: 23 in all; Sep. 27, 2026 (Sunday, the generation day) x10 on pp.2,3,5,6,9; June 30 x5; Sep. 25 x4; Aug. 31 x4",
+      "CONTROL, the research-era certified PDFs (overview abab2ffe.., comparison, multicomp; research worker portfolio IRPT-5c25486f.., generated Sep. 11, 2026, a Friday): each reads 'As Of: Custom', and each carries 10 'Data as of' lines equal to its generation day (Sep. 11)",
+      "recipe.py:514-515 sends level_as_of_type=prior_close with level_as_of_date=None; recipe.py:744 sends the report create as_of_date_option='latest'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "~Y 101938 (the W15-3 basis): level_as_of_type is a level-display basis, not an input to the returns, so a differing stored value can be recorded rather than refused.",
+  "world_is": "Per the vendor's own PDF text, the As Of setting chooses the allocation snapshot used throughout the historical performance calculation. Every API-created portfolio on record reads As Of Custom: the research worker, which never set the field, and the recipe, which sends prior_close. The 10 generation-day 'Data as of' lines appear under As Of Custom on a trading day as well.",
+  "notes": "Measured: the stored value and the PDF basis, now on both paths. INFERRED, not measured: (1) for a Static portfolio, 'a fixed set of holdings and weights as of its creation date' (p.13), every As Of option selects the same single allocation, so the numbers would not move; (2) the generation-day dating comes from the report create's as_of_date_option='latest', not from As Of. S159's 'prior_close would presumably read 09-25' is also unmeasured: no PDF with As Of other than Custom is on record. Discriminator: ONE read-only GET /model_portfolios/fixed/{id} of a portfolio the advisor created in the UI with prior_close (the HAR creates). If it also reads custom_date, the vendor stores prior_close as Custom on every path and the recipe cannot change it on create. The GET is a vendor call on P's session, so it needs its own word and halves; ~Y will not run it off-window. Decision owner 1.0.0_SA_CTO: whether window 16 keeps the W15-3 tolerance now that its stated reason is contradicted. ~Y REC: keep it for Static portfolios only. That holds only while (1) holds, which the discriminator tests."
+}
+```
