@@ -3726,6 +3726,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "PHASE A step 4: run the five named test modules on the release tree and record the result.",
     "world_is": "33 of 35 pass; the 2 failures are caused by the release's own pinning of a non-gateway contract file to the live base, not by the shipped gateway diff. The shipped app code is not implicated.",
     "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T17:30Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "No served effect. The 2 test_portal_grant failures on the release tree come from org/standards/NFRA_OPLGTW_CONTRACT.json, pinned to the live base by the narrow release (R-8). Nothing ships from outside the gateway directory. The served app never opens that file; it is only named in docstrings in app/. Its runtime readers are ops/schwab_entitlement_admin.py and ops/schwab_status.py, which the operator runs from the repo (CLOUD carries contract v1.3), plus tests. On CLOUD the same module passes 7 of 7. This is the same class as MX-r-3's Z-W1-S8, ruled the same way.",
+    "adjudicates": [
+      "NFRA_OPLGTW-Z-W8-S1"
+    ],
+    "one_line": "The issuer closes Z-W8-S1: the release tree's 2 contract-dependent test failures come from a repo file the served gateway never reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "contract readers at HEAD: ops/schwab_entitlement_admin.py:56, ops/schwab_status.py:54 and tests; app/ references are docstrings only"
+      ]
+    },
+    "spec_asserts": "The narrow release tree's regression modules pass as on CLOUD.",
+    "world_is": "2 fail on a repo-only contract file outside the shipped set."
   }
 ]
 ```
