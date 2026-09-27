@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T16:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T16:4xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -56,8 +56,10 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
    1 saved GET, 0 re-captures).
    Finding (with ~Y): the vendor stored custom_date against the prior_close sent; 5 of 51 PDF sections are dated
    2026-09-27 (a Sunday).
-   Open: K10, ~D reading the report in the page. Window 15 amendment 1 (blob 3207cf8e, @1f7ba6e7f4) is out for halves:
-   one fresh credential for the same principal, GET only, inside the 18:03Z cap.
+   K10 in the page (amendment 1, 16:34-16:47Z): the history LISTS the job, but its status and item reads omit
+   selected_tenant, so irpt-status refused IdRefused (UNEXPECTED) and the report was not reached in the page. ~D is
+   cutting the portal fix. Window 15 is CLOSED at 16:47:34Z (0 outside the classes). CTO 101972 narrowed W15-3 to
+   Static portfolios on the next resident version; ~Y's prior_close saved-GET test runs in its own packet.
 2. **K8, the first real export:** window 14 (15:03-15:12Z): the tenant hop HOLDS, since the POST carried
    selected_tenant=49financial. The server refused ReportRefused "invalid report reference", because the page sent
    report_id = the revision hash (39c11079..) instead of RPT-b5e0a16e... Nothing was exported. The fix IV-e-65 is
