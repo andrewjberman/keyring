@@ -104,6 +104,7 @@ def main(argv=None):
     ap.add_argument("--tfvars", required=True)
     ap.add_argument("--approval-ref", default=APPROVAL_REF)
     ap.add_argument("--tree")
+    ap.add_argument("--end-before-holdings", help="an explicit end EARLIER than the served holdings as-of (IRPT_BCKEND-S157: the as-of window reopens a retained report and never reaches the gate); recorded in the receipt as a deliberate departure")
     args = ap.parse_args(argv)
     firm = tenants._CANONICAL_COT
     s3 = boto3.client("s3", region_name="us-east-1")
@@ -132,6 +133,13 @@ def main(argv=None):
     account = eligible[rank]
 
     end, selection = holdings_as_of(account)
+    end_source = "served irpt-holdings source_dates.business_date for selection %s" % selection
+    if args.end_before_holdings:
+        if not args.end_before_holdings < end:
+            raise SystemExit("STOP: --end-before-holdings %s is not earlier than the served as-of %s" % (args.end_before_holdings, end))
+        end_source = ("DELIBERATE DEPARTURE (IRPT_BCKEND-S157): %s, one day before the served as-of %s for selection %s, "
+                      "because the as-of window reopens retained RPT-b683f188" % (args.end_before_holdings, end, selection))
+        end = args.end_before_holdings
     start = "%s-01-01" % end[:4]
     mapping = copy.deepcopy(load(firm, account))
     mapping.update(bind_report_currency(firm, mapping.get("currency")))       # as retained.compute does
@@ -148,7 +156,7 @@ def main(argv=None):
                         "account id (the directory carries no value field)"),
                "directory_entries": len(entries), "single_account_candidates": len(candidates),
                "mapping_refused": refused, "eligible": len(eligible), "picked_rank": rank,
-               "end_source": "served irpt-holdings source_dates.business_date for selection %s" % selection,
+               "end_source": end_source,
                "mapping_as_of": args.mapping_as_of, "plan": plan, "plan_sha256_of_digest": digest(plan),
                "plan_json_sha256": hashlib.sha256(plan_json.encode("utf-8")).hexdigest(), "vendor_call_made": False}
     Path(args.out).write_text(json.dumps(receipt, indent=1) + "\n", encoding="utf-8")
