@@ -230,3 +230,8 @@ deterministic (3 consecutive full runs, identical pass/fail sets; no retries, qu
 shared-state source and fixed at the root, and the "only Q rows fail" bar moved here from IV-e-35. Tests, fixtures, the class table and
 the channel only. Queued on slot ~29 after IV-e-45 (the last round-7 cell), direct act, LOCAL.
 
+**v7 addendum 6 (issuer, 2026-09-27 ~01:4xZ):** `IV-e-51`, CTO 101681 ruling (b) on IV-e-49: commodities takes the chromatic PALETTE
+token with the largest minimum dE00 (>= 20) against every mix, asset-class and model primary, used by no text/ink role, amber/gold
+preferred; text contrast >= 4.5:1. Writes src/lib/chartColors.ts and the IV-e-46/49 tests plus one new test. Slot ~30 queue 3 of 3;
+then IV-e-46+49+51 go to DEV with no second review.
+
