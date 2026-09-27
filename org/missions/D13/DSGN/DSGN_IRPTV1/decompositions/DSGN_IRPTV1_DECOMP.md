@@ -225,3 +225,8 @@ least CIEDE2000 dE 20 from every MIX_PIE, ASSET_CLASS and model primary, shared 
 src/lib/chartColors.ts, IV-e-46's reader-census test, one new test. Slot ~30 after IV-e-46, direct act, LOCAL. Round 7's harness cell
 (CTO 101651, the deterministic suite) and chain Z (IV-e-43, IV-e-45) seat when C: allows a worktree.
 
+**v7 addendum 5 (issuer, 2026-09-27 ~01:2xZ):** `IV-e-50`, the harness cell CTO 101651 names (disarms W23-S1): the IR suite is
+deterministic (3 consecutive full runs, identical pass/fail sets; no retries, quarantine or raised Q cap), each flaky file named with its
+shared-state source and fixed at the root, and the "only Q rows fail" bar moved here from IV-e-35. Tests, fixtures, the class table and
+the channel only. Queued on slot ~29 after IV-e-45 (the last round-7 cell), direct act, LOCAL.
+
