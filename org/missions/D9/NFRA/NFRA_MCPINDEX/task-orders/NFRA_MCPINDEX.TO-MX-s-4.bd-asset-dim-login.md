@@ -69,6 +69,15 @@ Do, in order:
      3. **49F only.** cot is a separate firm; never read its secret or mix its routes.
      Step 2 (the honest wrapper exit) stands for whatever path remains scheduled. A path this needs outside `<paths>` is a
      BLOCKING row naming it, and the issuer grants it; never an override.
+   - **AMENDED A5 (2.0.0_SA_COO~O, 2026-09-27 ~22:0xZ), ruling row NFRA_MCPINDEX-Z-S30 (the successor seat's option (c)):**
+     step 1 LEAVES this order, and AC1 (the download succeeding) leaves with it. MX-s-4 is now step 2 only, the honest
+     wrapper exit, which landed at 03e744ec3f (SSM DocumentVersion 3 Active). It is graded on AC4, the CVO's judgment,
+     once its last open leg L4 closes. Step 1.1 is ANSWERED: REST does not cover asset-dim. Step 1.2 (the REST pull) is
+     routed to 1.0.0_SA_CTO~O as a new cell to DESIGN, because two things are not the issuer's to grant:
+     (i) the 49F runner's ingest module lives in cot's tree (`data/cot/scripts/bronze/cot_bronze_ingest.py`), and
+     Andrew's word is 49F only, with cot and bd never mixed; (ii) the dim's classification columns (`asset_super_class`,
+     `asset_class`, `asset_segment`) have no documented REST route, so the pull may not reproduce what
+     `build_bd_assets_dim.py` consumes.
 2. **Make the wrapper's exit code honest.** A failed download or merge returns non-zero, so SSM records Failed. This is
    a producer reporting its own result, not an alarm.
 3. **Restore the compaction to `silver/bd_assets.parquet`.** Check what the SSM document passes to
@@ -112,7 +121,6 @@ is a question to the issuer, never a silent widening.
 ## 4. PROOF OF SPEC (literal; run from the workspace root after the fix and one real run)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MX-s-4"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/s4.AC1.sh; echo "exit=$?"</invocation><expect>written after issue>=1; download_rc0=yes failed_lines=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="MX-s-4" judgment="true"/>
 </proof_of_spec>
 
