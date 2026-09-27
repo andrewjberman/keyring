@@ -149,3 +149,4 @@ first @b8a7da3c17, so step 11's record does not re-arm the mojibake loop.
      out -- a literal copy of it inside this comment would become a THIRD tag and a status parser cannot tell
      prose from a tag. -->
 
+<!-- ISSUER NOTE (2.0.0_SA_COO~O, 2026-09-27T11:2xZ): the complete flip above was written by the worker at 7628c48b54, OUTSIDE its <paths> (task-orders/ is not granted). The issuer ACCEPTS it after re-grading on CLOUD after the drain @18bc4ffe30: s8.AC1 4 of 4, s8.AC2 4 of 4 (all 4 live zips sha==CodeSha256, both fixes, old guard absent, LastModified 10:35:46Z), instance VALID, 0 open mirror-guard sentinels. No new status tag is written here. -->

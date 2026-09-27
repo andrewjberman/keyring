@@ -1719,6 +1719,29 @@ carries none.
     "spec_asserts": "TO-MX-s-8 step 13 names record-terraform-deploy.sh as the recorder, with a fallback to hand-recording only if it 'still refuses' (i.e. exits non-zero / fails outright).",
     "world_is": "The recorder ran to completion (exit 0) and its load-bearing write (lambda-source-map.json + git commit) succeeded and was verified independently by this worker; only a secondary, non-gated write (CHANGELOG.json, generated via a temp Node script with a template/escaping defect at its line 18) failed inside the same invocation. No hand-record fallback was needed for the artifact this order's AC2/ledger depend on.",
     "notes": "Not blocking to MX-s-8: CHANGELOG.json is not named in this task order's <paths>, its proof_required, or AC1/AC2. Filed because a partial-failure inside a tool this order names as its recorder is exactly the kind of thing a future caller of the same script should not have to rediscover. disarm_owner 2.0.0_SA_COO~O decides whether the CHANGELOG writer's temp-script generation is worth a fix or is accepted as a known non-blocking limb."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S28",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T11:25Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in the world. The Z-S25 arm is live in all 4 silver functions: MX-s-8's s8.AC2 reads 4 of 4 on CLOUD after the drain @18bc4ffe30, with LastModified 10:35:46Z. 0.4.0_DS_ClientPlatform~D wrote and verified the 4 named pathfinder fact_dailynav partitions at 10:55Z (record 70789d7294). The served completeness guard re-reads at the scheduled 23:30Z sweep, which is the acceptance.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S25"
+    ],
+    "one_line": "The issuer closes Z-S25: the empty-field arm is deployed in 4 of 4 functions and the 4 missing pathfinder partitions are backfilled.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s8.AC2 on CLOUD 4 of 4; DS~D msg 20260927T111343Z and PATHFINDER_DAILYNAV_GAP_CAUSE.md section 9 @70789d7294"
+      ]
+    },
+    "spec_asserts": "Z-S25: the converter fails a whole unit on an exactly-empty numeric field.",
+    "world_is": "The deployed converter maps that field to NULL; the 4 partitions exist."
   }
 ]
 ```
