@@ -126,3 +126,6 @@ GO: both halves SIGNED; guards read from the signed half FILES, not the messages
 <fabric>site-z</fabric>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+<!-- flipped by the issuer 2026-09-27T22:4xZ after the drain @4619ac12ee (worker commits aa8e6c2f19, 0228c3073b, c0d45da58d, b58f6a8905; release 6a98a0553a). Re-graded on CLOUD: sp.AC1 (entry 1, sentinel no) PASS; sp.AC2 (1 file shipped, only deploy-to-ec2.sh, key occurrences 1) PASS; sp.AC3 (health 200, roster keys 1 entries 1, ENABLED_INTEGRATIONS unchanged) PASS; instance VALID. All 12 CTO-half guards held: .env key set 25 -> 26 (+SPRINT_VIEW_ALLOWED_EMAILS only), app md5 4/4 unchanged, tools 46 = 46. Act window 22:11Z-22:17:33Z; no rollback. -->
