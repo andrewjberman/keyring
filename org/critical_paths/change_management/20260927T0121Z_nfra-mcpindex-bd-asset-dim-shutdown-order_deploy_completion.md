@@ -12,42 +12,15 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | CLOUD: the shutdown moved above the failure branch | commit hash |  | OPEN |
-| L2 | activation | SSM document opal-bd-asset-dim-download, new DocumentVersion via update-document | describe-document LatestVersion advances past 2 and Hash changes from 5130ead6f5b0f201739af7a6fc65cb67574f7de2e6f89fee9e5f18a67d442129 |  | OPEN |
-| L3 | verify | the LIVE content at the version the trigger Lambda pins | get-document at $LATEST shows shutdown -h ABOVE exit 1, exactly one of each |  | OPEN |
+| L1 | git | CLOUD: the shutdown moved above the failure branch | commit hash | 03e744ec3f -- the two shutdown lines moved above the failure branch with the reason beside them; the branch keeps its exit 1; a plain echo Done. closes the success path. 60 -> 66 runCommand lines. Asserted in the edit script, not eyeballed: exactly one shutdown -h and exactly one exit 1 survive, and no pre-existing line was dropped. | CLOSED 20260927T013528Z |
+| L2 | activation | SSM document opal-bd-asset-dim-download, new DocumentVersion via update-document | describe-document LatestVersion advances past 2 and Hash changes from 5130ead6f5b0f201739af7a6fc65cb67574f7de2e6f89fee9e5f18a67d442129 | ssm update-document -> DocumentVersion 3, Active. Hash 5130ead6f5b0f201739af7a6fc65cb67574f7de2e6f89fee9e5f18a67d442129 -> 490af5249f84285f037cd200b210283e8f57edfa383a316234fede1008b77d66. Default moved to 3 so default and $LATEST agree. v1 and v2 retained; nothing destroyed. NO INSTANCE INTERACTION: update-document creates a version and sends nothing to i-0e6f6dc014fdcf1cd, which is the constraint the Z-S17 ruling placed on this act. | CLOSED 20260927T013528Z |
+| L3 | verify | the LIVE content at the version the trigger Lambda pins | get-document at $LATEST shows shutdown -h ABOVE exit 1, exactly one of each | get-document at $LATEST -- the version the trigger Lambda pins -- RE-READ by this seat rather than taken from the update call: 'shutdown -h' at index 58, 'exit 1' at index 63, so the shutdown PRECEDES the exit; exactly one of each; LIVE == REPO compared line by line; 66 lines. | CLOSED 20260927T013528Z |
 | L4 | verify | one failing run that records Failed AND ends with the instance stopped | the scheduled Monday 22:10Z fire: SSM Status Failed plus i-0e6f6dc014fdcf1cd State stopped afterwards |  | OPEN |
 | L5 | git | the ledger state committed | commit hash |  | OPEN |
 
 ## Log
 
 - 20260927T012155Z OPENED by 0.7.0_AE_CloudOps~I with 5 leg(s)
-
-## Blast radius and rollback per key (NEVER-2)
-
-**WRITE SET -- one object.** SSM document `opal-bd-asset-dim-download`.
-PRE-ACT: DefaultVersion 2, LatestVersion 2, Hash
-`5130ead6f5b0f201739af7a6fc65cb67574f7de2e6f89fee9e5f18a67d442129`. Versions 1 and 2 are retained.
-
-**ROLLBACK, and it is the same non-obvious one as the prior entry:** the trigger Lambda calls
-send_command with `DocumentVersion='$LATEST'`, NOT the default, so a default-version flip rolls back
-NOTHING. Rollback = `update-document` again with the v2 content
-(`git show 03e744ec3f^:infra/aws/ssm/opal-bd-asset-dim-download.json`), creating a v4 that restores it.
-Read out of the producer's code, not predicted from the API.
-
-**NO INSTANCE INTERACTION, which is the constraint the ruling placed on this act.** `update-document`
-creates a document version. It does not start, stop, or send anything to `i-0e6f6dc014fdcf1cd`, which
-is running and whose stop remains Andrew's. Nothing here touches it.
-
-**NOT TOUCHED:** the EventBridge rule (Monday 22:10Z stays the acceptance and is L4's evidence
-source); allocation, realized, transaction, unrealized -- all carrying the identical
-exit-before-shutdown order, all routed as queued repair items by the ruling, none edited; fees.
-
-**EXPECTED, BOTH BRANCHES.**
-  - PASS: Monday's scheduled fire records SSM **Failed** (the login is still broken; that is expected
-    and is not what this act repairs) AND `i-0e6f6dc014fdcf1cd` reads **stopped** afterwards. Both, or
-    the reorder did not work.
-  - STOP: if the run records Failed but the instance is still up, the reorder is wrong and this entry
-    rolls back to v2 rather than being argued with.
-
-**NO NEW VENDOR CALL.** L4's evidence comes from the schedule that fires anyway. Andrew's word covered
-ONE ad-hoc run and that run is spent; this act does not seek a second.
+- 20260927T013528Z LEG L1 closed: 03e744ec3f -- the two shutdown lines moved above the failure branch with the reason beside them; the branch keeps its ex
+- 20260927T013528Z LEG L2 closed: ssm update-document -> DocumentVersion 3, Active. Hash 5130ead6f5b0f201739af7a6fc65cb67574f7de2e6f89fee9e5f18a67d442129 
+- 20260927T013528Z LEG L3 closed: get-document at $LATEST -- the version the trigger Lambda pins -- RE-READ by this seat rather than taken from the update
