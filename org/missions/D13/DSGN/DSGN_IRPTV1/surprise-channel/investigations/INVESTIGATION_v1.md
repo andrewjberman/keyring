@@ -1403,6 +1403,119 @@
     "world_is": "This cell (the follow-on repair cell W21-S2 named) reduced the live-failing count from 23-28 (round 4's several measurements) to a stable 16 (2 consecutive runs; a 3rd nearby run showed 17), genuinely fixing 6 files' worth of real, root-caused defects and updating the table's action text for every one. The residual is now smaller but still will not fit in 5 Q slots, and the majority of what remains (9 of 16, by this cell's own isolation testing) is not a defect this cell could root-cause at all -- it is the test corpus's own run-to-run instability, reproducing under the SAME mechanism IVE35-AC1 uses, at a scale (9+ files, none sharing an obvious cause) well beyond the 3 files W21-S3 flagged. Per the refusal clause, this is recorded as a FAIL row rather than a table that pretends to a stability the live suite does not have; DSGN_IRPTV1.TO-IV-e-35's <status> is not flipped to complete.",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not itself a repair for W21-S2/S3 -- it is this round's measurement against them, filed because W21-S2 is still ARMED/BLOCKING under the CTO's own disarm clause and the numbers it was filed against are now four rounds stale. W21-S1 (the fe-s-46 BOUNDS conflict) is NOT disarmed by this row -- disarm_owner there is the CTO -- but this cell shipped a concrete candidate fix (census-lib.mjs's hunkDiff: a real git-diff-based check with ONE named, pinned exception for the S7 STATUS_SCHEMA hunk, replacing the naive index-position line compare that could never distinguish a legitimate insertion from a violation) the CTO may accept as answering W21-S1's question directly, in commit e330d6dc on branch wk-DSGN_IRPTV1-23-portal."
+  },
+  {
+    "id": "DSGN_IRPTV1-W25-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~25",
+    "surfaced_at": "2026-09-26T22:40:15Z",
+    "one_line": "UIR-11's actual root cause lives in ClientSearch.tsx's onQuery handler (not named by the cell's 'Where it lives' map for UIR-06/UIR-11, which cites only tabs/SampleView.tsx and tabs/TabShell.tsx), and UIR-10 was satisfied by a NEW SearchSelect prop + matched-count caption rather than by literally reusing BrowseDrawer's group-by-firm function the map named ('reuse, do not fork').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "index.tsx's select() (out of this cell's <paths> grant) nulls accepted/selection/row whenever called with (null, null); ClientSearch.tsx's own onQuery prop called onSelectionChange?.(null, null) on EVERY keystroke, so typing a new search while a real client's report was on screen swapped TabShell straight into SampleView's pre-selection Sample content (TabShell's own `!scopeRef` gate, unchanged) -- the fix (dropping that call, keeping only setQuery) lives entirely inside ClientSearch.tsx, in-grant, so no BOUNDS violation, but the map's own file list for these two rows did not name it",
+        "PRD v0.15 UIR-10 text offers an explicit disjunct -- 'grouped (OR clearly marked) by firm' -- BrowseDrawer.tsx's own loadBrowseGroups/filterGroups/pageGroups operate over a DIFFERENT shape (BrowseGroup[], paginated, its own full-catalogue walk) than ClientSearch's flat SearchOptionRow[] server-narrowed list, so literally forking/reusing those functions here would require re-shaping ClientSearch's whole result pipeline into paged groups; instead this cell added SearchSelect.tsx's own optional resultSummary prop (a matched-count caption) plus relied on UIR-04's now-guaranteed per-row firm tag to satisfy the 'clearly marked' half, verified by iv-e-37.search.test.tsx's UIR-10 arm (VERDICT: SEARCH-OK)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Both rows are graded PASS-by-output on this worker's own criterion (IVE37-AC1, VERDICT: SEARCH-OK) and mechanically confirmed (bun test, typecheck, eslint all clean); the deviation from the map's literal file/mechanism list is a documentation gap in the cell text, not a defect in the fix -- filed so the L9 judgment walk (IVE37-AC2) knows to look at ClientSearch.tsx for UIR-11 and at SearchSelect.tsx's resultSummary caption (rather than a BrowseDrawer-style grouped list) for UIR-10.",
+    "spec_asserts": "Cell text 'Where it lives': 'UIR-06 / UIR-11: tabs/SampleView.tsx ... is mounted by tabs/TabShell.tsx' and 'UIR-10: ClientSearch.tsx ... builds one flat list; header/BrowseDrawer.tsx ... already groups by firm (reuse, do not fork).'",
+    "world_is": "UIR-11's live defect is index.tsx's select(null,null) path, triggered from ClientSearch.tsx's onQuery (in-grant) rather than from SampleView.tsx/TabShell.tsx themselves (which only read the resulting scopeRef, unchanged). UIR-10 is satisfied by a new additive SearchSelect prop + per-row firm tag, not by forking/reusing BrowseDrawer's grouped-catalogue functions, which operate over a materially different shape.",
+    "notes": "Not blocking IVE37-AC1 (mechanical criterion passes) or IVE37-AC2 (judgment criterion, unrun by this worker)."
+  },
+  {
+    "id": "DSGN_IRPTV1-W25-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~25",
+    "surfaced_at": "2026-09-26T23:05:00Z",
+    "one_line": "IV-e-38's 'Where it lives' map cites the exact lines carrying THREE rows' defects (UIR-12 row.label, UIR-13's '--' separator) rather than an already-correct answer; the other three named rows (UIR-14, UIR-22, UIR-30) were already satisfied by existing code at fdccc6e6 and needed only a locking test, no source edit; UIR-13's own 'normal punctuation' has no spec-given literal, so this worker chose a shape by precedent already live in this codebase.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IdentityCard.tsx:435 (fdccc6e6) read `const who = row ? row.label : ...` -- row.label is displayName + maskedDiscriminator (header/search.ts optionLabel); rendered WHO for the committed directoryEntry.success.json fixture printed 'Coastal Ridge Trust ****4417', which fails UIR-12 ('WHO shows the client's name only') as a masked, account-shaped tail on the client's own name; fixed to row.displayName, re-rendered WHO = 'Coastal Ridge Trust' only, confirmed by this cell's own test (iv-e-38.header-identity.test.tsx UIR-12 arm) and by a restore-and-mutant round-trip (row.label reinstated -> VERDICT: HEADER-IDENTITY-FAIL naming the exact masked-tail leak; restored -> VERDICT: HEADER-IDENTITY-OK, re-run twice identical)",
+        "IdentityCard.tsx:464 (fdccc6e6) read `${firmName} -- ${kind}` (the doc-comment '--' em-dash substitute this repo's OWN prose convention uses, e.g. this very CLAUDE.md); on a client-facing line that reads as two literal hyphens, not the punctuation a reader would call 'normal' -- no fixture or PRD text gives a literal replacement string for UIR-13, so this worker adopted the SAME 'name (qualifier)' shape already live in this exact file's own sibling control (header/firm.ts: `${o.name} (unavailable)`, consumed by FirmDropdown.tsx), producing 'Opal Partner One (Client)'",
+        "UIR-14 (header/FirmDropdown.tsx / index.tsx:264-268): traced both live paths -- the validated single/multi-firm path only ever offers clients from the currently-resolved scope (contexts is built from `resolved`, which the dropdown's own value already names), so a picked client's firm can never disagree with the control; the internal Global-catalogue path renders 'Global (All)' as selected for as long as firmId stays 'global', independent of which client search returned -- both confirmed by direct FirmDropdown renders (this cell's UIR-14 arms), no source edit made",
+        "UIR-22 ('About this scope' disclosure, IdentityCard.tsx:525-528): the summary text is already plain client language and ScopeSummary's own system vocabulary (fingerprints, 'Scope match', revisions) is already nested inside that <details>, confirmed by this cell's UIR-22 arm reading zero of six named system-vocabulary tokens outside the disclosure boundary -- no source edit made",
+        "UIR-30 (global/FirmAttribution.tsx:54): findPermittedFirm returns at most one match and the component renders it in exactly one visible span (the firm TOKEN only ever appears in the non-visible `title` attribute); confirmed by an occurrences() count of 1 against the fixture's own display name -- no source edit made"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell's 'Where it lives' section names one code location per row (UIR-05, UIR-12, UIR-13, UIR-14, UIR-22, UIR-30) with no statement of whether each named location is already correct or is the defect itself; UIR-13's acceptance line ('normal punctuation') names no literal string.",
+    "world_is": "Two of the six named locations (UIR-12, UIR-13) were the live defect and needed a source edit within <paths>; three (UIR-14, UIR-22, UIR-30) were already correct at fdccc6e6 and needed only a test; UIR-05 (index.tsx:291) was also a live defect (the word 'Resolution'), fixed. UIR-13's replacement punctuation was chosen by this worker from an existing in-repo precedent rather than a spec-given literal.",
+    "notes": "Not blocking: IVE38-AC1 passes with every arm (VERDICT: HEADER-IDENTITY-OK), a mutant control on the UIR-12 fix fired as expected, and typecheck/eslint are clean on every touched file. Filed so the CVO's live walk (IVE38-AC2) reads UIR-13's exact chosen wording ('Opal Partner One (Client)') as a judgment call, not a literal spec quote, and so a later cell touching these same three already-correct rows (UIR-14/22/30) knows they were verified, not re-implemented, this round."
+  },
+  {
+    "id": "DSGN_IRPTV1-W25-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~25",
+    "surfaced_at": "2026-09-26T23:35:00Z",
+    "one_line": "The cell's cited record (2.0.0_SA_COO~P @80833001cb) describes handler.full_name_match in PROSE only; the actual predicate body is not reachable from this worker's branch at all (0 raw hits for 'full_name_match' anywhere under this HEAD) -- it lives on a DIFFERENT, non-ancestor commit (177719486c) this worker had to locate by searching all branches before mirroring it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git merge-base --is-ancestor 177719486c HEAD` on this worktree returns NOT-ANCESTOR; `infra/aws/lambda/investor-reporting/directory/handler.py` at this branch's HEAD carries no `full_name_match` definition at all (confirmed: the function is absent from the file this worker's <paths> grant does not include but was told to read)",
+        "the cited record's own prose (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_UIR07_SEARCH_RANK_20260926.md, read at 80833001cb^) states the rule as English ('the display name's tokens, sorted, equal the query's tokens, sorted') without the literal code; `git log --all` located the actual body on commit 177719486c (a sibling backend-source commit, same author 2.0.0_SA_COO~P, marked 'not built' in its own subject): `def full_name_match(entry, qtokens): return bool(qtokens) and sorted(tokens(entry.get('display_name',''))) == sorted(qtokens)` -- byte-identical in effect to this worker's independently-derived `header/search.ts` `isFullNameMatch` (tokenize via the file's own pre-existing `normalize`/`tokens` helpers at handler.py :64-74, sorted-array equality, empty query never matches)",
+        "this worker's JS mirror was written from the prose description plus the file's existing `normalize`/`tokens` primitives BEFORE finding 177719486c; the later discovery only confirmed no divergence -- had the two disagreed, this row would have to reconcile them, which the task order's citation alone (a record, not the code) could not have caught"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell text: 'Read the server's predicate where the record names it (handler.full_name_match, 2.0.0_SA_COO~P record @80833001cb) and mirror it; do not invent a different rule.'",
+    "world_is": "The record names the predicate but does not carry its code; the code exists in this repo only on a commit outside this worker's ancestry, reachable solely via an all-branches search the cell text did not point to. This worker mirrored the rule correctly (verified against the actual predicate body after the fact), but a worker who stopped at the cited record's prose alone (or who does not search other branches) has no in-tree code citation to check against.",
+    "notes": "Not blocking IVE47-AC1 (PASS-by-output, VERDICT: GLOBAL-MERGE-OK) -- the mirrored predicate matches the actual server code byte-for-byte in effect. Filed so a later cell citing this same record knows the code lives at 177719486c, not at any commit ancestor to this project's mainline worktrees."
+  },
+  {
+    "id": "DSGN_IRPTV1-W25-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~25",
+    "surfaced_at": "2026-09-26T23:50:00Z",
+    "one_line": "This order's own identity block names 'issued at CLOUD dca01c9765', but that commit is NOT an ancestor of this worker's worktree HEAD -- the task-order file DSGN_IRPTV1.TO-IV-e-47.global-merge.md did not exist anywhere in this worktree until this worker wrote it (verbatim from CLOUD @dca01c9765) so the proof-of-spec's decomp_ref.to_ref could resolve and the <status> flip have a file to land on.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git merge-base --is-ancestor dca01c9765 HEAD` on this worktree returns NOT-ANCESTOR; `ls org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/ | grep e-47` returned nothing before this row's fix, confirmed twice",
+        "sibling TOs for the same slot (IV-e-37, IV-e-38) DO exist in this worktree because they were minted by the round-7 issuance commit f56587bf9e, which IS an ancestor of this worktree's HEAD; IV-e-47/IV-e-46 were minted by a LATER direct-act commit (dca01c9765) issued straight to CLOUD after this worktree was created, and nothing merged that commit back into this worker's branch before dispatch",
+        "`python .tools/proof-of-spec-check.py <instance> IVE47-AC1,IVE47-AC2` read VIOLATION: decomp_ref.to_ref '...' does not resolve to a file before this row's fix (rc=1); after writing the TO file verbatim (byte-identical diff against `git show dca01c9765:<path>`) the same invocation read 0 violations, VALID (rc=0)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's identity block: 'Your task order is org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-47.global-merge.md (issued at CLOUD dca01c9765 ...)'; BOUNDS: 'Grant. The <paths> block below plus your deliverables folder and this order's file.'",
+    "world_is": "The named file was absent from this worker's own worktree entirely (not merely at a stale vintage) until this worker materialized it from the cited commit, using the BOUNDS grant's 'this order's file' clause as the write authority. The worker face embedded in this order's own dispatch prompt was already complete and self-sufficient for doing the work (per the standing L7 rule, 'the TO's WORKER FACE is the worker's whole context'); only the MECHANICAL steps downstream of the work -- decomp_ref.to_ref resolution and the <status> flip -- required the file to exist on disk.",
+    "notes": "Not blocking: the file is now present, byte-identical to CLOUD @dca01c9765 except the <status> flip this worker made per instruction, and proof-of-spec-check.py now reads VALID (rc=0). Filed so the drain does not read this worktree's TO-file set as a fossil of what was actually dispatched to slot ~25 over its life -- IV-e-46/IV-e-47 arrived by direct act, not by a merged issuance, and this worker's branch is where that gap first became visible."
+  },
+  {
+    "id": "DSGN_IRPTV1-W25-S5",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~25",
+    "surfaced_at": "2026-09-27T00:05:00Z",
+    "one_line": "The <status> flip this order requires cannot be committed by this worker AT ALL: `.tools/to-pipeline-gate.py` (run automatically by `safe-commit.sh`) refuses the materialized TO file both as a NEW tree task order under a worker's own authorship (COO-only, LD-0521 A3) and on cell alignment -- this worktree's own decomposition file has 28 cells and does NOT carry cell `IV-e-47` (decomp v7 addendum 2, minted by the same non-ancestor commit dca01c9765 as S4's TO file), so `owned_cells`/`cell_refs` citing `IV-e-47` are refused as citing a cell the decomp lacks.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- land decomp v7 addendum 2 (cell IV-e-47) and the TO-IV-e-47 issuance itself into this worktree's own branch ancestry (or merge/rebase this worktree onto a point after dca01c9765), then either this worker or the drain can commit the <status> flip; until then the order's own <status> field cannot reach 'complete' from inside this worktree by any route this worker's grant permits.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`bash .tools/safe-commit.sh ... -- org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-47.global-merge.md <proof instance> <result.md>` (this worker's own attempt, materializing the TO file per S4) was REFUSED: 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' with 7 named violations, the first three being: '(1) born terminal -- <status>complete</status> at issuance', '(2) a NEW tree task order committed under 0.9.0_WK_DSGN_IRPTV1~25 -- COO is the only agent that does task orders (LD-0521 A3)', '(3) owned_cells names cell IV-e-47, which is not a cell of org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md (28 cell ids read from the index)'",
+        "the gate's own re-run of `proof-of-spec-check.py` inside its stricter (governing-order-bound) mode printed 'flips to complete but its instance is NOT VALID (rc=1)' and 'instance VIOLATION: alignment: cell_ref IV-e-47 ... does NOT exist in ... DECOMP.md' -- the SAME instance this worker's own standalone run (the exact invocation this order's own <proof_of_spec> block names) reads VALID (rc=0), because the standalone run has no governing TO to bind against and explicitly defers ('NOT EVALUATED -- the governing TO exists but is UNCOMMITTED... commit it and re-run')",
+        "the reconstructed TO file was then removed (plain file delete, not `git clean`) rather than left as an unlandable untracked artifact; `git status --porcelain org/missions/D13/DSGN/DSGN_IRPTV1/` after removal shows only the two deliverables (proof_of_spec.json, result.md) as untracked -- no task-orders/ file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's proof_of_spec block + the standing worker rule: 'rc 0 AND every mechanical criterion PASS-by-output, then flip the task order's <status> to complete and commit instance, deliverables and flip together.'",
+    "world_is": "IVE47-AC1 is PASS-by-output (VERDICT: GLOBAL-MERGE-OK, run three times) and IVE47-AC2 is RECORDED per its judgment=true. The proof-of-spec instance is VALID (rc=0) by the EXACT invocation this order names. But the flip-and-commit step this worker's standing rule requires next is refused by a DIFFERENT, stricter gate (`to-pipeline-gate.py`, invoked automatically by `safe-commit.sh`) for reasons entirely upstream of this cell's own work: this worktree's decomp file never received addendum 2, and a worker may not author a new tree task-order file regardless. This worker did not use the gate's own offered escape ('# pipeline-override: <reason>') because that override is for a TO that genuinely stands outside pipeline governance, not for routing around a COO-only authorship rule or a stale decomp this worker has no grant to fix.",
+    "notes": "BLOCKING for the <status> flip only -- both acceptance criteria are otherwise fully discharged and committed (portal commit b5915df3; deliverables committed alongside this row). The task order's own <status> could not be advanced past 'pending' from inside this worktree; per BOUNDS and the 'never widen the order or fix a neighbouring defect' rule, the decomp/TO-issuance gap is left for 2.0.0_SA_COO~D to close."
   }
 ]
 ```
