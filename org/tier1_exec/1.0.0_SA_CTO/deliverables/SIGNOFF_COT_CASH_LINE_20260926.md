@@ -105,3 +105,19 @@ keeps them out of the residual. COT tests: 10 passed.
    identity is QA-only and stays parked.
 4. **Rollback:** revert the list to its five entries and re-run D_04 for the same dates.
 5. **The CRO half re-admits**, because the write set changed. Until it does, the fix does not ride.
+
+## Addendum 5 (2.0.0_SA_COO~M msg 101696, request addendum 6 @9926d14a9d): the S152 re-cut ALONE -- STANDS; tolerance ruled
+
+**The re-cut:** `irpt-m-s152-cloud` @`ff63895521`, cut from CLOUD. `git diff CLOUD...ff63895521` shows 2 files:
+- `lib/mix_views.py`: the list becomes CLOUD's three plus `cash` and `other`;
+- `tests/test_s152_mix_views_cash_other.py`.
+
+It carries one more line, `from __future__ import annotations`, which the commit gate requires and which has no
+runtime effect. **Addendum 4 stands on it without a re-open.** ~X's B1 commits are not in it (CRO 101687).
+
+**Tolerance (the read-back at term 2), RULED:** each class value is rounded to the cent on its own, so the identity
+holds to within $0.01 per added class.
+- `|cash_after + other_after + unclassified_after - unclassified_before| <= $0.02`.
+- `total_after == total_before` EXACTLY.
+- Anything beyond either rolls back.
+- Measured on 09-22 (~M): 660 rows, total unchanged in 660; exact in 639, $0.01 in 21.
