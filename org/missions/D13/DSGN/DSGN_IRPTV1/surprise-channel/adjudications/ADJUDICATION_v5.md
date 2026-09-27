@@ -75,6 +75,8 @@ The census shows 19 ARMED or BLOCKING items open (the packet counted 20; S19 has
 - S7, W21-S1 and W21-S2 were already graduated (v3, v4). They get remediation rows only.
 - The other 16 are dispositioned here: 11 GRADUATED and disarmed, 4 GRADUATED and OPEN (W23-S1, W29-S8, W29-S9, W29-S10), and
   1 DISMISSED_WITH_REASON (W22-S5).
+- Amended the same day: C-S53 graduates S19 (walk screenshots with real client data). It sits in a single-object
+  block that the first census missed, and its remote residual is open (see REMEDIATION_v3).
 
 **Correction.** "CTO 101449" is cited by:
 - TO-IV-e-35 and TO-IV-e-50;
@@ -544,6 +546,30 @@ lowered"), which this seat read. The rows keep their bytes; this line corrects t
         "org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md#DSGN_IRPTV1-W29-S10",
         "IV-e-50 result: two 3-run samples, 15 vs 7 failing; no CTO ruling on W29-S10",
         "org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/round7-L8-packet.md@ce13f9af66"
+      ]
+    }
+  },
+  {
+    "id": "DSGN_IRPTV1-C-S53",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-27T07:41:09Z",
+    "class": "OBSERVATION",
+    "adjudicates": [
+      "DSGN_IRPTV1-S19"
+    ],
+    "one_line": "S19 GRADUATED, OPEN: the walk screenshots are untracked and ignored locally, but origin/CLOUD's tip still carries 28 of them with real client data, because the untrack is unpushed.",
+    "spec_asserts": "Walk artifacts carry client data and stay off git (the ui-walk skill: 'Client data stays local').",
+    "world_is": "Locally the lane's disarm is done: 0 tracked shots, and *.shots/ is ignored. On the remote, origin/CLOUD tip 262d0e8d16 still holds 20 + 8 real-client screenshots, because cfed2c067b is local-only; after the push they remain in pushed history.",
+    "disposition": "GRADUATED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md#DSGN_IRPTV1-S19",
+        "org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md#DSGN_IRPTV1-S21 (closing evidence: untracked @cfed2c067b, *.shots/ ignored @01d82f1550)",
+        "git ls-files of the three .shots folders at HEAD = 0; git check-ignore: deliverables/2.0.0_SA_COO~D/.gitignore:2 '*.shots/'",
+        "origin/CLOUD tip 262d0e8d16 (fetched by 3.0.0_SA_CVO): git ls-tree lists 20 files in prod-uiwalk-20260926.shots (added @4f632208c5) and 8 in prod-walk-20260926.shots (added @9b5eed8f9d); w9-round7.shots (@a32823e232) is local-only; cfed2c067b is NOT an ancestor of origin/CLOUD"
       ]
     }
   }
