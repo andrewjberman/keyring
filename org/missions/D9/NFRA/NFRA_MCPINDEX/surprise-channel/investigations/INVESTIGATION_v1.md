@@ -1627,6 +1627,29 @@ carries none.
     "world_is": "That next act is done, and it refines both labels. The file ARRIVED, so it is not a non-delivery; the converter did exactly what it is written to do, so calling it a conversion failure misplaces the defect. It is a vendor FIELD omission meeting a strict parse-or-raise contract, amplified by the refusal being per-unit so one cell fails two funds. Z-S11's file-level facts were all correct.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "READ ONLY: no backfill, no re-conversion, no forced run, no code change, no S3 write, no vendor contact -- the order said read first and the remedy is a ruling. This row does NOT disarm Z-S6 or Z-S11 and claims no `adjudicates`: it answers them, and the disarm is the owner's once the question below is ruled. THE ADJUDICABLE QUESTION, one question: should an EMPTY field in a float64-declared column be NULL, or is it drift? The docstring's reasoning ('coercing it to null would be judgment, fillna's evil twin') is about unparseable TEXT like 'n/a'; an ABSENT field is arguably different, and _numeric_or_raise already returns None for None and for NaN, so null-for-absent is a distinction it partially makes already. (a) treat '' as NULL -- one clause beside the existing None/NaN arm; the 4 partitions then convert with a null spread, but it edits a RATIFIED Rule-17 boundary shared with the 4 vendored copies and needs Z-S3's never-widen path. (b) keep the refusal and name these two dates a permanent hole -- but then the completeness guard reads FAIL forever on a cause nobody will fix, which is the state Z-S6 objected to. Recommended: (a), narrowly, empty-string-to-null for a declared-numeric column only. Full evidence: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.4.0_DS_ClientPlatform~D/PATHFINDER_DAILYNAV_GAP_CAUSE.md"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S26",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T07:15Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in the world by MX-s-7, drained @ce2587a5e5. All 3 python open() calls in record-terraform-deploy.sh now name encoding='utf-8' (s7.AC1: calls=3 bare=0). The script's own update block, run on a map holding one U+2014, writes it back intact (s7.AC2), where at base it wrote 3 mojibake characters. The recorder no longer manufactures the corruption.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S13"
+    ],
+    "one_line": "The issuer closes Z-S13: the deploy recorder's read-write loop no longer turns one non-ASCII character into three (MX-s-7 complete).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s7.AC1/s7.AC2 PASS on CLOUD after drain ce2587a5e5; at base both FAIL"
+      ]
+    },
+    "spec_asserts": "Z-S13: nothing prevents recurrence of the source-map mojibake.",
+    "world_is": "The reader and writer are both explicit UTF-8, so the loop is broken at its source."
   }
 ]
 ```

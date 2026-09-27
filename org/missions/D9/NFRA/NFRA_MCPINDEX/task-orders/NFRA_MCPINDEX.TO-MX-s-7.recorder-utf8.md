@@ -78,3 +78,8 @@ MX-s-4 until Monday, so this order does not contend with it.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+
+<status>complete</status>
+<!-- flipped by the issuer 2026-09-27T07:1xZ after the drain @ce2587a5e5 (worker commits 981d0e931c, f82c698bec).
+     s7.AC1 PASS (calls=3 bare=0) and s7.AC2 PASS (em-dash round-trip intact) re-run on CLOUD; instance VALID (rc=0).
+     Diff: 3 insertions, 3 deletions, one file. -->
