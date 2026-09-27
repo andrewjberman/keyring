@@ -1560,6 +1560,50 @@
     "spec_asserts": "BOUNDS: this worker's write grant is exactly the <paths> the task order names; contracts/** is READ, never edited, by this cell.",
     "world_is": "The 25 pre-modified files are EOL-only drift (core.autocrlf converting checked-out LF blobs to CRLF on this box, the same mechanism row DSGN_IRPTV1-W4-S3 documented for a different file set on 2026-09-24) already present in this worktree before this worker's session began -- left untouched and uncommitted by this worker, since they are outside <paths> and carry no content change to commit.",
     "notes": "Not blocking: no criterion of this cell reads or depends on contracts/wire/**, and this worker committed nothing there. Filed so a future drain does not mistake a `git status` full-worktree read for evidence of an in-scope change -- these 25 paths were already dirty at worktree provisioning, independent of any worker's own edits, matching W4-S3's diagnosis rather than a new defect."
+  },
+  {
+    "id": "DSGN_IRPTV1-W27-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~27",
+    "surfaced_at": "2026-09-26T21:40:00Z",
+    "one_line": "No fixture on disk (fixtures/**, fixtures/fe-s-7/**) carries a genuinely MULTI-ROOTED HoldingsSnapshot (several `parentRef: null` nodes, no common wrapper) -- the exact shape UIR-39 needs to reproduce the bug and prove the fix -- so IVE41-AC1's test builds that shape in-file, cloning `holdingsSnapshot.success.json`'s own real envelope and account subtrees (never a hand-typed firm token), the identical precedent `iv-e-33.client-context.test.tsx`'s own header already recorded for a different field-shape gap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`node -e` walk (this worker's own measurement) over every `fixtures/*.json` and `fixtures/fe-s-7/*.json` HoldingsSnapshot: `holdingsSnapshot.success.json` has exactly 1 node with `parentRef === null` (`nd-root`, kind `scope`); every `fe-s-7/holdings.*.json` file likewise has exactly 1 such node -- 0 of 9 files carry more than one root",
+        "IVE41-AC1's test (`iv-e-41.every-account.test.tsx`) constructs FLAT_TWO_ACCOUNT / NESTED_TWO_ACCOUNT / DIVERGENT_FACTS_TWO_ACCOUNT by spreading `clone(BASE_SNAPSHOT)`'s own envelope (scope/revision/availability/sourceTimestamps/coverage) and replacing only `nodes`, reusing `BASE_SNAPSHOT`'s own two real account subtrees (nd-a1001 with its model/sleeve/security children, nd-a1002 flat) with `parentRef` pointed at `null` instead of the wrapper `nd-root` -- the same clone-and-override technique `iv-e-33.client-context.test.tsx`'s header (lines 26-42, this same worktree) already used and documented for its own gap ('No committed fixture carries a multi-account holdings snapshot with current-shape drill_refs ... the fixture's own ENVELOPE is cloned verbatim and only the nodes array is replaced')",
+        "arm 3 (DrillTree.tsx's `modelRowColorMap`/`mdpfResultFromSnapshot`) needs a shape no real fixture node carries even after reparenting -- two INDEPENDENT account roots, each with its own L0 category wrapping an L1 model row bearing a served `modelCode` -- so that arm's `MULTI_ROOT_MODEL_SNAPSHOT` is built from synthetic placeholder ids ('root-acct-1', 'cat-1', 'model-1', etc.), never a real firm/account token, following the same envelope-clone technique"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's BOUNDS: 'Fixtures: discover fixture names from disk (row W3-S2); never type a firm token or a real client figure into a new file.' and the cell text: 'write it from the rows above against fixtures (IR/fixtures, discovered from disk)'.",
+    "world_is": "Every on-disk HoldingsSnapshot fixture this project's grant can discover is single-rooted, so none can be loaded UNMODIFIED to exercise UIR-39's own defect shape (several independent account roots). No new fixture FILE was added (fixtures/** is not named in this order's <paths>): the multi-root snapshots instead live as TypeScript object literals inside the granted test file itself, built by cloning a real fixture's envelope and real account subtrees (never inventing a firm token) for three of the four arms, and from wholly synthetic placeholder ids for the one arm (DrillTree's model-row colour map) that needs a shape no real node provides even after reparenting.",
+    "notes": "Not blocking: IVE41-AC1 passes; every synthetic id used ('root-acct-1', 'cat-1', 'model-1', etc.) is legible scaffolding, never a real client/firm token, matching the BOUNDS clause's own wording. Filed so a later round that adds a real multi-root fixture (if one becomes needed elsewhere) can retire these in-file constructions in favour of it."
+  },
+  {
+    "id": "DSGN_IRPTV1-W27-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~27",
+    "surfaced_at": "2026-09-26T22:20:00Z",
+    "one_line": "A full `bun test src/pages/InvestorReporting` run (this worker's own regression check after IV-e-42's edits) shows 30 pre-existing failures, all outside this cell's <paths> grant (fe-s-1/14/15/19/25/30/31/33/39 -- envelope/contract-parsing, job-state rendering, print/export bundle checks) and none touching tabs/holdings/* or this cell's own new test; IVE42-AC1 and every holdings/fe-s-7/fe-s-76/fe-s-67 test (141 of 141) pass, and `tsc -b --noEmit` is clean.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`bun test src/pages/InvestorReporting` at this worker's worktree HEAD (after this cell's commit) printed '836 pass / 27 skip / 30 fail' across 893 tests in 228 files; every failing test name (grepped for the `\u2717` marker) is under __tests__/fe-s-1, fe-s-10, fe-s-14, fe-s-15, fe-s-19, fe-s-25, fe-s-30, fe-s-31, fe-s-33 or fe-s-39 -- none under __tests__/dsgn-irptv1 or __tests__/fe-s-7/fe-s-76/fe-s-67",
+        "`grep -c tabs/holdings` (read, not the gated recursive form) over each failing test's own source file returns 0 for every one sampled (fe-s-1/fixtures.test.ts, fe-s-14/envelope.test.ts, fe-s-25/absent-vs-null.test.ts) -- their failures are EnvelopeMismatch/route-coverage/job-state assertions, unconnected to DrillTree/SliceTable/slices/AllocationBars/HoldingsTab",
+        "a targeted run of `bun test __tests__/dsgn-irptv1 __tests__/fe-s-7 __tests__/fe-s-76 __tests__/fe-s-67` (this cell's own files plus every test this worker found referencing DrillTree) printed '141 pass / 0 fail'; `bun run typecheck` (`tsc -b --noEmit`) printed no output (rc 0, clean) against this worker's full changeset"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 22 (EVIDENCE LAW) / this task order's own bound: a worker verifies its OWN fresh change against live artifacts; this cell's <paths> grant does not extend to contracts/envelope.ts, api/endpoints/investor-reporting.ts or any fe-s-1/14/15/19/25/30/31/33/39 test file.",
+    "world_is": "The InvestorReporting suite carries 30 failing tests unrelated to this cell's own grant or edits, pre-dating this worker's changes (none reference tabs/holdings/* or reachable through it). This worker did not attempt to fix them (out of grant; fixing a neighbouring defect is an explicit non-goal) and did not widen its own edits to touch them.",
+    "notes": "Not blocking IVE42-AC1/AC2 (both pass/are recorded on this cell's own scope). Filed so the round's drain/analysis has a printed denominator for this pre-existing breakage rather than re-discovering it per worker; the CVO or CTO may want a dedicated cell/drain-hygiene item for contracts/envelope.ts and the fe-s-1/14/15/19/25/30/31/33/39 suites."
   }
 ]
 ```
