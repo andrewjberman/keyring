@@ -1551,6 +1551,31 @@ carries none.
     },
     "spec_asserts": "CLAUDE.md: NEVER write device-specific logic into ajb_workspace -- derive, don't hardcode.",
     "world_is": "Pre-existing. Kept out of MX-s-7's scope (bound 2); MX-s-7 makes the python path correct, which is the path site Z takes."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S23",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T05:20Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Routed off-project with a named owner. 1.0.0_SA_CTO~O (msg 20260927T051535Z) assigned both to 0.4.0_DS_ClientPlatform~D, queued after the Z-S18 sweep. Z-S3: DS fixes the source mirror_conversion.py:330; AE vendors the four Lambda copies (eclipse :275, orion :277) through Terraform under a never-widen sign-off, because served silver moves. Z-S6/Z-S11: read the conversion cause first, and no backfill until it is known. Neither serves an NFRA_MCPINDEX FWD.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S3",
+      "NFRA_MCPINDEX-Z-S6",
+      "NFRA_MCPINDEX-Z-S11"
+    ],
+    "one_line": "The issuer closes Z-S3 (the pandas-3 dtype guard in five mirror_conversion copies) and Z-S6/Z-S11 (4 pathfinder dailynav partitions failing conversion) as routed: the CTO named 0.4.0_DS_ClientPlatform~D the owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~O/read/20260927T051535Z_1.0.0_SA_CTO_O_Re_owners_for_Z-S3_Z-S6_Z-S11.md"
+      ]
+    },
+    "spec_asserts": "An ARMED row is disarmed by its disarm_owner.",
+    "world_is": "Both hazards remain in the world, now owned by a named DS seat outside this project."
   }
 ]
 ```
