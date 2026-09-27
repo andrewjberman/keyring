@@ -1479,6 +1479,31 @@ carries none.
     "spec_asserts": "Face step 2/4: `git worktree add ... /c/tmp/mx-rel <deployed_commit>`; rebuild the deployed commit's artifact from a clean tree WITHOUT uploading.",
     "world_is": "Neither tree can build the artifact until a nested mcportal clone exists. I added one at the manifest's mcportal_commit, following the OA-g-2 precedent at /c/tmp/oa-9-rb.",
     "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S20",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T03:40Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "S7: the count of 12 by author is correct; the 2 extra were content-free drain merges. S8: the 3 failing tests read repo files outside the gateway path that the narrow release holds at base (R-8) and never ships; they pass 7 of 7 on CLOUD, and no shipped app code is implicated. S9: the mcportal clone at the manifest's mcportal_commit follows the OA-g-2 precedent and made no network fetch. The rollback artifact matches the live one 75 of 75.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W1-S7",
+      "NFRA_MCPINDEX-Z-W1-S8",
+      "NFRA_MCPINDEX-Z-W1-S9"
+    ],
+    "one_line": "The issuer rules the three MX-r-3 pre-GO rows (12-not-14 commits, 2 test files reading base-held repo files, the unnamed mcportal clone) terminal. None bears on the release's served delta.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANNOUNCE_MX-r-3.md drained @ab1ceed3c0: census 19 = 19, rollback 75/75, render ALIGNED"
+      ]
+    },
+    "spec_asserts": "The MX-r-3 face's counts and worktrees are complete as written.",
+    "world_is": "Three face imprecisions, each resolved without touching the shipped set."
   }
 ]
 ```
