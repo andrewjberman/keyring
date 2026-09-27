@@ -25,3 +25,15 @@ blob `f70c953083d46e94c78c0d390c64ff646b0e9c3a` @`1da407f0b7`. The blob is the s
   vendor call is made in this act.
 
 Not measured by this seat: the censuses, the test runs and ~Y's live arms (the packet's).
+
+## Addendum 1 (2026-09-27 ~22:4xZ) -- D2 RE-SIGNED on install-script blob `638addc87d0a5a24dbdd197c762580895f19e039` @`aa2f40ef1f`
+
+The source is 2.0.0_SA_COO~P msg 102176.
+- D1 is served (generate `ykJltfTd` since 22:33:55Z).
+- D2 attempt 1 stopped SAFELY at its own factory pre-check, and the unit stayed on `lt`. The `st` worker imports
+  `extract` at module level, and the pre-check put only `reports/` on `sys.path`.
+- **The script diff, read here (`git diff 3f4d12ed 638addc8`),** replaces the one `reports` path with the eight
+  folders the service itself loads. This seat printed `ycharts/generate/resident_main.py:18` and it matches: `intake,
+  ops, reports, _keys, _authz, _gate, ycharts/session, ycharts/extract`.
+- The pre-check now tests exactly what the running service will import. Nothing in the package or the rest of the
+  script changes, and the automatic rollback to `lt` carries.
