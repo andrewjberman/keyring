@@ -2382,3 +2382,29 @@
   "notes": "The backend now accepts (tenant, report ref, owner check and async submit all hold). The page fix: accept the QUEUED status envelope, take the exr_ id from status.operation.revision and poll export-receipt to READY. Round-9 candidate, thread-breaking."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W35-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~35",
+  "surfaced_at": "2026-09-27T23:35:24Z",
+  "one_line": "src/pages/InvestorReporting/__tests__/fe-s-25/absent-vs-null.test.ts fails 0 pass/3 fail on this worktree (EnvelopeMismatch on 'status' in parseIrEnvelope, plus 2 disallowed '?? null' coalesces on distinguished fields in contracts/adapt.ts) -- pre-existing, unrelated to this cell's <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "a direct act whose <paths> grant covers portal/src/pages/InvestorReporting/contracts/adapt.ts and contracts/envelope.ts",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal wk-DSGN_IRPTV1-35-portal @5136087d: `bun test src/pages/InvestorReporting/__tests__/fe-s-25/absent-vs-null.test.ts` alone -> 0 pass / 3 fail; F25-AC2's two sub-tests throw `EnvelopeMismatch: investor-reporting performance-report: response envelope field 'status' does not satisfy the v1 contract` inside parseIrEnvelope (contracts/envelope.ts:296); F25-AC3's scan finds 2 `?? null` hits on distinguished fields in contracts/adapt.ts ('status?.state ?? null', 'section.value ?? null'), failing `expect(hits).toEqual([])`",
+      "`git diff --stat HEAD -- src/pages/InvestorReporting/contracts src/pages/InvestorReporting/state` on this worktree prints nothing -- both trees are byte-identical to HEAD, so this cell's own edits (PerformanceHeadline/PerformanceChart/ReturnsHeatmap/AccountsTable/ReportingTab/PerformanceControls/AccountFilter, none of which import contracts/adapt.ts or contracts/envelope.ts for anything this test path exercises) cannot be the cause",
+      "this cell's own <paths> grant does not include contracts/adapt.ts or contracts/envelope.ts, so a fix is out of grant here"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "fe-s-25/absent-vs-null.test.ts (F25-AC2/F25-AC3): ABSENT vs NULL source dates render differently for every no-answer wire state, and no `?? null` coalesce survives on a schema-distinguished field.",
+  "world_is": "On this worktree, `status` on the wire body this test builds fails `requirePublicStatus`'s v1-contract check inside `parseIrEnvelope` before either assertion runs, and contracts/adapt.ts carries two `?? null` coalesces (`status?.state`, `section.value`) the scan's own denominator flags as landing on a distinguished field.",
+  "notes": "Not blocking this cell's own criterion (IVE69-AC1 passes standalone, isolated and in a no-regression batch of 18 sibling files). Filed per BOUNDS ('never fix a neighbouring defect') rather than touched -- contracts/adapt.ts and contracts/envelope.ts are read-only here."
+}
+```
