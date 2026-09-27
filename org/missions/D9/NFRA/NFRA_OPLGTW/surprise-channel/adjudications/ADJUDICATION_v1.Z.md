@@ -28,6 +28,27 @@ from 2026-09-15..20, appends here when the round goes terminal.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "A verdict record. Z-S1 stays ARMED with its disarm_owner (1.0.0_SA_CTO~O) until the limb runs under an override; the disarm criterion is in the verdict."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-C-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T16:40:00Z",
+    "one_line": "OG-e-2 never-widen SECOND (non-acting) half: SIGNED for the narrow release of 110d93fb73 + 06eff3b73f + 744e4468e1. DELTA = 0 at GO (EMAILDENY 0 of 162, measured by this seat). The 503-on-unreadable-store branch is a ruled, signed new dependency; no deny record is signed.",
+    "class": "OBSERVATION",
+    "spec_asserts": "CTO half @4f83d1a820: N = 4 writers, EMAILDENY 0 of 162, the 503 branch signed deliberately (R2-k call 2), and a condition to re-read EMAILDENY = 0 at GO.",
+    "world_is": "Live = 110d93fb73 (S3 latest ETag 00356afd). The served files are app/{access_state,data_entitlement,server,token_broker}.py from 06eff3b73f only; the 2 other OPLGTW-worker gateway commits since the base touch tests/runbook only. The guard sits only in the /login+/sprint branch and the legacy /callback; /mcp is untouched. An empty email cannot reach the check (get_user_email fails closed first; the callback email comes from signed state). This seat's consistent scan at 16:40Z: 162 items, EMAILDENY 0, other POLICY# 10. The one reader of the record is data_entitlement.email_denial.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_OPLGTW_OG-e-2_NEVER_WIDEN_SECOND_HALF_20260927.md",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/1.0.0_SA_CTO~O/RULING_OG-e-2_RELEASE_SIGNOFF_20260927.md@4f83d1a820",
+        "infra/aws/ec2/opal-gateway/app/server.py and data_entitlement.py at 06eff3b73f"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A sign-off record carried onto the channel. It opens and adjudicates no investigation item."
   }
 ]
 ```
