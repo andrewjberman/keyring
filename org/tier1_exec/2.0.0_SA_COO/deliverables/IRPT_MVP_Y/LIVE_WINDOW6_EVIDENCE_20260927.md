@@ -85,3 +85,32 @@ What remains is the runner's live interaction with YCharts after its lease: seed
 sign-in form, or a challenge. Only a run whose receipt is kept can name it.
 `P_RESIDENT_RETAINED_REASON_20260927.patch` (Y branch 9c6626e1be) makes the next attempt's journal line carry the
 runner's `failure_class`.
+
+## S151: the one wrapper run (02:02Z, Andrew-direct via CTO 101694, "yes on the YCharts wrapper run, one run")
+
+Ledger `irpt-ycharts-wrapper-run-s151-20260927`: opened @b778f918a2 before the run, and CLOSED with proof.
+
+The run: ONE `run-ycharts-session.sh` (task `probe`) as ec2-user on i-0167fd745ad906a66, SSM `29cacb70`,
+02:02:13-02:02:25Z. There was no retry and no vendor write.
+
+| Measured | Result |
+|---|---|
+| Wrapper exit | `WRAPPER_RC=0` |
+| Receipt (scrubbed: fields only) | `ok: true`, `result {authenticated: true, reason: OK, http_status: 200}`; steps `CH-SIGNIN_FORM`, then `CH-AUTHENTICATED` (a form sign-in, no challenge) |
+| Runner lease `_opal`/`ycharts-session` | fence 12 to 13, released |
+| `ycharts/session/current` | `02e53a44` (fence 11, 09-24) to **`d38f6941` AWSCURRENT** (fence 13, captured 02:02:23Z, 31 cookie names); `02e53a44` is now AWSPREVIOUS |
+| Queue `irpt-generation` | 0/0 before and after |
+| The resident service's environment | `HOME=/home/ec2-user`, PATH including `/usr/bin`, `USER=ec2-user`: the same context as this run |
+
+**The cause of receive 1 is not reproduced.**
+- The same wrapper, host and user, with the same environment, IAM, secrets and runtime, now signs in through the form
+  in 12 s.
+- The 00:12Z failure is therefore not a standing defect of the host, wrapper or configuration. It fits a transient
+  YCharts-side screen on that attempt, for example a sign-in or WAF page the runner did not recognise.
+- It is unmeasured, because that run's receipt was discarded.
+
+**S151's hazard disarms:**
+- The capture path is proven working live.
+- A fresh session (fence 13) is published, so the next job's identity step should not need a capture.
+- The resident now runs the retained-reason patch (`fe64236bbb-rr`), so any recurrence names its `failure_class` in the
+  journal.
