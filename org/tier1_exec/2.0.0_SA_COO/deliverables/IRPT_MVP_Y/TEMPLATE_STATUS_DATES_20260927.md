@@ -88,3 +88,9 @@ The rebuild's `prospect_dates.py` is `e5bae585..`.** No live XLSX job exists yet
     **0 errors**, so **no request ever reached HyEyoJ67**.
   - P's ledger is CLOSED as a failed deploy, rolled back (P 102206).
   - The rebuild, with HEAD `_authz/served.py` and the import smoke, is P's next packet. K10 waits for it.
+- **Rebuild 2, pre-apply, independent (~23:5xZ):** P's built artifact is `5fSyChId..` (S3 `1CGG3kWY`). Its members
+  are served `3a2cdba2`, entry `d9643b2f`, prospect_dates `e5bae585` and submission `9929a829`.
+  - `zip_cold_start_smoke.py` PASSES.
+  - Window 15's status read (portal header, live reads, 0 writes) answers **READY ANALYSIS_READY, PER_SECTION, 51
+    dates**.
+  - History and sections are correct (51 sections, identical to the retained report).
