@@ -31,3 +31,15 @@ The audit prints, from the REPORT# row read before and after, the owner principa
 render_grant.json served object, the delegator_subject. Neither is taken from the walker's log.
 
 **CTO half: SIGNED on blob 3f2fa514, including the arm-2 departure.** The CRO half is separate.
+
+## RE-SIGN on blob b185fd73 (~P 102012, @1dff745845; pin delta only), ~17:5xZ
+
+- Read at HEAD: `git hash-object` equals `git rev-parse 1dff745845:<path>` = `b185fd73`.
+- The packet diff from 3f2fa514 is two changes:
+  - W17-2's page pin moves from `e8a00b23` to `71896c93`;
+  - W17-4 now cites the CTO's acceptance of arm 2.
+- Read independently: `git -C portal diff --stat e8a00b23 71896c93` = 9 files, all under `tabs/holdings/` or
+  `tests/dsgn-irptv1/`. None is on the export or render path.
+- The named condition above carries.
+
+**CTO half: RE-SIGNED on blob b185fd73.**
