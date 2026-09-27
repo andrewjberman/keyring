@@ -10093,3 +10093,84 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "GRADUATED into CTO 102024 (R10 applied to Analysis: labelled, never silent). With S162 (S160, S161), the level_as_of_type thread from window 15 is closed: W15-3 is Static-only as built, and P ships it on the next resident version."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S164",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.6.2_AE_PartnerETL~S",
+  "surfaced_at": "2026-09-27T18:57Z",
+  "one_line": "TO-IB-s158's build step 1 rests on a false premise: the box does NOT keep /tmp/cot-session-autologin-*.log. /tmp on i-0643a5bee8a8feabf is tmpfs, cot-bd-session-trigger starts the box per run, and ec2-auto-shutdown-enforcer stops it at IDLE_CEILING_HOURS=3.0 -- so every session-fetch log dies within hours. The 09-24..09-27 failure logs were destroyed before this order was cut, which is why AC1 is refused as written rather than answered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "on the box 2026-09-27T18:20:12Z (up 5 min): findmnt /tmp -> 'TARGET /tmp SOURCE tmpfs FSTYPE tmpfs OPTIONS rw,nosuid,nodev,seclabel,nr_inodes=1048576'; df -h /tmp -> 'tmpfs 3.9G 0 3.9G 0% /tmp'",
+      "ls /tmp/cot-session-autologin-*.log -> 'No such file or directory', count 0; ls /tmp/*.log -> 'No such file or directory' (no log of any kind survived)",
+      "s3://opal-data-cot/logs/cot-exporter/session-fetch/ -- 12 objects, newest cot-session-autologin-20260916-113031.log at 2026-09-16T11:33:37Z; NOTHING for 09-24/25/26/27. The 09-16 object is the POSITIVE CONTROL that the upload path works on a Success, so the gap is a true absence",
+      "the box's PERSISTENT SSM orchestration dirs (42 present) hold all 4 failed command ids, and stdout + stderr are EMPTY in 4 of 4 -- consistent with set -e aborting before tail, with the wrapper's output already redirected into the tmpfs log",
+      "bd_49f_auto_login.js:434 gates step screenshots behind BD_DEBUG_SHOTS=1; grep -c BD_DEBUG_SHOTS /opt/bd-cot-auto-login/secret-ids.env -> 0, so no screenshot carrier exists either"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "the box keeps /tmp/cot-session-autologin-*.log, so the failure cause can be read from it per failed day",
+  "world_is": "/tmp is tmpfs and the box is stopped between runs, so the logs are gone on three independent carriers with printed denominators. The cause per failed day is UNMEASURABLE by any instrument this seat holds.",
+  "notes": "GRADUATED into the fix the order already asked for: document version 5 (live 2026-09-27T18:37:47.998Z) uploads the wrapper log on the FAILURE branch, so the next failure names its own cause. The reproduction run through the trigger Lambda SUCCEEDED (cf7fdead, rc 0), so the failure did not reproduce and no cause was named or fixed. AC1 refused as written; the test was not weakened. Deliverable: org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/IRPT_BCKEND_S158_CAUSE_20260927.json"
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S165",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.6.2_AE_PartnerETL~S",
+  "surfaced_at": "2026-09-27T18:57Z",
+  "one_line": "The cot box carries NO in-run login retry, so one transient login failure costs a whole day and the COT chain stayed frozen 09-24..09-27 with nothing retrying and nothing surfacing. /opt/bd-cot-auto-login/secret-ids.env does not set BD_MAX_LOGIN_ATTEMPTS or BD_LOGIN_BACKOFF_MS; the repo copy does and marks them CTO-gated behind a newer .js that is not in this order's grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO -- the repo's own comment makes the retry CTO-gated ('Inert until the new .js is box-deployed (CTO-gated)') and the newer .js is outside TO-IB-s158's <paths>, so this seat deliberately changed nothing. The hazard is a standing single-point-of-failure, not an act this order may take.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "md5 of the RUNNING path vs the build input: /opt/bd-cot-auto-login/secret-ids.env = 9b55e03c9575d4f6b58d1d239c8409fb (1200 B); infra/aws/ec2/bd-cot-auto-login/secret-ids.env = 3c4298378faa5811b7e0eaf7a192ca2c (1660 B)",
+      "the box's file, read in full, ends at BD_HEADLESS=1 -- it contains no BD_MAX_LOGIN_ATTEMPTS and no BD_LOGIN_BACKOFF_MS line",
+      "the repo copy carries 'BD_MAX_LOGIN_ATTEMPTS=3' + 'BD_LOGIN_BACKOFF_MS=5000' under the comment 'CTO-B in-run retry ... cot OPTS IN (3 attempts) ... Inert until the new .js is box-deployed (CTO-gated)'",
+      "4 consecutive scheduled runs Failed with rc 1 (c5ba78ce 09-24, e990229f 09-25, 36166f00 09-26, 60650bfe 09-27), each the sole attempt of its day; the 5 prior runs back to 08-19 all Succeeded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "cot opted in to the CTO-B in-run retry (3 attempts, 5000 ms backoff)",
+  "world_is": "The opt-in exists in the repo only. The deployed box has no retry, so a single transient failure is terminal for the day and silent, which is how a 1-day glitch became an 11-day-stale session.",
+  "notes": "Named, not remediated -- the retry needs the newer bd_49f_auto_login.js and neither the .js nor a box redeploy of it is in TO-IB-s158's grant. Raised for the round-19 analysis: the document now logs its failures, but nothing yet retries one."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S166",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.6.2_AE_PartnerETL~S",
+  "surfaced_at": "2026-09-27T18:57Z",
+  "one_line": "The login script the cot box actually runs has no build input in the cot tree: infra/aws/ec2/bd-cot-auto-login/ contains no .js at all, and the running bd_49f_auto_login.js (28dd27a0, 35049 B) does not match the repo's 49F copy (15fd5ef9, 46900 B). The box matches the hash secret-ids.env DECLARES canonical, so this is a versioning gap, not proven drift.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (ownership question: which tree is the cot login script's source of truth). Out of TO-IB-s158's <paths>; this seat changed nothing and asserts no drift verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "md5sum on the RUNNING path: /opt/bd-cot-auto-login/bd_49f_auto_login.js = 28dd27a054b826cc3a87f6b4498d3b5a, 35049 bytes",
+      "md5sum infra/aws/ec2/bd-49f-auto-login/bd_49f_auto_login.js = 15fd5ef95081ba1c06c334a2276d93b8, 46900 bytes",
+      "ls infra/aws/ec2/bd-cot-auto-login/ -> run-bd-auto-login.sh and secret-ids.env ONLY; no .js in the cot deploy source the TO names as the S3->box origin",
+      "infra/aws/ec2/bd-cot-auto-login/secret-ids.env names 'the canonical .js (28dd27a0)', which is exactly the box's hash -- so the DECLARED canonical bytes and the RUNNING bytes agree, while the 49F repo copy has moved on"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the deploy source infra/aws/ec2/bd-cot-auto-login/ is the S3->box origin for /opt/bd-cot-auto-login",
+  "world_is": "It is the origin for the wrapper and the env file (the wrapper's md5 MATCHES exactly) but not for the login script, which exists on the box and in S3 without a cot-tree build input. A future S3->box redeploy from that directory would not reproduce the running .js.",
+  "notes": "Found while auditing deployed bytes for this order's L4 leg (rule 22a: diff against the build input, never by filename). No act taken. Recorded so a later cot redeploy is not planned against a source that cannot reproduce the running login script."
+}
+```
