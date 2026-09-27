@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T06:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T06:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -52,9 +52,11 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
    ONE host re-capture on a challenge (~Y 101809).
 2. **K8, the first real export:** window 10 (06:19-06:32Z) did not reach it. The page's Export preview refuses
    before any request ("cannot render reportKind performance-report: 39c11079.. is absent"), and 39c11079 is K7's own
-   report revision (RPT-b5e0a16e). The throw site is portal `export/resolveBundle.ts:255` (a cache miss, then a
-   client-side fetch failure) at DEV 200d257a. That is ~D's lane (DSGN_IRPTV1), and ~D is filing it. Re-cut window
-   10's packet as window 11 once ~D's fix is on DEV.
+   report revision (RPT-b5e0a16e). ROOT CAUSE (from the w10 HAR and the adapter log):
+   the preview's Performance fetch (resolveBundle.ts:292-300) omits `selected_tenant`. Its 2 GETs at 06:25:22Z answered
+   UNAVAILABLE/UNEXPECTED (BucketUnmapped for the internal viewer's own firm), and resolveOne rethrew that at :255.
+   The fix is in the portal (DSGN_IRPTV1-S20, ~D's lane, a round-8 candidate): thread the target's selectedTenant.
+   Re-cut window 10's packet as window 11 once the fix is on DEV.
 3. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
@@ -82,6 +84,7 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 | The performance root's per-apply `approved_performance_plan` variable is null now; any later arm passes its plan file, and the disarm is null | 2.0.0_SA_COO~P | the next per-use word |
 | 49F engine: 9 funded non-computable accounts; 219 of 5194 divergent vs BD | 1.0.0_SA_CTO to route (49F engine lane) | the engine lane's next c02 act |
 | ~D's COT card read HOW MUCH -$40,348.28 (a negative client total) on ****0441 | 2.0.0_SA_COO~D | ~D's next COT face review |
+| The adapter answers an internal viewer's Performance GET that lacks `selected_tenant` with UNAVAILABLE/UNEXPECTED (BucketUnmapped at the directory-bucket map), not a named refusal (w10 06:25:22Z, corr-27a7339e0e20) | 2.0.0_SA_COO~P | the next adapter deploy, or a firm user seeing UNEXPECTED |
 | 49F directory lists 790 not-terminated accounts the custodian shows empty/absent | 2.0.0_SA_COO~M | M's next directory refresh |
 
 ## Limits
