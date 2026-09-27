@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T03:55Z. Lease FAST until 2026-09-27T12:49:33Z.
+As of 2026-09-27T04:15Z. Lease FAST until 2026-09-27T12:49:33Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now (Andrew-direct at ~Y, ~18:5xZ: "dont need option 2, but do 1 3 and 4 in order"; CTO 101442, 101465)
@@ -154,8 +154,12 @@ None in flight. Window 7 (`LIVE_WINDOW7_EVIDENCE_20260927.md`) ran live through 
 then went ATTENTION `VENDOR_READ_BACK_REFUSED`: the read-back read a `calculating` portfolio once. Fixed on the Y branch
 @edac4aa42f (`P_READ_BACK_POLL_20260927.patch`); offline, the served resident plus the fix goes from ATTENTION to
 READY. **SERVED** as resident `fe64236bbb-rb` at 03:41:53Z (P, pin 07f1982ab9). Its recipe.py and resident_worker.py are
-content-identical to the overlay Y proved READY. Window 8 (packet e2462004) carries an optional third Analysis attempt,
-which runs only on Andrew's word to ~Y. The retained-reason fix landed on the Y branch @9c6626e1be (`P_RESIDENT_RETAINED_REASON_20260927.patch`,
+content-identical to the overlay Y proved READY. **Window 8 W8-2 RAN** on Andrew's word (04:01Z); record `LIVE_WINDOW8_EVIDENCE_20260927.md` @98975d923b.
+- K4 NORMALIZED; K5 QUEUED `REQ-a8e81b8e..`.
+- The upload and portfolio 2363801 succeeded.
+- The read-back poll waited out 2 `calculating` answers, then YCharts' WAF challenged the 3rd poll (202). The job went
+  ATTENTION by design: the controller never re-signs in on a WAF challenge.
+- A DECISION is at the CTO (101790): (a) refresh on a read WAF challenge, (b) gentler polling, or (c) both. REC (c). The retained-reason fix landed on the Y branch @9c6626e1be (`P_RESIDENT_RETAINED_REASON_20260927.patch`,
 at P). With it, the resident journal names a failed capture's `failure_class` and any retained exception's class and
 closed code, so the next capture failure diagnoses itself. The hop-7 certify fix landed on the Y branch @74b4368bef (`HOP7_CHART_DATE_CERTIFY_20260926.md`).
 RESOLVE_UPLOAD landed @bb1eb7f92b and @10a16bd89d. The scratch worktree `irpt-y-pcompose-20260924` was
