@@ -1674,6 +1674,29 @@ carries none.
     "spec_asserts": "TO-MX-s-8 step 6 treats a terraform plan run against the edited vendored copies as the pre-GO preview of the deploy Phase B's apply will perform, and step 9 gates that same apply on the plan naming only the 4 functions' code attributes.",
     "world_is": "The 4 functions deploy via the yang-lambda module's S3-artifact pattern (bucket+key+content-sha256 metadata), so a plan or apply run against the current, un-rebuilt S3 artifacts is a 0-diff no-op regardless of what the local vendored .py files now contain. Reaching a plan that actually previews the fix -- and an apply that actually ships it -- needs an artifact build+upload step (infra/aws/lambda/ci/build-and-upload.sh or equivalent) run first, which is outside this cell's Phase A <paths>/EGRESS CLASS (declared: none beyond get-function/get-layer-version/terraform apply) and is not named as a member of either phase in this task order.",
     "notes": "BLOCKING on the evidentiary value of step 6's plan and on step 9's gate, not on Phase A's literal steps (which this worker completed and recorded as written). ARMED: if GO is given on the current Phase B step list without an artifact rebuild+upload step added, the apply will land 0-diff and the fix will not ship while the ledger/record steps may read as a completed deploy. disarm_owner 2.0.0_SA_COO~O decides whether to add the build-and-upload leg (naming it, its own never-widen bound, and its S3 write target) to Phase B before authorizing GO, or to route it to whichever lane owns infra/aws/lambda/ci/build-and-upload.sh's egress."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S27",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T09:40Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Ruled by the issuer's amendment A1 to MX-s-8 @a296ac3598. PHASE B now uploads each function's artifact with build-and-upload.sh and verifies the write, keeping the prior VersionIds as rollback keys, before the apply. The apply must read 'Plan: 0 to add, 4 to change, 0 to destroy' on the 4 functions only, and a post-apply 'plan -detailed-exitcode' must exit 0. So a 0-diff apply can no longer pass as a deploy; AC2 reads the running zips in any case.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W7-S1"
+    ],
+    "one_line": "The issuer rules W7-S1: MX-s-8's GO phase gains the artifact build + upload that makes the Terraform apply non-vacuous (the MX-s-3 ledger legs L2-L4 pattern).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-s-8 face @a296ac3598 PHASE B steps 8-13; infra/aws/terraform/modules/yang-lambda/main.tf:36-39 (source_code_hash from the S3 artifact)"
+      ]
+    },
+    "spec_asserts": "MX-s-8 PHASE B as first cut: the apply alone ships the vendored edits.",
+    "world_is": "The apply alone reads 0-diff; the upload is a named member of the act."
   }
 ]
 ```
