@@ -30,6 +30,10 @@ the coverage and holdings halves of the universe share only three names.
 
 ## The five ADRs with no CIK, and the two still open -- one structural reason covers all seven
 
+> **RULED 2026-09-27 -- these five are DONE AND READY. See "ANDREW-DIRECT 2026-09-27 (Call 4)" at the
+> foot of this file for the ruling and the per-identity grade. Nothing below is withdrawn; the five are
+> no longer awaiting a call.**
+
 `BNPQY`, `CICHY`, `IBDRY`, `ICT`, `ISNPY` resolve to a company but carry **no CIK**, and `Manila MER PER`
 and `Tokyo Electron 8035 JP` produced no match at all. Measured rather than assumed: searching the SEC
 table's 10,459 TITLES for `PARIBAS`, `CONSTRUCTION BANK`, `IBERDROLA`, `CONTAINER TERMINAL`, `INTESA`,
@@ -114,3 +118,40 @@ Electric and Tokyo Electron remain without a universe line of any kind.
 ---
 Measured 2026-09-24 by `2.0.0_SA_COO~Y`. Sources: `universe/v1/2026-09-16.json` and the ingested SEC
 `company_tickers` bronze copy (date=2026-09-22, 10,459 tickers). No vendor call, no write.
+
+---
+
+## ANDREW-DIRECT 2026-09-27 (Call 4) -- the five are DONE AND READY, and the grade is recorded here
+
+**VERBATIM:** *"These are fine to proceed with as is, i dont care if its not perfect, consider them done
+and ready we just note the grade of their resolution."*
+
+So the five stop being an open call. What follows is the grade, per the claim law -- a value must carry its
+claim in a field a consumer can reject on, and these grades are **not uniform across the five**, which is
+the reason this is a table and not a sentence.
+
+| ADR line | issuer | usable identity | CIK | 20-F filer status |
+|---|---|---|---|---|
+| `BNPQY` | BNP Paribas | the ADR ticker | **ABSENT** from the mapping table | **INFERRED** |
+| `CICHY` | China Construction Bank | the ADR ticker | **ABSENT** from the mapping table | **INFERRED** |
+| `IBDRY` | Iberdrola SA | the ADR ticker | **ABSENT** -- no registrant found for the parent under three spellings; only the subsidiary IBERDROLA RENOVABLES (1424184) exists | **INFERRED** |
+| `ICT` | ICTSI | the ADR ticker | **MEASURED 1656958** | **MEASURED NO** (forms are F-6EF) |
+| `ISNPY` | Intesa Sanpaolo | the ADR ticker | **MEASURED 1374384** | **MEASURED NO** (12G3-2B, 6-K, 15F-12G) |
+
+**WHAT THE GRADE MEANS, and the difference between the rows is the whole point.** For all five the usable
+identity is the **ADR line already in the universe** -- that part is uniform and it is what "done and ready"
+attaches to. But `ICT` and `ISNPY` were resolved to a named EDGAR registrant by a direct query, so their
+no-20-F status is **MEASURED from the form history**; Intesa's is the strongest of the five because
+`12G3-2B` is the exemption itself, making no-20-F a design fact rather than an absence. The other three
+rest on **one instrument** -- the exchange-listed ticker-to-CIK table, where each issuer name returns 0 of
+10,459 titles -- and an issuer CAN file 20-F while carrying no exchange-listed ticker, so those three
+carry **INFERRED and not MEASURED**.
+
+**WHAT IS STILL NOT CLAIMED, because the ruling did not change the evidence.** The two genuinely open names
+are unaffected and remain without a universe line of any kind: `Manila MER PER` and `Tokyo Electron 8035 JP`
+(0 hits each). The `ABSENT` CIKs would be settled definitively by seven live EDGAR company-name searches
+(`/cgi-bin/browse-edgar?company=...&type=20-F`), which is egress and was not performed. **"Proceed as is"
+resolves the CALL, not the measurement** -- a later seat reading `INFERRED` on three of these rows is
+reading it correctly and should not upgrade it without that search.
+
+Ruled 2026-09-27, recorded by `2.0.0_SA_COO~Y`. No vendor call and no write made by this record.

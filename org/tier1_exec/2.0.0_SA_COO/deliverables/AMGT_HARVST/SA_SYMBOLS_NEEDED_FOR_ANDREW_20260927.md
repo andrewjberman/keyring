@@ -1,5 +1,24 @@
 # 33 names still needing a SEEKING ALPHA symbol -- for Andrew to fill
 
+> # ANSWERED AND CLOSED 2026-09-27 -- ALL 33 SUPPLIED. NOTHING IS OWED ON THIS FILE.
+>
+> Andrew opened all 33 Seeking Alpha pages himself and returned the symbols. They are recorded with
+> provenance in `SA_SYMBOLS_ANDREW_20260927.json` (status `MEASURED`, 6 records carrying qualifiers) and
+> merged in `SA_SYMBOLS_MERGED_89_20260927.json`. **The merge partitions the universe exactly: 56
+> pass-resolved + 33 Andrew, OVERLAP ZERO**, so no measured value was overwritten and no record was
+> re-graded by being merged. Wired at `lib/opal_data_harvest/config.json` @d2be2d3b13; the producer's own
+> `universe --all-securities` read goes **25 -> 89 with 0 still missing**.
+>
+> **THE NEAR-MISS THIS FILE CAUSED, kept because it is the useful part:** the list was sent as 33 names and
+> came back as **32 URLs** (Spotify absent, supplied after). Ingested BY POSITION that shifts everything
+> from #16 on and MIS-ASSIGNS 17 of 33 -- Zurich's symbol onto Zoetis, and so on -- while every symbol is
+> correct BY NAME. Mapped by name throughout. **A positional join against a hand-built list is a silent
+> corruption whenever the list is one item short**, and the list being one short is the normal case.
+>
+> Two supplied values were wrong and BOTH came from a candidate column of my own (`OBT` -> Orange County
+> Bancorp; `ORA` -> Ormat Technologies), settled as `ORANY` by his direct URL. See the supersession note in
+> `SA_SYMBOL_CANDIDATES_PENDING_DENSITY_20260927.md`.
+
 **Andrew-direct 2026-09-27:** *"What exactly is the issue, you don't know the tickers? If so, give me the list
 and I will find them myself."*
 

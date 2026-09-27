@@ -1,5 +1,23 @@
 # sa_symbol: 18 CANDIDATES across 9 folders that passed test (a) and never reached test (b)
 
+> # SUPERSEDED 2026-09-27 -- DO NOT PROBE THESE. ALL 9 FOLDERS NOW CARRY A MEASURED SYMBOL.
+>
+> Andrew read every remaining security's Seeking Alpha page by hand and supplied the symbols
+> (`SA_SYMBOLS_ANDREW_20260927.json`, 33 records, status `MEASURED`). The merged source
+> `SA_SYMBOLS_MERGED_89_20260927.json` is wired at `lib/opal_data_harvest/config.json`
+> (`symbol_resolution_source`, @d2be2d3b13) and the producer's own read is **89 of 89 with 0 missing**.
+>
+> **MEASURED 9 of 9:** Nestle->`NSRGY`, Nike->`NKE`, Novartis->`NVS`, Rio Tinto->`RTPPF`, Roche->`RHHBY`,
+> Sanofi->`SNY`, Shopify->`SHOP`, QXO->`QXO.PR.B`, Orange->`ORANY`. A later seat re-probing these 18
+> candidates would spend 9 vendor searches to re-derive answers already held at a STRONGER provenance --
+> a human read of the vendor's own symbol page, versus this file's two-readings-of-one-source.
+>
+> **WHAT SURVIVES AND IS WORTH KEEPING:** the section below on `OBT` is the reason this file exists. A
+> flagged candidate sitting in a column that reads as answers got picked up and supplied back to me as
+> real. That is a lesson about artifact design, and it is mine; it does not age with the symbols.
+> The `QXO.PR.B` density watch also survives -- serveability is the >=3-mentions-in-30-days bar, and the
+> preferred line may not clear it. That is still a measurement nobody has made.
+
 **Measured 2026-09-27 from `sa_symbol_pass_20260926/batch16.json`** (the live population: universe 89, ASKED
 69, resolved 56, serveable 19). Every row below comes from that artifact's own `candidates_probed`, which
 records each probed symbol with SA's own company name, the name overlap, and the news call's HTTP code.
