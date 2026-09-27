@@ -2269,3 +2269,31 @@
   "notes": "Same class as S22/S23 (a read that drops selected_tenant). Also carried to round 9: a prospect job (no client) is invisible until some client is chosen, because the history mounts only with a client."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-W36-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~36",
+  "surfaced_at": "2026-09-27T17:05:00Z",
+  "one_line": "Fixing IV-e-66's amendment 1 (thread selected_tenant into the row status-job read) breaks the frozen census in __tests__/fe-s-54/stated-state-wins.test.ts (F54-AC2, expect(productionCallSites.length).toBe(2)) -- the fix's own call site is out of this cell's <paths> grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "a direct act whose <paths> grant covers portal/src/pages/InvestorReporting/tabs/analysis/ProspectJobStatus.tsx and portal/src/pages/InvestorReporting/__tests__/fe-s-54/stated-state-wins.test.ts (update F54-AC2's frozen count, or route the row-status read back through ProspectJobStatus.tsx's own readIssuedStatus/getJobStatus call site with selectedTenant threaded there instead)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal e8a00b23 (worktree wk-DSGN_IRPTV1-36-portal) before this cell's edit: `git grep -n -F 'getJobStatus(' HEAD -- src` returns 2 production call sites, both in tabs/analysis/ProspectJobStatus.tsx (:7 the JobReader type, :18 the call) -- confirmed by running fe-s-54/stated-state-wins.test.ts, F54-AC2 CENSUS printing 'definitions=2 production call site(s)=2 test call site(s)=1', VERDICT 3 pass / 0 fail",
+      "this cell's <paths> grant is portal/src/api/endpoints/investor-reporting.ts, tabs/analysis/OwnedRequestHistory.tsx, tabs/analysis/AnalysisTab.tsx, the two named test files, and the investigation file -- tabs/analysis/ProspectJobStatus.tsx is NOT in it ('every other page are read, never edited')",
+      "the per-row status read OwnedRequestHistory.tsx makes (line ~138 pre-edit, `readIssuedStatus(api, id)`) reaches ProspectJobStatus.tsx's own 2-ary `getJobStatus(requestId: string)` -- selected_tenant cannot travel through that shared, out-of-grant helper, so amendment 1 requires OwnedRequestHistory.tsx to call `api.getJobStatus(id, selectedTenant)` directly (new export `readRowStatus`), adding two literal 'getJobStatus(' occurrences in this file (the widened local type + the call)",
+      "post-edit (uncommitted at measurement, portal worktree): `grep -n 'getJobStatus(' src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx` returns 2 new lines; git grep reads HEAD so F54-AC2 still reads 2/2 pre-commit, but will read productionCallSites=4 once this cell's commit lands, failing `expect(productionCallSites.length).toBe(2)`"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "F54-AC2's frozen census: exactly 2 production call sites for probeStatus(/getJobStatus( in the committed tree, both in ProspectJobStatus.tsx.",
+  "world_is": "This cell's own acceptance criterion (IVE66-AC1, amendment 1) requires a second, tenant-aware call site for getJobStatus, and the file boundary that keeps ProspectJobStatus.tsx's call site untouched forces that second call site into OwnedRequestHistory.tsx instead of collapsing back to one -- the census's assumption (one capability, one call site) no longer holds once a caller needs an argument the shared helper's signature does not carry.",
+  "notes": "Not fixed here: fe-s-54/stated-state-wins.test.ts and ProspectJobStatus.tsx are both out of this cell's <paths> grant, and the refusal clause bars weakening a test to pass -- this is the frozen test being weakened by a DIFFERENT cell's own frozen-elsewhere boundary, not by this cell widening its own criterion. This cell's own IVE66-AC1 does not depend on F54-AC2 and passes standalone (see this TO's proof_of_spec instance)."
+}
+```
