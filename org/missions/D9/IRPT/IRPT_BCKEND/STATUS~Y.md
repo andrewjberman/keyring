@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T04:37Z (the previous stamp read 04:55Z, ahead of the clock). Lease FAST until 2026-09-27T12:49:33Z.
+As of 2026-09-27T05:56Z. Lease FAST until 2026-09-27T12:49:33Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now (Andrew-direct at ~Y, ~18:5xZ: "dont need option 2, but do 1 3 and 4 in order"; CTO 101442, 101465)
@@ -150,7 +150,7 @@ and window 4 re-runs K4+K5 (+R1).
 
 ## Write claims
 
-None in flight. The CTO's (c) ruling is built on the Y branch @4aaeaea3d5 (`P_READ_BACK_WAF_REFRESH_20260927.patch`, cut against P's rb): a backed-off poll, and ONE refresh on a read WAF challenge. Offline, window 8's exact shape goes ATTENTION to READY. Window 7 (`LIVE_WINDOW7_EVIDENCE_20260927.md`) ran live through the YCharts upload and portfolio create,
+None in flight. The CTO's (c) ruling is built on the Y branch @4aaeaea3d5 (`P_READ_BACK_WAF_REFRESH_20260927.patch`, cut against P's rb): a backed-off poll, and ONE refresh on a read WAF challenge. Offline, window 8's exact shape goes ATTENTION to READY. **SERVED** as resident `fe64236bbb-wf` at 05:55Z (P, ledger irpt-resident-waf-refresh-20260927 CLOSED). Its recipe.py, resident_worker.py and broker.py @e2fdd01015 are content-identical to the overlay Y proved READY. The next Analysis window needs a packet naming the backed-off polls and the ONE re-capture, plus Andrew's go. Window 7 (`LIVE_WINDOW7_EVIDENCE_20260927.md`) ran live through the YCharts upload and portfolio create,
 then went ATTENTION `VENDOR_READ_BACK_REFUSED`: the read-back read a `calculating` portfolio once. Fixed on the Y branch
 @edac4aa42f (`P_READ_BACK_POLL_20260927.patch`); offline, the served resident plus the fix goes from ATTENTION to
 READY. **SERVED** as resident `fe64236bbb-rb` at 03:41:53Z (P, pin 07f1982ab9). Its recipe.py and resident_worker.py are
