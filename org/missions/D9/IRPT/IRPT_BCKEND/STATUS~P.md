@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T14:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T14:5xZ (b). Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -54,11 +54,10 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
    - on redelivery the saved-portfolio read worked (7 of 7 fields present), and ONE value differs: level_as_of_type.
    Bounds held (4 status GETs, 1 saved GET, 1 attempted re-capture). Running re-capture total: 1 attempted, 0 completed.
    ~Y's W13 diagnostics (ec5804f6e0: the journal names the stored value and the capture's runner reason) are SERVED as
-   resident `fe64236bbb-dx` since 14:50:22Z (@cfbc1989ff). Next: window 14 on ~Y's ask, cut on window 13's text.
-2. **K8, the first real export:** window 12 (13:35-14:03Z) got further. The preview resolved on 1f149d69, and ONE
-   export POST was sent, but the server REFUSED it (UNEXPECTED, BucketUnmapped): the SUBMIT also omits
-   selected_tenant (buildSubmitRequest, submit.ts:64-78). Nothing was exported. ~D is cutting the submit, receipt
-   and download fix as a direct act (101907). Re-cut on its pin.
+   resident `fe64236bbb-dx` since 14:50:22Z (@cfbc1989ff). Next: window 14 on ~Y's ask, cut on window 13's te2. **K8, the first real export:** window 12's POST was refused because the submit omitted selected_tenant. ~D's fix
+   IV-e-64 is drained at local portal DEV 55bbdd71. The window-14 packet (blob 423314f1, @a68848d634) is out for both
+   halves. The next Analysis attempt is window 15.
+in.
 3. **A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** unblocked. Andrew-direct relayed by MSTR
    101850 reads "they have egress for full session", and the loop prompt permits vendor uses, each ledgered. It needs
    ONE new COT use: plan 2 on the same account through cot_one_use_plan.py (no vendor call), a packet, both halves,
