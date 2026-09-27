@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T02:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T03:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -40,16 +40,24 @@ As of 2026-09-27T02:2xZ. Earlier forms of this file are in git (`git log -p -- <
 
 ## Write claims
 
-None building. Window 7 waits on its halves and Andrew's go; The cross-viewer binding is closed (3 arms PASS).
+None building. The INF re-cut waits on the CTO (101740); the Analysis read-back is ~Y's diagnosis.
 
 ## Next-list (in order)
 
-1. **Window 7 (the Analysis chain, second attempt):** packet blob 3ab51a52 @74e9998d9c sent 02:2xZ (window 6's text +
-   CTO 101673: the principal stays until jobs are terminal, 120-min cap). On both halves: create; ~Y's K4/K5 on
-   Andrew's word; ~D's K10; delete after READY or terminal; audit. S151 is disarmed (~Y 101704) and S150 graduated.
-2. **INF:** the armed plan 01209afb is SPENT; Andrew's per-use word asked via MSTR 01:51Z. **COT:** a new per-use
-   word.
-3. **K8, the first real export**, rides a later Performance window.
+Andrew-direct 02:5xZ: "yes to all three" (@6039c2f680) -- the window-7 go, ONE INF Orion one-use, ONE COT one-use.
+
+1. **INF (Andrew's ONE call, still UNUSED):** the arm f0de098f (03:07:25Z) missed. The page clamps every INF window to
+   the directory as-of (09-22), and the plan named 09-25, so 3 reads were refused unspent (0 Orion calls). Disarmed
+   03:21:34Z to the spent plan (CTO item 2). NEXT: re-cut the plan with `--end` = the INF directory as-of, under a new
+   arm packet and a window (the decision is at the CTO, 101740).
+2. **COT one-use** (Andrew's call 3): after the INF plan is spent or disarmed, which it now is. A plan, an arm packet,
+   and a window, sequenced with INF's re-cut if the CTO agrees.
+3. **The Analysis chain:** window 7's K5 is TERMINAL ATTENTION `VENDOR_READ_BACK_REFUSED` after holdings_upload +
+   portfolio_create (portfolio 2363504, kept); ~Y diagnoses. The page cannot show a job from another session (K10;
+   a product gap, ~D/CTO).
+4. **K8, the first real export**, rides a later Performance window.
+
+Windows 6 and 7 are CLOSED (0 requests outside the classes; every key traced).
 
 ## Parked
 
