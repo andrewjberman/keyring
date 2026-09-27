@@ -1923,6 +1923,29 @@
     "spec_asserts": "IVE50-AC1's own bar ('the flakiness source is removed at its root') and IVE50-AC2 ('the failing set equals exactly the table's Q rows').",
     "world_is": "This cell fixed 8 real, root-caused, verified-in-BOTH-baselines defects (fe-s-14, fe-s-15 x2, fe-s-19, fe-s-25 x2, fe-s-30/F30-AC4) at the fixture level -- genuine, durable progress. The remaining instability is NOT per-file: it is a property of the whole 240-file/905-test corpus under bun's own scheduler, which lands on one of at least two different stable failing-set regimes depending on machine/timing conditions this cell cannot control or characterize further from inside a fixture-only grant. IVE50-AC1's own instrument mechanically read S7-DETERMINISTIC-OK on its one graded invocation (a true, unmanipulated result of that one real 3-run sample) -- recorded verbatim in the proof-of-spec instance -- but this row records that the BAR THE CELL TEXT NAMES IN PROSE ('the flakiness source is removed at its root') is NOT actually met: the source is corpus-wide scheduling variance, still present, not removed. IVE50-AC2 reads S7-SUITE-FAIL on this same tip, per the refusal clause, honestly.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "DSGN_IRPTV1-W39-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~39",
+    "surfaced_at": "2026-09-27T14:09:46Z",
+    "one_line": "The cell's Build text does not qualify where OwnedRequestHistory mounts in AnalysisTab.tsx, but a pre-existing committed test (fe-s-72/reachable-states.test.ts, Andrew-direct 2026-09-24 design notes) already refuses ANY request panel -- including owned-request-history -- in the no-client-selected state, so the mount had to be scoped to the hasClient branch only, not rendered unconditionally as a first reading of the cell suggested.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/pages/InvestorReporting/__tests__/fe-s-72/reachable-states.test.ts:82-85 (pre-existing, untouched by this worker): `expect(emptyMarkup).not.toContain('data-slot=\"owned-request-history\"')` on a render with no HeaderSelectionContext (no client selected), citing 'Andrew-direct 2026-09-24 ~19:4xZ (design notes, Analysis): the empty state carries no request panel at all'",
+        "an unconditional mount of <OwnedRequestHistory> in AnalysisTab.tsx (this worker's first pass) made that exact assertion FAIL: 'Received: ...data-slot=\"owned-request-history\">...' inside the otherwise-empty markup -- rc from `bun test src/pages/InvestorReporting/__tests__/fe-s-72/reachable-states.test.ts` went from 0 to 1",
+        "moving the mount inside the `hasClient` branch (AnalysisTab.tsx, alongside generateComposer/prospect-disclosure) restored fe-s-72's PASS, and this worker's own iv-e-62.request-history.test.tsx MOUNT CONTROL arm now asserts the same no-client absence going forward",
+        "full-directory rerun after the fix: `bun test src/pages/InvestorReporting/` -> 872 pass / 27 skip / 7 fail, the 7 unrelated to this cell's files (contracts/adapt.ts ?? null census, vite config-loader script reach, selection-create/directory-browse unprojected_grant, a pre-existing 'ycharts' token at investor-reporting.ts:200 in a route-table comment this cell's <paths> grant does not touch) -- 0 fail attributable to this cell's edits"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IV-e-62's Build text: 'The Analysis tab lists the owner's requests from the served history read (not only this browser's), each with its state...' -- stated with no explicit hasClient/no-client qualifier.",
+    "world_is": "A separate, already-ruled ADR (the 2026-09-24 design notes, enforced by a committed fe-s-72 test this cell's <paths> grant does not cover) requires the no-client state to carry no request panel at all. This worker read the two together and scoped the new mount to the hasClient branch so both hold; the cell text alone, taken in isolation, would have allowed a reader to mount it unconditionally and break the existing rule.",
+    "notes": "Not blocking: resolved within this task order, both tests pass, no criterion was weakened. Filed so an L9/L10 reader sees this scoping was a deliberate reconciliation of two rules, not an oversight of either."
   }
 ]
 ```
