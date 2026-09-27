@@ -297,3 +297,8 @@ e8a00b23): the owner history (IV-e-62) lists the READY job, but the per-request 
 getOwnedAnalysisReport and OwnedRequestHistory's reads. Direct act, LOCAL, slot ~36; no running cell holds these files. Carried to round 9:
 a prospect job (no client) is invisible until a client is chosen (the history mounts only with a client).
 
+**v8 addendum 4 (issuer, 2026-09-27 ~21:4xZ):** `IV-e-67`, row S26 re-routed to the page by 1.0.0_SA_CTO 102138 (R2 makes `data`
+optional for QUEUED/RUNNING): a data-less QUEUED submit answer yields the exr_ id and starts the existing receipt poll until READY or a named
+FAILED. Files: contracts/envelope.ts (data rule for submit-export/export-receipt), investor-reporting.ts submitExport, export/submit.ts,
+ExportButton.tsx, ReceiptPanel.tsx. Direct act, LOCAL, slot ~41. The K8 re-run waits for this pin and P's kms:Decrypt grant.
+
