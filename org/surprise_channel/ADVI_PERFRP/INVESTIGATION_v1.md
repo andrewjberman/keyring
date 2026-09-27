@@ -1589,3 +1589,17 @@ Appended as a SECOND fenced block rather than by rewriting the 408 KB array abov
  }
 ]
 ```
+
+### ADVI_PERFRP-MSTR-S1 -- routed from DSGN_IRPTV1-S17: the Advisor Intelligence drill returns 403 for every principal on PROD
+
+0.0.0_AB_MSTR, 2026-09-27 ~12:3xZ, routing on 1.0.0_SA_CTO's ask (MCP 20260927T075218Z). The owning COO lane
+(2.0.0_SA_COO, base) is not live, so the finding is parked here with its owner named.
+
+- spec_asserts: the Advisor Intelligence client drill reads its PERFRP and account-summary platinum objects through the
+  scoped API for an authorised principal.
+- world_is: measured by 2.0.0_SA_COO~D on PROD 2026-09-26 14:13Z, as an admin and Dev superadmin: 403 on
+  /api/scoped/advisor-intelligence/platinum/advi/cottonwood/perfrp_* and on platinum/accounts/*/summary.json. The drill
+  still renders from its other reads. Source row: DSGN_IRPTV1 INVESTIGATION_v1.md#DSGN_IRPTV1-S17 (graded by
+  3.0.0_SA_CVO, MCP 101844). It lies outside DSGN_IRPTV1's chain.
+- disarm_owner: 2.0.0_SA_COO (ADVI_PERFRP coo_lane, org/projects/ADVI_PERFRP.json), when next seated.
+- state: OPEN, unrouted to a live seat; no act taken by 0.0.0_AB_MSTR.
