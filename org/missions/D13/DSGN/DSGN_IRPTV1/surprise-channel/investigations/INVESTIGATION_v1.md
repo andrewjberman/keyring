@@ -1628,6 +1628,28 @@
     "spec_asserts": "Rule 22 (EVIDENCE LAW) / this task order's own bound: a worker verifies its OWN fresh change against live artifacts; this cell's <paths> grant does not extend to contracts/envelope.ts, api/endpoints/investor-reporting.ts or any fe-s-1/14/15/19/25/30/31/33/39 test file.",
     "world_is": "The InvestorReporting suite carries 30 failing tests unrelated to this cell's own grant or edits, pre-dating this worker's changes (none reference tabs/holdings/* or reachable through it). This worker did not attempt to fix them (out of grant; fixing a neighbouring defect is an explicit non-goal) and did not widen its own edits to touch them.",
     "notes": "Not blocking IVE42-AC1/AC2 (both pass/are recorded on this cell's own scope). Filed so the round's drain/analysis has a printed denominator for this pre-existing breakage rather than re-discovering it per worker; the CVO or CTO may want a dedicated cell/drain-hygiene item for contracts/envelope.ts and the fe-s-1/14/15/19/25/30/31/33/39 suites."
+  },
+  {
+    "id": "DSGN_IRPTV1-W30-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~30",
+    "surfaced_at": "2026-09-26T22:45:00Z",
+    "one_line": "Moving ASSET_CLASS.commodities off PALETTE.yellow500 (CTO 101649) leaves two nearby comments/data in chartColors.ts describing a mapping that no longer holds: SUB_ASSET_COLORS's inline comment still calls yellow500 the 'class base', and getAssetClassTextColor's lightBackgrounds array + its WCAG doc table still carry a yellow500 row for 'Commodities' that ASSET_CLASS can no longer produce as an input -- both are now DEAD/STALE rather than wrong-answer (the function's own fallback happens to return the correct white-on-dark text for the new gray900 background), so nothing this cell's criteria exercise catches it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/lib/chartColors.ts:340 (this worktree, post-edit): '// Commodities -- yellow (class base PALETTE.yellow500, the ruled gold; NEVER amber)' -- ASSET_CLASS.commodities (the class base) is now PALETTE.gray900 (this cell's own edit, :127); SUB_ASSET_COLORS.Commodities/Metals deliberately stay PALETTE.yellow500 per this cell's Build directive ('No other existing colour value changes'), so the VALUE is correctly unchanged but the comment's claim about what the class base IS is now false",
+        "src/lib/chartColors.ts:361-368 (getAssetClassTextColor's own doc comment, 'Measured (WCAG 2.x...)') and :376 (its lightBackgrounds array) still list 'yellow500 ... (Commodities)' as a live case; since ASSET_CLASS.commodities is now gray900 (not in that array), the function's fallback branch returns PALETTE.white for it -- the CORRECT answer for a dark background by luck of the fallback's own design (return dark text only for a recognised LIGHT bg, else white), not because the array or its doc were updated",
+        "no criterion on this cell (IVE49-AC1/AC2) calls getAssetClassTextColor or reads SUB_ASSET_COLORS, so neither test surface would catch a future edit that broke this accidental correctness (e.g. a next commodities re-colour to a LIGHT hue, which the stale array/doc would not protect against)"
+      ]
+    },
+    "spec_asserts": "The cell's Build directive: 'No other existing colour value changes' -- read as bounding this cell to the two named colour VALUES (MIX_PIE.commodities, ASSET_CLASS.commodities), not extending to comments or the text-contrast helper function.",
+    "world_is": "Two prose/data sites in chartColors.ts now describe a commodities-colour mapping (yellow500) that the class no longer uses; the live BEHAVIOUR is still correct today only because getAssetClassTextColor's un-updated array happens to fall through to the right branch for a DARK replacement colour -- a property of gray900 being chosen, not of the array being current.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not blocking: IVE49-AC1/AC2 do not exercise getAssetClassTextColor or SUB_ASSET_COLORS. Left both untouched deliberately rather than editing them on this worker's own judgment: the cell's grant covers chartColors.ts, but its Build directive names only the two ASSET_CLASS/MIX_PIE commodities values, and 'no other existing colour value changes' reads as a scope fence, not an invitation to also correct nearby prose. Filed so a later round choosing to touch commodities colour again re-reads getAssetClassTextColor's array rather than trusting its current fallback to stay correct by coincidence."
   }
 ]
 ```
