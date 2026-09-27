@@ -42,3 +42,17 @@
    ~Y re-cuts both that way. They ship in the next release with their own halves.
 
 **CTO half: SIGNED on blob f70c9530.** The CRO half is separate.
+
+## RE-SIGN, D2 only: install script `3f4d12ed` -> `638addc8` (~P 102175, @aa2f40ef1f), ~22:4xZ
+
+- D1 is served: generate `ykJltfTd` since 22:33:55Z.
+- D2 attempt 1 was BLOCKED SAFELY (SSM 14b49d39): the factory pre-check put only `reports/` on sys.path, the st
+  worker imports `extract` at module level, and the unit stayed on lt.
+- Read at HEAD: `git hash-object` equals `git rev-parse aa2f40ef1f:<script>` = `638addc8`.
+- `git diff 3f4d12ed 638addc8` is the pre-check's sys.path ONLY. It changes from `reports` to the eight relatives
+  `intake, ops, reports, _keys, _authz, _gate, ycharts/session, ycharts/extract`, which I read as byte-identical to
+  `ycharts/generate/resident_main.py`'s own loop (the path list at :17-21, read in ~P's backend worktree). The
+  package, the tar shas, the 0/0 queue stop and the automatic roll back to lt are unchanged.
+- My named item 1 carries.
+
+**CTO half, D2: RE-SIGNED on script blob 638addc8.**
