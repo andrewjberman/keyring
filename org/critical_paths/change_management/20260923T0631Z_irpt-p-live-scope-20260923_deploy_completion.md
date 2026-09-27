@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-23T06:31:31.264662+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: sovereign / Andrew authenticated CloudFront scope and browse smoke on portal-v2.1.185 (held since 2026-09-23T06:46:58.968906+00:00)
+**Status:** CLOSED -- nothing stranded -- closed 20260927T123733Z -- gate: sovereign / Andrew authenticated CloudFront scope and browse smoke on portal-v2.1.185 (held since 2026-09-23T06:46:58.968906+00:00)
 **Deploy:** IRPT P bounded live scope repair and canonical Portal publication
 **Authored by:** 2.0.0_SA_COO~P
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -16,7 +16,7 @@
 | RECORD | git | scoped deploy records | committed ledger map changelog receipt | Scoped map, directory/API changelogs, live receipts and open sentinel committed0da45df0c6e185aa7dbe6d877b2202121f85f259; MSTR readback originCLOUD equals0da45df0. Recorder exception1c686165e1. | CLOSED 20260923T064350Z |
 | DEV | git | Portal DEV and backend CLOUD | MSTR pushed ancestry-preserving pins | MSTR99646 published Portal originDEV fac3b6a0c7cb55dd75d3c190a1382ce710030381 and backend originCLOUD0da45df0c6e185aa7dbe6d877b2202121f85f259. Preserves prior shared ancestors; frontend tree identical reviewed dcf5; DEV CI35827638465 SUCCESS. | CLOSED 20260923T064350Z |
 | PROD | activation | canonical Portal PROD | successful deploy CI and peeled tag | Canonical PROD a0690a03d7bee06380fec8a49159fa78761fa985; peeled tag portal-v2.1.185 equals PROD; exactsha workflow35828019440 Build/DeployS3CloudFront/Tag SUCCESS. CloudFront www.opalinvest.dev index and6referencedassets HTTP200 byte-identical CI artifact. | CLOSED 20260923T064658Z |
-| HTTP | verify | CloudFront authenticated scope browse | legitimate authorized HTTP and Andrew smoke |  | OPEN |
+| HTTP | verify | CloudFront authenticated scope browse | legitimate authorized HTTP and Andrew smoke | Andrew-direct 2026-09-27 ~12:3xZ at the 2.0.0_SA_COO~P terminal, verbatim 'rec approved', on /open-calls CALL 1 REC (a) (record ANDREW_DIRECT_20260927_123xZ_REC_APPROVED_CLOSE_P_LIVE_SCOPE_LEDGER.md): the held Andrew smoke of the authenticated CloudFront scope and browse is satisfied by the signed-in agent walks under his 'Agent on an admin+dev login' (@e2eae53ae3) -- the PROD walk 20260926T1351Z_irpt-ui-walk-principal-20260926 (opalinvest.dev login) and windows 2-10 (irpt-ui-walk-principal-w2..w10, 09-26/27), each with a route-graded HAR audit of 0 requests outside the admitted classes, on builds newer than portal-v2.1.185. | CLOSED 20260927T123650Z |
 | irpt-directory-search | tf-lambda | module.irpt_directory_search.aws_lambda_function.this | TF apply (0 destroy) + 0-diff replan + deployed source_code_hash matches uploaded sha + verify-on-served | CTO f6f34824d4 exact plan d5307a61:1create1update0destroy; replan exit0 no changes; live CodeSha256 iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s= Active Successful; S3 version RXChd66RsDjV1jhG1ZsFlOGnXeIDxApp bytes17/17 matched. Authenticated HTTP is separate OPEN leg. | CLOSED 20260923T063245Z |
 
 ## Log
@@ -28,3 +28,5 @@
 - 20260923T064350Z LEG DEV closed: MSTR99646 published Portal originDEV fac3b6a0c7cb55dd75d3c190a1382ce710030381 and backend originCLOUD0da45df0c6e185aa7db
 - 20260923T064658Z LEG PROD closed: Canonical PROD a0690a03d7bee06380fec8a49159fa78761fa985; peeled tag portal-v2.1.185 equals PROD; exactsha workflow358280
 - 20260923T064658Z HELD-SOVEREIGN-GATED gate=sovereign/Andrew authenticated CloudFront scope and browse smoke on portal-v2.1.185
+- 20260927T123650Z LEG HTTP closed: Andrew-direct 2026-09-27 ~12:3xZ at the 2.0.0_SA_COO~P terminal, verbatim 'rec approved', on /open-calls CALL 1 REC (a) 
+- 20260927T123733Z CLOSED -- all 6 legs proven
