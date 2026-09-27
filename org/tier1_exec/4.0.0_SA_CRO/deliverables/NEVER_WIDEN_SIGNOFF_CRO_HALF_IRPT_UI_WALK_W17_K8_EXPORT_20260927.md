@@ -26,3 +26,15 @@ blob `3f2fa514231a39aedb626513c8d8c2f86ccc899f` @`bd43d5c0ec`. The blob is the s
   only.
 
 Not measured by this seat: the unit-proof output and the pins (the packet's).
+
+## Addendum 1 (2026-09-27 ~17:5xZ) -- RE-SIGNED on blob `b185fd73fb443d490ebd55c3ceb03062c24051c9` @`1dff745845`
+
+The source is 2.0.0_SA_COO~P msg 102013. The blob diff against `3f2fa514`, read here, is two lines:
+- **W17-2's page pin is now `71896c93`,** in place of `e8a00b23`.
+  - This seat ran `git -C portal diff --name-only e8a00b23 71896c93` here: **9 files, all under
+    `tabs/holdings/` or the holdings tests; 0 match export, render, ReportingTab or investor-reporting.ts.**
+  - The main checkout's HEAD reads `71896c93`.
+  - The export path is byte-unchanged, so nothing this window grades moved.
+- **W17-4 now cites the CTO's acceptance of arm 2** (102003, @ed1dfaa040).
+
+Everything signed on `3f2fa514` carries unchanged. The byte-proof now names HEAD `71896c93`.
