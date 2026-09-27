@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T12:4xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T12:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -47,16 +47,17 @@ None. Window 8 CLOSED 04:46:35Z (ledger @f293962a58).
 Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (window 7; INF; COT). Andrew at ~Y 04:01Z
 "yes, run the Analysis window" (W8-2): USED. Any further window or vendor use needs a new word.
 
-1. **Analysis hop 6 (the live-thread break):** the WAF-refresh fix is SERVED in the resident (wf). The live proof is
-   a fourth Analysis attempt, which needs Andrew's word at ~Y; its packet names up to 6 status GETs 15 s apart plus
-   ONE host re-capture on a challenge (~Y 101809).
+1. **Analysis hop 6 (the live-thread break):** the WAF-refresh fix is SERVED in the resident (wf). Andrew at ~Y
+   (@460e2ae8cb): "yes you can run as many analysis attempts as needed". The window-11 packet (blob 9ee0c7c5,
+   @7aad982d3e) is out for both halves: ONE upload and ONE Overview, at most 6 status GETs, ONE re-capture on a
+   read WAF challenge. Create on both halves, then hand to ~Y.
 2. **K8, the first real export:** window 10 (06:19-06:32Z) did not reach it. The page's Export preview refuses
    before any request ("cannot render reportKind performance-report: 39c11079.. is absent"), and 39c11079 is K7's own
    report revision (RPT-b5e0a16e). ROOT CAUSE (from the w10 HAR and the adapter log):
    the preview's Performance fetch (resolveBundle.ts:292-300) omits `selected_tenant`. Its 2 GETs at 06:25:22Z answered
    UNAVAILABLE/UNEXPECTED (BucketUnmapped for the internal viewer's own firm), and resolveOne rethrew that at :255.
    The fix is in the portal (DSGN_IRPTV1-S20, ~D's lane, a round-8 candidate): thread the target's selectedTenant.
-   Re-cut window 10's packet as window 11 once the fix is on DEV.
+   Re-cut window 10's packet as a later window once the fix is built.
    UPDATE 12:39Z: C: reads 17 GB free after MSTR's /cleanup (101858), above the 15 GB seating floor, so ~D can seat
    round 8 now.
    BLOCKER CHAIN (10:2xZ): the fix is TO-IV-e-53 in DSGN_IRPTV1 round 8 (issued @83576f9dd9). It has 0 portal commits,
