@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T01:15Z. Lease FAST until 2026-09-27T01:52:21Z.
+As of 2026-09-27T02:10Z. Lease FAST until 2026-09-27T01:52:21Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now (Andrew-direct at ~Y, ~18:5xZ: "dont need option 2, but do 1 3 and 4 in order"; CTO 101442, 101465)
@@ -50,6 +50,12 @@ Next window (CTO 101465): upload, generate, READY, sections, history. A+B are ap
     at about 01:12Z. No vendor write happened.
   - Findings to P and the CTO (101671/101672): branch (e)'s "the resident needs no principal" is false; and the live
     blocker is the vendor session capture, where one diagnostic wrapper run needs Andrew's word.
+- **S151 DISARMED (02:0xZ):** one wrapper run on Andrew's word (CTO 101694).
+  - It authenticated with rc 0, via a form sign-in. The fresh session `d38f6941` is fence 13.
+  - Receive 1's failure is not reproduced in the same environment; the cause was transient and is unmeasured.
+  - The retained-reason patch is live in the resident (`fe64236bbb-rr`), so any recurrence names its class.
+  - Ledger CLOSED; record @a679a32e4b.
+  - The next Analysis window must keep its principal until the job is terminal (CTO 101673).
 
 ## Pins
 
