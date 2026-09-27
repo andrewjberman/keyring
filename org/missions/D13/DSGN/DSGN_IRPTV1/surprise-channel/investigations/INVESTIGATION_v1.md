@@ -2354,3 +2354,31 @@
   "notes": "Not blocking: IVE63-AC1's enumerated arms do not require this second exception; the answer-ends-before-page-date exception (with its control) is implemented and tested (iv-e-63.dates-sources.test.tsx arm 3). Left for a seat that can confirm dailyCumulative's true population (full series vs tail sample) before wiring a comparison that could otherwise mislabel every report."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S26",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-27T20:59:39Z",
+  "one_line": "Window 18 K8 on local DEV 3b98939b: the served async export answers the submit 200 QUEUED (EXPORT_QUEUED) in 3.1 s with the exr_ id in status.operation.revision and no data; the page reads the receipt from data, finds none, goes idle and never polls.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "a round-9 cell whose <paths> grant covers portal/src/pages/InvestorReporting/export/ExportButton.tsx, export/submit.ts and the live client's submitExport",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w18-20260927.har (gitignored, sha256 a7dc22c6..; 756 entries, 0 /__mockcot/): ONE POST /api/scoped/investor-reporting/export?selected_tenant=49financial, 200, 3,140 ms, body {status: {operation: {operation_kind: write, revision: exr_d9ee2b18746e425db10cf597}, state: QUEUED, public_reason_code: EXPORT_QUEUED}} with no data member",
+      "the k8 step's receipt panel went submitting -> idle|unknown within 10 s; no receipt GET followed",
+      "portal 3b98939b src/api/endpoints/investor-reporting.ts submitExport returns data through adaptExportReceipt (contracts/adapt.ts:1189)",
+      "walk byte-proof: start 20:52:31Z and end 21:02:01Z both HEAD 3b98939b, 0 tracked changes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An accepted export shows its receipt and moves to a download (FWD-9 / the export hop).",
+  "world_is": "The async submit's queued acknowledgement carries no receipt data; the page treats it as nothing and stops.",
+  "notes": "The backend now accepts (tenant, report ref, owner check and async submit all hold). The page fix: accept the QUEUED status envelope, take the exr_ id from status.operation.revision and poll export-receipt to READY. Round-9 candidate, thread-breaking."
+}
+```
