@@ -3703,6 +3703,29 @@ name the one known failure instead of silently inheriting it.
     },
     "spec_asserts": "Z-W7-S1: an email-less restricted activate writes a profile with no deny record.",
     "world_is": "It is refused before any write."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W8-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~8",
+    "surfaced_at": "2026-09-27T16:45Z",
+    "one_line": "PHASE A step 4: on the release tree, tests/test_portal_grant.py fails 2 of 7 (test_admin_accepts_portal_only_candidate KeyError 'portal_grant'; test_admin_rejects_unknown_portal_channel regex mismatch), because the narrow release pins org/standards/NFRA_OPLGTW_CONTRACT.json (a non-gateway path) to the live base 110d93fb73, which has no portal_grant contract section. Same class already seen on MX-r-3 (row NFRA_MCPINDEX-Z-W1-S8) and OA-g-2 (row NFRA_OPALAI-Z-W9-S4).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release tree /c/tmp/og-rel @fe94911257 (base 110d93fb73), `AUDIT_PATH=$(mktemp); python -m pytest tests/test_email_deny.py tests/test_owner_gate.py tests/test_portal_grant.py tests/test_sprint_view.py tests/test_asker_scope.py -q -p no:cacheprovider` from infra/aws/ec2/opal-gateway: rc=1, '2 failed, 33 passed'. Per-file: test_email_deny 11 passed, test_owner_gate 5 passed, test_portal_grant 2 failed/5 passed, test_sprint_view 8 passed, test_asker_scope 4 passed.",
+        "Failures: test_admin_accepts_portal_only_candidate raises KeyError('portal_grant') at tests/test_portal_grant.py:226 (contract['portal_grant']['scope_dimension']); test_admin_rejects_unknown_portal_channel's expected regex 'does not hold' does not match the actual message 'scope.portal_channels is not admitted by this contract (no portal_grant)'.",
+        "Control, the same invocation in /c/tmp/og-e2 @17f7d7b477 (CLOUD): test_portal_grant rc=0, '7 passed'.",
+        "Neither tests/test_portal_grant.py nor org/standards/NFRA_OPLGTW_CONTRACT.json is part of OG-e-1's shipped diff (06eff3b73f, 744e4468e1); the release tree holds the contract at the live base's bytes, which the task order requires (step 3: pin every non-gateway path back to the live commit)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PHASE A step 4: run the five named test modules on the release tree and record the result.",
+    "world_is": "33 of 35 pass; the 2 failures are caused by the release's own pinning of a non-gateway contract file to the live base, not by the shipped gateway diff. The shipped app code is not implicated.",
+    "disarm_owner": "2.0.0_SA_COO~O"
   }
 ]
 ```
