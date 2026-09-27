@@ -1972,6 +1972,29 @@
     "spec_asserts": "The task order's Build paragraph: a new header/firmDisplay.ts keyed by tenant key, with names copied from the portal's own existing partner-name maps.",
     "world_is": "A NEW file hand-typing a registered firm token as a bare string literal is REFUSE under the currently-enforced naming-gate, in every file type it grades (.ts included), with no per-line waiver route for anything but .py (NAMING_LEGACY_READS.json only applies when path.endswith('.py')) -- so the literal-map shape the BUILD text describes cannot be committed as written; a general, token-free title-case transform satisfies the same acceptance rows (UIR-04/13/30) without the conflict.",
     "notes": "Not blocking this delivery: resolved in-lane by dropping the literal map entirely (the BUILD text's own fallback clause, 'a tenant with no entry shows a neutral title-cased form of its key', is what this now does universally). Filed because a FUTURE cell that needs a genuine per-firm literal (a token this transform cannot spell correctly, e.g. an acronym or a name whose title-case does not match the marketing spelling) will hit the identical REFUSE with the identical missing exemption."
+  },
+  {
+    "id": "DSGN_IRPTV1-W34-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~34",
+    "surfaced_at": "2026-09-27T10:40:00Z",
+    "one_line": "fe-s-45/residuals.test.ts (S7 class H, 'not observed failing in any of this cell's measurements') DOES fail intermittently under a pinned full-suite invocation, unrelated to file order -- a real dev-server/OS-process timing hazard TO-IV-e-55 did not fix (out of its named scope).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "a future cell whose <paths> grant covers portal/src/pages/InvestorReporting/__tests__/fe-s-45/dev-script-writes.mjs -- real dev/build/preview server orchestration + OS listener-image detection, well outside this order's editable grant (iv-e-26.wire-regen.test.ts + the two S7 scripts + s7-flaky-sources.json + S7_CLASS_TABLE.json)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S7_CLASS_TABLE.json @HEAD (before this cell's edits) classes fe-s-45/residuals.test.ts as H with action text 'not observed failing in any of this cell's measurements (isolated or full-suite...), repeated across the round' -- IV-e-35, row DSGN_IRPTV1-W21-S2 disarm",
+        "this cell's own two identically-pinned (--seed=20260927, same fixed code) 3-run s7-determinism-check.ts samples: sample 1 (portal wk-DSGN_IRPTV1-34-portal pre-b67fdb22 vs post-b67fdb22 code, both fully fixed) showed fe-s-45/residuals.test.ts::'the reach by subtraction...' failing in exactly 1 of 3 runs (VERDICT: S7-DETERMINISTIC-FAIL); sample 2, same seed, same code, run immediately after, showed 0 of 3 (VERDICT: S7-DETERMINISTIC-OK) -- same file order both times (--randomize never passed, --seed fixed), so the difference is NOT test order",
+        "src/pages/InvestorReporting/__tests__/fe-s-45/dev-script-writes.mjs runs 7 REAL server arms (dev/runtimeControl/build/preview/programmatic/devLive/devOld) in one beforeAll (its own 420000ms budget), each measuring real port bind/close (a hardcoded 4s ECONNREFUSED bound), real OS listener images via netstat/tasklist, and real HTTP proxying -- exactly this project's own established 'real subprocess/filesystem, racing against whatever else the machine is doing' class (s7-flaky-sources.json's fe-s-27/precondition.test.ts and fe-s-46/timeouts.test.ts entries), not a JS-level shared-state/order bug a pinned test order can remove"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S7_CLASS_TABLE.json's H classification: fe-s-45/residuals.test.ts is not observed failing, in any measurement, isolated or full-suite.",
+    "world_is": "Under a fully pinned full-suite invocation (fixed seed, fixed code) it fails in roughly 1 of 2 3-run samples measured here, independent of file order -- real machine/server timing, not covered by this order's fix (iv-e-26.wire-regen.test.ts's CRLF/LF bug) or its collectFailures regex fix.",
+    "notes": "Not fixed here: dev-script-writes.mjs is real server/OS-process orchestration, a product-adjacent instrument outside TO-IV-e-55's named scope (which fixed iv-e-26.wire-regen.test.ts and the two S7 scripts' shared collectFailures() bug, both committed at b67fdb22). AC1/AC2 as graded on this cell's own final measurement PASSED (VERDICT: S7-DETERMINISTIC-OK / S7-SUITE-OK) on the run recorded in this cell's proof_of_spec; this row documents that the same pinned invocation can still show fe-s-45 as a 6th failure on an unlucky run, and that risk is not this cell's to close."
   }
 ]
 ```
