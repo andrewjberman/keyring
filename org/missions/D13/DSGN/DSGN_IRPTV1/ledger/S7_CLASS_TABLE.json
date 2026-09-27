@@ -17,8 +17,9 @@
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\envelope.test.ts",
       "test": "ENVELOPES PARSED -- 11 of 11, each built from its own response contract",
-      "class": "H",
-      "action": "extended dataFor() to read oneOf (resolve-scope) and PublicStatusEnvelope (no committed fixture of its own; projected from StatusEnvelope); 2 of the 17 routes (selection-create, directory-browse) still fail their adapter's own field-equality check against the committed SelectedAccounts/DirectoryPage fixtures -- not resolved this round"
+      "class": "R",
+      "action": "re-scoped at IV-e-50 (row DSGN_IRPTV1-W21-S2/W23-S1, IV-e-50 (0.9.0_WK_DSGN_IRPTV1~29), commit 464b7a37): the selection-create/directory-browse fixture mismatches are fixed and dataFor() now reads oneOf/PublicStatusEnvelope (both already landed before this cell); all 17 currently-declared routes parse cleanly (0 problems) -- the stale literal `expect(parsed).toBe(12)` (from FE-s-15's R2) is re-scoped to `expect(parsed).toBe(declared.length)` plus `expect(declared.length).toBe(17)`, same intent (every declared route parses through the one parser)",
+      "retired_by": "FWD-11 v0.16"
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-14\\envelope.test.ts",
@@ -72,13 +73,13 @@
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-15\\job-states.test.ts",
       "test": "queued, preparing, generating, ready and needs-attention each render ONE distinct label",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser; the fe-s-15/job.*.json fixtures parse clean now, but this specific label-render assertion still disagrees with tabs/analysis/composer.ts's current output -- not resolved this round"
+      "action": "fixed at IV-e-50 (row DSGN_IRPTV1-W21-S2/W23-S1, IV-e-50 (0.9.0_WK_DSGN_IRPTV1~29), commit 464b7a37): GenerateComposer.tsx's `visibleJob` gate (out of grant, unchanged) only shows a job's state when `job.submitted` deep-equals the composer's OWN live inputs; commit 907f260f required a non-empty `preparedFor` with no matching `initialPreparedFor` seed prop, so a job built from composerInputs()'s default `preparedFor: 'Synthetic recipient'` could never match a fresh mount's `''`. `jobFor`/the WAF-refresh render check now override `submitted` with `preparedFor: ''` (a pure comparison value, never validated in this path) and `renderWithJob` seeds `initialComparisonKeys`/`initialVariantChoice` to match -- assertion text unchanged"
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-15\\job-states.test.ts",
       "test": "the WAF-refresh state preserves the composition, deep-equal to its pre-submit value",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser; the data-job-state=\"needs-attention\" markup assertion still fails against composer.ts's current render -- not resolved this round"
+      "action": "fixed at IV-e-50 (row DSGN_IRPTV1-W21-S2/W23-S1, IV-e-50 (0.9.0_WK_DSGN_IRPTV1~29), commit 464b7a37): GenerateComposer.tsx's `visibleJob` gate (out of grant, unchanged) only shows a job's state when `job.submitted` deep-equals the composer's OWN live inputs; commit 907f260f required a non-empty `preparedFor` with no matching `initialPreparedFor` seed prop, so a job built from composerInputs()'s default `preparedFor: 'Synthetic recipient'` could never match a fresh mount's `''`. `jobFor`/the WAF-refresh render check now override `submitted` with `preparedFor: ''` (a pure comparison value, never validated in this path) and `renderWithJob` seeds `initialComparisonKeys`/`initialVariantChoice` to match -- assertion text unchanged"
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-19\\network-state.test.ts",
@@ -90,7 +91,7 @@
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-19\\pre-envelope.test.ts",
       "test": "four bodies, four named refusals, each rendering as a state",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser; STILL FAILING for a state carrying no `state` field via requirePublicStatus's business_date obligation on an empty source_dates object -- diagnosed, not resolved this round"
+      "action": "fixed at IV-e-50 (row DSGN_IRPTV1-W21-S2/W23-S1, IV-e-50 (0.9.0_WK_DSGN_IRPTV1~29), commit 464b7a37): selectedReference (api/endpoints/investor-reporting.ts) requires a server-retained accountSetId on every getPerformanceReport call (fe-s-13/routes.test.ts's own prior fix); this file's SCOPE fixture never carried one, so every case (including the positive control) refused with the generic OBJECT_NOT_COVERED before reaching the envelope parser this file grades -- added a valid accountSetId (`sel_[0-9a-f]{64}`) to SCOPE, assertion unchanged"
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-1\\adapter.test.ts",
@@ -155,20 +156,21 @@
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\source-age-field.test.ts",
       "test": "the anomaly is still an anomaly -- READY with NO business date",
-      "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts; same requirePublicStatus business_date obligation as above -- not resolved this round"
+      "class": "R",
+      "action": "re-scoped at IV-e-50 (row DSGN_IRPTV1-W21-S2/W23-S1, same CTO 101449 pattern F30-AC4 names, IV-e-50 (0.9.0_WK_DSGN_IRPTV1~29), commit 464b7a37): requirePublicStatus now REFUSES a READY status whose source_dates carries no business_date OUTRIGHT (an EnvelopeMismatch thrown at the envelope boundary), never reaching the availability/anomaly render path this test used to grade -- never loosen the consumer to admit it again. Re-scoped to assert the refusal itself (EnvelopeMismatch, field='status') is the anomaly now, same intent (a business_date-less answer-bearing status is never silently rendered as a success)",
+      "retired_by": "FWD-11 v0.16"
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\state-planes.test.ts",
       "test": "nine responses differing ONLY in `state`, rendered and compared pairwise",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts; same requirePublicStatus business_date obligation -- not resolved this round"
+      "action": "fixed at IV-e-50 (row DSGN_IRPTV1-W21-S2/W23-S1, IV-e-50 (0.9.0_WK_DSGN_IRPTV1~29), commit 464b7a37): state-planes.test.ts's HELD_SOURCE_DATES was `{}` for all nine wire states, which requirePublicStatus now refuses for the five answer-bearing ones (business_date required, CTO 101449) -- changed to a single HELD-CONSTANT business_date (`{business_date: '2026-09-09'}`), still the SAME value across all nine responses so `state` remains the only thing that varies; assertion unchanged"
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-25\\state-planes.test.ts",
       "test": "the domain of every partition in this cell is stated, not assumed",
       "class": "H",
-      "action": "regenerated/repaired the shared unprojected_grant.kinds (array->Record) and internal_correlation_id (stripped, SERVER-ONLY) bug shared by generators, test helpers and committed fixtures; re-ran through the real parser in fe-s-25/_panel.ts; same root -- not resolved this round"
+      "action": "fixed at IV-e-50 (row DSGN_IRPTV1-W21-S2/W23-S1, IV-e-50 (0.9.0_WK_DSGN_IRPTV1~29), commit 464b7a37): same HELD_SOURCE_DATES fix as this file's other row -- assertion unchanged"
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-26\\fixtures-carry-status.test.ts",
@@ -214,9 +216,10 @@
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-30\\predicate.test.ts",
-      "test": "a status carrying no state, beside a producer UNCERTAIN with the SAME view state",
-      "class": "G",
-      "action": "contracts/public-status.ts's requirePublicStatus hard-required `state`; a status carrying no state is a producer-legal shape the codebase's own adaptStatusEnvelope already handles (NO_STATUS_REASON) -- made `state` optional"
+      "test": "a status entirely ABSENT from the envelope, beside a producer UNCERTAIN with the SAME view state",
+      "class": "R",
+      "action": "amendment 1's F30-AC4 (row DSGN_IRPTV1-W29-S7, disarmed at IV-e-50 (0.9.0_WK_DSGN_IRPTV1~29), commit 464b7a37): this row's own prior G-class fix (making `state` optional in contracts/public-status.ts) was REVERTED by a later COO drain-repair (commit 96282c4d, citing CTO 101449: 'the tests that fed those shapes are re-classed H ... or R ... never G'). The prior arm built a status PRESENT but missing its state key -- a shape requirePublicStatus's closed-shape check now refuses outright (producer-illegal per the revert), never reaching this gate. Re-scoped to the one contract-legal way left to reach 'no producer state': a whole v1 body carrying NO status member at all (RESPONSE_STATUS_REQUIRED['performance-report'] is false) -- same discrimination (same view state UNCERTAIN, two outcomes, on producerState alone); test name updated to name the new shape",
+      "retired_by": "FWD-11 v0.16"
     },
     {
       "file": "src\\pages\\InvestorReporting\\__tests__\\fe-s-31\\every-page.test.ts",
