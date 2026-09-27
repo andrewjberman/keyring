@@ -1,0 +1,140 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+index be76047..14a118d 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+@@ -614,7 +614,7 @@ def reconcile_owned(collection, name, fingerprint):
+ 
+ # --------------------------------------------------------- the settings read-back
+ 
+-READ_BACK_POLLS = 6
++READ_BACK_POLLS = 2  # CTO 101917 (b): the WAF challenged the 3rd status GET in 4 of 4 runs
+ READ_BACK_SPACING_S = 15.0
+ READ_BACK_LEASE_TTL_S = 900
+ 
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+index 70e607e..f5cb276 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+@@ -30,6 +30,14 @@ class WorkerAttention(RuntimeError):
+     pass
+ 
+ 
++class ReadBackPending(RuntimeError):
++    """The portfolio is still calculating, or a status READ met a WAF challenge (CTO 101917 (b)).
++
++    Not ATTENTION: the job keeps its checkpoints, the message is retained, and the queue's own
++    redelivery (900 s visibility, 5 receives) resumes at the read-back with no mutation replay.
++    Measured: both 15-minute redeliveries answered `available` on the first GET, unchallenged."""
++
++
+ _TOKEN = re.compile(r"[a-z][a-z0-9_]{0,31}")
+ _VALUE = re.compile(r"[A-Za-z0-9_.^-]{1,32}")
+ 
+@@ -58,7 +66,7 @@ def refusal_line(result, tag="STEP_REFUSED"):
+     polls, wall = result.get("polls"), result.get("wall_s")
+     return ("IRPT_RESIDENT_%s step=%s status=%s portfolio_status=%s source=%s polls=%s wall_s=%s drifted=%s "
+             "absent=%s") % (
+-        tag if tag in ("STEP_REFUSED", "STEP_WAF_REFRESH", "READ_BACK_DONE") else "STEP",
++        tag if tag in ("STEP_REFUSED", "STEP_WAF_REFRESH", "READ_BACK_DONE", "READ_BACK_RELEASE") else "STEP",
+         token(result.get("step")), status if type(status) is int else "-",
+         token(result.get("portfolio_status")), token(result.get("settings_source")),
+         polls if type(polls) is int else "-", wall if type(wall) in (int, float) else "-",
+@@ -101,12 +109,12 @@ class ResidentGenerationWorker:
+             if eviction_verdict({}, observer=self.transport, result=failure) is not None:
+                 self.refresh_session()
+                 return self.step(function, *args)
+-            if waf_read_verdict(observer=self.transport, result=failure) is not None:
+-                # CTO 101792: a WAF challenge on a status READ spends the job's ONE refresh, then the
+-                # read resumes; a second challenge finds the intent used and goes ATTENTION.
+-                print(refusal_line(result, "STEP_WAF_REFRESH"), flush=True)
+-                self.refresh_session()
+-                return self.step(function, *args)
++            waf = waf_read_verdict(observer=self.transport, result=failure) is not None
++            if waf or (result.get("step") == "read_back" and result.get("portfolio_status") == "calculating"):
++                # CTO 101917 (b), superseding 101792 (a): a read challenge or a still-calculating
++                # portfolio releases the message for redelivery; the re-capture is for eviction only.
++                print(refusal_line(result, "READ_BACK_RELEASE"), flush=True)
++                raise ReadBackPending("READ_BACK_PENDING:" + ("WAF_CHALLENGE" if waf else "CALCULATING"))
+             # No exception body, cookie or signed URL reaches status storage.
+             print(refusal_line(result), flush=True)
+             raise WorkerAttention("VENDOR_" + result.get("step", "STEP").upper() + "_REFUSED")
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
+index f5d087b..97d3f93 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
+@@ -50,9 +50,16 @@ def read_back(transport, **kw):
+     return result, waits
+ 
+ 
++def test_the_default_is_two_status_gets_then_calculating_is_returned_for_release():
++    t = Replay((200, CALCULATING), (200, CALCULATING), (200, AVAILABLE))
++    result, waits = read_back(t)
++    assert recipe.READ_BACK_POLLS == 2 and t.calls == [STATUS] * 2 and len(waits) == 1
++    assert result["ok"] is False and result["portfolio_status"] == "calculating" and result["settings_source"] == "status"
++
++
+ def test_calculating_then_available_compares_the_saved_portfolio():
+     t = Replay((200, CALCULATING), (202, CALCULATING), (200, CALCULATING), (200, AVAILABLE))
+-    result, waits = read_back(t)
++    result, waits = read_back(t, polls=6)
+     assert result["ok"] is True and result["matched"] == result["denominator"] == 7
+     assert t.calls == [STATUS] * 4 + [FIXED] and waits == [recipe.READ_BACK_SPACING_S] * 3
+     assert result["portfolio_status"] == "available" and result["settings_source"] == "saved_portfolio"
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
+index c2dd91c..f209be3 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
+@@ -31,6 +31,7 @@ import deadline_transport  # noqa: E402
+ from resident_session import ResidentSession  # noqa: E402
+ from current_authority import CurrentAuthorityRefused, decide  # noqa: E402
+ from resident_worker import ResidentAssembly, poll_once  # noqa: E402
++import resident_worker  # noqa: E402
+ from test_resident_session import Dynamo  # noqa: E402
+ 
+ retention_world = frozen_support.retention_world
+@@ -268,29 +269,30 @@ WAF_READ = {'status': 202, 'content_type': 'application/json', 'body': {'status'
+             'waf_action': 'challenge'}
+ 
+ 
+-@pytest.mark.parametrize('second_challenge', [False, True])
+-def test_waf_challenge_on_the_read_back_spends_the_one_refresh_and_resumes(world, monkeypatch, second_challenge):
+-    """CTO 101792: window 8's read-back met YCharts' WAF challenge (a 202 during calculation polling). It
+-    spends the job's ONE existing refresh and resumes AT the read-back; a second challenge goes ATTENTION."""
++CALCULATING_READ = {'status': 200, 'content_type': 'application/json', 'body': {'status': 'calculating'}}
++
++
++@pytest.mark.parametrize('first_receive', ['waf', 'calculating'])
++def test_a_read_challenge_or_calculating_releases_and_the_redelivery_resumes(world, monkeypatch, first_receive):
++    """CTO 101917 (b): at most 2 status GETs per receive; a read WAF challenge or a still-calculating
++    portfolio RELEASES the message (retained, not ATTENTION) with no re-capture, and the redelivery
++    resumes at the read-back with no mutation replay (window 13's shape)."""
+     r = installed(world, monkeypatch)
+     route = ('GET', '/model_portfolios/2332060/status')
+     valid = r.replay.script[route][0]
+-    r.replay.script[route] = [WAF_READ, WAF_READ if second_challenge else valid]
++    first = [WAF_READ] if first_receive == 'waf' else [CALCULATING_READ, CALCULATING_READ]
++    r.replay.script[route] = first + [valid]
+     captures = []
+-    def capture():
+-        captures.append(True)
+-        r.bundle.update(generation='offline-fresh-session', fence=2)
+-    r.assembly.session.capture_workflow = SimpleNamespace(capture=capture)
++    r.assembly.session.capture_workflow = SimpleNamespace(capture=lambda: captures.append(True))
++    with pytest.raises(resident_worker.ReadBackPending, match='READ_BACK_PENDING'):
++        r.assembly.execute(r.message, lambda: None)
++    assert r.row['state']['S'] == 'SUBMITTING' and 'checkpoint_portfolio' in r.row
+     result = r.assembly.execute(r.message, lambda: None)
+-    assert captures == [True]
+-    assert 'intent_session_refresh' in r.row
+-    assert result['state'] == ('ATTENTION' if second_challenge else 'READY')
++    assert result['state'] == 'READY' and captures == [] and 'intent_session_refresh' not in r.row
+     calls = r.replay.sent_headers
+     assert sum(c['route'] == '/model_portfolios/fixed/' and c['method'] == 'POST' for c in calls) == 1
+     assert sum(c['route'].endswith('holdings_upload/client') for c in calls) == 1
+-    if second_challenge:
+-        assert result['detail']['code'] == 'SESSION_REFRESH_ALREADY_USED'
+-        assert not r.downloads
++    assert sum(c['route'] == '/model_portfolios/2332060/status' for c in calls) == len(first) + 1
+ 
+ 
+ def test_generic_auth_error_cannot_trigger_login(world, monkeypatch):

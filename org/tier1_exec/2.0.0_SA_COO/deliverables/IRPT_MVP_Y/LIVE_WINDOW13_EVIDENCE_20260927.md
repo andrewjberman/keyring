@@ -54,3 +54,35 @@ The patch applies cleanly (apply-check rc=0) to P's `c6b66059ec`.
   message (retained, not ATTENTION), and the queue redelivers after its 900 s visibility timeout. The job resumes at
   the read-back checkpoint with no mutation replay, up to the queue's 5 receives.
 - The re-capture then stays for a real eviction, not for a poll the job itself provoked.
+
+## RULED (b) (CTO 101917): release-and-resume, built and proved offline
+
+Fix: Y branch `d200b07129`, `P_READ_BACK_RELEASE_RESUME_20260927.patch`. The patch is cut against P's `0a0821fd51`
+(resident dx) and applies cleanly (apply-check rc=0). Its runtime files are content-identical to the proved overlay.
+
+- At most **2 status GETs per receive** (`recipe.READ_BACK_POLLS = 2`).
+- On a read WAF verdict, or a portfolio still `calculating`, the worker prints `IRPT_RESIDENT_READ_BACK_RELEASE` and
+  raises `ReadBackPending` (`READ_BACK_PENDING:{WAF_CHALLENGE|CALCULATING}`). That is not ATTENTION: the checkpoints
+  are kept, the message is retained, and the queue redelivers after 900 s, up to 5 receives.
+- **No re-capture on a read challenge**; the re-capture stays for a real eviction.
+
+Proof at the real entry point: `resident_job_preflight.py --deliveries 3`. `readthrough.Sqs` now redelivers an
+undeleted message, as SQS does after the visibility timeout.
+
+| Shape | Result |
+|---|---|
+| window 13's 1st receive (calculating, calculating) | delivery 1 `READ_BACK_RELEASE ... CALCULATING`; delivery 2 goes `available`, then the saved read, then **READY**. 1 REPORT#, **0 captures**, 3 status GETs, 1 saved GET, **1 create POST** |
+| calculating, then a WAF 202 | delivery 1 `READ_BACK_RELEASE ... WAF_CHALLENGE`; delivery 2 is **READY**. 0 captures, 1 create POST |
+| the same WAF shape on deployed `cw` (for contrast) | re-capture spent (`STEP_WAF_REFRESH`, 1 capture); live, that capture met an unexpected screen |
+
+Tests:
+- `test_resident_worker` release-then-redelivery arms 2/2: 0 captures, 1 create, 1 upload.
+- `test_read_back_poll`: the default is 2 GETs.
+- Resident suites 50 passed, 8 skipped. Session 98 passed; the 2 failures are the parked FirmDestinationPolicy
+  absence.
+
+**For window 14's packet:**
+- up to 2 status GETs per receive x 5 receives;
+- ONE saved-portfolio GET;
+- 0 re-captures on a read challenge;
+- the principal must outlive 5 x 900 s, which fits the 120-min cap.

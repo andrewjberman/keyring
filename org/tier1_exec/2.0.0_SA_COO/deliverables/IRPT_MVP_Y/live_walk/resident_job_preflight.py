@@ -53,6 +53,8 @@ def main(argv=None):
     ap.add_argument("--waf-shape", choices=("research", "window8"), default="research",
                     help="research: the decision_branches 202 (body says calculating); window8: the live 202 whose "
                          "body carried no status (the journal's portfolio_status=-)")
+    ap.add_argument("--deliveries", type=int, default=1,
+                    help="re-run poll_once up to N times while the job is not terminal (the queue's redelivery)")
     ap.add_argument("--available-bare", action="store_true",
                     help="the available status carries only its state, no settings (window 11 live)")
     ap.add_argument("--capture-stub", action="store_true",
@@ -177,11 +179,19 @@ def main(argv=None):
                     reached.append(label)
         return None
     sys.settrace(tracer)
+    first = json.loads(job_messages[0]) if job_messages else {}
+    job_key = {"tenant": {"S": first.get("tenant", "")}, "job": {"S": first.get("request_id", "")}}
     try:
-        handled = poll_once(**runtime)
-        error = None
-    except Exception as exc:  # noqa: BLE001 -- the pre-flight reports the refusal by name
-        handled, error = None, exc
+        for delivery in range(1, a.deliveries + 1):
+            try:
+                handled, error = poll_once(**runtime), None
+            except Exception as exc:  # noqa: BLE001 -- the pre-flight reports the refusal by name
+                handled, error = None, exc
+            now_state = ((ddb.current("irpt-jobs", job_key) or {}).get("state") or {}).get("S")
+            print("DELIVERY %d: handled=%s exception=%s state=%s" % (
+                delivery, handled, "%s %s" % (type(error).__name__, error) if error else None, now_state))
+            if now_state in ("READY", "ATTENTION", "FAILED"):
+                break
     finally:
         sys.settrace(None)
 

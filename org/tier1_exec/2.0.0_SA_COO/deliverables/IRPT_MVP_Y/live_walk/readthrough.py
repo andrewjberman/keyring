@@ -233,6 +233,9 @@ class Sqs:
 
     def __init__(self, writes, inbox=None):
         self.writes, self.sent, self.inbox = writes, [], list(inbox or [])
+        # SQS redelivers a received message that was not deleted once its visibility times out;
+        # the next receive_message stands for that (the release-and-resume path, CTO 101917).
+        self.in_flight, self.receives = None, 0
 
     def send_message(self, QueueUrl, MessageBody, **kw):
         self.sent.append(MessageBody)
@@ -240,13 +243,17 @@ class Sqs:
         return {"MessageId": "offline-%d" % len(self.sent)}
 
     def receive_message(self, **kw):
-        if not self.inbox:
-            return {}
-        body = self.inbox.pop(0)
-        return {"Messages": [{"Body": body, "ReceiptHandle": "offline-receipt", "MessageId": "offline-in"}]}
+        if self.in_flight is None:
+            if not self.inbox:
+                return {}
+            self.in_flight = self.inbox.pop(0)
+        self.receives += 1
+        return {"Messages": [{"Body": self.in_flight, "ReceiptHandle": "offline-receipt-%d" % self.receives,
+                              "MessageId": "offline-in", "Attributes": {"ApproximateReceiveCount": str(self.receives)}}]}
 
     def delete_message(self, **kw):
         self.writes.add("sqs.delete", receipt=kw.get("ReceiptHandle"))
+        self.in_flight = None
         return {}
 
     def change_message_visibility(self, **kw):
