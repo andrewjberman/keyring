@@ -9,7 +9,7 @@
 # nothing is written to S3, the queue or any job row.
 set -u
 R=/opt/irpt-resident
-UNIT=irpt-resident
+UNIT=irpt-analysis-resident.service
 RUN=$(systemctl show $UNIT -p ExecStart | grep -o "$R/[0-9a-z-]*" | head -1)
 [ -n "$RUN" ] && [ -d "$RUN" ] || { echo "BLOCKED: no running resident root"; exit 10; }
 echo "running root $RUN"
