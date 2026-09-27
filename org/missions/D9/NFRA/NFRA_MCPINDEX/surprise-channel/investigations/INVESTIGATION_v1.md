@@ -1388,6 +1388,29 @@ carries none.
     "world_is": "For 60 of the 98 files the sweep's line was removed again by 64b6b9d65a and has not come back. The gate therefore refuses each of those files on the next commit that touches it, which is a per-seat tax rather than a break, and the three carrying PEP-604 annotations are additionally exposed IF a runner is Python 3.9. WHAT IS NOT MEASURED, and what would move this row to ARMED: the actual Python version on the runners that import those three. On 3.10+ PEP-604 needs no future import and the whole row is hygiene; on 3.9 the three raise at import. This lane did not measure a runner, so the row is filed INERT rather than asserted either way. ADHC_DSFLOW.004's own wording is the only basis for the 3.9 premise.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "NOT FIXED HERE, and the reason is scope rather than difficulty: the repair is a one-line re-add per file across 60 files in gold, silver and bronze, which is a sweep of its own and touches trees MX-s-6 does not name (its <paths> reach data/black_diamond/scripts/silver/ and data/assets/scripts/silver/ only). Riding it on a compaction deploy would also put 60 unrelated scripts into a commit whose subject is the converter. This lane added the line to the ONE file its order owns (convert_assets_to_silver.py) because the gate blocked that commit, and routes the class. RECOMMENDATION for the issuer: re-run the ADHC_DSFLOW.004 sweep as its own cell, and before that, ask whether 64b6b9d65a reverted anything ELSE -- the deleted test files above suggest the 16,609 deletions are worth a read in their own right, and this row deliberately stops short of that claim because it measured only the one line."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S19",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T03:05Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A repo-wide hygiene regression outside NFRA_MCPINDEX, routed by this seat's same-turn message to 1.0.0_SA_CTO~O as a one-line sweep; the one file MX-s-6 owns is already fixed.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S18"
+    ],
+    "one_line": "RULES Z-S18 (0.4.0_DS_ClientPlatform~D). Confirmed: 64b6b9d65a (1.1.0_SA_CTO, 2026-04-27, a 'log' commit touching 275 files) removed 'from __future__ import annotations' from 98 .py files; 59 are still missing it at HEAD after the DS lane fixed its own converter. Each is a commit-gate refusal waiting for the next seat. Routed off-project as a sweep, not carried by MX-s-6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer re-measure ~03:0xZ: of the .py files 64b6b9d65a changed, 59 lack the line at HEAD while their parent version had it."
+      ]
+    },
+    "spec_asserts": "The DSFLOW.004 sweep's 'from __future__ import annotations' line holds across data/*/scripts.",
+    "world_is": "59 files lost it in a log commit; the sweep is routed."
   }
 ]
 ```
