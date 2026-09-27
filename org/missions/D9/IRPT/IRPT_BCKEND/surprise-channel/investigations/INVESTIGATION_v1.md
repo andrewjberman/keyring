@@ -10302,3 +10302,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No harm to the use (the gate checks the plan digest, not the ref text). Remedy applied same turn: cot_one_use_plan.py now REQUIRES --approval-ref (argparse refuses without it; measured). The row itself is immutable; the ledger R1 records the true authority."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S172",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T21:15:00Z",
+  "one_line": "Window 18's K1-CRED was NOT deleted at the login: the Git-Bash `aws ssm delete-parameter --name /irpt/...` was path-converted to 'C:/Program Files/Git/irpt/...', and the confirming get read the same mangled name, so a false ParameterNotFound was recorded as proof; the SecureString lived until 21:12:46Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudTrail DeleteParameter 20:54:17Z user/Andrew_Berman requestParameters.name 'C:/Program Files/Git/irpt/ui-walk-principal/1790542273/password'",
+      "CloudTrail DeleteParameter 21:12:46Z user/Andrew_Berman name '/irpt/ui-walk-principal/1790542273/password' (walk_principal.py delete, boto3)",
+      "ledger irpt-ui-walk-principal-w18-20260927 K1C proof and its 21:15Z CORRECTION line"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Walk windows: delete K1-CRED as soon as the walker logs in; the proof is a ParameterNotFound on the real name.",
+  "world_is": "The credential outlived the login by about 20 minutes and the proof read a different name. The walk closed 21:02:01Z; K1 was deleted 21:12:47Z.",
+  "notes": "CLAUDE.md Git section names the trap (MSYS path conversion of a slashed argument). Remedy this seat applies from now: K1-CRED is deleted through walk_principal.py (boto3, a new `credoff` verb would be one line) or python, never a Bash aws call with a slashed name; and a proof of absence reads the name back from CloudTrail or boto3, not from the same mangled call."
+}
+```
