@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """IRPT_BCKEND-S157 -- ONE corrected Cottonwood Performance read, by direct IAM invoke (no walk principal).
 
-    python cot_direct_read.py <precheck|read|reopen> <out.json>
+    python cot_direct_read.py <precheck|read|reopen> <out.json> [end, default 2026-09-22]
 
 The same boundary and synthetic internal viewer as reopen_authz_arm.py (V1, reopen-arm-1@opal.test, the edge's
 trusted header set), on the COT plan's ONE account and window:
@@ -19,7 +19,7 @@ import sys
 import boto3
 
 FIRM, ACCOUNT = "cottonwood", "acc_81d92b2b7e971a76bac96cea"
-WINDOW = ("2026-01-01", "2026-09-22")
+WINDOW = ("2026-01-01", sys.argv[3] if len(sys.argv) > 3 else "2026-09-22")
 ROUTE = "GET /api/scoped/investor-reporting/performance/{accountSetId}"
 SELECT_ROUTE = "POST /api/scoped/investor-reporting/selections"
 V1 = {"x-origin-verify": "cloudfront", "x-user-role": "user", "x-contract-version": "v1",
@@ -64,7 +64,7 @@ def read(selection):
 
 
 def main(argv):
-    if len(argv) != 3 or argv[1] not in ("precheck", "read", "reopen"):
+    if len(argv) not in (3, 4) or argv[1] not in ("precheck", "read", "reopen"):
         raise SystemExit(__doc__)
     selection = select()
     if not selection:

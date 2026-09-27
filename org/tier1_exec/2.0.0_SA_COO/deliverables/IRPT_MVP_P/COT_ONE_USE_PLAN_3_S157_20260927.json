@@ -1,0 +1,29 @@
+{
+ "schema_version": "irpt-cot-one-use-plan-v1",
+ "by": "2.0.0_SA_COO~P",
+ "approval_ref": "Andrew-direct 2026-09-27 ~02:0xZ relayed by 0.0.0_AB_MSTR 101850: 'they have egress for full session' (CTO 101854: reaches P's Performance vendor uses, each under both halves and a ledger) -- ONE corrected COT use for IRPT_BCKEND-S157, window ending 2026-09-21",
+ "rule": "served COT directory not-terminated, the entry holds exactly ONE account, the served COT mapping loads it at the cutoff and bd_selected.requests_for accepts it; the MEDIAN by opaque account id (the directory carries no value field)",
+ "directory_entries": 258,
+ "single_account_candidates": 82,
+ "mapping_refused": 0,
+ "eligible": 82,
+ "picked_rank": 40,
+ "end_source": "DELIBERATE DEPARTURE (IRPT_BCKEND-S157): 2026-09-21, one day before the served as-of 2026-09-22 for selection sel_66e6034cd164fb0f141b662babd962a65b17e37670281b4800c85a85ebd565e6, because the as-of window reopens retained RPT-b683f188",
+ "mapping_as_of": "2026-09-23",
+ "plan": {
+  "schema_version": "irpt-performance-one-use-v1",
+  "approval_ref": "Andrew-direct 2026-09-27 ~02:0xZ relayed by 0.0.0_AB_MSTR 101850: 'they have egress for full session' (CTO 101854: reaches P's Performance vendor uses, each under both halves and a ledger) -- ONE corrected COT use for IRPT_BCKEND-S157, window ending 2026-09-21",
+  "firm_id": "cottonwood",
+  "account_id": "acc_81d92b2b7e971a76bac96cea",
+  "vendor_account_id": 27436081,
+  "vendor_external_id": "z0927436081",
+  "mapping_revision": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe",
+  "start": "2026-01-01",
+  "end": "2026-09-21",
+  "expires_at": 1790575200,
+  "requests_sha256": "390735d60470b45c22e53095a65c48ecae473e62691d0a23c68937849fd3c019"
+ },
+ "plan_sha256_of_digest": "63cf95e9defc2385c7314f193cf211ea5a6d25a3426ece07654b7bcf8d31fb44",
+ "plan_json_sha256": "63cf95e9defc2385c7314f193cf211ea5a6d25a3426ece07654b7bcf8d31fb44",
+ "vendor_call_made": false
+}
