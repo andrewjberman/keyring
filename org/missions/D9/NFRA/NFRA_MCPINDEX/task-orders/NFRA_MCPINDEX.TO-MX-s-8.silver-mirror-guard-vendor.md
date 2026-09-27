@@ -13,7 +13,7 @@
 comp-schedule: DECLARED-NOT-APPLICABLE -- a code change to 4 existing functions; no schedule, event rule, cron, alarm or monitor is added or changed.
 comp-iam: DECLARED-NOT-APPLICABLE -- no role, policy or grant changes; Terraform touches only the 4 functions' code attributes.
 comp-adversary: DECLARED-NOT-APPLICABLE -- two ruled source fixes, vendored.
-EGRESS CLASS, declared: NONE beyond Opal's own AWS (Terraform apply, lambda get-function, get-layer-version).
+EGRESS CLASS, declared: NONE beyond Opal's own AWS (S3 artifact upload, Terraform apply, lambda get-function, get-layer-version).
 </preflight>
 
 ## 1. THE CELL -- `MX-s-8` (supplementary; rows Z-S3 and Z-S25, routed by 1.0.0_SA_CTO~O to this issuer)
@@ -53,14 +53,26 @@ source, and that sweep is parked. Apply exactly the two hunks to each copy and n
    report. Do NOT apply.
 
 ### PHASE B (GO) -- only after the issuer says GO
-8. NEVER-2 ledger with slug `nfra-mcpindex-silver-mirror-guard`: open it; commit the entry and its sentinel.
-9. `bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-assets apply -auto-approve`. The plan must name only the
-   4 functions; anything else: STOP before approving.
-10. The import-health smoke per function: the designed refusal of `lambda_entry` on a non-S3, non-sweep event, as the
-    MX-s-3 ledger `org/critical_paths/change_management/20260926T0844Z_nfra-mcpindex-silver-etf-rebuild_deploy_completion.md` did it.
-11. Record with `bash infra/aws/lambda/ci/record-terraform-deploy.sh --function <the 4 names>`; see its header for flags.
-12. Close each leg with its proof, commit the close, then run the criteria.
-A failed leg: redeploy the saved zips, close the entry as rolled back, report. Never half-landed.
+(AMENDED A1: the Terraform module reads `source_code_hash` from the S3 artifact, not the local tree. So PHASE A's plan
+reads "No changes" by design, and the artifact build + upload below is a member of the act. Row Z-W7-S1.)
+8. NEVER-2 ledger with slug `nfra-mcpindex-silver-mirror-guard`: open it with legs for the upload, the activation, the
+   post-apply plan, the smoke and the record; commit the entry and its sentinel BEFORE the upload.
+9. For each function, record the CURRENT S3 artifact's VersionId and content-sha256
+   (`s3api head-object` on `s3://opal-313476888478-lambda-artifacts/opal-assets/<function>.zip`); these and the saved
+   zips are the rollback keys. Then run `bash infra/aws/lambda/ci/build-and-upload.sh opal-assets <function>` for each
+   of the 4, and read its verified-write line. Re-read each object with `s3api head-object` yourself.
+10. `bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-assets apply -auto-approve`. Read the plan before it
+    applies. It must read `Plan: 0 to add, 4 to change, 0 to destroy`, and name only the 4
+    `module.silver_converter[...]` functions. Anything else: STOP before approving.
+11. Verify: each function's `CodeSha256` equals its new artifact content-sha256; then
+    `terraform plan -detailed-exitcode` on `infra/aws/terraform/opal-assets` exits 0.
+12. The import-health smoke per function: the designed refusal of `lambda_entry` on a non-S3, non-sweep event, as the
+    MX-s-3 ledger `org/critical_paths/change_management/20260926T0844Z_nfra-mcpindex-silver-etf-rebuild_deploy_completion.md`
+    did it (legs L2-L5 there are the template).
+13. Record with `bash infra/aws/lambda/ci/record-terraform-deploy.sh opal-assets --function <the 4 names>`; see its
+    header for flags. Close each leg with its proof, commit the close, then run the criteria.
+A failed leg: restore the prior artifacts (the saved zips / prior VersionIds), re-apply, close the entry as rolled
+back, report. Never half-landed.
 
 ## 2. BOUNDS
 
@@ -105,6 +117,8 @@ the layer pandas versions, the rollback keys, the plan's resource list, the ledg
 <!-- ===================== RECORD FACE ===================== -->
 
 # pipeline-override: supplementary vendoring cell routed to this issuer by 1.0.0_SA_CTO~O (msgs 20260927T065208Z and 072615Z) after 0.7.0_AE_CloudOps~I died holding the Z-S3 handoff (@5dd42c44e9); two ruled source fixes, one deploy, one sign-off.
+
+**AMENDMENT A1 (2.0.0_SA_COO~O, 2026-09-27 09:3xZ):** PHASE B gains the artifact build + upload (step 9), the exact plan line, and the post-apply 0-diff plan, on worker row Z-W7-S1 and the MX-s-3 ledger's legs L2-L4. PHASE A measured the layer at pandas 2.3.2, so Z-S3's arm is latent on the served path, and Z-S25's empty-field arm is the one served change. No criterion changes.
 
 **ISSUER NOTES:** Dry-run at base: s8.AC1 FAIL (both fixes 0 of 4, old guard 4); s8.AC2 FAIL (0 of 4 functions; all
 4 zips sha-verified). Positive control: AC1 PASS on 4 patched scratch copies via `VENDOR_ROOT=`. Never-widen (served
