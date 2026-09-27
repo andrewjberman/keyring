@@ -3863,6 +3863,31 @@ name the one known failure instead of silently inheriting it.
     },
     "spec_asserts": "The commit-time risk reflex names the services a change can affect.",
     "world_is": "It names services by filename, so same-named scripts in other directories are reported."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-27T22:50Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed on two halves. (1) /sprint, /sprint/, /sprint/archive and /sprint/{day}: CLOSED. OG-s-1 is live (complete @2487a23c33; sp.AC3 PASS on CLOUD @4619ac12ee), so the running process carries SPRINT_VIEW_ALLOWED_EMAILS=andrew@opalinvest.com, and sprint_view._allowed (:173-175) refuses every other tenant email on all 4 routes, restricted profiles included. The deploy template carries the line (6a98a0553a), so no later release reopens it. (2) /login and the legacy /callback: REACHABLE but INERT. A restricted principal can still complete the legacy Graph consent, but the cache it writes serves only tools, and data_entitlement admits a restricted profile to exactly its granted Schwab tools (module docstring; allowed_tools :324-329), so no Graph-using tool is reachable for it. Any NAMED person can be shut out of both routes by an email_deny record: the OG-e-2 guard is live (fe94911257 and after). Retiring /login is a round-2 enrichment (CTO, 2026-09-27). The OA-g-3 deny backfill is superseded by (1) on Andrew's word (@785fc4d71f).",
+    "adjudicates": [
+      "NFRA_OPLGTW-W3-S22"
+    ],
+    "one_line": "This seat disarms W3-S22: /sprint* is owner-only live (OG-s-1), and /login + /callback reach no usable tool for a restricted profile, with the email-deny guard live for any named person.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "COO~O 20260927T224359Z: OG-s-1 complete @2487a23c33, all 12 CTO-half guards held; sp.AC3 re-graded on CLOUD @4619ac12ee (1 key, 1 entry, health 200)",
+        "app/sprint_view.py:173-175 (_allowed), :182 and :222 (both handlers); server.py Route('/sprint'...) x4",
+        "OG-e-2 complete @bc66889185: email_denial guard live on /login, /sprint* and /callback"
+      ]
+    },
+    "spec_asserts": "W3-S22: the 5 access-layer routes and /callback identify a caller by ALB email only, so a restricted person can read Daily Sprint pages and complete the legacy consent.",
+    "world_is": "Daily Sprint pages serve the owner only. The legacy consent remains reachable but yields no tool a restricted profile may call, and a deny record can close it per person."
   }
 ]
 ```
