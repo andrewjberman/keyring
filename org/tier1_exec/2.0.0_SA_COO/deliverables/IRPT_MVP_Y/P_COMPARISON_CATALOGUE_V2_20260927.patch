@@ -1,0 +1,125 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json b/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json
+index af986de..998a1b3 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/templates.json
+@@ -95,7 +95,7 @@
+   },
+   "comparison_catalog": {
+     "_caveat": "Alyssa's narrative mentions Long-Term / Ultra Long-Term while the actual Multi-Comp HAR selects Short-Term / Intermediate-Term. The catalog exposes explicit ordered choices and hard-codes neither narrative.",
+-    "_claim": "Historical captured identities only. live_proven records the prior run; it grants no current reporting use.",
++    "_claim": "v2 (2026-09-27): each identity is VERIFIED on a current read (verification_ref); the reporting permission is Andrew's word, scoped to firms that already see these models (FWD-11), and M resolves the firms. live_proven still records only the prior run.",
+     "_note": "Selection requires current exact namespace/type/id/name evidence plus an explicit firm/principal permitted-use decision verified by M. Empty selection needs no candidate. Never infer vendor IDs from labels or MDPF names.",
+     "entries": [
+       {
+@@ -111,11 +111,22 @@
+           "name": "Opal Long-Term",
+           "security_type": "model_portfolio",
+           "mapping_evidence": "Historical templates.json blob ed18c59c86ef89b33eb4759f0d2a939b964e5ac8; Comparison 14141824, 31 pages",
+-          "identity_status": "UNVERIFIED",
+-          "entitlement_status": "UNVERIFIED",
++          "identity_status": "VERIFIED",
++          "entitlement_status": "WORD_GRANTED_FIRMS_PENDING_M",
+           "permitted_firm_ids": [],
+           "permitted_principal_classes": [],
+-          "verification_ref": null
++          "verification_ref": {
++            "evidence": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/COMPARISON_IDENTITY_READS_W18_20260927.json",
++            "evidence_sha256": "424eb3bf70d9975250cc8351de025930f72715b76b8586cad936515e86250194",
++            "retrieved_at": "2026-09-27T20:52:56Z",
++            "read_by": "2.0.0_SA_COO~P window 18 (4 read-only GET /securities/securities_info, CTO 102028 (1))",
++            "graded_by": "2.0.0_SA_COO~Y live_walk/comparison_identity.py: IDENTITY_VERIFIED",
++            "returned_name": "Opal Long-Term ",
++            "detailed_security_type": "model_portfolio",
++            "instance_id": 1728413,
++            "permission_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_195xZ_COMPARISON_PERMISSION_YES_AND_PURGE_S19_SCREENSHOTS.md @fce766f6ed (Andrew-direct \"call 1 yes\", CTO 102046)",
++            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11); M resolves permitted_firm_ids"
++          }
+         }
+       },
+       {
+@@ -131,11 +142,22 @@
+           "name": "Opal Short-Term",
+           "security_type": "model_portfolio",
+           "mapping_evidence": "Historical templates.json blob ed18c59c86ef89b33eb4759f0d2a939b964e5ac8; Multi-Comp 14141847 first comparison, 35 pages",
+-          "identity_status": "UNVERIFIED",
+-          "entitlement_status": "UNVERIFIED",
++          "identity_status": "VERIFIED",
++          "entitlement_status": "WORD_GRANTED_FIRMS_PENDING_M",
+           "permitted_firm_ids": [],
+           "permitted_principal_classes": [],
+-          "verification_ref": null
++          "verification_ref": {
++            "evidence": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/COMPARISON_IDENTITY_READS_W18_20260927.json",
++            "evidence_sha256": "424eb3bf70d9975250cc8351de025930f72715b76b8586cad936515e86250194",
++            "retrieved_at": "2026-09-27T20:52:56Z",
++            "read_by": "2.0.0_SA_COO~P window 18 (4 read-only GET /securities/securities_info, CTO 102028 (1))",
++            "graded_by": "2.0.0_SA_COO~Y live_walk/comparison_identity.py: IDENTITY_VERIFIED",
++            "returned_name": "Opal Short-Term",
++            "detailed_security_type": "model_portfolio",
++            "instance_id": 1728415,
++            "permission_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_195xZ_COMPARISON_PERMISSION_YES_AND_PURGE_S19_SCREENSHOTS.md @fce766f6ed (Andrew-direct \"call 1 yes\", CTO 102046)",
++            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11); M resolves permitted_firm_ids"
++          }
+         }
+       },
+       {
+@@ -151,11 +173,22 @@
+           "name": "Opal Intermediate-Term",
+           "security_type": "model_portfolio",
+           "mapping_evidence": "Historical templates.json blob ed18c59c86ef89b33eb4759f0d2a939b964e5ac8; Multi-Comp 14141847 second comparison",
+-          "identity_status": "UNVERIFIED",
+-          "entitlement_status": "UNVERIFIED",
++          "identity_status": "VERIFIED",
++          "entitlement_status": "WORD_GRANTED_FIRMS_PENDING_M",
+           "permitted_firm_ids": [],
+           "permitted_principal_classes": [],
+-          "verification_ref": null
++          "verification_ref": {
++            "evidence": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/COMPARISON_IDENTITY_READS_W18_20260927.json",
++            "evidence_sha256": "424eb3bf70d9975250cc8351de025930f72715b76b8586cad936515e86250194",
++            "retrieved_at": "2026-09-27T20:52:56Z",
++            "read_by": "2.0.0_SA_COO~P window 18 (4 read-only GET /securities/securities_info, CTO 102028 (1))",
++            "graded_by": "2.0.0_SA_COO~Y live_walk/comparison_identity.py: IDENTITY_VERIFIED",
++            "returned_name": "Opal Intermediate-Term",
++            "detailed_security_type": "model_portfolio",
++            "instance_id": 1728315,
++            "permission_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_195xZ_COMPARISON_PERMISSION_YES_AND_PURGE_S19_SCREENSHOTS.md @fce766f6ed (Andrew-direct \"call 1 yes\", CTO 102046)",
++            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11); M resolves permitted_firm_ids"
++          }
+         }
+       },
+       {
+@@ -171,17 +204,28 @@
+           "name": "Opal Ultra Long-Term",
+           "security_type": "model_portfolio",
+           "mapping_evidence": "Historical templates.json blob ed18c59c86ef89b33eb4759f0d2a939b964e5ac8; named in the catalog; NOT exercised in the live variant run",
+-          "identity_status": "UNVERIFIED",
+-          "entitlement_status": "UNVERIFIED",
++          "identity_status": "VERIFIED",
++          "entitlement_status": "WORD_GRANTED_FIRMS_PENDING_M",
+           "permitted_firm_ids": [],
+           "permitted_principal_classes": [],
+-          "verification_ref": null
++          "verification_ref": {
++            "evidence": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/COMPARISON_IDENTITY_READS_W18_20260927.json",
++            "evidence_sha256": "424eb3bf70d9975250cc8351de025930f72715b76b8586cad936515e86250194",
++            "retrieved_at": "2026-09-27T20:52:56Z",
++            "read_by": "2.0.0_SA_COO~P window 18 (4 read-only GET /securities/securities_info, CTO 102028 (1))",
++            "graded_by": "2.0.0_SA_COO~Y live_walk/comparison_identity.py: IDENTITY_VERIFIED",
++            "returned_name": "Opal Ultra Long-Term ",
++            "detailed_security_type": "model_portfolio",
++            "instance_id": 1728420,
++            "permission_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_195xZ_COMPARISON_PERMISSION_YES_AND_PURGE_S19_SCREENSHOTS.md @fce766f6ed (Andrew-direct \"call 1 yes\", CTO 102046)",
++            "permission_scope": "firms that already see these models in Opal's Model Portfolios view (FWD-11); M resolves permitted_firm_ids"
++          }
+         }
+       }
+     ],
+-    "candidate_version": "irpt-ycharts-comparison-candidate.20260923.v1",
++    "candidate_version": "irpt-ycharts-comparison-candidate.20260927.v2",
+     "maintainer": "2.0.0_SA_COO~Y",
+-    "admission": "UNVERIFIED_CURRENT_IDENTITY_AND_ENTITLEMENT",
++    "admission": "IDENTITY_VERIFIED_PERMISSION_WORD_GRANTED_M_VALIDATION_PENDING",
+     "verification_requirements": [
+       "Obtain separate authorization for exact bounded vendor identity verification; this candidate authorizes no network call.",
+       "Record actual namespace, typed vendor ID, returned name/type and immutable response evidence; refuse disagreement or ambiguity without label matching.",

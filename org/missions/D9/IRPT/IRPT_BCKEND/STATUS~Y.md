@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T20:35Z. Lease FAST until 2026-09-27T21:02:19Z.
+As of 2026-09-27T21:15Z. Lease FAST until 2026-09-27T21:45:56Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
@@ -25,7 +25,8 @@ Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` 
   ours always upload. **RULED (CTO 102021): keep W15-3 Static-only as built**; the vendor GET is withdrawn (row S162
   @e2c240c2d1). **R10 CLOSED (CTO 102024):** the vendor's printed "Data as of" line is the label, so there is no
   certifier change. The advisors send as_of_date_option=latest (6/6), as the recipe does. S163 @5465f7dcd1 closes S159.
-- **Next:** P ships `P_STATIC_TOLERANCE_20260927.patch`. Enrichment candidate: check the saved `model_portfolio_type`
+- **Static narrowing APPLIED at P** `12a67ed5ee` (content-identical to the proved overlay: extract 719369d5, resident_worker
+  9b2dbd18, recipe 982d8171); its deploy is P's. Enrichment candidate: check the saved `model_portfolio_type`
   at read-back, before the report is generated.
 
 ## Earlier (Andrew-direct at ~Y, ~18:5xZ: "dont need option 2, but do 1 3 and 4 in order"; CTO 101442, 101465)
@@ -225,7 +226,7 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Comparison / Multi-Comp (FWD-4 arms): CTO 102028 said (1) YES to 4 read-only securities_info GETs in P's next window (act spec `P_COMPARISON_IDENTITY_READ_ACT_20260927.md`; grader `live_walk/comparison_identity.py`, proved 4 arms) and (2) the reporting permission is GRANTED: Andrew-direct "call 1 yes" (CTO 102046, record @fce766f6ed), for firms that already see those four models in Model Portfolios (FWD-11) | 2.0.0_SA_COO~P runs (1) | (1)'s evidence lands: Y grades and versions the catalogue. The selection stays refused until (2) and M's consumer land |
+| Comparison / Multi-Comp (FWD-4 arms): the identity reads landed (P window 18, 4/4 HTTP 200); Y graded them IDENTITY 4/4 and versioned the catalogue to v2 (Y @c5aa93d60e, `P_COMPARISON_CATALOGUE_V2_20260927.patch`, `COMPARISON_CATALOGUE_V2_20260927.md`). The permission is GRANTED (Andrew "call 1 yes") | 2.0.0_SA_COO~M resolves the permitted firms (FWD-11) and reviews the consumer that admits v2; P packages templates.json into generate+resident | M's consumer admits a selection; then Y runs the Comparison variant live in a window |
 | Shares price source (Y2 Shares cells): CTO 100887 ruled (c), refused by name for v1; (b) has no known estate table; (a) goes to Andrew | 2.0.0_SA_COO~Y (re-ask the CTO) | the Dollars journey is graded |
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |

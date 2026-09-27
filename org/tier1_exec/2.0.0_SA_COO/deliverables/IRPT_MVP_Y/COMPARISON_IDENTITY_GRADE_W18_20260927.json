@@ -1,0 +1,58 @@
+{
+ "catalogue_version": "irpt-ycharts-comparison-candidate.20260923.v1",
+ "evidence_sha256": "424eb3bf70d9975250cc8351de025930f72715b76b8586cad936515e86250194",
+ "retrieved_at": "2026-09-27T20:52:56Z",
+ "identity": "4/4",
+ "reads_outside_catalogue": [],
+ "entitlement": "NOT_READ_HERE (Andrew's word, CTO 102028 (2))",
+ "results": [
+  {
+   "key": "opal_long_term",
+   "security_id": "P:1728413",
+   "label": "Opal Long-Term",
+   "verdict": "IDENTITY_VERIFIED",
+   "measured": {
+    "security_id": "P:1728413",
+    "security_name": "Opal Long-Term ",
+    "detailed_security_type": "model_portfolio",
+    "instance_id": 1728413
+   }
+  },
+  {
+   "key": "opal_short_term",
+   "security_id": "P:1728415",
+   "label": "Opal Short-Term",
+   "verdict": "IDENTITY_VERIFIED",
+   "measured": {
+    "security_id": "P:1728415",
+    "security_name": "Opal Short-Term",
+    "detailed_security_type": "model_portfolio",
+    "instance_id": 1728415
+   }
+  },
+  {
+   "key": "opal_intermediate_term",
+   "security_id": "P:1728315",
+   "label": "Opal Intermediate-Term",
+   "verdict": "IDENTITY_VERIFIED",
+   "measured": {
+    "security_id": "P:1728315",
+    "security_name": "Opal Intermediate-Term",
+    "detailed_security_type": "model_portfolio",
+    "instance_id": 1728315
+   }
+  },
+  {
+   "key": "opal_ultra_long_term",
+   "security_id": "P:1728420",
+   "label": "Opal Ultra Long-Term",
+   "verdict": "IDENTITY_VERIFIED",
+   "measured": {
+    "security_id": "P:1728420",
+    "security_name": "Opal Ultra Long-Term ",
+    "detailed_security_type": "model_portfolio",
+    "instance_id": 1728420
+   }
+  }
+ ]
+}
