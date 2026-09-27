@@ -9720,3 +9720,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "For the cloud-ops owner: census the roles carrying AmazonSSMManagedInstanceCore (iam list-entities-for-policy) and each host's real parameter reads (CloudTrail GetParameter* by role, with a positive control), then a per-role Deny with NotResource as S148's, or a customer-managed replacement for the managed policy."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S150",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T00:54:00Z",
+  "one_line": "Window-6 packet fffdca65 branch (e) asserted 'a job still running at delete time continues server-side (the resident needs no principal)'; false -- resident_worker.py:274-281 re-grades the submitter's CURRENT profile (principal('start')) on every receive, so deleting the principal at 00:21:32Z failed receives 2-5 of job REQ-3a1b73a8.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "resident journal: IRPT_RESIDENT_POLL retained_for_retry at 00:12:10, 00:27:08, 00:42:08Z; the job row stays SUBMITTING {operation: session_refresh}",
+      "2.0.0_SA_COO~Y 101671 (LIVE_WINDOW6_EVIDENCE_20260927.md @07f3caa3ab): receives 2+ raise at principal('start') because the submitter was deleted",
+      "1.0.0_SA_CTO 101673 verified at resident_worker.py:274-281"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "A window's principal can be deleted at its deadline while its Analysis job finishes server-side.",
+  "world_is": "The resident needs the submitter's live profile on every receive; a deleted principal strands the job until the DLQ.",
+  "notes": "GRADUATED into CTO ruling 101673, standing for every future window packet: the delete leg runs only after every job the window started reads terminal; a packet that reaches its deadline with a non-terminal job states that job's disposition before the delete; branch (e) is struck. Window 6's residue (the row at DLQ time, ~01:12Z) is P's, with a one-line amendment if it stays non-terminal."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S151",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T00:54:00Z",
+  "one_line": "Window-6 receive 1 (00:12:08Z) claimed the one-use session_refresh intent and the host YCharts session capture failed within ~2 s; the cause is not measured (the wrapper's output is discarded by design), and the one-use intent is now spent for job REQ-3a1b73a8.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~Y 101671: HostCapture passed its pins, pointers and cooldown; the Node runner took and released its lease (fence 12); the run failed in about 2 s; node, playwright, aws and headless Chromium are OK on the host (read-only)",
+      "_opal PROVIDER_OPERATION#971ab38a.. version 26 unchanged after 00:12Z (read 00:46Z)",
+      "durable_job.claim_intent: an intent is permanent; resident_worker.run raises SESSION_BOOTSTRAP_ALREADY_USED on a second claim"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A resident receive that needs a fresh YCharts session captures one and proceeds to the vendor chain.",
+  "world_is": "The capture failed silently at receive 1; the next Analysis job will need a working capture before its first vendor call.",
+  "notes": "Diagnosis needs ONE wrapper run, which is a live YCharts call and waits on Andrew's word (CTO 101673: it gates nothing now). It blocks the next Analysis window's K5; the un-park condition is Andrew's word for that run."
+}
+```
