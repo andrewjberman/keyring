@@ -1789,6 +1789,75 @@
     "spec_asserts": "Rule 22 (EVIDENCE LAW): a worker verifies its own fresh change against live artifacts; this cell's <paths> grant does not extend to fe-s-1/14/15/19/25/30/45/55/57's own test/source files.",
     "world_is": "The InvestorReporting suite carries 17 failing tests unrelated to this cell's own grant or edits, pre-dating this worker's changes (a sibling row, surfaced by a prior worker at an earlier round-7 tip, already documented ~30 failures in a related but not identical file set -- fe-s-1/14/15/19/25/30/31/33/39 -- the exact count and file set shift between worker tips as sibling round-7 chains merge underneath, which this row's own denominator is scoped to THIS worker's HEAD, printed above). This worker did not attempt to fix them (out of grant; fixing a neighbouring defect is an explicit non-goal).",
     "notes": "Not blocking IVE45-AC1/AC2/AC3 (all pass/are recorded on this cell's own scope). Filed as a fresh, printed denominator at this specific worktree tip so the round's drain does not have to re-discover it, and so a reader does not read the earlier ~30-count row as still current."
+  },
+  {
+    "id": "DSGN_IRPTV1-W29-S5",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~29",
+    "surfaced_at": "2026-09-27T05:10:00Z",
+    "one_line": "TO-IV-e-52 (CTO 101768) resolves the two ARMED hazards row DSGN_IRPTV1-W29-S2 and DSGN_IRPTV1-W29-S3 filed against this same cell: F39-AC7's byte-exact Advisory <td> pin and UIR-27's 'one click away' now co-exist (the disclosure hides the columns VISUALLY via a `data-classification-open` attribute + a scoped `<style>` rule, never by omitting the pinned `<td>` from the served markup), and format.ts now unifies EVERY money site on the page (Holdings tab + IdentityCard) on the identity card's own '$1,234.56' style, so the client total is ONE format and ONE occurrence (HoldingsSummary's own tile is retired).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/SliceTable.tsx (this worker's own edit, uncommitted at filing, worktree base portal@8d1b4d208e31a586362b7c2adf94ca745afc5d45): the `<td data-slot=\"slice-advisory\">`/`<td data-slot=\"slice-supervision\">` cells are rendered UNCONDITIONALLY (never behind a conditional or inside a <details>); a `data-classification-open` attribute on the wrapping div plus a scoped `<style>` rule is the ONLY thing gated on open/closed state",
+        "re-run of the full 8-file pinned battery (fe-s-39/adapter-plane.test.ts, iv-e-18.census.test.ts, fe-s-7/slices.test.ts, iv-e-3.card-fed.test.ts, iv-e-33.client-words.test.tsx, iv-t-1.identity-card.test.ts, fe-s-30/predicate.test.ts, fe-s-55/withheld-vs-unknown.test.ts) at this worker's tip: 38 pass / 1 fail (the 1 fail is F30-AC4, filed separately as DSGN_IRPTV1-W29-S7, unrelated to UIR-27/29)",
+        "portal/src/pages/InvestorReporting/tabs/holdings/format.ts (this worker's own edit): formatMoney now renders `Intl.NumberFormat({style:'currency',currency:'USD'})` for USD/null (matching header/IdentityCard.tsx's own unexported formatCustodyTotal byte for byte, verified in iv-e-52.money-and-disclosure.test.tsx's UIR-29a arm) and `${currency} ${formatted}` for a stated non-USD currency",
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsSummary.tsx (this worker's own edit): the 'Current value' tile is removed outright; fe-s-7/slices.test.ts's own account-count test is re-goldened to assert the total's absence instead of its presence"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row DSGN_IRPTV1-W29-S2's disarm_owner clause ('either re-scope F39-AC7's golden ... or rule that hidden-when-withheld is the accepted resolution') and row DSGN_IRPTV1-W29-S3's disarm_owner clause ('a ruling on which format wins ... and whether the client total appears once means literally one DOM occurrence').",
+    "world_is": "Both ARMED hazards are addressed by this cell's landed code, not merely re-scoped: F39-AC6/AC7 pass UNCHANGED (0 edits to that test file) because the byte-pinned cells never leave the markup; the page now carries ONE money format (the identity card's own) and the client total appears exactly once (verified by iv-e-52.money-and-disclosure.test.tsx's UIR-29c arm, an occurrence count across IdentityCard+HoldingsSummary combined).",
+    "notes": "Filed as the closing evidence for S2/S3, not a disposition change to either row (this worker does not adjudicate; a worker never edits an existing row). Whether S2/S3 themselves are graduated is for 1.0.0_SA_CTO or 3.0.0_SA_CVO, named as their own disarm_owner."
+  },
+  {
+    "id": "DSGN_IRPTV1-W29-S6",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~29",
+    "surfaced_at": "2026-09-27T05:15:00Z",
+    "one_line": "Unifying format.ts on the identity card's '$1,234.56' style breaks THREE out-of-grant tests that pin the four Holdings-tab formatters' PRIOR code-prefix output verbatim: iv-e-45.face-batch.test.tsx's UIR-29d/UIR-29e arms (`formatMoney(1234567.89,'USD')` no longer equals '1,234,567.89' or 'USD 1,234,567.89'; `formatMoney(-150000,'USD')` no longer .includes('-150,000.00')), plus iv-e-5.allocation-bars.test.ts / iv-t-4.security-list.test.ts / iv-e-13.map-drill.test.ts (not individually re-read line by line, flagged by their own use of `currency: 'USD'` fixtures through the same shared formatter) are candidates for the same class of break.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "a later cell whose <paths> grant covers portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-45.face-batch.test.tsx (and, on inspection, iv-e-5.allocation-bars.test.ts / iv-t-4.security-list.test.ts / iv-e-13.map-drill.test.ts) -- re-golden each formatMoney-output assertion to the new '$'-style, keeping its own intent (well-formed output, sign adjacency, USD fixtures unchanged in kind).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-45.face-batch.test.tsx:279-283 (read at portal@8d1b4d208e31a586362b7c2adf94ca745afc5d45, unmodified by this worker -- out of this cell's <paths> grant): `arm('UIR-29d', shared === '1,234,567.89' || shared === 'USD 1,234,567.89', ...)` and `arm('UIR-29e', formatMoney(-150000, 'USD').includes('-150,000.00'), ...)` -- both now measured FALSE: `formatMoney(1234567.89,'USD')` is `'$1,234,567.89'` (matches neither string) and `formatMoney(-150000,'USD')` is `'-$150,000.00'` (does not contain the exact substring '-150,000.00', a '$' now sits between the sign and the first digit)",
+        "these three additional files were located by `Grep` for 'USD |formatAmount|formatValue(|formatMoney' across __tests__/ and are named here as CANDIDATES on that basis, not individually re-run line by line -- this row does not claim they fail, only that they are worth the next grant-holder's read"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO 101768 (TO-IV-e-52 cell text): 'The identity card's $1,234.56 format wins page-wide ... every amount on the page goes through it [format.ts]' -- an instruction this cell followed exactly, with this collateral consequence on out-of-grant goldens pinned to the PRIOR format.",
+    "world_is": "iv-e-45.face-batch.test.tsx (and, unverified, the three candidate files) now fail two named arms after this cell's format.ts change, none of which is in this cell's <paths> grant to fix. This is the EXPECTED, foreseeable consequence of CTO 101768's explicit instruction, not a defect in this cell's own work -- the alternative (leaving two formats, the prior cell's own DSGN_IRPTV1-W29-S3 state) was the thing this cell was cut to fix.",
+    "notes": "Not blocking IVE52-AC1/AC2 (neither criterion runs iv-e-45.face-batch.test.tsx or the three candidate files). Filed so the drain does not read a fresh failure in those files as a surprise of its own."
+  },
+  {
+    "id": "DSGN_IRPTV1-W29-S7",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~29",
+    "surfaced_at": "2026-09-27T05:20:00Z",
+    "one_line": "fe-s-30/predicate.test.ts's F30-AC4 ('a status carrying no state ... UNCERTAIN') fails at this worker's HEAD -- NOT one of the two tests this task order names as IV-e-45's own breakage (only F30-AC5 was named) -- and is a standing residual from a CTO-ruled revert (CTO 101449, commit 96282c4d) that was never actually carried out: that ruling required the feeding tests to be re-classed H or R 'in the follow-on cell that carries the residual' (named as IV-e-35), but IV-e-35's own commits never touch fe-s-30/ at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "a cell whose <paths> grant covers portal/src/pages/InvestorReporting/__tests__/fe-s-30/_scenarios.ts and/or contracts/public-status.ts -- re-class F30-AC4's 'no wire state' scenario per CTO 101449 (class H: the fixture, not the code, is wrong -- a status with no `state` key is not a contract-legal wire shape; PublicStatusEnvelope.schema.json requires it) or class R (retire the scenario if the CTO now rules the shape is producer-illegal outright).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-30/predicate.test.ts:94-109 (read at portal@8d1b4d208e31a586362b7c2adf94ca745afc5d45, unmodified by this worker -- NOT in this cell's <paths> grant, only F30-AC5's own test in the same file is named by the task order): `arrived(null)` throws `EnvelopeMismatch('status', ...)` before the test's own logic runs, because `fe-s-30/_scenarios.ts#statusWire` omits `state` entirely for the null-state scenario and `contracts/public-status.ts:20` REQUIRES `state` (`closed(value, ['operation','state','source_dates','actions','public_reason_code'], ['contract_version'])`)",
+        "`git log --all -- portal/src/pages/InvestorReporting/contracts/public-status.ts`: c09fea54 (state required) -> 23a6953f (S7, made state OPTIONAL, class G) -> 96282c4d (COO drain-repair, REVERTED S7's change back to state-required, citing CTO 101449: 'the tests that fed those shapes are re-classed H ... or R ... never G, in the follow-on cell that carries the residual')",
+        "`git log --all -- portal/src/pages/InvestorReporting/__tests__/fe-s-30/` shows exactly 4 commits, none authored after 96282c4d's revert and none touching this folder as IV-e-35 (the decomp's own named residual cell, DSGN_IRPTV1_DECOMP.md v6 addendum 1) -- IV-e-35 did not carry out the re-class CTO 101449 named for this specific test",
+        "this worker's own 8-file pinned-battery run: 38 pass / 1 fail, the 1 fail is F30-AC4 (`✗ F30-AC4 -- the plane: no wire state is the panel ... a status carrying no state, beside a producer UNCERTAIN with the SAME view state`); public-status.ts and _scenarios.ts are both outside this cell's <paths> grant, so this worker cannot fix it without widening the order"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IVE52-AC2 ('the eight pinned files pass on the new behaviour ... 0 fail') and CTO 101449 ('re-classed H or R ... in the follow-on cell that carries the residual').",
+    "world_is": "F30-AC4 is a standing, pre-existing failure this task order did not name and this worker's <paths> grant cannot reach; IVE52-AC2's invocation therefore measures 1 fail, not 0, though every failure this task order DID name (F30-AC5, fe-s-55) is fixed. The 'follow-on cell' CTO 101449 named for this residual has not yet carried it out.",
+    "notes": "BLOCKING for IVE52-AC2 read literally (0 fail); this worker did not weaken the test or work outside grant to force a pass. Refusal clause invoked: the criterion's invocation is run and recorded verbatim in the proof-of-spec instance; the row above is the reason."
   }
 ]
 ```
