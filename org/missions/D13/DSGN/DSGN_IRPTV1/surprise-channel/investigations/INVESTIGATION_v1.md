@@ -1447,6 +1447,28 @@
     "spec_asserts": "Cell text: 'Read the server's predicate where the record names it (handler.full_name_match, 2.0.0_SA_COO~P record @80833001cb) and mirror it; do not invent a different rule.'",
     "world_is": "The record names the predicate but does not carry its code; the code exists in this repo only on a commit outside this worker's ancestry, reachable solely via an all-branches search the cell text did not point to. This worker mirrored the rule correctly (verified against the actual predicate body after the fact), but a worker who stopped at the cited record's prose alone (or who does not search other branches) has no in-tree code citation to check against.",
     "notes": "Not blocking IVE47-AC1 (PASS-by-output, VERDICT: GLOBAL-MERGE-OK) -- the mirrored predicate matches the actual server code byte-for-byte in effect. Filed so a later cell citing this same record knows the code lives at 177719486c, not at any commit ancestor to this project's mainline worktrees."
+  },
+  {
+    "id": "DSGN_IRPTV1-W25-S4",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~25",
+    "surfaced_at": "2026-09-26T23:50:00Z",
+    "one_line": "This order's own identity block names 'issued at CLOUD dca01c9765', but that commit is NOT an ancestor of this worker's worktree HEAD -- the task-order file DSGN_IRPTV1.TO-IV-e-47.global-merge.md did not exist anywhere in this worktree until this worker wrote it (verbatim from CLOUD @dca01c9765) so the proof-of-spec's decomp_ref.to_ref could resolve and the <status> flip have a file to land on.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git merge-base --is-ancestor dca01c9765 HEAD` on this worktree returns NOT-ANCESTOR; `ls org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/ | grep e-47` returned nothing before this row's fix, confirmed twice",
+        "sibling TOs for the same slot (IV-e-37, IV-e-38) DO exist in this worktree because they were minted by the round-7 issuance commit f56587bf9e, which IS an ancestor of this worktree's HEAD; IV-e-47/IV-e-46 were minted by a LATER direct-act commit (dca01c9765) issued straight to CLOUD after this worktree was created, and nothing merged that commit back into this worker's branch before dispatch",
+        "`python .tools/proof-of-spec-check.py <instance> IVE47-AC1,IVE47-AC2` read VIOLATION: decomp_ref.to_ref '...' does not resolve to a file before this row's fix (rc=1); after writing the TO file verbatim (byte-identical diff against `git show dca01c9765:<path>`) the same invocation read 0 violations, VALID (rc=0)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's identity block: 'Your task order is org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-47.global-merge.md (issued at CLOUD dca01c9765 ...)'; BOUNDS: 'Grant. The <paths> block below plus your deliverables folder and this order's file.'",
+    "world_is": "The named file was absent from this worker's own worktree entirely (not merely at a stale vintage) until this worker materialized it from the cited commit, using the BOUNDS grant's 'this order's file' clause as the write authority. The worker face embedded in this order's own dispatch prompt was already complete and self-sufficient for doing the work (per the standing L7 rule, 'the TO's WORKER FACE is the worker's whole context'); only the MECHANICAL steps downstream of the work -- decomp_ref.to_ref resolution and the <status> flip -- required the file to exist on disk.",
+    "notes": "Not blocking: the file is now present, byte-identical to CLOUD @dca01c9765 except the <status> flip this worker made per instruction, and proof-of-spec-check.py now reads VALID (rc=0). Filed so the drain does not read this worktree's TO-file set as a fossil of what was actually dispatched to slot ~25 over its life -- IV-e-46/IV-e-47 arrived by direct act, not by a merged issuance, and this worker's branch is where that gap first became visible."
   }
 ]
 ```
