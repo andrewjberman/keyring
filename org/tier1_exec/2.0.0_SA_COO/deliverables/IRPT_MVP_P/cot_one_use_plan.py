@@ -102,7 +102,9 @@ def main(argv=None):
     ap.add_argument("--expires-at", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--tfvars", required=True)
-    ap.add_argument("--approval-ref", default=APPROVAL_REF)
+    # REQUIRED (row IRPT_BCKEND-S171): a default wrote a spent word into an immutable claim row. Every use names
+    # the word that authorized IT; APPROVAL_REF below is kept only as the record of call 3.
+    ap.add_argument("--approval-ref", required=True)
     ap.add_argument("--tree")
     ap.add_argument("--end-before-holdings", help="an explicit end EARLIER than the served holdings as-of (IRPT_BCKEND-S157: the as-of window reopens a retained report and never reaches the gate); recorded in the receipt as a deliberate departure")
     args = ap.parse_args(argv)

@@ -10227,3 +10227,78 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Found while answering an Andrew-direct status question relayed by 4.0.0_SA_CRO (102057). Recorded as a correction to this seat's OWN prior claim rather than left to be discovered: the instrument is armed but the test does not arrive tomorrow, and anyone reading 'the next failure names its cause' needs the real date. Corrected in place in both files in the same commit as this row."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S169",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T20:40:00Z",
+  "one_line": "S158 DISARMED: a signed COT use on the refreshed session (AWSCURRENT 9da4e781, 18:42:27Z) made its 2 BD requests and retained a report -- the provider accepts the session again.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ledger irpt-performance-cot-one-use-s157r-20260927 R1: claim PERFORMANCE_USE#b20d69b2.. at 20:35:33Z; provider evidence ART-448c25af.. requests = performancePeriod + performanceSeries; retained RPT-12b885b8.. PARTIAL",
+      "TO-IB-s158 complete @fe23038617 (0.6.2_AE_PartnerETL~S): AC2 live document v5 uploads its log on failure; AC3 AWSCURRENT 9da4e781 after Success cf7fdead",
+      "1.0.0_SA_CTO 102044 item 2: close S158; AC1 accepted as refused with an absence proof"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Row IRPT_BCKEND-S158 (ARMED): a fresh COT Performance read fails at the provider (BDRequestFailed) until the session is live.",
+  "world_is": "The COT session is live and a real COT read computed and retained at 20:35Z.",
+  "notes": "Disarmed same turn as read by the seat that ran the use. The refresh's next unexercised branch is S168's (Lever A skips the fetch while the capture is under 7 days)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S170",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T20:40:00Z",
+  "one_line": "S157 RESOLVED on real data: the corrected COT report RPT-12b885b8 states actual 2026-07-21..2026-09-21, and its series' first point is 07-21 -- the window is disclosed as the account's own (criterion 3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/COT_S157R_READ_20260927.json: requested 01-01..09-21, actual 07-21..09-21, 44 points, series_first 07-21",
+      "retained blob RPT-12b885b8 rev 65fc347a: report.dates actual_start 2026-07-21, owner V1 (reopen-arm-1@opal.test)",
+      "reopen 20:36:14Z (COT_S157R_REOPEN_20260927.json) served the same report with no new claim"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Row IRPT_BCKEND-S157: COT's retained face overstates its window (RPT-b683f188 actual_start 01-02 over a 07-21 series).",
+  "world_is": "A real-data COT report computed by the fixed adapter (bOefL9nx) discloses the true window; RPT-b683f188 stays immutable and is parked with the release cutter's exclusion list.",
+  "notes": "Resolved by path (a) of S157's notes: ONE new COT use under both halves (packet 049ea241)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S171",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T20:40:00Z",
+  "one_line": "The S157R claim row cites a SPENT word as its authority: cot_one_use_plan.py's default approval_ref ('Andrew-direct 02:5xZ yes to all three -- call 3') was written into plan 4 and the immutable PERFORMANCE_USE#b20d69b2 row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-requests cottonwood PERFORMANCE_USE#b20d69b2..: approval_ref begins \"Andrew-direct 2026-09-27T02:5xZ (2.0.0_SA_COO~P terminal): 'yes to all three' -- call 3\"",
+      "plan 3's receipt (COT_ONE_USE_PLAN_3_S157_20260927.json) carried the MSTR 101850 relay; plan 4 was built without --approval-ref",
+      "the use's actual authority: both halves on blob 049ea241 (CTO @c07a035190, CRO @342bf8baca) under CTO 102044 item 2 and Andrew's session egress (MSTR 101850 as scoped by CTO 101854)"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "A value must carry its claim: a claim row's approval_ref names the word that authorized THIS use.",
+  "world_is": "The builder's default names a spent call; any use built without --approval-ref records the wrong provenance, silently.",
+  "notes": "No harm to the use (the gate checks the plan digest, not the ref text). Remedy applied same turn: cot_one_use_plan.py now REQUIRES --approval-ref (argparse refuses without it; measured). The row itself is immutable; the ledger R1 records the true authority."
+}
+```
