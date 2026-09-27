@@ -1787,6 +1787,30 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~O",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not a refusal of A4 -- the REST route looks buildable and cheaper than a crawler, and no new login is needed: bd-49f-runner already authenticates from Secrets Manager blackdiamond/49f/session read-only and the assets template is qt2, the same query type it already pulls. The ask is which of three routes the issuer wants: (a) grant this lane the two repo paths (the cot module edit still needs the DS lane's word under rule 13); (b) re-cut step 1.2 as a cell on the DS lane that owns cot_bronze_ingest.py, leaving this lane the bd-49f-runner and template legs; or (c) leave step 1.2 unbuilt this round and close MX-s-4 on step 2 alone, which is already landed and world-verified. This seat took none of them. MX-s-4 step 2 is unaffected: it landed at 03e744ec3f with SSM DocumentVersion 3 Active, legs L1-L3 and L5 closed in org/critical_paths/.open_deploys/nfra-mcpindex-bd-asset-dim-shutdown-order.json; only L4 (one failing run recording Failed with the instance stopped) is open, and i-0e6f6dc014fdcf1cd read State=stopped at 2026-09-27T20:59Z, which lifts the Z-S17 no-interaction constraint."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S31",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T22:50Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in the world by MX-s-4 step 2, complete @81c13ee0f9 and on CLOUD. Z-S9: the asset-dim SSM wrapper now reports failure honestly (SSM DocumentVersion 3 Active, landed 03e744ec3f), so a failed run reads Failed, not Success. Z-S17: the stranding order is fixed. Exit now follows the armed 'shutdown -h +2' (the planted probe ssm:e77e84c7 shows the OS 'Shutdown scheduled' line), and i-0e6f6dc014fdcf1cd reads 'stopped' (issuer's describe-instances, ~22:5xZ). Both of Z-S17's disarm conditions are met. Z-S8 (the login root cause) stays OPEN: it is carried by the asset-dim REST cell the CTO ruled @1973056c51, cut after tonight's git freeze.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S9",
+      "NFRA_MCPINDEX-Z-S17"
+    ],
+    "one_line": "The issuer closes Z-S9 (the SSM wrapper exit 0 on a failed run) and Z-S17 (the stranded EC2 runner): MX-s-4 step 2 is live and the runner is stopped. Z-S8 stays open on the post-freeze REST cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ec2 describe-instances i-0e6f6dc014fdcf1cd State=stopped; MX-s-4 last <status> complete @81c13ee0f9 on CLOUD; ledger nfra-mcpindex-bd-asset-dim-shutdown-order CLOSED 5/5"
+      ]
+    },
+    "spec_asserts": "Z-S9/Z-S17: a failed BD download reads Success and strands its EC2 runner.",
+    "world_is": "The wrapper exits honestly, and the shutdown is armed before the exit."
   }
 ]
 ```
