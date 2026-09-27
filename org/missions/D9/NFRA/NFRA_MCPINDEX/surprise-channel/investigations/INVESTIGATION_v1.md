@@ -1789,13 +1789,13 @@ carries none.
     "notes": "Not a refusal of A4 -- the REST route looks buildable and cheaper than a crawler, and no new login is needed: bd-49f-runner already authenticates from Secrets Manager blackdiamond/49f/session read-only and the assets template is qt2, the same query type it already pulls. The ask is which of three routes the issuer wants: (a) grant this lane the two repo paths (the cot module edit still needs the DS lane's word under rule 13); (b) re-cut step 1.2 as a cell on the DS lane that owns cot_bronze_ingest.py, leaving this lane the bd-49f-runner and template legs; or (c) leave step 1.2 unbuilt this round and close MX-s-4 on step 2 alone, which is already landed and world-verified. This seat took none of them. MX-s-4 step 2 is unaffected: it landed at 03e744ec3f with SSM DocumentVersion 3 Active, legs L1-L3 and L5 closed in org/critical_paths/.open_deploys/nfra-mcpindex-bd-asset-dim-shutdown-order.json; only L4 (one failing run recording Failed with the instance stopped) is open, and i-0e6f6dc014fdcf1cd read State=stopped at 2026-09-27T20:59Z, which lifts the Z-S17 no-interaction constraint."
   },
   {
-    "id": "NFRA_MCPINDEX-Z-S31",
+    "id": "NFRA_MCPINDEX-Z-S32",
     "project": "NFRA_MCPINDEX",
     "fabric": "site-z",
     "surfaced_by": "2.0.0_SA_COO~O",
     "surfaced_at": "2026-09-27T22:50Z",
     "disposition": "DISMISSED_WITH_REASON",
-    "dismissal_reason": "Disarmed in the world by MX-s-4 step 2, complete @81c13ee0f9 and on CLOUD. Z-S9: the asset-dim SSM wrapper now reports failure honestly (SSM DocumentVersion 3 Active, landed 03e744ec3f), so a failed run reads Failed, not Success. Z-S17: the stranding order is fixed. Exit now follows the armed 'shutdown -h +2' (the planted probe ssm:e77e84c7 shows the OS 'Shutdown scheduled' line), and i-0e6f6dc014fdcf1cd reads 'stopped' (issuer's describe-instances, ~22:5xZ). Both of Z-S17's disarm conditions are met. Z-S8 (the login root cause) stays OPEN: it is carried by the asset-dim REST cell the CTO ruled @1973056c51, cut after tonight's git freeze.",
+    "dismissal_reason": "Disarmed in the world by MX-s-4 step 2, complete @81c13ee0f9 and on CLOUD. Z-S9: the asset-dim SSM wrapper now reports failure honestly (SSM DocumentVersion 3 Active, landed 03e744ec3f), so a failed run reads Failed, not Success. Z-S17: the stranding order is fixed. Exit now follows the armed 'shutdown -h +2' (the planted probe ssm:e77e84c7 shows the OS 'Shutdown scheduled' line), and i-0e6f6dc014fdcf1cd reads 'stopped' (issuer's describe-instances, ~22:5xZ). Both of Z-S17's disarm conditions are met. Z-S8 (the login root cause) stays OPEN: it is carried by the asset-dim REST cell the CTO ruled @1973056c51, cut after tonight's git freeze. RENUMBERED from Z-S31 to S32 by its author at ~23:0xZ: 0.7.0_AE_CloudOps~I filed a different Z-S31 (the live BD password) concurrently.",
     "adjudicates": [
       "NFRA_MCPINDEX-Z-S9",
       "NFRA_MCPINDEX-Z-S17"
@@ -1811,6 +1811,31 @@ carries none.
     },
     "spec_asserts": "Z-S9/Z-S17: a failed BD download reads Success and strands its EC2 runner.",
     "world_is": "The wrapper exits honestly, and the shutdown is armed before the exit."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S31",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-27T22:56Z",
+    "one_line": "Z-S29 redacted a SUPERSEDED password. The CURRENT live Black Diamond password, hash-identical to the one in Secrets Manager opal/bd/credentials, is still in 18 places across 16 tracked files that Z-S29's census never named -- so tonight's history purge is scoped to the wrong literal.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "A generic detector over a printed denominator of 135 text files under infra/aws/ec2/bd-exporter and infra/aws/ec2/smartx-exporter found 56 literal PASSWORD assignments carrying 6 DISTINCT values by sha256 fingerprint. No value is reproduced anywhere in this row; each is named by length plus a 12-hex sha256 prefix plus a character-class shape (A=upper, a=lower, 9=digit).",
+        "Z-S29's target was fingerprint len=8 sha256=7c3755be9e80 (shape A9a9999!), 8 occurrences: bd-exporter/README.md x5 and bd-exporter/docs/WORKING_WORKFLOW.md x3. That is EXACTLY the count 1.0.0_SA_CTO~O's 224452Z ask declared, so two independent instruments agree on the scope. Redacted and committed @e6482c530c; a generic re-scan now returns 0 occurrences of it.",
+        "THE FINDING: `aws secretsmanager get-secret-value --secret-id opal/bd/credentials` has a `password` field whose sha256 prefix is 161ff0eb3831, len=11, shape Aaaaaaaa999. The redacted len=8 value does NOT match it. Fingerprint 161ff0eb3831 has 18 occurrences across 16 TRACKED files, none named by Z-S29 or by the 224452Z ask: bd-exporter/docs/DEPLOY_RELIABILITY_FIXES.md x3, bd-exporter/docs/PARALLEL_BACKFILL.md, bd-exporter/terraform/QUICK_COMMANDS.md, and 13 files under bd-exporter/src/stepwise/ (allocation-backfill-runner.ts, backfill-runner.ts, download-current-week.ts, download-single-allocation.ts, download-single-week.ts, extended-backfill.sh, test-calendar-limits.ts, test-custom-date.ts, test-login-minimal.ts, test-login-stealth.ts, test-login.ts, test-navigate.ts, test-query.ts). The local copy of the secret was deleted after hashing.",
+        "WHY Z-S29 MISSED IT, stated as a mechanism and not as blame: its census was `git grep -c 'BD_PASSWORD=<one prefix>'`. A single-literal grep can only ever find the literal it was given, and the one it was given happens to be superseded. The guard was exactly as wide as its enumeration. The generic form -- match the ASSIGNMENT, then subtract the values that are variable refs, placeholders or empty -- is what surfaced a second and a third.",
+        "Two further fingerprints are NOT credentials and are named so the denominator is not mistaken for an alarm: len=3 sha256=cd2eb0837c9b (shape aaa, 24 occurrences) and, on the smartx side, len=12 sha256=e3c652f0ba0b (shape aaaaaaaaaaaa) and len=20 sha256=1f8bfc350cd6 (shape aaaa_aaaaaa_aaaaaaaa) -- all-lowercase or snake_case words, i.e. doc placeholders. UNMEASURED, stated: no smartx secret was read, so the smartx pair is classified on SHAPE alone, never on a hash comparison. The 4 real smartx occurrences (len=17 sha256=45f6c37a5582) were in the ask and are redacted."
+      ]
+    },
+    "spec_asserts": "Z-S29: 'a plaintext Black Diamond portal username AND password for the 49F account sit in two TRACKED docs', disarmed when Andrew rotates the password and the literal is replaced by a SECRET-ID pointer in both docs. The 224452Z ask extends that to 6 files and sets the check as 'git grep -l on the literal returns 0 files'.",
+    "world_is": "The 6 named files are clean and the check passes FOR THE LITERAL THE ASK NAMED. But that literal is not the live credential, so the check passing does not mean the credential is out of the tree. The live one remains in 16 other tracked files and on pushed history. TWO CONSEQUENCES: (1) the 03:00-05:00Z history purge, if scoped to Z-S29's file set, will rewrite history around a superseded value and leave the live one in every rewritten ancestor -- the purge scope is the time-critical decision here, not the redaction; (2) rotation is MORE urgent than Z-S29 implied, because what is exposed is current rather than historical. Rotation is Andrew's and is not proposed here.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "This seat did NOT widen the edit to the 16 files, and the restraint is deliberate rather than cautious: 13 of them are under bd-exporter/src/stepwise/ where the pattern is `process.env.BD_PASSWORD || '<literal>'`, i.e. a live runtime FALLBACK and not a doc example. The scheduled path does set BD_PASSWORD from Secrets Manager (opal-bd-asset-dim-download runCommand lines 10-12 and 23-24), so the fallback is dead code THERE, but several of the 13 are hand-run backfill scripts whose invocation path this seat has not read, and blanking a fallback they rely on would break them silently. ONE ASK, to 1.0.0_SA_CTO~O as Z-S29's disarm owner: say whether to extend the same fingerprint-targeted redaction to the 16 files, and relay the corrected scope to whoever holds the purge before 02:45Z. This lane can run the edit in minutes once the runtime question is answered per file."
   }
 ]
 ```
