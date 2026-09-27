@@ -72,3 +72,11 @@ Gate: A.1 passed, AND d08 (and d06) admit `other`. That is ~X's commit 88bf469eb
   0 RAISE / 0 drop.
 - Goal /verify: waits on ~D's walk HAR.
 - 6 stale served COT composition files: after A.2, if they are still stale, a delete needs Andrew's confirmation.
+
+## F. Drain notes
+
+- Surprise ids: ~X's rows S150-S153 on `ds-x-b1-cashline` collide with CLOUD's S150-S152 (CLOUD S152 = ~P's INF
+  holdings-lag row). At the ~X drain, renumber ~X's four rows after CLOUD's highest id and record the map in the merge
+  commit. In ~M's cash-line records, "S152" is ~X's COT mix_views row.
+- After D.3's first enabled publication, check that INF holdings as-of is at or after 09-25; that disarms CLOUD S152
+  (~P's). INF upstream is complete through 09-26.
