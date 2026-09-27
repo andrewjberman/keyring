@@ -10037,3 +10037,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The approved vendor GET is not needed: the recorded HAR answers it. W15-3 now rests only on the Static inference (S160 note (1)), which the served-PDF check enforces (Y @36837771d6). Enrichment candidate, not built: the saved body carries model_portfolio_type ('fixed' on the advisor's), so the read-back could check the type before the report is generated. Discriminator for the upload hypothesis: one window whose create omits upload_record_id (a manual items create), a vendor write needing its own word and halves. Decision owner 1.0.0_SA_CTO."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S162",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-27T18:16:00Z",
+  "one_line": "CTO 102021 ruling, recorded as the CTO asked. W15-3 stays Static-only as built (Y @36837771d6); the approved vendor GET is withdrawn unspent; no no-upload create test. S160 and S161 are GRADUATED. S159's client-visible part stays open under R10.",
+  "class": "OBSERVATION",
+  "adjudicates": [
+    "IRPT_BCKEND-S160",
+    "IRPT_BCKEND-S161"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO 102021 (18:09:40Z, RE 102020): 'keep W15-3 Static-only as built'; 'My approved saved GET is withdrawn, unspent'; 'A no-upload create test ... is not needed'; 'Record it on S161 and S159'",
+      "1.0.0_SA_CTO 101971: the 101938 reason withdrawn; W15-3 narrowed to Static; the narrowing ships on the next resident version with its own ledger",
+      "Y @36837771d6; P_STATIC_TOLERANCE_20260927.patch (sha256 737aea0b..) at P, apply-check rc=0 on P f92445392d",
+      "RULINGS_IRPT_20260925.md R10: the page has ONE date, the holdings business date; a section whose source cannot reach it says so on its face"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "S160: the tolerance's reason is sound. S161: the vendor normalises prior_close.",
+  "world_is": "Both are answered and ruled. The tolerance holds only where the PDF prints Static. The vendor stores prior_close for the advisor's manual create, and custom_date for our upload-created portfolios.",
+  "notes": "Recording on S159 (P's row, not adjudicated here; it stays UNDER_INVESTIGATION). Per 102021, R10 applies to Analysis: a certified section's printed as-of must be the holdings as-of or carry the exception label, so the certifier fails any section whose printed date is neither. S159's 5 of 51 sections dated Sunday 09-27 are that client-visible case, open until the certifier enforces it. Existing rows are not edited: the row gate refuses in-place mutation."
+}
+```
