@@ -37,6 +37,8 @@ read is pending or refused, the tab says so by name (no silent empty state). Reu
 
 **Environment:** the portal worktree is based on local DEV `3f76cdb2` (round 7 drained). Other round-8 workers run in parallel in their own worktrees on disjoint files; edit only your `<paths>`. Do not start any server.
 
+**Amendment 1 (issuer, 2026-09-27 ~13:0xZ; CTO 101880, PRD v0.17 @fc21988bce, CRO walk docs/briefs/irpt-ui-review-verification-20260927.md):** this cell also carries UIW-0927-02 "Each included account shows the same label and value the account picker shows." (CRO walk: the analysis input lists the included accounts as 'Account', 'Account' with no label or tail; the list is built in `tabs/analysis/GenerateComposer.tsx`, possibly `InputReview.tsx`.) Build: each included account shows the account's masked label and value, formatted by the same helpers the picker uses (`tabs/holdings/AccountFilter.tsx` `formatAccountFilterValue`, read only). UIR-20 (CTO 101880) moved to IV-e-57 by write set. AC1 gains the arm: an input with two accounts renders both labels and values and never the bare word 'Account' as an entry.
+
 ### ACCEPTANCE
 
 <criterion id="IVE62-AC1" cell_refs="IV-e-62"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-39/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-62.request-history.test.tsx 2>&1 | tail -15</invocation><expect>VERDICT: REQUEST-HISTORY-OK</expect></criterion>
@@ -61,6 +63,8 @@ portal/src/pages/InvestorReporting/tabs/analysis/RequestList.tsx
 portal/src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-62.request-history.test.tsx
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
+portal/src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx
+portal/src/pages/InvestorReporting/tabs/analysis/InputReview.tsx
 </paths>
 
 <decomp_ref>

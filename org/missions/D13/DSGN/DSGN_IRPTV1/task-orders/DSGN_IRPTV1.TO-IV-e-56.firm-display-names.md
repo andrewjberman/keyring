@@ -38,6 +38,8 @@ never type a client name.
 
 **Environment:** the portal worktree is based on the local DEV the issuer names in the spawn prompt: `3f76cdb2` plus IV-e-54, merged before this chain seats. Other round-8 workers run in parallel in their own worktrees on disjoint files; edit only your `<paths>`. Do not start any server.
 
+**Amendment 1 (issuer, 2026-09-27 ~13:0xZ; CTO 101880, PRD v0.17 @fc21988bce, CRO walk docs/briefs/irpt-ui-review-verification-20260927.md):** this cell also carries UIW-0927-03 "While a client loads, the header shows a loading state, never words that read as missing data." (CRO walk: right after a client is picked the header reads 'value pending', 'not supplied', '0 accounts' until Holdings loads.) Build: while the client's snapshot is loading, `header/IdentityCard.tsx` shows one loading state (for example 'Loading client...') in place of those words; once loaded, or refused, it shows the answer or the refusal as today. AC1 gains the arm: a loading identity card carries none of 'value pending', 'not supplied', '0 accounts'.
+
 ### ACCEPTANCE
 
 <criterion id="IVE56-AC1" cell_refs="IV-e-56"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-35/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-56.firm-display.test.tsx 2>&1 | tail -15</invocation><expect>VERDICT: FIRM-DISPLAY-OK</expect></criterion>

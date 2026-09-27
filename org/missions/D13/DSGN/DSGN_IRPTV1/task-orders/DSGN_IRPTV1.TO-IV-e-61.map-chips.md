@@ -33,6 +33,8 @@ names its kind ("Model: <name>"). With one account, the group heading may be omi
 
 **Environment:** the portal worktree is based on your slot after IV-e-60. Other round-8 workers run in parallel in their own worktrees on disjoint files; edit only your `<paths>`. Do not start any server.
 
+**Amendment 1 (issuer, 2026-09-27 ~13:0xZ; CTO 101880, PRD v0.17 @fc21988bce, CRO walk docs/briefs/irpt-ui-review-verification-20260927.md):** this cell also carries UIW-0927-07 "The grouped small-items tile reads 'Smaller holdings' (or similar) in a colour no class uses." (CRO walk: the grouped small-items tile and the 'Other' asset class share one purple and one word.) Build: in `tabs/holdings/HoldingsTreemap.tsx` the grouped tile is labelled 'Smaller holdings' and drawn in a neutral colour that no ASSET_CLASS entry uses. AC1 gains the arm: the grouped tile's label is not 'Other' and its fill equals no ASSET_CLASS colour.
+
 ### ACCEPTANCE
 
 <criterion id="IVE61-AC1" cell_refs="IV-e-61"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-38/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-61.map-chips.test.tsx 2>&1 | tail -15</invocation><expect>VERDICT: MAP-CHIPS-OK</expect></criterion>

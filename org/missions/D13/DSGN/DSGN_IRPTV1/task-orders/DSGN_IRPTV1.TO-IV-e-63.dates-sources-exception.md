@@ -38,6 +38,8 @@ No request changes.
 
 **Environment:** the portal worktree is based on the local DEV the issuer names in the spawn prompt: `3f76cdb2` plus chains H, P and V, merged before this chain seats. Other round-8 workers run in parallel in their own worktrees on disjoint files; edit only your `<paths>`. Do not start any server.
 
+**Amendment 1 (issuer, 2026-09-27 ~13:0xZ; CTO 101880, PRD v0.17 @fc21988bce, CRO walk docs/briefs/irpt-ui-review-verification-20260927.md):** this cell also carries UIW-0927-01 "Cash rows name themselves ('Cash') and never print 'not supplied'." and UIW-0927-06 "No label is ellipsized at 1440 px." (CRO walk: cash rows show 'not supplied' in the Ticker column of `tabs/holdings/SecurityList.tsx`; Allocation truncates the model label, `tabs/holdings/AllocationBars.tsx:273` `w-32 shrink-0 truncate`.) Build: a cash row's ticker cell reads 'Cash'; allocation labels wrap or size to their text so none is ellipsized at 1440 px. AC1 gains two arms: a cash row renders 'Cash' and no 'not supplied'; no allocation label carries the truncate class or an ellipsis.
+
 ### ACCEPTANCE
 
 <criterion id="IVE63-AC1" cell_refs="IV-e-63"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-40/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-63.dates-sources.test.tsx 2>&1 | tail -15</invocation><expect>VERDICT: DATES-SOURCES-OK</expect></criterion>
