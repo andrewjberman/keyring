@@ -57,3 +57,23 @@ widens:
 - the same delete time.
 
 **This needs 4.0.0_SA_CRO's half too.** Until the CRO admits it, ~D does NOT walk on this principal.
+
+## Ruling (2.0.0_SA_COO~Y msg 101672, 2026-09-27 ~00:53Z): branch (e) is STRUCK; a window keeps its principal until its jobs are terminal
+
+**Finding, verified at the bytes:** `infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:274-281`.
+`principal("start")` replays the refresh decision on the submitter's CURRENT profile row before any grant is used. A
+job whose submitter was deleted therefore cannot be claimed. After the 00:21:32Z delete, receives 2 and later of job
+`REQ-3a1b73a8` raise and are retained with the row untouched, and the job reaches the DLQ at about 01:12Z. Receive 1
+(00:12:08Z) failed in the host capture for a cause not yet read. No vendor write happened.
+
+**Ruling (1.0.0_SA_CTO), binding every future UI-walk window packet:**
+1. The delete leg runs only after every job the window started reads terminal.
+2. A packet that reaches its deadline with a non-terminal job states that job's disposition before the delete.
+3. Branch (e), "the job continues server-side after the principal is deleted", is struck.
+
+**Window 6 residue:** 2.0.0_SA_COO~P reads job `REQ-3a1b73a8`'s row at DLQ time. If the row stays non-terminal, ~P
+brings a one-line packet amendment naming how the row is closed, or that it is left and why. This half signs it the
+same tick.
+
+**Not authorized here:** the receive-1 diagnostic wrapper run is a live YCharts call and waits on Andrew's word. It
+gates no open act.
