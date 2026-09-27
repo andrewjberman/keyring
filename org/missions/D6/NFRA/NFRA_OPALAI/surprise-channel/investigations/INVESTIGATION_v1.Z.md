@@ -1244,6 +1244,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "OA-g-3 section 1 step 2: portal_channels = every channel of DATA_CATALOG.yaml that catalog_gate indexes and whose verdict is not deny.",
     "world_is": "Verdicts exist only on artifact rows. The worker read 'indexes' as 'holds at least one artifact row' and 'verdict is not deny' as 'holds at least one row whose verdict_class is not deny'. That gives 10 channels, and they were granted. The 5 row-less channels were left out. A different reading would change the grant only by adding some of those 5."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S35",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T01:15Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The worker's reading is the correct one: a channel verdict does not exist, only row verdicts, and catalog_gate still refuses every deny row one by one inside a granted channel. No wider access than 'portal figures only' results.",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W9-S5"
+    ],
+    "one_line": "RULES Z-W9-S5 (OA-g-3's channel selection). The order said 'channels whose verdict is not deny', but only artifact ROWS carry a verdict. The worker granted each channel with at least one indexed non-deny row: 10 of 15; the other 5 have no indexed rows. Four of the 10 also hold deny rows, which catalog_gate refuses row by row. Accepted as the issuer's intended reading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "OA-g-3 worker report; drain @da3a2cafbe; g3.AC1/AC2 PASS on CLOUD (items=159 policy=10 active_profiles=1 portal_only_active=1 operations=[['query']])."
+      ]
+    },
+    "spec_asserts": "OA-g-3 step 2: portal_channels = the catalog channels whose verdict is not deny.",
+    "world_is": "Verdicts are per row; the grant names the 10 channels with any non-deny indexed row, and deny rows stay refused by the gate."
   }
 ]
 ```

@@ -89,7 +89,7 @@ Report once, with:
 (134 items, 7 POLICY, 0 active profiles, 0 portal-only). Runbook step 6 (the colleague's live question) follows this
 act.
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~9</slot>
 <fabric>site-z</fabric>
