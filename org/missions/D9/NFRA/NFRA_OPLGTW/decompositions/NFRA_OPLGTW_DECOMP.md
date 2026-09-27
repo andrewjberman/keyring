@@ -933,9 +933,14 @@ contract v1.3 adds `email_deny`; PRD v1.0 C2 and C6 each gain one clause). The d
 | cell | what it is | serves | writes | status |
 |---|---|---|---|---|
 | `OG-e-1` | BUILD: the hashed-email deny record, its guard on `/login` + `/sprint*` + legacy `/callback`, the writer's same-transaction put, and `deny-backfill` | C2, C6 (PRD v1.0 @2ae58221ab); row W3-S22 | `GW/app/access_state.py`, `GW/app/data_entitlement.py`, `GW/app/server.py`, `GW/app/token_broker.py`, `GW/ops/schwab_entitlement_admin.py`, `GW/tests/test_email_deny.py` (new), `GW/tests/test_owner_gate.py` | COMPLETE @ed13cfee26 |
-| `OG-e-2` | SERVED: the narrow gateway release of OG-e-1 (live commit + OG-e-1's two gateway commits), under never-widen | C2, C6; row W3-S22 | `infra/aws/ec2/EC2_MANIFEST.json`, the NEVER-2 ledger | ISSUED |
+| `OG-e-2` | SERVED: the narrow gateway release of OG-e-1 (live commit + OG-e-1's two gateway commits), under never-widen | C2, C6; row W3-S22 | `infra/aws/ec2/EC2_MANIFEST.json`, the NEVER-2 ledger | COMPLETE @bc66889185 (live fe94911257) |
 
 The SERVED steps follow as their own cells, each under never-widen:
 - a narrow gateway release from the live commit plus OG-e-1;
-- the grant-writer Lambda rebuilt and applied, before any dashboard grant;
+- the grant-writer Lambda: NO CELL NEEDED (measured 2026-09-27 ~19:5xZ). `mcportal-grant-writer-lambda` does not exist
+  in AWS (get-function-configuration: ResourceNotFoundException); `mcportal_grant_writer.tf` is not applied, and
+  NFRA_MCPORTAL MP-a-1 creates it. Its `build_package.py` stages `ops/schwab_entitlement_admin.py` and
+  `app/access_state.py` byte for byte from the tree at build time, so the first build already carries OG-e-1's
+  same-transaction deny put and no-email refusal. MP-a-1's cut must stage from a tree at or after @2d0f2dda83;
+  any CLOUD HEAD today qualifies;
 - the OA-g-3 backfill, which WAITS on Andrew's open card.
