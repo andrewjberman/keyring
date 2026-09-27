@@ -3772,6 +3772,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Step 12: 'VERIFY, from the host, within 90 s of the restart' (health, md5, tool-list diff, ENABLED_INTEGRATIONS).",
     "world_is": "The wrapper's own smoke check landed within the window; this worker's separate step-12 re-verification of the 4 named conditions landed at restart+375s, all PASS.",
     "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W8-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~8",
+    "surfaced_at": "2026-09-27T19:00Z",
+    "one_line": "The standing worker rule to flip the governing TO's <status> to complete and commit it with the proof cannot be carried out: this cell's own <paths> grant does not list org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/, so the flip is outside the write surface this order names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NFRA_OPLGTW.TO-OG-e-2.email-deny-release.md section 3 <paths>: infra/aws/ec2/EC2_MANIFEST.json; org/critical_paths/change_management/; org/critical_paths/.open_deploys/nfra-oplgtw-email-deny-release.json; org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~8/**; org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/** -- no task-orders/ entry.",
+        "A trial edit appending <status>complete</status> was made then reverted (Edit tool, not a git operation) before any commit -- 0 diff against HEAD on that file at the time of this row.",
+        "Sibling precedent NFRA_MCPINDEX.TO-MX-r-3.narrow-release.md:118 carries 'flipped by the issuer 2026-09-27T06:0xZ', i.e. the COO issuer performed that TO's own flip rather than its worker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "'flip the task order's <status> to complete and commit instance, deliverables and flip together' (standing worker rule).",
+    "world_is": "The proof-of-spec instance is VALID (rc=0) and every mechanical criterion is PASS, but the flip itself is left to the issuer since this cell's <paths> grant excludes task-orders/.",
+    "disarm_owner": "2.0.0_SA_COO~O"
   }
 ]
 ```
