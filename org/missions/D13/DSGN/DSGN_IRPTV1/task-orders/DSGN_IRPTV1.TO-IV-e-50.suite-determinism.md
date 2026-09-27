@@ -35,6 +35,8 @@ files; 13 failures outside the Q rows at IV-e-35's close), both in `org/missions
 code, H fix the harness or fixture with the assertion unchanged, Q leave failing with one line for the CTO) in
 `org/missions/D13/DSGN/DSGN_IRPTV1/ledger/ROUND_ANALYSIS.round4.md` section 2. `contracts/public-status.ts` stays producer-faithful (CTO 101449): never loosen it.
 
+**Amendment 1 (issuer, 2026-09-27 ~05:1xZ; rows W29-S6, W29-S7):** two more known failures are this cell's, inside its bar. (1) `fe-s-30/predicate.test.ts` F30-AC4 ("a status carrying no state ... UNCERTAIN"): a standing residual of CTO 101449's public-status.ts revert that no cell ever re-classed (class H: a contract-legal fixture, or R: the retired shape; never loosen the consumer). (2) `dsgn-irptv1/iv-e-45.face-batch.test.tsx` IVE45-AC1's UIR-29 arms pin the Holdings formatters' old code-prefix output ("USD 1,234,567.89"); TO-IV-e-52 made the card's "$1,234.56" format page-wide by CTO ruling 101768, so re-golden those arms to the new format with their intent kept (class R, the commit naming UIR-29). The suite at DEV 200d257a reads 898 pass / 17 fail.
+
 **Environment:** this slot's portal worktree carries every round-7 cell once IV-e-43 and IV-e-45 are done on it; that is your base.
 Re-measure the failing set yourself first (3 full runs): it is your denominator. A full run takes about 150-220 s. Do not start any
 server.
@@ -76,6 +78,7 @@ portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/s7-determinism-check.ts
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/s7-flaky-sources.json
 portal/src/pages/InvestorReporting/fixtures/
 portal/src/pages/InvestorReporting/render/fixtures/
+portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-45.face-batch.test.tsx
 org/missions/D13/DSGN/DSGN_IRPTV1/ledger/S7_CLASS_TABLE.json
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
