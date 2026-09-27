@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T05:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T05:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -12,11 +12,11 @@ As of 2026-09-27T05:2xZ. Earlier forms of this file are in git (`git log -p -- <
 |---|---|---|
 | irpt-performance-adapter | `bOefL9nx..` since 05:22:03Z (09-27) = Ll6t4VPa + COT actual_start (backend 05778597eb, publish f360e6c80e); earlier: P-REOPEN-01, both timing lines, S147 fix M; NO armed plan since 04:34:55Z (`approved_performance_plan = null`, no session grant) | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 / irpt-performance-cot-one-use-1-20260927 / irpt-cot-actual-window-20260927 CLOSED |
 | irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) = hop-3 six + the cross-viewer title binding (f8c72944f3) | irpt-cross-viewer-title-20260927 CLOSED |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-rb` since 03:41:53Z = f624e8a72f + hop-3 six + hop-7 certify + retained-reason + cross-viewer + the read-back poll (07f1982ab9); rollback roots xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-read-back-poll-20260927 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-wf` since 05:54:14Z = rb + ~Y's read-back WAF refresh (e2fdd01015: recipe, resident_worker, session/broker); rollback roots rb, xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-waf-refresh-20260927 CLOSED |
 | irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
 | irpt-directory-search | `o1TXq5PH..` since 22:54:12Z: UIR-07 exact full-name match first in search AND browse(q) (49b935c213); -target apply | irpt-uir07-search-rank-20260926 CLOSED |
 | irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
-| Backend branch | `irpt-smoke-p-backend-20260923` @05778597eb (not pushed) |  |
+| Backend branch | `irpt-smoke-p-backend-20260923` @3aa870163d (not pushed) |  |
 | Publish worktree | `irpt-p-publish-20260923` (source-map record after f360e6c80e; not pushed) |  |
 | Push state | LOCAL, unread against origin this turn; MSTR pushes |  |
 
@@ -47,15 +47,16 @@ None. Window 8 CLOSED 04:46:35Z (ledger @f293962a58).
 Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (window 7; INF; COT). Andrew at ~Y 04:01Z
 "yes, run the Analysis window" (W8-2): USED. Any further window or vendor use needs a new word.
 
-1. **Window 9 for ~D (101812):** a read-only round-7 walk of portal DEV 200d257a in window 5's shape, no armed plan,
-   for the CVO's L9 grades. Cut the packet and ask for both halves.
-2. **Analysis hop 6 (the live-thread break):** the CTO ruled (c) in 101792; ~Y built P_READ_BACK_WAF_REFRESH
-   (branch 4aaeaea3d5, cut on rb 07f1982ab9, apply-check rc=0) and proved it offline (101809). Ship it in the
-   resident under a ledger, then a next Analysis window on Andrew's word.
-3. **K8, the first real export:** retained reports exist at all three firms. It rides a later window.
-4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
+1. **Analysis hop 6 (the live-thread break):** the WAF-refresh fix is SERVED in the resident (wf). The live proof is
+   a fourth Analysis attempt, which needs Andrew's word at ~Y; its packet names up to 6 status GETs 15 s apart plus
+   ONE host re-capture on a challenge (~Y 101809).
+2. **K8, the first real export:** retained reports exist at all three firms; no vendor call. It needs a window packet
+   and both halves.
+3. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
+- Window 9 (~D's read-only round-7 walk) opened 05:37:40Z and closed 05:48:24Z: 0 outside the classes (@eade2ba0f5).
+- Resident wf served 05:54:14Z (@f57a08f106 OPEN; CLOSED this commit).
 - COT window disclosure (criterion 3): actual_start is now the account's first series point; served bOefL9nx,
   DELTA=0 on every reachable surface (ledger irpt-cot-actual-window-20260927).
 - INF signed-in Performance: plan 7f64b166, ONE Orion call, RPT-df47a1fc PARTIAL, 7.98% (01-01..09-22).
