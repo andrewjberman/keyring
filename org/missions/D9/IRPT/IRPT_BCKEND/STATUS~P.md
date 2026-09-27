@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T14:0xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T14:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -47,10 +47,13 @@ None. Window 8 CLOSED 04:46:35Z (ledger @f293962a58).
 Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (window 7; INF; COT). Andrew at ~Y 04:01Z
 "yes, run the Analysis window" (W8-2): USED. Any further window or vendor use needs a new word.
 
-1. **Analysis hop 6 (the live-thread break):** window 11's two defects were diagnosed by ~Y (@647f229b23): the
-   capture env, and the read-back reading the status body. Both are fixed (backend b6739556ea) and SERVED as resident
-   `fe64236bbb-cw` since 13:51:07Z (@45c9ac981e). The window-13 packet (blob 49ee40b0, @eea3452029) is out for both
-   halves; K5 adds ONE saved-portfolio GET. BOTH HALVES SIGNED (CTO @99311001d3, CRO @ce115a43f1); window 12 is closed, so create now.
+1. **Analysis hop 6 (the live-thread break):** window 13 (14:11-14:33Z) ran the fifth attempt on resident cw.
+   REQ-2119def4 went ATTENTION VENDOR_READ_BACK_REFUSED, and portfolio 2363820 is kept. It got CLOSER:
+   - capture_env worked (no LEASE_NOT_HELD), but the form sign-in met CAPTURE_FAILED:UNEXPECTED_CHALLENGE and stored
+     nothing;
+   - on redelivery the saved-portfolio read worked (7 of 7 fields present), and ONE value differs: level_as_of_type.
+   Bounds held (4 status GETs, 1 saved GET, 1 attempted re-capture). Running re-capture total: 1 attempted, 0 completed.
+   Both open items are with ~Y (P 14:34Z). Next: ~Y's fix, then window 14 under Andrew's standing word.
 2. **K8, the first real export:** window 12 (13:35-14:03Z) got further. The preview resolved on 1f149d69, and ONE
    export POST was sent, but the server REFUSED it (UNEXPECTED, BucketUnmapped): the SUBMIT also omits
    selected_tenant (buildSubmitRequest, submit.ts:64-78). Nothing was exported. ~D is cutting the submit, receipt
@@ -71,6 +74,7 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
+- Window 13 (the fifth Analysis attempt) opened 14:11:33Z and closed 14:33:10Z: 0 outside the classes; writes = K4/K5; bounds held.
 - Window 12 (K8 re-cut) opened 13:35:19Z and closed 14:03:20Z: the export refused at submit, nothing written; 0 outside the classes.
 - Window 11 (the fourth Analysis attempt) opened 12:56:51Z and closed 13:22:00Z: 0 outside the classes; writes = K4/K5 only; bounds held (@ledger irpt-ui-walk-principal-w11-20260927).
 - Andrew-direct "rec approved" (/open-calls CALL 1): ledger irpt-p-live-scope-20260923 CLOSED on the agent walks (@22c2fc699d).
