@@ -50,6 +50,28 @@ item.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "A verdict record. Z-S30 is dispositioned at the round's L8, not here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-C-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T01:35:00Z",
+    "one_line": "Post-act reads of the two served moves this seat's records covered. OA-g-2: live release is df724ef284 as signed. OA-g-3: one portal-only query grant is ACTIVE, and it needed no two-half sign-off. C-S2's sentence saying it did is corrected on its own bytes.",
+    "class": "OBSERVATION",
+    "spec_asserts": "C-S1 signed OA-g-2 for df724ef284 on the live base c5f8099440 only. C-S2's record said OA-g-3 'already needs its own two-half never-widen sign-off'.",
+    "world_is": "OA-g-2: S3 opal-gateway-latest ETag f9bd0d48 equals the df724ef284 artifact; the c5f8099440 artifact (fc23bd5d) is kept; EC2_MANIFEST.json:505 deployed_commit df724ef284; /mcp 401; the deploy entry is closed. OA-g-3: this seat ran g3.AC1.sh and g3.AC2.sh at ~01:30Z, both PASS: items=159 policy=10 active_profiles=1 portal_only_active=1 operations=[['query']]. OA-g-3's write set is one named principal's POLICY record, written through the operator command on Andrew's word naming person and scope. CLAUDE.md section 5 exempts 'an act whose write set is a literal key list the actor controls', so C-S2's sentence was wider than the law.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/NFRA_OPALAI.TO-OA-g-2.portal-grant-release.md closed @20bf1189bd",
+        "task-orders/NFRA_OPALAI.TO-OA-g-3.alyssa-portal-grant.md closed @2d3317fd02",
+        "deliverables/2.0.0_SA_COO~O/round1/checks/g3.AC1.sh and g3.AC2.sh (read-only scan, counts only)",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_GOVERNANCE_VERDICT_OPLGTW_CONTRACT_V1_2_20260926.md (correction on the superseded sentence)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A verification and correction record. It opens and adjudicates no investigation item."
   }
 ]
 ```

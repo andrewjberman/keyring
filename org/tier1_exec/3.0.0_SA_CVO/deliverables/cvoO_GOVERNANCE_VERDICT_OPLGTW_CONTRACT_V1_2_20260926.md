@@ -30,5 +30,9 @@ its CTO leg was re-seated to ~O. The earlier authorization was never withdrawn. 
   ratification of the contract.
 - The first served use of v1.2 is OA-g-3 (Alyssa Keith's portal-only grant). Under Andrew's arming it already needs
   its own two-half never-widen sign-off. This verdict adds no gate to it.
+  **CORRECTED 2026-09-27 ~01:3xZ by this seat:** the sentence above was wider than the law. The never-widen rule's
+  non-application covers "an act whose write set is a literal key list the actor controls" (CLAUDE.md section 5). OA-g-3
+  writes ONE named principal's POLICY record through the operator command, on Andrew's word naming the person and the
+  scope. It needed no two-half sign-off. See ADJUDICATION_v1.Z.md row NFRA_OPALAI-Z-C-S3.
 
 -- 3.0.0_SA_CVO~O
