@@ -1,0 +1,219 @@
+diff --git a/infra/aws/lambda/investor-reporting/ops/prospect_dates.py b/infra/aws/lambda/investor-reporting/ops/prospect_dates.py
+index 5ecbc6b..e49477d 100644
+--- a/infra/aws/lambda/investor-reporting/ops/prospect_dates.py
++++ b/infra/aws/lambda/investor-reporting/ops/prospect_dates.py
+@@ -1,8 +1,9 @@
+ """Retained prospect date evidence; unknown source semantics stay unavailable.
+ 
+ The bounded undated proof covers CSVs consisting entirely of identifier, value
+-and optional currency columns. Preambles, extra columns, skips and dated price
+-valuations require a future explicit source-date contract, never a fallback.
++and optional currency columns, and the two-column CSV template (Ticker/Symbol plus
++Dollars or a weight). Preambles, extra columns, skips and dated price valuations
++require a future explicit source-date contract, never a fallback.
+ """
+ import csv
+ import hashlib
+@@ -78,6 +79,48 @@ def _undated_csv(data, document):
+         return False
+ 
+ 
++# The template reader's own header vocabulary (intake/template_reader.py): column A names the
++# security, column B the basis. Shares is left out: a priced quantity carries a price date.
++_TEMPLATE_SYMBOL_HEADERS = ("ticker", "symbol")
++_TEMPLATE_UNDATED_BASES = {"dollars": "USD", "target weight": "TARGET_WEIGHT", "current weight": "CURRENT_WEIGHT"}
++
++
++def _undated_template_csv(data, document):
++    """The v2 two-column CSV template, proved cell by cell against its frozen census.
++
++    The reader keeps only columns A and B, so the RAW file is re-read here. Every row must
++    be exactly two cells (a date in a third column would otherwise vanish unseen), and every
++    non-blank row must be the census's own cells. XLSX has no bounded proof yet.
++    """
++    try:
++        template = document["template"]
++        if (not isinstance(data, bytes) or not 0 < len(data) <= 1024 * 1024
++                or template.get("schema_version") != "irpt-template.v2" or template.get("file_type") != "csv"
++                or template.get("content_sha256") != hashlib.sha256(data).hexdigest()
++                or template.get("findings") or document.get("findings") or document.get("prices")
++                or document.get("options", {}).get("price_date") is not None
++                or any(row.get("price") is not None for row in document["rows"])):
++            return False
++        headers = template["headers"]
++        a1, b1 = headers["A"]["text"].strip().lower(), headers["B"]["text"].strip().lower()
++        if a1 not in _TEMPLATE_SYMBOL_HEADERS or _TEMPLATE_UNDATED_BASES.get(b1) != template.get("basis"):
++            return False
++        census = {1: (headers["A"], headers["B"])}
++        census.update({row["row"]: (row["cells"]["A"], row["cells"]["B"]) for row in template["rows"]})
++        seen = set()
++        for number, values in enumerate(csv.reader(io.StringIO(data.decode("utf-8-sig"), newline=""), strict=True), 1):
++            if not values or values == ["", ""]:
++                continue
++            cells = census.get(number)
++            if (len(values) != 2 or cells is None
++                    or any(c["formula"] or c["invalid"] or c["text"] != v for c, v in zip(cells, values))):
++                return False
++            seen.add(number)
++        return bool(template["rows"]) and seen == set(census)
++    except (ValueError, KeyError, TypeError, IndexError, AttributeError, UnicodeError, csv.Error):
++        return False
++
++
+ class RetainedProspectDates:
+     def __init__(self, requests, principal, record, *, data_firm=None):
+         self.requests, self.principal, self.record = requests, principal, record
+@@ -126,16 +169,20 @@ class RetainedProspectDates:
+         data = self._artifact(ref["artifact_ref"], "NORMALIZED_PORTFOLIO", owner=original_owner)
+         document = json.loads(data)
+         canonical = json.dumps(document, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode()
+-        # Both frozen schemas bind here (intake/portfolio.py:17-18): v1 is the CSV_UPLOAD
+-        # lane this undated proof covers; v2 is the TEMPLATE_UPLOAD lane, which is bound
+-        # and then answered "unavailable" below, never refused. The portal sends the
+-        # prospect-v1 capability on every status-job read, so a v2 job must not refuse.
++        # Both frozen schemas bind here (intake/portfolio.py:17-18): v1 is the CSV_UPLOAD lane,
++        # v2 the TEMPLATE_UPLOAD lane. A v2 CSV template gets its own positive proof below
++        # (window 15's live Overview is one). Anything that proof cannot cover (XLSX, Shares,
++        # findings) is bound and then answered "unavailable", never refused: the portal sends
++        # the prospect-v1 capability on every status-job read.
+         if (hashlib.sha256(canonical).hexdigest() != sha or document != resolved.get("document")
+                 or document.get("schema_version") not in ("irpt-normalized-portfolio.v1",
+                                                           "irpt-normalized-portfolio.v2")):
+             raise RequestReadRefused("DATE_FROZEN_INPUT_BINDING")
+         source = document.get("source", {})
+-        if source.get("lane") != "CSV_UPLOAD":
++        template = (source.get("lane") == "TEMPLATE_UPLOAD"
++                    and document["schema_version"] == "irpt-normalized-portfolio.v2"
++                    and (document.get("template") or {}).get("file_type") == "csv")
++        if source.get("lane") != "CSV_UPLOAD" and not template:
+             return None
+         if dict(document["owner"], account_ids=[], prospect_input_id=source["upload_id"]) != original_owner:
+             raise RequestReadRefused("DATE_INPUT_OWNER_BINDING")
+@@ -144,8 +191,13 @@ class RetainedProspectDates:
+                 or original.get("content_sha256") != source.get("content_sha256")
+                 or original["artifact_ref"].get("sha256") != source.get("content_sha256")):
+             raise RequestReadRefused("DATE_ORIGINAL_SOURCE_BINDING")
+-        raw = self._artifact(original["artifact_ref"], "ORIGINAL_CSV", owner=original_owner)
+-        if not _undated_csv(raw, document):
++        if template:
++            raw = self._artifact(original["artifact_ref"], "ORIGINAL_HOLDINGS", owner=original_owner)
++            undated = original.get("file_type") == "csv" and _undated_template_csv(raw, document)
++        else:
++            undated = _undated_csv(self._artifact(original["artifact_ref"], "ORIGINAL_CSV", owner=original_owner),
++                                   document)
++        if not undated:
+             return None
+         return {"input_id": ref["input_id"], "content_sha256": sha}
+ 
+diff --git a/infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py b/infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py
+index a11cd64..b86892c 100644
+--- a/infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py
++++ b/infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py
+@@ -238,3 +238,107 @@ def test_template_lane_v2_document_binds_and_answers_unavailable_never_refuses(v
+     else:
+         with pytest.raises(RequestReadRefused, match=expected):
+             dates.input()
++
++
++# The TEMPLATE_UPLOAD lane (window 15's live Overview, REQ-67e12718): its v2 document, trimmed to what the proof reads.
++TEMPLATE_RAW = b"Ticker,Dollars\nAAPL,10.01\nVNQ,2.02\n"
++
++
++def _cell(column, row, text):
++    return {"column": column, "row": row, "text": text, "raw": text, "formula": False, "invalid": False}
++
++
++def template_document(raw=TEMPLATE_RAW, header_b="Dollars", basis="USD", file_type="csv"):
++    import hashlib
++    rows = [{"row": n, "symbol": s, "amount": a, "basis": basis, "cells": {"A": _cell("A", n, s), "B": _cell("B", n, a)}}
++            for n, (s, a) in ((2, ("AAPL", "10.01")), (3, ("VNQ", "2.02")))]
++    owner = {"firm_id": "cottonwood", "principal_id": "irpt-uiwalk-1790524948@opal.test", "advisor_id": None}
++    return {"schema_version": "irpt-normalized-portfolio.v2", "owner": owner, "findings": [], "prices": {},
++            "options": {"price_date": None, "reference_notional": None},
++            "rows": [{"security_id": r["symbol"], "price": None, "original": r} for r in rows],
++            "source": {"lane": "TEMPLATE_UPLOAD", "upload_id": "UP-" + "3" * 64, "file_type": file_type,
++                       "content_sha256": hashlib.sha256(raw).hexdigest()},
++            "template": {"schema_version": "irpt-template.v2", "file_type": file_type, "basis": basis, "findings": [],
++                         "content_sha256": hashlib.sha256(raw).hexdigest(), "sheet": None,
++                         "headers": {"A": _cell("A", 1, "Ticker"), "B": _cell("B", 1, header_b)}, "rows": rows}}
++
++
++def test_template_csv_proof_holds_for_the_live_window_15_shape():
++    from prospect_dates import _undated_template_csv
++    assert _undated_template_csv(TEMPLATE_RAW, template_document()) is True
++
++
++@pytest.mark.parametrize("change", ["third_column", "extra_row", "cell_text", "shares", "findings", "xlsx",
++                                    "digest", "price", "price_date", "no_rows"])
++def test_template_csv_proof_refuses_anything_it_cannot_see_whole(change):
++    import hashlib
++    from prospect_dates import _undated_template_csv
++    raw, document = TEMPLATE_RAW, template_document()
++    if change == "third_column":  # a date the two-column reader would drop unseen
++        raw = b"Ticker,Dollars,As Of\nAAPL,10.01,2026-09-25\nVNQ,2.02,2026-09-25\n"
++        document["template"]["content_sha256"] = hashlib.sha256(raw).hexdigest()
++    elif change == "extra_row":
++        raw = TEMPLATE_RAW + b"MSFT,1.00\n"
++        document["template"]["content_sha256"] = hashlib.sha256(raw).hexdigest()
++    elif change == "cell_text":
++        document["template"]["rows"][1]["cells"]["B"]["text"] = "2.03"
++    elif change == "shares":
++        document = template_document(header_b="Shares", basis="SHARES")
++    elif change == "findings":
++        document["template"]["findings"] = [{"code": "UNIT_UNRECOGNIZED"}]
++    elif change == "xlsx":
++        document = template_document(file_type="xlsx")
++    elif change == "digest":
++        raw = raw.replace(b"\n", b"\r\n")
++    elif change == "price":
++        document["rows"][0]["price"] = {"value": "1", "date": "2026-09-25"}
++    elif change == "price_date":
++        document["options"]["price_date"] = "2026-09-25"
++    elif change == "no_rows":
++        raw = b"Ticker,Dollars\n"
++        document["template"].update(rows=[], content_sha256=hashlib.sha256(raw).hexdigest())
++    assert _undated_template_csv(raw, document) is False
++
++
++@pytest.mark.parametrize("file_type,raw,expected", [
++    ("csv", TEMPLATE_RAW, "PROVED"),
++    ("csv", b"Ticker,Dollars,As Of\nAAPL,10.01,2026-09-25\nVNQ,2.02,2026-09-25\n", None),
++    ("xlsx", TEMPLATE_RAW, None)])
++def test_template_lane_input_binds_the_original_holdings_and_proves_or_answers_unavailable(file_type, raw, expected):
++    """Through RetainedProspectDates.input(): the ORIGINAL_HOLDINGS family (not ORIGINAL_CSV), the template owner
++    binding (submission.PROSPECT_UPLOAD_LANES), and an XLSX template never touching the original."""
++    import hashlib
++    from unittest.mock import Mock
++    from prospect_dates import RetainedProspectDates
++    document = template_document(file_type=file_type)
++    document["source"]["content_sha256"] = hashlib.sha256(raw).hexdigest()
++    document["template"]["content_sha256"] = hashlib.sha256(raw).hexdigest()
++    canonical = json.dumps(document, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode()
++    sha = hashlib.sha256(canonical).hexdigest()
++    upload = document["source"]["upload_id"]
++    owner = dict(document["owner"], account_ids=[], prospect_input_id=upload)
++    composition = {"schema_version": "irpt-analysis-composition.v1",
++                   "browser": {"input_id": "portfolio_" + sha, "client_id": None, "snapshot_id": None, "account_ids": []},
++                   "resolved": {"input_ref": {"input_id": "portfolio_" + sha, "content_sha256": sha,
++                                              "artifact_ref": {"sha256": sha}},
++                                "owner": owner, "input_owner": document["owner"],
++                                "client": {"client_id": None, "account_ids": []}, "document": document}}
++    record = {"owner": owner, "composition_ref": {"family": "REQUEST_COMPOSITION"}, "accepted_at": 1}
++    families = []
++    dates = RetainedProspectDates(Mock(), dict(owner), record)
++
++    def artifact(ref, family, owner=None):
++        families.append(family)
++        return {"REQUEST_COMPOSITION": json.dumps(composition).encode(), "NORMALIZED_PORTFOLIO": canonical,
++                "ORIGINAL_HOLDINGS": raw}[family]
++    dates._artifact = artifact
++    dates._row = lambda key: {"identity": upload, "owner": document["owner"], "file_type": file_type,
++                              "content_sha256": document["source"]["content_sha256"],
++                              "artifact_ref": {"sha256": document["source"]["content_sha256"]}}
++    result = dates.input()
++    if expected == "PROVED":
++        assert result == {"input_id": "portfolio_" + sha, "content_sha256": sha}
++    else:
++        assert result is None
++    assert families[:2] == ["REQUEST_COMPOSITION", "NORMALIZED_PORTFOLIO"]
++    assert ("ORIGINAL_HOLDINGS" in families) == (file_type == "csv") and "ORIGINAL_CSV" not in families
