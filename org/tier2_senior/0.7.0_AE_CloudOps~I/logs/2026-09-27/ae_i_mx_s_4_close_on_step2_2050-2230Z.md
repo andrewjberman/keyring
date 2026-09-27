@@ -144,3 +144,93 @@ query type 2 — the same type `bd-49f-runner` already pulls — so the route ne
 body, not a new crawler; and `asset_super_class` is the one column with no documented route at all.
 
 **[this seat]** Report once to the issuer, then event-driven on the inbox.
+
+---
+
+# ADDENDUM 2245-2320Z — the Z-S29 redaction, and why it was aimed at the wrong password
+
+**archetype:** DIAGNOSE
+
+**Task Order:** none — a direct ask from `1.0.0_SA_CTO~O` (msgs 224452Z, 230222Z), routed to this lane
+because the owned-paths gate refused it to its author under `CLOUD_OPS_OR_ETL`.
+**Status:** COMPLETE. 24 occurrences removed across 22 files. Generic re-scan reads 0 for all three
+real credentials. Commits `e6482c530c` and `ce0782aaf3`, both LOCAL.
+
+## What was asked, and what was actually true
+
+The ask was mechanical: strip a plaintext portal password from 6 tracked files. Row Z-S29's evidence
+was `git grep -c 'BD_PASSWORD=<one prefix>'` → README.md:5, WORKING_WORKFLOW.md:1.
+
+Rather than grep the same literal, I wrote a generic detector: match the *assignment*, then subtract
+values that are variable refs, placeholders, or empty. Over a printed denominator of 135 files it
+found **56 literal password assignments carrying 6 distinct values**. Two independent instruments
+then agreed exactly on the ask's scope — README x5, WORKING_WORKFLOW x3, four smartx debug files x1 —
+which is what made the *disagreement elsewhere* worth trusting.
+
+Then one hash comparison against `opal/bd/credentials` settled it:
+
+| fingerprint | occurrences | is it the live secret? |
+|---|---|---|
+| `7c3755be9e80` (len=8) | 8, in the 2 files Z-S29 named | **NO — superseded** |
+| `161ff0eb3831` (len=11) | 18, across 16 files Z-S29 never named | **YES — hash-identical to Secrets Manager** |
+
+**Z-S29 redacted an old password and left the live one in 16 other files.** Filed as Z-S31. No value
+was ever printed: each is named by length, a 12-hex sha256 prefix, and a character-class shape.
+
+## Why the narrow instrument missed it
+
+A single-literal grep can only find the literal it is handed, and the one it was handed happened to
+be stale. The guard was exactly as wide as its enumeration. Nothing about the census *looked* narrow
+— it returned a real number against real files, and that number was correct for the value it asked
+about. This is the same shape as a denominator whose scope is narrower than the sentence beside it.
+
+## Two instruments of mine also disagreed, and I was wrong first
+
+My own inventory pass reported **6** occurrences where the detector reported **18**. I did not
+average them or pick the convenient one. The fault localised cleanly: the inventory used one
+combined alternation, and on `const PASSWORD = process.env.BD_PASSWORD || '<lit>'` it consumes
+`process.env.BD_PASSWORD` as the value, so the `|| '<lit>'` is never reached. Two independent
+patterns are required. **18 was right; my 6 was the broken instrument.**
+
+## The fix is three fixes, because one would have been wrong twice
+
+| context | n | fix | why not the obvious one |
+|---|---|---|---|
+| `.md` | 5 | `<password-from-Secrets-Manager>` | docs have no runtime |
+| `.sh` | 1 | `${BD_PASSWORD:?<msg>}` | a placeholder is NOT inert here — the script would attempt a login with the literal placeholder string. `${VAR:-default}` is already this file's idiom two lines below |
+| `.ts` | 12 | `\|\| ''` **plus** a top-level `throw` | a bare `\|\| ''` sends an empty password into the Playwright login, which dies as a navigation **timeout** — the exact signature that hid the 95-day MFA break (Z-S8/Z-S9, 69 runs SSM called Success). Verified no importers first, so a top-level throw cannot break one |
+
+## What I did NOT do
+
+- **Did not widen silently.** On finding the live password in 16 unnamed files I filed a row and asked
+  the disarm owner, rather than editing 13 production downloaders on my own authority. The CTO named
+  me owner 3 minutes later, and then it was in scope.
+- **Did not rewrite history.** Andrew's.
+- **Did not touch `BD_USERNAME`,** still hardcoded beside several of these lines. Z-S29's text names
+  the username too, but neither of the CTO's asks named it. Flagged, not folded in.
+- **Did not assert an absolute non-ASCII zero.** My first guard did, and it refused on bytes that
+  predate this edit by months. The correct test is a per-file **delta**; these files carry 4–392
+  non-ASCII characters each and this edit added none.
+
+## Blocker — RAISED, then ANSWERED and withdrawn
+
+**None.** Recorded with its resolution rather than silently dropped, because the reasoning was wrong
+in an instructive way.
+
+Both commits are LOCAL (`origin/CLOUD` read `8bad3863e5` by `ls-remote` at 23:16Z). I raised that as
+a blocker at 231622Z on the reasoning that a history rewrite starts from the *pushed* tree, so a
+local commit would miss tonight's purge and the CTO's deadline would have been met on paper only.
+
+`1.0.0_SA_CTO~O` answered at 231710Z: **a commit is enough and a push is not needed.** Per MSTR~Z's
+freeze notice (213908Z) the trunk is pushed on cadence, and site Z runs the same rewrite *on this
+clone* with `--preserve-commit-hashes`, so local commits are carried into it.
+
+**What I got wrong:** I inferred the rewrite's input plane from how rewrites usually work, instead of
+reading the freeze notice that declares it. The push state I reported was measured and correct; the
+*consequence* I attached to it was assumed. That is the same shape as an unmeasured direction
+borrowing credibility from a real number sitting next to it — the hash and the `ls-remote` were
+sound, and the sentence built on them was not.
+
+Two items remain open and neither is this seat's: whether the literal leaves OLDER history (the
+replace-text scope) and the rotation. Both are carded to Andrew. `BD_USERNAME` is ruled not a secret
+and out of scope unless Andrew says otherwise.
