@@ -64,7 +64,10 @@ PY
 chown ec2-user:ec2-user SHA256SUMS $R/cutover_receipt.json
 sudo -u ec2-user PYTHONPATH="$ROOT" /usr/bin/python3.12 - "$ROOT" <<'PY'
 import sys
-sys.path.insert(0, sys.argv[1] + '/reports')
+# the factory check runs on resident_main.py's OWN sys.path (ycharts/generate/resident_main.py:17-21): the st
+# worker imports `extract` at module level, which lt's did not, so a reports-only path cannot import it
+for rel in ('intake', 'ops', 'reports', '_keys', '_authz', '_gate', 'ycharts/session', 'ycharts/extract'):
+    sys.path.insert(0, sys.argv[1] + '/' + rel)
 import resident_installed as ri
 rt = ri.build_resident_runtime()
 print('factory OK:', sorted(rt), 'enrolled', rt['assembly'].session.broker.enrolled_user_id)
