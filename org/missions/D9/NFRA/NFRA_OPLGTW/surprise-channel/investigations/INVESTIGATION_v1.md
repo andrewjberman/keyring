@@ -3840,6 +3840,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "A danger-node cross-reference in the pre-commit risk reflex identifies a claim actually made ABOUT the file being committed.",
     "world_is": "The reflex's danger map appears to match on basename alone across distinct full paths, surfacing three false-positive cross-service citations for every opal-gateway/deploy-to-ec2.sh commit.",
     "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T21:15Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The advisory is non-blocking and wrong-object. The pre-commit risk reflex matched the bare basename deploy-to-ec2.sh, which several services' directories share, and named three unrelated services. The change touches only infra/aws/ec2/opal-gateway/deploy-to-ec2.sh, whose census is exactly 1 file (+2/-1), and no other service's deploy script. It is a tooling false-match with no hazard to this act.",
+    "adjudicates": [
+      "NFRA_OPLGTW-Z-W9-S1"
+    ],
+    "one_line": "The issuer closes Z-W9-S1: the risk reflex's HOLD advisory matched deploy-to-ec2.sh by basename across services; OG-s-1 touches only the opal-gateway copy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "OG-s-1 release census: git diff --stat fe94911257 6a98a0553a = 1 file, infra/aws/ec2/opal-gateway/deploy-to-ec2.sh"
+      ]
+    },
+    "spec_asserts": "The commit-time risk reflex names the services a change can affect.",
+    "world_is": "It names services by filename, so same-named scripts in other directories are reported."
   }
 ]
 ```
