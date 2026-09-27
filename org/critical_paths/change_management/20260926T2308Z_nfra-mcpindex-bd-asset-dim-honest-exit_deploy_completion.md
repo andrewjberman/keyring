@@ -12,59 +12,18 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | CLOUD: the exit 1 inserted into the failure branch | commit hash |  | OPEN |
-| L2 | activation | SSM document opal-bd-asset-dim-download, new DocumentVersion via update-document | describe-document LatestVersion advances and Hash changes from 0be92f2611060f033011ed74ff5647be127f0511ee723ce42f890d3c7a7a30e6 |  | OPEN |
-| L3 | verify | the LIVE document content at the version the trigger Lambda will run | get-document shows 'exit 1' inside the DOWNLOAD_RC/MERGE_RC failure branch |  | OPEN |
-| L4 | activation | ONE ad-hoc vendor-facing run via Lambda bd-asset-dim-trigger, on Andrew's word 2026-09-26 22:05Z + 22:15Z | the invoke response, the SSM CommandId, and the run ledgered in this lane's deliverables |  | OPEN |
-| L5 | verify | the SSM command status for that run (AC4's evidence) | list-command-invocations Status for the CommandId -- Failed if the download fails, which is the honest report the old document could not make |  | OPEN |
+| L1 | git | CLOUD: the exit 1 inserted into the failure branch | commit hash | 4b3a757410 -- one line inserted into the failure branch of infra/aws/ssm/opal-bd-asset-dim-download.json, copied from the estate idiom; 59 -> 60 runCommand lines, every other line byte-identical, asserted in the edit script. | CLOSED 20260927T001914Z |
+| L2 | activation | SSM document opal-bd-asset-dim-download, new DocumentVersion via update-document | describe-document LatestVersion advances and Hash changes from 0be92f2611060f033011ed74ff5647be127f0511ee723ce42f890d3c7a7a30e6 | ssm update-document -> DocumentVersion 2, Status Updating then Active; Hash 0be92f2611060f033011ed74ff5647be127f0511ee723ce42f890d3c7a7a30e6 -> 5130ead6f5b0f201739af7a6fc65cb67574f7de2e6f89fee9e5f18a67d442129. update-document-default-version -> DefaultVersion 2, so the default and $LATEST agree rather than diverging for a human reader. v1 retained; nothing destroyed. | CLOSED 20260927T001915Z |
+| L3 | verify | the LIVE document content at the version the trigger Lambda will run | get-document shows 'exit 1' inside the DOWNLOAD_RC/MERGE_RC failure branch | get-document --document-version $LATEST (the version the trigger Lambda pins) re-read by this seat: the failure branch now carries 'exit 1' as its last statement, runCommand is 60 lines, and LIVE == REPO compared line by line. Not taken from the update call's own success. | CLOSED 20260927T001917Z |
+| L4 | activation | ONE ad-hoc vendor-facing run via Lambda bd-asset-dim-trigger, on Andrew's word 2026-09-26 22:05Z + 22:15Z | the invoke response, the SSM CommandId, and the run ledgered in this lane's deliverables | ONE ad-hoc vendor-facing run, fired 2026-09-26T23:31:15Z on Andrew's word ('rec a approved' ~22:05Z; 'vendor call is fine you have egress' ~22:15Z). lambda invoke bd-asset-dim-trigger RequestResponse -> StatusCode 200, no FunctionError, body 'Asset dim download triggered on i-0e6f6dc014fdcf1cd, command 9ba8d9c9-6759-4a4c-a1ac-d571abcde94f'. Run ledgered here and in this lane's deliverables. ONE run only; no new credential, no account change, no vendor interaction. | CLOSED 20260927T001919Z |
+| L5 | verify | the SSM command status for that run (AC4's evidence) | list-command-invocations Status for the CommandId -- Failed if the download fails, which is the honest report the old document could not make | THE POINT OF THE WHOLE ACT: SSM get-command-invocation for 9ba8d9c9-6759-4a4c-a1ac-d571abcde94f reads Status=Failed, StatusDetails=Failed, ResponseCode=1, 23:32:14Z -> 23:32:56Z. The identical failure recorded Success before this change. Cause reproduced live and unchanged: 'Phase 1: Login ... Error: TimeoutError: forURL: Timeout 30000ms exceeded ... waiting for navigation to **/bd3.bdreporting.com/** until load', then 'Download exit code: 1', 'SKIP: silver conversion skipped', 'ERROR: Asset-dim pipeline failed (download_rc=1 merge_rc=99)'. This is the 70th consecutive failure and AC4's evidence. AC1 remains FAILING as anticipated -- it needs a successful download. SIDE EFFECT FIRED AND IS NOT YET REMEDIED: the exit 1 returns before 'shutdown -h +2', so i-0e6f6dc014fdcf1cd is left RUNNING and no CloudWatch auto-stop exists for it (describe-alarms returns []). Stopping an EC2 is human-confirmation-gated, so it is surfaced to Andrew and this ledger is HELD rather than closed. | CLOSED 20260927T001922Z |
 | L6 | git | the ledger close | commit hash |  | OPEN |
 
 ## Log
 
 - 20260926T230840Z OPENED by 0.7.0_AE_CloudOps~I with 6 leg(s)
-
-## Blast radius and rollback per key (NEVER-2; measured BEFORE the act)
-
-**WRITE SET -- two things, and one of them is a vendor-facing side effect.**
-
-1. SSM document `opal-bd-asset-dim-download`. PRE-ACT, read at 2026-09-26 23:0xZ:
-     DefaultVersion 1 | LatestVersion 1 | Status Active
-     Hash 0be92f2611060f033011ed74ff5647be127f0511ee723ce42f890d3c7a7a30e6 (Sha256)
-     ONE version exists. The change adds version 2; nothing is destroyed.
-
-   >> ROLLBACK IS **NOT** A DEFAULT-VERSION FLIP, AND ASSUMING IT WAS WOULD HAVE LEFT A DEAD
-   ROLLBACK IN THIS ENTRY. `bd-asset-dim-trigger/lambda_function.py` calls send_command with
-   `DocumentVersion='$LATEST'`, NOT with the default. So `update-default-version 1` would change
-   nothing about what actually runs. ROLLBACK = `update-document` again with the v1 content, which
-   is `git show 4b3a757410^:infra/aws/ssm/opal-bd-asset-dim-download.json`, creating a version 3
-   that restores the old bytes. Read from the producer's own code, not predicted from the API's shape.
-
-2. EC2 `i-0e6f6dc014fdcf1cd` (`bd-assets`), currently STOPPED, will be STARTED by the trigger Lambda
-   and shuts itself down 2 minutes after the run. Rollback: none needed; it is the instance's normal
-   daily cycle. NOTE the interaction with this very change: on a FAILING run the new `exit 1` returns
-   before `shutdown -h +2`, so this instance may be left RUNNING. Measured precedent says it is not a
-   leak in practice -- `opal-bd-allocation-download` already uses this exact pattern and has failed
-   daily since 2026-06-23 with no bd-* runner in the running-instance list -- but on THIS run the
-   instance state is checked afterwards and stopped by hand if it is up. That check is L5's.
-
-**THE VENDOR-FACING SIDE EFFECT, named because it is the part that is not ours.** The run attempts ONE
-login to the Black Diamond portal with the existing credential from `opal/bd/credentials`. Andrew's
-word, 2026-09-26 ~22:05Z ("rec a approved") and ~22:15Z ("vendor call is fine you have egress"),
-covers exactly this: ONE ad-hoc run of the EXISTING producer. It does NOT cover a new credential, an
-MFA device, an account change, or any contract. If the run shows the failure needs one of those, this
-lane STOPS, files a BLOCKING row and reports -- MX-s-4 step 1's own carve-out.
-
-**NOT TOUCHED:** the EventBridge rule `bd-asset-dim-pipeline-trigger` (read, never changed -- Monday
-22:10Z remains the acceptance); the sibling documents `opal-bd-fees-download` (which carries the
-IDENTICAL missing `exit 1` and is NOT this order's) and `-allocation`, `-transaction`, `-realized`,
-`-unrealized`; any IAM role or policy; any gold or served artifact.
-
-**EXPECTED OUTCOME, BOTH BRANCHES, stated before the act.**
-  - EXPECTED (the 70th consecutive failure): the login times out again, the wrapper now exits 1, and
-    SSM records **Failed**. That is a PASS for AC4 -- the honest report the old document could not
-    make -- and simultaneously leaves AC1 FAILING, because AC1 needs a successful download. Both at
-    once is the anticipated result, not a contradiction.
-  - SURPRISE (the login succeeds): AC1 becomes reachable, the merge runs, and `silver/assets/` gets a
-    new partition. Then the 95-day outage was transient or environmental, and that is a finding worth
-    as much as the repair.
-  - EITHER WAY the run is ledgered in this lane's deliverables, per MX-s-4's preflight.
+- 20260927T001914Z LEG L1 closed: 4b3a757410 -- one line inserted into the failure branch of infra/aws/ssm/opal-bd-asset-dim-download.json, copied from th
+- 20260927T001915Z LEG L2 closed: ssm update-document -> DocumentVersion 2, Status Updating then Active; Hash 0be92f2611060f033011ed74ff5647be127f0511ee72
+- 20260927T001917Z LEG L3 closed: get-document --document-version $LATEST (the version the trigger Lambda pins) re-read by this seat: the failure branch n
+- 20260927T001919Z LEG L4 closed: ONE ad-hoc vendor-facing run, fired 2026-09-26T23:31:15Z on Andrew's word ('rec a approved' ~22:05Z; 'vendor call is fin
+- 20260927T001922Z LEG L5 closed: THE POINT OF THE WHOLE ACT: SSM get-command-invocation for 9ba8d9c9-6759-4a4c-a1ac-d571abcde94f reads Status=Failed, Sta
