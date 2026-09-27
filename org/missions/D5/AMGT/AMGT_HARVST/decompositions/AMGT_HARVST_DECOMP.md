@@ -1095,3 +1095,52 @@ finding it is exactly the outcome that should stop you, and a careless reader re
 
 **COST:** one `ls` before naming a cell. **NON-APPLICATION:** the first round of a project, where no id is
 spent yet.
+
+## 19. ROUND 8 INPUT -- THE ARTICLE-ID DEDUPE IS ONE FLAG WE HAVE NEVER PASSED (Andrew-direct 2026-09-27)
+
+**Andrew-direct:** *"we need a mechanism for article ID so we dont constantly pull same articles into database.
+I believe the News pipeline has an existing solution for this."* **He is right that it exists. Nothing needs
+building. It needs passing.**
+
+### THE THREE LAYERS, and which were actually ON tonight
+
+| layer | what it prevents | mechanism | state in tonight's runs |
+|---|---|---|---|
+| 1 | the BODY REQUEST for an article we hold | `--new-only` -> `config["new_only"]` | ⛔ **OFF -- never passed** |
+| 2 | a duplicate bronze WRITE | `C-DEDUPE-BY-KEY` in `put_listing_bronze` | ON, structural, always |
+| 3 | the VENDOR FETCH of a listing page we hold | `harvest_dedupe` | **ON already** |
+
+⛔ **CORRECTION TO THIS SEAT'S OWN FIRST READING.** I reported that "none of it is on in our runs" and cited
+`publishers.py:228` (`self.harvest_dedupe = False`) as evidence. **That line is only the pre-wiring default.**
+`worker.py:176-178` derives the live value -- `harvest_on = self.config.get("harvest_grammar", False) and
+self.harvest_client is not None`, then `client.harvest_dedupe = harvest_on` -- and `--harvest-grammar`
+(`__main__.py:180`) was passed on EVERY invocation tonight. **So layer 3 was on the whole time, and reading a
+constructor default as the runtime state was the error.** A default is not a state.
+
+### LAYER 1 IS THE REAL GAP AND IT IS ARTICLE-ID SHAPED, which is exactly what he asked for
+
+`worker.py:138-158`, when `new_only` is set:
+- reads `SELECT article_id, path FROM articles WHERE publisher=? AND security_key=?`,
+- builds `known_ids` **AND** `known_urls` (a URL match catches a re-issued id),
+- hands both to the client, where `publishers.py:400` skips on `identity in self.known_ids` and `:461` on
+  `identity in known_ids or item.get("url") in known_urls`,
+- and reports `mode: new_only` with `previously_stored: <n>` on the run artifact.
+
+**MEASURED, so it is not an empty mechanism:** the local `articles` table holds **121 rows** --
+sa 46 / wsj 26 / bbg 19 / barrons 15 / ft 15, across 3-5 securities each. Every run tonight reported
+`mode: qualification` and `previously_stored: 0`, so **46 already-stored sa articles were re-offered to the
+body path instead of being skipped.**
+
+### WHAT ROUND 8's CAPTURE CELL CARRIES
+
+**`--new-only` on every `run` invocation**, with the criterion printing `previously_stored` and `mode` from the
+run artifact -- a dedupe that cannot be seen in the evidence is a dedupe nobody can grade.
+
+⚠ **AND THE BOUND ON LAYER 1, stated so it is not oversold: `known_ids` come from DEVICE-LOCAL sqlite, keyed
+`(publisher, security_key)`.** It dedupes against THIS device's history, not against S3. A fresh machine, or a
+worker worktree without the main tree's `.runtime`, starts blind -- which is the same locality that killed
+round 6 (`Z-W19-S1`). Layer 3 is the one that survives a device change, because it reads bronze. **They are
+complementary and the cell should pass both rather than treat either as the answer.**
+
+**NON-APPLICATION:** a first-ever capture for a security has nothing stored, so layer 1 is inert there by
+construction -- which is correct, not a defect.
