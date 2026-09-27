@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T06:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T10:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -57,6 +57,9 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
    UNAVAILABLE/UNEXPECTED (BucketUnmapped for the internal viewer's own firm), and resolveOne rethrew that at :255.
    The fix is in the portal (DSGN_IRPTV1-S20, ~D's lane, a round-8 candidate): thread the target's selectedTenant.
    Re-cut window 10's packet as window 11 once the fix is on DEV.
+   BLOCKER CHAIN (10:2xZ): the fix is TO-IV-e-53 in DSGN_IRPTV1 round 8 (issued @83576f9dd9). It has 0 portal commits,
+   because ~D seated 0 workers: C: is at 14 GB free, under the 15 GB seating floor, awaiting Andrew. P's scratchpad
+   holds 72 MB, so it is not the lever.
 3. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
