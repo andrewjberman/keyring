@@ -1972,6 +1972,30 @@
     "spec_asserts": "The task order's Build paragraph: a new header/firmDisplay.ts keyed by tenant key, with names copied from the portal's own existing partner-name maps.",
     "world_is": "A NEW file hand-typing a registered firm token as a bare string literal is REFUSE under the currently-enforced naming-gate, in every file type it grades (.ts included), with no per-line waiver route for anything but .py (NAMING_LEGACY_READS.json only applies when path.endswith('.py')) -- so the literal-map shape the BUILD text describes cannot be committed as written; a general, token-free title-case transform satisfies the same acceptance rows (UIR-04/13/30) without the conflict.",
     "notes": "Not blocking this delivery: resolved in-lane by dropping the literal map entirely (the BUILD text's own fallback clause, 'a tenant with no entry shows a neutral title-cased form of its key', is what this now does universally). Filed because a FUTURE cell that needs a genuine per-firm literal (a token this transform cannot spell correctly, e.g. an acronym or a name whose title-case does not match the marketing spelling) will hit the identical REFUSE with the identical missing exemption."
+  },
+  {
+    "id": "DSGN_IRPTV1-W35-S2",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~35",
+    "surfaced_at": "2026-09-27T15:10:00Z",
+    "one_line": "IV-e-57 amendment 1 (CTO 101880) requires Export disabled whenever the ACTIVE tab (Analysis included) has no answer-bearing report; the decomp's own `writes` column for IV-e-57 names only SearchSelect/index.tsx/TabShell/SampleView/ClientSearch, never AnalysisTab.tsx, and AnalysisTab.tsx threads no answer-bearing signal up to index.tsx the way ReportingTab's onExportTarget does -- so index.tsx cannot distinguish 'Analysis has an answer-bearing report' from 'Analysis has none': it can only ever prove the CLOSED case for Analysis (fixed here, permanently disabled) until a future cell holding AnalysisTab.tsx's own grant publishes the real signal.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D (issuer, decomp `writes` authority) or 1.0.0_SA_CTO (PRD/amendment authority) -- a future cell whose grant includes tabs/analysis/AnalysisTab.tsx threads an onExportTarget-shaped callback up to index.tsx (mirroring ReportingTab.tsx's own effect) so the Analysis Export control can enable once a real answer-bearing report exists, the way Performance's already does.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md v8, `IV-e-57` row: writes column lists only 'src/components/ui/SearchSelect, index.tsx, tabs/TabShell, tabs/SampleView, ClientSearch'",
+        "portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx: `report`/`selectedRequest` state is fully local to the component; no `onExportTarget`-shaped prop exists, unlike `tabs/reporting/ReportingTab.tsx`'s own `onExportTarget` effect that publishes `PerformanceExportTarget` up to index.tsx",
+        "the SAME class of gap is already on record for the retired per-tab control: portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-16.page-export.test.ts's own docstring ('KNOWN GAP ... AnalysisTab.tsx ... this cell's own <paths> grant does NOT include')",
+        "resolved in-lane by index.tsx's new `analysisExportGateOk` (permanently `false` when `activeTab === 'analysis'`, ANDed alongside the existing, UNCHANGED `exportGateOk` so `iv-e-45.face-batch.test.tsx`'s own regex-pinned UIR-20b/20c arms over index.tsx's source still match byte-for-byte): `bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-45.face-batch.test.tsx src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-16.page-export.test.ts src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-57.search-covers.test.tsx` -> 3 pass, 0 fail"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 1 Build text: 'Export is disabled (aria-disabled and inert) on every tab whose active report is not answer-bearing, the Analysis tab included.'",
+    "world_is": "This cell's <paths> grant (and the decomp's writes column it is cut from) does not include tabs/analysis/AnalysisTab.tsx, so no real answer-bearing signal for Analysis can be threaded up in-lane; the Build text's Analysis arm is satisfied CONSERVATIVELY (permanently closed, never a false enable) rather than fully (closed only when genuinely no report exists), which is why AC1's own arm only tests 'no report generated -> disabled', never an 'Analysis + report -> enabled' case.",
+    "notes": "Not blocking this delivery: AC1's own literal arms (disabled with no report; Performance enabled with an answer-bearing report, control) both hold and are proven in iv-e-57.search-covers.test.tsx. Filed so an L9/L10 reader knows Analysis's own Export never re-enables until a future cell wires AnalysisTab.tsx's own report state up, same class as row W35-S1's naming-gate gap and the pre-existing IV-e-16 KNOWN GAP."
   }
 ]
 ```
