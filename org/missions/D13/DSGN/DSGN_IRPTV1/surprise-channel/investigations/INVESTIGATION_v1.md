@@ -2269,3 +2269,32 @@
   "notes": "Same class as S22/S23 (a read that drops selected_tenant). Also carried to round 9: a prospect job (no client) is invisible until some client is chosen, because the history mounts only with a client."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-W38-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~38",
+  "surfaced_at": "2026-09-27T15:10:00Z",
+  "one_line": "TO-IV-e-61's Amendment 1 (Smaller-holdings tile colour) and Amendment 2 (percentage bases in client words) each break ONE hardcoded assertion in a regression test outside this cell's <paths> grant (iv-e-44.securities-map.test.tsx, iv-e-42.drill-bases.test.tsx) that re-asserts the exact old literal the amendment orders changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "a cell/drain act whose <paths> grant covers portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-42.drill-bases.test.tsx and iv-e-44.securities-map.test.tsx",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal f04c0c1e (this slot's HEAD before TO-IV-e-61's own commit): iv-e-44.securities-map.test.tsx:198 asserts `other.color !== ASSET_CLASS_COLOR.Other` fails the test -- literally requires the OLD purple fill Amendment 1 orders replaced (OTHER_TILE_COLOR, a neutral PALETTE.slate400, per the cell text 'a neutral colour that no ASSET_CLASS entry uses')",
+      "portal f04c0c1e iv-e-42.drill-bases.test.tsx:298-317 (UIR-33/36/47 block) asserts the rendered SliceTable/DrillTree markup literally contains '% of total' and '% of parent: ' -- the exact two strings Amendment 2 orders removed ('No % of parent or % of total remains on the face')",
+      "measured this turn: `bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-44.securities-map.test.tsx` -> 1 fail (other tile colour \"#94a3b8\", expected ASSET_CLASS_COLOR.Other \"#9333ea\"); `bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-42.drill-bases.test.tsx` -> 3 fail (header/hover no longer state the old words; the donut-hover-vs-table-hover agreement check, which compares both against the SAME now-changed table hover)",
+      "full-suite re-run this turn (`bun test ./src/pages/InvestorReporting/__tests__/`, 864 tests/239 files) shows exactly these two files newly failing; the other 6 pre-existing failures (fixture-set route map, source-bounds forbidden-token scan, F25-AC2/AC3, F45-AC2) are unrelated files this cell never touched, confirmed by reading their own failure text (different modules: investor-reporting.ts endpoint, route fixtures, dev-script junction)",
+      "own fix: `bun run typecheck` (tsc -b --noEmit) rc=0 after this cell's own iv-e-60.drill-bases.test.tsx re-golden and iv-e-61.map-chips.test.tsx's own literal-type comparison fix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV-e-61's own <paths> grant names only iv-e-60.drill-bases.test.tsx for re-goldening (Amendment 2's own text: \"re-golden its UIR-33 arm to the new wording, naming UIR-33\"); Amendment 1 names no test file to re-golden at all.",
+  "world_is": "Two OTHER regression tests (iv-e-42.drill-bases.test.tsx's own UIR-33/36/47 block, iv-e-44.securities-map.test.tsx's own UIR-42 arm) independently hardcode the exact old literals both amendments order changed, and sit outside this cell's <paths> grant, so they now fail at HEAD and this worker cannot re-golden them.",
+  "notes": "Backward-compat defaults were added everywhere possible to shrink the blast radius (SliceTable.pctBaseWords, DonutHoverTooltip.baseWords, renderInsideLabel's second arg all default to the OLD wording when a caller does not pass them -- iv-e-42's own DIRECT calls to DonutHoverTooltip/renderInsideLabel with no base arg still pass); only the two hardcoded checks reachable ONLY through a real DrillTree/HoldingsTreemap render (which now computes and passes the NEW words/colour unconditionally) could not be preserved without weakening this cell's own build. Fix shape: re-golden iv-e-42's UIR-33/36/47 block the same way this cell re-goldened iv-e-60's, and iv-e-44's UIR-42 arm's `other.color` assertion to `OTHER_TILE_COLOR` (both exported, importable)."
+}
+```
