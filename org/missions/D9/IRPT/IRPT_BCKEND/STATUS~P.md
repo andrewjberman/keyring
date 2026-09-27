@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T13:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T14:0xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -50,10 +50,11 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 1. **Analysis hop 6 (the live-thread break):** window 11's two defects were diagnosed by ~Y (@647f229b23): the
    capture env, and the read-back reading the status body. Both are fixed (backend b6739556ea) and SERVED as resident
    `fe64236bbb-cw` since 13:51:07Z (@45c9ac981e). The window-13 packet (blob 49ee40b0, @eea3452029) is out for both
-   halves; K5 adds ONE saved-portfolio GET. Create after window 12 closes, then hand to ~Y.
-2. **K8, the first real export:** IN FLIGHT: window 12 opened 13:35:19Z, ~D logged in 13:42:26Z, K1-CRED deleted. The fix TO-IV-e-53 is on local portal DEV 1f149d69 (~D 101887). The
-   window-12 packet (blob 36c196ed, @c92a2c4c36) re-cuts window 10 on that page and is out for both halves. Create on
-   both halves, then hand to ~D.
+   halves; K5 adds ONE saved-portfolio GET. BOTH HALVES SIGNED (CTO @99311001d3, CRO @ce115a43f1); window 12 is closed, so create now.
+2. **K8, the first real export:** window 12 (13:35-14:03Z) got further. The preview resolved on 1f149d69, and ONE
+   export POST was sent, but the server REFUSED it (UNEXPECTED, BucketUnmapped): the SUBMIT also omits
+   selected_tenant (buildSubmitRequest, submit.ts:64-78). Nothing was exported. ~D is cutting the submit, receipt
+   and download fix as a direct act (101907). Re-cut on its pin.
 3. **A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** unblocked. Andrew-direct relayed by MSTR
    101850 reads "they have egress for full session", and the loop prompt permits vendor uses, each ledgered. It needs
    ONE new COT use: plan 2 on the same account through cot_one_use_plan.py (no vendor call), a packet, both halves,
@@ -70,6 +71,7 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
+- Window 12 (K8 re-cut) opened 13:35:19Z and closed 14:03:20Z: the export refused at submit, nothing written; 0 outside the classes.
 - Window 11 (the fourth Analysis attempt) opened 12:56:51Z and closed 13:22:00Z: 0 outside the classes; writes = K4/K5 only; bounds held (@ledger irpt-ui-walk-principal-w11-20260927).
 - Andrew-direct "rec approved" (/open-calls CALL 1): ledger irpt-p-live-scope-20260923 CLOSED on the agent walks (@22c2fc699d).
 - Window 10 opened 06:19:10Z and closed 06:32:17Z. K7 reopened a 49F report (8.05%); K8 was not run (the page refused); 0 outside the classes; 0 new media in git.
