@@ -3749,6 +3749,29 @@ name the one known failure instead of silently inheriting it.
     },
     "spec_asserts": "The narrow release tree's regression modules pass as on CLOUD.",
     "world_is": "2 fail on a repo-only contract file outside the shipped set."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W8-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~8",
+    "surfaced_at": "2026-09-27T18:50Z",
+    "one_line": "PHASE B step 12's own-instrument verify (md5 of 4 app files, tool-name list AFTER, ENABLED_INTEGRATIONS) ran ~375s after the restart, not within the named 90s window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "systemctl show opal-gateway -p ActiveEnterTimestamp --value on i-07dccb1615503ac99 (ssm:822648a2-5d61-47cd-be87-db2006ba1bba) reads 'Sun 2026-09-27 18:43:56 UTC'.",
+        "The SSM send-command for this cell's own step-12 verify (ssm:822648a2-5d61-47cd-be87-db2006ba1bba) was dispatched 2026-09-27T18:50:03Z and completed 2026-09-27T18:50:11Z -- both well past 18:45:26Z (restart + 90s).",
+        "The deploy-to-ec2.sh wrapper's OWN embedded smoke check (health 200, opal-gateway active, /mcp 401, md5 of app/server.py and app/oauth_as.py) ran inside the same SSM install command (ssm:2ae27f67-2842-4c5f-9ab4-a68d859d07f0) immediately at restart time, so a within-window health signal exists; only this cell's independent 4-file md5 / tool-list / ENABLED_INTEGRATIONS re-check ran late.",
+        "The late read still shows PASS on every measured value: /health=200, all 4 app files' md5 = git show fe94911257's bytes, TOOLCOUNT=46 both before and after with sorted-name diff EMPTY, ENABLED_INTEGRATIONS unchanged -- so the delay did not conceal a divergent state, but the literal bound was not met and this row records that rather than silently treating a late read as an on-time one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 12: 'VERIFY, from the host, within 90 s of the restart' (health, md5, tool-list diff, ENABLED_INTEGRATIONS).",
+    "world_is": "The wrapper's own smoke check landed within the window; this worker's separate step-12 re-verification of the 4 named conditions landed at restart+375s, all PASS.",
+    "disarm_owner": "2.0.0_SA_COO~O"
   }
 ]
 ```
