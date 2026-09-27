@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-27T19:5xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-27T21:1xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -204,6 +204,8 @@ Done this lease:
 | ~P's S152 (CLOUD): served INF holdings as-of 09-22 vs directory 09-25. Cause measured: INF upstream complete through 09-26 (0 refusals); no publication since the 09-24 republish because the schedule is DISABLED until R4 ENABLE (~P msg 101769 answered) | 2.0.0_SA_COO~M | the first enabled publication serves INF at or after 09-25 (Monday runbook D) |
 | Validate the Comparison/Multi-Comp permission (Andrew "call 1 yes", CTO 102048 @fce766f6ed) | 2.0.0_SA_COO~M | ~Y versions templates.json comparison_catalog after ~P's identity reads land |
 | History purge (CTO @fce766f6ed call 2): all 6 ~M branches carry the purged span; asked MSTR whether its rewrite covers them (19:57Z) | 2.0.0_SA_COO~M | before Monday's merge (runbook H) |
+| UIC-15 (name beside ticker; DSGN_IRPTV1 PRD v0.18, CTO 102106) | 2.0.0_SA_COO~M | rides R4's INF name fill (Monday); re-measure every SECURITY node's name on the enabled publication |
+| UIC-16 (account type in full): INF source is full but the label cuts it to 24 chars and uppercases (both label rules change together with ~P's directory); 49F holds Schwab codes, no decode in the repo (UIC16_ACCOUNT_TYPE_IN_FULL_20260927.md @15dec62901) | 2.0.0_SA_COO~M | the CTO rules the 49F decode source (asked 21:09Z) |
 | IRPT_BCKEND-S124: the bundle mint reads working-tree bytes | owner of .tools/safe_deploy_core.py | next bundle re-mint |
 | COT B_01b deploy. The skip list (52 ruled-out keys + Part 2's 26) and the rule-2 prompt are BUILT on branch irpt-m-b01b-skip @c993550, NOT merged, because a CLOUD commit deploys on the next push. Dry run: 0 new securities, so a first upload makes no OpenAI call. S3 still serves the no-op (S141) | 2.0.0_SA_COO~M | COT's chain adds B_01b: merge + safe-deploy as ONE act under a ledger |
 
