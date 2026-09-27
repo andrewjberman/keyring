@@ -10201,3 +10201,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Resolved by following the GATE and the project's established convention, not the face; the instance was git mv'd so history follows and no duplicate was left to diverge. Surfaced, NOT adjudicated: the <proof_of_spec> grammar is the issuer's, and this would refuse the flip of every tree order written with the flat path. 2.0.0_SA_COO~P notified in the completion report."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S168",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.6.2_AE_PartnerETL~S",
+  "surfaced_at": "2026-09-27T20:05Z",
+  "one_line": "CORRECTING MY OWN RECORD on S158: the 09-28 07:30 ET scheduled run will NOT exercise the new log-on-failure branch, because Lever A in cot-bd-session-trigger skips opal-cot-bd-session-fetch while the capture is younger than MAX_SESSION_AGE_DAYS (default 7) and probes positive-live. The deliverable and proof-of-spec said the next scheduled run was the cold-boot test; that was wrong and is corrected in place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cot-bd-session-trigger source (unpacked from Code.Location) _session_is_positive_live: returns (False, why) IFF over-age or probe-negative; _handle_session_refresh: `if live: -> _handle_bronze_run()` else `-> _handle_ssm_dispatch(SESSION_FETCH_SSM_DOCUMENT, ...)`",
+      "MAX_SESSION_AGE_DAYS = int(os.environ.get('MAX_SESSION_AGE_DAYS', '7')); the live Environment.Variables read returns None for that key, so the bound is the default 7",
+      "the Lambda's own read-only mode=session-check, run 2026-09-27: {\"session_live\": true, \"captured_at\": \"2026-09-27T18:42:27.162Z\", \"expires_at\": \"\"} -- so at 09-28 11:30Z the capture is ~0.53d old, far inside the bound",
+      "the firing pattern corroborates by subtraction: under a cron(30 7 * * ? *) schedule the document ran 08-19, 08-27, 08-31, 09-08, 09-16 (roughly 8-day gaps, not daily) and then 09-24/25/26/27 daily -- exactly what an age bound of 7 days plus 'a failed mint leaves the live cookie untouched' produces"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "my own S158 deliverable and proof-of-spec asserted the next SCHEDULED run (09-28 07:30 ET) would be the cold-boot test that exercises the failure branch",
+  "world_is": "Lever A will skip the session-fetch on 09-28 and dispatch opal-cot-bronze-run directly. The next expected session-fetch is when the capture passes 7 days (~2026-10-04 07:30 ET), or sooner if the probe goes negative. The failure branch stays UNEXERCISED until then.",
+  "notes": "Found while answering an Andrew-direct status question relayed by 4.0.0_SA_CRO (102057). Recorded as a correction to this seat's OWN prior claim rather than left to be discovered: the instrument is armed but the test does not arrive tomorrow, and anyone reading 'the next failure names its cause' needs the real date. Corrected in place in both files in the same commit as this row."
+}
+```
