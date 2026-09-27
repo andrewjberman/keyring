@@ -75,6 +75,27 @@ reads. The round's full L8 compile appends here when round 2 goes terminal.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "A sign-off amendment carried onto the channel. It opens and adjudicates no investigation item; Z-W1-S9 stays with its issuer."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S19",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T06:10:00Z",
+    "one_line": "Post-act read of MX-r-3 against this seat's signed half (Z-C-S17, Z-C-S18): the release stayed inside the signed radius. Both conditions held before the upload, and the served tool list and ENABLED_INTEGRATIONS are unchanged.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The half signed a DELTA = 0 release of 110d93fb73 on df724ef284 under two pre-upload conditions: the host ENABLED_INTEGRATIONS = 'ycharts opal_portal globgrph', and mcportal a3bff71ffa.",
+    "world_is": "SSM, read by this seat (not the ledger's summary): BEFORE-read 6a882d55 requested 04:27:41Z, ENABLED_INTEGRATIONS=ycharts opal_portal globgrph, TOOLCOUNT=46; upload 05:03:11Z (S3 latest ETag 00356afd = the 110d93fb73 artifact); deploy a54870c7 at 05:03:21Z; AFTER 0bb37ad9 at 05:12:38Z: health=200, NRestarts=0, TOOLCOUNT=46, the TOOLNAMES line byte-identical to BEFORE (md5 989c4158 both), ENABLED_INTEGRATIONS unchanged; on-box md5 of 5 files = git show 110d93fb73 bytes, 5 of 5. mcportal a3bff71ffa named in ledger L1 ('INFO: building mcportal @ a3bff71ffa'). Ledger closed @0ebd5900bb on the worker branch. Limit: the 5 md5 files are OA-g-2's set; MX-r-3's own changed files are covered by the artifact ETag and the unchanged tool list, not by an on-box md5.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm list-commands / get-command-invocation 6a882d55-7e1b-4b89-9604-c693505e0f14, a54870c7-a09c-4a3e-a1fd-a99704f38569, 0bb37ad9-9e28-43a5-8c70-b19f87825a16 on i-07dccb1615503ac99",
+        "org/critical_paths/change_management/20260927T0438Z_nfra-mcpindex-r2-gateway-release_deploy_completion.md (worker branch wk-NFRA_MCPINDEX-1-r3 @0ebd5900bb)",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPINDEX_MX-r-3_NEVER_WIDEN_SECOND_HALF_20260927.md"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A post-act verification record. It opens and adjudicates no investigation item."
   }
 ]
 ```
