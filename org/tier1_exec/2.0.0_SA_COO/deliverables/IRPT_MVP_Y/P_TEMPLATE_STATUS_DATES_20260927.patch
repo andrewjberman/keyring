@@ -1,20 +1,29 @@
 diff --git a/infra/aws/lambda/investor-reporting/ops/prospect_dates.py b/infra/aws/lambda/investor-reporting/ops/prospect_dates.py
-index 5ecbc6b..e49477d 100644
+index 5ecbc6b..4b1eb4f 100644
 --- a/infra/aws/lambda/investor-reporting/ops/prospect_dates.py
 +++ b/infra/aws/lambda/investor-reporting/ops/prospect_dates.py
-@@ -1,8 +1,9 @@
+@@ -1,15 +1,18 @@
  """Retained prospect date evidence; unknown source semantics stay unavailable.
  
  The bounded undated proof covers CSVs consisting entirely of identifier, value
 -and optional currency columns. Preambles, extra columns, skips and dated price
 -valuations require a future explicit source-date contract, never a fallback.
-+and optional currency columns, and the two-column CSV template (Ticker/Symbol plus
-+Dollars or a weight). Preambles, extra columns, skips and dated price valuations
++and optional currency columns, and the two-column template (Ticker/Symbol plus Dollars or a
++weight) as CSV or as a one-sheet XLSX. Preambles, extra columns, skips and dated price valuations
 +require a future explicit source-date contract, never a fallback.
  """
  import csv
  import hashlib
-@@ -78,6 +79,48 @@ def _undated_csv(data, document):
+ import io
+ import json
+ import re
++import zipfile
+ from datetime import date
++from xml.etree import ElementTree
+ 
+ from owned_requests import RequestReadRefused, _data_firm, _storage_kwargs
+ from submission import input_repository_owner
+@@ -78,6 +81,95 @@ def _undated_csv(data, document):
          return False
  
  
@@ -22,6 +31,29 @@ index 5ecbc6b..e49477d 100644
 +# security, column B the basis. Shares is left out: a priced quantity carries a price date.
 +_TEMPLATE_SYMBOL_HEADERS = ("ticker", "symbol")
 +_TEMPLATE_UNDATED_BASES = {"dollars": "USD", "target weight": "TARGET_WEIGHT", "current weight": "CURRENT_WEIGHT"}
++_SHEET_NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
++_XML_DECLARATIONS = re.compile(rb"<!\s*(?:DOCTYPE|ENTITY)", re.I)
++
++
++def _template_census(data, document, file_type):
++    """The frozen v2 census, when it is complete and undated: the census, keyed by source row, or None."""
++    template = document["template"]
++    if (not isinstance(data, bytes) or not 0 < len(data) <= 1024 * 1024
++            or template.get("schema_version") != "irpt-template.v2" or template.get("file_type") != file_type
++            or template.get("content_sha256") != hashlib.sha256(data).hexdigest()
++            or template.get("findings") or document.get("findings") or document.get("prices")
++            or document.get("options", {}).get("price_date") is not None
++            or any(row.get("price") is not None for row in document["rows"]) or not template["rows"]):
++        return None
++    headers = template["headers"]
++    a1, b1 = headers["A"]["text"].strip().lower(), headers["B"]["text"].strip().lower()
++    if a1 not in _TEMPLATE_SYMBOL_HEADERS or _TEMPLATE_UNDATED_BASES.get(b1) != template.get("basis"):
++        return None
++    census = {1: (headers["A"], headers["B"])}
++    census.update({row["row"]: (row["cells"]["A"], row["cells"]["B"]) for row in template["rows"]})
++    if any(c["formula"] or c["invalid"] for cells in census.values() for c in cells):
++        return None
++    return census
 +
 +
 +def _undated_template_csv(data, document):
@@ -29,41 +61,65 @@ index 5ecbc6b..e49477d 100644
 +
 +    The reader keeps only columns A and B, so the RAW file is re-read here. Every row must
 +    be exactly two cells (a date in a third column would otherwise vanish unseen), and every
-+    non-blank row must be the census's own cells. XLSX has no bounded proof yet.
++    non-blank row must be the census's own cells.
 +    """
 +    try:
-+        template = document["template"]
-+        if (not isinstance(data, bytes) or not 0 < len(data) <= 1024 * 1024
-+                or template.get("schema_version") != "irpt-template.v2" or template.get("file_type") != "csv"
-+                or template.get("content_sha256") != hashlib.sha256(data).hexdigest()
-+                or template.get("findings") or document.get("findings") or document.get("prices")
-+                or document.get("options", {}).get("price_date") is not None
-+                or any(row.get("price") is not None for row in document["rows"])):
++        census = _template_census(data, document, "csv")
++        if census is None:
 +            return False
-+        headers = template["headers"]
-+        a1, b1 = headers["A"]["text"].strip().lower(), headers["B"]["text"].strip().lower()
-+        if a1 not in _TEMPLATE_SYMBOL_HEADERS or _TEMPLATE_UNDATED_BASES.get(b1) != template.get("basis"):
-+            return False
-+        census = {1: (headers["A"], headers["B"])}
-+        census.update({row["row"]: (row["cells"]["A"], row["cells"]["B"]) for row in template["rows"]})
 +        seen = set()
 +        for number, values in enumerate(csv.reader(io.StringIO(data.decode("utf-8-sig"), newline=""), strict=True), 1):
 +            if not values or values == ["", ""]:
 +                continue
 +            cells = census.get(number)
-+            if (len(values) != 2 or cells is None
-+                    or any(c["formula"] or c["invalid"] or c["text"] != v for c, v in zip(cells, values))):
++            if len(values) != 2 or cells is None or any(c["text"] != v for c, v in zip(cells, values)):
 +                return False
 +            seen.add(number)
-+        return bool(template["rows"]) and seen == set(census)
++        return seen == set(census)
 +    except (ValueError, KeyError, TypeError, IndexError, AttributeError, UnicodeError, csv.Error):
++        return False
++
++
++def _undated_template_xlsx(data, document):
++    """The v2 XLSX template: ONE worksheet, and no cell outside columns A and B.
++
++    The reader reads one sheet's A/B cells and skips the rest unseen, so the raw workbook is
++    re-read for what it skips: a second sheet or a third column is not proved undated. The
++    A/B texts are the census's own (it was read from these bytes, bound by digest); the set
++    of rows holding a value must be exactly the census rows.
++    """
++    try:
++        census = _template_census(data, document, "xlsx")
++        if census is None:
++            return False
++        with zipfile.ZipFile(io.BytesIO(data)) as archive:
++            infos = archive.infolist()
++            names = [i.filename for i in infos]
++            sheets = [n for n in names if re.fullmatch(r"xl/worksheets/[^/]+\.xml", n)]
++            if (len(names) != len(set(names)) or sum(i.file_size for i in infos) > 8 * 1024 * 1024
++                    or any(i.flag_bits & 1 for i in infos) or len(sheets) != 1):
++                return False
++            workbook, sheet = archive.read("xl/workbook.xml"), archive.read(sheets[0])
++        if (_XML_DECLARATIONS.search(workbook) or _XML_DECLARATIONS.search(sheet)
++                or len(ElementTree.fromstring(workbook).findall(_SHEET_NS + "sheets/" + _SHEET_NS + "sheet")) != 1):
++            return False
++        valued = set()
++        for cell in ElementTree.fromstring(sheet).iter(_SHEET_NS + "c"):
++            address = re.fullmatch(r"([A-Z]+)([1-9][0-9]*)", cell.get("r", ""))
++            if not address or address[1] not in ("A", "B"):
++                return False
++            if cell.find(_SHEET_NS + "v") is not None or cell.find(_SHEET_NS + "is") is not None:
++                valued.add(int(address[2]))
++        return valued == set(census)
++    except (ValueError, KeyError, TypeError, IndexError, AttributeError, zipfile.BadZipFile, ElementTree.ParseError,
++            RuntimeError, NotImplementedError, OSError):
 +        return False
 +
 +
  class RetainedProspectDates:
      def __init__(self, requests, principal, record, *, data_firm=None):
          self.requests, self.principal, self.record = requests, principal, record
-@@ -126,16 +169,20 @@ class RetainedProspectDates:
+@@ -126,16 +218,20 @@ class RetainedProspectDates:
          data = self._artifact(ref["artifact_ref"], "NORMALIZED_PORTFOLIO", owner=original_owner)
          document = json.loads(data)
          canonical = json.dumps(document, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode()
@@ -73,8 +129,8 @@ index 5ecbc6b..e49477d 100644
 -        # prospect-v1 capability on every status-job read, so a v2 job must not refuse.
 +        # Both frozen schemas bind here (intake/portfolio.py:17-18): v1 is the CSV_UPLOAD lane,
 +        # v2 the TEMPLATE_UPLOAD lane. A v2 CSV template gets its own positive proof below
-+        # (window 15's live Overview is one). Anything that proof cannot cover (XLSX, Shares,
-+        # findings) is bound and then answered "unavailable", never refused: the portal sends
++        # (window 15's live Overview is one), and a one-sheet A/B XLSX template another. Anything those
++        # proofs cannot cover (Shares, findings, a second sheet or column) is bound and then answered "unavailable", never refused: the portal sends
 +        # the prospect-v1 capability on every status-job read.
          if (hashlib.sha256(canonical).hexdigest() != sha or document != resolved.get("document")
                  or document.get("schema_version") not in ("irpt-normalized-portfolio.v1",
@@ -84,12 +140,12 @@ index 5ecbc6b..e49477d 100644
 -        if source.get("lane") != "CSV_UPLOAD":
 +        template = (source.get("lane") == "TEMPLATE_UPLOAD"
 +                    and document["schema_version"] == "irpt-normalized-portfolio.v2"
-+                    and (document.get("template") or {}).get("file_type") == "csv")
++                    and (document.get("template") or {}).get("file_type") in ("csv", "xlsx"))
 +        if source.get("lane") != "CSV_UPLOAD" and not template:
              return None
          if dict(document["owner"], account_ids=[], prospect_input_id=source["upload_id"]) != original_owner:
              raise RequestReadRefused("DATE_INPUT_OWNER_BINDING")
-@@ -144,8 +191,13 @@ class RetainedProspectDates:
+@@ -144,8 +240,14 @@ class RetainedProspectDates:
                  or original.get("content_sha256") != source.get("content_sha256")
                  or original["artifact_ref"].get("sha256") != source.get("content_sha256")):
              raise RequestReadRefused("DATE_ORIGINAL_SOURCE_BINDING")
@@ -97,7 +153,8 @@ index 5ecbc6b..e49477d 100644
 -        if not _undated_csv(raw, document):
 +        if template:
 +            raw = self._artifact(original["artifact_ref"], "ORIGINAL_HOLDINGS", owner=original_owner)
-+            undated = original.get("file_type") == "csv" and _undated_template_csv(raw, document)
++            prove = {"csv": _undated_template_csv, "xlsx": _undated_template_xlsx}[document["template"]["file_type"]]
++            undated = original.get("file_type") == document["template"]["file_type"] and prove(raw, document)
 +        else:
 +            undated = _undated_csv(self._artifact(original["artifact_ref"], "ORIGINAL_CSV", owner=original_owner),
 +                                   document)
@@ -106,10 +163,10 @@ index 5ecbc6b..e49477d 100644
          return {"input_id": ref["input_id"], "content_sha256": sha}
  
 diff --git a/infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py b/infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py
-index a11cd64..b86892c 100644
+index a11cd64..07bb48c 100644
 --- a/infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py
 +++ b/infra/aws/lambda/investor-reporting/ops/tests/test_prospect_dates.py
-@@ -238,3 +238,107 @@ def test_template_lane_v2_document_binds_and_answers_unavailable_never_refuses(v
+@@ -238,3 +238,166 @@ def test_template_lane_v2_document_binds_and_answers_unavailable_never_refuses(v
      else:
          with pytest.raises(RequestReadRefused, match=expected):
              dates.input()
@@ -178,7 +235,7 @@ index a11cd64..b86892c 100644
 +@pytest.mark.parametrize("file_type,raw,expected", [
 +    ("csv", TEMPLATE_RAW, "PROVED"),
 +    ("csv", b"Ticker,Dollars,As Of\nAAPL,10.01,2026-09-25\nVNQ,2.02,2026-09-25\n", None),
-+    ("xlsx", TEMPLATE_RAW, None)])
++    ("xlsx", TEMPLATE_RAW, None)])  # an .xlsx census over bytes that are not a workbook: bound, then unavailable
 +def test_template_lane_input_binds_the_original_holdings_and_proves_or_answers_unavailable(file_type, raw, expected):
 +    """Through RetainedProspectDates.input(): the ORIGINAL_HOLDINGS family (not ORIGINAL_CSV), the template owner
 +    binding (submission.PROSPECT_UPLOAD_LANES), and an XLSX template never touching the original."""
@@ -215,5 +272,64 @@ index a11cd64..b86892c 100644
 +        assert result == {"input_id": "portfolio_" + sha, "content_sha256": sha}
 +    else:
 +        assert result is None
-+    assert families[:2] == ["REQUEST_COMPOSITION", "NORMALIZED_PORTFOLIO"]
-+    assert ("ORIGINAL_HOLDINGS" in families) == (file_type == "csv") and "ORIGINAL_CSV" not in families
++    assert families == ["REQUEST_COMPOSITION", "NORMALIZED_PORTFOLIO", "ORIGINAL_HOLDINGS"]
++
++
++# The XLSX template: real workbooks (openpyxl) through the real template reader, so the census is the reader's own.
++def xlsx(rows, *, extra_sheet=None, first_title=None):
++    import io as _io
++    openpyxl = pytest.importorskip("openpyxl")
++    book = openpyxl.Workbook()
++    sheet = book.active
++    if first_title:
++        sheet.title = first_title
++    for row in rows:
++        sheet.append(list(row))
++    if extra_sheet:
++        other = book.create_sheet(extra_sheet[0])
++        for row in extra_sheet[1]:
++            other.append(list(row))
++    out = _io.BytesIO()
++    book.save(out)
++    return out.getvalue()
++
++
++def xlsx_document(data):
++    import sys
++    sys.path.insert(0, str(ROOT / "infra/aws/lambda/investor-reporting/intake"))
++    from template_reader import read_template
++    template = read_template(data, "xlsx")
++    document = template_document(file_type="xlsx")
++    document["template"] = template
++    document["rows"] = [{"security_id": r["symbol"], "price": None, "original": r} for r in template["rows"]]
++    return document
++
++
++HOLDINGS = [("Ticker", "Dollars"), ("AAPL", 10.01), ("VNQ", 2.02)]
++
++
++def test_template_xlsx_proof_holds_for_a_one_sheet_a_b_workbook():
++    from prospect_dates import _undated_template_xlsx
++    data = xlsx(HOLDINGS)
++    document = xlsx_document(data)
++    assert document["template"]["findings"] == [] and len(document["template"]["rows"]) == 2
++    assert _undated_template_xlsx(data, document) is True
++
++
++@pytest.mark.parametrize("change", ["third_column", "second_sheet", "instructions_sheet", "digest", "shares"])
++def test_template_xlsx_proof_refuses_what_the_reader_would_skip_unseen(change):
++    from prospect_dates import _undated_template_xlsx
++    rows, kwargs = HOLDINGS, {}
++    if change == "third_column":  # the reader keeps A/B only; a date in C would vanish
++        rows = [("Ticker", "Dollars", "As Of"), ("AAPL", 10.01, "2026-09-25"), ("VNQ", 2.02, "2026-09-25")]
++    elif change == "second_sheet":
++        kwargs = {"extra_sheet": ("notes", [("Holdings as of", "2026-09-25")])}
++    elif change == "instructions_sheet":  # the reader picks holdings_template; the proof still wants ONE sheet
++        kwargs = {"first_title": "holdings_template", "extra_sheet": ("instructions", [("Fill in column A and B",)])}
++    elif change == "shares":
++        rows = [("Ticker", "Shares"), ("AAPL", 3), ("VNQ", 1)]
++    data = xlsx(rows, **kwargs)
++    document = xlsx_document(data)
++    if change == "digest":
++        data = xlsx([("Ticker", "Dollars"), ("AAPL", 10.01), ("VNQ", 2.03)])
++    assert _undated_template_xlsx(data, document) is False

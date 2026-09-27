@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T20:05Z. Lease FAST until 2026-09-27T20:34:47Z.
+As of 2026-09-27T20:35Z. Lease FAST until 2026-09-27T21:02:19Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
@@ -171,8 +171,8 @@ and window 4 re-runs K4+K5 (+R1).
 ## Write claims
 
 **Built, at P (a live-thread defect before K10):** window 15's READY job read wrong on status-job (the served
-irpt-status with the portal's header refused it). Y @6998d0acff extends the undated date proof to the template
-CSV lane. `P_TEMPLATE_STATUS_DATES_20260927.patch` has apply-check rc=0 on P `118612b599`. P rebuilds irpt-status
+irpt-status with the portal's header refused it). Y @6998d0acff (CSV) and @49f3393cb0 (one-sheet XLSX) extend the undated date proof to
+the template lane; the patch is cumulative, `4d50bf51..`, and prospect_dates.py is `e5bae585..`. `P_TEMPLATE_STATUS_DATES_20260927.patch` has apply-check rc=0 on P `118612b599`. P rebuilds irpt-status
 with HEAD's `submission.py` plus the patch. Measured arms: served = refused; + submission.py = UNAVAILABLE;
 + both = READY ANALYSIS_READY, PER_SECTION, 51 dates. Record: `TEMPLATE_STATUS_DATES_20260927.md`.
 

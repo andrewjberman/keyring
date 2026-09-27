@@ -16,7 +16,7 @@ and 0 writes:
 |---|---|
 | as served | **refused**: public `INVALID_INPUT`, internal `DATE_SOURCE_OWNER_BINDING` |
 | + P HEAD's `submission.py` (sha256 `9929a829..`, the generate zip's) | `UNAVAILABLE ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE` |
-| + that `submission.py` + Y's `prospect_dates.py` (`70079fcf..`) | **`READY ANALYSIS_READY`**, `date_basis PER_SECTION`, 51 section dates |
+| + that `submission.py` + Y's `prospect_dates.py` (`70079fcf..`; re-run with `e5bae585..`, the same) | **`READY ANALYSIS_READY`**, `date_basis PER_SECTION`, 51 section dates |
 
 The sections read already serves all 51 sections, identical to the retained report, and so does the history list. As
 served, the row state shows "unavailable" and the job-status panel fails.
@@ -49,4 +49,17 @@ Tests:
 ## To serve it (P, with its own ledger and never-widen halves: the public status answer moves)
 
 Rebuild `irpt-status` from P's HEAD plus this patch. The zip must carry `submission.py` `9929a829..` and
-`prospect_dates.py` `70079fcf..`. Re-run the three arms above on the new zip; the third is the expectation.
+`prospect_dates.py` `e5bae585..`. Re-run the three arms above on the new zip; the third is the expectation.
+
+## Update ~20:4xZ: the XLSX template (Y @49f3393cb0)
+
+The portal also accepts `.xlsx`, and that template still answered UNAVAILABLE. `_undated_template_xlsx` re-reads the
+raw workbook for what the A/B reader skips unseen. It requires ONE worksheet and every cell in columns A/B, and the rows
+holding a value must be exactly the census rows. A second sheet or a third column stays unproved (conservative: a
+`holdings_template` sheet plus an instructions sheet is unproved too).
+
+Tests on real openpyxl workbooks through the real intake reader: 1 proved and 5 unproved. `test_prospect_dates` 58,
+ops 180 passed and 22 skipped. The live CSV arm still reads READY with the refactored file.
+
+**The patch at the same path is superseded (cumulative, sha256 `4d50bf51..`, apply-check rc=0 on P `118612b599`).
+The rebuild's `prospect_dates.py` is `e5bae585..`.** No live XLSX job exists yet.
