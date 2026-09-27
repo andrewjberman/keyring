@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T16:0xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T16:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -47,19 +47,22 @@ None. Window 8 CLOSED 04:46:35Z (ledger @f293962a58).
 Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (window 7; INF; COT). Andrew at ~Y 04:01Z
 "yes, run the Analysis window" (W8-2): USED. Any further window or vendor use needs a new word.
 
-1. **Analysis hop 6 (the live-thread break):** windows 11 and 13 (the fourth and fifth attempts) went ATTENTION, each
-   closer than the last. In window 13 the saved-portfolio read worked (7 of 7 fields present), and ONE value differs:
-   level_as_of_type. The capture met UNEXPECTED_CHALLENGE and stored nothing. Resident fixes shipped this stretch:
-   - cw (W11 fixes, 13:51Z);
-   - dx (W13 diagnostics, 14:50Z);
-   - rs (~Y's read-back release-and-resume, 38ee23deaa, 15:18:44Z, @2d0e50c0f3);
-   - lt (level_as_of_type tolerated and recorded, 49b85eacd2, 15:51:47Z).
-   Next: window 15 (CTO 101929): K5 at most 2 status GETs x 5 receives, ONE saved GET, 0 read re-captures. The packet
-   names level_as_of_type as TOLERATED with ~Y's reason (101938).
+1. **Analysis (the live thread): READY.** Window 15's REQ-67e12718 on resident lt reached READY at 16:23:00Z:
+   - one release (calculating), then READ_BACK_DONE on the saved portfolio (7/7, tolerated level_as_of_type=custom_date);
+   - certified, READY;
+   - REPORT#RPT-5288c06d6c9799f5251f3a27632ffc1b retained, with the vendor PDF, 2 extraction-evidence objects and the
+     platinum analysis report.
+   This is the FIRST READY Analysis report, FWD-1's Analysis hop end to end. Bounds held (2 receives, 3 status GETs,
+   1 saved GET, 0 re-captures).
+   Finding (with ~Y): the vendor stored custom_date against the prior_close sent; 5 of 51 PDF sections are dated
+   2026-09-27 (a Sunday).
+   Open: K10, ~D reading the report in the page. Window 15 amendment 1 (blob 3207cf8e, @1f7ba6e7f4) is out for halves:
+   one fresh credential for the same principal, GET only, inside the 18:03Z cap.
 2. **K8, the first real export:** window 14 (15:03-15:12Z): the tenant hop HOLDS, since the POST carried
    selected_tenant=49financial. The server refused ReportRefused "invalid report reference", because the page sent
-   report_id = the revision hash (39c11079..) instead of RPT-b5e0a16e... Nothing was exported. The fix is TO-IV-e-65
-   (~D, @71383ccd8f: take report_id, revision and sha256 from the adapter's retained_ref). Re-cut on ~D's pin.
+   report_id = the revision hash (39c11079..) instead of RPT-b5e0a16e... Nothing was exported. The fix IV-e-65 is
+   drained at local portal DEV e8a00b23 (21ec94d8). The window-16 packet (blob 907073b1, @c1e5b8d1b5) is out for both
+   halves, and it is created after window 15 closes.
 3. **A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** plan 63cf95e9 (01-01..09-21) was built with
    no vendor call. The 01-01..09-22 as-of window reopens RPT-b683f188 through the retained pointer (12:29:54Z), so that
    window would never spend a plan. The plan-off pre-check refused with 0 vendor calls (P0). The packet (blob 9c807347,
