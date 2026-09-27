@@ -91,5 +91,14 @@ Tests:
 - extract/test_publication's 3 committed-variant tests fail on the Y worktree whatever the change, because a docs census
   file is absent there.
 
-**Open:** the saved-GET discriminator the CTO approved (one read-only GET of an advisor-created prior_close portfolio,
-in its own packet and halves) has not been run.
+**The discriminator the CTO approved, answered with no vendor call** (`IRPT_BCKEND-S161`, @ea7f5e9291):
+- The advisor's recorded HAR 02 (sha256 `14588304..`) holds a saved read (#296) of the portfolio the advisor had just
+  created with `prior_close` (#148). It reads `level_as_of_type=prior_close`, `level_as_of_date=2026-07-01`,
+  `model_portfolio_type=fixed`, upload count 0.
+- So the vendor does not normalise `prior_close` to `custom_date` in general.
+- That create had no holdings upload, while ours always upload; that this causes the difference is inferred.
+- W15-3 now rests only on the Static inference, which the PDF check enforces.
+- **RULED (CTO 102021):** keep W15-3 Static-only as built; the vendor GET is withdrawn, unspent; no no-upload create
+  test. Row S162 (@e2c240c2d1) adjudicates S160 and S161 as GRADUATED.
+- **Open (S159, R10):** a certified section's printed as-of must be the holdings as-of or carry the exception label.
+  The certifier does not enforce that yet: this report's 5 sections dated Sunday 09-27 passed.
