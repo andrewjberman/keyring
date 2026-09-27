@@ -2140,3 +2140,31 @@
   "notes": "Same class as S22 (IV-e-53 threaded the tenant into the preview only). K7 on the same walk read 8.05% PARTIAL with selected_tenant on both Performance GETs, and the picker showed value and YTD side by side (IV-e-58 live). P re-cuts the next window on the fix's pin."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S24",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-27T15:12:37Z",
+  "one_line": "Window 14 K8 on local DEV 55bbdd71: the export POST now carries selected_tenant (S23 holds) but answers UNAVAILABLE / DEPENDENCY_UNAVAILABLE -- the bundle sends the revision hash as report_id, and the render refuses 'invalid report reference'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "a direct act whose <paths> grant covers portal/src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx (TO-IV-e-65)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w14-20260927.har (gitignored, sha256 41cc5d63..; 453 entries, 0 /__mockcot/): ONE POST /api/scoped/investor-reporting/export?selected_tenant=49financial at 15:06:10Z, HTTP 200, ok=false, state UNAVAILABLE, public_reason_code DEPENDENCY_UNAVAILABLE, business_date 2026-09-24",
+      "2.0.0_SA_COO~P 101933: irpt-export-render 15:06:13Z ReportRefused 'invalid report reference' (corr-27eb154e587e); the POST's authorized_report_revisions was [{report_id: 39c11079.., revision: 39c11079.., authorization_ref: 39c11079..}]; the server checks report_id against RPT-<32 hex> (reports/repository.py:17, 67-68)",
+      "portal 55bbdd71 tabs/reporting/ReportingTab.tsx:214-228 buildPerformanceExportTarget sets reportRefs: [report.revision.revisionId]; the view already carries retainedReport {reportId, revision} (contracts/index.ts:526, adapt.ts:808); export/resolveBundle.ts:141-145 maps each reportRef to reportRef and adapt.ts:1373-1377 maps reportRef to the wire report_id",
+      "walk byte-proof: start 15:03:51Z and end 15:07:50Z both HEAD 55bbdd71, 0 tracked changes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Export on Performance submits the report the tab shows by its report id (RPT-...) and its revision.",
+  "world_is": "The export target names the report by its revision hash, so the renderer cannot find it and the export is refused.",
+  "notes": "Closing evidence for S23 as well: the POST carries selected_tenant=49financial and gets past BucketUnmapped. P re-cuts K8 on the fix's pin."
+}
+```

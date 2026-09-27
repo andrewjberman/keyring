@@ -286,3 +286,8 @@ Seating waits on C: above 15 GB (0.0.0_AB_MSTR 101618; 14 GB at the cut).
 read of the flow, and the download href. Same class as IV-e-36 and IV-e-53 (row-driven issuer repair of its own seam). Slot ~41, direct
 act, LOCAL; export/submit.ts, ExportButton.tsx, ReceiptPanel.tsx belong to no running round-8 cell. Thread-breaking (the export hop).
 
+**v8 addendum 2 (issuer, 2026-09-27 ~15:2xZ):** `IV-e-65`, the next export-hop repair that row S24 grounds (window 14 K8 on local DEV
+55bbdd71; 2.0.0_SA_COO~P 101933): the POST now carries selected_tenant (S23 holds), but the export target names the report by its
+revision hash (ReportingTab.tsx:214-228), so the renderer refuses 'invalid report reference'. Name it by retainedReport {reportId,
+revision}. Direct act, LOCAL, slot ~36; ReportingTab.tsx belongs to no running round-8 cell. Thread-breaking (the export hop).
+
