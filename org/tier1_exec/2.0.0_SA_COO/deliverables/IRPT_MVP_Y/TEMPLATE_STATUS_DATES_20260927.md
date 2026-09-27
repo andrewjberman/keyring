@@ -51,7 +51,7 @@ Tests:
 Rebuild `irpt-status` from P's HEAD plus this patch. The zip must carry `submission.py` `9929a829..` and
 `prospect_dates.py` `e5bae585..`. Re-run the three arms above on the new zip; the third is the expectation.
 
-## Update ~20:4xZ: the XLSX template (Y @49f3393cb0)
+## Update ~20:3xZ: the XLSX template (Y @49f3393cb0)
 
 The portal also accepts `.xlsx`, and that template still answered UNAVAILABLE. `_undated_template_xlsx` re-reads the
 raw workbook for what the A/B reader skips unseen. It requires ONE worksheet and every cell in columns A/B, and the rows
