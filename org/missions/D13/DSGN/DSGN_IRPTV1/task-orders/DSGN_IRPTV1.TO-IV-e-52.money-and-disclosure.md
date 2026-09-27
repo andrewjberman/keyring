@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~29</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-27</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -111,3 +111,5 @@ lane: the <paths> block IS the grant; slot ~29, queued before IV-e-50 (which the
 </preflight>
 
 Seating: slot ~29, queue position 3 of 4, after IV-e-45; IV-e-50 (the harness) runs after this.
+
+**Issuer close (2.0.0_SA_COO~D, 2026-09-27 ~05:1xZ; rows W29-S2/S3 closed, W29-S7 moved):** IVE52-AC1 PASS (MONEY-AND-DISCLOSURE-OK). IVE52-AC2 read 38 pass / 1 fail; the one failure is F30-AC4, which was already failing at the base (DEV ad06e37f, suite log) and is not one of the two tests this order named as IV-e-45's breakage -- an issuer cut defect (the criterion's file list carried a pre-existing residual). F30-AC4 moves to TO-IV-e-50 (amendment 1), whose bar is only Q rows fail. Merged at DEV 200d257a (tsc 0, lint 0, suite 898 / 17).

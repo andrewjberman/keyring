@@ -1,0 +1,29 @@
+{
+ "schema_version": "irpt-cot-one-use-plan-v1",
+ "by": "2.0.0_SA_COO~P",
+ "approval_ref": "Andrew-direct 2026-09-27T02:5xZ (2.0.0_SA_COO~P terminal): 'yes to all three' -- call 3, ONE Cottonwood one-use Performance plan for one signed-in COT run, record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260927_025xZ_YES_TO_ALL_THREE_P_OPEN_CALLS.md @6039c2f680",
+ "rule": "served COT directory not-terminated, the entry holds exactly ONE account, the served COT mapping loads it at the cutoff and bd_selected.requests_for accepts it; the MEDIAN by opaque account id (the directory carries no value field)",
+ "directory_entries": 258,
+ "single_account_candidates": 82,
+ "mapping_refused": 0,
+ "eligible": 82,
+ "picked_rank": 40,
+ "end_source": "served irpt-holdings source_dates.business_date for selection sel_66e6034cd164fb0f141b662babd962a65b17e37670281b4800c85a85ebd565e6",
+ "mapping_as_of": "2026-09-23",
+ "plan": {
+  "schema_version": "irpt-performance-one-use-v1",
+  "approval_ref": "Andrew-direct 2026-09-27T02:5xZ (2.0.0_SA_COO~P terminal): 'yes to all three' -- call 3, ONE Cottonwood one-use Performance plan for one signed-in COT run, record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260927_025xZ_YES_TO_ALL_THREE_P_OPEN_CALLS.md @6039c2f680",
+  "firm_id": "cottonwood",
+  "account_id": "acc_81d92b2b7e971a76bac96cea",
+  "vendor_account_id": 27436081,
+  "vendor_external_id": "z0927436081",
+  "mapping_revision": "a560410f86e384c7c3157c8ec32b20ae9fb1a111e1acd2a1f73f26037049ecfe",
+  "start": "2026-01-01",
+  "end": "2026-09-22",
+  "expires_at": 1790532000,
+  "requests_sha256": "b03c99bbb79f78fc4ae5f542632fb10a909c5c6b9588c4740065c5eb59559b49"
+ },
+ "plan_sha256_of_digest": "22f0a98881b6db96e472cb8c39f203e9c5fd033d80d6a5260044dd7f31f287f0",
+ "plan_json_sha256": "22f0a98881b6db96e472cb8c39f203e9c5fd033d80d6a5260044dd7f31f287f0",
+ "vendor_call_made": false
+}
