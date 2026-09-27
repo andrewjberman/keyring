@@ -1742,6 +1742,27 @@ carries none.
     },
     "spec_asserts": "Z-S25: the converter fails a whole unit on an exactly-empty numeric field.",
     "world_is": "The deployed converter maps that field to NULL; the 4 partitions exist."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S29",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-27T20:15Z",
+    "one_line": "A plaintext Black Diamond portal username AND password for the 49F account sit in two TRACKED docs (bd-exporter README.md, 5 lines; docs/WORKING_WORKFLOW.md, 1 line), in git since c4eeb4b8d6 (2026-01-13) and on the pushed history.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-files --error-unmatch infra/aws/ec2/bd-exporter/README.md -> tracked; first commit c4eeb4b8d6 2026-01-13",
+        "git grep -c 'BD_PASSWORD=Q' -> README.md:5, docs/WORKING_WORKFLOW.md:1 (the value itself is not reproduced here)"
+      ]
+    },
+    "spec_asserts": "Credentials live in Secrets Manager only; bd-49f-auto-login reads them via BD_CREDENTIALS_SECRET_ID pointers, never values (run-bd-auto-login.sh header).",
+    "world_is": "A literal password is committed in two docs. BD's MFA and the device-trust token (added ~2026-06-23, Andrew 2026-09-27) limit, but do not remove, the exposure. Disarm: Andrew rotates the BD 49F password (a vendor-account act), the new value goes to Secrets Manager only, and the literal is replaced by a SECRET-ID pointer in both docs. The history rewrite is destructive git and needs Andrew's word; it is not proposed here.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
