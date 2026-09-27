@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T23:02Z. Lease FAST until 2026-09-27T23:31:08Z.
+As of 2026-09-27T23:20Z. Lease FAST until 2026-09-27T23:49:57Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
@@ -170,6 +170,10 @@ and window 4 re-runs K4+K5 (+R1).
 | Y7 reconciled full trace per case | 1 case traced (template lane, Dollars, Overview): 16 MATCH / 0 MISMATCH; screen and export NOT_EVALUATED | `Y7_CASE_TRACE_W15_20260927.md` |
 
 ## Write claims
+
+**irpt-status rebuild HyEyoJ67 FAILED at cold start and is ROLLED BACK** (Y caught it with 0 invocations; CTO 102204; live
+bMMJ/bQ+5 from 23:15:47Z, verified byte-identical; the one invocation since was P's post-rollback proof; 0 errors). The fix is
+proved (HEAD `_authz/served.py` 3a2cdba2 gives READY PER_SECTION 51). The rebuild with an import smoke is P's next packet; K10 waits.
 
 **Release catv2+static VERIFIED (P ledger CLOSED 22:47Z):** the served generate `ykJltfTd` ACCEPTS the Overview. The resident `st`
 equals the proved files, and with no overlay it runs window 15's shape: Static READY, a foreign row ATTENTION, no tolerance READY.

@@ -79,3 +79,12 @@ The rebuild's `prospect_dates.py` is `e5bae585..`.** No live XLSX job exists yet
   header, live reads) answers **READY ANALYSIS_READY, PER_SECTION, 51 dates**.
 - **Lesson for the drift census:** it compared Y-owned modules only, so it could not see this `_authz` file. A rebuild
   that takes one file from HEAD needs every file that file imports from HEAD too, which the import smoke catches.
+- **Rollback verified by Y (~23:2xZ):**
+  - The live CodeSha256 reads `bMMJ/bQ+5` from 23:15:47Z, and the live zip is byte-identical to the pre-rebuild
+    zip.
+  - Cold start builds. Window 15's history and sections read correctly (51 sections, identical to the retained
+    report), and its status read gives the known pre-fix template refusal.
+  - CloudWatch shows **one** invocation since 23:00Z, at 23:16:24Z: P's post-rollback cold-start proof. It shows
+    **0 errors**, so **no request ever reached HyEyoJ67**.
+  - P's ledger is CLOSED as a failed deploy, rolled back (P 102206).
+  - The rebuild, with HEAD `_authz/served.py` and the import smoke, is P's next packet. K10 waits for it.
