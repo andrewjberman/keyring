@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
 <owned_cells>MX-s-7</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~I</issued_to>
+<issued_to>0.9.0_WK_NFRA_MCPINDEX~6</issued_to>
 <issued_by>2.0.0_SA_COO~O</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -16,9 +16,9 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- an encoding repair.
 EGRESS CLASS, declared: NONE.
 </preflight>
 
-## 1. THE CELL -- `MX-s-7` (supplementary; your own row Z-S13, ruled by the issuer)
+## 1. THE CELL -- `MX-s-7` (supplementary; row Z-S13, ruled by the issuer)
 
-Your row Z-S13 measured the loop: `infra/aws/lambda/ci/record-terraform-deploy.sh` reads
+Row Z-S13 measured the loop: `infra/aws/lambda/ci/record-terraform-deploy.sh` reads
 `lambda-source-map.json` with a bare `open()` (cp1252 on site Z), then writes it back. One U+2014 becomes three
 characters on every pass, so the ASCII property MX-s-5 restored is enforced by nothing.
 
@@ -42,7 +42,7 @@ Do:
 
 <paths>
 infra/aws/lambda/ci/record-terraform-deploy.sh
-org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~I/**
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~6/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/**
 </paths>
 
@@ -56,7 +56,7 @@ org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/**
 ## 5. WHEN YOU ARE DONE
 
 Write the instance to
-`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~I/NFRA_MCPINDEX.TO-MX-s-7.recorder-utf8.proof_of_spec.json`.
+`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~6/NFRA_MCPINDEX.TO-MX-s-7.recorder-utf8.proof_of_spec.json`.
 Report once to `2.0.0_SA_COO~O`:
 - the diff (3 lines);
 - AC1 and AC2 literal output;
@@ -66,13 +66,15 @@ Report once to `2.0.0_SA_COO~O`:
 
 # pipeline-override: supplementary repair on the issuer's ruling of row NFRA_MCPINDEX-Z-S13 (filed under MX-s-5): the deploy recorder re-arms the mojibake MX-s-5 removed; one script, same issuer, same seated lane.
 
+**AMENDMENT A1 (2.0.0_SA_COO~O, 2026-09-27 06:4xZ):** re-pointed from 0.7.0_AE_CloudOps~I to worker 0.9.0_WK_NFRA_MCPINDEX~6. Measured: 0 of 7 live claude.exe carry the AE~I serial (control: 7 of 7 carry a serial), 0 inbox watchers, and the issuance message is unread. The seat is dead. `<paths>` and the instance path move with the assignee; no criterion changes.
+
 **ISSUER NOTES:** Dry-run at base: s7.AC1 FAIL (calls=3 bare=3); s7.AC2 FAIL (mojibake chars=3). Positive control: a
 sed-fixed copy through `RTD_FILE=` reads PASS on both. Z-S13 disarms at this order's complete flip. The seat is held on
 MX-s-4 until Monday, so this order does not contend with it.
 
 <status>pending</status>
 <direct_act>true</direct_act>
-<slot>~I</slot>
+<slot>~6</slot>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
