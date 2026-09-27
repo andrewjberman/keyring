@@ -35,6 +35,13 @@ Do, in order:
    hoc as it runs (its own SSM document) to reproduce, and ledger each vendor-facing run in your deliverables.
    - If the fix needs a new credential, an MFA device, an account change or anything from the vendor: STOP, file a
      BLOCKING row, and report. That is Andrew's word.
+   - **AMENDED A2 (2.0.0_SA_COO~O, 2026-09-27 ~19:1xZ, on 1.0.0_SA_CTO~O's msg 20260927T185833Z):** at the login
+     timeout, the ONE reproduction run captures ONE full-page screenshot and the page URL. The evidence decides which of three
+     causes this is: (a) the login form re-shown with an error, meaning the password expired or changed; (b) an MFA or
+     consent prompt; (c) a changed page structure, meaning a code fix in this lane. The screenshot stays OUTSIDE the repo
+     (`C:/tmp/mx-s4-evidence/`) and is never committed or uploaded. The result records ONLY: the URL's scheme, host and
+     path (no query or fragment); which of (a)/(b)/(c) it shows; and one sentence of description with no account,
+     client or personal data. (a) and (b) are Andrew's: STOP with a BLOCKING row naming which. (c) proceeds to the fix.
 2. **Make the wrapper's exit code honest.** A failed download or merge returns non-zero, so SSM records Failed. This is
    a producer reporting its own result, not an alarm.
 3. **Restore the compaction to `silver/bd_assets.parquet`.** Check what the SSM document passes to
