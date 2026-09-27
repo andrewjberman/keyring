@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T12:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T13:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -47,10 +47,15 @@ None. Window 8 CLOSED 04:46:35Z (ledger @f293962a58).
 Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (window 7; INF; COT). Andrew at ~Y 04:01Z
 "yes, run the Analysis window" (W8-2): USED. Any further window or vendor use needs a new word.
 
-1. **Analysis hop 6 (the live-thread break):** the WAF-refresh fix is SERVED in the resident (wf). Andrew at ~Y
-   (@460e2ae8cb): "yes you can run as many analysis attempts as needed". The window-11 packet (blob 9ee0c7c5,
-   @7aad982d3e) is out for both halves: ONE upload and ONE Overview, at most 6 status GETs, ONE re-capture on a
-   read WAF challenge. Create on both halves, then hand to ~Y.
+1. **Analysis hop 6 (the live-thread break):** window 11 (12:56-13:22Z) ran the fourth attempt on resident wf.
+   REQ-717c91a5 went ATTENTION VENDOR_READ_BACK_REFUSED, and portfolio 2363812 is kept. Two defects, sent to ~Y for
+   diagnosis (P 13:20:55Z):
+   (a) the WAF refresh fired on the 3rd poll's 202, but the host capture refused CAPTURE_FAILED:LEASE_NOT_HELD
+       before any sign-in (session secret unchanged);
+   (b) on redelivery the read-back got portfolio_status=available and still refused, with the same 7 settings
+       fields "drifted" as windows 7 and 8, so the compare, not the timing, is wrong.
+   Bounds held: 4 status GETs, 0 completed re-captures. Next: ~Y's fixes, then a fifth attempt under Andrew's
+   standing word, each in a signed window.
 2. **K8, the first real export:** window 10 (06:19-06:32Z) did not reach it. The page's Export preview refuses
    before any request ("cannot render reportKind performance-report: 39c11079.. is absent"), and 39c11079 is K7's own
    report revision (RPT-b5e0a16e). ROOT CAUSE (from the w10 HAR and the adapter log):
@@ -79,6 +84,7 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
 4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
+- Window 11 (the fourth Analysis attempt) opened 12:56:51Z and closed 13:22:00Z: 0 outside the classes; writes = K4/K5 only; bounds held (@ledger irpt-ui-walk-principal-w11-20260927).
 - Andrew-direct "rec approved" (/open-calls CALL 1): ledger irpt-p-live-scope-20260923 CLOSED on the agent walks (@22c2fc699d).
 - Window 10 opened 06:19:10Z and closed 06:32:17Z. K7 reopened a 49F report (8.05%); K8 was not run (the page refused); 0 outside the classes; 0 new media in git.
 - S157 filed (COT retained face overstates its window) and named in the release item (@52f078fe1e).
