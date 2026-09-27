@@ -1650,6 +1650,30 @@ carries none.
     },
     "spec_asserts": "Z-S13: nothing prevents recurrence of the source-map mojibake.",
     "world_is": "The reader and writer are both explicit UTF-8, so the loop is broken at its source."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W7-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~7",
+    "surfaced_at": "2026-09-27T08:50Z",
+    "one_line": "MX-s-8 Phase A step 6's terraform plan read 'No changes' because the yang-lambda module's source_code_hash comes from an S3 artifact's metadata, not the local source tree -- neither Phase A nor Phase B names the build-and-upload step that must run before a plan/apply against these 4 functions can show or ship the vendored edits.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/modules/yang-lambda/main.tf:36-39 -- aws_lambda_function.this reads s3_bucket=var.artifact_bucket, s3_key=var.artifact_key, source_code_hash=data.aws_s3_object.artifact.metadata[\"content-sha256\"]; nothing in the module reads the local .py tree.",
+        "terraform plan -input=false -no-color run 2026-09-27T08:4xZ in infra/aws/terraform/opal-assets AFTER the 4 vendored mirror_conversion.py edits + the etf manifest hash edit were made and staged, printed exactly 'No changes. Your infrastructure matches the configuration.' (rc=0) -- confirmed against the just-edited worktree, not a stale read.",
+        "infra/aws/lambda/ci/build-and-upload.sh:18-28 documents the required order: edit source -> commit -> build-and-upload.sh {pipeline} -> TF plan (shows updates) -> TF apply -> 0-diff plan afterward. Neither TO-MX-s-8 PHASE A (steps 1-7) nor PHASE B (steps 8-12: ledger, safe-apply, smoke, record, close) names a build-and-upload (or equivalent artifact rebuild+S3-upload) step for opal-assets-silver-{blackdiamond,etf,eclipse,orion}.",
+        "TO-MX-s-8 section 1 step 6 verbatim: 'The plan must name ONLY the 4 functions' code attributes. Anything else: STOP, a BLOCKING row.' -- read literally this PASSES (nothing beyond the 4 functions is named, because nothing is named at all), but the plan run is not evidence of what Phase B's apply would actually deploy: without the artifact rebuild+upload, step 9's 'terraform plan must name only the 4 functions' code attributes' before approving would ALSO read 'No changes', and an apply run against that would be a silent no-op that never ships either fix to a running Lambda."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MX-s-8 step 6 treats a terraform plan run against the edited vendored copies as the pre-GO preview of the deploy Phase B's apply will perform, and step 9 gates that same apply on the plan naming only the 4 functions' code attributes.",
+    "world_is": "The 4 functions deploy via the yang-lambda module's S3-artifact pattern (bucket+key+content-sha256 metadata), so a plan or apply run against the current, un-rebuilt S3 artifacts is a 0-diff no-op regardless of what the local vendored .py files now contain. Reaching a plan that actually previews the fix -- and an apply that actually ships it -- needs an artifact build+upload step (infra/aws/lambda/ci/build-and-upload.sh or equivalent) run first, which is outside this cell's Phase A <paths>/EGRESS CLASS (declared: none beyond get-function/get-layer-version/terraform apply) and is not named as a member of either phase in this task order.",
+    "notes": "BLOCKING on the evidentiary value of step 6's plan and on step 9's gate, not on Phase A's literal steps (which this worker completed and recorded as written). ARMED: if GO is given on the current Phase B step list without an artifact rebuild+upload step added, the apply will land 0-diff and the fix will not ship while the ledger/record steps may read as a completed deploy. disarm_owner 2.0.0_SA_COO~O decides whether to add the build-and-upload leg (naming it, its own never-widen bound, and its S3 write target) to Phase B before authorizing GO, or to route it to whichever lane owns infra/aws/lambda/ci/build-and-upload.sh's egress."
   }
 ]
 ```
