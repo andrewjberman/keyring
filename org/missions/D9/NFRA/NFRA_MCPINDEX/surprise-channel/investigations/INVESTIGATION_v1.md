@@ -1337,6 +1337,31 @@ carries none.
     },
     "spec_asserts": "MX-s-4 step 3: the converter writes the compacted file unless --no-compacted is passed.",
     "world_is": "It writes it only under --backfill; the remedy is a DS script change, now MX-s-6."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S17",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-27T00:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The estate's own honest-exit idiom STRANDS its EC2 runner: 5 of the 6 Black Diamond download documents place `exit 1` BEFORE `shutdown -h +2`, so every failing run leaves a t3.medium up with no auto-stop net. MX-s-4 step 2 inherited the defect by copying the idiom, and it fired on the first real run.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IT FIRED, on this lane's own act. The ad-hoc run at 2026-09-26T23:31Z failed at login as expected; SSM correctly recorded Failed/ResponseCode 1; and i-0e6f6dc014fdcf1cd (bd-assets, t3.medium) was left RUNNING. Re-read ~35 minutes later: still running, idle.",
+        "NO AUTO-STOP NET EXISTS FOR IT: `cloudwatch describe-alarms` filtered to that instance returns [] -- an empty list, not an unread. So nothing reaps it; the only stop is the `shutdown -h +2` the `exit 1` now skips, or a hand.",
+        "IT IS A CLASS, NOT THIS DOCUMENT: line positions of `exit 1` vs `shutdown -h` across the six BD download documents -- allocation 48/60, asset-dim 55/59, realized 51/55, transaction 47/51, unrealized 51/55, and fees has no `exit 1` at all. FIVE OF SIX place the exit first and therefore strand on every failure. allocation, realized, transaction and unrealized have carried this since before MX-s-4 existed.",
+        "AND A REASSURANCE OF MINE THAT WAS WRONG, recorded because the reasoning error is the point. In commit 4b3a757410 I wrote 'The pattern does not leak instances in this fleet', resting on a single `describe-instances` that showed no bd-* runner up at that moment, plus the argument that allocation uses the same idiom and fails daily. That was A SNAPSHOT ANSWERING A QUESTION ABOUT A STANDING PROPERTY. The structural read above is what should have been run, and it says the opposite. I had the lesson banked and leaned on the snapshot anyway.",
+        "THE FIX IS A REORDER, NOT A REVERT: arm the shutdown BEFORE the non-zero exit, so the run reports Failed AND the instance still stops. Both properties, one line moved. Not applied -- stopping or re-deploying against a running instance interacts with the human-confirmation gate below."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 2: 'Make the wrapper's exit code honest. A failed download or merge returns non-zero, so SSM records Failed. This is a producer reporting its own result, not an alarm.' The estate's four already-correct documents were taken as the reference implementation.",
+    "world_is": "The exit code is now honest -- that part worked, and SSM recorded Failed where it recorded Success before. But the reference implementation carries a second, unstated defect: its `exit 1` short-circuits the shutdown. Making the wrapper honest, by copying the estate, also made it leak a t3.medium per failure -- and this producer fails every day. The two properties were never in tension; they only appeared so because the idiom put them in the wrong order.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "IMMEDIATE, AND GATED: i-0e6f6dc014fdcf1cd is running and idle right now. CLAUDE.md Agent Autonomy puts stopping an EC2 behind human confirmation, so this lane has NOT stopped it and has surfaced it to Andrew instead. The instance is billing until he answers; that cost is this act's and is named rather than buried. SCOPE: the reorder of asset-dim's own document is within MX-s-4 step 2 and is proposed to Andrew in the same breath. The four sibling documents are NOT this order's -- bound 1 -- and are routed, not touched. fees is a third case again: it has no `exit 1`, so it neither reports honestly nor strands."
   }
 ]
 ```
