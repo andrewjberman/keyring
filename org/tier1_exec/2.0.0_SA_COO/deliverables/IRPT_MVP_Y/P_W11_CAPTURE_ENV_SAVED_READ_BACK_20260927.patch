@@ -1,0 +1,288 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+index 5544cfe..be76047 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py
+@@ -638,6 +638,13 @@ def step_read_back(transport, portfolio_id, settings, *, polls=READ_BACK_POLLS,
+     lease is renewed between polls (each request must fit its 780 s budget inside the lease), and
+     a WAF challenge ends the loop at once so the caller's one-refresh rule sees it. The result
+     carries `polls` and `wall_s`.
++
++    THE SETTINGS COME FROM THE SAVED PORTFOLIO, NOT THE STATUS (window 11): the status answer of an
++    `available` portfolio carried none of the 7 fields, so every one "drifted". The only
++    live-proven settings read is the research worker's GET /model_portfolios/fixed/{id}, whose
++    `portfolio` object holds the effective settings (variant_worker.verify_owned_snapshot). The
++    status is polled only until `available`; then the saved portfolio is read ONCE and compared.
++    A field the vendor does not return is named in `absent`, apart from a value that differs.
+     """
+     started = clock()
+     renew = getattr(transport, "renew", None)
+@@ -658,6 +665,16 @@ def step_read_back(transport, portfolio_id, settings, *, polls=READ_BACK_POLLS,
+             if callable(renew):
+                 renew(ttl=READ_BACK_LEASE_TTL_S)
+             wait(spacing)
++    portfolio_status, source = effective.get("status"), "status"
++    if info["status"] == 200 and not info.get("waf_action") and portfolio_status == "available":
++        info, body = transport.request("/model_portfolios/fixed/%s" % portfolio_id)
++        try:
++            saved = json.loads(body)
++        except ValueError:
++            saved = {}
++        effective = saved.get("portfolio") if isinstance(saved, dict) else None
++        effective = effective if isinstance(effective, dict) else {}
++        source = "saved_portfolio"
+     s = settings["settings"]
+     rows = []
+     for key, vendor_field in sorted(SETTING_TO_VENDOR_FIELD.items()):
+@@ -668,7 +685,9 @@ def step_read_back(transport, portfolio_id, settings, *, polls=READ_BACK_POLLS,
+                      "expected": expected, "actual": actual, "matches": actual == expected})
+     matched = sum(1 for r in rows if r["matches"])
+     return {**_recovery_ref(info), "step": "read_back", "ok": info["status"] == 200 and matched == len(rows),
+-            "status": info["status"], "portfolio_status": effective.get("status"), "polls": poll,
++            "status": info["status"], "portfolio_status": portfolio_status, "polls": poll,
++            "settings_source": source,
++            "absent": [r["setting"] for r in rows if r["vendor_field"] not in effective],
+             "wall_s": round(clock() - started, 1), "waf_action": info.get("waf_action"),
+             "matched": matched, "denominator": len(rows), "rows": rows,
+             "drifted": [r["setting"] for r in rows if not r["matches"]]}
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+index 7b409a7..2c499b8 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
+@@ -42,12 +42,15 @@ def refusal_line(result, tag="STEP_REFUSED"):
+         return value if isinstance(value, str) and _TOKEN.fullmatch(value) else "-"
+     status = result.get("status")
+     drifted = [name for name in result.get("drifted") or [] if name in recipe.SETTING_TO_VENDOR_FIELD]
++    absent = [name for name in result.get("absent") or [] if name in recipe.SETTING_TO_VENDOR_FIELD]
+     polls, wall = result.get("polls"), result.get("wall_s")
+-    return "IRPT_RESIDENT_%s step=%s status=%s portfolio_status=%s polls=%s wall_s=%s drifted=%s" % (
++    return ("IRPT_RESIDENT_%s step=%s status=%s portfolio_status=%s source=%s polls=%s wall_s=%s drifted=%s "
++            "absent=%s") % (
+         tag if tag in ("STEP_REFUSED", "STEP_WAF_REFRESH", "READ_BACK_DONE") else "STEP",
+         token(result.get("step")), status if type(status) is int else "-",
+-        token(result.get("portfolio_status")), polls if type(polls) is int else "-",
+-        wall if type(wall) in (int, float) else "-", ",".join(drifted) or "-")
++        token(result.get("portfolio_status")), token(result.get("settings_source")),
++        polls if type(polls) is int else "-", wall if type(wall) in (int, float) else "-",
++        ",".join(drifted) or "-", ",".join(absent) or "-")
+ 
+ 
+ class ResidentGenerationWorker:
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py
+index 4b53509..dcc6223 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py
+@@ -141,6 +141,10 @@ def base_script(status_fixture="status_ok.json", create_fixture="create_201.json
+         ("POST", "/model_portfolios/fixed/"): create,
+         ("GET", "/model_portfolios/fixed/"): collection,
+         ("GET", "/model_portfolios/2332060/status"): fixture(status_fixture),
++        # The settings come from the SAVED portfolio (window 11): the status fixture's values, in the
++        # research worker's live-proven {"portfolio": {...}} shape.
++        ("GET", "/model_portfolios/fixed/2332060"): {"status": 200, "body": {"portfolio": {
++            k: v for k, v in fixture(status_fixture)["body"].items() if k != "status"}, "items": []}},
+         ("POST", "/custom_pdf_reports/validate_report_securities/14141822"):
+             fixture("validate_200.json"),
+         ("POST", "/custom_pdf_reports/validate_report_securities/14141824"):
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
+index 2601945..65c909c 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_read_back_poll.py
+@@ -1,4 +1,5 @@
+-"""The settings read-back waits for an AVAILABLE portfolio (window 7: read once while `calculating`, 7/7 refused)."""
++"""The settings read-back: wait out `calculating` (window 7), back off and stop on a WAF challenge (window 8), and
++read the settings from the SAVED portfolio once available (window 11: the status carried none of them)."""
+ import json
+ from pathlib import Path
+ import sys
+@@ -9,24 +10,35 @@ import recipe  # noqa: E402
+ import resident_worker  # noqa: E402
+ 
+ FIX = Path(__file__).parents[1] / "fixtures" / "har"
+-AVAILABLE = json.loads((FIX / "status_ok.json").read_text(encoding="utf-8"))["body"]
+-DRIFTED = json.loads((FIX / "status_drifted.json").read_text(encoding="utf-8"))["body"]
++# The status of an available portfolio, as window 11 measured it: the state only, no settings.
++AVAILABLE = {"status": "available"}
+ CALCULATING = {"status": "calculating"}
++# The saved portfolio's settings. The values are the recipe's own (status_ok.json carries them); the SHAPE,
++# `{"portfolio": {...}}`, is the research worker's live-proven read (variant_worker.verify_owned_snapshot).
++SETTINGS = {k: v for k, v in json.loads((FIX / "status_ok.json").read_text(encoding="utf-8"))["body"].items()
++            if k != "status"}
++SAVED = {"portfolio": SETTINGS, "items": []}
++DRIFTED = {"portfolio": dict(SETTINGS, management_fee=0.01), "items": []}
++STATUS = "/model_portfolios/2363504/status"
++FIXED = "/model_portfolios/fixed/2363504"
+ 
+ 
+ class Replay:
+-    def __init__(self, *answers):
+-        self.answers, self.calls, self.renewals = list(answers), 0, []
++    def __init__(self, *status_answers, saved=(200, SAVED)):
++        self.answers, self.saved, self.calls, self.renewals = list(status_answers), saved, [], []
+ 
+     def request(self, path, method="GET", payload=None, content_type=None):
+-        assert path == "/model_portfolios/2363504/status" and method == "GET"
+-        answer = self.answers[min(self.calls, len(self.answers) - 1)]
+-        status, body = answer[0], answer[1]
+-        self.calls += 1
+-        info = {"status": status}
++        assert method == "GET" and path in (STATUS, FIXED)
++        self.calls.append(path)
++        if path == FIXED:
++            status, body = self.saved
++            return {"status": status}, json.dumps(body).encode()
++        n = sum(1 for p in self.calls if p == STATUS)
++        answer = self.answers[min(n - 1, len(self.answers) - 1)]
++        info = {"status": answer[0]}
+         if len(answer) > 2:
+             info["waf_action"] = answer[2]
+-        return info, json.dumps(body).encode()
++        return info, json.dumps(answer[1]).encode()
+ 
+     def renew(self, *, ttl):
+         self.renewals.append(ttl)
+@@ -38,50 +50,67 @@ def read_back(transport, **kw):
+     return result, waits
+ 
+ 
+-def test_calculating_then_available_compares_the_available_response():
++def test_calculating_then_available_compares_the_saved_portfolio():
+     t = Replay((200, CALCULATING), (202, CALCULATING), (200, CALCULATING), (200, AVAILABLE))
+     result, waits = read_back(t)
+     assert result["ok"] is True and result["matched"] == result["denominator"] == 7
+-    assert result["polls"] == 4 and t.calls == 4 and waits == [recipe.READ_BACK_SPACING_S] * 3
+-    assert result["portfolio_status"] == "available" and recipe.READ_BACK_SPACING_S == 15.0
++    assert t.calls == [STATUS] * 4 + [FIXED] and waits == [recipe.READ_BACK_SPACING_S] * 3
++    assert result["portfolio_status"] == "available" and result["settings_source"] == "saved_portfolio"
+     assert t.renewals == [recipe.READ_BACK_LEASE_TTL_S] * 3 and isinstance(result["wall_s"], float)
++    assert result["absent"] == [] and recipe.READ_BACK_SPACING_S == 15.0
++
++
++def test_window_11_an_available_status_alone_never_carries_the_settings():
++    """The status body of an available portfolio has no settings; comparing it would drift 7/7."""
++    result, _ = read_back(Replay((200, AVAILABLE)))
++    assert result["ok"] is True and result["settings_source"] == "saved_portfolio"
++
++
++def test_a_saved_portfolio_missing_fields_names_them_absent_not_just_drifted():
++    t = Replay((200, AVAILABLE), saved=(200, {"portfolio": {"management_fee": 0.003}}))
++    result, _ = read_back(t)
++    assert result["ok"] is False and "management_fee" not in result["drifted"]
++    assert set(result["absent"]) == set(result["drifted"]) and len(result["absent"]) == 6
+ 
+ 
+ def test_a_waf_challenge_ends_the_poll_at_once_for_the_one_refresh_rule():
+     t = Replay((200, CALCULATING), (202, CALCULATING, "challenge"), (200, AVAILABLE))
+     result, waits = read_back(t)
+-    assert result["ok"] is False and result["polls"] == 2 and t.calls == 2 and len(waits) == 1
+-    assert result["waf_action"] == "challenge" and result["status"] == 202
++    assert result["ok"] is False and result["polls"] == 2 and t.calls == [STATUS] * 2 and len(waits) == 1
++    assert result["waf_action"] == "challenge" and result["status"] == 202 and result["settings_source"] == "status"
+ 
+ 
+ def test_never_available_is_refused_with_its_status_named_after_the_bound():
+     t = Replay((200, CALCULATING))
+     result, waits = read_back(t, polls=5)
+-    assert result["ok"] is False and result["polls"] == 5 and t.calls == 5 and len(waits) == 4
++    assert result["ok"] is False and result["polls"] == 5 and t.calls == [STATUS] * 5 and len(waits) == 4
+     assert result["portfolio_status"] == "calculating" and len(result["drifted"]) == 7
+ 
+ 
+ def test_an_eviction_is_returned_at_once_for_the_callers_refresh_rule():
+     t = Replay((403, {"detail": "Your session ended because of a concurrent sign in."}), (200, AVAILABLE))
+     result, waits = read_back(t)
+-    assert result["ok"] is False and result["status"] == 403 and t.calls == 1 and waits == []
++    assert result["ok"] is False and result["status"] == 403 and t.calls == [STATUS] and waits == []
+ 
+ 
+-def test_available_but_drifted_is_refused_on_the_first_read():
+-    result, waits = read_back(Replay((200, DRIFTED)))
++def test_available_but_drifted_is_refused_on_the_saved_read():
++    result, waits = read_back(Replay((200, AVAILABLE), saved=(200, DRIFTED)))
+     assert result["ok"] is False and result["polls"] == 1 and waits == []
+-    assert result["drifted"] == ["management_fee"]
++    assert result["drifted"] == ["management_fee"] and result["absent"] == []
+ 
+ 
+ def test_refusal_line_carries_closed_tokens_only():
+-    line = resident_worker.refusal_line({"step": "read_back", "status": 200, "portfolio_status": "calculating",
+-                                         "polls": 12, "drifted": ["management_fee", "https://x?sig=1"]})
+-    assert line == ("IRPT_RESIDENT_STEP_REFUSED step=read_back status=200 portfolio_status=calculating "
+-                    "polls=12 wall_s=- drifted=management_fee")
++    line = resident_worker.refusal_line({"step": "read_back", "status": 200, "portfolio_status": "available",
++                                         "settings_source": "saved_portfolio", "polls": 1,
++                                         "drifted": ["management_fee", "https://x?sig=1"], "absent": ["tax_status"]})
++    assert line == ("IRPT_RESIDENT_STEP_REFUSED step=read_back status=200 portfolio_status=available "
++                    "source=saved_portfolio polls=1 wall_s=- drifted=management_fee absent=tax_status")
+     done = resident_worker.refusal_line({"step": "read_back", "status": 200, "portfolio_status": "available",
+-                                         "polls": 3, "wall_s": 31.4, "drifted": []}, "READ_BACK_DONE")
++                                         "settings_source": "saved_portfolio", "polls": 3, "wall_s": 31.4,
++                                         "drifted": [], "absent": []}, "READ_BACK_DONE")
+     assert done == ("IRPT_RESIDENT_READ_BACK_DONE step=read_back status=200 portfolio_status=available "
+-                    "polls=3 wall_s=31.4 drifted=-")
++                    "source=saved_portfolio polls=3 wall_s=31.4 drifted=- absent=-")
+     leaky = resident_worker.refusal_line({"step": "Read Back <x>", "status": "200", "portfolio_status": "a b@c",
+-                                          "drifted": None})
+-    assert leaky == "IRPT_RESIDENT_STEP_REFUSED step=- status=- portfolio_status=- polls=- wall_s=- drifted=-"
++                                          "drifted": None, "absent": ["x@y"]})
++    assert leaky == ("IRPT_RESIDENT_STEP_REFUSED step=- status=- portfolio_status=- source=- polls=- wall_s=- "
++                     "drifted=- absent=-")
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
+index 7efc106..c2dd91c 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py
+@@ -147,6 +147,9 @@ def installed(world, monkeypatch, *, ambiguous=False, prepared=None, principal_f
+         ('POST', '/model_portfolios/fixed/holdings_upload/client'): upload,
+         ('POST', '/model_portfolios/fixed/'): fixture('create_201'),
+         ('GET', '/model_portfolios/2332060/status'): fixture('status_ok'),
++        # The settings come from the SAVED portfolio (window 11); its values are the recipe's own.
++        ('GET', '/model_portfolios/fixed/2332060'): {'status': 200, 'body': {'portfolio': {
++            k: v for k, v in fixture('status_ok')['body'].items() if k != 'status'}, 'items': []}},
+         ('POST', '/custom_pdf_reports/validate_report_securities/14141822'): fixture('validate_200'),
+         ('POST', '/custom_pdf_reports/14141822'): fixture('generate_201')}
+     replay = ReplayTransport(script)
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py b/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py
+index a6fba71..beaffc7 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py
+@@ -41,13 +41,26 @@ def failure_code(output):
+     return 'CAPTURE_FAILED'
+ 
+ 
++def capture_env(environ=None):
++    """The wrapper's environment: the resident's own, WITHOUT any PYTHON* variable.
++
++    Measured window 11: the resident unit sets PYTHONPATH to its package root, which vendors a
++    urllib3 written for Python 3.10+. The wrapper inherited it, the runner's `aws` CLI (the
++    host's python3.9) imported that urllib3 and crashed, and the runner reported the failed lease
++    call as LEASE_NOT_HELD. The capture is a separate program; it must not see the resident's
++    Python import path.
++    """
++    source = os.environ if environ is None else environ
++    return {k: v for k, v in source.items() if not k.upper().startswith("PYTHON")}
++
++
+ def run_capture(wrapper, *, deadline, clock=time.time):
+     if os.name != 'posix':
+         raise OperationRefused('DEDICATED_LINUX_HOST_REQUIRED')
+     remaining = deadline - clock()
+     if remaining <= 0:
+         raise OperationRefused('CAPTURE_DEADLINE')
+-    process = subprocess.Popen(['/bin/bash', str(wrapper)], cwd=str(wrapper.parent),
++    process = subprocess.Popen(['/bin/bash', str(wrapper)], cwd=str(wrapper.parent), env=capture_env(),
+         stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+         start_new_session=True)
+     try:
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py b/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py
+index a20a9da..393a038 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py
+@@ -94,3 +94,10 @@ def test_failure_code_names_the_runner_class_and_never_its_message(output, code)
+     got = host_capture.failure_code(output)
+     assert got == code
+     assert 'SECRET' not in got and 'VALUE' not in got and 'https' not in got
++
++
++def test_capture_env_drops_every_python_variable_and_keeps_the_rest():
++    env = host_capture.capture_env({'PYTHONPATH': '/opt/irpt-resident/pkg', 'PYTHONUNBUFFERED': '1',
++                                    'PYTHONHOME': '/x', 'pythonstartup': '/y', 'HOME': '/home/ec2-user',
++                                    'PATH': '/usr/local/bin:/usr/bin', 'USER': 'ec2-user'})
++    assert env == {'HOME': '/home/ec2-user', 'PATH': '/usr/local/bin:/usr/bin', 'USER': 'ec2-user'}

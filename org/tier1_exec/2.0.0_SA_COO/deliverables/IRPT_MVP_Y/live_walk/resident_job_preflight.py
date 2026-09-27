@@ -53,6 +53,8 @@ def main(argv=None):
     ap.add_argument("--waf-shape", choices=("research", "window8"), default="research",
                     help="research: the decision_branches 202 (body says calculating); window8: the live 202 whose "
                          "body carried no status (the journal's portfolio_status=-)")
+    ap.add_argument("--available-bare", action="store_true",
+                    help="the available status carries only its state, no settings (window 11 live)")
     ap.add_argument("--capture-stub", action="store_true",
                     help="stand in for the Linux-only host browser capture: bump the session generation and fence")
     ap.add_argument("--status-calculating", type=int, default=0,
@@ -96,7 +98,9 @@ def main(argv=None):
             [{"status": 200, "body": {"status": "calculating"}}] * a.status_calculating
             + [fixture("decision_branches")["WAF_REFRESH_REQUIRED"] if a.waf_shape == "research" else
                {"status": 202, "body": {}, "content_type": "application/json", "waf_action": "challenge"}] * a.waf_read
-            + [fixture("status_ok")]),
+            + [{"status": 200, "body": {"status": "available"}} if a.available_bare else fixture("status_ok")]),
+        ("GET", "/model_portfolios/fixed/2332060"): {"status": 200, "body": {"portfolio": {
+            k: v for k, v in fixture("status_ok")["body"].items() if k != "status"}, "items": []}},
         ("POST", "/custom_pdf_reports/validate_report_securities/14141822"): fixture("validate_200"),
         ("POST", "/custom_pdf_reports/14141822"): fixture("generate_201")}
     replay = ReplayTransport(script)
