@@ -18,7 +18,7 @@ and records are in this directory unless another path is given. Work only from t
 2. **Baseline served D_03:** `python cot_served_composition_check.py --out COT_SERVED_COMPOSITION_POSTRUN_20260928.json`.
    It shows the deployed act-1 and cash-admission bytes; the 09-23 July baseline had 9 over 100%.
 
-## B. The COT cash-line act (both halves: CTO + CRO on 9e3f568d42 + 0deac23f1e; S152 re-cut ff63895521)
+## B. The COT cash-line act (both halves: CTO + CRO on 9e3f568d42 + 0deac23f1e; S155 re-cut ff63895521)
 
 Pre-deploy (CRO 101595):
 - `python cot_cash_line_negative_census.py` must reprint 17 of 29 net negative.
@@ -31,8 +31,8 @@ Pre-deploy (CRO 101595):
    - branch `irpt-m-s152-cloud` @ff63895521.
    Commit the OPEN sentinel at once.
    - NOT in this act: ccb9b38dd8 (structured/commodities in COT C_06/D_03/D_04), on `irpt-m-cot-b1`. It is ETF Part
-     B's B1 and merges under B1's ledger with ~X's commits, the same split the CTO and CRO ruled for S152 (101686,
-     101688). At that merge, the S152 test `test_s152_mix_views_cash_other.py` must take B1's widened list.
+     B's B1 and merges under B1's ledger with ~X's commits, the same split the CTO and CRO ruled for S155 (101686,
+     101688). At that merge, the S155 test `test_s152_mix_views_cash_other.py` must take B1's widened list.
 2. Merge both branches into CLOUD with `.tools/safe-merge.sh` (clean index, `OPAL_AGENT_SERIAL=2.0.0_SA_COO~M`). COT
    gold deploys on push (S141), so the deploy is safe-deploy of those four scripts under this ledger, HALT_ACK=1.
 3. Verify the served bytes: each S3 object's version and sha equal the merged file.
@@ -75,8 +75,7 @@ Gate: A.1 passed, AND d08 (and d06) admit `other`. That is ~X's commit 88bf469eb
 
 ## F. Drain notes
 
-- Surprise ids: ~X's rows S150-S153 on `ds-x-b1-cashline` collide with CLOUD's S150-S152 (CLOUD S152 = ~P's INF
-  holdings-lag row). At the ~X drain, renumber ~X's four rows after CLOUD's highest id and record the map in the merge
-  commit. In ~M's cash-line records, "S152" is ~X's COT mix_views row.
+- Surprise ids: ~X's branch rows S150-S153 are already on CLOUD as S153-S156 (@92244581d2, CTO 101771). At the ~X
+  drain, drop the branch's copies; CLOUD's S150-S152 stay. The COT mix_views row is S155.
 - After D.3's first enabled publication, check that INF holdings as-of is at or after 09-25; that disarms CLOUD S152
   (~P's). INF upstream is complete through 09-26.
