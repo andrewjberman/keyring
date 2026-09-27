@@ -72,6 +72,27 @@ item.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "A verification and correction record. It opens and adjudicates no investigation item."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-C-S4",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T13:05:00Z",
+    "one_line": "Amends Z-C-S1 and Z-C-S3. This seat's OA-g-2 half missed that any profile record restricts its principal's own tools, and this seat's OA-g-3 read checked the grant but not that effect. Both are corrected. C-S3's law reading (the literal-key exemption) is unchanged.",
+    "class": "OBSERVATION",
+    "spec_asserts": "Z-C-S1 signed OA-g-2's second branch as 'only that person's answers narrow'. Z-C-S3 verified OA-g-3 as one portal-only query grant, ACTIVE.",
+    "world_is": "data_entitlement.py:28-33 at 110d93fb73: a principal with ANY profile record is restricted. :41-44 and decide() :364-376: a restricted principal is denied every tool outside its grant and the direct REST routes, and a portal-only grant admits no tool. So Alyssa Keith's own gateway tools were removed by the OA-g-3 write. 1.0.0_SA_CTO~O measured 6,895 audit records (2026-09-25..27): 92 are hers, all ms_site_children on the 02Z site-ingest path, still ok, and 0 MCP tool calls, so nothing observed broke. The lockout is latent, and the CTO carried it to Andrew (entitlements are his class). The write also broke OPLGTW W3-S22's round-1 policy disarm (AC12), per the CTO's ruling. The never-widen exemption for a literal-key write still covered the act; what C-S3 missed was a reader of the key, not a writer.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/data_entitlement.py:28-44, :364-376 at 110d93fb73 (read by this seat)",
+        "commit 244cd0d80f (1.0.0_SA_CTO~O: the CTO half corrected; RULING_W3-S22_20260927.md)",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_OPALAI_OA-g-2_NEVER_WIDEN_SECOND_HALF_20260926.md (supersession on its own bytes)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction record. It opens and adjudicates no investigation item; the latent lockout is carried to Andrew by the CTO, and W3-S22 stays ARMED on OPLGTW."
   }
 ]
 ```

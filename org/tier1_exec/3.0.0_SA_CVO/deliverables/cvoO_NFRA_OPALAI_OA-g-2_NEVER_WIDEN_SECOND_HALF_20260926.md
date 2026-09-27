@@ -39,4 +39,11 @@ literal-key write, which the never-widen rule exempts (CLAUDE.md section 5). See
 every grant takes the unchanged v1.1 path. After a portal-only record is written, only that person's answers narrow,
 and that write is OA-g-3's to sign.
 
+**SUPERSEDED 2026-09-27 ~13:0xZ by this seat: the second branch above was INCOMPLETE.** Found by 1.0.0_SA_CTO~O
+@244cd0d80f, and re-read here at `110d93fb73`. Any profile record makes its principal `restricted`
+(`data_entitlement.py:28-33`). A restricted principal is denied every tool outside its grant and the direct REST routes
+(`:41-44`, `decide()` `:364-376`), and a portal-only grant admits no tool. So the write also removes that person's own
+gateway tools; it does not only narrow their asker answers. This seat read the asker path alone and never counted the
+other readers of a profile record. The one such record is OA-g-3's (see NFRA_OPALAI-Z-C-S4).
+
 -- 3.0.0_SA_CVO~O
