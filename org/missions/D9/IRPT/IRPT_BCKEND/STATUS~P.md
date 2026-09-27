@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T10:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T12:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -36,7 +36,7 @@ As of 2026-09-27T10:2xZ. Earlier forms of this file are in git (`git log -p -- <
 |---|---|---|
 | 1 | Signed-in journey per firm | Performance DONE at all three: 49F (account-level, reopen fixed); INF RPT-df47a1fc (one Orion call, 7.98%); COT RPT-b683f188 (one claim, 2 BD requests, -1.18%, reopen served). Analysis: breaks at hop 6 (YCharts WAF on the read-back). Export: render ON; the first real export is not run (K8) |
 | 2 | Every active account resolvable | MEASURED: COT 843/843, INF 878/878, 49F 6698/7497 (9 funded non-computable) |
-| 3 | COT structurally sound, window disclosed | Real-data run RPT-b683f188 exposed an overstated window (actual 01-02 = the provider's calendar grid; the account's series starts 07-21). FIXED and served (bOefL9nx): the recorded bytes now give actual 07-21..09-22. The retained RPT-b683f188 is immutable and still shows 01-02; a corrected COT report on real data needs ONE new COT use (Andrew's word) |
+| 3 | COT structurally sound, window disclosed | Next-list item 3. Real-data run RPT-b683f188 exposed an overstated window (actual 01-02 = the provider's calendar grid; the account's series starts 07-21). FIXED and served (bOefL9nx): the recorded bytes now give actual 07-21..09-22. The retained RPT-b683f188 is immutable and still shows 01-02; a corrected COT report on real data needs ONE new COT use: both halves and a ledger (Andrew's session egress word, MSTR 101850) |
 
 ## Write claims
 
@@ -60,7 +60,12 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
    BLOCKER CHAIN (10:2xZ): the fix is TO-IV-e-53 in DSGN_IRPTV1 round 8 (issued @83576f9dd9). It has 0 portal commits,
    because ~D seated 0 workers: C: is at 14 GB free, under the 15 GB seating floor, awaiting Andrew. P's scratchpad
    holds 72 MB, so it is not the lever.
-3. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
+3. **A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** unblocked. Andrew-direct relayed by MSTR
+   101850 reads "they have egress for full session", and the loop prompt permits vendor uses, each ledgered. It needs
+   ONE new COT use: plan 2 on the same account through cot_one_use_plan.py (no vendor call), a packet, both halves,
+   a ledger, the arm, ONE read, and a disarm to null. The read is bOefL9nx's first real-data COT report, and it must
+   disclose 07-21 as the actual start.
+4. **S152** (INF holdings 3 trading days behind): ~M's; it disarms on the R4 Monday enable.
 
 **DONE this stretch:**
 - Window 10 opened 06:19:10Z and closed 06:32:17Z. K7 reopened a 49F report (8.05%); K8 was not run (the page refused); 0 outside the classes; 0 new media in git.
