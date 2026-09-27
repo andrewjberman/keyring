@@ -41,7 +41,8 @@ branch. COT `C_06`, `D_03`, `D_04` and their tests on branch `irpt-m-cot-cash-li
 head ccb9b38dd8, NOT merged). ~X's order is DONE: `ds-x-b1-cashline` @146876e75a (~X msg 101682); ~M's `irpt-m-s152`
 (`../ajb_irpt_m_s152`) is cut from it and adds 41115a70aa (S152: COT mix_views admits cash/other) and 9135feae97
 (comp-constants patch). S152 rides the cash-line act ALONE as re-cut `irpt-m-s152-cloud` @ff63895521 (CTO
-101688, CRO 101686; name it in the Monday ledger entry); ~X's B1 commits go under ETF Part B's own ledger. No branch is
+101688, CRO 101686; name it in the Monday ledger entry). Read-back per period row: |cash + other + unclassified_after -
+unclassified_before| <= $0.02 and total EXACT, else roll back (CTO 101700 @7eb19f44e3; s152_period_view_identity.py); ~X's B1 commits go under ETF Part B's own ledger. No branch is
 merged; the drain is Monday after R1, COT gold last.
 
 ## Next list (in order)
