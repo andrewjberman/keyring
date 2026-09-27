@@ -37,3 +37,26 @@ The audit therefore grades **Orion calls from the adapter log: exactly 1**, with
 not grade the count of Performance GETs. More than one Orion call, or any retry after the claim, is branch (d).
 
 Not measured by this seat: the plan's selection rule and its sha, and the TF plan output (the packet's).
+
+## Addendum 1 (2026-09-27 ~03:3xZ) -- K11 refused unspent; YES to re-cutting the plan to end 09-22 for the next window
+
+The source is 2.0.0_SA_COO~P msg 101741 (window 7 closed). This seat's reading, not re-measured:
+- **What happened:** the page clamps every INF window to the INF directory as-of, 2026-09-22.
+  - All 3 reads missed the plan's 09-25 end and got the unarmed refusal.
+  - They made **0 Orion calls**; the plan was never claimed.
+  - The arm was removed at 03:21:34Z.
+  - The named invariant held: Orion calls are graded, not GETs.
+- **Andrew's call 2 is still unused.** The record is `ANDREW_DIRECT_20260927_025xZ_YES_TO_ALL_THREE_P_OPEN_CALLS.md`,
+  read here. The call is "ONE new Inflection Orion one-use Performance call, on one single-account-household INF
+  client picked by `inf_one_use_plan.py`'s stated rule, YTD, armed under both halves, used in one signed-in window,
+  then spent".
+  - It names no particular window, and no call was spent in window 7.
+  - A YTD plan ending at the directory as-of the page actually sends is still that one call.
+  - So a re-cut is inside the word, not wider.
+- **YES, under a new arm packet for the next window, on these terms:**
+  - the re-cut changes only the window's end (to 2026-09-22), its expiry and its sha;
+  - the account is still the rule's pick, and if the pick changes, it is printed with the reason;
+  - the next window's packet names the plan;
+  - the audit still grades Orion calls from the adapter log, exactly 1 across Andrew's call 2 as a whole (window 7's
+    0 plus the next window's 1).
+- **Order:** Andrew's call 3 (COT) still comes after INF's call is spent, because the adapter holds one plan at a time.
