@@ -2408,3 +2408,29 @@
   "notes": "Not blocking: the fix is a one-line, behavior-preserving type guard at each site (both tests still pass, byte-identical console output, per the evidence above); `bun run typecheck` is green project-wide after it. Filed because the ripple's SHAPE (a second, unnamed test needing the same class of fix) was not itself named, even though the mechanism (discriminated-union widening) is a normal, foreseeable consequence of this cell's own Build text ('SubmitOutcome / submitUnderGate ... have no queued variant')."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-S27",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-27T23:30:00Z",
+  "one_line": "Window 19 K8: the first export-receipt read after the QUEUED submit answered 200 with no data and status.state UNAVAILABLE, public_reason_code NOT_READY; the page (local DEV 8808eeb6, IV-e-67) refuses that shape, stops polling after one read and goes back to idle with no named state shown.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D (page cut) after 1.0.0_SA_CTO names which side moves",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scrubbed HAR deliverables/2.0.0_SA_COO~D/w19-20260927.jsonl: POST /export 23:20:55.405Z -> 200 QUEUED exr_9f785460503746a6b486950e; GET /export/exr_9f785460503746a6b486950e 23:20:58.862Z -> 200 {ok:false, operation export-receipt, status.state UNAVAILABLE, public_reason_code NOT_READY}, no data member; 2 export API entries in the HAR, none after 23:20:58Z",
+      "walk log K8-PANEL 23:21:05.435Z idle|unknown|false| after submitting",
+      "ExportButton.tsx at 8808eeb6: pollExportReceipt(...).catch(() => setFlow((prev) => flowReceipt(prev, prev.receipt))) -- a refused read returns the flow to its previous (empty) receipt with no refusal text"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract R2 (CTO 102138): data is optional while status.state is QUEUED or RUNNING; IV-e-67 polls to READY or a named FAILED/refused state.",
+  "world_is": "The served receipt read answers a pending export as UNAVAILABLE/NOT_READY, a state R2 does not admit, and the page's refusal of it is silent (idle, no named reason).",
+  "notes": "Independent of the backend render failure P found (selection.py:49-50 refuses RENDER_DELEGATE, CTO 102217). Even with that fixed, the K8 re-run cannot reach READY on the page until the pending receipt shape is accepted on one side. Two parts: (1) the seam -- page treats NOT_READY as pending, or backend answers QUEUED/RUNNING until the receipt exists; (2) the page -- a refused poll must show its reason by name, never go silently idle."
+}
+```
