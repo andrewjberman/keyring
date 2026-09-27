@@ -1222,6 +1222,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Each target is an open gating item owned by this seat.",
     "world_is": "Each is fixed, superseded, routed off-project, or disarmed by a named carrier, as listed per item.",
     "notes": "Z-S5: Disarmed by Z-S6: opal_asker_query deploys DARK for the concierge (identity_scope does not list it), so no Teams call reaches the cited-message resolution; the binding fix is carried in 1.0.0_SA_CTO~O's ROUND2_ENRICHMENT_DRAFT.md. | Z-S18: Fixed and LIVE: OA-f-1/OA-f-2 (release c5f8099440, 07:43:40Z; closed @3558be2482); f2.AC3 reads the live upload row client-qualified (unqualified=0). | Z-S23: Answered by the CTO's ruling (B) and addendum A2 (@9ba4ca286f): OA-g-1 drained @45ddd8d948; OA-g-2 and OA-g-3 carry the rest. | Z-S25: Corrected by the filer's own Z-S26: this seat's watcher recovered at 05:33Z, and A2 was issued before Z-S25 landed. | Z-W2-S1: Addressed by A2: the grant grammar gains portal_channels, and asker_scope serves a catalog key only in a granted channel (OA-g-1, @45ddd8d948). | Z-W2-S3: Resolved by the CTO's narrow-release ruling (@592e319a06): OA-t-6 shipped f1f0fc6780 with only its own two changes. | Z-W3-S1: Fixed at the instrument: round1/checks/_root.sh sets `set -o pipefail` (its own comment cites W3-S1), so every check's rc is the command's. | Z-W6-S1: Fixed at the instrument: round1/checks/_root.sh sets `set -o pipefail` (its own comment cites W6-S1). | Z-W1-S1: A shared-tool defect outside NFRA_OPALAI (.tools/owned-paths-validate.py ignores the worker_grant for a path with no lane row). It was worked around in-cell under the audited override; routed to the tool's owner 1.0.0_SA_CTO~O in this seat's same-turn message. This project's gate no longer carries it. | Z-W2-S4: A shared-tool defect outside NFRA_OPALAI (safe-ec2-deploy.sh Step 3: jq.exe writes EC2_MANIFEST.json CRLF). Every release since recorded the manifest by hand on an LF copy (OA-t-6, MP-d-1, OA-f-2); routed to the tool's owner in this seat's same-turn message. | Z-W5-S1: A shared-tool defect outside NFRA_OPALAI (install-owned-paths.sh --submodule resolves REPO_ROOT from the ambient cwd). It was installed correctly in-cell by cd-ing first; routed to the tool's owner in this seat's same-turn message. | Z-W4-S1: DISARMED by a named carrier, not fixed: cutover precondition CP-1 in NFRA_OPALAI_DECOMP.md (this commit) binds whichever cell cuts the cutover. The workspace copy of teams-watch.py stays until runner.py is re-pointed and its next fire is read back. Measured ~20:1xZ: the file is present and runner.py still imports it, so the hazard has not fired."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W9-S5",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~9",
+    "surfaced_at": "2026-09-27T00:46Z",
+    "one_line": "OA-g-3 step 2 selects the catalog channels 'whose verdict is not deny', but a channel in DATA_CATALOG.yaml carries no verdict: verdict_class is a field of each artifact row. 5 of the 15 channels have no artifact rows, so catalog_gate indexes nothing for them. The grant used the 10 channels that hold at least one indexed row whose verdict_class is not deny. 4 of those 10 also hold deny rows, which catalog_gate still refuses row by row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@a60f285f94, loaded with catalog_gate.load_catalog: 15 channels; no channel carries a verdict or verdict_class key.",
+        "Rows per channel (verdict_class counts): benchmarks_and_models 6 (serve 1, serve-with-caveat 2, deny 3); capital_markets 2 (swc 2); correlations_factors 4 (swc 4); macro_rates 4 (swc 4); market_regime_trending 2 (swc 1, deny 1); mdpf_model_portfolios 8 (serve 2, swc 1, deny 5); peers 1 (swc 1); positioning_holdings 4 (swc 4); sentiment_news_mood 3 (serve 1, deny 2); valuation 2 (swc 2). No artifact rows: market_overview, news, pipeline_freshness, sharepoint_documents, bloomberg_standing_read.",
+        "CODE infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py@a60f285f94:57-74 indexes artifact rows by key and tags each with _channel; :38 SERVABLE_CLASSES = serve and serve-with-caveat; :95 refuses any other verdict_class for that row.",
+        "Contract org/standards/NFRA_OPLGTW_CONTRACT.json@a60f285f94 portal_grant.channel_ids admits any key of channels.*; it does not define a channel verdict."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-g-3 section 1 step 2: portal_channels = every channel of DATA_CATALOG.yaml that catalog_gate indexes and whose verdict is not deny.",
+    "world_is": "Verdicts exist only on artifact rows. The worker read 'indexes' as 'holds at least one artifact row' and 'verdict is not deny' as 'holds at least one row whose verdict_class is not deny'. That gives 10 channels, and they were granted. The 5 row-less channels were left out. A different reading would change the grant only by adding some of those 5."
   }
 ]
 ```
