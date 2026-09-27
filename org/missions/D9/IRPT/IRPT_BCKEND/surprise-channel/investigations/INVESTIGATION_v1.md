@@ -10174,3 +10174,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Found while auditing deployed bytes for this order's L4 leg (rule 22a: diff against the build input, never by filename). No act taken. Recorded so a later cot redeploy is not planned against a source that cannot reproduce the running login script."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S167",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.6.2_AE_PartnerETL~S",
+  "surfaced_at": "2026-09-27T19:50Z",
+  "one_line": "TO-IB-s158's <proof_of_spec> block declares its instance at a FLAT seat path (org/tier2_senior/<seat>/deliverables/<to_id>.proof_of_spec.json), which to-pipeline-gate.py's complete-flip limb can NEVER find for a TREE order: for a TO under */task-orders/ it globs <project>/deliverables/*/<FULL-TO-FILENAME-STEM>.proof_of_spec.json. Writing the declared path produces 'NO proof-of-spec instance was found beside it' and refuses the flip, with a VALID instance sitting on disk.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the TO face at HEAD declares: Instance at `org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/IRPT_BCKEND.TO-IB-s158.proof_of_spec.json`",
+      ".tools/to-pipeline-gate.py check_complete_flip: `if to_dir.endswith('/task-orders')` -> `_glob.glob(os.path.join(root, to_dir[:-len('/task-orders')], 'deliverables', '*', n))` where n = basename(rel).rsplit('.md')[0] + '.proof_of_spec.json' -- so the stem carries the TO's SLUG and the folder is the PROJECT tree, not the seat tree",
+      "MEASURED, not reasoned: a flip committed with the instance at the declared seat path was REFUSED -- 'flips to complete on PIPELINE-REGISTERED project IRPT_BCKEND, and NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip' -- while that same instance validated VALID rc=0",
+      "the project's own 12 pre-existing instances all follow the GATE's grammar (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/{0.4.0_DS_ClientPlatform~X,0.7.0_AE_CloudOps~V}/IRPT_BCKEND.TO-IB-<cell>.<slug>.proof_of_spec.json), so the face is the outlier, not the gate",
+      "after moving the instance to org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.6.2_AE_PartnerETL~S/IRPT_BCKEND.TO-IB-s158.cot-bd-session-autologin.proof_of_spec.json the gate's own glob, run standalone, returns exactly 1 hit"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "the instance belongs at org/tier2_senior/<seat>/deliverables/<to_id>.proof_of_spec.json",
+  "world_is": "For a TREE order the gate reads only <project>/deliverables/<serial>/<full-TO-stem>.proof_of_spec.json. The declared path is unreachable by the mechanism that enforces the flip.",
+  "notes": "Resolved by following the GATE and the project's established convention, not the face; the instance was git mv'd so history follows and no duplicate was left to diverge. Surfaced, NOT adjudicated: the <proof_of_spec> grammar is the issuer's, and this would refuse the flip of every tree order written with the flat path. 2.0.0_SA_COO~P notified in the completion report."
+}
+```
