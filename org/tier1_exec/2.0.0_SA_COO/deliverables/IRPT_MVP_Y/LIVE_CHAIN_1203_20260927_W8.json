@@ -1,0 +1,145 @@
+{
+ "principal": "irpt-uiwalk-1790481488@opal.test",
+ "tenant": "cottonwood",
+ "authority": "window 8 W8-2, packet e2462004 (CTO c42d47163d, CRO 1dbf46c36b); Andrew-direct at ~Y 04:01Z yes, run the Analysis window",
+ "k4_status": 200,
+ "upload_id": "UP-84b8ebec97c16c15bfba33d749299635f37bbe3a4041ac13fb0b1c09810423b9",
+ "k4_state": "NORMALIZED",
+ "input_id": "portfolio_acddb08c91b03066fe272de34967ab4d276b4534d8d787ad97a3af3b555a2d7e",
+ "k5_status": 200,
+ "k5_state": "QUEUED",
+ "request_ref": "{\"tenant_firm_id\": \"cottonwood\", \"request_id\": \"REQ-a8e81b8eccc800b2f3a00c8c\", \"revision\": 1, \"immutable\": true, \"ingestion_gate_revision\": \"schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae\", \"destination_policy_revision\": \"e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f",
+ "calls": [
+  {
+   "at": "2026-09-27T04:02:00.657988Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/login",
+   "request_headers": {
+    "Content-Type": "application/json"
+   },
+   "request_body": {
+    "email": "irpt-uiwalk-1790481488@opal.test",
+    "password": "<redacted>"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EVxBHiDvIAMEPoQ=",
+    "set-cookie": "<redacted>"
+   },
+   "response_body": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "irpt-uiwalk-1790481488@opal.test",
+     "name": "IRPT UI walk principal (Andrew-direct 20260926)",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   }
+  },
+  {
+   "at": "2026-09-27T04:02:41.256536Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis/inputs?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "upload_token": "y-live-1203-20260927T040241",
+    "filename": "aapl-vnq-12.03.csv",
+    "file_base64": "<35 bytes base64>",
+    "file_type": "csv",
+    "declared_currency": "USD"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EVxHehSXoAMESdw="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-input-upload",
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+    "data": {
+     "upload_id": "UP-84b8ebec97c16c15bfba33d749299635f37bbe3a4041ac13fb0b1c09810423b9",
+     "input_id": null,
+     "state": "RESOLVING"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    }
+   }
+  },
+  {
+   "at": "2026-09-27T04:02:46.396118Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "request_id": "y-live-1203-overview-20260927",
+    "client_id": null,
+    "account_ids": [],
+    "snapshot_id": null,
+    "variant": "overview",
+    "comparison_keys": [],
+    "report_title": null,
+    "prepared_for": "IRPT live walk 12.03",
+    "input_id": "portfolio_acddb08c91b03066fe272de34967ab4d276b4534d8d787ad97a3af3b555a2d7e"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EVxIRjQJoAMEZJA="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-requests",
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+    "data": {
+     "identity": {
+      "tenant_firm_id": "cottonwood",
+      "request_id": "REQ-a8e81b8eccc800b2f3a00c8c",
+      "revision": 1,
+      "immutable": true,
+      "ingestion_gate_revision": "schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae",
+      "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85"
+     },
+     "stage": "RECEIVED"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    },
+    "status": {
+     "operation": {
+      "operation_id": "analysis-requests",
+      "operation_kind": "write",
+      "revision": "v1"
+     },
+     "state": "QUEUED",
+     "source_dates": {
+      "source_completion_date": null
+     },
+     "actions": [
+      {
+       "action": "WAIT",
+       "safe": true,
+       "description": "accepted work is queued for processing"
+      }
+     ],
+     "public_reason_code": "NOT_READY",
+     "internal_correlation_id": "corr-262610de6a45"
+    }
+   }
+  }
+ ]
+}
