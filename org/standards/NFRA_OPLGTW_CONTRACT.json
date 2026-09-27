@@ -238,7 +238,7 @@
     "consistency": "strong_reads_and_conditional_transactions",
     "ttl": "cleanup_only_never_authorization",
     "key_namespaces": {
-      "POLICY": "profile/grant/approval/operator audit, and denial-only email_deny (POLICY#EMAILDENY#<sha256>); operator writes only; no TTL or ordinary delete",
+      "POLICY": "profile/grant/approval/operator audit, and denial-only email_deny (POLICY#EMAILDENY#<sha256hex(\"og-email-deny/v1|\" + email.strip().lower())>; routes and operator writer compute the same function); operator writes only; no TTL or ordinary delete",
       "RUNTIME": "client/pending-auth/code/refresh/ticket/catalog; runtime conditional writes and expiring records"
     },
     "runtime_policy_access": "strong read only; write actions require all LeadingKeys match RUNTIME#*"
