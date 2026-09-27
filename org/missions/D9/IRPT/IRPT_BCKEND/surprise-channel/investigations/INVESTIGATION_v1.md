@@ -10011,3 +10011,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Measured: the stored value and the PDF basis, now on both paths. INFERRED, not measured: (1) for a Static portfolio, 'a fixed set of holdings and weights as of its creation date' (p.13), every As Of option selects the same single allocation, so the numbers would not move; (2) the generation-day dating comes from the report create's as_of_date_option='latest', not from As Of. S159's 'prior_close would presumably read 09-25' is also unmeasured: no PDF with As Of other than Custom is on record. Discriminator: ONE read-only GET /model_portfolios/fixed/{id} of a portfolio the advisor created in the UI with prior_close (the HAR creates). If it also reads custom_date, the vendor stores prior_close as Custom on every path and the recipe cannot change it on create. The GET is a vendor call on P's session, so it needs its own word and halves; ~Y will not run it off-window. Decision owner 1.0.0_SA_CTO: whether window 16 keeps the W15-3 tolerance now that its stated reason is contradicted. ~Y REC: keep it for Static portfolios only. That holds only while (1) holds, which the discriminator tests."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S161",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-27T18:06:00Z",
+  "one_line": "The CTO 101971 discriminator (S160) is answered from the advisor's own recorded HAR, with no vendor call. An advisor-created prior_close portfolio reads back level_as_of_type=prior_close with level_as_of_date=2026-07-01, not custom_date. So the vendor does not normalise prior_close to custom_date in general; our upload-created portfolios differ from the advisor's.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "HAR 02 'Blended walkthrough A (2026-07-02 am)', sha256 14588304.. (= INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910 hars[1]), read locally from the CRO's recon handoff; ids hashed, no values beyond the level and settings fields",
+      "#148 12:52:33Z POST /model_portfolios/fixed/ 201 sent level_as_of_type=prior_close, level_as_of_date=null, weight_type=Dollars, no upload_record_id (a manual create)",
+      "#276 12:57:37Z the report POST on that same portfolio (its status read at #275), then #290 the edit page, then #296 12:59:41Z GET /model_portfolios/fixed/{id} 200: level_as_of_type=prior_close, level_as_of_date=2026-07-01, model_portfolio_type=fixed, model_portfolio_data_upload_count=0",
+      "HAR 01 and HAR 03 hold 4 more prior_close creates, all with an upload record, and no saved read",
+      "ours, all with an upload record: window 15 stored custom_date (resident journal 16:22:09Z; RPT-5288c06d effective_inputs), and every certified PDF on record prints As Of: Custom (S160)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO 101971 item 3: if an advisor-created prior_close portfolio also stores custom_date, the vendor normalises the value and the tolerance is sound.",
+  "world_is": "The one advisor-created prior_close portfolio on record stored prior_close, resolved to a concrete date (the prior trading day's close). The normalisation premise is false for that path. The visible difference is the holdings upload: the advisor's was a manual create (upload count 0), and ours always upload. That is INFERRED, not measured.",
+  "notes": "The approved vendor GET is not needed: the recorded HAR answers it. W15-3 now rests only on the Static inference (S160 note (1)), which the served-PDF check enforces (Y @36837771d6). Enrichment candidate, not built: the saved body carries model_portfolio_type ('fixed' on the advisor's), so the read-back could check the type before the report is generated. Discriminator for the upload hypothesis: one window whose create omits upload_record_id (a manual items create), a vendor write needing its own word and halves. Decision owner 1.0.0_SA_CTO."
+}
+```
