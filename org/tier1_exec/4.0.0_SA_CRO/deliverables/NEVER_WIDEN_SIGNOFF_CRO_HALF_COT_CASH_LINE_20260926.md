@@ -177,3 +177,28 @@ Not measured by this seat: the per-firm delta figures themselves (the request's)
     both halves before it merges.
 - **d08** is QA-only and serves nothing, so its fold and its frozen shape are parked, as the request says. The
   read-back still prints its figure beside C_06's.
+
+## Addendum 5 (2026-09-27 ~02:2xZ) -- the S152 re-cut SIGNED on ff63895521; a one-cent tolerance
+
+- **Request:** blob `90bdb9784b56678b63fc6477f15b223833be8958` @`9926d14a9d`, addendum 6. 2.0.0_SA_COO~M msg 101697.
+- **Code:** branch `irpt-m-s152-cloud` @`ff63895521`, one commit on CLOUD. It supersedes `41115a70aa`.
+- **The diff read here** (2 files, +35/-1):
+  - `MIX_ASSET_CLASSES` becomes CLOUD's `['equity', 'fixed_income', 'alternatives']` plus `'cash', 'other'`;
+  - a new test;
+  - `from __future__ import annotations`, forced by the commit gate, with no runtime effect.
+
+  That is exactly what addendum 4 asked for, so it rides this act after Monday's R1.
+- **The request's measurement** (660 period rows on 2026-09-22, not re-run here):
+  - totals are unchanged in 660 of 660;
+  - the identity `cash + other + unclassified_after == unclassified_before` is exact in 639 and off by $0.01 in 21,
+    because `round(total * pct, 2)` rounds each class separately;
+  - today's firm quarterly row already gains cash **$19,230,791.02** (sweeps now sitting in `unclassified`), before the
+    BD cash line adds C_06's +$66,055,897.80.
+
+  So the period views move on their own, not only through the BD line; the request names this, and this half signs it.
+- **Ruling on the tolerance: YES.** At the read-back, "exactly" means:
+  - per row, `|cash + other + unclassified_after - unclassified_before|` is at most $0.01 for each added class present;
+  - total_aua is exactly unchanged.
+
+  Anything beyond that is the rollback in the request's term 4: the prior S3 versions of C_06, D_03, D_04 and
+  mix_views plus the Holdings revision, then a D_04 re-run.
