@@ -1604,6 +1604,30 @@
     "spec_asserts": "Rule 22 (EVIDENCE LAW) / this task order's own bound: a worker verifies its OWN fresh change against live artifacts; this cell's <paths> grant does not extend to contracts/envelope.ts, api/endpoints/investor-reporting.ts or any fe-s-1/14/15/19/25/30/31/33/39 test file.",
     "world_is": "The InvestorReporting suite carries 30 failing tests unrelated to this cell's own grant or edits, pre-dating this worker's changes (none reference tabs/holdings/* or reachable through it). This worker did not attempt to fix them (out of grant; fixing a neighbouring defect is an explicit non-goal) and did not widen its own edits to touch them.",
     "notes": "Not blocking IVE42-AC1/AC2 (both pass/are recorded on this cell's own scope). Filed so the round's drain/analysis has a printed denominator for this pre-existing breakage rather than re-discovering it per worker; the CVO or CTO may want a dedicated cell/drain-hygiene item for contracts/envelope.ts and the fe-s-1/14/15/19/25/30/31/33/39 suites."
+  },
+  {
+    "id": "DSGN_IRPTV1-W29-S1",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~29",
+    "surfaced_at": "2026-09-26T22:40:00Z",
+    "one_line": "IV-e-43's own fix (UIR-37: no hue means both a model and an asset class) necessarily moves page-local ASSET_CLASS_COLOR.Equity/'Fixed Income'/Alternatives off the shared lib/chartColors.ts ASSET_CLASS hexes they used to equal -- which breaks IV-e-12's own pre-existing acceptance test (iv-e-12.unclassified.test.ts, IVE12-AC3), a file outside this cell's <paths> grant, so it cannot be fixed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- the fix is a one-line edit to iv-e-12.unclassified.test.ts (line 104-105, its 'equity control' assertion) comparing against tabs/holdings/assetClass.ts's own ASSET_CLASS_COLOR.Equity instead of the shared lib/chartColors.ts ASSET_CLASS.equity, or an explicit CTO ruling that the two cells' criteria are in tension and one must yield",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worker face IV-e-43, 'Where it lives': 'the canonical palettes are src/lib/modelPortfolioColors.ts :16/:192 and src/lib/chartColors.ts ASSET_CLASS :115-124 ... are READ, never edited (other pages use them); resolve collisions page-locally' -- read plainly this requires the page-local tabs/holdings/assetClass.ts ASSET_CLASS_COLOR values to diverge from the shared registry wherever a collision exists, which is exactly what this cell's fix does for Equity (blue500->blue600), Fixed Income (green500->green600) and Alternatives (orange500->orange600), each of which measured EQUAL to a canonical MODEL_PORTFOLIO_COLORS primary (Long Term/Intermediate Term/Ultra-Short Term respectively) before the fix",
+        "`bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1` at this worker's tip (after the IV-e-43 fix, before this row): 106 pass / 1 fail, the one failure iv-e-12.unclassified.test.ts's IVE12-AC3 -- 'equity control did not resolve to Equity/#3b82f6: got Equity/#2563eb' (that test's line 104 pins HoldingsTreemap's equity leaf colour to the SHARED ASSET_CLASS.equity constant, imported from @/lib/chartColors, not from the page-local assetClass.ts this cell owns)",
+        "iv-e-12.unclassified.test.ts is not named in this task order's <paths> block (which lists only DrillTree.tsx, AllocationBars.tsx, HoldingsTreemap.tsx, assetClass.ts, palette.ts, the new iv-e-43 test file and this investigation file) -- BOUNDS: 'every other page/file is READ, never edited'",
+        "re-running the same suite with a throwaway local revert of only the three assetClass.ts colour lines (not committed) confirmed IVE12-AC3 passes again at the base colours and IVE43-AC1's own UIR-37 arm (ASSET_CLASS_COLOR entries vs canonical model primaries) then FAILS on the same three pairs -- confirming the two cells' criteria are genuinely mutually exclusive at these three colours, not a mistake on either side"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IV-e-43's own criterion (UIR-37, this cell): no ASSET_CLASS_COLOR entry may equal a canonical MODEL_PORTFOLIO_COLORS primary. IV-e-12's own criterion (IVE12-AC3, a different, prior cell): a classified security control (equity) must resolve to exactly lib/chartColors.ts's ASSET_CLASS.equity hex on HoldingsTreemap.",
+    "world_is": "Both criteria cannot hold simultaneously for Equity (and, by the same shape, Fixed Income and Alternatives): IVE12-AC3 pins the page's rendered asset-class colour to the shared registry's exact hex, and that exact hex is one of the five canonical model colours (measured true for all three at the base commit fdccc6e6/HEAD before this cell). This cell's own <paths> grant does not include iv-e-12.unclassified.test.ts, so it was left untouched, unweakened and unfixed; IVE43-AC1 (this cell's own criterion) passes at rc0 with every arm holding.",
+    "notes": "Not blocking IVE43-AC1 (passes, VERDICT: ONE-COLOUR-OK, own proof instance VALID). Filed because a silent drain-time fix to iv-e-12.unclassified.test.ts without a ruling would either re-introduce the UIR-37 collision (if reverted back to the shared hex) or silently redefine IV-e-12's own acceptance criterion (if changed to the page-local value) -- the CTO/CVO should rule which of the two pins is authoritative for Equity/Fixed Income/Alternatives going forward."
   }
 ]
 ```
