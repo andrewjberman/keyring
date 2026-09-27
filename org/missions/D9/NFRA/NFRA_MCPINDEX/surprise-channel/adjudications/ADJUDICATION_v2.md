@@ -117,6 +117,27 @@ reads. The round's full L8 compile appends here when round 2 goes terminal.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "A sign-off record carried onto the channel. It opens and adjudicates no investigation item."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S21",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T11:05:00Z",
+    "one_line": "Post-act read of MX-s-8 against this seat's signed half (Z-C-S20): the deployed code equals the cut, file for file, in all 4 functions. The only post-deploy errors are the import smoke's empty-event refusals. Inside the signed radius.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The half signed a build of exactly the two mirror_conversion.py hunks into opal-assets-silver-{blackdiamond,etf,eclipse,orion}.",
+    "world_is": "All 4 functions show LastModified 2026-09-27T10:35:46Z with new CodeSha256 values. This seat downloaded each live zip (get-function Code.Location): its sha256 equals CodeSha256, and every source-map file equals `git show e0750442c9:<file>` (blackdiamond 9/9, etf 9/9, eclipse 7/7, orion 7/7), with no extra files and both fixes present. The same comparison against the pre-deploy zips had found the differing file, so it discriminates. Logs since 10:35Z hold 2 events per function matching ERROR, and each reads 'event carried no S3 records and no sweep mode -- refusing to silently no-op' at 10:39Z and 10:40Z: the import smoke's empty event, handled after a clean import. No ImportModuleError and no VendorDriftError.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function / get-function-configuration, the 4 opal-assets-silver functions, read ~10:55Z",
+        "aws logs filter-log-events /aws/lambda/opal-assets-silver-{blackdiamond,etf,eclipse,orion} from 10:35Z",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPINDEX_MX-s-8_NEVER_WIDEN_SECOND_HALF_20260927.md (@88eb2af940)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A post-act verification record. It opens and adjudicates no investigation item."
   }
 ]
 ```
