@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T22:09Z. Lease FAST until 2026-09-27T22:39:06Z.
+As of 2026-09-27T22:39Z. Lease FAST until 2026-09-27T23:08:08Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
@@ -171,9 +171,9 @@ and window 4 re-runs K4+K5 (+R1).
 
 ## Write claims
 
-**Built, at P (CTO 102151):** the certifier's cross-firm name check, Y @ecc0cb6a29, `P_FOREIGN_FIRM_NAME_CHECK_20260927.patch`. The
-comparison grant: Y @991ee7fca9, `P_COMPARISON_CATALOGUE_GRANT_20260927.patch`; all 4 hashes MATCH M's consumer pins.
-Both apply-check rc=0 on P `65957b8afc`. Record: `FOREIGN_FIRM_NAME_CHECK_20260927.md`. One P release with M's consumer.
+**Re-cut, at P (CTO 102169):** P's naming gate refused the typed firm ids. The check (Y @14568b9ec1) now reads every client firm's
+printed names from the registry. The grant (Y @0a24edfe38) types no firm; M's consumer resolves them through lookup() and re-pins.
+Both patches pass the naming gate in ENFORCE with apply-check rc=0 on P `c296cdff9c`. P applied the status-dates patch (`c296cdff9c`).
 
 **Y2 arms ready for a window:** `P_Y2_UPLOAD_ARMS_ACT_20260927.md` (@5d371a403e) covers an XLSX template (`aapl-vnq-12.03.xlsx`) and
 Target Weight at notional 1000 (`aapl-vnq-target-weight.csv`). `live_chain.py` takes WALK_UPLOAD_FILE, WALK_FILE_TYPE and

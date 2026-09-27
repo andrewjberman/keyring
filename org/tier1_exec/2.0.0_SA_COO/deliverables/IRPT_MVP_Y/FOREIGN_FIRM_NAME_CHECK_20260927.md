@@ -46,3 +46,24 @@ P already carries v2 (`4b563c98a0`, identical to Y @c5aa93d60e). The grant step 
 
 M's consumer branch, the grant patch and the check ship in generate AND the resident together (M 102157). The check
 moves the served publication path, so it rides that release's ledger and halves (CTO 102151).
+
+## Re-cut ~22:3xZ (CTO 102169: the firm ids come from the registry; nothing typed in JSON)
+
+P's naming limb (LGIC_ENFORCE DEC-6, ENFORCE) refused both first cuts for typed firm ids (P 102162). Both patches are
+superseded in place, and both now pass `.tools/naming-gate.py --enforce` (**PASS, 0 graded**) with apply-check rc=0 on
+P `c296cdff9c`.
+
+- **The check** (Y @14568b9ec1; patch sha256 `752fe65f..`):
+  - `printed_firm_names()` reads every client FIRM scope's `tenant.display_name` and its "prose"-plane aliases from
+    `infra/logic/registry/scopes.json` through `lib/opal_naming.py` (49F is 49financial's prose alias). The installed
+    runtimes already put `lib/` on sys.path.
+  - The report's own scope comes from `lookup(firm)`, so a firm's test tenant counts as its own.
+  - An unregistered firm refuses `REPORT_FIRM_UNREGISTERED`.
+  - The rule now covers every registered client firm's printed names.
+  - Tests: 10 + 2, every firm read from the registry at run time; resident suites 57 passed, 8 skipped.
+- **The grant** (Y @0a24edfe38; patch sha256 `6b7230b5..`):
+  - `permitted_firm_ids` stays `[]`.
+  - GRANTED, the three principal classes, and a `permission_scope` naming no firm.
+  - **M's consumer re-pins its policy hash over this shape and resolves the firms through `lookup()` in
+    `maintained_sources.py`** (CTO 102169). The earlier 4/4 hash match was against the typed shape, so it no longer
+    applies.
