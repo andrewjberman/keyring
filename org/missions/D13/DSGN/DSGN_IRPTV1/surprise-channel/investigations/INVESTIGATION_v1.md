@@ -1469,6 +1469,29 @@
     "spec_asserts": "This order's identity block: 'Your task order is org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-47.global-merge.md (issued at CLOUD dca01c9765 ...)'; BOUNDS: 'Grant. The <paths> block below plus your deliverables folder and this order's file.'",
     "world_is": "The named file was absent from this worker's own worktree entirely (not merely at a stale vintage) until this worker materialized it from the cited commit, using the BOUNDS grant's 'this order's file' clause as the write authority. The worker face embedded in this order's own dispatch prompt was already complete and self-sufficient for doing the work (per the standing L7 rule, 'the TO's WORKER FACE is the worker's whole context'); only the MECHANICAL steps downstream of the work -- decomp_ref.to_ref resolution and the <status> flip -- required the file to exist on disk.",
     "notes": "Not blocking: the file is now present, byte-identical to CLOUD @dca01c9765 except the <status> flip this worker made per instruction, and proof-of-spec-check.py now reads VALID (rc=0). Filed so the drain does not read this worktree's TO-file set as a fossil of what was actually dispatched to slot ~25 over its life -- IV-e-46/IV-e-47 arrived by direct act, not by a merged issuance, and this worker's branch is where that gap first became visible."
+  },
+  {
+    "id": "DSGN_IRPTV1-W25-S5",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~25",
+    "surfaced_at": "2026-09-27T00:05:00Z",
+    "one_line": "The <status> flip this order requires cannot be committed by this worker AT ALL: `.tools/to-pipeline-gate.py` (run automatically by `safe-commit.sh`) refuses the materialized TO file both as a NEW tree task order under a worker's own authorship (COO-only, LD-0521 A3) and on cell alignment -- this worktree's own decomposition file has 28 cells and does NOT carry cell `IV-e-47` (decomp v7 addendum 2, minted by the same non-ancestor commit dca01c9765 as S4's TO file), so `owned_cells`/`cell_refs` citing `IV-e-47` are refused as citing a cell the decomp lacks.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- land decomp v7 addendum 2 (cell IV-e-47) and the TO-IV-e-47 issuance itself into this worktree's own branch ancestry (or merge/rebase this worktree onto a point after dca01c9765), then either this worker or the drain can commit the <status> flip; until then the order's own <status> field cannot reach 'complete' from inside this worktree by any route this worker's grant permits.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`bash .tools/safe-commit.sh ... -- org/missions/D13/DSGN/DSGN_IRPTV1/task-orders/DSGN_IRPTV1.TO-IV-e-47.global-merge.md <proof instance> <result.md>` (this worker's own attempt, materializing the TO file per S4) was REFUSED: 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' with 7 named violations, the first three being: '(1) born terminal -- <status>complete</status> at issuance', '(2) a NEW tree task order committed under 0.9.0_WK_DSGN_IRPTV1~25 -- COO is the only agent that does task orders (LD-0521 A3)', '(3) owned_cells names cell IV-e-47, which is not a cell of org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md (28 cell ids read from the index)'",
+        "the gate's own re-run of `proof-of-spec-check.py` inside its stricter (governing-order-bound) mode printed 'flips to complete but its instance is NOT VALID (rc=1)' and 'instance VIOLATION: alignment: cell_ref IV-e-47 ... does NOT exist in ... DECOMP.md' -- the SAME instance this worker's own standalone run (the exact invocation this order's own <proof_of_spec> block names) reads VALID (rc=0), because the standalone run has no governing TO to bind against and explicitly defers ('NOT EVALUATED -- the governing TO exists but is UNCOMMITTED... commit it and re-run')",
+        "the reconstructed TO file was then removed (plain file delete, not `git clean`) rather than left as an unlandable untracked artifact; `git status --porcelain org/missions/D13/DSGN/DSGN_IRPTV1/` after removal shows only the two deliverables (proof_of_spec.json, result.md) as untracked -- no task-orders/ file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's proof_of_spec block + the standing worker rule: 'rc 0 AND every mechanical criterion PASS-by-output, then flip the task order's <status> to complete and commit instance, deliverables and flip together.'",
+    "world_is": "IVE47-AC1 is PASS-by-output (VERDICT: GLOBAL-MERGE-OK, run three times) and IVE47-AC2 is RECORDED per its judgment=true. The proof-of-spec instance is VALID (rc=0) by the EXACT invocation this order names. But the flip-and-commit step this worker's standing rule requires next is refused by a DIFFERENT, stricter gate (`to-pipeline-gate.py`, invoked automatically by `safe-commit.sh`) for reasons entirely upstream of this cell's own work: this worktree's decomp file never received addendum 2, and a worker may not author a new tree task-order file regardless. This worker did not use the gate's own offered escape ('# pipeline-override: <reason>') because that override is for a TO that genuinely stands outside pipeline governance, not for routing around a COO-only authorship rule or a stale decomp this worker has no grant to fix.",
+    "notes": "BLOCKING for the <status> flip only -- both acceptance criteria are otherwise fully discharged and committed (portal commit b5915df3; deliverables committed alongside this row). The task order's own <status> could not be advanced past 'pending' from inside this worktree; per BOUNDS and the 'never widen the order or fix a neighbouring defect' rule, the decomp/TO-issuance gap is left for 2.0.0_SA_COO~D to close."
   }
 ]
 ```
