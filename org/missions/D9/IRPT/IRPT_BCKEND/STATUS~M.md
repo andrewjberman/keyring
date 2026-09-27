@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-27T04:0xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-27T07:4xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -30,9 +30,9 @@ a0690a03 parser reads READY at every firm.
 
 | Criterion | State | Evidence |
 |---|---|---|
-| (1) signed-in journey, 49F / INF / COT | API EXERCISED at all three; screen walked by Andrew on the fixed build; the firm-tab HAR is the one artifact asked | VERIFY_HOLDINGS_GOAL_20260924.md addenda |
+| (1) signed-in journey, 49F / INF / COT | **MET**: ~D's firm-tab HARs w8 + w9 (09-27) show resolve, browse, selection, Holdings and Performance at all three firms, every node resolved | VERIFY addendum 2026-09-27 |
 | (2) every active 49F/INF account resolvable, or refused explicitly | MET on the CURRENT directories (49F 09-24, INF 09-25): 49F 7,443 resolve + 54 refused, 0 empty of 7,497; INF 876 resolve + 2 refused, 0 empty of 878. Of the refusals, 37 at 49F are the no-custody accounts known since 09-17, and 19 (17 at 49F, 2 at INF) are new to the directory since 09-17 (that they postdate the 09-22 holdings date is INFERRED) | census @f247a922a5; VERIFY addendum 09-25 (M branch) |
-| (3) COT soundness + window disclosed | disclosed in the receipts | COT_LABELLED_PUBLICATION_RECEIPT_20260924.json |
+| (3) COT soundness + window disclosed | window disclosed; **BROKEN@SEMANTIC**: the walked COT account serves `CASH -- CASH` as equity (the BD cash line). Fix f28c0d89f2 is signed and served at Monday's R4 publication; re-verify then | VERIFY addendum 2026-09-27 |
 
 ## Write claims
 
@@ -48,7 +48,7 @@ ccb9b38dd8 (COT B1) is split to `irpt-m-cot-b1` for B1's ledger. Monday order: I
 
 ## Next list (in order)
 
-1. Andrew's firm-tab HAR, then /verify on the goal.
+1. Goal /verify: re-verify criterion (3) after Monday's R4 publication (COT `CASH -- CASH` reads `cash`); (1) and (2) are MET.
 2. **CTO R5, with Andrew's two answers** (msg 100951;
    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260925_144xZ_CLASSIFIER_OTHER_OPENAI_RUN_AND_DEV_PUSH.md`
    @705be61575). Done so far:

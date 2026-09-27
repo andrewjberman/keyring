@@ -183,3 +183,46 @@ INFERRED, not measured: the 19 new accounts entered the directory after the hold
 directory exists between 09-17 and 09-24, so an account added 09-18 to 09-22 cannot be told apart here. Either way,
 each one refuses explicitly and none reads silently empty. Criterion (2) holds as worded. The next step is the same
 in both cases: republish holdings at a newer business date.
+
+## ADDENDUM 2026-09-27 ~07:4xZ -- the firm-tab HARs read; verdict BROKEN@SEMANTIC (COT cash line), fix signed for Monday
+
+Evidence: 2.0.0_SA_COO~D's agent walks (msg 101841), read in place. They are gitignored and hold session tokens; no
+header was copied. Both files are in `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/`:
+`w8-20260927.har` (770 entries) and `w9-round7-20260927.har`. The walker is not the builder (~D walked; ~M built the
+producer).
+
+**MECHANICAL: PASS.** The signed-in journey runs end to end at all three firms through the firm tab: a global
+`directory/resolve` (context_kind + firms), then per firm `directory/browse` with `selected_tenant`, `selections`,
+`holdings/<sel>` and `performance/<sel>`, every call 200.
+
+| Firm | Holdings call | Nodes resolved / attempted | Model leaves | Custody total | Revision |
+|---|---|---|---|---|---|
+| INF | w8 04:03:17Z | 46 / 46 | 1 | $245,127.53 | inflection@2026-09-22 |
+| COT | w8 04:22:47Z, w9 05:45:54Z | 4 / 4 | none (COT has no overlay; window disclosed) | -$40,348.28 | cottonwood@2026-09-22 |
+| 49F | w9 05:41:27Z (3 accounts), 05:44:28Z (1 account) | 131 / 131, 52 / 52 | 7, 3 | $400,898.23; $153,836.54 | 49financial@2026-09-22 |
+
+Every response carries clocks: business_date 2026-09-22, custody_as_of 2026-09-22, overlay_as_of 2026-09-23. Each has
+a zero remainder, and Performance returns `returns` at each firm (window 2026-01-01..2026-09-22).
+
+**DECLARATIVE: PASS.** The served revisions the page read are the ones STATUS~M pins: COT, INF and 49F at business
+date 2026-09-22, published 09-24 (as_of_timestamp 06:02Z, 07:19Z, 07:14Z). The criterion (1) row in the goal record
+("the firm-tab HAR is the one artifact asked") is now answered.
+
+**SEMANTIC: BROKEN@SEMANTIC, COT only.** The walked COT account `****0441 / BROKERAGE` has two positions:
+- `BDCASHIN -- CASH AND MARGIN INTEREST`: fixed_income, NAME_PATTERN;
+- **`CASH -- CASH`: `equity`, basis TABLE.**
+
+The second is Black Diamond's own cash line served as the ticker CASH's class (Pathward Financial). It is a debit here,
+so the account totals -$40,348.28 with the debit booked as equity. It is the defect the CTO called a served error
+(msg 101547).
+- The Holdings fix, the `classify_security` rule on `display.description` (f28c0d89f2), is signed by the CTO and the
+  CRO.
+- It is served at the first scheduled publication, which is R4's ENABLE half on Monday 2026-09-28 (runbook D).
+INF and 49F show no class defect in the walked accounts: 21/19/2/1 and 81/25/5 by class.
+
+**Verdict:** the goal is NOT yet SOUND. Criteria (1) and (2) are MET; (3), COT soundness, is BROKEN on the served BD
+cash line.
+- Owner: 2.0.0_SA_COO~M.
+- The next act un-parks at Monday's R4 publication.
+- Re-verify: read one COT holdings answer whose account holds `CASH -- CASH`; it must read `cash`, basis
+  NAME_PATTERN, at a business date at or after 2026-09-25.
