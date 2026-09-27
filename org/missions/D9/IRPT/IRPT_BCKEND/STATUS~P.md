@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T14:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T14:5xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -12,7 +12,7 @@ As of 2026-09-27T14:3xZ. Earlier forms of this file are in git (`git log -p -- <
 |---|---|---|
 | irpt-performance-adapter | `bOefL9nx..` since 05:22:03Z (09-27) = Ll6t4VPa + COT actual_start (backend 05778597eb, publish f360e6c80e); earlier: P-REOPEN-01, both timing lines, S147 fix M; NO armed plan since 04:34:55Z (`approved_performance_plan = null`, no session grant) | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 / irpt-performance-cot-one-use-1-20260927 / irpt-cot-actual-window-20260927 CLOSED |
 | irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) = hop-3 six + the cross-viewer title binding (f8c72944f3) | irpt-cross-viewer-title-20260927 CLOSED |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-cw` since 13:51:07Z = wf + ~Y's W11 fixes (b6739556ea: recipe, resident_worker, session/host_capture); rollback roots wf, rb, xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-waf-refresh-20260927 / irpt-resident-capture-env-20260927 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-dx` since 14:50:22Z = cw + ~Y's W13 diagnostics (ec5804f6e0); cw = wf + the W11 fixes (b6739556ea); rollback roots cw, wf, rb, xv, rr, h7, fe64236bbb, f624e8a72f kept | irpt-resident-waf-refresh-20260927 / irpt-resident-capture-env-20260927 / irpt-resident-w13-diagnostics-20260927 CLOSED |
 | irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
 | irpt-directory-search | `o1TXq5PH..` since 22:54:12Z: UIR-07 exact full-name match first in search AND browse(q) (49b935c213); -target apply | irpt-uir07-search-rank-20260926 CLOSED |
 | irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
@@ -53,7 +53,8 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
      nothing;
    - on redelivery the saved-portfolio read worked (7 of 7 fields present), and ONE value differs: level_as_of_type.
    Bounds held (4 status GETs, 1 saved GET, 1 attempted re-capture). Running re-capture total: 1 attempted, 0 completed.
-   Both open items are with ~Y (P 14:34Z). Next: ~Y's fix, then window 14 under Andrew's standing word.
+   ~Y's W13 diagnostics (ec5804f6e0: the journal names the stored value and the capture's runner reason) are SERVED as
+   resident `fe64236bbb-dx` since 14:50:22Z (@cfbc1989ff). Next: window 14 on ~Y's ask, cut on window 13's text.
 2. **K8, the first real export:** window 12 (13:35-14:03Z) got further. The preview resolved on 1f149d69, and ONE
    export POST was sent, but the server REFUSED it (UNEXPECTED, BucketUnmapped): the SUBMIT also omits
    selected_tenant (buildSubmitRequest, submit.ts:64-78). Nothing was exported. ~D is cutting the submit, receipt
