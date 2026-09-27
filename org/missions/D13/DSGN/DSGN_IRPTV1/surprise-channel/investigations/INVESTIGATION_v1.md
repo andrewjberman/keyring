@@ -2168,3 +2168,29 @@
   "notes": "Closing evidence for S23 as well: the POST carries selected_tenant=49financial and gets past BucketUnmapped. P re-cuts K8 on the fix's pin."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W36-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~36",
+  "surfaced_at": "2026-09-27T15:51:22Z",
+  "one_line": "One full run of `bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/` printed 115 pass / 1 fail; two immediate re-runs of the identical command on the identical worktree HEAD printed 116 pass / 0 fail both times -- a flake, not a regression from this cell's own edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-DSGN_IRPTV1-36/portal @089c3cbb, 0 tracked changes beyond this TO's own edits at the time of all three runs",
+      "run 1: 'bun test v1.3.9 ... 115 pass / 1 fail / Ran 116 tests across 102 files [65.42s]', no failing test name captured in the tail-piped output",
+      "run 2 and run 3 (same command, same worktree, no edit between): both '116 pass / 0 fail / Ran 116 tests across 102 files', ~70-77s each",
+      "this worker's own IVE65-AC1 target file was part of the same run 1/2/3 file set both times (whole dsgn-irptv1/ directory) -- the flake did not reproduce and its failing test name was not identified before it cleared"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "N/A -- not a claim about this cell's own acceptance criterion (IVE65-AC1 passed on every run, isolated and inside the full-directory run); filed per the standing surprise-channel rule ('found something odd off-task? append one row, keep working'), not as a disposition on IV-e-65.",
+  "world_is": "The dsgn-irptv1 suite has at least one test whose pass/fail is not stable run-to-run under this worker's environment; cause not isolated (candidate: the recharts 'width(-1) height(-1)' console warnings visible in the same runs suggest a jsdom-layout-timing sensitivity in a chart-rendering test, but this is not confirmed).",
+  "notes": "Not blocking IV-e-65 (this cell's own acceptance criterion command was run standalone and passed cleanly, denominator 1 of 1). Left UNDER_INVESTIGATION for whichever seat next needs suite-wide stability; this worker's <paths> grant does not cover whichever file is flaking."
+}
+```
