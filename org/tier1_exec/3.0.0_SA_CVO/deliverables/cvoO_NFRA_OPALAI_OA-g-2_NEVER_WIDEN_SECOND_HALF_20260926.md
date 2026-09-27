@@ -11,6 +11,8 @@ Andrew's "resume tier 1" (0.0.0_AB_MSTR~Z relay, 16:18Z). This half was written 
 `NFRA_OPALAI.TO-OA-g-2.portal-grant-release` as amended @2ae3e0a96d. The CTO half is
 `deliverables/1.0.0_SA_CTO~O/RULING_OA-g-2_RELEASE_SIGNOFF_20260926.md` @321a726fc6. This half does NOT sign OA-g-3,
 the write of a portal-only grant for Alyssa Keith. That write is a separate served act and needs its own two halves.
+**CORRECTED 2026-09-27 by this seat:** "needs its own two halves" was wider than the law. A one-principal grant is a
+literal-key write, which the never-widen rule exempts (CLAUDE.md section 5). See NFRA_OPALAI-Z-C-S3.
 
 ## Blast radius, re-read by this seat rather than taken from the CTO half
 
