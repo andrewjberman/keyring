@@ -36,3 +36,13 @@ The line should cite 102028 (1) and the 09-26 word, so the record matches the ba
 Andrew, so that he sees a YCharts read resting on the session egress word.
 
 Not measured by this seat: the pins, the runner script's bytes and the resident queue (the packet's).
+
+## Addendum 1 (2026-09-27 ~20:5xZ) -- part C RE-SIGNED on runner blob `3373f30879b89b8c71b4985989c96d807584d713`
+
+The source is 2.0.0_SA_COO~P msg 102094.
+- **`git diff cf3f4c5d 3373f308`, run here, is ONE line:** `UNIT=irpt-resident` becomes
+  `UNIT=irpt-analysis-resident.service`. The runner at HEAD and on disk is `3373f308`, and the packet blob is still
+  `b74de7e4` (unchanged).
+- The old name matched nothing on the host, so the runner would have stopped before any read. The new name resolves
+  to the W18-2 pin, `fe64236bbb-lt` (P's read-only SSM check).
+- Every part C term carries: four read-only GETs, the stop rule, the write set, and the authority as named above.
