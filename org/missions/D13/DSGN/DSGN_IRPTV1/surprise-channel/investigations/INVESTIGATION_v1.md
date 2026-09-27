@@ -1425,6 +1425,28 @@
     "spec_asserts": "The cell's 'Where it lives' section names one code location per row (UIR-05, UIR-12, UIR-13, UIR-14, UIR-22, UIR-30) with no statement of whether each named location is already correct or is the defect itself; UIR-13's acceptance line ('normal punctuation') names no literal string.",
     "world_is": "Two of the six named locations (UIR-12, UIR-13) were the live defect and needed a source edit within <paths>; three (UIR-14, UIR-22, UIR-30) were already correct at fdccc6e6 and needed only a test; UIR-05 (index.tsx:291) was also a live defect (the word 'Resolution'), fixed. UIR-13's replacement punctuation was chosen by this worker from an existing in-repo precedent rather than a spec-given literal.",
     "notes": "Not blocking: IVE38-AC1 passes with every arm (VERDICT: HEADER-IDENTITY-OK), a mutant control on the UIR-12 fix fired as expected, and typecheck/eslint are clean on every touched file. Filed so the CVO's live walk (IVE38-AC2) reads UIR-13's exact chosen wording ('Opal Partner One (Client)') as a judgment call, not a literal spec quote, and so a later cell touching these same three already-correct rows (UIR-14/22/30) knows they were verified, not re-implemented, this round."
+  },
+  {
+    "id": "DSGN_IRPTV1-W25-S3",
+    "project": "DSGN_IRPTV1",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~25",
+    "surfaced_at": "2026-09-26T23:35:00Z",
+    "one_line": "The cell's cited record (2.0.0_SA_COO~P @80833001cb) describes handler.full_name_match in PROSE only; the actual predicate body is not reachable from this worker's branch at all (0 raw hits for 'full_name_match' anywhere under this HEAD) -- it lives on a DIFFERENT, non-ancestor commit (177719486c) this worker had to locate by searching all branches before mirroring it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git merge-base --is-ancestor 177719486c HEAD` on this worktree returns NOT-ANCESTOR; `infra/aws/lambda/investor-reporting/directory/handler.py` at this branch's HEAD carries no `full_name_match` definition at all (confirmed: the function is absent from the file this worker's <paths> grant does not include but was told to read)",
+        "the cited record's own prose (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_UIR07_SEARCH_RANK_20260926.md, read at 80833001cb^) states the rule as English ('the display name's tokens, sorted, equal the query's tokens, sorted') without the literal code; `git log --all` located the actual body on commit 177719486c (a sibling backend-source commit, same author 2.0.0_SA_COO~P, marked 'not built' in its own subject): `def full_name_match(entry, qtokens): return bool(qtokens) and sorted(tokens(entry.get('display_name',''))) == sorted(qtokens)` -- byte-identical in effect to this worker's independently-derived `header/search.ts` `isFullNameMatch` (tokenize via the file's own pre-existing `normalize`/`tokens` helpers at handler.py :64-74, sorted-array equality, empty query never matches)",
+        "this worker's JS mirror was written from the prose description plus the file's existing `normalize`/`tokens` primitives BEFORE finding 177719486c; the later discovery only confirmed no divergence -- had the two disagreed, this row would have to reconcile them, which the task order's citation alone (a record, not the code) could not have caught"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell text: 'Read the server's predicate where the record names it (handler.full_name_match, 2.0.0_SA_COO~P record @80833001cb) and mirror it; do not invent a different rule.'",
+    "world_is": "The record names the predicate but does not carry its code; the code exists in this repo only on a commit outside this worker's ancestry, reachable solely via an all-branches search the cell text did not point to. This worker mirrored the rule correctly (verified against the actual predicate body after the fact), but a worker who stopped at the cited record's prose alone (or who does not search other branches) has no in-tree code citation to check against.",
+    "notes": "Not blocking IVE47-AC1 (PASS-by-output, VERDICT: GLOBAL-MERGE-OK) -- the mirrored predicate matches the actual server code byte-for-byte in effect. Filed so a later cell citing this same record knows the code lives at 177719486c, not at any commit ancestor to this project's mainline worktrees."
   }
 ]
 ```
