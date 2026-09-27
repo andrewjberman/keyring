@@ -1,0 +1,3 @@
+=== BATCH 18  exclude-done=batch17.json ===
+  rc=0 elapsed=144s  asked=61 of 88  resolved=56  search_refused=27  never_reached=23  serveable=19
+  gap: sleeping 7800s before the next batch (the decay window)

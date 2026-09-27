@@ -1,0 +1,28 @@
+CARRIED        66 already-ANSWERED folder(s) skipped and carried into the output
+RETRIED        4 folder(s) the vendor had refused -- a refusal is not an answer
+UNIVERSE       org\missions\D5\AMGT\AMGT_RESAPP\deliverables\0.9.0_WK_AMGT_RESAPP~4\universe.json
+DENOMINATOR    89 folders   THIS BATCH 23
+PROVIDER       seekingalpha.com, DIRECT, unauthenticated, no vendor
+BARS           window 30 days, density >= 3 in window
+MODE           LIVE
+
+  [ 1] SSE plc SSE LN                           --       NOT ASKED, HTTP 403
+  [ 2] Schlumberger SLB                         --       REFUSED -- 1 candidate(s) returned, 0 passed the name test, and no
+  [ 3] ServiceNow NOW US                        NOW      ACCEPTED NOW -- SA names it 'ServiceNow, Inc.' (test a) and 25 of 
+  [ 4] Shopify SHOP CA                          --       NOT ASKED -- the name test passed for 7 candidate(s), but every ne
+  [ 5] Singapore Telecom ST SP                  --       NOT ASKED, HTTP 403
+  [ 6] Spotify SPOT US                          --       NOT ASKED, HTTP 403
+  [ 7] Sumitomo Mitsui Financial Group 8316 JP  --       NOT ASKED, HTTP 403
+
+  STOPPING: 3 consecutive vendor refusals. The rest of the batch would record absences never asked about.
+
+CALLS          11 (all free, direct, no quota)
+POPULATION     66 carried + 23 this batch = 89 record(s)
+ASKED          69 of 89
+NEVER REACHED  16  <- the stop guard fired before these
+NOT ASKED      20 search-refused + 1 news-refused  <- vendor refusals, NOT findings about those names
+RESOLVED       56 of 69 asked
+REFUSED        12 of 69 asked  <- a 0 here means the rule is NOT discriminating
+SERVEABLE      19 of 69 asked  <- resolved AND clearing the density bar
+WROTE          C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier1_exec\2.0.0_SA_COO\deliverables\AMGT_HARVST\sa_symbol_pass_20260926\batch16.json
+

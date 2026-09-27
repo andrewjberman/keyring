@@ -1,0 +1,25 @@
+CARRIED        59 already-ANSWERED folder(s) skipped and carried into the output
+RETRIED        3 folder(s) the vendor had refused -- a refusal is not an answer
+UNIVERSE       org\missions\D5\AMGT\AMGT_RESAPP\deliverables\0.9.0_WK_AMGT_RESAPP~4\universe.json
+DENOMINATOR    89 folders   THIS BATCH 20
+PROVIDER       seekingalpha.com, DIRECT, unauthenticated, no vendor
+BARS           window 30 days, density >= 3 in window
+MODE           LIVE
+
+  [ 1] QXO                                      --       NOT ASKED -- the name test passed for 2 candidate(s), but every ne
+  [ 2] RWE AG RWE GY                            --       NOT ASKED, HTTP 403
+  [ 3] Reckitt Benckiser RKT LN                 --       NOT ASKED, HTTP 403
+  [ 4] Rio Tinto RIO LN                         --       NOT ASKED, HTTP 403
+
+  STOPPING: 3 consecutive vendor refusals. The rest of the batch would record absences never asked about.
+
+CALLS          6 (all free, direct, no quota)
+POPULATION     59 carried + 20 this batch = 79 record(s)
+ASKED          60 of 79
+NEVER REACHED  16  <- the stop guard fired before these
+NOT ASKED      19 search-refused + 1 news-refused  <- vendor refusals, NOT findings about those names
+RESOLVED       52 of 60 asked
+REFUSED        7 of 60 asked  <- a 0 here means the rule is NOT discriminating
+SERVEABLE      18 of 60 asked  <- resolved AND clearing the density bar
+WROTE          C:\Users\Opal Bloomberg\Desktop\ajb_workspace\org\tier1_exec\2.0.0_SA_COO\deliverables\AMGT_HARVST\sa_symbol_pass_20260926\batch9.json
+
