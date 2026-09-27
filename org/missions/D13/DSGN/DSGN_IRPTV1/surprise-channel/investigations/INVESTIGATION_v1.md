@@ -2269,3 +2269,31 @@
   "notes": "Same class as S22/S23 (a read that drops selected_tenant). Also carried to round 9: a prospect job (no client) is invisible until some client is chosen, because the history mounts only with a client."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-W40-S1",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~40",
+  "surfaced_at": "2026-09-27T18:54:45Z",
+  "one_line": "TO-IV-e-63's Build names TWO Performance exception conditions (answer-ends-before-page-date, and 'its series' first date after the requested start'); this worker implemented only the first -- the second was scoped out because the on-disk reference fixtures make the naive check (dailyCumulative[0].date vs requestedDates.start/actualDates.start) fire on the CONTROL fixture too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "a future direct act on PerformanceHeadline.tsx/MethodAndSources.tsx that either (a) confirms dailyCumulative is meant to be the full daily series (in which case the comparison is real and belongs on the face) or (b) finds the correct anchor for the 'series starts late' fact and re-scopes this note",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/fixtures/performanceReport.success.json (this cell's OWN reference/control fixture, actualDates.end === sourceTimestamps.businessAsOf === '2026-09-09'): dailyCumulative[0].date = '2026-09-05', requestedDates.start = actualDates.start = '2026-01-01' -- dailyCumulative[0].date > requestedDates.start is TRUE here despite this being the 'clean' control case, not a defect case",
+      "TO-IV-e-63 worker face Build: \"...or its series' first date after the requested start), the section says so on its face in words (...; 'Series starts Jul 21'). No request changes.\" -- cited verbatim from the task order",
+      "portal/src/pages/InvestorReporting/tabs/reporting/PerformanceHeadline.tsx (this worker's own edit, HEAD of wk-DSGN_IRPTV1-40): only the answer-ends-before-page-date exception ('Returns through ...') is implemented; no 'Series starts ...' label was added",
+      "IVE63-AC1's own enumerated arms (worker face ACCEPTANCE section) name only the answer-ending exception + its control, not a series-start arm, so no graded criterion is left unmet by this scoping choice"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IV-e-63 Build: a section whose own series' first date lands after the requested start says so on its face in words (e.g. 'Series starts Jul 21').",
+  "world_is": "dailyCumulative arrays in this project's own reference fixtures are short, tail-only samples (a handful of points near the end of the window), not a full daily history from the requested start -- so a first-date-vs-requested-start comparison would print 'Series starts ...' on every report, including ones with no real data-availability defect, rather than only on a genuine case like window 8/9's COT account (Answered 2026-01-02 to 2026-09-22, series starting 2026-07-21).",
+  "notes": "Not blocking: IVE63-AC1's enumerated arms do not require this second exception; the answer-ends-before-page-date exception (with its control) is implemented and tested (iv-e-63.dates-sources.test.tsx arm 3). Left for a seat that can confirm dailyCumulative's true population (full series vs tail sample) before wiring a comparison that could otherwise mislabel every report."
+}
+```
