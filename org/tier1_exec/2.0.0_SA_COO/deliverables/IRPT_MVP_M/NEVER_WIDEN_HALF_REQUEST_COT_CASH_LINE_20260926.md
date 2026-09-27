@@ -161,3 +161,34 @@ It reads every SERVED D_03 composition in s3://opal-data-cot: the firm file plus
   2026-09-18 (220 carry 2026-09-22; see the JSON). D_03 no longer rewrites them. Parked, not in this act.
 - **Monday:** re-run this script after the run. Before the merge it reads the act-1 and cash-admission bytes; after
   the cash-line deploy, the bar is 0.
+
+## Addendum 5 (01:5xZ 09-27): the DS lane's readers, and one gap in this half's reader claim
+
+`0.4.0_DS_ClientPlatform~X` finished its work order.
+- **Branch:** `ds-x-b1-cashline` @146876e75a, not merged.
+- **Record:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/B1_AND_CASH_LINE_CRITERIA_20260926.md`.
+- **Rows:** S150-S153.
+
+What it changes for this half:
+- **Correction to "No reader crashes or drops it" (S152, ARMED on ~M, now DISARMED in code).** COT `lib/mix_views`
+  built its period rows (quarterly, monthly, annually) only from its own list, and that list left out `cash` and
+  `other`. So every cash dollar fell into the `unclassified` residual. That includes today's sweeps and, after the
+  deploy, the BD cash line.
+  - Fix: `irpt-m-s152` @41115a70aa, cut from ~X's head. The list is now equity, fixed_income, alternatives,
+    structured, commodities, cash, other; test added; COT tests 10 passed.
+  - The portal already expects `cash` (and optional `other`) in each period point (`FirmMixPeriodPoint`,
+    portal `types.ts:1601-1611`), so the served period rows start matching the page's type.
+  - It merges and deploys with this act, after Monday's R1.
+- **a07 (S150):** the BD cash-line rule in a07 changes 0 of 4,053 dim rows. The dim has one row per upper-cased
+  ticker, and `CASH` is held by 49F's Pathward row with a null name. The operative guard therefore sits in d08's own
+  lookup, as it does in the COT gold readers.
+- **d08** only emits to QA; nothing served reads it.
+  - It folds cash into fixed_income, a declared rule, and its `mix{}` is shape-frozen at three classes (S151). So the
+    BD cash line moves equity -> fixed_income there: **-$59,253,165.31 / +$59,253,165.31**. That is the signed net;
+    d08 keeps negative rows.
+  - C_06 books the same line as `cash`, **+$66,055,897.80** (positive rows only).
+  - Both are printed side by side at the read-back, as the CRO asked. The difference is d08's fold plus the 26
+    negative rows. No served value depends on d08.
+- **d08's shape identity** compares its emission with the LIVE `platinum/firm/mix_summary.json`, which D_04 writes. From
+  Monday's run the live file carries `cash` (and later more classes) that d08's frozen three-class `mix{}` lacks, so d08
+  will refuse. Parked in STATUS~M with the runners' owner; it serves nothing.
