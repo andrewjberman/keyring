@@ -11,8 +11,8 @@ As of 2026-09-27T02:2xZ. Earlier forms of this file are in git (`git log -p -- <
 | What | Value | Ledger |
 |---|---|---|
 | irpt-performance-adapter | `Ll6t4VPa..` since 21:28:13Z: P-REOPEN-01 (260399e940), both timing lines (8d7a8b10fe, b18cb77c7d), S147 fix M (52604d790b); INF one-use plan env kept as live | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 CLOSED |
-| irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) = hop-3 six + the cross-viewer title binding (f8c72944f3) | irpt-cross-viewer-title-20260927 (V1 open) |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-xv` since 02:08:38Z = f624e8a72f + the hop-3 six + hop-7 certify + retained-reason (746ddee18a) + the cross-viewer binding (f8c72944f3); rollback roots rr, h7, fe64236bbb, f624e8a72f kept | irpt-cross-viewer-title-20260927 (V1 open) |
+| irpt-ycharts-generate | `G/TqLPdL..` since 02:15:03Z (09-27) = hop-3 six + the cross-viewer title binding (f8c72944f3) | irpt-cross-viewer-title-20260927 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-xv` since 02:08:38Z = f624e8a72f + the hop-3 six + hop-7 certify + retained-reason (746ddee18a) + the cross-viewer binding (f8c72944f3); rollback roots rr, h7, fe64236bbb, f624e8a72f kept | irpt-cross-viewer-title-20260927 CLOSED |
 | irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
 | irpt-directory-search | `o1TXq5PH..` since 22:54:12Z: UIR-07 exact full-name match first in search AND browse(q) (49b935c213); -target apply | irpt-uir07-search-rank-20260926 CLOSED |
 | irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
@@ -40,18 +40,16 @@ As of 2026-09-27T02:2xZ. Earlier forms of this file are in git (`git log -p -- <
 
 ## Write claims
 
-None building. Window 7 waits on its halves and Andrew's go; the cross-viewer V1 waits on ~Y.
+None building. Window 7 waits on its halves and Andrew's go; The cross-viewer binding is closed (3 arms PASS).
 
 ## Next-list (in order)
 
 1. **Window 7 (the Analysis chain, second attempt):** packet blob 3ab51a52 @74e9998d9c sent 02:2xZ (window 6's text +
    CTO 101673: the principal stays until jobs are terminal, 120-min cap). On both halves: create; ~Y's K4/K5 on
    Andrew's word; ~D's K10; delete after READY or terminal; audit. S151 is disarmed (~Y 101704) and S150 graduated.
-2. **Cross-viewer V1:** ~Y's offline re-proof on G/TqLPdL (second viewer ACCEPTED, uploader ACCEPTED, the CRO's
-   refusal arm SOURCE_OWNER_BINDING). A failed arm rolls back generate first, then the resident.
-3. **INF:** the armed plan 01209afb is SPENT; Andrew's per-use word asked via MSTR 01:51Z. **COT:** a new per-use
+2. **INF:** the armed plan 01209afb is SPENT; Andrew's per-use word asked via MSTR 01:51Z. **COT:** a new per-use
    word.
-4. **K8, the first real export**, rides a later Performance window.
+3. **K8, the first real export**, rides a later Performance window.
 
 ## Parked
 
