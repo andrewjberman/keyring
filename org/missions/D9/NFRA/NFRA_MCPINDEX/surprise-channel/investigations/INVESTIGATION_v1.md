@@ -1697,6 +1697,28 @@ carries none.
     },
     "spec_asserts": "MX-s-8 PHASE B as first cut: the apply alone ships the vendored edits.",
     "world_is": "The apply alone reads 0-diff; the upload is a named member of the act."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W7-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~7",
+    "surfaced_at": "2026-09-27T10:44Z",
+    "one_line": "record-terraform-deploy.sh's CHANGELOG.json writer failed with a SyntaxError in a temp-generated Node script during MX-s-8 step 13's record; the source-map commit (this order's own leg) still landed correctly and unaffected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "record-terraform-deploy.sh opal-assets --function <4 names> --deploy-ledger nfra-mcpindex-silver-mirror-guard run 2026-09-27T10:44:31Z: stdout carried 'File \"C:\\Users\\OPALBL~1\\AppData\\Local\\Temp\\rdeploy-changelog-GSAS2H.js\", line 18 ... SyntaxError: unterminated string literal (detected at line 18)' followed by 'Note: CHANGELOG.json write failed \u2014 source map update still committed'.",
+        "The script's own exit code was 0 and its next act (lambda-source-map.json commit) landed at c57d287517 with correct artifact_sha256 == deployed CodeSha256 for all 4 functions and correct last_deployed_commit e0750442c9 -- the CHANGELOG failure did not propagate into the recorded artifact this task order depends on."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MX-s-8 step 13 names record-terraform-deploy.sh as the recorder, with a fallback to hand-recording only if it 'still refuses' (i.e. exits non-zero / fails outright).",
+    "world_is": "The recorder ran to completion (exit 0) and its load-bearing write (lambda-source-map.json + git commit) succeeded and was verified independently by this worker; only a secondary, non-gated write (CHANGELOG.json, generated via a temp Node script with a template/escaping defect at its line 18) failed inside the same invocation. No hand-record fallback was needed for the artifact this order's AC2/ledger depend on.",
+    "notes": "Not blocking to MX-s-8: CHANGELOG.json is not named in this task order's <paths>, its proof_required, or AC1/AC2. Filed because a partial-failure inside a tool this order names as its recorder is exactly the kind of thing a future caller of the same script should not have to rediscover. disarm_owner 2.0.0_SA_COO~O decides whether the CHANGELOG writer's temp-script generation is worth a fix or is accepted as a known non-blocking limb."
   }
 ]
 ```

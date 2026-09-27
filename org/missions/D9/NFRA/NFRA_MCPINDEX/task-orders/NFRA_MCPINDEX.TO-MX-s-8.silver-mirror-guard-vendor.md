@@ -132,3 +132,20 @@ first @b8a7da3c17, so step 11's record does not re-arm the mojibake loop.
 <fabric>site-z</fabric>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+<!-- complete flipped by 0.9.0_WK_NFRA_MCPINDEX~7 2026-09-27T10:5xZ. AC1 PASS exit=0 (vendored copies=4 both
+     fixes 4 of 4 old guard 0), AC2 PASS exit=0 (functions carrying the fix 4 of 4, sha==CodeSha256=True for all 4).
+     Instance: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~7/NFRA_MCPINDEX.TO-MX-s-8.silver-mirror-guard-vendor.proof_of_spec.json
+     proof-of-spec-check VALID (rc=0).
+     Live: blackdiamond CodeSha256 DZl5N5IoyMTwGZI1Dl/D+40Ldd+ZzkbF60M6JFwD3Pw=, etf hosvkcI2IaY+NBmxqio98+dEqWmXIjBpBQqEpkA30nU=,
+     eclipse QsoUUJUhw2lDaga37HU2gKo1VqZwHreRNbeZpRvE2Bg=, orion dO6YMv6Gi477d6/g4Jbx/WLPro60rXwtFm7hA97ne0Y=,
+     all LastModified 2026-09-27T10:35:46.000+0000, State Active.
+     Ledger nfra-mcpindex-silver-mirror-guard CLOSED at b3547a80a2, 5 of 5 legs proven, sentinel removed.
+     Rows raised: NFRA_MCPINDEX-Z-W7-S1 (already DISMISSED_WITH_REASON by issuer ruling Z-S27 before this phase),
+     NFRA_MCPINDEX-Z-W7-S2 (record-terraform-deploy.sh CHANGELOG.json writer defect, OBSERVATION/INERT, non-blocking).
+     The APPEND is deliberate: the earlier tag above is left standing, because an order's status history is
+     append-only and the LAST tag is the live one. This comment deliberately does NOT spell the earlier tag
+     out -- a literal copy of it inside this comment would become a THIRD tag and a status parser cannot tell
+     prose from a tag. -->
+
