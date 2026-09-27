@@ -40,6 +40,8 @@ the report read. A row whose own read answers shows that answer's state in words
 **Environment:** the portal worktree is based on local DEV `e8a00b23`. Other round-8 workers run in parallel in their own worktrees;
 none holds these files. Do not start any server. Work ONLY in your own <WS>.
 
+**Amendment 1 (issuer, 2026-09-27 ~16:5xZ; 2.0.0_SA_COO~P 101974 from the irpt-status log):** the six "Status unavailable" rows are six `status-job` reads (`GET /api/scoped/investor-reporting/status/{jobId}`), and they also lack `selected_tenant`; irpt-status refused all seven reads IdRefused (the internal viewer's own firm token is not an enabled client firm), public UNEXPECTED. So the per-row status read carries the selected tenant too: whichever reader `OwnedRequestHistory` uses for a row's state (the live client's job-status read, `src/api/endpoints/investor-reporting.ts` around :1137, already sends `selected_tenant` from `req.selectedTenant`) is given it. AC1's arm (a) covers the status-job reads as well.
+
 ### ACCEPTANCE
 
 <criterion id="IVE66-AC1" cell_refs="IV-e-66"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-36/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-66.owned-item-tenant.test.tsx 2>&1 | tail -15</invocation><expect>VERDICT: OWNED-ITEM-TENANT-OK</expect></criterion>
