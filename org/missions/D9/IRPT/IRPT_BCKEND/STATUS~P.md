@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-27T13:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T13:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -56,18 +56,9 @@ Andrew-direct 02:5xZ "yes to all three" (@6039c2f680): all three calls USED (win
        fields "drifted" as windows 7 and 8, so the compare, not the timing, is wrong.
    Bounds held: 4 status GETs, 0 completed re-captures. Next: ~Y's fixes, then a fifth attempt under Andrew's
    standing word, each in a signed window.
-2. **K8, the first real export:** window 10 (06:19-06:32Z) did not reach it. The page's Export preview refuses
-   before any request ("cannot render reportKind performance-report: 39c11079.. is absent"), and 39c11079 is K7's own
-   report revision (RPT-b5e0a16e). ROOT CAUSE (from the w10 HAR and the adapter log):
-   the preview's Performance fetch (resolveBundle.ts:292-300) omits `selected_tenant`. Its 2 GETs at 06:25:22Z answered
-   UNAVAILABLE/UNEXPECTED (BucketUnmapped for the internal viewer's own firm), and resolveOne rethrew that at :255.
-   The fix is in the portal (DSGN_IRPTV1-S20, ~D's lane, a round-8 candidate): thread the target's selectedTenant.
-   Re-cut window 10's packet as a later window once the fix is built.
-   UPDATE 12:39Z: C: reads 17 GB free after MSTR's /cleanup (101858), above the 15 GB seating floor, so ~D can seat
-   round 8 now.
-   BLOCKER CHAIN (10:2xZ): the fix is TO-IV-e-53 in DSGN_IRPTV1 round 8 (issued @83576f9dd9). It has 0 portal commits,
-   because ~D seated 0 workers: C: is at 14 GB free, under the 15 GB seating floor, awaiting Andrew. P's scratchpad
-   holds 72 MB, so it is not the lever.
+2. **K8, the first real export:** UNBLOCKED. The fix TO-IV-e-53 is on local portal DEV 1f149d69 (~D 101887). The
+   window-12 packet (blob 36c196ed, @c92a2c4c36) re-cuts window 10 on that page and is out for both halves. Create on
+   both halves, then hand to ~D.
 3. **A corrected COT report (IRPT_BCKEND-S157, criterion 3 on real data):** unblocked. Andrew-direct relayed by MSTR
    101850 reads "they have egress for full session", and the loop prompt permits vendor uses, each ledgered. It needs
    ONE new COT use: plan 2 on the same account through cot_one_use_plan.py (no vendor call), a packet, both halves,
