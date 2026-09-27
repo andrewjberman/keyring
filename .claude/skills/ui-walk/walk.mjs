@@ -23,7 +23,7 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
@@ -33,6 +33,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--no-arm') opt.arm = false
   else if (a === '--keep-armed') opt.keepArmed = true
   else if (a === '--headed') opt.headed = true
+  else if (a === '--deep') opt.deep = true
   else throw new Error('unknown argument ' + a)
 }
 if (!opt.routes.length) opt.routes.push('/investor-reporting')
@@ -211,6 +212,47 @@ async function exploreScope(page, scopeSel, label) {
   }
 }
 
+// ---- deep mode: press every enabled, admitted button in a tab once (presets, variants, chips, toggles) -------------
+// One button per round, the DOM re-read each round because a press can re-render the tab. Never pressed: anything the
+// DO_NOT_CLICK words match, the tab strip's own tabs, disabled buttons. Writes are still blocked by the network guard,
+// and file pickers are <input type=file>, never a <button>, so no OS dialog opens.
+const TAB_WORDS = /^(performance|holdings|analysis)$/i
+async function pressAll(page, scopeSel, label, maxPresses = 18) {
+  const seen = new Set()
+  for (let round = 0; round < maxPresses && timeLeft(); round++) {
+    const btns = page.locator(`${scopeSel} button:visible`)
+    const n = await btns.count().catch(() => 0)
+    let pressed = false
+    for (let i = 0; i < n && timeLeft(); i++) {
+      const b = btns.nth(i)
+      const txt = (((await b.innerText().catch(() => '')) || (await b.getAttribute('aria-label').catch(() => '')) || '')).replace(/\s+/g, ' ').trim()
+      if (!txt || seen.has(txt) || DO_NOT_CLICK.test(txt) || TAB_WORDS.test(txt)) continue
+      seen.add(txt)
+      if (await b.isDisabled().catch(() => true)) continue
+      await b.click({ timeout: 3000 }).catch(() => {})
+      await settle(page, 1800)
+      await checks(page, `${label}-press-${txt.slice(0, 28)}`)
+      // light follow-up: open any <details> the press revealed (selects are walked once per tab, not per press)
+      const sums = page.locator(`${scopeSel} details:not([open]) > summary`)
+      const nSum = Math.min(await sums.count().catch(() => 0), 6)
+      for (let k = 0; k < nSum; k++) {
+        const s = page.locator(`${scopeSel} details:not([open]) > summary`).first()
+        if (DO_NOT_CLICK.test(((await s.innerText().catch(() => '')) || ''))) break
+        await s.click({ timeout: 3000 }).catch(() => {})
+        await page.waitForTimeout(400)
+      }
+      if (nSum) await checks(page, `${label}-after-${txt.slice(0, 16)}-expanded`)
+      // close anything the press opened (a card's "View breakdown" dialog blocked the next tab click on 2026-09-27)
+      await page.keyboard.press('Escape').catch(() => {})
+      await page.waitForTimeout(400)
+      pressed = true
+      break
+    }
+    if (!pressed) break
+  }
+  return [...seen]
+}
+
 // ---- drill: every top-level row, then its first drillable child, down to 4 levels ------------------------------
 // Rows are the SliceTable's `tr[data-slot=slice-row]` (clickable when data-child-count > 0); the breadcrumb is
 // `nav[data-slot=holdings-breadcrumbs]`, whose first entry ("All holdings") returns to the top.
@@ -345,6 +387,8 @@ try {
           for (let i = 0; i < nTabs && timeLeft(); i++) {
             const name = ((await tabs.nth(i).innerText().catch(() => '')) || `tab${i}`).trim().toLowerCase()
             step = `tab ${name}`
+            await page.keyboard.press('Escape').catch(() => {})   // no dialog may stand over the tab strip
+            await page.waitForTimeout(300)
             await tabs.nth(i).click().catch(() => {})
             await settle(page, 2500)
             await checks(page, `${client}-${name}`)
@@ -355,6 +399,10 @@ try {
               log('DRILL PATHS', JSON.stringify(p).slice(0, 400))
             }
             await exploreScope(page, '[data-slot="tabs"]', `${client}-${name}`)
+            if (opt.deep) {
+              const pressed = await pressAll(page, '[data-slot="tabs"]', `${client}-${name}`)
+              log('PRESSED', name, JSON.stringify(pressed).slice(0, 300))
+            }
           }
         }
         if (!opt.clients.length) log('NOTE: no --client given; only the page load and the empty search were walked')

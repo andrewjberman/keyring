@@ -53,7 +53,13 @@ warns when the account has been armed for more than 60 minutes.
 /ui-walk                                   -> /investor-reporting, empty search only
 /ui-walk --client "anna thiessen"          -> plus that client's identity, every tab, drill and pickers
 /ui-walk --route /model-portfolios         -> any other route (generic explore: details, selects, popups)
+/ui-walk --deep --client "..."             -> also press every enabled button on each tab once (period presets, variant
+                                              cards, map chips, sort headers, toggles); never a DO_NOT_CLICK word
 ```
+
+`--deep` presses one button per round, re-reading the tab each time, and presses Escape after each press, so a
+dialog never blocks the next tab. File pickers are `<input type=file>` and are never pressed. A deep walk takes
+about 12-15 minutes per client.
 
 The skill runs:
 

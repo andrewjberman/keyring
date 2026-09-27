@@ -1,0 +1,554 @@
+{
+ "schema_version": "1.0",
+ "register": "irpt-ui-cleanup-20260927",
+ "source": {
+  "walks": [
+   "20260927T200826Z",
+   "20260927T203155Z",
+   "20260927T201809Z"
+  ],
+  "tool": ".claude/skills/ui-walk/walk.mjs (--deep for 20260927T203155Z)",
+  "build": "portal local DEV 3b98939b (round 8), 0 tracked changes; origin/DEV carries none of it",
+  "clients": [
+   "the 49F three-account client",
+   "the INF four-account client",
+   "the COT eleven-account client",
+   "the COT two-account client"
+  ],
+  "viewport": "1440 px",
+  "note": "No client names or client dollar figures; screenshots stay in tmp/ui-walk/ (gitignored)."
+ },
+ "outcomes": {
+  "O1": "Performance reads as a finished answer: no 'not supplied' tiles, no raw data dump, no system words on the face.",
+  "O2": "Every period button either answers or says in plain words why it cannot, over a real date range.",
+  "O3": "Holdings charts stay legible at any account count: readable labels, distinct colours, negatives handled, long lists reachable.",
+  "O4": "No system name, code or unknown placeholder reaches the face or its first click.",
+  "O5": "Analysis setup behaves like a form: a selection takes, defaults fit the client, errors wait for input.",
+  "O6": "The request list is the viewer's own and speaks client language."
+ },
+ "findings": [
+  {
+   "id": "UIC-01",
+   "screenshots": "20260927T200826Z#031",
+   "surface": "performance",
+   "observed": "On a computed 49F report (YTD 5.93%), VS BENCHMARK, ENDING VALUE and BEGINNING VALUE all read 'not supplied'.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "The adapter's answer carries no benchmark and no period values for this account; the page renders each missing field as a tile.",
+    "evidence": "walk screenshot(s) 20260927T200826Z#031 (local, gitignored)"
+   },
+   "acceptance": "A computed report shows only the figures it has; a missing benchmark or value is one plain line, never three 'not supplied' tiles."
+  },
+  {
+   "id": "UIC-02",
+   "screenshots": "20260927T200826Z#031",
+   "surface": "performance",
+   "observed": "Under the cumulative chart the page lists every daily point as a table row (about 185 rows), making the page over 6,000 px tall.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C1 (one answer per view)",
+   "cause": {
+    "claim": "measured",
+    "text": "The series table is rendered in full below the chart.",
+    "evidence": "walk screenshot(s) 20260927T200826Z#031 (local, gitignored)"
+   },
+   "acceptance": "The daily series is one click away (or paged); the default view is the chart and the period figures."
+  },
+  {
+   "id": "UIC-03",
+   "screenshots": "20260927T200826Z#032",
+   "surface": "performance / report details",
+   "observed": "Report details on a computed report shows 'Partial -- Qualified answer -- not a complete report', PERFORMANCE_PARTIAL, TIME_WEIGHTED, OPAL_ENGINE and three revision hashes.",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "known",
+   "known_ref": "UIW-0927-05 (round 9)",
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "The details panel prints the report's provenance fields verbatim.",
+    "evidence": "walk screenshot(s) 20260927T200826Z#032 (local, gitignored)"
+   },
+   "acceptance": "Report details states the method and source in client words (for example 'Time-weighted, net of fees; Opal's performance engine'); codes and hashes stay out of the page."
+  },
+  {
+   "id": "UIC-04",
+   "screenshots": "20260927T200826Z#032",
+   "surface": "performance / monthly table",
+   "observed": "The 'Monthly returns and accounts' table carries rows whose account, ending value and coverage cells read 'not supplied'.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "Rows are built for fields the answer does not carry.",
+    "evidence": "walk screenshot(s) 20260927T200826Z#032 (local, gitignored)"
+   },
+   "acceptance": "The monthly table lists only rows it can fill, or states once what is not available."
+  },
+  {
+   "id": "UIC-05",
+   "screenshots": "20260927T200826Z#031, 20260927T203155Z#140",
+   "surface": "performance / account picker",
+   "observed": "The account picker keeps 'YTD pending' (or 'YTD unavailable') after the YTD figure has rendered, and still says 'YTD' while 3Y or Since inception is selected.",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The picker's suffix is computed once at load and not tied to the selected period.",
+    "evidence": "walk screenshot(s) 20260927T200826Z#031, 20260927T203155Z#140 (local, gitignored)"
+   },
+   "acceptance": "The picker's figure follows the selected period and updates when it computes."
+  },
+  {
+   "id": "UIC-06",
+   "screenshots": "20260927T203155Z#140, #141",
+   "surface": "performance / period presets",
+   "observed": "For the 49F three-account client, 3Y and Since inception answer 'Unavailable' with the raw code UNSUPPORTED_OPERATION and a 'Contact support' button, no plain words.",
+   "outcome": "O2",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~P",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "The adapter refuses those windows (UNSUPPORTED_OPERATION, 3 answers in the walk); the page shows the code instead of a sentence.",
+    "evidence": "walk screenshot(s) 20260927T203155Z#140, #141 (local, gitignored)"
+   },
+   "acceptance": "A window the service cannot answer says so in words (what is supported, what to choose instead); no code on the face. Owner of the capability: IRPT_BCKEND (~P)."
+  },
+  {
+   "id": "UIC-07",
+   "screenshots": "20260927T201809Z#018, 20260927T203155Z#141",
+   "surface": "performance / period presets",
+   "observed": "'Since inception' requests 1970-01-01 to 2026-09-22 (INF and 49F clients).",
+   "outcome": "O2",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The preset uses a fixed epoch start, not the account's inception date.",
+    "evidence": "walk screenshot(s) 20260927T201809Z#018, 20260927T203155Z#141 (local, gitignored)"
+   },
+   "acceptance": "'Since inception' starts at the account's first data point (or its opening date)."
+  },
+  {
+   "id": "UIC-08",
+   "screenshots": "20260927T201809Z#007",
+   "surface": "performance / refusal",
+   "observed": "The INF refusal reads 'This account is not covered for performance reporting. It becomes available once this account is added to the covered set for this firm.'",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "The OBJECT_NOT_COVERED refusal is worded in system terms.",
+    "evidence": "walk screenshot(s) 20260927T201809Z#007 (local, gitignored)"
+   },
+   "acceptance": "The refusal names, in client words, why the figure is missing and who can make it available."
+  },
+  {
+   "id": "UIC-09",
+   "screenshots": "20260927T203155Z#067, #140",
+   "surface": "performance / loading",
+   "observed": "While a report loads, the canvas reads 'Loading  No source age yet'; a refusal reads 'Unavailable  No source age yet'.",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "A provenance label is rendered before there is a source.",
+    "evidence": "walk screenshot(s) 20260927T203155Z#067, #140 (local, gitignored)"
+   },
+   "acceptance": "Loading is a loading state with no system words; 'source age' never shows before a source exists."
+  },
+  {
+   "id": "UIC-10",
+   "screenshots": "20260927T201809Z#022, 20260927T203155Z#086",
+   "surface": "holdings / accounts pie",
+   "observed": "With 4 (INF) or 11 (COT) accounts, the pie's slice labels overlap into an unreadable pile.",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C1",
+   "cause": {
+    "claim": "measured",
+    "text": "Every slice gets an on-chart label regardless of size.",
+    "evidence": "walk screenshot(s) 20260927T201809Z#022, 20260927T203155Z#086 (local, gitignored)"
+   },
+   "acceptance": "Labels never overlap: small slices move to the legend (or a leader line)."
+  },
+  {
+   "id": "UIC-11",
+   "screenshots": "20260927T201809Z#022, 20260927T203155Z#086",
+   "surface": "holdings / accounts pie",
+   "observed": "The accounts pie draws 4 or 11 slices in near-identical greys and dark navies; neighbouring slices cannot be told apart.",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "known",
+   "known_ref": "UIR-25 (met for 2 accounts)",
+   "design_rule": "portal colour law",
+   "cause": {
+    "claim": "measured",
+    "text": "The account palette is a narrow grey ramp.",
+    "evidence": "walk screenshot(s) 20260927T201809Z#022, 20260927T203155Z#086 (local, gitignored)"
+   },
+   "acceptance": "Adjacent slices are distinguishable at a glance (a palette with enough separation for 11+ accounts)."
+  },
+  {
+   "id": "UIC-12",
+   "screenshots": "20260927T203155Z#086",
+   "surface": "holdings / accounts pie",
+   "observed": "One account of the COT eleven-account client is NEGATIVE (about -4.6% of the client) and sits in the accounts table and legend of a pie.",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "A pie cannot draw a negative share; the negative row is kept in the list.",
+    "evidence": "walk screenshot(s) 20260927T203155Z#086 (local, gitignored)"
+   },
+   "acceptance": "A negative account is shown as a separate, labelled line (never as a pie slice), and the pie's shares sum to the positive total it states."
+  },
+  {
+   "id": "UIC-13",
+   "screenshots": "20260927T203155Z#067, #086",
+   "surface": "identity / over what",
+   "observed": "For the COT eleven-account client, the Over what list shows 10 rows and cuts the next one in half; there is no 'show all'.",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The expanded list has a fixed height with hidden overflow.",
+    "evidence": "walk screenshot(s) 20260927T203155Z#067, #086 (local, gitignored)"
+   },
+   "acceptance": "Every account is reachable from Over what (a 'show all' or a scroll affordance); no row is clipped."
+  },
+  {
+   "id": "UIC-14",
+   "screenshots": "20260927T200826Z#015 (cropped)",
+   "surface": "holdings / footer",
+   "observed": "The Holdings footer reads 'Source: holdings_snapshot.build_cot.', an internal function name.",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "known",
+   "known_ref": "UIR-45 (not met)",
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "The footer prints the snapshot's producer field.",
+    "evidence": "walk screenshot(s) 20260927T200826Z#015 (cropped) (local, gitignored)"
+   },
+   "acceptance": "The source line names the data source in client words (for example 'Black Diamond, as of ...')."
+  },
+  {
+   "id": "UIC-15",
+   "screenshots": "20260927T201809Z#038",
+   "surface": "holdings / models dialog",
+   "observed": "INF model holdings list bare tickers (FDRXX, CIVIX, VO ...) with no security names.",
+   "outcome": "O3",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "status": "known",
+   "known_ref": "R4 enable (INF name fill, Monday 09-28)",
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "INF name facts are not yet served.",
+    "evidence": "walk screenshot(s) 20260927T201809Z#038 (local, gitignored)"
+   },
+   "acceptance": "Every security shows its name beside its ticker."
+  },
+  {
+   "id": "UIC-16",
+   "screenshots": "20260927T201809Z#007, #022",
+   "surface": "identity / account label",
+   "observed": "INF account labels read '****9749 / INDIVIDUAL RETIREMENT AC' (the type text is cut off) on every surface.",
+   "outcome": "O3",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "status": "known",
+   "known_ref": "UIR-26 labels (Monday)",
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The registration type arrives truncated from the source field.",
+    "evidence": "walk screenshot(s) 20260927T201809Z#007, #022 (local, gitignored)"
+   },
+   "acceptance": "An account's type reads in full ('Individual Retirement Account')."
+  },
+  {
+   "id": "UIC-17",
+   "screenshots": "20260927T200826Z#005, 20260927T201809Z#007",
+   "surface": "identity / about this scope",
+   "observed": "'About this scope' shows 'SCOPE AS OF: unknown' for every client walked (49F, INF, COT).",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "The scope's as-of is not carried to the page.",
+    "evidence": "walk screenshot(s) 20260927T200826Z#005, 20260927T201809Z#007 (local, gitignored)"
+   },
+   "acceptance": "The scope panel shows a real date or omits the field."
+  },
+  {
+   "id": "UIC-18",
+   "screenshots": "20260927T203155Z#184",
+   "surface": "analysis / variant cards",
+   "observed": "Pressing 'Multi-Comp' leaves 'Variant: Overview (0 comparisons)' and shows 'Multi-Comp does not match 0 comparison(s); Overview does.'; the selected card is barely distinguishable.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The variant is derived from the comparison count, so a card press alone does not change it, and the mismatch is reported as a validation sentence.",
+    "evidence": "walk screenshot(s) 20260927T203155Z#184 (local, gitignored)"
+   },
+   "acceptance": "Pressing a card selects it visibly and the form asks for what that variant needs (for example 'Add at least two models'); no system sentence."
+  },
+  {
+   "id": "UIC-19",
+   "screenshots": "20260927T203155Z#126, #184",
+   "surface": "analysis / report title",
+   "observed": "For multi-account clients the default report title names ONE account ('<client> ****8774 / UTMA -- Overview'), and the title field shows the name with trailing asterisks.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The default title is built from the selection's first account label.",
+    "evidence": "walk screenshot(s) 20260927T203155Z#126, #184 (local, gitignored)"
+   },
+   "acceptance": "The default title names the client (and the variant), never one account of several."
+  },
+  {
+   "id": "UIC-20",
+   "screenshots": "20260927T200826Z#026, 20260927T203155Z#126",
+   "surface": "analysis / prepared for",
+   "observed": "'Enter the report recipient (up to 200 characters).' shows as a red error before anything has been typed.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Validation runs on load.",
+    "evidence": "walk screenshot(s) 20260927T200826Z#026, 20260927T203155Z#126 (local, gitignored)"
+   },
+   "acceptance": "Required-field messages appear after the user tries to generate (or leaves the field), not on load."
+  },
+  {
+   "id": "UIC-21",
+   "screenshots": "20260927T203155Z#126, #184",
+   "surface": "analysis / comparisons",
+   "observed": "The comparison input's placeholder is cut off: 'Opal model or ETF symbo'.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The input is narrower than its placeholder.",
+    "evidence": "walk screenshot(s) 20260927T203155Z#126, #184 (local, gitignored)"
+   },
+   "acceptance": "No placeholder or label is truncated at 1440 px."
+  },
+  {
+   "id": "UIC-22",
+   "screenshots": "20260927T200826Z#029",
+   "surface": "analysis / holdings snapshot",
+   "observed": "While the snapshot loads, Analysis shows 'Holdings snapshot: none held -- Loading' and the red refusal 'No holdings snapshot is held for this scope.' for a client whose Holdings tab shows holdings.",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The refusal renders before the snapshot read returns.",
+    "evidence": "walk screenshot(s) 20260927T200826Z#029 (local, gitignored)"
+   },
+   "acceptance": "Analysis shows a loading state until the snapshot read answers; a refusal only after it answers."
+  },
+  {
+   "id": "UIC-23",
+   "screenshots": "20260927T203155Z#126",
+   "surface": "analysis / your analysis requests",
+   "observed": "Signed in as the admin walker, 'Your analysis requests' lists requests other principals submitted (windows 7-15), each as 'Open REQ-<24-hex> . revision 1' with 'Unavailable -- ANALYSIS_REQUIRES_ATTENTION' or 'Status unavailable' (including window 15's READY job).",
+   "outcome": "O6",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "known",
+   "known_ref": "~D known gap (irpt-status redeploy)",
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "The list is not owner-scoped for an admin viewer, prints raw ids and codes, and the status reads fail until irpt-status is redeployed (~D 101985 known gap).",
+    "evidence": "walk screenshot(s) 20260927T203155Z#126 (local, gitignored)"
+   },
+   "acceptance": "The list shows the viewer's own requests (or is labelled as all requests for an admin), each by client name, variant and date, with a status in words; a READY job reads Ready."
+  }
+ ],
+ "regrade_of_irpt_ui_review_20260926": [
+  {
+   "id": "UIR-04",
+   "verdict": "MET",
+   "note": "Options show 'Cottonwood' / '49 Financial'."
+  },
+  {
+   "id": "UIR-06",
+   "verdict": "MET",
+   "note": "The empty page shows grey placeholders, no figures."
+  },
+  {
+   "id": "UIR-11",
+   "verdict": "MET",
+   "note": "No sample content behind the open search list."
+  },
+  {
+   "id": "UIR-13",
+   "verdict": "MET",
+   "note": "'Cottonwood (Client)'."
+  },
+  {
+   "id": "UIR-15",
+   "verdict": "PAGE MET, DATA OPEN",
+   "note": "Each entry shows its value; the labels stay identical until UIR-26's labels (Monday)."
+  },
+  {
+   "id": "UIR-17",
+   "verdict": "NOT MET",
+   "note": "Over what still lists identical labels (data, UIR-26)."
+  },
+  {
+   "id": "UIR-20",
+   "verdict": "MET",
+   "note": "Export is grey on Analysis with no report."
+  },
+  {
+   "id": "UIR-25",
+   "verdict": "MET",
+   "note": "Two accounts draw two distinct colours (but see UIC-11 at 4+ accounts)."
+  },
+  {
+   "id": "UIR-30",
+   "verdict": "NOT MET",
+   "note": "The display name is right, but the firm still shows twice (chip and identity line)."
+  },
+  {
+   "id": "UIR-32",
+   "verdict": "NOT MET",
+   "note": "The breadcrumb now names the account; the strategy still reads '*9238' against '****9237', two masking styles."
+  },
+  {
+   "id": "UIR-34",
+   "verdict": "NOT MET",
+   "note": "A one-child level still draws a one-slice pie."
+  },
+  {
+   "id": "UIR-37",
+   "verdict": "NOT MET",
+   "note": "Blue still marks a model and Equity; orange a model and Alternatives."
+  },
+  {
+   "id": "UIR-40",
+   "verdict": "NOT MET",
+   "note": "Round 9: several navy bands remain (3 on the empty page)."
+  },
+  {
+   "id": "UIR-41",
+   "verdict": "MET",
+   "note": "Map chips are grouped by account."
+  },
+  {
+   "id": "UIR-45",
+   "verdict": "NOT MET",
+   "note": "Two date formats remain, and the source line is now an internal name (UIC-14)."
+  },
+  {
+   "id": "UIR-46",
+   "verdict": "MET",
+   "note": "As UIR-25."
+  },
+  {
+   "id": "UIR-49",
+   "verdict": "NOT MET",
+   "note": "As UIR-32."
+  }
+ ],
+ "regrade_of_uiw_0927_built": [
+  {
+   "id": "UIW-0927-01",
+   "verdict": "MET"
+  },
+  {
+   "id": "UIW-0927-02",
+   "verdict": "MET"
+  },
+  {
+   "id": "UIW-0927-03",
+   "verdict": "MET"
+  },
+  {
+   "id": "UIW-0927-06",
+   "verdict": "MET"
+  },
+  {
+   "id": "UIW-0927-07",
+   "verdict": "MET"
+  }
+ ]
+}
