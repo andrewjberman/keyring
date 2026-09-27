@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-27T00:55Z. Lease FAST until 2026-09-27T01:52:21Z.
+As of 2026-09-27T01:15Z. Lease FAST until 2026-09-27T01:52:21Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now (Andrew-direct at ~Y, ~18:5xZ: "dont need option 2, but do 1 3 and 4 in order"; CTO 101442, 101465)
@@ -144,7 +144,9 @@ and window 4 re-runs K4+K5 (+R1).
 
 ## Write claims
 
-None in flight. The hop-7 certify fix landed on the Y branch @74b4368bef (`HOP7_CHART_DATE_CERTIFY_20260926.md`).
+None in flight. The retained-reason fix landed on the Y branch @9c6626e1be (`P_RESIDENT_RETAINED_REASON_20260927.patch`,
+at P). With it, the resident journal names a failed capture's `failure_class` and any retained exception's class and
+closed code, so the next capture failure diagnoses itself. The hop-7 certify fix landed on the Y branch @74b4368bef (`HOP7_CHART_DATE_CERTIFY_20260926.md`).
 RESOLVE_UPLOAD landed @bb1eb7f92b and @10a16bd89d. The scratch worktree `irpt-y-pcompose-20260924` was
 removed by 0.0.0_AB_MSTR at 13:3xZ after Y's content check (101172); its branch is kept. Y makes no commit on P's branch.
 

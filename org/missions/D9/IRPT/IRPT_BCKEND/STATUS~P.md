@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-26T23:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+As of 2026-09-27T01:3xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
 
 ## Pins (served)
 
@@ -12,7 +12,7 @@ As of 2026-09-26T23:2xZ. Earlier forms of this file are in git (`git log -p -- <
 |---|---|---|
 | irpt-performance-adapter | `Ll6t4VPa..` since 21:28:13Z: P-REOPEN-01 (260399e940), both timing lines (8d7a8b10fe, b18cb77c7d), S147 fix M (52604d790b); INF one-use plan env kept as live | irpt-reopen-authz / irpt-adapter-timing2 / irpt-authz-memo-20260926 CLOSED |
 | irpt-ycharts-generate | `/iFhTAvT..` since 19:33:52Z = 85TXFzzv + ~Y's six hop-3 files (a219094b1a) | irpt-hop3-generate-resident-20260926 CLOSED |
-| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-h7` since 21:20:44Z = f624e8a72f + the hop-3 six + hop-7 certify.py (ad817b55ea); rollback roots fe64236bbb, f624e8a72f kept | irpt-hop3-... / irpt-hop7-certify-resident-20260926 CLOSED |
+| Resident (i-0167fd745ad906a66) | `/opt/irpt-resident/fe64236bbb-rr` since 01:29:55Z = f624e8a72f + the hop-3 six + hop-7 certify.py (ad817b55ea) + ~Y's retained-reason resident_main/host_capture (746ddee18a); rollback roots fe64236bbb-h7, fe64236bbb, f624e8a72f kept | irpt-resident-retained-reason-20260927 CLOSED |
 | irpt-status | `bMMJ/bQ+5..` since 19:56:53Z (+interactive_access.py); irpt-status-role reads BY VERSION | irpt-status-reads-20260926 CLOSED |
 | irpt-directory-search | `o1TXq5PH..` since 22:54:12Z: UIR-07 exact full-name match first in search AND browse(q) (49b935c213); -target apply | irpt-uir07-search-rank-20260926 CLOSED |
 | irpt-export-render | render ON behind the S148 fence | irpt-export-deploy-b-20260926 |
@@ -40,25 +40,31 @@ As of 2026-09-26T23:2xZ. Earlier forms of this file are in git (`git log -p -- <
 
 ## Write claims
 
-Window 6 LIVE: principal irpt-uiwalk-1790464832 created 23:22:09Z; ~Y K4 -> K5, ~D K10; delete on both "done" or 00:20Z (cron b5a7fb99).
+None building. Every open item is gated (S151 on Andrew's word; INF/COT per-use words).
 
 ## Next-list (in order)
 
-1. **Window 6 (Analysis chain end to end):** packet blob fffdca65 @e9c283801f sent 23:1xZ (CTO 101601, CRO 101602).
-   On both halves at HEAD: the ledger, the pre-read (the cottonwood row census, `_opal` jobs, queue 0/0, resident
-   on fe64236bbb-h7), create, hand the NAME to ~Y (K4, then K5) and ~D (K10), delete at 60 min, audit.
-2. **UIR-07:** the server side is SERVED and PASS. The Global merge is ruled to ~D's portal (CTO 101591, PRD v0.16).
-   P's part is done.
-3. **The cross-viewer title binding** (f8c72944f3) ships in generate + the resident with the next Analysis deploy.
-4. **INF:** a new one-use plan on a one-account-household client, then one signed-in run. **COT:** a new per-use
-   word. (Window 5 saw their first opens refused VendorEgressRefused, as designed while unarmed.)
-5. **K8, the first real export**, rides a later Performance window.
+1. **The next Analysis window is BLOCKED on S151:** window 6's receive-1 YCharts session capture failed, cause
+   unmeasured. The resident now logs a retained failure's closed reason code (fe64236bbb-rr), so the next capture
+   attempt names its cause. That attempt is a live YCharts call and waits on Andrew's word (owner ~Y). Future
+   packets keep the principal until every job is terminal (CTO 101673; S150).
+2. **The cross-viewer title binding** (f8c72944f3) ships in generate + the resident, paired, with the next Analysis
+   deploy.
+3. **INF:** a new one-use plan on a one-account-household client, then one signed-in run. **COT:** a new per-use
+   word.
+4. **K8, the first real export**, rides a later Performance window.
+
+Window 6 CLOSED (ledger irpt-ui-walk-principal-w6-20260926):
+- K4 NORMALIZED; K5 QUEUED, then stuck at hop 6; the message is in irpt-generation-dlq and the row is left alone
+  (amendment 2, CTO signed);
+- 0 requests outside the admitted classes; every new key traced to K4/K5;
+- ~D's C25 re-walk rode the same principal (amendment 1).
 
 ## Parked
 
 | Question | Owner | Un-parks when |
 |---|---|---|
-| The kept test inputs and reports from windows 1-6 in cottonwood (UPLOAD#/INPUT#/analysis#/REPORT# rows and objects owned by deleted walk principals) must be excluded from any firm viewer's lists, or removed, before the route opens to firm users; closes as not needed if history lists by owner only (4.0.0_SA_CRO 101609) | the release cutter | the route opening to firm users |
+| The kept test inputs and reports from windows 1-6 in cottonwood (UPLOAD#/INPUT#/analysis#/REPORT# rows and objects owned by deleted walk principals) must be excluded from any firm viewer's lists, or removed, before the route opens to firm users; include by KEY irpt-jobs cottonwood / REQ-3a1b73a8dead02a17a09043b, the window-6 job left SUBMITTING, since a tenant-wide job listing would show it as never finishing (CTO 101678); closes as not needed only if EVERY reader lists by owner (4.0.0_SA_CRO 101609) | the release cutter | the route opening to firm users |
 | The backend worktree's directory Terraform root predates M's holdings resources (a full plan would destroy 11); UIR-07 used -target | 2.0.0_SA_COO~P | the next directory-root apply: merge CLOUD into the backend worktree first |
 | `build-and-upload.sh` deletes tracked performance/*.py from the publish tree on each adapter build | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
 | `build-and-upload.sh` zips a source_dir JSON with the checkout's EOL (CRLF here), and its artifact record passes through MSYS path conversion (`/iFh..` became `C:/Program Files/Git/iFh..`) | 1.0.0_SA_CTO to route (ci/ owner) | the next build of a function whose hash starts with `/`, or that hashes a JSON member |

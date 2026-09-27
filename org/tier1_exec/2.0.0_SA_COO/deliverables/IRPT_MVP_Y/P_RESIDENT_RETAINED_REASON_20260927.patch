@@ -1,0 +1,141 @@
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py
+index cfe19f8abf..f6627569d5 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py
+@@ -22,6 +22,16 @@ for _relative in ("intake", "ops", "reports", "_keys", "_authz", "_gate", "ychar
+ 
+ from resident_worker import ResidentAssembly, poll_once  # noqa: E402
+ 
++# A refusal code is a closed token by construction ('CAPTURE_FAILED', 'CAPTURE_FAILED:ChallengeError');
++# any other message may carry a signed URL or customer data and is never printed.
++_CODE = re.compile(r'[A-Z][A-Z0-9_]{2,63}(:[A-Za-z][A-Za-z0-9_]{0,63})?')
++
++
++def retained_reason(exc):
++    """The exception's class, plus its message only when that message is itself a closed code."""
++    code = str(exc)
++    return 'class=%s code=%s' % (type(exc).__name__, code if _CODE.fullmatch(code) else '-')
++
+ 
+ def main(argv=None):
+     parser = argparse.ArgumentParser(description=__doc__)
+@@ -43,10 +53,11 @@ def main(argv=None):
+         try:
+             count = poll_once(**runtime)
+             print('IRPT_RESIDENT_POLL handled=' + str(count), flush=True)
+-        except Exception:
++        except Exception as exc:
+             # Errors can contain signed URLs or source/customer data. Never emit
+-            # the exception or frame locals into the host's operational log.
+-            print('IRPT_RESIDENT_POLL retained_for_retry', flush=True)
++            # the exception text or frame locals into the host's operational log:
++            # only its class and a closed code (retained_reason).
++            print('IRPT_RESIDENT_POLL retained_for_retry ' + retained_reason(exc), flush=True)
+             if args.once:
+                 return 1
+             stopped.wait(5)
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_main.py b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_main.py
+new file mode 100644
+index 0000000000..0ea45ebade
+--- /dev/null
++++ b/infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_main.py
+@@ -0,0 +1,22 @@
++"""The resident's retained-for-retry line names a closed reason and never an exception's text."""
++from pathlib import Path
++import sys
++
++import pytest
++
++sys.path.insert(0, str(Path(__file__).parents[1]))
++sys.path.insert(0, str(Path(__file__).parents[2] / "session"))
++import resident_main  # noqa: E402
++from operation_lease import OperationRefused  # noqa: E402
++
++
++@pytest.mark.parametrize("exc, reason", [
++    (OperationRefused("CAPTURE_FAILED:ChallengeError"), "class=OperationRefused code=CAPTURE_FAILED:ChallengeError"),
++    (OperationRefused("SESSION_READ_UNAVAILABLE"), "class=OperationRefused code=SESSION_READ_UNAVAILABLE"),
++    (ValueError("INSTALLED_RESIDENT_RUNTIME_REQUIRED"), "class=ValueError code=INSTALLED_RESIDENT_RUNTIME_REQUIRED"),
++    (KeyError("irpt-uiwalk-1790464832@opal.test"), "class=KeyError code=-"),
++    (RuntimeError("GET https://bucket.s3/key?X-Amz-Signature=abc failed"), "class=RuntimeError code=-"),
++    (ValueError(""), "class=ValueError code=-"),
++])
++def test_retained_reason_is_class_plus_closed_code_only(exc, reason):
++    assert resident_main.retained_reason(exc) == reason
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py b/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py
+index d7048c1e7c..a6fba7195b 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/session/host_capture.py
+@@ -9,6 +9,7 @@ import hashlib
+ import json
+ import os
+ from pathlib import Path
++import re
+ import signal
+ import subprocess
+ import time
+@@ -17,6 +18,29 @@ import uuid
+ from operation_lease import OperationRefused
+ 
+ 
++_FAILURE_CLASS = re.compile(r'[A-Za-z][A-Za-z0-9_]{0,63}')
++
++
++def failure_code(output):
++    """A failed run's reason as a closed token: the runner receipt's failure_class, never its
++    message or record, so the resident can name why a capture failed without a second login."""
++    for line in output.splitlines():
++        if not line.startswith(b'{'):
++            continue
++        try:
++            receipt = json.loads(line)
++        except ValueError:
++            continue
++        if not isinstance(receipt, dict):
++            continue
++        if receipt.get('ok') is True and (receipt.get('result') or {}).get('authenticated') is not True:
++            return 'CAPTURE_FAILED:NOT_AUTHENTICATED'
++        failure = receipt.get('failure_class')
++        if receipt.get('ok') is False and isinstance(failure, str) and _FAILURE_CLASS.fullmatch(failure):
++            return 'CAPTURE_FAILED:' + failure
++    return 'CAPTURE_FAILED'
++
++
+ def run_capture(wrapper, *, deadline, clock=time.time):
+     if os.name != 'posix':
+         raise OperationRefused('DEDICATED_LINUX_HOST_REQUIRED')
+@@ -31,8 +55,10 @@ def run_capture(wrapper, *, deadline, clock=time.time):
+         if remaining <= 0:
+             raise OperationRefused('CAPTURE_DEADLINE')
+         output, _ = process.communicate(timeout=remaining)
+-        if process.returncode != 0 or clock() >= deadline or len(output) > 256 * 1024:
++        if clock() >= deadline or len(output) > 256 * 1024:
+             raise OperationRefused('CAPTURE_FAILED')
++        if process.returncode != 0:
++            raise OperationRefused(failure_code(output))
+         receipts = []
+         for line in output.splitlines():
+             if line.startswith(b'{'):
+diff --git a/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py b/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py
+index 9cb6406d76..a20a9dac73 100644
+--- a/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py
++++ b/infra/aws/lambda/investor-reporting/ycharts/session/tests/test_host_capture.py
+@@ -79,3 +79,18 @@ def test_capture_timeout_keeps_quarantine_and_changed_source_never_runs(tmp_path
+     capture.wrapper.write_text('changed')
+     with pytest.raises(OperationRefused, match='CAPTURE_SOURCE_PIN'):
+         capture.capture()
++
++
++@pytest.mark.parametrize('output, code', [
++    (b'[orchestrator] start\n{"ok": false, "task": "probe", "failure_class": "ChallengeError",'
++     b' "message": "https://signed.example/x?token=SECRET", "record": {"cookie": "VALUE"}}\n', 'CAPTURE_FAILED:ChallengeError'),
++    (b'{"ok": true, "task": "probe", "result": {"authenticated": false}}\n', 'CAPTURE_FAILED:NOT_AUTHENTICATED'),
++    (b'{"ok": false, "failure_class": "has space or https://x"}\n', 'CAPTURE_FAILED'),
++    (b'{"ok": false, "failure_class": "' + b'A' * 65 + b'"}\n', 'CAPTURE_FAILED'),
++    (b'{not json\n[orchestrator] exit rc=1\n', 'CAPTURE_FAILED'),
++    (b'', 'CAPTURE_FAILED'),
++])
++def test_failure_code_names_the_runner_class_and_never_its_message(output, code):
++    got = host_capture.failure_code(output)
++    assert got == code
++    assert 'SECRET' not in got and 'VALUE' not in got and 'https' not in got
