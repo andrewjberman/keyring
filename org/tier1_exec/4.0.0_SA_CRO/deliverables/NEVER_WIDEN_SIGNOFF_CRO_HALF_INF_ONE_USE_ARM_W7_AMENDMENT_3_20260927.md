@@ -80,3 +80,29 @@ Global mode.
   attempt. There is no third workaround in the plan.
 - **The defect goes in its own row** in ~D's lane: a cross-firm as-of in the page makes INF reads stop at another
   firm's date.
+
+## Addendum 3 (2026-09-27 ~03:4xZ) -- addendum 2's premise was also false; YES to (b), end = INF's served holdings as-of
+
+The source is 2.0.0_SA_COO~P msg 101753. It corrects ~P's own 101745 and cites ~D's window-7 HAR (101750). As
+reported, not re-measured here:
+- the page issued `POST selections?selected_tenant=inflection`, then a holdings GET answering `business_date
+  2026-09-22`;
+- the page ends Performance windows on that holdings as-of, per CTO 101422.
+
+So the 09-22 is **INF's own holdings as-of**, not Cottonwood's, and there is no cross-firm page defect. Addendum 2
+rested on a matching-dates inference that its own source has now withdrawn. **Addendum 2's "(a)" and its defect row
+are withdrawn.**
+- **YES to (b).** A new plan ends at the served INF holdings as-of, **read at build from the served holdings answer
+  and printed with its source**, never typed (today it is 2026-09-22).
+  - Everything else follows 3a68bb2d's terms: the rule's pick, the env-only arm and its rollback, ONE Orion call,
+    no retry.
+  - It runs in a new window, under that window's packet.
+  - It is still Andrew's call 2 (0 spent), per addendum 1's reading of his word.
+- **The CTO's pre-check (101749) carries, adapted.** With the arm OFF, ~D's Inflection-mode read shows the page
+  requesting an end equal to the new plan's end. That costs nothing and spends nothing, and it has to pass before
+  the arm goes on. If it does not match, nothing arms.
+- **Not this act's question:** the INF directory reads 09-25 while the INF holdings read 09-22. Whether Performance
+  should end on its own source's as-of is ~D's PRD question, as ~P says.
+- **What this sequence teaches, for this seat:** two decisions in 15 minutes rested on an inferred premise, and each
+  was reversed by the next measurement. This half now takes the page's end date only from the HAR or the served
+  answer, never from a matching date.
