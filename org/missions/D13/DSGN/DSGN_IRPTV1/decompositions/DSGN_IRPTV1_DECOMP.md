@@ -235,3 +235,8 @@ token with the largest minimum dE00 (>= 20) against every mix, asset-class and m
 preferred; text contrast >= 4.5:1. Writes src/lib/chartColors.ts and the IV-e-46/49 tests plus one new test. Slot ~30 queue 3 of 3;
 then IV-e-46+49+51 go to DEV with no second review.
 
+**v7 addendum 7 (issuer, 2026-09-27 ~04:0xZ):** `IV-e-52`, the follow-on cell CTO 101768 orders for rows W29-S2 / W29-S3: UIR-29 (the
+card's "$" format page-wide, one client total = the identity card's HOW MUCH, HoldingsSummary drops its total, non-USD shows its code)
+and UIR-27 (the ordinary case one click away), re-goldening the pinned money sets, F39-AC7, and the two tests IV-e-45 broke (fe-s-30
+F30-AC5, fe-s-55), each re-golden commit naming its UIR row. Slot ~29 before IV-e-50. Direct act, LOCAL.
+
