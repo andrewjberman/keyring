@@ -9906,3 +9906,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Fixed in this cell, all of it the gate's own prescribed remedy and nothing more: the future import added (matching the COT twin), the four dead imports removed, the shadowed import of MIX_ASSET_CLASSES dropped so the name resolves to one list, and comp-constants.config.yaml's MIX_ASSET_CLASSES entry widened with its ruling cited -- which the entry's own note already required ('If BD adds a new asset class, this list must be updated'). Both lists now carry structured and commodities, so the two surfaces agree by value as well as by name. NOT done: `comp-constants index`, which was run once and reverted -- it deletes other lanes' `drift: true` markers and human comments (INF entries), so it is not a committable reindex; only the two site lines this cell's edits shifted were hand-updated. AND NOT COMMITTED, which is the live loose end: owned-paths puts comp-constants.config.yaml on lane ANY_EXEC_OR_AE and refused this serial, so the widened entry sits in the branch worktree only. Until an exec or AE lane applies org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/comp-constants-MIX_ASSET_CLASSES-widen.patch, the next commit touching EITHER registered BD site refuses on drift on CLOUD -- so it belongs with the drain of 6e2864bd3e, not after it. RENUMBERED from S153 (minted on unmerged branch ds-x-b1-cashline @146876e75a; id collision with CLOUD, CTO 101771) and landed on CLOUD by 2.0.0_SA_COO~M."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S157",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-27T06:10:00Z",
+  "one_line": "COT's first signed-in retained Performance report RPT-b683f188 (acc_81d92b2b.., ****0441) states its answered window as 2026-01-02..2026-09-22 while the account's performance series starts 2026-07-21, so its immutable retained face overstates the period its -1.18% covers.",
+  "class": "OBSERVATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "retained report body (s3 opal-data-irpt irpt/cottonwood/platinum/performance_reports/RPT-b683f188../8ac387dc...json): dates.actual_start 2026-01-02, actual_end 2026-09-22; daily_cumulative_series 45 points 2026-07-21..2026-09-22",
+      "provider evidence ART-36a64d88 performanceSeries: dataStartDate 2026-01-02 (the dates[] calendar grid, 181 points) but levelStartDate/startDate and perfDates[0] 2026-07-21",
+      "~D 101807 (the K12 read) and 101821 (window 9 reopen): the face reads 'Answered 2026-01-02 to 2026-09-22' with SERIES START 2026-07-21",
+      "the cause is fixed for every NEW COT report: backend 05778597eb, adapter bOefL9nx served 05:22:03Z (ledger irpt-cot-actual-window-20260927); replay of the recorded bytes now gives actual 2026-07-21"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A retained Performance report discloses the window its return actually covers (goal criterion 3, 'window disclosed').",
+  "world_is": "RPT-b683f188 is immutable and keeps actual_start 2026-01-02 over a 07-21..09-22 series; any reopen shows the overstated window, so the -1.18% reads as a near-full-year return.",
+  "notes": "Filed on CTO 101825. Not ARMED: nothing breaks today, and every new COT report computes the right window. It resolves by either (a) ONE new COT use after Andrew's per-use word, producing a corrected report that supersedes it, or (b) the release cutter excluding or removing it with the other kept test-window artifacts (STATUS~P parked row 'kept test inputs and reports', now naming RPT-b683f188 by key). Owner of the choice: 2.0.0_SA_COO~P until the release cutter takes the parked row."
+}
+```
