@@ -59,6 +59,14 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 **ISSUER NOTES:** Seat order. Base: AC1 FAILS (CodeSha256 = LK9h47ju...DcO4s=); AC2's base is round 44's close-run served TSV @f4e94c87b7 (abs_missing 0 on 9 of 95), same instrument plus the missing-absence count. Both are build checks.
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-28, post-reboot):** the lane's close is `996b260d42` on the trunk (the pre-purge
+`bdf48ee216`; the S19 rewrite re-hashed it, and `ed3caaba81` / `c29576fd0e` are the rewritten `ee87bf1506` / `9d9f38d823`).
+AC1 RE-MEASURED by the issuer on the live function: `CodeSha256=vBSCqd71wGn1GNOpaWGKr+KdI6t+zo3QVovzEd9Mrew=
+LastUpdateStatus=Successful LastModified=2026-09-26T23:35:04Z`, exit=0. Instance graded `proof-of-spec-check ... AC1,AC2
+--governing-order <this order>`: VALID rc=0, violations 0. NEVER-2 entry `20260926T2128Z_amgt-tt-2-the-redeploy` reads CLOSED
+at HEAD; no AMGT entry under `.open_deploys/` at HEAD. AC2 is the lane's served sweep (95 of 95, read 2026-09-26T23:55:10Z),
+not re-run here. Row Z-S291 (INERT, disarm_owner this seat) stands; it bounds cross-round pdf digest comparison only.
+<status>complete</status>
 <round>45</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
