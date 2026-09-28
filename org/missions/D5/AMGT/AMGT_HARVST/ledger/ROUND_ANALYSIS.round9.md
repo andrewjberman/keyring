@@ -40,8 +40,15 @@ contract into line with the outcome Andrew already ratified; it is not a new out
 **Landed:** PRD `v0.3`, `C-HV-EVENT-SPINE` working rule amended in place with the reason beside it. **It changes
 CONTRACT text, so it RE-OPENS the ratified-text half** (this is a multi-round project, so the proportionate
 sign-off does not apply). `3.0.0_SA_CVO~Z` signed v0.2 and is wound down; **this seat routes the re-sign to
-`3.0.0_SA_CVO~O`.** The brief half is untouched. **Round 10 does not cut a cell against the new rule until the half
-is SIGNED** (`.tools/prd-signoff.py status AMGT_HARVST`).
+`3.0.0_SA_CVO~O`.** The brief half is untouched.
+
+⛔ **THE GATE CANNOT SEE THIS RE-OPENING -- measured after the commit.** `.tools/prd_signoff_lib.py` binds both halves
+to the ENDPOINT hash (spine v3.19), so `prd-signoff.py status AMGT_HARVST` still reads the ratified half **SIGNED,
+current** although its section hash moved (`fa4257b65ca7` signed -> `43375644bc89` now). **So the condition is a
+record, not a status line: round 10 does not cut a cell against the new rule until `3.0.0_SA_CVO~O` has stamped the
+ratified half at these bytes** (`prd-signoff.py sign AMGT_HARVST --half ratified-text ...`, a new file under
+`prd/signoff/`). The mismatch between CLAUDE.md's proportionate-sign-off scope (single-round or sub-week) and the
+lib's universal ENDPOINT binding is noted for the lib's owner; it is not ruled here.
 
 ## 4. FINDINGS CARRIED
 
