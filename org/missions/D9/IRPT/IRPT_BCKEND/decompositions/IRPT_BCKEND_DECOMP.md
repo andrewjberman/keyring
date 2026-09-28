@@ -1084,3 +1084,20 @@ no cell text yet (CTO tick 65 names it only as enrichment); the ~P hygiene items
 template path S167, directory Terraform root, cherry-pick review) are record acts, not cells.
 
 fanout: 2 of 2 chains, cap 8.
+
+
+### 13.1 ADDENDUM 1 (2026-09-28 ~22:3xZ, 2.0.0_SA_COO~P, on 4.0.0_SA_CRO D1 RESULT @5f82151a2e and 1.0.0_SA_CTO 102447)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-194` | FWD-3; NEW-01 on the served surface (ledger irpt-adapter-implausible-guard-20260928 D1) | WORLD (path floor; code and tests only, the served move is the COO's act under both halves) | `IB-pr-191` (on CLOUD) | A (carried by the REOPENED order TO-IB-pr-191, slot ~63) |
+
+**IB-pr-194 -- reopen refuses a pre-guard impossible report.** The served page reopens RETAINED reports
+(`retained.py` `_compute` -> `reopen`) and never re-runs `f49_engine.calculate`, so IB-pr-191's guard did not reach the
+two NEW-01 reports retained before 22:02Z. `retained.implausible_engine_series(report)` (any
+`daily_cumulative_series` value <= -1.0) gates `reopen` for the engine firm, raising `EngineReturnImplausible`. Nothing
+in the store is deleted, rewritten or re-derived. Live census at the cut: 23 retained 49F reports, exactly 2 flagged
+(790fe675, 74fb35a4). This packet's blast radius counts BOTH readers of the served figure (compute and reopen) -- the
+miss the adapter packet made.
+
+fanout: 1 of 1 chains, cap 8.
