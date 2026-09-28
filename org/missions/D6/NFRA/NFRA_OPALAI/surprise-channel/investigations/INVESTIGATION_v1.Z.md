@@ -1267,6 +1267,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     },
     "spec_asserts": "OA-g-3 step 2: portal_channels = the catalog channels whose verdict is not deny.",
     "world_is": "Verdicts are per row; the grant names the 10 channels with any non-deny indexed row, and deny rows stay refused by the gate."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S36",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-28T20:50Z",
+    "one_line": "First moto-enabled read of tests/test_data_entitlement_guard.py (row Z-W8-S1's UNREAD) at CLOUD HEAD, before any round-2 change: 2 failed, 10 passed. test_ogz1_ac05 raises KeyError 'unclassified' on the guard's report, and test_ogz1_ac08's pinned route-class set no longer equals the app's 35 routes. 'Keeps passing' was never true to begin with; it was unmeasured.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd infra/aws/ec2/opal-gateway && PYTHONPATH=C:/tmp/moto-target;. python -m pytest tests/test_data_entitlement_guard.py -q -> '2 failed, 10 passed' (moto 5.2.3, installed under G-MOTO, record @f8d1103a38).",
+        "tests/test_data_entitlement_guard.py:622 `assert report[\"unclassified\"] == [\"fresh_unclassified\"]` -> KeyError: 'unclassified'.",
+        "tests/test_data_entitlement_guard.py:712 `assert len(routes) == len(ge.server.app.routes) and set(ROUTE_CLASS) == set(routes)` -> 35 == 35 but the sets differ (a route renamed or added since the pin)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round-1 analysis R-5 / row Z-W8-S1: the entitlement guard suite keeps passing across gateway changes; E1 records its pass count.",
+    "world_is": "At CLOUD HEAD the suite is already red on 2 of 12, from changes that predate round 2. So E1's R-5 criterion is graded as NO NEW FAILURE against this base (the same 2 named failures, at least 10 passed), never as all-pass. The two failures are the NFRA_OPLGTW OG-z-1 guard's own pins, and they stay open for their owner.",
+    "notes": "Filed by the issuer at the cut. INERT: the served gateway does not run tests. The OA-e-1 order carries the base count."
   }
 ]
 ```
