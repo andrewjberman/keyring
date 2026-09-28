@@ -1396,6 +1396,137 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "disposition": "UNDER_INVESTIGATION"
 },
   {
+    "id": "NFRA_OPALAI-Z-W10-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-28T21:50Z",
+    "one_line": "e1.AC1.sh cannot print PASS for the four named arms on this device, though all four pass. Its matcher greps '^PASSED tests/test_asker_binding.py::<name>', but pytest 9.1.1 prints the -rA line with a BACKSLASH ('PASSED tests\\test_asker_binding.py::<name>') when it is run from infra/aws/ec2/opal-gateway, because the rootdir is the workspace root (pytest.ini there) and the node id is shown relative to the invocation dir with the OS separator. The script reports 'named arms passed 0 of 4' and RESULT: FAIL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/e1.AC1.sh -> 'named arms passed 0 of 4; failed/errored tests 0; summary: 20 passed in 1.41s' / 'RESULT: FAIL' / exit=1, at the worker's branch wk-NFRA_OPALAI-10.",
+        "cd infra/aws/ec2/opal-gateway && python -m pytest tests/test_asker_binding.py -rA -p no:cacheprovider --color=no -> 'rootdir: C:\\tmp\\oa-10' / 'configfile: pytest.ini' and 'PASSED tests\\test_asker_binding.py::test_old_message_from_wider_person_refused'.",
+        "The same command with --rootdir=. prints 'PASSED tests/test_asker_binding.py::test_old_message_from_wider_person_refused' (forward slash). --rootdir is not in the script's invocation, so it was not used to meet the criterion.",
+        "The four named tests PASSED in the -rA output: test_old_message_from_wider_person_refused, test_reply_to_other_chat_refused, test_group_chat_unprofiled_member_refused, test_same_chat_recent_message_served; tests/test_asker_scope.py 4 of 4 passed; 20 passed, 0 failed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "e1.AC1.sh: each named arm appears as '^PASSED tests/test_asker_binding.py::<name>' in the pytest -rA output, so 'named arms passed 4 of 4' prints and the script exits 0.",
+    "world_is": "On this Windows device pytest renders that line with 'tests\\'. The matcher can never see a forward slash, so AC1 reads 0 of 4 whatever the tests do. The same matcher shape in any other round-2 check that greps pytest -rA output from the gateway directory reads the same way. The worker did not edit the check, add a pytest.ini under the gateway directory, or pass --rootdir, and reports AC1 as a refusal with these measurements.",
+    "notes": "Not ARMED: a check that cannot pass fails closed. The issuer's fix is one of: match '[/\\\\]' in the grep, or add --rootdir=. to the pytest line of the check."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-28T21:55Z",
+    "one_line": "The OA-e-1 repair turns two existing tests in tests/test_portal_grant.py red: test_asker_portal_scope_admits_granted_channel and test_asker_portal_scope_refuses_other_channel. Their fake Graph message carries tenant 22222222-... (not the configured Opal TENANT_ID) and no createdDateTime, so handle_asker_query now refuses them asker_message_stale (and, once that is fixed, asker_tenant_denied). The file is outside this order's paths, so the worker did not edit it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd infra/aws/ec2/opal-gateway && PYTHONPATH='C:/tmp/moto-target;.' python -m pytest tests/test_tool_classification_composition.py tests/test_identity_scope.py tests/test_portal_grant.py tests/test_teams_reader_fallback.py -q -> '2 failed, 26 passed'; the 2 failed are the two named tests; the other 26 pass.",
+        "tests/test_portal_grant.py:39 _TID = '22222222-2222-2222-2222-222222222222' and :27 os.environ.setdefault('TENANT_ID', '11111111-...'); the fake _graph_call at :93 returns no createdDateTime. Assertion at :183: \"guard_denied\" not in result -> code asker_message_stale.",
+        "The order's paths (section 3) name tests/test_asker_scope.py and tests/test_asker_binding.py only; tests/test_portal_grant.py is not among them."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order OA-e-1 section 1: only tests/test_asker_scope.py must keep passing; tests/test_portal_grant.py is not named.",
+    "world_is": "Both refusals are the specified behaviour (a message with no parseable createdDateTime is refused; a non-Opal tenant is refused). Those two tests pass a foreign tenant and an undated message on purpose or by omission. Fixing them takes a tenant equal to the configured TENANT_ID and a recent createdDateTime in that file's _graph_call, in a cell whose paths include it. OA-r-1 cherry-picks this change, so those two tests will be red on CLOUD after the drain until then.",
+    "notes": "Not ARMED: the gateway does not run tests at serve time."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W17-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~17",
+    "surfaced_at": "2026-09-28T21:10Z",
+    "one_line": "The E11 fix does not reach an already-installed wrapper: install-owned-paths.sh returns 'already wired ... idempotent no-op' when the destination hook mentions owned-paths-check.sh, so the real opal_ai hooks dir keeps the old fail-open wrapper until it is removed and the installer re-run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~AI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/git-hooks/install-owned-paths.sh 'Already wired check' block: `grep -q owned-paths-check.sh $HOOK_DEST` then exit 0 without rewriting (unchanged by this order; bound 1 forbids widening).",
+        "Read-only measure of the real ajb_workspace .git/modules/opal_ai/hooks/pre-commit: grep -c 'owned-paths-check.sh' = 3 (old wrapper wired) and grep -c 'worktree list' = 1 (the first-entry resolution E11 replaces). Nothing was written there."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO OA-e-11 bound 2: 'The issuer installs at the drain' -- the installed wrapper carries the new resolution afterwards.",
+    "world_is": "A re-run of install-owned-paths.sh --submodule opal_ai at the drain is a no-op against the existing old wrapper, so a linked worktree of the real opal_ai outside every parent worktree still skips the lane check (exit 0). The wrapper file must be deleted (or replaced) first, then the installer run; the hook script owned-paths-check.sh itself is read live from the parent and takes the fix without reinstall.",
+    "notes": "Fix is one issuer act at the drain: remove .git/modules/opal_ai/hooks/pre-commit, run the installer with --submodule opal_ai, confirm 'worktree list' no longer appears in it. Filed by the worker; not done here (bound 2)."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W11-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~11",
+    "surfaced_at": "2026-09-28T21:45Z",
+    "one_line": "The nested commit the order prescribes is refused by the owned-paths pre-commit hook for a path the order's own <paths> block names: the hook's worker-grant census runs git with the nested repo's GIT_DIR inherited, so it finds no task orders and admits nothing. The three OA-e-2 nested edits are made and UNCOMMITTED; the worker did not bypass the gate.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git -C opal_ai commit --author '0.9.0_WK_NFRA_OPALAI~11 <...>' -F msg -- opal/agent/hooks/concierge-gate.sh opal/agent/hooks/test_concierge_gate.sh opal/agent/refs/RELAUNCH.md` -> ERROR owned-paths lane violation(s), 3 of 3 paths: 'agent=0.9.0_WK_NFRA_OPALAI~11 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The three paths are named verbatim, parent-relative (opal_ai/opal/agent/...), in TO-OA-e-2 section 3 <paths>, whose <status> is pending and <issued_to> is this serial.",
+        "MEASURED, same input, two environments: `printf 'opal_ai/opal/agent/hooks/concierge-gate.sh' | python3 .tools/owned-paths-validate.py --check-agent 0.9.0_WK_NFRA_OPALAI~11 .owned-paths.yaml` from the parent worktree C:/tmp/oa-11 -> no VIOLATION line (rc 0); the same command with GIT_DIR set to the nested repo's absolute git dir -> 'VIOLATION: ... not in permitted_agents ... no NON-TERMINAL task order'. Git exports GIT_DIR/GIT_INDEX_FILE into a pre-commit hook.",
+        "CODE .tools/owned-paths-validate.py _worker_orders (lines ~176-205) runs `git ls-files` and `git show HEAD:<path>` with cwd=root but the hook's environment, so GIT_DIR outranks cwd and the census reads the nested repo. .tools/git-hooks/owned-paths-check.sh defines `_git_x` (env -u GIT_DIR ...) for exactly this hazard and applies it to its own superproject probe, but the validator subprocess calls do not.",
+        "The hook wrapper at the shared module's hooks/pre-commit (C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.git/modules/opal_ai/hooks/pre-commit) resolves the superproject to C:/tmp/oa-11 correctly; the prefix rebase to opal_ai/<path> is correct; only the census env is wrong."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OA-e-2 section 2.1: the worker commits its nested files with `git -C opal_ai commit --author ... -F <msgfile> -- <nested paths>`, and the order's <paths> is the write grant.",
+    "world_is": "The gate refuses that commit for a granted path (validator census reads the wrong repo under a hook's GIT_DIR). The worker did not use --no-verify, GIT_COMMIT_AUTHOR_OVERRIDE or plumbing (order section 2.3: no route the face does not name). Edits sit in the worktree C:/tmp/oa-11/opal_ai (branch wk-NFRA_OPALAI-11-opal_ai, HEAD fd8ab8a57f, 3 modified files). e2.AC1 and e2.AC2 read the nested ref and cannot pass until a commit exists; e2.AC3 reads PASS only vacuously (0 files changed). Fix owner is the tooling lane: env -u GIT_DIR -u GIT_INDEX_FILE -u GIT_WORK_TREE on the census subprocesses in _worker_orders, or the issuer commits the three files after reading them.",
+    "notes": "Nested-commit workers before this round were never graded by this hook (row Z-W5-S1: the hook was absent from the shared module), so this path had not been exercised by a worker. The COO decides whether to commit the three files or to fix the validator and re-issue."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W11-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~11",
+    "surfaced_at": "2026-09-28T21:50Z",
+    "one_line": "e2.AC1 bounds the fence's own test at 60 s (`timeout 60 bash $TT`), but test_concierge_gate.sh takes about 89 s on this device (28 cases, one jq process chain per case), so AC1 reads 'no summary' and FAILs even on a correct commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: e2.AC1.sh at the pinned/unchanged HEAD printed \"fence test 'no summary'\" (the 60 s bound cut the test before its RESULT line). The same script text is `summ=$(timeout 60 bash \"$TT\" ...)`.",
+        "MEASURED: `time (timeout 500 bash test_concierge_gate.sh | tail -5)` on the edited working tree -> 'RESULT: 28 passed, 0 failed (denominator: 28 cases)', real 1m28.708s. The new deny arm reads 'ok [DENY] -bbg opal_data_refresh_upload'. A first run under `timeout 60` was 'Terminated' before any RESULT line."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "e2.AC1 expects `fence test 'RESULT: N passed, 0 failed ...'` within its own bounds.",
+    "world_is": "The fence test's runtime on this device exceeds the check's inner 60 s bound, so the criterion cannot be met as written regardless of the commit. The worker did not repair the criterion. The edited fence itself passes its whole test (28 of 28) and the three arms of AC1 were exercised by the test's own cases (upload DENY, -bbg whoami/poll PASS, send_email DENY) on the UNCOMMITTED working tree.",
+    "notes": "Suggested for the issuer: raise the inner bound to 240 s (the outer 120 s harness bound also needs to admit it), or replace the full-suite call with the upload arm only."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W11-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~11",
+    "surfaced_at": "2026-09-28T22:20Z",
+    "one_line": "Rows Z-W11-S1 and Z-W11-S2 are cleared on this branch: with the issuer's validator fix and the amended AC1 bound, the nested commit landed through the hook with no override (opal_ai 7c6473c) and e2.AC1-AC3 all read RESULT: PASS. This row disarms nothing; the issuer dispositions S1 and S2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git -C opal_ai commit --author ... -F msg -- <3 paths>` -> '[wk-NFRA_OPALAI-11-opal_ai 7c6473c] ... 3 files changed, 11 insertions(+), 8 deletions(-)' on parent HEAD d750cba8c4 (carrying fix @fd0aa6ba57 and amendment @c7a5391c18 as cherry-picks).",
+        "MEASURED: e2.AC1 'upload=DENY read_chat_messages=PASS send_email=DENY; fence test names upload=1; ... RESULT: 28 passed, 0 failed (denominator: 28 cases)' exit=0; e2.AC2 '/terminal-upload=0; upload lines=1, of which without never/not=0; publish_to_portal.py=1' exit=0; e2.AC3 'files changed=3, outside the cell's three=0; fence lines removed outside G4=0' exit=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer message: S1 (validator census inherited the nested GIT_DIR) fixed @fd0aa6ba57; S2 (AC1 inner bound) raised 60 s -> 105 s at c7a5391c18.",
+    "world_is": "Both hold on this branch: the hook admitted the nested commit and AC1 completed its fence test inside the new bound."
+  },
+  {
     "id": "NFRA_OPALAI-Z-W15-S1",
     "project": "NFRA_OPALAI",
     "fabric": "site-z",

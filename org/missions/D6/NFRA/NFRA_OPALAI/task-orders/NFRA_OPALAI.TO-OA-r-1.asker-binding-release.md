@@ -48,12 +48,13 @@ In order:
      `git -C /c/tmp/oa-10-rel cherry-pick --no-commit` OA-e-1's commits. Restore every file outside
      `infra/aws/ec2/opal-gateway/` to the base, and commit under your serial.
    - Census: `git -C /c/tmp/oa-10-rel diff --stat <base> HEAD -- infra/aws/ec2/opal-gateway` names ONLY
-     `app/asker_scope.py`, `app/tools.py`, `tests/test_asker_scope.py` and `tests/test_asker_binding.py`. Any other
-     file: STOP, a BLOCKING row.
+     `app/asker_scope.py`, `app/tools.py`, `tests/test_asker_scope.py`, `tests/test_asker_binding.py` and
+     `tests/test_portal_grant.py` (AMENDED: OA-e-1's fixture commit a2c96703b1, row Z-W10-S2). Any other file: STOP,
+     a BLOCKING row. OA-e-1's code commits are `2254910889` and `a2c96703b1`.
    - **The issuer authorizes the audited `GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPALAI~10` for exactly the
      release-branch commit(s).** Name each use in your report.
    - Inside the release tree, from `infra/aws/ec2/opal-gateway`, run
-     `python -m pytest tests/test_asker_binding.py tests/test_asker_scope.py tests/test_identity_scope.py -rA -q` and
+     `python -m pytest tests/test_asker_binding.py tests/test_asker_scope.py tests/test_portal_grant.py tests/test_identity_scope.py -rA -q` and
      save the FULL output to `deliverables/0.9.0_WK_NFRA_OPALAI~10/OA-r-1_NEGATIVE_ARMS.txt`. It must show
      `test_old_message_from_wider_person_refused`, `test_reply_to_other_chat_refused`,
      `test_group_chat_unprofiled_member_refused` and `test_same_chat_recent_message_served` PASSED. That file is the
@@ -106,6 +107,7 @@ infra/aws/ec2/opal-gateway/app/asker_scope.py
 infra/aws/ec2/opal-gateway/app/tools.py
 infra/aws/ec2/opal-gateway/tests/test_asker_scope.py
 infra/aws/ec2/opal-gateway/tests/test_asker_binding.py
+infra/aws/ec2/opal-gateway/tests/test_portal_grant.py
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-opalai-r2-asker-binding-gateway.json
 org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~10/**
@@ -157,6 +159,11 @@ Dry-run at base (CLOUD `c8df03c408`, ~20:5xZ):
 **AMENDMENT (2.0.0_SA_COO~AI, issuer licence, ~22:1xZ):** The served base at the cut is `6a98a0553a`, not `fe94911257`, and the base resolution gains the .env key-set tie-break
 (row Z-S38). No criterion's expectation moves. Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii)
 placeholders (NONE), so no limb graded this amendment.
+
+**AMENDMENT 2 (2.0.0_SA_COO~AI, issuer licence, ~23:1xZ):** the census, the pytest list and `<paths>` gain
+`tests/test_portal_grant.py`, the file OA-e-1's amendment (row Z-W10-S2) added; OA-e-1's code commits are 2254910889 +
+a2c96703b1. No criterion moves. Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii) placeholders
+(NONE), so no limb graded this amendment.
 
 <status>pending</status>
 <round>2</round>

@@ -74,7 +74,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 rc=1, 0 of 4), AC2 FAIL (0 of 2, the crash). On the published tree @c3dd9ca9 (no mount) AC1 reads NOT_EXERCISED and the AC2 loop
 reads 2 of 2 by token -- so AC2 discriminates a crash from a verdict. Precedes uu-3 on slot ~166 (uu-3's AC2 runs this harness).
 
-<status>pending</status>
+<status>complete</status>
 <round>46</round>
 <slot>~166</slot>
 <fabric>site-z</fabric>

@@ -146,7 +146,7 @@ MX-s-10 PHASE B as its own order; MX-s-10 stays superseded with PHASE A graded (
 
 # pipeline-override: re-cut of MX-s-10 PHASE B (MX-s-10 carried the same line: supplementary cell ruled by 1.0.0_SA_CTO~O @bf94418eb8 on row Z-S42), lifted from ROUND_ANALYSIS.round2.md s.1 @e4445020f5; the gate's one shape refusal is PRD_HEADER.fabric=laptop vs register site-z, a CTO carrier drift reported to 1.0.0_SA_CTO~O. LIMB 6 still grades.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @2033d10e73 by 2.0.0_SA_COO~MI, 2026-09-28 ~22:5xZ: s10.AC1 PASS (served doc v4: rest-pull 4, builder 4, playwright 0, BD_PASSWORD 0), s10.AC2 PASS, s10.AC3 PASS (the scheduled fire ssm 16d855de at 22:11:06Z Success; dim rewritten 22:11:33Z), instance VALID. Issuer re-measure of the served dim, qcSdLjLW vs G1 kittUyy: 12,141 = 12,141 ids, id-set sha equal, 0 added, 0 removed, non-null cusip 10,957 = 10,957, 0 cusip changes; no rollback. Ledger nfra-mcpindex-bd-asset-dim-rest-schedule closed, 5 of 5 legs. J1 (s10.J1) is OPEN for 3.0.0_SA_CVO~O at L9. Z-S42 and Z-S47 are disarmed by rows Z-S48 and Z-S49. Was: pending.</status>
 <direct_act>true</direct_act>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

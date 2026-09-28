@@ -487,3 +487,12 @@ precedent). It is not an enrichment cell.
 
 Chain: alone, slot `~18`. Ruling (b) runs beside it: `0.0.0_AB_MSTR~Z` provisions from a scratch copy whose
 `git diff --no-index` against PROD fd8ab8a is exactly OA-f-3's committed line. The checkout stays at PROD.
+
+## ADDENDUM R2-A2 -- G-ACCT step 3 without WinRM (`1.0.0_SA_CTO~O` ruling msg 26260)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-4` | `opal_ai/opal/runtime/provision/verify-boundary.ps1`: both arms run AS Opal_Agent through `Start-Process -Credential -WorkingDirectory <state_dir> -Wait`, each writing its verdict into `state_dir`. An arm that cannot start is ERROR (a new exit code 3), never DENIED-OK. Adds an optional `-CredPath` test seam. WinRM is never enabled | LOCAL |
+
+Chain: alone, slot `~19`, direct act. `0.0.0_AB_MSTR~Z` re-runs step 3 from a scratch copy whose diff against PROD
+fd8ab8a is OA-f-3 plus OA-f-4 only.
