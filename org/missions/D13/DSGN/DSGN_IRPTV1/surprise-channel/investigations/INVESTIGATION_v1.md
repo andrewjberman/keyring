@@ -2545,3 +2545,53 @@
   "notes": "Not blocking: no criterion depends on the other 23 files' EOL state, and leaving them uncommitted (rather than force-including them past the grant) is the narrower act. A later, in-grant regeneration pass would normalize them for good; that pass is out of this cell's bounds."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-S29",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-28T14:25:00Z",
+  "one_line": "UIC-09 is reopened: TO-IV-e-69 closed it as 'already holds' and left StatusPanel/state status unedited, but the CRO's 09-28 re-walk on local DEV 4b9df1e7 still reads 'Loading  No source age yet' while loading and 'Unavailable  No source age yet' on a refusal, which the UIC-09 acceptance line forbids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D (a round-9 cell cut after the reboot, per CTO 102358)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/briefs/irpt-ui-cleanup-status-20260928.md @f330857833 (4.0.0_SA_CRO): line 18 'UIC-09 is NOT MET'; JSON log row UIC-09 observed_20260928 'The canvas still reads Loading  No source age yet while loading, and Unavailable  No source age yet on a refusal.'",
+      "TO-IV-e-69 worker report: UIC-09 (StatusPanel.tsx / state/status.ts) left unedited, measured as already satisfying the acceptance line and pinned by fe-s-25's battery"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "UIC-09 (PRD v0.18): no 'No source age yet' placeholder on the loading or refused state; IV-e-69 reported it already holds.",
+  "world_is": "The running page still prints 'No source age yet' on both states; IV-e-69's measurement did not match the screen.",
+  "notes": "Joins round 9 after the reboot (CTO 102358). The cut must reconcile fe-s-25's pinned battery with the acceptance line."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-S30",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-28T14:25:00Z",
+  "one_line": "NEW-02: on local DEV 4b9df1e7 the Holdings 'All holdings' accounts pie draws nothing for the Cottonwood eleven-account client (0% non-white pixels, against 38% for the same client and step on 2026-09-27); the legend and table still render.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D (a round-9 cell cut after the reboot, per CTO 102358)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/briefs/irpt-ui-cleanup-status-20260928.md @f330857833: JSON row NEW-02 (surface holdings / accounts pie) observed_20260928 '0% non-white pixels in the pie box, against 38% for the same client and step on 2026-09-27 and 72% for the INF four-account client's pie this walk'",
+      "same row: 'No portal commit since the 09-27 walk touches the pie (IV-e-72 is pending). The negative account may now stop the pie from drawing. Not measured.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "UIC-10/11 (PRD v0.18): the accounts pie draws every account with distinguishable slices.",
+  "world_is": "The pie draws nothing for the eleven-account client; cause not yet measured (candidates: a negative account value, or a data change since 09-27).",
+  "notes": "Joins round 9 after the reboot. IV-e-72 (UIC-10/12/13, DrillTree/slices) is the natural home; diagnose first (data vs page) before the cut."
+}
+```
