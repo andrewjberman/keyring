@@ -939,6 +939,18 @@ def _self_test():
          lambda: '"--governing-order", rel' in inspect.getsource(check_complete_flip)),
         ("binding: a refused flip names the checker's VIOLATION lines, not only its verdict line",
          lambda: '"VIOLATION: "' in inspect.getsource(check_complete_flip)),
+        # GATE (x) WORKSTREAM KEY (row IRPT_BCKEND-S179): per-workstream rounds.
+        ("round-issuer GREEN (S179): round 13 at HEAD under workstream ~P; a ~M order into round 13 -> admitted",
+         lambda: _round_issuer_violations(tree, "<round>13</round>\n<workstream>~M</workstream>\n" + v3,
+                                          {("~P", 13): ["org/missions/D0/X/X_PRJ/task-orders/X_PRJ.TO-0.md"]}) == []),
+        ("round-issuer RED (S179): round 13 at HEAD under workstream ~P; a second ~P order into round 13 -> refused",
+         lambda: any("workstream ~P round 13" in x and "S154" in x for x in
+                     _round_issuer_violations(tree, "<round>13</round>\n<workstream>~P</workstream>\n" + v3,
+                                              {("~P", 13): ["org/missions/D0/X/X_PRJ/task-orders/X_PRJ.TO-0.md"]}))),
+        ("round-issuer RED (S179): a prose mention of <workstream> is inert -- keyed as the bare round, still collides",
+         lambda: any("round 13" in x and "S154" in x for x in
+                     _round_issuer_violations(tree, "<round>13</round>\nthe `<workstream>~M</workstream>` element\n" + v3,
+                                              {13: ["org/missions/D0/X/X_PRJ/task-orders/X_PRJ.TO-0.md"]}))),
         # GATE (x) -- ONE ISSUER PER ROUND (row AMGT_RESAPP-Z-S154; Rule 27; cell AMGT-rk-55). Pure
         # arms; the real-index battery (a scratch git repo, the gate's own CLI, real committed
         # bytes) lives in .tools/tests/test_gate_x_round_issuer.py.
@@ -1939,6 +1951,24 @@ def _output_vocabulary_violations(root, rel, text):
 # flip and a COO re-cut of an existing order are modifications by construction (Rule 27).
 ROUND_ELEMENT_RE = re.compile(r"^[ \t]*<round>\s*([0-9]+)\s*</round>[ \t]*$", re.M)
 
+# THE WORKSTREAM KEY (row IRPT_BCKEND-S179; Rule 27 "a WORKSTREAM is a SCOPE, not a round"). An order
+# may carry a line-anchored <workstream>NAME</workstream> element (same discipline as ROUND_ELEMENT_RE:
+# a prose mention is inert). The census then keys it by (NAME, round) and a collision is looked up
+# under the order's OWN (workstream, round), so two workstreams of one project each issue their own
+# round N. An order WITHOUT the element keys by the bare round int, exactly as before.
+WORKSTREAM_ELEMENT_RE = re.compile(r"^[ \t]*<workstream>\s*(\S+?)\s*</workstream>[ \t]*$", re.M)
+
+
+def _round_key(text, n):
+    """The census/lookup key for an order declaring round `n`: (workstream, n) when a line-anchored
+    <workstream> element is present, else the bare int `n` (the pre-S179 shape, unchanged)."""
+    w = WORKSTREAM_ELEMENT_RE.search(text or "")
+    return (w.group(1), n) if w else n
+
+
+def _round_key_label(k):
+    return "workstream %s round %d" % k if isinstance(k, tuple) else "round %d" % k
+
 # THE NARROW EXEMPTION (row AMGT_RESAPP-Z-W58-S2; ROUND_ANALYSIS.round14.md s.2.1): an order that
 # declares itself round-less EXPLICITLY, via a line-anchored <direct_act>true</direct_act> element
 # (same discipline as ROUND_ELEMENT_RE -- a prose mention is inert), is exempted from the missing-
@@ -1977,7 +2007,7 @@ def _head_rounds_census(root, code):
             continue
         m = ROUND_ELEMENT_RE.search(text)
         if m:
-            rounds.setdefault(int(m.group(1)), []).append(p)
+            rounds.setdefault(_round_key(text, int(m.group(1))), []).append(p)
         else:
             unrounded += 1
     return rounds, unrounded, len(paths)
@@ -2008,16 +2038,18 @@ def _round_issuer_violations(rel, text, head_rounds):
                 "face is not the element. Add '<round>N</round>' naming this order's round, or a "
                 "line-anchored '<direct_act>true</direct_act>' declaring this order round-less by "
                 "design (row AMGT_RESAPP-Z-W58-S2)." % rel]
-    n = int(m.group(1))
-    existing = (head_rounds or {}).get(n) or []
+    key = _round_key(text, int(m.group(1)))
+    existing = (head_rounds or {}).get(key) or []
     if existing:
         code = m_code.group(5)
-        return ["%s: round %d of %s already has an issuance at HEAD (%d order(s): %s); ONE ISSUER "
+        return ["%s: %s of %s already has an issuance at HEAD (%d order(s): %s); ONE ISSUER "
                 "PER ROUND is keyed to the ROUND, never the serial (Rule 27; row "
                 "AMGT_RESAPP-Z-S154). A re-cut into the first issuance MODIFIES its orders and adds "
-                "no file; a genuinely additional order into an open round takes the audited "
-                "'# pipeline-override: <reason>'."
-                % (rel, n, code, len(existing), ", ".join(os.path.basename(p) for p in sorted(existing)))]
+                "no file. A SECOND WORKSTREAM of the project issues its own round by carrying a "
+                "line-anchored '<workstream>NAME</workstream>' element beside <round> (row "
+                "IRPT_BCKEND-S179); this limb reads no override."
+                % (rel, _round_key_label(key), code, len(existing),
+                   ", ".join(os.path.basename(p) for p in sorted(existing)))]
     return []
 
 
@@ -3036,8 +3068,8 @@ def _rounds_cli(root, args):
         print("[to-pipeline-gate --rounds] could not read tree orders for %s at HEAD (git ls-files "
               "failed) -- 0 order(s) at HEAD." % code)
         return 0
-    for n in sorted(rounds):
-        print("round %d: %d order(s)" % (n, len(rounds[n])))
+    for k in sorted(rounds, key=lambda k: (k[1], k[0]) if isinstance(k, tuple) else (k, "")):
+        print("%s: %d order(s)" % (_round_key_label(k), len(rounds[k])))
     print("unrounded: %d order(s)" % unrounded)
     print("%d order(s) at HEAD" % total)
     return 0
