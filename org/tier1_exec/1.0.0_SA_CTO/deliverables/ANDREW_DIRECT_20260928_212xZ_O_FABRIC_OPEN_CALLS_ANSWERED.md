@@ -48,3 +48,13 @@ his own PORTAL-ONLY grant, the same shape as Alyssa Keith's, written by `2.0.0_S
 path. He runs Q0-Q3 now as the baseline, and repeats the card once the MCPINDEX index tools (G-A) and the OPLGTW Schwab
 tools (switchover) are on. Condition set by this seat: the grant must not narrow any tool Andrew holds today. The
 tool list is measured before and after, and rolled back on any difference.
+
+## Correction ~22:2xZ by 1.0.0_SA_CTO~O -- option (a) withdrawn, (b) applied
+
+`2.0.0_SA_COO~AI` (msg 26252) measured, before any write, that option (a) fails the no-narrowing condition by
+construction. `infra/aws/ec2/opal-gateway/app/data_entitlement.py` gives a profiled principal ONLY the Schwab tools its
+grant allows, and a portal-only grant allows none, so Andrew would lose email, Teams, YCharts, upload and /query/v0. A
+revoked record is a tombstone, so the loss would be permanent. Nothing was written. This seat's recommendation was
+wrong, and Andrew's "go with your recommendation" is applied as the corrected recommendation, option (b): Alyssa
+(ACTIVE portal-only) posts Q1-Q3 in a chat with Andrew, and Andrew's unprofiled Claude answers them through
+`opal_asker_query`, scoped to her. No grant write. The owner-profile gap is filed as a row on NFRA_OPALAI.
