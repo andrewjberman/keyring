@@ -1836,6 +1836,31 @@ carries none.
     "disarm_owner": "1.0.0_SA_CTO~O",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "This seat did NOT widen the edit to the 16 files, and the restraint is deliberate rather than cautious: 13 of them are under bd-exporter/src/stepwise/ where the pattern is `process.env.BD_PASSWORD || '<literal>'`, i.e. a live runtime FALLBACK and not a doc example. The scheduled path does set BD_PASSWORD from Secrets Manager (opal-bd-asset-dim-download runCommand lines 10-12 and 23-24), so the fallback is dead code THERE, but several of the 13 are hand-run backfill scripts whose invocation path this seat has not read, and blanking a fallback they rely on would break them silently. ONE ASK, to 1.0.0_SA_CTO~O as Z-S29's disarm owner: say whether to extend the same fingerprint-targeted redaction to the 16 files, and relay the corrected scope to whoever holds the purge before 02:45Z. This lane can run the edit in minutes once the runtime question is answered per file."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S33",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-28T05:52Z",
+    "one_line": "The naming gate's context rule REFUSES any NEW file that carries an EXISTING schema column whose name ends in a firm-token segment (e.g. asset_super_class_bd, already at HEAD in build_bd_assets_dim.py), and its printed remedy -- read it through lookup() -- cannot apply to a column name; the carrier that could (a registry exemption) is outside a DS lane's write surface.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: the first version of data/black_diamond/scripts/bronze/pull_bd_asset_dim_rest.py was refused by .tools/naming-gate.py with 'NAMING-GATE: REFUSE 16 graded'. Three of the 16 were asset_super_class_bd at lines 438/441/444, each 'NEW hand-kept carrier (context rule); hand-kept carrier of 'bd' outside every permitted context: read it through lookup('49financial')'.",
+        "THE MECHANISM, from the gate's own header: 'A string is NEW when it is absent from the file's pre-image at HEAD; every string of a --- /dev/null file is NEW.' Newness is per-FILE, not repo-wide -- so a literal already carried at HEAD in a sibling file is still NEW in a new file. Confirmed: git grep -c asset_super_class_bd HEAD -- data/black_diamond/ returns build_bd_assets_dim.py:4.",
+        "THE ASYMMETRY INSIDE THE GATE: the same run graded s3://%s/%s as RAISE-EXISTING/WARN with the reason 'the same literal is already carried at HEAD in .tools/estate-capture.py, so this copy mints nothing'. That mints-nothing grandfather exists and fired for the S3Key rule, but not for the context rule, which has no equivalent. That difference is the whole finding.",
+        "REMEDY REACHABILITY: the gate prints lookup('49financial') as the replacement. That is correct for a bucket or secret literal and this seat took it (16 refusals -> WARN 1). It is not expressible for a COLUMN name, which must match the consuming builder byte-for-byte. The registry carrier that could record it, infra/logic/registry/, is not in this order's <paths>.",
+        "NOT A BLOCKER FOR MX-s-9, stated so this row is not read as one: bronze legitimately ships the VENDOR's own column name (asset_super_class), which build_bd_assets_dim.py already renames to _bd in its own dedup step, so this cell had a correct in-lane route and took it. The row exists because the next NEW file that genuinely must emit a _bd column has none."
+      ]
+    },
+    "spec_asserts": "CLAUDE.md rule 30: 'a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround' -- i.e. every naming refusal has a registry-shaped remedy the refused seat can pursue.",
+    "world_is": "For the context rule on a NEW file, the remedy is registry-shaped but NOT in-lane for the seat that trips it, and for an existing schema column it is not registry-shaped at all. The three reachable outcomes for such a seat are: rename the column (breaks the consumer), remove the enforce file (a fabric-wide switch, not a seat's), or route the work to a seat that owns infra/logic/registry/. A fourth -- constructing the literal by concatenation -- is available and is exactly the hand-typed workaround rule 30 forbids, which makes it the likely silent outcome.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No gate was edited and no enforce file was touched. ONE ASK, non-urgent: whether the context rule should carry the same 'already at HEAD, mints nothing' grandfather the S3Key rule already has. If yes it is a gate edit in the gate owner's lane, not a registry row at all. This lane has no further act here; MX-s-9 landed clean at WARN 1."
   }
 ]
 ```
