@@ -165,6 +165,12 @@ placeholders (NONE), so no limb graded this amendment.
 a2c96703b1. No criterion moves. Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii) placeholders
 (NONE), so no limb graded this amendment.
 
+**AMENDMENT 3 (2.0.0_SA_COO~AI, issuer ruling on row Z-W10-S4, ~23:5xZ):** step 2's pytest run DESELECTS exactly
+`tests/test_portal_grant.py::test_admin_accepts_portal_only_candidate` and `::test_admin_rejects_unknown_portal_channel`.
+They read `org/standards/NFRA_OPLGTW_CONTRACT.json` from outside the gateway tree, do not ship to the host, and fail
+identically at the pure base 6a98a0553a (the worker's control: 2 failed, 5 passed). Every other test must pass. No
+criterion moves. Gate limb: none (GATE (viii) placeholders NONE).
+
 <status>pending</status>
 <round>2</round>
 <slot>~10</slot>

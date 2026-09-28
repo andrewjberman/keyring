@@ -1756,6 +1756,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "PRD FWD-12: 'the team's Upside/Base/Downside cases render as the team's, cited, in the slot that is ABSENT today' (ACCEPT: the team's own cases are readable).",
     "world_is": "The slot is populated and cited for 34 names, but the value is the heading label; the case content under it is not carried. My FWD-12 row reads met on the clause's literal words and names this finding; whether the outcome is met is L9's call.",
     "notes": "Related: Z-W2-S11 (rule-output read as the team's Base case) and its 'the cases the team WROTE in prose (34 served-and-cited)' figure, which is this same 34 and counts headings. Consumers in infra/ and the portal were not searched (outside the cone), so hazard_standing INERT is unproven for a downstream reader."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S50",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-28T22:30:00Z",
+    "one_line": "to-check --all reports 13 AMGT_CORPUS orders PENDING; on the LAST <status> tag only 1 of 39 was open (TO-CRPS-i-5, since drained). The tool reads the FIRST <status> element, and CORPUS orders append their flips, so 12 completed orders read as open.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/to-check.py --all | grep AMGT_CORPUS -> 'Project: AMGT_CORPUS (13 PENDING)', incl. TO-CRPS-f-3 and TO-CRPS-h-2.",
+        "grep -o '<status>[a-z_-]*' on TO-CRPS-f-3 and TO-CRPS-h-2 -> '<status> <status>pending <status>complete' on each: the last element reads complete.",
+        "Last-tag census over org/missions/D5/AMGT/AMGT_CORPUS/task-orders/*.md at ~22:3xZ: 1 of 39 open (TO-CRPS-i-5); at ~22:4xZ: 0 of 39.",
+        ".tools/to-check.py:113-120 _extract_status_tag uses re.search (first match) on the masked text."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "org/XXX.md Step 1b-B.1: `to-check.py --all --assignee` is the read of the work a seat holds.",
+    "world_is": "On a project whose orders append status flips, the read overstates open work 13 to 1; a driver or a COO taking it at face value would re-drive completed orders.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Found by the /self-drive tick 1 scope read, off-task for CORPUS; filed and not investigated further. The tool is shared, so the fix is not CORPUS's code; the COO's own census reads the last tag."
   }
 ]
 ```

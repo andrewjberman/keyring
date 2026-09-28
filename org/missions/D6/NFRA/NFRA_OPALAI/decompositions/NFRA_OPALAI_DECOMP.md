@@ -496,3 +496,12 @@ Chain: alone, slot `~18`. Ruling (b) runs beside it: `0.0.0_AB_MSTR~Z` provision
 
 Chain: alone, slot `~19`, direct act. `0.0.0_AB_MSTR~Z` re-runs step 3 from a scratch copy whose diff against PROD
 fd8ab8a is OA-f-3 plus OA-f-4 only.
+
+## ADDENDUM R2-A3 -- the launcher's gate launch has no working directory (issuer ruling, /canonical-drive obligation 7)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-5` | `opal_ai/opal/runtime/launcher.ps1:85-88`: the `Start-Process -Credential` that runs launch-gate.ps1 AS Opal_Agent gains `-WorkingDirectory <state_dir>`, as the claude.exe launch at `:107` already has. Without it the child inherits the operator's directory and fails "The directory name is invalid" (measured 2026-09-28) | LOCAL |
+
+Chain: alone, slot `~20`, direct act. It is on G-ACCT step 6's path (Part B). `0.0.0_AB_MSTR~Z` runs step 6 from the
+scratch copy (OA-f-3 + OA-f-4 + OA-f-5), placed where Opal_Agent can read it.
