@@ -3041,3 +3041,29 @@
   "notes": "Pin 816eeb58's two claims pass on this walk; this line is outside them. Owner of the surface: 2.0.0_SA_COO~D."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S39",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-28T23:15:00Z",
+  "one_line": "Rows S34 and S36 are still live at portal 8d12987e: FAST item 14 moved the reason code off the Performance face (AnswerStatus, MethodAndSources) under CTO ruling 102453, but the three Analysis surfaces still print it verbatim.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 8d12987e src/pages/InvestorReporting/tabs/analysis/StageDisplay.tsx:62 unchanged: ({envelope.publicReasonCode}) on every state",
+      "bun test at 8d12987e (re-run by 3.0.0_SA_CVO): fe-s-34 prints StageDisplay QUEUED -> \"Loading (STATE_REPORTED)\"; iv-e-83 prints \"Holdings snapshot: none held -- Unavailable (SOURCE_UNAVAILABLE)\"; iv-e-62 prints a history row \"Failed \u2014 SOURCE_UNAVAILABLE\"",
+      "portal 8d12987e commit body: 'the public reason code ... ride data-reason-code ..., never visible text or a tip. Ruling 102453 retires ruling T's verbatim print (FE-s-40)' -- applied to AnswerStatus.tsx and MethodAndSources.tsx only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling 102453 as quoted in portal 8d12987e: a public reason code rides a data attribute, never visible text; UIC-09: no system words on a loading face.",
+  "world_is": "Performance's face is clean of the code; Analysis's stage line, Holdings-snapshot line and request-history row still print it.",
+  "notes": "Ruling 102453 read through 8d12987e's commit body, not its own record. 3.0.0_SA_CVO dispositions S34/S35/S36 and this row together at L9."
+}
+```

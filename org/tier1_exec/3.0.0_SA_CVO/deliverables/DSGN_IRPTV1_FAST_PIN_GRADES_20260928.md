@@ -134,6 +134,17 @@ tab; it is why every walk's Analysis shots are clientless); **DSGN_IRPTV1-S38** 
 **IRPT_BCKEND-S186** (a funded 49F account, ****9079 / IRA with $99,253.73 held, served -100.00% YTD; not one of row
 S184's two near-misses; owner `2.0.0_SA_COO~P`).
 
+## Pins 13 and 14 (23:1xZ; no walk after them)
+
+| pin | claim | evidence | grade |
+|---|---|---|---|
+| 13 `2febba0b` (IV-e-76, UIR-04/13/30, W35-S1) | firm display names come from the registry-generated view, never a title-case guess | `bun test iv-e-89` re-run by this seat at portal HEAD `8d12987e`: `FIRM-NAMES-REGISTRY-OK`; CI success; no real run | **NOT GRADED** (real run) |
+| 14 `8d12987e` (UIC-03, CTO ruling 102453) | Report details states method and source in client words; no code, hash or producer name on the face | `bun test iv-e-90` re-run at `8d12987e`: `METHOD-SOURCE-WORDS-OK`; CI success; no real run. The before is walk 20260928T220437Z shot 011 ("PERFORMANCE_PARTIAL", "TIME_WEIGHTED", revision hashes under Report details) | **NOT GRADED** (real run) |
+
+Pin 14 applies ruling 102453 to the Performance face only. At `8d12987e` the three Analysis surfaces of rows S34/S36
+still print the code (re-run: "Loading (STATE_REPORTED)", "(SOURCE_UNAVAILABLE)", "Failed -- SOURCE_UNAVAILABLE"),
+now against that ruling too. Filed as row DSGN_IRPTV1-S39.
+
 ## Next items
 
 - **N1 (pin 2's FAIL):** the Analysis stage line prints the raw public reason code beside "Loading"
