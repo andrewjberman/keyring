@@ -1289,6 +1289,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Round-1 analysis R-5 / row Z-W8-S1: the entitlement guard suite keeps passing across gateway changes; E1 records its pass count.",
     "world_is": "At CLOUD HEAD the suite is already red on 2 of 12, from changes that predate round 2. So E1's R-5 criterion is graded as NO NEW FAILURE against this base (the same 2 named failures, at least 10 passed), never as all-pass. The two failures are the NFRA_OPLGTW OG-z-1 guard's own pins, and they stay open for their owner.",
     "notes": "Filed by the issuer at the cut. INERT: the served gateway does not run tests. The OA-e-1 order carries the base count."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S37",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-28T21:40Z",
+    "one_line": "G-ACCT cannot run from opal_ai PROD: provision-account.ps1:101 passes New-LocalUser a -Description of 86 characters, the cmdlet's limit is 48, so the real (elevated) run refuses before any act. OA-t-2's dry run and refusal arms never reached New-LocalUser, so the defect shipped to PROD fd8ab8a57f unseen.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z report 20260928T213328Z (elevated run of HANDOFF_G-ACCT_ELEVATED_20260928.md step 2): exit 1, ParameterBindingValidationException 'The character length of the 86 argument is too long ... fewer than or equal to \"48\" characters'; Opal_Agent, the credential file and the state dir all absent after, so no rollback was needed.",
+        "git -C opal_ai show fd8ab8a57f:opal/runtime/provision/provision-account.ps1 :97-101 -- New-LocalUser ... -Description 'Opal Teams-facing runtime agent account (provisioned by provision-account.ps1, OA-t-2)' (86 characters), read by this seat."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~AI",
+    "spec_asserts": "Runbook Part A step 2 / G-ACCT handoff step 2: the real elevated run of provision-account.ps1 creates Opal_Agent and prints one OK line per act.",
+    "world_is": "The real run refuses at act 1 on a parameter-length validation that no unelevated arm exercises. Andrew's switchover sitting (Parts A-B) is held until a fixed script reaches the checkout the run uses.",
+    "notes": "Remedy routed to 1.0.0_SA_CTO~O as ONE ask: a direct-act addendum cell fixing the one Description literal (<=48 chars) in opal_ai, plus how the fix reaches C:\\opal_runtime\\opal_ai before the cutover G-PUSH window."
   }
 ]
 ```
