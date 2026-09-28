@@ -10548,3 +10548,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Cause not measured. First read: the irpt-directory-search log group around 17:55Z for the 500's stack. Walker traffic is read-only apart from admitted selection POSTs."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W42-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~42",
+  "surfaced_at": "2026-09-28T19:35:00Z",
+  "one_line": "TO-IB-mr-2 Step 2's one QA fire of irpt-holdings-refresh-lambda ({\"qa\": true}) dispatched one SSM command per firm and all three terminated Failed (rc=1), for three distinct structural causes, not a transient runner-start race.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (closure gap in .tools/safe_deploy_core.py _IRPT_HOLDINGS_CLOSURE) and 2.0.0_SA_COO~M (the two firm-holdings assumed roles' missing s3:GetObjectVersion grant on their cross-bucket source reads)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda.invoke(FunctionName='irpt-holdings-refresh-lambda', Payload={\"qa\": true}) this session: first call returned {\"status\": \"RUNNER_OFFLINE_START_ISSUED\"} (i-02448edb624a7a7cf was 'stopped', ec2.describe_instances this session); ssm.describe_instance_information polled Online within 1s; second call returned {\"status\": \"DISPATCHED\", \"qa\": true, \"results\": [{\"firm\": \"49financial\", \"dispatched\": \"10a22d91-5462-4da6-b241-841be0796b51\"}, {\"firm\": \"cottonwood\", \"dispatched\": \"415f085f-24a5-43fa-b565-fa7b341dc927\"}, {\"firm\": \"inflection\", \"dispatched\": \"a0f8059e-ac39-4ce7-9bc2-292ef6afd857\"}]}",
+      "ssm.get_command_invocation for all 3 command ids this session: Status=Failed ResponseCode=1 for each, polled within 1s of dispatch (already terminal)",
+      "49financial stdout tail: botocore.errorfactory.AccessDenied 'User: arn:aws:sts::313476888478:assumed-role/irpt-49f-holdings-role/irpt-holdings-49financial is not authorized to perform: s3:GetObjectVersion on resource: arn:aws:s3:::opal-data-assets/gateway/49financial/bronze/taxsma_workbook_projection/date=2026-09-23/taxsma_workbook_projected_snapshot.json'",
+      "cottonwood stdout tail: same AccessDenied shape, role arn:aws:sts::313476888478:assumed-role/irpt-cot-holdings-role/irpt-holdings-cottonwood, resource arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/silver/fact_model_assignment/date=2026-09-28/data.parquet",
+      "inflection stdout tail: ModuleNotFoundError: No module named 'lib.silver_ids' at data/inf/scripts/silver/_orion_api_silver_lib.py:284 'from lib.silver_ids import ...'; lib/silver_ids.py exists at CLOUD 8cd218cd05 but is absent from .tools/safe_deploy_core.py _IRPT_HOLDINGS_CLOSURE (read this session, lines 419-460 of the worktree's HEAD)",
+      "s3.head_object on each firm's served irpt/<firm>/platinum/holdings/current/manifest.json before and after the fire: VersionId unchanged at all 3 firms (49financial OqjgF6qs7e5QsF7HScOre54hxJ18Ktgf, inflection ipomYxTGLoE0pAgeh.nNtVJ6QUm5ynJG, cottonwood ykQofbha2WKbcHFKvxMThBs0UNC_g9ji); holdings_qa/current/manifest.json is a 404 at all 3 firms (nothing published)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-mr-2 Step 2 / IBM19-2-AC2: 'A QA fire publishes to holdings_qa ... Poll each command ... read its output: the rc, the as_of it built, and the holdings_qa revision it published' with the check script's own expectation of 'each with a Success command id'.",
+  "world_is": "All three QA-fire SSM commands terminated Failed(rc=1) on the first and only fire this session: 2 of 3 firms fail on an IAM AccessDenied (assumed firm-holdings role missing s3:GetObjectVersion on a cross-bucket source under opal-data-assets) and the third fails on a ModuleNotFoundError because the re-minted standalone bundle's declared closure (_IRPT_HOLDINGS_CLOSURE) does not carry lib/silver_ids.py, a module data/inf/scripts/silver/_orion_api_silver_lib.py imports. No holdings_qa manifest was published at any firm; the served manifest is untouched (VersionId equal before/after).",
+  "notes": "Out of this worker's bounds to fix (paths grant does not reach .tools/safe_deploy_core.py or IAM policy; Step 2 is bounded to invoking the dispatch with qa:true only). IBM19-2-AC2 is graded FAIL as measured; the ENABLE half (Step 3) is filled with these measurements rather than fabricated Success values, per the refusal clause. DISARM: add lib/silver_ids.py to _IRPT_HOLDINGS_CLOSURE and re-mint; grant s3:GetObjectVersion on the two named cross-bucket source prefixes to irpt-49f-holdings-role and irpt-cot-holdings-role (or their source objects' own VersionedInputs read path), then re-run the QA fire."
+}
+```
