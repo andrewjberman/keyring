@@ -79,7 +79,7 @@ No vendor call, no write anywhere but your deliverables and the channel, no test
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>12</round>
 <slot>~38</slot>
 <fabric>site-z</fabric>
