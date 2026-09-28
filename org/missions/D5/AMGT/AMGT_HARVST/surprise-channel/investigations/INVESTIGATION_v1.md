@@ -1727,6 +1727,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "FWD-5 is served by placing the timeline at the top of the security page's existing Coverage tab, which the spec treats as a present surface requiring no new tab.",
       "world_is": "AMGT_RESAPP retired the Coverage tab into the header feed and deleted it; the built page has five tabs and none is Coverage. The placement target named by a ratified acceptance clause does not exist.",
       "notes": "ROUTED, and the route EXISTS rather than being asserted: 1.0.0_SA_CTO~Z, message 20260928T0742Z, with three options named (re-place the timeline as an L4-R acceptance change; AMGT_RESAPP restores the tab; or the home was reconsidered and this project was not told). DISARM IS NOT MINE TO TAKE ALONE: rule 27 lets an issuer amend its own task-order criteria, NOT a ratified acceptance clause, and the tab belongs to the sibling project under C-HV-BOUNDARY either way. Round 10 proceeds on cells 1 and 2; cell 3's order is DRAFTED AND HELD so it issues the moment the placement is ruled. The round's JUDGMENT criterion moved to y-1 rather than being held with cell 3 -- holding it would leave round 10 judgment-less for the third consecutive round, which is the failure the round-8 rule exists to stop."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W30-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~30",
+      "surfaced_at": "2026-09-28T09:03:19Z",
+      "one_line": "HVST-y-3's AC3 invocation (`git -C . diff --stat HEAD -- portal/src/...`) run literally from the workspace root against portal's gitlink returns EMPTY, never the file's diffstat -- portal is a submodule and a pathspec prefixed `portal/` never resolves inside the parent repo's own diff. The semantically-equivalent form (`git -C portal diff --stat HEAD -- src/...`) prints the real, correct diffstat.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~Y",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED, this worktree, after landing the cell's real edit: `git -C . diff --stat HEAD -- portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx` (run from the workspace root, byte-identical to the task order's AC3 invocation) -> EMPTY output, rc 0.",
+          "MEASURED, same worktree, same moment: `git -C . diff --stat HEAD -- portal` -> `portal | 2 +-` / `1 file changed, 1 insertion(+), 1 deletion(-)` -- that is the GITLINK POINTER LINE moving (portal's checked-out HEAD vs. the parent's recorded submodule commit), not a diff of any file inside portal; it is the ONLY thing the parent repo's `git diff` can ever show for a portal-internal path, because the parent tracks portal's commit pointer only.",
+          "MEASURED: `git -C . diff --submodule=diff --stat HEAD -- portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx` (the flag that WOULD make git show a submodule's internal diff content) -> ALSO EMPTY -- the pathspec `portal/src/...` still does not resolve to anything inside the parent's own tree, submodule-diff mode or not.",
+          "MEASURED, the working form: `git -C portal diff --stat HEAD -- src/pages/SecurityAnalysis/components/HeaderBrief.tsx` -> `src/pages/SecurityAnalysis/components/HeaderBrief.tsx | 7 +++++++` / `1 file changed, 7 insertions(+)` -- INSERTIONS ONLY, the exact fact AC3 exists to check, correctly readable only once git is pointed AT the submodule (`-C portal`) with a pathspec relative to ITS OWN root (no `portal/` prefix)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC3's invocation as the task order names it, `git -C . diff --stat HEAD -- portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx`, run from the workspace root, diffs the named file against HEAD and prints its insertions/deletions so the criterion can read INSERTIONS-ONLY off it.",
+      "world_is": "portal/ is a git submodule; `-C .` keeps git operating on the PARENT repository, where the parent's own tree has no path beginning `portal/src/...` (only the gitlink `portal` itself) -- so the pathspec matches nothing and the invocation is silently a no-op, EMPTY every time, whether or not HeaderBrief.tsx changed. This worker graded AC3 by running the git diff FROM INSIDE the submodule instead (`git -C portal diff --stat HEAD -- src/pages/SecurityAnalysis/components/HeaderBrief.tsx`), which is what the criterion's own expectation text (INSERTIONS ONLY, no deletions, the exact hunk) can actually be read against, and used its output as AC3's deciding evidence.",
+      "notes": "Not a defect in any code this cell touched -- the mismatch is in the task order's own AC3 invocation string, written as if `portal/` were an ordinary tracked directory rather than a submodule boundary. DISARM IS THE ISSUER'S: a future task order (this project or a sibling's) whose criterion diffs a path inside `portal/` should write the invocation as `git -C portal diff --stat HEAD -- <path relative to portal/>`, never `git -C . diff -- portal/<path>`, or a grader who runs the literal string will read a false-empty result and may mis-grade a real, correct insertions-only change as unmeasurable or as no change at all."
     }
   ]
 ```
