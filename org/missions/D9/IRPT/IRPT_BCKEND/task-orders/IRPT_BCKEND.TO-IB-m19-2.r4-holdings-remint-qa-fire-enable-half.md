@@ -78,6 +78,42 @@ to `.../IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_R4_ENABLE_20260928.md` and fill ever
 - Add the members-sha256 of the re-minted packages (Step 1) as the code the schedule will run.
 - Do NOT send it. The issuer sends it to 1.0.0_SA_CTO and 4.0.0_SA_CRO at the drain.
 
+### AMENDMENT 1 (2026-09-28 ~20:2xZ, issuer 2.0.0_SA_COO~M, on row IRPT_BCKEND-W42-S1)
+
+The QA fire failed 3 of 3 for two causes, both measured from the command outputs:
+- 49F and COT: `AccessDenied ... not authorized to perform: s3:GetObjectVersion` on source reads. Every source read goes
+  through `data/assets/scripts/gold/investor_reporting/source_inputs.py:51`, which re-reads the exact version it got;
+  IAM authorizes a versioned GET as `s3:GetObjectVersion`. The firm read statement grants only `s3:GetObject`
+  (`infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf:81`).
+- INF: `No module named 'lib.silver_ids'`. `lib/silver_ids.py` landed on CLOUD 2026-09-28 (8cd218cd05), after the
+  09-25 trace behind `_IRPT_HOLDINGS_CLOSURE` in `.tools/safe_deploy_core.py` (its own comment: "Re-measure it when a
+  builder gains an import").
+Ruling (issuer): both are inside this cell. Steps 1 and 3 stand as done; do these, in order:
+
+**Step 4 -- re-trace the closure and re-mint.** First `git merge --no-edit CLOUD` in your worktree (pull-merge, never
+rebase) so the amended checks and CLOUD's latest reach you. Re-measure the closure the way the constant was measured:
+for each firm, import and run the holdings build locally with `--dry-run` (no upload) and record every repo module in
+`sys.modules` and every repo data file opened. Set `_IRPT_HOLDINGS_CLOSURE` to that union (adding at least
+`lib/silver_ids.py`), keep the three bundles manifest-stamped, commit, then open ledger
+`irpt-holdings-packages-m-20260928b` (legs M1-M3 as before) and re-mint from your clean worktree. Close it with the new
+members-sha256 (it must differ from a2866ed29a82).
+
+**Step 5 -- the read-version grant: plan and half, then STOP.** In `holdings_refresh.tf`, the READS statement (line 81)
+becomes `actions = ["s3:GetObject", "s3:GetObjectVersion"]`, resources unchanged. Nothing else in the file moves.
+Run `terraform -chdir=infra/aws/terraform/investor-reporting/directory plan -lock=false` and expect exactly
+`0 to add, 3 to change, 0 to destroy` (the three `aws_iam_role_policy.irpt_holdings[...]`); any other line in the plan
+is a stop and a row. Write `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_READ_VERSIONS_20260928.md`:
+the act (one safe-apply under ledger `irpt-holdings-principals-versionread-m-20260928`), the plan read in full, the
+blast radius (the same prefixes per firm, now readable at a pinned version; no new key, bucket or firm reachable),
+the cause lines above, and rollback per key (revert the one line, safe-apply). Commit it and END your turn with a
+report that says HALF READY. Do NOT apply: a firm principal is never-widen class, and the halves are signed by the
+issuer and 1.0.0_SA_CTO. You will be continued with the signature.
+
+**Step 6 -- only when continued with the CTO's signature.** Open the ledger, `HALT_ACK=1 bash .tools/safe-apply.sh
+-chdir=infra/aws/terraform/investor-reporting/directory apply` (-target the three policies if the plan carries more),
+read back each policy JSON, close the ledger. Then repeat Step 2 (one QA fire) and re-fill the half from the new
+fire; the half names the three Success command ids.
+
 ### ACCEPTANCE
 
 <criterion id="IBM19-2-AC1" cell_refs="IB-mr-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R19_CHECKS/r19_m2_packages_reminted.py</invocation><expect>REMINTED followed by a 12-hex members-sha256 that is not 83f6a81aab34</expect></criterion>
@@ -90,6 +126,10 @@ to `.../IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_R4_ENABLE_20260928.md` and fill ever
 `IBM19-2-AC3` -- the half is filled from the fire, no slot left.
 
 <expected_criteria>IBM19-2-AC1,IBM19-2-AC2,IBM19-2-AC3</expected_criteria>
+
+Amendment 1 changes no criterion id. AC2's check accepts a qa command dated 2026-09-28 or 2026-09-29; AC3's check now
+requires the half to name three SUCCESS qa command ids (read from SSM). Dry-run of both at the amendment: FAIL as
+expected (0 Success qa commands exist).
 
 All three run from your worktree root and exit 1 at the base (dry-run 2026-09-28 18:2xZ: NOT-REMINTED / NOT-FIRED 0 of
 161 commands / NOT-FILLED). The QA-fire check reads AWS, so it is graded after your commands end.
@@ -111,6 +151,11 @@ org/critical_paths/.open_deploys/irpt-holdings-packages-m-20260928.json
 org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_R4_ENABLE_20260928.md
 org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R4_ENABLE_DIFF_20260928/
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
+.tools/safe_deploy_core.py
+infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf
+org/critical_paths/.open_deploys/irpt-holdings-packages-m-20260928b.json
+org/critical_paths/.open_deploys/irpt-holdings-principals-versionread-m-20260928.json
+org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_READ_VERSIONS_20260928.md
 </paths>
 
 The block is your WRITE grant. Everything else named on this face (the draft half, the diff tools, the 09-26 README,
