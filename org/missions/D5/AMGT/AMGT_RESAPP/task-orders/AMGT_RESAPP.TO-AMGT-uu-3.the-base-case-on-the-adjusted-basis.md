@@ -97,7 +97,7 @@ crashes, Z-S292), AC3 PASS (66 passed). GREEN arm for AC1 (scratch reference): 3
 511.61 USD, RKT 5941.78 GBp. Issuer's choice, stated: compute at SERVE time from the stored figures (one Lambda redeploy, no S3
 write over ~95 keys) rather than re-land the blocks. SERVED; reaches the served body at uu-4 under a never-widen pair.
 
-<status>pending</status>
+<status>complete</status>
 <round>46</round>
 <slot>~166</slot>
 <fabric>site-z</fabric>
