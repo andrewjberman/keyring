@@ -112,8 +112,9 @@ deploy as cut would mount two routes that answer AccessDenied -- the third reaso
 `Z-S35`'s missing pyarrow. **Remedy, in this order's own scope:** the preflight line is corrected in place, the egress
 class adds (E) one read-only grant, and bound 1 admits that one IAM change and no other. AC1 already refuses an
 AccessDenied (it requires HTTP 200 with data). The issuer amends its own criteria without a CTO ruling (CLAUDE.md
-rule 27, L6); **the gate limb that graded this modification: none** -- `.tools/to-pipeline-gate.py` grades a MODIFIED
-order only under GATE (viii), and this order declares `<placeholders>NONE</placeholders>`. The CTO sees the grant on
+rule 27, L6); **the gate limb that graded this modification: GATE (viii)** -- measured at the amendment commit `a60bd1bae5`
+("1 of 1 staged-MODIFIED tree order(s) already declare <placeholders> at HEAD and were graded"). That commit's message
+says "none"; the gate's own line is the record, and `<placeholders>NONE</placeholders>` counts as declaring. The CTO sees the grant on
 the halves it signs.
 
 <risk>WORLD</risk>
