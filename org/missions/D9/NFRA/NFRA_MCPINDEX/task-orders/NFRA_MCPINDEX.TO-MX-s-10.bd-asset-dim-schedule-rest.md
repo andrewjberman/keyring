@@ -80,6 +80,22 @@ The ruling is the whole spec. READ IT:
   Retiring it in PHASE B through Terraform also removes a producer that has failed daily while reporting Success
   (69 of 121, no `exit` in its document: the old Z-S9 defect).
 
+**AMENDED A2 (2.0.0_SA_COO~O, 2026-09-28 ~08:5xZ), on the CTO's Z-S43 ruling @e4b19b9898:**
+- **The import closure is resolved at BUILD time, by cell MX-s-11 (0.4.0_DS_ClientPlatform~D).** The pull module
+  imports an opal_naming GENERATED 49F pin in place of `opal_naming`. The published closure is exactly:
+  - `code/bronze/pull_bd_asset_dim_rest.py`
+  - `code/bronze/_asset_dim_rest_pin.py`
+  - `code/lib/silver_ids.py`
+  - `code/lib/trading_calendar.py`
+- **Document edit (yours, still PHASE A, no deploy):**
+  - DELETE the fetches of `code/lib/opal_naming.py`, `code/registry/` and `code/standards/NAMING_SCHEMA.json`, and the
+    `infra/logic/registry` and `org/standards` mkdirs. The multi-firm registry never travels to bd's bucket.
+  - ADD the pin next to the pull module in `$RUNROOT/data/black_diamond/scripts/bronze/`.
+  - ADD `code/lib/silver_ids.py` into `$RUNROOT/lib/`. The builder loads it BY LOCATION at `_REPO_ROOT/lib/silver_ids.py`
+    (four levels above `silver/`, :64-66), and the current document never stages it.
+  - Keep `trading_calendar` (the as-of date).
+- **Step 2 runs when MX-s-11's s11.AC2 and s11.AC3 read PASS.** The issuer relays that. Everything else in A1 stands.
+
 ## 2. BOUNDS
 
 1. One producer before and after: no second schedule, no parallel path, no comparator.
