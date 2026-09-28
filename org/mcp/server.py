@@ -1899,14 +1899,33 @@ async def send_message(
     # either name a recipient and get a per-recipient verdict, or you did not send.
     # Backward compatible by construction -- `to_agent: str` is untouched and a
     # single-recipient call returns the exact legacy receipt string.
+    # --- COMMA-JOINED RECIPIENT STRING (0.0.0_AB_MSTR~Z, 2026-09-28). A caller that passed
+    # "A~Z,B~Z" as ONE recipient was taken as ONE serial: _instance_suffix() returned
+    # "Z,B~Z", _resolve_agent_folder() STILL resolved the first serial's folder (it base-strips
+    # at the first ~), and the write landed in a PHANTOM lane dir inbox/<A>/~Z,B~Z/ that no
+    # watcher watches and no check_inbox reads. It is a SILENT TOTAL LOSS: the sender gets a
+    # normal receipt naming a real folder, and the recipient count reads 1.
+    # MEASURED on this device 2026-09-28: 15 phantom dirs, 28 messages, 74 intended
+    # (message x recipient) deliveries, ZERO present in any real slice, oldest 14 days, one an
+    # Andrew-direct relay to three seats. All 28 were recovered by hand.
+    # A real serial can never contain a comma (the serial grammar is
+    # <n>.<n>.<n>_<CLASS>_<Name>[~lane]), so splitting is UNAMBIGUOUS and turns the loss into
+    # the fan-out the caller plainly meant. Applied to to_agents entries too -- the same string
+    # can arrive by either door.
+    def _split_recipients(_raw: str):
+        for _part in (_raw or "").split(","):
+            _part = _part.strip()
+            if _part:
+                yield _part
+
     _recipients: list[str] = []
     for _r in (to_agents or []):
-        _r = (_r or "").strip()
-        if _r and _r not in _recipients:
-            _recipients.append(_r)
-    _single = (to_agent or "").strip()
-    if _single and _single not in _recipients:
-        _recipients.insert(0, _single)
+        for _one in _split_recipients(_r):
+            if _one not in _recipients:
+                _recipients.append(_one)
+    for _one in reversed(list(_split_recipients(to_agent))):
+        if _one not in _recipients:
+            _recipients.insert(0, _one)
     if not _recipients:
         return ("SEND REFUSED: no recipient. Pass to_agent=\"<serial>\" or "
                 "to_agents=[\"<serial>\", ...]. (Nothing was sent.)")
