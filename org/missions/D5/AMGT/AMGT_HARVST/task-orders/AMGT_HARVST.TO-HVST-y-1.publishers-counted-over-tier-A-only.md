@@ -108,8 +108,37 @@ re-grade FWD-6 -- that is the CVO's at L9.
 4. **NEVER-1 checked and does NOT fire** -- census in decomp `s.22.2`, with the zero's bounds stated. **It WILL
    fire the round after `y-3` ships a served reader.**
 
+## 6. THE VERDICT -- `complete`. VALID (rc=0), and the worker built TWO controls nobody asked for
+
+**Measured at the merged HEAD after the drain (`72401942b5`), re-read post-merge:** violations 0,
+invocation-alignment 3/3, artifact-resolution 5 of 5 resolved at pin. **VALID (rc=0).**
+
+| | |
+|---|---|
+| AC1 | `17 passed, 129 deselected` on `-k event`. ⭐ **A MUTANT CONTROL proves the new test is not vacuous** -- `test_one_tier_a_one_tier_b_two_publishers_no_longer_qualifies` FAILS against the unamended predicate (`assert [{...BA_US_Equity...}] == []`). Whole-suite **146/146** after vs **145/145** before |
+| AC2 | **12 -> 8 events**, the 4 spurious named (`992_HK`, `COST`, `DELL`, `MSFT`), and **BOTH `event_id` MOVES PROVED** -- `OLD != NEW` **and** `NEW == _event_id(security_key, new_first, new_last)` for `BA` and `HD`. `C-HV-GOLD-REBUILDABLE: True`; two runs byte-identical |
+| AC4 | JUDGMENT, **PRESENTED with no verdict**, oracle `3.0.0_SA_CVO` at L9 named. All 8 events with span, lead, counts and member headlines |
+
+⭐ **THE SECOND UNASKED CONTROL:** the pre-amendment baseline was measured **in an ephemeral detached worktree
+that the worker then removed**, leaving the shared tree untouched. That is the discipline 14b wants and no
+clause in this order required it.
+
+### THE LOOP THIS CELL CLOSES, across three rounds
+
+`HVST-w-3`'s AC4 presented the cross-company `lead_headline` as a judgment question -> `3.0.0_SA_CVO~O`'s L9
+(`ADJUDICATION_v17`) found **4 of 12 events were not coverage about their own security** -> `1.0.0_SA_CTO~Z`
+amended `C-HV-EVENT-SPINE` by addendum -> **this cell's amendment removes exactly those four.** ⛔ **A mechanical
+column was green on all 12 the whole way.** Only the judgment criterion could have started it.
+
+**ISSUER CLOSE-VERIFICATION (rule 22), run separately from the worker:** at the merged HEAD,
+`2x tier-A / 2 publishers -> 1 event` and `1x A + 1x B / 2 publishers -> 0 events`. The rule behaves as
+specified in the shared tree, not only on the branch.
+
+**NO ROWS FILED, reported as an outcome:** the discriminator, the `datetime` trap and the existing-test
+collateral were all anticipated by the order, so there was no surprise to file.
+
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~28</slot>
 <fabric>site-z</fabric>

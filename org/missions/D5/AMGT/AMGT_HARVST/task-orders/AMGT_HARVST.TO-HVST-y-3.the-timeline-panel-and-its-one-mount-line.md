@@ -107,8 +107,56 @@ it; the grade is `1.0.0_SA_CTO`'s at L10 and the judgment sits on `y-1`.
 4. **AC1 demands the screenshot be READ.** A captured-but-unread PNG is the frontend equivalent of a green column
    over an empty denominator.
 
+## 6. AMENDMENT 1 -- AC3's LITERAL INVOCATION CANNOT RESOLVE A SUBMODULE PATH. MY DEFECT, THE THIRD THIS SESSION
+
+**Issuer's act under Rule 27. GATE LIMB: GATE (viii)** (this order declares `<placeholders>NONE</placeholders>`).
+
+AC3 read `git -C . diff --stat HEAD -- portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx`.
+⛔ **`portal` IS A GIT SUBMODULE, so a `portal/`-prefixed pathspec NEVER resolves against the parent's own tree
+-- the command returns EMPTY, not a diff.** Reproduced by the issuer. Row `AMGT_HARVST-Z-W30-S1`.
+
+**AMENDED TO:** `git -C portal diff --stat HEAD~1 -- src/pages/SecurityAnalysis/components/HeaderBrief.tsx`
+-- the repo is the SUBMODULE and the path is relative to it. Nothing else about AC3 changes: insertions-only,
+no deletions, no moved lines, and the header still renders.
+
+⛔ **AND s.14x REQUIRED ME TO RUN IT BEFORE CUTTING, AND I DID NOT.** I ran `y-1`'s two pytest invocations and
+skipped this one **because a diffstat looked trivially safe.** That is the third unrunnable invocation I have
+written this session (`lib/opal_data_harvest/tests/` in round 8, the escaping in round 9's predecessors, this),
+and it is the same shape each time: **the clause I wrote to stop it was applied to the interesting criteria and
+not to the boring one.** A trivial-looking command is exactly the one no one checks.
+
+**AMENDMENT 1a -- THE `<invocation>` TEXT IS DELIBERATELY LEFT AS THE UNRUNNABLE FORM, and that is not a
+retreat.** I first amended it to the corrected command and the gate REFUSED the flip: the instance had
+recorded the LITERAL form, because that is what this order told the worker to run and what it ran. **Its
+`invocation` field is TRUE.** Editing the instance to match my amendment would have made a graded party's
+record claim it ran a command it did not run -- the exact move the alignment limb exists to stop. So the
+criterion text reverts and **the correction lives in prose and in `s.14x`, where it binds FUTURE orders.**
+⚠ **The distinction from round 7's AC1, which looked identical and was not:** there the recorded invocation
+carried an ANNOTATION that was never part of the command, so stripping it made the record MORE accurate.
+Here the recorded command IS what ran. **Correcting a record and bending one to a checker differ by which
+way the truth moves.**
+
+## 7. THE VERDICT -- `complete`. VALID (rc=0), and the worker mutation-tested a criterion I did not ask it to
+
+**Measured at the merged HEAD:** violations 0, invocation-alignment 3/3. **VALID (rc=0).**
+
+| | |
+|---|---|
+| AC1 | `RENDERED_DAY_COUNT=270 DENOMINATOR=270 EQUAL=True`, 6 of 6 ui-smoke assertions. ⭐ **And the screenshot was READ, not just saved** -- the Lenovo header, "MENTION TIMELINE -- DENSE FROM 2026-01-01" with its COMPLETE/PARTIAL/DENIED legend, a continuous dense bar row with visible orange and red marks, the "270 of 270 day(s) rendered (no gap)" caption, and the feed items BELOW it, confirming the panel sits above the article list |
+| AC2 | **4 of 4 arms distinguishable**, 0 failures. ⭐ **MUTATION-TESTED without being asked:** collapsing DENIED's fill onto PARTIAL's made the harness FAIL with 2 named failures; reverted, clean pass restored. **That is the control that turns "they look different" into "they cannot be made to look the same by accident."** |
+| AC3 | on the AMENDED form: **1 file changed, 7 insertions(+), 0 deletions** -- insertions only. `tabs.harness.cjs` CHECKS-OK 20 of 20, and `data-header-brief`, `data-timeline-panel`, `data-header-feed` all present IN THAT DOM ORDER |
+
+### THE PORTAL STATE, AND WHY I AM NOT MOVING THE GITLINK
+
+**The portal commit `92a2576254` is on local `DEV`, NEVER PUSHED.** ⛔ **The parent's gitlink still records
+`1e02be40` and I am deliberately leaving it there.** Two reasons: this cell touches a PRODUCT file
+(`HeaderBrief.tsx`), so `1.0.0_SA_CTO` reviews it before it lands; and the gitlink was **ALREADY divergent before
+this cell ran** (`1e02be40` vs a peer's `4e29386e`), so moving it would publish **another seat's unreviewed
+portal work** inside my commit. **The drain's `gitlink-publication-check` confirms `staged gitlinks=0`.** The
+divergence is reported to the CTO, not silently reconciled.
+
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~30</slot>
 <fabric>site-z</fabric>

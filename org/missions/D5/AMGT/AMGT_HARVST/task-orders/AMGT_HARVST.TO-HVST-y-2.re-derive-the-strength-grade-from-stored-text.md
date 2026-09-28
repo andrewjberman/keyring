@@ -88,8 +88,31 @@ two rest on. It makes no vendor call.
 4. **s.14x honoured:** `assign_tier`'s signature, purity and totality claim were read at the bytes at this cut;
    all three invocations name scripts the criterion creates.
 
+## 5. THE VERDICT -- `complete`. VALID (rc=0), and FWD-4's answer is POSITIVE and non-degenerate
+
+**Measured at the merged HEAD after the drain (`0c6699f60d`):** violations 0, invocation-alignment 3/3.
+**VALID (rc=0).**
+
+| | |
+|---|---|
+| AC1 | **263 of 263** newest-snapshot rows examined, **263 measurable, 0 unmeasurable**, **263 AGREE / 0 DISAGREE** between the stored `signal_tier` and a re-derivation from the STORED TEXT |
+| AC2 | stored and derived distributions IDENTICAL and **NOT degenerate** -- `A 66 / B 64 / C 45 / D 88` on both sides -- and `assign_tier`'s totality proved over **16 of 16** truth-table combinations, every one mapped exactly once |
+| AC3 | row grain 263/263 with 0 mismatches; **day grain 50,997 of 50,997** `(security, day)` pairs consistent, with one worked example shown |
+
+⭐ **THIS IS THE FIRST UNAMBIGUOUSLY POSITIVE MEASUREMENT THIS PIPELINE HAS PRODUCED, AND AC2 IS WHY IT IS
+BELIEVABLE.** A 100% match rate is worthless on a single-tier corpus; the four-way distribution rules that out.
+**FWD-4's grade does describe the text it claims to** -- so FWD-5's "strongest first" and FWD-7's "chatter by
+strength" rest on something real.
+
+### THE ROW IT FILED IS AGAINST MY ORDER, NOT THE CODE
+
+`AMGT_HARVST-Z-W29-S1`: the only committed `securities.json` (`deliverables/~4/`) is **stale at 6 of the 55
+`security_key`s the newest gold carries**, and ⛔ **this order named NO ALIAS SOURCE**, so the worker had to
+choose one. It used a live `universe_securities.build()` read **and said so** rather than quietly picking. **The
+gap is mine: a criterion that needs an identity source must name it.** STAYS ARMED.
+
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~29</slot>
 <fabric>site-z</fabric>
