@@ -10737,3 +10737,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Same class as a naming convention the issuing COO's own task-order template does not carry: every round-19 ~P cell whose <proof_of_spec> block states a short-form instance name will hit this same refusal at flip time. Disarms when the issuer either (a) states the full-stem name in the template, or (b) the gate accepts the to_id-based short form as an alternate candidate name."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S183",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-28T21:10:00Z",
+  "one_line": "Issuer disposition of the round-19 ~P worker rows: W61-S1 disarmed by amendment f511608f1f; W62-S1 carried to the next ~P round; W61-S2 rides the S181 producer routing (CTO ruling 102424/102425) and IB-pr-192 stays open with the guard strict.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W61-S1 (worker ~61, on CLOUD via drain @4f47d58fe3): the order's <proof_of_spec> named a short-form instance the flip check refuses. Disarmed: TO-IB-pr-192 amended @f511608f1f to the full-stem name and to W<slot>-S<k> row ids; TO-IB-pr-193 was already complete",
+      "W62-S1 (worker ~62, on CLOUD via drain @b02d1e9097): export tests/test_submit_async.py::test_the_marked_event_builds_and_the_handle_reaches_the_receipt fails AttributeError handler.finalize_export -- measured on CLOUD before the merge (1 failed / 12 passed) and after (1 failed / 13 passed): pre-existing, not caused by IB-pr-193. Carried as a cell of the next ~P round",
+      "W61-S2 (worker ~61, on branch wk-IRPT_BCKEND-61 @b1cbe6a302, not yet on CLOUD): measured by the COO -- s3 opal-data-49financial gold/advi/canonical/twr_daily date=2024-07-08 and date=2025-01-09 lack bmv/emv/cf_net while 2024-07-09, 2025-01-08 and 2025-01-10 carry them, all schema_version 1.2, LastModified 2026-08-30. The adapter schema guard refuses every full-history (Since-inception) read. Ruled by 1.0.0_SA_CTO 102425: the repair rides row S181's runners_49f routing; the guard stays strict; IB-pr-192 stays open"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every worker row of the round has a disposition from its issuer, and a live defect outside the round's write grant is routed, never worked around.",
+  "world_is": "W61-S1 is disarmed, W62-S1 is carried, and W61-S2 waits on the producer repair routed under S181.",
+  "notes": "IB-pr-192's AC2 re-runs after the two partitions are repaired; its build (AC1 PASS) stays on wk-IRPT_BCKEND-61 until then."
+}
+```
