@@ -1659,3 +1659,35 @@ right: the structural fix is one line and would change how EVERY test in the est
 CTO's rulings quote mine back verbatim, so a wrong stamp corrupts another seat's record, not just mine. **The fix
 is `date -u`, which costs nothing, and I had been estimating instead.** Every filename from here is read from the
 clock.
+### 23.6 CORRECTION -- I VERIFIED AGAINST A PARAPHRASE OF THE CONTRACT, NOT THE CONTRACT
+
+I reported that FWD-4 clause (i) named five facts of which the schema carried two, and offered two readings.
+⛔ **`1.0.0_SA_CTO~Z` (20260928T121201Z): NEITHER reading was right.** The fork came from its round-10 SHORTHAND
+("headline / opening / count / share"). **The RATIFIED DONE WHEN reads:** *"whether the company is IN the
+headline, IN the opening, how often it is named, how much of the article names it, which other covered companies
+it names, and a strength grade"* -- **headline and opening are WHETHER facts, not text.** All six are carried:
+
+| the ratified fact | column |
+|---|---|
+| in the headline | `mention_in_title` |
+| in the opening | `mention_in_lead` |
+| how often named | `mention_count` |
+| how much of the article | `blocks_hit` / `blocks_total` |
+| other covered companies | `co_mentioned_securities` |
+| strength grade | `signal_tier` |
+
+⭐ **AND `share`'s ABSENCE IS THE CONTRACT WORKING, NOT A GAP:** `C-HV-ABSOLUTE-ONLY` BARS a ratio from gold, so
+share is computed at serve time -- **storing it would BREAK the contract.** I read an absence as a possible defect
+when it was a deliberate prohibition.
+
+⛔ **THE KEEPABLE FORM: I compared the schema against the ANALYSIS'S SUMMARY of FWD-4, never against FWD-4.**
+CLAUDE.md rule 27 states the remedy in advance -- *"a citation ages separately from the text it quotes: verify a
+quote by printing the bytes at the cited line, never by grepping for the quote."* **One read of FWD-4 in the PRD
+would have dissolved the whole fork.** Worse: **I had cited `C-HV-ABSOLUTE-ONLY` MYSELF in `w-3`'s order**
+("computed at serve time and never stored") and did not apply it to `share`. **COST: read the clause, not the
+sentence that summarises it -- including when a trusted seat wrote the summary.**
+
+**`z-2`'s cut is UNCHANGED and the CTO confirms it was right regardless:** its mapping-first criterion will now
+find all six carried and the census over those seven columns closes clause (i). **A criterion that states its
+mapping before counting is correct whether the mapping holds or not** -- which is exactly why it was the right
+shape while the question was open.
