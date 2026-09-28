@@ -148,6 +148,33 @@ fix from this file. Commit it.
 **Step 6 is suspended** until the issuer continues you with the CTO's signature on the Step 7 half and a ruling on
 the Step 8 verdict.
 
+### AMENDMENT 3 (2026-09-28 ~22:0xZ, issuer 2.0.0_SA_COO~M, on Step 8's verdict)
+
+Step 8 measured the 49F kill as OOM-SINGLE (`R19_QA_FIRE_49F_KILL_20260928.json`, 514c1dfb40): the runner is a
+t3.medium (3,836 MB), and the oom-killer took the 49F build alone (pid 5349, anon-rss about 3.6 GB); the other two
+builds had ended about 2 minutes earlier. Running the builds one at a time does not fix it. Ruling (issuer): cut the
+49F build's peak memory in code (this cell's outcome is a Success QA fire at 49F); a runner upsize is a cost call
+that is not this cell's, and is not asked.
+
+**Step 9 -- cut the 49F build's peak, prove the output unchanged, re-mint.** Profile
+`holdings_snapshot.run_firm("49financial", s3, qa=True, upload=False)` locally (tracemalloc snapshots or a psutil RSS
+sampler around each stage) and name the stage(s) that set the peak, with MB per stage, in
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R19_49F_MEMORY_PROFILE_20260928.json` (`{"before": {"peak_rss_mb",
+"stages": [...]}, "after": {...}, "change": "...", "output_identity": {...}}`). Reduce the peak with the smallest
+change that works (read only the columns and partitions the build uses, drop frames once consumed, stream or chunk a
+large read); no behaviour change. Prefer changes in the 49F-only modules (e.g. `holdings_49f.py`): `holdings_snapshot.py`
+and `directory_runner.py` are members of the directory chain's `investor-reporting.tar.gz`, which a CLOUD push
+re-mints; if one of them must change, say so first in the profile JSON's "change". Target: local peak RSS under 2,000 MB. Output identity: the 49F candidate built
+before and after the change is identical in node set, amounts and every classification field (compare the two
+local candidates; record the counts). Run `python -m pytest data/assets/scripts/gold/investor_reporting/tests -q`
+and record its summary line. Commit, then open ledger `irpt-holdings-packages-m-20260928c` (legs M1-M3 as before),
+re-mint the three packages from your clean worktree, close it. If the peak cannot be brought under 2,000 MB without a
+behaviour change, STOP with a row and the profile; do not change any output.
+
+Order of work now: Step 9 first. Step 6 (apply the own-prefix grant under ledger
+`irpt-holdings-principals-ownread-m-20260928`, read back, re-plan; then one QA fire; then fill the ENABLE half) runs
+only when the issuer continues you with the CTO's signature on half 2.
+
 ### ACCEPTANCE
 
 <criterion id="IBM19-2-AC1" cell_refs="IB-mr-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R19_CHECKS/r19_m2_packages_reminted.py</invocation><expect>REMINTED followed by a 12-hex members-sha256 that is not 83f6a81aab34</expect></criterion>
@@ -193,6 +220,9 @@ org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOL
 org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_OWN_READ_VERSIONS_20260928.md
 org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R19_QA_FIRE_49F_KILL_20260928.json
 org/critical_paths/.open_deploys/irpt-holdings-principals-ownread-m-20260928.json
+org/critical_paths/.open_deploys/irpt-holdings-packages-m-20260928c.json
+org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R19_49F_MEMORY_PROFILE_20260928.json
+data/assets/scripts/gold/investor_reporting/
 </paths>
 
 The block is your WRITE grant. Everything else named on this face (the draft half, the diff tools, the 09-26 README,
