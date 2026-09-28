@@ -945,3 +945,65 @@ The SERVED steps follow as their own cells, each under never-widen:
   same-transaction deny put and no-email refusal. MP-a-1's cut must stage from a tree at or after @2d0f2dda83;
   any CLOUD HEAD today qualifies;
 - the OA-g-3 backfill, which WAITS on Andrew's open card.
+
+## ADDENDUM R2-E (2.0.0_SA_COO~O, 2026-09-28, round-2 enrichment on the CTO's round-1 analysis @da12a0c091)
+
+The recut of round 2 is `1.0.0_SA_CTO~O`'s ENRICHMENT LIST (`ledger/ROUND_ANALYSIS.round1.md` @da12a0c091, section 4,
+items E1-E11), cut in ONE issuance. The rulings folded in:
+- the six cut questions @5676f4a48a (`deliverables/1.0.0_SA_CTO~O/RULING_ROUND2_CUT_QUESTIONS_20260928.md`): Q1-Q5
+  ADOPTED;
+- Q3 AMENDED @79430e9933: no `eip` kind row, no Name tag, no builder call (`aws_eip` has no name argument and is in
+  neither tf map, so the `name()` refusal is correct, not a missing row);
+- Q6 CLEARED by Andrew-direct ~21:2xZ (record `ANDREW_DIRECT_20260928_212xZ_O_FABRIC_OPEN_CALLS_ANSWERED.md`
+  @7bfa5811c6): development egress (PyPI downloads for a venv) for all four ~O COOs and their workers, no per-use card;
+- row `NFRA_OPLGTW-Z-S8` @b6727f8cee (the export path cannot return a CSV today) folds into `OG-x-2`;
+- R-5 (PRD v1.1 @ac41d1fe1f, wording @c80b5c85b6; ratified-text half SIGNED current by `3.0.0_SA_CVO~O`,
+  `prd-signoff.py status` ADMITTED) admits `OG-u-2`.
+
+| item | cell | what it is (2-4 lines) | risk | slot |
+|---|---|---|---|---|
+| E4 | `OG-v-6` | The sealed question set v2: two FIXED qualified dates (D_PREV, D_NEW), the measured grain of dim_position / dim_balance / dim_asset per snapshot (12), at least one units, one between-dates per master, one between-masters and one balance-overlap question; sealed with salted digests, the copy of record in SSM. The seal plus the OFFLINE grade only (Q4). | WORLD (floor: an infra/ path) | ~10 |
+| E1 | `OG-v-7` | Grading the controlled-identity walkthrough (re-cut of OG-v-4): AC1-AC7 carried, OGV4-AC9 carried as AC8, the round's JUDGMENT criterion J2 (every ACCEPT clause of FWD-1 and FWD-3..8 has a PERSON-OBSERVED line), graded by `3.0.0_SA_CVO~O` at L9. | WORLD | ~10 |
+| E2 | `OG-v-8` | Grading the pilot onboarding walkthrough (re-cut of OG-v-5): AC1-AC4 carried; J1 the observed-line judgment over FWD-1 and FWD-8. Subject re-read at hand-off against Andrew-direct G-ASKER (@7bfa5811c6 call 1). | WORLD | ~10 |
+| E3 | `OG-o-3` | Runbook text repair (OGO2-J1): the three cross-references (6.1, 8, 6.1), the section count, and 7.2 rewritten against the live release and the manifest's deploy history. J1 re-grades OGO2-J1 at L9. | WORLD (floor) | ~13 |
+| E5 | `OG-x-2` | BUILD: the streaming export -- refuse over-cap BEFORE fetching, one representation of the result at a time, the 500-row MCP cap counted once (W5-S6), and the export wired end to end through the real `run_export` (Z-S8; the two test aliases removed). | WORLD (floor) | ~11 |
+| E5 | `OG-x-3` | SERVED: the narrow gateway release of OG-x-2 (live base plus OG-x-2's gateway commits), never-widen halves, NEVER-2 ledger; Schwab stays dark (DELTA=0 on served answers). | WORLD | ~11 |
+| E6 | `OG-r-3` | Re-cut of OG-r-2 on the host: the repaired `_cap_respected` (R2-b, S48), the streaming export at contract scale, AC4 on the 09-11..09-17 baseline PLUS one post-release window of equal length ending at the cut, both with request counts (Q5). Contract unchanged (R-4). | WORLD | ~11 |
+| E7 | `OG-t-1` | BUILD: `resolve_tier` keys on the principal (`<tid>/<oid>`) only; principal rosters from the environment (empty defaults); no email fallback for a person; machine/bearer paths (the MS-ingest identity, `token_broker.py:192`'s server-held branch), `identity_scope.py` and `query_v0.py` named OUT of scope (Q1/Q2) with a test that no machine path reaches `resolve_tier` as a person. | WORLD (floor) | ~12 |
+| E9 | `OG-u-1` | BUILD: `/ms/site_children` authenticates before it validates (W3-S11); the two browser OIDC paths join `AUTH_PATHS` (W3-S18). | WORLD (floor) | ~12 |
+| E9 | `OG-u-2` | BUILD: the DCR idle lifetime per PRD v1.1 C1 (R-5): 30-day idle expiry, explicit logical expiry checked on every exchange, invalid_client when expired, a live refresh family keeps its client, no backfill. | WORLD (floor) | ~12 |
+| E7+E9 | `OG-t-2` | SERVED: the narrow gateway release of OG-t-1 + OG-u-1 + OG-u-2, with the principal rosters added to the host `.env`; the 14-day blast-radius pre-read (machine callers included) shows 0 tier deltas beyond the fixture; never-widen halves. | WORLD | ~12 |
+| E8 | `OG-n-1` | WORLD: `aws_eip` + `aws_eip_association` in the gateway root, no Name tag and no builder call (Q3 amended), a TARGETED `safe-apply`, NEVER-2 ledger, no stop/start. | WORLD | ~14 |
+| E10 | `OG-h-1` | The batch cell: eol rules for the gateway's 7 extensions (W2-S8), the out-of-repo citation register (S43), the suite hygiene rows (W3-S2, W3-S6, W6-S9), and the W2-S6 probe-fixture CARD for Andrew (no delete). | WORLD (floor) | ~13 |
+| E11 | `OG-m-1` | READ only: the 08335338 marker storm re-measured (PUTs per date, dispatches by source and outcome, the writer census with deployed bytes). The remedy is a later cut under never-widen. | SERVED | ~13 |
+
+"floor" = GATE (xii) of `.tools/to-pipeline-gate.py`: a `<paths>` entry under `infra/` sets the WORLD floor. The cell
+itself deploys nothing unless its row says SERVED or names an apply.
+
+**Edges** (data dependencies; a file overlap is not an edge except where a batch cell must run last):
+- `OG-o-3` -> `OG-v-7` (the operator follows the repaired runbook in the walkthrough);
+- `OG-v-6` -> `OG-v-7` -> `OG-v-8` (the seal, then the controlled walkthrough, then the pilot);
+- `OG-x-2` -> `OG-x-3` -> `OG-r-3` (build, served, measured on the host);
+- `OG-t-1`, `OG-u-1`, `OG-u-2` -> `OG-t-2` (E9 rides E7's release);
+- `OG-x-3` -> `OG-t-2` (RELEASE SERIALISATION: t-2's release base must be x-3's release or descend from it, so the
+  second narrow release never rolls the first back);
+- `OG-h-1` runs LAST, after `OG-x-2` has merged (both write `tests/test_schwab_engine.py` and
+  `tests/test_schwab_export.py`; a batch cell runs last).
+
+**Gates and holds:**
+- `OG-t-2` PHASE A waits on the switchover sitting's Part D record for `ADMIN_PRINCIPAL` and on the two
+  `WRITE_CAPABLE_PRINCIPALS` tid/oid values; PHASE B on both never-widen halves;
+- `OG-v-7` on G-C (`1.0.0_SA_CTO~O`'s record at `deliverables/1.0.0_SA_CTO~A/G-C_CONTROLLED_IDENTITY_AND_GRANT.md`,
+  evidence from a `0.7.0_AE_CloudOps` seat) and G-D (Andrew's walkthrough), plus `OG-o-3` and `OG-v-6` merged;
+- `OG-v-8` on the G-E record and G-F, plus `OG-v-7` merged;
+- `OG-n-1` after NFRA_MCPORTAL MP-a-1's build (the root cannot plan without its layer zip and owner-key values);
+- `OG-r-3` after `OG-x-3`; `OG-x-3` PHASE B on its never-widen halves.
+
+**Fan-out:** 14 orders; chains (connected components of the edge set) M = 4 before `OG-h-1`'s last-run ordering
+({o-3, v-6, v-7, v-8}, {x-2, x-3, r-3, t-1, u-1, u-2, t-2}, {m-1}, {n-1}). N = 5 slots, cap 8:
+- `~10` {v-6, v-7, v-8}
+- `~11` {x-2, x-3, r-3}
+- `~12` {t-1, u-1, u-2, t-2} (a second root inside the release component, joined to ~11 only at t-2's release base)
+- `~13` {o-3, m-1, h-1}
+- `~14` {n-1}, spawned only at its gate.
+Slots ~10..~14 are unused by round 1 (its orders and deliverables name ~1..~9; no `wk-*` branch names ~10..~14).

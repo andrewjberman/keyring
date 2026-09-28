@@ -95,7 +95,7 @@ Dry-run at base (main tree, CLOUD `c8df03c408`; `OA_NESTED_REF=fd8ab8a57f` reads
 - e2.AC3 base: PASS as expected at fd8ab8a57f (bound: 0 files changed); FAIL at the stale gitlink HEAD, which is not
   the worker's base.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~11</slot>
 <fabric>site-z</fabric>
