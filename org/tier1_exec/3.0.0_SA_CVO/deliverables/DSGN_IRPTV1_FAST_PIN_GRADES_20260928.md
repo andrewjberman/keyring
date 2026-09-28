@@ -145,6 +145,11 @@ Pin 14 applies ruling 102453 to the Performance face only. At `8d12987e` the thr
 still print the code (re-run: "Loading (STATE_REPORTED)", "(SOURCE_UNAVAILABLE)", "Failed -- SOURCE_UNAVAILABLE"),
 now against that ruling too. Filed as row DSGN_IRPTV1-S39.
 
+| 15 `d516158f` (AD-03, Andrew-direct via CTO 102455) | Holdings carries no Allocation panel and no Report details / Unique accounts / source-dates card | `bun test iv-e-91` re-run at portal HEAD `d516158f`: `HOLDINGS-PANELS-REMOVED-OK` (control: the drill tree still present); CI success; no real run | **NOT GRADED** (real run) |
+
+Pin 15 changes the Holdings tab that row S37's reset ran through. Whether the dropdown whose pick cleared the client
+survives this pin is not read here; the next walk re-tests S37.
+
 ## Next items
 
 - **N1 (pin 2's FAIL):** the Analysis stage line prints the raw public reason code beside "Loading"
