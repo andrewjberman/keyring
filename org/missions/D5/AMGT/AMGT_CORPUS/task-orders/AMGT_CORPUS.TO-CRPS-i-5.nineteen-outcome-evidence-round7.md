@@ -82,7 +82,7 @@ moment -- the round-5 g-4 pass read a worktree older than its fixes (the CTO's v
 base: AC1/AC2 FAIL (MISSING file), AC3 bound.
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>

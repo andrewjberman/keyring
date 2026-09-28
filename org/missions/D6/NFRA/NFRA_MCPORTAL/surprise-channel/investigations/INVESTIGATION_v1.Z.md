@@ -642,6 +642,48 @@
     "spec_asserts": "The writer's tests are green at the base every cell builds on.",
     "world_is": "One writer test fails at HEAD because an upstream shared module changed under it; no gate ran the writer's suite on that commit.",
     "notes": "A shared-module change in another project's cell did not run this project's dependent suite. Recorded only; no gate is proposed here."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S13",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T21:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-W2-S3 (disarm owner this seat, transferred with the project): MP-f-1's session fixture (merged @5d36443784) points AUDIT_PATH at a temp file, and R-8's condition holds at CLOUD -- the audit-reaching gateway tests leave the tracked audit.jsonl byte-identical, with a planted append as the positive control.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "f1.AC1.sh re-run by the issuer on the shared CLOUD tree after the merge: 14 passed; audit.jsonl md5 before=after=2e05d36768ee9b3cad061ee0da8ca396; porcelain before=0 after=0; control seen=yes; RESULT: PASS.",
+        "Worker ~4 instance NFRA_MCPORTAL.TO-MP-f-1.audit-path-fixture.proof_of_spec.json: AC1 PASS, AC2 PASS (app/config.py default untouched)."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-W2-S3 is ARMED: a gateway test run appends to the tracked audit.jsonl.",
+    "world_is": "The three test files that reach the audit path no longer write it. The full collectable suite (13 files need moto, which is not installed) was not the disarm instrument; R-8 names the audit file's porcelain, which reads empty."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S14",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The full opal-gateway suite does not finish on site Z: with moto installed (5.2.3, under Andrew's ~21:2xZ development-egress word), `pytest tests --ignore=tests/acceptance` hit a 900 s cap, and faulthandler showed tests/test_schwab_engine.py::test_ogq1_ac01 blocked in app/integrations/schwab/engine.py:1103 submit. The same test passes alone (7 s), and the whole file passes (13 of 13 in 58 s), so the stall is an inter-file interaction. It predates MP-f-1: the issuer's pre-fixture run stalled past 300 s as well.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Drain run on CLOUD after @5d36443784: rc=124 at 900 s; 'Timeout (0:02:00)!' dump with test_schwab_engine.py:203 test_ogq1_ac01 -> :199 main -> engine.py:1103 submit; audit.jsonl md5 unchanged, porcelain 0.",
+        "A/B with the only difference being the conftest (A = C:/tmp/mp3-1 at pre-fixture d4bcedef5c, B = CLOUD): the single test passes in both (9.4 s / 7.0 s); the whole file is A '1 failed, 12 passed', B '13 passed'.",
+        "Pre-fixture run 2026-09-28 ~20:4xZ (no moto): `timeout 300` terminated the full collectable suite at 306 s."
+      ]
+    },
+    "spec_asserts": "The gateway suite is a drain instrument that finishes.",
+    "world_is": "The suite stalls in the full-run context on this box, so the drain grades the affected files and the audit-file bound instead of a full-suite verdict.",
+    "notes": "Not this project's surface (the Schwab engine is NFRA_OPLGTW's). Recorded only; the drain for MP-f-1 rests on the three audit-reaching files plus the engine-file A/B."
   }
 ]
 ```

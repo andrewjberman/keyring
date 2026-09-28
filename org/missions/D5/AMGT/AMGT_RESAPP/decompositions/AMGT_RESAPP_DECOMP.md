@@ -6466,3 +6466,86 @@ fanout:
   Not on s.6's list; carried to the CTO's round-45 analysis.
 - Raw float repr in served values (e.g. "537.6961078500001 USD"), recorded by the CVO at round 44, not held against the grade.
 - The portal promote; FWD-7's route coverage; the span write; the wiring class; ACCEPT (carded); Z-S287 (resolver).
+
+
+## 54. ROUND 46 -- THE HARNESS THAT LOADS THE TIMELINE MOUNT, THE BASE CASE ON THE ADJUSTED BASIS, ITS REDEPLOY, AND THE FIRST FULL OUTCOME PASS. Four orders over the round-45 analysis's five items
+
+**Cut by `2.0.0_SA_COO~Z`** (post-reboot, post-S19 rewrite; every hash here is post-rewrite) on `1.0.0_SA_CTO~Z`'s **ROUND 45
+ANALYSIS** (`ledger/ROUND_ANALYSIS.round45.md` @`2356891712`, s.4 five items; round 45 CLOSED), with s.2 item 2 answered by
+Andrew (~21:3xZ, record @`c027b4726f`, CTO msg 26218: the Base case is ADJUSTED EPS x ADJUSTED P/E, rebuilt from served data, no
+vendor pull) and item 5 struck by the CTO on measurement (msg 26234, row Z-S293). The ratified-text half reads ADMITTED at v0.28;
+no outcome is added, so no half re-opens.
+
+### 54a. THE FIVE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 the full FWD-1..FWD-31 outcome pass, carrying the judgment criterion with each Base-case input's basis beside its ratio | `AMGT-uu-1` |
+| 2 the export-compare harness loads a header that mounts HARVST's `TimelinePanel` (Z-S292) | `AMGT-uu-2` |
+| 3 `consensus_eps` carries `basis` | `AMGT-uu-3` (one cell with item 4 and Andrew's ruling: one write surface, one sign-off) + `AMGT-uu-4` (served) |
+| 4 served values print as values, not raw float repr | `AMGT-uu-3` |
+| 5 FWD-24 cited cases + the stale reason | **NOT CUT.** The 34 "cited" cases are section headings, 34 of 34, 0 content (row Z-S293 @`c21e3f4fbc`); the extraction is AMGT_CORPUS's and enters at its round-7 analysis (CTO msg 26234). The upside/downside reason stays: both sites serve upside/downside only, which Andrew's ruling did not settle, and PRD `:1271` quotes it. |
+
+### 54b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The harness crash.** On the shared tree (portal DEV @`92a25762`, HARVST's LOCAL-only timeline commit) `exportCompare.harness.cjs`
+   fails `Cannot find module '@/api/api-client'` for every name (38 of 38 before the issuer stopped the close run); on the published
+   gitlink `c3dd9ca9` the same fixture reads 4 of 4 sets clean. `load()` (`:144-152`) has no `@/` mapping.
+2. **The planted control was blind to that crash** (row Z-S294): `tt-1.AC2.sh` accepts any rc=1. uu-2 AC2 requires the tokens.
+3. **The adjusted P/E is computable from every stored block.** AMD's block carries 10 fiscal-year `PX_LAST` and 10
+   `IS_COMP_EPS_ADJUSTED` rows (and 8 `PE_RATIO`); `BEST_EPS` forecast figures carry their own `basis` object. Median over the
+   closed years of (PX_LAST_y / f) / IS_COMP_EPS_ADJUSTED_y: AMD 55.63 (the CVO's adjusted-implied 55.6), GOOGL 27.01, RKT 17.63
+   once the GBp minor unit (f = 100) is divided out -- without it RKT reads 1762.6. Adjusted Base: AMD 415.64 USD (~0.66 of
+   price, the CVO's proxy), GOOGL 511.61 USD, RKT 5941.78 GBp.
+4. **Served today:** 48 of 95 live names serve a SERVED base; 0 of 48 carry either basis (uu-4 AC3 base read).
+5. **The Base case is served AS LANDED** (`scoped_amgt._model_cases`, `:2971-2998`) from stored blocks
+   (`derived/model_block/<key>/<stamp>/model_block.json`). Issuer's choice: the adapter computes at serve time from the stored
+   figures by ONE function the producer also calls -- one Lambda redeploy, no S3 write over ~95 keys.
+
+### 54c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-uu-2` | THE EXPORT-COMPARE HARNESS LOADS A HEADER THAT MOUNTS THE TIMELINE PANEL | `~166` | worker | LOCAL | `portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs` |
+| `AMGT-uu-3` | THE BASE CASE ON THE ADJUSTED BASIS, EACH INPUT CARRYING ITS BASIS, THE VALUE PRINTED AS A VALUE | `~166` | worker | SERVED | `integrations/bloomberg/research/model_block_pull.py` (+tests), `lib/research/api/*.py` (+tests), `lib/research/print/render_pack.py` (+tests), `portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx` |
+| `AMGT-uu-4` | THE REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (apply only), its deliverables, the ledger |
+| `AMGT-uu-1` | THE FULL FWD-1..FWD-31 OUTCOME PASS + THE BASE-CASE BASIS TABLE | `~167` | worker | LOCAL | its deliverables only |
+
+### 54d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's five items; four land in exactly one cell each (3 and 4 share uu-3 by write surface), item 5 is struck
+  by measurement with the CTO's approval (54a). Nothing in s.4 is left unplaced.
+- **(ii) Same grain.** One instrument repair, one build, one deploy, one measurement.
+- **(iii) Intent.** One axis: the served page states its numbers on a stated basis, and the instrument that says so can see.
+- **(iv) What a cell does NOT move.** uu-2 moves no page file; uu-3 moves no S3 object, no pdf path, no posture path, and not the
+  upside/downside objects; uu-4 moves exactly its sign-off pair's radius; uu-1 writes only its deliverables.
+
+### 54e. EDGES AND FAN-OUT
+
+```
+uu-2 -> uu-3   (uu-3's AC2 runs the harness uu-2 repairs; both touch the portal on one slot)
+uu-3 -> uu-4   (the code the deploy serves; never-widen halves written after uu-3 lands)
+uu-4 -> uu-1   (the pass measures the served state after the redeploy)
+fanout:
+  cap: 2                               # site Z contention, as round 45
+  orders_total: 4
+  chains_total: 1
+  wave_0: [uu-2, uu-3]                 # ONE worker, slot ~166, queued in that order (continued, never respawned)
+  wave_1: [uu-4]                       # a seat order: after uu-3 merges and both never-widen halves are committed
+  wave_2: [uu-1]                       # slot ~167, worktree cut after uu-4's verification
+  portal_ref: DEV                      # local portal DEV at the cut: 92a25762 (carries the mount uu-2 must load)
+  no_vite_per_worker: true             # port 5174 is Andrew's walk build (record @c027b4726f)
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: uu-4's build pip-downloads its pinned wheels (declared); uu-1 reads Opal's own deployed function (GET routes)
+  route_change: none
+  no_promote: true
+```
+
+### 54f. CARRIED
+
+- FWD-30 is MET on the served export (round 45) but not REALIZED: the page side is portal DEV only (rounds 40-46 unpromoted) and
+  tt-2's limb-7 branches 1 and 2 were UNEXERCISED. uu-1 grades it with the rest.
+- GOOGL's FY1 `BEST_EPS` (1.75x its last adjusted year) stays ungraded by name (the analysis's s.2; no vendor ask).
+- The portal PROD promote (gated on Andrew's word); Z-S290's template change is applied in this round's faces (no order tells a
+  worker to commit the gitlink).

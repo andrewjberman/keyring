@@ -81,7 +81,11 @@ Bloomberg use; this analysis makes no new vendor ask.
 **NOT cells:**
 - The order template's gitlink instruction (`Z-S290`) is the ISSUER's own template; the issuer amends it at the recut
   and states so in the issuance commit. `Z-W163-S1` stays disarmed by the measured condition until then.
-- The portal PROD promote is gated (DEV only without Andrew's word); it is named here because `FWD-30` waits on it.
+- The portal PROD promote. Andrew's standing word for AMGT (`ANDREW_DIRECT_20260921_172xZ_AMGT_RESAPP_PROMOTE_IF_FEATURES_...md`:
+  "push DEV to PROD if there are new features") covers AMGT's features, but a promote today would carry 71 non-merge
+  commits of which 67 are IRPT/DSGN and 3 are AMGT (`origin/PROD..origin/DEV`, read 2026-09-28 ~21:2xZ). That is
+  outside the word's scope, so this seat does not take it for AMGT's sake; `FWD-30` waits on the next promote the
+  portal's owning lanes take.
 - The 7 carried rows keep their owners as the CVO named them (`Z-S237` safe-commit detached-HEAD limb; `Z-S255`
   portal hooks, `0.0.0_AB_MSTR~Z`; `Z-S248` another owner; `Z-S238` not authorised; `Z-W158-S1` + `Z-S276` two arms).
 

@@ -48,7 +48,9 @@ ANSI-coloured) output format never matches. Repair:
 - every finding ruff 0.16.9 reports on `opal/` is FIXED in the code, never waived by an ignore or a rule change. Use
   the pinned binary the issuer installed: `C:/tmp/ruff-0.16.9/bin/ruff.exe` (put `C:/tmp/ruff-0.16.9/bin` FIRST on
   PATH; the box's own ruff is 0.15.11, which finds nothing, and that is why this defect was invisible here). Measured
-  at the cut on `opal_ai` `fd8ab8a57f`: 13 findings, all in `opal/agent/tools/portal_lookup.py`: 8 `SIM115`
+  at the cut on `opal_ai` `fd8ab8a57f`: 13 findings, all in `opal/agent/teams_watch/teams-watch.py` (AMENDED: the cut
+  said portal_lookup.py; row Z-W15-S1 measured them in the Analyst's watch, and the issuer re-read it with
+  `--output-format concise`): 8 `SIM115`
   (`open()` without a context manager), 3 `BLE001` (blind `except Exception`), 1 `SIM102` (collapsible `if`) and
   1 `UP031` (`%`-formatting). Fix each one with the success path's behaviour unchanged. A narrowed `except` names the
   exceptions the guarded call can raise, and an error path keeps its message text.
@@ -59,7 +61,9 @@ The green run on a real push happens at the cutover (G-PUSH), not here.
 1. **`opal_ai` is a nested repository** at `<worktree>/opal_ai`, on its own branch off `opal_ai` `fd8ab8a57f`. Commit
    nested files with `git -C opal_ai commit --author "0.9.0_WK_NFRA_OPALAI~15 <0.9.0_WK_NFRA_OPALAI~15@opal.agent>" -F
    <msgfile> -- <nested paths>`, the msgfile written with the Write tool. Commit the parent file with `safe-commit.sh`.
-2. No ruff ignore, `noqa`, per-file-ignore or rule-set change. No behaviour change to `portal_lookup.py`'s success path.
+2. No ruff ignore, `noqa`, per-file-ignore or rule-set change. No behaviour change to the success path of
+   `opal/agent/teams_watch/teams-watch.py` (the Analyst's OWN watch, not the parent operator watch of item 1); its
+   `test_teams_watch_lineage.py` keeps passing.
 3. Standing: no push, no install (the pinned ruff is already installed), no vendor call. REFUSE a criterion you cannot meet as written, and report the refusal
    with its measurement. Never repair a criterion, widen it, or meet it by a route this face does not name.
 
@@ -70,6 +74,7 @@ The green run on a real push happens at the cutover (G-PUSH), not here.
 opal_ai/.github/workflows/ci.yml
 opal_ai/opal/checks/run_checks.sh
 opal_ai/opal/agent/tools/portal_lookup.py
+opal_ai/opal/agent/teams_watch/teams-watch.py
 org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~15/**
 org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigations/**
 </paths>
@@ -117,6 +122,12 @@ Dry-run at base (main tree, CLOUD `c8df03c408`; `OA_NESTED_REF=fd8ab8a57f` = the
   the plant, with Z-S20's miscount reproduced). The check bounds each run at 50 s.
 - e7.AC3 base (re-run): FAIL as expected (`steps=4; run_checks step=3; pytest installed before it=no; ruff installed
   before it=yes; ruff pinned 0.16.9=no`).
+
+**AMENDMENT 1 (2.0.0_SA_COO~AI, issuer licence, 2026-09-28 ~22:0xZ), on the worker's rows Z-W15-S1/-S2:** the 13 ruff 0.16.9
+findings sit in `opal_ai/opal/agent/teams_watch/teams-watch.py`, not portal_lookup.py (the cut's error: a `--statistics`
+read names no file). `<paths>` gains that file, and section 1/2's text is corrected. No criterion moves. The nested-commit
+refusal (Z-W15-S2) was the validator's GIT_DIR census, fixed @fd0aa6ba57 and cherry-picked onto this branch. Gate limb:
+to-pipeline-gate grades a MODIFIED order only on GATE (viii) placeholders (NONE here), so no limb graded this amendment.
 
 <status>pending</status>
 <round>2</round>
