@@ -10548,3 +10548,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Cause not measured. First read: the irpt-directory-search log group around 17:55Z for the 500's stack. Walker traffic is read-only apart from admitted selection POSTs."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S181",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-28T19:05:00Z",
+  "one_line": "ROUTING of row S177's producer half (CTO ruling on 2.0.0_SA_COO~P msg 102404): the 49F engine c02_twr_engine.py:264 marks r_net <= -1 as status OK; the fix is a named non-OK status for r_net <= -1 plus a look at the flow-scaling rows, owned outside IRPT_BCKEND by the runners_49f producer lane, PARKED until that lane is seated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.4.0_DS_ClientPlatform",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-S177 (@8de1f7c22f): 28 OK account-days with r_net <= -0.999 YTD across 24 accounts; producer line data/assets/scripts/gold/runners_49f/c02_twr_engine.py:264",
+      "git log -- data/assets/scripts/gold/runners_49f/c02_twr_engine.py: last 5 commits authored by 0.4.0_DS_ClientPlatform~N/~V/~U (read 2026-09-28 ~19:0xZ); CLAUDE.md rule 13: DS owns commit and QA-deploy of data/*/scripts/gold",
+      "get_live_agents 2026-09-28 18:3xZ: no 0.4.0_DS_ClientPlatform serial is live"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A daily time-weighted return at or below -100% for a long account is never emitted as status OK by the producer (row S177).",
+  "world_is": "The producer emits it as OK; the IRPT adapter's round-19 refusal (TO-IB-P19-1) contains the symptom on the page but not in gold.",
+  "notes": "Un-parks when a 0.4.0_DS_ClientPlatform lane is seated: it takes this row as its order of record. NOT in scope of either fix: whether a re-funded account's track record restarts (re-inception); that methodology call is Andrew's, asked by 1.0.0_SA_CTO 2026-09-28."
+}
+```
