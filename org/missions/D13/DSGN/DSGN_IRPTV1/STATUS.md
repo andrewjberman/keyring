@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-28T20:3xZ.
+tick here. As of 2026-09-28T20:5xZ.
 
 ## Pins
 
@@ -11,9 +11,9 @@ tick here. As of 2026-09-28T20:3xZ.
 |---|---|
 | Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-28T19:47:43Z (presence-extended) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal candidate pin | DEV `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `921e6808` (pushed by this seat under the lease; ls-remote read 20:3xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 UNREAD |
-| Suite on 921e6808 | IR scope 899 pass / 27 skip / 5 fail (the known 5); tsc -b 0; eslint 0 errors |
+| Portal candidate pin | DEV `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
+| Portal origin | origin DEV `38986671` (pushed by this seat under the lease; ls-remote read 20:5xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 UNREAD |
+| Suite on 38986671 | IR scope 900 pass / 27 skip / 5 fail (the known 5); tsc -b 0; eslint 0 errors |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
 
@@ -30,32 +30,32 @@ on 5174 @528acdcd working tree (tmp/ui-walk/20260928T190559Z, local only). S30 d
 | 2 | portal `528acdcd` | UIC-09, S29 | six source-age files green but the known F25 set; the walk caught no loading face (unit render is the exercised path) |
 | 3 | portal `bfafa6c0` | UIR-32, UIR-49 (IV-e-71 mask half) | iv-e-71 STRATEGY-TAIL-OK; real run thiessen shot 026 caught the category-views modal before the adapter fix; the post-fix face is unit-proven only (walk killed for low memory) |
 | 4 | portal `921e6808` | UIC-23 residue (row S32): date in words, no raw id | iv-e-80 HISTORY-DATE-OK; no real run (walks paused after the harness's low-memory kill) |
+| 5 | portal `38986671` | UIC-11 residue (near-white account colour) | iv-e-81 ACCOUNT-PALETTE-VISIBLE-OK, iv-e-70/59 green; no real run (walks paused) |
 
 Round 9 at the boundary (@f42e1b00fa): IV-e-68/69/70/73/74/78/79 terminal and drained; IV-e-71/72/75/76/77
 superseded by this lease, unbuilt, their rows carried into Next.
 
 ## Next (in order; a defect that breaks the live thread goes first)
 
-1. **UIC-11 residue:** ACCOUNT_PALETTE[0] is neutral-100 `#f5f5f5`, near-white on the white panel (the first
-   wedge and swatch nearly vanish).
-2. **IV-e-75 rows (UIC-18..22, W35-S2):** Analysis setup behaves like a form; Export on Analysis opens only on an
+1. **IV-e-75 rows (UIC-18..22, W35-S2):** Analysis setup behaves like a form; Export on Analysis opens only on an
    answer-bearing report.
-3. **IV-e-77 rows (UIR-45, UIC-14, UIC-17):** one client date format on Performance and the directory stamp; the
+2. **IV-e-77 rows (UIR-45, UIC-14, UIC-17):** one client date format on Performance and the directory stamp; the
    source line in client words; the scope panel never prints 'unknown' (SCOPE AS OF still reads unknown).
-4. **IV-e-76 rows (UIR-04/13/30, W35-S1):** firm display names from the registry generated view. Per CTO 102351 the
+3. **IV-e-76 rows (UIR-04/13/30, W35-S1):** firm display names from the registry generated view. Per CTO 102351 the
    view target lands in `lib/opal_naming.py`, outside this lease's surface: CTO reads the diff before it lands.
-5. **UIC-03:** no fix of record yet.
-6. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
+4. **UIC-03:** no fix of record yet.
+5. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
 
 ## Write claims
 
-`portal/src/pages/InvestorReporting/tabs/holdings/palette.ts` ACCOUNT_PALETTE (item 1 of Next, UIC-11 residue).
+`portal/src/pages/InvestorReporting/tabs/analysis/` composer.ts, GenerateComposer.tsx, VariantCards.tsx, AnalysisTab.tsx (item 1 of Next, IV-e-75 rows).
 
 ## Next proof
 
-UIC-11 residue: no account wedge is near-white on the white panel (ACCOUNT_PALETTE[0] neutral-100 `#f5f5f5`); the
-iv-e-70 palette battery stays green. Real runs wait until system memory allows a walk (the harness killed the 19:54Z
-walk for low memory; items 2-4 carry unit-only proof on the post-fix face).
+IV-e-75 rows (UIC-18..22, W35-S2): Analysis setup behaves like a form (required-field messages after an attempt, not
+on load; no truncated label at 1440 px; a loading state until the snapshot read answers) and Export on Analysis opens
+only on an answer-bearing report. One cell of the rows at a time, each with its own test. Real runs wait until system
+memory allows a walk.
 
 ## Dependencies
 
