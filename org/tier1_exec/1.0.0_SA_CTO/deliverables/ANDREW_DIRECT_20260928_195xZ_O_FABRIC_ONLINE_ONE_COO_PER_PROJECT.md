@@ -43,5 +43,14 @@ Carried state each COO picks up (from `org/tier1_exec/1.0.0_SA_CTO/handoffs/ctoO
 - NFRA_MCPORTAL: MP-a-1 re-cuts behind G-HDR (Andrew's); open rows Z-W2-S3 (ARMED), Z-W1-S5, Z-W2-S6.
 - NFRA_OPALAI: OA-t-1 / OA-t-3 carry behind the cutover gates G-ACCT / G-AUTH / G-PUSH.
 
+## Addendum -- Andrew-direct 2026-09-28 ~20:1xZ, at the 1.0.0_SA_CTO~O terminal
+
+> Bring on CVO~O who will handle your COOs investigations/surprise channels.
+
+Placement: `3.0.0_SA_CVO~O` is the one CVO over the four COOs above (`~O`, `~MI`, `~MP`, `~AI`). Its scope is their
+surprise channels and investigations: L8 compile, L9 adjudication and the L10 slug to 1.0.0_SA_CTO~O, one per project.
+Zero crons; `/watcher` once. Its predecessor's handoff is
+`org/tier1_exec/3.0.0_SA_CVO/handoffs/2026-09-28_1658Z_CVOO.md`.
+
 Spawn: 1.0.0_SA_CTO~O cannot spawn (`/mstr-spawn` invokers are MSTR and COO). The spawn is asked of 0.0.0_AB_MSTR~Z,
 the relaying seat, in one message.
