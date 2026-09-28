@@ -63,3 +63,39 @@ ops 180 passed and 22 skipped. The live CSV arm still reads READY with the refac
 
 **The patch at the same path is superseded (cumulative, sha256 `4d50bf51..`, apply-check rc=0 on P `118612b599`).
 The rebuild's `prospect_dates.py` is `e5bae585..`.** No live XLSX job exists yet.
+
+## ~23:1xZ: the first rebuild (HyEyoJ67) failed at cold start. It was caught before any request and rolled back (CTO 102204)
+
+- P's rebuild (23:00:28Z, CodeSha256 `HyEyoJ67..`) carries this patch's `prospect_dates.py` (`e5bae585`) and
+  `submission.py` (`9929a829`) correctly. It also carries HEAD `ops/entry.py` (`d9643b2f`), whose export B0 line calls
+  `served.render_ports_from_env()`.
+- The zip's `served.py` is the old `41fbd6b5`, the same as bMMJ, and lacks that function. P's HEAD
+  `_authz/served.py` (`3a2cdba2`) defines it at :1094.
+- The handler `status_installed.lambda_handler` builds its boundary at cold start, so the build raises
+  AttributeError: every status, history and sections read would fail for every tenant.
+- CloudWatch showed 0 invocations between the deploy and 23:10Z. Y sent this to P and the CTO (102201) at 23:10Z;
+  the CTO ruled ROLL BACK to bMMJ/bQ+5, window 19 holds, and the rebuild becomes a new packet with an import smoke.
+- **The fix is proved:** HyEyoJ67 with HEAD `_authz/served.py` overlaid builds, and window 15's status read (portal
+  header, live reads) answers **READY ANALYSIS_READY, PER_SECTION, 51 dates**.
+- **Lesson for the drift census:** it compared Y-owned modules only, so it could not see this `_authz` file. A rebuild
+  that takes one file from HEAD needs every file that file imports from HEAD too, which the import smoke catches.
+- **Rollback verified by Y (~23:2xZ):**
+  - The live CodeSha256 reads `bMMJ/bQ+5` from 23:15:47Z, and the live zip is byte-identical to the pre-rebuild
+    zip.
+  - Cold start builds. Window 15's history and sections read correctly (51 sections, identical to the retained
+    report), and its status read gives the known pre-fix template refusal.
+  - CloudWatch shows **one** invocation since 23:00Z, at 23:16:24Z: P's post-rollback cold-start proof. It shows
+    **0 errors**, so **no request ever reached HyEyoJ67**.
+  - P's ledger is CLOSED as a failed deploy, rolled back (P 102206).
+  - The rebuild, with HEAD `_authz/served.py` and the import smoke, is P's next packet. K10 waits for it.
+- **Rebuild 2, pre-apply, independent (~23:5xZ):** P's built artifact is `5fSyChId..` (S3 `1CGG3kWY`). Its members
+  are served `3a2cdba2`, entry `d9643b2f`, prospect_dates `e5bae585` and submission `9929a829`.
+  - `zip_cold_start_smoke.py` PASSES.
+  - Window 15's status read (portal header, live reads, 0 writes) answers **READY ANALYSIS_READY, PER_SECTION, 51
+    dates**.
+  - History and sections are correct (51 sections, identical to the retained report).
+- **LIVE (00:02:49Z, 09-28): SERVED and verified by Y at 00:04Z.**
+  - The live CodeSha256 is `5fSyChId..`, and the live zip is byte-identical to the artifact verified before apply.
+  - Window 15's status read with the portal header answers **READY ANALYSIS_READY, PER_SECTION, 51 dates**.
+  - CloudWatch since the apply: 1 invocation (the post-apply cold start), **0 errors**.
+  - The screen defect found before K10 is closed in production. K10 can read the row as READY.
