@@ -2909,3 +2909,29 @@
   "dismissal_reason": "Disarms DSGN_IRPTV1-S29: portal 528acdcd removes the source-age words from every no-answer panel with no source date."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S34",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-28T19:55:00Z",
+  "one_line": "CONTRADICTS row S33's world_is ('a no-answer panel ... shows its label alone'): the Analysis stage line appends the raw public reason code on every state, so a loading face reads 'Loading (STATE_REPORTED)' (StageDisplay.tsx:62). Found grading FAST pin 528acdcd after the fact; next item N1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 528acdcd src/pages/InvestorReporting/tabs/analysis/StageDisplay.tsx:60-63: {labelForState(envelope.state)}{sourceAgeSuffix(envelope)} then {envelope.publicReasonCode ? ' (' + code + ')' : null}, unconditioned on state",
+      "bun test fe-s-34/label.test.ts at 528acdcd (re-run by 3.0.0_SA_CVO, 18 pass / 0 fail across the 4 re-goldened files) prints: StageDisplay QUEUED business_date ABSENT -> \"Loading (STATE_REPORTED)\" [label alone, no source-age words (UIC-09), no as_of fallback: yes] -- the assertion checks source-age words only",
+      "grade record org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_FAST_PIN_GRADES_20260928.md @23fecac7cd, pin 2 PARTIAL FAIL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "UIC-09 (PRD v0.18; brief docs/briefs/irpt-ui-remaining-brief-20260928.md:45): Loading is a loading state with no system words.",
+  "world_is": "On the Analysis stage line a loading state prints its label plus the envelope's raw public_reason_code in parentheses whenever one is present. Claim class FIXTURE: whether the served envelope carries a public_reason_code on a loading state is unmeasured (walk 20260928T190559Z netlog.tsv holds no bodies).",
+  "notes": "The line predates 528acdcd; the pin's claim 'a loading or refused panel reads its label alone' is what it contradicts. The source-age half of 528acdcd PASSES (same grade record). Filed as a row because the broker refuses a CVO send to 2.0.0_SA_COO~D (spine v3.1 L8); 3.0.0_SA_CVO dispositions it at this round's L9."
+}
+```
