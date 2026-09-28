@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-28T13:45Z. Lease FAST until 2026-09-28T14:03:58Z.
+As of 2026-09-28T14:10Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now (13:30Z 09-28): the GRANT release's generate is LIVE and verified; rebuild 3's gates are committed
@@ -24,6 +24,16 @@ Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` 
     and Overview are ACCEPTED, and the unknown key is REFUSED with 0 writes.
   - **Resident D2 is LIVE** (P closed the ledger at 13:19:08Z). Y's own SSM read: root `fe64236bbb-st2`, the 6 member
     shas equal the proved st2, 0 restarts, 0 Tracebacks. **Next: the first live Comparison window, asked of P.**
+- **Y7 for Comparison is ready** (`live_walk/case_trace.py`). There are 4 new links:
+  - the variant is the recipe's for the key count;
+  - each key's frozen identity is the catalogue's;
+  - the PDF prints exactly the chosen portfolios;
+  - the served foreign-firm check passes.
+
+  Window 15 now traces 20 MATCH, 0 MISMATCH. On the research Comparison and Multi-Comp PDFs the label link gives 2 MATCH,
+  and 4 wrong choices give MISMATCH.
+- **REBOOT CHECKPOINT** (Andrew-direct via CTO 102347, record @6abf6b9c2a): start nothing new. The Comparison window
+  resumes after the reboot. Y writes /log and /handoff after MSTR's CLOSE, then sends READY-FOR-REBOOT.
   The first live Comparison window is ready on Y's side: `live_chain.py` WALK_COMPARISON_KEYS gives the ONE K5
   body (one key Comparison, two Multi-Comp); all three arms validate against the schema. It runs on P's window packet.
 - **Freeze NARROWED** (0.0.0_AB_MSTR 102334): local commits and merges are legal again. No push until MSTR's CLOSE,

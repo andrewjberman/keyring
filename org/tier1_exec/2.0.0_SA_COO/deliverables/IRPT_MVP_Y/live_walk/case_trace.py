@@ -10,6 +10,11 @@ until they run: this tool does not stand in for them.
 Hops: original upload -> normalization -> normalized input -> request composition -> job (vendor echo, read-back) ->
 retained vendor PDF (whose settings table names this job's portfolio) -> extraction evidence -> certified report,
 whose every scalar section is re-read at its own page and coordinates in the retained PDF.
+
+Comparison and Multi-Comp cases: the variant must be the recipe's for the key count; each key's frozen identity must be
+the maintained catalogue's; and the retained PDF must print, of the catalogue's portfolios, exactly the chosen ones.
+Every case: the served foreign-firm name check passes the PDF for its own firm. Arms on the 09-11 research Comparison
+and Multi-Comp PDFs and window 15's Overview: 2 MATCH, and 4 wrong choices MISMATCH.
 """
 import argparse
 import csv
@@ -28,6 +33,9 @@ from boto3.dynamodb.types import TypeDeserializer
 AWS = r"C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\aws.cmd"
 # The extractor's own reader for the printed settings row (Y @36837771d6); the served resident carries it once P ships.
 EXTRACT = r"C:\Users\AndrewBerman\Desktop\irpt-mvp-y-20260922\infra\aws\lambda\investor-reporting\ycharts\extract"
+# The recipe's own variant rule, and the maintained comparison catalogue (templates.json, CRLF-normalized sha 54656584
+# = the served generate AdE17rT6 and resident st2 member).
+GENERATE = r"C:\Users\AndrewBerman\Desktop\irpt-mvp-y-20260922\infra\aws\lambda\investor-reporting\ycharts\generate"
 _de = TypeDeserializer()
 
 
@@ -84,6 +92,27 @@ def printed_number(text):
     return None if not m else float(m.group().replace(",", "").replace("\u2212", "-"))
 
 
+def served_catalogue():
+    """The maintained comparison catalogue entries by key, and the templates.json sha (CRLF-normalized)."""
+    raw = open(os.path.join(GENERATE, "templates.json"), "rb").read().replace(b"\r\n", b"\n")
+    entries = json.loads(raw)["comparison_catalog"]["entries"]
+    return {e["key"]: e for e in entries}, sha(raw)
+
+
+def printed_labels(pdf_bytes, labels):
+    """{label: [pages]} for each catalogue label printed whole (not inside a longer name) somewhere in the PDF."""
+    import pdfplumber
+    with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+        texts = [p.extract_text() or "" for p in pdf.pages]
+    found = {}
+    for label in labels:
+        pattern = re.compile(r"(?<![\w-])%s(?![\w-])" % re.escape(label))
+        pages = [i + 1 for i, text in enumerate(texts) if pattern.search(text)]
+        if pages:
+            found[label] = pages
+    return found
+
+
 def reread_sections(pdf_bytes, sections):
     """Each scalar section's value, re-read at its own page and bbox in the retained PDF (not the certifier's verdict)."""
     import pdfplumber
@@ -125,6 +154,24 @@ def main(argv=None):
     t.link("request", "the composition binds the browser's input_id to that input's own artifact",
            input_ref["input_id"] == input_id and input_ref["artifact_ref"]["sha256"] == input_id.split("_", 1)[1],
            input_id=input_id[:26])
+    sys.path.insert(0, GENERATE)
+    import recipe  # noqa: E402
+    keys = comp["browser"].get("comparison_keys") or []
+    variant = recipe.variant_for_comparison_count(len(keys))
+    descriptors = comp["resolved"]["source_descriptors"]
+    templates = {d["projection"].get("template_id") for d in descriptors.values() if "template_id" in d["projection"]}
+    t.link("request", "the variant is the recipe's for the comparison count, and every recipe source names one template",
+           comp["browser"]["variant"].upper().replace("MULTICOMP", "MULTI") == variant
+           and {d["projection"].get("variant") for d in descriptors.values() if "variant" in d["projection"]} == {variant}
+           and len(templates) == 1, keys=keys, variant=variant, template_id=sorted(templates))
+    catalogue, catalogue_sha = served_catalogue()
+    frozen = comp["resolved"].get("comparison_catalog") or {}
+    chosen = [frozen.get(k) or {} for k in keys]
+    t.link("request", "each chosen key's frozen identity is the maintained catalogue's (security id, label, model portfolio)",
+           set(frozen) == set(keys) and all(
+               k in catalogue and c.get("vendor_id") == catalogue[k]["security_id"] and c.get("name") == catalogue[k]["label"]
+               and c.get("security_type") == catalogue[k]["security_type"] == "model_portfolio" for k, c in zip(keys, chosen)),
+           frozen={k: [c.get("vendor_id"), c.get("name")] for k, c in zip(keys, chosen)}, catalogue_sha=catalogue_sha[:8])
 
     # 2. The normalized input and the upload it came from.
     inp = t.req("INPUT#" + input_id)
@@ -186,6 +233,12 @@ def main(argv=None):
     t.link("pdf", "the effective settings the report records are the read-back's actual values",
            meta["effective_inputs"]["settings"] == {r["setting"]: r["actual"] for r in rb["rows"]},
            effective=meta["effective_inputs"]["settings"])
+    labels = printed_labels(pdf_bytes, [e["label"] for e in catalogue.values()])
+    t.link("pdf", "of the catalogue's portfolios, the PDF prints exactly the chosen comparisons (the vendor compared "
+                  "what was asked)", set(labels) == {c.get("name") for c in chosen}, printed=labels)
+    import publication  # noqa: E402  (the served name check, Y @14568b9ec1 = st2's 6aa82b3a)
+    foreign = publication.foreign_firm_names(pdf_bytes, a.tenant)
+    t.link("pdf", "the served foreign-firm name check passes the PDF for its own firm", foreign == [], foreign=foreign)
 
     # 5. Extraction evidence and the certified report.
     pub = cp["publication"]
