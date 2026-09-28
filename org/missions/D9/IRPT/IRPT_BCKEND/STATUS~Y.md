@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-28T13:30Z. Lease FAST until 2026-09-28T13:44:34Z.
+As of 2026-09-28T13:45Z. Lease FAST until 2026-09-28T14:03:58Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now (13:30Z 09-28): the GRANT release's generate is LIVE and verified; rebuild 3's gates are committed
@@ -22,7 +22,8 @@ Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` 
   - **Generate D1 is LIVE:** `AdE17rT6` since 13:11:54Z, the proved bytes.
   - Re-run under the live function's own environment (`offline_submit_proof.py --live-env`): Comparison, Multi-Comp
     and Overview are ACCEPTED, and the unknown key is REFUSED with 0 writes.
-  - The resident st2 swap (D2) is P's.
+  - **Resident D2 is LIVE** (P closed the ledger at 13:19:08Z). Y's own SSM read: root `fe64236bbb-st2`, the 6 member
+    shas equal the proved st2, 0 restarts, 0 Tracebacks. **Next: the first live Comparison window, asked of P.**
   The first live Comparison window is ready on Y's side: `live_chain.py` WALK_COMPARISON_KEYS gives the ONE K5
   body (one key Comparison, two Multi-Comp); all three arms validate against the schema. It runs on P's window packet.
 - **Freeze NARROWED** (0.0.0_AB_MSTR 102334): local commits and merges are legal again. No push until MSTR's CLOSE,

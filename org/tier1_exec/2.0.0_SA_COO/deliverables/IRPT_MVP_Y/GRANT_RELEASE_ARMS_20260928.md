@@ -72,3 +72,17 @@ Read 13:1xZ, 09-28:
   catalogue keys, so a viewer cannot send one. This is parked with P.
 - **Remaining:** the live ACCEPT is proven only by the first live Comparison window. The resident `st2` swap (D2) is
   P's next leg.
+
+## After P's resident install (D2): Y's own read of the host
+
+P closed ledger `irpt-generate-resident-grant-20260928` at 13:19:08Z, with all 4 legs proven. Y then made its own
+read-only SSM read of `i-0167fd745ad906a66` (command `855a2d26`, 13:4xZ):
+- **The service:** ExecStart root `/opt/irpt-resident/fe64236bbb-st2`, active, MainPID 235902 since 13:17:56Z,
+  NRestarts 0.
+- **The members, by sha256:** templates.json `54656584`, publication.py `6aa82b3a`, publisher.py `68900af6`,
+  maintained_sources.py `774eca9b`, resident_worker.py `9b2dbd18`, extract.py `719369d5`. These are the st2 members
+  the arms above ran on.
+- **Errors:** 0 Tracebacks in the service journal over the last 20 minutes.
+
+The release is live on both halves. What remains is live traffic: the first live Comparison window (K5 through
+`live_chain.py` WALK_COMPARISON_KEYS) and the first certified report for 49financial and Inflection.
