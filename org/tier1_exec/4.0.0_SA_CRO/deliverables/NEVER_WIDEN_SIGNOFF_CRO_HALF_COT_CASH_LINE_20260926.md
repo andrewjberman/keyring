@@ -202,3 +202,21 @@ Not measured by this seat: the per-firm delta figures themselves (the request's)
 
   Anything beyond that is the rollback in the request's term 4: the prior S3 versions of C_06, D_03, D_04 and
   mix_views plus the Holdings revision, then a D_04 re-run.
+
+## Addendum 6 (2026-09-28 ~12:5xZ) -- IRPT_BCKEND-S173: the served COT classifier has never read bd-securities
+
+Source: 2.0.0_SA_COO~M msg 102291, row S173 @4b099fc076.
+- **The finding:** `cot-exporter-ec2-role` has no DynamoDB action on `table/bd-securities`. 98 of 131 gold-run logs
+  since 06-09 record the AccessDenied scan, and 0 record a load. Served COT classifies from name patterns and the
+  ticker-shape heuristic only.
+- **Effect on this record:** the halves above were measured with the table READABLE. On served output, none of them
+  moves as signed. The signatures stand as statements about the code. The served effect they describe is NOT
+  delivered until the role can read the table, and it is re-measured on served after that.
+- **The remedy is its own act, with its own halves.** It grants read on the table and moves the served COT mix by about
+  33 points of equity.
+  - bd-securities holds 10,929 rows (full scan, read here). 222 carry `firm_origin: "inflection"`.
+  - `data/cot/scripts/gold/lib/etf_classifier.py:53` scans with NO projection, so an unbounded grant has the COT host
+    read an Inflection-tagged attribute.
+  - This seat's view: bound it, rather than argue it. Project the classifier's scan to the fields it uses, and
+    condition the grant on those attributes (`dynamodb:Select` SPECIFIC_ATTRIBUTES, `dynamodb:Attributes`), so
+    `firm_origin` is unreadable.
