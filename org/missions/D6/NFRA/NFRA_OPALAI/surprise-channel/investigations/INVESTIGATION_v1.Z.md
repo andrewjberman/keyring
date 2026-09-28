@@ -1486,6 +1486,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-r-1 step 2: the four-file pytest list runs in the release tree and any failure stops the deploy; the order expects the list to pass there.",
     "world_is": "tests/test_portal_grant.py holds an operator half (ops/schwab_entitlement_admin.py) whose two tests read the contract file outside infra/aws/ec2/opal-gateway. The release tree is the base plus five gateway files, so it carries the base's contract (no portal_grant). Those two tests fail there before and after OA-e-1, and neither touches asker_scope.py or tools.py. The worker did not deploy, opened no ledger entry, and touched nothing on the instance beyond the read-only SSM of step 0. Options for the issuer: amend step 2's list to deselect those two tests (with the reason), or supply the v1.2 contract to the census. The worker will not choose.",
     "notes": "Not ARMED: nothing is deployed. The release worktree /c/tmp/oa-10-rel and branch rel-nfra-opalai-r2-asker-binding-gateway (d287ffb346) exist and are unpushed. Scratch /c/tmp/oa-10-basechk holds the base control and can be removed."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S5",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-28T23:55Z",
+    "one_line": "OA-r-1 cannot start its act: safe-ec2-deploy.sh's halt gate refuses this worker from the release tree with exit 3 (SERIAL RESOLVES TO NO KNOWN AGENT). The gate admits a 0.9.0_WK_<CODE>~<n> worker only while a non-terminal task order under <CODE> is issued_to it AT HEAD OF THE CALLING WORKTREE (halt-gate-check.sh:166-185, git ls-files + git show HEAD:p). The release tree is HEAD 6a98a0553a + d287ffb346 and holds 0 task orders under NFRA_OPALAI (33 under NFRA_OPLGTW); the slot branch holds 31. The wrapper pins HALT_GATE_REPO_ROOT to the calling toplevel, so the release tree cannot be told otherwise.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd /c/tmp/oa-10-rel && ( . .tools/halt-gate-check.sh; halt_gate_check oa-r-1-preview ) -> 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', 'Resolved serial: 0.9.0_WK_NFRA_OPALAI~10', gate rc=3. Before the serial file existed in the release tree the session file resolved to the parent COO's serial 2.0.0_SA_COO~AI, also rc=3.",
+        "git -C /c/tmp/oa-10-rel ls-files -- 'org/missions/D*/*/NFRA_OPALAI/task-orders/*.md' | wc -l = 0; the same in /c/tmp/oa-10 = 31.",
+        ".tools/halt-gate-check.sh:185 reads git -C $HALT_GATE_REPO_ROOT ls-files; infra/aws/ec2/safe-ec2-deploy.sh assigns HALT_GATE_REPO_ROOT=$(git rev-parse --show-toplevel) of its own checkout unconditionally, so an env override does not survive.",
+        "Prior OPALAI releases passed because their release bases already held NFRA_OPALAI orders; the OPLGTW OG-s-1 base 6a98a0553a holds none.",
+        "I created org/mcp/sessions/<session>.serial (gitignored, my own serial) inside /c/tmp/oa-10-rel to test the gate; it changes no tracked file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-r-1 step 5: ACT from the release worktree with its scripts, halt gate pre-acknowledged with HALT_ACK=1 when it reads 0 STOP.",
+    "world_is": "HALT_ACK covers a routine unread inbox (exit 1), not an unadmitted serial (exit 3), and HALT_OVERRIDE covers a STOP (exit 2). Nothing in the wrapper admits a worker whose release tree predates its orders. Routes that would pass, none taken: (a) commit the OA-r-1 task order into the release branch (breaks the five-file census), (b) run the wrapper from /c/tmp/oa-10 (a HEAD deploy, forbidden), (c) edit .tools/halt-gate-check.sh or the wrapper (read-only for this order). The issuer decides which, or provides another.",
+    "notes": "Not ARMED: nothing is deployed and no ledger entry is open. Done before the stop, all proven: step 2 (release d287ffb346, census 5 of 5, 34 passed 2 deselected, transcript saved); step 3 (rollback artifact opal-gateway-6a98a0553a.tar.gz 398873 bytes from /c/tmp/oa-10-rb, 79 of 79 files identical to the live host, not uploaded); step 4(i) the .env render, 27 keys, all 9 markers on their own keys, no misalignment."
   }
 ]
 ```
