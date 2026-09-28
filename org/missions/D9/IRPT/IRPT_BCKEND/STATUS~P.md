@@ -1,99 +1,102 @@
-# IRPT_BCKEND~P (Performance) -- status (FROZEN for hand-back, brief A2)
+# IRPT_BCKEND~P (Performance) -- status
 
-Seat `2.0.0_SA_COO~P` (CLAUDE). Workstream scope (brief section 3 Phase D): shared auth, routes, IaC and packaging,
-plus Performance/Reporting.
-As of 2026-09-28T18:0xZ. This is the A2 freeze of `org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_CLOSER_TO_CANONICAL_RETURN_BRIEF_20260924.md`
-section 3, act 3 of `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20260928_174xZ_RELAUNCH_CANONICAL_DRIVE_PMY_CLOSER_D.md`
-(CTO 102385). Lease IRPT_BCKEND~P is FULL; the /loop 20m goal row is struck; the /closer-drive cron 312e843c is gone
-(CronList empty at relaunch). The goal record stays the done-criterion:
-`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-Round 19 is cut from the next-list below. Earlier forms of this file are in git.
+Seat `2.0.0_SA_COO~P` (CLAUDE), `/canonical-drive 10m` (cron 34a39a73; LIVE_ARMS RELAUNCH row). Workstream scope:
+shared auth, routes, IaC and packaging, plus Performance/Reporting. Also issuer of workstream ~E (CTO ruling 102461).
+As of 2026-09-28T23:2xZ. The A2 freeze of this file is @025cef10fd; earlier forms are in git.
 
-## Served function -> deployed artifact -> source commit
+## Standing Andrew words that govern this workstream (read first)
 
-Live CodeSha256 read 2026-09-28 ~17:5xZ (`get-function-configuration`), each equal to the ledger readback. Source
-commits are on the backend branch `irpt-smoke-p-backend-20260923` and are NOT on CLOUD (`merge-base --is-ancestor`,
-all six checked N); the S19 purge map leaves every one of them unchanged. B3 of the brief is the proof that the drain
-carries them.
+- **~22:2xZ call 3** (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_OPEN_CALLS_1_2_APPROVED_3_HOLDINGS_BASED_PERFORMANCE.md`):
+  performance is end-of-day holdings only -- the weight-pro-rated daily price return of the securities held, no
+  inflow/outflow logic.
+- **~22:4xZ** (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_HOLDINGS_BASED_PERFORMANCE_ALL_FIRMS_SILVER_TO_ONE_GOLD.md`):
+  every firm (49F, INF, COT) moves to that basis, in ONE consolidated gold shape the page reads, run daily, verified at
+  the vendors' official periods. Sequence: CRO L1 inventory brief -> CTO L4 addendum (an ENDPOINT change; CVO
+  re-signs) -> COO decomposition. Cottonwood per-use vendor plans are no longer the path.
 
-| Function | Live CodeSha256 | Applied (Z) | S3 version | Source (backend branch) | Ledger | Rollback |
-|---|---|---|---|---|---|---|
-| irpt-performance-adapter | `F0bYtOfBw3qwHtHAALuGcP77bzMB98mTYSBr+eO6rlM=` | 09-27 23:47:48 | G4UtfeeR.. | `entry.py` @c8ef8b7751 over the live 69-member set | irpt-adapter-render-selection-20260927 (+ render-grant-kms-20260927) | S3 8uohgNwE (bOefL9nx) |
-| irpt-export-render | `BORQ2shbblG4OIG387kkAKTxUUtbPhw6LoLVx0mqGM4=` | 09-28 12:51:49 | O1Vu8CyD.. | `export/entry.py` @5c0185fee2 (R11 RUNNING) | irpt-export-receipt-running-20260928 | Ulim/gmf |
-| irpt-ycharts-generate | `AdE17rT6f3IZKuh/VWMLTB+HuCZql50ZJzZXUYs90e8=` | 09-28 13:11:54 | BIEsyaNn.. | `generate_installed.py` @2e3d50caac, `publication.py` @c1fd6c5e52, `maintained_sources.py` @15b9f85eb3, `templates.json` @6096ee740b | irpt-generate-resident-grant-20260928 CLOSED | S3 Iu3nADja (ykJltfTd) |
-| Resident (i-0167fd745ad906a66) | root `/opt/irpt-resident/fe64236bbb-st2`, tar sha256 f681024b.. | 09-28 13:17:56 | 2ZLL.I5j.. | st overrides + the same four files as generate (6096ee740b, 15b9f85eb3, c1fd6c5e52) | irpt-generate-resident-grant-20260928 CLOSED | root fe64236bbb-st |
-| irpt-status | `ZYr+IDMpN0vtwnpxz+kOXKDMcjNpLrbbHdRm4TZerkY=` | 09-28 14:04:55 | 7Uz6kDd_.. | publish @6389be7a9b (submission.py 9929a829, prospect_dates.py e5bae585); IAM original_holdings grant @75df934b23 | irpt-status-dates-rebuild3-20260928 | code S3 7xPCOM83 (bMMJ); grant = ops root at 5c0185fee2 iam.tf |
-| irpt-directory-search | `o1TXq5PH1+/VVff+hf4U+b+H6Kf1VCJkUJJjAaN+y7Q=` | 09-26 22:54:06 | -- | directory `handler.py` + `entry.py` @49b935c213 | irpt-uir07-search-rank-20260926 CLOSED | S3 7ENQv_0N (o9Qu0Jm7) |
+## Served function -> deployed artifact -> source commit (live CodeSha256 read at each move)
 
-Branches (local, not pushed; MSTR drains per brief B1, ~P first):
-- backend `irpt-smoke-p-backend-20260923` @101ec0d8eb. WIP: none. The worktree's untracked files are `.scratch/`
-  commit-message drafts and `org/pipescript-suite-gate-audit.log`; its `portal` path reads modified (237bdfda vs the
-  recorded 10141b6d, no `.gitmodules` mapping in that worktree). Neither is ~P work, and neither is committed.
-- publish `irpt-p-publish-20260923` @b4f5492e9e. WIP: none (status clean).
-- Branch-side ledger residue: both branches still carry `.open_deploys` files (irpt-p-live-scope-20260923,
-  irpt-performance-window-rearm-20260924, irpt-upload-hop2-20260924, irpt-performance-49f-engine-20260924,
-  irpt-performance-inf-one-use-20260925) that CLOUD already closed (each has one completion file on CLOUD). At the
-  drain the CLOUD state wins; none is a live deploy.
+| Function | Live CodeSha256 | Applied (Z) | Source | Ledger |
+|---|---|---|---|---|
+| irpt-performance-adapter | `hcZpXDDofuUX2YImni0nsCDyLOxHl2Mxc1IvEBwG0+0=` (S3 wVW7wVQw) | 09-28 22:02:49 | entry.py + f49_engine.py @57a58117fb (NEW-01 guard); other 67 pins as F0bYtOfB | irpt-adapter-implausible-guard-20260928 (U1 closed; D1 OPEN) -- rollback G4UtfeeR |
+| irpt-export-render | `BORQ2shbblG4OIG387kkAKTxUUtbPhw6LoLVx0mqGM4=` | 09-28 12:51:49 | export/entry.py @5c0185fee2 | irpt-export-receipt-running-20260928 |
+| irpt-ycharts-generate | `AdE17rT6f3IZKuh/VWMLTB+HuCZql50ZJzZXUYs90e8=` | 09-28 13:11:54 | generate_installed @2e3d50caac, publication @c1fd6c5e52, maintained_sources @15b9f85eb3, templates @6096ee740b | irpt-generate-resident-grant-20260928 CLOSED |
+| Resident (i-0167fd745ad906a66) | root `/opt/irpt-resident/fe64236bbb-st2` | 09-28 13:17:56 | as generate | same, CLOSED |
+| irpt-status | `ZYr+IDMpN0vtwnpxz+kOXKDMcjNpLrbbHdRm4TZerkY=` | 09-28 14:04:55 | publish @6389be7a9b; IAM @75df934b23 | irpt-status-dates-rebuild3-20260928 |
+| irpt-directory-search | `o1TXq5PH1+/VVff+hf4U+b+H6Kf1VCJkUJJjAaN+y7Q=` | 09-26 22:54:06 | @49b935c213 | irpt-uir07-search-rank-20260926 CLOSED |
 
-## Open ledger entries (CLOUD `org/critical_paths/.open_deploys/`), each open on A1 only
+All source commits are on CLOUD (MSTR act-4 drain @c161a2faca; B3 row S178). Nothing here is pushed.
 
-U1 and D1 are closed in every completion file; the JSON legs lag on U1/D1 for four of the six. The open proof in each
-is a live walk:
+## Open ledger entries (CLOUD `org/critical_paths/.open_deploys/`)
 
-| Entry | Open leg | Proof owed |
+| Entry | Open leg | What closes it |
 |---|---|---|
-| irpt-adapter-render-grant-kms-20260927 | A1 | the render's Performance read as RENDER_DELEGATE succeeds (no AccessDenied); READY %PDF |
-| irpt-adapter-render-selection-20260927 | A1 | the same read answers (no SelectionRefused); READY %PDF |
-| irpt-export-async-submit-20260927 | A1 | ONE POST answers QUEUED with an exr_ revision under 29 s; BUILDING -> SUBMITTED; receipt NOT_READY -> READY %PDF or a named FAILED |
+| irpt-adapter-implausible-guard-20260928 | D1, A1 | CRO D1 NOT MET @5f82151a2e: the page reopens RETAINED reports, so NEW-01 1Y still reads -100%. Closes after IB-pr-194 (the reopen guard) is served and a walk shows the named refusal |
+| irpt-adapter-render-grant-kms-20260927 | A1 | the render's Performance read succeeds, READY %PDF |
+| irpt-adapter-render-selection-20260927 | A1 | the same read answers (no SelectionRefused) |
+| irpt-export-async-submit-20260927 | A1 | one POST QUEUED -> READY %PDF or a named FAILED |
 | irpt-export-receipt-running-20260928 | A1 | a pending receipt reads RUNNING and the page polls to READY |
-| irpt-export-reopen-rule-20260927 | A1 | a second in-scope principal exports READY; a principal missing one account is refused; grant/receipt name the caller |
+| irpt-export-reopen-rule-20260927 | A1 | a second in-scope principal exports READY; a principal missing one account is refused |
 | irpt-status-dates-rebuild3-20260928 | A1 | the page reads REQ-67e12718 READY PER_SECTION |
+
+## Round 19 (workstream ~P; decomposition section 13, 13.1)
+
+| Order | Cell(s) | State |
+|---|---|---|
+| TO-IB-pr-191 | IB-pr-191 (NEW-01 guard on compute) + IB-pr-194 (the retained reopen guard) | REOPENED @b6e0525927 to slot ~63; 191 served as hcZpXDDo; 194 built @90c4b596f3, proof pending |
+| TO-IB-pr-192 | IB-pr-192 (Since inception from the first data point) | pending on slot ~61's branch; AC1 PASS, AC2 FAIL live (row W61-S2); now governed by the consolidated-gold sequence |
+| TO-IB-pr-193 | IB-pr-193 (async export log REFUSED) | complete, merged @b02d1e9097 |
+| TO-IB-s158 | IB-sr-1 (COT BD session auto-login) | complete |
+| TO-IB-er-191 (workstream ~E) | IB-er-191 (holdings-based 49F engine) | CANCELLED @06d66b5893 by Andrew-direct ~22:4xZ; 0.4.0_DS_ClientPlatform~E halted, nothing written (102466) |
 
 ## Acceptance (goal done criteria)
 
 | # | Criterion | State |
 |---|---|---|
-| 1 | Signed-in journey per firm | Performance DONE at 49F, INF, COT, but NEW-01 puts a wrong figure on one 49F account. Analysis READY once (49F). Export reaches the render; READY needs the K8 window |
-| 2 | Every active account resolvable | MEASURED: COT 843/843, INF 878/878, 49F 6698/7497 (9 funded non-computable) |
-| 3 | COT structurally sound, window disclosed | MET: RPT-12b885b8, actual 07-21..09-21 (rows S169/S170) |
+| 1 | Signed-in journey per firm | Performance: no firm has a complete report on the page (CRO walk 17:49Z; AD-14). 49F NEW-01 still -100% on retained reports (D1 open). Analysis READY once -- cottonwood, REQ-67e12718 (corrected by ~Y 102408; previously written here as 49F). Export reaches the render; READY needs the K8 window |
+| 2 | Every active account resolvable | MEASURED 09-28 AM: COT 843/843, INF 878/878, 49F 6698/7497 |
+| 3 | COT structurally sound, window disclosed | MET on RPT-12b885b8 (actual 07-21..09-21) |
 
-## Next-list, in priority order (round 19 cells)
+## Named dependencies (AD-14)
 
-1. **NEW-01 (HIGH, row S176, CTO 102357):** an invested 49F account answers YTD -100.00% (the series falls from 0.00%
-   on 04-15 to -100.00% on 04-16 and holds). Trace to file:line in the adapter F0bYtOfB and the gips series, then fix.
-   Acceptance: an account with positive holdings never answers -100%; a first-day funding flow is not a return. Source:
-   `docs/briefs/irpt-ui-cleanup-status-20260928.md` (shots 20260928T133602Z#138/#139). Risk WORLD.
-2. **The first live Comparison + export window (one packet, both halves before the principal):** K4 window 15's
-   Dollars CSV; K5 ONE Comparison, opal_long_term, via `live_chain.py` @898fda7783 (~Y 102340); K8 the export, closing
-   the five export/adapter A1 legs above (needs ~D's page pin TO-IV-e-78); K10 the page reads REQ-67 READY (rebuild 3
-   A1). Risk WORLD.
-3. **UIC-06, backend half:** NOT MET at the CRO re-walk @f330857833; no work recorded.
-4. **Per-headline causal filter** (carried from the goal loop).
-5. **Hygiene, owner ~P:** `run_async_submit` logs stage FAILED for a refused replay whose pointer it did not change;
-   the tree-order template's `<proof_of_spec>` path is flat while the gate globs
-   `<project>/deliverables/<serial>/<TO stem>.proof_of_spec.json` (row S167); the backend worktree's directory
-   Terraform root predates ~M's holdings resources (UIR-07 used -target); the ~M consumer cherry-picks 65957b8afc and
-   15b9f85eb3 went in by plain cherry-pick, not safe-commit (review at the drain).
+- **COT** (row S185): every fresh Cottonwood window needs a server-approved one-use Black Diamond plan; none is armed,
+  so the adapter refuses VendorEgressRefused before any vendor call (154 refusals 13:30-22:30Z). Superseded as a fix
+  path by the ~22:4xZ Andrew-direct (holdings basis for all firms).
+- **INF**: InflectionMappingRefused, "account not individually addressable: its Orion household holds 4 accounts" (49).
+- **49F**: WindowNotRuled for 3Y / Since inception (36); NEW-01 on two retained reports.
+
+## Next-list, in priority order
+
+1. **IB-pr-194 served move:** drain slot ~63; packet (both readers of the served figure counted: compute AND reopen);
+   both halves; apply; CRO walk shows NEW-01 1Y and YTD as a named refusal. Closes ledger D1.
+2. **Consolidated holdings gold:** the ~P share of the COO decomposition once the CRO brief and CTO L4 addendum land;
+   ~E's 49F slice is re-cut then (DS~E's facts are with the CRO: 99.2% priceable, prices in canonical_positions,
+   W61-S2's cause is a calendar gap).
+3. **The live window packet** (one principal, both halves): K4 window 15 Dollars CSV; K5 one Comparison
+   (opal_long_term); K8 export (closes the five export/adapter A1 legs); K10 the page reads REQ-67 READY; ~Y's arms
+   (Y2 XLSX, Y2 Target Weight, one INF Overview, one 49F Overview, a deliberate mid-job credoff revocation).
+   Precondition: the next resident + generate build carries ~Y's recipe.py + resident_worker.py @ec8f69f718.
+4. **Branded Analysis export** (~Y R19_Y AMENDMENT 2; ~Y supplies the AnalysisReport schema and owner shape).
+5. **Hygiene:** W62-S1 (export suite red `test_the_marked_event_builds_and_the_handle_reaches_the_receipt`,
+   pre-existing); the tree-order template's short proof_of_spec name (W61-S1); build-and-upload deleting tracked
+   performance/*.py; the directory Terraform root predating ~M's holdings resources.
 
 ## Andrew acts in flight
 
-None at this lane. No one-use plan is armed on the adapter (live env has no PLAN key, read ~17:5xZ). A future vendor
-call (a Performance one-use window, a 49F SmartX or INF Orion Scope call) needs a fresh per-use word, both halves and
-a ledger.
+None at this lane. No one-use plan is armed on the adapter.
 
-## Parked (owner outside ~P, or un-park condition not met)
+## Parked
 
 | Question | Owner | Un-parks when |
 |---|---|---|
-| Kept test inputs and reports from windows 1-6 in cottonwood, plus RPT-b683f188 (S157) and the spent claims PERFORMANCE_USE#63cf95e9 / #b20d69b2, must be excluded from firm viewers' lists or removed | the release cutter | the route opens to firm users |
-| `build-and-upload.sh` deletes tracked performance/*.py on each adapter build (restored by hand each time) | 1.0.0_SA_CTO to route (ci/ owner) | the next performance build |
-| Row S175: an unknown comparison key and a catalogue edit both raise MaintainedSourceRefused, mapped to UNEXPECTED; remedy two subclasses declaring `public_reason_code` in `_scope/maintained_sources.py`. UI-unreachable | 2.0.0_SA_COO~M | the next maintained_sources.py change, or a portal path that sends a free key |
+| Kept test inputs and reports from windows 1-6 in cottonwood, RPT-b683f188, spent claims PERFORMANCE_USE#63cf95e9 / #b20d69b2 | the release cutter | the route opens to firm users |
+| Row S175: MaintainedSourceRefused maps to UNEXPECTED | 2.0.0_SA_COO~M | the next maintained_sources.py change |
+| Row S184: 2 near-miss invested accounts (-0.9996, -0.99996) keep ~-100% | the consolidated-gold decomposition | the holdings basis replaces the flow engine |
 
 ## Gates in force
 
-- Every served zip: `flat_zip_module_census.py` + ~Y's `zip_module_census` + a built-zip cold-start smoke BEFORE apply.
-- A LIVE before-read on the served bytes before the apply, and the same read after; any unnamed difference is a
-  same-turn rollback.
-- Served moves need both never-widen halves (CTO + CRO) at HEAD naming the packet blob.
-- Walk principals: password to SSM SecureString only; K1-CRED removed by `walk_principal.py --kind=uiwalk credoff`;
-  deleted within the 120-minute cap.
+- Every served zip: flat_zip_module_census + ~Y zip_module_census + a cold-start smoke (with /var/task mapped on this
+  host; the ~Y smoke is non-discriminating here) BEFORE apply.
+- A before/after read that DISCRIMINATES on the served surface, counting every reader of the served figure (compute
+  and retained reopen); a refusal-only read does not count.
+- Served moves need both never-widen halves at HEAD naming the packet blob.
