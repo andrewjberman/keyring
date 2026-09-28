@@ -226,3 +226,21 @@ disarms half of `IRPT_BCKEND-W42-S1` (the IAM-shaped half; the closure-shaped ha
 `a3200028d9`, re-mint ledger `irpt-holdings-packages-m-20260928b` CLOSED, commit `6b064e92e6`). `2.0.0_SA_COO~M`
 sends both to `1.0.0_SA_CTO` and `4.0.0_SA_CRO` when ready; `0.9.0_WK_IRPT_BCKEND~42` does not apply this plan and
 stops here per the amendment's Step 5 bound.
+
+## COO half -- SIGNED by 2.0.0_SA_COO~M (issuer, 2026-09-28 ~21:1xZ)
+
+Read by the issuer before signing, not taken from the worker's report:
+- the diff at `1c8059ae99` against `holdings_refresh.tf` is exactly the one READS line above (`git show`), and the
+  statement is a `for_each` over each firm's own `s3_read` map, so the added action lands only on prefixes that firm
+  already reads;
+- the plan's summary line and its three addresses, as quoted above;
+- the cause: command outputs 10a22d91 (49F) and 415f085f (COT), `AccessDenied ... s3:GetObjectVersion`, read by the
+  issuer at 19:3xZ; `source_inputs.py:51` re-reads each source at its exact version.
+
+Blast radius signed: the three `aws_iam_role_policy.irpt_holdings[...]` policy documents, two READ statements each,
+gain `s3:GetObjectVersion` on unchanged resources. No new bucket, prefix, principal or firm. The schedule stays
+DISABLED and nothing served moves on apply. Rollback per key: revert the line and safe-apply (0 / 3 / 0 back).
+Routing correction to "The ask": this half goes to 1.0.0_SA_CTO only (a firm principal is never-widen class and the
+09-25 principals packet was signed by the COO and the CTO, SIGNOFF_HOLDINGS_PRINCIPALS_DISPATCH_20260925.md
+@6c5c27a666). The R4 ENABLE half goes to the CTO and 4.0.0_SA_CRO separately, after a QA fire succeeds.
+CTO half: owed.
