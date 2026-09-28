@@ -10327,3 +10327,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "CLAUDE.md Git section names the trap (MSYS path conversion of a slashed argument). Remedy this seat applies from now: K1-CRED is deleted through walk_principal.py (boto3, a new `credoff` verb would be one line) or python, never a Bash aws call with a slashed name; and a proof of absence reads the name back from CloudTrail or boto3, not from the same mangled call."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S173",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-28T01:10:00Z",
+  "one_line": "The COT gold host role cot-exporter-ec2-role has NO DynamoDB access to bd-securities, so every COT gold run's ETFClassifier scan fails (AccessDenied) and falls back to EMPTY maps: served COT classification is name patterns plus a 1-5-letter-ticker=equity heuristic, never the table. Served COT firm mix 2026-09-25 is equity 85.8% / FI 13.0%; with the table it is equity 52.5% / FI 35.1% / alternatives 8.8% / cash 3.6%.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cot/logs/cot-exporter/gold-run/: 131 logs 2026-06-09..2026-09-27; 98 carry 'ETFClassifier: scan failed, falling back to empty maps: ... AccessDeniedException ... Scan ... cot-exporter-ec2-role/i-0643a5bee8a8feabf'; 0 carry 'ETFClassifier loaded'",
+      "iam simulate-principal-policy role/cot-exporter-ec2-role on table/bd-securities: dynamodb:Scan, GetItem, DescribeTable all implicitDeny; inline cot-exporter-policy + cross-firm-bucket-deny and AmazonSSMManagedInstanceCore carry no dynamodb action; CloudTrail Put/Delete/Attach/DetachRolePolicy on the role since 2026-08-01: 0",
+      "served gold/entities/clients/z09308463.json (generated 2026-09-27T18:48Z by the 18:46Z gold run): FXNAX 'FIDELITY U.S. BOND INDEX' and PDBZX 'PGIM TOTAL RETURN BOND Z' asset_class equity; FCASH fixed_income (bd-securities says cash)",
+      "the served lib/etf_classifier.py and C_06 are byte-identical to CLOUD (sha 943ff55e2e7b, 90574a72965c): the difference is the runtime's table access, not code",
+      "served gold/views/firm_composition.json 2026-09-25: equity 0.8575, fixed_income 0.1301, unclassified 0.0082, alternatives 0.0041; the same C_06 classify_series with bd-securities readable over canonical 2026-09-25 (positive rows, ghosts excluded): equity 0.5251, fixed_income 0.351, alternatives 0.088, cash 0.0359"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "COT gold classifies holdings through the DynamoDB-backed ETFClassifier over bd-securities (C_06/D_03/D_04 docstrings; every COT classification half this week -- cash admission, other admission, COT-new Part 1, cash line -- was measured with the table readable).",
+  "world_is": "The COT host cannot read bd-securities and never has in the retained logs; COT's served asset classes come from name regexes and the ticker-shape heuristic. None of the bd-securities writes or classifier-rule changes reach served COT gold until the role can read the table.",
+  "notes": "Remedy (not ~M's lane): grant cot-exporter-ec2-role read-only dynamodb:Scan/GetItem on table/bd-securities in infra/aws/terraform/cot-pipeline/iam.tf (cot_exporter_policy :241), via safe-apply. It is an IAM widening and moves every served COT mix (about 33 points of equity), so it needs its own halves; bd-securities is security-level asset truth (a07 serves all firms from it), not another firm's client data. Until then the Monday R1 read-backs of cot-cash-admission, cot-other-admission and bd-securities-cot-new-p1 cannot pass on served output, and the COT cash-line act is moot on served. Found by 2.0.0_SA_COO~M reading the ad-hoc 2026-09-27 18:46Z COT gold run's outputs."
+}
+```
