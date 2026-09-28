@@ -1654,6 +1654,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "AC2's invocation, as cut, collects and runs both real test suites (lib/research/harvest/tests/ and lib/opal_data_harvest's tests) and prints their combined before/after pass-fail counts.",
       "world_is": "The second path segment names a directory that has never existed in this repo; pytest's own multi-path collection refuses the WHOLE invocation on the first bad path, so it produces zero counts from either directory, not a partial result. This worker did not re-path the invocation (standing instruction) and grades AC2 on the literal output alone.",
       "notes": "DISARM IS THE ISSUER'S, not this worker's (rule 27, L6, amend-without-CTO-ruling): re-cut AC2's invocation to `python -m pytest lib/research/harvest/tests/ lib/opal_data_harvest/ -rA` (drop the `/tests/` suffix on the second path), which is exactly the historical AC3 command from HVST-v-1 plus the sibling suite. This worker's own two production edits (lib/opal_data_harvest/uploads.py, lib/opal_data_harvest/__main__.py) are otherwise unaffected -- the diagnostic run above shows them landing with zero regression against the corrected command."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W26-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~26",
+      "surfaced_at": "2026-09-28T02:00:00Z",
+      "one_line": "test_worker.py's `patch(\"lib.opal_data_harvest.publishers.DowJones\", ...)` never took effect -- pytest's rootdir import (no lib/__init__.py) loads the test as `opal_data_harvest.test_worker`, so the code under test resolves `DowJones` off `opal_data_harvest.publishers`, a DIFFERENT module object than the one the string-targeted patch imports and mutates -- and this shape (`patch(\"lib.opal_data_harvest....\")`) has one more live occurrence in the same file that only 'works' by accident.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~Y",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: `python -c \"from lib.opal_data_harvest.publishers import DowJones; print(DowJones.__module__)\"` -> `lib.opal_data_harvest.publishers`. But a pytest traceback of the failing test (full -v run, this worktree) shows `self = <opal_data_harvest.publishers.DowJones object at ...>` -- no `lib.` prefix -- proving pytest's own collection of `lib/opal_data_harvest/test_worker.py` resolves the module under a different qualified name.",
+          "`lib/opal_data_harvest/__init__.py` exists; `lib/__init__.py` does NOT (comp-find --name confirms), which is exactly the condition under which pytest's default rootdir-based import inserts `lib/` (not the repo root) onto sys.path and imports the package as `opal_data_harvest`, not `lib.opal_data_harvest`.",
+          "`pytest.ini`'s `pythonpath = .` also puts the repo root on sys.path, so `patch(\"lib.opal_data_harvest.publishers.DowJones\", ...)`'s internal `importlib.import_module(\"lib.opal_data_harvest.publishers\")` SUCCEEDS -- it just creates and mutates a SECOND, unrelated module object, so the patch call raises nothing and silently no-ops against the code path actually exercised.",
+          "test_worker.py:51 patches `\"lib.opal_data_harvest.transport.time.time\"` with the same string shape and its test PASSES -- but only because `time` (stdlib) is a process-wide singleton: `duplicate_module.time` and the real code's `transport.time` are the SAME object, so mutating `.time.time` on the duplicate module still lands on the shared stdlib module. A future patch of this shape against any non-singleton target (a class, a plain module-level dict/function) would silently no-op exactly as the DowJones one did."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-x-1's diagnosis (WHY_THE_RED_TESTS_ARE_STILL_RED_20260928.md) states the cause of the AttributeError as 'the failing test's fake session has no handler for the /client?legacy=false auth-check URL' -- a test-double completeness gap.",
+      "world_is": "The double's incompleteness is real (no handler existed), but the reason `dj().check()` ran the REAL, unmocked `DowJones.check()` at all -- rather than the intended `remote.check()` stub -- is that the class-level `patch()` never attached to the class the generator actually uses, a module-identity bug independent of what the double does or does not answer. Completing the double (this cell's item 2) fixes the symptom without touching this cause, and the cause's second live instance (test_worker.py:51) remains unrepaired, unARMED only by the stdlib singleton coincidence.",
+      "notes": "NOT investigated or repaired beyond this cell's own two lines (bounds: three mechanical criteria, no fourth; a worker never fixes a neighbouring defect). This cell's own repair of item 2 sidesteps the bug entirely by using `patch.object(DowJones, ...)` on the class object this test file itself imports via `from .publishers import ... DowJones` (no string re-import, so no module-identity split is possible) -- so item 2's fix does not rely on or repair the module-identity bug, it routes around it. Disarm scope, if taken: audit every `patch(\"lib.opal_data_harvest....\")` / `patch.dict(\"lib.opal_data_harvest....\")` string target repo-wide (test_verification.py:11 uses the identical `patch.dict(\"lib.opal_data_harvest.verification.REGISTRY\", ...)` shape -- NOT investigated further per this cell's bounds, since that test is w-4's quarantine, not this cell's to diagnose) and re-target every one against the module actually imported by its own test file, or add a `lib/__init__.py` so pytest's rootdir import agrees with the dotted-path convention these patch strings assume."
     }
   ]
 ```
