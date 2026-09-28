@@ -2227,6 +2227,29 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~MI",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Disarm is one of: (a) the issuer writes org/mcp/sessions/<sid>.serial inside the worker worktree naming 0.9.0_WK_NFRA_MCPINDEX~8 and the worker re-runs safe-apply against a fresh plan (the worker will re-plan, the saved plan is not trusted after time passes); or (b) the issuer applies from the worker branch. The order forbids step 4 between 22:05Z and 22:40Z, so the window is now until 22:05Z or after 22:40Z; if unapplied before 22:15Z the fees Playwright leg fires once more, which is the state it has been in for 95 days and harmless to data (bronze/fees is written by the REST runner)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T21:17Z",
+    "one_line": "Z-W8-S1 disarmed: the issuer 2.0.0_SA_COO~MI wrote the gitignored worktree serial file naming the worker, safe-apply then passed, and the graded 0/0/5 fees-leg retirement applied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+      "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer message 21:05Z: wrote org/mcp/sessions/3f54aa89-ef8a-46dc-b108-5c18de99298f.serial in the worker worktree naming 0.9.0_WK_NFRA_MCPINDEX~8; the worker read the file back: contents equal the worker serial. The file is gitignored and not committed.",
+        "Re-plan (worker scratch plan2.txt) read exactly 'Plan: 0 to add, 0 to change, 5 to destroy', the same five resources as the plan graded before the block. safe-apply.sh: 'Apply complete! Resources: 0 added, 0 changed, 5 destroyed.' APPLY_RC=0; the halt gate resolved the worker (scanning the issuer inbox, 191 pending messages, HALT_ACK=1).",
+        "Post-apply terraform plan -detailed-exitcode: 'no differences', rc 0. events describe-rule bd-fees-pipeline-trigger: does not exist. AC2 PASS exit 0."
+      ]
+    },
+    "spec_asserts": "TO MX-s-12 step 4: retire the fees schedule leg through safe-apply and reach plan -detailed-exitcode 0.",
+    "world_is": "Step 4 is met as written; the block in Z-W8-S1 was a provisioning gap (no worker-local serial file), removed by the issuer, not a defect in the plan.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The gap is reusable knowledge for the issuer: a worker whose order includes a safe-apply needs the worktree serial file provisioned at spawn. Z-W8-S1 is not edited; this row records its disarm in prose. The structured `adjudicates` field is refused to a worker (surprise-row-gate A-1: it is 3.0.0_SA_CVO's field), so the CVO is asked to disposition NFRA_MCPINDEX-Z-W8-S1 by naming it in an adjudicating row."
   }
 ]
 ```
