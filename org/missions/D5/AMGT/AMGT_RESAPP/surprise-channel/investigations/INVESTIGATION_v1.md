@@ -14993,6 +14993,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "It is not comparable across runs. Two captures of the same deployment hours apart produced different digests at identical byte lengths on 4 of 4 keys, while three captures minutes apart produced identical digests. Limb 5 as written is unaffected -- it grades a BEFORE/AFTER pair captured inside one act, and tt-2's pair is internally controlled -- but any future limb that compares a pdf digest to one recorded in an earlier round's ledger would read a difference that is not the product moving.",
   "disarm_owner": "2.0.0_SA_COO~Z -- the issuer, to route whether a cross-round pdf digest comparison is ever relied on, and if so to name the length-stable varying component (a per-render id or a date rendered as glyphs are the two candidates this row did not distinguish).",
   "notes": "Filed while executing AMGT-tt-2 L2; I did not halt. tt-2's limb 5 is graded on its own before/after pair with an instrument control in each capture, which is the grading the half specifies. This row claims no defect in the product and none in rs-2's close, whose L7 verdict rested on its own internally-controlled pair exactly as this one does."
+},
+{
+  "id": "AMGT_RESAPP-Z-S292",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-28T20:18:00Z",
+  "one_line": "AMGT_HARVST's LOCAL-only portal commit 92a25762 mounts TimelinePanel in HeaderBrief.tsx; RESAPP's exportCompare.harness.cjs loads HeaderBrief and cannot resolve TimelinePanel's '@/api/api-client' alias, so every FWD-30 export-compare on a tree carrying 92a25762 reads CAPTURE_FAILED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer close-run of round 45 on the shared tree (portal DEV @92a25762, 1 ahead of origin/DEV, 22 behind), read_at 2026-09-28T20:13:49Z: 38 of the first 38 names CAPTURE_FAILED 'harness printed no FIGURES line (rc=1)'; stopped by the issuer.",
+      "node exportCompare.harness.cjs on 1299_HK_Equity at portal 92a25762: Error: Cannot find module '@/api/api-client', from TimelinePanel.tsx:39 via the harness load() at exportCompare.harness.cjs:151, which resolves only STUBS, relative paths and node_modules -- never the '@/' alias.",
+      "The same fixture and rich export at the PUBLISHED gitlink c3dd9ca9 (origin/DEV, no TimelinePanel.tsx): FIGURES 182/182, ABSENCES 17/17, CASES 3/3, missing 0, rc=0.",
+      "92a25762 is LOCAL-only (not an ancestor of origin/DEV); its DEV push is pre-authorised by Andrew's ruling 3 of 2026-09-28 ~18:05Z once HARVST's timeline routes answer."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "RESAPP's FWD-30 instrument (round45/checks/sweep.py + exportCompare.harness.cjs) measures the page as it stands on portal DEV.",
+  "world_is": "The harness transpiles page sources itself and resolves no '@/' alias, so any new header mount that imports through '@/' breaks it for every name. It fails LOUD (CAPTURE_FAILED, sweep rc=1), never as a false OK. Round 45's close-run was therefore read at the published gitlink c3dd9ca9 in an isolated worktree. Once 92a25762 publishes, the published page itself carries the mount and FWD-30 cannot be measured until the harness resolves '@/' (or stubs TimelinePanel with the timeline's exclusion from the three sets stated).",
+  "disarm_owner": "2.0.0_SA_COO~Z -- the issuer cuts the harness fix as a round-46 cell ahead of the full FWD-1..FWD-31 pass; the HARVST push stays as authorised.",
+  "notes": "Filed without halting; the close-run proceeded on the published tree. No gate is placed on 92a25762's push: Andrew's word stands verbatim."
 }
 ]
 ```
