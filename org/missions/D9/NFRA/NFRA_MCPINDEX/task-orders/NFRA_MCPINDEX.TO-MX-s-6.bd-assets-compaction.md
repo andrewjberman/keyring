@@ -114,3 +114,13 @@ a write after this order's issue also satisfies it.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+<!-- flipped by the issuer 2026-09-28T07:3xZ. Seat commits 9fb05bc6c1 (the builder ported onto lib.silver_ids, the
+     inf re-export, the result and the proof) and 4d7188efca; lib/silver_ids.py landed by 1.0.0_SA_CTO~O @88e4e69e69.
+     Re-graded on CLOUD: AC2 (s4.AC3) PASS, silver/bd_assets_dim.parquet LastModified 2026-09-28T06:22:06Z, after issue.
+     Instance VALID. The dim holds 12,141 rows / 22 cols, asset_id unique; 805 of 805 formerly missing ids are carried (MX-s-2's
+     791 grew by 14 trading-day ids). Inf re-export: 6 real callers import, 0 failed. Inf tests: 17 passed, 1 failed. The one
+     failure was confirmed by the issuer as pre-existing and environmental: test_silver_write_empty_dim_guard (unchanged
+     since 92e654c522, 2026-07-13) dies with FileNotFoundError walking untracked .runtmp/portal-promote-20260820T183300Z
+     node_modules on an over-long Windows path. Not caused by this change. -->

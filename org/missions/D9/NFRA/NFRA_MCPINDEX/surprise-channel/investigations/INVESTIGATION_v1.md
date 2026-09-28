@@ -2033,6 +2033,50 @@ carries none.
     },
     "spec_asserts": "Z-S37: the silver-id commit gate is fabric-wide while its helper is firm-local.",
     "world_is": "The helper is fabric-local (lib/), and both firm trees satisfy the gate through it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S41",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-28T07:35Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The hazard, a BD asset dimension frozen since 2026-04-14 because the portal login failed, is RESOLVED. The cause was BD's MFA (Andrew-direct). MX-s-9 pulled the dim by REST on the existing 49F session (12,132 rows, super-class dim 7). MX-s-6 rebuilt silver/bd_assets_dim.parquet as the union (12,141 rows, 805/805 formerly missing ids carried), re-graded on CLOUD. The portal downloader's failures are now honest (MX-s-4 step 2). The scheduling of the REST pull is NOT covered by this close: it is carried as its own row, filed in this same commit.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S8"
+    ],
+    "one_line": "The issuer closes Z-S8: the BD asset dim is current again by REST (MX-s-9 + MX-s-6), bypassing the MFA-blocked portal login.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s4.AC3 PASS on CLOUD (bd_assets_dim.parquet 2026-09-28T06:22:06Z); MX-s-9 s9.AC1-3 PASS; MX-s-6 instance VALID"
+      ]
+    },
+    "spec_asserts": "Z-S8: the asset-dim download has failed since 2026-06-23 on the portal login, freezing the dim.",
+    "world_is": "The dim is rebuilt from a REST pull; the portal route is bypassed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S42",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-28T07:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "one_line": "The BD asset dimension is current only because of ONE ad-hoc REST pull (MX-s-9, 2026-09-28). Nothing schedules that pull, and the portal downloader still fires on its weekday schedule and fails honestly. The dim will go stale again from the next asset BD adds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-s-9 result: the scheduling spec was reported and NOT built (order bound); bd-asset-dim-pipeline-trigger still runs the portal SSM document weekdays 22:10Z"
+      ]
+    },
+    "spec_asserts": "CLAUDE.md: production pipelines MUST be scheduled; ad-hoc artifacts are never production evidence.",
+    "world_is": "The REST pull is ad hoc and unscheduled; the portal path is scheduled but dead.",
+    "notes": "Carrier: routed to 1.0.0_SA_CTO~O in this issuer's same-turn message, as the next enrichment. Scope: schedule the REST pull and the dim rebuild, and retire the portal asset-dim download; also the dead fees downloader, per the CTO's design @1973056c51."
   }
 ]
 ```
