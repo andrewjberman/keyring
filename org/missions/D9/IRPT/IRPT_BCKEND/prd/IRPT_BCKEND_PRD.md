@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.17",
+ "prd_version": "v0.18",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -438,3 +438,29 @@ Surfaces this project writes, reads or executes. Every new surface is registered
 | news DynamoDB tables and `opal-data-news-v2` | read | B13 | news producers; ownership unchanged |
 | Secrets `opal/auth/irpt-render-jwt-private-key` (read by the render minter ONLY) and `opal/auth/irpt-render-jwt-public-key` (read by V2 and V3) (v0.16) | new secrets | B14 | IRPT_BCKEND; the portal key `opal/auth/jwt-private-key` is NEVER granted to any IRPT role |
 | V2 `infra/aws/users/lambda/portal-authorizer/index.mjs` and V3 `infra/aws/lambda-edge/auth-validator-edge/index.mjs` -- one explicit, route-scoped render branch each (v0.16) | served-surface change (SHARED authorizer + edge validator) | B3, B15 | their existing owners; NEVER-2 ledger entry and both never-widen halves per deploy; the human-token path's behaviour unchanged and proven so (arm f) |
+
+## ADDENDUM v0.18 -- closer hand-back (the L10 answer; outside ENDPOINT, re-opens no half)
+
+**Source.** Andrew-direct 2026-09-28 ~17:3xZ, `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260928_173xZ_RELAUNCH_CTO_COO_DYPM_CANONICAL_DRIVE_D_CLOSER_CRO_UIWALK.md`;
+placement `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20260928_174xZ_RELAUNCH_CANONICAL_DRIVE_PMY_CLOSER_D.md`
+(@1d443e50db). Procedure: `org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_CLOSER_TO_CANONICAL_RETURN_BRIEF_20260924.md`
+section 3 (C5, E1-E3), run early: the three journeys are NOT yet closed, so they grade here as open outcomes, not REALIZED.
+
+1. **The thread and its order.** Round 19 serves, in order: the Holdings journey (FWD-5 backend half) signed in for a real
+   client, first Anna's account; then Performance (FWD-3 backend half); then Analysis (FWD-4 backend half). Each is
+   graded EXERCISED on the numbered done-criteria of its goal record in `org/tier1_exec/2.0.0_SA_COO/deliverables/`:
+   `ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`,
+   `ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`,
+   `ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`. The other FWD ids stand unchanged.
+2. **Workstreams (one issuer per workstream round; disjoint write surfaces from the contract's writer table).**
+   `2.0.0_SA_COO~P`: shared auth, routes, IaC, packaging, Performance/Reporting. `2.0.0_SA_COO~M`: Holdings custody,
+   publication, the gold holdings snapshot. `2.0.0_SA_COO~Y`: upload, resolution, the resident, Analysis job semantics.
+3. **Round 19's rectangle = each seat's frozen next-list**, in its priority order: `STATUS~P.md` @025cef10fd,
+   `STATUS~M.md` @e589729e6a, `STATUS~Y.md` @37cb971b4a (this directory's parent). No further round-18 analysis (E1).
+   S1-S7 and the P/M/Y acceptance matrices are the enrichment backlog behind those lists.
+4. **Andrew's acts in flight are EXERCISED arms, never waits** (E3), as each STATUS file lists them.
+5. **Precondition for worker cells:** the act-4 drain lands each seat branch on CLOUD and proves by content that CLOUD
+   carries every served IRPT function's source (return brief B3). A cell cut before that names the seat branch as base.
+6. **Deferred, owner 1.0.0_SA_CTO:** renumbering the ENDPOINT so FWD-1 is the thread (spine v3.16-3.18). It is an
+   ENDPOINT change and re-opens the ratified-text half; no `3.0.0_SA_CVO` is seated, so it waits for one rather than
+   blocking round 19's issuance at LIMB 6.
