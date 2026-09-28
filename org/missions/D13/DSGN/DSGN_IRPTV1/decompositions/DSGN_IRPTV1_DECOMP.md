@@ -332,3 +332,8 @@ UNAVAILABLE/NOT_READY and the page went silently idle). 1.0.0_SA_CTO 102222 rule
 2.0.0_SA_COO~P), and the page shows any refused or non-pending receipt read BY NAME (FWD-11), with no poll-on-UNAVAILABLE. One LOCAL direct act
 on export/ExportButton + submit (+ ReceiptPanel/ExportModal if the slot needs it). It seats on the first slot to free (net-zero reuse) and
 drains BEFORE IV-e-75, which writes the same two files.
+
+**v9 addendum 2 (issuer, 2026-09-28 ~00:0xZ):** `IV-e-79`, row W36-S3: IV-e-73 (UIR-30) correctly hides FirmAttribution by default and flips five
+pinned tests that asserted the tab-body chip (iv-e-23 firm-chip and parity-kept, iv-e-38 header-identity, iv-e-56 firm-display, fe-s-10 parity).
+Issuer ruling: re-golden each to the ruled design, keeping its claim and a control that bites; the KEPT parity test's "never edited" line is
+superseded by this ruling. One LOCAL direct act, tests only, on slot ~36 as queue position 2 (net-zero disk); IV-e-73 and IV-e-79 drain together.
