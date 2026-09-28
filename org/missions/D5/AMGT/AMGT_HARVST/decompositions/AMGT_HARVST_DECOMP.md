@@ -1330,3 +1330,100 @@ named so it is not silently swept in: `Z-W11-S1` is `.tools/missions-tree-index.
 routed to the tool's owner and the route is RECORDED** -- and "recorded" means a route that exists, not a
 sentence saying it was routed. Round 7 taught that one: I wrote "routed to the tool's owner" twice in committed
 records while the row carried no `route` field at all.
+
+
+## 21. ROUND 9 -- L5 DECOMPOSITION v1.8, over the CORRECTED round-8 analysis (`ledger/ROUND_ANALYSIS.round8.md` @1ae0fd36f6)
+
+**Issuer `2.0.0_SA_COO~Y`, 2026-09-28 ~04:3xZ.** Cut on `1.0.0_SA_CTO~Z`'s go-ahead (042311Z) after
+`0.0.0_AB_MSTR~Z`'s PARTIAL all-clear (041852Z): **commits resumed, pushes frozen to 05:00Z.** The purge never
+ran -- `origin/CLOUD` unchanged at `9a5d538d35` with the pre-freeze tip still an ancestor.
+
+⚠ **CUT AGAINST @1ae0fd36f6, NOT THE VERSION I READ AT 02:4xZ.** The analysis was corrected in place after I
+disputed its finding 1, and cutting against the pre-correction bytes would have carried a diagnosis its own
+author has struck. **The bytes were re-read at HEAD before this section was written.**
+
+### 21.0 THE DENOMINATORS, read before any id is named
+
+`ls task-orders/ | cut -d. -f2` -> spent series letters **h, r, s, t, u, v, w** (23 orders). **Round 9 is the
+`x` series.** Worker slots: **MAX+1 over 25 -> `~26` and `~27`.** Never a grep for the id I intend, never a row
+count -- both errors happened in round 7, on two different id spaces.
+
+### 21.1 WHAT IS ISSUED, AND THE RULE THAT DECIDED IT
+
+⛔ **The corrected rule from the round-8 analysis s.2, and it is binding on every recut from here:** *"the
+round's judgment criterion sits on a cell that can issue without a pending Andrew word."* Round 8's L9 was
+vacuous because the round-7 analysis put the only judgment criterion on a WORLD card. **Round 9's judgment
+criterion therefore sits on `HVST-x-2`, a LOCAL cell.**
+
+| # | cell | class | disposition |
+|---|---|---|---|
+| 1 | `HVST-x-1` -- second repair: the 2 red tests, the `publishers.py:672` guard, the flaky quarantine | **LOCAL** | **ISSUED** to `~26` |
+| 2 | `HVST-x-2` -- timeline EXERCISE, **carrying the round's JUDGMENT criterion** | **LOCAL** | **ISSUED** to `~27` |
+| 3 | `w-2`, `w-4`, `w-5` | WORLD | **CARDED at Andrew**, unchanged; each fires only on his live per-use word |
+| 4 | the 16 carried rows | -- | **ISSUER act**, stated in the issuance commit (21.4) |
+
+**Fan-out 2**, derived: `1` and `2` are independent and LOCAL. The three cards serialise on the vendor ledger
+and the device-local session vault **when** they fire. Each order carries **at most three mechanical criteria**.
+
+### 21.2 CELL `HVST-x-1` -- THE SECOND REPAIR. THREE ITEMS, AND ONE OF THEM IS NOT A TEST FIX
+
+**The diagnosis is already done and committed** (`deliverables/2.0.0_SA_COO_Y/WHY_THE_RED_TESTS_ARE_STILL_RED_20260928.md`
+@`9a5d538d35`), so this cell does not re-derive it. **It is TWO tests, not three** -- pytest counts SUBTEST
+failures separately and `test_single_broken_dow_jones_article...` SUBFAILS twice.
+
+1. **TEST B -- the test-double gap.** `publishers.py:672` does
+   `session.get(base + "/client?legacy=false").json()` and `.json()` returns **None**, because that test's fake
+   session has no handler for the auth-check URL while its siblings all provide one
+   (`test_bronze_capture.py:285`/`:296`, `test_retrieval_provenance.py:239`). **`DowJones.check()` is behaving
+   correctly; the DOUBLE is incomplete.**
+2. ⛔ **THE `.json()` GUARD -- A PRODUCT CHANGE, NOT A TEST CHANGE, AND IT GETS ITS OWN CRITERION.**
+   `:672` calls `.json()` unguarded, so a real non-JSON or empty body raises `AttributeError` **instead of the
+   clean `AuthExpired` the method exists to raise** -- brittleness on a LIVE AUTH PATH. **Completing the double
+   turns the test green and leaves this standing**, which is exactly why the analysis requires it shown
+   DIRECTLY and not through the suite.
+3. **TEST A -- QUARANTINE, not repair.** It alternated between `KeyError: 'bundle'` and
+   `FileExistsError: [WinError 183]` across two identical runs. **A test that fails differently on identical
+   input is not a regression baseline.** Quarantine with the reason named; **the diagnosis belongs to `w-4`'s
+   scope** (same publisher, and `w-4` is carded), not here.
+
+**The criterion bar from the analysis, adopted verbatim:** the suite's failed count is **ZERO or each remaining
+failure is quarantined with a named reason.**
+
+### 21.3 CELL `HVST-x-2` -- THE TIMELINE EXERCISE, and its FIRST act is a MEASUREMENT that may bound it
+
+**This is the issuable cell the corrected rule requires, and it carries round 9's JUDGMENT criterion:** *are
+the events shown the real coverage bursts?* A mechanical criterion counts spans; only judgment says the spans
+mean something. Graded by `3.0.0_SA_CVO` at L9, **presented with its output and no verdict.**
+
+⚠ **THE BOUND ROUND 8 ALREADY MEASURED, carried forward so this cell does not re-learn it:** `chatter_event`
+can hold **ZERO rows for every security** while only `sa` has landed listing rows
+(`EVENT_MIN_PUBLISHERS = 2`). **So FWD-6's arm of this exercise may be empty by construction, and an empty
+result is NOT a pass** -- the cell's first act is to print `chatter_daily`/`chatter_event` row counts for the
+validation security **and say which arm is exercisable before exercising either.**
+
+⭐ **AND THE ONE MEASUREMENT ROUND 8 DECLINED TO GUESS AT IS THIS CELL'S TO TAKE:** round 7 measured "1 of 89
+securities with a non-empty span" and **never named which security.** FWD-5 needs a day with
+`articles_total > 0`. **The cell names that security from a read rather than assuming it is Lenovo** -- and if
+it is not `992_HK_Equity`, the spec's acceptance security and the only exercisable one differ, which is itself
+the finding.
+
+### 21.4 ITEM 6 -- THE 16 CARRIED ROWS, and what I state rather than what I claim
+
+The round-7 analysis adopted the slug's "16 of 28 not re-measured" as a stated limit; the round-8 analysis says
+**this round's issuance commit states the 16 re-measured OR states why not.** Measured at HEAD before this cut:
+**37 ARMED rows carry `2.0.0_SA_COO~Y` as `disarm_owner`**, which is a larger set than the slug's 16 and is not
+the same population -- the slug's 16 is a subset of the channel's ARMED set at ITS vintage.
+
+⛔ **REMEDIATION ROWS ARE NOT MINE TO WRITE.** CLAUDE.md section 2 and `surprise-row-gate.py:111` split it: the
+`disarm_owner` ACTS and files evidence, **`3.0.0_SA_CVO` writes the clock.** The round-8 analysis briefly said
+otherwise and **its author corrected it** at @1ae0fd36f6. So item 6 is discharged as EVIDENCE, twice ferried to
+`3.0.0_SA_CVO~O` (0152Z, 0228Z), not as rows I mint.
+
+### 21.5 CUT RULES CARRIED -- s.14x now covers the ones round 8 cost me
+
+s.14x's three order-writing clauses bind this cut: **the instance FILENAME is the order's filename stem**,
+**`to_id` names that same stem**, and **every criterion's invocation is RUN ONCE by the issuer before the cut**
+because escaping can make a recorded invocation align while being unrunnable. Plus: `-rA` never `-q`
+(`Z-W21-S1`); a whitespace-bearing placeholder is expanded and `NONE` declared (`Z-W22-S6`); scripts in the
+worker's own `deliverables/<serial>/scripts/`, never `.scratch/`; and **the spawn face and the order FILE are
+ONE edit** (`Z-W22-S4`/`S5`).
