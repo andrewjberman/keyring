@@ -1866,6 +1866,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Z-W31-S1 and Z-W31-S2 name this seat as disarm_owner; the channel rule is that an ARMED hazard is disarmed same-turn by its disarm_owner.",
       "world_is": "Round 11 is frozen after its one issuance, so the remedy cannot be cut into it. It is placed instead: the round-11 drain-end packet carries it as the first item for the round-12 cut -- one cell whose paths are scoped-amgt-api.tf, scoped_amgt.py and test_scoped_amgt_mount.py, whose criteria are (1) the mount test green in both directions at 18 routes, (2) both routes answering 200 for 992_HK_Equity through the deployed gateway with the deploy ledgered under NEVER-2, and (3) the day route timed from the deployed Lambda with its margin to 29s printed. If (3) leaves under ~9s of margin, the next cell narrows the silver headline scan to the publishers on the day's mention rows, which is Z-W31-S2's own proposed remedy.",
       "notes": "This row disarms by SPECIFICATION, not by remedy: the remedy is not yet applied and this row does not claim it is. The two predecessor rows keep reading ARMED forever by construction (append-only), so read their live state through _latest_dispositions and the CVO's fold, never through their own hazard_standing field."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S35",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-28T22:40Z",
+      "one_line": "The round-11 analysis's cell 1 (mount both timeline routes + ledgered deploy) cannot by itself make either route answer: the deployed opal-amgt-scoped-api package carries NO pyarrow and NO lib.opal_naming, and its only layer (opal-amgt-print-deps:1) carries numpy 2.2.6 but NO pyarrow -- so after a mount-and-redeploy both timeline routes would fail at `import pyarrow` inside their function-scope loaders. The deploy cell must also make the package import the gold readers.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by this seat (read-only S3 GET + lambda get-layer-version, 2026-09-28 ~22:3xZ): s3://opal-313476888478-lambda-artifacts/research/opal-amgt-scoped-api.zip (VersionId 0XDw5hJWOYgx3P8CSA42oAlkLuTlupkS, 857637 B, 203 members) carries lib/research/harvest/publication_gold.py 1 and store.py 1, but pyarrow/ 0, numpy/ 0, lib/opal_naming 0, and lib/research/harvest/timeline_api.py 0.",
+          "Layer opal-amgt-print-deps:1 (the function's only layer; runtime python3.11 x86_64): 1340 members, 121743633 B unzipped, python/numpy/ 271 (numpy 2.2.6), python/pyarrow/ 0.",
+          "publication_gold.py:37-38 import pyarrow at MODULE scope; HVST-z-0's loaders import publication_gold at FUNCTION scope (scoped_amgt.py, merged @4350d5af00), so the other 16 routes are unaffected and the two timeline routes are the ones that would fail.",
+          "The estate's working pattern is the chatter-axis Lambda (infra/aws/terraform/harvest/lambda_src/build_zip.py:40-53): pyarrow+numpy vendored into the zip from an owned layer, lib.opal_naming and its registry JSONs added to the closure roots, unzipped total printed against the 250 MiB ceiling. That build is cp312; the scoped API is python3.11 with numpy 2.2.6 already in its layer, so its wheels cannot be copied across as-is."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "ROUND_ANALYSIS.round11.md s.4 cell 1: mount both route keys + table 16->18 + a ledgered deploy + both routes timed from the deployed Lambda 'unlocks ruling 3's push and FWD-5/FWD-6's walk'.",
+      "world_is": "A mount plus a code-only redeploy gives two mounted routes that answer an import failure, not data. The package must carry a python3.11 pyarrow build that imports alongside the layer's numpy 2.2.6, plus lib.opal_naming and its registry data, inside Lambda's 250 MiB unzipped ceiling (layer alone is 121.7 MB).",
+      "notes": "DISARM (issuer's, same turn): round 12 cuts the deploy cell HVST-a-2 to include making the package import the gold readers, with the wheel source (a sha256-pinned wheel, which is egress to PyPI as in AMGT-tt-2's half, or an owned layer) and the unzipped total against 250 MiB carded on the never-widen halves the CTO signs; a-2's AC1 invokes the deployed Lambda and FAILS on a 200-less timeline route, so an import failure cannot pass silently. No runtime change is admitted without the CTO's word."
     }
   ]
 ```
