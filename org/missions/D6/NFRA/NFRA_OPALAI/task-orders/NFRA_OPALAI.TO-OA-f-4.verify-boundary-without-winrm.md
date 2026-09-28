@@ -44,6 +44,17 @@ Rewrite ONLY the two arms' execution, and keep the semantics:
    Nothing else in the script's interface changes. It is the test seam AC2 uses.
 Change no other file.
 
+**AMENDMENT 1 (CTO ruling msg 26294, after 0.0.0_AB_MSTR~Z's real run at 23:39Z read `BOUNDARY: ERROR` exit 3):** both
+children STARTED as Opal_Agent, so the logon works, but each printed its own script text. The ArgumentList element
+`"`"$probeCmd`""` wraps the script in literal double quotes, so `-Command` evaluated a quoted STRING. Fix:
+5. pass each arm's script with `-EncodedCommand <base64 of the UTF-16LE bytes>`
+   (`[Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($cmd))`), which has no quoting layer. No `-Command`
+   remains in the file;
+6. add ONE optional switch, `-SelfTestAsCurrentUser`: the arms go through the SAME Start-Process + `-EncodedCommand`
+   path but WITHOUT `-Credential`, as the current user. It is the test seam AC3 uses to prove each arm RUNS and writes
+   its verdict file. The default (no switch) always runs as Opal_Agent. The ERROR-never-DENIED-OK semantics are
+   unchanged.
+
 ## 2. BOUNDS
 
 1. **`opal_ai` is a nested repository** at `<worktree>/opal_ai`, on its own branch off `opal_ai` `fd8ab8a57f`. Commit
@@ -71,6 +82,7 @@ Rows: `org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigations/INVESTIG
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OA-f-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f4.AC1.sh; echo "exit=$?"</invocation><expect>Invoke-Command/ComputerName=0; Start-Process with -Credential -Wait -WorkingDirectory>=2; parse errors=0; other files changed vs fd8ab8a57f=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OA-f-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f4.AC2.sh; echo "exit=$?"</invocation><expect>rc=3 line='BOUNDARY: ERROR probe=... control=...' -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OA-f-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f4.AC3.sh; echo "exit=$?"</invocation><expect>-EncodedCommand refs>=1 -Command refs=0; rc=1 line='BOUNDARY: BREACH probe=ALLOWED control=OK'; verdict files>=2 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -97,7 +109,11 @@ Dry-run at base (opal_ai fd8ab8a57f):
 - f4.AC1 base: FAIL as expected (`Invoke-Command/ComputerName=2; Start-Process with -Credential -Wait -WorkingDirectory=0`).
 - f4.AC2 base: FAIL as expected (`rc=1 line='none'`: no `-CredPath` parameter, so no BOUNDARY line).
 
-<status>pending</status>
+f4.AC3 (amendment 1) base: FAIL as expected at fd8ab8a57f and at the defective 6b13ff892f (`-EncodedCommand refs=0`,
+no BOUNDARY line, 0 verdict files). Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii)
+placeholders (NONE), so no limb graded this amendment.
+
+<status>in_progress -- REOPENED by the issuer 2026-09-28 ~23:5xZ (amendment 1, CTO ruling msg 26294): the real G-ACCT step-3 run read ERROR because the arms ran a quoted string; -EncodedCommand + a -SelfTestAsCurrentUser seam + AC3. Same slot ~19, same face. The worker branch had flipped it complete @46869f3ea2. Was: complete.</status>
 <direct_act>true</direct_act>
 <slot>~19</slot>
 <fabric>site-z</fabric>

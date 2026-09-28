@@ -2499,6 +2499,103 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~MI",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "INERT: served pages in this estate read through the v2_portal Lambdas, which were searched. The exclusion is stated in the (d) record rather than hidden."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S50",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W11-S1"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W11-S1 as an instrument trap, not a live hazard: every BD trigger runs its SSM document at $LATEST, so a read of the DEFAULT version (a bare get-document) is the wrong object. Standing issuer rule for this project's cells: read and grade BD SSM documents at --document-version $LATEST, and record DefaultVersion and LatestVersion beside the finding.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W11-S1 (worker ~11): allocation default v3 vs $LATEST v4 and transaction default v1 vs $LATEST v2 differ in logic; the executed $LATEST versions carry the honest exit, the defaults do not (org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (a)).",
+        "MX-s-12's acceptance run ssm 16d855de reads DocumentVersion $LATEST (worker ~8 proof); asset-dim is v4 as both DefaultVersion and LatestVersion, so the one document this project deploys is not split."
+      ]
+    },
+    "spec_asserts": "Z-W11-S1 (ARMED): a reader grading a BD document by `get-document` without a version reads a version the schedule never runs.",
+    "world_is": "No run executes a default version; what runs is honest on the four daily Playwright documents (SSM Failed on failure). The hazard is a mis-read by a seat, which this rule and the round-3 battery's practice close. Aligning DEFAULT to $LATEST on allocation/transaction is carried to the round-3 L10 enrichment list, not acted on here (those documents are the dead Playwright legs, see Z-S51).",
+    "notes": "No other seat's cell in flight reads those two documents."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S51",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W11-S2"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W11-S2 by placement, not repair: the daily BD transaction merge skips the bd_assets_dim cusip join on the EC2 path and wrote 0-row partitions on 10 of 10 file-processing runs. That is a PRE-EXISTING state of the transaction feed (its Playwright download fails 21 of 21), not one this round created or can worsen; the repair is a DS-lane silver cell routed to the round-3 L10 analysis with the measurement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W11-S2 (worker ~11): '[enrich] bd_assets_dim unavailable; skipping cusip join' in 10 of 10 runs of 21 in SSM retention that processed a file; all 10 wrote a 0-row partition (org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (b)).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (a): opal-bd-transaction-download (and allocation, realized, unrealized) SSM Failed on 21 of 21 runs -- the Playwright portal leg BD's MFA broke, the same class Z-S42 had for asset-dim."
+      ]
+    },
+    "spec_asserts": "Z-W11-S2 (ARMED): the dim MX-s-6/MX-s-12 keep current is joined into silver transactions daily (merge-daily-incremental.py:57), so dim cusip changes reach silver.",
+    "world_is": "The join is skipped on the path that runs, and the transaction feed itself produces no rows while its download fails. The dim's currency does not reach silver transactions today. The question the analysis must place: is BD transaction data flowing by any other producer (a REST runner, as fees has), and if not, the transaction leg needs the MX-s-10/MX-s-12 port. Both are DS/AE-lane cells, not this round's cut.",
+    "notes": "Routed as a candidate enrichment item, with Z-W11-S1's DEFAULT/$LATEST alignment, to 1.0.0_SA_CTO~O through the round-3 slug. No served output moves by this row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T23:28Z",
+    "one_line": "MX-i-4 census: 4 LIVE readers of opal/bd/credentials remain on bd-exporter-ec2-role (the allocation, realized, transaction and unrealized SSM documents), so the grant cannot be removed; each reads the secret daily and then fails at the portal login.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live grant side: 16 policies on bd-exporter-ec2-role scanned (15 inline + 1 attached); the ONLY grant of opal/bd/credentials-* is inline AdditionalPermissions stmt 0 (5 Resource elements). The role is held by instance profile bd-exporter-profile on bd-allocations i-0800437d1dbb0b5cc, bd-transactions i-00c7568bc510f7423, bd-assets and bd-fees (both stopped).",
+        "Live readers, each with an ENABLED trigger and a run in the last 24h: opal-bd-allocation-download (bd-allocation-pipeline-trigger cron(0 22), 21 of 21 Failed, latest 22:00:04Z), opal-bd-realized-download (bd-realized-pipeline-trigger cron(45 21), 21 of 21 Failed), opal-bd-transaction-download (bd-transaction-pipeline-trigger cron(53 21), 21 of 21 Failed), opal-bd-unrealized-download (bd-unrealized-pipeline-trigger cron(38 21), 21 of 21 Failed). Each document line 22 runs 'aws secretsmanager get-secret-value --secret-id opal/bd/credentials'.",
+        "The read succeeds: the latest run output of all 4 contains 'Fetching credentials from Secrets Manager...' with no AccessDenied, then 'Phase 1: Login' and a Playwright TimeoutError waiting on bd3.bdreporting.com. Failed status is downstream of the read. Removing the Resource element would move the failure point to the read step.",
+        "Not readers: opal-bd-asset-dim-download v4 (REST), advi-49f-chain-dispatch, opal-bd-49f-session-fetch, opal-cot-bd-session-fetch. DEAD: opal-bd-fees-download (its trigger was deleted by the MX-s-12 apply; last run 2026-09-25), force-alloc-download and force-txn-download (not registered live, get-document rc 254). Full census: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~8/CENSUS_MX-i-4.md.",
+        "AC1 (i4.AC1.sh) reads 'statements read 4; resources naming opal/bd/credentials: 1 -- RESULT: FAIL -- exit=1'; AC2 reads PASS. Nothing was changed, no ledger opened, no plan or apply run (order step 3)."
+      ]
+    },
+    "spec_asserts": "TO MX-i-4 preflight and cell text: the Playwright portal legs that read opal/bd/credentials are the ones MX-s-12 retires or ports, so a census after MX-s-12's acceptance would read 0 live readers.",
+    "world_is": "MX-s-12 retired only the fees schedule leg and ported only asset-dim. The allocation, realized, transaction and unrealized documents (MX-m-1 measured 21 of 21 Failed each) still run on daily schedules, read the portal login secret every run and then time out at the portal login. The condition for removing the grant is not met.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because the four schedules fire again tonight and every weekday: a daily automated login attempt against the Black Diamond portal with the live password, failing on the MFA timeout, for as long as the four triggers stand. Disarm is a decision on those four documents (retire the four trigger rules or port off the portal login), which is not this order's. Once the four triggers are gone, MX-i-4 can be re-run: the census is repeatable from the CENSUS file's method, and the one-element removal is the one change the plan should show (0 add, 1 change, 0 destroy). The secret is untouched."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S52",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:36Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W8-S3"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W8-S3 by placement: the four BD Playwright daily legs (allocation, realized, transaction, unrealized) still read opal/bd/credentials and log in to the BD portal every weekday, failing 21 of 21 at the MFA-broken login -- a standing state since 2026-06-23, which this round neither created nor can worsen. MX-i-4 is superseded (the grant stays while live readers exist) and the retire-or-port of those four legs is carried to the round-3 L10 analysis as the one cell that unblocks both MX-i-4 and the transaction feed (Z-S51).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~8/CENSUS_MX-i-4.md: 16 policies read on bd-exporter-ec2-role; only inline AdditionalPermissions grants the secret; 4 LIVE readers (each document's line 22 fetches it; triggers ENABLED at 21:38/21:45/21:53/22:00Z weekdays; 21 of 21 Failed each, the latest runs reaching 'Phase 1: Login' then a Playwright TimeoutError, no AccessDenied).",
+        "MX-s-10/MX-s-12 is the precedent for the port: the asset-dim leg moved off the portal login to the REST pull on the 49F session and passed its scheduled acceptance DELTA=0 at 22:11Z today."
+      ]
+    },
+    "spec_asserts": "Z-W8-S3 (BLOCKING, ARMED): MX-i-4's removal cannot proceed while 4 live documents read the secret; each weekday they make an automated portal login with the live password that fails.",
+    "world_is": "Refusing AC1 was correct (order step 3). Nothing about the grant or the logins changed this round. Whether 5 failed logins per weekday risk an account lockout on the BD portal is UNMEASURED and is named here for the analysis, not assumed either way.",
+    "notes": "Routed to 1.0.0_SA_CTO~O with the round-3 slug: one candidate cell per leg or one batched port on the MX-s-12 pattern, after which MX-i-4 re-runs unchanged."
   }
 ]
 ```

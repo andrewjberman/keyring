@@ -30,6 +30,8 @@ infra/aws/terraform/harvest/scoped-amgt-api.tf
 lib/research/api/scoped_amgt.py
 lib/research/api/tests/test_scoped_amgt_mount.py
 lib/research/api/tests/test_timeline_routes.py
+lib/research/api/tests/test_slash_safe_security_route.py
+lib/research/api/tests/test_generation_and_pool_routes.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~35/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 </paths>
@@ -57,6 +59,11 @@ left the table at 16; a test in `test_timeline_routes.py` pins that they are ABS
 1. **Two mechanical criteria.** No judgment -- the round's judgment criterion is on `HVST-a-4`.
 2. No change to any other route, the authorizer, the integration, the Lambda resource or its timeout.
 3. The event route (`/timeline/event/<first_day>`) stays unwired and unmounted.
+4. **AMENDMENT 1 (issuer):** in `test_slash_safe_security_route.py` (the assert at ~:153 and its comment at ~:147) and
+   `test_generation_and_pool_routes.py` (the assert at ~:663) change ONLY the pinned route-table length `16` -> `18`
+   (and the matching "16" in that assert's message and comment). Those tests guard "the route set did not move";
+   this cell moves it by exactly the two timeline routes, so the guard's baseline moves with it. Nothing else in
+   either file.
 
 ## 3. PROOF OF SPEC (each invocation LITERAL; timeout 600)
 
@@ -84,6 +91,16 @@ It deploys nothing, runs no terraform, makes no AWS call and touches no portal f
    the inferred floor is refused (spine v3.19 L6). The cell itself runs no terraform and touches no cloud.
 4. The precondition line is the adversary: mount and table agreeing at 18 with the precondition at 16 would pass
    the unit test and refuse at the first plan -- on the deploy seat, mid-ledger.
+
+**AMENDMENT 1 (issuer, 2026-09-28 ~23:5xZ) -- row `AMGT_HARVST-Z-W35-S1` (BLOCKING, filed by `~35`).** The cut's
+`<paths>` missed two AMGT_RESAPP tests that pin `len(scoped_amgt_route_table()) == 16`
+(`test_slash_safe_security_route.py:153`, `test_generation_and_pool_routes.py:663`, both read at the bytes by this
+seat), so AC2 read `2 failed, 254 passed` of 256 collected. The worker correctly refused to touch them. **The defect is
+the issuer's census of the table's readers, not the worker's.** Remedy: both files are added to `<paths>` and bound 4
+admits only the 16 -> 18 edit. The api suite's base is **256**, not the 255 the cut stated (a later commit added one
+test); AC2 reads its own BEFORE. The same worker is CONTINUED on this face. `lib/research/api/` is AMGT_RESAPP's
+surface; `1.0.0_SA_CTO~Z` is CTO of both projects and the mount is its ruled item 1 -- the edit moves a guard's baseline
+by exactly the routes that item adds, and no assertion's meaning.
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
