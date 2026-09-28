@@ -725,6 +725,17 @@ def generated_ranges(lines, nm):
     return ranges
 
 
+def _nested_portal_path(path):
+    """A commit made inside the nested portal repo (safe-commit runs `git diff --cached` from its cwd) names its
+    files portal-relative, while generator targets are workspace-relative (`portal/src/...`). Only then is the
+    `portal/` prefix restored; any other cwd returns the path unchanged."""
+    portal = os.path.normcase(os.path.join(REPO, "portal"))
+    cwd = os.path.normcase(os.path.abspath(os.getcwd()))
+    if cwd == portal or cwd.startswith(portal + os.sep):
+        return "portal/" + path
+    return path
+
+
 def generator_output(nm, path, post_text):
     """The generator's output for a generated target whose post-image is post_text (the carrier's hand-kept
     bytes are read from the post-image, as generate() reads them from the working tree)."""
@@ -1401,12 +1412,13 @@ def grade_file(nm, f, post_from_index):
     gen_ranges = []
     if marked:
         tag = "<generated-file-edit>"
-        if path not in nm.targets:
+        target = path if path in nm.targets else _nested_portal_path(path)
+        if target not in nm.targets:
             return [("REFUSE", path, first_added, tag,
                      "not produced by lib/opal_naming.py generate (known targets: %d)" % len(nm.targets),
                      "the file carries the GENERATED mark but the generator does not produce it", "REFUSE")]
         try:
-            expected = generator_output(nm, path, post_text)
+            expected = generator_output(nm, target, post_text)
         except Exception as exc:  # the generator cannot run: a registry defect, never a refusal
             return [("RAISE", path, first_added, tag, "(rule or registry defect)",
                      "the generator could not produce %s: %s: %s" % (path, type(exc).__name__, exc), "WARN")]
