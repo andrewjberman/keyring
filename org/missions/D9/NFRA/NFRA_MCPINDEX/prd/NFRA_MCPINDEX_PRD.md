@@ -2,7 +2,7 @@
 {
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
-  "fabric": "laptop",
+  "fabric": "site-z",
   "prd_version": "v0.5",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
