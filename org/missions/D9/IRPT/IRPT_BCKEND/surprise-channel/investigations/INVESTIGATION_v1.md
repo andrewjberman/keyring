@@ -10549,34 +10549,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-```json
-{
-  "id": "IRPT_BCKEND-W42-S1",
-  "project": "IRPT_BCKEND",
-  "fabric": "laptop",
-  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~42",
-  "surfaced_at": "2026-09-28T19:35:00Z",
-  "one_line": "TO-IB-mr-2 Step 2's one QA fire of irpt-holdings-refresh-lambda ({\"qa\": true}) dispatched one SSM command per firm and all three terminated Failed (rc=1), for three distinct structural causes, not a transient runner-start race.",
-  "class": "BLOCKING",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "1.0.0_SA_CTO (closure gap in .tools/safe_deploy_core.py _IRPT_HOLDINGS_CLOSURE) and 2.0.0_SA_COO~M (the two firm-holdings assumed roles' missing s3:GetObjectVersion grant on their cross-bucket source reads)",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "lambda.invoke(FunctionName='irpt-holdings-refresh-lambda', Payload={\"qa\": true}) this session: first call returned {\"status\": \"RUNNER_OFFLINE_START_ISSUED\"} (i-02448edb624a7a7cf was 'stopped', ec2.describe_instances this session); ssm.describe_instance_information polled Online within 1s; second call returned {\"status\": \"DISPATCHED\", \"qa\": true, \"results\": [{\"firm\": \"49financial\", \"dispatched\": \"10a22d91-5462-4da6-b241-841be0796b51\"}, {\"firm\": \"cottonwood\", \"dispatched\": \"415f085f-24a5-43fa-b565-fa7b341dc927\"}, {\"firm\": \"inflection\", \"dispatched\": \"a0f8059e-ac39-4ce7-9bc2-292ef6afd857\"}]}",
-      "ssm.get_command_invocation for all 3 command ids this session: Status=Failed ResponseCode=1 for each, polled within 1s of dispatch (already terminal)",
-      "49financial stdout tail: botocore.errorfactory.AccessDenied 'User: arn:aws:sts::313476888478:assumed-role/irpt-49f-holdings-role/irpt-holdings-49financial is not authorized to perform: s3:GetObjectVersion on resource: arn:aws:s3:::opal-data-assets/gateway/49financial/bronze/taxsma_workbook_projection/date=2026-09-23/taxsma_workbook_projected_snapshot.json'",
-      "cottonwood stdout tail: same AccessDenied shape, role arn:aws:sts::313476888478:assumed-role/irpt-cot-holdings-role/irpt-holdings-cottonwood, resource arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/silver/fact_model_assignment/date=2026-09-28/data.parquet",
-      "inflection stdout tail: ModuleNotFoundError: No module named 'lib.silver_ids' at data/inf/scripts/silver/_orion_api_silver_lib.py:284 'from lib.silver_ids import ...'; lib/silver_ids.py exists at CLOUD 8cd218cd05 but is absent from .tools/safe_deploy_core.py _IRPT_HOLDINGS_CLOSURE (read this session, lines 419-460 of the worktree's HEAD)",
-      "s3.head_object on each firm's served irpt/<firm>/platinum/holdings/current/manifest.json before and after the fire: VersionId unchanged at all 3 firms (49financial OqjgF6qs7e5QsF7HScOre54hxJ18Ktgf, inflection ipomYxTGLoE0pAgeh.nNtVJ6QUm5ynJG, cottonwood ykQofbha2WKbcHFKvxMThBs0UNC_g9ji); holdings_qa/current/manifest.json is a 404 at all 3 firms (nothing published)"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "TO-IB-mr-2 Step 2 / IBM19-2-AC2: 'A QA fire publishes to holdings_qa ... Poll each command ... read its output: the rc, the as_of it built, and the holdings_qa revision it published' with the check script's own expectation of 'each with a Success command id'.",
-  "world_is": "All three QA-fire SSM commands terminated Failed(rc=1) on the first and only fire this session: 2 of 3 firms fail on an IAM AccessDenied (assumed firm-holdings role missing s3:GetObjectVersion on a cross-bucket source under opal-data-assets) and the third fails on a ModuleNotFoundError because the re-minted standalone bundle's declared closure (_IRPT_HOLDINGS_CLOSURE) does not carry lib/silver_ids.py, a module data/inf/scripts/silver/_orion_api_silver_lib.py imports. No holdings_qa manifest was published at any firm; the served manifest is untouched (VersionId equal before/after).",
-  "notes": "Out of this worker's bounds to fix (paths grant does not reach .tools/safe_deploy_core.py or IAM policy; Step 2 is bounded to invoking the dispatch with qa:true only). IBM19-2-AC2 is graded FAIL as measured; the ENABLE half (Step 3) is filled with these measurements rather than fabricated Success values, per the refusal clause. DISARM: add lib/silver_ids.py to _IRPT_HOLDINGS_CLOSURE and re-mint; grant s3:GetObjectVersion on the two named cross-bucket source prefixes to irpt-49f-holdings-role and irpt-cot-holdings-role (or their source objects' own VersionedInputs read path), then re-run the QA fire."
-}
-```
 
 ```json
 {
@@ -10818,6 +10790,63 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+
+```json
+{
+  "id": "IRPT_BCKEND-S184",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-28T21:50:00Z",
+  "one_line": "The NEW-01 guard (IB-pr-191, adapter hcZpXDDo) does not close NEW-01's class: 2 invested 49F accounts with a near-total one-day loss (r_net -0.999631 on 2026-04-07, -0.999959 on 2026-07-10; balance ~4k -> 1.50 and 0.17 with cf_net 0.0) sit just above the r_net <= -1 predicate and keep serving about -100% after the apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4.0.0_SA_CRO half @3f953cb06b (condition 2): the zip's own calculate against live twr_daily YTD 2026-01-01..2026-09-25 -- near-miss A COMPUTES -0.999526, near-miss B COMPUTES -0.999957; the guard moves 26 of the 28 rows with r_net <= -0.999 (22 accounts)",
+      "the COO's YTD census (row S177): 28 OK account-days with r_net <= -0.999 across 24 accounts; the two rows between -1 and -0.999 are the only ones the predicate does not reach"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An account with positive holdings never answers -100% (NEW-01 acceptance).",
+  "world_is": "After the guard, two invested accounts still answer about -100% because their bad day is -0.9996 / -0.99996, not <= -1.",
+  "notes": "Two ways to close it, ~P's call and not a condition of the adapter act: (a) a class predicate in the adapter (bmv > 0, emv near 0, cf_net 0 -> refuse), which needs its own cell and halves; (b) row S181's producer fix (a named non-OK status for a value that vanishes with no flow), already routed by 1.0.0_SA_CTO to the runners_49f owner. Recommended: (b) first, since it fixes the table every consumer reads; (a) only if S181 slips past the next ~P round."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W42-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~42",
+  "surfaced_at": "2026-09-28T19:35:00Z",
+  "one_line": "TO-IB-mr-2 Step 2's one QA fire of irpt-holdings-refresh-lambda ({\"qa\": true}) dispatched one SSM command per firm and all three terminated Failed (rc=1), for three distinct structural causes, not a transient runner-start race.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (closure gap in .tools/safe_deploy_core.py _IRPT_HOLDINGS_CLOSURE) and 2.0.0_SA_COO~M (the two firm-holdings assumed roles' missing s3:GetObjectVersion grant on their cross-bucket source reads)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda.invoke(FunctionName='irpt-holdings-refresh-lambda', Payload={\"qa\": true}) this session: first call returned {\"status\": \"RUNNER_OFFLINE_START_ISSUED\"} (i-02448edb624a7a7cf was 'stopped', ec2.describe_instances this session); ssm.describe_instance_information polled Online within 1s; second call returned {\"status\": \"DISPATCHED\", \"qa\": true, \"results\": [{\"firm\": \"49financial\", \"dispatched\": \"10a22d91-5462-4da6-b241-841be0796b51\"}, {\"firm\": \"cottonwood\", \"dispatched\": \"415f085f-24a5-43fa-b565-fa7b341dc927\"}, {\"firm\": \"inflection\", \"dispatched\": \"a0f8059e-ac39-4ce7-9bc2-292ef6afd857\"}]}",
+      "ssm.get_command_invocation for all 3 command ids this session: Status=Failed ResponseCode=1 for each, polled within 1s of dispatch (already terminal)",
+      "49financial stdout tail: botocore.errorfactory.AccessDenied 'User: arn:aws:sts::313476888478:assumed-role/irpt-49f-holdings-role/irpt-holdings-49financial is not authorized to perform: s3:GetObjectVersion on resource: arn:aws:s3:::opal-data-assets/gateway/49financial/bronze/taxsma_workbook_projection/date=2026-09-23/taxsma_workbook_projected_snapshot.json'",
+      "cottonwood stdout tail: same AccessDenied shape, role arn:aws:sts::313476888478:assumed-role/irpt-cot-holdings-role/irpt-holdings-cottonwood, resource arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/silver/fact_model_assignment/date=2026-09-28/data.parquet",
+      "inflection stdout tail: ModuleNotFoundError: No module named 'lib.silver_ids' at data/inf/scripts/silver/_orion_api_silver_lib.py:284 'from lib.silver_ids import ...'; lib/silver_ids.py exists at CLOUD 8cd218cd05 but is absent from .tools/safe_deploy_core.py _IRPT_HOLDINGS_CLOSURE (read this session, lines 419-460 of the worktree's HEAD)",
+      "s3.head_object on each firm's served irpt/<firm>/platinum/holdings/current/manifest.json before and after the fire: VersionId unchanged at all 3 firms (49financial OqjgF6qs7e5QsF7HScOre54hxJ18Ktgf, inflection ipomYxTGLoE0pAgeh.nNtVJ6QUm5ynJG, cottonwood ykQofbha2WKbcHFKvxMThBs0UNC_g9ji); holdings_qa/current/manifest.json is a 404 at all 3 firms (nothing published)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-mr-2 Step 2 / IBM19-2-AC2: 'A QA fire publishes to holdings_qa ... Poll each command ... read its output: the rc, the as_of it built, and the holdings_qa revision it published' with the check script's own expectation of 'each with a Success command id'.",
+  "world_is": "All three QA-fire SSM commands terminated Failed(rc=1) on the first and only fire this session: 2 of 3 firms fail on an IAM AccessDenied (assumed firm-holdings role missing s3:GetObjectVersion on a cross-bucket source under opal-data-assets) and the third fails on a ModuleNotFoundError because the re-minted standalone bundle's declared closure (_IRPT_HOLDINGS_CLOSURE) does not carry lib/silver_ids.py, a module data/inf/scripts/silver/_orion_api_silver_lib.py imports. No holdings_qa manifest was published at any firm; the served manifest is untouched (VersionId equal before/after).",
+  "notes": "Out of this worker's bounds to fix (paths grant does not reach .tools/safe_deploy_core.py or IAM policy; Step 2 is bounded to invoking the dispatch with qa:true only). IBM19-2-AC2 is graded FAIL as measured; the ENABLE half (Step 3) is filled with these measurements rather than fabricated Success values, per the refusal clause. DISARM: add lib/silver_ids.py to _IRPT_HOLDINGS_CLOSURE and re-mint; grant s3:GetObjectVersion on the two named cross-bucket source prefixes to irpt-49f-holdings-role and irpt-cot-holdings-role (or their source objects' own VersionedInputs read path), then re-run the QA fire."
+}
+```
+
+
 ```json
 {
   "id": "IRPT_BCKEND-W42-S2",
@@ -10871,5 +10900,61 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "spec_asserts": "Amendment 3 Step 9: run the investor_reporting test suite and record its summary line -- implicitly, that the suite's result reflects this session's code, not an unrelated collection-order artifact.",
   "world_is": "Two same-named top-level packages (repo-root lib/ and .tools/lib/) coexist in the tree; one test file's permanent sys.path mutation makes the INF chain's `from lib.silver_ids import ...` resolve to the wrong one whenever the full investor_reporting test directory runs together, independent of any change to holdings code. This session recorded the real (unweakened) summary line as required and did not touch test_bundle_manifest_stamp.py, .tools/, or lib/ (all outside this order's <paths>).",
   "notes": "Fix sketch for whoever takes this: either scope test_bundle_manifest_stamp.py's sys.path.insert to a `finally`-popped context, or rename/alias one of the two `lib` packages so they cannot collide, or have _orion_api_silver_lib.py import repo-root lib/ by explicit file path (importlib.util.spec_from_file_location) instead of a bare package name. Not blocking IBM19-2-AC1/AC2/AC3 or this order's Step 9 (none of its checks read the pytest summary line's pass/fail count)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S185",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-28T22:45:00Z",
+  "one_line": "AD-14 (Andrew-direct call 1c, record ANDREW_DIRECT_20260928_222xZ_OPEN_CALLS_1_2_APPROVED_3_HOLDINGS_BASED_PERFORMANCE.md): the COT dependency behind 'temporarily unavailable' (DEPENDENCY_UNAVAILABLE) is NAMED: every fresh Cottonwood Performance window needs a server-approved ONE-USE Black Diamond performance plan (Andrew's per-use vendor word, armed on the adapter), and none is armed, so the adapter refuses VendorEgressRefused before any vendor call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/irpt-performance-adapter 2026-09-28 13:30-22:30Z, irpt_retained_phases + irpt_internal: 154 computes refused:VendorEgressRefused 'matching current server-approved performance use required' (authorization.py:90); 49 refused:InflectionMappingRefused (INF: 'account not individually addressable: its Orion household holds 4 accounts'); 36 refused:WindowNotRuled (49F 3Y / Since inception); 44 reopens; 2 fresh",
+      "the adapter's live environment (read ~22:4xZ) carries neither IRPT_PERFORMANCE_APPROVED_PLAN nor IRPT_PERF_VENDOR_EGRESS_AUTHORIZED: no one-use plan is armed (infra/aws/terraform/investor-reporting/performance/lambda.tf:51-53, retained.tf:10 default null)",
+      "authorization.py:60-101: a fresh vendor-path compute is admitted only when the request matches the armed plan exactly (firm, account, window, mapping revision, vendor ids, request digest) and a PERFORMANCE_USE# claim is written once; otherwise VendorEgressRefused",
+      "the one COT window that answers is the retained RPT-12b885b8 (actual 07-21..09-21, rows S169/S170), computed under a one-use plan on 09-27 and reopened since; every other COT window is fresh and refused",
+      "the master guidance brief AD-14 (docs/briefs/irpt-master-guidance-brief-20260928.md): the CRO walk 20260928T174953Z counted COT DEPENDENCY_UNAVAILABLE 53 times"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A window that cannot answer names its dependency in one plain sentence (AD-14 acceptance); Cottonwood Performance answers for its clients' windows.",
+  "world_is": "Cottonwood Performance is gated per request on a one-use vendor plan by design (vendor egress needs Andrew's per-use word); with none armed, every fresh COT window answers DEPENDENCY_UNAVAILABLE and the page says only 'temporarily unavailable'.",
+  "notes": "This names the dependency; it fixes nothing (AD-14: name before any fix). The fix is Andrew's scope question already open in the same record's routing: whether the holdings-based basis of call 3 (end-of-day holdings, weight-pro-rated security returns, no flow logic) also replaces the VENDOR-calculated performance for Cottonwood (Black Diamond) and Inflection (Orion). If yes, COT stops needing a per-use vendor plan; if no, each COT window needs its own per-use word and plan. The page sentence for this refusal is ~D's (a plain 'this firm's performance needs an approved data pull' line)."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S186",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-28T22:50:00Z",
+  "one_line": "A third about -100% account, outside row S184's two near-misses: 49F client ANTHONY DALE REID, account ****9079 / IRA holding $99,253.73, is served a YTD period return of -100.00% (answered 2026-04-15..2026-09-22, PERFORMANCE_PARTIAL), its cumulative series falling to -100% on 2026-04-16 and staying there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/ui-walk/20260928T220437Z/shots/011-anthony-dale-reid-performance-after-YTD-expanded.png (md5 87fe1638ba0d6e10661becaf6f9de57d): account picker '****9079 / IRA -- $99,253.73 -- YTD pending'; PERIOD RETURN -100.00%; series start 2026-04-15 0.00%, every observation from 2026-04-16 to 2026-09-22 -100.00% (69 of 69); report availability PARTIAL",
+      "tmp/ui-walk/20260928T220437Z/shots/028-anthony-dale-reid-holdings-select-1-Opal-Long-Term.png: the same account's Holdings total $99,253.73, 100% in Opal models",
+      "row IRPT_BCKEND-S184 names two near-misses with ~4k balances falling on 2026-04-07 and 2026-07-10; this account's balance (~$99k) and date (04-16) match neither",
+      "walk on localhost:5174 dev:live (live data through the CloudFront front door), 2026-09-28T22:04:37Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-191 (NEW-01): the engine never serves an impossible return.",
+  "world_is": "A funded account ($99,253.73 held) is served -100.00% for the period. Not measured here: the account's twr_daily rows (whether 04-16's r_net is <= -1, which the guard should refuse, or just above it like S184's two), and which Lambda version answered.",
+  "notes": "Found by 3.0.0_SA_CVO reading a DSGN_IRPTV1 walk; not a DSGN pin's claim. pr-191 is REOPENED as IB-pr-194 (b6e0525927). 3.0.0_SA_CVO dispositions it at round 19's L9."
 }
 ```

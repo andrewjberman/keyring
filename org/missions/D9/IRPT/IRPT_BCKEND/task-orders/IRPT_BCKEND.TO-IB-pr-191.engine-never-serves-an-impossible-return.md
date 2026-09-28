@@ -2,10 +2,10 @@
 
 <to_id>IRPT_BCKEND.TO-IB-pr-191</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~61</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~63</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-28</issued_date>
-<status>complete -- P19-1-AC1/AC2/AC3 all PASS-by-output (proof-of-spec-check.py VALID rc=0). f49_engine.EngineReturnImplausible raised from calculate() before any report is built when a linked window day carries r_net &lt;= -1.0; entry.py names it DEPENDENCY_UNAVAILABLE ahead of the MRO's EnginePerformanceRefused OBJECT_NOT_COVERED; tests/test_f49_engine.py carries the NEW-01 shape + sibling control (10 of 10 tests pass). Base-state contrast executed against a detached-HEAD worktree at 0a80f8165c: AC1/AC3 arm A both FAIL there, matching the order's stated base. Committed 57a58117fb on wk-IRPT_BCKEND-61.</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -13,8 +13,15 @@
 <round>19</round>
 <workstream>~P</workstream>
 
-**Directive:** D9 | **Fabric:** laptop | **Decomp cell:** `IB-pr-191` (decomposition section 13) | **outcome_ref:** FWD-3
+**Directive:** D9 | **Fabric:** laptop | **Decomp cell:** `IB-pr-191` (decomposition section 13) and `IB-pr-194` (section 13.1 addendum 1) | **outcome_ref:** FWD-3
 (Performance backend half) | **depends_on:** none
+
+**REOPENED by the issuer 2026-09-28 ~22:4xZ** (4.0.0_SA_CRO D1 RESULT @5f82151a2e; 1.0.0_SA_CTO 102447): the first
+flip graded the compute path only (57a58117fb, served as adapter hcZpXDDo since 22:02Z, all three P19-1 criteria
+PASS and still passing). The served page reopens RETAINED reports, so the outcome -- an invested account never
+answers -100% -- is not met on the served surface. The order is re-cut in place (the one-issuance limb admits a
+modification, never a new file) to own cell `IB-pr-194` as well, and reissued to slot ~63 on a fresh worktree so it
+does not stack onto slot ~61's unmerged IB-pr-192 branch.
 
 ---
 
@@ -42,6 +49,29 @@ worktree (the path in your spawn line replaces `C:/Users/AndrewBerman/Desktop/aj
 3. Add the NEW-01 shape and its control to `tests/test_f49_engine.py` as a test, reusing that file's `FakeS3`
    fixtures.
 
+
+### CELL `IB-pr-194` (added at the reopen) -- the retained reopen refuses a pre-guard impossible report
+
+Your base is CLOUD, where cell `IB-pr-191` below is ALREADY BUILT and merged (57a58117fb): do not rebuild it; its three
+criteria must still pass. The NEW-01 guard lives in `f49_engine.calculate`, but the Performance page reopens RETAINED
+reports and never recomputes them. In `infra/aws/lambda/investor-reporting/performance/retained.py`,
+`RetainedPerformance._compute` returns `reopen(existing)` (lines 177-183) whenever an accepted pointer exists, and
+`reopen` (lines 151-174) returns `accepted["report"]` without reading its figures. So a report computed BEFORE the guard
+is re-served: the CRO's after-read saw the NEW-01 account's 1Y still at -100.00%, with 26 reopens and 0 engine runs.
+Measured in the live store: 23 retained 49F PERFORMANCE reports, exactly 2 with a
+`returns.daily_cumulative_series` value <= -1.0 (both the NEW-01 account).
+
+**Build**, in `retained.py`:
+1. Add a module function `implausible_engine_series(report) -> bool`: True when any point of
+   `report["returns"]["daily_cumulative_series"]` has a cumulative value <= -1.0 (a number, or a dict carrying
+   `value`; read both). A cumulative value <= -1 on a linked series means some linked day had r_net <= -1.
+2. In `reopen`, when the owner's firm is 49 Financial (`owner["firm_id"] == tenants._CANONICAL_49F`) and
+   `implausible_engine_series(accepted["report"])` is True, raise `f49_engine.EngineReturnImplausible` (fixed text,
+   no account, date or value). The boundary already names it DEPENDENCY_UNAVAILABLE. Nothing in the store is deleted,
+   rewritten or re-derived.
+3. Every other reopen, every other firm and the fresh path are unchanged. Add the two arms to
+   `tests/test_retained_performance.py`.
+
 ### ACCEPTANCE (run each from your worktree root)
 
 <criterion id="P19-1-AC1" cell_refs="IB-pr-191"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r19/p19_1_ac1_implausible_fixture.py" .</invocation><expect>P19-1-AC1 PASS</expect></criterion>
@@ -58,7 +88,18 @@ arm B PASS.
 `P19-1-AC3` -- the boundary names the refusal DEPENDENCY_UNAVAILABLE. Without the line, the MRO walk would answer
 OBJECT_NOT_COVERED ("this account is not covered"), which is false. Base: FAIL on arm A.
 
-<expected_criteria>P19-1-AC1,P19-1-AC2,P19-1-AC3</expected_criteria>
+<criterion id="P19-4-AC1" cell_refs="IB-pr-194"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r19/p19_4_ac1_reopen_fixture.py" .</invocation><expect>P19-4-AC1 PASS</expect></criterion>
+`P19-4-AC1` -- the built behaviour with its difference control. The check retains a report through the PRE-guard
+engine (f49_engine.py from git at 8d7a8b10fe, as served before hcZpXDDo), then reopens it with your code: arm A, the
+NEW-01 shape reopens as EngineReturnImplausible; arm B, a clean account reopens with the same report and no second
+engine read. Base: arm A FAIL (DID NOT RAISE, the live bug), arm B PASS.
+
+<criterion id="P19-4-AC2" cell_refs="IB-pr-194"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r19/p19_4_ac2_live_store.py" .</invocation><expect>P19-4-AC2 PASS</expect></criterion>
+`P19-4-AC2` -- the seam probe against the REAL retained store (DynamoDB irpt-requests + S3 blobs, read-only):
+`implausible_engine_series` flags exactly revisions 790fe675 and 74fb35a4 of the 23, and passes the other 21. Base:
+FAIL (not defined).
+
+<expected_criteria>P19-1-AC1,P19-1-AC2,P19-1-AC3,P19-4-AC1,P19-4-AC2</expected_criteria>
 
 ## BOUNDS
 
@@ -73,21 +114,23 @@ OBJECT_NOT_COVERED ("this account is not covered"), which is false. Base: FAIL o
 infra/aws/lambda/investor-reporting/performance/f49_engine.py
 infra/aws/lambda/investor-reporting/performance/entry.py
 infra/aws/lambda/investor-reporting/performance/tests/test_f49_engine.py
+infra/aws/lambda/investor-reporting/performance/retained.py
+infra/aws/lambda/investor-reporting/performance/tests/test_retained_performance.py
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
 <decomp_ref>
-<decomp_doc>org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md</decomp_doc> section 13 (round 19, workstream ~P), cell `IB-pr-191`.
-<owned_cells>IB-pr-191</owned_cells>
+<decomp_doc>org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md</decomp_doc> section 13 (round 19, workstream ~P), cell `IB-pr-191`; section 13.1 addendum 1, cell `IB-pr-194`.
+<owned_cells>IB-pr-191, IB-pr-194</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: P19-1-AC1, P19-1-AC2, P19-1-AC3. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~61/IRPT_BCKEND.TO-IB-pr-191.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> P19-1-AC1,P19-1-AC2,P19-1-AC3` BEFORE the flip.
+Criterion ids: P19-1-AC1, P19-1-AC2, P19-1-AC3, P19-4-AC1, P19-4-AC2. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~63/IRPT_BCKEND.TO-IB-pr-191.engine-never-serves-an-impossible-return.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> P19-1-AC1,P19-1-AC2,P19-1-AC3,P19-4-AC1,P19-4-AC2` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** your final message: the commit hash, each criterion's last line, and any surprise row id
-(`IRPT_BCKEND-W19P-S<k>`).
+(`IRPT_BCKEND-W63-S<k>`).
 
 ---
 
@@ -103,4 +146,4 @@ comp-adversary: RUN -- the checks were dry-run at the base (CLOUD content for th
 lane: the <paths> block IS the grant; no other open order names these files.
 </preflight>
 
-Queue: slot ~61 continues with `IRPT_BCKEND.TO-IB-pr-192` on the same files.
+Reopened to slot ~63 (fresh worktree from CLOUD); slot ~61 keeps IRPT_BCKEND.TO-IB-pr-192 alone.

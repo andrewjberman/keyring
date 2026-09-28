@@ -2962,3 +2962,82 @@
   "notes": "Filed by 2.0.0_SA_COO~Y as the owner of the Analysis status semantics (IRPT_BCKEND~Y). No backend change is proposed: the fix surface is StageDisplay.tsx (2.0.0_SA_COO~D). 3.0.0_SA_CVO dispositions it with S34 at L9."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S36",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-28T21:45:00Z",
+  "one_line": "Widens row S34: a raw public reason code reaches the Analysis face in at least two more places -- the Holdings-snapshot line on a refusal ('none held -- Unavailable (SOURCE_UNAVAILABLE)') and the request-history row ('Failed -- SOURCE_UNAVAILABLE'). A fix at StageDisplay.tsx:62 alone leaves both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test iv-e-83.snapshot-loading.test.tsx at portal 816eeb58 (re-run by 3.0.0_SA_CVO) prints: UIC-22 answered, refused: \"Holdings snapshot: none held -- Unavailable (SOURCE_UNAVAILABLE)\"",
+      "bun test iv-e-62.request-history.test.tsx at portal 921e6808 (re-run by 3.0.0_SA_CVO) prints row text \"Failed \u2014 SOURCE_UNAVAILABLE\"",
+      "grade record org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_FAST_PIN_GRADES_20260928.md, next item N3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "UIC-09 (PRD v0.18): a loading or refused state carries no system words; FWD-15 client language on the face.",
+  "world_is": "Three Analysis surfaces print a reason code verbatim: the stage line (S34), the Holdings-snapshot line on a refusal, and the request-history row. Claim class FIXTURE for the last two (test-rendered text); row S35 shows the served envelope does carry reason codes.",
+  "notes": "Both lines were found in the tests' own printed output while grading FAST pins 7 and 4; neither pin claims them. 3.0.0_SA_CVO dispositions this with S34 and S35 at L9."
+}
+```
+
+
+```json
+{
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-28T22:50:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "DSGN_IRPTV1-S37",
+  "one_line": "Picking an option in the Holdings tab's first dropdown can reset the whole page: the client selection clears, the tab jumps back to Performance, and the sample placeholders show. Every walk's Analysis shots are therefore clientless, which is why FAST pins 7 and 8 have no real-run grade.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/ui-walk/20260928T220437Z/shots/028-anthony-dale-reid-holdings-select-1-Opal-Long-Term.png (md5 12230fee9d6b0d7ee70f86e2587a2ad6): client ANTHONY DALE REID still selected after the 'Opal Long Term' pick (its holdings table has headers and no rows)",
+      "tmp/ui-walk/20260928T220437Z/shots/030-anthony-dale-reid-holdings-select-1-Opal-Ultra-Long-Term.png (md5 c738f75091129f8a396dc2dc535c8820): search box empty, 'Choose a client to see its firm and accounts.', PERFORMANCE tab active, SAMPLE panels",
+      "same order in walk 20260928T190559Z: shot 030 'cowdin-holdings-select-1-Client', then shot 031 Analysis with no client",
+      ".claude/skills/ui-walk/walk.mjs:384-403: the walker clicks tabs and picks select options inside [data-slot=\"tabs\"]; it has no step that clears the header selection there; the walk's console_errors carry nothing after login"
+    ]
+  },
+  "spec_asserts": "A selection takes and holds (brief O5); a Holdings view filter narrows Holdings, it does not change the client scope.",
+  "world_is": "After an 'Opal Short Term' or 'Opal Ultra Long Term' pick in the Holdings select, the next shot shows no client and the Performance tab. Which of the two picks resets it, and whether the page or the walker's option pick causes it, is not isolated. Claim class: WALK-OBSERVED, 2 walks.",
+  "notes": "Found grading FAST pins 7-9 after the fact. Owner of the surface: 2.0.0_SA_COO~D (lease surface portal/src/pages/InvestorReporting). One manual pick of each select-1 option with a client selected isolates it."
+}
+```
+
+
+```json
+{
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-28T22:50:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "DSGN_IRPTV1-S38",
+  "one_line": "After a Comparison or Multi-Comp card is picked (shown SELECTED, the right ask, the title '-- Comparison'), the composer's summary line still reads 'Variant  Overview (0 comparisons)' and the panel's top-right label still reads 'Overview'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/ui-walk/20260928T220437Z/shots/034-anthony-dale-reid-analysis-press-VARIANT-Comparison-Against-.png (md5 2fce3883719629e200362fed7d2e32f1): Comparison card SELECTED, ask 'Add one Opal model to compare against.', title helper 'the selected client -- Comparison', summary 'Variant Overview (0 comparisons)', top-right 'Overview'",
+      "tmp/ui-walk/20260928T220437Z/shots/037-anthony-dale-reid-analysis-press-VARIANT-Multi-Comp-Against-.png (md5 0adb4cf3b4fb6c0d72baecef7ab9e8a6): Multi-Comp SELECTED, ask 'Add at least two Opal models to compare against.', summary still 'Variant Overview (0 comparisons)'",
+      "build: portal 8c6792df (HEAD 22:03:24Z to 22:22:31Z; walk 22:04:37Z, 4.6 min)"
+    ]
+  },
+  "spec_asserts": "UIC-18: a picked variant is visibly selected and the form asks for what that variant needs; a selection takes (brief O5).",
+  "world_is": "The card, the ask and the title follow the pick; the summary line and the top-right label keep the default variant. Claim class: WALK-OBSERVED, no client selected in the shots (see S37).",
+  "notes": "Pin 816eeb58's two claims pass on this walk; this line is outside them. Owner of the surface: 2.0.0_SA_COO~D."
+}
+```

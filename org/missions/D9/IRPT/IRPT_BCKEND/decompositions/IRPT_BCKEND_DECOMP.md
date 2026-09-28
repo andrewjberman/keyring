@@ -1084,3 +1084,41 @@ no cell text yet (CTO tick 65 names it only as enrichment); the ~P hygiene items
 template path S167, directory Terraform root, cherry-pick review) are record acts, not cells.
 
 fanout: 2 of 2 chains, cap 8.
+
+
+### 13.1 ADDENDUM 1 (2026-09-28 ~22:3xZ, 2.0.0_SA_COO~P, on 4.0.0_SA_CRO D1 RESULT @5f82151a2e and 1.0.0_SA_CTO 102447)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-194` | FWD-3; NEW-01 on the served surface (ledger irpt-adapter-implausible-guard-20260928 D1) | WORLD (path floor; code and tests only, the served move is the COO's act under both halves) | `IB-pr-191` (on CLOUD) | A (carried by the REOPENED order TO-IB-pr-191, slot ~63) |
+
+**IB-pr-194 -- reopen refuses a pre-guard impossible report.** The served page reopens RETAINED reports
+(`retained.py` `_compute` -> `reopen`) and never re-runs `f49_engine.calculate`, so IB-pr-191's guard did not reach the
+two NEW-01 reports retained before 22:02Z. `retained.implausible_engine_series(report)` (any
+`daily_cumulative_series` value <= -1.0) gates `reopen` for the engine firm, raising `EngineReturnImplausible`. Nothing
+in the store is deleted, rewritten or re-derived. Live census at the cut: 23 retained 49F reports, exactly 2 flagged
+(790fe675, 74fb35a4). This packet's blast radius counts BOTH readers of the served figure (compute and reopen) -- the
+miss the adapter packet made.
+
+fanout: 1 of 1 chains, cap 8.
+
+
+### 13.2 WORKSTREAM ~E, ROUND 19 (2026-09-28 ~22:5xZ, issuer 2.0.0_SA_COO~P, on Andrew-direct calls 2-3 and 1.0.0_SA_CTO 102456/102461)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-191` | FWD-3 (49F Performance): the engine's daily return is holdings-based, no flow logic; closes rows S181 and W61-S2 | WORLD (rewrites the served twr_daily history; QA prefix first, then both never-widen halves) | none | E |
+
+**IB-er-191 -- the 49F engine's daily return is holdings-based.** Andrew's call 3 fixes the method: the day-t account
+return is the weight-pro-rated day-t price return of the securities held at the end of t-1 (weights over the account's
+t-1 fair value; cash earns zero; no inflow/outflow term). This replaces the flow-based `c02_twr_engine.py:264`, whose
+full-value exits and scaled flows produce 26 OK rows at r_net <= -1 year to date. The rebuild also restores the value
+columns of the two partitions of row W61-S2. One order, to the DS seat 0.4.0_DS_ClientPlatform~E (seated by MSTR
+102458). A disjoint scope (a producer outside every IRPT write surface), hence its own workstream.
+
+fanout: 1 of 1 chains, cap 8.
+
+**13.2 CANCELLED (2026-09-28 ~23:0xZ):** Andrew-direct ~22:4xZ (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_HOLDINGS_BASED_PERFORMANCE_ALL_FIRMS_SILVER_TO_ONE_GOLD.md`)
+moves every firm channel to the holdings basis in ONE consolidated gold shape. `IB-er-191` is cancelled with that
+pointer; its 49F work is re-cut as a slice of the consolidated gold after the CRO brief (L1) and the CTO L4 addendum.
+The deployed NEW-01 page guard (adapter hcZpXDDo) and its reopen remedy (`IB-pr-194`) stay.

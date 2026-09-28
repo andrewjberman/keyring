@@ -1,0 +1,132 @@
+{
+  "captured_at_utc": "2026-09-28T22:47:19.595964+00:00",
+  "notebooks": [
+    {
+      "live_path": "C:\\Users\\AndrewBerman\\OneDrive - Opal Capital\\Shared - Documents\\OCIO Models\\Dashboard\\202511 Model Portfolio Exposure\\src\\market_indices_data_pull.ipynb",
+      "live_sha256": "f47d72abdd49a019b94155783bc81e5b4dc28e5f64b1f3a2c1b8c006d85fb610",
+      "repo_path": "integrations\\bloomberg\\pipeline\\tplus1\\src\\market_indices_data_pull.ipynb",
+      "repo_sha256": "f47d72abdd49a019b94155783bc81e5b4dc28e5f64b1f3a2c1b8c006d85fb610",
+      "cells": [
+        {
+          "cell_index_zero_based": 10,
+          "live_code_sha256": "9c36f2b0c21c8a71ae2f8cca37032f32ab5c0559c7baf6d9406695bc0232d302",
+          "repo_code_sha256": "9c36f2b0c21c8a71ae2f8cca37032f32ab5c0559c7baf6d9406695bc0232d302",
+          "equal": true
+        },
+        {
+          "cell_index_zero_based": 13,
+          "live_code_sha256": "fa2d9226840d487a750a9a10f01e50d42f324d3729f9fb5fdf323547776b0394",
+          "repo_code_sha256": "fa2d9226840d487a750a9a10f01e50d42f324d3729f9fb5fdf323547776b0394",
+          "equal": true
+        },
+        {
+          "cell_index_zero_based": 16,
+          "live_code_sha256": "eef0b09536ede8cf84e5fd1d889c753940388580acd06083699285970de2a350",
+          "repo_code_sha256": "eef0b09536ede8cf84e5fd1d889c753940388580acd06083699285970de2a350",
+          "equal": true
+        }
+      ],
+      "return_field": "DAY_TO_DAY_TOT_RETURN_GROSS_DVDS",
+      "price_field": "PX_LAST"
+    },
+    {
+      "live_path": "C:\\Users\\AndrewBerman\\OneDrive - Opal Capital\\Shared - Documents\\OCIO Models\\Dashboard\\202511 Model Portfolio Exposure\\src\\model_portfolio_regression_analysis.ipynb",
+      "live_sha256": "33bad4f433bc6e7d6276c1e68ce36c106865733358877e2b3146f38299f784a1",
+      "repo_path": "integrations\\bloomberg\\pipeline\\tplus1\\src\\model_portfolio_regression_analysis.ipynb",
+      "repo_sha256": "712153dee6affa127ff68adf7c1054f557a800b9fa8ace97c4310ac8c5829dc6",
+      "cells": [
+        {
+          "cell_index_zero_based": 3,
+          "live_code_sha256": "e74c17150cc3e1699164938990a00e333dd45877b4e266c9e79350fe3111ed05",
+          "repo_code_sha256": "fec938661f17257f10f9cdf4d0992507366da5554a7280129bcd137f498b12da",
+          "equal": false
+        },
+        {
+          "cell_index_zero_based": 10,
+          "live_code_sha256": "2fea0fadac70b229444ec7c0e6dc27e52da1f5e257d09a79d990b0b0bdc3cf68",
+          "repo_code_sha256": "2fea0fadac70b229444ec7c0e6dc27e52da1f5e257d09a79d990b0b0bdc3cf68",
+          "equal": true
+        },
+        {
+          "cell_index_zero_based": 12,
+          "live_code_sha256": "9d836b1f0ddce021e04c94290597158923d6896b273f75aa8e51e7d049dcb8ac",
+          "repo_code_sha256": "9d836b1f0ddce021e04c94290597158923d6896b273f75aa8e51e7d049dcb8ac",
+          "equal": true
+        },
+        {
+          "cell_index_zero_based": 14,
+          "live_code_sha256": "90893414237e1504a79a4d7def0133b8efd9cb06c6e33d6388c2de4220d9bbf2",
+          "repo_code_sha256": "066c5eb917a2fce54b82c62caecbe3a0d882c431fe325a78456a037d74281262",
+          "equal": false
+        },
+        {
+          "cell_index_zero_based": 15,
+          "live_code_sha256": "93075545a068bdb499916c80da10592adb231ca2e51b18638706e3024f62ee90",
+          "repo_code_sha256": "93075545a068bdb499916c80da10592adb231ca2e51b18638706e3024f62ee90",
+          "equal": true
+        },
+        {
+          "cell_index_zero_based": 35,
+          "live_code_sha256": "71a59cbda7d84d58b60fa8d82e3b52a6157589d1691993b7f43c3bf359989b8d",
+          "repo_code_sha256": "71a59cbda7d84d58b60fa8d82e3b52a6157589d1691993b7f43c3bf359989b8d",
+          "equal": true
+        }
+      ],
+      "return_field": "DAY_TO_DAY_TOT_RETURN_GROSS_DVDS",
+      "price_field": "PX_LAST"
+    }
+  ],
+  "source_output_matches_s3": [
+    {
+      "source_path": "C:\\Users\\AndrewBerman\\OneDrive - Opal Capital\\Shared - Documents\\OCIO Models\\Dashboard\\202511 Model Portfolio Exposure\\output\\data 20260921 v1.pkl",
+      "s3_key": "benchmarks/data_20260921_v1.pkl",
+      "sha256": "26f7f3aae77caabde057bbcb433ed795ac8cfc3a1e1075cdc3c43cdbbaff8211",
+      "identical": true
+    },
+    {
+      "source_path": "C:\\Users\\AndrewBerman\\OneDrive - Opal Capital\\Shared - Documents\\OCIO Models\\Dashboard\\202511 Model Portfolio Exposure\\output\\model 20260921 v1.pkl",
+      "s3_key": "benchmarks/model_20260921_v1.pkl",
+      "sha256": "6d6b86fcd5255972357e64a873891a26f2e4195776b4196db4452e8c2847bbd5",
+      "identical": true
+    },
+    {
+      "source_path": "C:\\Users\\AndrewBerman\\OneDrive - Opal Capital\\Shared - Documents\\OCIO Models\\Dashboard\\202511 Model Portfolio Exposure\\output\\data 20260925 v1.pkl",
+      "s3_key": "benchmarks/data_20260925_v1.pkl",
+      "sha256": "a6845655ce5e811f51996fa6c19cce42444bffcb3b962fb3767e90b37c334217",
+      "identical": true
+    },
+    {
+      "source_path": "C:\\Users\\AndrewBerman\\OneDrive - Opal Capital\\Shared - Documents\\OCIO Models\\Dashboard\\202511 Model Portfolio Exposure\\output\\model 20260925 v1.pkl",
+      "s3_key": "benchmarks/model_20260925_v1.pkl",
+      "sha256": "ca50f6b00631d729d813ca37644c0e31472f5c462c1e91b01cc03e00061b41fb",
+      "identical": true
+    }
+  ],
+  "ust_income_examples": [
+    {
+      "date": "2026-04-01",
+      "cix": 0.027,
+      "holdings_total": 0.027542582157194604,
+      "holdings_price": -0.198200625984265
+    },
+    {
+      "date": "2026-07-01",
+      "cix": -0.012,
+      "holdings_total": -0.011733553238397247,
+      "holdings_price": -0.23286286126295103
+    },
+    {
+      "date": "2026-09-01",
+      "cix": -0.0758,
+      "holdings_total": -0.07562991789698409,
+      "holdings_price": -0.2992087896432362
+    }
+  ],
+  "ust_cix_vs_holdings_total_return_correlation": 0.9999954352194694,
+  "ust_max_daily_difference_percentage_points": 0.0011541333553663213,
+  "source_limits": [
+    "The market-index downloader substitutes price_return when the Bloomberg total-return field is missing; it does not retain a fallback flag.",
+    "CIX construction configuration was not independently retrieved. Independent ETF reconstruction supports income inclusion but differs by 2.36 bps YTD.",
+    "OneDrive notebook inspection is a current-source comparison, not an immutable execution attestation. The scheduled runner names repo notebooks; relevant field mappings agree in both copies."
+  ]
+}
