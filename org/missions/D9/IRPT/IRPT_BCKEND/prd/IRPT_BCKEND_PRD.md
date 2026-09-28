@@ -461,6 +461,6 @@ section 3 (C5, E1-E3), run early: the three journeys are NOT yet closed, so they
 4. **Andrew's acts in flight are EXERCISED arms, never waits** (E3), as each STATUS file lists them.
 5. **Precondition for worker cells:** the act-4 drain lands each seat branch on CLOUD and proves by content that CLOUD
    carries every served IRPT function's source (return brief B3). A cell cut before that names the seat branch as base.
-6. **Deferred, owner 1.0.0_SA_CTO:** renumbering the ENDPOINT so FWD-1 is the thread (spine v3.16-3.18). It is an
-   ENDPOINT change and re-opens the ratified-text half; no `3.0.0_SA_CVO` is seated, so it waits for one rather than
-   blocking round 19's issuance at LIMB 6.
+6. **Not done (1.0.0_SA_CTO, 2026-09-28 ~20:4xZ): no ENDPOINT renumbering.** Moving the thread to FWD-1 would re-key
+   every FWD citation across 18 rounds of orders, rows and analyses for no change in what is built; item 1 names the
+   thread and its order. The ENDPOINT text stays as ratified, so no half re-opens.
