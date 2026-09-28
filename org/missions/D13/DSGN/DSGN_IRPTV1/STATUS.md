@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-28T21:5xZ.
+tick here. As of 2026-09-28T22:0xZ.
 
 ## Pins
 
@@ -11,9 +11,9 @@ tick here. As of 2026-09-28T21:5xZ.
 |---|---|
 | Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-28T19:47:43Z (presence-extended) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal candidate pin | DEV `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `b0acdee2` (pushed by this seat under the lease; ls-remote read 21:5xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 UNREAD |
-| Suite on b0acdee2 | IR scope: the known 5 only, counted line by line (IVE3-AC1, missed at item 10 by a tail read, re-goldened in b0acdee2); tsc -b 0; eslint clean |
+| Portal candidate pin | DEV `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
+| Portal origin | origin DEV `8c6792df` (pushed by this seat under the lease; ls-remote read 22:0xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df UNREAD |
+| Suite on 8c6792df | IR scope: the known 5 only, counted line by line (item 12 re-goldened three raw-ISO date checks); tsc -b 0; eslint clean |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
 
@@ -37,6 +37,7 @@ on 5174 @528acdcd working tree (tmp/ui-walk/20260928T190559Z, local only). S30 d
 | 9 | portal `816eeb58` | UIC-18 (IV-e-75): visible pick; the form asks what the variant needs | iv-e-85 VARIANT-ASKS-OK, fe-s-15/iv-e-22/82 green; no real run (walks paused) |
 | 10 | portal `11c3fa4a` | UIC-17 (IV-e-77): scope panel dates real or omitted | iv-e-86 SCOPE-DATES-OK, iv-t-1 re-goldened, F48 green; no real run (walks paused) |
 | 10 follow-up | portal `b0acdee2` | iv-e-3 IVE3-AC1 re-goldened to the formatted date | missed in item 10's own run (tail-read); CARD-FED green |
+| 12 | portal `8c6792df` | UIR-45 (IV-e-77): Performance date window in the page date format | iv-e-88 PERFORMANCE-DATES-OK; three raw-ISO checks re-goldened; no real run (walks paused) |
 
 Round 9 at the boundary (@f42e1b00fa): IV-e-68/69/70/73/74/78/79 terminal and drained; IV-e-71/72/75/76/77
 superseded by this lease, unbuilt, their rows carried into Next.
@@ -45,10 +46,12 @@ superseded by this lease, unbuilt, their rows carried into Next.
 
 1. **IV-e-75 row UIC-21:** no placeholder or label truncated at 1440 px (needs a rendered measurement; waits for a
    browser run). W35-S2 is parked below (no answer-bearing Analysis report reaches the page).
-2. **IV-e-77 row UIR-45 (UIC-17 landed as item 10; UIC-14 parked below):** one client date format on Performance and the directory stamp; the
+2. **IV-e-77 (UIR-45 landed as item 12, UIC-17 as item 10; UIC-14 parked below):** one client date format on Performance and the directory stamp; the
    source line in client words; the scope panel never prints 'unknown' (SCOPE AS OF still reads unknown).
-3. **IV-e-76 rows (UIR-04/13/30, W35-S1):** firm display names from the registry generated view. Per CTO 102351 the
-   view target lands in `lib/opal_naming.py`, outside this lease's surface: CTO reads the diff before it lands.
+3. **IV-e-76 rows (UIR-04/13/30, W35-S1): UNBLOCKED (CTO 102440).** The view target FIRM_DISPLAY_NAMES landed at
+   lib/opal_naming.py @01646908e1; generate portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts
+   (python lib/opal_naming.py generate --out . --target <that path>), import it in firmDisplay.ts and its callers,
+   delete the title-case transform.
 4. **UIC-03:** no fix of record yet.
 5. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
 
@@ -58,9 +61,9 @@ superseded by this lease, unbuilt, their rows carried into Next.
 
 ## Next proof
 
-IV-e-77's UIR-45: every date on Performance (header, axis, daily table) and the directory stamp goes through
-format.ts formatPageDate (PerformanceControls.tsx :136-146 prints raw requested/actual dates). A test on the rendered
-Performance header. Each suite result is read as a counted list of failing tests.
+IV-e-76: generate firmDisplayNames.generated.ts from the registry (generator output committed, never hand-edited),
+read firm names through it in firmDisplay.ts and its callers, and delete the title-case transform; a test that each
+firm reads its registry display name.
 
 ## Dependencies
 
@@ -78,7 +81,7 @@ Performance header. Each suite result is read as a counted list of failing tests
 | All 11 cowdin accounts read "****8774 / UTMA" (the producer's display.label, inferred): row IRPT_BCKEND-S182 @cd42e57b61 | 2.0.0_SA_COO~M | ~M reads the served snapshot; a distinct producer label returns it here as a page item |
 | UIC-23's variant word on each history row: the served OwnedAnalysisRequestWire carries identity + accepted_at only | 1.0.0_SA_CTO (wire field, ~Y intake surface) | a variant field lands on the history wire, or the CTO rules the row names no variant |
 | W35-S2 (Export on Analysis): the page holds no answer-bearing Analysis report to export -- the live list read (listAnalysisRequests) is refused, so AnalysisTab's report is always null, and the owned-report view (AnalysisReportSliceView) carries sections but not the binding buildAnalysisSubmitRequest needs (input revision, configuration, artifact hash). Export on Analysis correctly stays closed | 2.0.0_SA_COO~Y (analysis read surface) with 1.0.0_SA_CTO | a served read returns an answer-bearing Analysis report with its binding, or the owned report carries the binding fields |
-| UIC-14 (Holdings source line in client words): the producer names embed firm tokens (49f/inf/cot), so a hand-typed producer-to-source map is refused by the LGIC naming gate (ENFORCE, DEC-6: read through lookup()). It needs the registry-generated view, the same path CTO 102351 set for IV-e-76, in lib/opal_naming.py outside this lease's surface. Build and test parked at .runtmp/parked/iv-e-87.source-client-words.test.ts (local) | 1.0.0_SA_CTO (reads the lib/opal_naming.py diff) | the view target lands (with IV-e-76's), or the lease surface widens to lib/opal_naming.py |
+| UIC-14 (Holdings source line in client words): the producer names embed firm tokens (49f/inf/cot), so a hand-typed producer-to-source map is refused by the LGIC naming gate (ENFORCE, DEC-6: read through lookup()). It needs the registry-generated view, the same path CTO 102351 set for IV-e-76, in lib/opal_naming.py outside this lease's surface. Build and test parked at .runtmp/parked/iv-e-87.source-client-words.test.ts (local) | 1.0.0_SA_CTO (CTO 102440: the registry holds no vendor display words or producer-to-vendor relation; the shape is a CTO decision) | the CTO decides and lands that registry shape |
 | IV-e-71's one-slice ALL CATEGORIES pie: an additive prop on the shared CategoryViewTree.tsx | 1.0.0_SA_CTO (surface) | the lease surface widens to that file, or a FULL round cuts it |
 
 ## Limits
