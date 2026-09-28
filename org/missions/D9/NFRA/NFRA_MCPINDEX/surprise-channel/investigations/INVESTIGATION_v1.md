@@ -2009,6 +2009,30 @@ carries none.
     "world_is": "Discharged by hand-off, which is the route the row recommended and the one 0.0.0_AB_MSTR~Z set on org/mcp/broker.py. THE LANE BARRIER IS UNCHANGED AND IS NOT CLAIMED FIXED: lib/ is still BASE_EXEC and the next non-exec seat needing it hits the same wall. That is correct standing behaviour, not a defect left open -- what this pair of rows records is the working route, and that GIT_COMMIT_AUTHOR_OVERRIDE was available throughout and was not taken.",
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "The blocker was a lane this seat does not hold, and it was cleared by the lane's holder rather than by an override or a widened grant. Nothing about the gate, the lane config or owned-paths-validate.py was edited. I first tried to close Z-S38 by EDITING IT IN PLACE and the surprise-row gate refused -- 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit' -- so that mutation was reverted surgically and this row is the correction, in the shape the gate and the channel's own 12 prior closures use."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S40",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-28T07:30Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in the world under ruling (a) @86b1b3b5b4. coerce_silver_ids and DEFAULT_SILVER_ID_COLS now live in lib/silver_ids.py (@88e4e69e69, committed by this seat under BASE_EXEC, read and exercised before commit). The inf module re-exports them and the bd builder imports from lib (@9fb05bc6c1, 0.4.0_DS_ClientPlatform~D). Re-verified after both landed (DS~D msg 26168): the builder imports, 6 of 6 inf callers resolve through the re-export, and s4.AC3 PASS. No cross-firm import exists and no exemption was taken.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S37"
+    ],
+    "one_line": "The disarm owner closes Z-S37: the silver-id helper is in lib/, the inf re-export and the bd import have landed, and the gate is satisfied without a cross-firm import.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log @88e4e69e69 (lib/silver_ids.py) and @9fb05bc6c1 (the move)",
+        "DS~D msg 26168 20260928T072756Z: 6/6 inf callers, s4.AC3 PASS, proof instance VALID"
+      ]
+    },
+    "spec_asserts": "Z-S37: the silver-id commit gate is fabric-wide while its helper is firm-local.",
+    "world_is": "The helper is fabric-local (lib/), and both firm trees satisfy the gate through it."
   }
 ]
 ```
