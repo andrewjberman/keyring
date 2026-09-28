@@ -3917,3 +3917,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "REC to the issuer: record the 18:06Z working seal as phase 1's seal of record (commit it on wk-nfra_oplgtw-og-v-4-p1 as a supersession of b0d4bba5df's digests), since it is the only seal whose salt exists; and mark AC8's probe as MUTATING in the order so a verifier re-runs only a read-back. Until then: no further AC8 invocation, no worktree removal, no salt edit."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-28T21:05Z",
+  "one_line": "Every Schwab CSV export fails today with INTERNAL_ERROR scan_incomplete: the engine's export branch returns CSV bytes and no 'rows', while SchwabService.export_query refuses any result without a 'rows' list. S57's premise that the export returns a Python list of rows is therefore wrong on the production path, and the tests hide it by aliasing run_export to run_query.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O (folds into the round-2 E5 streaming-export cell)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/engine.py:686-695 at HEAD: if kind == 'export', result['csv'] = the file bytes; only the else branch sets result['rows']. :1037-1038 run_export calls _run_plan('export', ...).",
+      "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:898-905 at HEAD: job = await self._engine.run_export(...); rows = value.get('rows'); if not isinstance(rows, list) ... raise ServiceError(INTERNAL_ERROR, 'scan_incomplete').",
+      "tests/acceptance/conftest.py:139 'run_export = run_query' and tests/test_schwab_export.py:132 'self.engine.run_export = self.engine.run_query' route every export test through the query branch, which does set 'rows'.",
+      "tests/acceptance/onhost_bench.py:366-371 states the same mismatch in a comment and refers to 'the surprise row filed for this cell'; no row in this channel names run_export's missing 'rows' (a search for run_export returns only S57's two evidence lines, both assuming a list is returned).",
+      "INERT: the live gateway .env (SSM 3f1bce17, 2026-09-28) is the 6a98a0553a template, whose ENABLED_INTEGRATIONS is 'ycharts opal_portal globgrph', so the Schwab tools are not served."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-4 and OG-x-1: a person can download a CSV equal to what they can query, within the export caps; S57: the export materialises the result as a list up to three times.",
+  "world_is": "Once Schwab is enabled, the production export path cannot return a CSV at all. The memory profile S57 measured came from the query branch, which the test aliases substituted for the export branch.",
+  "notes": "Found by the round-2 E5 draft (2.0.0_SA_COO~O fork) and verified by this seat at the bytes. The E5 cell must wire export end to end through the real run_export and remove both aliases from the export tests, so the tests exercise the branch production takes. R-4's memory reasoning still holds for the streaming remedy; only S57's account of the current path needs correcting."
+}
+```
