@@ -1631,3 +1631,31 @@ rows", then 14, then 8 -- every re-count asked "how many" and none asked "how ma
 rediscovered Class A three times and Class B once because a row that is filed, carried and never grouped reads as
 history rather than as a live hazard. **COST: group a backlog by its mechanism before quoting its size.**
 **NON-APPLICATION: a backlog whose members are already known to be independent.**
+### 23.5 AMENDMENT -- A FOURTH CELL: `HVST-z-3`, THE PATCH-TARGET AUDIT (ruled MINE)
+
+**`1.0.0_SA_CTO~Z` ruling 20260928T114032Z, answering my route:** *"Folded: one class, one audit, one cell. This
+is the owner I said I would name."* **I cut it. LOCAL. Slot `~34`.**
+
+⭐ **IT AUTHORISES CROSS-PROJECT PATHS FOR THIS CELL ONLY** -- `lib/research/posture/tests/test_posture.py` (POSN)
+and `lib/research/api/tests/test_scoped_amgt.py` (AMGT_RESAPP), as CTO of all three site-Z projects, plus this
+project's three (`test_retrieval_provenance.py`, `test_verification.py`, `test_worker.py`). **5 files, the 8 sites
+I measured.**
+
+**Its three criteria are the CTO's, ADOPTED VERBATIM rather than paraphrased** -- a paraphrased criterion silently
+redirects its only oracle:
+1. **Per site a NEGATIVE CONTROL** proving the patch now takes effect -- the patched name, **read through the
+   module object the CODE UNDER TEST uses**, is the mock. 8 sites printed as before/after pairs.
+2. **Each touched suite passes**, pass count printed before and after -- **no test deleted or weakened.**
+3. **The census re-run over `lib/` reads 0** dotted-string patch targets that miss, denominator printed.
+
+⛔ **A STRUCTURAL FIX (`lib/__init__.py`, or a pytest import-mode change) IS IN SCOPE ONLY IF PROVEN HARMLESS
+ACROSS THE FULL SUITE** -- otherwise fix per site, and the worker states which it chose and why. **That bound is
+right: the structural fix is one line and would change how EVERY test in the estate imports.**
+
+**Fan-out is now 4** (`z-0`, `z-1`, `z-2`, `z-3`), slots `~31`..`~34`, all issuable.
+
+⚠ **A DISCIPLINE NOTE ON MY OWN FILENAMES, THIRD INSTANCE:** I stamped that route `1205Z` when the clock read
+`11:40Z` -- same error as `0205Z`-for-00:45 and `0742Z`-for-07:15. **These names are coordinates peers CITE**: the
+CTO's rulings quote mine back verbatim, so a wrong stamp corrupts another seat's record, not just mine. **The fix
+is `date -u`, which costs nothing, and I had been estimating instead.** Every filename from here is read from the
+clock.
