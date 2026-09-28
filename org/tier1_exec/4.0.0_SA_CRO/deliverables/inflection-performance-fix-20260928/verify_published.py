@@ -61,17 +61,26 @@ def main():
         before = read_json(fix_root / ("before_" + filename))
         end = pd.Timestamp(after["data_as_of"])
         assert str(end.date()) == "2026-09-25"
-        for code, group in after["current_holdings"].items():
-            for holding in group["holdings"]:
-                ticker = holding["ticker"]
-                series = etfs[etfs.ticker == ticker].set_index("date")["return"].sort_index()
-                for period, value in holding["returns"].items():
-                    check(surface, code + "/" + ticker, period, value,
-                          expected(series, end, period, full_window=True))
+        for collection in ["current_holdings", "portfolios"]:
+            for code, group in after.get(collection, {}).items():
+                for holding in group["holdings"]:
+                    ticker = holding["ticker"]
+                    series = etfs[etfs.ticker == ticker].set_index("date")["return"].sort_index()
+                    for period, value in holding["returns"].items():
+                        check(surface, collection + "/" + code + "/" + ticker, period, value,
+                              expected(series, end, period, full_window=True))
         report["changes"][surface] = diff(before, after)
-        unexpected = [r for r in report["changes"][surface]
+        input_changes = [r for r in report["changes"][surface]
                       if "/returns/" not in r["path"] and r["path"] != "/generated_at"]
-        report["summary"][surface + " unexpected_non_return_changes"] = unexpected
+        report["summary"][surface + " non_return_changes_since_previous_run"] = input_changes
+        # AUM is read live by the unchanged producer. Replay the OLD handler with
+        # the exact NEW AUM version and intercept its writes: every non-return
+        # field must then equal production, proving the delta is input-driven.
+        control = read_json(fix_root / ("control_" + filename))
+        control_changes = diff(control, after)
+        unexpected = [r for r in control_changes
+                      if "/returns/" not in r["path"] and r["path"] != "/generated_at"]
+        report["summary"][surface + " non_return_mismatches_against_control"] = unexpected
 
     filename = "etf_returns.json"
     after = read_json(fix_root / ("after_" + filename))
@@ -125,8 +134,8 @@ def main():
     print(json.dumps(report["summary"], indent=2))
     assert all(r["matches"] for r in report["checks"]), "Published return mismatch"
     assert report["summary"]["benchmark_bytes_unchanged"]
-    assert not report["summary"]["Positioning unexpected_non_return_changes"]
-    assert not report["summary"]["Opal aggregate unexpected_non_return_changes"]
+    assert not report["summary"]["Positioning non_return_mismatches_against_control"]
+    assert not report["summary"]["Opal aggregate non_return_mismatches_against_control"]
 
 
 if __name__ == "__main__":

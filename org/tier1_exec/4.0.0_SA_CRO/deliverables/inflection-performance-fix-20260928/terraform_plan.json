@@ -1,0 +1,44 @@
+[
+  {
+    "address": "module.generate_etf_returns.aws_lambda_function.this",
+    "actions": [
+      "update"
+    ],
+    "changed_attributes": [
+      "last_modified",
+      "s3_object_version",
+      "source_code_hash"
+    ],
+    "before": {
+      "last_modified": "2026-05-04T18:54:49.000+0000",
+      "s3_object_version": "Kn6DO.nGbf0C1_4_D4GJdadqEP_Vy3Zi",
+      "source_code_hash": "a51oRNa/L5S6Jx4sd75gTqZFvRxbUaWmjyuCJa14mak="
+    },
+    "after": {
+      "last_modified": null,
+      "s3_object_version": "ar1VXdkDxwJhoYnltwnEG39PDhKRcPD7",
+      "source_code_hash": "pqOCSw8hl9CjLgi4H9YfSNDGO1TAvz8ALROWlOaJaTE="
+    }
+  },
+  {
+    "address": "module.generate_positioning.aws_lambda_function.this",
+    "actions": [
+      "update"
+    ],
+    "changed_attributes": [
+      "last_modified",
+      "s3_object_version",
+      "source_code_hash"
+    ],
+    "before": {
+      "last_modified": "2026-09-15T22:09:30.000+0000",
+      "s3_object_version": "RKnw3YkTo8okvldCf3vrTbDtWejlJjzs",
+      "source_code_hash": "riByGXEfWXdFTEavKGG0nFRj/k4JUAjIiVKfm06Tdgk="
+    },
+    "after": {
+      "last_modified": null,
+      "s3_object_version": "0hKUQC8G8uJ3T1Zbvc42Mk3MST4kAjbI",
+      "source_code_hash": "SGeYjRaOfPRsywinUrhrgYWJyAyrzCfqhuz3lTQWnu0="
+    }
+  }
+]
