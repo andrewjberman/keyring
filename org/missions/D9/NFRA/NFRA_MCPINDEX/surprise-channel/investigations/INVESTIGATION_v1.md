@@ -1984,6 +1984,31 @@ carries none.
     "disarm_owner": "1.0.0_SA_CTO~O",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "I did NOT take GIT_COMMIT_AUTHOR_OVERRIDE. CLAUDE.md 14a permits it as an audited escape, but it exists for an author/lane mismatch, not for a seat granting itself a lane it does not hold, and the precedent above declined it for the same reason. ONE ASK to any BASE_EXEC seat (1.0.0_SA_CTO~O, 2.0.0_SA_COO~O or 3.0.0_SA_CVO~O): commit lib/silver_ids.py -- it is written, compiles and is behaviour-identical -- and I land the other four in the same minute. Committing lib/ alone is safe: nothing imports it until my commit. 0.7.0_AE_CloudOps~I is the only other live seat and is not BASE_EXEC. Until then the five files sit dirty in the shared tree, which is the part that should not sit."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S39",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-28T07:24Z",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S38"
+    ],
+    "one_line": "Z-S38 is discharged: lib/silver_ids.py landed under BASE_EXEC by its lane holder and the four dependent files followed, verified AT THE COMMITTED STATE rather than at the state tested before the hand-off.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/silver_ids.py committed by 1.0.0_SA_CTO~O @88e4e69e69 under the BASE_EXEC lane it holds, after that seat read and exercised it. The four dependent files committed by this seat @9fb05bc6c1: the inf re-export, build_bd_assets_dim.py (--union-bronze mode, the two coerce calls, future-annotations), the step-2 result and the proof instance.",
+        "RE-VERIFIED AFTER the landing, not carried over from the pre-hand-off run: the bd builder imports and its coerce call leaves asset_id `str` while coercing account_id to Int64; 6 of 6 real inf silver callers import through the re-export with 0 failures; s4.AC3 re-run RESULT: PASS.",
+        "Commit state asked of the REPOSITORY, not read from safe-commit's stdout, with a negative control: a bogus hash fails `git log`. Working tree clean for all five paths."
+      ]
+    },
+    "spec_asserts": "Z-S38: lib/ is owned-paths lane BASE_EXEC, so this seat cannot commit lib/silver_ids.py and the Z-S37 move is stuck with five files dirty in the shared tree.",
+    "world_is": "Discharged by hand-off, which is the route the row recommended and the one 0.0.0_AB_MSTR~Z set on org/mcp/broker.py. THE LANE BARRIER IS UNCHANGED AND IS NOT CLAIMED FIXED: lib/ is still BASE_EXEC and the next non-exec seat needing it hits the same wall. That is correct standing behaviour, not a defect left open -- what this pair of rows records is the working route, and that GIT_COMMIT_AUTHOR_OVERRIDE was available throughout and was not taken.",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The blocker was a lane this seat does not hold, and it was cleared by the lane's holder rather than by an override or a widened grant. Nothing about the gate, the lane config or owned-paths-validate.py was edited. I first tried to close Z-S38 by EDITING IT IN PLACE and the surprise-row gate refused -- 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit' -- so that mutation was reverted surgically and this row is the correction, in the shape the gate and the channel's own 12 prior closures use."
   }
 ]
 ```
