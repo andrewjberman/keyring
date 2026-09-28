@@ -1,6 +1,6 @@
 """Cold-start smoke of a BUILT flat Lambda zip (CTO 102204 item 3): import the handler and run its cold-start build.
 
-    python zip_cold_start_smoke.py <zip> --function <lambda name> --route "<METHOD> <path>"
+    python zip_cold_start_smoke.py <zip> --function <lambda name> --route "<METHOD> <path>" [--owner-refusal "<METHOD> <path>"]
 
 The failure it catches (irpt-status HyEyoJ67, 2026-09-27): a zip whose files came from different source vintages. For
 example, HEAD entry.py calling served.render_ports_from_env() beside an older served.py, which fails only when the
@@ -16,6 +16,11 @@ What runs:
 No AWS call can leave the process: AWS_ENDPOINT_URL points at a closed local port. Any call the cold start attempts
 fails fast and is REPORTED, never made. PASS = the handler returned a response; FAIL = the import or the cold-start
 build raised, with the exception class and its first line.
+
+--owner-refusal adds the second arm (CTO 102269): an Opal viewer's verified-edge owner read with NO selected_tenant, so
+the firm refused is the viewer's own and the refusal is raised INSIDE the owner read, where it is recorded (window 20's
+exact shape). It must answer a NAMED refusal. irpt-status 5fSyChId passed the cold start and failed exactly here: its
+refusal record raised TypeError (public_line(admitted=)) and every such refusal became a 500.
 """
 import argparse
 import importlib
@@ -44,6 +49,7 @@ def main(argv=None):
     ap.add_argument("zip")
     ap.add_argument("--function", required=True)
     ap.add_argument("--route", required=True, help='e.g. "GET /api/scoped/investor-reporting/status"')
+    ap.add_argument("--owner-refusal", help='e.g. "GET /api/scoped/investor-reporting/status/{jobId}"')
     a = ap.parse_args(argv)
     handler_ref, env = live_configuration(a.function)
     module_name, function_name = handler_ref.rsplit(".", 1)
@@ -79,6 +85,32 @@ def main(argv=None):
                      and os.path.exists(os.path.join(root, n + ".py")) and not m.__file__.startswith(root))
     print("PASS: the cold-start build answered an unauthenticated request with state/statusCode %s | first-party modules "
           "from outside the zip: %s" % (status, outside or "none"))
+
+    if a.owner_refusal and not outside:
+        method, path = a.owner_refusal.split(" ", 1)
+        viewer = {"x-contract-version": "v1", "x-origin-verify": "cloudfront", "x-user-email": "smoke-viewer@opal.test",
+                  "x-user-role": "admin", "x-user-type": "Dev", "x-firm-id": "opal-capital", "x-user-name": "Smoke Viewer"}
+        event = {"version": "2.0", "routeKey": a.owner_refusal, "rawPath": path, "headers": viewer,
+                 "queryStringParameters": {},  # no selected_tenant: the viewer's own firm is refused INSIDE the owner read
+                 "pathParameters": {"jobId": "REQ-" + "0" * 24, "requestId": "REQ-" + "0" * 24},
+                 "requestContext": {"http": {"method": method}}, "isBase64Encoded": False}
+        try:
+            refused = getattr(module, function_name)(event, None)
+        except Exception as exc:  # noqa: BLE001
+            print("FAIL: owner-read refusal raised %s: %s" % (type(exc).__name__, (str(exc).splitlines() or [""])[0][:200]))
+            return 1
+        body = refused
+        if isinstance(refused, dict) and isinstance(refused.get("body"), str):
+            try:
+                body = json.loads(refused["body"])
+            except ValueError:
+                body = {}
+        status = (body.get("status") or {}) if isinstance(body, dict) else {}
+        code = refused.get("statusCode") if isinstance(refused, dict) else None
+        if code == 500 or not status.get("public_reason_code"):
+            print("FAIL: owner-read refusal answered statusCode %s, reason %s" % (code, status.get("public_reason_code")))
+            return 1
+        print("PASS: owner-read refusal answered a named refusal: %s %s" % (status.get("state"), status.get("public_reason_code")))
     return 0 if not outside else 1
 
 
