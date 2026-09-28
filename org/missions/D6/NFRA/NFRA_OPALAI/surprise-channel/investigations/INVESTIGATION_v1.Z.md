@@ -1309,6 +1309,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "NFRA_OPALAI-Z-W13-S2",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~13",
+  "surfaced_at": "2026-09-28T13:00:00Z",
+  "one_line": "Fix fd0aa6ba57 is not live for the nested commit from worktree oa-13: the hook execs the worktree's own .tools",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Issuer message: fd0aa6ba57 is live in the main tree the nested hook execs, so re-running the nested commit clears.",
+  "world_is": "Re-run refused with the identical VIOLATION text. The nested pre-commit wrapper (.git/modules/opal_ai/hooks/pre-commit) runs ${_SUPER}/.tools/git-hooks/owned-paths-check.sh, and _SUPER is /c/tmp/oa-13, whose .tools predates the fix: git merge-base --is-ancestor fd0aa6ba57 HEAD -> 1; git diff HEAD fd0aa6ba57 -- .tools/owned-paths-validate.py shows 15 insertions, 2 deletions. .tools is outside my <paths>, so I cannot bring the fix in.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "nested commit rerun -> same owned-paths VIOLATION",
+      "is-ancestor fd0aa6ba57 HEAD in /c/tmp/oa-13 -> rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
