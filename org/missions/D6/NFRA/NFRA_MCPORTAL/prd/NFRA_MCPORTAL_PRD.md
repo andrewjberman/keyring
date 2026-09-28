@@ -3,7 +3,7 @@
   "project": "NFRA_MCPORTAL",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.2",
+  "prd_version": "v0.3",
   "step": 4,
   "brief_ref": "docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md@8d1f5c362b",
   "endpoint_outcomes": [
@@ -202,11 +202,13 @@ the `mcportal` commit, recorded in the deploy manifest beside the `opal_ai` comm
   named).
 - **The independent identity check:** the gateway forwards, with each write, the ALB-signed `x-amzn-oidc-data` header
   of the request that asked for it. The writer verifies that header ITSELF, against the regional ELB public key, which
-  the gateway cannot mint. It then exact-matches the identity against its OWN owner configuration (Andrew's Entra
-  object id, set in the writer's own deploy, never read from the gateway), and refuses a header older than a short
-  window. A write without a valid owner header is refused before any store call.
-- **The named residual:** a compromised gateway that captures a live owner header could replay it inside that window.
-  The window bounds it. The writer writes its own audit record for every write and every refusal, in a record the
+  the gateway cannot mint. It then exact-matches the header's `sub` claim against its OWN owner configuration
+  (Andrew's `sub` value, set in the writer's own deploy, never read from the gateway), and refuses a header past its
+  own `exp` claim. A write without a valid owner header is refused before any store call. (L10 addendum R-2 / G-C4,
+  2026-09-28: the measured header carries `sub` and `exp` and carries neither `oid` nor `iat`, per
+  `deliverables/2.0.0_SA_COO~MP/round3/E1_G-HDR_READ.md` @c8b42c8913.)
+- **The named residual:** a compromised gateway that captures a live owner header could replay it until that header's
+  `exp`. The `exp` bounds it. The writer writes its own audit record for every write and every refusal, in a record the
   gateway role cannot write, and the dashboard's history reads the writer's record. A replay is therefore visible,
   though not prevented.
 - Every grant write keeps the store's optimistic revision check. A revoked record stays a tombstone, never a delete.
