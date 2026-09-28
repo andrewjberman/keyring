@@ -1101,3 +1101,19 @@ in the store is deleted, rewritten or re-derived. Live census at the cut: 23 ret
 miss the adapter packet made.
 
 fanout: 1 of 1 chains, cap 8.
+
+
+### 13.2 WORKSTREAM ~E, ROUND 19 (2026-09-28 ~22:5xZ, issuer 2.0.0_SA_COO~P, on Andrew-direct calls 2-3 and 1.0.0_SA_CTO 102456/102461)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-191` | FWD-3 (49F Performance): the engine's daily return is holdings-based, no flow logic; closes rows S181 and W61-S2 | WORLD (rewrites the served twr_daily history; QA prefix first, then both never-widen halves) | none | E |
+
+**IB-er-191 -- the 49F engine's daily return is holdings-based.** Andrew's call 3 fixes the method: the day-t account
+return is the weight-pro-rated day-t price return of the securities held at the end of t-1 (weights over the account's
+t-1 fair value; cash earns zero; no inflow/outflow term). This replaces the flow-based `c02_twr_engine.py:264`, whose
+full-value exits and scaled flows produce 26 OK rows at r_net <= -1 year to date. The rebuild also restores the value
+columns of the two partitions of row W61-S2. One order, to the DS seat 0.4.0_DS_ClientPlatform~E (seated by MSTR
+102458). A disjoint scope (a producer outside every IRPT write surface), hence its own workstream.
+
+fanout: 1 of 1 chains, cap 8.
