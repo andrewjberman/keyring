@@ -2430,6 +2430,31 @@ carries none.
     "spec_asserts": "Z-S47 (ARMED): opal-bd-fees-download has no exit on its failure branch, so SSM reports Success on every failed run (69 of 121).",
     "world_is": "The leg that ran that document is gone; nothing triggers opal-bd-fees-download (it stays registered, inert, not Terraform-managed). Whether the OTHER BD SSM documents share the defect is MX-m-1 (a), in flight.",
     "notes": "Disarm owner of Z-S47 was 2.0.0_SA_COO~O; the issuer is now 2.0.0_SA_COO~MI."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T23:28Z",
+    "one_line": "MX-i-4 census: 4 LIVE readers of opal/bd/credentials remain on bd-exporter-ec2-role (the allocation, realized, transaction and unrealized SSM documents), so the grant cannot be removed; each reads the secret daily and then fails at the portal login.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live grant side: 16 policies on bd-exporter-ec2-role scanned (15 inline + 1 attached); the ONLY grant of opal/bd/credentials-* is inline AdditionalPermissions stmt 0 (5 Resource elements). The role is held by instance profile bd-exporter-profile on bd-allocations i-0800437d1dbb0b5cc, bd-transactions i-00c7568bc510f7423, bd-assets and bd-fees (both stopped).",
+        "Live readers, each with an ENABLED trigger and a run in the last 24h: opal-bd-allocation-download (bd-allocation-pipeline-trigger cron(0 22), 21 of 21 Failed, latest 22:00:04Z), opal-bd-realized-download (bd-realized-pipeline-trigger cron(45 21), 21 of 21 Failed), opal-bd-transaction-download (bd-transaction-pipeline-trigger cron(53 21), 21 of 21 Failed), opal-bd-unrealized-download (bd-unrealized-pipeline-trigger cron(38 21), 21 of 21 Failed). Each document line 22 runs 'aws secretsmanager get-secret-value --secret-id opal/bd/credentials'.",
+        "The read succeeds: the latest run output of all 4 contains 'Fetching credentials from Secrets Manager...' with no AccessDenied, then 'Phase 1: Login' and a Playwright TimeoutError waiting on bd3.bdreporting.com. Failed status is downstream of the read. Removing the Resource element would move the failure point to the read step.",
+        "Not readers: opal-bd-asset-dim-download v4 (REST), advi-49f-chain-dispatch, opal-bd-49f-session-fetch, opal-cot-bd-session-fetch. DEAD: opal-bd-fees-download (its trigger was deleted by the MX-s-12 apply; last run 2026-09-25), force-alloc-download and force-txn-download (not registered live, get-document rc 254). Full census: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~8/CENSUS_MX-i-4.md.",
+        "AC1 (i4.AC1.sh) reads 'statements read 4; resources naming opal/bd/credentials: 1 -- RESULT: FAIL -- exit=1'; AC2 reads PASS. Nothing was changed, no ledger opened, no plan or apply run (order step 3)."
+      ]
+    },
+    "spec_asserts": "TO MX-i-4 preflight and cell text: the Playwright portal legs that read opal/bd/credentials are the ones MX-s-12 retires or ports, so a census after MX-s-12's acceptance would read 0 live readers.",
+    "world_is": "MX-s-12 retired only the fees schedule leg and ported only asset-dim. The allocation, realized, transaction and unrealized documents (MX-m-1 measured 21 of 21 Failed each) still run on daily schedules, read the portal login secret every run and then time out at the portal login. The condition for removing the grant is not met.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because the four schedules fire again tonight and every weekday: a daily automated login attempt against the Black Diamond portal with the live password, failing on the MFA timeout, for as long as the four triggers stand. Disarm is a decision on those four documents (retire the four trigger rules or port off the portal login), which is not this order's. Once the four triggers are gone, MX-i-4 can be re-run: the census is repeatable from the CENSUS file's method, and the one-element removal is the one change the plan should show (0 add, 1 change, 0 destroy). The secret is untouched."
   }
 ]
 ```
