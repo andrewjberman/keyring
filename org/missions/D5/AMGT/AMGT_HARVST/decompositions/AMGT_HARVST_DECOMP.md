@@ -1144,3 +1144,150 @@ complementary and the cell should pass both rather than treat either as the answ
 
 **NON-APPLICATION:** a first-ever capture for a security has nothing stored, so layer 1 is inert there by
 construction -- which is correct, not a defect.
+
+
+## 20. ROUND 8 -- L5 DECOMPOSITION v1.7, over the round-7 analysis (`ledger/ROUND_ANALYSIS.round7.md` @cb2ba00a33)
+
+**Issuer `2.0.0_SA_COO~Y`, 2026-09-28 ~00:3xZ.** Round 7 CLOSED, all nine FWD NOT REALIZED. The analysis's
+section 5 is the enrichment list and its ORDER is adopted as given: **repair before capture.**
+
+### 20.0 THE CELL-ID DENOMINATOR, read before any id is named (decomp 18f, and it bit twice in round 7)
+
+`ls task-orders/ | cut -d. -f2 | sort -u` -> spent series letters **h, r, s, t, u, v** (21 orders). **Round 8 is
+the `w` series**, `HVST-w-1` upward. The discriminator is the SPENT set, never a grep for the id I intend to
+use -- a grep for `HVST-w-1` returns nothing whether or not `w` is free, and that is how `HVST-r-1` collided.
+
+### 20.1 WHAT IS ISSUED AS AN ORDER, AND WHAT IS CARDED -- the vendor rule decides, not my preference
+
+⛔ **The analysis binds this and I am not reading around it:** *"Every WORLD cell in round 8 needs a live
+per-use word from Andrew before it fires; a cell without one is a card, not a queued order."* Round 6's egress
+word was scoped to "this session" and **has lapsed**; the 2026-09-26 22:15Z word went to `0.7.0_AE_CloudOps~I`
+for the Black Diamond producer and **does not travel**.
+
+| # | cell | class | round-8 disposition |
+|---|---|---|---|
+| 1 | REPAIR -- `silver_append` collision, 3 red tests, `--harvest-grammar` help text | **LOCAL** | **ISSUED** as `HVST-w-1` |
+| 2 | CAPTURE -- `--new-only` + `--harvest-grammar`, timeout-tolerant batch | WORLD | **CARDED** at Andrew, text drafted |
+| 3 | `w-3` timeline BUILD | **LOCAL** | **ISSUED** as `HVST-w-3` (see 20.4 -- its scope is CUT DOWN by a measurement) |
+| 4 | ft/barrons DIAGNOSTIC, carrying `Z-S31` | WORLD | **CARDED** at Andrew |
+| 5 | bbg DIAGNOSTIC, carrying `Z-S32` | WORLD | **CARDED** at Andrew |
+| 6 | the 16 carried backlog rows, re-measured | -- | **ISSUER ACT**, mine, not a cell |
+
+**INTERPRETATION STATED SO THE CTO CAN CORRECT IT RATHER THAN DISCOVER IT:** I read "a card, not a queued
+order" as *do not issue it to a worker*, so cells 2/4/5 are DECLARED here with their criteria drafted and are
+NOT dispatched. On Andrew's per-use word each issues immediately without re-deriving anything. **The
+alternative reading -- issue them with a non-firing precondition clause -- I rejected**, because a `pending`
+order a worker can pick up is exactly a queued order, and the sentence forbids that.
+
+### 20.2 FAN-OUT, derived and not chosen
+
+`1 -> 2` is **serial** (the repair lands on the very path the capture writes). `3` is **independent and LOCAL**.
+Cells **2, 4 and 5 are all WORLD and share two single surfaces** -- the vendor ledger and the device-local
+session vault -- so **they serialise**, per this decomposition's own reason 3 (18e): two live vendor cells in one
+round contend on the one surface whose failure mode is a silent credentialed login. **Issued fan-out this round
+is therefore 2** (`w-1`, `w-3`), both independent of each other, well inside the cap of 8. Each build order
+carries **at most three mechanical criteria**.
+
+### 20.3 CELL `HVST-w-1` -- THE REPAIR (LOCAL). It lands before any capture because it owns the capture's write path
+
+Three mechanical criteria, no more:
+
+1. **`Z-W9-S1`'s listings half.** `silver_append` keys on a SECOND-PRECISION `run_stamp` with
+   `IfNoneMatch="*"`, so **two writes inside one second collide**. ARMED on exactly the path a capture cell
+   writes. The criterion exercises the collision (two appends in one second) and shows it no longer drops a
+   write.
+2. **The 3 red tests (`Z-W21-S2`).** The suite was ALREADY red at HEAD before round 7 touched anything -- 3
+   failed / 160 passed -- and **one of the three is `WinError 183`, a filesystem-state failure, not a logic
+   failure.** ⚠ The criterion states the count BEFORE and AFTER and names each test; a repair that fixes two
+   and leaves the WinError is reported as such, not rounded to green.
+3. **`Z-S27`, the `--harvest-grammar` help text** says "writes" for a flag that writes nothing to S3. Read
+   alone it asserts the exact belief that produced round 6's failure. A text fix, and the criterion prints the
+   new string.
+
+**Cut rule applied:** the criterion asking for a passing test BY NAME uses `pytest -rA` or `-v`, **never `-q`**
+(`Z-W21-S1`: `-q` never prints a passing test's nodeid, which made a round-7 criterion unsatisfiable by
+construction).
+
+### 20.4 CELL `HVST-w-3` -- THE TIMELINE BUILD (LOCAL), AND ITS SCOPE IS CUT DOWN BY A MEASUREMENT I TOOK FIRST
+
+**The precondition is discharged: I read `SPEC_SECTION_timeline.md` at HEAD** (18,196 bytes,
+`deliverables/0.9.0_WK_AMGT_HARVST~8/`), which is why the following two facts are in the cut instead of in a
+round-9 post-mortem.
+
+⛔ **FWD-6 IS UNSATISFIABLE BY CONSTRUCTION TODAY, AND A CRITERION FOR IT WOULD HAVE PASSED VACUOUSLY.**
+Measured at the bytes: `publication_gold.EVENT_MIN_PUBLISHERS = 2`, `EVENT_MIN_ARTICLES = 2`, qualifying tiers
+`('A','B')`. **Only `sa` has landed listing rows** (round 7: sa 0 -> 40; bbg in hard refusal since 09-15;
+ft/wsj/barrons unexercised in gold). With ONE publisher landed, `publishers_distinct >= 2` is structurally
+unreachable, so **`chatter_event` can hold ZERO rows for every security, Lenovo included.** The spec's own
+acceptance asks the build to "show at least the event runs `chatter_event` holds for Lenovo" -- against an
+empty set that criterion **PASSES while proving nothing**, and the spec even blesses the empty render as "the
+correct, honest state." **A green column over an empty denominator is the failure mode this project has paid
+for before.** So FWD-6 is NOT a criterion of `w-3`; it is named here as BLOCKED ON A SECOND PUBLISHER, with
+its cause printed.
+
+**What `w-3` IS graded on, all three checkable without rich data** -- the spec's substance is its HONEST-STATE
+discipline, and that is testable on constructed inputs:
+1. **The three API routes' SHAPE** (`timeline`, `timeline/day/{date}`, `timeline/event/{first_day}`) serving
+   exactly the stored fields section 5 enumerates, with `breakout_ratio`/`z_score` computed AT SERVE TIME and
+   never stored (`C-HV-ABSOLUTE-ONLY`).
+2. **The error envelope and the failed-call state.** `{"error": true, "error_code", "message"}` is NEVER
+   rendered as data, never merged into `series`/`events`/`articles`, and never degraded to an empty array --
+   because an empty array is the honest "nothing in range" state and must not be reachable from a failure.
+   **This is the one the spec says was a real graduated defect on this page's other panels (`Z-S227`/`C-S400`).**
+3. **Quiet-COMPLETE vs PARTIAL vs DENIED never share an encoding** (section 2/6), on the line AND in the
+   dissection.
+
+⭐ **ONE OF THE SPEC'S OWN OPEN CALLS IS ALREADY ANSWERED BY THE CODE and the cell must not re-decide it:**
+section 7 leaves open "whether the build cell mints a stable synthetic `event_id`". **`publication_gold._event_id`
+already exists** -- `sha256("security_key|first_day|last_day")`. So the event route keys off that, not off a new
+id and not off `first_day` alone. A build cell inventing a second id scheme would have been a silent
+divergence from the producer.
+
+### 20.5 THE THREE CARDED WORLD CELLS -- drafted, not dispatched
+
+- **`w-2` CAPTURE.** `--new-only` AND `--harvest-grammar` on every `run`; the criterion PRINTS `mode` and
+  `previously_stored` from the run artifact, because **a dedupe nobody can see in the evidence is a dedupe
+  nobody can grade** (121 rows are held and every round-7 run read `previously_stored: 0`). The batch tolerates
+  ONE timeout without cooling the publisher (`Z-W22-S2`: one slow body cost 7 of 8 jobs). **Carries round 8's
+  JUDGMENT criterion** (below).
+- **`w-4` ft/barrons DIAGNOSTIC**, carrying `Z-S31`: ft holds 15 rows under 14 DISTINCT `article_id`s while
+  every other publisher is exactly 1:1, and `articles` has no unique constraint. **The question the round-7
+  measurement could not answer because it did not group by `security_key`:** does any gold count double-count
+  it? Diagnostic only, no producer change.
+- **`w-5` bbg DIAGNOSTIC**, carrying `Z-S32`: why `search/query` refuses (9 consecutive 403s since
+  2026-09-15T04:47Z) while `/user-info` reads 200 on 12 of 12. **FWD-1's five-publisher population is
+  unreachable until this is explained, so no bbg CAPTURE is plannable before it.** ⭐ **New input the diagnostic
+  starts from, found tonight in 12-day-unread base-addressed mail:** Andrew described this exact challenge on
+  2026-09-14 -- *"the press and hold starts draining and you have to wait and un-press for a moment, and then
+  press again after its gone down somewhat"* -- and **the producer already implements precisely that** (solver
+  logs `drain -> release -> partial fall -> re-press`). It fails with `recoveries=0`, **meaning the drain never
+  partially fell, so the technique's own precondition was never met.** That is where the diagnostic starts, not
+  from scratch.
+
+### 20.6 THE JUDGMENT CRITERION -- round 8 carries one again, and the analysis named where
+
+**On `w-2`, the capture cell** (per the analysis: the cell where a green mechanical column can hide a wrong
+result). **The question:** are the rows `--new-only` skipped truly already held -- the SAME article -- or did a
+url/id mismatch skip a NEW one? A mechanical criterion counts skips; only judgment can say the skips were
+right. Graded by `3.0.0_SA_CVO` at L9, never self-graded, and **presented with its output and no verdict.**
+
+### 20.7 CUT RULES CARRIED, from the analysis (rules, not cells)
+
+1. A criterion asking for a passing test by name uses `-rA` or `-v`, **never `-q`** (`Z-W21-S1`).
+2. **A placeholder whose value contains whitespace is EXPANDED to a literal and `<placeholders>NONE</placeholders>`
+   is declared** (`Z-W22-S6`; `1.0.0_SA_CTO~Z` ruling 20260927T220426Z -- `(\S+)` is a deliberate tamper guard,
+   not a defect, so the order adapts and the tool does not).
+3. `ls task-orders/ | cut -d. -f1 | sort -u` before naming a cell (20.0 above).
+4. Worker scripts go in `deliverables/0.9.0_WK_AMGT_HARVST~<n>/scripts/`, **never `.scratch/`** -- `.scratch/`
+   does not survive the drain and an issuer structurally cannot relocate a worker's files afterwards.
+5. **The spawn face and the order FILE are ONE edit, not two.** Round 7 cost two rows (`Z-W22-S4`, `Z-W22-S5`)
+   because I changed the face and not the file.
+
+### 20.8 ITEM 6 -- THE ISSUER ACT, and one row of it is NOT this lane's to fix
+
+The slug carried **16 of 28 rows without re-measuring them**, and the analysis adopts that as a stated limit
+rather than absorbing it. **Re-measuring them is mine as `disarm_owner`, not a worker cell.** ⛔ **Exception,
+named so it is not silently swept in: `Z-W11-S1` is `.tools/missions-tree-index.py`, a SHARED mechanism. It is
+routed to the tool's owner and the route is RECORDED** -- and "recorded" means a route that exists, not a
+sentence saying it was routed. Round 7 taught that one: I wrote "routed to the tool's owner" twice in committed
+records while the row carried no `route` field at all.
