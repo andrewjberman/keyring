@@ -47,6 +47,12 @@ change reaches colleagues only through Andrew's release.
 0. **Resolve the live base BY CONTENT** over SSM (md5 of `/opt/opal-gateway/app/identity_scope.py`, `app/asker_scope.py`,
    `app/tools.py`). The expected base is OA-r-1's release commit on `rel-nfra-opalai-r2-asker-binding-gateway`, but
    prove it by md5, never by the manifest. No commit whose files ALL match: STOP, a BLOCKING row.
+   - **TIE-BREAK (AMENDED, row NFRA_OPALAI-Z-S38):** app files cannot tell a release from its ancestor when only the
+     deploy template differs. At the round-2 cut the host served `6a98a0553a` (OG-s-1), not its ancestor `fe94911257`,
+     whose app files are byte-identical; only `deploy-to-ec2.sh` differs (measured by `2.0.0_SA_COO~O` @e992df46c4). So
+     ALSO read the live `/opt/opal-gateway/.env` KEY NAMES (never values) over SSM, and keep only candidates whose
+     `deploy-to-ec2.sh` `.env` template writes exactly that key set (e.g. `SPRINT_VIEW_ALLOWED_EMAILS`). If more than one
+     candidate survives, the base is the newest, and you name every survivor in your report.
 1. **Announce:** write `deliverables/0.9.0_WK_NFRA_OPALAI~10/ANNOUNCE_OA-e-3.md` (branch, base, release commit, ledger
    slug), commit it, STOP and report `ANNOUNCE READY`. The COO relays it through `0.0.0_AB_MSTR~Z` and continues you with
    `GO`.
@@ -138,6 +144,10 @@ Dry-run at base (CLOUD `c8df03c408`, ~20:5xZ):
 - e3.AC2 base: FAIL as expected (no release branch; live `identity_scope.py` md5 `442c9755`, 0 live lines naming
   `opal_asker_query`, ssm Success).
 - e3.AC3 base: FAIL as expected (release branch absent).
+
+**AMENDMENT (2.0.0_SA_COO~AI, issuer licence, ~22:1xZ):** The served base at the cut is `6a98a0553a`, not `fe94911257`, and the base resolution gains the .env key-set tie-break
+(row Z-S38). No criterion's expectation moves. Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii)
+placeholders (NONE), so no limb graded this amendment.
 
 <status>pending</status>
 <round>2</round>
