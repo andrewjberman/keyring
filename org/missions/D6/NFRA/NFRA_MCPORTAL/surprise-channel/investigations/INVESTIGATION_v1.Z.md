@@ -578,6 +578,29 @@
     },
     "spec_asserts": "Each target row's hazard stands until disarmed.",
     "world_is": "The fold read them open only because no adjudicating row existed."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S10",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T20:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The grant writer's own record writes the OWNER-KEY VALUE into every WRITTEN item: lambda_function.py:266 sets ctx['who'] = '<claim>:<key> <email>' and _record_item puts it in the table's `who` field (:189). On the sub branch that is Andrew's `sub` in mcportal-grant-changes-table, which the gateway's history reads and serves. The CTO's privacy condition @384fd85543 says the value goes ONLY into the function's configuration, never into a log, an audit record or a committed file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py:266 at CLOUD HEAD a9c8a178e3: ctx[\"who\"] = \"%s:%s%s\" % (owner.claim, owner.key, ...); :189 \"who\": s(who) in _record_item.",
+        "MP-a-1's face (task-orders/NFRA_MCPORTAL.TO-MP-a-1.writer-apply.md:28-29) quotes the condition: the owner-key VALUE is written ONLY into this function's configuration, never into a log, an audit record or a committed file.",
+        "No WRITTEN item exists yet: the writer is not applied (a2.AC2 dry run at the cut: ResourceNotFoundException on the table)."
+      ]
+    },
+    "spec_asserts": "The owner-key value lives only in the writer's configuration (privacy condition @384fd85543).",
+    "world_is": "The first WRITTEN outcome, which is Andrew's narrow in the MP-c-1 close run, would store '<claim>:<value> <email>' in the table, where the gateway's history serves it.",
+    "notes": "Disarm (the issuer, same turn): the G-CLOSE card that starts Andrew's sitting is NOT sent until 1.0.0_SA_CTO~O rules whether `who` carries the claim NAME and email only. MP-a-2's apply and its no-header refusal write REFUSED items with who=UNVERIFIED, so they are untouched and proceed. Found off-task at the round-3 cut."
   }
 ]
 ```
