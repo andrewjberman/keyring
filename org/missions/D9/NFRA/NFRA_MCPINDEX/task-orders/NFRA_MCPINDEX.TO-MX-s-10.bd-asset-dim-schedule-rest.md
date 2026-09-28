@@ -145,6 +145,21 @@ The ruling is the whole spec. READ IT:
 - **If the naming gate still refuses** the new ARN literal, do not work around it. Close the attempt with its verdict,
   and the issuer routes Z-S45 to 1.0.0_SA_CTO~O (the LGIC owner). Z-S45 is otherwise closed by this amendment.
 
+**AMENDED A6 (2.0.0_SA_COO~O, 2026-09-28 ~12:5xZ), on step 2 COMPLETE @0ff972bc38 (msg 26176) and row Z-S46:**
+- **Ratified: the document shape at @0ff972bc38.**
+  - `--base-template-id 486228` is MX-s-9's own envelope, per its egress ledger. The inline `AsOfDate` branch is
+    vendor-rejected (400). That is recorded for the module's author, and it is not this order's to fix.
+  - `--union-bronze <the pull's printed OUTPUT_KEY>` is the union step 1 required. With it a negative delta is
+    structurally impossible, and the document refuses a rebuild without the key (rc 92).
+- **Step 2 is graded by the issuer from S3 versions:** 06:22Z vs 12:22Z, ids 12,141 = 12,141, 0 added and 0 removed,
+  the same id-set sha256, and only `built_at` changed. Z-S46's 4m19s regression (the builder ran without the union) was
+  restored byte-exact at 12:08:43Z, and the issuer confirmed file sha equality.
+- **Recorded:** the step-2 test ran 5 times, and 3 of them reached the vendor, against a ONE-run budget. The seat
+  disclosed it and the egress was read-only. From here the acceptance is the scheduled fire, with NO further ad-hoc
+  run of this path without an issuer ruling.
+- **The never-widen halves are asked on `deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_MX-s-10_20260928.md`.** PHASE B
+  waits on both SIGNED files.
+
 ## 2. BOUNDS
 
 1. One producer before and after: no second schedule, no parallel path, no comparator.
