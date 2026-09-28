@@ -72,6 +72,11 @@ already does; no network). Write them in the NEW file `tests/test_asker_binding.
   one-on-one chat is served, and a reply to that same chat is not refused by the binding.
 
 Add more tests beside them as you need. `tests/test_asker_scope.py` must keep passing, and you may extend it.
+AMENDED (row Z-W10-S2): `tests/test_portal_grant.py`'s two asker tests
+(`test_asker_portal_scope_admits_granted_channel`, `test_asker_portal_scope_refuses_other_channel`) build a fake
+message with a foreign tenant and no `createdDateTime`, so your (a) and (b) now refuse them before the channel check
+they exist to test. Update ONLY their fixtures (the configured tenant, a recent `createdDateTime`, a `oneOnOne`
+chat) so each again reaches and asserts the portal-channel verdict it was written for. Never change an assertion.
 
 **R-5 (row Z-W8-S1).** Run `tests/test_data_entitlement_guard.py` with moto from `C:/tmp/moto-target`, from
 `infra/aws/ec2/opal-gateway`:
@@ -99,6 +104,7 @@ infra/aws/ec2/opal-gateway/app/asker_scope.py
 infra/aws/ec2/opal-gateway/app/tools.py
 infra/aws/ec2/opal-gateway/tests/test_asker_scope.py
 infra/aws/ec2/opal-gateway/tests/test_asker_binding.py
+infra/aws/ec2/opal-gateway/tests/test_portal_grant.py
 org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~10/**
 org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigations/**
 </paths>
@@ -142,6 +148,10 @@ Dry-run at base (CLOUD `c8df03c408`, ~20:5xZ):
 - e1.AC2 base: FAIL as expected (host TENANT_ID read=yes, ssm Success; `asker_scope.resolve_asker_class` absent).
 - e1.AC3 base: PASS as expected. It is a no-regression bound: moto 5.2.3, 10 passed, failed=[test_ogz1_ac05
   test_ogz1_ac08], row Z-S36 @3c61dbe4d3.
+
+**AMENDMENT (2.0.0_SA_COO~AI, issuer licence, ~22:1xZ):** `<paths>` gains tests/test_portal_grant.py (row Z-W10-S2); e1.AC1's matcher accepts `tests\` or `tests/` (row Z-W10-S1). The served base at the cut is `6a98a0553a`, not `fe94911257`, and the base resolution gains the .env key-set tie-break
+(row Z-S38). No criterion's expectation moves. Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii)
+placeholders (NONE), so no limb graded this amendment.
 
 <status>pending</status>
 <round>2</round>
