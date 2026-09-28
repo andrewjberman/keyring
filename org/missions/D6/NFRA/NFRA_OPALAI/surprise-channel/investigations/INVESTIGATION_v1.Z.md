@@ -1642,6 +1642,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Order section 2.1: nested files commit with git -C opal_ai commit --author <serial> -F <msgfile>; <paths> lists opal_ai/.github/workflows/ci.yml and opal_ai/opal/checks/run_checks.sh.",
     "world_is": "Both the git -C opal_ai commit and safe-commit.sh from inside opal_ai refuse: 'agent=0.9.0_WK_NFRA_OPALAI~15 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path'. The edits to ci.yml and run_checks.sh sit uncommitted in C:/tmp/oa-15/opal_ai; AC2/AC3 read committed HEAD and so read FAIL. No override used."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S40",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-28T23:40Z",
+    "one_line": "The D7 ticket-intake runner (Scheduled Task OPAL_D7_ticket_intake, every 5 min), which imports the operator teams-watch.py (cutover precondition CP-1), has not succeeded since 2026-09-03: 8712 exit-2 passes against 613 exit-0 in its log, and since 2026-09-18 every pass dies 'no mcpOAuth record matches the pin (--server=opal-gateway-bbg --identity=opalbloomberg)'. It predates round 2 and is unchanged by OA-e-7's comment-only header merge.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "%USERPROFILE%\\opal_ticket_intake\runner.log: last 'intake pass exit 0' at [Thu 09/03/2026 4:29:48]; first 'no-token-for-identity' after [Fri 09/18/2026 1:59:46]; counts exit 2 = 8712, exit 0 = 613 (grep -c, read by this seat 2026-09-28 ~23:4xZ).",
+        "Get-ScheduledTaskInfo OPAL_D7_ticket_intake: LastTaskResult=2 at 23:29:46Z (before the OA-e-7 merge) and 23:34:46Z (after the merge b3b3d3bc39); py_compile and a by-path import of the merged teams-watch.py both OK.",
+        "OA-e-5 (@79da942995) read 4 of 4 Teams reads OK through the same watch with the --server pin alone, so the store holds the opal-gateway-bbg record; the runner's extra --identity=opalbloomberg pin is what finds no match."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling I-3 / CP-1: the parent teams-watch.py STAYS as the operator plane's tool, and the D7 intake runner keeps running on it through the cutover.",
+    "world_is": "The runner has not delivered a pass in 25 days, and the dark D7 lane (OPAL_TICKET_VNEXT, no COO lane since 2026-09-11) has no reader of its LastTaskResult. CP-1's 'read the next scheduled fire back' will read a failure that is not the cutover's.",
+    "notes": "Owner: OPAL_TICKET_VNEXT (no live COO lane). Routed as an observation through the round-2 drain message to 1.0.0_SA_CTO~O; not repaired here (outside this project's write surface). The likely cause is the --identity pin not matching how the store names the Opal Bloomberg record; not verified."
   }
 ]
 ```
