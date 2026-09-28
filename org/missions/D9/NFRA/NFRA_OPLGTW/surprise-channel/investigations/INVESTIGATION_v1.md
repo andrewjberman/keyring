@@ -3945,3 +3945,106 @@ name the one known failure instead of silently inheriting it.
   "notes": "Found by the round-2 E5 draft (2.0.0_SA_COO~O fork) and verified by this seat at the bytes. The E5 cell must wire export end to end through the real run_export and remove both aliases from the export tests, so the tests exercise the branch production takes. R-4's memory reasoning still holds for the streaming remedy; only S57's account of the current path needs correcting."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S1",
+  "one_line": "dim_position and dim_asset COLLIDE under the declared grain on all 8 of their snapshots (2 masters x 2 dates), so the order's units question (quantity against value for one (cusip, l_s) group, sign on a short group) can only be sealed as the C3 refusal; no value answer to it exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GRAIN_DECLARATION.json (0.9.0_WK_NFRA_OPLGTW~10 deliverables): dim_position colliding keys = 10 and extra rows = 13 on each of 4 snapshots; dim_asset colliding keys = 1 with 22 or 24 extra rows on each of 4; dim_balance HOLDS on 4 of 4. Each snapshot was re-read by VersionId and re-derived by probes/og_v6.py AC1 (12 of 12).",
+      "BlackDiamond (08335338) dim_position on both dates holds short groups (l_s short: 1300 rows on each date), so a sign question exists in the data; SmartX holds none. Both are refused under the C3 rule the order states.",
+      "Sealed accordingly: RQ2-1 (units, dim_position) and RQ2-7 (paged read, dim_position) carry expected_class C3_REFUSAL in SEALED_EXPECTED_V2.json; the units question answerable with values is RQ2-2 (dim_balance value fields mkt_value_long and mkt_value_short: sign, sums, scale)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 step 3: one units question whose correct answer distinguishes a QUANTITY field from a VALUE field for the same (cusip, l_s) group and states the sign each carries on a short group; and any question whose rows touch a colliding grain has the C3 refusal as its expected answer.",
+  "world_is": "Both statements cannot hold at once on real data: the only dataset carrying a quantity field beside a value field (dim_position) collides on every measured snapshot, so the C3 rule wins and the quantity-against-value answer is a refusal. Value-field units (sign and scale) are exercised on dim_balance instead, as an addition, not a substitute.",
+  "notes": "Quantity against value stays unexercised with values until the position grain is corrected or a different grain is adopted (a spec decision for 1.0.0_SA_CTO~O, see W10-S2). The scale asked in RQ2-1 is the decimal scale of the Parquet type (5 and 4); the unit label itself (shares, dollars) is not measurable from the source and is not sealed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S2",
+  "one_line": "The collisions are structured: 5 of 10 colliding dim_position keys and the only colliding dim_asset key carry a blank component, and adding one contract column makes each colliding snapshot unique (CANDIDATE only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GRAIN_DECLARATION.json: colliding_keys_with_blank_component = 5 of 10 (dim_position, all 4 snapshots) and 1 of 1 (dim_asset, all 4); rows_in_colliding_keys = 23 (dim_position) and 23 or 25 (dim_asset).",
+      "candidate_unique_superset (label CANDIDATE): dim_position = (account_ref, cusip, l_s, quantity_settled_unsettled) with 3 alternatives at that size; dim_asset = (cusip, security_description_line_1) with 1 alternative; the search over contract columns (up to 4 extra) found a superset at 1 extra column on 8 of 8 colliding snapshots. account_ref is assumed to be the contract name of source account_id.",
+      "Counts and column names only; no key value is printed or committed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 step 2: record, for a COLLIDES snapshot, the smallest superset of contract columns that is unique on it, or NONE_FOUND, labelled a CANDIDATE.",
+  "world_is": "Recorded as ordered. Adopting a different grain, or treating blank-key rows as a source defect, is a spec decision for 1.0.0_SA_CTO~O; this cell adopts nothing.",
+  "notes": "A blank cusip on 23 to 25 dim_asset rows suggests non-security or unmapped rows entering a dataset the Gateway keys on cusip alone; that reading is inferred from the blank-component count, not measured further."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S3",
+  "one_line": "WALKTHROUGH_PROTOCOL.md still names OG-v-3 and the old C:/tmp answer path in places the order did not authorise changing: the section 4 heading (:208), the preamble (:38-39), the A7 clause 'graded by OG-v-4' (:111) and the G-D record template (:242).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WALKTHROUGH_PROTOCOL.md at the OG-v-6 commit: line 208 '## 4. Real-data questions (OG-v-3 computes and seals; A7 asks them)'; lines 38-39 'operator OUTSIDE the repository at C:/tmp/nfra-oplgtw-sealed/actual/ ... OG-v-4 hashes them there'; line 111 '(graded by OG-v-4)'; line 242 'written to C:/tmp/nfra-oplgtw-sealed/actual/'. Found by a token census of OG-v-3, OG-v-4 and nfra-oplgtw-sealed over the file.",
+      "The order changed exactly three places: A7 step 2 (:107), the :111 seal name and date, and the section 4 paragraph and table; 'Change no other row of the protocol.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 step 3: change A7 step 2 and :111 (seal and D_NEW), replace the section 4 table and its paragraph, and change no other row of the protocol.",
+  "world_is": "The remaining lines still send the operator to write actual answers under C:/tmp (the location row S42 records losing a salt from) while A7 step 2 says %LOCALAPPDATA%/opal/og-salt/actual_v2/, and still name OG-v-3 as the computing cell in the heading and OG-v-4 as the grader. ARMED because an operator following the preamble writes answers where OG-v-7 does not read.",
+  "notes": "Left untouched under the frozen-spec rule; the fix is a few-line edit by whoever owns the protocol after this cell."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S4",
+  "one_line": "Step 1 needs the list of marker dates but the grant names only GetObject and HeadObject; the run used one s3 version-listing read on schwab/<master>/meta/complete/, and each date's marker has 10 versions, so 'each marker's VersionId' is the IsLatest version at the run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measure_grain.py latest_markers(): 'aws s3api list-object-versions --prefix schwab/<master>/meta/complete/ --query Versions[?IsLatest]' (read-only; 2 calls in the script plus 4 exploratory calls before it); nothing written or deleted in S3.",
+      "GRAIN_DECLARATION.json markers: D_NEW 2026-09-25 SmartX VersionId gUxeZ71rYjY0B.QKrRKumyv4KmQ_FUy9 (LastModified 2026-09-26T22:16:14+00:00); the listing showed 10 versions of the 2026-09-25 marker in SmartX and 10 in BlackDiamond, one of them IsLatest.",
+      "Each snapshot's VersionId is the one the marker's closure.tables[<dataset>].object names, checked against the GetObject response VersionId."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 bounds: 'You may run GetObject and HeadObject by VersionId on ... meta/complete/'; step 1: 'read the closure markers s3://opal-data-assets/schwab/<master>/meta/complete/date=*.json, read-only'.",
+  "world_is": "A wildcard read of date=*.json cannot be done with GetObject alone; a read-only version listing is the only way to enumerate the dates and marker VersionIds. A marker is rewritten by each producer completion, so its VersionId is a moment's value.",
+  "notes": "Read strictly, the listing was a step beyond the named grant; it wrote nothing. The recorded marker VersionIds let OG-v-7 re-read the exact bytes."
+}
+```
