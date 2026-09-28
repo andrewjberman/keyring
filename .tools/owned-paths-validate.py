@@ -173,12 +173,25 @@ def _order_grants(path: str, entries: list[str]) -> bool:
     return False
 
 
+_GIT_REPO_ENV = ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_COMMON_DIR", "GIT_OBJECT_DIRECTORY",
+                 "GIT_ALTERNATE_OBJECT_DIRECTORIES")
+
+
+def _root_git_env() -> dict:
+    """os.environ minus the repo-pinning GIT_* vars. Inside a pre-commit hook for a NESTED (submodule) commit, git
+    exports GIT_DIR/GIT_INDEX_FILE pinned to the nested repo, and they outrank cwd=root: the census would read the
+    nested repo's HEAD, find no task order, and refuse every worker's nested commit (row NFRA_OPALAI-Z-W13-S1). The
+    hook's own `_git_x` clears the same set for its cross-repo calls."""
+    return {k: v for k, v in os.environ.items() if k not in _GIT_REPO_ENV}
+
+
 def _worker_orders(root: str, code: str):
     """[(to_path, issued_to, entries)] for the project's NON-TERMINAL tree task orders at HEAD; None when git could not
     answer (the caller fails closed). Terminal orders grant nothing: a finished order is not a standing permission."""
+    env = _root_git_env()
     try:
         ls = subprocess.run(["git", "ls-files", "--", "org/missions/D*/*/%s/task-orders/*.md" % code], cwd=root,
-                            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+                            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60, env=env)
     except Exception as exc:  # noqa: BLE001
         print("WARN: worker-grant census raised %s -- admitting nothing" % exc, file=sys.stderr)
         return None
@@ -189,7 +202,7 @@ def _worker_orders(root: str, code: str):
     for p in [x.strip().replace("\\", "/") for x in ls.stdout.splitlines() if x.strip()]:
         try:
             show = subprocess.run(["git", "show", "HEAD:%s" % p], cwd=root, capture_output=True, text=True,
-                                  encoding="utf-8", errors="replace", timeout=60)
+                                  encoding="utf-8", errors="replace", timeout=60, env=env)
         except Exception as exc:  # noqa: BLE001
             print("WARN: worker-grant census git show raised %s on %s -- admitting nothing" % (exc, p), file=sys.stderr)
             return None
