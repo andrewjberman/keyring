@@ -2519,3 +2519,32 @@
   "notes": "Not blocking this cell's own criterion (IVE69-AC1 passes standalone, isolated and in a no-regression batch of 18 sibling files). Filed per BOUNDS ('never fix a neighbouring defect') rather than touched -- contracts/adapt.ts and contracts/envelope.ts are read-only here."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W36-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~36",
+  "surfaced_at": "2026-09-28T13:10:05Z",
+  "one_line": "Row DSGN_IRPTV1-W36-S3 is DISARMED: TO-IV-e-79's own cell (this order) is the disarm_owner row S3 named -- all five files it listed (fe-s-10/parity.test.ts, dsgn-irptv1/iv-e-23.firm-chip.test.ts, dsgn-irptv1/iv-e-23.parity-kept.test.ts, dsgn-irptv1/iv-e-38.header-identity.test.tsx, dsgn-irptv1/iv-e-56.firm-display.test.tsx) are now re-goldened to the `show`-gated default per the issuer's Build ruling, keeping every original test's CLAIM and adding a real control in place of each retired chip-based discriminator.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- disarmed by this row's own act (0.9.0_WK_DSGN_IRPTV1~36, TO-IV-e-79)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree wk-DSGN_IRPTV1-36/portal, uncommitted (repository freeze in force, 0.0.0_AB_MSTR): `git diff --stat` shows exactly the 5 named test files edited plus the pre-existing CRLF-only artifact on contracts/wire/*.ts and global/FirmAttribution.tsx (`git diff` on FirmAttribution.tsx and contracts/wire/index.ts prints only the CRLF warning, no content hunk) -- no product file's bytes changed",
+      "`timeout 120 bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-23.firm-chip.test.ts ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-38.header-identity.test.tsx ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-56.firm-display.test.tsx ./src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-23.parity-kept.test.ts ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-73.one-firm-mention.test.tsx`: 8 pass, 0 fail across 6 files (IVE79-AC1)",
+      "bite check: mutating FirmAttribution.tsx's own default from `show = false` to `show = true` (restoring the old chip-visible default) and re-running the same 4 re-goldened files flips 6 of 8 tests to fail -- iv-e-23.firm-chip ('default (no show) rendered something for a matched firm'), iv-e-38.header-identity ('UIR-30: the tab-body chip ... rendered something; ... rendered 2 time(s) ... expected exactly once'), iv-e-56.firm-display ('UIR-13g: the same matched input with no `show` renders nothing' fails), fe-s-10/parity.test.ts (byte-identical assertion fails), iv-e-23.parity-kept.test.ts (child rc=1) and iv-e-73.one-firm-mention.test.tsx (its own ARM a/DIRECT arm both flip); bytes restored after (md5 b183f14e85147cd9312d6357cddf0ebb before and after)",
+      "second bite check: mutating fe-s-10/parity.test.ts's own new CONTROL test (collapsing REPORT_ALT to `{ ...REPORT }`, i.e. no longer a different report) flips 'CONTROL: the comparison can fail' to fail ('differ=false'), proving that control is a real discriminator and not vacuous; bytes restored after (md5 d9276ec5c12bb57ca57d728ac6f2d1e7 before and after)",
+      "re-ran IVE79-AC1's full invocation after both restores: 8 pass, 0 fail, unchanged from the first measurement"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Fixed in-bounds per TO-IV-e-79's own Build ruling (2.0.0_SA_COO~D on row W36-S3): each of the 5 named files re-goldened to the ruled `show`-gated default, keeping every original CLAIM, with a real control in place of each retired chip-based discriminator (arm-3/UIR-30/UIR-13g default-renders-nothing arms; parity's byte-identical-without-stripping assertion plus its own two-different-reports CONTROL). No test deleted, no assertion loosened.",
+  "spec_asserts": "TO-IV-e-79's Build: re-golden each of the 5 named tests to the ruled `show`-gated default, keeping every test's CLAIM and a real control; never delete a test or loosen an assertion to pass.",
+  "world_is": "All 5 files are now re-goldened exactly per the Build text (verified by direct read against the ruling and by the bite checks above); IVE79-AC1's invocation measures 8 pass / 0 fail together with IV-e-73's own test, closing the gap row W36-S3 named.",
+  "notes": "Row W36-S3 stays filed as it is (append-only); this row is the disarm record. Repository freeze (0.0.0_AB_MSTR) forbids any git write at the time this row is filed -- the 5 files' edits are proven in the worktree (measured above) but not yet committed; the issuer continues this worker after the freeze to commit and flip TO-IV-e-79's status."
+}
+```
