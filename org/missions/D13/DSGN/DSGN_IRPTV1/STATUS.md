@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-28T19:3xZ.
+tick here. As of 2026-09-28T20:2xZ.
 
 ## Pins
 
@@ -11,9 +11,9 @@ tick here. As of 2026-09-28T19:3xZ.
 |---|---|
 | Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-28T19:47:43Z (presence-extended) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal candidate pin | DEV `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `528acdcd` (pushed by this seat under the lease; ls-remote read 19:3xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd UNREAD |
-| Suite on 528acdcd | IR scope 895 pass / 27 skip / 7 fail = the known 5 + IVE20-AC2/AC3 dev-server timeouts (pass alone); tsc -b 0; eslint 0 errors |
+| Portal candidate pin | DEV `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
+| Portal origin | origin DEV `bfafa6c0` (pushed by this seat under the lease; ls-remote read 20:2xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success |
+| Suite on bfafa6c0 | IR scope 898 pass / 27 skip / 5 fail (the known 5); tsc -b 0; eslint 0 errors |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
 
@@ -28,35 +28,34 @@ on 5174 @528acdcd working tree (tmp/ui-walk/20260928T190559Z, local only). S30 d
 |---|---|---|---|
 | 1 | portal `a47d3a75` | UIC-10, UIC-12, UIC-13, S30 | iv-e-72 HOLDINGS-ANY-COUNT-OK; real run cowdin shot 017 |
 | 2 | portal `528acdcd` | UIC-09, S29 | six source-age files green but the known F25 set; the walk caught no loading face (unit render is the exercised path) |
+| 3 | portal `bfafa6c0` | UIR-32, UIR-49 (IV-e-71 mask half) | iv-e-71 STRATEGY-TAIL-OK; real run thiessen shot 026 caught the category-views modal before the adapter fix; the post-fix face is unit-proven only (walk killed for low memory) |
 
 Round 9 at the boundary (@f42e1b00fa): IV-e-68/69/70/73/74/78/79 terminal and drained; IV-e-71/72/75/76/77
 superseded by this lease, unbuilt, their rows carried into Next.
 
 ## Next (in order; a defect that breaks the live thread goes first)
 
-1. **IV-e-71 rows (UIR-32/34/49):** one account mask everywhere (`****1234 / TYPE`); ALL CATEGORIES draws no
-   one-slice pie. The pie half lives in the shared `portal/src/components/CategoryViewTree.tsx`, outside this lease's
-   surface: that half is parked below; the mask half is in-surface.
-2. **UIC-23 residue (CTO 102416, row S32):** each Analysis history row names its variant and date in words.
-3. **UIC-11 residue:** ACCOUNT_PALETTE[0] is neutral-100 `#f5f5f5`, near-white on the white panel (the first
+1. **UIC-23 residue (CTO 102416, row S32):** each Analysis history row names its variant and date in words.
+2. **UIC-11 residue:** ACCOUNT_PALETTE[0] is neutral-100 `#f5f5f5`, near-white on the white panel (the first
    wedge and swatch nearly vanish).
-4. **IV-e-75 rows (UIC-18..22, W35-S2):** Analysis setup behaves like a form; Export on Analysis opens only on an
+3. **IV-e-75 rows (UIC-18..22, W35-S2):** Analysis setup behaves like a form; Export on Analysis opens only on an
    answer-bearing report.
-5. **IV-e-77 rows (UIR-45, UIC-14, UIC-17):** one client date format on Performance and the directory stamp; the
+4. **IV-e-77 rows (UIR-45, UIC-14, UIC-17):** one client date format on Performance and the directory stamp; the
    source line in client words; the scope panel never prints 'unknown' (SCOPE AS OF still reads unknown).
-6. **IV-e-76 rows (UIR-04/13/30, W35-S1):** firm display names from the registry generated view. Per CTO 102351 the
+5. **IV-e-76 rows (UIR-04/13/30, W35-S1):** firm display names from the registry generated view. Per CTO 102351 the
    view target lands in `lib/opal_naming.py`, outside this lease's surface: CTO reads the diff before it lands.
-7. **UIC-03:** no fix of record yet.
-8. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
+6. **UIC-03:** no fix of record yet.
+7. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
 
 ## Write claims
 
-`portal/src/pages/InvestorReporting/tabs/holdings/slices.ts::maskedLabelFor`, `.../tabs/holdings/DrillTree.tsx` Breadcrumbs (item 1 of Next, the mask half).
+`portal/src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx` (item 1 of Next, UIC-23 residue).
 
 ## Next proof
 
-IV-e-71 mask half: one mask form (`****1234 / TYPE`) on the drill breadcrumb and strategy levels, the same tail as the
-header; a fixture test plus a cowdin/INF drill on 5174.
+UIC-23 residue: each Analysis history row names its variant and date in words (client name already from the header
+selection, CTO row S32); a fixture test plus the Analysis history on 5174. A walk runs only when system memory allows
+(the harness killed the 19:54Z walk for low memory).
 
 ## Dependencies
 
