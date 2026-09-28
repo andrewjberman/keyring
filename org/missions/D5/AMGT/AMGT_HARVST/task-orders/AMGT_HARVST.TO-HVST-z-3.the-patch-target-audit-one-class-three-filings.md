@@ -105,7 +105,7 @@ network, S3 or vendor call. It does not disarm the three rows -- evidence is the
    Round 10 taught me that a bare zero reads as "no problem exists."
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~34</slot>
 <fabric>site-z</fabric>
