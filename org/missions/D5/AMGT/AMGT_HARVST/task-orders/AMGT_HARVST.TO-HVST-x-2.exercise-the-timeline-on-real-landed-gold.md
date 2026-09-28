@@ -49,6 +49,10 @@ reading landed `chatter_daily` / `chatter_event` through this project's existing
 
 ## 2. AC1's QUESTION COMES FIRST, AND IT MAY BOUND THE REST OF THE CELL
 
+> ⛔ **THE PREMISE IN THIS SECTION IS FALSE -- DISPROVED BY THIS CELL'S OWN AC1. 12 `chatter_event` rows
+> exist across 7 securities, 4 of them Lenovo's, and `publishers_distinct` reaches 3. See section 7. The
+> instruction to name the exercisable arm BEFORE exercising it was still right, and is what caught this.**
+
 ⛔ **AN EMPTY RESULT IS NOT A PASS, and the issuer has already measured why this is a live risk:**
 `publication_gold.EVENT_MIN_PUBLISHERS = 2` and **only `sa` has landed listing rows**, so `chatter_event` can
 hold **ZERO rows for every security.** If you exercise FWD-6's arm against an empty set it will look like it
@@ -113,8 +117,65 @@ changes no module. It does not fix anything it finds -- findings are rows.
    no mirror-of-an-unrunnable-string. All three name scripts the criterion itself creates, which is s.14x's
    stated non-application for the run-it-first clause.
 
+## 7. THE VERDICT -- `complete`, VALID (rc=0), AND THIS ORDER'S OWN PREMISE WAS FALSE
+
+**Measured at the merged HEAD after the drain (`8ac166b569`):** `acceptance rows=3 | violations=0`,
+`invocation-alignment 3/3, 0 diverge`, `artifact-resolution 5 resolved at pin`, coverage `AC1,AC2,AC4`.
+**VALID (rc=0).**
+
+### FIRST, THE CORRECTION -- AND IT IS THE ISSUER'S, STATED ON THE BYTES THAT CARRIED THE ERROR
+
+⛔ **SECTION 2 OF THIS ORDER ASSERTS: "`publication_gold.EVENT_MIN_PUBLISHERS = 2` and only `sa` has landed
+listing rows, so `chatter_event` can hold ZERO rows for every security." THAT IS FALSE**, and AC1 disproved it
+on its first read. **Re-verified by me independently (rule 22), not taken on the worker's word:**
+
+| measured live at HEAD | value |
+|---|---|
+| securities carrying ANY `chatter_daily` row | **191** (not 89) |
+| securities with a day where `articles_total > 0` | **55 of 191** |
+| **`chatter_event` rows that exist at all** | **12, across 7 securities** |
+| of which **`992_HK_Equity` (Lenovo)** | **4** |
+| `publishers_distinct` MAXIMUM observed | **3** (not 1) |
+
+**So BOTH FWD-5 AND FWD-6 ARE EXERCISABLE, on the spec's own acceptance security.** The arm I declared
+unreachable by construction had twelve rows in it, four of them on the very security the spec names.
+
+### HOW I GOT IT WRONG, because the shape matters more than the fact
+
+**I reasoned from a MEASURED CONSTANT plus an INHERITED POPULATION CLAIM, and presented the conjunction with
+the constant's authority.** `EVENT_MIN_PUBLISHERS = 2` I did read at the bytes -- that part was real. *"Only
+`sa` has landed listing rows"* I carried forward from round 7's AC3, which measured **that cell's** population
+at **that** vintage, before `HVST-v-2`/`HVST-s-1`'s captures and later gold rebuilds landed. **And I never read
+`chatter_event` at all.** One `COUNT(*)` would have shown 12.
+
+⛔ **THE TELL I WROTE MYSELF AND DID NOT APPLY:** I called it "measured at the bytes" because the THRESHOLD was
+measured. **The threshold was; the population was not.** A conclusion is only as measured as its weakest
+premise, and labelling the pair with the stronger one is how an inherited number acquires authority it never
+earned. **COST: read the OUTPUT table, not just the RULE that governs it.** NON-APPLICATION: a rule whose
+output cannot exist yet because nothing has run.
+
+**WHERE IT PROPAGATED, so every copy is findable:** decomp `s.20.4` and `s.21.3`; `HVST-w-3`'s order section 7;
+`ROUND8_DRAIN_END_PACKET.md` section 3; this order's section 2; and messages to `1.0.0_SA_CTO~Z` and
+`3.0.0_SA_CVO~O`, one of which the round-8 analysis then quoted. **Row `AMGT_HARVST-Z-W27-S1` carries it and
+STAYS ARMED until those are corrected.**
+
+### WHAT THE CELL ACTUALLY ACHIEVED -- and it may move two FWDs the analysis graded NOT REALIZED
+
+| | |
+|---|---|
+| AC1 | the census above, with the security keys round 7 never named -- 55 of 191 printed by key |
+| AC2 | **FWD-5 EXERCISED on Lenovo's landed gold**: 267 of 267 dense days with NO gap, day `2026-05-22` (`articles_total=3`) opening strongest-first (tier A, A, B) with **0 pairwise sort violations** and every field present including `mention_in_title`/`mention_in_lead` when false. No divergence to file -- the exercisable security IS the spec's acceptance security |
+| AC4 | **JUDGMENT, PRESENTED with NO verdict**, status `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming `3.0.0_SA_CVO` at L9. All 12 events presented with spans, `lead_headline`, counts and the member headlines |
+
+⭐ **AC4 SURFACED SOMETHING THE CVO SHOULD WEIGH:** Lenovo's 4 events include a genuine earnings cluster
+(`2026-02-12`, *"Lenovo Posts Earnings Beat on AI-Driven Demand"*, 2 tier-A articles from 2 publishers) **and a
+shared-industry item whose `lead_headline` is carried VERBATIM across `992_HK_Equity`, `DELL`, `MSFT` and
+`NVDA` on the same day** (*"Nvidia Introduces First PCs Designed for AI Agents"*). **Whether a headline naming
+a different company is the right lead for Lenovo's event is exactly the judgment question**, and it is the
+CVO's, not mine.
+
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <slot>~27</slot>
 <fabric>site-z</fabric>

@@ -118,8 +118,40 @@ per-use vendor word and is not yours.
    tests were deleted. The count pair is the discriminator.
 4. **Two tests, not three, is stated in the worker face** so the worker does not spend a cycle hunting a third.
 
+## 8. THE VERDICT -- `complete`. ALL THREE PASS, VALID (rc=0), and no issuer repair was needed
+
+**Measured at the merged HEAD after the drain (`4d2b5d7615`):** `acceptance rows=3 | violations=0`,
+`invocation-alignment 3/3, 0 diverge`, coverage `AC1,AC2,AC3`. **VALID (rc=0).**
+
+| | |
+|---|---|
+| AC1 | the guard shown DIRECTLY: `AttributeError` pre-fix, `AuthExpired` post-fix on the SAME input, and BOTH positive controls hold (a valid logged-in body still passes; a logged-out body still raises `AuthExpired`). 4 of 4 sub-outcomes |
+| AC2 | `3 failed, 306 passed` -> **`306 passed, 1 skipped`**. Passed count HELD at 306, which was the discriminator against tests being deleted rather than fixed |
+| AC3 | the quarantine is visible AND carries its reason verbatim in the `-rA` output; `1 failed, 3 passed` -> `3 passed, 1 skipped` |
+
+⭐ **MY OWN CLOSE-VERIFICATION (rule 22), run separately from the worker's:** the dow-jones test is
+**PRESENT AND PASSING**, not quietly skipped -- `pytest -k dow_jones` reports it PASSED, 1 passed / 17
+deselected. **The AC2 count pair alone could not have told me that**, because a test that had been skipped
+would also have left `306 passed` standing. The targeted run is what separates "fixed" from "silenced."
+
+⛔ **s.14x HELD: NEITHER ROUND-9 INSTANCE NEEDED AN ISSUER REPAIR.** Round 8 cost three attempts to a
+filename, a `to_id` and an artifact pin. This round both workers were TOLD those three things in the worker
+face, and both instances validated first time. **The clause paid for itself in one round.**
+
+### THE ROW THIS CELL FOUND, and it is better than the repair
+
+`AMGT_HARVST-Z-W26-S1`: `patch("lib.opal_data_harvest.publishers.DowJones", ...)` **never took effect.**
+pytest's rootdir import (there is no `lib/__init__.py`) loads the test as `opal_data_harvest.test_worker`, so
+the code under test resolves `DowJones` off a **different module object** than the string-targeted patch
+mutates -- the patch call raises nothing and silently no-ops. **A sibling occurrence at `test_worker.py:51`
+only "works" by a stdlib-singleton coincidence** (`time` is process-wide, so mutating it on the duplicate
+module still lands), and `test_verification.py:11` carries the identical shape. **So the `AttributeError` had
+a cause one layer beneath the incomplete double, and completing the double routes around it rather than
+fixing it.** The worker used `patch.object(DowJones, ...)` on the class its own file imports, which cannot
+split. STAYS ARMED.
+
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <slot>~26</slot>
 <fabric>site-z</fabric>
