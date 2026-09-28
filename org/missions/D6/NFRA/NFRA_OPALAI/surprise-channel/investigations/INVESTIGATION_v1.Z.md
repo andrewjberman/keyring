@@ -1289,6 +1289,65 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Round-1 analysis R-5 / row Z-W8-S1: the entitlement guard suite keeps passing across gateway changes; E1 records its pass count.",
     "world_is": "At CLOUD HEAD the suite is already red on 2 of 12, from changes that predate round 2. So E1's R-5 criterion is graded as NO NEW FAILURE against this base (the same 2 named failures, at least 10 passed), never as all-pass. The two failures are the NFRA_OPLGTW OG-z-1 guard's own pins, and they stay open for their owner.",
     "notes": "Filed by the issuer at the cut. INERT: the served gateway does not run tests. The OA-e-1 order carries the base count."
-  }
+  },
+{
+  "id": "NFRA_OPALAI-Z-W16-S1",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+  "surfaced_at": "2026-09-28T22:05Z",
+  "one_line": "E10's LOGIN_USES=0 is a count over 2026-07-14..2026-09-28, not since the /authorize go-live: the host journal starts 21 days after the commit that registered /authorize.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SSM i-07dccb1615503ac99 2026-09-28: journalctl -u opal-gateway first line 2026-08-15T03:02:10+0000; journalctl _COMM=uvicorn first line 2026-07-14T09:48:50+0000; /login count 0 on both.",
+      "git log -S: 63e61ca77b 2026-06-23 (authored, UNAPPLIED); org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~16/E10_LOGIN_CENSUS.md."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OA-e-10 section 1: LOGIN_USES is the number of /login requests since the MCP /authorize sign-in went live, read from journalctl -u opal-gateway.",
+  "world_is": "journalctl -u opal-gateway starts 2026-08-15 (the unit rename); the whole journal starts 2026-07-14T09:48:50Z under the earlier unit m365-mcp-gateway. /authorize was registered at 63e61ca77b (2026-06-23). The worker counted both unit names (0 and 0) and named the gap in the census; the 21 days before the journal are unmeasured and not recoverable on the host."
+},
+{
+  "id": "NFRA_OPALAI-Z-W16-S2",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+  "surfaced_at": "2026-09-28T22:05Z",
+  "one_line": "E10 NARROW's 'a config list' is derived from the two existing settings OTP_MAILBOX and MS_INGEST_IDENTITY, because app/config.py is outside the order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/server.py _login_allowed_identities (worker commit on wk-NFRA_OPALAI-16).",
+      "tests/test_login_retire.py::test_login_fails_closed_when_empty passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OA-e-10 section 1 NARROW: /login admits only the server identities the census named (a config list, fail closed when empty).",
+  "world_is": "The order writes only app/server.py, so a new config key could not be added. The allow-list is computed in server.py from cfg.OTP_MAILBOX and cfg.MS_INGEST_IDENTITY (the two server-held identities the census named); empty -> admits nobody. A separate list key would need config.py and a host .env edit at release."
+},
+{
+  "id": "NFRA_OPALAI-Z-W16-S3",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+  "surfaced_at": "2026-09-28T22:05Z",
+  "one_line": "The census's host read printed the first 4 characters of OTP_BEARER, MS_INGEST_BEARER and the two identity values into the worker's own tool output (never into a committed file).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SSM command output in the worker session 2026-09-28 ~21:55Z (ENV_KEYS block); grep of the committed census for the prefixes: absent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OA-e-10 bound 3: no token, cache content, secret or email is printed, committed or put in the census.",
+  "world_is": "The worker's SSM script derived the two cache file names from .env and, in an extra diagnostic line, echoed each key's first 4 value characters. Nothing was written to the repo, the census or this row. The prefixes sit in the worker's session output only; a 4-character prefix of a static bearer is not usable as a credential."
+}
 ]
 ```
