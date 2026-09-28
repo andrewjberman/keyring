@@ -1333,6 +1333,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "e2.AC1 expects `fence test 'RESULT: N passed, 0 failed ...'` within its own bounds.",
     "world_is": "The fence test's runtime on this device exceeds the check's inner 60 s bound, so the criterion cannot be met as written regardless of the commit. The worker did not repair the criterion. The edited fence itself passes its whole test (28 of 28) and the three arms of AC1 were exercised by the test's own cases (upload DENY, -bbg whoami/poll PASS, send_email DENY) on the UNCOMMITTED working tree.",
     "notes": "Suggested for the issuer: raise the inner bound to 240 s (the outer 120 s harness bound also needs to admit it), or replace the full-suite call with the upload arm only."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W11-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~11",
+    "surfaced_at": "2026-09-28T22:20Z",
+    "one_line": "Rows Z-W11-S1 and Z-W11-S2 are cleared on this branch: with the issuer's validator fix and the amended AC1 bound, the nested commit landed through the hook with no override (opal_ai 7c6473c) and e2.AC1-AC3 all read RESULT: PASS. This row disarms nothing; the issuer dispositions S1 and S2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git -C opal_ai commit --author ... -F msg -- <3 paths>` -> '[wk-NFRA_OPALAI-11-opal_ai 7c6473c] ... 3 files changed, 11 insertions(+), 8 deletions(-)' on parent HEAD d750cba8c4 (carrying fix @fd0aa6ba57 and amendment @c7a5391c18 as cherry-picks).",
+        "MEASURED: e2.AC1 'upload=DENY read_chat_messages=PASS send_email=DENY; fence test names upload=1; ... RESULT: 28 passed, 0 failed (denominator: 28 cases)' exit=0; e2.AC2 '/terminal-upload=0; upload lines=1, of which without never/not=0; publish_to_portal.py=1' exit=0; e2.AC3 'files changed=3, outside the cell's three=0; fence lines removed outside G4=0' exit=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer message: S1 (validator census inherited the nested GIT_DIR) fixed @fd0aa6ba57; S2 (AC1 inner bound) raised 60 s -> 105 s at c7a5391c18.",
+    "world_is": "Both hold on this branch: the hook admitted the nested commit and AC1 completed its fence test inside the new bound."
   }
 ]
 ```
