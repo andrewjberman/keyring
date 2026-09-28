@@ -1890,6 +1890,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "ROUND_ANALYSIS.round11.md s.4 cell 1: mount both route keys + table 16->18 + a ledgered deploy + both routes timed from the deployed Lambda 'unlocks ruling 3's push and FWD-5/FWD-6's walk'.",
       "world_is": "A mount plus a code-only redeploy gives two mounted routes that answer an import failure, not data. The package must carry a python3.11 pyarrow build that imports alongside the layer's numpy 2.2.6, plus lib.opal_naming and its registry data, inside Lambda's 250 MiB unzipped ceiling (layer alone is 121.7 MB).",
       "notes": "DISARM (issuer's, same turn): round 12 cuts the deploy cell HVST-a-2 to include making the package import the gold readers, with the wheel source (a sha256-pinned wheel, which is egress to PyPI as in AMGT-tt-2's half, or an owned layer) and the unzipped total against 250 MiB carded on the never-widen halves the CTO signs; a-2's AC1 invokes the deployed Lambda and FAILS on a 200-less timeline route, so an import failure cannot pass silently. No runtime change is admitted without the CTO's word."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W35-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~35",
+      "surfaced_at": "2026-09-28T23:10Z",
+      "one_line": "Mounting the two timeline routes (16->18) turns two tests OUTSIDE HVST-a-1's <paths> red: test_slash_safe_security_route.py::test_route_table_still_has_sixteen_entries and test_generation_and_pool_routes.py::test_19_the_route_set_did_not_move_and_the_retired_table_is_not_named both pin len(scoped_amgt_route_table()) == 16; AC2 reads 2 failed, 254 passed of 256 collected.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED in worktree wk-hvst-r12-35 (branch wk-AMGT_HARVST-35): base run of `python -m pytest lib/research/api/tests/ -rA --tb=line` before any edit = 256 passed, 0 failed (256 collected; the order states 255). After the four in-scope edits the same command = 2 failed, 254 passed, 256 collected; AC1 = PASS (0 failure(s)) at 18/18/==18.",
+          "FAILED lib/research/api/tests/test_slash_safe_security_route.py::test_route_table_still_has_sixteen_entries -- AssertionError: 18 of 16 routes in scoped_amgt_route_table() (assert len(routes) == 16 at :153).",
+          "FAILED lib/research/api/tests/test_generation_and_pool_routes.py::test_19_the_route_set_did_not_move_and_the_retired_table_is_not_named -- assert len(routes) == 16 at :663.",
+          "Neither file is in HVST-a-1's <paths> (which name test_scoped_amgt_mount.py and test_timeline_routes.py only); the worker did not edit them. test_scoped_amgt_mount.py's own two literal-16 asserts (:128,:129) ARE in scope and were moved to 18 with the terraform count."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-a-1 s.1 step 4 and AC2: 'Change no other assertion' and 'the api suite passes ... a pre-existing failure elsewhere is reported ... never repaired'; the cut assumed the only tests pinning the table size were test_scoped_amgt_mount.py and test_timeline_routes.py.",
+      "world_is": "Two further tests pin the table length at 16 and fail once the table returns 18; they are not pre-existing failures but a direct consequence of the mount, and outside the write grant. Left as is, the api suite is red on CLOUD after this branch drains. Remedy for the issuer: amend HVST-a-1's <paths> to add the two test files and move each len == 16 to 18 (test_19 also enumerates the AMGT-rk-6 leaves; the two timeline leaves need no new leaf count), or accept the red suite until a-2.",
+      "notes": "Worker leaves the TO status open: AC2 FAIL is the recorded output. No terraform, AWS, deploy or push was run."
     }
   ]
 ```
