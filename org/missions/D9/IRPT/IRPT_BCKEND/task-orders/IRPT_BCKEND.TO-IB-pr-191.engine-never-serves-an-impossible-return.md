@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~61</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-28</issued_date>
-<status>pending</status>
+<status>complete -- P19-1-AC1/AC2/AC3 all PASS-by-output (proof-of-spec-check.py VALID rc=0). f49_engine.EngineReturnImplausible raised from calculate() before any report is built when a linked window day carries r_net &lt;= -1.0; entry.py names it DEPENDENCY_UNAVAILABLE ahead of the MRO's EnginePerformanceRefused OBJECT_NOT_COVERED; tests/test_f49_engine.py carries the NEW-01 shape + sibling control (10 of 10 tests pass). Base-state contrast executed against a detached-HEAD worktree at 0a80f8165c: AC1/AC3 arm A both FAIL there, matching the order's stated base. Committed 57a58117fb on wk-IRPT_BCKEND-61.</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

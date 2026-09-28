@@ -10575,3 +10575,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Un-parks when a 0.4.0_DS_ClientPlatform lane is seated: it takes this row as its order of record. NOT in scope of either fix: whether a re-funded account's track record restarts (re-inception); that methodology call is Andrew's, asked by 1.0.0_SA_CTO 2026-09-28."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W61-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~61",
+  "surfaced_at": "2026-09-28T20:15:00Z",
+  "one_line": "TO-IB-pr-191's own <proof_of_spec> block names the instance path 'IRPT_BCKEND.TO-IB-pr-191.proof_of_spec.json' (short form), but .tools/to-pipeline-gate.py's check_complete_flip only accepts a filename built from the TO file's FULL stem ('IRPT_BCKEND.TO-IB-pr-191.engine-never-serves-an-impossible-return.proof_of_spec.json') plus '.proof_of_spec.json'/'_PROOF_OF_SPEC.json' -- the order's own stated name does not satisfy its own flip gate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-191.engine-never-serves-an-impossible-return.md <proof_of_spec> block (this cell's own WORKER FACE, cited verbatim in the task order text): 'Instance at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~61/IRPT_BCKEND.TO-IB-pr-191.proof_of_spec.json'",
+      ".tools/to-pipeline-gate.py check_complete_flip(), read this session: 'stem = os.path.basename(rel).rsplit(\".md\", 1)[0]; names = (stem + \".proof_of_spec.json\", stem + \"_PROOF_OF_SPEC.json\")' -- stem is the TASK ORDER FILENAME's own stem (the long descriptive slug), never the short to_id",
+      "reproduced this session: committing the status flip with the instance saved at the order's literal short-form path was REFUSED by safe-commit.sh / to-pipeline-gate.py layer 2 ('NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.'); renaming the identical, already-VALID (proof-of-spec-check.py rc=0) instance to the full-stem name let the same commit through unchanged otherwise"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order's own <proof_of_spec> instance path is the path that completes the flip.",
+  "world_is": "That literal path fails the gate that enforces the flip; only the full-TO-stem name (undocumented in the order's own text) satisfies it. This worker renamed the instance to the full-stem form (content unchanged, still VALID rc=0 under both names) to complete the flip rather than leaving it pending on a naming mismatch.",
+  "notes": "Same class as a naming convention the issuing COO's own task-order template does not carry: every round-19 ~P cell whose <proof_of_spec> block states a short-form instance name will hit this same refusal at flip time. Disarms when the issuer either (a) states the full-stem name in the template, or (b) the gate accepts the to_id-based short form as an alternate candidate name."
+}
+```
