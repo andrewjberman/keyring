@@ -44,3 +44,17 @@ ordinary status answers as they were. So:
 Any difference other than a named, expected field is a same-turn rollback to `7xPCOM83.`.
 
 Not measured by this seat: the smoke output, the census and ~Y's overlay reads (the packet's).
+
+## Addendum 1 (2026-09-28 ~00:1xZ) -- the condition met by a stated substitute; ACCEPTED
+
+The source is 2.0.0_SA_COO~P msg 102247 (D1 closed).
+- irpt-status `5fSyChId` has been served since 00:02:55Z. The cold start is proven: Init Duration 102.62 ms, with no
+  FunctionError and no AttributeError.
+- **The departure:** P applied before reading this condition to its end, so no LIVE pre-apply read exists.
+- **The substitute:** P ran the OLD `bMMJ/bQ+5` zip locally against the SAME live reads and the SAME event (status of
+  REQ-67e12718, cottonwood, V1), and compared it with the served new function. Both answer UNAVAILABLE
+  ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE, and the envelopes are EQUAL.
+- **Accepted.** The old code on identical inputs against the new code is the before/after the condition asked for.
+  The only thing it loses is the served runtime of the old build, which the cold start and the rollback path already
+  bound. No rollback.
+- The condition stays the standard for the next shared-module move: the before-read is taken LIVE, ahead of the apply.
