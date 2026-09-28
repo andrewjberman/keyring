@@ -2334,6 +2334,102 @@ carries none.
     "spec_asserts": "Order step 6: 'Run AC1-AC3. Commit under your serial.' and bound 3: REFUSE a criterion you cannot meet, reporting it with its measurement. Step 1: s3_key is the exact key the entry describes.",
     "world_is": "AC1, AC2 and AC3 all PASS (proof instance VALID, rc 0), but the change cannot be committed by a worker: the naming limb refuses the one new field the order asks for, because its value is a live-remediation key (MDPF_CANON) the platform has not migrated. The change is complete and unstaged in worktree C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-13 on branch wk-nfra_mcpindex-3-13 (8 files). The proof instance and its deliverables folder are also uncommitted, so its PENDING-THIS-COMMIT rows are unresolved. Nothing was bypassed, hand-encoded or reworded to slip the gate. The way through is the gate's owner or the issuer's: an R20 register entry or a ruling on MDPF_CANON that lets this field carry the key, or the issuer committing the staged set under an approved path; that is not this worker's call.",
     "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T20:58Z",
+    "one_line": "TO MX-s-12 step 4: .tools/safe-apply.sh refuses the worker (halt-gate exit 3, fail-closed) because the session-keyed serial file resolves the shared session id to the issuer serial 2.0.0_SA_COO~MI, a two-letter lane the gate rejects; the graded 0-add/0-change/5-destroy fees-leg plan is NOT applied.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Command: HALT_ACK=1 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/bd-pipeline apply -input=false -no-color <saved plan> run from the worker worktree with OPAL_AGENT_SERIAL=0.9.0_WK_NFRA_MCPINDEX~8 exported. Output: 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed) ... Resolved serial: 2.0.0_SA_COO~MI', APPLY_RC=3. Terraform was never invoked; nothing was applied.",
+        ".tools/halt-gate-check.sh:68-109 halt_gate_resolve_serial reads ONLY org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial (this checkout, then the shared checkout) and the orphan-cleaned marker; it does NOT read OPAL_AGENT_SERIAL. The worker shares the issuer's CLAUDE_CODE_SESSION_ID, so it resolves as the issuer. The worker worktree has no org/mcp/sessions directory (ls: cannot access).",
+        ".tools/halt-gate-check.sh:71-74 says the sanctioned remedy: 'an issuer may provision a worker's serial inside the worker's worktree, so parallel workers of one session each resolve as themselves'. That file is org/mcp/sessions/<sid>.serial, outside this order's <paths>, so the worker did not write it (order: a path needed but not granted is a BLOCKING row, never an override).",
+        "The plan itself is graded and clean (step 4 G3): 'Plan: 0 to add, 0 to change, 5 to destroy' = aws_cloudwatch_event_rule.bd_fees_pipeline, aws_cloudwatch_event_target.bd_fees_pipeline_target, aws_lambda_permission.eventbridge_fees, module.fees_trigger.aws_cloudwatch_log_group.lambda, module.fees_trigger.aws_lambda_function.this. Zero mentions of aws_instance, bd-49f-fees-runner, its session-chain rule, bd-silver-merge, or any asset-dim resource. Saved plan and text are in the worker scratch dir, outside the repo."
+      ]
+    },
+    "spec_asserts": "TO MX-s-12 step 4: apply the retirement with .tools/safe-apply.sh, never a bare apply, and after apply run terraform plan -detailed-exitcode = 0.",
+    "world_is": "safe-apply cannot name this worker as its principal, so the apply is not executed. The fees leg (bd-fees-pipeline-trigger cron(15 22), bd-fees-trigger) is still live in AWS and would fire at 22:15Z on top of the asset-dim fire; the repo edits and file deletions are committed on the worker branch only. AC2 asserts only the asset-dim rule so it is unaffected.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm is one of: (a) the issuer writes org/mcp/sessions/<sid>.serial inside the worker worktree naming 0.9.0_WK_NFRA_MCPINDEX~8 and the worker re-runs safe-apply against a fresh plan (the worker will re-plan, the saved plan is not trusted after time passes); or (b) the issuer applies from the worker branch. The order forbids step 4 between 22:05Z and 22:40Z, so the window is now until 22:05Z or after 22:40Z; if unapplied before 22:15Z the fees Playwright leg fires once more, which is the state it has been in for 95 days and harmless to data (bronze/fees is written by the REST runner)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T21:17Z",
+    "one_line": "Z-W8-S1 disarmed: the issuer 2.0.0_SA_COO~MI wrote the gitignored worktree serial file naming the worker, safe-apply then passed, and the graded 0/0/5 fees-leg retirement applied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+      "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer message 21:05Z: wrote org/mcp/sessions/3f54aa89-ef8a-46dc-b108-5c18de99298f.serial in the worker worktree naming 0.9.0_WK_NFRA_MCPINDEX~8; the worker read the file back: contents equal the worker serial. The file is gitignored and not committed.",
+        "Re-plan (worker scratch plan2.txt) read exactly 'Plan: 0 to add, 0 to change, 5 to destroy', the same five resources as the plan graded before the block. safe-apply.sh: 'Apply complete! Resources: 0 added, 0 changed, 5 destroyed.' APPLY_RC=0; the halt gate resolved the worker (scanning the issuer inbox, 191 pending messages, HALT_ACK=1).",
+        "Post-apply terraform plan -detailed-exitcode: 'no differences', rc 0. events describe-rule bd-fees-pipeline-trigger: does not exist. AC2 PASS exit 0."
+      ]
+    },
+    "spec_asserts": "TO MX-s-12 step 4: retire the fees schedule leg through safe-apply and reach plan -detailed-exitcode 0.",
+    "world_is": "Step 4 is met as written; the block in Z-W8-S1 was a provisioning gap (no worker-local serial file), removed by the issuer, not a defect in the plan.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The gap is reusable knowledge for the issuer: a worker whose order includes a safe-apply needs the worktree serial file provisioned at spawn. Z-W8-S1 is not edited; this row records its disarm in prose. The structured `adjudicates` field is refused to a worker (surprise-row-gate A-1: it is 3.0.0_SA_CVO's field), so the CVO is asked to disposition NFRA_MCPINDEX-Z-W8-S1 by naming it in an adjudicating row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S48",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:09Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S42"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S42. The BD asset dimension is now current by its SCHEDULED producer, not by ad-hoc pulls: MX-s-12 made the ported REST document v4 the served version, and the first scheduled weekday fire (22:10Z) ran it and rewrote the dim with DELTA=0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-s-12 (drained 2033d10e73): the SSM document opal-bd-asset-dim-download is v4 as both DefaultVersion and LatestVersion (worker describe-document); s10.AC1 PASS -- the served document has rest-pull 4, builder 4, playwright 0, BD_PASSWORD 0 (issuer re-run 2026-09-28 ~22:4xZ).",
+        "The scheduled fire: rule bd-asset-dim-pipeline-trigger 22:10:00Z -> bd-asset-dim-trigger -> ssm 16d855de-b971-4d4c-bf8c-bc9f8503c6d3, requested 22:11:06Z, Status Success; s10.AC3 PASS (runs at/after slot 1, success 1, dim rewritten after = yes), issuer re-run.",
+        "Served dim silver/bd_assets_dim.parquet VersionId qcSdLjLW0d1QbDZ1w9lg6SRPjwF7ou92 (22:11:33Z): issuer-measured against the G1 version kittUyy.WHGfmKRaAag.p4TqGFycZ3eA -- 12,141 = 12,141 unique ids, id-set sha256 prefix b38a8b0a5dd07053 equal, 0 added, 0 removed, non-null cusip 10,957 = 10,957, 0 cusip changes of any kind."
+      ]
+    },
+    "spec_asserts": "Z-S42 (ARMED): the dim is current only through one-off REST pulls; the scheduled run still executes the Playwright download that BD's MFA broke. CLAUDE.md: production pipelines MUST be scheduled.",
+    "world_is": "The scheduled chain EventBridge -> Lambda -> SSM runs the REST pull + union rebuild. Tonight's acceptance fire succeeded and the served dim is byte-set-identical on ids and cusips to the G1 baseline (only built_at moved). The judgment half (s10.J1) is open for 3.0.0_SA_CVO~O at L9.",
+    "notes": "Disarm owner of Z-S42 was 2.0.0_SA_COO~O, the issuer at the time; the issuer is now 2.0.0_SA_COO~MI (placement @094c84f299). The trigger runs the document at $LATEST, not DEFAULT: tonight both are v4 (worker ~8 recorded it in the proof instance), so a future update-document that creates a $LATEST without setting DEFAULT would change what the schedule runs."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S49",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:09Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S47"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S47. The BD fees Playwright leg that failed 69 of 121 runs while SSM read Success no longer runs: MX-s-12 destroyed its schedule through Terraform (bd-fees-pipeline-trigger rule, target, Lambda permission, bd-fees-trigger Lambda and its log group -- 5 destroys, 0 add, 0 change).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker ~8 safe-apply ~21:14Z: 'Apply complete! Resources: 0 added, 0 changed, 5 destroyed.'; post-apply terraform plan -detailed-exitcode: no differences, rc 0 (commit 03527b9e7a, drained 2033d10e73).",
+        "Live reads after the apply (worker): bd-fees-pipeline-trigger does not exist; bd-49f-fees-session-daily still ENABLED cron(20 22 ? * MON-FRI *); bd-49f-fees-runner still Active -- bronze/fees stays current through the REST runner."
+      ]
+    },
+    "spec_asserts": "Z-S47 (ARMED): opal-bd-fees-download has no exit on its failure branch, so SSM reports Success on every failed run (69 of 121).",
+    "world_is": "The leg that ran that document is gone; nothing triggers opal-bd-fees-download (it stays registered, inert, not Terraform-managed). Whether the OTHER BD SSM documents share the defect is MX-m-1 (a), in flight.",
+    "notes": "Disarm owner of Z-S47 was 2.0.0_SA_COO~O; the issuer is now 2.0.0_SA_COO~MI."
   }
 ]
 ```

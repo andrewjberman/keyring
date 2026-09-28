@@ -153,7 +153,7 @@ Dry-run at base (CLOUD `c8df03c408`, ~20:5xZ):
 (row Z-S38). No criterion's expectation moves. Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii)
 placeholders (NONE), so no limb graded this amendment.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~10</slot>
 <fabric>site-z</fabric>
