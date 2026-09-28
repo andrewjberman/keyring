@@ -1702,6 +1702,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "The task order's own premise: chatter_event holds ZERO rows for every security (FWD-6's arm is UNEXERCISABLE by construction), and the universe to measure against is 89 securities (round 7's number).",
       "world_is": "Landed gold has moved past both premises: the universe is now 191 securities and chatter_event carries 12 rows across 7 securities, so BOTH FWD-5 and FWD-6 are exercisable today, on Lenovo's own data as the spec's section 8 acceptance expects. Neither premise was wrong when written; both are stale relative to gold that has since been rebuilt.",
       "notes": "Not a defect in any module -- no code change follows from this row. Filed because a later round or the L9 CVO read reasoning from this task order's premise (e.g. 'FWD-6 cannot be exercised yet') would be reasoning from a denominator two rebuilds out of date. DISARM IS THE ISSUER'S: the round-9/round-10 analysis should re-quote the universe size and chatter_event coverage from a fresh read rather than carrying forward 89/zero."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S33",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~Y",
+      "surfaced_at": "2026-09-28T07:45:00Z",
+      "one_line": "FWD-5's RATIFIED acceptance places the timeline at the top of the security page's Coverage tab and says in terms 'this is a placement, not a new tab' -- but AMGT_RESAPP RETIRED that tab into the header feed and DELETED it, so the built page carries five tabs and no CoverageTab.tsx. The acceptance clause is unsatisfiable as written and the only obvious workaround is the one the spec forbids.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~Y",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "THIS PROJECT'S RATIFIED SPEC, the half 3.0.0_SA_CVO~O signed at v0.3: deliverables/0.9.0_WK_AMGT_HARVST~8/SPEC_SECTION_timeline.md:21 -- 'The timeline lives at the top of the Coverage tab, above the existing article list (S4, the Coverage Reader). This is a placement, not a new tab'; and :250, FWD-5's acceptance -- 'an analyst opens Lenovo's security page, reaches the Coverage tab, sees the day-by-day line'.",
+          "THE SIBLING PROJECT RETIRED IT: org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md:1838 -- 'Management, Peers, Model, Posture; the Coverage tab retired into the header feed'; AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~18/SESSION_LOG.AMGT-rj-9.md:30 -- 'Portal: five tabs; Coverage tab deleted; HeaderBrief (description, Posture line, feed)'; and AMGT_RESAPP.TO-AMGT-rj-9.the-header-and-the-five-tabs.md:74 calls it 'the retired Coverage tab'.",
+          "CONFIRMED ON THE BUILT SURFACE, not inferred from the prose: comp-find --name '*Tab*' over portal/src/pages/SecurityAnalysis returns ExecManagementTab.tsx, ModelTab.tsx, PeersTab.tsx, PostureTab.tsx, ThesisTab.tsx -- FIVE tabs, denominator 67 files scanned, and NO CoverageTab.tsx. A prior --name '*ompany*' census over portal/src returned a measured 0 of 1123, which is how the absence was first noticed.",
+          "WHY IT IS BLOCKING RATHER THAN AN OBSERVATION: round 10's cell 3 is the timeline PAGE, whose acceptance IS FWD-5. It cannot be cut against a deleted surface, and creating a Coverage tab would both contradict the spec's own 'not a new tab' sentence and edit a page C-HV-BOUNDARY assigns to AMGT_RESAPP ('the rest of the security page belongs to AMGT_RESAPP').",
+          "NOT A CODE DEFECT AND NOTHING IS MIS-BUILT: AMGT_RESAPP's retirement was its own cut, presumably correct for its own reasons. The defect is that two ratified surfaces of the same estate now disagree and neither project was told."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "FWD-5 is served by placing the timeline at the top of the security page's existing Coverage tab, which the spec treats as a present surface requiring no new tab.",
+      "world_is": "AMGT_RESAPP retired the Coverage tab into the header feed and deleted it; the built page has five tabs and none is Coverage. The placement target named by a ratified acceptance clause does not exist.",
+      "notes": "ROUTED, and the route EXISTS rather than being asserted: 1.0.0_SA_CTO~Z, message 20260928T0742Z, with three options named (re-place the timeline as an L4-R acceptance change; AMGT_RESAPP restores the tab; or the home was reconsidered and this project was not told). DISARM IS NOT MINE TO TAKE ALONE: rule 27 lets an issuer amend its own task-order criteria, NOT a ratified acceptance clause, and the tab belongs to the sibling project under C-HV-BOUNDARY either way. Round 10 proceeds on cells 1 and 2; cell 3's order is DRAFTED AND HELD so it issues the moment the placement is ruled. The round's JUDGMENT criterion moved to y-1 rather than being held with cell 3 -- holding it would leave round 10 judgment-less for the third consecutive round, which is the failure the round-8 rule exists to stop."
     }
   ]
 ```
