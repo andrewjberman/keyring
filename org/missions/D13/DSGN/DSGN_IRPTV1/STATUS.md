@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-28T22:1xZ.
+tick here. As of 2026-09-28T22:5xZ.
 
 ## Pins
 
@@ -11,9 +11,9 @@ tick here. As of 2026-09-28T22:1xZ.
 |---|---|
 | Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-28T19:47:43Z (presence-extended) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal candidate pin | DEV `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `8c6792df` (pushed by this seat under the lease; ls-remote read 22:0xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success |
-| Suite on 8c6792df | IR scope: the known 5 only, counted line by line (item 12 re-goldened three raw-ISO date checks); tsc -b 0; eslint clean |
+| Portal candidate pin | DEV `8d12987e` (FAST item 14, UIC-03) on `2febba0b` (FAST item 13, IV-e-76) on `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
+| Portal origin | origin DEV `8d12987e` (pushed by this seat under the lease; ls-remote read 22:5xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success; 2febba0b run 36492054339 success; 8d12987e UNREAD |
+| Suite on 8d12987e | IR scope 908 pass / 27 skip / 5 fail = the known 5, counted line by line; tsc -b 0; eslint 0 errors |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
 
@@ -38,19 +38,31 @@ on 5174 @528acdcd working tree (tmp/ui-walk/20260928T190559Z, local only). S30 d
 | 10 | portal `11c3fa4a` | UIC-17 (IV-e-77): scope panel dates real or omitted | iv-e-86 SCOPE-DATES-OK, iv-t-1 re-goldened, F48 green; no real run (walks paused) |
 | 10 follow-up | portal `b0acdee2` | iv-e-3 IVE3-AC1 re-goldened to the formatted date | missed in item 10's own run (tail-read); CARD-FED green |
 | 12 | portal `8c6792df` | UIR-45 (IV-e-77): Performance date window in the page date format | iv-e-88 PERFORMANCE-DATES-OK; three raw-ISO checks re-goldened; no real run (walks paused) |
+| 13 | portal `2febba0b` | IV-e-76 (UIR-04/13/30, W35-S1): firm names from the registry view | iv-e-89 FIRM-NAMES-REGISTRY-OK, iv-e-56 re-goldened; landed after the CTO's naming-gate fix @85febf3bd1 (102449) |
+| 14 | portal `8d12987e` | UIC-03 + CTO ruling 102453 (AD-15): method/source in words; codes, hashes, producer names off the face | iv-e-90 METHOD-SOURCE-WORDS-OK; F40/F47/IVE63 re-goldened; no real run (walks paused) |
 
 Round 9 at the boundary (@f42e1b00fa): IV-e-68/69/70/73/74/78/79 terminal and drained; IV-e-71/72/75/76/77
 superseded by this lease, unbuilt, their rows carried into Next.
 
-## Next (in order; a defect that breaks the live thread goes first)
+## Next (in order; Andrew-direct via CTO 102455 -- docs/briefs/irpt-master-guidance-brief-20260928.md Part VI)
 
-1. **IV-e-75 row UIC-21:** no placeholder or label truncated at 1440 px (needs a rendered measurement; waits for a
-   browser run). W35-S2 is parked below (no answer-bearing Analysis report reaches the page).
-2. **IV-e-77 (UIR-45 landed as item 12, UIC-17 as item 10; UIC-14 parked below):** one client date format on Performance and the directory stamp; the
-   source line in client words; the scope panel never prints 'unknown' (SCOPE AS OF still reads unknown).
-3. **IV-e-76 rows (UIR-04/13/30, W35-S1): BUILT, PARKED UNLANDED** -- see Parked (naming-gate nested-repo path).
-4. **UIC-03:** no fix of record yet.
-5. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
+Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_OPEN_CALLS_1_2_APPROVED_3_HOLDINGS_BASED_PERFORMANCE.md
+@391ab19331 (call 1). The one-slice pie (IV-e-71's other half) and the page-local ACCOUNT_PALETTE items are DROPPED;
+the MDPF card renders navy as Andrew's screenshot (C3 departure recorded by the CTO); commodities-gold lands in the
+shared colour registry as a separate change the CTO reads first.
+
+1. **AD-03 (P0):** Holdings loses the Allocation panel and the Report details / Unique accounts / source-dates card;
+   the as-of and source appear once, on the Total Assets card, in client words. In-surface (HoldingsTab.tsx).
+2. **AD-01 + AD-02 (P0 URGENT):** Holdings is two components -- the canonical All Categories card (L-1 accounts -> L0
+   Models / SMAs / Client -> L1 -> L2, hover preview and HeroDialog) and the tree map with the holdings table beneath,
+   both re-scoping to the card's selection; L0 is always Models / SMAs / Client, never 'Rebalancer strategy'.
+   Needs: ~M's Models / SMAs / Client nodes per account; the shared CategoryViewTree (portal/src/components, outside
+   this lease's surface) for the L-1 level.
+3. **AD-04 + AD-05:** port Positioning's tree map and table; commodities colour waits on the CTO, the GLD class on ~M.
+4. **AD-06..AD-09:** the Analysis three-page flow, the canonical modals, readable results (~Y owns result content).
+5. **AD-10..AD-13:** account labels (with ~M), search only, clients that open (with ~P/~M), remove About this scope.
+6. **AD-14:** on ~P in parallel (name the COT dependency, then make each firm answer).
+7. Carried: UIC-21 (1440 px truncation) waits on a browser run.
 
 ## Write claims
 
@@ -78,7 +90,6 @@ test. UIC-21 waits on a browser run; IV-e-76, UIC-14 and W35-S2 are parked below
 | UIC-23's variant word on each history row: the served OwnedAnalysisRequestWire carries identity + accepted_at only | 1.0.0_SA_CTO (wire field, ~Y intake surface) | a variant field lands on the history wire, or the CTO rules the row names no variant |
 | W35-S2 (Export on Analysis): the page holds no answer-bearing Analysis report to export -- the live list read (listAnalysisRequests) is refused, so AnalysisTab's report is always null, and the owned-report view (AnalysisReportSliceView) carries sections but not the binding buildAnalysisSubmitRequest needs (input revision, configuration, artifact hash). Export on Analysis correctly stays closed | 2.0.0_SA_COO~Y (analysis read surface) with 1.0.0_SA_CTO | a served read returns an answer-bearing Analysis report with its binding, or the owned report carries the binding fields |
 | UIC-14 (Holdings source line in client words): the producer names embed firm tokens (49f/inf/cot), so a hand-typed producer-to-source map is refused by the LGIC naming gate (ENFORCE, DEC-6: read through lookup()). It needs the registry-generated view, the same path CTO 102351 set for IV-e-76, in lib/opal_naming.py outside this lease's surface. Build and test parked at .runtmp/parked/iv-e-87.source-client-words.test.ts (local) | 1.0.0_SA_CTO (ruled, CTO 102444: no function-name-to-vendor map; ~M's Holdings snapshot will carry its source vendor keys, rendered as words from a registry vendor view) | 2.0.0_SA_COO~M serves the snapshot's source vendor keys (and the registry vendor view lands) |
-| IV-e-76 built and green (firmDisplay reads FIRM_DISPLAY_NAMES; title-case deleted; iv-e-89 FIRM-NAMES-REGISTRY-OK; iv-e-56 re-goldened; IR suite = the known 5 + IVE56, re-goldened) but the commit is refused: .tools/naming-gate.py:1404 compares the portal-repo path src/pages/... to generator targets keyed portal/src/..., so the generator's own output reads as a hand edit. Parked unlanded at .runtmp/parked/ (iv-e-76.item13.patch, firmDisplayNames.generated.ts, iv-e-89.firm-names-registry.test.ts); the shared tree is clean | 1.0.0_SA_CTO (LGIC gate owner; blocker sent 22:14Z) | the naming gate resolves nested-repo generator targets |
 | IV-e-71's one-slice ALL CATEGORIES pie: an additive prop on the shared CategoryViewTree.tsx | 1.0.0_SA_CTO (surface) | the lease surface widens to that file, or a FULL round cuts it |
 
 ## Limits
