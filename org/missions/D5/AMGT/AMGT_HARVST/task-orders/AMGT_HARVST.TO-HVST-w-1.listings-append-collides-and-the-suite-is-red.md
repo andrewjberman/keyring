@@ -182,8 +182,36 @@ round 7 abandoned slot `~19` and re-issued to `~20` the same way.**
 4. **No judgment criterion here.** Round 8's judgment criterion belongs on the CAPTURE cell (`w-2`), where a
    green mechanical column can hide a wrong result. This cell's three criteria are all mechanically decidable.
 
+## 10. THE VERDICT -- `complete`. ALL THREE PASS, VALID (rc=0), read AFTER the drain
+
+**Measured in the main tree at `c20f446aee`, post-merge:** `acceptance rows=3 | violations=0`,
+`invocation-alignment 3/3, 0 diverge`, `artifact-resolution 2 resolved at pin / 2 PENDING co-committed`
+(instance commit `acad10157c`), coverage `AC1,AC2,AC3`. **VALID (rc=0).**
+
+| | |
+|---|---|
+| AC1 | the negative control **reproduced the collision** through the unwrapped direct call, then the repaired call site landed **2 of 2 appends at distinct object names, 2 of 2 rows, 0 dropped**. `Z-W9-S1`'s listings half is REMEDIED |
+| AC2 | on the AMENDED invocation: **3 failed / 292 passed, on BOTH of two runs.** All 3 pre-existing, none inside this cell's `<paths>`, **0 assertions altered** |
+| AC3 | old text *"turn on harvest-grammar bronze/silver writes"* -> new text naming the row BUILD and *"writes nothing to S3 by itself"*. `Z-S27` remedied |
+
+⭐ **AC2 FOUND A GENUINE NON-DETERMINISM, and it is worth more than the count:**
+`test_disabled_barrons_contract_defers_before_opening_a_browser` **alternated between `KeyError: 'bundle'` and
+`FileExistsError: [WinError 183]` across two runs with NO intervening edit.** That is the `WinError 183` case
+the order told the worker to report rather than force green -- and running AC2 TWICE is what exposed it as
+alternating rather than fixed. **A single run would have recorded one of the two faces as "the" failure.** The
+worker left the assertion alone, as ordered, and filed nothing new because prior rows already ground it.
+
+⛔ **AND THE ORDER ITSELF CARRIES AN ESCAPING DEFECT I AUTHORED -- the banked lesson reproduced exactly.**
+The worker's first validation attempt showed **3 invocation-alignment mismatches** because it had recorded the
+literal `&&` and `2>&1` it actually ran, while **this order's `<invocation>` text carries the HTML-ESCAPED
+`&amp;&amp;` and `2>&amp;1`**. To align, the instance had to record the ESCAPED bytes. **So alignment here
+certifies that the instance MIRRORS the order, not that either string is runnable as written** -- which is
+precisely the banked finding "invocation-alignment certifies AGREEMENT, never RUNNABILITY." It is mine: I wrote
+the escapes into the criterion block. **The remedy is the order template, not a worker's care** -- and it sits
+alongside the other two template defects this cell surfaced (the instance FILENAME and `to_id`).
+
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <slot>~25</slot>
 <fabric>site-z</fabric>
