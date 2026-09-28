@@ -1,5 +1,5 @@
 """Round 19 (~M) check IBM19-2-AC2: one QA fire of irpt-holdings-refresh-lambda reached Success at all three
-firms on the runner (SSM commands tagged "irpt holdings refresh qa <firm> 2026-09-28").
+firms on the runner (SSM commands tagged "irpt holdings refresh qa <firm> <2026-09-28|29>").
 
 Prints QA-FIRED <command ids> or NOT-FIRED: <reason>.
 """
@@ -9,7 +9,7 @@ import boto3
 
 INSTANCE = "i-02448edb624a7a7cf"
 FIRMS = ("49financial", "inflection", "cottonwood")
-DAY = "2026-09-28"
+DAYS = ("2026-09-28", "2026-09-29")  # amendment 1: a re-fire after the IAM half may land past 00:00Z
 
 
 def main():
@@ -21,7 +21,7 @@ def main():
             total += 1
             comment = cmd.get("Comment") or ""
             for firm in FIRMS:
-                if comment == "irpt holdings refresh qa %s %s" % (firm, DAY):
+                if comment in ["irpt holdings refresh qa %s %s" % (firm, d) for d in DAYS]:
                     found.setdefault(firm, []).append((cmd["Status"], cmd["CommandId"]))
     scanned = sum(len(v) for v in found.values())
     ok = {f: [c for s, c in found.get(f, []) if s == "Success"] for f in FIRMS}
