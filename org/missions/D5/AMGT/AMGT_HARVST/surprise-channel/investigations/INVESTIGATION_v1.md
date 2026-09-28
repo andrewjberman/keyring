@@ -1843,6 +1843,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Task order HVST-z-0 section 2: the day route delegates to timeline_api with an `article_loader`, and says nothing about latency.",
       "world_is": "The day route is correct and serves 3 of 3 real articles for the busiest Lenovo day, but every call rescans all silver articles; from this box that is 15.8s of a 29s ceiling.",
       "notes": "No producer or timeline_api change was made (out of paths). DISARM (issuer's): once the terraform mount cell runs, time the day route from the deployed Lambda; if it approaches the ceiling, cut a cell that reads only the silver parts of the publishers named on the day's mention rows, or lands headline and published_precision onto the mention gold row at build time."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S34",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-28T21:45Z",
+      "one_line": "DISARM RECORD for AMGT_HARVST-Z-W31-S1 and AMGT_HARVST-Z-W31-S2 (both ARMED on this seat by HVST-z-0): neither hazard is reachable today because the gateway mounts no timeline route, so no browser and no ruling-3 pre-push measurement can observe the handler; the remedy is placed as ONE round-12 cell owned by this seat -- mount both route_keys and move scoped_amgt_route_table() 16->18 in one commit, deploy under a ledger entry, then time the day route in-region against the 29s ceiling.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by this seat at shared HEAD d4bcedef5c (after the z-0 drain @4350d5af00): infra/aws/terraform/harvest/scoped-amgt-api.tf carries 0 occurrences of 'timeline' over 390 lines; scoped_amgt.scoped_amgt_route_table() returns 16 routes with 0 timeline entries; scoped_amgt.TIMELINE_ROUTES declares the two routes as data only.",
+          "So the handler is wired but UNMOUNTED: a browser call 404s at API Gateway, which is the honest state and not a silent one. Andrew's ruling 3 (ANDREW_DIRECT_20260928_1805Z_OPEN_CALLS_FOUR_RULINGS.md) pre-authorises the portal DEV push of 92a2576254 only after 0.0.0_AB_MSTR~Z measures the timeline routes answering for Lenovo on the served backend; that measurement reads 404 until the mount lands, so the push cannot go early on a false reading.",
+          "Z-W31-S2's latency (day route 15.8s, range 5.4s, measured in-process from the site-Z box) is unobservable by any user until the mount; the 29s ceiling is scoped-amgt-api.tf:266 (timeout = 29) and :358 (timeout_milliseconds = 29000), read at the same HEAD."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Z-W31-S1 and Z-W31-S2 name this seat as disarm_owner; the channel rule is that an ARMED hazard is disarmed same-turn by its disarm_owner.",
+      "world_is": "Round 11 is frozen after its one issuance, so the remedy cannot be cut into it. It is placed instead: the round-11 drain-end packet carries it as the first item for the round-12 cut -- one cell whose paths are scoped-amgt-api.tf, scoped_amgt.py and test_scoped_amgt_mount.py, whose criteria are (1) the mount test green in both directions at 18 routes, (2) both routes answering 200 for 992_HK_Equity through the deployed gateway with the deploy ledgered under NEVER-2, and (3) the day route timed from the deployed Lambda with its margin to 29s printed. If (3) leaves under ~9s of margin, the next cell narrows the silver headline scan to the publishers on the day's mention rows, which is Z-W31-S2's own proposed remedy.",
+      "notes": "This row disarms by SPECIFICATION, not by remedy: the remedy is not yet applied and this row does not claim it is. The two predecessor rows keep reading ARMED forever by construction (append-only), so read their live state through _latest_dispositions and the CVO's fold, never through their own hazard_standing field."
     }
   ]
 ```
