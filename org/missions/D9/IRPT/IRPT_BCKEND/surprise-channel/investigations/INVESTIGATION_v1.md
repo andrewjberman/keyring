@@ -10575,3 +10575,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Un-parks when a 0.4.0_DS_ClientPlatform lane is seated: it takes this row as its order of record. NOT in scope of either fix: whether a re-funded account's track record restarts (re-inception); that methodology call is Andrew's, asked by 1.0.0_SA_CTO 2026-09-28."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S182",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-28T19:10:00Z",
+  "one_line": "Every one of the COT eleven-account client's (cowdin) accounts reads the same identity, '****8774 / UTMA', in OVER WHAT, the Holdings pie legend and the Holdings table, so no two accounts can be told apart on the page. The page renders the producer's account display.label verbatim, so the one tail is most likely the Holdings snapshot's own label (claim: inferred; the served bytes were not read).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (IRPT Holdings workstream): read the served holdings snapshot for this client and name whether the eleven account nodes carry one display.label",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run: node .claude/skills/ui-walk/walk.mjs --client cowdin on localhost:5174 @ portal a47d3a75, tmp/ui-walk/20260928T182319Z shot 017 (local only): 11 OVER WHAT rows, 11 legend entries and 11 table rows all read '****8774 / UTMA', with 11 different amounts",
+      "same on DEV 28f5118c before any FAST edit: CRO walk tmp/ui-walk/20260928T174953Z shot 086",
+      "portal src/pages/InvestorReporting/contracts/adapt.ts:1041-1045 carries the producer's display.label verbatim; tabs/holdings/slices.ts:423-425 displayLabelFor prefers it over every page-side name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each account is named distinctly (UIR-32 mask form '****1234 / TYPE' per account; UIC-13 every account reachable from OVER WHAT).",
+  "world_is": "Eleven accounts with eleven different values share one label, so the reachable rows cannot be told apart.",
+  "notes": "Surfaced by DSGN_IRPTV1's FAST item-1 real run. If the producer's labels are distinct, the defect is page-side and returns to 2.0.0_SA_COO~D as a DSGN_IRPTV1 item. Eleven sub-accounts sharing one custodial number is possible; even then the page needs a distinguishing field."
+}
+```
