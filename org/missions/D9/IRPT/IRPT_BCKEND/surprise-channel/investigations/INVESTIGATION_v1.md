@@ -10384,3 +10384,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Weak facts (a security was once in that book), not client data; measured while adjudicating msg 102292 before its withdrawal. They leave the cross-firm read path when the BD gold classifier moves to etf-classifications (the CTO's same-class row) and when ~M disposes of the held COT-new write. classified_run stays until that open deploy closes, because it is the rollback key; firm_origin should stop being written (classify_assets.py:353, the INF classification writer's lane)."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S175",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-28T13:14:00Z",
+  "one_line": "After the GRANT release (generate AdE17rT6), an unknown Comparison key is refused with public_reason_code UNEXPECTED: MaintainedSourceRefused has no classifier mapping, so a named refusal reads as an unexpected fault.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "offline_submit_proof.py on the served AdE17rT6 bytes (get_function Code.Location), 2026-09-28 13:13Z, cottonwood input portfolio_32fbcd0b, --comparison-keys no_such_key: exception_type MaintainedSourceRefused 'comparison key unknown or ambiguous', extra.classifier_code UNEXPECTED, ANSWER public_reason_code UNEXPECTED",
+      "the same read on the prior served ykJltfTd bytes at 13:02Z: ComparisonCatalogueRequired, public_reason_code NOT_READY",
+      "2.0.0_SA_COO~Y GRANT_RELEASE_ARMS_20260928.md: 'unknown key REFUSED' on the built zip; the code was not named in packet b6c264b3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every refusal answers a named public reason (the R11 status contract); UNEXPECTED is reserved for faults.",
+  "world_is": "A refused unknown or ambiguous comparison key answers UNEXPECTED.",
+  "notes": "Unreachable from the portal: the selection offers catalogue keys only; the catalogue-edit refusal shares the path. Held, not rolled back (ledger irpt-generate-resident-grant-20260928 D1). The remedy is a classifier mapping of MaintainedSourceRefused to a named refusal code in generate, as a STATUS~P next item."
+}
+```
