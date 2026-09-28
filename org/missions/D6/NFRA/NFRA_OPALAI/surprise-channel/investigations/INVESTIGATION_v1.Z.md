@@ -1354,6 +1354,46 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Test card option (a) / CTO msg 26243: an owner can be given a portal-only asker grant without narrowing anything he holds today.",
     "world_is": "Any profile restricts, and restriction is permanent. An asker grant for an owner or operator seat would silently cost that seat its email, Teams, YCharts, upload and /query/v0 reach.",
     "notes": "Candidate enrichment item for round 2's L10 (CTO msg 26254): an asker-only grant shape (or an owner class) that scopes the ASKER path without restricting the principal's own tools, specified by the PRD owner. INERT: nothing was written, and no owner holds a profile. It binds any future grant written for a seat that also calls tools itself."
-  }
+  },
+{
+  "id": "NFRA_OPALAI-Z-W13-S1",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~13",
+  "surfaced_at": "2026-09-28T12:00:00Z",
+  "one_line": "Nested commit of SKILL.md refused by the owned-paths lane gate: the order's opal_ai/... path is not matched for the nested repo's commit",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order OA-e-4 bound 1: git -C opal_ai commit --author <serial> -F <msgfile> -- opal/agent/skills/bbg-teams-assist/SKILL.md lands, and <paths> lists opal_ai/opal/agent/skills/bbg-teams-assist/SKILL.md.",
+  "world_is": "The commit was refused (owned-paths block mode): 'agent=0.9.0_WK_NFRA_OPALAI~13 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The order file exists at HEAD b17a43ca9a and names the path with the opal_ai/ prefix. The edit is in the nested working tree, uncommitted; AC1 (reads nested HEAD) FAILs 0/0/0, AC2 and AC3 PASS. No override used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C opal_ai commit ... -> 'VIOLATION: opal_ai/opal/agent/skills/bbg-teams-assist/SKILL.md -- lane=ANY_EXEC_OR_AE ... not in permitted_agents'",
+      "e4.AC1.sh at nested HEAD fd8ab8a57f: read_chat_message_images=0; hostedContents/pasted lines=0; decline sentence=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "NFRA_OPALAI-Z-W13-S2",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~13",
+  "surfaced_at": "2026-09-28T13:00:00Z",
+  "one_line": "Fix fd0aa6ba57 is not live for the nested commit from worktree oa-13: the hook execs the worktree's own .tools",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Issuer message: fd0aa6ba57 is live in the main tree the nested hook execs, so re-running the nested commit clears.",
+  "world_is": "Re-run refused with the identical VIOLATION text. The nested pre-commit wrapper (.git/modules/opal_ai/hooks/pre-commit) runs ${_SUPER}/.tools/git-hooks/owned-paths-check.sh, and _SUPER is /c/tmp/oa-13, whose .tools predates the fix: git merge-base --is-ancestor fd0aa6ba57 HEAD -> 1; git diff HEAD fd0aa6ba57 -- .tools/owned-paths-validate.py shows 15 insertions, 2 deletions. .tools is outside my <paths>, so I cannot bring the fix in.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "nested commit rerun -> same owned-paths VIOLATION",
+      "is-ancestor fd0aa6ba57 HEAD in /c/tmp/oa-13 -> rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```
