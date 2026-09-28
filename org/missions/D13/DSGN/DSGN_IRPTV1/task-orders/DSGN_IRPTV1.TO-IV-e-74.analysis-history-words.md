@@ -25,12 +25,24 @@ CTO ruling S25 (analysis section 2): diagnose first. Window 15's READY job REQ-6
 
 **Build:** Each row reads the client name and the state in words; the diagnosis (file:line) goes in your result.
 
+**Amendment 1 (issuer, 2026-09-28 ~00:4xZ; windows 19-20, rows S25/S28, CTO 102271):** the S25 diagnosis is SETTLED and is backend:
+window 20 (local DEV 12aa026a) read REQ-67e12718's status through the page three times and got HTTP 500; 2.0.0_SA_COO~Y 102268 traced it
+to the status role lacking the original-holdings read grant and a stale errors.py that turned every refusal into a 500. irpt-status is
+rolled back (it answers named refusals again; REQ-67e12718 now answers a named DATE_BASIS refusal) and rebuild 3 lands after 05:00Z at
+2.0.0_SA_COO~P. So this cell does NOT diagnose further; the page states whatever the served read answers IN WORDS (a READY row reads
+Ready; a named refusal such as DATE_BASIS or FIRM_BINDING reads its reason in words; a failed read reads "status could not be
+confirmed"). Row S28's page half is ADDED here: `tabs/analysis/ProspectJobStatus.tsx` `readJobStatus` (:16-18) calls
+`api.getJobStatus(requestId)` with NO selected tenant, while the history row's read (`OwnedRequestHistory.tsx` `readRowStatus` :32-33)
+carries it; ~Y 102268 measured the tenant-less reads as refused (IdRefused). Thread the same selected tenant into the opened request's
+status read (`OwnedRequestHistory.tsx` :232 mounts `ProspectJobStatus`; `ProspectComposer.tsx` :256 mounts it for a fresh submit and
+stays as it is unless it already holds the tenant). IV-e-75 edits tabs/analysis/* after you, on the same slot.
+
 **Environment:** the portal worktree is based on the local DEV the issuer names in the spawn prompt (local DEV 3b98939b (round 8 drained), plus any chain this one follows). Other round-9 workers run in parallel on disjoint files; edit only your `<paths>`. Do not start any server. Work ONLY in your own <WS>. A workspace history rewrite runs ~03:00-05:00Z: commit before 03:00Z.
 
 ### ACCEPTANCE
 
 <criterion id="IVE74-AC1" cell_refs="IV-e-74"><invocation>cd C:/Users/AndrewBerman/Desktop/wk-DSGN_IRPTV1-39/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-74.history-words.test.tsx 2>&1 | tail -20</invocation><expect>VERDICT: ANALYSIS-HISTORY-WORDS-OK</expect></criterion>
-`IVE74-AC1` -- the built behaviour: (a) a READY row reads READY; (b) an ATTENTION row reads its reason in words and never ANALYSIS_REQUIRES_ATTENTION; (c) each row names the client; control: a refused status read says so in words. Print `VERDICT: ANALYSIS-HISTORY-WORDS-OK` only when every arm holds.
+`IVE74-AC1` -- the built behaviour: (a) a READY row reads READY; (b) an ATTENTION row reads its reason in words and never ANALYSIS_REQUIRES_ATTENTION; (c) each row names the client; (d) opening a request issues its status read carrying the same selected tenant as the row read (S28); control: a refused status read says so in words. Print `VERDICT: ANALYSIS-HISTORY-WORDS-OK` only when every arm holds.
 <criterion id="IVE74-AC2" cell_refs="IV-e-74" judgment="true"/>
 `IVE74-AC2` -- judgment: the rows above read on the running page (round-9 walk), graded by 3.0.0_SA_CVO at L9. Record it as UNVERIFIABLE-BY-INSTRUMENT with a status_reason naming the CVO; never PASS or FAIL.
 
@@ -45,6 +57,8 @@ CTO ruling S25 (analysis section 2): diagnose first. Window 15's READY job REQ-6
 
 <paths>
 portal/src/pages/InvestorReporting/tabs/analysis/OwnedRequestHistory.tsx
+portal/src/pages/InvestorReporting/tabs/analysis/ProspectJobStatus.tsx
+portal/src/pages/InvestorReporting/tabs/analysis/tests/prospect.test.tsx
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-74.history-words.test.tsx
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-66.owned-item-tenant.test.tsx
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
