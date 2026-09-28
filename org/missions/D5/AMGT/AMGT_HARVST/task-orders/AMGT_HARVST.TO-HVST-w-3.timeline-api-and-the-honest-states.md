@@ -137,8 +137,47 @@ It builds no `.tsx`. It writes no gold and reads no live bucket. **And it does N
    a defect that already graduated on sibling panels; a build that gets the field lists right and this wrong
    ships the same defect again.
 
+## 7. THE VERDICT -- `complete`. VALID (rc=0) ON THE INSTRUMENT, RE-RUN AFTER THE DRAIN
+
+**Measured in the main tree at `4f08b0f239`, AFTER the merge, not before it:**
+
+```
+proof-of-spec-check | acceptance rows=3 | violations=0
+artifact-resolution   0 resolved at pin / 4 PENDING co-committed (touched by instance commit 22f9eb2bfd)
+invocation-alignment  3/3 match, 0 diverge
+coverage              AC1,AC2,AC3 declared and checked
+VALID (rc=0)
+```
+
+⚠ **THE POST-DRAIN RE-RUN IS THE POINT, NOT A FORMALITY.** Earlier tonight a commit that touched `HVST-v-2`'s
+instance ALONE moved its "instance commit" forward past its own artifacts and turned 11 co-committed rows into
+12 CCX-class violations. **A merge does not do that** -- it preserves the worker's commit as the one that
+touched the instance, which is why these 4 rows still resolve. That is a measured difference between a merge
+and a follow-up commit, and it is why this verdict was read after the drain rather than from the branch.
+
+### WHAT THE CELL DID
+
+| | |
+|---|---|
+| AC1 | 3 of 3 routes serve exactly the spec's field lists; **0 of 13 combined fields missing and 0 extra** (both directions checked, so a superset was as visible as a subset). `breakout_ratio`/`z_score` served-only, absent from every stored row. `events` carries no relative figure. The event route keys off the EXISTING `publication_gold._event_id` |
+| AC2 | **9 of 9 injected-failure cases** carry `error: true` with a non-empty `error_code` and NO data key, and BOTH honest-empty controls (range and day) come back with `error` absent. **A failed call is structurally unable to reach the empty-array encoding**, with the consumer-side predicate printed |
+| AC3 | 14 new tests named under `-rA`; whole suite **145 passed** (131 baseline + 14 new) with **no red elsewhere** |
+| controls | mutant **FIRED-AS-EXPECTED**, determinism **STABLE** |
+
+### WHAT IT DELIBERATELY DID NOT DO, and both were issuer decisions with reasons
+
+- **FWD-6 was never a criterion.** `EVENT_MIN_PUBLISHERS = 2` with one publisher landed makes `chatter_event`
+  empty for every security, so the criterion would have **passed vacuously**. Named BLOCKED ON A SECOND
+  PUBLISHER.
+- **FWD-5 was not asserted reachable** -- it needs a Lenovo day with `articles_total > 0`, and round 7 measured
+  "1 of 89 securities with a non-empty span" without naming which. The `.tsx` half, whose acceptance IS FWD-5,
+  is split off rather than cut against an unmeasured population.
+
+**NO ROWS FILED, and that is a reported outcome rather than a silence:** the worker found no off-task surprise,
+and the spec's section-7 open calls are explicitly delegated to the build cell, so they are not surprises.
+
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <slot>~24</slot>
 <fabric>site-z</fabric>
