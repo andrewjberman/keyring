@@ -11,9 +11,9 @@
 <placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: RUN at L5 -- no cron, alarm, monitor or cadence moves; 0 AMGT entries open under org/critical_paths/.open_deploys/ at the cut.
-comp-iam: RUN at L5 on the DESIRED plane -- the function's existing role already reads opal-data-harvest gold (the RESAPP chatter routes); the two timeline loaders read the same bucket's chatter_daily / chatter_event / article_security_mention gold and silver article parts, GET only. A refusal is a BLOCKING row, never a grant edit here.
+comp-iam: RUN at L5 on the APPLIED plane (corrected by AMENDMENT 1, row AMGT_HARVST-Z-S36) -- opal-amgt-scoped-api-role's inline policy opal-amgt-scoped-api-grants reads 25 harvest resources, including every publisher's harvest/silver/* and the bucket itself, and NO amgt/harvest/gold/*; the two timeline loaders GET chatter_daily / chatter_event / article_security_mention under amgt/harvest/gold/, so this cell ADDS ONE read-only grant (s3:GetObject on arn:aws:s3:::opal-data-harvest/amgt/harvest/gold/*) in infra/aws/terraform/harvest/, carded on the halves. No write, no other grant.
 comp-adversary: RUN at L5 -- the adversary is a deploy that MOUNTS both routes and ships code that cannot import pyarrow, so the gateway answers an import failure where a 404 used to be (row AMGT_HARVST-Z-S35). AC1 invokes the deployed function and requires HTTP 200 WITH DATA.
-EGRESS CLASS, declared: (A) ONE S3 artifact write research/opal-amgt-scoped-api.zip (versioned; the prior VersionId is the rollback target); (B) at most ONE layer publish if the halves choose a layer; (C) ONE safe-apply on infra/aws/terraform/harvest/ moving the scoped API's code, its two new routes (and a layer attachment only if the halves name one); (D) any wheel download is sha256-pinned and named on the halves -- none is admitted otherwise.
+EGRESS CLASS, declared: (A) ONE S3 artifact write research/opal-amgt-scoped-api.zip (versioned; the prior VersionId is the rollback target); (B) at most ONE layer publish if the halves choose a layer; (C) ONE safe-apply on infra/aws/terraform/harvest/ moving the scoped API's code, its two new routes (and a layer attachment only if the halves name one); (D) any wheel download is sha256-pinned and named on the halves -- none is admitted otherwise. (E) ONE read-only IAM grant on the function's role, s3:GetObject on arn:aws:s3:::opal-data-harvest/amgt/harvest/gold/* (AMENDMENT 1).
 </preflight>
 
 ## 0. BEGIN ONLY WHEN ALL THREE HOLD
@@ -57,7 +57,8 @@ removes both:**
 
 ## 2. BOUNDS
 
-1. The acts above and nothing else. No runtime change, no memory or timeout change, no authorizer, no other route.
+1. The acts above and nothing else. No runtime change, no memory or timeout change, no authorizer, no other route,
+   and no IAM change beyond the ONE read-only gold grant named in the preflight (AMENDMENT 1).
 2. **No S3 delete of any kind**, including a noncurrent artifact version -- the prior version IS the rollback.
 3. No vendor call, no portal promote, no push of a shared branch, no key hunting.
 4. `lib/research/api/` and this API serve AMGT_RESAPP's page. AC2 sweeps three of its routes as controls.
@@ -102,6 +103,18 @@ unzipped total, the plan's resource list, both criteria's output, the NEVER-2 en
    the CTO signs, which this seat writes only after `a-1` lands and a `--build-only` closure diff exists.
 4. **The deploy moves RESAPP's served routes too** (one function, one artifact). The COO half cards that, and AC2's
    three controls are its exercised check.
+
+**AMENDMENT 1 (issuer, 2026-09-28 ~23:3xZ, before any spawn) -- row `AMGT_HARVST-Z-S36`, filed by `4.0.0_SA_CRO~Z`
+@f9acd618b1 (msg 26281).** The cut's comp-iam line said the role "already reads opal-data-harvest gold (the RESAPP
+chatter routes)". **That was an inference, never a read, and it was false.** Re-measured by this seat on the APPLIED
+plane (iam list/get role policies, both pages): 2 policies, 25 harvest resources, 0 under `amgt/harvest/gold/`. So the
+deploy as cut would mount two routes that answer AccessDenied -- the third reason the timeline cannot answer, beside
+`Z-S35`'s missing pyarrow. **Remedy, in this order's own scope:** the preflight line is corrected in place, the egress
+class adds (E) one read-only grant, and bound 1 admits that one IAM change and no other. AC1 already refuses an
+AccessDenied (it requires HTTP 200 with data). The issuer amends its own criteria without a CTO ruling (CLAUDE.md
+rule 27, L6); **the gate limb that graded this modification: none** -- `.tools/to-pipeline-gate.py` grades a MODIFIED
+order only under GATE (viii), and this order declares `<placeholders>NONE</placeholders>`. The CTO sees the grant on
+the halves it signs.
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
