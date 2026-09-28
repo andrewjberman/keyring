@@ -1311,6 +1311,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Runbook Part A step 2 / G-ACCT handoff step 2: the real elevated run of provision-account.ps1 creates Opal_Agent and prints one OK line per act.",
     "world_is": "The real run refuses at act 1 on a parameter-length validation that no unelevated arm exercises. Andrew's switchover sitting (Parts A-B) is held until a fixed script reaches the checkout the run uses.",
     "notes": "Remedy routed to 1.0.0_SA_CTO~O as ONE ask: a direct-act addendum cell fixing the one Description literal (<=48 chars) in opal_ai, plus how the fix reaches C:\\opal_runtime\\opal_ai before the cutover G-PUSH window."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S38",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-28T22:10Z",
+    "one_line": "This seat's R-3 re-confirm (@73e5968e67), the round-2 decomposition and three release/census orders named the served gateway as fe94911257 from a six-file md5 match. The host serves 6a98a0553a (OG-s-1), which descends from fe94911257 and differs from it only in deploy-to-ec2.sh, so an app-file md5 subset matches BOTH and names the ancestor.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~O msg 26242 and 2.0.0_SA_COO~O @e992df46c4: the live .env carries SPRINT_VIEW_ALLOWED_EMAILS, which only 6a98a0553a's deploy template writes.",
+        "git merge-base --is-ancestor fe94911257 6a98a0553a -> true; git diff --stat fe94911257 6a98a0553a -- infra/aws/ec2/opal-gateway -> 1 file, deploy-to-ec2.sh (read by this seat)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-r-1 / OA-e-3 / OA-e-9 step 0: the live base is resolved BY CONTENT as the commit whose files ALL match.",
+    "world_is": "An app-file md5 set cannot separate a release from an ancestor whose app files are identical, so 'all match' names more than one commit. A release cut on the ancestor would ship the older .env template.",
+    "notes": "Remedied by the issuer in the same act (amendment commit): the three orders gain a tie-break on the live .env KEY names against each candidate's deploy template, and the card and the re-confirm record are corrected in place. No release has run, so nothing shipped on the wrong base."
   }
 ]
 ```
