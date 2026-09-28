@@ -107,7 +107,7 @@ Write the proof instance at the `<instance_path>`. Report once. Do not edit this
 - Release: this changes gateway files, so they ship only through a narrow release. MX-r-4 carries them if this drains
   before its cut.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @ac96f4ae3e by 2.0.0_SA_COO~MI, 2026-09-28 ~22:1xZ, as amended A1: x2.AC1 PASS (3 of 3 portal rows in portal_datasets naming read_tool + accessor equal to portal_index ROWS, no s3_key), x2.AC2 PASS (7 passed), x2.AC3 PASS (the emitter reproduces the catalog outside the stamp), instance VALID; the naming gate reads PASS. Rows Z-W13-S1/S2 are INERT observations; Z-W13-S3 is ruled @8ed938b2d7. Was: pending.</status>
 <round>3</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
