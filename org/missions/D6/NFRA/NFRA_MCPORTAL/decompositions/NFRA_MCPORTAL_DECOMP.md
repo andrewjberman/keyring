@@ -280,3 +280,80 @@ a-1; `~2` g-1, then d-1; `~3` p-1.
 
 1. No cell has run. The claim keys, the owner key's value and the release census are measured by their cells.
 2. The remaining pages (FWD-3, 5-9, 11-13) and S6 are subtracted, per the analysis's section 4.
+
+# ROUND 3 -- THE ENRICHMENT CUT (L5, v3)
+
+```json
+{
+ "project": "NFRA_MCPORTAL",
+ "decomp_version": "v3",
+ "step": 5,
+ "round": 3,
+ "input": "org/missions/D6/NFRA/NFRA_MCPORTAL/ledger/ROUND_ANALYSIS.round2.md@33ca99c40e (section 5, E1-E5)",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md@963fff9f5a (v0.3, ratified-text half re-signed @24ef97a3b7)",
+ "author": "2.0.0_SA_COO~MP",
+ "cells": 5,
+ "chains": 3,
+ "join_cells": 1,
+ "frozen": true
+}
+```
+
+**Author:** `2.0.0_SA_COO~MP`, the project's one COO since the ~19:5xZ placement. **Input:** the CTO's round-2 analysis
+@33ca99c40e, section 5, cut in ONE issuance. Rounds 1 and 2 above stay frozen as their own records.
+
+## R3.1 E1 IS DONE BEFORE THE CUT (the issuer's act, R-7)
+
+E1 was read by the issuer @c8b42c8913 (`deliverables/2.0.0_SA_COO~MP/round3/E1_G-HDR_READ.md`): 1
+`OWNER-HEADER-CLAIMS` line in 552671 journal lines across 4 boots, keys
+`email,exp,family_name,given_name,iss,name,picture,sub`. That picks the `sub` branch, and because `oid` and `iat` are
+both absent, it triggers G-C4. G-C4 is now signed: the CTO's addendum is v0.3 @963fff9f5a and the CVO re-signed it
+@24ef97a3b7. The line is printed only AFTER `is_owner` (`app/owner_gate.py:113-118`), and the access log shows `GET /
+200` at 14:59:58Z, so Andrew's admission (A2's third arm) is MEASURED by E1, and no cell re-runs it. E1 is not a cell.
+
+## R3.2 THE CELLS -- 5
+
+| Cell | From | Builds / runs | Write surface | Risk |
+|---|---|---|---|---|
+| `MP-b-3` | row Z-S10 (CTO ruling msg 26207) + row Z-S12 | the writer's record: `who` on a WRITTEN item carries the claim NAME and the email only, never the owner-key value (`lambda_function.py:189`, `:266`); a test proving no WRITTEN item holds the configured value on either branch; the stale expectation at `tests/test_grant_writer.py:141` (it predates NFRA_OPLGTW's `email_deny` record @3e936f77bd) brought to the record set `activate` writes at HEAD | `infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py`, its `tests/` | WORLD (infra floor; it goes live through MP-a-2's apply) |
+| `MP-a-2` | E2 (the re-cut of MP-a-1, plus R-9) | the writer's APPLY on the `sub` branch: `MCPORTAL_OWNER_KEY_CLAIM=sub`, key = Andrew's own `whoami` `sub` (from the issuer's spawn note, never committed); the layer built from its pinned requirements (G-PYPI given); `safe-apply` targeted to `mcportal_grant_writer.tf`; NEVER-2 ledger slug `nfra-mcportal-r3-writer-apply`; the live no-header refusal; R-9's source-map note replaced | `infra/aws/lambda/layers/mcportal-grant-writer-deps/`, `infra/aws/lambda/ci/lambda-source-map.json`, ledger paths | WORLD |
+| `MP-f-1` | E3 (R-8, row Z-W2-S3) | the batch cell: a gateway test fixture that points `AUDIT_PATH` at a temp file for the whole session; `app/config.py`'s default is untouched | `infra/aws/ec2/opal-gateway/tests/conftest.py` | WORLD (infra floor) |
+| `MP-v-1` | E4 (A2, FWD-2) | FWD-2's live arms: one signed-in Opal account that is not Andrew's (`Opal Bloomberg`, named here) requests `/` and each of the 5 admin handlers once (6 of 6 expect 403) and `/sprint` (expect 200); graded on the gateway's own access log | its deliverables only | WORLD |
+| `MP-c-1` | E5 (A1 + A1n, the FWD-1 close run) | after Andrew's sitting (narrow one colleague's grant from the Entitlements tab, the colleague asks, widen back, the colleague asks again): reads both writes in the writer's table, runs A1n's two live-reachable arms, commits the redacted exchange; carries the round's JUDGMENT criterion | its deliverables only | WORLD |
+
+## R3.3 DEPENDENCY EDGES AND CHAINS
+
+```
+chain A   MP-b-3 --> MP-a-2 --> MP-c-1     a-2 applies the package b-3 changed; c-1 grades writes the applied writer makes
+chain B   MP-f-1                no edge
+chain C   MP-v-1                no edge (reads the live gateway only)
+joins     MP-c-1 (A + G-CLOSE)
+```
+
+**Fan-out:** `N = 3 of M = 3 chains, cap 8`. Slots: `~1` b-3, then a-2, then c-1; `~3` v-1; `~4` f-1 (`~2` is skipped because
+round 2's `wk-NFRA_MCPORTAL-2` worktree at `C:/tmp/mp-2` still carries uncommitted gitlink moves and is not reaped
+here).
+
+## R3.4 GATES (spawn preconditions; none of them holds another chain)
+
+- **MP-b-3** has no gate and spawns at the issuance. It was added at the cut, before any issuance, on the CTO's Z-S10
+  ruling (msg 26207: "cut it ahead of MP-c-1").
+
+- **G-SUB (MP-a-2):** Andrew's own `sub` from `https://mcp.opalinvest.dev/api/admin/whoami` (runbook Part D step 7),
+  given to the issuer off-repo. Holder: Andrew. G-HDR, G-C4 and G-PYPI are satisfied.
+- **G-2ND (MP-v-1):** a person at the box signs in as `Opal Bloomberg` in the headed Edge window the worker opens
+  (Entra MFA is a human act). Holder: Andrew. If nobody can, the arm is ONE card to Andrew, and nothing else in this
+  cell runs without a session.
+- **G-CLOSE (MP-c-1):** MP-a-2 has drained, and Andrew's sitting is done: he names the colleague, narrows their data
+  grant from the Entitlements tab, the colleague asks one real MCP question, Andrew widens the grant back, and the
+  colleague asks again. The exchanges are handed to the issuer, who writes `c1_run.json` (window, principal hash,
+  off-repo raw path) before the spawn. Holder: Andrew.
+
+## R3.5 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. The owner key's value, the layer's versions and every live read are measured by their cells.
+2. The full gateway suite is not a criterion. On this box it collects 212 tests with 13 collection errors (`moto` is
+   not installed, and installing it is vendor egress), and the run exceeded 300 s. It is the issuer's drain check.
+3. A1n's arms (ii), a valid non-owner header, and (iii), an owner header past `exp`, need an ALB-signed header no seat
+   can mint. They stand on MP-b-2's in-package tests, as a fixture, per the diet's clause (b).
+4. Subtracted, per the analysis's section 5: C6 (round 4), FWD-3 and 5-13 and FWD-4's A4, and Z-W2-S6 (CloudOps).

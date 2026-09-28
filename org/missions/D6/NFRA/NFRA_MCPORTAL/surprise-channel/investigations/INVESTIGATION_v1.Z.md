@@ -601,6 +601,47 @@
     "spec_asserts": "The owner-key value lives only in the writer's configuration (privacy condition @384fd85543).",
     "world_is": "The first WRITTEN outcome, which is Andrew's narrow in the MP-c-1 close run, would store '<claim>:<value> <email>' in the table, where the gateway's history serves it.",
     "notes": "Disarm (the issuer, same turn): the G-CLOSE card that starts Andrew's sitting is NOT sent until 1.0.0_SA_CTO~O rules whether `who` carries the claim NAME and email only. MP-a-2's apply and its no-header refusal write REFUSED items with who=UNVERIFIED, so they are untouched and proceed. Found off-task at the round-3 cut."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S11",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T21:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-S10 (disarm owner this seat) against 1.0.0_SA_CTO~O's ruling (msg 26207): `who` on a WRITTEN item carries the claim NAME and the email only. The fix is cell MP-b-3, cut at the round-3 issuance at the head of chain A, so MP-a-2's apply ships it; the G-CLOSE card that starts the first WRITTEN outcome is sent only after MP-a-2 drains.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CTO message 20260928T205744Z (Msg-ID 26207): 'RULED ... The fix is a cell: lambda_function.py :189/:266 drop the value, plus a test ... Cut it ahead of MP-c-1, then release the G-CLOSE card.'",
+        "task-orders/NFRA_MCPORTAL.TO-MP-b-3.who-without-owner-key.md and TO-MP-c-1's spawn conditions, in this round's issuance commit."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-S10 is ARMED: the first WRITTEN item would store the owner-key value.",
+    "world_is": "No WRITTEN item can exist before MP-a-2 applies the writer, and MP-a-2 packages MP-b-3's source; the only live writes before then are REFUSED items with who=UNVERIFIED."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S12",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T21:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The grant writer's own suite is RED at CLOUD HEAD: tests/test_grant_writer.py::test_owner_write_lands_with_operator_audit expects record types [data_entitlement, operator_audit, principal_profile], but admin.activate now also puts an email_deny record (NFRA_OPLGTW OG-e-1 @3e936f77bd changed access_state.operator_transact, which the writer imports). The writer's POLICY#* grant covers the new POLICY#EMAILDENY# key, so the live path is not refused; the test is stale. Remedied inside MP-b-3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "b3.AC1 dry run at base: '1 failed, 9 passed'; pytest -vv: 'At index 1 diff: email_deny != operator_audit' at tests/test_grant_writer.py:141.",
+        "access_state.py:64 POLICY_RECORD_TYPES includes email_deny; :447-469 'the principal's partition plus at most email_deny puts'; mcportal_grant_writer.tf:87-91 PutItem/UpdateItem on POLICY#* leading keys."
+      ]
+    },
+    "spec_asserts": "The writer's tests are green at the base every cell builds on.",
+    "world_is": "One writer test fails at HEAD because an upstream shared module changed under it; no gate ran the writer's suite on that commit.",
+    "notes": "A shared-module change in another project's cell did not run this project's dependent suite. Recorded only; no gate is proposed here."
   }
 ]
 ```
