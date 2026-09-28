@@ -1604,6 +1604,44 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "OA-e-10 AC2: the test named for the census's branch passed>=1, failed/errored=0, read from e10.AC2.sh.",
     "world_is": "With pytest printing OS-native path separators, the check's forward-slash pattern matches nothing on this device, so named=0 whatever the tests do (the same script would pass on a POSIX device). The worker did not edit the check or the invocation, and could not change the separator inside its <paths>. Disarm owner is the issuer: the pattern needs to accept either separator, e.g. tests[/\\]test_login_retire.py. The other two OA-e-10 criteria pass and the mutant control fired (guard removed -> both tests fail)."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W15-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~15",
+    "surfaced_at": "2026-09-28T21:30Z",
+    "one_line": "OA-e-7 (2): the 13 ruff 0.16.9 findings are in opal/agent/teams_watch/teams-watch.py, not portal_lookup.py; that file is outside the order's <paths>, so they cannot be fixed by this worker.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PATH=C:/tmp/ruff-0.16.9/bin:$PATH; ruff check --target-version py39 --output-format concise --color never opal -> 'Found 13 errors.' all in opal\u0007gent\teams_watch\teams-watch.py; same command on opal/agent/tools/portal_lookup.py -> 'All checks passed!' (opal_ai fd8ab8a)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order section 1: all 13 findings (8 SIM115, 3 BLE001, 1 SIM102, 1 UP031) are in opal/agent/tools/portal_lookup.py.",
+    "world_is": "portal_lookup.py is clean under ruff 0.16.9 ('All checks passed!'); the 13 findings (8 SIM115, 3 BLE001, 1 SIM102, 1 UP031) are in opal/agent/teams_watch/teams-watch.py (lines 228..790). AC2's clean run cannot read CHECKS: PASS until that file is fixed."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W15-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~15",
+    "surfaced_at": "2026-09-28T21:30Z",
+    "one_line": "Nested opal_ai commit refused by the lane gate: the order's opal_ai/** paths are not resolved as this serial's grant (owned-paths, lane ANY_EXEC_OR_AE).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C opal_ai commit ... -> 'VIOLATION: opal_ai/.github/workflows/ci.yml -- lane=ANY_EXEC_OR_AE ... not in permitted_agents'; git -C opal_ai log -1 still fd8ab8a."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order section 2.1: nested files commit with git -C opal_ai commit --author <serial> -F <msgfile>; <paths> lists opal_ai/.github/workflows/ci.yml and opal_ai/opal/checks/run_checks.sh.",
+    "world_is": "Both the git -C opal_ai commit and safe-commit.sh from inside opal_ai refuse: 'agent=0.9.0_WK_NFRA_OPALAI~15 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path'. The edits to ci.yml and run_checks.sh sit uncommitted in C:/tmp/oa-15/opal_ai; AC2/AC3 read committed HEAD and so read FAIL. No override used."
   }
 ]
 ```
