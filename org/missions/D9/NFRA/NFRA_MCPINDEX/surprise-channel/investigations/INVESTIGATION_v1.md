@@ -2266,6 +2266,74 @@ carries none.
     "world_is": "In src/stepwise/extended-backfill.sh the BD_PASSWORD line 16 is already a :? refusal; line 15 is BD_USERNAME (a username, left as ordered); no line holds the redacted value, and a shape scan for mixed letter/digit/symbol tokens of 8+ chars found 0. File left unedited; AC1 reads 0 literals over 44 files.",
     "disarm_owner": "2.0.0_SA_COO~MI",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W13-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~13",
+    "surfaced_at": "2026-09-28T17:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The worktree's portal/ is an empty gitlink directory, so the emitter refused ('accessor index is EMPTY -- portal/src/api not readable'); I extracted portal/src/api at the pinned gitlink into it to run step 4.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WORLD (this worktree): `ls -la portal` shows an empty directory; `git ls-tree HEAD portal` = 160000 commit c3dd9ca96a3718afcde829ea9b010041d925f883.",
+        "CODE: workflows/atom_decomposition/emit_catalog_v02.py:369 PORTAL_API = <root>/portal/src/api and :462 refuses when the accessor index is empty; the first run printed 'EMIT REFUSED: accessor index is EMPTY'.",
+        "ACT: `git archive c3dd9ca96a3718afcde829ea9b010041d925f883 src/api` from the shared ajb_workspace/portal repo (read-only; that commit exists there, whose HEAD is 92a2576) piped to tar into <worktree>/portal. Content sits inside the gitlink directory, so it is not part of any commit of this branch."
+      ]
+    },
+    "spec_asserts": "The order (step 4) says to run the emitter in the worktree and treats the portal submodule as present; the order's paths do not name portal/.",
+    "world_is": "A worker worktree carries no portal checkout, so step 4 and AC3 cannot run as cut. I read the pinned gitlink's src/api only (23 files), not a rebuild of the tree. The catalog was therefore emitted against portal c3dd9ca96a, not the shared tree's 92a2576; the accessors list is the only portal input, and AC3 reproduced the committed catalog with 0 differing lines outside the stamp, so no accessor drift shows at this pin.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "notes": "Any worker cell whose invocation runs the emitter needs portal/src/api at cut time; the issuer may want that in the preflight."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W13-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~13",
+    "surfaced_at": "2026-09-28T17:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "validate_catalog_v02.py (step 5) makes live S3 reads, against this order's 'No AWS' bound, and then crashes writing its report because catalog_v02/ does not exist in the tree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: workflows/atom_decomposition/validate_catalog_v02.py docstring: concrete keys -> s3api head-object, family rows -> s3 ls the prefix; READ-ONLY; results -> catalog_v02/validation_report.json.",
+        "RUN (rc=1): printed per-key KEY-OK/FAMILY-OK lines and 'SUMMARY: {rows: 36, concrete_ok: 26, concrete_missing: 0, family_ok: 9, family_mismatch_or_error: 1}', then FileNotFoundError on workflows/atom_decomposition/catalog_v02/validation_report.json. git status after the run shows no change to that path, so nothing needed restoring.",
+        "MEASURED separately with catalog_gate.load_catalog on the new DATA_CATALOG.yaml: loads, 48 rows_by_key, no refusal of the new portal_datasets section."
+      ]
+    },
+    "spec_asserts": "Order bounds 3: 'No AWS'; step 5: check that validate_catalog_v02.py still accepts the catalog, and restore validation_report.json if it rewrites it.",
+    "world_is": "The validator's 36 rows are the channels: rows, which this change did not touch (the catalog diff is only the two stamp lines plus the silver_datasets/portal_datasets sections), so its summary says nothing about the new section either way. One row was reported family_mismatch_or_error; I did not identify it and did not rerun (a rerun is more S3 reads). It is unmeasured whether that predates this change; the channels rows are byte-identical, so it is not caused by it. The validator does check the new key, by a different route: main() runs validate_silver_entries() first (validate_catalog_v02.py:103-105, the emitter's own validate_entry over catalog_entries/*.yaml) and refuses before any S3 call on an invalid entry; it did not refuse, so the three s3_key entries are accepted. It does not read the catalog's portal_datasets section itself.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W13-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~13",
+    "surfaced_at": "2026-09-28T18:10:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "BLOCKING: the commit's naming limb (LGIC_ENFORCE DEC-6) refuses the 6 new lines that carry the exact keys the order requires in s3_key, so MX-x-2's work sits in the worktree uncommitted.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash .tools/safe-commit.sh ... -- <8 paths> printed 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' and 'NAMING-GATE: REFUSE 6 graded'.",
+        "The 6 refused lines are the added s3_key values: DATA_CATALOG.yaml:1336, :1356, :1376 and the three catalog_entries/portal_mdpf_*.yaml files (:18, :20, :20). Each reads 'EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it'; the gate proposes mdpf/{scope}/platinum/{scope}/<file>.json.",
+        "CODE .tools/naming-gate.py:1-20 (DEC-6 matrix): an EXISTING out-of-pattern key in a live-remediation surface is REFUSED unless the diff removes it; prose (a string with whitespace) is not graded. safe-commit.sh:721 turns ENFORCE on from the org/mcp/naming-gate.enforce file, and its refusal has no worker-side override (a --force bypasses only contamination checks).",
+        "The key is not chosen by this worker: the order (step 1) requires s3_key to be the key the portal_index fence pins, and test_portal_index.py pins platinum/mdpf/{scope}/<file>.json. The same string already sits, ungraded, on unchanged lines (the channels: rows, and the producer prose)."
+      ]
+    },
+    "spec_asserts": "Order step 6: 'Run AC1-AC3. Commit under your serial.' and bound 3: REFUSE a criterion you cannot meet, reporting it with its measurement. Step 1: s3_key is the exact key the entry describes.",
+    "world_is": "AC1, AC2 and AC3 all PASS (proof instance VALID, rc 0), but the change cannot be committed by a worker: the naming limb refuses the one new field the order asks for, because its value is a live-remediation key (MDPF_CANON) the platform has not migrated. The change is complete and unstaged in worktree C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-13 on branch wk-nfra_mcpindex-3-13 (8 files). The proof instance and its deliverables folder are also uncommitted, so its PENDING-THIS-COMMIT rows are unresolved. Nothing was bypassed, hand-encoded or reworded to slip the gate. The way through is the gate's owner or the issuer's: an R20 register entry or a ruling on MDPF_CANON that lets this field carry the key, or the issuer committing the staged set under an approved path; that is not this worker's call.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
   }
 ]
 ```
