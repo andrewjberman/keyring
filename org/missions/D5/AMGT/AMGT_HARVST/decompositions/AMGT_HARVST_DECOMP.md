@@ -529,6 +529,45 @@ ruled that the right handling because it keeps the audit trail honest.
 reads that field, which is exactly why it survived. **Corrected to a real UTC timestamp, and the lesson is that the
 habit produced it in a file where nothing would ever refuse it.**
 
+
+### 14x. THE ORDER-WRITING CLAUSES -- three gate-shaped defects the ISSUER must not ship again
+
+**Source: round 8, `HVST-w-1` and `HVST-w-3`, 2026-09-28.** Both cells were executed correctly by their
+workers and BOTH `complete` flips were REFUSED on the issuer's own order-writing, three separate ways. ⛔ **None
+of the three was satisfiable by a worker's care, so none belongs in a worker's prompt. They belong here.**
+
+**1. THE INSTANCE FILENAME IS DERIVED FROM THE ORDER'S FILENAME, not from the cell id.**
+`.tools/to-pipeline-gate.py:2873-2879` discovers the instance by globbing
+`deliverables/*/` for `<ORDER FILENAME MINUS .md>.proof_of_spec.json` (or `..._PROOF_OF_SPEC.json`). A short,
+natural name like `HVST-w-3.proof_of_spec.json` is INVISIBLE to it and the flip dies on *"NO proof-of-spec
+instance was found beside it."* **Every future order STATES the exact expected filename in its worker face.**
+
+**2. `to_id` MUST NAME THAT SAME STEM.** The gate refuses BEFORE ANY LIMB RUNS if the instance's `to_id` "names
+no tracked order whose filename carries it" (RULING S, row `IRPT_FNTEND-S61`). `to_id: "HVST-w-3"` was refused
+where `to_id: "AMGT_HARVST.TO-HVST-w-3.timeline-api-and-the-honest-states"` passed. **State the literal value in
+the order.**
+
+**3. ⛔ THE CRITERION BLOCK'S HTML ESCAPING MAKES THE RECORDED INVOCATION NON-RUNNABLE WHILE STILL ALIGNING.**
+An `<invocation>` written with `&amp;&amp;` and `2>&amp;1` forces the worker to record the ESCAPED bytes to
+align. **So invocation-alignment certifies that the instance MIRRORS the order -- never that either string
+runs.** `HVST-w-1`'s worker hit exactly this (3 mismatches on its first validation) and had to record escapes.
+**This is the banked finding "invocation-alignment certifies AGREEMENT, never RUNNABILITY" arriving on this
+project's own orders, and the cost is that a criterion can be green and unrunnable at once.**
+
+**THE RULE THAT COVERS ALL THREE: WRITE EVERY ORDER THROUGH ONE WRITER AND RUN THE INVOCATION ONCE YOURSELF
+BEFORE CUTTING.** A single `ls` on every path a criterion names, and one execution of the literal string as the
+file carries it, would have caught all three plus `HVST-w-1`'s AC2 (which named
+`lib/opal_data_harvest/tests/`, a directory that has NEVER existed, and collected ZERO of 293 tests).
+
+**COST:** one `ls` per named path, one dry execution per criterion, at cut time.
+**NON-APPLICATION:** a path the criterion itself creates, and a judgment criterion carrying no `<invocation>`.
+
+⚠ **AND THE HONEST SHAPE OF THE ROUND-8 FAILURE, because the diligence WAS there and still missed:** before
+writing AC1 I read BOTH call sites of `uploads.py` and confirmed the listings path bypassed the retry wrapper --
+real work, and it made AC1 a good criterion with a real negative control. **I spent none of that care on AC2's
+second path or on the three gate-shaped fields.** VERIFICATION AIMED AT THE INTERESTING CRITERION IS NOT
+VERIFICATION OF THE ORDER.
+
 ## 15. ROUND 4 (v1.3, the RECUT) -- from the L10 round-3 analysis @4bcd9e87ca (`1.0.0_SA_CTO~Z`)
 
 **ONE CELL, read-only, and the WRITE is deliberately NOT in it.** The analysis ranks round 4 as `Z-S1`'s backward
