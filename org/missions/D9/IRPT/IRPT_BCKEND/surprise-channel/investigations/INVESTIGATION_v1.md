@@ -10789,3 +10789,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not blocking this cell (renamed and refiled before commit, gate now clears; commit 0a1fc245cb on wk-IRPT_BCKEND-63). Fourth occurrence this round of the same recommendation carried in IRPT_BCKEND-W21-S1/W41-S3: reconcile decomp-cell-id-style to_id values against the actual order-file-basename-keyed gate lookup estate-wide."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S184",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-28T21:50:00Z",
+  "one_line": "The NEW-01 guard (IB-pr-191, adapter hcZpXDDo) does not close NEW-01's class: 2 invested 49F accounts with a near-total one-day loss (r_net -0.999631 on 2026-04-07, -0.999959 on 2026-07-10; balance ~4k -> 1.50 and 0.17 with cf_net 0.0) sit just above the r_net <= -1 predicate and keep serving about -100% after the apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4.0.0_SA_CRO half @3f953cb06b (condition 2): the zip's own calculate against live twr_daily YTD 2026-01-01..2026-09-25 -- near-miss A COMPUTES -0.999526, near-miss B COMPUTES -0.999957; the guard moves 26 of the 28 rows with r_net <= -0.999 (22 accounts)",
+      "the COO's YTD census (row S177): 28 OK account-days with r_net <= -0.999 across 24 accounts; the two rows between -1 and -0.999 are the only ones the predicate does not reach"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An account with positive holdings never answers -100% (NEW-01 acceptance).",
+  "world_is": "After the guard, two invested accounts still answer about -100% because their bad day is -0.9996 / -0.99996, not <= -1.",
+  "notes": "Two ways to close it, ~P's call and not a condition of the adapter act: (a) a class predicate in the adapter (bmv > 0, emv near 0, cf_net 0 -> refuse), which needs its own cell and halves; (b) row S181's producer fix (a named non-OK status for a value that vanishes with no flow), already routed by 1.0.0_SA_CTO to the runners_49f owner. Recommended: (b) first, since it fixes the table every consumer reads; (a) only if S181 slips past the next ~P round."
+}
+```
