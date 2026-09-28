@@ -43,12 +43,11 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260828_050xZ_COOX_DRIVE_LOOP_NFRA_C3MATERIALIZE.md`.
-- `1.0.0_SA_CTO` `/self-drive` the fabric (all LAPTOP directives), the CTO adjudicating adjudicable calls on its rec:
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_021xZ_SELF_DRIVE_THE_FABRIC_HANDLE_OPEN_CALLS_ON_MY_REC.md`.
-  RESERVED to Andrew under every self-drive: vendor/egress off Opal infrastructure; unrecoverable acts; money and
-  contracts; every hold he set by name (the portal freeze, the LD-0522 push cadence, the shared-branch push).
-- `1.0.0_SA_CTO` `/self-drive D9 IRPT` 30m (IRPT_FNTEND + IRPT_BCKEND + DSGN_REBRND), per the CTO's own record of
-  2026-09-11 in its deliverables; ends on `status: complete` or his stand-down.
+- `1.0.0_SA_CTO` `/self-drive 30m laptop directives` DIRECTED (Andrew-direct 2026-09-28 ~23:0xZ, "/self-drive [30m]
+  Laptop Fabric"): `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_230xZ_SELF_DRIVE_LAPTOP_FABRIC.md`.
+  Chooser Andrew; landed by 1.0.0_SA_CTO. Paired with the RELAUNCH COO rows above. It supersedes this seat's 09-12
+  fabric row and 09-11 D9 IRPT row. RESERVED under it: vendor/egress off Opal infrastructure; unrecoverable acts;
+  money and contracts; every hold he set by name. Stop: DONE read from the register, HELD-AT-STOP, or his stand-down.
 - `1.0.0_SA_CTO` `/self-drive MDPF_TAXSMA,NFRA_OPLGTW,LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON` -- PAUSED by the managed
   wind-down, resume authority:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_COO_GOALS_AND_CTO_SELF_DRIVE_ADJUDICATES.md`.
