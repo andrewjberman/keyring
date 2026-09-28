@@ -1630,6 +1630,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "bbg's 403 is intermittent and burst-sensitive, so a retry within a window clears it -- the premise this seat used to justify the paced retry, resting on 09-15's measured 403->200 recoveries at 13 min, 8 min and 70 seconds.",
       "world_is": "Those recoveries are ALL from 09-15 and nothing has returned 200 since. Six genuine attempts tonight over 66 minutes were refused without exception. The endpoint's behaviour CHANGED between 09-15 and 09-23; it is not a window that decays.",
       "notes": "TWO DENOMINATOR ERRORS OF MINE ARE CORRECTED BY THIS ROW, and they are the same mistake on two axes. I reported bbg as serving '200 sixty times against seven 403s'. (1) POOLED ACROSS PATHS: that 60 counted EVERY bbg http event -- /user-info session checks, which always return 200, and article-body fetches -- not the endpoint under discussion. On search/query alone it is 9 and 12. (2) POOLED ACROSS TIME: all 9 of those 200s fall on one day, so a figure I used to predict tonight's behaviour was drawn entirely from a regime that had already ended. A denominator bounds the SAMPLE; only a MECHANISM bounds the INFERENCE, and I had no mechanism -- just a pooled rate. COST: group the census BY PATH and BY DAY before quoting a rate as a prediction. ID: next safe id read as MAX+1 over spent Z-S ids (1..31 contiguous -> Z-S32). The row count equals max here only because nothing has been removed, so it is not the discriminator."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W23-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~23",
+      "surfaced_at": "2026-09-28T00:39:29Z",
+      "one_line": "AC2's LITERAL invocation names `lib/opal_data_harvest/tests/`, a path that does not and never has existed (only flat `lib/opal_data_harvest/test_*.py` files) -- so the literal command collects ZERO tests from EITHER named directory (pytest usage error, rc=4), never reaching the 3-failed/N-passed baseline the criterion's own <expect> clause describes.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~Y",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "AC2's literal invocation run verbatim (@275811ed99, this worktree): `python -m pytest lib/research/harvest/tests/ lib/opal_data_harvest/tests/ -rA` -> `ERROR: file or directory not found: lib/opal_data_harvest/tests/` then `collected 0 items` / `no tests ran in 0.00s`, rc=4 (pytest USAGE_ERROR).",
+          "comp-find over the whole repo corpus for the literal string 'opal_data_harvest/tests' returns exactly 2 hits, BOTH inside this task order's own text (the <paths> block and AC2's invocation) -- zero hits anywhere else, at any prior commit this search can see.",
+          "The historical AC3 invocation this criterion's baseline text is drawn from (row AMGT_HARVST-Z-W21-S2, org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~21/AMGT_HARVST.TO-HVST-v-1.empty-mapping-cannot-reach-silver.proof_of_spec.json:94) used `python -m pytest lib/opal_data_harvest/ -q` -- no `tests/` suffix -- and measured `3 failed, 160 passed`.",
+          "DIAGNOSTIC ONLY, not the graded invocation: `python -m pytest lib/research/harvest/tests/ lib/opal_data_harvest/ -rA` (the two real directories, un-typo'd) collects and runs, printing `3 failed, 292 passed in 3.39s` -- the SAME three nodeids as Z-W21-S2 (test_disabled_barrons_contract_defers_before_opening_a_browser and test_single_broken_dow_jones_article_is_skipped_but_repeated_server_failure_stops, twice via SUBFAILED), i.e. no new failure and no regression from this cell's own uploads.py/__main__.py edit."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC2's invocation, as cut, collects and runs both real test suites (lib/research/harvest/tests/ and lib/opal_data_harvest's tests) and prints their combined before/after pass-fail counts.",
+      "world_is": "The second path segment names a directory that has never existed in this repo; pytest's own multi-path collection refuses the WHOLE invocation on the first bad path, so it produces zero counts from either directory, not a partial result. This worker did not re-path the invocation (standing instruction) and grades AC2 on the literal output alone.",
+      "notes": "DISARM IS THE ISSUER'S, not this worker's (rule 27, L6, amend-without-CTO-ruling): re-cut AC2's invocation to `python -m pytest lib/research/harvest/tests/ lib/opal_data_harvest/ -rA` (drop the `/tests/` suffix on the second path), which is exactly the historical AC3 command from HVST-v-1 plus the sibling suite. This worker's own two production edits (lib/opal_data_harvest/uploads.py, lib/opal_data_harvest/__main__.py) are otherwise unaffected -- the diagnostic run above shows them landing with zero regression against the corrected command."
     }
   ]
 ```
