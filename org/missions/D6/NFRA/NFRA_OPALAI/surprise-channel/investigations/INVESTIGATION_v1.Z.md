@@ -1289,6 +1289,51 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Round-1 analysis R-5 / row Z-W8-S1: the entitlement guard suite keeps passing across gateway changes; E1 records its pass count.",
     "world_is": "At CLOUD HEAD the suite is already red on 2 of 12, from changes that predate round 2. So E1's R-5 criterion is graded as NO NEW FAILURE against this base (the same 2 named failures, at least 10 passed), never as all-pass. The two failures are the NFRA_OPLGTW OG-z-1 guard's own pins, and they stay open for their owner.",
     "notes": "Filed by the issuer at the cut. INERT: the served gateway does not run tests. The OA-e-1 order carries the base count."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-28T21:50Z",
+    "one_line": "e1.AC1.sh cannot print PASS for the four named arms on this device, though all four pass. Its matcher greps '^PASSED tests/test_asker_binding.py::<name>', but pytest 9.1.1 prints the -rA line with a BACKSLASH ('PASSED tests\\test_asker_binding.py::<name>') when it is run from infra/aws/ec2/opal-gateway, because the rootdir is the workspace root (pytest.ini there) and the node id is shown relative to the invocation dir with the OS separator. The script reports 'named arms passed 0 of 4' and RESULT: FAIL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/e1.AC1.sh -> 'named arms passed 0 of 4; failed/errored tests 0; summary: 20 passed in 1.41s' / 'RESULT: FAIL' / exit=1, at the worker's branch wk-NFRA_OPALAI-10.",
+        "cd infra/aws/ec2/opal-gateway && python -m pytest tests/test_asker_binding.py -rA -p no:cacheprovider --color=no -> 'rootdir: C:\\tmp\\oa-10' / 'configfile: pytest.ini' and 'PASSED tests\\test_asker_binding.py::test_old_message_from_wider_person_refused'.",
+        "The same command with --rootdir=. prints 'PASSED tests/test_asker_binding.py::test_old_message_from_wider_person_refused' (forward slash). --rootdir is not in the script's invocation, so it was not used to meet the criterion.",
+        "The four named tests PASSED in the -rA output: test_old_message_from_wider_person_refused, test_reply_to_other_chat_refused, test_group_chat_unprofiled_member_refused, test_same_chat_recent_message_served; tests/test_asker_scope.py 4 of 4 passed; 20 passed, 0 failed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "e1.AC1.sh: each named arm appears as '^PASSED tests/test_asker_binding.py::<name>' in the pytest -rA output, so 'named arms passed 4 of 4' prints and the script exits 0.",
+    "world_is": "On this Windows device pytest renders that line with 'tests\\'. The matcher can never see a forward slash, so AC1 reads 0 of 4 whatever the tests do. The same matcher shape in any other round-2 check that greps pytest -rA output from the gateway directory reads the same way. The worker did not edit the check, add a pytest.ini under the gateway directory, or pass --rootdir, and reports AC1 as a refusal with these measurements.",
+    "notes": "Not ARMED: a check that cannot pass fails closed. The issuer's fix is one of: match '[/\\\\]' in the grep, or add --rootdir=. to the pytest line of the check."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-28T21:55Z",
+    "one_line": "The OA-e-1 repair turns two existing tests in tests/test_portal_grant.py red: test_asker_portal_scope_admits_granted_channel and test_asker_portal_scope_refuses_other_channel. Their fake Graph message carries tenant 22222222-... (not the configured Opal TENANT_ID) and no createdDateTime, so handle_asker_query now refuses them asker_message_stale (and, once that is fixed, asker_tenant_denied). The file is outside this order's paths, so the worker did not edit it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd infra/aws/ec2/opal-gateway && PYTHONPATH='C:/tmp/moto-target;.' python -m pytest tests/test_tool_classification_composition.py tests/test_identity_scope.py tests/test_portal_grant.py tests/test_teams_reader_fallback.py -q -> '2 failed, 26 passed'; the 2 failed are the two named tests; the other 26 pass.",
+        "tests/test_portal_grant.py:39 _TID = '22222222-2222-2222-2222-222222222222' and :27 os.environ.setdefault('TENANT_ID', '11111111-...'); the fake _graph_call at :93 returns no createdDateTime. Assertion at :183: \"guard_denied\" not in result -> code asker_message_stale.",
+        "The order's paths (section 3) name tests/test_asker_scope.py and tests/test_asker_binding.py only; tests/test_portal_grant.py is not among them."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order OA-e-1 section 1: only tests/test_asker_scope.py must keep passing; tests/test_portal_grant.py is not named.",
+    "world_is": "Both refusals are the specified behaviour (a message with no parseable createdDateTime is refused; a non-Opal tenant is refused). Those two tests pass a foreign tenant and an undated message on purpose or by omission. Fixing them takes a tenant equal to the configured TENANT_ID and a recent createdDateTime in that file's _graph_call, in a cell whose paths include it. OA-r-1 cherry-picks this change, so those two tests will be red on CLOUD after the drain until then.",
+    "notes": "Not ARMED: the gateway does not run tests at serve time."
   }
 ]
 ```
