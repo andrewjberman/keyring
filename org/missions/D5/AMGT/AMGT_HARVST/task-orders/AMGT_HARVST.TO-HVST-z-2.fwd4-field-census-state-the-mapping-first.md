@@ -98,7 +98,7 @@ not grade FWD-4; it measures the clause the grade needs.
    that would have saved me.
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~33</slot>
 <fabric>site-z</fabric>
