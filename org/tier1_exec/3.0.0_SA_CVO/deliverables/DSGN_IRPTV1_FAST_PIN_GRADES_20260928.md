@@ -11,7 +11,8 @@ bound here by md5.
 
 **Tally:** 4 pins handed over. 1 PASS (`a47d3a75`). 1 PARTIAL FAIL (`528acdcd`: the source-age half passes; the
 "label alone" half fails on the Analysis stage line, next item N1). 1 PARTIAL PASS (`bfafa6c0`: the drill half passes
-on a real run; the Asset Category Views half is NOT GRADED, unit only). 1 NOT GRADED (`921e6808`, no real run).
+on a real run; the Asset Category Views half is NOT GRADED, unit only). 1 NOT GRADED (`921e6808`, no real run). Pins 5 (`38986671`) and 6 (`4ded3791`): NOT GRADED on a real run (none
+exists; walker runs paused); their unit evidence holds.
 
 ## Grades
 
@@ -48,6 +49,20 @@ Detail for pin 2:
 | 3 | `bfafa6c0` FAST item 3 (UIR-32/49, IV-e-71 mask half) | a strategy under an account reads the account's tail in the header's one masking style, in the drill rows, breadcrumb and Asset Category Views | (a) `tmp/ui-walk/20260928T195357Z/shots/017-thiessen-holdings-Account-9237-BROKERAGE.png` md5 `6c223ed90252bed874eed46a206ac288`, opened and read; (b) `.../026-thiessen-holdings-open-Rebalancer-strategy-Ann.png` md5 `f9f4acb5dee2bddddca5ffed7136302b`, opened and read; (c) `bun test iv-e-71.strategy-tail.test.tsx` re-run by this seat at portal HEAD `921e6808` (a descendant): 1 pass, `VERDICT: STRATEGY-TAIL-OK`, controls printed; (d) CI completed/success | **PARTIAL PASS** |
 | 4 | `921e6808` FAST item 4 (UIC-23 residue, S32) | each Analysis history row names its date in client words and never a raw request id | (a) `bun test iv-e-80.history-date.test.tsx iv-e-62.request-history.test.tsx` re-run by this seat at `921e6808`: 2 pass, 0 fail, `HISTORY-DATE-OK`, `REQUEST-HISTORY-OK`; (b) CI completed/success (re-read before commit); (c) no real run exists (commit body: "No real run") | **NOT GRADED** |
 
+| 5 | `38986671` FAST item 5 (UIC-11 residue) | no account wedge is near-white on the white Holdings panel | (a) `bun test iv-e-81 iv-e-70` re-run by this seat at portal HEAD `4ded3791` (a descendant): `ACCOUNT-PALETTE-VISIBLE-OK` (lightest `#cbd5e1` 1.485:1, control `#f5f5f5` 1.090:1) and `MODEL-VS-CLASS-COLOUR-OK` (worst internal dE00 6.7642); (b) both contrast ratios recomputed by hand from the WCAG luminance formula: 1.09:1 and 1.48:1, matching; (c) CI completed/success; (d) no real run | **NOT GRADED** (real run) |
+| 6 | `4ded3791` FAST item 6 (UIC-20, IV-e-75) | a required-field message shows only after the user tries to generate, never on load | (a) `bun test iv-e-82` re-run by this seat at `4ded3791`: `REQUIRED-AFTER-ATTEMPT-OK` (load: no message, Generate enabled; after one press: the message shown, 0 submitter calls); (b) walk 20260928T190559Z shot 031, opened and read, is the before; (c) CI in progress at grading; (d) no real run after the change | **NOT GRADED** (real run) |
+
+Detail for pins 5 and 6:
+- Pin 5 claims the near-white entry only. The rest of UIC-11 (brief `:48`, "a narrow grey ramp; neighbouring slices
+  cannot be told apart") is not claimed. After the pin, `ACCOUNT_PALETTE` (`palette.ts:59-73`) is still 13 neutrals
+  (slate, stone, zinc, neutral). Its measured separation is dE00 >= 6.76 per pair; whether 11 adjacent grey wedges
+  read "distinguishable at a glance" is a judgment on a rendered 11-account pie, which is owed. The lightest entry
+  (1.485:1) meets the pin's own 1.4:1 floor, not the 3:1 floor WCAG 2.1 SC 1.4.11 sets for graphical objects. The
+  legend names each slice, so colour is not the only carrier.
+- Pin 6: shot 031 has no client selected (search box empty), so the "Select a client in the header first." it removes
+  on load was a true statement, not a masked selection defect. The body still prints "Client: select a client above"
+  and "Holdings snapshot: none held -- Loading" at rest; neither is in the pin's claim.
+
 Detail for pin 3:
 - **Drill half: PASS on a real run.** Shot 017 (Thiessen, Anna; account ****9237 / BROKERAGE) shows the breadcrumb
   "All holdings ****9237 / BROKERAGE / Rebalancer strategy: Anna ****9237": the owning account's tail, in the header's
@@ -79,7 +94,9 @@ the walk dies. Nothing waits on a FAST grade, so the real runs go to the next wa
   portal fixtures. N1 is therefore live on every Analysis loading face, not only in the fixture (claim class
   SOURCE-READ; no live body read).
 - **N2 (owed real runs):** the Asset Category Views card and modal after `bfafa6c0`; the Analysis history over a
-  client with two dated requests after `921e6808`.
+  client with two dated requests after `921e6808`; the 11-account Holdings pie after `38986671` (a glance judgment on
+  the grey ramp); the Analysis tab at rest and after one Generate press after `4ded3791`. One walk of Cowdin (11
+  accounts) plus Thiessen covers all four.
 
 ## Observations (not grades; each is outside the pin's claim)
 
