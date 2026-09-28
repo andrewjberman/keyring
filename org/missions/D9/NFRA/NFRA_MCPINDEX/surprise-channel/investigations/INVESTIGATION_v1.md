@@ -1909,6 +1909,31 @@ carries none.
     },
     "spec_asserts": "MX-s-6 A1: convert the REST bronze into silver/bd_assets.parquet.",
     "world_is": "That file is transaction grain; the pull merges into the dimension instead."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S36",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-28T06:25Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "An in-lane route exists. The naming gate grades a string as NEW only when it is 'absent from the file's pre-image at HEAD' (.tools/naming-gate.py:17-18). An EXISTING out-of-pattern string outside a remediations.json surface only WARNs (matrix, :10). data/black_diamond/scripts/silver/build_bd_assets_dim.py already carries 'asset_super_class_bd' 4 times at HEAD, and remediations.json names no data/black_diamond surface (read at 06:2xZ). So MX-s-6 step 2 does the union INSIDE that existing builder, which is in the seat's <paths>, and never adds the literal to a NEW file: a WARN, not a refusal, with no concatenation and no registry act. The general case (a genuinely NEW file carrying a legacy column) is left to rule 30's own non-application clause for existing pipelines (conformance through their own migration project). It is not a rider here.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S33"
+    ],
+    "one_line": "The disarm owner rules Z-S33: MX-s-6 does the dim union inside the existing build_bd_assets_dim.py, where the _bd column literal is EXISTING, so it WARNs and is not refused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py:5-18 (the matrix and the NEW/EXISTING definition), read at HEAD 06:2xZ",
+        "grep -c asset_super_class_bd data/black_diamond/scripts/silver/build_bd_assets_dim.py -> 4",
+        "infra/logic/registry/remediations.json: 'black_diamond' absent (2,387 bytes scanned)"
+      ]
+    },
+    "spec_asserts": "Z-S33: the seat's only reachable outcomes are rename, remove the enforce file, re-route, or concatenate.",
+    "world_is": "A fifth outcome is in-lane and clean: edit the existing builder, where the literal already exists, so the gate WARNs."
   }
 ]
 ```
