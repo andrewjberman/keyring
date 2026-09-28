@@ -2518,3 +2518,30 @@
   "notes": "S25 (diagnose, then route) stays open: the page half reads the failure honestly; the blocking half is backend. The selected_tenant omission on the opened-request read did not cause the 500 (the row read carried it and also failed) but is a page defect for internal viewers, same class as S23."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-W41-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~41",
+  "surfaced_at": "2026-09-28T00:43:52Z",
+  "one_line": "IVE78-AC2's own graded invocation (bun test iv-e-26.wire-regen.test.ts) runs the real gen-wire.ts generate(), which rewrites EVERY committed portal/src/pages/InvestorReporting/contracts/wire/*.ts file (24 files), not only responses.ts -- of those, only responses.ts carried a real content diff (the R11 data-optional field + its schema sha256); the other 23 differed from the committed bytes in EOL alone (CRLF->LF, the same checkout artifact this pinned test's own docstring already documents at row DSGN_IRPTV1-W34-S). The task order's <paths> grant names only responses.ts among wire/*.ts, so the other 23 EOL-normalized files were left uncommitted rather than staged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- no gate broke; the mandated invocation's own side effect, scoped correctly by committing only the granted path",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal worktree wk-DSGN_IRPTV1-41-portal, pre-commit: `git status --short -- src/pages/InvestorReporting/contracts/wire/` listed 24 modified files immediately after running IVE78-AC2's exact invocation once",
+      "per-file content check: `git diff --ignore-space-at-eol -w <file> | grep -c '^[+-][^+-]'` printed 0 changed content-lines for all 23 non-responses.ts files and 4 for responses.ts (the `data?:` widening + updated `Source sha256` comment)",
+      "committed only `src/pages/InvestorReporting/contracts/wire/responses.ts` (plus this cell's own ExportButton.tsx/submit.ts/test file) via `.tools/safe-commit.sh -- <4 explicit paths>`, portal commit c34692a2; `git status --short` after the commit still shows the other 23 wire/*.ts files as untouched-but-modified (EOL-only), confirming safe-commit's `--only` scoping left them out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Regenerate `responses.ts` with the existing generator ... and commit it (the cell names one file).",
+  "world_is": "`gen-wire.ts`'s `generate()` is an all-or-nothing batch writer over the whole wire/ directory (11 contract schemas + responses + index), so satisfying AC2's own invocation necessarily touches 23 files this cell's grant does not name; only the one instructed file (`responses.ts`) carries real content, and the rest is the pre-existing CRLF-checkout artifact this same pinned test's docstring already names (row DSGN_IRPTV1-W34-S).",
+  "notes": "Not blocking: no criterion depends on the other 23 files' EOL state, and leaving them uncommitted (rather than force-including them past the grant) is the narrower act. A later, in-grant regeneration pass would normalize them for good; that pass is out of this cell's bounds."
+}
+```
