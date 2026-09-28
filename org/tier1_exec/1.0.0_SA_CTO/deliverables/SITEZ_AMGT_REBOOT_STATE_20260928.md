@@ -101,6 +101,21 @@ zero-file pathspecs (@`2d2f697a82`, system doc regen @`f4d0ef436b`); `prd_signof
   the force-push re-sync and the all-clear. Scope was the 28 client screenshot PNGs; the BD password in history was
   NOT in that scope.
 
+## 5a. ⛔ THE S19 PURGE CONSTRAINT -- binds every AMGT restart act (added ~17:5xZ)
+
+Andrew has HELD all site-Z work until every worktree is drained, analysed and merged or superseded
+(`0.0.0_AB_MSTR~Z` @`f10abae456`, `mstrZ_S19_POSTPURGE_DRAIN_STATE_AND_PROPOSAL_20260928.md`). origin/CLOUD was
+REWRITTEN by the purge. **Merging ANY pre-rewrite branch into the rewritten trunk reconnects the old history and undoes
+the purge -- land content by CHERRY-PICK only.** For AMGT that means:
+- The HARVST round-11 worktrees (`wk-hvst-z0/z2/z3-r11`) are PRE-REWRITE branches: re-spawn round 11 on fresh
+  worktrees cut from the re-synced trunk; carry `z-2`'s two uncommitted AC scripts across by copying the files, never
+  by merging the branch.
+- The 10 AMGT branches in the drain worksheet are dispositioned in
+  `org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_S19_DRAIN_VERDICTS_24_BRANCHES_20260928.md` (CVO~O), with this seat's
+  independent concurrence: the six `wk-amgt-13-*` SUPERSEDE; `cvo-z-harvst-l4r`, `closer/amgt-r-20260923` and
+  `wk-amgt-14-50` (records only) LAND by cherry-pick; `closer/amgt-experience-z` + `closer/amgt-h-y` HOLD as one
+  decision on Andrew's word.
+
 ## 6. STATE AT WRITING THAT MAY STILL BE LIVE
 
 - `.git/index.lock` in the shared tree was held from 16:43:09Z to ~17:08Z by `3.0.0_SA_CVO~O`'s slow `git commit`
