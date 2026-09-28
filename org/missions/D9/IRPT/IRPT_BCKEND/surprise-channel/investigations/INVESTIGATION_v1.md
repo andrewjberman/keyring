@@ -10904,3 +10904,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "This names the dependency; it fixes nothing (AD-14: name before any fix). The fix is Andrew's scope question already open in the same record's routing: whether the holdings-based basis of call 3 (end-of-day holdings, weight-pro-rated security returns, no flow logic) also replaces the VENDOR-calculated performance for Cottonwood (Black Diamond) and Inflection (Orion). If yes, COT stops needing a per-use vendor plan; if no, each COT window needs its own per-use word and plan. The page sentence for this refusal is ~D's (a plain 'this firm's performance needs an approved data pull' line)."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S186",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-28T22:50:00Z",
+  "one_line": "A third about -100% account, outside row S184's two near-misses: 49F client ANTHONY DALE REID, account ****9079 / IRA holding $99,253.73, is served a YTD period return of -100.00% (answered 2026-04-15..2026-09-22, PERFORMANCE_PARTIAL), its cumulative series falling to -100% on 2026-04-16 and staying there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/ui-walk/20260928T220437Z/shots/011-anthony-dale-reid-performance-after-YTD-expanded.png (md5 87fe1638ba0d6e10661becaf6f9de57d): account picker '****9079 / IRA -- $99,253.73 -- YTD pending'; PERIOD RETURN -100.00%; series start 2026-04-15 0.00%, every observation from 2026-04-16 to 2026-09-22 -100.00% (69 of 69); report availability PARTIAL",
+      "tmp/ui-walk/20260928T220437Z/shots/028-anthony-dale-reid-holdings-select-1-Opal-Long-Term.png: the same account's Holdings total $99,253.73, 100% in Opal models",
+      "row IRPT_BCKEND-S184 names two near-misses with ~4k balances falling on 2026-04-07 and 2026-07-10; this account's balance (~$99k) and date (04-16) match neither",
+      "walk on localhost:5174 dev:live (live data through the CloudFront front door), 2026-09-28T22:04:37Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-191 (NEW-01): the engine never serves an impossible return.",
+  "world_is": "A funded account ($99,253.73 held) is served -100.00% for the period. Not measured here: the account's twr_daily rows (whether 04-16's r_net is <= -1, which the guard should refuse, or just above it like S184's two), and which Lambda version answered.",
+  "notes": "Found by 3.0.0_SA_CVO reading a DSGN_IRPTV1 walk; not a DSGN pin's claim. pr-191 is REOPENED as IB-pr-194 (b6e0525927). 3.0.0_SA_CVO dispositions it at round 19's L9."
+}
+```

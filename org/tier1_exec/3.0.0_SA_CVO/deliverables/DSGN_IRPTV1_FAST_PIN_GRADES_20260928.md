@@ -115,6 +115,25 @@ Observation from shot 015: with no client selected, the snapshot line reads "Hol
 in flight without a client, that is a loading word for a state that is not loading; one shot cannot tell. A render
 with a client selected (pins 7, 8) settles both.
 
+## Regrades on a real run: walk 20260928T220437Z (22:5xZ)
+
+Same client, `--deep` (period presets and variant cards pressed). Build: portal `8c6792df` (HEAD 22:03:24Z to 22:22:31Z;
+the walk ran 22:04:37Z for 4.6 min), so pins 1-12. Shots opened and read: 011 md5 `87fe1638ba0d6e10661becaf6f9de57d`,
+028 `12230fee9d6b0d7ee70f86e2587a2ad6`, 030 `c738f75091129f8a396dc2dc535c8820`, 034
+`2fce3883719629e200362fed7d2e32f1`, 037 `0adb4cf3b4fb6c0d72baecef7ab9e8a6`.
+
+| pin | now | on what |
+|---|---|---|
+| 12 `8c6792df` (UIR-45) | **PASS on its claim** | shot 011: "Requested January 1st, 2026 to September 22nd, 2026 / Answered April 15th, 2026 to September 22nd, 2026". Outside the claim, the same tab still prints raw ISO: "Business date 2026-09-22", "SERIES START 2026-04-15", the axis and the daily-series dates; and raw codes under Report details ("PERFORMANCE_PARTIAL", "TIME_WEIGHTED") |
+| 9 `816eeb58` | **PASS**, ask arms now exercised | shot 034: Comparison SELECTED, "Add one Opal model to compare against."; shot 037: Multi-Comp SELECTED, "Add at least two Opal models to compare against." Outside the claim: the summary line stays "Variant Overview (0 comparisons)" (row S38) |
+| 8 `c77b693b` | **PASS on the variant half**; the client half not exercised | shots 034/037: title "the selected client -- Comparison" / "-- Multi-Comp"; no client was selected (row S37) |
+| 7 `84519ede` | still NOT GRADED | no client on the Analysis tab (row S37) |
+
+Rows filed from this walk (commit below): **DSGN_IRPTV1-S37** (a Holdings dropdown pick resets the page's client and
+tab; it is why every walk's Analysis shots are clientless); **DSGN_IRPTV1-S38** (stale "Variant Overview" summary);
+**IRPT_BCKEND-S186** (a funded 49F account, ****9079 / IRA with $99,253.73 held, served -100.00% YTD; not one of row
+S184's two near-misses; owner `2.0.0_SA_COO~P`).
+
 ## Next items
 
 - **N1 (pin 2's FAIL):** the Analysis stage line prints the raw public reason code beside "Loading"
@@ -129,8 +148,9 @@ with a client selected (pins 7, 8) settles both.
   while loading, the default title, and a picked variant with its ask after `84519ede`, `c77b693b`, `816eeb58`. One
   walk of Cowdin (11 accounts) plus Thiessen, with the Analysis tab pressed through, covers all seven. After walk
   20260928T215633Z, still owed: the Asset Category Views card and modal (pin 3); two dated history rows (pin 4); an
-  11-account pie (UIC-11 glance); Generate pressed once (pin 6); the Analysis tab WITH a client selected (pins 7, 8);
-  a Comparison or Multi-Comp pick (pin 9's ask arms).
+  11-account pie (UIC-11 glance); Generate pressed once (pin 6); the Analysis tab WITH a client selected (pins 7, 8).
+  Pin 9's ask arms were exercised by walk 20260928T220437Z. A walk that goes to Analysis BEFORE touching the Holdings
+  dropdowns (row S37) gets pins 7 and 8.
 - **N3 (raw code, the N1 class, second surface):** the Holdings-snapshot line on Analysis prints "(SOURCE_UNAVAILABLE)"
   on a refusal (pin 7's test), as the history row prints "Failed -- SOURCE_UNAVAILABLE" (pin 4's). N1's fix should
   cover every place a reason code reaches the face, not only `StageDisplay.tsx:62`.
