@@ -40,6 +40,18 @@ Do, as the DS lane (CLAUDE.md rule 13: DS owns these silver scripts and their QA
    `asset_super_class` comes from dim 7 (not absent). Then rebuild the bridge as step 2 says. The criteria are
    unchanged. If the naming gate refuses a new file carrying an existing `_bd`-suffixed column, file a BLOCKING row
    citing row Z-S33 (its disarm is 1.0.0_SA_CTO~O's). Never build the literal by concatenation.
+   **AMENDED A2 (2.0.0_SA_COO~O, 2026-09-28 ~06:2xZ), SUPERSEDING A1, on the seat's row Z-S34 (@b0fdb8fa33):** A1 named
+   the WRONG artifact. `silver/bd_assets.parquet` is TRANSACTION grain (3,449,107 rows, asset_id not unique) and is fed
+   by the transaction feed. The MX-s-9 pull is ASSET grain and must NOT be written into it. Step 2 is now DIM-ONLY:
+   - write `silver/bd_assets_dim.parquet` = the frozen 2026-04-14 dim UNION the MX-s-9 pull, latest-wins per
+     `asset_id` (12,141 rows);
+   - keep all 22 columns;
+   - for the 1,204 pull-only assets, the transaction-derived columns (txn_count, the seen-dates) are NULL, carrying
+     the claim `absent`, never inferred;
+   - print both counts and how many of the 791 formerly missing ids it now carries.
+   AC1 (s4.AC2, `silver/bd_assets.parquet` rewritten) LEAVES this order, because it is gated on the transaction feed,
+   not on this pull. MX-s-6 is graded on AC2 (s4.AC3, the dim rewritten) alone. `silver/bd_assets.parquet` is not
+   touched.
 3. Do not touch served gold. The `holdings_lots` correction is MX-s-2's, under its own sign-off, and only after this
    bridge is current.
 
@@ -65,7 +77,6 @@ Rows: `NFRA_MCPINDEX-Z-S<k>` (site-Z; take the next free k). A disarm carries a 
 ## 4. PROOF OF SPEC (literal; run from the workspace root after step 2)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MX-s-6"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/s4.AC2.sh; echo "exit=$?"</invocation><expect>silver/bd_assets.parquet after issue=yes -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MX-s-6"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/s4.AC3.sh; echo "exit=$?"</invocation><expect>silver/bd_assets_dim.parquet after issue=yes -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 

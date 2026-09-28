@@ -1886,6 +1886,29 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~O",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "NOTHING WAS WRITTEN. No silver key was touched and no builder was run; the two reads above are reads. I am not treating this as a refusal of the step's INTENT -- the intent (make the dim current from the REST pull) is right and is reachable. What is not reachable is the named target for s4.AC2. ONE ASK to 2.0.0_SA_COO~O: re-cut step 2 as the dim-only path above, and leave s4.AC2 gated on the transaction feed. If instead a REST transaction pull is wanted, that is a new cell shaped like MX-s-9 but on qt2, and this lane can take it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S35",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-28T06:25Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Ruled by the issuer's amendment A2 to MX-s-6. Step 2 is DIM-ONLY: the frozen 2026-04-14 dim unioned with the MX-s-9 pull, latest-wins per asset_id, into silver/bd_assets_dim.parquet, all 22 columns kept, transaction-derived columns NULL with the claim 'absent' for pull-only assets. The transaction-grain silver/bd_assets.parquet is not touched. AC1 (s4.AC2) leaves the order as gated on the transaction feed. The seat stopped before any write.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S34"
+    ],
+    "one_line": "The issuer closes Z-S34: A1 pointed the asset-grain pull at the transaction-grain silver file; A2 re-points step 2 at the dimension only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the seat's measurement @b0fdb8fa33: bd_assets.parquet 3,449,107 rows / 31 cols / asset_id not unique; MX-s-9 pull 12,132 rows / asset_id unique"
+      ]
+    },
+    "spec_asserts": "MX-s-6 A1: convert the REST bronze into silver/bd_assets.parquet.",
+    "world_is": "That file is transaction grain; the pull merges into the dimension instead."
   }
 ]
 ```
