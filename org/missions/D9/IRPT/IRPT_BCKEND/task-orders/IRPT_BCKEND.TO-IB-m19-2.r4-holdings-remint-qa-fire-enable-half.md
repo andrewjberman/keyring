@@ -114,6 +114,40 @@ issuer and 1.0.0_SA_CTO. You will be continued with the signature.
 read back each policy JSON, close the ledger. Then repeat Step 2 (one QA fire) and re-fill the half from the new
 fire; the half names the three Success command ids.
 
+### AMENDMENT 2 (2026-09-28 ~21:5xZ, issuer 2.0.0_SA_COO~M, on row IRPT_BCKEND-W42-S2)
+
+The Step 6 re-fire (after the read-version grant, ledger irpt-holdings-principals-versionread-m-20260928 CLOSED)
+failed 3 of 3, past the source reads this time:
+- INF (d3275e05) and COT (1f3650bb): `AccessDenied ... s3:GetObjectVersion` on the firm's OWN
+  `irpt/<firm>/gold/holdings_qa/date=2026-09-25/<rev>.parquet` in its own publication bucket. The build re-reads its
+  own prior revision at a pinned version; the `PublishOwnHoldings` statement
+  (`infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf:105`) grants only `s3:GetObject` and
+  `s3:PutObject`. The issuer's COO half of the first grant said the publication side needs no versioned read; that
+  was wrong, and the half you write says so.
+- 49F (b4d4b0d8): `rc=137` (SIGKILL), status TimedOut, execution 21:29:07Z-21:33:35Z (~4.5 min, SSM's own start/end, not a 3600 s hang), while all three firm builds ran concurrently
+  on the one runner. Cause UNMEASURED.
+Ruling (issuer): both are inside this cell. Do Steps 7 and 8, then END with a report that says HALF READY.
+
+**Step 7 -- the own-prefix read-version grant: plan and half, then STOP.** In `holdings_refresh.tf` the
+`PublishOwnHoldings` statement (line 105) becomes `actions = ["s3:GetObject", "s3:GetObjectVersion", "s3:PutObject"]`,
+resources unchanged. Nothing else in the file moves. `terraform ... plan -lock=false` must read exactly
+`0 to add, 3 to change, 0 to destroy` on the three `aws_iam_role_policy.irpt_holdings[...]`; anything else is a stop
+and a row. Write `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_OWN_READ_VERSIONS_20260928.md`
+in the same shape as the first read-version half (act under ledger `irpt-holdings-principals-ownread-m-20260928`,
+the plan in full, blast radius, the cause lines above, rollback per key), and state plainly that the first half's
+"publication needs no versioned read" was wrong. Commit it. Do NOT apply.
+
+**Step 8 -- measure the 49F kill (read-only).** Send ONE read-only SSM command (AWS-RunShellScript) to
+`i-02448edb624a7a7cf`: `dmesg -T | grep -i -E 'killed process|out of memory|oom' | tail -30; free -m; nproc;
+uptime`, plus `ec2.describe_instances` for its type. From the output and the three commands' Execution start/end
+times, write `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R19_QA_FIRE_49F_KILL_20260928.json`:
+`{"oom_evidence": [...lines...], "instance_type", "mem_total_mb", "concurrent_builds_at_kill": n,
+"verdict": "OOM-CONCURRENT" | "OOM-SINGLE" | "NOT-OOM", "why"}`. Do not change any code for it; the issuer rules the
+fix from this file. Commit it.
+
+**Step 6 is suspended** until the issuer continues you with the CTO's signature on the Step 7 half and a ruling on
+the Step 8 verdict.
+
 ### ACCEPTANCE
 
 <criterion id="IBM19-2-AC1" cell_refs="IB-mr-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R19_CHECKS/r19_m2_packages_reminted.py</invocation><expect>REMINTED followed by a 12-hex members-sha256 that is not 83f6a81aab34</expect></criterion>
@@ -156,6 +190,9 @@ infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf
 org/critical_paths/.open_deploys/irpt-holdings-packages-m-20260928b.json
 org/critical_paths/.open_deploys/irpt-holdings-principals-versionread-m-20260928.json
 org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_READ_VERSIONS_20260928.md
+org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_OWN_READ_VERSIONS_20260928.md
+org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R19_QA_FIRE_49F_KILL_20260928.json
+org/critical_paths/.open_deploys/irpt-holdings-principals-ownread-m-20260928.json
 </paths>
 
 The block is your WRITE grant. Everything else named on this face (the draft half, the diff tools, the 09-26 README,
