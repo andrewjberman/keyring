@@ -1117,3 +1117,8 @@ columns of the two partitions of row W61-S2. One order, to the DS seat 0.4.0_DS_
 102458). A disjoint scope (a producer outside every IRPT write surface), hence its own workstream.
 
 fanout: 1 of 1 chains, cap 8.
+
+**13.2 CANCELLED (2026-09-28 ~23:0xZ):** Andrew-direct ~22:4xZ (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_HOLDINGS_BASED_PERFORMANCE_ALL_FIRMS_SILVER_TO_ONE_GOLD.md`)
+moves every firm channel to the holdings basis in ONE consolidated gold shape. `IB-er-191` is cancelled with that
+pointer; its 49F work is re-cut as a slice of the consolidated gold after the CRO brief (L1) and the CTO L4 addendum.
+The deployed NEW-01 page guard (adapter hcZpXDDo) and its reopen remedy (`IB-pr-194`) stay.

@@ -5,7 +5,7 @@
 <issued_to>0.4.0_DS_ClientPlatform~E</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-28</issued_date>
-<status>pending</status>
+<status>cancelled -- Andrew-direct 2026-09-28 ~22:4xZ, record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_HOLDINGS_BASED_PERFORMANCE_ALL_FIRMS_SILVER_TO_ONE_GOLD.md item 4 (relayed by 1.0.0_SA_CTO 102464): holdings-based performance for ALL firms, one consolidated gold; this order is not issued against c02_twr_engine.py, and its work is re-cut as the 49F slice of that gold after the CRO brief and the CTO L4 addendum. Halt sent to 0.4.0_DS_ClientPlatform~E by the issuer 2026-09-28 ~23:0xZ.</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
