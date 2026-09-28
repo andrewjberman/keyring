@@ -2381,6 +2381,124 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~MI",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The gap is reusable knowledge for the issuer: a worker whose order includes a safe-apply needs the worktree serial file provisioned at spawn. Z-W8-S1 is not edited; this row records its disarm in prose. The structured `adjudicates` field is refused to a worker (surprise-row-gate A-1: it is 3.0.0_SA_CVO's field), so the CVO is asked to disposition NFRA_MCPINDEX-Z-W8-S1 by naming it in an adjudicating row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S48",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:09Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S42"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S42. The BD asset dimension is now current by its SCHEDULED producer, not by ad-hoc pulls: MX-s-12 made the ported REST document v4 the served version, and the first scheduled weekday fire (22:10Z) ran it and rewrote the dim with DELTA=0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-s-12 (drained 2033d10e73): the SSM document opal-bd-asset-dim-download is v4 as both DefaultVersion and LatestVersion (worker describe-document); s10.AC1 PASS -- the served document has rest-pull 4, builder 4, playwright 0, BD_PASSWORD 0 (issuer re-run 2026-09-28 ~22:4xZ).",
+        "The scheduled fire: rule bd-asset-dim-pipeline-trigger 22:10:00Z -> bd-asset-dim-trigger -> ssm 16d855de-b971-4d4c-bf8c-bc9f8503c6d3, requested 22:11:06Z, Status Success; s10.AC3 PASS (runs at/after slot 1, success 1, dim rewritten after = yes), issuer re-run.",
+        "Served dim silver/bd_assets_dim.parquet VersionId qcSdLjLW0d1QbDZ1w9lg6SRPjwF7ou92 (22:11:33Z): issuer-measured against the G1 version kittUyy.WHGfmKRaAag.p4TqGFycZ3eA -- 12,141 = 12,141 unique ids, id-set sha256 prefix b38a8b0a5dd07053 equal, 0 added, 0 removed, non-null cusip 10,957 = 10,957, 0 cusip changes of any kind."
+      ]
+    },
+    "spec_asserts": "Z-S42 (ARMED): the dim is current only through one-off REST pulls; the scheduled run still executes the Playwright download that BD's MFA broke. CLAUDE.md: production pipelines MUST be scheduled.",
+    "world_is": "The scheduled chain EventBridge -> Lambda -> SSM runs the REST pull + union rebuild. Tonight's acceptance fire succeeded and the served dim is byte-set-identical on ids and cusips to the G1 baseline (only built_at moved). The judgment half (s10.J1) is open for 3.0.0_SA_CVO~O at L9.",
+    "notes": "Disarm owner of Z-S42 was 2.0.0_SA_COO~O, the issuer at the time; the issuer is now 2.0.0_SA_COO~MI (placement @094c84f299). The trigger runs the document at $LATEST, not DEFAULT: tonight both are v4 (worker ~8 recorded it in the proof instance), so a future update-document that creates a $LATEST without setting DEFAULT would change what the schedule runs."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S49",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:09Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S47"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S47. The BD fees Playwright leg that failed 69 of 121 runs while SSM read Success no longer runs: MX-s-12 destroyed its schedule through Terraform (bd-fees-pipeline-trigger rule, target, Lambda permission, bd-fees-trigger Lambda and its log group -- 5 destroys, 0 add, 0 change).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker ~8 safe-apply ~21:14Z: 'Apply complete! Resources: 0 added, 0 changed, 5 destroyed.'; post-apply terraform plan -detailed-exitcode: no differences, rc 0 (commit 03527b9e7a, drained 2033d10e73).",
+        "Live reads after the apply (worker): bd-fees-pipeline-trigger does not exist; bd-49f-fees-session-daily still ENABLED cron(20 22 ? * MON-FRI *); bd-49f-fees-runner still Active -- bronze/fees stays current through the REST runner."
+      ]
+    },
+    "spec_asserts": "Z-S47 (ARMED): opal-bd-fees-download has no exit on its failure branch, so SSM reports Success on every failed run (69 of 121).",
+    "world_is": "The leg that ran that document is gone; nothing triggers opal-bd-fees-download (it stays registered, inert, not Terraform-managed). Whether the OTHER BD SSM documents share the defect is MX-m-1 (a), in flight.",
+    "notes": "Disarm owner of Z-S47 was 2.0.0_SA_COO~O; the issuer is now 2.0.0_SA_COO~MI."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W11-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~11",
+    "surfaced_at": "2026-09-28T22:53Z",
+    "one_line": "A bare `aws ssm get-document --name <doc>` returns the DEFAULT version, not the $LATEST that every run executes: 2 of the 7 BD documents differ in logic (allocation v3 vs v4, transaction v1 vs v2), and the default versions are the ones WITHOUT an exit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-09-28 by list-document-versions and get-document run twice per document, once bare and once with --document-version $LATEST, over the 7 BD documents (denominator 7). Content differs on 3 of 7: allocation (default v3, $LATEST v4), transaction (default v1, $LATEST v2), and fees (both v1, bytes differ only in non-ASCII comment characters -- not a logic difference). The other 4 read equal.",
+        "THE DIFFERENCE IS THE PROPERTY UNDER MEASURE. Default allocation v3 and default transaction v1 end their download and merge steps in `|| true` / `|| echo WARNING` and contain no exit statement; $LATEST v4 and v2 capture DOWNLOAD_RC and MERGE_RC and end `exit 1`. Runs use DocumentVersion $LATEST (list-commands, field DocumentVersion). All 21 allocation runs and all 21 transaction runs in the retention window read SSM Status Failed with a log that records failure, which matches $LATEST and contradicts what the default version would predict.",
+        "A census of exit honesty that reads the documents with the bare verb would have graded allocation and transaction as silent-failure documents like fees, and would have been wrong on the population it names."
+      ]
+    },
+    "spec_asserts": "MX-m-1 (a): 'read its content (aws ssm get-document). Name the failure branch and whether it ends in a non-zero exit.' The verb as written returns the default version.",
+    "world_is": "The default version and the executed version differ on allocation and transaction, and the executed one is the honest one. This measure used --document-version $LATEST and recorded the version numbers beside each finding.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT FIXED. Nothing is changed: the fix, if any, is either a note in the census recipe (always pass --document-version) or promoting v4/v2 to default so the two views agree. Neither is this cell's. Item 5's census should name the version it read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W11-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~11",
+    "surfaced_at": "2026-09-28T22:53Z",
+    "one_line": "The daily BD transaction merge does NOT join bd_assets_dim on the EC2 run path: in 10 of 10 runs (of 21 in the SSM retention window) that processed a new file, the log says '[enrich] bd_assets_dim unavailable; skipping cusip join', and all 10 wrote a 0-row partition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: 21 transaction-download logs (S3 versions pinned by VersionId, one per SSM run, dates 2026-08-31 to 2026-09-28 UTC). 11 logs say 'No new files to process'; 10 say 'Found 1 new files' and each of those 10 carries the same '[enrich] bd_assets_dim unavailable; skipping cusip join' line and 'OK: TRANSACTIONS_DAILY_<date>.xlsx -> silver/transactions/<date>.parquet (0 rows)'. 10 of 10; 0 of 10 carry an '[enrich] cusip: N/M non-null' line.",
+        "THE ONLY OBJECT WRITTEN TO silver/transactions/ AFTER the MX-s-6 dim version (pdoQY5Waj63_, 2026-09-28T06:22:06Z) is silver/transactions/2026-09-28.parquet, VersionId fgzzqFZOaFvMw0_B7vCk3ZdnQ1Wx3Kkz, 2026-09-28T21:54:42Z, 34,882 bytes, 0 rows, 73 columns, no cusip column (pyarrow metadata num_rows=0). 1 object of 2,405 versions under the prefix.",
+        "THE DEPLOYED SCRIPT (s3://opal-data-bd/scripts/merge-daily-incremental.py, latest version MF9tYCkR4uu_S0xMVcE4yu1ZPYUNonRm, 2026-06-29, 43,492 bytes) is NOT the repo file (59,077 bytes). Its load_bd_assets_dim prints 'load failed: <err>' on an exception and returns None SILENTLY only when `boto3 is None` (deployed lines 97-98), or the dim is empty. No 'load failed' line appears in any of the 10 logs, so a silent path is the one taken. That boto3 is not importable on the host is INFERRED, not measured: no command was run on the instance.",
+        "THE dim CONTENT ITSELF IS NOT THE PROBLEM: the cusip mapping is identical across the 4 dim versions that carry the 12,141-asset universe (pdoQ, bSQW, kitt, qcSd: 0 changed of 12,141 common asset_ids on each pair compared), and the 42 deltas versus the predecessor (4dfwF, 10,937 asset_ids) are all value-to-other-value changes, with 1,204 asset_ids added."
+      ]
+    },
+    "spec_asserts": "MX-m-1 (b) states that merge-daily-incremental.py:57 joins silver/bd_assets_dim.parquet for cusip enrichment on every daily run.",
+    "world_is": "On the run path the SSM document uses, the join is skipped on every run that processes a file. The repo's :57 constant is a real join, in a file the EC2 documents do not run. No silver transaction row written after the dim rewrite carries any dim-derived cusip, because none was written with rows at all.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "WHY ARMED: the day the forwardfill file carries rows, the enrichment stays off on this path and cusip lands null (or whatever the file carried) with a WARN-shaped log line and rc 0. The answer to the MX-m-1 (b) count is 0 of 0 and it is a zero with a named cause, not evidence the 42 deltas propagate. NOT FIXED: no cell covers the deploy of the repo script or the host's Python environment."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W11-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~11",
+    "surfaced_at": "2026-09-28T22:53Z",
+    "one_line": "The portal submodule is an empty directory in this worktree, so the served-page arm of the (d) reader census could only be measured over infra/aws/lambda and the repo's gold scripts, not over portal source.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`ls portal` in the worktree prints nothing and `comp-find ... -- portal/src` returns 'pathspec(s) do not exist'. The first-party reader census therefore covers every file in the worktree corpus (43,870 files scanned in corpus=all) including the Lambda sources under infra/aws/lambda/v2_portal, and excludes the portal repository.",
+        "Within that population the only code that names gold/canonical/lots_unrealized or lots_realized is B_02 (producer), B_03 and C_05 (readers), lib/s3_layout.py (key builders), and gold_freshness_config.yaml (a declared artifact)."
+      ]
+    },
+    "spec_asserts": "MX-m-1 (d): 'Find every reader in the repo with comp-find, and print the denominator. Name the LIVE ones: a scheduled job, a Lambda or a served page.'",
+    "world_is": "The repo is not fully present in a worker worktree: the portal gitlink is not checked out. A served page that reads these keys directly from portal code would not appear.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: served pages in this estate read through the v2_portal Lambdas, which were searched. The exclusion is stated in the (d) record rather than hidden."
   }
 ]
 ```

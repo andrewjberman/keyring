@@ -1441,6 +1441,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "notes": "Not ARMED: the gateway does not run tests at serve time."
   },
   {
+    "id": "NFRA_OPALAI-Z-W17-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~17",
+    "surfaced_at": "2026-09-28T21:10Z",
+    "one_line": "The E11 fix does not reach an already-installed wrapper: install-owned-paths.sh returns 'already wired ... idempotent no-op' when the destination hook mentions owned-paths-check.sh, so the real opal_ai hooks dir keeps the old fail-open wrapper until it is removed and the installer re-run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~AI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/git-hooks/install-owned-paths.sh 'Already wired check' block: `grep -q owned-paths-check.sh $HOOK_DEST` then exit 0 without rewriting (unchanged by this order; bound 1 forbids widening).",
+        "Read-only measure of the real ajb_workspace .git/modules/opal_ai/hooks/pre-commit: grep -c 'owned-paths-check.sh' = 3 (old wrapper wired) and grep -c 'worktree list' = 1 (the first-entry resolution E11 replaces). Nothing was written there."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO OA-e-11 bound 2: 'The issuer installs at the drain' -- the installed wrapper carries the new resolution afterwards.",
+    "world_is": "A re-run of install-owned-paths.sh --submodule opal_ai at the drain is a no-op against the existing old wrapper, so a linked worktree of the real opal_ai outside every parent worktree still skips the lane check (exit 0). The wrapper file must be deleted (or replaced) first, then the installer run; the hook script owned-paths-check.sh itself is read live from the parent and takes the fix without reinstall.",
+    "notes": "Fix is one issuer act at the drain: remove .git/modules/opal_ai/hooks/pre-commit, run the installer with --submodule opal_ai, confirm 'worktree list' no longer appears in it. Filed by the worker; not done here (bound 2)."
+  },
+  {
     "id": "NFRA_OPALAI-Z-W11-S1",
     "project": "NFRA_OPALAI",
     "fabric": "site-z",
