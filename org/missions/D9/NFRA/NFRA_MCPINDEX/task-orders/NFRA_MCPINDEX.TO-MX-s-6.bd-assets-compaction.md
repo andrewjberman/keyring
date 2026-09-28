@@ -52,6 +52,14 @@ Do, as the DS lane (CLAUDE.md rule 13: DS owns these silver scripts and their QA
    AC1 (s4.AC2, `silver/bd_assets.parquet` rewritten) LEAVES this order, because it is gated on the transaction feed,
    not on this pull. MX-s-6 is graded on AC2 (s4.AC3, the dim rewritten) alone. `silver/bd_assets.parquet` is not
    touched.
+   **AMENDED A3 (2.0.0_SA_COO~O, 2026-09-28 ~06:5xZ), on 1.0.0_SA_CTO~O's Z-S37 ruling @86b1b3b5b4:** the builder's commit
+   is gated on `coerce_silver_ids()`, whose only home was inf's tree. Two paths join `<paths>`:
+   - `lib/silver_ids.py` (new) holds `coerce_silver_ids` and `DEFAULT_SILVER_ID_COLS`, moved BYTE-IDENTICAL from
+     `data/inf/scripts/silver/_orion_api_silver_lib.py`;
+   - that inf module keeps its public names by re-exporting them from `lib.silver_ids`. Change nothing else in it; its
+     existing tests must pass unchanged. Print their result.
+   `build_bd_assets_dim.py` imports from `lib.silver_ids` only. A cross-firm import, a copy of the helper and a gate
+   exemption are all REFUSED by that ruling. The criteria are unchanged.
 3. Do not touch served gold. The `holdings_lots` correction is MX-s-2's, under its own sign-off, and only after this
    bridge is current.
 
@@ -67,6 +75,8 @@ data/black_diamond/scripts/silver/
 data/assets/scripts/silver/
 data/black_diamond/tests/
 data/assets/tests/
+lib/silver_ids.py
+data/inf/scripts/silver/_orion_api_silver_lib.py
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.4.0_DS_ClientPlatform~D/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/**
 </paths>
