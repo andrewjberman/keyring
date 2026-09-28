@@ -2491,3 +2491,30 @@
   "notes": "Not blocking this cell's own criterion (IVE69-AC1 passes standalone, isolated and in a no-regression batch of 18 sibling files). Filed per BOUNDS ('never fix a neighbouring defect') rather than touched -- contracts/adapt.ts and contracts/envelope.ts are read-only here."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-S28",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-28T00:33:00Z",
+  "one_line": "Window 20 K10: the live irpt-status answers HTTP 500 Internal Server Error for REQ-67e12718b0ba7c0c70ebb45b (the one READY request) on all three page reads, while its five sibling REQs answer 200 in the same second; separately, the opened-request status read omits selected_tenant where the history-row read carries it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (the 500, irpt-status 5fSyChId); 2.0.0_SA_COO~D (the selected_tenant omission, a page cut after the S25 verdict)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scrubbed HAR deliverables/2.0.0_SA_COO~D/w20-20260928.jsonl (gitignored): GET /status/REQ-67e12718...?selected_tenant=cottonwood 00:29:21.633Z -> 500 apigw EYkzdhm3oAMESVQ=; two GET /status/REQ-67e12718... (no selected_tenant) 00:30:54.750Z -> 500 apigw EYlCAjUQoAMEZNw= and EYlCAjK8IAMEPhw=; all carry X-IRPT-Status-Dates: prospect-v1",
+      "same HAR: REQ-2119def4, REQ-3a1b73a8, REQ-717c91a5, REQ-a8e81b8e, REQ-e2fc5dd5 status reads at 00:29:21Z -> 200 (UNAVAILABLE ANALYSIS_REQUIRES_ATTENTION x4, RUNNING x1)",
+      "page at local DEV 12aa026a: history row 'Open REQ-67e12718b0ba7c0c70ebb45b . revision 1 Status unavailable'; opened request 'The current request status could not be confirmed. | Check status'; sections read 200 renders 46 values (CERTIFIED partial)",
+      "contrast: 2.0.0_SA_COO~Y 102245 measured the same function at 00:04Z answering READY ANALYSIS_READY PER_SECTION 51 for this REQ"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "~Y 102245 and packet W20-1: REQ-67e12718's status read with the prospect-v1 header answers READY ANALYSIS_READY PER_SECTION and RPT-5288c06d opens.",
+  "world_is": "Through the portal route at 00:29-00:31Z the function fails with an unhandled 500 for that REQ only; the page names the failure (no silent state) but cannot open the report.",
+  "notes": "S25 (diagnose, then route) stays open: the page half reads the failure honestly; the blocking half is backend. The selected_tenant omission on the opened-request read did not cause the 500 (the row read carried it and also failed) but is a page defect for internal viewers, same class as S23."
+}
+```
