@@ -113,3 +113,5 @@ for a test) are the close run's, after G-ACCT and G-AUTH. Cutover hookups: remov
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+<status>superseded -- CLOSED for round 1 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: the gate's PASS arm (as Opal_Agent) and its negative arm are the close run's, after G-ACCT and G-AUTH (Andrew's, carded by 1.0.0_SA_CTO), which have not landed. Holding it open would deadlock round 1's L10 on an Andrew act. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in round 2 beside OA-t-1, unchanged, once the gates land. Was: pending.</status>

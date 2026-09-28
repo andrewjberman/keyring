@@ -265,7 +265,14 @@ def evaluate(prd_text, files, coo_lane_of_project=None, designated=None, brief_b
                           % (doc.get("prd_version"), version, half, hashes[half][:12]))
             per[half] = {"state": "STALE", "by": doc.get("signed_by"), "file": name, "detail": detail}
         elif verdict == "SIGNED":
-            per[half] = {"state": "SIGNED", "by": doc.get("signed_by"), "file": name, "detail": "current"}
+            detail = "current"
+            if doc.get("endpoint_hash") and doc.get("half_hash") and str(doc.get("half_hash")) != hashes[half]:
+                # v3.19 keeps this SIGNED (the ENDPOINT is unchanged), but the half's OWN bytes moved since the
+                # signature. Saying a bare "current" here asserted the opposite of what this function computed
+                # (AMGT_HARVST v0.3, 2026-09-28: a CONTRACTS edit read "current"). The state is unchanged.
+                detail = ("current by ENDPOINT hash; this half's text CHANGED since signed (%s -> %s)"
+                          % (str(doc.get("half_hash"))[:12], hashes[half][:12]))
+            per[half] = {"state": "SIGNED", "by": doc.get("signed_by"), "file": name, "detail": detail}
         elif verdict == "REFUSED":
             per[half] = {"state": "REFUSED", "by": doc.get("signed_by"), "file": name,
                          "detail": "review: %s" % (doc.get("review_ref") or "no review_ref")}

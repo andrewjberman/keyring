@@ -112,7 +112,7 @@ if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'comp-(read|find|surpri
     echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  CENSUS-PIPE  $_cstatus  q=$(printf '%s' "$_orig_query" | tr '\n\r\t' '   ' | head -c 80)" >> "$RAIL_LOG" 2>/dev/null || true
     if [ "$_cstatus" = DENY ]; then
       class=CENSUS-FILTERED
-      msg="comp-tool on the HUD: a census command ($_clead_base) pipes into a receiver that can erase its denominator. Use the tool's own --limit, --page, --width, --band, or --json flags. Summary-aware filters containing ENUMERATE or DENOMINATOR are allowed. If no native flag fits, use '# rail-checked: <why>'."
+      msg="comp-tool on the HUD: a census command ($_clead_base) pipes into a receiver that can erase its denominator. Use the tool's own flags (comp-find: --limit, --page, --band, --all; comp-read: --width; other tools: see --help). Summary-aware filters containing ENUMERATE or DENOMINATOR are allowed. If no native flag fits, use '# rail-checked: <why>'."
       emit_deny
     elif printf '%s' "$_orig_query" | grep -qE '#[[:space:]]*rail-checked:' \
          && printf '%s' "$_cs" | grep -qE '\|[[:space:]]*(grep|egrep|fgrep|rg|head|tail|cut|awk|sed|wc)([[:space:]]|$)'; then

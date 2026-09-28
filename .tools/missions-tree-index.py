@@ -188,7 +188,53 @@ class Estate:
                         except Exception as e:  # noqa: BLE001
                             problems.append(("ROW-FIELD", f"row parse error: {e}"))
                     found.append({"D": Dp.name, "M": Mp.name, "code": Pp.name, "folder": Pp, "row": row, "problems": problems})
+        found.extend(self._index_only_projects({(t["D"], t["M"], t["code"]) for t in found}))
         return found, level_viol
+
+    def _index_only_projects(self, seen):
+        """Project rows the git INDEX holds but the worktree does not materialise -- a worker's sparse cone.
+
+        The walk above sees only what is on disk, so on a sparse cone every project outside the cone read as
+        INDEX-ORPHAN (24 false violations, row AMGT_HARVST-Z-W11-S1). The index still carries every path, so
+        a row absent on disk is read from its index blob. On a full checkout nothing is index-only and this
+        adds nothing; a root outside any git worktree (the self-test's scratch estate) adds nothing either."""
+        import subprocess
+        try:
+            ls = subprocess.run(["git", "-C", str(self.root), "ls-files", "-z", "--full-name", "--", f"*/{self.row_file}"],
+                                capture_output=True, text=True, timeout=60)
+            top = subprocess.run(["git", "-C", str(self.root), "rev-parse", "--show-toplevel"],
+                                 capture_output=True, text=True, timeout=30).stdout.strip()
+        except Exception:  # noqa: BLE001
+            return []
+        if ls.returncode != 0 or not top:
+            return []
+        try:
+            rel_root = self.root.resolve().relative_to(Path(top).resolve()).as_posix()
+        except ValueError:
+            return []
+        out = []
+        for full in filter(None, ls.stdout.split("\0")):
+            parts = full[len(rel_root) + 1:].split("/") if full.startswith(rel_root + "/") else []
+            if len(parts) != 4 or (parts[0], parts[1], parts[2]) in seen:
+                continue
+            D, M, code, _ = parts
+            if not (self.re_dir.match(D) and self.re_mac.match(M) and self.re_prj.match(code)):
+                continue
+            if (self.root / D / M / code / self.row_file).exists():
+                continue
+            blob = subprocess.run(["git", "-C", str(self.root), "show", f":{full}"],
+                                  capture_output=True, text=True, encoding="utf-8", timeout=30)
+            row, problems = None, []
+            try:
+                row = json.loads(blob.stdout) if blob.returncode == 0 else None
+                if not isinstance(row, dict):
+                    row = None
+                    problems.append(("ROW-FIELD", "row is not a JSON object (index blob)"))
+            except Exception as e:  # noqa: BLE001
+                problems.append(("ROW-FIELD", f"row parse error (index blob): {e}"))
+            out.append({"D": D, "M": M, "code": code, "folder": self.root / D / M / code, "row": row, "problems": problems,
+                        "index_only": True})
+        return out
 
     def _rel(self, p: Path) -> str:
         try:
@@ -210,6 +256,7 @@ class Estate:
             viol.append(("ROW-FIELD", self._rel(p), msg))
         seen = {}
         valid = []
+        r6_not_graded = []
         for t in tree:
             path = self.home_of(t)
             for pid, msg in t["problems"]:
@@ -266,7 +313,10 @@ class Estate:
             if key not in directives.get(t["D"], []):
                 viol.append(("R5", path, f"{key!r} absent from DIRECTIVES.yaml directives.{t['D']}.members.projects"))
             # R6 the close: a CLOSED row needs the COO's report and the CTO's grades, on the header's outcomes, all REALIZED
-            if str(row.get("dep_stage")) == CLOSE_STAGE:
+            if str(row.get("dep_stage")) == CLOSE_STAGE and t.get("index_only"):
+                # the close documents are not on disk outside a sparse cone; R6 is graded on a full checkout
+                r6_not_graded.append(t["code"])
+            elif str(row.get("dep_stage")) == CLOSE_STAGE:
                 home = self.root / t["D"] / t["M"] / t["code"]
                 hdr, rep, gr, errs = load_close_artifacts(home, t["code"], _WS / CLOSE_SCHEMA_REL)
                 for rid, msg in close_violations(t["code"], hdr, rep, gr, errs):
@@ -307,6 +357,8 @@ class Estate:
             "macros_ratified": sum(1 for v in macros.values() if v["ratification"].startswith(self.ratified_prefix)),
             "value_enums": {f: {"values": list(vals), "source": self.enum_sources[f]} for f, vals in self.enums.items()},
         }
+        if r6_not_graded:
+            denom["r6_not_graded_index_only"] = sorted(r6_not_graded)
         viol.sort(key=lambda v: (v[0], v[1], v[2]))
         return viol, denom, valid, directives
 
@@ -373,6 +425,9 @@ def _print_check(viol, denom, as_json=False):
           " | MACROS.yaml: {macros_ratified} of {macros_directives} directive(s) RATIFIED".format(**denom))
     for f, spec in denom.get("value_enums", {}).items():
         print(f"  value enum {f}: {len(spec['values'])} values from {spec['source']} (read by AST at run time)")
+    if denom.get("r6_not_graded_index_only"):
+        skipped = denom["r6_not_graded_index_only"]
+        print(f"  R6 NOT GRADED for {len(skipped)} CLOSED project(s) outside this sparse cone (read from the git index): {', '.join(skipped)}")
     for a, b, c in viol:
         print(f"  [{a}] {b}: {c}")
     print(f"RESULT: {len(viol)} violation(s)  (denominators on the first line; 0 tree projects is the s.8 baseline, not a blank read)")

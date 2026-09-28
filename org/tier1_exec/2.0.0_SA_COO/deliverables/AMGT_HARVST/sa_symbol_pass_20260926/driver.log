@@ -1,0 +1,43 @@
+=== BATCH 3  exclude-done=batch2.json ===
+  rc=0 elapsed=62s  asked=52 of 71  resolved=49  search_refused=19  never_reached=16  serveable=16
+  gap: sleeping 600s before the next batch (the decay window)
+=== BATCH 4  exclude-done=batch3.json ===
+  rc=0 elapsed=62s  asked=53 of 72  resolved=50  search_refused=19  never_reached=16  serveable=17
+  newly asked this batch: 1
+  gap: sleeping 600s before the next batch (the decay window)
+=== BATCH 5  exclude-done=batch4.json ===
+  rc=0 elapsed=62s  asked=54 of 73  resolved=50  search_refused=19  never_reached=16  serveable=17
+  newly asked this batch: 1
+  gap: sleeping 600s before the next batch (the decay window)
+=== BATCH 6  exclude-done=batch5.json ===
+  rc=0 elapsed=123s  asked=56 of 74  resolved=51  search_refused=18  never_reached=15  serveable=17
+  newly asked this batch: 2
+  gap: sleeping 600s before the next batch (the decay window)
+=== BATCH 7  exclude-done=batch6.json ===
+  rc=0 elapsed=82s  asked=58 of 76  resolved=51  search_refused=18  never_reached=15  serveable=17
+  newly asked this batch: 2
+  gap: sleeping 600s before the next batch (the decay window)
+=== BATCH 8  exclude-done=batch7.json ===
+  rc=0 elapsed=62s  asked=59 of 78  resolved=52  search_refused=19  never_reached=16  serveable=18
+  newly asked this batch: 1
+  gap: sleeping 600s before the next batch (the decay window)
+=== BATCH 9  exclude-done=batch8.json ===
+  rc=0 elapsed=61s  asked=60 of 79  resolved=52  search_refused=19  never_reached=16  serveable=18
+  newly asked this batch: 1
+  gap: sleeping 600s before the next batch (the decay window)
+=== BATCH 10  exclude-done=batch9.json ===
+  rc=0 elapsed=63s  asked=61 of 80  resolved=53  search_refused=19  never_reached=16  serveable=18
+  newly asked this batch: 1
+  gap: sleeping 600s before the next batch (the decay window)
+=== BATCH 11  exclude-done=batch10.json ===
+  rc=0 elapsed=122s  asked=63 of 81  resolved=54  search_refused=18  never_reached=15  serveable=18
+  newly asked this batch: 2
+  gap: sleeping 600s before the next batch (the decay window)
+=== BATCH 12  exclude-done=batch11.json ===
+  rc=0 elapsed=62s  asked=64 of 83  resolved=54  search_refused=19  never_reached=16  serveable=18
+  newly asked this batch: 1
+  gap: sleeping 600s before the next batch (the decay window)
+=== BATCH 13  exclude-done=batch12.json ===
+  rc=0 elapsed=62s  asked=65 of 84  resolved=55  search_refused=19  never_reached=16  serveable=18
+  newly asked this batch: 1
+  gap: sleeping 600s before the next batch (the decay window)

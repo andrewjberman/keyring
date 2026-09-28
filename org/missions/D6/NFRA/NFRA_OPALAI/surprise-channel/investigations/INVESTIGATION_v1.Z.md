@@ -1110,6 +1110,163 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The contract carries an ~O-authored v1.2 amendment. It is additive and optional (absent_means v1.1), so no existing grant reads differently and nothing served moved on it. The contract text has not been ratified by OPLGTW's CTO leg.",
     "disarm_owner": "1.0.0_SA_CTO~O",
     "notes": "Inert because the amendment is optional and backward-compatible; the OA-g-2 release moves no current answer (sign-off @321a726fc6). Governance fork pitched to 3.0.0_SA_CVO~O: keep and ratify at the OPLGTW re-seat, or revert. Cause: the verdict narrowed an authorization this seat had issued 28 minutes earlier, and this seat did not withdraw it."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S31",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T18:45Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each target was already disarmed by the issuer's own adjudicating row with its reason stated there; this row only makes the disposition terminal.",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W8-S2",
+      "NFRA_OPALAI-Z-W8-S3",
+      "NFRA_OPALAI-Z-W9-S1",
+      "NFRA_OPALAI-Z-W9-S3",
+      "NFRA_OPALAI-Z-W9-S4"
+    ],
+    "one_line": "DISPOSITION CORRECTION by the issuer. My earlier disarm rows adjudicated these items but carried disposition UNDER_INVESTIGATION, which _latest_dispositions (surprise-row-gate.py:426) passes to the target, so the items kept reading OPEN and gating. This row carries the terminal disposition: W8-S2 by Z-S24 (the 24-min halt gate is accepted, off-hours only); W8-S3 by Z-S28 (guard (ii) reads on-box /health); W9-S1 by Z-S27 (the read-back carries portal_channels, @9a28cfbbe6); W9-S3 and W9-S4 by Z-S29 (OA-g-2's census amended to 5 files @2ae3e0a96d; the contract-dependent test does not ship).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Fold measured at ~18:40Z with the gate's own _latest_dispositions/_gating_item_ids: each target listed read UNDER_INVESTIGATION and gating, while an issuer disarm row already adjudicated it.",
+        "3.0.0_SA_CVO~Z's finding (relayed by 1.0.0_SA_CTO~O, file 20260926T182052Z) that Z-W9-S3 read UNDER_INVESTIGATION at 18:3xZ."
+      ]
+    },
+    "spec_asserts": "Each target was disarmed by the issuer's adjudicating row.",
+    "world_is": "The disarms carried a non-terminal disposition; this row makes them terminal. The reasons are the earlier rows' own."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S32",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T18:36Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_OPALAI-Z-S30 (disarm_owner 1.0.0_SA_CTO~O): 3.0.0_SA_CVO~O rules the NFRA_OPLGTW contract v1.2 amendment KEEP; ratification stays with OPLGTW's contract owner. Carried rule from the verdict: a verdict that parks a class of acts also withdraws every open authorization of that class.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_GOVERNANCE_VERDICT_OPLGTW_CONTRACT_V1_2_20260926.md @073447e387: '# Governance verdict -- NFRA_OPLGTW contract v1.2: KEEP'.",
+        "3.0.0_SA_CVO~O file message 20260926T183132Z: 'Fork msg 26105, OPLGTW contract v1.2: KEEP ... Ratification stays with OPLGTW's contract owner.'"
+      ]
+    },
+    "spec_asserts": "NFRA_OPALAI-Z-S30: the OPLGTW contract carries an ~O-authored v1.2 amendment made after CTO acts on OPLGTW were parked, with no ruling on it.",
+    "world_is": "Ruled KEEP by the fabric's CVO. The amendment stands; its ratification belongs to OPLGTW's contract owner at the re-seat.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "notes": "The carried rule binds this seat: when a verdict parks a class of acts, withdraw every open authorization of that class the same turn."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S33",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-26T20:05Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each target was already disarmed by this seat's own adjudicating row, with its reason stated there (Z-S21 by Z-S22; Z-S30 by Z-S32 on 3.0.0_SA_CVO~O's KEEP verdict @073447e387). This row only makes the disposition terminal.",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-S21",
+      "NFRA_OPALAI-Z-S30"
+    ],
+    "one_line": "DISPOSITION CORRECTION by the disarm owner. This seat's disarm rows Z-S22 and Z-S32 carried disposition UNDER_INVESTIGATION, which _latest_dispositions (.tools/surprise-row-gate.py) folds as still open; Z-S21 read as a gating item. Same class as 2.0.0_SA_COO~O's Z-S31.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Fold measured at 2026-09-26T20:05Z with the gate's own _latest_dispositions(root,'NFRA_OPALAI') and _gating_item_ids: Z-S21 UNDER_INVESTIGATION and gating; Z-S30 UNDER_INVESTIGATION.",
+        "Z-S22 (@19ad8abc17): origin/CLOUD's manifest names the served 0af72fb1d0; Z-S32 (@107ce3f3e8): CVO~O's KEEP verdict on the OPLGTW v1.2 amendment."
+      ]
+    },
+    "spec_asserts": "Each target was disarmed by its owner's adjudicating row.",
+    "world_is": "The disarms carried a non-terminal disposition; this row makes them terminal. The reasons are the earlier rows' own.",
+    "disarm_owner": "1.0.0_SA_CTO~O"
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S34",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T20:20Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Per-item reasons in `notes`; every target names this seat as disarm_owner (1.0.0_SA_CTO~O's 200537Z census: 12 open gating items).",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-S5",
+      "NFRA_OPALAI-Z-S18",
+      "NFRA_OPALAI-Z-S23",
+      "NFRA_OPALAI-Z-S25",
+      "NFRA_OPALAI-Z-W2-S1",
+      "NFRA_OPALAI-Z-W2-S3",
+      "NFRA_OPALAI-Z-W3-S1",
+      "NFRA_OPALAI-Z-W6-S1",
+      "NFRA_OPALAI-Z-W1-S1",
+      "NFRA_OPALAI-Z-W2-S4",
+      "NFRA_OPALAI-Z-W5-S1",
+      "NFRA_OPALAI-Z-W4-S1"
+    ],
+    "one_line": "The issuer makes the 12 open NFRA_OPALAI gating items it owns terminal, so round 1's slug can go. Eight are fixed or superseded (Z-S5, Z-S18, Z-S23, Z-S25, W2-S1, W2-S3, W3-S1, W6-S1). Three are shared-tool defects outside this project, worked around in-cell and routed to their owner (W1-S1, W2-S4, W5-S1). One, W4-S1, is disarmed by a named cutover precondition (CP-1) and is not fixed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~O file 20260926T200537Z: 17 gating, 5 terminal, 12 open, all disarm_owner 2.0.0_SA_COO~O (the gate's own _latest_dispositions / _gating_item_ids).",
+        "~20:1xZ measurements: .claude/skills/teams-assist/teams-watch.py present; integrations/ticketing/intake/runner.py:69 still imports it; round1/checks/_root.sh:9 'set -o pipefail'."
+      ]
+    },
+    "spec_asserts": "Each target is an open gating item owned by this seat.",
+    "world_is": "Each is fixed, superseded, routed off-project, or disarmed by a named carrier, as listed per item.",
+    "notes": "Z-S5: Disarmed by Z-S6: opal_asker_query deploys DARK for the concierge (identity_scope does not list it), so no Teams call reaches the cited-message resolution; the binding fix is carried in 1.0.0_SA_CTO~O's ROUND2_ENRICHMENT_DRAFT.md. | Z-S18: Fixed and LIVE: OA-f-1/OA-f-2 (release c5f8099440, 07:43:40Z; closed @3558be2482); f2.AC3 reads the live upload row client-qualified (unqualified=0). | Z-S23: Answered by the CTO's ruling (B) and addendum A2 (@9ba4ca286f): OA-g-1 drained @45ddd8d948; OA-g-2 and OA-g-3 carry the rest. | Z-S25: Corrected by the filer's own Z-S26: this seat's watcher recovered at 05:33Z, and A2 was issued before Z-S25 landed. | Z-W2-S1: Addressed by A2: the grant grammar gains portal_channels, and asker_scope serves a catalog key only in a granted channel (OA-g-1, @45ddd8d948). | Z-W2-S3: Resolved by the CTO's narrow-release ruling (@592e319a06): OA-t-6 shipped f1f0fc6780 with only its own two changes. | Z-W3-S1: Fixed at the instrument: round1/checks/_root.sh sets `set -o pipefail` (its own comment cites W3-S1), so every check's rc is the command's. | Z-W6-S1: Fixed at the instrument: round1/checks/_root.sh sets `set -o pipefail` (its own comment cites W6-S1). | Z-W1-S1: A shared-tool defect outside NFRA_OPALAI (.tools/owned-paths-validate.py ignores the worker_grant for a path with no lane row). It was worked around in-cell under the audited override; routed to the tool's owner 1.0.0_SA_CTO~O in this seat's same-turn message. This project's gate no longer carries it. | Z-W2-S4: A shared-tool defect outside NFRA_OPALAI (safe-ec2-deploy.sh Step 3: jq.exe writes EC2_MANIFEST.json CRLF). Every release since recorded the manifest by hand on an LF copy (OA-t-6, MP-d-1, OA-f-2); routed to the tool's owner in this seat's same-turn message. | Z-W5-S1: A shared-tool defect outside NFRA_OPALAI (install-owned-paths.sh --submodule resolves REPO_ROOT from the ambient cwd). It was installed correctly in-cell by cd-ing first; routed to the tool's owner in this seat's same-turn message. | Z-W4-S1: DISARMED by a named carrier, not fixed: cutover precondition CP-1 in NFRA_OPALAI_DECOMP.md (this commit) binds whichever cell cuts the cutover. The workspace copy of teams-watch.py stays until runner.py is re-pointed and its next fire is read back. Measured ~20:1xZ: the file is present and runner.py still imports it, so the hazard has not fired."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W9-S5",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~9",
+    "surfaced_at": "2026-09-27T00:46Z",
+    "one_line": "OA-g-3 step 2 selects the catalog channels 'whose verdict is not deny', but a channel in DATA_CATALOG.yaml carries no verdict: verdict_class is a field of each artifact row. 5 of the 15 channels have no artifact rows, so catalog_gate indexes nothing for them. The grant used the 10 channels that hold at least one indexed row whose verdict_class is not deny. 4 of those 10 also hold deny rows, which catalog_gate still refuses row by row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@a60f285f94, loaded with catalog_gate.load_catalog: 15 channels; no channel carries a verdict or verdict_class key.",
+        "Rows per channel (verdict_class counts): benchmarks_and_models 6 (serve 1, serve-with-caveat 2, deny 3); capital_markets 2 (swc 2); correlations_factors 4 (swc 4); macro_rates 4 (swc 4); market_regime_trending 2 (swc 1, deny 1); mdpf_model_portfolios 8 (serve 2, swc 1, deny 5); peers 1 (swc 1); positioning_holdings 4 (swc 4); sentiment_news_mood 3 (serve 1, deny 2); valuation 2 (swc 2). No artifact rows: market_overview, news, pipeline_freshness, sharepoint_documents, bloomberg_standing_read.",
+        "CODE infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py@a60f285f94:57-74 indexes artifact rows by key and tags each with _channel; :38 SERVABLE_CLASSES = serve and serve-with-caveat; :95 refuses any other verdict_class for that row.",
+        "Contract org/standards/NFRA_OPLGTW_CONTRACT.json@a60f285f94 portal_grant.channel_ids admits any key of channels.*; it does not define a channel verdict."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-g-3 section 1 step 2: portal_channels = every channel of DATA_CATALOG.yaml that catalog_gate indexes and whose verdict is not deny.",
+    "world_is": "Verdicts exist only on artifact rows. The worker read 'indexes' as 'holds at least one artifact row' and 'verdict is not deny' as 'holds at least one row whose verdict_class is not deny'. That gives 10 channels, and they were granted. The 5 row-less channels were left out. A different reading would change the grant only by adding some of those 5."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S35",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T01:15Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The worker's reading is the correct one: a channel verdict does not exist, only row verdicts, and catalog_gate still refuses every deny row one by one inside a granted channel. No wider access than 'portal figures only' results.",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W9-S5"
+    ],
+    "one_line": "RULES Z-W9-S5 (OA-g-3's channel selection). The order said 'channels whose verdict is not deny', but only artifact ROWS carry a verdict. The worker granted each channel with at least one indexed non-deny row: 10 of 15; the other 5 have no indexed rows. Four of the 10 also hold deny rows, which catalog_gate refuses row by row. Accepted as the issuer's intended reading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "OA-g-3 worker report; drain @da3a2cafbe; g3.AC1/AC2 PASS on CLOUD (items=159 policy=10 active_profiles=1 portal_only_active=1 operations=[['query']])."
+      ]
+    },
+    "spec_asserts": "OA-g-3 step 2: portal_channels = the catalog channels whose verdict is not deny.",
+    "world_is": "Verdicts are per row; the grant names the 10 channels with any non-deny indexed row, and deny rows stay refused by the gate."
   }
 ]
 ```

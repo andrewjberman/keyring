@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.2",
+  "prd_version": "v0.3",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -694,7 +694,12 @@ contract defect.
 **`C-HV-EVENT-SPINE`.**
 - The gold `chatter_event` table (`s3://opal-data-harvest/amgt/harvest/gold/chatter_event/date=2026-09-22`, builder
   output) holds clustered runs of UTC days for one security.
-- The working rule: tier A+B articles >= 2, from >= 2 publishers, merged across gaps of <= 1 day.
+- The working rule: tier A+B articles >= 2, from >= 2 publishers **each contributing at least one tier-A article**,
+  merged across gaps of <= 1 day. *(L10 addendum, round 9, `1.0.0_SA_CTO~Z`: the publisher count is taken over tier-A
+  articles only. The prior rule counted tier-B co-mentions, and round 9's L9 (`ADJUDICATION_v17` @`6073975682`) found 4
+  of 12 events that were not coverage about their own security -- one Nvidia PC story became a Lenovo, Dell and
+  Microsoft event with 0 tier-A articles. FWD-6's ACCEPT asks for "bursts of real coverage about the company"; this
+  rule keeps exactly the 8 the L9 graded real.)*
 - Each event carries its lead headline and its articles.
 
 **`C-HV-GOLD-REBUILDABLE`.** Gold is built from silver only. A rebuild from the same silver reproduces identical rows.

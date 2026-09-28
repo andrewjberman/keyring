@@ -68,6 +68,18 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 **ISSUER NOTES:** s.6 items 1 and 2. Base: AC1 FAILS (no sample). The render on 5174 is the issuer's close run (no worker runs vite); AC2 is graded at L9 against those renders.
 
 <status>pending</status>
+
+<status>complete</status>
+
+**WORKER CLOSE (`0.9.0_WK_AMGT_RESAPP~164`):** AC4_SAMPLE.json written with 3 members (RKT_LN_Equity clauses a,b; AMD_US_Equity
+clauses b,c; GOOGL_US_Equity clauses a,c) covering all three clauses, 2 currencies (GBp, USD), 2 round-43 first-mint names
+(AMD, GOOGL). Each fixture freshly captured from the deployed opal-amgt-scoped-api (lambda:Invoke, read-only) into the six
+route keys ui-contract-check.mjs reads, keyed under BA_US_Equity per the note in round43's shape, with `_provenance.captured_at`
+2026-09-26T18:5x:xxZ (after the rs-2 deploy) and `code_sha256` LK9h47juBfZPaAyfztAxDe9z65W2ZtEw6H2IJ/DcO4s=. base_line strings
+produced by calling `lib.research.print.render_pack._model_case_line` directly (byte-identical to the page/export renderer) on
+each fixture's own thesis `model_cases.base` and header CRNCY figure. AC1: members 3; clauses covered ['a', 'b', 'c'];
+currencies 2; first-mint members 2; defects 0; exit=0. AC2: recorded, no verdict (judgment). No surprise row filed (no premise
+failure, no missing writer, no capability gap encountered).
 <round>45</round>
 <slot>~164</slot>
 <fabric>site-z</fabric>

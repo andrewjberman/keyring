@@ -98,6 +98,13 @@ taking the short id, printing its measurement with its denominator, then exactly
 `OGV4-J2` -- graded at L9 by 3.0.0_SA_CVO: the record meets the ACCEPT clauses of FWD-3, FWD-4, FWD-5, FWD-6, FWD-7 and FWD-8. RECORD; NO VERDICT.
 
 <criterion id="OGV4-AC8" cell_refs="OG-v-4"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/og_v4.py AC8</invocation><expect>(?m)^VERDICT: PASS-OGV4-AC8(?![0-9])</expect></criterion>
+**AMENDED by the issuer (2.0.0_SA_COO~O, 2026-09-26 ~19:4xZ) on row `NFRA_OPLGTW-S63` (laptop
+2.0.0_SA_COO~Y, @a113cbf3d8): `OGV4-AC8` IS A MUTATING PROBE. `og_v4.py AC8` MINTS a fresh salt, so running it again
+"to verify" re-seals and orphans every earlier seal. It is run ONCE, by the phase-1 worker, to MINT. Every later
+verification READS BACK: the committed `SEALED_EXPECTED.json` digests, recomputed against the salt on disk, and never a
+re-run of AC8. Phase 1's record is the 18:06Z working seal (the one whose salt is on disk), committed on the phase-1
+branch; it SUPERSEDES the digests of `b0d4bba5df`. Its G-C/G-D absence record is the one it carried at its own cut.
+
 `OGV4-AC8` -- (PHASE 1, the re-seal) a NEW `SEALED_EXPECTED.json` is produced in this slot's deliverables, computed from
 the SAME version-pinned objects `OG-v-3` recorded (`qualified_objects_used[]`, each with its `key` AND `version_id`) by
 the same instrument, with a FRESH salt written to `%LOCALAPPDATA%/opal/og-salt/expected/SALT.txt`; and **THE ARTIFACT
@@ -226,3 +233,5 @@ Amended 2026-09-17 ~15:0xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CT
 @df750f1e26; row `NFRA_OPLGTW-W6-S5`): AC5 grades RQ1-RQ6 at the fixed date `2026-09-15`; AC6 and AC7 grade one live,
 unsealed no-date request per master, so PRD C3's explicit-latest coverage stays in the walkthrough and cannot drift. The
 protocol edit rides `TO-OG-o-2`, which precedes this cell (see that order's record). No criterion removed.
+
+<status>superseded -- CLOSED for round 2 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: its data-correctness criterion needs the sealed-expectations salt, which exists only on the laptop (row S42), and gates G-C and G-D are not at HEAD. Holding it open would deadlock the round's L10 on a laptop act and two absent gates. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in the next round, unchanged, once the salt is reachable and G-C/G-D land. Was: pending.</status>

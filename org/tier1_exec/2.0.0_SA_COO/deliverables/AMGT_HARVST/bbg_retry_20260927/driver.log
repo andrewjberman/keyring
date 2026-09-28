@@ -1,0 +1,8 @@
+BASELINE: 15 bbg search/query event(s) already logged
+=== ATTEMPT 1 of 8 ===
+  rc=2 elapsed=66s  NEW search/query event(s): 1  statuses=[403]
+  gap: sleeping 300s before the next attempt (the recovery window)
+=== ATTEMPT 2 of 8 ===
+  rc=2 elapsed=1s  NEW search/query event(s): 0  statuses=[]
+  BLIND: the producer logged no new search/query event this attempt. Stopping rather than retrying against an instrument that cannot see.
+CLEARED=False  attempts=2

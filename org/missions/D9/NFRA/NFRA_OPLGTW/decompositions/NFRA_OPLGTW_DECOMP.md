@@ -921,3 +921,27 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
 5. **The chain count and the constraint table are readings.** M = 64 follows from the 45 edges this document declares; a
    missing edge would show as false width.
 6. **The emulator for DynamoDB conditional semantics is not chosen here.** `OG-d-1` names it; the build ladder applies.
+
+## ADDENDUM R2-k (2.0.0_SA_COO~O, 2026-09-27, on the re-seat @6fba157e76) -- the email-keyed deny cell (row W3-S22)
+
+Ruled: CTO ruling 97251 (row S17) placed W3-S22 in round 2's email-keyed authorization cell. `1.0.0_SA_CTO~O` re-affirmed
+it @244cd0d80f and ruled the five design calls @2ae58221ab (`deliverables/1.0.0_SA_CTO~O/RULING_R2-k_FIVE_CALLS_20260927.md`;
+contract v1.3 adds `email_deny`; PRD v1.0 C2 and C6 each gain one clause). The design is
+`deliverables/2.0.0_SA_COO~O/R2-k_EMAIL_DENY_CELL_DESIGN_20260927.md` @500aac7e4d. Ordered before `OG-v-4`/`OG-v-5`
+(the 09-18 ruling), which stay HELD behind it.
+
+| cell | what it is | serves | writes | status |
+|---|---|---|---|---|
+| `OG-e-1` | BUILD: the hashed-email deny record, its guard on `/login` + `/sprint*` + legacy `/callback`, the writer's same-transaction put, and `deny-backfill` | C2, C6 (PRD v1.0 @2ae58221ab); row W3-S22 | `GW/app/access_state.py`, `GW/app/data_entitlement.py`, `GW/app/server.py`, `GW/app/token_broker.py`, `GW/ops/schwab_entitlement_admin.py`, `GW/tests/test_email_deny.py` (new), `GW/tests/test_owner_gate.py` | COMPLETE @ed13cfee26 |
+| `OG-e-2` | SERVED: the narrow gateway release of OG-e-1 (live commit + OG-e-1's two gateway commits), under never-widen | C2, C6; row W3-S22 | `infra/aws/ec2/EC2_MANIFEST.json`, the NEVER-2 ledger | COMPLETE @bc66889185 (live fe94911257) |
+| `OG-s-1` | SERVED: `/sprint` for the owner only (Andrew-direct 2026-09-27 ~19:5xZ, @785fc4d71f): `SPRINT_VIEW_ALLOWED_EMAILS` added to deploy-to-ec2.sh's `.env` literal, shipped as a narrow release under never-widen; supersedes the OA-g-3 deny backfill; W3-S22 disarms on landing | C6; row W3-S22 | `GW/deploy-to-ec2.sh`, `infra/aws/ec2/EC2_MANIFEST.json`, the NEVER-2 ledger | COMPLETE (live 6a98a0553a) |
+
+The SERVED steps follow as their own cells, each under never-widen:
+- a narrow gateway release from the live commit plus OG-e-1;
+- the grant-writer Lambda: NO CELL NEEDED (measured 2026-09-27 ~19:5xZ). `mcportal-grant-writer-lambda` does not exist
+  in AWS (get-function-configuration: ResourceNotFoundException); `mcportal_grant_writer.tf` is not applied, and
+  NFRA_MCPORTAL MP-a-1 creates it. Its `build_package.py` stages `ops/schwab_entitlement_admin.py` and
+  `app/access_state.py` byte for byte from the tree at build time, so the first build already carries OG-e-1's
+  same-transaction deny put and no-email refusal. MP-a-1's cut must stage from a tree at or after @2d0f2dda83;
+  any CLOUD HEAD today qualifies;
+- the OA-g-3 backfill, which WAITS on Andrew's open card.

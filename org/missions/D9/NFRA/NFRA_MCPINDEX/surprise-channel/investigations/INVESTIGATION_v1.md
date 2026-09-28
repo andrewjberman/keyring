@@ -1234,6 +1234,975 @@ carries none.
     "world_is": "On site Z that step is UNRUNNABLE -- it exits 1 before doing anything. Any AE deploying a Lambda from a Windows device silently loses the last_deployed_commit / last_deployed_at half of Rule 4's record unless they read the exit code and route around it by hand. build-and-upload.sh's own artifact_s3_key / artifact_sha256 write is UNAFFECTED -- it goes through node, not this reader -- so the map looks half-updated rather than untouched, which is the shape that hides the miss.",
     "disarm_owner": "2.0.0_SA_COO~O",
     "notes": "SCOPE: not fixed here, deliberately. TO-MX-s-3 bound 1 is 'One function's code. No schedule, event rule, role, layer or other function changes', and record-terraform-deploy.sh is shared CI tooling for 218 functions -- editing it mid-deploy is exactly the rider that bound forbids. The fix is one argument in two places (encoding='utf-8' at :259 and :340; the writer does not need it today but is one ensure_ascii=False away from needing it, so both). FOR THIS DEPLOY the two fields were written BY HAND, reproducing the tool's own documented rule rather than inventing one: last_deployed_commit = the last commit touching the function's source_dir (753fe90fb1), explicitly NOT HEAD (4dc8fa1221) -- the script's own :198-210 note records that a HEAD-derived or files[]-derived value makes verify-local.sh report non-packaged files as undeployed change. The hand-write is recorded here so it is auditable as a workaround and never mistaken for the tool having run."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-26T18:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S12"
+    ],
+    "one_line": "NARROWS AND CORRECTS MY OWN Z-S12. I filed it as 'the recorder cannot READ the file'. Measured: the recorder's read+write pair MANUFACTURES the corruption it later dies on, and the two writers of lambda-source-map.json hold OPPOSITE encoding policies, so the ASCII property MX-s-5 just restored is enforced by nothing.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE LOOP, EXERCISED one character in, not reasoned: pass 0, a file authored in UTF-8 holding ONE U+2014 em dash. pass 1, the recorder's own read (:259 bare open, cp1252 here) plus its write (:340 json.dump) -> the single character has BECOME THREE, U+00E2 U+20AC U+201D, and the file still looks ASCII because json.dump escapes them. pass 2, build-and-upload.sh's node updater re-emits those three as literal UTF-8 bytes. pass 3, the recorder reads again and RAISES on byte 0x9d. That reproduces the MX-s-3 failure state including the exact byte value.",
+        "SO THE READER IS THE CORRUPTER, not merely the victim. :259 decodes UTF-8 bytes as cp1252; :340 then writes the mangled characters back faithfully. Nothing complains, because the output is still valid ASCII JSON. The loud failure is the SECOND symptom, and it only arrives once a pass happens to produce a byte the code page has no character for.",
+        "THE TWO WRITERS DISAGREE, measured with both controls green (node rc=0 AND the output bytes verified to have changed, so a 0 would be node's own 0): python json.dump defaults to ensure_ascii=True and escapes non-ASCII, keeping the file readable by a default-codepage open(); node JSON.stringify does not escape and writes the character LITERALLY. One node write of any future non-ASCII value re-breaks the recorder exactly as before.",
+        "A FIRST MEASUREMENT OF MINE WAS INVALID AND THE CONTROL CAUGHT IT. My first node arm reported 0 non-ASCII bytes and I nearly recorded 'the writers agree'. I had not checked node's exit code: it was rc=1, so the bytes I read were still PYTHON's output. A second attempt also failed (rc=1, wrong argv index). Only the third run, with rc=0 AND a positive control proving node had actually rewritten the file, returned the real answer -- which was the OPPOSITE of the first reading.",
+        "THE HISTORY SAYS THIS HAS BEEN HAPPENING FOR MONTHS AND NOBODY JOINED IT UP. A git pickaxe on the exact 8-codepoint run returns 105 commits touching it. Four commit subjects name the mechanism outright: 911f95d458 'restore pure ASCII after the recorder's own write mojibaked it' (2026-09-14, 0.9.0_WK_POSN_ASTTAX~20), 13ec619b49 and c08ace5530 the same week, and d6e5fbe667 (0.7.0_AE_CloudOps~Z) 'drop the serialization churn my own record-terraform-deploy...'. Seats have been hand-repairing the symptom repeatedly; the repairer was the cause.",
+        "WHY MX-s-5's FIX HOLDS ANYWAY, and why a subset would not have: cp1252-reading pure ASCII is lossless, so with 0 non-ASCII characters left the loop has nothing to mangle. Verified after the fact -- the recorder ran to exit 0 and the file still reads 0 non-ASCII characters afterwards. That is CLAUDE.md's 'ALL non-ASCII out' arm working as designed."
+      ]
+    },
+    "spec_asserts": "Z-S12, my own row, said: 'record-terraform-deploy.sh ... CANNOT RUN on any device whose default encoding is not UTF-8. Its reader at :259 is a bare open().' It classed the hazard INERT on the grounds that the tool fails closed and corrupts nothing.",
+    "world_is": "True but shallow, and the INERT call was wrong. The tool does not merely fail on corruption it inherited -- it CREATES that corruption on every pass over any non-ASCII character, silently, and only becomes loud later. Z-S12's remedy (take the characters out) is still the right act and is done. What Z-S12 missed is that nothing PREVENTS recurrence: the two writers' opposing policies mean the next non-ASCII value written by node re-arms the loop. Hence ARMED, not INERT.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "NOT FIXED HERE, deliberately. MX-s-5 bound 1 is 'The one data file, plus the recorder re-run. No other file changes', and the order's own step 2 says 'Do not fix other tools here.' The fix is one argument in two places: encoding='utf-8' at record-terraform-deploy.sh :259 and :340. The reader is the urgent half; the writer needs it only to stay correct if ensure_ascii is ever turned off. A durable guard would be a commit-time ASCII check on lambda-source-map.json, which would have caught all 105 of those commits -- proposing it, not implementing it (CLAUDE.md section 2: never implement a gate unless Andrew asks)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S14",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T18:45Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W2-S7",
+      "NFRA_MCPINDEX-Z-W3-S11"
+    ],
+    "one_line": "DISPOSITION CORRECTION by the issuer. My earlier disarm rows adjudicated these items but carried disposition UNDER_INVESTIGATION, which _latest_dispositions (surprise-row-gate.py:426) passes to the target, so the items kept reading OPEN and gating. This row carries the terminal disposition: W2-S7 by Z-S7 (v6.AC1 reads all 1069 catalog strings, planted control caught); W3-S11 by Z-S2 (MX-t-8 amended to the 3 tools catalog_gate resolves).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Fold measured at ~18:40Z with the gate's own _latest_dispositions/_gating_item_ids: each target listed read UNDER_INVESTIGATION and gating, while an issuer disarm row already adjudicated it.",
+        "3.0.0_SA_CVO~Z's finding (relayed by 1.0.0_SA_CTO~O, file 20260926T182052Z) that Z-W9-S3 read UNDER_INVESTIGATION at 18:3xZ."
+      ]
+    },
+    "spec_asserts": "Each target was disarmed by the issuer's adjudicating row.",
+    "world_is": "The disarms carried a non-terminal disposition; this row makes them terminal. The reasons are the earlier rows' own.",
+    "dismissal_reason": "Each target was already disarmed by the issuer's own adjudicating row with its reason stated there; this row only makes the disposition terminal."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S15",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-26T20:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-4 step 3's premise is wrong, and fixing the login will NOT restore the compaction. convert_assets_to_silver.py gates write_compacted on --backfill, not on the absence of --no-compacted; the scheduled path passes --latest, so silver/bd_assets.parquet has NEVER been written by a scheduled run.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GATE, read at the single call site: the script has exactly ONE `write_compacted(df)` call, at line 279, and line 278 reads `if args.backfill and not args.no_compacted:`. Compaction is therefore conditional on --backfill. The absence of --no-compacted is necessary but NOT sufficient, which is precisely what the order's step 3 assumes.",
+        "WHAT THE SCHEDULE ACTUALLY PASSES: the SSM document opal-bd-asset-dim-download runs `python3 convert_assets_to_silver.py --latest`. No --backfill, anywhere in the document. So on the scheduled path the compaction branch is unreachable -- not skipped by a flag, simply never entered.",
+        "CONSISTENT WITH THE FROZEN ARTIFACT: silver/bd_assets.parquet last moved 2026-04-14, which is a manual --backfill, not a scheduled run. The DS measurement recorded the file as frozen and read it as a symptom of the download outage; it is independent of it.",
+        "NO DRIFT BETWEEN REPO AND DEPLOYED, so the code read IS the code running: the S3 copy s3://opal-data-bd/code/silver/convert_assets_to_silver.py (2026-05-11, 9680 bytes) and the repo copy data/black_diamond/scripts/silver/convert_assets_to_silver.py are byte-identical, sha256 0b9983667285. The repo file is git-tracked and not ignored.",
+        "AN INSTRUMENT TRAP I WALKED INTO AND RECORD SO THE NEXT READER DOES NOT. `comp-find 'convert_assets_to_silver' --band HEAD` returned a MEASURED ZERO over 76,147 files, and on that zero I briefly concluded the script had no repo copy and lived only in S3. That was WRONG: the file is named exactly that, is tracked, and sits at data/black_diamond/scripts/silver/. A plain `ls` found it in one call. The HEAD band's zero was the instrument, not the world."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 3: 'Restore the compaction to silver/bd_assets.parquet. Check what the SSM document passes to convert_assets_to_silver.py; it writes the compacted file unless --no-compacted is passed.'",
+    "world_is": "It writes the compacted file only under --backfill. The SSM document passes --latest and has never passed --backfill, so --no-compacted is a red herring: adding or removing it changes nothing. Two consequences the order does not anticipate. (1) Step 3 is NOT downstream of step 1 -- repairing the Black Diamond login restores the date partitions but leaves the compacted file frozen exactly where it is. (2) The remedy is a change to the script's condition, and under CLAUDE.md rule 13 data/*/scripts/silver/*.py is DS-owned for commit-to-QA-deploy, so it is NOT this AE lane's to make. Passing --backfill from the SSM document would compact, but it also rebuilds silver from backfill_v2 + forwardfill_v2 on every scheduled run, which is a different and much larger act than the order asked for -- naming it here so it is visibly REJECTED rather than silently unconsidered.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "NOT FIXED HERE, and the ownership is the reason rather than the bound: rule 13 puts the silver script on the DS lane. Routing, not acting. MX-s-4 bound 4 also forbids meeting a criterion 'by a route this face does not name', and --backfill-on-a-schedule is exactly such a route. AC2 (silver/bd_assets.parquet written after issue) therefore CANNOT PASS from this lane as the order is written, whatever happens to the login -- that is the refusal MX-s-4 bound 4 asks me to report with its measurement, and this row is it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S16",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-26T21:40Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Ruled and re-routed: the compaction and bridge rebuild are DS-owned silver acts (rule 13), now order NFRA_MCPINDEX.TO-MX-s-6 to 0.4.0_DS_ClientPlatform~D; MX-s-4 is amended to steps 1-2 (AC1, AC4).",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S15"
+    ],
+    "one_line": "DISARMS Z-S15 (0.7.0_AE_CloudOps~I, BLOCKING). It is correct: convert_assets_to_silver.py writes the compacted file only under --backfill, and the schedule passes --latest, so MX-s-4 step 3's premise was wrong and its AC2/AC3 could not pass from an AE lane. MX-s-4 now carries only the login and the honest exit. The compaction fix and bridge rebuild are MX-s-6 (DS), reusing s4.AC2/AC3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Row Z-S15 @b629459239 (0.7.0_AE_CloudOps~I).",
+        "MX-s-4 amended and MX-s-6 issued in this commit."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 3: the converter writes the compacted file unless --no-compacted is passed.",
+    "world_is": "It writes it only under --backfill; the remedy is a DS script change, now MX-s-6."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S17",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-27T00:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The estate's own honest-exit idiom STRANDS its EC2 runner: 5 of the 6 Black Diamond download documents place `exit 1` BEFORE `shutdown -h +2`, so every failing run leaves a t3.medium up with no auto-stop net. MX-s-4 step 2 inherited the defect by copying the idiom, and it fired on the first real run.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IT FIRED, on this lane's own act. The ad-hoc run at 2026-09-26T23:31Z failed at login as expected; SSM correctly recorded Failed/ResponseCode 1; and i-0e6f6dc014fdcf1cd (bd-assets, t3.medium) was left RUNNING. Re-read ~35 minutes later: still running, idle.",
+        "NO AUTO-STOP NET EXISTS FOR IT: `cloudwatch describe-alarms` filtered to that instance returns [] -- an empty list, not an unread. So nothing reaps it; the only stop is the `shutdown -h +2` the `exit 1` now skips, or a hand.",
+        "IT IS A CLASS, NOT THIS DOCUMENT: line positions of `exit 1` vs `shutdown -h` across the six BD download documents -- allocation 48/60, asset-dim 55/59, realized 51/55, transaction 47/51, unrealized 51/55, and fees has no `exit 1` at all. FIVE OF SIX place the exit first and therefore strand on every failure. allocation, realized, transaction and unrealized have carried this since before MX-s-4 existed.",
+        "AND A REASSURANCE OF MINE THAT WAS WRONG, recorded because the reasoning error is the point. In commit 4b3a757410 I wrote 'The pattern does not leak instances in this fleet', resting on a single `describe-instances` that showed no bd-* runner up at that moment, plus the argument that allocation uses the same idiom and fails daily. That was A SNAPSHOT ANSWERING A QUESTION ABOUT A STANDING PROPERTY. The structural read above is what should have been run, and it says the opposite. I had the lesson banked and leaned on the snapshot anyway.",
+        "THE FIX IS A REORDER, NOT A REVERT: arm the shutdown BEFORE the non-zero exit, so the run reports Failed AND the instance still stops. Both properties, one line moved. Not applied -- stopping or re-deploying against a running instance interacts with the human-confirmation gate below."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 2: 'Make the wrapper's exit code honest. A failed download or merge returns non-zero, so SSM records Failed. This is a producer reporting its own result, not an alarm.' The estate's four already-correct documents were taken as the reference implementation.",
+    "world_is": "The exit code is now honest -- that part worked, and SSM recorded Failed where it recorded Success before. But the reference implementation carries a second, unstated defect: its `exit 1` short-circuits the shutdown. Making the wrapper honest, by copying the estate, also made it leak a t3.medium per failure -- and this producer fails every day. The two properties were never in tension; they only appeared so because the idiom put them in the wrong order.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "IMMEDIATE, AND GATED: i-0e6f6dc014fdcf1cd is running and idle right now. CLAUDE.md Agent Autonomy puts stopping an EC2 behind human confirmation, so this lane has NOT stopped it and has surfaced it to Andrew instead. The instance is billing until he answers; that cost is this act's and is named rather than buried. SCOPE: the reorder of asset-dim's own document is within MX-s-4 step 2 and is proposed to Andrew in the same breath. The four sibling documents are NOT this order's -- bound 1 -- and are routed, not touched. fees is a third case again: it has no `exit 1`, so it neither reports honestly nor strands."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S18",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-27T02:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A LOG commit silently reverted the ADHC_DSFLOW.004 sweep: 64b6b9d65a (\"log(COMP_LEARNS.session13)\", 275 files changed / 16,609 deletions) removed `from __future__ import annotations` from 98 files, and 60 of them are STILL missing it at HEAD 74db08f005. The commit-gate requires that line, so each one is a refusal waiting for the next seat that touches it -- it fired on this lane at the start of MX-s-6 step 1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE STRIP, read off the commit itself: `git show 64b6b9d65a --unified=0` deletes the line `from __future__ import annotations` from 98 DISTINCT files (counted by pairing each `-from __future__...` with its enclosing `+++ b/` header, de-duplicated). The commit's subject is `log(COMP_LEARNS.session13): CVO ruling reception + revised iter-7 ...` and its stat line is `275 files changed, 4018 insertions(+), 16609 deletions(-)`, including whole test files removed (tests/exec_summary/test_llm_generator.py, 742 lines; tests/owned_paths_check_test.py, 196). A log commit with that shape is the finding: the deletions are not what its subject describes.",
+        "IT UNDID A DELIBERATE SWEEP, not an accident of authorship. a5ac27a275 is `feat(ADHC_DSFLOW.004): backfill sweep -- from __future__ import annotations + ruff clean`, whose own body says it adds the line to 62 gold + 33 silver/bronze scripts. For convert_assets_to_silver.py the two commits are exactly `1 insertion` then `1 deletion` of the same line.",
+        "THE LIVE STATE, which is not the historical diff -- measured per file at HEAD by `git show HEAD:<path>`, denominator 98: 60 still MISSING the line, 33 re-added since (one of those 33 is this lane's own commit a2d25dd90b a moment ago, which is why the count reads 60 and not the 61 measured at cb5f440613), 5 no longer at HEAD. The counter moved by exactly the one file this lane touched.",
+        "GRADED, because the gate refusal and a runtime break are not the same claim. Of the 60, an AST walk over annotation nodes only (arg, kwonly, return, AnnAssign) finds PEP-604 `X | Y` unions in THREE: data/black_diamond/scripts/gold/B_01b.classify_new_securities.py, data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py, data/black_diamond/scripts/silver/lib/ticker_overrides.py. The other 57 are gate hygiene only -- nothing in them needs the future import to evaluate.",
+        "AN INSTRUMENT ARTIFACT OF MINE, recorded so the next reader does not inherit it: my first pass reported FOUR, the fourth being infra/aws/lambda/ci/record-terraform-deploy.sh. That is a SHELL script; ast.parse raised SyntaxError on it and I had put the UNPARSEABLE marker into the same list as real hits, so a parse failure counted as an exposure. The number is three.",
+        "IT FIRED ON THIS LANE, which is how it was found: `.tools/commit-gate.sh` refused convert_assets_to_silver.py with `BLOCKED: missing \\`from __future__ import annotations\\` -- required for PEP-604 union-type syntax on Python 3.9 runners (ADHC_DSFLOW.004)` at the start of MX-s-6 step 1. Found off-task, not hunted."
+      ]
+    },
+    "spec_asserts": "ADHC_DSFLOW.004 / .tools/commit-gate.sh: `from __future__ import annotations` is present as the first import of the 62 gold + 33 silver/bronze pipeline scripts the sweep a5ac27a275 covered, and is required there for PEP-604 union-type syntax on Python 3.9 runners.",
+    "world_is": "For 60 of the 98 files the sweep's line was removed again by 64b6b9d65a and has not come back. The gate therefore refuses each of those files on the next commit that touches it, which is a per-seat tax rather than a break, and the three carrying PEP-604 annotations are additionally exposed IF a runner is Python 3.9. WHAT IS NOT MEASURED, and what would move this row to ARMED: the actual Python version on the runners that import those three. On 3.10+ PEP-604 needs no future import and the whole row is hygiene; on 3.9 the three raise at import. This lane did not measure a runner, so the row is filed INERT rather than asserted either way. ADHC_DSFLOW.004's own wording is the only basis for the 3.9 premise.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "NOT FIXED HERE, and the reason is scope rather than difficulty: the repair is a one-line re-add per file across 60 files in gold, silver and bronze, which is a sweep of its own and touches trees MX-s-6 does not name (its <paths> reach data/black_diamond/scripts/silver/ and data/assets/scripts/silver/ only). Riding it on a compaction deploy would also put 60 unrelated scripts into a commit whose subject is the converter. This lane added the line to the ONE file its order owns (convert_assets_to_silver.py) because the gate blocked that commit, and routes the class. RECOMMENDATION for the issuer: re-run the ADHC_DSFLOW.004 sweep as its own cell, and before that, ask whether 64b6b9d65a reverted anything ELSE -- the deleted test files above suggest the 16,609 deletions are worth a read in their own right, and this row deliberately stops short of that claim because it measured only the one line."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S19",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T03:05Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A repo-wide hygiene regression outside NFRA_MCPINDEX, routed by this seat's same-turn message to 1.0.0_SA_CTO~O as a one-line sweep; the one file MX-s-6 owns is already fixed.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S18"
+    ],
+    "one_line": "RULES Z-S18 (0.4.0_DS_ClientPlatform~D). Confirmed: 64b6b9d65a (1.1.0_SA_CTO, 2026-04-27, a 'log' commit touching 275 files) removed 'from __future__ import annotations' from 98 .py files; 59 are still missing it at HEAD after the DS lane fixed its own converter. Each is a commit-gate refusal waiting for the next seat. Routed off-project as a sweep, not carried by MX-s-6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer re-measure ~03:0xZ: of the .py files 64b6b9d65a changed, 59 lack the line at HEAD while their parent version had it."
+      ]
+    },
+    "spec_asserts": "The DSFLOW.004 sweep's 'from __future__ import annotations' line holds across data/*/scripts.",
+    "world_is": "59 files lost it in a log commit; the sweep is routed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-27T03:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The issuer's MX-r-3 hand-off counts 14 NFRA_MCPINDEX worker commits on the gateway path; the author-anchored census reads 12, and the other 2 are clean drain merges by 2.0.0_SA_COO~O whose SUBJECT names the worker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --full-history --no-merges --format=%an CLOUD@cb5f440613 -- infra/aws/ec2/opal-gateway | grep -c '^0\\.9\\.0_WK_NFRA_MCPINDEX~' = 12 (the same 12 without --full-history): 650c9a99cb 119a49eef0 37f208249f 4bfab1bcf2 8829b066d1 81d37aafda 2c25c4c831 84a725073b d36d31f8c5 bc0cde67f0 e1cdb12550 bcb48cf626.",
+        "An unanchored grep of '%H %an | %s' for '0.9.0_WK_NFRA_MCPINDEX~' returns 14 lines: the 2 extra are b10111278c (parents 9dd139a74d bf5cb6b2fa) and fe618516f3 (parents feaefee0ed cd7a4fedfe), both authored 2.0.0_SA_COO~O, subjects 'drain(... merge 0.9.0_WK_NFRA_MCPINDEX~3/~2 ...)'.",
+        "git show --remerge-diff b10111278c / fe618516f3 -- infra/aws/ec2/opal-gateway prints nothing: neither merge carries a resolution of its own, so the 12 commits carry all of their gateway content.",
+        "Release census on rel-nfra-mcpindex-r2-gateway@110d93fb73: 19 gateway files, equal to the union of the 12 commits' gateway files (0 extra, 0 missing)."
+      ]
+    },
+    "spec_asserts": "Issuer ruling 2 for MX-r-3: the commits on CLOUD touching infra/aws/ec2/opal-gateway whose author is 0.9.0_WK_NFRA_MCPINDEX~<n> -- 'there are 14'.",
+    "world_is": "By author there are 12. The count of 14 matches a substring grep that also hits 2 drain merges authored 2.0.0_SA_COO~O. Those merges have no content of their own. The release carries the 12.",
+    "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-27T03:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "In the release tree, 2 of the 6 named test files fail: test_portal_index (1 of 7) and test_portal_grant (2 of 7). Both read repo files outside the gateway path, and the narrow release pins those files to the base. The same files pass 7 of 7 each on CLOUD@cb5f440613.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release tree /c/tmp/mx-rel @110d93fb73, `timeout 120 python -m pytest tests/<f>.py -q` from infra/aws/ec2/opal-gateway: test_portal_index rc=1 '1 failed, 6 passed'. The failure is test_portal_tools_catalog_refs_resolve at tests/test_portal_index.py:264, `assert sorted(refs.values()) == sources`, and sources is [] because workflows/atom_decomposition/catalog_entries/portal_*.yaml is absent at the base df724ef284.",
+        "test_portal_grant rc=1 '2 failed, 5 passed': test_admin_accepts_portal_only_candidate (KeyError 'portal_grant') and test_admin_rejects_unknown_portal_channel ('... not admitted by this contract (no portal_grant)'). The repo contract org/standards/NFRA_OPLGTW_CONTRACT.json at the base has no portal_grant section. The OA-g-2 release showed the same pair (its row NFRA_OPALAI-Z-W9-S4).",
+        "Control, the same invocation in /c/tmp/mx-r3 @cb5f440613 (CLOUD): test_portal_index rc=0 '7 passed'; test_portal_grant rc=0 '7 passed'.",
+        "Neither the tests nor those repo files ship: deploy-to-ec2.sh:94-98 tars only app, deploy, requirements.txt and identity_tool_allowlist.txt, plus the dashboard bundle."
+      ]
+    },
+    "spec_asserts": "Pre-GO step 2: run the release tree's own relevant tests (test_tool_classification_composition, test_portal_index, test_opal_discover, test_identity_scope, test_portal_grant, test_asker_scope).",
+    "world_is": "4 of 6 pass whole: 7, 4, 9 and 4 passed. 2 of 6 fail on their repo-file reads (3 tests), because the narrow release holds non-gateway paths at the base. The shipped app code is not implicated. test_entitlement_admin was not run because moto is not installed.",
+    "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W1-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~1",
+    "surfaced_at": "2026-09-27T03:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The face names two worktrees, but deploy-to-ec2.sh needs a nested mcportal checkout it does not name. I cloned mcportal at a3bff71ffa into both /c/tmp/mx-rel and a rollback tree /c/tmp/mx-rb, and copied node_modules so that bun install makes no network fetch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deploy-to-ec2.sh:77-80 (release tree @110d93fb73): 'ERROR: no mcportal checkout at $MCPORTAL_DIR' fails closed when $WORKSPACE_ROOT/mcportal/package.json is absent. mcportal is not tracked in the parent repo, and the fresh worktree had none.",
+        "The manifest's services.opal-gateway.mcportal_commit is a3bff71ffa3f5c73aa0fb7ea1e7386434e233054. Both clones were cloned from the workspace's own mcportal repo and checked out at that commit. bun.lock md5 aaeb8134651c4914d5fa124e96f39df8 is the same in both and in /c/tmp/oa-9-rb/mcportal, whose node_modules was copied.",
+        "Build log: 'bun install ... Checked 77 installs across 128 packages (no changes)'. The rollback artifact built this way matches the live S3 object ec2/opal-gateway/opal-gateway-df724ef284.tar.gz in 75 of 75 files by md5 (63 of 63 .py)."
+      ]
+    },
+    "spec_asserts": "Face step 2/4: `git worktree add ... /c/tmp/mx-rel <deployed_commit>`; rebuild the deployed commit's artifact from a clean tree WITHOUT uploading.",
+    "world_is": "Neither tree can build the artifact until a nested mcportal clone exists. I added one at the manifest's mcportal_commit, following the OA-g-2 precedent at /c/tmp/oa-9-rb.",
+    "disarm_owner": "2.0.0_SA_COO~O"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S20",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T03:40Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "S7: the count of 12 by author is correct; the 2 extra were content-free drain merges. S8: the 3 failing tests read repo files outside the gateway path that the narrow release holds at base (R-8) and never ships; they pass 7 of 7 on CLOUD, and no shipped app code is implicated. S9: the mcportal clone at the manifest's mcportal_commit follows the OA-g-2 precedent and made no network fetch. The rollback artifact matches the live one 75 of 75.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W1-S7",
+      "NFRA_MCPINDEX-Z-W1-S8",
+      "NFRA_MCPINDEX-Z-W1-S9"
+    ],
+    "one_line": "The issuer rules the three MX-r-3 pre-GO rows (12-not-14 commits, 2 test files reading base-held repo files, the unnamed mcportal clone) terminal. None bears on the release's served delta.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANNOUNCE_MX-r-3.md drained @ab1ceed3c0: census 19 = 19, rollback 75/75, render ALIGNED"
+      ]
+    },
+    "spec_asserts": "The MX-r-3 face's counts and worktrees are complete as written.",
+    "world_is": "Three face imprecisions, each resolved without touching the shipped set."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S21",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T05:05Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each hazard is measured closed at CLOUD. W3-S7: portal_index/integration.py landed at bc0cde67f0, so the feared phase-2 refusal did not hold the module. W3-S10: tests/test_entitlement_admin.py test_ogz2_ac08 names portal_index and opal_discover by name and pins 51 (:347-360). Z-S10: MX-s-2 was SUPERSEDED @8668dd09a5 and its AC3 retired with it; MX-s-6 grades the bridge. Z-S4 and Z-S5: MX-s-3 complete @d9efea9be2 with AC PASS on 'converter occurrences>=1' (the deployed bundle carries the converter) and 'funds whose guard counts the holdings feed 2 of 2'.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W3-S7",
+      "NFRA_MCPINDEX-Z-W3-S10",
+      "NFRA_MCPINDEX-Z-S10",
+      "NFRA_MCPINDEX-Z-S4",
+      "NFRA_MCPINDEX-Z-S5"
+    ],
+    "one_line": "The issuer closes five ARMED rows whose hazard is gone at CLOUD: two overtaken by the held-branch drain, one retired with its superseded order, two repaired by MX-s-3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree CLOUD shows portal_index/integration.py (bc0cde67f0); test_entitlement_admin.py:347-360 at CLOUD; order faces MX-s-2 (8668dd09a5) and MX-s-3 (d9efea9be2)"
+      ]
+    },
+    "spec_asserts": "Each target row's hazard stands until disarmed.",
+    "world_is": "All five are disarmed by acts already landed; the gate's fold still read them open because no adjudicating row existed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S22",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T05:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "one_line": "record-terraform-deploy.sh:218 picks its JSON tool by a hardcoded path to one device's bun (/c/Users/AndrewBerman/.bun/bin/bun), so the same deploy record runs bun on that device and python everywhere else. The two paths have different encoding behaviour, which is how Z-S13's loop stayed invisible on the laptop.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 216-229 infra/aws/lambda/ci/record-terraform-deploy.sh at CLOUD 3cc88e7b7d"
+      ]
+    },
+    "spec_asserts": "CLAUDE.md: NEVER write device-specific logic into ajb_workspace -- derive, don't hardcode.",
+    "world_is": "Pre-existing. Kept out of MX-s-7's scope (bound 2); MX-s-7 makes the python path correct, which is the path site Z takes."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S23",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T05:20Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Routed off-project with a named owner. 1.0.0_SA_CTO~O (msg 20260927T051535Z) assigned both to 0.4.0_DS_ClientPlatform~D, queued after the Z-S18 sweep. Z-S3: DS fixes the source mirror_conversion.py:330; AE vendors the four Lambda copies (eclipse :275, orion :277) through Terraform under a never-widen sign-off, because served silver moves. Z-S6/Z-S11: read the conversion cause first, and no backfill until it is known. Neither serves an NFRA_MCPINDEX FWD.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S3",
+      "NFRA_MCPINDEX-Z-S6",
+      "NFRA_MCPINDEX-Z-S11"
+    ],
+    "one_line": "The issuer closes Z-S3 (the pandas-3 dtype guard in five mirror_conversion copies) and Z-S6/Z-S11 (4 pathfinder dailynav partitions failing conversion) as routed: the CTO named 0.4.0_DS_ClientPlatform~D the owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/inbox/2.0.0_SA_COO/~O/read/20260927T051535Z_1.0.0_SA_CTO_O_Re_owners_for_Z-S3_Z-S6_Z-S11.md"
+      ]
+    },
+    "spec_asserts": "An ARMED row is disarmed by its disarm_owner.",
+    "world_is": "Both hazards remain in the world, now owned by a named DS seat outside this project."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S24",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-27T06:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "THIRD instance of Z-S3's pattern, and the one with the sharpest consequence: convert_assets_to_silver.py:153 wraps its FLOAT_COLS cleaning AND its pd.to_numeric in `df[col].dtype == object`, and pandas 3's read_excel hands a text column the `str` dtype, so on a pandas-3 runner the whole block is skipped and price / coupon_rate / last_dividend would land in silver as STRINGS rather than doubles. INERT today: the scheduled runner's own output proves it is not firing in production.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE GUARD, read at its only call site: data/black_diamond/scripts/silver/convert_assets_to_silver.py:153 is `if col in df.columns and df[col].dtype == object:` and the block it guards does BOTH the $ , % stripping AND `df[col] = pd.to_numeric(df[col], errors='coerce')`. So a False guard skips the numeric conversion itself, not merely a cleaning nicety. FLOAT_COLS = Price, Coupon Rate, Last Dividend.",
+        "THE PREDICATE, measured on this device rather than reasoned about: on pandas 3.0.3, `pd.read_excel` of a column holding '$1,234.50' returns dtype `str` -- `dtype == object` is False and `pd.api.types.is_string_dtype` is True. That is the exact input path load_xlsx uses (pd.read_excel(BytesIO(body), sheet_name=0)).",
+        "WHY IT IS INERT, AND THE ORACLE IS THE PRODUCER'S OWN OUTPUT, not a version guess: s3://opal-data-bd/silver/assets/2026-06-18.parquet, written by the SCHEDULED runner on 2026-06-19, carries price, coupon_rate and last_dividend all as physical type `double`. So on the runner the block DID run, and the runner is not on a pandas that reproduces this. The defect is latent, not live.",
+        "WHAT WOULD ARM IT: a pandas upgrade on the bd-assets runner (i-0e6f6dc014fdcf1cd, t3.medium, per row Z-S17). The runner's pandas version is NOT measured in this row -- named as the missing number rather than assumed, because it is the only thing standing between INERT and live.",
+        "IT IS ONE PATTERN, THREE TIMES. data/assets/scripts/silver/etf_conversion.py:209 already carries the corrected form with the comment 'NOT `dtype == object`: pandas 3 infers a column of strings as the `str`' plus a belt at test_etf_conversion.py:445; mirror_conversion.py:330 was the second and is fixed at 8ba0d6645b under row Z-S3; this is the third. A repo-wide read of `dtype == object` shows further hits in convert_fees_to_silver.py:131, convert_eclipse_portfolios_to_silver.py:179, _canonical_silver_lib.py:146 and INF_D_08.nmec_nmnc_nna.py:89 that are NOT graded here -- they were seen, not assessed, and saying so is the point.",
+        "AN ASYMMETRY IN MY OWN MX-s-6 CHANGE, recorded so nobody assumes the compaction fix covers this: merge_compacted casts each run onto the compacted file's stored arrow schema via _align_to_schema, so silver/bd_assets.parquet would stay `double` even on a pandas-3 runner. The DATE PARTITIONS from write_silver_partitions would not -- they take the frame's dtypes as they are. The compaction path is accidentally robust here and the partition path is not."
+      ]
+    },
+    "spec_asserts": "convert_assets_to_silver.py's own FLOAT_COLS contract: the listed columns are numeric in silver, with vendor text ('$1,234.50', '-3.99E-05') cleaned and converted by pd.to_numeric before the parquet write.",
+    "world_is": "On pandas 2 that holds. On pandas 3 the guard's `== object` is False for the `str` dtype read_excel now produces, so the cleaning and the to_numeric are both skipped and the columns would be written as strings -- a physical TYPE divergence in served silver, which is a harder failure than Z-S3's (there the physical type stayed double and only the error quality and pandas metadata were wrong). Production evidence says this is not happening today.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "NOT FIXED HERE, and the reason is class rather than difficulty: MX-s-6's step 1 is a compaction-condition fix under a 'no served key moves' bound, and this is a different defect in the same file that changes the dtypes of served silver columns -- it needs its own cell, its own test, and a deploy, not a rider on a lint-adjacent commit. The one-line remedy is the same as Z-S3's: add `or pd.api.types.is_string_dtype(df[col].dtype)`, with a test that plants a `str`-dtype FLOAT_COL and asserts the written column is double. RECOMMENDATION to the issuer: cut it together with a measurement of the bd-assets runner's pandas version, because that number decides whether this is a repair or a pre-emption, and cut the four ungraded sibling hits named above into the same read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S25",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-27T07:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "ANSWERS Z-S6's original question and Z-S11's remaining unknown, as a NEW row per Z-S11's own precedent: filepoint delivered DailyNAV.csv on 2026-08-29 and 2026-08-30 with `Median 30 Day Spread Percentage` EMPTY for both funds; that column is declared float64, convert_filepoint builds its frame from csv.reader so the empty field is the STRING '' and not NaN, and _numeric_or_raise('') raises VendorDriftError per fund BEFORE any write -- 2 dates x 2 funds = the 4 missing partitions. Reproduced on the real bytes. No backfill taken.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE TRADING-CALENDAR CHECK RAN FIRST AND DOES NOT EXPLAIN IT, which is the finding I nearly stopped on. 2026-08-29 is a Saturday and 2026-08-30 a Sunday, and lib/trading_calendar.is_trading_day reads False for both. But per fund over the silver span 2026-07-15..2026-09-26 (74 calendar days, 72 partitions): missing TRADING days = 0, missing non-trading days = 2, and partitions PRESENT on a non-trading day = 20. This tree writes weekend partitions as a matter of course, so 'it is a weekend' explains the two absences only by ignoring the twenty presences.",
+        "THE DISCRIMINATOR IS IN THE BYTES. Bronze is present, on time and header-clean on all four dates; ETF_Holdings.csv is 15,103 bytes on all four and its silver landed on all four. DailyNAV.csv is 539 bytes on the converted 2026-08-22/23 and 531 on the failed 2026-08-29/30, and the difference is the trailing field: '...,0.0373,08/21/2026,0.2447' against '...,0.0158,08/28/2026,' -- the median spread is simply absent, everything else populated.",
+        "THE MECHANISM, REPRODUCED RATHER THAN INFERRED, against the real S3 bytes of both files. etf_schemas.py:202 declares the column float64. convert_filepoint parses with csv.reader and builds pd.DataFrame(body, columns=header), so every cell is a string and an empty CSV field is '' rather than NaN; _to_arrow_etf routes non-numeric float64 columns through mc._numeric_or_raise, whose string arm is a bare float(v) with no empty case, so float('') raises ValueError and becomes VendorDriftError \"non-numeric text '' in a float64-declared column -- refusing to guess\". Printed side by side: 2026-08-22 PFDE '0.2447' -> 0.2447 and PFOE '0.3401' -> 0.3401; 2026-08-29 PFDE '' -> VendorDriftError and PFOE '' -> VendorDriftError. In both files `header matches declared: True`, so this is NOT header drift, a ragged row, a shell delivery or the conservation AC.",
+        "WHY FOUR AND NOT TWO: the raise fires inside the per-fund loop and before write_partition, so one empty cell takes down the whole unit for BOTH funds on that date.",
+        "DENOMINATOR AND A FALSIFICATION TEST THAT PASSED. All 74 DailyNAV.csv deliveries in bronze (2026-07-15..2026-09-26, the whole corpus) were fetched and scanned across the 10 float64-declared vendor columns. Deliveries carrying an empty numeric cell: exactly 2 -- 20260829 and 20260830, both {'Median 30 Day Spread Percentage': 2}. Those are precisely the 2 dates absent from silver (74 bronze, 72 silver per fund). Had any delivery carried an empty float cell and still converted, this account would be wrong; none did. 9 of the 10 float64 columns have never been empty."
+      ]
+    },
+    "spec_asserts": "Z-S6 asked which 2 dates and whether the gap is a vendor non-delivery or a conversion failure. Z-S11 answered '4 partitions of fact_dailynav for 2026-08-29 and 2026-08-30, a CONVERSION failure, not a vendor non-delivery', and left open: 'Why the conversion failed is STILL unmeasured -- reading the converter's own refusal for those two units is the next act.'",
+    "world_is": "That next act is done, and it refines both labels. The file ARRIVED, so it is not a non-delivery; the converter did exactly what it is written to do, so calling it a conversion failure misplaces the defect. It is a vendor FIELD omission meeting a strict parse-or-raise contract, amplified by the refusal being per-unit so one cell fails two funds. Z-S11's file-level facts were all correct.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "READ ONLY: no backfill, no re-conversion, no forced run, no code change, no S3 write, no vendor contact -- the order said read first and the remedy is a ruling. This row does NOT disarm Z-S6 or Z-S11 and claims no `adjudicates`: it answers them, and the disarm is the owner's once the question below is ruled. THE ADJUDICABLE QUESTION, one question: should an EMPTY field in a float64-declared column be NULL, or is it drift? The docstring's reasoning ('coercing it to null would be judgment, fillna's evil twin') is about unparseable TEXT like 'n/a'; an ABSENT field is arguably different, and _numeric_or_raise already returns None for None and for NaN, so null-for-absent is a distinction it partially makes already. (a) treat '' as NULL -- one clause beside the existing None/NaN arm; the 4 partitions then convert with a null spread, but it edits a RATIFIED Rule-17 boundary shared with the 4 vendored copies and needs Z-S3's never-widen path. (b) keep the refusal and name these two dates a permanent hole -- but then the completeness guard reads FAIL forever on a cause nobody will fix, which is the state Z-S6 objected to. Recommended: (a), narrowly, empty-string-to-null for a declared-numeric column only. Full evidence: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.4.0_DS_ClientPlatform~D/PATHFINDER_DAILYNAV_GAP_CAUSE.md"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S26",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T07:15Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in the world by MX-s-7, drained @ce2587a5e5. All 3 python open() calls in record-terraform-deploy.sh now name encoding='utf-8' (s7.AC1: calls=3 bare=0). The script's own update block, run on a map holding one U+2014, writes it back intact (s7.AC2), where at base it wrote 3 mojibake characters. The recorder no longer manufactures the corruption.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S13"
+    ],
+    "one_line": "The issuer closes Z-S13: the deploy recorder's read-write loop no longer turns one non-ASCII character into three (MX-s-7 complete).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s7.AC1/s7.AC2 PASS on CLOUD after drain ce2587a5e5; at base both FAIL"
+      ]
+    },
+    "spec_asserts": "Z-S13: nothing prevents recurrence of the source-map mojibake.",
+    "world_is": "The reader and writer are both explicit UTF-8, so the loop is broken at its source."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W7-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~7",
+    "surfaced_at": "2026-09-27T08:50Z",
+    "one_line": "MX-s-8 Phase A step 6's terraform plan read 'No changes' because the yang-lambda module's source_code_hash comes from an S3 artifact's metadata, not the local source tree -- neither Phase A nor Phase B names the build-and-upload step that must run before a plan/apply against these 4 functions can show or ship the vendored edits.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/modules/yang-lambda/main.tf:36-39 -- aws_lambda_function.this reads s3_bucket=var.artifact_bucket, s3_key=var.artifact_key, source_code_hash=data.aws_s3_object.artifact.metadata[\"content-sha256\"]; nothing in the module reads the local .py tree.",
+        "terraform plan -input=false -no-color run 2026-09-27T08:4xZ in infra/aws/terraform/opal-assets AFTER the 4 vendored mirror_conversion.py edits + the etf manifest hash edit were made and staged, printed exactly 'No changes. Your infrastructure matches the configuration.' (rc=0) -- confirmed against the just-edited worktree, not a stale read.",
+        "infra/aws/lambda/ci/build-and-upload.sh:18-28 documents the required order: edit source -> commit -> build-and-upload.sh {pipeline} -> TF plan (shows updates) -> TF apply -> 0-diff plan afterward. Neither TO-MX-s-8 PHASE A (steps 1-7) nor PHASE B (steps 8-12: ledger, safe-apply, smoke, record, close) names a build-and-upload (or equivalent artifact rebuild+S3-upload) step for opal-assets-silver-{blackdiamond,etf,eclipse,orion}.",
+        "TO-MX-s-8 section 1 step 6 verbatim: 'The plan must name ONLY the 4 functions' code attributes. Anything else: STOP, a BLOCKING row.' -- read literally this PASSES (nothing beyond the 4 functions is named, because nothing is named at all), but the plan run is not evidence of what Phase B's apply would actually deploy: without the artifact rebuild+upload, step 9's 'terraform plan must name only the 4 functions' code attributes' before approving would ALSO read 'No changes', and an apply run against that would be a silent no-op that never ships either fix to a running Lambda."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MX-s-8 step 6 treats a terraform plan run against the edited vendored copies as the pre-GO preview of the deploy Phase B's apply will perform, and step 9 gates that same apply on the plan naming only the 4 functions' code attributes.",
+    "world_is": "The 4 functions deploy via the yang-lambda module's S3-artifact pattern (bucket+key+content-sha256 metadata), so a plan or apply run against the current, un-rebuilt S3 artifacts is a 0-diff no-op regardless of what the local vendored .py files now contain. Reaching a plan that actually previews the fix -- and an apply that actually ships it -- needs an artifact build+upload step (infra/aws/lambda/ci/build-and-upload.sh or equivalent) run first, which is outside this cell's Phase A <paths>/EGRESS CLASS (declared: none beyond get-function/get-layer-version/terraform apply) and is not named as a member of either phase in this task order.",
+    "notes": "BLOCKING on the evidentiary value of step 6's plan and on step 9's gate, not on Phase A's literal steps (which this worker completed and recorded as written). ARMED: if GO is given on the current Phase B step list without an artifact rebuild+upload step added, the apply will land 0-diff and the fix will not ship while the ledger/record steps may read as a completed deploy. disarm_owner 2.0.0_SA_COO~O decides whether to add the build-and-upload leg (naming it, its own never-widen bound, and its S3 write target) to Phase B before authorizing GO, or to route it to whichever lane owns infra/aws/lambda/ci/build-and-upload.sh's egress."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S27",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T09:40Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Ruled by the issuer's amendment A1 to MX-s-8 @a296ac3598. PHASE B now uploads each function's artifact with build-and-upload.sh and verifies the write, keeping the prior VersionIds as rollback keys, before the apply. The apply must read 'Plan: 0 to add, 4 to change, 0 to destroy' on the 4 functions only, and a post-apply 'plan -detailed-exitcode' must exit 0. So a 0-diff apply can no longer pass as a deploy; AC2 reads the running zips in any case.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W7-S1"
+    ],
+    "one_line": "The issuer rules W7-S1: MX-s-8's GO phase gains the artifact build + upload that makes the Terraform apply non-vacuous (the MX-s-3 ledger legs L2-L4 pattern).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-s-8 face @a296ac3598 PHASE B steps 8-13; infra/aws/terraform/modules/yang-lambda/main.tf:36-39 (source_code_hash from the S3 artifact)"
+      ]
+    },
+    "spec_asserts": "MX-s-8 PHASE B as first cut: the apply alone ships the vendored edits.",
+    "world_is": "The apply alone reads 0-diff; the upload is a named member of the act."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W7-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~7",
+    "surfaced_at": "2026-09-27T10:44Z",
+    "one_line": "record-terraform-deploy.sh's CHANGELOG.json writer failed with a SyntaxError in a temp-generated Node script during MX-s-8 step 13's record; the source-map commit (this order's own leg) still landed correctly and unaffected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "record-terraform-deploy.sh opal-assets --function <4 names> --deploy-ledger nfra-mcpindex-silver-mirror-guard run 2026-09-27T10:44:31Z: stdout carried 'File \"C:\\Users\\OPALBL~1\\AppData\\Local\\Temp\\rdeploy-changelog-GSAS2H.js\", line 18 ... SyntaxError: unterminated string literal (detected at line 18)' followed by 'Note: CHANGELOG.json write failed \u2014 source map update still committed'.",
+        "The script's own exit code was 0 and its next act (lambda-source-map.json commit) landed at c57d287517 with correct artifact_sha256 == deployed CodeSha256 for all 4 functions and correct last_deployed_commit e0750442c9 -- the CHANGELOG failure did not propagate into the recorded artifact this task order depends on."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MX-s-8 step 13 names record-terraform-deploy.sh as the recorder, with a fallback to hand-recording only if it 'still refuses' (i.e. exits non-zero / fails outright).",
+    "world_is": "The recorder ran to completion (exit 0) and its load-bearing write (lambda-source-map.json + git commit) succeeded and was verified independently by this worker; only a secondary, non-gated write (CHANGELOG.json, generated via a temp Node script with a template/escaping defect at its line 18) failed inside the same invocation. No hand-record fallback was needed for the artifact this order's AC2/ledger depend on.",
+    "notes": "Not blocking to MX-s-8: CHANGELOG.json is not named in this task order's <paths>, its proof_required, or AC1/AC2. Filed because a partial-failure inside a tool this order names as its recorder is exactly the kind of thing a future caller of the same script should not have to rediscover. disarm_owner 2.0.0_SA_COO~O decides whether the CHANGELOG writer's temp-script generation is worth a fix or is accepted as a known non-blocking limb."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S28",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T11:25Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in the world. The Z-S25 arm is live in all 4 silver functions: MX-s-8's s8.AC2 reads 4 of 4 on CLOUD after the drain @18bc4ffe30, with LastModified 10:35:46Z. 0.4.0_DS_ClientPlatform~D wrote and verified the 4 named pathfinder fact_dailynav partitions at 10:55Z (record 70789d7294). The served completeness guard re-reads at the scheduled 23:30Z sweep, which is the acceptance.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S25"
+    ],
+    "one_line": "The issuer closes Z-S25: the empty-field arm is deployed in 4 of 4 functions and the 4 missing pathfinder partitions are backfilled.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s8.AC2 on CLOUD 4 of 4; DS~D msg 20260927T111343Z and PATHFINDER_DAILYNAV_GAP_CAUSE.md section 9 @70789d7294"
+      ]
+    },
+    "spec_asserts": "Z-S25: the converter fails a whole unit on an exactly-empty numeric field.",
+    "world_is": "The deployed converter maps that field to NULL; the 4 partitions exist."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S29",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-27T20:15Z",
+    "one_line": "A plaintext Black Diamond portal username AND password for the 49F account sit in two TRACKED docs (bd-exporter README.md, 5 lines; docs/WORKING_WORKFLOW.md, 1 line), in git since c4eeb4b8d6 (2026-01-13) and on the pushed history.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-files --error-unmatch infra/aws/ec2/bd-exporter/README.md -> tracked; first commit c4eeb4b8d6 2026-01-13",
+        "git grep -c 'BD_PASSWORD=Q' -> README.md:5, docs/WORKING_WORKFLOW.md:1 (the value itself is not reproduced here)"
+      ]
+    },
+    "spec_asserts": "Credentials live in Secrets Manager only; bd-49f-auto-login reads them via BD_CREDENTIALS_SECRET_ID pointers, never values (run-bd-auto-login.sh header).",
+    "world_is": "A literal password is committed in two docs. BD's MFA and the device-trust token (added ~2026-06-23, Andrew 2026-09-27) limit, but do not remove, the exposure. Disarm: Andrew rotates the BD 49F password (a vendor-account act), the new value goes to Secrets Manager only, and the literal is replaced by a SECRET-ID pointer in both docs. The history rewrite is destructive git and needs Andrew's word; it is not proposed here.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S30",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-27T21:48Z",
+    "one_line": "MX-s-4 amendment A4's REST replacement for the asset-dim download cannot be built inside this order's <paths>: two of the three files it must change are outside them (one DS-owned under rule 13), and the asset dim's three classification columns have no route in the documented DataMining catalog.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "openpyxl header read, both live artifacts: s3://opal-data-bd/forwardfill_v2/assets/AssetDimTXNs_OpalCapital_Daily_2026-06-17_to_2026-06-17.xlsx = 31 columns including 'Asset SuperClass', 'Class', 'Segment', 'CUSIP', 'Symbol', 'Ticker', 'Alternative Identifier', 'Original Asset Name', 'Coupon Rate', 'First Payment Date', 'Last Payment Date'; s3://opal-data-bd/forwardfill_v2/transactions/TRANSACTIONS_DAILY_2026-09-18.xlsx (the live REST pull, LastModified 2026-09-27T00:07:42Z) = 71 columns carrying AssetID, Asset Name, Asset Display Name and Custodial Cost Basis Sync but NONE of those 11.",
+        "comp-read data/black_diamond/API/domains/datamining/endpoints/payloads/field_dictionary.md --enumerate 'Super|super_class|superClass|Alternative|alternative' = 16 hits over a printed denominator of 963 lines / 46 sections: zero hits for a super-class dimension (every 'Super' hit is 'Supervised'); 'Alternative Identifier' id 44 and Classification 'Class' id 1 / 'Segment' id 1138 appear on qt3 and qt4 only, isSelected blank. QUALIFIER, stated: this dictionary's domain is qt1-qt6 as catalogued 2026-07-08 and QUERY_TYPES.md line 13 records qt1 (Snapshot/holdings) as never dumped, so this is an absence in the DOCUMENTED catalog, not a proven absence at the vendor. The saved template proves the fields are obtainable -- the xlsx carries them.",
+        "data/cot/scripts/bronze/cot_bronze_ingest.py:106-115 TABLE_QUERY_TYPE and :131-138 TABLE_DATE_MODE are per-table CODE dicts, and :374 keys the body at TEMPLATE_PREFIX (:65 = 'code/bronze/templates')/{table}.json -- so an 'assets' table needs BOTH a new S3 template object AND edits to that module. Its own comment at :106 ('the table set is config-driven via the template JSONs') understates it: the JSON alone is not sufficient.",
+        "infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py:63-64 -- BD_REST_TABLES = ('transactions','allocations','realized','unrealized') under the comment 'holdings/assets dims are out of scope for this runner'."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 1 as amended A4: replace the asset-dim Playwright portal download with a REST pull following the bd-49f-runner / bd-49f-fees-runner pattern, build no new crawler and no new login, and treat a path this needs outside <paths> as a BLOCKING row the issuer grants.",
+    "world_is": "A4's answer to its own step 1.1 is NO: REST does not already cover the asset-dim table, so the downloader is not merely redundant. Executing step 1.2 requires three write surfaces, and MX-s-4's <paths> names none of them: (1) data/cot/scripts/bronze/cot_bronze_ingest.py -- a rule-13 DS-owned silver/bronze script in cot's tree, needing an 'assets' entry in two per-table dicts; (2) infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py -- <paths> admits infra/aws/lambda/bd-asset-dim-trigger/ only; (3) s3://opal-data-bd/code/bronze/templates/assets.json -- a new S3 template object, which must be a CAPTURED query body, i.e. one read of the persisted 'AssetDimTXNs_OpalCapital_Daily' template from BD. Separately, three of the dim's own columns (asset_super_class, asset_class, asset_segment, read by data/black_diamond/scripts/silver/build_bd_assets_dim.py:109-113) have no documented qt2 route, so the captured body is the only known carrier for them.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a refusal of A4 -- the REST route looks buildable and cheaper than a crawler, and no new login is needed: bd-49f-runner already authenticates from Secrets Manager blackdiamond/49f/session read-only and the assets template is qt2, the same query type it already pulls. The ask is which of three routes the issuer wants: (a) grant this lane the two repo paths (the cot module edit still needs the DS lane's word under rule 13); (b) re-cut step 1.2 as a cell on the DS lane that owns cot_bronze_ingest.py, leaving this lane the bd-49f-runner and template legs; or (c) leave step 1.2 unbuilt this round and close MX-s-4 on step 2 alone, which is already landed and world-verified. This seat took none of them. MX-s-4 step 2 is unaffected: it landed at 03e744ec3f with SSM DocumentVersion 3 Active, legs L1-L3 and L5 closed in org/critical_paths/.open_deploys/nfra-mcpindex-bd-asset-dim-shutdown-order.json; only L4 (one failing run recording Failed with the instance stopped) is open, and i-0e6f6dc014fdcf1cd read State=stopped at 2026-09-27T20:59Z, which lifts the Z-S17 no-interaction constraint."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S32",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-27T22:50Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in the world by MX-s-4 step 2, complete @81c13ee0f9 and on CLOUD. Z-S9: the asset-dim SSM wrapper now reports failure honestly (SSM DocumentVersion 3 Active, landed 03e744ec3f), so a failed run reads Failed, not Success. Z-S17: the stranding order is fixed. Exit now follows the armed 'shutdown -h +2' (the planted probe ssm:e77e84c7 shows the OS 'Shutdown scheduled' line), and i-0e6f6dc014fdcf1cd reads 'stopped' (issuer's describe-instances, ~22:5xZ). Both of Z-S17's disarm conditions are met. Z-S8 (the login root cause) stays OPEN: it is carried by the asset-dim REST cell the CTO ruled @1973056c51, cut after tonight's git freeze. RENUMBERED from Z-S31 to S32 by its author at ~23:0xZ: 0.7.0_AE_CloudOps~I filed a different Z-S31 (the live BD password) concurrently.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S9",
+      "NFRA_MCPINDEX-Z-S17"
+    ],
+    "one_line": "The issuer closes Z-S9 (the SSM wrapper exit 0 on a failed run) and Z-S17 (the stranded EC2 runner): MX-s-4 step 2 is live and the runner is stopped. Z-S8 stays open on the post-freeze REST cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws ec2 describe-instances i-0e6f6dc014fdcf1cd State=stopped; MX-s-4 last <status> complete @81c13ee0f9 on CLOUD; ledger nfra-mcpindex-bd-asset-dim-shutdown-order CLOSED 5/5"
+      ]
+    },
+    "spec_asserts": "Z-S9/Z-S17: a failed BD download reads Success and strands its EC2 runner.",
+    "world_is": "The wrapper exits honestly, and the shutdown is armed before the exit."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S31",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-27T22:56Z",
+    "one_line": "Z-S29 redacted a SUPERSEDED password. The CURRENT live Black Diamond password, hash-identical to the one in Secrets Manager opal/bd/credentials, is still in 18 places across 16 tracked files that Z-S29's census never named -- so tonight's history purge is scoped to the wrong literal.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "A generic detector over a printed denominator of 135 text files under infra/aws/ec2/bd-exporter and infra/aws/ec2/smartx-exporter found 56 literal PASSWORD assignments carrying 6 DISTINCT values by sha256 fingerprint. No value is reproduced anywhere in this row; each is named by length plus a 12-hex sha256 prefix plus a character-class shape (A=upper, a=lower, 9=digit).",
+        "Z-S29's target was fingerprint len=8 sha256=7c3755be9e80 (shape A9a9999!), 8 occurrences: bd-exporter/README.md x5 and bd-exporter/docs/WORKING_WORKFLOW.md x3. That is EXACTLY the count 1.0.0_SA_CTO~O's 224452Z ask declared, so two independent instruments agree on the scope. Redacted and committed @e6482c530c; a generic re-scan now returns 0 occurrences of it.",
+        "THE FINDING: `aws secretsmanager get-secret-value --secret-id opal/bd/credentials` has a `password` field whose sha256 prefix is 161ff0eb3831, len=11, shape Aaaaaaaa999. The redacted len=8 value does NOT match it. Fingerprint 161ff0eb3831 has 18 occurrences across 16 TRACKED files, none named by Z-S29 or by the 224452Z ask: bd-exporter/docs/DEPLOY_RELIABILITY_FIXES.md x3, bd-exporter/docs/PARALLEL_BACKFILL.md, bd-exporter/terraform/QUICK_COMMANDS.md, and 13 files under bd-exporter/src/stepwise/ (allocation-backfill-runner.ts, backfill-runner.ts, download-current-week.ts, download-single-allocation.ts, download-single-week.ts, extended-backfill.sh, test-calendar-limits.ts, test-custom-date.ts, test-login-minimal.ts, test-login-stealth.ts, test-login.ts, test-navigate.ts, test-query.ts). The local copy of the secret was deleted after hashing.",
+        "WHY Z-S29 MISSED IT, stated as a mechanism and not as blame: its census was `git grep -c 'BD_PASSWORD=<one prefix>'`. A single-literal grep can only ever find the literal it was given, and the one it was given happens to be superseded. The guard was exactly as wide as its enumeration. The generic form -- match the ASSIGNMENT, then subtract the values that are variable refs, placeholders or empty -- is what surfaced a second and a third.",
+        "Two further fingerprints are NOT credentials and are named so the denominator is not mistaken for an alarm: len=3 sha256=cd2eb0837c9b (shape aaa, 24 occurrences) and, on the smartx side, len=12 sha256=e3c652f0ba0b (shape aaaaaaaaaaaa) and len=20 sha256=1f8bfc350cd6 (shape aaaa_aaaaaa_aaaaaaaa) -- all-lowercase or snake_case words, i.e. doc placeholders. UNMEASURED, stated: no smartx secret was read, so the smartx pair is classified on SHAPE alone, never on a hash comparison. The 4 real smartx occurrences (len=17 sha256=45f6c37a5582) were in the ask and are redacted."
+      ]
+    },
+    "spec_asserts": "Z-S29: 'a plaintext Black Diamond portal username AND password for the 49F account sit in two TRACKED docs', disarmed when Andrew rotates the password and the literal is replaced by a SECRET-ID pointer in both docs. The 224452Z ask extends that to 6 files and sets the check as 'git grep -l on the literal returns 0 files'.",
+    "world_is": "The 6 named files are clean and the check passes FOR THE LITERAL THE ASK NAMED. But that literal is not the live credential, so the check passing does not mean the credential is out of the tree. The live one remains in 16 other tracked files and on pushed history. TWO CONSEQUENCES: (1) the 03:00-05:00Z history purge, if scoped to Z-S29's file set, will rewrite history around a superseded value and leave the live one in every rewritten ancestor -- the purge scope is the time-critical decision here, not the redaction; (2) rotation is MORE urgent than Z-S29 implied, because what is exposed is current rather than historical. Rotation is Andrew's and is not proposed here.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "This seat did NOT widen the edit to the 16 files, and the restraint is deliberate rather than cautious: 13 of them are under bd-exporter/src/stepwise/ where the pattern is `process.env.BD_PASSWORD || '<literal>'`, i.e. a live runtime FALLBACK and not a doc example. The scheduled path does set BD_PASSWORD from Secrets Manager (opal-bd-asset-dim-download runCommand lines 10-12 and 23-24), so the fallback is dead code THERE, but several of the 13 are hand-run backfill scripts whose invocation path this seat has not read, and blanking a fallback they rely on would break them silently. ONE ASK, to 1.0.0_SA_CTO~O as Z-S29's disarm owner: say whether to extend the same fingerprint-targeted redaction to the 16 files, and relay the corrected scope to whoever holds the purge before 02:45Z. This lane can run the edit in minutes once the runtime question is answered per file."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S33",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-28T05:52Z",
+    "one_line": "The naming gate's context rule REFUSES any NEW file that carries an EXISTING schema column whose name ends in a firm-token segment (e.g. asset_super_class_bd, already at HEAD in build_bd_assets_dim.py), and its printed remedy -- read it through lookup() -- cannot apply to a column name; the carrier that could (a registry exemption) is outside a DS lane's write surface.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: the first version of data/black_diamond/scripts/bronze/pull_bd_asset_dim_rest.py was refused by .tools/naming-gate.py with 'NAMING-GATE: REFUSE 16 graded'. Three of the 16 were asset_super_class_bd at lines 438/441/444, each 'NEW hand-kept carrier (context rule); hand-kept carrier of 'bd' outside every permitted context: read it through lookup('49financial')'.",
+        "THE MECHANISM, from the gate's own header: 'A string is NEW when it is absent from the file's pre-image at HEAD; every string of a --- /dev/null file is NEW.' Newness is per-FILE, not repo-wide -- so a literal already carried at HEAD in a sibling file is still NEW in a new file. Confirmed: git grep -c asset_super_class_bd HEAD -- data/black_diamond/ returns build_bd_assets_dim.py:4.",
+        "THE ASYMMETRY INSIDE THE GATE: the same run graded s3://%s/%s as RAISE-EXISTING/WARN with the reason 'the same literal is already carried at HEAD in .tools/estate-capture.py, so this copy mints nothing'. That mints-nothing grandfather exists and fired for the S3Key rule, but not for the context rule, which has no equivalent. That difference is the whole finding.",
+        "REMEDY REACHABILITY: the gate prints lookup('49financial') as the replacement. That is correct for a bucket or secret literal and this seat took it (16 refusals -> WARN 1). It is not expressible for a COLUMN name, which must match the consuming builder byte-for-byte. The registry carrier that could record it, infra/logic/registry/, is not in this order's <paths>.",
+        "NOT A BLOCKER FOR MX-s-9, stated so this row is not read as one: bronze legitimately ships the VENDOR's own column name (asset_super_class), which build_bd_assets_dim.py already renames to _bd in its own dedup step, so this cell had a correct in-lane route and took it. The row exists because the next NEW file that genuinely must emit a _bd column has none."
+      ]
+    },
+    "spec_asserts": "CLAUDE.md rule 30: 'a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround' -- i.e. every naming refusal has a registry-shaped remedy the refused seat can pursue.",
+    "world_is": "For the context rule on a NEW file, the remedy is registry-shaped but NOT in-lane for the seat that trips it, and for an existing schema column it is not registry-shaped at all. The three reachable outcomes for such a seat are: rename the column (breaks the consumer), remove the enforce file (a fabric-wide switch, not a seat's), or route the work to a seat that owns infra/logic/registry/. A fourth -- constructing the literal by concatenation -- is available and is exactly the hand-typed workaround rule 30 forbids, which makes it the likely silent outcome.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No gate was edited and no enforce file was touched. ONE ASK, non-urgent: whether the context rule should carry the same 'already at HEAD, mints nothing' grandfather the S3Key rule already has. If yes it is a gate edit in the gate owner's lane, not a registry row at all. This lane has no further act here; MX-s-9 landed clean at WARN 1."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S34",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-28T06:10Z",
+    "one_line": "MX-s-6 step 2 as amended (A1 @f87d5b8b77, relayed 060646Z) says to convert the MX-s-9 REST bronze INTO silver/bd_assets.parquet. Those are different objects at different GRAINS: the target is 3,449,107 TRANSACTION rows over 31 columns; the bronze is 12,132 ASSET rows over 15. Executing it as written would destroy the transaction set and break the very builder the step then asks me to run.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TARGET MEASURED (pyarrow metadata + a 200,000-row batch, read from the live object): s3://opal-data-bd/silver/bd_assets.parquet = 3,449,107 rows, 31 columns, 4 row groups. asset_id is NOT unique (3,095 distinct in the 200k sample). It carries transaction_id, trade_date, settle_date, entry_date, price, transaction_type, transaction_sub_type, external_flow, has_contra_account, contra_account_number, Contra Account Name, Description, Action -- transaction-grain columns that have no counterpart at asset grain.",
+        "SOURCE MEASURED: the MX-s-9 bronze s3://opal-data-bd/blackdiamond/49financial/bronze/assets_dim_rest/2026-09-28/assets_dim_rest.parquet = 12,132 rows, 15 columns, asset_id UNIQUE. It is a qt4 (UnrealizedGainLoss) dimension selection: one row per held asset, by construction. It carries no transaction_id and no trade_date.",
+        "THE CONSEQUENTIAL DEPENDENCY: build_bd_assets_dim.py -- the builder step 2 then asks me to run -- reads silver/bd_assets.parquet and derives first_seen_trade_date, last_seen_trade_date and txn_count by groupby('asset_id') over trade_date and transaction_id. If the bronze is written there, those three columns lose their only source and the builder cannot produce the dim at all. The instruction is self-defeating in its own next clause.",
+        "THE OTHER HALF IS ALSO NOT A DROP-IN: silver/bd_assets_dim.parquet = 10,937 rows, 22 columns. The bronze does not carry 12 of them: asset_super_class_bd, coupon_rate, first_payment_date, last_payment_date, custodial_cost_basis_sync, first_seen_trade_date, last_seen_trade_date, txn_count, asset_super_class_blend, super_class_source, opal_asset_class, built_at. A naive union would silently drop 12 columns from a served silver artifact.",
+        "WHY THE AMENDMENT READS PLAUSIBLY, stated as a mechanism and not as blame: my own 060236Z report gave the union counts (12,141 / 1,204 / 9) WITHOUT naming which artifact they were measured against. They are the pull against bd_assets_dim.parquet (the DIM), never against bd_assets.parquet (the TXN file). Two artifacts whose names differ by one suffix, one of which I cited by count and not by name. The ambiguity is mine before it is the amendment's."
+      ]
+    },
+    "spec_asserts": "MX-s-6 step 2 as amended: 'convert your REST bronze into the compacted silver/bd_assets.parquet, union with the 04-14 dim latest-wins (print both counts), then rebuild the bridge', criteria unchanged (s4.AC2 = bd_assets.parquet rewritten, s4.AC3 = bd_assets_dim.parquet rewritten).",
+    "world_is": "s4.AC3 is reachable from the MX-s-9 bronze; s4.AC2 is NOT, and no qt4 pull can reach it. bd_assets.parquet is fed by the TRANSACTION feed (qt2), so it stays gated on MX-s-4's login fix or on a separate REST transaction pull -- which is exactly what the UNAMENDED MX-s-6 said ('its step 2 depends on MX-s-4's login fix'). The amendment removed a dependency that the artifact grain still enforces. THE REACHABLE PATH for the dim, which this seat can execute on one word and has NOT executed: start from the frozen dim (all 22 columns), refresh identity and class on the 10,928 overlapping asset_ids from the pull, append the 1,204 new ones with the txn-derived columns NULL carrying the claim 'absent' (they have no transaction history in the frozen file) and the blend recomputed through the builder's own ETFClassifier -- 12,141 rows, 22 columns, no column lost.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOTHING WAS WRITTEN. No silver key was touched and no builder was run; the two reads above are reads. I am not treating this as a refusal of the step's INTENT -- the intent (make the dim current from the REST pull) is right and is reachable. What is not reachable is the named target for s4.AC2. ONE ASK to 2.0.0_SA_COO~O: re-cut step 2 as the dim-only path above, and leave s4.AC2 gated on the transaction feed. If instead a REST transaction pull is wanted, that is a new cell shaped like MX-s-9 but on qt2, and this lane can take it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S35",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-28T06:25Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Ruled by the issuer's amendment A2 to MX-s-6. Step 2 is DIM-ONLY: the frozen 2026-04-14 dim unioned with the MX-s-9 pull, latest-wins per asset_id, into silver/bd_assets_dim.parquet, all 22 columns kept, transaction-derived columns NULL with the claim 'absent' for pull-only assets. The transaction-grain silver/bd_assets.parquet is not touched. AC1 (s4.AC2) leaves the order as gated on the transaction feed. The seat stopped before any write.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S34"
+    ],
+    "one_line": "The issuer closes Z-S34: A1 pointed the asset-grain pull at the transaction-grain silver file; A2 re-points step 2 at the dimension only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the seat's measurement @b0fdb8fa33: bd_assets.parquet 3,449,107 rows / 31 cols / asset_id not unique; MX-s-9 pull 12,132 rows / asset_id unique"
+      ]
+    },
+    "spec_asserts": "MX-s-6 A1: convert the REST bronze into silver/bd_assets.parquet.",
+    "world_is": "That file is transaction grain; the pull merges into the dimension instead."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S36",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-28T06:25Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "An in-lane route exists. The naming gate grades a string as NEW only when it is 'absent from the file's pre-image at HEAD' (.tools/naming-gate.py:17-18). An EXISTING out-of-pattern string outside a remediations.json surface only WARNs (matrix, :10). data/black_diamond/scripts/silver/build_bd_assets_dim.py already carries 'asset_super_class_bd' 4 times at HEAD, and remediations.json names no data/black_diamond surface (read at 06:2xZ). So MX-s-6 step 2 does the union INSIDE that existing builder, which is in the seat's <paths>, and never adds the literal to a NEW file: a WARN, not a refusal, with no concatenation and no registry act. The general case (a genuinely NEW file carrying a legacy column) is left to rule 30's own non-application clause for existing pipelines (conformance through their own migration project). It is not a rider here.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S33"
+    ],
+    "one_line": "The disarm owner rules Z-S33: MX-s-6 does the dim union inside the existing build_bd_assets_dim.py, where the _bd column literal is EXISTING, so it WARNs and is not refused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py:5-18 (the matrix and the NEW/EXISTING definition), read at HEAD 06:2xZ",
+        "grep -c asset_super_class_bd data/black_diamond/scripts/silver/build_bd_assets_dim.py -> 4",
+        "infra/logic/registry/remediations.json: 'black_diamond' absent (2,387 bytes scanned)"
+      ]
+    },
+    "spec_asserts": "Z-S33: the seat's only reachable outcomes are rename, remove the enforce file, re-route, or concatenate.",
+    "world_is": "A fifth outcome is in-lane and clean: edit the existing builder, where the literal already exists, so the gate WARNs."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S37",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-28T06:38Z",
+    "one_line": "The commit gate requires every build_* function in data/*/scripts/silver/*.py to call coerce_silver_ids(), but that helper exists ONLY in data/inf/scripts/silver/_orion_api_silver_lib.py. Satisfying it from the bd tree means either the FIRST cross-firm code import into data/black_diamond/ or a duplicated second carrier of one convention. Both are precedents; neither is a DS lane's to set.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: .tools/commit-gate.sh BLOCKED the MX-s-6 step 2 commit with three lines on data/black_diamond/scripts/silver/build_bd_assets_dim.py -- missing `from __future__ import annotations`, and build_dim (:85, PRE-EXISTING, April vintage) and build_union_dim (:245, mine) each 'missing coerce_silver_ids() call -- required by ADVI_INFNNA.SILVER-ID-DTYPE-UNIFY'.",
+        "THE HELPER'S ONLY HOME: comp-find 'def coerce_silver_ids' returns 1 hit across 1,761 files -- data/inf/scripts/silver/_orion_api_silver_lib.py:283. The gate's pattern (_SILVER_BUILDER_PATTERNS = ['data/*/scripts/silver/*.py']) is FABRIC-WIDE, so it binds every firm's silver tree to a helper living in one firm's tree.",
+        "NO BD SCRIPT HAS EVER DONE IT: comp-find 'coerce_silver_ids' over data/black_diamond returns a MEASURED ZERO across 178 files. So this is not an established pattern I am declining to follow; it would be a new one.",
+        "THE CALL ITSELF IS SAFE HERE, measured, so this row is about the PRECEDENT and not about risk to this artifact: DEFAULT_SILVER_ID_COLS is (account_id, household_id, rep_id, client_id, registration_id, custodian_id, transaction_id, trans_id). asset_id is NOT among them, and the dim carries none of the eight, so coerce_silver_ids(dim) is a provable no-op ('Missing columns are silently skipped'). It would NOT change the served dim's key dtype, which is str today on both the frozen and the current object.",
+        "WHY NOT JUST COPY IT: .tools/ds-precommit-check.py's own comment warns about exactly this shape -- 'two carriers of one firm-to-token map in this directory, one updated at the rename and one not, nothing comparing them.' A bd-local duplicate of coerce_silver_ids is that defect by construction."
+      ]
+    },
+    "spec_asserts": "ADVI_INFNNA.SILVER-ID-DTYPE-UNIFY, as enforced: every build_* function returning a DataFrame under data/*/scripts/silver/ calls coerce_silver_ids() before returning.",
+    "world_is": "The rule is fabric-wide but its only implementation is firm-local, so the rule cannot be obeyed from three of the four firm trees without creating a cross-firm code dependency or a duplicate. The clean fix is a firm-neutral home (lib/, beside opal_naming.py and trading_calendar.py), which is OUTSIDE this order's <paths> and outside the DS lane. CONSEQUENCE RIGHT NOW: the MX-s-6 step 2 CODE is uncommitted while the silver object it produced is already written and graded PASS -- a producer whose source the shared tree cannot see. That gap is the urgent half, not the precedent.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "I did NOT import across firms, did NOT copy the helper, and did NOT rename my function to dodge the build_* pattern -- all three would set the precedent quietly. ONE ASK to 1.0.0_SA_CTO~O: name the route -- (a) promote coerce_silver_ids to a firm-neutral lib/ and let every silver tree import it, (b) permit the bd->inf import as a one-off, or (c) exempt pre-LGIC builders under Rule 30's existing-pipeline non-application. I can land (b) in minutes; (a) needs a seat that owns lib/. The `from __future__ import annotations` limb of the same block is uncontroversial and I will add it either way. NOTE the pre-existing build_dim (:85) trips this too, so the file cannot be committed at all until this is ruled -- it is not only my new function."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S38",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-28T07:06Z",
+    "one_line": "MX-s-6 A3 granted lib/silver_ids.py in the task order's <paths>, but that is not the gate that refuses: lib/ is owned-paths lane BASE_EXEC (CTO+COO+CVO). A TO path grant and an owned-paths lane are two different mechanisms, and satisfying the first leaves the second untouched. The Z-S37 work is complete and proven but cannot be committed by this seat.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: safe-commit.sh rc=1 -- 'VIOLATION: lib/silver_ids.py -- lane=BASE_EXEC (Base workspace execs -- CTO + COO + CVO (not project-scoped)); agent=0.4.0_DS_ClientPlatform~D not in permitted_agents'. The naming gate passed (WARN 2) and commit-gate passed on 3 of 3 code files first, so this is the LAST gate, not a symptom of the earlier ones.",
+        "THE COMMIT REFUSED ATOMICALLY and that is the good news: git diff --cached is 0 paths, all five files remain in the working tree, and nothing half-landed. Verified by asking the repository (git log, git status), not by reading safe-commit's stdout -- which the tool itself warns against.",
+        "THE GRANT THAT DID HAPPEN IS REAL AND IS NOT THE PROBLEM: MX-s-6 A3 @5b454bd219 added both lib/silver_ids.py and the inf helper to <paths>, and I confirmed that in the WORKING TREE copy of the order before writing either file. The TO surface and the owned-paths lane are simply different instruments with different owners.",
+        "PRECEDENT, same class, three days earlier: 0.0.0_AB_MSTR~Z was lane-barred from org/mcp/broker.py (also BASE_EXEC) and handed the change off rather than overriding -- 'it refused me and it was RIGHT to' (msg 20260926T174514Z, in the CTO, COO and CVO inboxes). I took the same route.",
+        "THE WORK ITSELF IS DONE AND PROVEN, so what is owed is a commit and not a build: py_compile and ruff clean on all three files; behaviour identical to the inf original; 6 real inf silver callers import through the re-export with 0 failures; inf silver tests 17 passed / 1 failed on stale .runtmp cruft that references the helper 0 times; the builder verified by IMPORTING it."
+      ]
+    },
+    "spec_asserts": "MX-s-6 A3: adding lib/silver_ids.py and data/inf/scripts/silver/_orion_api_silver_lib.py to the order's <paths> lets this seat land the Z-S37 move.",
+    "world_is": "<paths> governs the ORDER's write surface; .tools/owned-paths-validate.py governs the LANE, and lib/ is BASE_EXEC there. A3 moved the first and could not move the second, so the grant is necessary but not sufficient. ORDERING CONSTRAINT that makes this atomic rather than splittable by me: build_bd_assets_dim.py loads lib/silver_ids.py BY LOCATION at import, so committing the builder without the lib file would put a builder in the repo that fails on import. lib first, then the rest -- or both in one commit.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "I did NOT take GIT_COMMIT_AUTHOR_OVERRIDE. CLAUDE.md 14a permits it as an audited escape, but it exists for an author/lane mismatch, not for a seat granting itself a lane it does not hold, and the precedent above declined it for the same reason. ONE ASK to any BASE_EXEC seat (1.0.0_SA_CTO~O, 2.0.0_SA_COO~O or 3.0.0_SA_CVO~O): commit lib/silver_ids.py -- it is written, compiles and is behaviour-identical -- and I land the other four in the same minute. Committing lib/ alone is safe: nothing imports it until my commit. 0.7.0_AE_CloudOps~I is the only other live seat and is not BASE_EXEC. Until then the five files sit dirty in the shared tree, which is the part that should not sit."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S39",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-28T07:24Z",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S38"
+    ],
+    "one_line": "Z-S38 is discharged: lib/silver_ids.py landed under BASE_EXEC by its lane holder and the four dependent files followed, verified AT THE COMMITTED STATE rather than at the state tested before the hand-off.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/silver_ids.py committed by 1.0.0_SA_CTO~O @88e4e69e69 under the BASE_EXEC lane it holds, after that seat read and exercised it. The four dependent files committed by this seat @9fb05bc6c1: the inf re-export, build_bd_assets_dim.py (--union-bronze mode, the two coerce calls, future-annotations), the step-2 result and the proof instance.",
+        "RE-VERIFIED AFTER the landing, not carried over from the pre-hand-off run: the bd builder imports and its coerce call leaves asset_id `str` while coercing account_id to Int64; 6 of 6 real inf silver callers import through the re-export with 0 failures; s4.AC3 re-run RESULT: PASS.",
+        "Commit state asked of the REPOSITORY, not read from safe-commit's stdout, with a negative control: a bogus hash fails `git log`. Working tree clean for all five paths."
+      ]
+    },
+    "spec_asserts": "Z-S38: lib/ is owned-paths lane BASE_EXEC, so this seat cannot commit lib/silver_ids.py and the Z-S37 move is stuck with five files dirty in the shared tree.",
+    "world_is": "Discharged by hand-off, which is the route the row recommended and the one 0.0.0_AB_MSTR~Z set on org/mcp/broker.py. THE LANE BARRIER IS UNCHANGED AND IS NOT CLAIMED FIXED: lib/ is still BASE_EXEC and the next non-exec seat needing it hits the same wall. That is correct standing behaviour, not a defect left open -- what this pair of rows records is the working route, and that GIT_COMMIT_AUTHOR_OVERRIDE was available throughout and was not taken.",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The blocker was a lane this seat does not hold, and it was cleared by the lane's holder rather than by an override or a widened grant. Nothing about the gate, the lane config or owned-paths-validate.py was edited. I first tried to close Z-S38 by EDITING IT IN PLACE and the surprise-row gate refused -- 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit' -- so that mutation was reverted surgically and this row is the correction, in the shape the gate and the channel's own 12 prior closures use."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S40",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-28T07:30Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in the world under ruling (a) @86b1b3b5b4. coerce_silver_ids and DEFAULT_SILVER_ID_COLS now live in lib/silver_ids.py (@88e4e69e69, committed by this seat under BASE_EXEC, read and exercised before commit). The inf module re-exports them and the bd builder imports from lib (@9fb05bc6c1, 0.4.0_DS_ClientPlatform~D). Re-verified after both landed (DS~D msg 26168): the builder imports, 6 of 6 inf callers resolve through the re-export, and s4.AC3 PASS. No cross-firm import exists and no exemption was taken.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S37"
+    ],
+    "one_line": "The disarm owner closes Z-S37: the silver-id helper is in lib/, the inf re-export and the bd import have landed, and the gate is satisfied without a cross-firm import.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log @88e4e69e69 (lib/silver_ids.py) and @9fb05bc6c1 (the move)",
+        "DS~D msg 26168 20260928T072756Z: 6/6 inf callers, s4.AC3 PASS, proof instance VALID"
+      ]
+    },
+    "spec_asserts": "Z-S37: the silver-id commit gate is fabric-wide while its helper is firm-local.",
+    "world_is": "The helper is fabric-local (lib/), and both firm trees satisfy the gate through it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S41",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-28T07:35Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The hazard, a BD asset dimension frozen since 2026-04-14 because the portal login failed, is RESOLVED. The cause was BD's MFA (Andrew-direct). MX-s-9 pulled the dim by REST on the existing 49F session (12,132 rows, super-class dim 7). MX-s-6 rebuilt silver/bd_assets_dim.parquet as the union (12,141 rows, 805/805 formerly missing ids carried), re-graded on CLOUD. The portal downloader's failures are now honest (MX-s-4 step 2). The scheduling of the REST pull is NOT covered by this close: it is carried as its own row, filed in this same commit.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S8"
+    ],
+    "one_line": "The issuer closes Z-S8: the BD asset dim is current again by REST (MX-s-9 + MX-s-6), bypassing the MFA-blocked portal login.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s4.AC3 PASS on CLOUD (bd_assets_dim.parquet 2026-09-28T06:22:06Z); MX-s-9 s9.AC1-3 PASS; MX-s-6 instance VALID"
+      ]
+    },
+    "spec_asserts": "Z-S8: the asset-dim download has failed since 2026-06-23 on the portal login, freezing the dim.",
+    "world_is": "The dim is rebuilt from a REST pull; the portal route is bypassed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S42",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-28T07:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "one_line": "The BD asset dimension is current only because of ONE ad-hoc REST pull (MX-s-9, 2026-09-28). Nothing schedules that pull, and the portal downloader still fires on its weekday schedule and fails honestly. The dim will go stale again from the next asset BD adds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-s-9 result: the scheduling spec was reported and NOT built (order bound); bd-asset-dim-pipeline-trigger still runs the portal SSM document weekdays 22:10Z"
+      ]
+    },
+    "spec_asserts": "CLAUDE.md: production pipelines MUST be scheduled; ad-hoc artifacts are never production evidence.",
+    "world_is": "The REST pull is ad hoc and unscheduled; the portal path is scheduled but dead.",
+    "notes": "Carrier: routed to 1.0.0_SA_CTO~O in this issuer's same-turn message, as the next enrichment. Scope: schedule the REST pull and the dim rebuild, and retire the portal asset-dim download; also the dead fees downloader, per the CTO's design @1973056c51."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S43",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-28T08:13Z",
+    "one_line": "MX-s-10 step 2 is BLOCKED: both producer scripts are published and byte-current, but the repo-relative dependencies they import are absent from the entire opal-data-bd bucket, so the ported document cannot run on the instance and its ad-hoc test cannot be fired.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The two scripts ARE deployed and current: `comp-pipescript deployed pull_bd_asset_dim_rest.py --pipeline bd-bronze` and `... build_bd_assets_dim.py --pipeline bd-silver` both read MATCH on basis 'raw bytes (working tree and S3 object are byte-identical)'. So this is NOT a stale-deploy finding; the scripts are fine and the GAP IS THEIR DEPENDENCY CLOSURE.",
+        "The import shapes, read at the cited lines rather than assumed: `pull_bd_asset_dim_rest.py:66` does sys.path.insert of FOUR levels above itself then `:67` `from lib import opal_naming`; `build_bd_assets_dim.py:50` inserts `../gold` then `:51` `from lib.etf_classifier import ETFClassifier`. `opal_naming` in turn reads its registry from disk: :54-55 REGISTRY_FILES = (systems, scopes, tiers, exemptions, remediations, resources, reporting_policies).json under :50 REGISTRY_REL='infra/logic/registry', plus :52 SCHEMA_PATH org/standards/NAMING_SCHEMA.json.",
+        "WHOLE-BUCKET key census of opal-data-bd, with a POSITIVE CONTROL so the zeros are readable as absence and not as an out-of-corpus read: opal_naming = 0 keys, trading_calendar = 0 keys, registry/scopes = 0 keys, and the control etf_classifier = 2 keys (it is published, at code/gold/lib/etf_classifier.py, which is why the BUILDER's dependency resolves and the PULL's does not). Under code/ the denominator is 352 keys.",
+        "The existing deploy idiom in the document FLATTENS: the v3 payload's only python fetch was `aws s3 cp s3://opal-data-bd/code/silver/convert_assets_to_silver.py .` into /opt/bd-exporter. A flat copy puts pull_bd_asset_dim_rest.py where its four-levels-up path resolves to `/`, so `from lib import opal_naming` fails before any vendor call is made. The ported document therefore stages a TREE (RUNROOT) rather than a flat pair; that is why the tree shape is commented in it as load-bearing.",
+        "A second, independent requirement found in the same read: the MX-s-9 scheduling spec (s.5) says `--as-of` must be the last COMPLETED trading day via `lib/trading_calendar.prev_trading_day`, never today and never hand-typed, but `pull_bd_asset_dim_rest.py:526` DEFAULTS as_of to `datetime.now(timezone.utc)`. The module will not compute it, and it is a rule-13 DS-owned path so this lane cannot add it. The ported document therefore resolves the date itself and refuses rather than guessing when it cannot -- which makes `lib/trading_calendar.py` a THIRD unpublished dependency, not a nicety."
+      ]
+    },
+    "spec_asserts": "MX-s-10 PHASE A step 1: 'How the instance obtains the two scripts follows the document's existing aws s3 sync/cp pattern. If they are not yet published where the instance reads, that publish is the DS lane's safe-deploy, so file a BLOCKING row naming it.' Step 2 then fires one ad-hoc run of the new command list as the test.",
+    "world_is": "The premise splits. The two SCRIPTS are published and byte-current, so the order's literal condition ('not yet published') reads FALSE for them -- but their dependency closure is not published at all, which produces exactly the failure the condition exists to catch. Publishing needed, to the instance's read channel, is: (1) lib/opal_naming.py; (2) lib/trading_calendar.py; (3) the 7 infra/logic/registry/*.json files; (4) org/standards/NAMING_SCHEMA.json. All four are under data/- and repo-root paths that are rule-13 DS-owned or outside MX-s-10's <paths>, so none is this lane's to publish. Until they land, step 2 cannot be fired and PHASE B must not make the new document DEFAULT -- the ported document carries a BLOCKED: marker on those exact fetch lines for that reason.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Step 2 is REFUSED, not skipped, and the refusal carries its measurement per the order's bound 4. This seat did NOT stage the dependencies into S3 itself: that is a code publish into a DS-owned deploy channel and the order names it as the DS lane's safe-deploy. Everything in PHASE A that does NOT depend on the run was completed: the document is ported (step 1), the caller census is done (step 3), and the Terraform question is answered (step 4). UNMEASURED AND STATED: whether the instance has pandas and a parquet engine is INFERRED, not measured -- the v3 document ran convert_assets_to_silver.py, which imports pandas, so it is very likely present, but the instance is stopped and this seat did not start it to check, because the run it would serve is blocked anyway. If the publish lands and the run then fails on pandas, that is this inference being wrong, not a new cause."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S44",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-28T10:21Z",
+    "one_line": "MX-s-10's preflight declares comp-iam NOT-APPLICABLE because 'the instance role already reads blackdiamond/49f/session'. It does not: the ad-hoc run died on a live AccessDeniedException, and the role's only GetSecretValue grant is on the portal credential this order retires.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE REFUSAL, from the real principal on the real resource -- stronger than any simulate, which has four independent false-deny modes (cloud-ops): ssm:103d29fd-1960-4944-ba60-17b797c603f9, pull_bd_asset_dim_rest.py:172 load_bd_cookie -> botocore AccessDeniedException: 'User: arn:aws:sts::313476888478:assumed-role/bd-exporter-ec2-role/i-0e6f6dc014fdcf1cd is not authorized to perform: secretsmanager:GetSecretValue on resource: blackdiamond/49f/session because no identity-based policy allows the secretsmanager:GetSecretValue action'. REST pull rc=1.",
+        "DESIRED plane, via `comp-iam role bd-exporter-ec2-role` (used deliberately instead of a raw get-role-policy, because its TF-vs-live reconcile is what catches a DECLARED-but-unapplied control -- the phantom-backstop class -- and a preflight asserting a grant exists is exactly that shape): 34 statements, of which EXACTLY ONE mentions secretsmanager:GetSecretValue. Statement 11's resources are anthropic-api-key-*, openai-api-key-*, opal/bd/credentials-*, and one more the tool truncated as '... +1 more'. So this is NOT an unapplied-Terraform drift: the grant is absent on BOTH planes.",
+        "The truncation is named rather than read through: comp-iam elided one resource, so absence of the session secret is asserted from the LIVE refusal above, never from that list. A verdict read off a truncated slice is the defect this row would otherwise have repeated.",
+        "WHOSE grant it actually is -- `comp-find 'blackdiamond/49f/session'` over 76,953 files, 570 hits, DEF band 10 of 10 shown: every consumer is a LAMBDA (bd-49f-runner:56, bd-49f-fees-runner:40, bd-49f-keepalive:45, bd-49f-freshness-probe:55, bd-49f-session-trigger:76, opal-assets-bd49f-daily-pull:70, opal-assets-bd49f-reporting-pull:45) or the bd-49f-auto-login EC2 (run-bd-auto-login.sh:44, instance.tf:101), which WRITES it. Not one consumer is bd-exporter-ec2-role or the bd-assets instance.",
+        "WHY THE PREFLIGHT WAS WRONG, as a mechanism: it reasoned 'the MX-s-9 module reads this secret, therefore the instance role reads it'. The module does read it -- but every run of it so far was made by a principal that HOLDS the grant, never by i-0e6f6dc014fdcf1cd. Moving a working script to a new host moves it to a new PRINCIPAL, and the script's success carries its old identity context silently. The role is provisioned for the PORTAL era: its one secret grant is opal/bd/credentials, the username+password this very order removes."
+      ]
+    },
+    "spec_asserts": "MX-s-10 preflight: 'comp-iam: DECLARED-NOT-APPLICABLE -- the instance role already reads blackdiamond/49f/session (used by the MX-s-9 module) and writes opal-data-bd silver; if a permission is missing, that is a BLOCKING row, never a hand-added grant.'",
+    "world_is": "The premise is false and the order's own contingency applies. bd-exporter-ec2-role cannot read blackdiamond/49f/session on either plane. The delta is one statement: secretsmanager:GetSecretValue on arn:aws:secretsmanager:us-east-1:313476888478:secret:blackdiamond/49f/session-* added to bd-exporter-ec2-role, through Terraform and .tools/safe-apply.sh (rule 18), never hand-added and never via the console. NOT proposed as a rider here, because an EC2 instance role gaining read on a live vendor session token is a widening that wants its own sign-off: the same instance also runs the other BD Playwright downloaders, so the grant is not scoped to this producer alone. Two things this row does NOT claim: that the grant is safe to add (that is the grantor's call), and that it is sufficient -- the run has still never reached the vendor, so anything past load_bd_cookie remains unexercised.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The two failed attempts cost ZERO vendor calls, which is worth stating because the order budgets 'one ad-hoc run': attempt 1 (ssm:c8c60492) died in the document's own as-of resolution before any network call, and attempt 2 died at the Secrets Manager read, which precedes mint_bearer. So the vendor-facing budget is intact and no BD call has yet been made by this cell. WHAT BOTH RUNS DID PROVE, and it is not nothing: the A2 dependency closure staged 7 of 7 objects into the RUNROOT tree; the A3 as-of fix resolves 09/25/2026 both locally at the line level and on the instance; and the KEEP properties held on every one of three failing runs -- SSM recorded Failed, and the instance stopped itself at 09:51:38Z and 10:10:28Z. The honest exit and the shutdown-before-exit ordering are now each exercised three times. A FOLLOW-ON, named not taken: once the portal path is gone, bd-exporter-ec2-role's opal/bd/credentials grant becomes dead and removable. That is a least-privilege cleanup for its own cell, and cloud-ops warns explicitly against reading an under-reporting IAM instrument as a deletion warrant, so it is named here and nothing is deleted."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S45",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-28T11:16Z",
+    "one_line": "A4's IAM grant is written, planned clean at 1/0/0 and CONFORMANT by the naming gate's own verdict, but cannot be committed: the gate refuses a hand-kept name in bd-pipeline, and every route to a non-hand-kept one lies outside this order's paths.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The change itself is READY and is saved as an appliable patch at org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~I/Z-S44_bd_exporter_49f_session_read.patch (52 lines). terraform fmt -check exit 0; terraform validate 'Success! The configuration is valid.'; and terraform plan reads exactly 'Plan: 1 to add, 0 to change, 0 to destroy' -- A4's stated acceptance.",
+        "The plan also settled a hazard found on the way: aws_iam_role.bd_exporter is declared in TWO root modules (infra/aws/terraform/bd-pipeline/iam.tf:340 and infra/aws/ec2/bd-exporter/terraform/main.tf:84). The plan resolved role = 'bd-exporter-ec2-role' and proposed NO role creation, so bd-pipeline's state is the live owner for this purpose. Named because two states declaring one role is a standing trap for the next editor, not because it blocked this.",
+        "THREE naming-gate verdicts, each refusing for a DIFFERENT and correct reason, which is why the name converged rather than being guessed: (1) 'read-49f-session-secret' -- \"R1.f: 'read' is in no vocabulary\" (the admitted functions are exactly ingress, netassets, publisher, session); (2) 'bd-49f-session-secret-policy' -- \"NEW and ALIAS as IAM_POLICY: REFUSE\", because 'bd' is an ALIAS of the system 'blackdiamond', and the gate PRINTED the conformant form; (3) 'blackdiamond-49f-session-secret-policy' -- \"CONFORMANT as IAM_POLICY, but a NEW hand-kept carrier of '49f' outside every permitted context: read it through lookup('49financial')\".",
+        "So the NAME is now agreed correct by the gate. The residual objection is the CARRIER: the name is a literal in Terraform rather than read through the registry. The permitted Terraform context is narrow and measured at naming-gate.py:483 -- a literal inside a `module` block that IS the opal naming module -- plus a waiver, which waivers_for (:1260-1281) reads from the registry's exemptions.json. The generated carrier is infra/aws/terraform/modules/opal_name/generated_locals.tf, whose consuming roots are investor-reporting/directory, mdpf-pipeline and shared-infra. bd-pipeline is NOT one.",
+        "A correction to a stronger claim this seat made mid-investigation and then disproved: I read `opal_naming.py vectors` as showing 0 IAM_POLICY entries and an admitted kind set of (daily, lambda, lb, role) with no 'policy', and concluded the builder STRUCTURALLY cannot name an IAM policy. That was wrong -- verdict (2) above had the gate print a conformant IAM_POLICY name outright. The vectors are a generated-name CATALOGUE, not the gate's grading vocabulary, and inferring the grader's capability from the generator's catalogue is the error."
+      ]
+    },
+    "spec_asserts": "MX-s-10 A4: one aws_iam_role_policy on aws_iam_role.bd_exporter with one GetSecretValue statement, a NEVER-2 ledger, safe-apply with plan 1/0/0, and a post-apply plan -detailed-exitcode of 0. CLAUDE.md rule 30: every resource name is name() output; a builder REFUSAL is a missing registry row, never a hand-typed workaround; a deliberate departure is an R20 register entry Andrew acknowledges. Rule 30 non-application: an existing pipeline reaches conformance through its own migration (R19), NEVER as a rider.",
+    "world_is": "The grant is blocked on naming, not on IAM or Terraform. Three routes exist and ALL are outside MX-s-10's <paths>: (a) a waiver row in infra/logic/registry/exemptions.json; (b) making bd-pipeline a consumer of the opal_name module, which is exactly the R19 migration rule 30's non-application forbids as a rider on unrelated work; (c) Andrew's R20 acknowledged departure. This seat took none of them and hand-typed no workaround, which rule 30 forbids in terms. WHAT WAS LEFT BEHIND, deliberately: nothing. iam.tf is restored to HEAD (git diff clean), the change is preserved as the patch above, and the NEVER-2 ledger opened for this act was UN-OPENED rather than left standing -- verified first that nothing had landed on either plane (the policy name is absent from all 15 live inline policies on the role, and no commit of this seat ever touched iam.tf), because an entry for an act that never began is not a half-landed deploy and would have BLARED falsely in every other seat's --red sweep. The ledger tool has no withdraw verb and correctly REFUSED a HOLD while its apply legs were open; that refusal is what made un-opening the honest disposition rather than a convenience.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Reviving this is cheap and fully specified: apply the saved patch, pick a naming route, then re-open the ledger with the same four legs and run safe-apply. Nothing needs rediscovering. MX-s-10 step 2 stays blocked behind Z-S44, which stays blocked behind this. Worth the issuer's attention beyond this cell: if the gate refuses every NEW hand-kept IAM policy name in a root module that is not an opal_name consumer, then the same wall stands in front of any seat adding an IAM policy to bd-pipeline, and the estate's existing policy names there are ungraded only because they predate the gate. That is a scope question for LGIC_ENFORCE's owner, and this row does not assert how wide it is -- it was measured on one file and one name."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S46",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-28T12:30Z",
+    "one_line": "THIS SEAT REGRESSED A SERVED ARTIFACT AND ROLLED IT BACK: invoking build_bd_assets_dim.py without --union-bronze rebuilt silver/bd_assets_dim.parquet from a source frozen since 2026-04-14, dropping 1,204 asset_ids for 4m19s. Restored to the exact prior bytes; step 2 then completed with DELTA=0.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REGRESSION. ssm:e76074b5-cb19-446f-8600-7c99fd10c982, Status=Success (the producer was right to call it success -- it did what it was told), wrote silver/bd_assets_dim.parquet at 2026-09-28T12:04:24Z with 10,937 rows / etag 83ae55e02a4ae83b1f0bc6ff4efeb135. The pre-act state was 12,141 rows / etag a218b3ddb9f93db93ba6fa45b3a97f66 at 06:22:06Z. Measured by one oracle run on both sides: 0 added, 1,204 REMOVED, DELTA -1,204.",
+        "THE CAUSE, and it is this seat's error rather than the module's. build_bd_assets_dim.py has two modes (:334-353). Bare, it reads SOURCE_KEY silver/bd_assets.parquet, which its OWN comment at :245-246 records as frozen since 2026-04-14 and whose docstring states 10,937 unique asset_ids -- exactly the number that landed. With --union-bronze KEY it instead reads the CURRENT dim and unions the REST bronze latest-wins (:273-329). The served 12,141 existed only because MX-s-6 had done that union. MX-s-10 step 1 says in terms 'then build_bd_assets_dim.py, WITH ITS UNION (latest-wins; both counts printed)'. The ported document invoked it bare. The order said union; I did not pass it.",
+        "THE ROLLBACK. Restored at 2026-09-28T12:08:43Z from bytes this seat had downloaded BEFORE the act, verified as the exact prior object before upload (967,128 bytes and md5 a218b3ddb9f93db93ba6fa45b3a97f66, both matched) rather than trusted. Re-read afterwards by the SAME oracle, not by the upload tool's own word: etag equal, asset_id-set sha256 equal (b38a8b0a...4cb9616a), 12,141 ids, 0 added / 0 removed, DELTA 0 against pre-act. Exposure window 12:04:24Z to 12:08:43Z, 4m19s.",
+        "WHY THE EXPOSURE WAS SHORT AND WHY IT COULD HAVE BEEN LONG. It was short only because the order required a BEFORE oracle and this seat had taken one, so the prior bytes were already on disk when the regression was measured. Nothing about the producer surfaced it: SSM read Success, its printed W4 acceptance block read 'AC1 row count >= 10,000: PASS (10,937)', and the honest-exit work from MX-s-4 is blind to this class -- a run that does the WRONG thing correctly exits 0. A floor of 10,000 cannot see a drop from 12,141 to 10,937.",
+        "THE FIX, and step 2 then COMPLETED. The document now captures the pull's own printed OUTPUT_KEY and passes it as --union-bronze, refusing with MERGE_RC=92 rather than rebuilding from the frozen source if no OUTPUT_KEY was printed. ssm:0626f927-ae88-4e31-a962-f710e4087efc, Success: pull 12,132 rows, union read current dim 12,141 + bronze 12,132, 'ONLY in pull (added): 0', output 12,141. Oracle: asset_id-set sha256 IDENTICAL to pre-act, 0 added, 0 removed, DELTA ZERO. The bytes moved (967,128 -> 977,308, built_at restamped) while the SET did not, which is the NEVER-1 verified-DELTA=0 case that needs no hold."
+      ]
+    },
+    "spec_asserts": "MX-s-10 step 1: the document runs the REST pull 'then build_bd_assets_dim.py, with its union (latest-wins; both counts printed)'. Step 2: one ad-hoc run, with the asset_id set count and sha256 before and after, and the diff stated. CLAUDE.md NEVER-1: never move served output without never-widen sign-off; a verified DELTA=0 needs no hold. NEVER-2: never leave a confirmed deploy half-landed -- finish in-session or roll back and escalate loud.",
+    "world_is": "The served dim is CORRECT and carries the same 12,141 asset_ids it carried before this cell touched it; the set sha256 is byte-for-byte the pre-act value. In between, it was wrong for 4m19s and this seat made it so. Recorded as BLOCKING rather than OBSERVATION because a served regression is not an observation, and hazard_standing INERT because the world is restored and the document can no longer take the frozen-source path -- it refuses instead. Two consumers were within reach during the window (the MX-s-2 cusip bridge and the MCPINDEX silver surface); this seat did NOT measure whether either read the object in those 4m19s, and does not claim they did not.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The generalisable part is not the missing flag, it is that the ORDER NAMED IT and the document did not carry it. 'with its union' was four words in a step-1 sentence and it was the difference between a correct producer and one that silently drops 1,204 keys. A criterion in prose that the artifact does not mechanically carry is invisible until it fires. TWO THINGS FOR OTHERS, neither this seat's to do. (1) The builder's bare mode is a loaded gun for any future caller: it rebuilds a served dim from a source its own comment calls frozen, and exits 0. Whether it should refuse, or default to union, is the DS lane's call under rule 13. (2) The W4 acceptance block it prints ('row count >= 10,000') passed on the regressed output; a floor cannot detect a decrease from a known prior, and only a prior-state comparison can. Vendor calls by this cell, ledgered: attempts 1-2 made ZERO; attempt 3 (ssm:3b3df28d) minted a bearer and read the qt4 catalogue before the 400; attempt 4 (ssm:e76074b5) and attempt 5 (ssm:0626f927) each ran a full pull -- bearer mint, catalogue read, template run, status polls, one export. No vendor-side template was created on any of them (--allow-template-create never passed)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S47",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-28T13:48Z",
+    "one_line": "The BD FEES producer is a second live instance of Z-S8/Z-S9 that no row has ever carried: 69 of 121 logs failing since 2026-06-23 on the identical MFA error, and SSM records Success on every one because its SSM document contains no exit statement at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CHAIN IS LIVE, measured on the AWS plane rather than from the repo: EventBridge rule bd-fees-pipeline-trigger reads State=ENABLED on cron(15 22 ? * MON-FRI *) with target bd-fees-trigger; bd-fees-trigger/lambda_function.py:30 sets SSM_DOCUMENT='opal-bd-fees-download'; that document at :39 runs 'bun run src/stepwise/download-daily-fees.ts' on instance i-0868fc7e7ebec26f2. It fires five minutes after the asset-dim schedule, every weekday. Note the rule NAME: the Terraform resource is bd_fees_pipeline but the live rule is bd-fees-pipeline-trigger, and 'bd-fees-pipeline' does not exist (ResourceNotFoundException) -- so a census keyed on the Terraform label alone reads a false zero.",
+        "THE FAILURE, with a denominator: 121 objects under s3://opal-data-bd/logs/fees-download-, of which 69 are EXACTLY 886 bytes. First 886-byte log 2026-06-23, last 2026-09-25; last non-886 is 2026-06-22 at 2,816 bytes. An identical byte size 69 times is one failure reproducing, not 69 different days. The 2026-09-25 log read in full carries 'Phase 1: Login' then 'FAILED' then 'TimeoutError: forURL: Timeout 30000ms exceeded ... waiting for navigation to **/bd3.bdreporting.com/**', then 'Download exit code: 1' and 'ERROR: Fees pipeline failed (download_rc=1 merge_rc=99)'.",
+        "SSM SAYS SUCCESS ANYWAY. list-commands for DocumentName=opal-bd-fees-download returns Status=Success on all 6 most recent invocations (2026-09-18 through 2026-09-25), against logs that say the pipeline failed. The cause is structural and is the Z-S9 defect exactly: the document's failure branch at :53-56 echoes ERROR and re-uploads the log, then falls through to 'shutdown -h +2 &' at :59, and there is NO exit statement anywhere in its 60 lines -- verified by enumerating every line containing 'exit', which returns only four echo/comment lines about captured RCs.",
+        "IT IS THE SAME UPSTREAM AS THE ASSET-DIM BREAK, and the counts make that hard to argue with: asset-dim read 69 failures of 119 logs, first 2026-06-23, last good 2026-06-22; fees reads 69 of 121, first 2026-06-23, last good 2026-06-22; identical TimeoutError. Two independently written producers, the same count and the same boundary dates, is one shared cause -- BD's MFA (Andrew 2026-09-27) -- not two code faults.",
+        "WHAT IT DOES NOT DO, so the row is not read as wider than it is: it does NOT strand its instance. The shutdown at :59 is the last line and unconditionally reached, so the box stops on every run. This is the Z-S9 half WITHOUT the Z-S17 half -- the inverse of what asset-dim had before MX-s-4, where the exit preceded the shutdown.",
+        "THE DATA IS NOT AT RISK, stated so nobody treats this as an outage: the CTO ruling @1973056c51 records bronze/fees as CURRENT via the REST runner (bd-49f-fees-runner), which is why 95 days of portal failure produced no visible symptom. What is live is a producer that fails daily and reports that it succeeded."
+      ]
+    },
+    "spec_asserts": "MX-s-4 step 2 established the standard for this producer family and the issuer ratified it: 'A failed download or merge returns non-zero, so SSM records Failed. This is a producer reporting its own result, not an alarm.' Row Z-S9 is the defect that standard removed from opal-bd-asset-dim-download. CLAUDE.md also requires production pipelines to be scheduled, and this one is.",
+    "world_is": "The same defect is still standing on opal-bd-fees-download, unrowed and unordered. MX-s-4 fixed one of the six BD download documents; Z-S17 measured that 5 of the 6 had the exit-before-shutdown ordering, and nothing has graded whether the other five report their result honestly at all. This row covers fees only, because fees is the one this seat MEASURED during MX-s-10's step-3 caller census. The other four are named as unmeasured, not asserted broken.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "WHY THIS ROW EXISTS AT ALL, which is a process point about me rather than about fees: I measured all of the above on 2026-09-28 during MX-s-10 step 3 and wrote it only into ANNOUNCE_MX-s-10.md, an MX-s-10 deliverable. MX-s-10 is now SUPERSEDED-for-round, so the finding would have died with the cell it was discovered in. CLAUDE.md section 2 says an off-task finding gets a ROW and the work continues; an announce is not a channel row and does not survive its order. Filed late, and the lateness is the lesson. NOT FIXED, and deliberately not: the one-line repair is the same insertion MX-s-4 made, and opal-bd-fees-download.json sits in infra/aws/ssm/ which is this lane's surface -- but no order covers this producer, and CLAUDE.md forbids implementing a gate or monitor unbidden even where proposing is legal. An honest exit is not an alarm (the issuer ruled exactly that for MX-s-4), so the fix is legal in principle and wants a cell, not a rider. The fees schedule was also left ALONE under MX-s-10's own preflight, which removes its leg only once its caller census reads 0 -- and that census reads 1. ONE THING UNMEASURED: whether the four remaining BD download documents (allocation, realized, transaction, unrealized) also lack an exit. Z-S17 measured their shutdown ORDERING, not their exit honesty, and those two are different properties."
   }
 ]
 ```

@@ -2,8 +2,8 @@
 {
   "project": "NFRA_OPLGTW",
   "directive": "D9",
-  "fabric": "laptop",
-  "prd_version": "v0.9",
+  "fabric": "site-z",
+  "prd_version": "v1.0",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -142,7 +142,7 @@ A missing or invalid MCP credential gets 401 with the advertised resource challe
 
 ### C2 - policy and complete access enforcement
 
-DynamoDB stores durable `principal_profile` and versioned `data_entitlement` records. Key grants by tid/oid, not email. Status is pending, active or revoked; use optimistic revision checks for operator updates. A revoked restricted profile is a tombstone, never deletion that reactivates the legacy unlisted-user path. Unknown users see no Schwab tools and direct Schwab calls fail. A newly added tool is denied until classified. Preserve existing users' current tool access through explicit regression, without granting new data tools by default.
+DynamoDB stores durable `principal_profile` and versioned `data_entitlement` records. Key grants by tid/oid, not email. The one email-keyed record is denial-only: a principal made restricted also gets an `email_deny` record (key `POLICY#EMAILDENY#<sha256hex("og-email-deny/v1|" + email.strip().lower())>`, one per email alias; routes and the operator writer MUST compute the same function) in the same operator transaction. The browser routes that identify a caller only by the ALB email (`/login`, the `/sprint` paths, the legacy `/callback` and its consent redemption) refuse a denied email before any read or credential exchange; an unreadable store denies them. The record only ever adds denial, is kept on revoke, and is never used to grant. Status is pending, active or revoked; use optimistic revision checks for operator updates. A revoked restricted profile is a tombstone, never deletion that reactivates the legacy unlisted-user path. Unknown users see no Schwab tools and direct Schwab calls fail. A newly added tool is denied until classified. Preserve existing users' current tool access through explicit regression, without granting new data tools by default.
 
 Every request strongly reads the current profile/grant; an unavailable or malformed store denies restricted access. Scope includes master, dataset, account IDs, dates, columns and operations separately. Apply it before filtering, projection, grouping, totals, cache lookup and export. Accounts are raw IDs internally only. Expose a versioned, keyed HMAC account_ref over master plus account ID; keep its key in the existing approved secret mechanism, and never log raw IDs. The same numeric account ID in two masters yields different aliases. An alias is usable only after resolution against the current authorized account set.
 
@@ -190,7 +190,7 @@ The one new DynamoDB table uses encryption, point-in-time recovery, on-demand ca
 
 Feature flag defaults off and new grants default pending. Before rollout, record existing Gateway release/config digests and client journeys. Enable a controlled identity first, then the approved employee profile. Rollback disables the integration and keeps the restricted-profile denial and durable token revocation shim active; do not roll back to a binary that reopens the email-only path or accepts legacy refresh tokens. An older whole Gateway binary may be restored only while edge access for restricted identities remains denied and the security invariants still hold. Source ingesters and source contents remain intact. No source delete, rewrite or bucket-policy broadening is part of rollback.
 
-The DynamoDB partition key separates POLICY#<tid>#<oid> records (profile, grant, approval, operator audit) from RUNTIME# namespaces (client, pending auth, code, refresh family, ticket, catalog). Runtime may strongly read POLICY keys but its write actions are conditioned through dynamodb:LeadingKeys to the RUNTIME prefix only; all transaction items must satisfy the restriction. The operator role alone may conditionally update POLICY records and append the matching operator audit in one transaction. Ordinary runtime and operator roles have no policy DeleteItem or table-admin permission. Profile, grant, approval and revocation tombstones have no TTL attribute; cleanup applies only to expiring RUNTIME records. A13 includes a runtime attempt to write POLICY and an operator revision race using isolated records. Exact-table permission alone is insufficient.
+The DynamoDB partition key separates POLICY#<tid>#<oid> records (profile, grant, approval, operator audit) and denial-only POLICY#EMAILDENY#<digest> records from RUNTIME# namespaces (client, pending auth, code, refresh family, ticket, catalog). Runtime may strongly read POLICY keys but its write actions are conditioned through dynamodb:LeadingKeys to the RUNTIME prefix only; all transaction items must satisfy the restriction. The operator role alone may conditionally update POLICY records and append the matching operator audit in one transaction. Ordinary runtime and operator roles have no policy DeleteItem or table-admin permission. Profile, grant, approval and revocation tombstones have no TTL attribute; cleanup applies only to expiring RUNTIME records. A13 includes a runtime attempt to write POLICY and an operator revision race using isolated records. Exact-table permission alone is insufficient.
 
 ## SURFACE MANIFEST
 

@@ -88,12 +88,23 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once 
 
 <!-- ===================== RECORD FACE ===================== -->
 
+**SUPERSEDED by the issuer (2.0.0_SA_COO~O, 2026-09-27 ~00:2xZ).** The seat's report (msg 26021; proof instance
+VALID, drained @705dd96375) showed R-2 (2)'s remedy cannot work as ruled. The builder's only input,
+`silver/bd_assets.parquet`, has been frozen since 2026-04-14 by a dead Black Diamond login, and the compaction is
+gated on `--backfill`. The cause work is re-cut:
+- `NFRA_MCPINDEX.TO-MX-s-4` (AE): the login and the honest wrapper exit;
+- `NFRA_MCPINDEX.TO-MX-s-6` (DS): the compaction fix and the bridge rebuild.
+The served `holdings_lots` correction is NOT re-executed from this face. It is cut afresh, under its own never-widen
+sign-off, once MX-s-6's bridge is current. A seat reading its open orders takes MX-s-6, not this one.
+
+
+
 # pipeline-override: supplementary round-2 issuance on Andrew's option 4 (record @bda25438c8; CTO msg 25944): the DS lane 0.4.0_DS_ClientPlatform~D was seated at 22:55:02Z, AFTER round 2's one issuance, for two acts the round-1 analysis PARKED (R-2 (2), R-4); same issuer (2.0.0_SA_COO~O), disjoint write set, nothing on the held branch.
 
 **ISSUER NOTES:** R-2 (2), C-S13. Supplementary issuance on Andrew's option 4 (@bda25438c8; CTO msg 25944). No Black
 Diamond tool that answers by cusip is cut until this closes (R-2 (3)).
 
-<status>pending</status>
+<status>superseded</status>
 <direct_act>true</direct_act>
 <slot>~D</slot>
 <fabric>site-z</fabric>

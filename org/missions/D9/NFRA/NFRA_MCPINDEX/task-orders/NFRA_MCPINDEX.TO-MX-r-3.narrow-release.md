@@ -114,3 +114,9 @@ SPAWN ONLY after:
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+<!-- flipped by the issuer 2026-09-27T06:0xZ after the drain @857050f815. AC1/AC2/AC3 re-run on CLOUD: PASS exit=0 each
+     (AC3 ssm 3095c5bb, /health=200, new integrations enabled=0). Instance VALID (rc=0). opal-gateway serves 110d93fb73
+     since 05:03:34Z. Pre-upload conditions both held: ENABLED_INTEGRATIONS literal read before the upload; the ledger's
+     L1 line reads 'building mcportal @ a3bff71ffa'. -->

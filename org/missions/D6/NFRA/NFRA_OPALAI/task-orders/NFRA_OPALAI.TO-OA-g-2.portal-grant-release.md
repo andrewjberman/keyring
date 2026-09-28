@@ -135,7 +135,7 @@ Report once, with:
 (@75117e60d6) and relays the announcement through MSTR. Dry-run at base: g2.AC1 FAIL (0 entries), g2.AC2 FAIL (no
 release branch; live data_entitlement.py 85fddfe3).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~9</slot>
 <fabric>site-z</fabric>

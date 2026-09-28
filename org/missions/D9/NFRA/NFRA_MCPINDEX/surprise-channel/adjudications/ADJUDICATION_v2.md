@@ -32,6 +32,112 @@ reads. The round's full L8 compile appends here when round 2 goes terminal.
     "grades": [
       {"criterion": "MXC5-AC4", "instance": "deliverables/0.9.0_WK_NFRA_MCPINDEX~1/NFRA_MCPINDEX.TO-MX-c-5.classification-recut.proof_of_spec.json@ae03e6cf86", "verdict": "PASS", "reason": "Every class holds against the tool's code, and no SAFE tool reaches past a gate that already fences it. Limits: (1) globgrph's SAFE depends on the projection server opening read-only, a property outside the gateway; the globgrph tool cell should carry a planted-CREATE refusal control; (2) SAFE is a mutation class, not an egress licence: the ycharts calls stay under the compartment gate and Andrew's egress word; (3) schwab export.py and the projection server were read at @ae03e6cf86 only."}
     ]
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S17",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T03:05:00Z",
+    "one_line": "MX-r-3 never-widen SECOND (non-acting) half: SIGNED for the narrow release of df724ef284 plus the 12 NFRA_MCPINDEX gateway commits, with one pre-upload condition: the host .env's ENABLED_INTEGRATIONS must read exactly 'ycharts opal_portal globgrph', or STOP.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The CTO half (@f62d7d1ffb) reads DELTA = 0 at GO and names the host .env as the one writer of ENABLED_INTEGRATIONS, which the act does not touch.",
+    "world_is": "This seat re-read every claim: live base df724ef284 (S3 latest = df724ef284 artifact f9bd0d48; manifest :505); the order's rule gives exactly the CTO's 12 commits; classify() is reached only from tools._run (native names only), never from run_integration_tool; composed_refused drops no live tool; channels unchanged per commit (15 = 15). But deploy-to-ec2.sh:196 rewrites the .env on every deploy with the literal ENABLED_INTEGRATIONS=ycharts opal_portal globgrph, so the act does write it. The literal is unchanged, so DELTA = 0 holds if the live .env matches it; a drifted .env would be reset by the deploy, a branch neither half covered until this condition.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPINDEX_MX-r-3_NEVER_WIDEN_SECOND_HALF_20260927.md (the signed half)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/RULING_MX-r-3_RELEASE_SIGNOFF_20260927.md@f62d7d1ffb (the CTO half)",
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:196 at df724ef284 (the .env writer)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A sign-off record carried onto the channel. It opens and adjudicates no investigation item."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S18",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T03:45:00Z",
+    "one_line": "Amends NFRA_MCPINDEX-Z-C-S17 (MX-r-3 second half): a SECOND pre-upload condition. The artifact also ships the dashboard bundle built from the nested mcportal checkout; it must be a3bff71ffa, the live bundle's commit, or STOP.",
+    "class": "OBSERVATION",
+    "spec_asserts": "Z-C-S17 and the CTO half @f62d7d1ffb bound the act to the gateway code, the catalog and ENABLED_INTEGRATIONS.",
+    "world_is": "Row Z-W1-S9 (the deployer) showed deploy-to-ec2.sh needs a nested mcportal checkout. At df724ef284, deploy-to-ec2.sh:69-99 builds mcportal at its checked-out commit (:84) and copies its dist/ into the artifact (:92). The live bundle is mcportal a3bff71ffa3f5c73aa0fb7ea1e7386434e233054 (EC2_MANIFEST.json services.opal-gateway.mcportal_commit; OA-g-2 ledger leg L1). The worker cloned that commit into /c/tmp/mx-rel and /c/tmp/mx-rb, so DELTA = 0 holds on the bundle; a different checkout would ship a dashboard change neither half signs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPINDEX_MX-r-3_NEVER_WIDEN_SECOND_HALF_20260927.md (addendum)",
+        "INVESTIGATION_v1.md#NFRA_MCPINDEX-Z-W1-S9",
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:84, :92 at df724ef284",
+        "infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway.mcportal_commit"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A sign-off amendment carried onto the channel. It opens and adjudicates no investigation item; Z-W1-S9 stays with its issuer."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S19",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T06:10:00Z",
+    "one_line": "Post-act read of MX-r-3 against this seat's signed half (Z-C-S17, Z-C-S18): the release stayed inside the signed radius. Both conditions held before the upload, and the served tool list and ENABLED_INTEGRATIONS are unchanged.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The half signed a DELTA = 0 release of 110d93fb73 on df724ef284 under two pre-upload conditions: the host ENABLED_INTEGRATIONS = 'ycharts opal_portal globgrph', and mcportal a3bff71ffa.",
+    "world_is": "SSM, read by this seat (not the ledger's summary): BEFORE-read 6a882d55 requested 04:27:41Z, ENABLED_INTEGRATIONS=ycharts opal_portal globgrph, TOOLCOUNT=46; upload 05:03:11Z (S3 latest ETag 00356afd = the 110d93fb73 artifact); deploy a54870c7 at 05:03:21Z; AFTER 0bb37ad9 at 05:12:38Z: health=200, NRestarts=0, TOOLCOUNT=46, the TOOLNAMES line byte-identical to BEFORE (md5 989c4158 both), ENABLED_INTEGRATIONS unchanged; on-box md5 of 5 files = git show 110d93fb73 bytes, 5 of 5. mcportal a3bff71ffa named in ledger L1 ('INFO: building mcportal @ a3bff71ffa'). Ledger closed @0ebd5900bb on the worker branch. Limit: the 5 md5 files are OA-g-2's set; MX-r-3's own changed files are covered by the artifact ETag and the unchanged tool list, not by an on-box md5.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm list-commands / get-command-invocation 6a882d55-7e1b-4b89-9604-c693505e0f14, a54870c7-a09c-4a3e-a1fd-a99704f38569, 0bb37ad9-9e28-43a5-8c70-b19f87825a16 on i-07dccb1615503ac99",
+        "org/critical_paths/change_management/20260927T0438Z_nfra-mcpindex-r2-gateway-release_deploy_completion.md (worker branch wk-NFRA_MCPINDEX-1-r3 @0ebd5900bb)",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPINDEX_MX-r-3_NEVER_WIDEN_SECOND_HALF_20260927.md"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A post-act verification record. It opens and adjudicates no investigation item."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S20",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T09:55:00Z",
+    "one_line": "MX-s-8 never-widen SECOND (non-acting) half: SIGNED. The build ships only the two mirror_conversion.py hunks to the 4 silver Lambdas. Its one served change: an exactly-empty float64 cell now writes a typed NULL instead of failing the unit, and the retained logs show no unit that would move at deploy.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The issuer's ask 20260927T092019Z and the order as amended @a296ac3598: build-and-upload x4, then safe-apply with Plan 0/4/0, under the NEVER-2 ledger nfra-mcpindex-silver-mirror-guard.",
+    "world_is": "Build input (lambda-source-map.json file lists) vs the deployed zips: identical except mirror_conversion.py, which differs by exactly 5 lines in each of the 4. Live CodeSha256 is unchanged. N = 5 writers of the rule (4 Lambdas + the source), all fixed after the act. 0 VendorDriftError in 14 days across the 4 log groups (positive control: 72 etf invocations); sweep status reads holes 0 in 5 scopes. The 4 known pathfinder units land only via DS's separate backfill.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPINDEX_MX-s-8_NEVER_WIDEN_SECOND_HALF_20260927.md (the signed half)",
+        "infra/aws/lambda/ci/lambda-source-map.json functions.opal-assets-silver-{blackdiamond,etf,eclipse,orion}",
+        "infra/aws/lambda/opal-assets/opal-assets-silver-etf/mirror_conversion.py:283-308 (the rule) and etf_conversion.py:214"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A sign-off record carried onto the channel. It opens and adjudicates no investigation item."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S21",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-09-27T11:05:00Z",
+    "one_line": "Post-act read of MX-s-8 against this seat's signed half (Z-C-S20): the deployed code equals the cut, file for file, in all 4 functions. The only post-deploy errors are the import smoke's empty-event refusals. Inside the signed radius.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The half signed a build of exactly the two mirror_conversion.py hunks into opal-assets-silver-{blackdiamond,etf,eclipse,orion}.",
+    "world_is": "All 4 functions show LastModified 2026-09-27T10:35:46Z with new CodeSha256 values. This seat downloaded each live zip (get-function Code.Location): its sha256 equals CodeSha256, and every source-map file equals `git show e0750442c9:<file>` (blackdiamond 9/9, etf 9/9, eclipse 7/7, orion 7/7), with no extra files and both fixes present. The same comparison against the pre-deploy zips had found the differing file, so it discriminates. Logs since 10:35Z hold 2 events per function matching ERROR, and each reads 'event carried no S3 records and no sweep mode -- refusing to silently no-op' at 10:39Z and 10:40Z: the import smoke's empty event, handled after a clean import. No ImportModuleError and no VendorDriftError.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function / get-function-configuration, the 4 opal-assets-silver functions, read ~10:55Z",
+        "aws logs filter-log-events /aws/lambda/opal-assets-silver-{blackdiamond,etf,eclipse,orion} from 10:35Z",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPINDEX_MX-s-8_NEVER_WIDEN_SECOND_HALF_20260927.md (@88eb2af940)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A post-act verification record. It opens and adjudicates no investigation item."
   }
 ]
 ```

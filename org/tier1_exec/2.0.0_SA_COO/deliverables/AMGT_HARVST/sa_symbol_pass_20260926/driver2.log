@@ -1,0 +1,15 @@
+=== BATCH 14  exclude-done=batch13.json ===
+  rc=0 elapsed=1s  asked=65 of 89  resolved=55  search_refused=24  never_reached=21  serveable=18
+  gap: sleeping 7800s before the next batch (the decay window)
+=== BATCH 15  exclude-done=batch14.json ===
+  rc=0 elapsed=62s  asked=66 of 89  resolved=55  search_refused=23  never_reached=19  serveable=18
+  newly asked this batch: 1
+  gap: sleeping 7800s before the next batch (the decay window)
+=== BATCH 16  exclude-done=batch15.json ===
+  rc=0 elapsed=143s  asked=69 of 89  resolved=56  search_refused=20  never_reached=16  serveable=19
+  newly asked this batch: 3
+  gap: sleeping 7800s before the next batch (the decay window)
+=== BATCH 17  exclude-done=batch16.json ===
+  rc=0 elapsed=64s  asked=59 of 83  resolved=56  search_refused=24  never_reached=19  serveable=19
+  newly asked this batch: -10
+  gap: sleeping 7800s before the next batch (the decay window)

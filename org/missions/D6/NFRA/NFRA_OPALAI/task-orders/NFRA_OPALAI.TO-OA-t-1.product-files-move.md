@@ -117,3 +117,5 @@ declined rows feed the cutover record.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+<status>superseded -- CLOSED for round 1 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: this cell's parent-side removals merge only in the round's CUTOVER window (decomp s.8), and that window opens on Andrew's gates G-ACCT, G-AUTH and G-PUSH (carded by 1.0.0_SA_CTO), none of which has landed. Holding it open would deadlock round 1's L10 on an Andrew act (the refuser counts open orders PER PROJECT). NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS as round 2's first cutover cell, unchanged, once the gates land. Was: pending.</status>

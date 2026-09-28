@@ -2,13 +2,13 @@
   "project_code": "NFRA_OPLGTW",
   "macro_code": "NFRA",
   "directive": "D9",
-  "fabric": "laptop",
+  "fabric": "site-z",
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
   "created": "2026-09-14",
   "registered_under_tree": "2026-09-14",
-  "placement": "LAPTOP",
+  "placement": "SITEZ",
   "pods": [],
   "related": [],
   "name": "Opal Gateway: authorized Schwab questions and CSV downloads in Claude",
@@ -22,16 +22,16 @@
     "org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md"
   ],
   "leads": {
-    "cto": "1.0.0_SA_CTO~A",
-    "coo": "2.0.0_SA_COO",
-    "cvo": "3.0.0_SA_CVO",
+    "cto": "1.0.0_SA_CTO~O",
+    "coo": "2.0.0_SA_COO~O",
+    "cvo": "3.0.0_SA_CVO~O",
     "cro": "4.0.0_SA_CRO"
   },
   "coo_lane": "2.0.0_SA_COO~O",
   "blocking": "Not blocked at L4. L4-R ADMITTED at v0.7 -- ratified-text SIGNED by 3.0.0_SA_CVO @9efe1ed8bc (review @13ca2e8aa3), brief SIGNED by 4.0.0_SA_CRO current; python .tools/prd-signoff.py status NFRA_OPLGTW read ADMITTED 2026-09-16 ~19:4xZ by 1.0.0_SA_CTO. Two rename orders owed at 2.0.0_SA_COO~O under R-OG-7 and R-OG-8 (the IAM names in OG-i-3; the access-state table in its own order with writes quiesced and the old table removed only after the rollback window). HISTORY: L6 issued by 2.0.0_SA_COO~O: 28 task orders, one per OG cell of decomposition v1 (@8768f46770), six worker slots 0.9.0_WK_NFRA_OPLGTW~1..~6. Held at issuance: OG-i-4 on G-A (Andrew's word to stop/start the Gateway instance), OG-c-2's deploy and replay on G-B (never-widen sign-off, 1.0.0_SA_CTO + 2.0.0_SA_COO~O, naming the 49F accelerator at silver.tf:756-759), OG-v-4 on G-C and G-D (controlled identity + grant from 1.0.0_SA_CTO~A; the walkthrough record), OG-v-5 on G-E and G-F (Menachem's approved grant + activation; the pilot record). Notice N-1 (the OAuth cutover's client inventory to 0.0.0_AB_MSTR and 1.0.0_SA_CTO) precedes OG-r-1's spawn. Row NFRA_OPLGTW-S1: one pre-existing red Gateway test, deselected by name in every suite criterion.",
   "endpoint_ref": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#endpoint-step-2-endpoint---forward",
   "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1524ET_NFRA_OPLGTW_ENDPOINT_APPROVED.md",
-  "fabric_ruling": "laptop inherited from D9 placement; current commission explicitly selects D9 / Opal Workflows.",
+  "fabric_ruling": "site-z since 2026-09-27 ~12:2xZ: Andrew's 'recs approved' re-seated all legs to ~O (see phase). D9 as a whole stays where it is (his call-2 answer (a)); this project's own placement field carries it. Previously: laptop inherited from D9 placement.",
   "thread_counter": 0,
   "threads": [],
   "prd_lineage": [
@@ -41,6 +41,6 @@
     "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v0.6 -- 2026-09-16 ~19:2xZ, 1.0.0_SA_CTO, RULING R-OG-7 on 2.0.0_SA_COO~O 97544 (rows W1-S9, W1-S11): C6's two typed role names become builder output (the person binding moves to the trust policy, entitlement and tags, never the name); the contract JSON version 1.1; the three applied resources renamed in the next apply of the root before any runtime consumer binds. CONTRACTS only; the ratified-text half re-opens to 3.0.0_SA_CVO.",
     "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v0.7 -- 2026-09-16 ~19:3xZ, 1.0.0_SA_CTO, on 3.0.0_SA_CVO's REFUSED v0.6 (review @d7faaaab7d, stamp @b0b8254107) and RULING R-OG-8: the contract version worded as a sequence (1.0 -> 1.1 in the rename applies); the access-state table named by the builder and renamed in its own order with its records carried across (7 items, 1,015 bytes at 19:3xZ), the audit namespace verified item by item; the ruling id and history removed from CONTRACTS. CONTRACTS only; the ratified-text half re-opens."
   ],
-  "phase": "L7 EXECUTING round 1, 24 of 31 task orders complete at 2026-09-18 ~00:2xZ (read from the order faces, not a log): OG-q-5 running at slot ~5 (the dim_asset restriction on the live path + R-OG-17 C3 census); OG-v-2 open for its last re-hand (AC2 whole + the a18 correction, row S26); OG-r-1 open behind OG-v-2 with its N-1 notice already sent (97731/97732) and R-OG-14 AC13/AC14 added; OG-r-2 behind OG-r-1 and OG-i-4; OG-i-4 HELD on G-A (Andrew, with 1.0.0_SA_CTO); OG-v-4 on G-C/G-D; OG-v-5 on G-E/G-F. /canonical-drive armed 30m on Andrew-direct 97709, carrier org/XXX.md Step 1b-F @1525cb72e7. PRD v0.9 @e09219470f ADMITTED, both halves SIGNED. L4-R ADMITTED at v0.7 2026-09-16 ~19:4xZ. PRD v0.7 2026-09-16 ~19:3xZ (contract version as a sequence; the access-state table by the builder, R-OG-8; ratified-text half re-offered). PRD v0.6 2026-09-16 ~19:2xZ (C6 role names by the builder, R-OG-7; ratified-text half re-offered). PRD v0.5 2026-09-16 ~18:3xZ (FWD-9 retired on Andrew's call 4; the export moves to 4.0.0_SA_CRO~G's brief). PRD v0.4 2026-09-16 ~18:2xZ (the CVO's two cures on v0.3 carried; ratified-text half re-offered). PRD v0.3 2026-09-16 ~18:0xZ (FWD-9 Schwab-to-SharePoint export, sequenced last; R-OG-1..3 on 97496). ",
-  "last_updated": "2026-09-18T00:25:41Z"
+  "phase": "RE-SEATED 2026-09-27 ~12:2xZ to 1.0.0_SA_CTO~O / 2.0.0_SA_COO~O / 3.0.0_SA_CVO~O (the ~O fabric, site Z) on Andrew's word 'recs approved' (call 1; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_122xZ_CTO_O_CALLS_1_2_RECS_APPROVED_OPLGTW_RESEAT.md), the un-park condition of 3.0.0_SA_CVO~O's verdict @e470835e7c; the laptop's 1.0.0_SA_CTO~A is not live. Tree unchanged under D9. | L7 EXECUTING round 1, 24 of 31 task orders complete at 2026-09-18 ~00:2xZ (read from the order faces, not a log): OG-q-5 running at slot ~5 (the dim_asset restriction on the live path + R-OG-17 C3 census); OG-v-2 open for its last re-hand (AC2 whole + the a18 correction, row S26); OG-r-1 open behind OG-v-2 with its N-1 notice already sent (97731/97732) and R-OG-14 AC13/AC14 added; OG-r-2 behind OG-r-1 and OG-i-4; OG-i-4 HELD on G-A (Andrew, with 1.0.0_SA_CTO); OG-v-4 on G-C/G-D; OG-v-5 on G-E/G-F. /canonical-drive armed 30m on Andrew-direct 97709, carrier org/XXX.md Step 1b-F @1525cb72e7. PRD v0.9 @e09219470f ADMITTED, both halves SIGNED. L4-R ADMITTED at v0.7 2026-09-16 ~19:4xZ. PRD v0.7 2026-09-16 ~19:3xZ (contract version as a sequence; the access-state table by the builder, R-OG-8; ratified-text half re-offered). PRD v0.6 2026-09-16 ~19:2xZ (C6 role names by the builder, R-OG-7; ratified-text half re-offered). PRD v0.5 2026-09-16 ~18:3xZ (FWD-9 retired on Andrew's call 4; the export moves to 4.0.0_SA_CRO~G's brief). PRD v0.4 2026-09-16 ~18:2xZ (the CVO's two cures on v0.3 carried; ratified-text half re-offered). PRD v0.3 2026-09-16 ~18:0xZ (FWD-9 Schwab-to-SharePoint export, sequenced last; R-OG-1..3 on 97496). ",
+  "last_updated": "2026-09-27"
 }

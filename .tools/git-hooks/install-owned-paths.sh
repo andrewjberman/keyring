@@ -28,7 +28,10 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+# Resolve the repo from THIS SCRIPT's location, never the caller's ambient cwd (row NFRA_OPALAI-Z-W5-S1):
+# invoked by absolute path from another repo's cwd, the ambient form silently targeted that other repo.
+_SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(git -C "$_SELF_DIR" rev-parse --show-toplevel 2>/dev/null || git rev-parse --show-toplevel 2>/dev/null || pwd)"
 HOOK_SRC="$REPO_ROOT/.tools/git-hooks/owned-paths-check.sh"
 
 SUBMODULE_PATH=""

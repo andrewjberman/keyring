@@ -1,0 +1,27 @@
+# Deploy Completion Record
+**Date opened:** 2026-09-27T22:11:08.611367+00:00
+**Status:** CLOSED -- nothing stranded -- closed 20260927T223254Z
+**Deploy:** NFRA_OPLGTW OG-s-1: narrow opal-gateway release, /sprint owner-only roster (.env line only)
+**Authored by:** 0.9.0_WK_NFRA_OPLGTW~9
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 4.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | s3-prefix | build the release-tree (6a98a0553a, mcportal a3bff71ffa3f5c73aa0fb7ea1e7386434e233054) gateway tarball and upload to s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/ | the deploy-to-ec2.sh INFO: uploaded line naming the S3 URI | INFO: uploaded s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/opal-gateway-6a98a0553a.tar.gz (+ latest); built from /c/tmp/og-s1-rel HEAD 6a98a0553a0a01c7e1acc6aea2b2ce5b82fc0f9b with mcportal a3bff71ffa3f5c73aa0fb7ea1e7386434e233054; artifact 392K; halt gate 186 pending messages passed with HALT_ACK=1; wrapper rc=0 | CLOSED 20260927T223140Z |
+| L2 | ec2-baked-asset | SSM pull+install+restart opal-gateway.service on i-07dccb1615503ac99 from the uploaded artifact | SSM Status=Success + on-box /health 200 within 90s + on-box md5 of app/{access_state,data_entitlement,server,token_broker}.py = fe94911257's bytes 4/4 + on-host tool-name list AFTER=46 sorted diff vs BEFORE EMPTY + ENABLED_INTEGRATIONS unchanged + process env SPRINT_VIEW_ALLOWED_EMAILS once with 1 entry | ssm:69162a20-453d-4071-bebf-9cf1a6a489a9 OK: deploy Success; on-box wrapper smoke: opal-gateway active, /health {"ok":true}, AS metadata serves, /mcp unauth -> 401, md5 server.py 1339aca9648e88ed754edcf902b7af26 = fe94911257's bytes. Independent verify (ssm:02e29f76-a792-4a7e-9784-9de07943e956): health=200; md5 4/4 = fe94911257's bytes (access_state.py 6d2c021b7f1c126dcb78325103e53400, data_entitlement.py 964504343c24d412a266da74e7108e69, server.py 1339aca9648e88ed754edcf902b7af26, token_broker.py aa08edc2a4c4d349b7c6b2d87b83729e); ENABLED_INTEGRATIONS before/after = 'ycharts opal_portal globgrph' unchanged (ssm:a1c8355e-162e-485c-a850-18e41039eecd before, ssm:02e29f76 after); host .env KEY SET before=25 keys, after=26 keys, ONE new key SPRINT_VIEW_ALLOWED_EMAILS, none removed; running process env (MainPID 369668, ssm:bd06c1df-e528-4ce4-8d6a-776717835564) carries SPRINT_VIEW_ALLOWED_EMAILS exactly once with 1 entry; on-host tool-name list BEFORE (ssm:fb5e9eb3-d4e7-4878-b7e3-8b4dfb297ab6)=46 and AFTER (ssm:b5387b0b-ed0d-4cfd-8c16-fbbf1b421ca4)=46, sorted diff EMPTY. NOT rolled back. | CLOSED 20260927T223205Z |
+| L3 | git | EC2_MANIFEST.json services.opal-gateway deployed_commit=6a98a0553a full hash, previous_deployed_commit=fe94911257 full hash, mcportal_commit unchanged, release_note naming Andrew's word @785fc4d71f, committed on wk-NFRA_OPLGTW-9-s1 | the safe-commit hash | commit 0228c3073b on wk-NFRA_OPLGTW-9-s1: EC2_MANIFEST.json services.opal-gateway deployed_commit=6a98a0553a0a01c7e1acc6aea2b2ce5b82fc0f9b, previous_deployed_commit=fe94911257c2c3c4845f5dfa8bb8128804cd05ec, deployed_at=2026-09-27T22:17:33Z, deployed_by=0.9.0_WK_NFRA_OPLGTW~9, mcportal_commit unchanged. Recorded by hand on an LF copy (0 CR, 0 CRLF). The wrapper's auto-commit on rel-nfra-oplgtw-sprint-owner was refused at the naming-gate (89 pre-existing findings), left UNLANDED in /c/tmp/og-s1-rel. | CLOSED 20260927T223223Z |
+| L6 | verify | rollback to fe94911257 proven before the act without uploading: clean base tree /c/tmp/og-s1-rb (HEAD fe94911257, mcportal a3bff71ffa3f5c73aa0fb7ea1e7386434e233054); rollback command cd /c/tmp/og-s1-rb && HALT_ACK=1 AGENT_NAME=0.9.0_WK_NFRA_OPLGTW~9 bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh | the artifact name + byte size + identical-file count against live (79 of 79, per PHASE A step 6) | /c/tmp/og-s1-rb HEAD=fe94911257c2c3c4845f5dfa8bb8128804cd05ec clean (mcportal a3bff71ffa3f5c73aa0fb7ea1e7386434e233054); rollback artifact opal-gateway-fe94911257.tar.gz 398857 bytes (scratch build) proven 79 of 79 files IDENTICAL against live s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/opal-gateway-fe94911257.tar.gz (398947 bytes; gzip-metadata delta only) BEFORE the act (Phase A step 6). Redeploy: cd /c/tmp/og-s1-rb && HALT_ACK=1 AGENT_NAME=0.9.0_WK_NFRA_OPLGTW~9 bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh. NOT exercised -- the act succeeded on 6a98a0553a (all AFTER-guard verify conditions PASS), so rollback was not invoked. | CLOSED 20260927T223241Z |
+
+## Log
+
+- 20260927T221108Z OPENED by 0.9.0_WK_NFRA_OPLGTW~9 with 4 leg(s)
+- 20260927T223140Z LEG L1 closed: INFO: uploaded s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/opal-gateway-6a98a0553a.tar.gz (+ latest); built
+- 20260927T223205Z LEG L2 closed: ssm:69162a20-453d-4071-bebf-9cf1a6a489a9 OK: deploy Success; on-box wrapper smoke: opal-gateway active, /health {"ok":tr
+- 20260927T223223Z LEG L3 closed: commit 0228c3073b on wk-NFRA_OPLGTW-9-s1: EC2_MANIFEST.json services.opal-gateway deployed_commit=6a98a0553a0a01c7e1acc6
+- 20260927T223241Z LEG L6 closed: /c/tmp/og-s1-rb HEAD=fe94911257c2c3c4845f5dfa8bb8128804cd05ec clean (mcportal a3bff71ffa3f5c73aa0fb7ea1e7386434e233054);
+- 20260927T223254Z CLOSED -- all 4 legs proven

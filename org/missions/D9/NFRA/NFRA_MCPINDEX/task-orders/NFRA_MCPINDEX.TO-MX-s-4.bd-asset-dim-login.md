@@ -35,12 +35,62 @@ Do, in order:
    hoc as it runs (its own SSM document) to reproduce, and ledger each vendor-facing run in your deliverables.
    - If the fix needs a new credential, an MFA device, an account change or anything from the vendor: STOP, file a
      BLOCKING row, and report. That is Andrew's word.
+   - **AMENDED A2 (2.0.0_SA_COO~O, 2026-09-27 ~19:1xZ, on 1.0.0_SA_CTO~O's msg 20260927T185833Z):** at the login
+     timeout, the ONE reproduction run captures ONE full-page screenshot and the page URL. The evidence decides which of three
+     causes this is: (a) the login form re-shown with an error, meaning the password expired or changed; (b) an MFA or
+     consent prompt; (c) a changed page structure, meaning a code fix in this lane. The screenshot stays OUTSIDE the repo
+     (`C:/tmp/mx-s4-evidence/`) and is never committed or uploaded. The result records ONLY: the URL's scheme, host and
+     path (no query or fragment); which of (a)/(b)/(c) it shows; and one sentence of description with no account,
+     client or personal data. (a) and (b) are Andrew's: STOP with a BLOCKING row naming which. (c) proceeds to the fix.
+   - **AMENDED A3 (2.0.0_SA_COO~O, 2026-09-27 ~20:2xZ), on Andrew-direct 2026-09-27 ~19:5xZ** (record
+     `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_195xZ_CTO_O_SPRINT_OWNER_ONLY_AND_BD_MFA_USE_THE_TRUST_TOKEN_ROUTE.md`
+     @785fc4d71f): Black Diamond added MFA around 2026-06-23, which is the cause. **The fix is a CODE fix in this lane.** The
+     download consumes the durable trust-token/session that `bd-49f-auto-login` (the ADVI_BDAPIMIG producer) writes to
+     Secrets Manager, instead of a fresh portal username/password login. No new credential, MFA device or vendor act is
+     needed, so this is not a STOP. **Firm by firm:** read ONLY the bd firm's secret, never cot's, and never mirror or
+     sync between them (CLAUDE.md rule 13).
+     - A2's screenshot run becomes OPTIONAL. Run it only if the token route fails, to show what the token did not clear.
+     - Do NOT modify `bd-49f-auto-login` or anything under ADVI_BDAPIMIG. Read its secret's NAME and SHAPE from its
+       code, and consume it read-only. If the secret is absent, stale, or of another firm, STOP with a BLOCKING row
+       naming which.
+   - **AMENDED A4 (2.0.0_SA_COO~O, 2026-09-27 ~20:4xZ), SUPERSEDING A3's mechanism**, on Andrew-direct ~20:1xZ relayed
+     by 1.0.0_SA_CTO~O (msg 20260927T203308Z): "see if you can just have a rest api pull for those tables. shouldnt
+     need to make another 49 Financial bd crawler to get the long-trust token because we already have it with that
+     existing crawler". Step 1 is now:
+     1. **Check coverage first.** Do the `bd-49f-runner` and `bd-49f-fees-runner` Lambdas already pull the fees (and
+        allocation) tables by REST? If a Playwright downloader is simply dead because REST already covers its table,
+        report that with the evidence and do not rebuild it.
+     2. **Replace the asset-dim Playwright portal download with a REST pull**, following those runners' pattern:
+        - auth from the session / device-trust token the EXISTING `bd-49f-auto-login` writes to Secrets Manager
+          `blackdiamond/49f/session`, read-only;
+        - routes from `data/black_diamond/API/` (DataMining query types, `domains/datamining/endpoints`);
+        - build NO new crawler and NO new login.
+        The pull feeds the same downstream (`convert_assets_to_silver.py`).
+     3. **49F only.** cot is a separate firm; never read its secret or mix its routes.
+     Step 2 (the honest wrapper exit) stands for whatever path remains scheduled. A path this needs outside `<paths>` is a
+     BLOCKING row naming it, and the issuer grants it; never an override.
+   - **AMENDED A5 (2.0.0_SA_COO~O, 2026-09-27 ~22:0xZ), ruling row NFRA_MCPINDEX-Z-S30 (the successor seat's option (c)):**
+     step 1 LEAVES this order, and AC1 (the download succeeding) leaves with it. MX-s-4 is now step 2 only, the honest
+     wrapper exit, which landed at 03e744ec3f (SSM DocumentVersion 3 Active). It is graded on AC4, the CVO's judgment,
+     once its last open leg L4 closes. Step 1.1 is ANSWERED: REST does not cover asset-dim. Step 1.2 (the REST pull) is
+     routed to 1.0.0_SA_CTO~O as a new cell to DESIGN, because two things are not the issuer's to grant:
+     (i) the 49F runner's ingest module lives in cot's tree (`data/cot/scripts/bronze/cot_bronze_ingest.py`), and
+     Andrew's word is 49F only, with cot and bd never mixed; (ii) the dim's classification columns (`asset_super_class`,
+     `asset_class`, `asset_segment`) have no documented REST route, so the pull may not reproduce what
+     `build_bd_assets_dim.py` consumes.
 2. **Make the wrapper's exit code honest.** A failed download or merge returns non-zero, so SSM records Failed. This is
    a producer reporting its own result, not an alarm.
 3. **Restore the compaction to `silver/bd_assets.parquet`.** Check what the SSM document passes to
    `convert_assets_to_silver.py`; it writes the compacted file unless `--no-compacted` is passed.
 4. Rebuild the bridge once, `build_bd_assets_dim.py`, from the now-current input. Adding the builder to the schedule is
    NOT this order's: report the spec (section 5, item 4) for a later ask.
+
+**AMENDED by the issuer (2.0.0_SA_COO~O, 2026-09-26 ~21:3xZ) on your row NFRA_MCPINDEX-Z-S15:** steps 3 and 4 LEAVE this
+order. The compaction to `silver/bd_assets.parquet` is gated on `--backfill` in `convert_assets_to_silver.py`, not on
+`--no-compacted`, and the scheduled path passes `--latest`. So restoring it is a change to a DS-owned silver script (rule
+13), and the bridge rebuild depends on it. Both move to `NFRA_MCPINDEX.TO-MX-s-6` (0.4.0_DS_ClientPlatform~D), with this
+order's former AC2 and AC3. This order is now steps 1 and 2 only: the login, and the honest wrapper exit. Its
+criteria are AC1 and AC4.
 
 ## 2. BOUNDS
 
@@ -71,9 +121,6 @@ is a question to the issuer, never a silent widening.
 ## 4. PROOF OF SPEC (literal; run from the workspace root after the fix and one real run)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MX-s-4"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/s4.AC1.sh; echo "exit=$?"</invocation><expect>written after issue>=1; download_rc0=yes failed_lines=0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MX-s-4"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/s4.AC2.sh; echo "exit=$?"</invocation><expect>silver/bd_assets.parquet after issue=yes -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="MX-s-4"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~O/round2/checks/s4.AC3.sh; echo "exit=$?"</invocation><expect>silver/bd_assets_dim.parquet after issue=yes -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="MX-s-4" judgment="true"/>
 </proof_of_spec>
 
@@ -110,3 +157,22 @@ Queued after MX-s-3 on the same lane (0.7.0_AE_CloudOps~I). MX-s-3 has the 23:30
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+<!-- self-marked by the assignee 0.7.0_AE_CloudOps~I 2026-09-27T22:3xZ, on the order as amended A5
+     @fc2001d2a6 (step 1 and AC1 left this order; MX-s-4 is step 2 only, graded on AC4 alone).
+     Step 2, the honest wrapper exit, landed at 4b3a757410 and its Z-S17 ordering repair at 03e744ec3f;
+     SSM document opal-bd-asset-dim-download is at DocumentVersion 3, Active and default, Hash
+     490af5249f84285f037cd200b210283e8f57edfa383a316234fede1008b77d66 (describe-document re-read by
+     this seat, not taken from the update call).
+     Deploy ledger nfra-mcpindex-bd-asset-dim-shutdown-order CLOSED, all 5 legs proven, sentinel removed.
+     L4 closed on a PLANTED ordering probe, which AC4 admits in terms: ssm:e77e84c7-6e1f-4772-9dae-d00dc52b9965
+     Status=Failed rc=1, stdout shutdown-before-error, stderr carrying the OS's own 'Shutdown scheduled for
+     Sun 2026-09-27 22:17:03 UTC', and the instance stopped 22:17:38Z. The probe made NO vendor contact.
+     AC4 is JUDGMENT: recorded UNVERIFIABLE-BY-INSTRUMENT, NOT self-graded -- 3.0.0_SA_CVO~O grades it at L9.
+     Instance: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~I/
+       NFRA_MCPINDEX.TO-MX-s-4.bd-asset-dim-login.proof_of_spec.json -- proof-of-spec-check VALID (rc=0),
+       acceptance rows=1, violations=0.
+     Rows: Z-S15 and Z-S17 (both the issuer's to disarm; Z-S17's two conditions are now both met) and
+       Z-S30 (BLOCKING, @e8fcf04e58, ruled (c) by the issuer at 215826Z). Step 1.2 is 1.0.0_SA_CTO~O's to
+       design. The asset-dim data freeze is NOT lifted by this order and never was in it. -->
