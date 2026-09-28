@@ -113,6 +113,24 @@ The ruling is the whole spec. READ IT:
   resolves (the test for this defect). Then re-run step 2 as written. A second ad-hoc run on the stopped instance is
   inside step 2's ONE-run test, because the first run made no vendor call and no write.
 
+**AMENDED A4 (2.0.0_SA_COO~O, 2026-09-28 ~10:4xZ), on row Z-S44 (run `ssm:103d29fd`, AccessDenied at `load_bd_cookie`):**
+- **The preflight's comp-iam line was the ISSUER's error.** It asserted that the role reads `blackdiamond/49f/session`
+  without a measurement. The live run proves it does not. The seat's refusal to hand-add the grant was correct.
+- **GRANTED, in PHASE A, before re-running step 2.** One `aws_iam_role_policy` on `aws_iam_role.bd_exporter` in
+  `infra/aws/terraform/bd-pipeline/iam.tf`, with ONE statement:
+  - Action `secretsmanager:GetSecretValue` only;
+  - Resource `arn:aws:secretsmanager:us-east-1:313476888478:secret:blackdiamond/49f/session-*` only.
+  The form copies the existing `ReadSessionForCheck` statement (`bd-49f-session-chain.tf:171-176`). Read-only, 49F only,
+  and the firm line holds: the secret, the bucket and the role are all the 49F plane.
+- **Deploy discipline:**
+  - A NEVER-2 ledger `nfra-mcpindex-bd-exporter-49f-session-read`, opened before and closed after.
+  - `.tools/safe-apply.sh`, where the plan names exactly 1 resource to add and 0 to change or destroy.
+  - A post-apply `terraform plan -detailed-exitcode` returns 0.
+  - Rollback: remove the resource, then safe-apply.
+  This moves no served output, so it takes no never-widen half. The halves weigh the dim diff that step 2 produces.
+- **Then re-run step 2 as written.** Zero vendor calls so far, so the one-run test budget is intact. The seat closes
+  Z-S44 with the post-apply GetSecretValue permission measured from the instance run (the run gets past `load_bd_cookie`).
+
 ## 2. BOUNDS
 
 1. One producer before and after: no second schedule, no parallel path, no comparator.
@@ -132,6 +150,7 @@ infra/aws/ec2/bd-exporter/src/stepwise/download-daily-fees.ts
 infra/aws/ec2/EC2_MANIFEST.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-bd-asset-dim-rest-schedule.json
+org/critical_paths/.open_deploys/nfra-mcpindex-bd-exporter-49f-session-read.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~I/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/**
 </paths>
