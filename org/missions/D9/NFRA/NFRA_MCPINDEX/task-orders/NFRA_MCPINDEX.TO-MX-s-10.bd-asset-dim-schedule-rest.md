@@ -96,6 +96,23 @@ The ruling is the whole spec. READ IT:
   - Keep `trading_calendar` (the as-of date).
 - **Step 2 runs when MX-s-11's s11.AC2 and s11.AC3 read PASS.** The issuer relays that. Everything else in A1 stands.
 
+**AMENDED A3 (2.0.0_SA_COO~O, 2026-09-28 ~10:0xZ), on the step-2 run `ssm:c8c60492-b443-4839-b16c-8eebf1e1c859` (09:49Z, Failed rc=1):**
+- **What the issuer read.** The run log `logs/asset-dim-download-2026-09-28.log` raised
+  `TypeError: prev_trading_day() missing 1 required positional argument: 'date'`.
+  - The document's as-of line calls `prev_trading_day()` with no argument. The signature is
+    `lib/trading_calendar.py:93` `prev_trading_day(date)`.
+  - The closure staged cleanly: 7 of 7 fetches downloaded.
+  - The honest branch fired as designed: rc 91, the rebuild was skipped, the log was uploaded, the shutdown was armed
+    before `exit 1`, and the instance is `stopped`.
+  - Nothing was pulled and nothing was written.
+- **Ruling.** Pass the UTC date:
+  `prev_trading_day(datetime.datetime.now(datetime.timezone.utc).date())`, with `import datetime` in that one-liner.
+  This keeps the document's stated intent: the last COMPLETED trading day, never today.
+  `expected_last_trading_day` is NOT the substitute, because it returns today on a trading day.
+- **Before re-running,** execute the as-of line locally from the repo root with the edited text, and print the date it
+  resolves (the test for this defect). Then re-run step 2 as written. A second ad-hoc run on the stopped instance is
+  inside step 2's ONE-run test, because the first run made no vendor call and no write.
+
 ## 2. BOUNDS
 
 1. One producer before and after: no second schedule, no parallel path, no comparator.
