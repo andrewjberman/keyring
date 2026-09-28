@@ -11,8 +11,8 @@ bound here by md5.
 
 **Tally:** 4 pins handed over. 1 PASS (`a47d3a75`). 1 PARTIAL FAIL (`528acdcd`: the source-age half passes; the
 "label alone" half fails on the Analysis stage line, next item N1). 1 PARTIAL PASS (`bfafa6c0`: the drill half passes
-on a real run; the Asset Category Views half is NOT GRADED, unit only). 1 NOT GRADED (`921e6808`, no real run). Pins 5 (`38986671`) and 6 (`4ded3791`): NOT GRADED on a real run (none
-exists; walker runs paused); their unit evidence holds.
+on a real run; the Asset Category Views half is NOT GRADED, unit only). 1 NOT GRADED (`921e6808`, no real run). Pins 5 (`38986671`) through 9 (`816eeb58`): NOT GRADED on a real run
+(none exists; walker runs paused); their unit evidence holds.
 
 ## Grades
 
@@ -51,6 +51,15 @@ Detail for pin 2:
 
 | 5 | `38986671` FAST item 5 (UIC-11 residue) | no account wedge is near-white on the white Holdings panel | (a) `bun test iv-e-81 iv-e-70` re-run by this seat at portal HEAD `4ded3791` (a descendant): `ACCOUNT-PALETTE-VISIBLE-OK` (lightest `#cbd5e1` 1.485:1, control `#f5f5f5` 1.090:1) and `MODEL-VS-CLASS-COLOUR-OK` (worst internal dE00 6.7642); (b) both contrast ratios recomputed by hand from the WCAG luminance formula: 1.09:1 and 1.48:1, matching; (c) CI completed/success; (d) no real run | **NOT GRADED** (real run) |
 | 6 | `4ded3791` FAST item 6 (UIC-20, IV-e-75) | a required-field message shows only after the user tries to generate, never on load | (a) `bun test iv-e-82` re-run by this seat at `4ded3791`: `REQUIRED-AFTER-ATTEMPT-OK` (load: no message, Generate enabled; after one press: the message shown, 0 submitter calls); (b) walk 20260928T190559Z shot 031, opened and read, is the before; (c) CI in progress at grading; (d) no real run after the change | **NOT GRADED** (real run) |
+
+| 7 | `84519ede` FAST item 7 (UIC-22, IV-e-75) | Analysis shows a loading state until the holdings snapshot read answers; "none held" only after it answers | `bun test iv-e-83` re-run by this seat at portal HEAD `816eeb58`: `SNAPSHOT-LOADING-OK` (unanswered "Holdings snapshot: Loading"; answered refusal "none held -- Unavailable (SOURCE_UNAVAILABLE)"); CI success; no real run | **NOT GRADED** (real run) |
+| 8 | `c77b693b` FAST item 8 (UIC-19, IV-e-75) | the default report title names the client and the variant, never one account or a comparison key | `bun test iv-e-84` re-run at `816eeb58`: `TITLE-CLIENT-VARIANT-OK` ("Coastal Ridge Trust -- Overview / Comparison / Multi-Comp" at 0/1/2 comparisons); CI success; no real run | **NOT GRADED** (real run) |
+| 9 | `816eeb58` FAST item 9 (UIC-18, IV-e-75) | a picked variant card is visibly selected; the form asks for what that variant needs, with no system sentence | `bun test iv-e-85` re-run at `816eeb58`: `VARIANT-ASKS-OK` (3 cards, 1 ringed, 1 "Selected"; five asks in client words, e.g. "Add at least two Opal models to compare against."); CI success; no real run | **NOT GRADED** (real run) |
+
+Detail for pins 7-9 (from the tests' own printed text; outside each pin's claim):
+- Pin 7's refused arm prints "none held -- Unavailable (SOURCE_UNAVAILABLE)": the N1 raw-code class again, on the
+  Holdings-snapshot line. Its held control prints "as of 2026-09-09 ReadyNeeds correction: ...": a raw ISO date, and
+  "Ready" run into "Needs" in the test's text read (the DOM may separate them; a render is the check).
 
 Detail for pins 5 and 6:
 - Pin 5 claims the near-white entry only. The rest of UIC-11 (brief `:48`, "a narrow grey ramp; neighbouring slices
@@ -95,8 +104,12 @@ the walk dies. Nothing waits on a FAST grade, so the real runs go to the next wa
   SOURCE-READ; no live body read).
 - **N2 (owed real runs):** the Asset Category Views card and modal after `bfafa6c0`; the Analysis history over a
   client with two dated requests after `921e6808`; the 11-account Holdings pie after `38986671` (a glance judgment on
-  the grey ramp); the Analysis tab at rest and after one Generate press after `4ded3791`. One walk of Cowdin (11
-  accounts) plus Thiessen covers all four.
+  the grey ramp); the Analysis tab at rest and after one Generate press after `4ded3791`; the Analysis snapshot line
+  while loading, the default title, and a picked variant with its ask after `84519ede`, `c77b693b`, `816eeb58`. One
+  walk of Cowdin (11 accounts) plus Thiessen, with the Analysis tab pressed through, covers all seven.
+- **N3 (raw code, the N1 class, second surface):** the Holdings-snapshot line on Analysis prints "(SOURCE_UNAVAILABLE)"
+  on a refusal (pin 7's test), as the history row prints "Failed -- SOURCE_UNAVAILABLE" (pin 4's). N1's fix should
+  cover every place a reason code reaches the face, not only `StageDisplay.tsx:62`.
 
 ## Observations (not grades; each is outside the pin's claim)
 

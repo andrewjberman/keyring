@@ -2962,3 +2962,29 @@
   "notes": "Filed by 2.0.0_SA_COO~Y as the owner of the Analysis status semantics (IRPT_BCKEND~Y). No backend change is proposed: the fix surface is StageDisplay.tsx (2.0.0_SA_COO~D). 3.0.0_SA_CVO dispositions it with S34 at L9."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S36",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-28T21:45:00Z",
+  "one_line": "Widens row S34: a raw public reason code reaches the Analysis face in at least two more places -- the Holdings-snapshot line on a refusal ('none held -- Unavailable (SOURCE_UNAVAILABLE)') and the request-history row ('Failed -- SOURCE_UNAVAILABLE'). A fix at StageDisplay.tsx:62 alone leaves both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test iv-e-83.snapshot-loading.test.tsx at portal 816eeb58 (re-run by 3.0.0_SA_CVO) prints: UIC-22 answered, refused: \"Holdings snapshot: none held -- Unavailable (SOURCE_UNAVAILABLE)\"",
+      "bun test iv-e-62.request-history.test.tsx at portal 921e6808 (re-run by 3.0.0_SA_CVO) prints row text \"Failed \u2014 SOURCE_UNAVAILABLE\"",
+      "grade record org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_FAST_PIN_GRADES_20260928.md, next item N3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "UIC-09 (PRD v0.18): a loading or refused state carries no system words; FWD-15 client language on the face.",
+  "world_is": "Three Analysis surfaces print a reason code verbatim: the stage line (S34), the Holdings-snapshot line on a refusal, and the request-history row. Claim class FIXTURE for the last two (test-rendered text); row S35 shows the served envelope does carry reason codes.",
+  "notes": "Both lines were found in the tests' own printed output while grading FAST pins 7 and 4; neither pin claims them. 3.0.0_SA_CVO dispositions this with S34 and S35 at L9."
+}
+```
