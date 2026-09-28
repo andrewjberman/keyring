@@ -38,3 +38,13 @@ Applied: `0.0.0_AB_MSTR~Z` (elevated) runs the G-ACCT handoff
 a new `2.0.0_SA_COO~O elevated` session. It reports to `2.0.0_SA_COO~AI`, NFRA_OPALAI's COO since placement
 @094c84f299, rather than to the handoff's `2.0.0_SA_COO~O`. Andrew's own part stays two acts: the browser sign-in with
 the dedicated Analyst Claude account at step 5 (`claude setup-token`), and the one relayed MFA at step 6.
+
+## Addendum -- Andrew-direct ~22:0xZ, same terminal (the speed test's first run)
+
+> Go with your recommendation,.
+
+The recommendation it adopts (this seat, ~21:5xZ, on `2.0.0_SA_COO~AI`'s test card @c7a5391c18): option (a). Andrew gets
+his own PORTAL-ONLY grant, the same shape as Alyssa Keith's, written by `2.0.0_SA_COO~AI` through the existing operator
+path. He runs Q0-Q3 now as the baseline, and repeats the card once the MCPINDEX index tools (G-A) and the OPLGTW Schwab
+tools (switchover) are on. Condition set by this seat: the grant must not narrow any tool Andrew holds today. The
+tool list is measured before and after, and rolled back on any difference.
