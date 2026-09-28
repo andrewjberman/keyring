@@ -94,6 +94,27 @@ Detail for pin 4:
 and the previous walk died to the harness's low-memory kill. A walk arms an admin-role account that stays active if
 the walk dies. Nothing waits on a FAST grade, so the real runs go to the next walk of this surface.
 
+## Regrades on a real run: walk 20260928T215633Z (22:0xZ)
+
+Client ANTHONY DALE REID (49 Financial, 3 accounts), localhost:5174. The dev server started 21:46:49Z
+(`tmp/ui-walk/devserver-20260928T214648Z.log`); portal HEAD from 21:51:01Z to 22:03:24Z was `b0acdee2` (reflog), so the
+walk's build holds pins 1-10 (vite serves the working tree; uncommitted edits, if any, are not excluded). Shots opened and
+read: `005-identity-...-expanded.png` md5 `065b6c286486ffa5537b0cbb7348cb79`, `011-...-holdings.png`
+`bf22a59927104fab7c82b593b9c756c1`, `015-...-analysis-expanded.png` `aceb3c210802a9fdde2f012bc4740542`.
+
+| pin | was | now | on what |
+|---|---|---|---|
+| 2 `528acdcd` source-age half | PASS (unit + refusal face) | PASS, also on a real loading face | shot 005: the Performance body reads "Loading" alone |
+| 5 `38986671` | NOT GRADED | **PASS on its claim** | shot 011: three wedges, none near-white (slate-300, stone-300, zinc-400). UIC-11's glance test is still open: the two pale wedges read close, and all three wedges, legend entries and rows read "****9079 / IRA" (UIR-26) |
+| 6 `4ded3791` | NOT GRADED | **PASS at rest**; the after-press arm is not exercised | shot 015: Generate enabled, no red refusal on load; the recipient line is grey helper text, not an error |
+| 9 `816eeb58` | NOT GRADED | **PASS on the visible pick**; the ask arms are not exercised (Overview asks nothing) | shot 015: the Overview card ringed and reading "SELECTED" |
+| 10 `11c3fa4a` (UIC-17) | not handed before this walk | **PASS** | shot 005: no "SCOPE AS OF" field (was "unknown"); "DIRECTORY AS OF September 24th, 2026" in the page's date format |
+| 7 `84519ede`, 8 `c77b693b` | NOT GRADED | still NOT GRADED | shot 015 has no client selected (search box empty), so "Holdings snapshot: Loading" and the title "the selected client -- Overview" do not exercise a read that answers or a client name |
+
+Observation from shot 015: with no client selected, the snapshot line reads "Holdings snapshot: Loading". If no read is
+in flight without a client, that is a loading word for a state that is not loading; one shot cannot tell. A render
+with a client selected (pins 7, 8) settles both.
+
 ## Next items
 
 - **N1 (pin 2's FAIL):** the Analysis stage line prints the raw public reason code beside "Loading"
@@ -106,7 +127,10 @@ the walk dies. Nothing waits on a FAST grade, so the real runs go to the next wa
   client with two dated requests after `921e6808`; the 11-account Holdings pie after `38986671` (a glance judgment on
   the grey ramp); the Analysis tab at rest and after one Generate press after `4ded3791`; the Analysis snapshot line
   while loading, the default title, and a picked variant with its ask after `84519ede`, `c77b693b`, `816eeb58`. One
-  walk of Cowdin (11 accounts) plus Thiessen, with the Analysis tab pressed through, covers all seven.
+  walk of Cowdin (11 accounts) plus Thiessen, with the Analysis tab pressed through, covers all seven. After walk
+  20260928T215633Z, still owed: the Asset Category Views card and modal (pin 3); two dated history rows (pin 4); an
+  11-account pie (UIC-11 glance); Generate pressed once (pin 6); the Analysis tab WITH a client selected (pins 7, 8);
+  a Comparison or Multi-Comp pick (pin 9's ask arms).
 - **N3 (raw code, the N1 class, second surface):** the Holdings-snapshot line on Analysis prints "(SOURCE_UNAVAILABLE)"
   on a refusal (pin 7's test), as the history row prints "Failed -- SOURCE_UNAVAILABLE" (pin 4's). N1's fix should
   cover every place a reason code reaches the face, not only `StageDisplay.tsx:62`.
