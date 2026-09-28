@@ -3945,3 +3945,55 @@ name the one known failure instead of silently inheriting it.
   "notes": "Found by the round-2 E5 draft (2.0.0_SA_COO~O fork) and verified by this seat at the bytes. The E5 cell must wire export end to end through the real run_export and remove both aliases from the export tests, so the tests exercise the branch production takes. R-4's memory reasoning still holds for the streaming remedy; only S57's account of the current path needs correcting."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-28T22:00Z",
+  "one_line": "OG-t-1 AC2's check script tk.AC2.sh cannot pass as written: line 9 carries a literal backslash-n between two test names, so bash passes a stray 9th argument 'n' and the script reads 'named tests passed 8 of 9' although all 8 named tests PASS.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/tk.AC2.sh:8-9 at HEAD b5a585cf2f: '... test_unverified_provider_floors_every_principal \n  test_machine_paths_never_reach_resolve_tier; ok=$?' -- od -c shows the two characters backslash and n on ONE line, not a newline; unquoted, bash turns '\n' into the word 'n'.",
+      "Run from the worktree root after commit b5a585cf2f: 'pytest rc=0; named tests passed 8 of 9; failed/error lines 0' then 'RESULT: FAIL', exit=1. The same pytest run, -v, shows all 8 named tests PASSED (tests/test_tier_principal.py, 8 passed).",
+      "The script is the issuer's file under deliverables/2.0.0_SA_COO~O/, outside the worker's <paths>; the order says never repair or widen a criterion."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "AC2 expects 'named tests passed 8 of 8; failed/error lines 0 -- RESULT: PASS -- exit=0'.",
+  "world_is": "The check cannot produce its expected line whatever the code does: it counts a phantom 9th name. AC2 is recorded FAIL as written and the order stays open; the fix is one character (replace the literal backslash-n with a line continuation or a space) in the issuer's file, then a re-run reads 8 of 8.",
+  "notes": "Worker did not edit the script. The 8 named tests are PASSED by name in the pytest -v output."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-28T22:00Z",
+  "one_line": "Two moto-dependent suites outside OG-t-1's paths still call resolve_tier with an EMAIL or set the email roster for a person; once moto is present test_principal_cutover.py fails (AttributeError on a str) and test_data_entitlement_guard.py test_ogz1_ac04's 'master_admin with no profile' arm silently stops being a master admin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py:395 'tier.resolve_tier(context.get_current_email(), _CFG)' and :471 'token_broker._scopes_for_tier(tier.resolve_tier(s.principal.email, _CFG))' at HEAD b5a585cf2f: an email string reaches resolve_tier(principal, cfg), which reads principal.key.",
+      "infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py:546 'monkeypatch.setattr(_CFG, \"MASTER_ADMIN_EMAILS\", (\"boss@opalinvest.com\",))' makes the admin arm of test_ogz1_ac04 a master admin at the base; after OG-t-1 resolve_tier reads no email roster, so that arm is a READ_ONLY user and the assertion 'a tier does not grant data' passes without exercising a master admin.",
+      "Both modules import moto (test_principal_cutover.py:35, test_data_entitlement_guard.py:30), which is not installed on site Z, so neither runs in the round's checks; neither is in OG-t-1's <paths> and neither is in AC3's suite list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-t-1: update test_min_tier_gate.py and test_attachment_tools.py only where they set the email rosters for a PERSON; nothing names these two suites.",
+  "world_is": "A round with moto installed will see test_principal_cutover.py fail on a stale email argument and test_data_entitlement_guard.py::test_ogz1_ac04 pass with its master-admin arm hollowed out. Fix (a later cell's paths): key both on the principal (resolve_tier(context.get_current_principal(), cfg); the ac04 arm sets MASTER_ADMIN_PRINCIPALS to the admin's tid/oid).",
+  "notes": "Neither file was edited by this worker (outside <paths>)."
+}
+```
