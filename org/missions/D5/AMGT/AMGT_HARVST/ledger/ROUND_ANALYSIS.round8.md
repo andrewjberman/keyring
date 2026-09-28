@@ -27,9 +27,18 @@ is welcome; it never replaces the first.
 
 ## 3. FINDINGS THE RECUT MUST ANSWER
 
-1. **The repair cell did not repair.** The 3 red tests were its reason for existing and they still fail.
+1. ~~**The repair cell did not repair.** The 3 red tests were its reason for existing and they still fail.
    Either its criterion did not require them green (a cut defect) or it did and graded green on something
-   else. **The recut reads `w-1`'s order and instance and says which, before cutting a second repair.**
+   else. **The recut reads `w-1`'s order and instance and says which, before cutting a second repair.**~~
+
+   **SUPERSEDED (2.0.0_SA_COO~Y, 20260928T0242Z, measured @`9a5d538d35`) -- both horns were wrong.** `w-1`
+   was cut for Z-W9-S1 (AC1) and that repair LANDED, with a negative control. The red suite was AC2, a
+   REGRESSION BASELINE requiring disclosure with every failure named -- exactly what this seat's round-7
+   analysis asked for -- and 0 assertions were altered. **And it is TWO tests, not three** (one test
+   SUBFAILS twice). A second repair is still needed; its diagnosis is
+   `deliverables/2.0.0_SA_COO_Y/WHY_THE_RED_TESTS_ARE_STILL_RED_20260928.md`, including an UNGUARDED
+   `.json()` at `publishers.py:672` that a completed test double would hide. **Round 9 cell 1 carries that
+   guard as its own criterion, so a green suite cannot imply it.**
 2. **A barrons test alternates between two failure faces across identical runs** (COO~Y's two-run finding).
    A test that fails differently on identical input is not a regression baseline. Quarantine it with the
    reason stated, then diagnose it inside `w-4`'s scope.
@@ -37,7 +46,9 @@ is welcome; it never replaces the first.
    the 16 rows re-measured or states why not.
 4. **Three remedies read at HEAD, clocks not flipped** (Z-W9-S1 listings half, Z-S27, Z-W11-S1): REMEDIATION_v1
    rows still read OPEN because the table carries no flip verb. **Recorded here as REMEDIATED on the CVO's
-   HEAD read (Z-W11-S1 also on this seat's own measurement);** the disarm owner writes the evidence rows.
+   HEAD read (Z-W11-S1 also on this seat's own measurement);** ~~the disarm owner writes the evidence rows.~~
+   **CORRECTED: REMEDIATION rows are the CVO's to write (CLAUDE.md section 2; `.tools/surprise-row-gate.py`
+   splits it: the disarm owner acts and files evidence, `3.0.0_SA_CVO` writes the clock).**
 
 ## 4. FWD GRADES -- all nine NOT REALIZED
 
@@ -48,7 +59,7 @@ Nothing else in round 8 reached a DONE WHEN population. Unchanged from round 7 o
 
 | # | cell | note |
 |---|---|---|
-| 1 | **Second repair, after reading `w-1`** (finding 1) + quarantine of the flaky barrons test (finding 2) | LOCAL. Criterion: the suite's failed count is ZERO or each remaining failure is quarantined with a named reason |
+| 1 | **Second repair, from COO~Y's diagnosis** (finding 1): the 2 red tests + the `publishers.py:672` `.json()` guard + quarantine of the flaky barrons test (finding 2) | LOCAL. Criteria: the guard exists (a non-JSON body raises `AuthExpired`, shown directly, not via the suite); the suite's failed count is ZERO or each remaining failure is quarantined with a named reason |
 | 2 | **Timeline EXERCISE (LOCAL) carrying the round's JUDGMENT criterion**: open the validation security's timeline, pick a day, read the articles strongest first -- are the events shown the real coverage bursts? | FWD-5/FWD-6. This is the issuable cell the corrected rule requires |
 | 3 | The three cards `w-2`, `w-4`, `w-5` | unchanged, at Andrew; each fires only on his live per-use word. `w-2` keeps its own judgment criterion |
 | 4 | Item 6, the 16 rows | the ISSUER's act, stated in the issuance commit |
