@@ -10602,3 +10602,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Surfaced by DSGN_IRPTV1's FAST item-1 real run. If the producer's labels are distinct, the defect is page-side and returns to 2.0.0_SA_COO~D as a DSGN_IRPTV1 item. Eleven sub-accounts sharing one custodial number is possible; even then the page needs a distinguishing field."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W62-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~62",
+  "surfaced_at": "2026-09-28T19:30:00Z",
+  "one_line": "Off-task in TO-IB-pr-193: infra/aws/lambda/investor-reporting/export/tests/test_submit_async.py::test_the_marked_event_builds_and_the_handle_reaches_the_receipt fails pre-existing, unrelated to this cell's diff -- entry.py:185's `_finalize_on_read` calls `_handler.finalize_export` and gets AttributeError: module 'handler' has no attribute 'finalize_export', though export/handler.py:297 defines it. Reproduced identically against the unmodified HEAD entry.py (my only diff is the REFUSED/FAILED catch added at run_async_submit), and reproduced running that one test alone, so it is not caused by my change and not a collection-order artifact of my own test addition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P: five sibling investor-reporting Lambda dirs (export, performance, holdings, directory, narrative) each ship their own handler.py; a bare `import handler` resolves to whichever same-named module sys.modules cached first in the test process, so any test session pulling in two of them will silently bind the wrong one for the second import -- this looks like that class of defect, not fully diagnosed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run @wk-irpt-p-62: `python -m pytest tests/test_submit_async.py -v` from infra/aws/lambda/investor-reporting/export -- 1 failed (test_the_marked_event_builds_and_the_handle_reaches_the_receipt), 13 passed; traceback at entry.py:185 `_fin.finalize(pending, s3=s3, bucket=bucket, ssm=ssm, finalize_export=_handler.finalize_export)` raising AttributeError: module 'handler' has no attribute 'finalize_export'",
+      "same failure reproduced with entry.py reverted to `git show HEAD:infra/aws/lambda/investor-reporting/export/entry.py` (my task-order edit backed out), same test run in isolation via `-k test_the_marked_event_builds_and_the_handle_reaches_the_receipt`",
+      "infra/aws/lambda/investor-reporting/export/handler.py:297 `def finalize_export(*, submission, pdf_bytes, bucket=None, created_at=None, ...)` -- the attribute exists in that file",
+      "five investor-reporting Lambda subdirectories (export, performance, holdings, directory, narrative) each carry a file literally named handler.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-193 names only entry.py's run_async_submit and one new test in export/tests/test_submit_async.py; it does not ask this worker to make the whole test file's suite green.",
+  "world_is": "The suite carries one pre-existing, unrelated failure (test_the_marked_event_builds_and_the_handle_reaches_the_receipt) that this cell's diff does not touch and does not fix, confirmed present against HEAD before this cell's edit.",
+  "notes": "Not fixed here: out of this cell's <paths> grant and its own defect, not IB-pr-193's. Left exactly as found; my new test (test_a_refused_replay_logs_stage_refused_never_failed) and all 12 other pre-existing tests pass."
+}
+```
