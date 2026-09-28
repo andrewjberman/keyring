@@ -142,6 +142,15 @@ way the truth moves.**
 
 | | |
 |---|---|
+> ⛔ **AC1 CERTIFIED THE COMPONENT, NOT THE PATH -- MY DEFECT, found by `1.0.0_SA_CTO~Z` while signing the
+> never-widen half (20260928T104534Z) and verified by this seat.** `lib/research/api/scoped_amgt.py` has **ZERO
+> occurrences of `timeline`** (0 hits over 1 file) and every `get_timeline*` reference in the estate is its own
+> definition or a test/proof script. **So there is NO SERVED ROUTE and this panel rendered against STUBS.** The
+> criterion demanded a render and a READ of the screenshot -- both delivered faithfully -- but never required the
+> data to arrive by the path a user traverses. **A RENDER CRITERION MUST NAME ITS DATA SOURCE, OR IT CERTIFIES
+> THE COMPONENT AND NOT THE PATH.** Round 11 cell `HVST-z-0` wires the routes; the portal push waits for it.
+> The render itself stands -- 270 of 270 days, 4 of 4 states -- it just proves less than I wrote.
+
 | AC1 | `RENDERED_DAY_COUNT=270 DENOMINATOR=270 EQUAL=True`, 6 of 6 ui-smoke assertions. ⭐ **And the screenshot was READ, not just saved** -- the Lenovo header, "MENTION TIMELINE -- DENSE FROM 2026-01-01" with its COMPLETE/PARTIAL/DENIED legend, a continuous dense bar row with visible orange and red marks, the "270 of 270 day(s) rendered (no gap)" caption, and the feed items BELOW it, confirming the panel sits above the article list |
 | AC2 | **4 of 4 arms distinguishable**, 0 failures. ⭐ **MUTATION-TESTED without being asked:** collapsing DENIED's fill onto PARTIAL's made the harness FAIL with 2 named failures; reverted, clean pass restored. **That is the control that turns "they look different" into "they cannot be made to look the same by accident."** |
 | AC3 | on the AMENDED form: **1 file changed, 7 insertions(+), 0 deletions** -- insertions only. `tabs.harness.cjs` CHECKS-OK 20 of 20, and `data-header-brief`, `data-timeline-panel`, `data-header-feed` all present IN THAT DOM ORDER |

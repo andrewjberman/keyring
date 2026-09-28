@@ -1544,3 +1544,90 @@ different owners. **The keepable form is the banked one: N items is not N CAUSES
 distribution before accepting a backlog figure.** The **8** are named above and are the real work; re-measuring
 claims spanning rounds 1-6 is **cell-sized, not an issuance line**, and it is carried as round 11's candidate
 with its members enumerated so the next issuer inherits a list rather than a number.
+
+
+## 23. ROUND 11 -- L5 DECOMPOSITION v2.0, over the round-10 analysis (`ledger/ROUND_ANALYSIS.round10.md` @3b9cd352b8, corrected in place)
+
+**Issuer `2.0.0_SA_COO~Y`, 2026-09-28 ~11:3xZ.** Series **`z`** (spent: h, r, s, t, u, v, w, x, y over 28 orders).
+Slots MAX+1 over 30 -> **`~31`, `~32`, `~33`**.
+
+### 23.1 THE NEVER-WIDEN PAIR IS COMPLETE, and the CTO's read strengthened my half
+
+**COO half @`7f9df49098`; CTO half @`9fddce21db`.** Its signing check confirmed the mechanism my forward-only
+rollback rests on: **`_latest_gold_snapshot_rows` reads the ONE newest part by `(date, key)`, never a union, so a
+later snapshot wins even on the same day.** That is the property that makes "restore by addition" sound rather
+than hopeful. **Cell 1 may issue.**
+
+### 23.2 ⛔ THE CTO'S FINDING WHILE SIGNING REFRAMES ROUND 10, AND THE DEFECT IS MINE
+
+**There is NO SERVED ROUTE.** The panel calls `/api/scoped/amgt/security/<key>/timeline` and
+`/timeline/day/<date>`; **`lib/research/api/scoped_amgt.py` has ZERO occurrences of `timeline`** (verified by this
+seat: 0 hits over 1 file), and every `get_timeline*` reference in the estate is its own definition or a
+test/proof script.
+
+⛔ **SO `HVST-y-3` RENDERED AGAINST STUBS, AND MY AC1 COULD NOT TELL.** I required a render AND a read of the
+screenshot -- which the worker did faithfully -- but **never required the data to arrive by the path a user
+traverses.** **A RENDER CRITERION MUST NAME ITS DATA SOURCE, OR IT CERTIFIES THE COMPONENT AND NOT THE PATH.**
+COST: one line in the criterion naming the route, and one read of the route's file at cut time.
+NON-APPLICATION: a component whose contract is explicitly fixture-only.
+
+⚠ **It also softens my own never-widen half**, and I would rather say so than let it read stronger than it is: I
+wrote that readers "resolve to 8 events." True of the GOLD LOADERS; **there is no served reader at all, so the
+rebuild moves nothing user-visible today.** The blast radius (one key) stands; the word "SERVED" was inherited
+from the analysis and overstated. **Both halves are signed anyway, which is the conservative outcome.**
+
+**Consequence: the CTO added NEW CELL 0** -- wire both routes in `scoped_amgt.py` with real newest-snapshot
+loaders, authorised by it as CTO of both projects -- **and the portal push waits for it.**
+
+### 23.3 THE CELLS
+
+| id | cell | class | slot |
+|---|---|---|---|
+| `HVST-z-0` | **wire the two timeline routes** in `scoped_amgt.py` over real newest-snapshot loaders | LOCAL | `~31` |
+| `HVST-z-1` | **rebuild `chatter_event` gold** under the amended rule, **never-widen pair SIGNED**, carrying the round's **JUDGMENT** criterion | **SERVED** | `~32` |
+| `HVST-z-2` | **FWD-4's FIELD census** -- the DONE WHEN clause `y-2` did not exercise | LOCAL | `~33` |
+| -- | FWD-5 on the served page | waits on **Andrew's word** for the DEV merge-then-push, then the deploy |
+| -- | FWD-7, the chatter rank from the graded table | follows `z-2` |
+| -- | `w-2`, `w-4`, `w-5` | **at Andrew**, unchanged |
+
+⭐ **`z-2` EXISTS BECAUSE THE CTO READ FWD-4's DONE WHEN AND I DID NOT.** Its two clauses are (i) every
+(article, company) pair CARRIES headline / opening / count / share / co-mentioned companies, and (ii) the grade is
+re-derived and matches. **`y-2` exercised (ii) beautifully -- 263 of 263 -- and (i) was never measured.** I read
+the grade MECHANISM (`assign_tier`) and not the OUTCOME's own definition. **Same shape as 23.2: verification aimed
+at the interesting half.**
+
+**Fan-out 3**, all issuable now; `z-1`'s judgment grades on the served plane AFTER `z-0` lands, which is a grading
+order, not a dispatch dependency.
+
+### 23.4 ITEM 6 -- CLOSED AFTER FOUR CARRIES, AND THE ANSWER IS THAT IT IS NOT A BACKLOG OF 8
+
+The 8 genuinely-open rows were enumerated in `s.22.4` and are now **re-measured by reading what each asserts**.
+⛔ **They are not 8 independent items. At least two are DEFECT CLASSES that recurred THIS SESSION because the rows
+were filed and carried instead of disarmed:**
+
+**CLASS A -- the dotted-string patch target that silently no-ops.**
+`Z-W10-S3` (round 2: `monkeypatch.setattr("lib.opal_data_harvest.publishers...")` failed to intercept the real
+class) and `Z-W14-S2` (its "NEW variant", an absolute `from lib...auth import SessionManager`) **are the same
+defect `0.9.0_WK_AMGT_HARVST~28` filed AGAIN in round 10 as `Z-W26-S1`.** ⭐ **THREE FILINGS OF ONE CLASS ACROSS
+EIGHT ROUNDS, each recorded as new.** **STILL LIVE, measured:** 8 dotted-string patch/setattr targets across 5
+files -- and **it is broader than this project**, reaching `lib/research/posture/tests/` (4 sites),
+`lib/research/api/tests/` and `lib/opal_data_harvest/test_verification.py:18`. The CTO already routed `Z-W26-S1`
+as a repo-wide audit; **`Z-W10-S3` and `Z-W14-S2` are the same route and should ride it, not sit here.**
+
+**CLASS B -- alignment certifies AGREEMENT, never RUNNABILITY.**
+`Z-S11`, open since round 2, states it exactly: *"when BOTH carry the same unrunnable text it PASSES."*
+⛔ **That is precisely what happened to me in round 10 with `y-3`'s AC3** -- order and instance both carried a
+submodule pathspec that returns empty, and alignment passed 3/3. **A row filed eight rounds ago predicted this
+session's defect and nobody acted on it, including me, and I had read the channel repeatedly.**
+
+**THE FOUR SINGLETONS** stay singletons and keep their claims: `Z-S3` (a verdict sentence whose subject is PATHS
+while its evidence population is 14 bronze objects), `Z-S5` (the amended spec closes one half of a judgment
+criterion and not the C-S400 half), `Z-S23` (a census contaminated by its own output -- the seat wrote its result
+into the channel the census reads), `Z-W8-S2` (the checker's coverage frame returning rc=1 on a correctly-built
+instance), `Z-W10-S8` (the WSJ extractor pulling the whole `__NEXT_DATA__` blob into silver).
+
+⛔ **THE KEEPABLE FORM, and it is why this was carried four times: A BACKLOG COUNT HIDES A DEFECT CLASS. "16
+rows", then 14, then 8 -- every re-count asked "how many" and none asked "how many DISTINCT".** The estate
+rediscovered Class A three times and Class B once because a row that is filed, carried and never grouped reads as
+history rather than as a live hazard. **COST: group a backlog by its mechanism before quoting its size.**
+**NON-APPLICATION: a backlog whose members are already known to be independent.**
