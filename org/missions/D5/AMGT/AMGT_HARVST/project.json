@@ -19,7 +19,7 @@
   "seats": {
     "cro": "4.0.0_SA_CRO~Z (L1 brief author)",
     "cto": "1.0.0_SA_CTO~Z (L2 endpoint, L3 registration, L4 PRD, L10 routing)",
-    "coo": "2.0.0_SA_COO~Y (L5 decomposition, L6 issuance, drives to completion) -- named by Andrew 2026-09-22 ~14:4xZ; seated at the L4->L5 handoff",
+    "coo": "2.0.0_SA_COO~H (L5 decomposition, L6 issuance, drives to completion) from ROUND 11's re-spawn -- re-seated by 1.0.0_SA_CTO~Z on Andrew-direct 2026-09-28 ~19:5xZ 'one COO per project on a relevant tilde' (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_195xZ_SITEZ_AMGT_ONE_COO_PER_PROJECT_SEATING.md), because ~Y is live on the laptop for IRPT_BCKEND; succeeds 2.0.0_SA_COO~Y (rounds 1-11 issuance, named by Andrew 2026-09-22 ~14:4xZ)",
     "cvo": "3.0.0_SA_CVO~Z (L8 compilation, L9 adjudication, L10 slug)"
   },
   "related": [
