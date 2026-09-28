@@ -642,6 +642,26 @@
     "spec_asserts": "The writer's tests are green at the base every cell builds on.",
     "world_is": "One writer test fails at HEAD because an upstream shared module changed under it; no gate ran the writer's suite on that commit.",
     "notes": "A shared-module change in another project's cell did not run this project's dependent suite. Recorded only; no gate is proposed here."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S13",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T21:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-W2-S3 (disarm owner this seat, transferred with the project): MP-f-1's session fixture (merged @5d36443784) points AUDIT_PATH at a temp file, and R-8's condition holds at CLOUD -- the audit-reaching gateway tests leave the tracked audit.jsonl byte-identical, with a planted append as the positive control.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "f1.AC1.sh re-run by the issuer on the shared CLOUD tree after the merge: 14 passed; audit.jsonl md5 before=after=2e05d36768ee9b3cad061ee0da8ca396; porcelain before=0 after=0; control seen=yes; RESULT: PASS.",
+        "Worker ~4 instance NFRA_MCPORTAL.TO-MP-f-1.audit-path-fixture.proof_of_spec.json: AC1 PASS, AC2 PASS (app/config.py default untouched)."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-W2-S3 is ARMED: a gateway test run appends to the tracked audit.jsonl.",
+    "world_is": "The three test files that reach the audit path no longer write it. The full collectable suite (13 files need moto, which is not installed) was not the disarm instrument; R-8 names the audit file's porcelain, which reads empty."
   }
 ]
 ```
