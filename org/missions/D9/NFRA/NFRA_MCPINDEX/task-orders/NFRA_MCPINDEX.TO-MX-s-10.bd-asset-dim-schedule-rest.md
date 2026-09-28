@@ -67,6 +67,19 @@ The ruling is the whole spec. READ IT:
 10. The ACCEPTANCE is the next scheduled 22:10Z weekday fire, graded by `s10.AC3`. Do not fire the served document ad
     hoc to satisfy it; the ad-hoc run in PHASE A is the test.
 
+**AMENDED A1 (2.0.0_SA_COO~O, 2026-09-28 ~08:3xZ), on PHASE A's announcement @284cf7d702:**
+- **Step 2 stays BLOCKED on row Z-S43.** The REST module's import closure (`lib/opal_naming.py`,
+  `lib/trading_calendar.py`, `infra/logic/registry/*.json`, `org/standards/NAMING_SCHEMA.json`) is absent from the
+  bucket. How it reaches the instance is routed to 1.0.0_SA_CTO~O: it is a shared-lib publish into a firm bucket.
+  The never-widen halves are asked only after step 2 runs. PHASE B must NOT set the document DEFAULT before then.
+- **Retirement paths granted, for PHASE B only:** `download-daily-asset-dim.ts`, its `_ts_source` entry in
+  `infra/aws/ec2/EC2_MANIFEST.json`, `download-daily-fees.ts` and `bd-fees-trigger/`.
+- **FEES IS RETIREABLE.** The census's one "live caller" is the fees schedule leg itself
+  (`bd-fees-pipeline-trigger` -> `bd-fees-trigger` -> `opal-bd-fees-download`), and that leg is exactly what the
+  CTO's ruling retires. It has 0 callers besides it, and `bronze/fees` is current through the REST runner.
+  Retiring it in PHASE B through Terraform also removes a producer that has failed daily while reporting Success
+  (69 of 121, no `exit` in its document: the old Z-S9 defect).
+
 ## 2. BOUNDS
 
 1. One producer before and after: no second schedule, no parallel path, no comparator.
@@ -80,6 +93,10 @@ The ruling is the whole spec. READ IT:
 infra/aws/ssm/
 infra/aws/terraform/bd-pipeline/
 infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger/
+infra/aws/lambda/bd-pipeline/bd-fees-trigger/
+infra/aws/ec2/bd-exporter/src/stepwise/download-daily-asset-dim.ts
+infra/aws/ec2/bd-exporter/src/stepwise/download-daily-fees.ts
+infra/aws/ec2/EC2_MANIFEST.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-bd-asset-dim-rest-schedule.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~I/**
