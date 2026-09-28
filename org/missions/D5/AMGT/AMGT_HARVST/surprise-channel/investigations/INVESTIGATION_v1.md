@@ -1727,6 +1727,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "FWD-5 is served by placing the timeline at the top of the security page's existing Coverage tab, which the spec treats as a present surface requiring no new tab.",
       "world_is": "AMGT_RESAPP retired the Coverage tab into the header feed and deleted it; the built page has five tabs and none is Coverage. The placement target named by a ratified acceptance clause does not exist.",
       "notes": "ROUTED, and the route EXISTS rather than being asserted: 1.0.0_SA_CTO~Z, message 20260928T0742Z, with three options named (re-place the timeline as an L4-R acceptance change; AMGT_RESAPP restores the tab; or the home was reconsidered and this project was not told). DISARM IS NOT MINE TO TAKE ALONE: rule 27 lets an issuer amend its own task-order criteria, NOT a ratified acceptance clause, and the tab belongs to the sibling project under C-HV-BOUNDARY either way. Round 10 proceeds on cells 1 and 2; cell 3's order is DRAFTED AND HELD so it issues the moment the placement is ruled. The round's JUDGMENT criterion moved to y-1 rather than being held with cell 3 -- holding it would leave round 10 judgment-less for the third consecutive round, which is the failure the round-8 rule exists to stop."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W29-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~29",
+      "surfaced_at": "2026-09-28T00:00:00Z",
+      "one_line": "The only securities.json checked into this project's deliverables (deliverables/0.9.0_WK_AMGT_HARVST~4/securities.json, cited by name as the --securities-json argument in five later ACs across ~4/~5/~6/~13) is a hand-written 6-security file that now covers 6 of the 55 security_keys the newest article_security_mention gold snapshot actually carries -- a future cell that treats it as the current alias source would silently mis-derive mention_in_title/mention_in_lead/mention_count for the other 49.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~Y",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED this cut: `pg._latest_gold_snapshot_rows(pg.GOLD_TABLE)` (newest article_security_mention snapshot) carries 263 rows over 55 distinct security_keys (Counter printed, e.g. BA_US_Equity=36, 992_HK_Equity=32 ... down to singletons like UBER_US_Equity=1). `json.load(open('org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~4/securities.json'))` carries exactly 6 entries (BA, COST, HD, HAL, VLO, 992_HK_Equity/Lenovo).",
+          "`lib/research/harvest/universe_securities.py`'s own docstring (2b, ADDED SCOPE ITEM) states this module exists precisely so gold is built 'over the UNIVERSE rather than over whatever hand-written six-name file a round happened to carry' -- confirming the six-name file was always meant to be superseded, not extended.",
+          "`lib.research.harvest.universe_securities.build()` run live this cut resolves 191 securities off `pool:universe/v1/2026-09-16.json`, and every one of the 55 security_keys the newest gold snapshot carries is present in that live build's `security_key` set (0 missing) -- so the current gold snapshot was almost certainly built against this dynamic universe source, not the static ~4/securities.json file, even though no proof_of_spec instance in this project's deliverables names that CLI/module as the source of the alias set it used.",
+          "This worker used the live `universe_securities.build()` read for HVST-y-2's AC1/AC2/AC3 (never the stale file) precisely to avoid feeding the wrong alias set into `assign_tier`'s re-derivation; had the stale file been used instead, 49 of 55 security_keys would have read UNMEASURABLE_SECURITY rather than AGREE/DISAGREE."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "No task order in this project names which securities/alias source is the CURRENT one to build or re-derive gold against; five prior ACs across ~4/~5/~6/~13 cite the same static ~4/securities.json path by name as a working example invocation.",
+      "world_is": "The static file is 49/55 security_keys short of the universe the newest landed gold snapshot actually covers, and the module built to replace it (`universe_securities.py`, 2b) is live and correctly resolves all 55. The static path is not wrong to have existed, but citing it as if it were still the build's current input would be.",
+      "notes": "Not a code defect; no producer changed. Filed so a later cell does not copy the ~4/securities.json invocation shape out of the prior ACs' examples and silently narrow its own measurement to 6 of 55 securities. DISARM (COO's): either retire/relabel the ~4/securities.json file's citations as historical-only, or land a committed securities.json built from a pinned `universe_securities.build()` run so later cells have one CURRENT, reproducible alias source to cite instead of a live call each time."
     }
   ]
 ```
