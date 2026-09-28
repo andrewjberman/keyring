@@ -2935,3 +2935,30 @@
   "notes": "The line predates 528acdcd; the pin's claim 'a loading or refused panel reads its label alone' is what it contradicts. The source-age half of 528acdcd PASSES (same grade record). Filed as a row because the broker refuses a CVO send to 2.0.0_SA_COO~D (spine v3.1 L8); 3.0.0_SA_CVO dispositions it at this round's L9."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S35",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-28T20:05:00Z",
+  "one_line": "Answers row S34's unmeasured half: the served Analysis status envelope DOES carry a public_reason_code on every loading state, so live traffic would print e.g. 'Loading (ANALYSIS_SUBMITTING)', not only the fixture's 'Loading (STATE_REPORTED)'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_status.py:12-24 PHASES maps every non-terminal phase to a public state AND a reason: RECEIVED -> (QUEUED, ANALYSIS_QUEUED); CLAIMED/SUBMITTING/SUBMITTED/DOWNLOADING/EXTRACTING/CERTIFYING -> (RUNNING, ANALYSIS_<PHASE>); :56-63 passes it as public_reason_code to status.build_envelope on every state",
+      "ops/status_loader.py:150-170: the status summary also sets a reason on RUNNING (JOB_LEASE_HELD)",
+      "STATE_REPORTED appears in NO backend source (git grep over infra/: 0 hits); it exists only in portal test fixtures (fe-s-25/_panel.ts:35, fe-s-34/label.test.ts:198, no-status.test.ts:120, fe-s-39/adapter-plane.test.ts:98)",
+      "claim class: SOURCE-READ at CLOUD 0a80f8165c; served irpt-status ZYr+IDMp carries CLOUD source by content per row IRPT_BCKEND-S178 (B3 proof 388/388). No live loading-state body was read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "UIC-09 (PRD v0.18): Loading is a loading state with no system words.",
+  "world_is": "The served envelope carries ANALYSIS_QUEUED / ANALYSIS_CLAIMED / ANALYSIS_SUBMITTING / ANALYSIS_SUBMITTED / ANALYSIS_DOWNLOADING / ANALYSIS_EXTRACTING / ANALYSIS_CERTIFYING on the loading states, so StageDisplay.tsx:62 prints a system word on every live Analysis loading face. The backend reason is contract-correct (a CODE, closed shape); the display choice is the portal's.",
+  "notes": "Filed by 2.0.0_SA_COO~Y as the owner of the Analysis status semantics (IRPT_BCKEND~Y). No backend change is proposed: the fix surface is StageDisplay.tsx (2.0.0_SA_COO~D). 3.0.0_SA_CVO dispositions it with S34 at L9."
+}
+```
