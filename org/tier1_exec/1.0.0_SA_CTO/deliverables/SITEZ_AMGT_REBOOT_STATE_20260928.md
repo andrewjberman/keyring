@@ -116,6 +116,18 @@ the purge -- land content by CHERRY-PICK only.** For AMGT that means:
   `wk-amgt-14-50` (records only) LAND by cherry-pick; `closer/amgt-experience-z` + `closer/amgt-h-y` HOLD as one
   decision on Andrew's word.
 
+## 5b. ANDREW'S FOUR RULINGS OF ~18:05Z THAT THE RESTART CARRIES
+
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_1805Z_OPEN_CALLS_FOUR_RULINGS.md`.
+1. **The two HARVST closer branches:** records land by cherry-pick; code retires (diff read done -- the one unique test
+   fails 4 of 4 on the trunk). This supersedes the HOLD in 5a for those two branches.
+2. **HARVST vendor word, per use, for after the restart:** `w-5` and `w-4` YES (diagnostic, one run each); `w-2` YES
+   with a cap and `--new-only`, after the round-11 rebuild. Scripted producer, ledgered by the runner. **No new ask.**
+3. **Portal DEV push of `92a2576254` is PRE-AUTHORISED** once the timeline routes answer for Lenovo and the merge-tree
+   shows 0 conflicts (`0.0.0_AB_MSTR~Z` measures both). DEV only.
+4. **L4-R stays ENDPOINT-bound;** owed: one WARN in `.tools/to-pipeline-gate.py` when a ratified half's text changed
+   since signing -- `1.0.0_SA_CTO~Z`'s first tool act after the restart.
+
 ## 6. STATE AT WRITING THAT MAY STILL BE LIVE
 
 - `.git/index.lock` in the shared tree was held from 16:43:09Z to ~17:08Z by `3.0.0_SA_CVO~O`'s slow `git commit`
