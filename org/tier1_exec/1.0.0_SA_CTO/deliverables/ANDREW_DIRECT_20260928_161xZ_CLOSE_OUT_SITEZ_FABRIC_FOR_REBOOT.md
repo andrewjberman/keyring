@@ -8,6 +8,20 @@
 > sitez reboot state and instructions so we can pick up where we left off. Make sure this is managed for your fabric
 > and ping me when ready for reboot."
 
+## Two follow-ups, same terminal, minutes later (VERBATIM)
+
+> "I think you are pretty much done, you are the only ~Z agent left online aside from MSTR~Z. The premise is
+> esentially that post-reboot, i want to restart all AMGT workstreams, HARVST/CORPUS/RESAPP/etc., so we want a clean
+> startpoint and that instruction and state recorded."
+
+> "I am going to work with MSTR~Z to essentially make sure that we are properly integrated here with the work that has
+> been getting done on the laptop box, (and vice versa), with the intent being that at the reboot point, we wil have
+> all necessary data/structures/development at parity both on local and in remote with the laptop box, and the two
+> fabrics can get back started in an organized fashion on their respective workstreams."
+
+**Carried out as:** the restart map `org/tier1_exec/1.0.0_SA_CTO/deliverables/SITEZ_AMGT_REBOOT_STATE_20260928.md`.
+Parity with the laptop is Andrew's with `0.0.0_AB_MSTR~Z`, not this seat's.
+
 ## Scope as given (not widened)
 
 - **"Your fabric"** = the seats this CTO lane runs with on site Z: `2.0.0_SA_COO~Y` (AMGT_HARVST, the only live
