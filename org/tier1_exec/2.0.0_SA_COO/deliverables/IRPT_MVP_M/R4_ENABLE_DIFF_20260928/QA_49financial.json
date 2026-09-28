@@ -1,0 +1,316 @@
+{
+ "firm": "49financial",
+ "served_revision": "9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed",
+ "served_latest_date": "2026-09-22",
+ "candidate": ".scratch/qa_candidates/49financial.json",
+ "candidate_business_date": "2026-09-25",
+ "counts": {
+  "node_added": 2463,
+  "node_removed": 1880,
+  "label_account": 2970,
+  "classification": 135231,
+  "amount": 147410,
+  "percentages": 147161,
+  "clocks": 149817,
+  "field:valuation_facts": 5621,
+  "display_other": 7537,
+  "field:provenance": 7,
+  "top:scope": 1,
+  "top:custody_totals": 1,
+  "top:coverage": 1,
+  "top:attribution_holdouts": 1
+ },
+ "dollars": {
+  "node_added:ACCOUNT": 0.0,
+  "node_added:SLEEVE": 2422164.56,
+  "node_added:CASH": 48864.27,
+  "node_added:SECURITY": 27002090.79,
+  "node_added:MODEL_LEAF": 3443327.79,
+  "node_removed:SECURITY": 20920173.11,
+  "node_removed:SLEEVE": 2755815.2,
+  "node_removed:CASH": 1625739.88,
+  "node_removed:MODEL_LEAF": 657914.45,
+  "amount:ACCOUNT": -8935283.63,
+  "amount:SLEEVE": -8601632.99,
+  "amount:CASH": 3465379.19,
+  "amount:SECURITY": -11942190.48,
+  "amount:MODEL_LEAF": -17194804.78
+ },
+ "examples": {
+  "node_added": [
+   {
+    "node_id": "acc_02043d7d4cc4c77138f3baf4",
+    "node_kind": "ACCOUNT",
+    "amount": 0.0
+   },
+   {
+    "node_id": "acc_02043d7d4cc4c77138f3baf4:client",
+    "node_kind": "SLEEVE",
+    "amount": 0.0
+   },
+   {
+    "node_id": "acc_02043d7d4cc4c77138f3baf4:client:cash",
+    "node_kind": "CASH",
+    "amount": 0.0
+   },
+   {
+    "node_id": "acc_02c35d0428306aa32b50da8f",
+    "node_kind": "ACCOUNT",
+    "amount": 0.0
+   },
+   {
+    "node_id": "acc_02c35d0428306aa32b50da8f:client",
+    "node_kind": "SLEEVE",
+    "amount": 0.0
+   }
+  ],
+  "node_removed": [
+   {
+    "node_id": "acc_038c7908ced7b977e589fce0:model:1ac11280-bb51-4540-8b0a-b12a9d8ee420:asset:105136c18ccf631bafc117d0",
+    "node_kind": "SECURITY",
+    "amount": 11268.14
+   },
+   {
+    "node_id": "acc_038c7908ced7b977e589fce0:model:1ac11280-bb51-4540-8b0a-b12a9d8ee420:asset:18795657fc8c922a9af56aa8",
+    "node_kind": "SECURITY",
+    "amount": 8346.72
+   },
+   {
+    "node_id": "acc_038c7908ced7b977e589fce0:model:1ac11280-bb51-4540-8b0a-b12a9d8ee420:asset:27d2ec5934c872b30328d6cc",
+    "node_kind": "SECURITY",
+    "amount": 5019.2
+   },
+   {
+    "node_id": "acc_038c7908ced7b977e589fce0:model:1ac11280-bb51-4540-8b0a-b12a9d8ee420:asset:2d045a223ed180435ed083a5",
+    "node_kind": "SECURITY",
+    "amount": 6513.84
+   },
+   {
+    "node_id": "acc_038c7908ced7b977e589fce0:model:1ac11280-bb51-4540-8b0a-b12a9d8ee420:asset:3bde9509edb99682b847ed70",
+    "node_kind": "SECURITY",
+    "amount": 8076.68
+   }
+  ],
+  "label_account": [
+   {
+    "node_id": "acc_000177fc677e10d397f36d43",
+    "served": "****4636 / IRA",
+    "candidate": "****0533 / IRA"
+   },
+   {
+    "node_id": "acc_0010de3a921e3e1fbb55bd28",
+    "served": "****7261 / S1",
+    "candidate": "****9072 / IRA"
+   },
+   {
+    "node_id": "acc_003d062bd06cf6a206977856",
+    "served": "****0704 / IRA",
+    "candidate": "****7294 / IRA"
+   },
+   {
+    "node_id": "acc_003fa2974a2724701ff89ae5",
+    "served": "****2189 / IRA",
+    "candidate": "****2882 / S1"
+   },
+   {
+    "node_id": "acc_00a5fafba5bf9d769c451614",
+    "served": "****2832 / IRA",
+    "candidate": "****7364 / S1"
+   }
+  ],
+  "classification": [
+   {
+    "node_id": "acc_000177fc677e10d397f36d43",
+    "node_kind": "ACCOUNT",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_0010de3a921e3e1fbb55bd28",
+    "node_kind": "ACCOUNT",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_0010de3a921e3e1fbb55bd28:model:5861abc6-c0eb-4a49-8a4f-9f14fc749ada",
+    "node_kind": "MODEL_LEAF",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_0010de3a921e3e1fbb55bd28:model:5861abc6-c0eb-4a49-8a4f-9f14fc749ada:asset:40039ccbcaed2ef9f394f722",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_0010de3a921e3e1fbb55bd28:model:5861abc6-c0eb-4a49-8a4f-9f14fc749ada:asset:49bc870b4df84b945699c9b9",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   }
+  ],
+  "amount": [
+   {
+    "node_id": "acc_000177fc677e10d397f36d43",
+    "node_kind": "ACCOUNT",
+    "delta": -198.18
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client",
+    "node_kind": "SLEEVE",
+    "delta": -198.18
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:cash",
+    "node_kind": "CASH",
+    "delta": 0.0
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:0520a0cfda14c0f1f15b423d0a274d92aa724e928c5676106019d12fdec3b52e",
+    "node_kind": "SECURITY",
+    "delta": -10.56
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:13a86c0789d00840a1807e0a5755eb4a3ebb7c278346389658eac183ead89c45",
+    "node_kind": "SECURITY",
+    "delta": -47.25
+   }
+  ],
+  "percentages": [
+   {
+    "node_id": "acc_000177fc677e10d397f36d43",
+    "node_kind": "ACCOUNT"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client",
+    "node_kind": "SLEEVE"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:cash",
+    "node_kind": "CASH"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:0520a0cfda14c0f1f15b423d0a274d92aa724e928c5676106019d12fdec3b52e",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:13a86c0789d00840a1807e0a5755eb4a3ebb7c278346389658eac183ead89c45",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "clocks": [
+   {
+    "node_id": "acc_000177fc677e10d397f36d43",
+    "node_kind": "ACCOUNT"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client",
+    "node_kind": "SLEEVE"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:cash",
+    "node_kind": "CASH"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:0520a0cfda14c0f1f15b423d0a274d92aa724e928c5676106019d12fdec3b52e",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:13a86c0789d00840a1807e0a5755eb4a3ebb7c278346389658eac183ead89c45",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "field:valuation_facts": [
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:0520a0cfda14c0f1f15b423d0a274d92aa724e928c5676106019d12fdec3b52e",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:13a86c0789d00840a1807e0a5755eb4a3ebb7c278346389658eac183ead89c45",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:3a5fd4175cba4c683df3c2e1c64ebbf88dc5ccba773fbaca0a8fcc46eb3753cb",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:3e605f8c18ee87d7a87a9334a56c5247e9f05dadcec7e526ae24a8e336038351",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_000177fc677e10d397f36d43:client:position:59eb333a2d3380a4fbb34176b8d091230ee6eb11000d02bd9ce0a31b67b993bd",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "display_other": [
+   {
+    "node_id": "acc_0010de3a921e3e1fbb55bd28:model:5861abc6-c0eb-4a49-8a4f-9f14fc749ada:cash",
+    "node_kind": "CASH"
+   },
+   {
+    "node_id": "acc_0018d73863bd3527ce3bd7b8:model:c97cf573-53c3-4165-82b4-6485b3fe744f:cash",
+    "node_kind": "CASH"
+   },
+   {
+    "node_id": "acc_0030c178052a2db50d683027:model:08c1f759-7fbb-4819-89fa-56fee8299f54:cash",
+    "node_kind": "CASH"
+   },
+   {
+    "node_id": "acc_003d062bd06cf6a206977856:model:4504673b-d57d-4a34-aa42-6dfb604ce99b:cash",
+    "node_kind": "CASH"
+   },
+   {
+    "node_id": "acc_003d062bd06cf6a206977856:model:4d7712e6-c692-4231-a38c-47eb72a84c14:cash",
+    "node_kind": "CASH"
+   }
+  ],
+  "field:provenance": [
+   {
+    "node_id": "acc_32f871d189848d7bc7fb5be6:model:71c6ea7d-bab1-4a19-96ad-0cf7869be9fc",
+    "node_kind": "MODEL_LEAF"
+   },
+   {
+    "node_id": "acc_86b5628e8665fea88bc3a10e:model:35132605-b902-454f-984e-4af9bd980008",
+    "node_kind": "MODEL_LEAF"
+   },
+   {
+    "node_id": "acc_bf2682e8834888c551c63101:model:05194d88-2277-4909-9f57-e0e53b2a46cb",
+    "node_kind": "MODEL_LEAF"
+   },
+   {
+    "node_id": "acc_d88afc01bce59a9e99cf745b:model:a35aeed3-930c-47e7-90e0-ac600d3f98b3",
+    "node_kind": "MODEL_LEAF"
+   },
+   {
+    "node_id": "acc_d8a90190192ef335541717aa:model:9c16d8e5-ae88-4e79-b95a-e8d535e44171",
+    "node_kind": "MODEL_LEAF"
+   }
+  ],
+  "top:scope": [
+   {
+    "node_id": "scope"
+   }
+  ],
+  "top:custody_totals": [
+   {
+    "node_id": "custody_totals"
+   }
+  ],
+  "top:coverage": [
+   {
+    "node_id": "coverage"
+   }
+  ],
+  "top:attribution_holdouts": [
+   {
+    "node_id": "attribution_holdouts"
+   }
+  ]
+ }
+}

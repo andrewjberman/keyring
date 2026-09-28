@@ -1,0 +1,305 @@
+{
+ "firm": "inflection",
+ "served_revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+ "served_latest_date": "2026-09-22",
+ "candidate": ".scratch/qa_candidates/inflection.json",
+ "candidate_business_date": "2026-09-25",
+ "counts": {
+  "node_added": 1644,
+  "node_removed": 2567,
+  "label_account": 875,
+  "classification": 29903,
+  "amount": 28458,
+  "percentages": 12628,
+  "clocks": 30761,
+  "display_other": 28370,
+  "field:valuation_facts": 28370,
+  "field:provenance": 3,
+  "top:scope": 1,
+  "top:custody_totals": 1,
+  "top:coverage": 1,
+  "top:attribution_holdouts": 1
+ },
+ "dollars": {
+  "node_added:MODEL_LEAF": 16072351.98,
+  "node_added:SLEEVE": 15527722.93,
+  "node_added:SECURITY": 14221713.78,
+  "node_added:ACCOUNT": 0.0,
+  "node_removed:SECURITY": 19277237.53,
+  "node_removed:MODEL_LEAF": 10786430.77,
+  "node_removed:SLEEVE": 10982575.07,
+  "amount:ACCOUNT": -1247360.07,
+  "amount:MODEL_LEAF": -1075380.04,
+  "amount:SECURITY": -2212853.08,
+  "amount:SLEEVE": -5792507.95
+ },
+ "examples": {
+  "node_added": [
+   {
+    "node_id": "acc_027beea12a4a7d75f81fb8ca:model:6",
+    "node_kind": "MODEL_LEAF",
+    "amount": 422573.78
+   },
+   {
+    "node_id": "acc_027beea12a4a7d75f81fb8ca:models",
+    "node_kind": "SLEEVE",
+    "amount": 422573.78
+   },
+   {
+    "node_id": "acc_151c4e0f2949aa27bab246fa:model:6",
+    "node_kind": "MODEL_LEAF",
+    "amount": 399712.72
+   },
+   {
+    "node_id": "acc_151c4e0f2949aa27bab246fa:models",
+    "node_kind": "SLEEVE",
+    "amount": 399712.72
+   },
+   {
+    "node_id": "acc_1a86e5a43bb2a07c5d164661:client:position:07230a9d928cb8ee7dc6cea7c6df6b48",
+    "node_kind": "SECURITY",
+    "amount": 0.0
+   }
+  ],
+  "node_removed": [
+   {
+    "node_id": "acc_027beea12a4a7d75f81fb8ca:client:position:01459e79c187abba86b36dab4bc2f4ce",
+    "node_kind": "SECURITY",
+    "amount": 0.0
+   },
+   {
+    "node_id": "acc_027beea12a4a7d75f81fb8ca:client:position:027f109ee0abec355ce8e65fc97c818b",
+    "node_kind": "SECURITY",
+    "amount": 0.0
+   },
+   {
+    "node_id": "acc_027beea12a4a7d75f81fb8ca:client:position:04a6c89b6fce70f60d59c70f2c76b0b0",
+    "node_kind": "SECURITY",
+    "amount": 0.0
+   },
+   {
+    "node_id": "acc_027beea12a4a7d75f81fb8ca:client:position:0f922a3b89f37a248e86d9e7c20e151a",
+    "node_kind": "SECURITY",
+    "amount": 8747.52
+   },
+   {
+    "node_id": "acc_027beea12a4a7d75f81fb8ca:client:position:10bb83241fc3b1258592a055fa11a4d8",
+    "node_kind": "SECURITY",
+    "amount": 11768.33
+   }
+  ],
+  "label_account": [
+   {
+    "node_id": "acc_002c686393f239134019d60f",
+    "served": "****5686 / TRUST",
+    "candidate": "****9882 / Individual Retirement Account"
+   },
+   {
+    "node_id": "acc_0051606d2db6c099080bcf60",
+    "served": "****1990 / ROTH",
+    "candidate": "****2059 / Joint"
+   },
+   {
+    "node_id": "acc_0059665adf10c75ff5e6ce04",
+    "served": "****5152 / SIMPLE",
+    "candidate": "****1430 / Individual"
+   },
+   {
+    "node_id": "acc_008571bae160de04a43dfe2a",
+    "served": "****0061 / JOINT",
+    "candidate": "****0061 / Joint"
+   },
+   {
+    "node_id": "acc_00efd83cb93fc0e70aec060f",
+    "served": "****7666 / INDIVIDUAL RETIREMENT AC",
+    "candidate": "****7666 / Individual Retirement Account"
+   }
+  ],
+  "classification": [
+   {
+    "node_id": "acc_002c686393f239134019d60f",
+    "node_kind": "ACCOUNT",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:03aadea1a657fcb23a3bb1a17d0459ce",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:04bb935fa50dd01d8a1a2218c4de848b",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:06c136258b08c12b24f7d421eb9c4a24",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:097bd8c16bcc01102cfd6d1e70332618",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   }
+  ],
+  "amount": [
+   {
+    "node_id": "acc_002c686393f239134019d60f",
+    "node_kind": "ACCOUNT",
+    "delta": -1695.88
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6",
+    "node_kind": "MODEL_LEAF",
+    "delta": -1695.88
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:03aadea1a657fcb23a3bb1a17d0459ce",
+    "node_kind": "SECURITY",
+    "delta": -79.0
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:04bb935fa50dd01d8a1a2218c4de848b",
+    "node_kind": "SECURITY",
+    "delta": 0.0
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:06c136258b08c12b24f7d421eb9c4a24",
+    "node_kind": "SECURITY",
+    "delta": 0.0
+   }
+  ],
+  "percentages": [
+   {
+    "node_id": "acc_002c686393f239134019d60f",
+    "node_kind": "ACCOUNT"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6",
+    "node_kind": "MODEL_LEAF"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:03aadea1a657fcb23a3bb1a17d0459ce",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:0c05611c5446d2fa3778d22b2d3a89ff",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:1ebfa66968c18485fd1e0c12308707f5",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "clocks": [
+   {
+    "node_id": "acc_002c686393f239134019d60f",
+    "node_kind": "ACCOUNT"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6",
+    "node_kind": "MODEL_LEAF"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:03aadea1a657fcb23a3bb1a17d0459ce",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:04bb935fa50dd01d8a1a2218c4de848b",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:06c136258b08c12b24f7d421eb9c4a24",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "display_other": [
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:03aadea1a657fcb23a3bb1a17d0459ce",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:04bb935fa50dd01d8a1a2218c4de848b",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:06c136258b08c12b24f7d421eb9c4a24",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:097bd8c16bcc01102cfd6d1e70332618",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:0c05611c5446d2fa3778d22b2d3a89ff",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "field:valuation_facts": [
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:03aadea1a657fcb23a3bb1a17d0459ce",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:04bb935fa50dd01d8a1a2218c4de848b",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:06c136258b08c12b24f7d421eb9c4a24",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:097bd8c16bcc01102cfd6d1e70332618",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:0c05611c5446d2fa3778d22b2d3a89ff",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "field:provenance": [
+   {
+    "node_id": "acc_23c34001e8c8a15a322cd0a8:model:8",
+    "node_kind": "MODEL_LEAF"
+   },
+   {
+    "node_id": "acc_4105bab057ab9e948c89f051:model:6",
+    "node_kind": "MODEL_LEAF"
+   },
+   {
+    "node_id": "acc_52137d934340568a5a20d66c:model:7",
+    "node_kind": "MODEL_LEAF"
+   }
+  ],
+  "top:scope": [
+   {
+    "node_id": "scope"
+   }
+  ],
+  "top:custody_totals": [
+   {
+    "node_id": "custody_totals"
+   }
+  ],
+  "top:coverage": [
+   {
+    "node_id": "coverage"
+   }
+  ],
+  "top:attribution_holdouts": [
+   {
+    "node_id": "attribution_holdouts"
+   }
+  ]
+ }
+}
