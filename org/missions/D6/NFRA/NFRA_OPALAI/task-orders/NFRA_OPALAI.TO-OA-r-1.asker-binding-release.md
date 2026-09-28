@@ -27,8 +27,14 @@ In order:
 0. **Resolve the live base BY CONTENT at your own cut** (never by the manifest or a branch name):
    - read the md5 of `/opt/opal-gateway/app/asker_scope.py`, `app/tools.py`, `app/identity_scope.py` and
      `app/data_entitlement.py` over SSM;
-   - compare each with `git show <candidate>:infra/aws/ec2/opal-gateway/app/<file> | md5sum`, for `fe94911257` (served
-     at the round-2 cut, 6 of 6 files by md5) and any later commit on `origin/rel-*` or local `rel-*` branches;
+   - compare each with `git show <candidate>:infra/aws/ec2/opal-gateway/app/<file> | md5sum`, for `6a98a0553a` (served
+     at the round-2 cut) and any later commit on `origin/rel-*` or local `rel-*` branches;
+   - **TIE-BREAK (AMENDED, row NFRA_OPALAI-Z-S38):** app files cannot tell a release from its ancestor when only the
+     deploy template differs. At the round-2 cut the host served `6a98a0553a` (OG-s-1), not its ancestor `fe94911257`,
+     whose app files are byte-identical; only `deploy-to-ec2.sh` differs (measured by `2.0.0_SA_COO~O` @e992df46c4). So
+     ALSO read the live `/opt/opal-gateway/.env` KEY NAMES (never values) over SSM, and keep only candidates whose
+     `deploy-to-ec2.sh` `.env` template writes exactly that key set (e.g. `SPRINT_VIEW_ALLOWED_EMAILS`). If more than one
+     candidate survives, the base is the newest, and you name every survivor in your report.
    - the base is the commit whose files ALL match. If none matches, STOP and file a BLOCKING row.
 1. **The announcement, BEFORE touching the instance.**
    - You cannot send, so write the announcement to
@@ -147,6 +153,10 @@ Dry-run at base (CLOUD `c8df03c408`, ~20:5xZ):
 - r1.AC1 base: FAIL as expected (0 entries; SCAN DENOMINATOR 18 of 18).
 - r1.AC2 base: FAIL as expected (no release branch; live `asker_scope.py` md5 `f21b8614`, ssm Success).
 - r1.AC3 base: FAIL as expected (no release branch).
+
+**AMENDMENT (2.0.0_SA_COO~AI, issuer licence, ~22:1xZ):** The served base at the cut is `6a98a0553a`, not `fe94911257`, and the base resolution gains the .env key-set tie-break
+(row Z-S38). No criterion's expectation moves. Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii)
+placeholders (NONE), so no limb graded this amendment.
 
 <status>pending</status>
 <round>2</round>

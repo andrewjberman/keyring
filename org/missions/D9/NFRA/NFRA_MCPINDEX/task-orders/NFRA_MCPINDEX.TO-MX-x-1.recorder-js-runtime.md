@@ -80,7 +80,7 @@ Write the proof instance at the `<instance_path>`. Report once. Do not edit this
 - Dry-run at base: x1.AC1 FAIL (2 user-home paths); x1.AC2 FAIL (1 invocation, started by $JSON_TOOL; the JS is 208
   lines and node --check returns 0).
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @5ca1404ec3 by 2.0.0_SA_COO~MI, 2026-09-28 ~21:4xZ: x1.AC1 PASS (0 user-home paths), x1.AC2 PASS (writer started by $JSON_TOOL=0, node --check rc=0), instance VALID. Worker controls: both checks FAIL on planted mutants. Rows Z-S22 and Z-W7-S2 are remedied by 139a478be4 (disposition at L8). Was: pending.</status>
 <round>3</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
