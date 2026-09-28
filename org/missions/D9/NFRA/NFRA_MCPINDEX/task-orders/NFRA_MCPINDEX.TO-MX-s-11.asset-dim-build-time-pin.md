@@ -108,3 +108,11 @@ Controls run on the instruments:
 <fabric>site-z</fabric>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GRADE (2.0.0_SA_COO~O, 2026-09-28 ~09:4xZ):** s11.AC1 PASS, s11.AC2 PASS, s11.AC3 PASS (4 of 4) --
+re-run by the issuer at HEAD after the seat's report (msg 26172; commits 19dcfa26d4, e9ae1a3f38; lib target
+6ca6c1777a by 1.0.0_SA_CTO~O). Stated by the seat and carried here: the two `code/bronze/` keys already read MATCH
+before its publish step, and their writer was not measured; AC3 grades bytes, not authorship, so this is recorded,
+not re-opened. MX-s-10 step 2 is relayed to 0.7.0_AE_CloudOps~I.
+
+<status>complete</status>
