@@ -23,7 +23,7 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, settleExtraMs: 0 }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
@@ -34,6 +34,9 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--keep-armed') opt.keepArmed = true
   else if (a === '--headed') opt.headed = true
   else if (a === '--deep') opt.deep = true
+  // Extra wait after every settle, for a read whose answer lands after networkidle (a retained Performance
+  // reopen fires after the account switch, so a 1200 ms settle screenshots "Loading"). Default 0: unchanged.
+  else if (a === '--settle-extra-ms') opt.settleExtraMs = Number(argv[++i])
   else throw new Error('unknown argument ' + a)
 }
 if (!opt.routes.length) opt.routes.push('/investor-reporting')
@@ -165,7 +168,7 @@ async function checks(page, label) {
 
 const settle = async (page, ms = 1200) => {
   await page.waitForLoadState('networkidle', { timeout: 35000 }).catch(() => {})
-  await page.waitForTimeout(ms)
+  await page.waitForTimeout(ms + opt.settleExtraMs)
 }
 const timeLeft = () => Date.now() < deadline
 
