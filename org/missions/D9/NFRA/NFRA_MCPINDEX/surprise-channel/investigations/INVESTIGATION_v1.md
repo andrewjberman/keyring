@@ -2334,6 +2334,53 @@ carries none.
     "spec_asserts": "Order step 6: 'Run AC1-AC3. Commit under your serial.' and bound 3: REFUSE a criterion you cannot meet, reporting it with its measurement. Step 1: s3_key is the exact key the entry describes.",
     "world_is": "AC1, AC2 and AC3 all PASS (proof instance VALID, rc 0), but the change cannot be committed by a worker: the naming limb refuses the one new field the order asks for, because its value is a live-remediation key (MDPF_CANON) the platform has not migrated. The change is complete and unstaged in worktree C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-13 on branch wk-nfra_mcpindex-3-13 (8 files). The proof instance and its deliverables folder are also uncommitted, so its PENDING-THIS-COMMIT rows are unresolved. Nothing was bypassed, hand-encoded or reworded to slip the gate. The way through is the gate's owner or the issuer's: an R20 register entry or a ruling on MDPF_CANON that lets this field carry the key, or the issuer committing the staged set under an approved path; that is not this worker's call.",
     "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T20:58Z",
+    "one_line": "TO MX-s-12 step 4: .tools/safe-apply.sh refuses the worker (halt-gate exit 3, fail-closed) because the session-keyed serial file resolves the shared session id to the issuer serial 2.0.0_SA_COO~MI, a two-letter lane the gate rejects; the graded 0-add/0-change/5-destroy fees-leg plan is NOT applied.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Command: HALT_ACK=1 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/bd-pipeline apply -input=false -no-color <saved plan> run from the worker worktree with OPAL_AGENT_SERIAL=0.9.0_WK_NFRA_MCPINDEX~8 exported. Output: 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed) ... Resolved serial: 2.0.0_SA_COO~MI', APPLY_RC=3. Terraform was never invoked; nothing was applied.",
+        ".tools/halt-gate-check.sh:68-109 halt_gate_resolve_serial reads ONLY org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial (this checkout, then the shared checkout) and the orphan-cleaned marker; it does NOT read OPAL_AGENT_SERIAL. The worker shares the issuer's CLAUDE_CODE_SESSION_ID, so it resolves as the issuer. The worker worktree has no org/mcp/sessions directory (ls: cannot access).",
+        ".tools/halt-gate-check.sh:71-74 says the sanctioned remedy: 'an issuer may provision a worker's serial inside the worker's worktree, so parallel workers of one session each resolve as themselves'. That file is org/mcp/sessions/<sid>.serial, outside this order's <paths>, so the worker did not write it (order: a path needed but not granted is a BLOCKING row, never an override).",
+        "The plan itself is graded and clean (step 4 G3): 'Plan: 0 to add, 0 to change, 5 to destroy' = aws_cloudwatch_event_rule.bd_fees_pipeline, aws_cloudwatch_event_target.bd_fees_pipeline_target, aws_lambda_permission.eventbridge_fees, module.fees_trigger.aws_cloudwatch_log_group.lambda, module.fees_trigger.aws_lambda_function.this. Zero mentions of aws_instance, bd-49f-fees-runner, its session-chain rule, bd-silver-merge, or any asset-dim resource. Saved plan and text are in the worker scratch dir, outside the repo."
+      ]
+    },
+    "spec_asserts": "TO MX-s-12 step 4: apply the retirement with .tools/safe-apply.sh, never a bare apply, and after apply run terraform plan -detailed-exitcode = 0.",
+    "world_is": "safe-apply cannot name this worker as its principal, so the apply is not executed. The fees leg (bd-fees-pipeline-trigger cron(15 22), bd-fees-trigger) is still live in AWS and would fire at 22:15Z on top of the asset-dim fire; the repo edits and file deletions are committed on the worker branch only. AC2 asserts only the asset-dim rule so it is unaffected.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm is one of: (a) the issuer writes org/mcp/sessions/<sid>.serial inside the worker worktree naming 0.9.0_WK_NFRA_MCPINDEX~8 and the worker re-runs safe-apply against a fresh plan (the worker will re-plan, the saved plan is not trusted after time passes); or (b) the issuer applies from the worker branch. The order forbids step 4 between 22:05Z and 22:40Z, so the window is now until 22:05Z or after 22:40Z; if unapplied before 22:15Z the fees Playwright leg fires once more, which is the state it has been in for 95 days and harmless to data (bronze/fees is written by the REST runner)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T21:17Z",
+    "one_line": "Z-W8-S1 disarmed: the issuer 2.0.0_SA_COO~MI wrote the gitignored worktree serial file naming the worker, safe-apply then passed, and the graded 0/0/5 fees-leg retirement applied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+      "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer message 21:05Z: wrote org/mcp/sessions/3f54aa89-ef8a-46dc-b108-5c18de99298f.serial in the worker worktree naming 0.9.0_WK_NFRA_MCPINDEX~8; the worker read the file back: contents equal the worker serial. The file is gitignored and not committed.",
+        "Re-plan (worker scratch plan2.txt) read exactly 'Plan: 0 to add, 0 to change, 5 to destroy', the same five resources as the plan graded before the block. safe-apply.sh: 'Apply complete! Resources: 0 added, 0 changed, 5 destroyed.' APPLY_RC=0; the halt gate resolved the worker (scanning the issuer inbox, 191 pending messages, HALT_ACK=1).",
+        "Post-apply terraform plan -detailed-exitcode: 'no differences', rc 0. events describe-rule bd-fees-pipeline-trigger: does not exist. AC2 PASS exit 0."
+      ]
+    },
+    "spec_asserts": "TO MX-s-12 step 4: retire the fees schedule leg through safe-apply and reach plan -detailed-exitcode 0.",
+    "world_is": "Step 4 is met as written; the block in Z-W8-S1 was a provisioning gap (no worker-local serial file), removed by the issuer, not a defect in the plan.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The gap is reusable knowledge for the issuer: a worker whose order includes a safe-apply needs the worktree serial file provisioned at spawn. Z-W8-S1 is not edited; this row records its disarm in prose. The structured `adjudicates` field is refused to a worker (surprise-row-gate A-1: it is 3.0.0_SA_CVO's field), so the CVO is asked to disposition NFRA_MCPINDEX-Z-W8-S1 by naming it in an adjudicating row."
   }
 ]
 ```
