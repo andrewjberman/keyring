@@ -1,0 +1,68 @@
+{
+  "captured_at": "2026-09-28T23:26:24.306821+00:00",
+  "event": {
+    "manifest": {
+      "bucket": "opal-data-portal-v2"
+    },
+    "processed": {
+      "model_pkl_key": "benchmarks/model_20260925_v1.pkl",
+      "data_pkl_key": "benchmarks/data_20260925_v1.pkl"
+    },
+    "data_as_of_date": "2026-09-25"
+  },
+  "functions": {
+    "yang-generate-positioning": {
+      "code_sha256": "SGeYjRaOfPRsywinUrhrgYWJyAyrzCfqhuz3lTQWnu0=",
+      "last_modified": "2026-09-28T23:25:55.000+0000",
+      "member_sha256": {
+        "etf_classifications_dynamodb.py": "c677e8a5f6996555fdb7ac566166cc87659e76ac777bd07418ecd864aee5bca3",
+        "lambda_function.py": "26b52525b1bea3b6db95a6d37beca16c44b8e603d24792d2721d051e70a5fc11"
+      },
+      "request_id": "3782539b-00f1-4d97-a5fb-f32fa37eb19c",
+      "result": {
+        "output_key": "json/positioning/positioning_data.json",
+        "data_as_of": "2026-09-25",
+        "model_count": 5
+      }
+    },
+    "yang-generate-etf-returns": {
+      "code_sha256": "pqOCSw8hl9CjLgi4H9YfSNDGO1TAvz8ALROWlOaJaTE=",
+      "last_modified": "2026-09-28T23:25:55.000+0000",
+      "member_sha256": {
+        "etf_classification.py": "591967f14bf3a3c8651527a6e0169d75ecdd083ea91d557de657ace89741a380",
+        "lambda_function.py": "ef7f827f373e45ef6886f0ea78a2b7d1b6afdda36b19981404142addcb30b504"
+      },
+      "request_id": "82a5e9be-5592-4f31-8964-97a2795a10ad",
+      "result": {
+        "output_key": "json/benchmarks/etf_returns.json",
+        "etf_count": 5
+      }
+    }
+  },
+  "objects": {
+    "json/positioning/positioning_data.json": {
+      "version_id": "lLg._UuvChRHF9CS5BLBLKuYdVmG0_5k",
+      "etag": "\"3fc5bc2fba4b588f3a3595d5cebc0901\"",
+      "last_modified": "2026-09-28T23:26:34+00:00",
+      "sha256": "ac696c7f1bc02cc8dfb33e7fa09c2affc1e79fbbdcad7296fca297e9202e4ee6"
+    },
+    "json/positioning/opal_aggregate.json": {
+      "version_id": "yHniNbOUkeKw947DQCkKmbnkysosfpS0",
+      "etag": "\"9ad8c45d61874c6c30d9b3aa0e9772af\"",
+      "last_modified": "2026-09-28T23:26:34+00:00",
+      "sha256": "d650bd0de12f66e2306ec0aafaea2eee8179a7ac683c7db98825e23af9a7390b"
+    },
+    "json/benchmarks/etf_returns.json": {
+      "version_id": "0xSv6BeWmnBP78VjXyeBwWzol73cBPkE",
+      "etag": "\"064d34e6e3fb367ff94c97d04725e8d5\"",
+      "last_modified": "2026-09-28T23:26:40+00:00",
+      "sha256": "575e3812b6601ca690ce2b7585ae7752fc15312d8815f870db011ad8054bc13e"
+    },
+    "json/benchmarks/model_portfolio_benchmarks.json": {
+      "version_id": "Pxy6ATX1Eah8up3d9.iauhexhaxPMkxX",
+      "etag": "\"8e60a85a46a693f0fe9edf659e0a40f4\"",
+      "last_modified": "2026-09-26T11:06:31+00:00",
+      "sha256": "fe15588504fec4fac7c8637bcbb47403c705e3f966eb617c7bd1dd9884d4647c"
+    }
+  }
+}
