@@ -156,7 +156,17 @@ output cannot exist yet because nothing has run.
 
 **WHERE IT PROPAGATED, so every copy is findable:** decomp `s.20.4` and `s.21.3`; `HVST-w-3`'s order section 7;
 `ROUND8_DRAIN_END_PACKET.md` section 3; this order's section 2; and messages to `1.0.0_SA_CTO~Z` and
-`3.0.0_SA_CVO~O`, one of which the round-8 analysis then quoted. **Row `AMGT_HARVST-Z-W27-S1` carries it and
+`3.0.0_SA_CVO~O`.
+
+> ⛔ **AND A CORRECTION TO THIS VERY PARAGRAPH, which I got wrong in the opposite direction.** I first
+> wrote that the round-8 analysis "then quoted" my claim. **It did not.** `1.0.0_SA_CTO~Z` said so
+> (20260928T054653Z) and I verified it: `ROUND_ANALYSIS.round8.md` returns **ZERO hits** for
+> `unsatisfiable`, `ZERO rows`, `EVENT_MIN_PUBLISHERS`, `second publisher` and `only sa`. Its s.4 graded
+> FWD-5/FWD-6 NOT REALIZED for a DIFFERENT and correct reason -- *"graded on an analyst EXERCISING it,
+> which no cell did"* -- which was true when written. **I INFLATED THE BLAST RADIUS OF MY OWN ERROR,
+> which is the same carelessness as understating it and additionally puts a false statement about another
+> seat's document into my record. A correction's whole value is accuracy about WHERE the falsehood went.**
+> COST: one grep of the document I was about to accuse. **Row `AMGT_HARVST-Z-W27-S1` carries it and
 STAYS ARMED until those are corrected.**
 
 ### WHAT THE CELL ACTUALLY ACHIEVED -- and it may move two FWDs the analysis graded NOT REALIZED
