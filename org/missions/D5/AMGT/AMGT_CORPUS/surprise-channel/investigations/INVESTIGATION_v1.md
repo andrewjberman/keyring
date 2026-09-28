@@ -1688,6 +1688,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "No served surface reads the selections; they are labelled rule outputs in an evidence file. AC4's workbook half remains ungradeable for a different, now-measured reason: the layout, not the reader.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's). Round-8 input: a template-aware reader (find the Base-case section by its title, then read the value block beneath it, cited by coordinate) or a ruling that AC4's workbook half is answered by the cases the team WROTE in prose (34 served-and-cited per correction A2 @2dae84b5a9) rather than by the one-pager."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S49",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-28T21:17:00Z",
+    "one_line": "LIFT of AMGT_CORPUS-Z-S46 by its owner, and Z-S45's own close condition MEASURED MET: the hold on continuation --write is spent (the /2 write ran 2026-09-26 under the signed pair), both readers serve the current-method /2 object on 95 of 95 resolved names, and the dossier rewrite that bakes it in has landed on 95 of 95. Closing adjudication of Z-S45 is the CVO's at L8.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~X/evidence/r7_actB_gate_fast.txt (before step 2, 20:12:59Z) and evidence/r7_actB_V1_pick_census_after.txt (after, 21:16:09Z): 'continuation_pick names 95 current_method_available 95 stale_pick 0 errors 0 method amgt-corpus-continuation/2', through continuation.read_latest and substrate._continuation_member.",
+        "evidence/r7_step2_after.txt: 'partitions 95 objects 468' (373 before, evidence/r7_step2_before.txt), 'read_dossier serves the last write 95 of 95', 95 objects dated 2026-09-28, max 1 per partition.",
+        "Change entry org/critical_paths/change_management/20260928T2016Z_amgt-corpus-r7-dossier-rewrite_deploy_completion.md CLOSED, legs B2 and V1 proven."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S46: Z-S45 closes when both readers pick the current-method object and a /2 rewrite serves /2 on every resolved name.",
+    "world_is": "Both readers pick /2 on 95 of 95; every dossier was rewritten on 2026-09-28 from the /2 continuation. The split Z-S45 feared (49 /2, 46 /1) is 0 on the served plane.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's observation, evidence-cited; not a REMEDIATION row (the CVO's). Step 2 ran as three resumable runs of the same dossier.write_one over the same 95 keys (serial 8, thread 12, process 75; the last read 'unchanged 20'), recorded on leg B2."
   }
 ]
 ```
