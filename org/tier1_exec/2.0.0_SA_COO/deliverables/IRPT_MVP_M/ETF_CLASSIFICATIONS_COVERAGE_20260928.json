@@ -1,0 +1,440 @@
+{
+ "etf_classifications_items": 285,
+ "bd_securities_items": 10837,
+ "firms": {
+  "cot": {
+   "partition": "gold/canonical/holdings/2026-09-25.parquet",
+   "served_total": 564000806.69,
+   "no_ticker_mv": 105293004.06,
+   "tickers": 847,
+   "tickers_in_etf": 179,
+   "mv_in_etf": 223930603.55,
+   "mv_in_etf_pct": 0.397,
+   "tickers_in_bd_securities": 817,
+   "mv_in_bd_securities_pct": 0.7776,
+   "top_uncovered": [
+    {
+     "ticker": "FCASH",
+     "name": "FCASH",
+     "mv": 20257064.73,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "SHYD",
+     "name": "VANECK SHORT HIGH YIELD MUNI ETF",
+     "mv": 12931989.15,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "MFEIX",
+     "name": "MFS GROWTH I",
+     "mv": 10521247.14,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "MEAR",
+     "name": "ISHARES SHORT MATURITY MUNICIPAL BOND AC",
+     "mv": 10422988.42,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "SHM",
+     "name": "STATE STREET SPDR NUVEEN ICE SHORT TERM ",
+     "mv": 10323109.76,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "SUB",
+     "name": "ISHARES SHORT-TERM NATIONAL MUNI BOND ET",
+     "mv": 10259701.2,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "EVSM",
+     "name": "EATON VANCE SHORT DURATION MUNICIPAL INC",
+     "mv": 10251929.25,
+     "in_bd_securities": false
+    },
+    {
+     "ticker": "PEIYX",
+     "name": "PUTNAM LARGE CAP VALUE Y",
+     "mv": 10194546.29,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "PHYS",
+     "name": "SPROTT ASSET MANAGEMENT LP PHYSICAL GOLD",
+     "mv": 8582610.67,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "FSPGX",
+     "name": "FIDELITY LARGE CAP GROWTH IDX",
+     "mv": 6646047.56,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "FLCOX",
+     "name": "FIDELITY LARGE CAP VALUE INDEX",
+     "mv": 6537076.08,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "FSGGX",
+     "name": "FIDELITY GLOBAL EX US INDEX",
+     "mv": 5647725.44,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "MIEKX",
+     "name": "MFS INTERNATIONAL EQUITY I",
+     "mv": 4282005.71,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "FDRXX",
+     "name": "FIDELITY PHILLIPS STREET TRUST GOVT CASH",
+     "mv": 4184046.61,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "FXNAX",
+     "name": "FIDELITY U.S. BOND INDEX",
+     "mv": 3960540.14,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "FSMAX",
+     "name": "FIDELITY EXTENDED MARKET INDEX",
+     "mv": 3790194.29,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "WOBDX",
+     "name": "JPMORGAN CORE BOND I",
+     "mv": 3276517.32,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "PDBZX",
+     "name": "PGIM TOTAL RETURN BOND Z",
+     "mv": 3275103.33,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "CEMIX",
+     "name": "CAUSEWAY EMERGING MARKETS INSTL",
+     "mv": 3145991.67,
+     "in_bd_securities": false
+    },
+    {
+     "ticker": "USHY",
+     "name": "ISHARES BROAD USD HIGH YIELD CORPORATE B",
+     "mv": 3080984.29,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "FIGXX",
+     "name": "FIDELITY COLCHESTER STR TR MNY MRKT FDS ",
+     "mv": 2759853.67,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "PSLV",
+     "name": "SPROTT ASSET MANAGEMENT LP PHYSICAL SILV",
+     "mv": 2725123.06,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "PULS",
+     "name": "PGIM ULTRA SHORT BOND ETF",
+     "mv": 2284624.44,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "EIHYX",
+     "name": "EATON VANCE HIGH-YIELD MUNICIPAL INC I",
+     "mv": 2163824.02,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "PAAA",
+     "name": "PGIM AAA CLO ETF",
+     "mv": 2126074.96,
+     "in_bd_securities": true
+    }
+   ],
+   "class_disagreements": [
+    {
+     "ticker": "GLD",
+     "etf": "commodities",
+     "bd_securities": "alternatives",
+     "mv": 9471092.91
+    },
+    {
+     "ticker": "CASH",
+     "etf": "fixed_income",
+     "bd_securities": "equity",
+     "mv": 2155555.54
+    },
+    {
+     "ticker": "VXX",
+     "etf": "structured",
+     "bd_securities": "alternatives",
+     "mv": 1981334.4
+    },
+    {
+     "ticker": "JEPI",
+     "etf": "structured",
+     "bd_securities": "equity",
+     "mv": 1252111.29
+    },
+    {
+     "ticker": "SLV",
+     "etf": "commodities",
+     "bd_securities": "alternatives",
+     "mv": 172966.5
+    },
+    {
+     "ticker": "VNQ",
+     "etf": "alternatives",
+     "bd_securities": "equity",
+     "mv": 104547.51
+    },
+    {
+     "ticker": "IAU",
+     "etf": "commodities",
+     "bd_securities": "alternatives",
+     "mv": 45411.58
+    }
+   ],
+   "class_disagreement_count": 7
+  },
+  "bd": {
+   "partition": "gold/canonical/holdings/2026-09-25.parquet",
+   "served_total": 1955227870.36,
+   "no_ticker_mv": 510624077.93,
+   "tickers": 1449,
+   "tickers_in_etf": 228,
+   "mv_in_etf": 1330836176.05,
+   "mv_in_etf_pct": 0.6807,
+   "tickers_in_bd_securities": 1383,
+   "mv_in_bd_securities_pct": 0.737,
+   "top_uncovered": [
+    {
+     "ticker": "KYCCF",
+     "name": "KEYENCE CORP ORD",
+     "mv": 3582000.0,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "DFAC",
+     "name": "DIMENSIONAL U.S. CORE EQUITY 2 ETF",
+     "mv": 3038443.76,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "WMT",
+     "name": "WALMART INC COM",
+     "mv": 2660244.12,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "PCOFX",
+     "name": "POLEN CREDIT OPPORTUNITIES INSTITUTIONAL",
+     "mv": 2578610.89,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "VMGMX",
+     "name": "VANGUARD MID-CAP GROWTH INDEX ADMIRAL",
+     "mv": 2542432.51,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "VTSAX",
+     "name": "VANGUARD TOTAL STOCK MKT IDX ADM",
+     "mv": 2457747.38,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "VFIAX",
+     "name": "VANGUARD 500 INDEX ADMIRAL",
+     "mv": 2336562.04,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "VIGAX",
+     "name": "VANGUARD GROWTH INDEX ADMIRAL",
+     "mv": 2191312.61,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "META",
+     "name": "META PLATFORMS INC CL A",
+     "mv": 1728344.47,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "ROAD",
+     "name": "CONSTRUCTION PARTNERS INC COM CL A",
+     "mv": 1675066.23,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "ESLG",
+     "name": "EVENTIDE LARGE CAP GROWTH ETF",
+     "mv": 1571738.2,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "ELCV",
+     "name": "POLEN DIVIDEND INCOME ETF",
+     "mv": 1340368.48,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "DFUS",
+     "name": "DIMENSIONAL U.S. EQUITY MARKET ETF",
+     "mv": 1304275.56,
+     "in_bd_securities": false
+    },
+    {
+     "ticker": "ORCL",
+     "name": "ORACLE CORP COM",
+     "mv": 1294236.78,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "DDJCX",
+     "name": "POLEN OPPORTUNISTIC HIGH YIELD - INS",
+     "mv": 1191273.72,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "AESI",
+     "name": "ATLAS ENERGY SOLUTIONS INC COM NEW",
+     "mv": 1169815.05,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "OVBC",
+     "name": "OHIO VY BANC CORP COM",
+     "mv": 1133727.89,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "VSGAX",
+     "name": "VANGUARD SMALL CAP GROWTH INDEX ADMIRAL",
+     "mv": 1121521.51,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "AAETX",
+     "name": "AMERICAN FUNDS 2030 TRGT DATE RETIRE A",
+     "mv": 1110737.49,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "DE",
+     "name": "DEERE & CO COM",
+     "mv": 1098806.23,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "AGTHX",
+     "name": "AMERICAN FUNDS GROWTH FUND OF AMER A",
+     "mv": 1076236.08,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "JMUB",
+     "name": "JPMORGAN MUNICIPAL ETF",
+     "mv": 1052295.96,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "JMST",
+     "name": "JPMORGAN ULTRA-SHORT MUNICIPAL INCOME ET",
+     "mv": 1050964.91,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "AFL",
+     "name": "AFLAC INC COM",
+     "mv": 1049777.84,
+     "in_bd_securities": true
+    },
+    {
+     "ticker": "HYGV",
+     "name": "FLEXSHARES HIGH YIELD VALUE-SCORED BOND ",
+     "mv": 1048273.78,
+     "in_bd_securities": true
+    }
+   ],
+   "class_disagreements": [
+    {
+     "ticker": "VXX",
+     "etf": "structured",
+     "bd_securities": "alternatives",
+     "mv": 18120631.79
+    },
+    {
+     "ticker": "JEPI",
+     "etf": "structured",
+     "bd_securities": "equity",
+     "mv": 358794.37
+    },
+    {
+     "ticker": "GLD",
+     "etf": "commodities",
+     "bd_securities": "alternatives",
+     "mv": 304499.34
+    },
+    {
+     "ticker": "SLV",
+     "etf": "commodities",
+     "bd_securities": "alternatives",
+     "mv": 159361.74
+    },
+    {
+     "ticker": "IAU",
+     "etf": "commodities",
+     "bd_securities": "alternatives",
+     "mv": 101147.64
+    },
+    {
+     "ticker": "VNQ",
+     "etf": "alternatives",
+     "bd_securities": "equity",
+     "mv": 56999.78
+    },
+    {
+     "ticker": "USO",
+     "etf": "commodities",
+     "bd_securities": "alternatives",
+     "mv": 29666.0
+    },
+    {
+     "ticker": "CASH",
+     "etf": "fixed_income",
+     "bd_securities": "equity",
+     "mv": 14816.49
+    },
+    {
+     "ticker": "QBER",
+     "etf": "structured",
+     "bd_securities": "alternatives",
+     "mv": 2403.3
+    },
+    {
+     "ticker": "PDBC",
+     "etf": "commodities",
+     "bd_securities": "equity",
+     "mv": 776.22
+    }
+   ],
+   "class_disagreement_count": 10
+  }
+ }
+}
