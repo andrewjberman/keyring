@@ -2853,3 +2853,30 @@
   "dismissal_reason": "Disarms DSGN_IRPTV1-S30: the fix at portal a47d3a75 makes a negative account a labelled line and never a wedge, so the pie's feed always sums above zero; the live cowdin pie draws."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S32",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-28T19:15:00Z",
+  "one_line": "RULING that DISARMS row DSGN_IRPTV1-W39-S2 (disarm owner 1.0.0_SA_CTO): the served OwnedAnalysisRequest wire does NOT gain a client field now; the request history names its client from the header's accepted selection, which is sound because the history mounts only under a selected client.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row DSGN_IRPTV1-W39-S2: AnalysisTab.tsx:218,239-273 hasClient gates the only mount of OwnedRequestHistory; OwnedAnalysisRequest.schema.json carries identity + accepted_at only (additionalProperties false)",
+      "DSGN_IRPTV1 PRD UIC-23 (prd line 491): 'The list shows the viewer's own requests (or is labelled as all requests for an admin), each by client name, variant and date' -- an admin list is still scoped to the selected client, so the header-derived name holds for it too"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The spec is met under a client-scoped mount: every history row names the header-selected client, and no outcome today cuts a cross-client history view that would need a client field on the wire.",
+  "spec_asserts": "Each history row names its client (UIC-23).",
+  "world_is": "Each row names the client from the header selection under a client-scoped mount; no cross-client history view exists or is in any outcome today.",
+  "notes": "Build ladder rung 1 (YAGNI): no schema change without a consumer. The day a cell cuts a CROSS-CLIENT history view, that cell carries the wire change (a client field on OwnedAnalysisRequest, IRPT_BCKEND ~Y intake surface) paired with the page change. UIC-23's 'variant and date' words are not ruled here; they stay on 2.0.0_SA_COO~D's list as UIC-23 criteria."
+}
+```
