@@ -2545,3 +2545,33 @@
   "notes": "Not blocking: no criterion depends on the other 23 files' EOL state, and leaving them uncommitted (rather than force-including them past the grant) is the narrower act. A later, in-grant regeneration pass would normalize them for good; that pass is out of this cell's bounds."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-W39-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~39",
+  "surfaced_at": "2026-09-28T14:19:29Z",
+  "one_line": "IV-e-74's Build text ('Each row reads the client name...') assumes the served history row itself carries a client name; the served wire it actually reads (`OwnedAnalysisRequestWire`, `docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json`) carries NO client field at all -- only `identity` (tenant_firm_id, request_id, revision, immutable, ingestion_gate_revision, destination_policy_revision) plus `accepted_at`. Resolved in-lane: `OwnedRequestHistory.tsx` reads the client's name from the SAME accepted header selection `GenerateComposer.tsx` already reads at :256 (`header?.row?.displayName`, UIR-12 -- never `.label`, which also carries the masked discriminator), valid because `AnalysisTab.tsx`'s own `hasClient` gate (out of this cell's <paths>, read-only) mounts this component only with ONE client already accepted, so every row on any one page names that same client. A future admin view spanning MULTIPLE clients' requests (UIC-23's own parenthetical, 'or is labelled as all requests for an admin') would need a real per-row client field on the wire; this cell does not build that.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO -- whether the served OwnedAnalysisRequest wire should carry a client field for a future admin (cross-client) history view is a contract-scope call this worker's <paths> grant (portal-only, no schema/backend) cannot make; today's single-client-scoped resolution is sound but would not extend to that admin case without a backend/schema change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/contracts/wire/OwnedAnalysisRequest.ts:12-22 (read-only, GENERATED file): `OwnedAnalysisRequestWire` has exactly `identity` (6 fields, none a client id/name) and `accepted_at`",
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json (read-only): `additionalProperties: false`, `required: [\"identity\", \"accepted_at\"]`, description states 'Immutable accepted request identity and original acceptance time only'",
+      "portal/src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx:256 (read-only, out of this cell's <paths>): `const clientLabel = header?.row?.label ?? 'the selected client'` -- the established precedent this worker's own `OwnedRequestHistory.tsx` change (`useHeaderSelection()`, `header?.row?.displayName`) follows",
+      "portal/src/pages/InvestorReporting/header/IdentityCard.tsx:459-464 (read-only): UIR-12 comment establishing `displayName`, never `.label`, as 'the client's NAME only'",
+      "portal/src/pages/InvestorReporting/tabs/analysis/AnalysisTab.tsx:218,239-273 (read-only, out of this cell's <paths>): `hasClient = Boolean(header?.selection)` gates the ONLY mount of `<OwnedRequestHistory>`, confirming every row on any one page shares one accepted client",
+      "iv-e-74.history-words.test.tsx ARM(c): rendered `data-slot=\"owned-request-client\"` reads the fixture's own `directoryEntry.success.json` displayName ('Coastal Ridge Trust') on every row when a `HeaderSelectionContext` is provided, and a named placeholder ('Client not identified') when it is not -- never blank"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV-e-74 Build text: 'Each row reads the client name and the state in words.' UIC-23 (verbatim, cited by the cell): '...each by client name, variant and date...'",
+  "world_is": "The served wire this cell's own paths read from carries no client field; the client name shown is derived from the header's accepted selection, valid only because this view is single-client-scoped today (`AnalysisTab.tsx`'s `hasClient` gate, out of this cell's grant). `variant` and `date` (also named in UIC-23's verbatim line but not in this cell's own narrower Build text or its acceptance criteria) are not built here -- outside IVE74-AC1's four explicit clauses (a)-(d).",
+  "notes": "Not blocking: IVE74-AC1 as written names only 'client name' and 'state in words' as this cell's own scope (verbatim Build text), and both are met; UIC-23's fuller line (variant, date, admin-all-requests) was not re-litigated since the task order's own Build text narrows it. Filed so an L9/L10 reader sees the wire-contract gap and the header-derived resolution were a deliberate reconciliation, not an oversight."
+}
+```
