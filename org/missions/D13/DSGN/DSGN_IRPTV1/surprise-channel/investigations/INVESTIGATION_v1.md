@@ -2595,3 +2595,90 @@
   "notes": "Joins round 9 after the reboot. IV-e-72 (UIC-10/12/13, DrillTree/slices) is the natural home; diagnose first (data vs page) before the cut."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-W36-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~36",
+  "surfaced_at": "2026-09-27T23:28:37Z",
+  "one_line": "TO-IV-e-73's Build (FirmAttribution renders nothing by default; the four tab mounts stay unedited) is the correct fix for round-8's UIR-30 finding, but it necessarily flips FIVE pinned tests outside this cell's <paths> grant from pass to fail, because each one exercises the REAL, unedited tab mount (or FirmAttribution directly with the same firmId-only shape) and asserts the OLD default (the chip visible).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "a round-9/10 cell whose <paths> grant covers portal/src/pages/InvestorReporting/__tests__/{fe-s-10/parity.test.ts,dsgn-irptv1/iv-e-23.firm-chip.test.ts,dsgn-irptv1/iv-e-23.parity-kept.test.ts,dsgn-irptv1/iv-e-38.header-identity.test.tsx,dsgn-irptv1/iv-e-56.firm-display.test.tsx} -- to re-golden each one's FirmAttribution-shaped assertion to the new `show`-gated default (2.0.0_SA_COO~D or 1.0.0_SA_CTO to route)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/global/FirmAttribution.tsx (this cell's own edit, HEAD wk-DSGN_IRPTV1-36-portal 8808eeb6 + uncommitted): `if (!show) return null` -- default `show = false`",
+      "`timeout 120 bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-23.firm-chip.test.ts ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-38.header-identity.test.tsx ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-56.firm-display.test.tsx ./src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-23.parity-kept.test.ts` BEFORE this cell's edits (measured on the same worktree at the un-edited HEAD): 3 pass, 0 fail (iv-e-23.firm-chip, iv-e-38.header-identity, iv-e-56.firm-display all print their own OK verdicts)",
+      "the SAME invocation AFTER this cell's edits: 1 pass, 5 fail across the 6 tests these 5 files carry -- iv-e-23.firm-chip.test.ts (face no longer contains the display name), iv-e-38.header-identity.test.tsx (UIR-30 arm: name occurrences=0, expected 1), iv-e-56.firm-display.test.tsx (UIR-13d/e: 'attribution chip carries the display name' now false), fe-s-10/parity.test.ts (positive control `globalMarkup.includes('49 Financial<')` now false because ReportingTab's real, unedited mount renders no chip at all), iv-e-23.parity-kept.test.ts (its own child-process run of the now-failing parity.test.ts: rc=1, 1 fail)",
+      "fe-s-10/parity.test.ts's own header states it is 'KEPT (R6) and must stay green' and 'never itself edited here (bounds: do not edit it')' -- none of the five files are named in this task order's <paths>, so BOUNDS forbids editing any of them"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV-e-73 Build: FirmAttribution renders nothing by default in the tab bodies; the tab mounts stay as they are (no tab file is edited); export/Preview.tsx passes an explicit prop.",
+  "world_is": "Three pinned tests (iv-e-23.firm-chip, iv-e-38.header-identity's UIR-30 arm, iv-e-56.firm-display) call FirmAttribution directly with the exact same (scope, firmId) shape the unedited tab mounts use, with no distinguishing prop available, so the ONLY way to satisfy the Build's literal instruction (default hidden, no tab file touched) is a default that ALSO flips these three tests' assertions; a fourth, fe-s-10/parity.test.ts, mounts the real unedited ReportingTab and its own POSITIVE CONTROL depends on the chip being present in the raw markup before stripping, which is now false by construction of the fix; a fifth, iv-e-23.parity-kept.test.ts, is a child-process re-run of the fourth and fails identically.",
+  "notes": "Not blocking THIS task order: IVE73-AC1/AC2 are self-contained (this worker's own new test file) and both pass; the refusal clause (do not weaken a test to pass) was honoured by not touching any of the five files, since none is in <paths>. Filed ARMED because the round's own drain/CI would show 5 new failures the moment this branch merges, and no cell in the round-9 decomp (org/missions/D13/DSGN/DSGN_IRPTV1/decompositions/DSGN_IRPTV1_DECOMP.md v9) currently owns re-goldening any of the five files."
+}
+```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-W36-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~36",
+  "surfaced_at": "2026-09-28T13:10:05Z",
+  "one_line": "Row DSGN_IRPTV1-W36-S3 is DISARMED: TO-IV-e-79's own cell (this order) is the disarm_owner row S3 named -- all five files it listed (fe-s-10/parity.test.ts, dsgn-irptv1/iv-e-23.firm-chip.test.ts, dsgn-irptv1/iv-e-23.parity-kept.test.ts, dsgn-irptv1/iv-e-38.header-identity.test.tsx, dsgn-irptv1/iv-e-56.firm-display.test.tsx) are now re-goldened to the `show`-gated default per the issuer's Build ruling, keeping every original test's CLAIM and adding a real control in place of each retired chip-based discriminator.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- disarmed by this row's own act (0.9.0_WK_DSGN_IRPTV1~36, TO-IV-e-79)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree wk-DSGN_IRPTV1-36/portal, uncommitted (repository freeze in force, 0.0.0_AB_MSTR): `git diff --stat` shows exactly the 5 named test files edited plus the pre-existing CRLF-only artifact on contracts/wire/*.ts and global/FirmAttribution.tsx (`git diff` on FirmAttribution.tsx and contracts/wire/index.ts prints only the CRLF warning, no content hunk) -- no product file's bytes changed",
+      "`timeout 120 bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-23.firm-chip.test.ts ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-38.header-identity.test.tsx ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-56.firm-display.test.tsx ./src/pages/InvestorReporting/__tests__/fe-s-10/parity.test.ts ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-23.parity-kept.test.ts ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-73.one-firm-mention.test.tsx`: 8 pass, 0 fail across 6 files (IVE79-AC1)",
+      "bite check: mutating FirmAttribution.tsx's own default from `show = false` to `show = true` (restoring the old chip-visible default) and re-running the same 4 re-goldened files flips 6 of 8 tests to fail -- iv-e-23.firm-chip ('default (no show) rendered something for a matched firm'), iv-e-38.header-identity ('UIR-30: the tab-body chip ... rendered something; ... rendered 2 time(s) ... expected exactly once'), iv-e-56.firm-display ('UIR-13g: the same matched input with no `show` renders nothing' fails), fe-s-10/parity.test.ts (byte-identical assertion fails), iv-e-23.parity-kept.test.ts (child rc=1) and iv-e-73.one-firm-mention.test.tsx (its own ARM a/DIRECT arm both flip); bytes restored after (md5 b183f14e85147cd9312d6357cddf0ebb before and after)",
+      "second bite check: mutating fe-s-10/parity.test.ts's own new CONTROL test (collapsing REPORT_ALT to `{ ...REPORT }`, i.e. no longer a different report) flips 'CONTROL: the comparison can fail' to fail ('differ=false'), proving that control is a real discriminator and not vacuous; bytes restored after (md5 d9276ec5c12bb57ca57d728ac6f2d1e7 before and after)",
+      "re-ran IVE79-AC1's full invocation after both restores: 8 pass, 0 fail, unchanged from the first measurement"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Fixed in-bounds per TO-IV-e-79's own Build ruling (2.0.0_SA_COO~D on row W36-S3): each of the 5 named files re-goldened to the ruled `show`-gated default, keeping every original CLAIM, with a real control in place of each retired chip-based discriminator (arm-3/UIR-30/UIR-13g default-renders-nothing arms; parity's byte-identical-without-stripping assertion plus its own two-different-reports CONTROL). No test deleted, no assertion loosened.",
+  "spec_asserts": "TO-IV-e-79's Build: re-golden each of the 5 named tests to the ruled `show`-gated default, keeping every test's CLAIM and a real control; never delete a test or loosen an assertion to pass.",
+  "world_is": "All 5 files are now re-goldened exactly per the Build text (verified by direct read against the ruling and by the bite checks above); IVE79-AC1's invocation measures 8 pass / 0 fail together with IV-e-73's own test, closing the gap row W36-S3 named.",
+  "notes": "Row W36-S3 stays filed as it is (append-only); this row is the disarm record. Repository freeze (0.0.0_AB_MSTR) forbids any git write at the time this row is filed -- the 5 files' edits are proven in the worktree (measured above) but not yet committed; the issuer continues this worker after the freeze to commit and flip TO-IV-e-79's status."
+}
+```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-W36-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~36",
+  "surfaced_at": "2026-09-28T13:45:00Z",
+  "one_line": "The proof instance's 4 PENDING-THIS-COMMIT artifact rows (portal test files) had to be re-pinned to the portal repo's actual commit hash before the complete-flip could pass -- the outer pipeline gate's POST-COMMIT artifact-resolution walks the WORKSPACE repo's tree/object store, which cannot see a portal-only (submodule) commit's paths, so a PENDING sentinel read as ABSENT there once the portal commit (and then the workspace instance commit) existed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- resolved in-place by this row's own act",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit 6521cb0966b896676a1ab16e0b0be6dc89a2efb4 (branch wk-DSGN_IRPTV1-36-portal, LOCAL) carries the 4 re-goldened files exactly as the instance's deploy_evidence describes",
+      "workspace commit attempt with the 4 rows left at PENDING-THIS-COMMIT: `.tools/to-pipeline-gate.py`'s check_complete_flip ran the checker POST-COMMIT against instance commit 67afd4c8b1 and refused with 4x 'artifact-resolution: ... is PENDING-THIS-COMMIT but is ABSENT at the instance's commit 67afd4c8b1' -- the outer repo's `git diff-tree`/`git cat-file -e <workspace-commit>:portal/...` cannot resolve a path that lives only inside the portal submodule's own object store",
+      "re-pinning the same 4 rows to the portal commit hash 6521cb0966b896676a1ab16e0b0be6dc89a2efb4 (the exact pattern already used, unmodified, on this instance's 5th row, iv-e-23.parity-kept.test.ts, pinned to portal HEAD 01b9f1d0aaae324b049b63e635c8c5cf7c7ff75d) makes the checker read all 5 rows as UNRESOLVED-HERE (`.tools/proof-of-spec-check.py` artifact_resolution_check: 'commit not in local store; announced, not asserted') rather than a violation",
+      "`python .tools/proof-of-spec-check.py <instance> IVE79-AC1` after the re-pin: VALID (rc=0), artifact-resolution line reads '0 resolved at pin / 0 PENDING co-committed / 0 pending-on-worktree / 5 UNRESOLVED-HERE / 0 s3_object -- denominator 5 row(s)'"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Corrected the instance's own pin field to match the artifact's true (portal-repo) commit, using the identical pattern the instance's own 5th row already carried unmodified -- no test weakened, no gate bypassed, no override token used; the gate's own UNRESOLVED-HERE class exists exactly for a commit-ish this checker's repo cannot see.",
+  "spec_asserts": "The two-repo worktree pair (workspace + portal) is the order's own <Environment> and BOUNDS shape; a proof instance naming a portal artifact must be resolvable by the pipeline gate without a violation once both commits exist.",
+  "world_is": "The gate's artifact-resolution check is written for a single-repo tree; it correctly classifies a portal-only commit-ish as UNRESOLVED-HERE (announced, not a violation) when the row carries that commit-ish directly, but a PENDING-THIS-COMMIT sentinel resolved against the WORKSPACE commit reads as ABSENT for a path that only ever lands in the portal repo -- a structural gap for any two-repo worker, not specific to this order.",
+  "notes": "Not fixed by editing the gate or checker (outside this order's <paths> grant, and a tooling change is wider than this cell). Filed as OBSERVATION/INERT because the workaround already existing in the schema (a direct commit-ish pin) fully resolves it for this instance; a future two-repo PENDING-THIS-COMMIT row would hit the same gap."
+}
+```
