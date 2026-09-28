@@ -1,0 +1,24 @@
+{
+  "measured_by": "0.9.0_WK_IRPT_BCKEND~42",
+  "measured_at": "2026-09-28T21:54:18Z",
+  "ssm_command_id": "161d8665-2504-4a7e-8bcb-bf672cfa75c0",
+  "instance_id": "i-02448edb624a7a7cf",
+  "oom_evidence": [
+    "[Mon Sep 28 21:33:35 2026] python3 invoked oom-killer: gfp_mask=0x140dca(GFP_HIGHUSER_MOVABLE|__GFP_ZERO|__GFP_COMP), order=0, oom_score_adj=0",
+    "[Mon Sep 28 21:33:35 2026]  oom_kill_process+0xfc/0x220",
+    "[Mon Sep 28 21:33:35 2026] [  pid  ]   uid  tgid total_vm      rss rss_anon rss_file rss_shmem pgtables_bytes swapents oom_score_adj name",
+    "[Mon Sep 28 21:33:35 2026] oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/system.slice/amazon-ssm-agent.service,task=python3,pid=5349,uid=0",
+    "[Mon Sep 28 21:33:35 2026] Out of memory: Killed process 5349 (python3) total-vm:12024204kB, anon-rss:3666704kB, file-rss:208kB, shmem-rss:0kB, UID:0 pgtables:7696kB oom_score_adj:0"
+  ],
+  "instance_type": "t3.medium",
+  "mem_total_mb": 3836,
+  "nproc": 2,
+  "concurrent_builds_at_kill": 1,
+  "command_windows": {
+    "49financial": {"command_id": "b4d4b0d8-5f7c-49ac-bf70-b59d38558662", "status": "TimedOut", "start": "2026-09-28T21:29:07.748Z", "end": "2026-09-28T21:33:35.748Z"},
+    "cottonwood": {"command_id": "1f3650bb-9127-4ea0-bf9e-7db161f77397", "status": "Failed", "start": "2026-09-28T21:29:07.769Z", "end": "2026-09-28T21:31:47.769Z"},
+    "inflection": {"command_id": "d3275e05-5945-4c4c-b6be-0cc34ff1920c", "status": "Failed", "start": "2026-09-28T21:29:07.894Z", "end": "2026-09-28T21:31:32.894Z"}
+  },
+  "verdict": "OOM-SINGLE",
+  "why": "The kernel oom log timestamps the kill at 21:33:35Z and names pid 5349, the exact pid the 49financial command's own stderr reported as 'Killed python3 $R/holdings_snapshot.py --firms 49financial --upload --qa' (surprise row IRPT_BCKEND-W42-S2). At that instant cottonwood (ended 21:31:47Z, ~108s earlier) and inflection (ended 21:31:32Z, ~123s earlier) had both already terminated Failed on the AccessDenied cause disarmed by Step 7's half -- so exactly ONE build (49financial itself) was still running on the host at kill time; the three commands only overlapped for their first ~2.5 minutes (21:29:07Z-21:31:32/47Z), before the kill. The killed process's own footprint (total-vm 12,024,204 kB, anon-rss 3,666,704 kB, ~3.58 GiB) is by itself close to the box's entire usable memory (free -m: 3,836 MB total, 2 vCPUs, t3.medium). This is a single-process OOM: 49financial's own build exceeds what a t3.medium (4 GiB nominal, ~3.75 GiB usable) provides, independent of whether the other two firms' builds were still resident. Not measured here: whether cottonwood/inflection's now-exited processes left any freed-but-not-yet-reclaimed memory behind, or what 49financial's peak RSS would be run alone with nothing else ever concurrent -- the concurrency window that did exist (21:29:07Z-~21:31:30Z) ended roughly two minutes before the kill, which is the measured basis for OOM-SINGLE over OOM-CONCURRENT."
+}

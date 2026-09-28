@@ -415,6 +415,10 @@ CODE_TREES: dict[str, dict] = {
 # THE CLOSURE: every repo file a real `holdings_snapshot.run_firm` opens or imports for all three firms (qa, no
 # upload, both retained-input variables unset, CLOUD @de042e1e4b). It was measured with an `open` audit hook plus
 # sys.modules: 29 modules and 11 data files. Re-measure it when a builder gains an import.
+# RE-MEASURED 2026-09-28 (0.9.0_WK_IRPT_BCKEND~42, TO-IB-m19-2 amendment 1, row W42-S1): the same audit-hook +
+# sys.modules trace against this worktree's HEAD (2dccc70d49, post lib/silver_ids.py landing 8cd218cd05) adds
+# exactly one file -- lib/silver_ids.py, imported by data/inf/scripts/silver/_orion_api_silver_lib.py -- and drops
+# none: 30 modules and 11 data files (41 total).
 # ---------------------------------------------------------------------------
 _IRPT_HOLDINGS_CLOSURE = (
     "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py",
@@ -445,6 +449,7 @@ _IRPT_HOLDINGS_CLOSURE = (
     "infra/aws/lambda/investor-reporting/holdings/publication.py",
     "infra/aws/lambda/investor-reporting/reports/currency_authority.py",
     "lib/opal_naming.py",
+    "lib/silver_ids.py",
     "lib/trading_calendar.py",
     "data/firm_registry.json",
     "docs/contracts/investor-reporting/v1/CurrencyAuthorities.json",
