@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-28T23:3xZ.
+tick here. As of 2026-09-28T23:4xZ.
 
 ## Pins
 
@@ -12,7 +12,7 @@ tick here. As of 2026-09-28T23:3xZ.
 | Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-28T19:47:43Z (presence-extended) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
 | Portal candidate pin | DEV `1f6612c8` (FAST item 16, AD-01/02 card) on `d516158f` (FAST item 15, AD-03) on `8d12987e` (FAST item 14, UIC-03) on `2febba0b` (FAST item 13, IV-e-76) on `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `1f6612c8` (pushed by this seat under the lease; ls-remote read 23:3xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success; 2febba0b run 36492054339 success; 8d12987e run 36495184912 success; d516158f run 36496901922 success; 1f6612c8 UNREAD |
+| Portal origin | origin DEV `1f6612c8` (pushed by this seat under the lease; ls-remote read 23:3xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success; 2febba0b run 36492054339 success; 8d12987e run 36495184912 success; d516158f run 36496901922 success; 1f6612c8 run 36498832251 success |
 | Suite on 1f6612c8 | IR scope 910 pass / 27 skip / 5 fail = the known 5, counted line by line; tsc -b 0; eslint 0 errors |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
@@ -53,11 +53,14 @@ Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_OP
 the MDPF card renders navy as Andrew's screenshot (C3 departure recorded by the CTO); commodities-gold lands in the
 shared colour registry as a separate change the CTO reads first.
 
-1. **AD-01 remainder (item 16 landed the card adapter):** remove DrillTree's own donut, slice table and breadcrumb
-   below the card, and show the tree map + holdings table at rest (not behind 'More holdings views'). The account
-   picker's removal and the map/table re-scoping to the card's selection need a selection callback from the shared
-   CategoryViewTree (portal/src/components, outside this lease's surface) -- parked below. ~M's served shape (msg
-   102476, CATEGORY nodes; the wire kind mapping lands with its schema) arrives in ~M's next round.
+1. **AD-01 remainder (item 17): BUILT, PARKED UNLANDED pending CTO decision (asked 23:47Z).** DrillTree renders only
+   the navy All Categories card for any forest; its breadcrumb, donut and slice table are gone; the tree map + holdings
+   table sit at rest. IVE93 HOLDINGS-TWO-COMPONENTS-OK; the IR suite counted the known 5 + 16 tests pinning the removed
+   UI. Two of the 16 pin ratified behaviour that lived only in the removed table -- W17-S1 (refuse a drill into another
+   source revision) and F39-AC6/AC7 (out-of-enum advisory flagged per row) -- so re-home vs retire is the CTO's call;
+   the other 14 re-golden to AD-01 once ruled. Work kept at .runtmp/parked/ (item17-ad01.patch, the IVE93 test,
+   item17-suite.txt); the shared tree is clean. The account picker removal + map/table re-scope stay parked on
+   CategoryViewTree's surface.
 2. **AD-04 + AD-05:** port Positioning's tree map and table; commodities colour waits on the CTO, the GLD class on ~M.
 3. **AD-06..AD-09:** the Analysis three-page flow, the canonical modals, readable results (~Y owns result content).
 4. **AD-10..AD-13:** account labels (with ~M), search only, clients that open (with ~P/~M), remove About this scope.
