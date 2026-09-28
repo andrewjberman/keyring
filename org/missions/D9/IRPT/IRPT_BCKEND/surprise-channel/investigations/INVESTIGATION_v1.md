@@ -10817,3 +10817,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not blocking this cell (renamed and refiled before commit, gate now clears; commit 0a1fc245cb on wk-IRPT_BCKEND-63). Fourth occurrence this round of the same recommendation carried in IRPT_BCKEND-W21-S1/W41-S3: reconcile decomp-cell-id-style to_id values against the actual order-file-basename-keyed gate lookup estate-wide."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W42-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~42",
+  "surfaced_at": "2026-09-28T21:35:00Z",
+  "one_line": "Amendment 1 Step 6's re-fire (after the CTO-signed s3:GetObjectVersion grant was applied and read back on all 3 firm-holdings roles) still terminated non-Success at all three firms, on TWO NEW causes distinct from W42-S1's: a different AccessDenied (read-after-write verification on the firm's OWN gold bucket, outside the granted READS statements) at 2 firms, and a 3600s execution timeout (SIGKILL, rc=137) with no further diagnostic at the third.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (the PublishOwnHoldings statement's missing s3:GetObjectVersion grant for the read-after-write verification path, and the unexplained 49financial hang/timeout, both need investigation before another fire)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Applied under ledger irpt-holdings-principals-versionread-m-20260928 (opened 869a91f786, closed 0d6c39b702): terraform apply on infra/aws/terraform/investor-reporting/directory -- 'Apply complete! Resources: 0 added, 3 changed, 0 destroyed' on aws_iam_role_policy.irpt_holdings[49financial|cottonwood|inflection]; iam.get_role_policy on all 3 roles this session shows ReadOpalDataAssets and ReadOpalData{Bd,Cot,Inf} Action=['s3:GetObjectVersion','s3:GetObject']; terraform plan -lock=false -> 'No changes.'",
+      "lambda.invoke(FunctionName='irpt-holdings-refresh-lambda', Payload={\"qa\": true}) this session (runner already Online, one call): {\"status\": \"DISPATCHED\", \"results\": [{\"firm\": \"49financial\", \"dispatched\": \"b4d4b0d8-5f7c-49ac-bf70-b59d38558662\"}, {\"firm\": \"cottonwood\", \"dispatched\": \"1f3650bb-9127-4ea0-bf9e-7db161f77397\"}, {\"firm\": \"inflection\", \"dispatched\": \"d3275e05-5945-4c4c-b6be-0cc34ff1920c\"}]}",
+      "cottonwood ssm.get_command_invocation: Status=Failed rc=1, traceback ending 'botocore.errorfactory.AccessDenied: ... User: arn:aws:sts::313476888478:assumed-role/irpt-cot-holdings-role/irpt-holdings-cottonwood is not authorized to perform: s3:GetObjectVersion on resource: \"arn:aws:s3:::opal-data-cottonwood/irpt/cottonwood/gold/holdings_qa/date=2026-09-25/e70269ab9d90630ccec660004d9b1019e8606556ff51755df4306cb11a65299c.parquet\"' raised from publication.py read_exact (the PUBLISH-time read-after-write check on the firm's OWN gold bucket, statement PublishOwnHoldings, which the applied grant never touched -- it covers only ReadOpalDataAssets/ReadOpalData<Firm>)",
+      "inflection ssm.get_command_invocation: Status=Failed rc=1, identical AccessDenied shape on arn:aws:s3:::opal-data-inflection/irpt/inflection/gold/holdings_qa/date=2026-09-25/558daf10b93a4ee6218c1790c639b3354e645000780b8eb07b340c7344b6aa78.parquet, role irpt-inf-holdings-role",
+      "49financial ssm.get_command_invocation: Status=TimedOut rc=137; stdout shows bundle download + SHA256SUMS verified (41 members) + all 4 deps present, then NOTHING further from holdings_snapshot.py itself before stderr 'line 15: 5349 Killed python3 $R/holdings_snapshot.py --firms 49financial --upload --qa' at the 3600s EXECUTION_TIMEOUT -- no AccessDenied or other traceback printed, cause not isolated",
+      "s3.head_object on each firm's served irpt/<firm>/platinum/holdings/current/manifest.json before this fire and again after all 3 commands terminal: VersionId unchanged at all 3 (49financial OqjgF6qs7e5QsF7HScOre54hxJ18Ktgf, inflection ipomYxTGLoE0pAgeh.nNtVJ6QUm5ynJG, cottonwood ykQofbha2WKbcHFKvxMThBs0UNC_g9ji); holdings_qa/current/manifest.json is still a 404 at all 3 firms (no candidate index published, though cottonwood/inflection's error text shows a QA gold PARQUET PART was PUT before the failed read-back verification)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 Step 6: 'Then repeat Step 2 (one QA fire) and fill the half (Step 3) from the new fire; the half names the three Success command ids. If a firm's QA command still fails, read its output, file a row ... with the exact error, and STOP (do not widen anything further; do not retry past one fire).'",
+  "world_is": "The grant this session activated and read back correctly (0 add/3 change/0 destroy, both READ statements on all 3 roles now carry GetObjectVersion, re-plan clean) disarms neither of the two failure classes actually blocking a Success: the read-after-write verification on the firm's OWN gold bucket needs the same action under a DIFFERENT statement (PublishOwnHoldings) the grant never named, and 49financial's cause is unmeasured (silent hang to the execution timeout, not an AccessDenied). Per the order's own STOP clause, no further widening or retry was attempted; the ENABLE half is left as the prior session filled it (failed-fire values), not re-filled with fabricated Success ids.",
+  "notes": "Out of this worker's bounds to fix (paths grant does not reach IAM policy beyond the three READS statements the signed request covered; the WORLD-act bound admits only 'apply the signed one-line grant ... nothing else'). AC2 and AC3 (amendment 1's Success-id check) are graded FAIL as measured. DISARM: (a) determine whether PublishOwnHoldings needs s3:GetObjectVersion for its own read-after-write check, or whether publication.py's verification should read by ETag/no-version instead, and get a new never-widen half signed for whichever; (b) isolate 49financial's silent hang (retry storm, network stall, or a genuinely larger snapshot needing more than 3600s) before any further fire."
+}
+```
