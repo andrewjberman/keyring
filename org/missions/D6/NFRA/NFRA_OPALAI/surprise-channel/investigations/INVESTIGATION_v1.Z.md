@@ -1289,6 +1289,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Round-1 analysis R-5 / row Z-W8-S1: the entitlement guard suite keeps passing across gateway changes; E1 records its pass count.",
     "world_is": "At CLOUD HEAD the suite is already red on 2 of 12, from changes that predate round 2. So E1's R-5 criterion is graded as NO NEW FAILURE against this base (the same 2 named failures, at least 10 passed), never as all-pass. The two failures are the NFRA_OPLGTW OG-z-1 guard's own pins, and they stay open for their owner.",
     "notes": "Filed by the issuer at the cut. INERT: the served gateway does not run tests. The OA-e-1 order carries the base count."
+  },
+  {
+      "id": "NFRA_OPALAI-Z-W17-S1",
+      "project": "NFRA_OPALAI",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_OPALAI~17",
+      "surfaced_at": "2026-09-28T21:10Z",
+      "one_line": "The E11 fix does not reach an already-installed wrapper: install-owned-paths.sh returns 'already wired ... idempotent no-op' when the destination hook mentions owned-paths-check.sh, so the real opal_ai hooks dir keeps the old fail-open wrapper until it is removed and the installer re-run.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~AI",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              ".tools/git-hooks/install-owned-paths.sh 'Already wired check' block: `grep -q owned-paths-check.sh $HOOK_DEST` then exit 0 without rewriting (unchanged by this order; bound 1 forbids widening).",
+              "Read-only measure of the real ajb_workspace .git/modules/opal_ai/hooks/pre-commit: grep -c 'owned-paths-check.sh' = 3 (old wrapper wired) and grep -c 'worktree list' = 1 (the first-entry resolution E11 replaces). Nothing was written there."
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO OA-e-11 bound 2: 'The issuer installs at the drain' -- the installed wrapper carries the new resolution afterwards.",
+      "world_is": "A re-run of install-owned-paths.sh --submodule opal_ai at the drain is a no-op against the existing old wrapper, so a linked worktree of the real opal_ai outside every parent worktree still skips the lane check (exit 0). The wrapper file must be deleted (or replaced) first, then the installer run; the hook script owned-paths-check.sh itself is read live from the parent and takes the fix without reinstall.",
+      "notes": "Fix is one issuer act at the drain: remove .git/modules/opal_ai/hooks/pre-commit, run the installer with --submodule opal_ai, confirm 'worktree list' no longer appears in it. Filed by the worker; not done here (bound 2)."
   }
 ]
 ```
