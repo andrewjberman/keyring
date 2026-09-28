@@ -69,14 +69,13 @@ Report once to `2.0.0_SA_COO~O`:
 **ISSUER NOTES:** Queued on 0.7.0_AE_CloudOps~I AFTER MX-s-3 closes (step 3 of this order re-runs MX-s-3's record) and
 before or beside MX-s-4. Dry-run at base: s5.AC1 FAIL (nonascii_chars=23 json=ok).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~I</slot>
 <fabric>site-z</fabric>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
 
-<status>complete</status>
 <!-- complete flipped by 0.7.0_AE_CloudOps~I 2026-09-26T18:2xZ. AC1 PASS exit=0, run BY THIS SEAT at 18:15Z
      (the issuer's own 16:56Z passing read was NOT carried into the instance).
      Instance: deliverables/0.7.0_AE_CloudOps~I/NFRA_MCPINDEX.TO-MX-s-5.source-map-ascii.proof_of_spec.json

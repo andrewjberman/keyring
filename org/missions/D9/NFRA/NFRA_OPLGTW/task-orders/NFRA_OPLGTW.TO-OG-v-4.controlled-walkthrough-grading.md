@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPLGTW~6</issued_to>
 <issued_by>2.0.0_SA_COO~O</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>superseded -- CLOSED for round 2 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: its data-correctness criterion needs the sealed-expectations salt, which exists only on the laptop (row S42), and gates G-C and G-D are not at HEAD. Holding it open would deadlock the round's L10 on a laptop act and two absent gates. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in the next round, unchanged, once the salt is reachable and G-C/G-D land. Was: pending.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v0.2 @f0aa50dbc0 (ADMITTED) | **Contract:** `org/standards/NFRA_OPLGTW_CONTRACT.json` v1.0 | **Decomp cell:** `OG-v-4` | **outcome_ref:** FWD-1, FWD-3 .. FWD-8 | **depends_on:** `OG-r-2`, `OG-o-2`, `OG-i-3`, `OG-v-3`; **HELD on gates G-C and G-D** | **slot:** ~6, queue position 4
 
@@ -234,4 +234,3 @@ Amended 2026-09-17 ~15:0xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CT
 unsealed no-date request per master, so PRD C3's explicit-latest coverage stays in the walkthrough and cannot drift. The
 protocol edit rides `TO-OG-o-2`, which precedes this cell (see that order's record). No criterion removed.
 
-<status>superseded -- CLOSED for round 2 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: its data-correctness criterion needs the sealed-expectations salt, which exists only on the laptop (row S42), and gates G-C and G-D are not at HEAD. Holding it open would deadlock the round's L10 on a laptop act and two absent gates. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in the next round, unchanged, once the salt is reachable and G-C/G-D land. Was: pending.</status>

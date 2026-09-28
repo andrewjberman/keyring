@@ -94,14 +94,13 @@ FAIL (ledger absent). The seat is DEAD (MSTR 000450Z); issued to the lane owner 
 DS's), and the reseat is asked of MSTR in the same turn, to hold MX-s-9 and MX-s-6 together. Row Z-S8 disarms when
 MX-s-6 step 2 rebuilds the dim from this pull.
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~D</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 
-<status>complete</status>
 <!-- flipped by the issuer 2026-09-28T06:1xZ. Seat commits 867e5d2cca (pull) and b8442bf174 (proof), both on CLOUD.
      Re-graded on CLOUD by the issuer: s9.AC1 PASS (1 bd bronze module, 0 cot imports, 0 data/cot files changed),
      s9.AC2 PASS (12,132 rows, asset_id unique, written after issue), s9.AC3 PASS (3 ledgered calls; super-class outcome

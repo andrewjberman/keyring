@@ -108,14 +108,13 @@ Report once to `2.0.0_SA_COO~O`:
 LastModified 2026-04-14). Its step 2 depends on MX-s-4's login fix (AE). The issue timestamp in s4_read.py is 06:00Z;
 a write after this order's issue also satisfies it.
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~D</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 
-<status>complete</status>
 <!-- flipped by the issuer 2026-09-28T07:3xZ. Seat commits 9fb05bc6c1 (the builder ported onto lib.silver_ids, the
      inf re-export, the result and the proof) and 4d7188efca; lib/silver_ids.py landed by 1.0.0_SA_CTO~O @88e4e69e69.
      Re-graded on CLOUD: AC2 (s4.AC3) PASS, silver/bd_assets_dim.parquet LastModified 2026-09-28T06:22:06Z, after issue.
