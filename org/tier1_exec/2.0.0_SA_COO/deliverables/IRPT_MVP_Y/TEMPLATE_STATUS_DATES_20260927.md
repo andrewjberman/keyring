@@ -94,3 +94,8 @@ The rebuild's `prospect_dates.py` is `e5bae585..`.** No live XLSX job exists yet
   - Window 15's status read (portal header, live reads, 0 writes) answers **READY ANALYSIS_READY, PER_SECTION, 51
     dates**.
   - History and sections are correct (51 sections, identical to the retained report).
+- **LIVE (00:02:49Z, 09-28): SERVED and verified by Y at 00:04Z.**
+  - The live CodeSha256 is `5fSyChId..`, and the live zip is byte-identical to the artifact verified before apply.
+  - Window 15's status read with the portal header answers **READY ANALYSIS_READY, PER_SECTION, 51 dates**.
+  - CloudWatch since the apply: 1 invocation (the post-apply cold start), **0 errors**.
+  - The screen defect found before K10 is closed in production. K10 can read the row as READY.
