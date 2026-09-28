@@ -116,7 +116,7 @@ Dry-run at base (CLOUD `c8df03c408`, ~20:5xZ):
 - e10.AC2 base: FAIL as expected (no BRANCH in a committed census).
 - e10.AC3 base: PASS as expected (control: 4 sprint routes asserted; 11 passed, 0 failed).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~16</slot>
 <fabric>site-z</fabric>
