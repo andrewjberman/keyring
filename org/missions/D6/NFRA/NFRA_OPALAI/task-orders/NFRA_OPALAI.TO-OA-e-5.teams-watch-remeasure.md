@@ -118,7 +118,7 @@ Checker arms were exercised with a synthetic file, then removed:
 example `whoami` on `opal-gateway-bbg`) so the watch's token is live for the measurement window. The slot continues
 with OA-e-6 after Part A.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~14</slot>
 <fabric>site-z</fabric>

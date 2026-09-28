@@ -42,6 +42,23 @@ FENCES, not in a field a consumer can reject on.
    `catalog_v02/validation_report.json`, restore that file before you commit.
 6. Run AC1-AC3. Commit under your serial.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-28 ~22:0xZ), on the CTO ruling of row Z-W13-S3 (`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/RULING_Z-W13-S3_Z-W9-S1_20260928.md` @8ed938b2d7):**
+- **NO `s3_key` field anywhere.** A catalog line stating a served address is a second hand-kept copy of the key
+  (Rule 30), and the naming gate's legacy-read waiver cannot admit a YAML line.
+- **Instead, each `portal_*` row names WHERE it is read,** in two fields:
+  - `read_tool`: the portal_index tool;
+  - `accessor`: the portal accessor whose channel row carries the key.
+  Both must equal that entity's entry in `portal_index/integration.py`'s `ROWS` (tool name, then `ToolRow`'s
+  accessor), e.g. `read_tool: mdpf_get_aum_metrics`, `accessor: getAUMMetricsByFirm`.
+- Put them in the three `catalog_entries/portal_mdpf_*.yaml` source files, and have the emitter carry them into
+  `portal_datasets:` in place of `s3_key`. The section header says the key is resolved by that tool through that
+  accessor's channel row.
+- Everything else in section 1 stands: the section, the reader move, the regeneration, the gates.
+- If a consumer genuinely needs the raw key from the catalog, do not add it. File a row naming that consumer and its
+  line.
+- AC1 is re-issued (section 4) to grade exactly this. Your uncommitted `s3_key` work in the worktree is the thing to
+  change.
+
 ## 2. BOUNDS
 
 1. Nothing is deployed. The catalog changes only through the emitter.
@@ -69,7 +86,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 
 <proof_of_spec>
   <expected_criteria>AC1,AC2,AC3</expected_criteria>
-  <criterion id="AC1" cell_refs="MX-x-2" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round3/checks/x2.AC1.sh; echo "exit=$?"</invocation><expect>placed and keyed N of N with N>=3 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MX-x-2" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round3/checks/x2.AC1.sh; echo "exit=$?"</invocation><expect>placed and naming their reader N of N with N>=3 (no s3_key) -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MX-x-2" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round3/checks/x2.AC2.sh; echo "exit=$?"</invocation><expect>pytest rc=0; passed>=1; failed/error 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-x-2" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round3/checks/x2.AC3.sh; echo "exit=$?"</invocation><expect>emitter rc=0; differing lines outside the build stamp: 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~13/NFRA_MCPINDEX.TO-MX-x-2.portal-catalog-section.proof_of_spec.json</instance_path>
@@ -90,7 +107,7 @@ Write the proof instance at the `<instance_path>`. Report once. Do not edit this
 - Release: this changes gateway files, so they ship only through a narrow release. MX-r-4 carries them if this drains
   before its cut.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @ac96f4ae3e by 2.0.0_SA_COO~MI, 2026-09-28 ~22:1xZ, as amended A1: x2.AC1 PASS (3 of 3 portal rows in portal_datasets naming read_tool + accessor equal to portal_index ROWS, no s3_key), x2.AC2 PASS (7 passed), x2.AC3 PASS (the emitter reproduces the catalog outside the stamp), instance VALID; the naming gate reads PASS. Rows Z-W13-S1/S2 are INERT observations; Z-W13-S3 is ruled @8ed938b2d7. Was: pending.</status>
 <round>3</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

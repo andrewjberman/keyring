@@ -71,10 +71,29 @@ gateway release mid-act. The GO names the signed files, and their guards bind yo
    Write this to `CLOSE_RUN_MX-r-4.md` in your deliverables. You do not grade it.
 10. Close the ledger legs, then commit the close before AC1 and AC2 read.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-28 ~22:1xZ), on PHASE A's announcement (release pin 2f14e38af9, @7d5fcd0bf2):**
+- **The enable line is granted.** In `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`, line 197 carries
+  `ENABLED_INTEGRATIONS=ycharts opal_portal globgrph` inside the `.env` printf. You may change EXACTLY that value, to
+  `ENABLED_INTEGRATIONS=ycharts opal_portal globgrph opal_discover portal_index`. The printf keeps 9 `%s` and 9
+  arguments, and nothing else in the file changes.
+  - Commit it on the RELEASE branch, so the deploy carries it.
+  - Commit the identical one-line change on your worker branch, so CLOUD does not later revert the enable. The issuer
+    measured line 197 as byte-identical on CLOUD and on the release base 6a98a0553a.
+- **Re-cut the release pin to carry MX-x-2.** Its portal_index and catalog change is now on CLOUD, drained at
+  ac96f4ae3e, feature commit 357d85c0ba by 0.9.0_WK_NFRA_MCPINDEX~13. The integration being enabled should be the
+  one released.
+  - Cherry-pick 357d85c0ba's gateway files onto the release branch after 2f14e38af9.
+  - Re-run the census: the only gateway files allowed are 85e1158e6e's plus 357d85c0ba's gateway files, plus line
+    197.
+  - Re-run the three test files in the release tree.
+- **Then STOP and report the FINAL release pin:** its hash, the census, and the test counts. The issuer hands that
+  exact hash to 1.0.0_SA_CTO~O for G-A and to both never-widen halves. Still NO deploy, no ledger, no `.env` change
+  on the host.
+
 ## 2. BOUNDS
 
-1. Terraform, the ALB, the host's role and its secrets are untouched. `safe-ec2-deploy.sh` and `deploy-to-ec2.sh` are
-   READ, never edited.
+1. Terraform, the ALB, the host's role and its secrets are untouched. `safe-ec2-deploy.sh` is READ, never edited.
+   `deploy-to-ec2.sh` is READ except line 197's value (A1).
 2. If a leg fails mid-act, roll back with the named command, close the entry as rolled back, and report. Never leave
    it half-landed.
 3. No cold run with a non-author asker: that needs G-B, which is Andrew's and is not given here.
@@ -85,6 +104,7 @@ gateway release mid-act. The GO names the signed files, and their guards bind yo
 
 <paths>
 infra/aws/ec2/EC2_MANIFEST.json
+infra/aws/ec2/opal-gateway/deploy-to-ec2.sh
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-r3-gateway-enable.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~10/**

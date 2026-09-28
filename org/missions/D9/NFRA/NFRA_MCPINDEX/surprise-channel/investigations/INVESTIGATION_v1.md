@@ -2203,6 +2203,137 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~O",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "WHY THIS ROW EXISTS AT ALL, which is a process point about me rather than about fees: I measured all of the above on 2026-09-28 during MX-s-10 step 3 and wrote it only into ANNOUNCE_MX-s-10.md, an MX-s-10 deliverable. MX-s-10 is now SUPERSEDED-for-round, so the finding would have died with the cell it was discovered in. CLAUDE.md section 2 says an off-task finding gets a ROW and the work continues; an announce is not a channel row and does not survive its order. Filed late, and the lateness is the lesson. NOT FIXED, and deliberately not: the one-line repair is the same insertion MX-s-4 made, and opal-bd-fees-download.json sits in infra/aws/ssm/ which is this lane's surface -- but no order covers this producer, and CLAUDE.md forbids implementing a gate or monitor unbidden even where proposing is legal. An honest exit is not an alarm (the issuer ruled exactly that for MX-s-4), so the fix is legal in principle and wants a cell, not a rider. The fees schedule was also left ALONE under MX-s-10's own preflight, which removes its leg only once its caller census reads 0 -- and that census reads 1. ONE THING UNMEASURED: whether the four remaining BD download documents (allocation, realized, transaction, unrealized) also lack an exit. Z-S17 measured their shutdown ORDERING, not their exit honesty, and those two are different properties."
+  },
+  {
+      "id": "NFRA_MCPINDEX-Z-W10-S1",
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~10",
+      "surfaced_at": "2026-09-28T22:10Z",
+      "one_line": "MX-d-3 ranking fixed 2 of the 3 dataset misses (Q05, Q07); Q22 (an index ask matching no keyword) and the 3 false positives Q09, Q13, Q25 are not ranking defects and stay MISS at 23 of 27.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~MI",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "run_routing.py before the fix: MISSES Q05, Q07, Q09, Q13, Q22, Q25, ROUTING 21 of 27; after the fix: MISSES Q09, Q13, Q22, Q25, ROUTING 23 of 27 (Q05 and Q07 route first to json/benchmarks/model_portfolio_benchmarks.json).",
+              "app/refs/DATA_CATALOG.yaml carries no S&P/SPX/index-name vocabulary on any channel that holds a row: the only hit is the example ask 'where did the SPX close?' on bloomberg_standing_read, a channel with 0 rows. mkt.01 is reached by no keyword an S&P ask contains (Q22 -> candidates=0).",
+              "Q09 ('holdings'), Q13 ('inflection') and Q25 ('value') are asks whose expected answer is NOT_CATALOGUED but each contains one channel keyword, so the channel's rows are still returned; the routed tool changes with ranking (Q25 moved from correlation_data to tier1-snapshot) but the ask still routes to a dataset."
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO MX-d-3 act 2: fix the RANKING inside opal_discover so that a dataset ask ranks its dataset first, without editing the catalog (bound 1), the harness or the question set; row Z-W2-S8 names three miss signatures (one common word selects a whole channel, unranked channel, an index ask matches no keyword).",
+      "world_is": "Ranking reaches only the 'unranked channel' signature (Q05, Q07). The 'index ask matches no keyword' signature (Q22) needs the ask to select a candidate at all, and no catalog text or keyword links an S&P ask to mkt.01; the honest repairs are a catalog keyword (out of bounds for this order) or an in-code index-name vocabulary (which this worker judged to be special-casing words, so did not add). The 'one common word selects a whole channel' signature (Q09, Q13, Q25) is a PRECISION defect (a weak channel-keyword-only match should return no dataset), which reordering candidates cannot cure; a threshold rule would be a recall risk and was not attempted inside a ranking cell. AC2 (2 of 3 dataset asks first) and AC1 (>=21) both pass.",
+      "notes": "Suggested next cells, for the issuer to place: (a) a catalog keyword or index-name row for market-returns asks (catalog owner); (b) a rule that a channel-keyword-only match with zero own-text overlap is returned as a weak candidate or not at all, graded against the harness for recall loss."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W9-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~9",
+    "surfaced_at": "2026-09-28T22:00Z",
+    "one_line": "A tracked file outside the MX-s-13 redaction set carries the live BD password value on 2 lines.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured by a byte-count of the value taken from HEAD run-daily-downloads.sh across all git ls-files at the worktree: 1 file matched, 2 occurrences, lines 3408 and 3412; the other 43 bd-exporter files and every other tracked file read 0."
+      ]
+    },
+    "spec_asserts": "MX-s-13 names 7 files as the complete redaction set for the live BD password (Z-S31).",
+    "world_is": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/CARRIER_CENSUS.md lines 3408 and 3412 each contain the value the 7-file set carried. Not edited: outside <paths>. No content quoted.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W9-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~9",
+    "surfaced_at": "2026-09-28T22:00Z",
+    "one_line": "extended-backfill.sh: no second literal credential found where the order says the CTO measured one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Line-by-line masked-shape read of every assignment and BD_/PASS line of extended-backfill.sh (lines 15,16,17,22,23,25,37-39,43-45): no credential-shaped literal; the CTO's literal may be a username on line 15 or a since-fixed line -- unresolved by me."
+      ]
+    },
+    "spec_asserts": "MX-s-13 edit 1: extended-backfill.sh carries a DIFFERENT literal elsewhere than the BD_PASSWORD line.",
+    "world_is": "In src/stepwise/extended-backfill.sh the BD_PASSWORD line 16 is already a :? refusal; line 15 is BD_USERNAME (a username, left as ordered); no line holds the redacted value, and a shape scan for mixed letter/digit/symbol tokens of 8+ chars found 0. File left unedited; AC1 reads 0 literals over 44 files.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W13-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~13",
+    "surfaced_at": "2026-09-28T17:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The worktree's portal/ is an empty gitlink directory, so the emitter refused ('accessor index is EMPTY -- portal/src/api not readable'); I extracted portal/src/api at the pinned gitlink into it to run step 4.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WORLD (this worktree): `ls -la portal` shows an empty directory; `git ls-tree HEAD portal` = 160000 commit c3dd9ca96a3718afcde829ea9b010041d925f883.",
+        "CODE: workflows/atom_decomposition/emit_catalog_v02.py:369 PORTAL_API = <root>/portal/src/api and :462 refuses when the accessor index is empty; the first run printed 'EMIT REFUSED: accessor index is EMPTY'.",
+        "ACT: `git archive c3dd9ca96a3718afcde829ea9b010041d925f883 src/api` from the shared ajb_workspace/portal repo (read-only; that commit exists there, whose HEAD is 92a2576) piped to tar into <worktree>/portal. Content sits inside the gitlink directory, so it is not part of any commit of this branch."
+      ]
+    },
+    "spec_asserts": "The order (step 4) says to run the emitter in the worktree and treats the portal submodule as present; the order's paths do not name portal/.",
+    "world_is": "A worker worktree carries no portal checkout, so step 4 and AC3 cannot run as cut. I read the pinned gitlink's src/api only (23 files), not a rebuild of the tree. The catalog was therefore emitted against portal c3dd9ca96a, not the shared tree's 92a2576; the accessors list is the only portal input, and AC3 reproduced the committed catalog with 0 differing lines outside the stamp, so no accessor drift shows at this pin.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "notes": "Any worker cell whose invocation runs the emitter needs portal/src/api at cut time; the issuer may want that in the preflight."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W13-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~13",
+    "surfaced_at": "2026-09-28T17:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "validate_catalog_v02.py (step 5) makes live S3 reads, against this order's 'No AWS' bound, and then crashes writing its report because catalog_v02/ does not exist in the tree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: workflows/atom_decomposition/validate_catalog_v02.py docstring: concrete keys -> s3api head-object, family rows -> s3 ls the prefix; READ-ONLY; results -> catalog_v02/validation_report.json.",
+        "RUN (rc=1): printed per-key KEY-OK/FAMILY-OK lines and 'SUMMARY: {rows: 36, concrete_ok: 26, concrete_missing: 0, family_ok: 9, family_mismatch_or_error: 1}', then FileNotFoundError on workflows/atom_decomposition/catalog_v02/validation_report.json. git status after the run shows no change to that path, so nothing needed restoring.",
+        "MEASURED separately with catalog_gate.load_catalog on the new DATA_CATALOG.yaml: loads, 48 rows_by_key, no refusal of the new portal_datasets section."
+      ]
+    },
+    "spec_asserts": "Order bounds 3: 'No AWS'; step 5: check that validate_catalog_v02.py still accepts the catalog, and restore validation_report.json if it rewrites it.",
+    "world_is": "The validator's 36 rows are the channels: rows, which this change did not touch (the catalog diff is only the two stamp lines plus the silver_datasets/portal_datasets sections), so its summary says nothing about the new section either way. One row was reported family_mismatch_or_error; I did not identify it and did not rerun (a rerun is more S3 reads). It is unmeasured whether that predates this change; the channels rows are byte-identical, so it is not caused by it. The validator does check the new key, by a different route: main() runs validate_silver_entries() first (validate_catalog_v02.py:103-105, the emitter's own validate_entry over catalog_entries/*.yaml) and refuses before any S3 call on an invalid entry; it did not refuse, so the three s3_key entries are accepted. It does not read the catalog's portal_datasets section itself.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W13-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~13",
+    "surfaced_at": "2026-09-28T18:10:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "BLOCKING: the commit's naming limb (LGIC_ENFORCE DEC-6) refuses the 6 new lines that carry the exact keys the order requires in s3_key, so MX-x-2's work sits in the worktree uncommitted.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash .tools/safe-commit.sh ... -- <8 paths> printed 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' and 'NAMING-GATE: REFUSE 6 graded'.",
+        "The 6 refused lines are the added s3_key values: DATA_CATALOG.yaml:1336, :1356, :1376 and the three catalog_entries/portal_mdpf_*.yaml files (:18, :20, :20). Each reads 'EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it'; the gate proposes mdpf/{scope}/platinum/{scope}/<file>.json.",
+        "CODE .tools/naming-gate.py:1-20 (DEC-6 matrix): an EXISTING out-of-pattern key in a live-remediation surface is REFUSED unless the diff removes it; prose (a string with whitespace) is not graded. safe-commit.sh:721 turns ENFORCE on from the org/mcp/naming-gate.enforce file, and its refusal has no worker-side override (a --force bypasses only contamination checks).",
+        "The key is not chosen by this worker: the order (step 1) requires s3_key to be the key the portal_index fence pins, and test_portal_index.py pins platinum/mdpf/{scope}/<file>.json. The same string already sits, ungraded, on unchanged lines (the channels: rows, and the producer prose)."
+      ]
+    },
+    "spec_asserts": "Order step 6: 'Run AC1-AC3. Commit under your serial.' and bound 3: REFUSE a criterion you cannot meet, reporting it with its measurement. Step 1: s3_key is the exact key the entry describes.",
+    "world_is": "AC1, AC2 and AC3 all PASS (proof instance VALID, rc 0), but the change cannot be committed by a worker: the naming limb refuses the one new field the order asks for, because its value is a live-remediation key (MDPF_CANON) the platform has not migrated. The change is complete and unstaged in worktree C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-13 on branch wk-nfra_mcpindex-3-13 (8 files). The proof instance and its deliverables folder are also uncommitted, so its PENDING-THIS-COMMIT rows are unresolved. Nothing was bypassed, hand-encoded or reworded to slip the gate. The way through is the gate's owner or the issuer's: an R20 register entry or a ruling on MDPF_CANON that lets this field carry the key, or the issuer committing the staged set under an approved path; that is not this worker's call.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
   }
 ]
 ```

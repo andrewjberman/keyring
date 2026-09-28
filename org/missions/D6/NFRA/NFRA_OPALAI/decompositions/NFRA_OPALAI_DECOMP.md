@@ -475,3 +475,15 @@ what each remedy does NOT move:
 2. The reply binding is server-side and holds within the window. It cannot stop an agent from repeating, after the
    window closes, text it already holds. That residual is stated, not solved.
 3. E6's server move and history cap, E8's remedies, E9's move and E10's release are later cells.
+
+## ADDENDUM R2-A1 -- G-ACCT's provisioning defect (row Z-S37; `1.0.0_SA_CTO~O` ruling msg 26231)
+
+One direct-act cell, `<direct_act>true</direct_act>`, added mid-round on the CTO's ruling (the round-1 addenda A1/A2
+precedent). It is not an enrichment cell.
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-3` | `opal_ai/opal/runtime/provision/provision-account.ps1:101`: the `New-LocalUser -Description` literal (86 characters) becomes 48 characters or fewer, one line changed and nothing else. It reaches PROD in the cutover G-PUSH | LOCAL |
+
+Chain: alone, slot `~18`. Ruling (b) runs beside it: `0.0.0_AB_MSTR~Z` provisions from a scratch copy whose
+`git diff --no-index` against PROD fd8ab8a is exactly OA-f-3's committed line. The checkout stays at PROD.
