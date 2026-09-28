@@ -305,3 +305,173 @@ after OA-g-2, because the live gateway's current parser would read a zero-master
   OA-t-4 moved that file into `opal_ai`, and it is still present in the workspace until OA-t-1's parent side merges.
   The cutover MUST NOT remove the workspace copy until `runner.py` is re-pointed to a surviving import and its next
   scheduled fire is read back. Measured 2026-09-26 ~20:1xZ: the file is present, and `runner.py` still imports it.
+
+---
+
+# ROUND 2 -- THE ENRICHMENT CUT (L5, v2)
+
+```json
+{
+ "project": "NFRA_OPALAI",
+ "decomp_version": "v2",
+ "step": 5,
+ "round": 2,
+ "input": "org/missions/D6/NFRA/NFRA_OPALAI/ledger/ROUND_ANALYSIS.round1.md@a8baa4b23d (section 4: items 0-11, rule J)",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_OPALAI/prd/NFRA_OPALAI_PRD.md@f06341327e",
+ "author": "2.0.0_SA_COO~AI",
+ "cells": 14,
+ "chains": 9,
+ "join_cells": 2,
+ "frozen": true
+}
+```
+
+**Author:** `2.0.0_SA_COO~AI` (the project's issuer since placement @094c84f299). **Input:** `1.0.0_SA_CTO~O`'s round-1
+analysis @a8baa4b23d, section 4, cut in ONE issuance: item 0 (the gated cutover cells) plus E1-E11, with rule J. Round 1
+(sections 1-9 and the addenda above) stays frozen as its own record. **Frozen at the cut.**
+
+**Measured at the cut** (site Z, CLOUD `c8df03c408`, 2026-09-28 ~20:3xZ):
+- `opal_ai` origin DEV = PROD = `fd8ab8a57f` (`ls-remote`). It already carries round 1's nested work: OA-t-1's move
+  (`99190d1`), OA-t-3's runtime files and fence (`fd8ab8a`), OA-t-2, OA-t-4 and OA-w-3. The main tree's `opal_ai`
+  gitlink is still `90ca424fc7`; the gitlink bump is the cutover's.
+- The gateway serves `fe94911257` (6 of 6 files by md5 over SSM, `deliverables/2.0.0_SA_COO~AI/SWITCHOVER_PRECONDITIONS_RECONFIRM_20260928.md` @73e5968e67).
+- The concierge seed in `app/identity_scope.py:51-72` does NOT name `opal_asker_query` (Z-S6's disarm, still standing).
+- `opal_ai/opal/agent/refs/RELAUNCH.md:81` and `:126-127` list `opal_data_refresh_upload` and `/terminal-upload` as the
+  Analyst's reach. The runtime fence (`concierge-gate.sh`) has no line for it (Z-S19).
+- `moto` is absent on this device, with no local wheel (`import moto` fails; `pip download --no-index` finds none).
+
+## R2.1 THE CELLS -- 14
+
+| Cell | From | Builds | Write surface | Risk |
+|---|---|---|---|---|
+| `OA-t-1` | item 0 (R-3), re-cut UNCHANGED | round 1's cell text, verbatim. The nested half is ALREADY on `opal_ai` PROD (`99190d1`); what remains is the parent half: remove the moved parent files, re-point the ONE catalog line `:1241` `guardrails_ref`, and re-point every consumer. Graded by round 1's three criteria. The two checks that read `opal_ai` read it at the move's drain commit `fd8ab8a57f`, not the nested HEAD, because E2 and E7 edit two moved files AFTER the move by design. Plus rule J's second judgment criterion (the close run's reply) | `org/tier0_utility/0.0.3_BG_BBGTerminal/{prompt.md,refs/<7 top-level files>,tools/portal_lookup.py}` (removals), `.claude/skills/bbg-teams-assist/SKILL.md` (removal), `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` (one line) | WORLD (catalog floor) |
+| `OA-t-3` | item 0 (R-3), re-cut UNCHANGED | round 1's cell text, verbatim. The nested half is on PROD (`fd8ab8a`); what remains is the parent half: remove `.tools/hooks/bg-concierge-gate.sh` and its test. Graded by round 1's three criteria, nested reads pinned the same way. The gate's PASS arm as `Opal_Agent` and its negative arm are the close run's (R-3) | `.tools/hooks/bg-concierge-gate.sh`, `.tools/hooks/tests/test_bg_concierge_gate.sh` (removals) | LOCAL |
+| `OA-e-1` | E1 (I-1 + Z-S5) + R-5 | ONE cell in `asker_scope.handle_asker_query` and its tool: (a) the catalog verdict is `gate(asker) AND gate(calling identity)`. The asker's class and firm come from their VERIFIED Entra tenant: Opal's own tenant = Opal-internal; any other tenant = denied (no tenant-to-firm registry exists); never from the profile's `email`. (b) The cited message is bound: older than `ASKER_MESSAGE_MAX_AGE_SECONDS` (default 900, config-overridable) is refused. After a data-serving asker query for chat C, a send by the same (identity, OAuth client) to any chat other than C inside that window is refused. (c) In a group chat, the scope is the intersection over every human member (Graph chat members, excluding the calling identity): any member with no profile, or no `query` operation, refuses the whole query. Three negative arms: an older message from a wider person is refused; a reply to a different chat is refused; a group chat with an unprofiled member is refused. R-5: `tests/test_data_entitlement_guard.py` runs with moto available, and its pass count is recorded | `infra/aws/ec2/opal-gateway/app/asker_scope.py`, `app/tools.py` (the `opal_asker_query` and send-tool binding lines only), `tests/test_asker_scope.py`, `tests/test_asker_binding.py` (new) | WORLD (infra floor) |
+| `OA-r-1` | E1's release | the NARROW gateway release of OA-e-1's commits, on the live base resolved BY CONTENT at its own cut (served `fe94911257` at this cut). Announced before the act (one deployer at a time, @75117e60d6). NEVER-2 ledger, rollback proven first, `.env` render guard, host `/health` over SSM, tool-list diff empty. Outside US business hours (Z-S24). Rule J's judgment criterion sits HERE | `infra/aws/ec2/EC2_MANIFEST.json`, the release branch, ledger paths | WORLD |
+| `OA-e-2` | E2 (Z-S18/Z-S19; Andrew's option 2, call 6) | the upload drops out of the Analyst's reach: the runtime fence `concierge-gate.sh` denies `mcp__opal-gateway-bbg__opal_data_refresh_upload` (a G4 line, with a deny arm in its test), and `RELAUNCH.md`'s lines naming the upload and `/terminal-upload` as the Analyst's are rewritten to say the upload is the operator's daily script (`publish_to_portal.py`) and never the Analyst's. Every other hard line and catalog row is byte-unchanged (C7) | `opal_ai/opal/agent/hooks/concierge-gate.sh`, `opal_ai/opal/agent/hooks/test_concierge_gate.sh`, `opal_ai/opal/agent/refs/RELAUNCH.md` | LOCAL |
+| `OA-e-3` | E3 (Z-S6 lifted) | the Analyst is switched on for the asker tool: `opal_asker_query` joins the concierge seed in `app/identity_scope.py` (the docstring's "requires Andrew's ruling" line cites his word, G-SCOPE), its pinned tests move, and the NARROW release of that one commit ships on the live base, with the same release discipline as OA-r-1. This release is FWD-9's first exercise (S13): the change reaches colleagues only through Andrew's release word | `infra/aws/ec2/opal-gateway/app/identity_scope.py`, `tests/test_identity_scope.py`, `EC2_MANIFEST.json`, the release branch, ledger paths | WORLD |
+| `OA-e-4` | E4 (I-5; FWD-2) | the serve skill consumes the SERVED image reader: `bbg-teams-assist/SKILL.md` calls `read_chat_message_images` for a message with pasted content (`hostedContents`), and when it cannot read one the reply says plainly "I could not read the image you pasted". Nothing is built on the gateway | `opal_ai/opal/agent/skills/bbg-teams-assist/SKILL.md` | LOCAL |
+| `OA-e-5` | E5 (I-5 gap B; blocker (2)) | MEASURE ONLY: the Teams watch's reads against the live gateway, after the laptop's gap-B fix, with a printed denominator (reads attempted, succeeded, failed, and each failure's signature). If they clear, the watch's remaining work is blocker (1), the token refresh (C8), named for the next round. Nothing is changed | `deliverables/0.9.0_WK_NFRA_OPALAI~14/` only | LOCAL |
+| `OA-e-6` | E6 (S15 first measurement) | MEASURE ONLY, after Part A creates `Opal_Agent`: can `Opal_Agent` open `127.0.0.1:8194` (DAPI) and `127.0.0.1:8790` (the view server, when the operator runs it over `streamable-http`)? Positive read as `Opal_Agent`, the operator's read as the control. The server's move into `opal_ai/opal/mcp/bloomberg/` and the history-cap CONTRACT question are NOT this cell's (the analysis names the measurement as E6's first cell) | `deliverables/0.9.0_WK_NFRA_OPALAI~14/` only | LOCAL |
+| `OA-e-7` | E7 (I-3 + R-4 / Z-S20) | the batch cell: (1) the parent `.claude/skills/teams-assist/teams-watch.py` header names its real consumers (the D7 intake runner and the operator's `/teams-assist`), so nobody reads it as the Analyst's; (2) `opal_ai` CI can pass: `ci.yml` installs pytest and ruff before `run_checks.sh`; `portal_lookup.py`'s 15 ruff findings are FIXED, never waived; `run_checks.sh` reports ruff's real finding count. The green run on a real push is G-PUSH's, at the cutover | `.claude/skills/teams-assist/teams-watch.py` (header only), `opal_ai/.github/workflows/ci.yml`, `opal_ai/opal/checks/run_checks.sh`, `opal_ai/opal/agent/tools/portal_lookup.py` | LOCAL |
+| `OA-e-8` | E8 (FWD-3, S9) | MEASURE ONLY, after the item-0 close run: real exchanges timed stage by stage (message posted, noticed, asker query, reply sent) against the 2026-08-20 baseline. The remedies are cut from what it finds | `deliverables/0.9.0_WK_NFRA_OPALAI~12/` only | LOCAL |
+| `OA-e-9` | E9 (FWD-5, FWD-11), first cell | CENSUS ONLY, after OA-e-3 drains: every commit CLOUD holds on the gateway paths that the ONE release base (@75117e60d6 ruling; the live served commit at this cell's cut) does not, grouped by owning project and order, each marked released-elsewhere / unreleased / superseded. The move itself is cut from this census | `deliverables/0.9.0_WK_NFRA_OPALAI~10/` only | LOCAL |
+| `OA-e-10` | E10 (row NFRA_OPLGTW-Z-S7) | census first: `/login` use in the gateway's audit trail since the MCP `/authorize` sign-in went live, and which server-held identities (`/otp`, `/ms`) still depend on the email-keyed cache it writes. On ZERO dependents, the route and the legacy `/callback` branch are removed; otherwise `/login` is narrowed to the named server identities. The OG-e-2 email-deny guard stays either way. Built and tested on CLOUD; its release is NOT this round's (it needs never-widen halves, and it is cut at round 2's L10 or rides E9's move) | `infra/aws/ec2/opal-gateway/app/server.py` (the `/login` route and its handler only), `app/browser_oidc.py` (only if the census names it), `tests/test_login_retire.py` (new) | WORLD (infra floor) |
+| `OA-e-11` | R-2 (row Z-S17) | the nested-worktree fail-open is closed: `.tools/git-hooks/owned-paths-check.sh` resolves the superproject from the COMMITTING worktree's own path, never the first `git worktree list` entry, and REFUSES loud when none resolves; `install-owned-paths.sh:95` gets the same resolution if it shares the defect. Proven on a scratch fixture: an out-of-lane commit in an `opal_ai` linked worktree outside every parent worktree is REFUSED; the same commit in the main nested checkout is still refused, and an in-lane one lands | `.tools/git-hooks/owned-paths-check.sh`, `.tools/git-hooks/install-owned-paths.sh`, `.tools/tests/test_nested_worktree_failclosed.sh` (new) | LOCAL |
+
+**Write sets are pairwise disjoint.** E2 and E7 touch two files that OA-t-1 MOVED (`RELAUNCH.md`, `portal_lookup.py`),
+but OA-t-1's remaining half writes no `opal_ai` file; its checks read the move at `fd8ab8a57f`. OA-e-1 and OA-e-10 are
+both gateway code, in disjoint files. OA-r-1, OA-e-3 and any other project's gateway release share ONE resource, the
+host, and are serialised by the one-deployer rule, not by an edge.
+
+## R2.2 DEPENDENCY EDGES AND CHAINS
+
+```
+chain A   OA-e-1 --> OA-r-1 --> OA-e-3 --> OA-e-9     the gateway deployer: build, release, switch-on, then census
+chain B   OA-e-2 --> OA-t-3                           the fence denies the upload before the cutover fence is graded
+chain C   OA-t-1 --> OA-e-8                           speed is measured only on the live path
+chain D   OA-e-4
+chain E   OA-e-5
+chain F   OA-e-6                                      after Part A (Opal_Agent exists)
+chain G   OA-e-7
+chain H   OA-e-10
+chain I   OA-e-11
+joins     OA-e-3 (A + OA-e-2 drained + G-SCOPE); OA-e-8 (C + OA-t-3 + the item-0 close run)
+```
+
+**Fan-out:** `N = 8 of M = 9 chains, cap 8; join cells: 2 (OA-e-3, OA-e-8)`. Slots:
+- `~10`: OA-e-1, then OA-r-1, then OA-e-3, then OA-e-9;
+- `~11`: OA-e-2, then OA-t-3;
+- `~12`: OA-t-1, then OA-e-8;
+- `~13`: OA-e-4;
+- `~14`: OA-e-5, then OA-e-6. Chains E and F share a slot, because F waits on Part A anyway;
+- `~15`: OA-e-7;
+- `~16`: OA-e-10;
+- `~17`: OA-e-11.
+
+**Slots start at `~10`** because round 1's pre-rewrite branches `wk-NFRA_OPALAI-1` and `-3` are HELD and never deleted
+(handoff `ctoO_2026-09-28_1630Z.md`), and `wk-provision.sh provision NFRA_OPALAI <n>` names its branch by slot.
+
+**Spawn at the cut:** `~10`, `~11`, `~13`, `~14`, `~15`, `~16`, `~17` (OA-e-6 inside `~14` waits for Part A). **Held:** `~12` until Parts A-B.
+
+## R2.3 PLACEMENT AND ISSUER RULINGS
+
+- Every cell executes on SITE Z. Each `opal_ai` cell gets a nested worktree off `opal_ai` `fd8ab8a57f` (origin PROD at
+  the cut), through `wk-provision.sh --nested opal_ai=fd8ab8a57f`, never the main tree's stale gitlink `90ca424fc7`.
+- **The re-cut starts from origin, not from `C:/tmp/oa-1` or `oa-3`** (R-3). The pre-rewrite branches
+  `wk-NFRA_OPALAI-1` and `-3` are never merged. OA-t-1's and OA-t-3's parent halves are redone on the current HEAD.
+- **"Re-cut unchanged" means the cell text and its three criteria are unchanged.** Their check files are round-1's,
+  copied to `round2/checks/` with ONE amendment each: a read of the nested `opal_ai` at HEAD reads it at `fd8ab8a57f`,
+  the move's drain commit. The claim is about the move, and round 2 edits two moved files after it by design.
+- **G-MOTO: GIVEN** (Andrew-direct ~20:4xZ, record @f8d1103a38, which also frees this seat's development downloads
+  and vendor calls). moto 5.2.3 is installed at `C:/tmp/moto-target`, never the system Python. Its first read at CLOUD
+  HEAD is 2 failed, 10 passed (row Z-S36 @3c61dbe4d3), so R-5 is graded as NO NEW FAILURE against that base.
+- **G-SCOPE: GIVEN, CONDITIONED** (record @f8d1103a38). OA-e-3 widens the concierge's server-side reach (Z-S3, Z-S6).
+  It spawns only after OA-r-1 closes with its three negative arms passing AND `3.0.0_SA_CVO~O` grades J1 PASS. The
+  issuer asks the CVO for J1's read at OA-r-1's drain. If the CVO grades it only at round 2's L9, OA-e-3 re-cuts into
+  round 3, and the item-0 close run moves with it. That risk is stated here, not hidden.
+- **Rows carried:** Z-S4 is REMEDIATED @6bc980ad5d (R-1); no cell. Z-S17 is OA-e-11 (R-2). Z-S20 is OA-e-7 (R-4).
+  Z-W8-S1 is OA-e-1's R-5 criterion. CP-1 (row Z-W4-S1) still binds the cutover: under ruling I-3 the parent watch
+  STAYS, so no cell removes it.
+
+## R2.4 GATES, THE CUTOVER AND THE CLOSE RUN
+
+- **G-ACCT, G-AUTH** (Andrew; runbook Parts A-B through the G-ACCT handoff, `claude setup-token` and one relayed MFA):
+  preconditions re-confirmed MET @73e5968e67. They unblock `~12`, OA-e-6, and the close run.
+- **G-MOTO**: given. **G-SCOPE**: given, conditioned (R2.3).
+- **G-PUSH** (`0.0.0_AB_MSTR~Z`; Andrew's word GIVEN for the cutover window, @f8d1103a38, relayed when the window opens): pushes `opal_ai` DEV (E2, E4, E7's nested merges) and merges DEV
+  into PROD, at the cutover. Its CI run is FWD-13's green run (R-4).
+- **The cutover window (C1, as round 1 s.8):**
+  1. the nested branches merge into `opal_ai` DEV locally;
+  2. G-PUSH;
+  3. the parent halves of OA-t-1 and OA-t-3 merge, the gitlink is bumped, and the hookups land in ONE parent commit:
+     the `.claude/settings.json` fence line and the `.tools/ajb.ps1` BG launch line;
+  4. the launcher runs, prints `GATE: PASS`, and the agent is live as `Opal_Agent`;
+  5. the workspace seat's Teams duty stops in the same window;
+  6. the cutover record lists every catalog row declined under C11.
+- **The close run (the COO's one real run):** one live exchange with the named colleague (G-ASKER), graded against A1
+  (FWD-1). Andrew's G-ASKER answer at ~15:2xZ names Menachem, while runbook Part C names Alyssa Keith (portal-only grant
+  ACTIVE). Running A1 on Alyssa would narrow his word, so `1.0.0_SA_CTO~O` asked Andrew (msg 26208) with
+  the issuer's REC (Alyssa for A1 now, Menachem a follow-on). Until he answers, the colleague is a named PARAMETER of the
+  close run and is baked into no cell. One
+  un-admitted asker is refused. The launch gate's PASS arm and its negative arm run (A7, FWD-7). The artifact goes to
+  `deliverables/2.0.0_SA_COO~AI/round2/`. It needs OA-e-3 live, because without it the Analyst cannot call the asker
+  tool.
+- **Rule J:** a judgment criterion on OA-r-1: the CVO reads the three negative-arm transcripts and the group-chat case,
+  and judges whether each answer's scope is the asker's own. A second one on OA-t-1: the CVO judges that the close run's
+  reply has the figure, date, source and coverage the portal shows for that date. Both are graded at L9 and never
+  self-graded.
+
+## R2.5 BATTERY DISPOSITION
+
+- `comp-adversary`: DECLARED-NOT-APPLICABLE. E1's three negative arms and rule J's judgment ARE the adversary read of
+  the one security surface this round changes.
+- `comp-schedule`: DECLARED-NOT-APPLICABLE. No cell arms a cron, alarm, monitor or cadence. E5 runs the existing watch
+  a bounded number of polls.
+- `comp-iam`: DECLARED-NOT-APPLICABLE, with the reason measured. OA-e-1 reads Graph chat members through the
+  concierge's EXISTING delegated token. OA-e-10 reads the audit trail through the host's EXISTING role. No cell writes
+  IAM. A needed action the role lacks is a BLOCKING row, never a grant here.
+
+## R2.6 RULE 24 FOUR-POSTULATE RECORD
+
+(i) MECE: the domain is the analysis's section-4 list, items 0-11, with the analysis's amendments (E1+R-5, E7+R-4,
+E11). The first release cell splits out of E1 because rule J places the judgment on E1's RELEASE. Every item maps to a
+cell; E6, E8, E9 and E10 are their FIRST cells only, as the analysis words them. (ii) SAME GRAIN: one adapter, release,
+measurement or census per cell. (iii) INTENT: enrich the FWD-1 thread and close its rows. The operator controls
+(FWD-8, NFRA_MCPORTAL) and the index (FWD-4, FWD-12, NFRA_MCPINDEX) are out, per the analysis's section 5. (iv) STATE,
+what each remedy does NOT move:
+- OA-e-1 does not change any other tool's gate, a policy record, or the legacy path of existing tools.
+- OA-e-2 does not change G1-G3, any other G4 line, the hard lines, or the operator's upload (the client-bound row stays).
+- OA-e-3 does not add any tool other than `opal_asker_query`.
+- OA-e-7 does not waive a ruff rule or change portal_lookup's behaviour.
+- OA-e-10 does not release, and it keeps the OG-e-2 guard.
+- OA-e-11 does not change a lane verdict in the parent repository.
+- The measurement cells change nothing.
+
+## R2.7 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. The asker's tenant resolution, the group-member read and the `/login` audit are measured by their
+   cells.
+2. The reply binding is server-side and holds within the window. It cannot stop an agent from repeating, after the
+   window closes, text it already holds. That residual is stated, not solved.
+3. E6's server move and history cap, E8's remedies, E9's move and E10's release are later cells.
