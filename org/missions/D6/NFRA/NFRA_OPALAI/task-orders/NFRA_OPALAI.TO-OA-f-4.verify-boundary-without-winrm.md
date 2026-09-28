@@ -113,7 +113,7 @@ f4.AC3 (amendment 1) base: FAIL as expected at fd8ab8a57f and at the defective 6
 no BOUNDARY line, 0 verdict files). Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii)
 placeholders (NONE), so no limb graded this amendment.
 
-<status>in_progress -- REOPENED by the issuer 2026-09-28 ~23:5xZ (amendment 1, CTO ruling msg 26294): the real G-ACCT step-3 run read ERROR because the arms ran a quoted string; -EncodedCommand + a -SelfTestAsCurrentUser seam + AC3. Same slot ~19, same face. The worker branch had flipped it complete @46869f3ea2. Was: complete.</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~19</slot>
 <fabric>site-z</fabric>
