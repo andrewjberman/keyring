@@ -1775,6 +1775,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "No task order in this project names which securities/alias source is the CURRENT one to build or re-derive gold against; five prior ACs across ~4/~5/~6/~13 cite the same static ~4/securities.json path by name as a working example invocation.",
       "world_is": "The static file is 49/55 security_keys short of the universe the newest landed gold snapshot actually covers, and the module built to replace it (`universe_securities.py`, 2b) is live and correctly resolves all 55. The static path is not wrong to have existed, but citing it as if it were still the build's current input would be.",
       "notes": "Not a code defect; no producer changed. Filed so a later cell does not copy the ~4/securities.json invocation shape out of the prior ACs' examples and silently narrow its own measurement to 6 of 55 securities. DISARM (COO's): either retire/relabel the ~4/securities.json file's citations as historical-only, or land a committed securities.json built from a pinned `universe_securities.build()` run so later cells have one CURRENT, reproducible alias source to cite instead of a live call each time."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W31-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~31",
+      "surfaced_at": "2026-09-28T21:00:00Z",
+      "one_line": "The two timeline routes are now handled by scoped_amgt.handler but are NOT mounted at the gateway: infra/aws/terraform/harvest/scoped-amgt-api.tf has 0 occurrences of `timeline`, so a browser call still 404s at API Gateway until a terraform cell adds them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED this cell: `cat infra/aws/terraform/harvest/scoped-amgt-api.tf | grep -c timeline` -> 0 (worktree wk-hvst-r11b-31 cut from CLOUD @943f0910c1). The mount list `scoped_amgt_routes` there is the 16-route set `scoped_amgt_route_table()` returns.",
+          "lib/research/api/tests/test_scoped_amgt_mount.py diffs that terraform list against `scoped_amgt_route_table()` in BOTH directions, so adding the two timeline routes to the table would turn that test red; this cell's <paths> do not reach infra/. I therefore declared the two routes as data in `scoped_amgt.TIMELINE_ROUTES` and left `scoped_amgt_route_table()` at 16, and a test pins that they are absent from the mounted table.",
+          "MEASURED in-process: `scoped_amgt.handler` serves GET /api/scoped/amgt/security/992_HK_Equity/timeline (HTTP 200, 267 dense days, 4 events) and .../timeline/day/2026-05-22 (HTTP 200, 3 articles) from real landed gold (AC1). Handled is not mounted: the gateway route set is single-segment with no {proxy+}, and `timeline/day/{date}` is also a new path shape (two extra segments after the key)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Task order HVST-z-0 section 1: 'You are wiring the missing path. The panel calls GET .../timeline and GET .../timeline/day/<date>', with the order's paths limited to scoped_amgt.py, its tests and this project's deliverables/surprise channel.",
+      "world_is": "The handler half of the path is wired and proven against real gold; the gateway half (terraform route_key entries, and the test_scoped_amgt_mount.py denominator that must move with them) is untouched, so the panel still cannot reach either route from a browser. `day/{date}` needs a route_key with two segments after {security_key}.",
+      "notes": "DISARM IS THE ISSUER'S: cut a terraform cell that adds both route_keys to scoped-amgt-api.tf AND moves scoped_amgt_route_table() from 16 to 18 (fold TIMELINE_ROUTES into it) in one commit, so the mount test stays green in both directions. Deploy needs Andrew's word per the order's section 5. Until then FWD-5's walk cannot run."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W31-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~31",
+      "surfaced_at": "2026-09-28T21:00:00Z",
+      "one_line": "The day route takes ~15.8s per call from this box because the headline join scans EVERY source's whole silver `article` table (publication_gold._iter_latest_articles) and the range route ~5.4s; against the 29s API Gateway ceiling this leaves little headroom as silver grows.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED this cell, in-process from the site-Z box: handler GET .../security/992_HK_Equity/timeline -> HTTP 200 in 5.4s; GET .../timeline/day/2026-05-22 -> HTTP 200 in 15.8s. `publication_gold._headline_by_article_key()` alone read 120 article rows in 15.6s (measured separately).",
+          "The 29s figure is `timeout = 29` / `timeout_milliseconds = 29000` in infra/aws/terraform/harvest/scoped-amgt-api.tf (lines 266 and 358), the API Gateway HTTP API integration ceiling that file's own comment cites.",
+          "The loader uses the producer's own reader for the join because the silver `article` table is the only place headline and published_precision live (publication_gold._headline_by_article_key docstring). The newest-snapshot gold reads are one part each; the cost is the silver scan, which is `store.silver_latest` reading every part-*.parquet for every publisher. In-region Lambda-to-S3 will be faster than this box, which is UNMEASURED here."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Task order HVST-z-0 section 2: the day route delegates to timeline_api with an `article_loader`, and says nothing about latency.",
+      "world_is": "The day route is correct and serves 3 of 3 real articles for the busiest Lenovo day, but every call rescans all silver articles; from this box that is 15.8s of a 29s ceiling.",
+      "notes": "No producer or timeline_api change was made (out of paths). DISARM (issuer's): once the terraform mount cell runs, time the day route from the deployed Lambda; if it approaches the ceiling, cut a cell that reads only the silver parts of the publishers named on the day's mention rows, or lands headline and published_precision onto the mention gold row at build time."
     }
   ]
 ```
