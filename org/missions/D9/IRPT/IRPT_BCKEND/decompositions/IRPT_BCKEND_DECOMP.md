@@ -1122,3 +1122,20 @@ fanout: 1 of 1 chains, cap 8.
 moves every firm channel to the holdings basis in ONE consolidated gold shape. `IB-er-191` is cancelled with that
 pointer; its 49F work is re-cut as a slice of the consolidated gold after the CRO brief (L1) and the CTO L4 addendum.
 The deployed NEW-01 page guard (adapter hcZpXDDo) and its reopen remedy (`IB-pr-194`) stay.
+
+
+## 14. WORKSTREAM ~E, ROUND 1 (2026-09-28 ~23:5xZ, issuer 2.0.0_SA_COO~P, on PRD ADDENDUM v0.19 @65f3dde719 rulings 10-11)
+
+The holdings-basis gold thread (spine v3.16: round 1 builds the thread). One cell, one order, to the DS seat
+0.4.0_DS_ClientPlatform~E. Its downstream hops (the adapter reading the gold, the page, the PDF) are ~P's own later
+cells, cut once this gold exists.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-201` | FWD-3 thread, hop 1: one invested 49F account (0010498003), YTD, silver -> holdings-basis gold | WORLD (new gold prefixes; no reader switched, nothing served moves) | none | E1 |
+
+**IB-er-201.** The source declaration as data (ruling 1), the gold script writing `holdings_performance_daily` and
+its manifest at the builder addresses (ruling 9), the method of call 3 (rulings 2-5), and an ad-hoc QA run for the
+thread account over the YTD trading days. The schedule, the other two firms and the adapter switch are later rounds.
+
+fanout: 1 of 1 chains, cap 8.
