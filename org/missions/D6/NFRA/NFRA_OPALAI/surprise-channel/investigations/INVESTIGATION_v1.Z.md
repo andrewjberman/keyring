@@ -1348,6 +1348,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "OA-e-10 bound 3: no token, cache content, secret or email is printed, committed or put in the census.",
   "world_is": "The worker's SSM script derived the two cache file names from .env and, in an extra diagnostic line, echoed each key's first 4 value characters. Nothing was written to the repo, the census or this row. The prefixes sit in the worker's session output only; a 4-character prefix of a static bearer is not usable as a credential."
+},
+{
+  "id": "NFRA_OPALAI-Z-W16-S4",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+  "surfaced_at": "2026-09-28T22:20Z",
+  "one_line": "e10.AC2.sh cannot pass on this Windows device: it greps pytest -rA lines for 'PASSED tests/test_login_retire.py::<name>' with a forward slash, but pytest here prints 'PASSED tests\test_login_retire.py::<name>' with a backslash. The tests pass; the named-test count reads 0.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/e10.AC2.sh at HEAD 8ed37b3266 -> 'branch=NARROW named=test_login_narrowed passed=0 failed/errored=0; summary: 2 passed' RESULT: FAIL exit=1.",
+      "python -m pytest tests/test_login_retire.py -rA (cat -A) -> 'PASSED tests\test_login_retire.py::test_login_narrowed$' and '...::test_login_fails_closed_when_empty$'; e10.AC2.sh grep pattern is ^PASSED tests/test_login_retire.py::$want( |$)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OA-e-10 AC2: the test named for the census's branch passed>=1, failed/errored=0, read from e10.AC2.sh.",
+  "world_is": "With pytest printing OS-native path separators, the check's forward-slash pattern matches nothing on this device, so named=0 whatever the tests do (the same script would pass on a POSIX device). The worker did not edit the check or the invocation, and could not change the separator inside its <paths>. Disarm owner is the issuer: the pattern needs to accept either separator, e.g. tests[/\\]test_login_retire.py. The other two OA-e-10 criteria pass and the mutant control fired (guard removed -> both tests fail)."
 }
 ]
 ```
