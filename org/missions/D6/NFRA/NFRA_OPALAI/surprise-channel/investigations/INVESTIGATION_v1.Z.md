@@ -1439,6 +1439,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Order OA-e-1 section 1: only tests/test_asker_scope.py must keep passing; tests/test_portal_grant.py is not named.",
     "world_is": "Both refusals are the specified behaviour (a message with no parseable createdDateTime is refused; a non-Opal tenant is refused). Those two tests pass a foreign tenant and an undated message on purpose or by omission. Fixing them takes a tenant equal to the configured TENANT_ID and a recent createdDateTime in that file's _graph_call, in a cell whose paths include it. OA-r-1 cherry-picks this change, so those two tests will be red on CLOUD after the drain until then.",
     "notes": "Not ARMED: the gateway does not run tests at serve time."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-28T23:20Z",
+    "one_line": "OA-r-1 step 0's tie-break ('keep candidates whose .env template writes the live key set; if more than one survives, the base is the newest') picks the WRONG base here. Two candidates survive the four-file md5 and the .env key-set test: 6a98a0553a and rel-nfra-mcpindex-r3-gateway (2dedae93df, a descendant of 6a98a0553a). Their four named files and their 27-key .env sets are identical; they differ in 3 other files and in the VALUE of ENABLED_INTEGRATIONS. The live host's other files match 6a98a0553a and do not match 2dedae93df.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM (i-07dccb1615503ac99, status Success, 2026-09-28 ~23:1xZ) md5 of /opt/opal-gateway/app/{asker_scope,tools,identity_scope,data_entitlement}.py = f21b86141a7145fb70b5f77d37774d85, 6c888e51a3c652dfe89c74654fde39e3, 442c9755d14aa1ffbbccf5bf0fe73656, 964504343c24d412a266da74e7108e69. These four equal 6a98a0553a, fe94911257, rel-nfra-oplgtw-sprint-owner (6a98a0553a) and rel-nfra-mcpindex-r3-gateway (2dedae93df); 12 rel-* refs (local and origin) and 2 pinned commits were compared.",
+        "Live .env key names (27, values never read) equal the deploy-to-ec2.sh line-197 key set at 6a98a0553a, 2dedae93df and rel-nfra-oplgtw-sprint-owner; fe94911257 and rel-nfra-oplgtw-email-deny write 26 (no SPRINT_VIEW_ALLOWED_EMAILS) and are excluded. Read with .scratch/keys.py against git show <c>:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh.",
+        "git diff --stat 6a98a0553a rel-nfra-mcpindex-r3-gateway -- infra/aws/ec2/opal-gateway: 5 files, app/integrations/opal_discover/integration.py, app/integrations/portal_index/integration.py, app/refs/DATA_CATALOG.yaml, deploy-to-ec2.sh (ENABLED_INTEGRATIONS value only), tests/test_opal_discover.py.",
+        "SSM md5 of the three app files that differ: live 9f80030ee9085a3e17d9944aead2f4c8 (opal_discover/integration.py), 41c6b834fd60a7c4996012e63fd482b5 (portal_index/integration.py), a19baa4c4600614bfa49ad7df950d87d (DATA_CATALOG.yaml) = all three at 6a98a0553a; at 2dedae93df they are 33d6b06075f92fb97bdc3af1894cef06, a4c28bef2a6d18c97a3a13e9c2571d87, bfffd6254d290303023687c5cdc0c9ad.",
+        "infra/aws/ec2/EC2_MANIFEST.json at 90cbe69b07: services.opal-gateway.deployed_commit 6a98a0553a0a01c7e1acc6aea2b2ce5b82fc0f9b, deployed_at 2026-09-27T22:17:33Z."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-r-1 step 0 (AMENDED, row Z-S38): among candidates whose app files and .env key set match the host, 'the base is the newest, and you name every survivor'.",
+    "world_is": "Applying 'newest' literally gives 2dedae93df, a release the host is not running (three of its files are not on the host). Building the release on it would ship the MX-r-4 opal_discover/portal_index changes and an ENABLED_INTEGRATIONS value change beside OA-e-1. The worker resolved the base as 6a98a0553a on the content of three further files, an addition to the four the order names, and reports both survivors. The order's tie-break should say to break a tie of survivors by the files in which they differ.",
+    "notes": "Not ARMED for this order once the base is 6a98a0553a. The same tie-break in another cell's release order would pick the newest survivor whether or not the host runs it."
   }
 ]
 ```
