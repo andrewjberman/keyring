@@ -129,7 +129,7 @@ read names no file). `<paths>` gains that file, and section 1/2's text is correc
 refusal (Z-W15-S2) was the validator's GIT_DIR census, fixed @fd0aa6ba57 and cherry-picked onto this branch. Gate limb:
 to-pipeline-gate grades a MODIFIED order only on GATE (viii) placeholders (NONE here), so no limb graded this amendment.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
