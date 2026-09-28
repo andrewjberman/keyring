@@ -10875,3 +10875,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Out of this worker's bounds to fix (paths grant does not reach IAM policy beyond the three READS statements the signed request covered; the WORLD-act bound admits only 'apply the signed one-line grant ... nothing else'). AC2 and AC3 (amendment 1's Success-id check) are graded FAIL as measured. DISARM: (a) determine whether PublishOwnHoldings needs s3:GetObjectVersion for its own read-after-write check, or whether publication.py's verification should read by ETag/no-version instead, and get a new never-widen half signed for whichever; (b) isolate 49financial's silent hang (retry storm, network stall, or a genuinely larger snapshot needing more than 3600s) before any further fire."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S185",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-28T22:45:00Z",
+  "one_line": "AD-14 (Andrew-direct call 1c, record ANDREW_DIRECT_20260928_222xZ_OPEN_CALLS_1_2_APPROVED_3_HOLDINGS_BASED_PERFORMANCE.md): the COT dependency behind 'temporarily unavailable' (DEPENDENCY_UNAVAILABLE) is NAMED: every fresh Cottonwood Performance window needs a server-approved ONE-USE Black Diamond performance plan (Andrew's per-use vendor word, armed on the adapter), and none is armed, so the adapter refuses VendorEgressRefused before any vendor call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/irpt-performance-adapter 2026-09-28 13:30-22:30Z, irpt_retained_phases + irpt_internal: 154 computes refused:VendorEgressRefused 'matching current server-approved performance use required' (authorization.py:90); 49 refused:InflectionMappingRefused (INF: 'account not individually addressable: its Orion household holds 4 accounts'); 36 refused:WindowNotRuled (49F 3Y / Since inception); 44 reopens; 2 fresh",
+      "the adapter's live environment (read ~22:4xZ) carries neither IRPT_PERFORMANCE_APPROVED_PLAN nor IRPT_PERF_VENDOR_EGRESS_AUTHORIZED: no one-use plan is armed (infra/aws/terraform/investor-reporting/performance/lambda.tf:51-53, retained.tf:10 default null)",
+      "authorization.py:60-101: a fresh vendor-path compute is admitted only when the request matches the armed plan exactly (firm, account, window, mapping revision, vendor ids, request digest) and a PERFORMANCE_USE# claim is written once; otherwise VendorEgressRefused",
+      "the one COT window that answers is the retained RPT-12b885b8 (actual 07-21..09-21, rows S169/S170), computed under a one-use plan on 09-27 and reopened since; every other COT window is fresh and refused",
+      "the master guidance brief AD-14 (docs/briefs/irpt-master-guidance-brief-20260928.md): the CRO walk 20260928T174953Z counted COT DEPENDENCY_UNAVAILABLE 53 times"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A window that cannot answer names its dependency in one plain sentence (AD-14 acceptance); Cottonwood Performance answers for its clients' windows.",
+  "world_is": "Cottonwood Performance is gated per request on a one-use vendor plan by design (vendor egress needs Andrew's per-use word); with none armed, every fresh COT window answers DEPENDENCY_UNAVAILABLE and the page says only 'temporarily unavailable'.",
+  "notes": "This names the dependency; it fixes nothing (AD-14: name before any fix). The fix is Andrew's scope question already open in the same record's routing: whether the holdings-based basis of call 3 (end-of-day holdings, weight-pro-rated security returns, no flow logic) also replaces the VENDOR-calculated performance for Cottonwood (Black Diamond) and Inflection (Orion). If yes, COT stops needing a per-use vendor plan; if no, each COT window needs its own per-use word and plan. The page sentence for this refusal is ~D's (a plain 'this firm's performance needs an approved data pull' line)."
+}
+```
