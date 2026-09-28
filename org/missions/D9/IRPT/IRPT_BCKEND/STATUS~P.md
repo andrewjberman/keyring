@@ -16,7 +16,7 @@ re-sync each worktree on DONE.
 | irpt-export-render | `Ulim/gmf..`: async submit, withheld prose with client copy, the async leg bound to accept, the reopen-rule authorizer | irpt-export-async-submit-20260927 (A1: arm 3 re-runs) |
 | irpt-ycharts-generate | **`ykJltfTd..`** since 22:33:55Z (catalogue v2 + ~M's consumer; comparisons still refused, since no GRANT) | irpt-generate-resident-catv2-static-20260927 CLOSED |
 | Resident | **`/opt/irpt-resident/fe64236bbb-st`** since 22:46:12Z (the Static-only tolerance + v2 + consumer); lt kept for rollback | same, CLOSED |
-| irpt-status | **`5fSyChId..`** since 00:02:55Z: the template status dates + HEAD served.py. Cold start proven; the ordinary status read is equal before and after. HyEyoJ67 failed at cold start and was rolled back at 23:15:52Z | irpt-status-dates-rebuild2-20260927 (A1 = K10) |
+| irpt-status | **`bMMJ/bQ+5..`** (rolled back 00:36:31Z). Rebuild 1 (HyEyoJ67) and rebuild 2 (5fSyChId) both failed: cold start, then refusals turned into 500s by a pin-skewed errors.py plus a missing original_holdings grant. Rebuild 3's shape is asked of the CTO | irpt-status-dates-rebuild(2)-* CLOSED as failed deploys |
 | irpt-directory-search | `o1TXq5PH..` | irpt-uir07-search-rank-20260926 CLOSED |
 | Backend branch | `irpt-smoke-p-backend-20260923` @5c0185fee2 (not pushed) |  |
 | Publish worktree | `irpt-p-publish-20260923` @8aba435a00 (not pushed) |  |
@@ -47,20 +47,20 @@ None open. Windows 18 and 19 are CLOSED (@614594fff7, @6d6e5984b2).
 
 ## Next-list (in order)
 
-1. DONE: irpt-status rebuild 2 served 00:02:55Z (D1 closed).
-2. **After 05:00Z, a new K8 window** on all three pieces:
-   - the adapter F0bYtOfB (served);
-   - S27's RUNNING receipt (backend 5c0185fee2: own packet, built-zip smoke, apply);
-   - ~D's page pin (the S27 naming fix, TO-IV-e-78 against R11).
-   Plus K10 on the status rebuild.
-3. **The GRANT release** (generate + resident):
-   - ~Y's re-cut GRANT (6096ee740b) and foreign-firm check (c1fd6c5e52);
-   - ~M's consumer d7c97910d9 (as 15b9f85eb3);
-   - the get_catalogue wiring (2e3d50caac).
-   All are committed in the backend; build, census, smoke, packet and halves remain. Comparison and Multi-Comp ACCEPT
-   on these (~Y 102194).
-4. **UIC-06** (CTO 102105): an unanswerable window says why in words, never a code.
-5. **Next round's enrichment** (CTO 102041): filter each causal headline before composition.
+Post-freeze (05:00Z on), each under both halves, with live before/after reads, a cold start and a built-zip census plus
+smoke:
+1. **S27, the RUNNING receipt** (packet c0b90ea2): both halves SIGNED (CTO 102263, CRO 102272/102279).
+2. **The Comparison GRANT release** (packet b6c264b3): the CTO half is SIGNED (102286: no false foreign-firm refusal,
+   ~Y's arm); the CRO half is pending. ~Y's composition arms run on the built zip BIEsyaNn and on st2.
+3. **irpt-status rebuild 3:** the shape is asked (my rec: bMMJ + submission.py + prospect_dates.py + the original_holdings
+   grant). Gates: ~Y's zip_module_census, the owner-refusal smoke, role simulation, and REQ-67 READY.
+4. **A new K8 + K10 window** on all of the above plus ~D's S27 page pin (TO-IV-e-78).
+5. UIC-06; next round's per-headline causal filter.
+
+**Tonight's lessons, now gates:**
+- every zip gets `flat_zip_module_census.py` (shared-package pin skew) plus ~Y's census and smoke BEFORE apply;
+- the before-read is taken LIVE before the apply;
+- K1-CRED is removed by `credoff`.
 
 ## Parked
 
