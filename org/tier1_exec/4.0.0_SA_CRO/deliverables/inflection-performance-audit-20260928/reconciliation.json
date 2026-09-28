@@ -1,0 +1,1430 @@
+{
+  "method": "Compound daily percent returns; compare published rounded YTD cells.",
+  "snapshots": [
+    {
+      "as_of": "2026-09-21",
+      "benchmark_generated_at": "2026-09-22T11:08:34Z",
+      "positioning_generated_at": "2026-09-22T11:08:36Z",
+      "benchmark_model_ytd_checks": [
+        {
+          "code": "UST",
+          "calculated_pct": 1.684119973091991,
+          "published_pct": 1.68,
+          "matches_2dp": true
+        },
+        {
+          "code": "ST",
+          "calculated_pct": 1.3633333852156149,
+          "published_pct": 1.36,
+          "matches_2dp": true
+        },
+        {
+          "code": "INT",
+          "calculated_pct": 7.117340633592284,
+          "published_pct": 7.12,
+          "matches_2dp": true
+        },
+        {
+          "code": "LT",
+          "calculated_pct": 9.164534495533406,
+          "published_pct": 9.16,
+          "matches_2dp": true
+        },
+        {
+          "code": "ULT",
+          "calculated_pct": 9.611127925990592,
+          "published_pct": 9.61,
+          "matches_2dp": true
+        }
+      ],
+      "holding_ytd_checks": [
+        {
+          "model": "UST",
+          "ticker": "VGSH",
+          "calculated_pct": 0.5657286747946744,
+          "published_pct": 0.57,
+          "price_only_pct": -1.8729780350757341,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "VCSH",
+          "calculated_pct": 0.44722569646213906,
+          "published_pct": 0.45,
+          "price_only_pct": -2.48338141226635,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "VUSB",
+          "calculated_pct": 2.2965152680133327,
+          "published_pct": 2.3,
+          "price_only_pct": -0.5317014446227897,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "MINT",
+          "calculated_pct": 3.052293672959494,
+          "published_pct": 3.05,
+          "price_only_pct": 0.34881403229030106,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "OBIL",
+          "calculated_pct": 1.9432280510205624,
+          "published_pct": 1.94,
+          "price_only_pct": -0.4980575754557348,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "VNLA",
+          "calculated_pct": 2.37486160045135,
+          "published_pct": 2.37,
+          "price_only_pct": -0.7529507529510093,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "DFSD",
+          "calculated_pct": 0.2601544303963088,
+          "published_pct": 0.26,
+          "price_only_pct": -2.148070907195132,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "SPHY",
+          "calculated_pct": 1.9899385886148035,
+          "published_pct": 1.99,
+          "price_only_pct": -2.703844528939514,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "XBIL",
+          "calculated_pct": 2.4556262389651584,
+          "published_pct": 2.46,
+          "price_only_pct": 0.019972039145144116,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "JAAA",
+          "calculated_pct": 3.3844321764259444,
+          "published_pct": 3.38,
+          "price_only_pct": 0.19770660340048263,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "JPST",
+          "calculated_pct": 2.294208813356202,
+          "published_pct": 2.29,
+          "price_only_pct": -0.43486855109747813,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "TBIL",
+          "calculated_pct": 2.5906395703917173,
+          "published_pct": 2.59,
+          "price_only_pct": 0.16038492381738045,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "CLIP",
+          "calculated_pct": 2.6268611021469157,
+          "published_pct": 2.63,
+          "price_only_pct": 0.1498351813005172,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "ICSH",
+          "calculated_pct": 2.3150282041158876,
+          "published_pct": 2.32,
+          "price_only_pct": -0.3954132068011318,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "BIV",
+          "calculated_pct": -1.9553399544087968,
+          "published_pct": -1.96,
+          "price_only_pct": -4.738058551617863,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "VGSH",
+          "calculated_pct": 0.5657286747946744,
+          "published_pct": 0.57,
+          "price_only_pct": -1.8729780350757341,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "DFCF",
+          "calculated_pct": -1.1699360213620502,
+          "published_pct": -1.17,
+          "price_only_pct": -3.571428571428592,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "UTWO",
+          "calculated_pct": 0.29017893740901357,
+          "published_pct": 0.29,
+          "price_only_pct": -2.1208689385360358,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "DIVZ",
+          "calculated_pct": 4.684821877499901,
+          "published_pct": 4.68,
+          "price_only_pct": 2.8943177974143586,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "JAAA",
+          "calculated_pct": 3.3844321764259444,
+          "published_pct": 3.38,
+          "price_only_pct": 0.19770660340048263,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "OBIL",
+          "calculated_pct": 1.9432280510205624,
+          "published_pct": 1.94,
+          "price_only_pct": -0.4980575754557348,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "SPHY",
+          "calculated_pct": 1.9899385886148035,
+          "published_pct": 1.99,
+          "price_only_pct": -2.703844528939514,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "VCSH",
+          "calculated_pct": 0.44722569646213906,
+          "published_pct": 0.45,
+          "price_only_pct": -2.48338141226635,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "IDVZ",
+          "calculated_pct": 9.461020182545754,
+          "published_pct": 9.46,
+          "price_only_pct": 6.982378854625226,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "VNLA",
+          "calculated_pct": 2.37486160045135,
+          "published_pct": 2.37,
+          "price_only_pct": -0.7529507529510093,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "PFDE",
+          "calculated_pct": 15.405972122119094,
+          "published_pct": 15.41,
+          "price_only_pct": 15.17033826892944,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "VEA",
+          "calculated_pct": 16.833536698958085,
+          "published_pct": 16.83,
+          "price_only_pct": 15.735553065471342,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "CLIP",
+          "calculated_pct": 2.6268611021469157,
+          "published_pct": 2.63,
+          "price_only_pct": 0.1498351813005172,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "ICSH",
+          "calculated_pct": 2.3150282041158876,
+          "published_pct": 2.32,
+          "price_only_pct": -0.3954132068011318,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "IEFA",
+          "calculated_pct": 12.532919238084816,
+          "published_pct": 12.53,
+          "price_only_pct": 10.731052984574085,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "DIVZ",
+          "calculated_pct": 4.684821877499901,
+          "published_pct": 4.68,
+          "price_only_pct": 2.8943177974143586,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "SPYM",
+          "calculated_pct": 14.375149933295962,
+          "published_pct": 14.38,
+          "price_only_pct": 13.475442533034165,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "IDVZ",
+          "calculated_pct": 9.461020182545754,
+          "published_pct": 9.46,
+          "price_only_pct": 6.982378854625226,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "BIV",
+          "calculated_pct": -1.9553399544087968,
+          "published_pct": -1.96,
+          "price_only_pct": -4.738058551617863,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "PFDE",
+          "calculated_pct": 15.405972122119094,
+          "published_pct": 15.41,
+          "price_only_pct": 15.17033826892944,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "CLIP",
+          "calculated_pct": 2.6268611021469157,
+          "published_pct": 2.63,
+          "price_only_pct": 0.1498351813005172,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "JAAA",
+          "calculated_pct": 3.3844321764259444,
+          "published_pct": 3.38,
+          "price_only_pct": 0.19770660340048263,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "PFOE",
+          "calculated_pct": -9.749284285454785,
+          "published_pct": -9.75,
+          "price_only_pct": -9.947520041085244,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "DFCF",
+          "calculated_pct": -1.1699360213620502,
+          "published_pct": -1.17,
+          "price_only_pct": -3.571428571428592,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "VCSH",
+          "calculated_pct": 0.44722569646213906,
+          "published_pct": 0.45,
+          "price_only_pct": -2.48338141226635,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "SPHY",
+          "calculated_pct": 1.9899385886148035,
+          "published_pct": 1.99,
+          "price_only_pct": -2.703844528939514,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "PCHI",
+          "calculated_pct": 0.844474366668968,
+          "published_pct": 0.84,
+          "price_only_pct": -3.8696228008050726,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "VEA",
+          "calculated_pct": 16.833536698958085,
+          "published_pct": 16.83,
+          "price_only_pct": 15.735553065471342,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "VUG",
+          "calculated_pct": 12.19307961671927,
+          "published_pct": 12.19,
+          "price_only_pct": 11.94195055958669,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "IEMG",
+          "calculated_pct": 25.577622878525407,
+          "published_pct": 25.58,
+          "price_only_pct": 24.6057720916395,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "VXX",
+          "calculated_pct": -33.1693881765572,
+          "published_pct": -33.17,
+          "price_only_pct": -33.16962599168877,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "QQQ",
+          "calculated_pct": 21.10515239379116,
+          "published_pct": 21.11,
+          "price_only_pct": 20.699646758151523,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "ICSH",
+          "calculated_pct": 2.3150282041158876,
+          "published_pct": 2.32,
+          "price_only_pct": -0.3954132068011318,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "IEFA",
+          "calculated_pct": 12.532919238084816,
+          "published_pct": 12.53,
+          "price_only_pct": 10.731052984574085,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "DIVZ",
+          "calculated_pct": 4.684821877499901,
+          "published_pct": 4.68,
+          "price_only_pct": 2.8943177974143586,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "IDVZ",
+          "calculated_pct": 9.461020182545754,
+          "published_pct": 9.46,
+          "price_only_pct": 6.982378854625226,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "PFDE",
+          "calculated_pct": 15.405972122119094,
+          "published_pct": 15.41,
+          "price_only_pct": 15.17033826892944,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "SPYM",
+          "calculated_pct": 14.375149933295962,
+          "published_pct": 14.38,
+          "price_only_pct": 13.475442533034165,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "IJH",
+          "calculated_pct": 11.862191775875285,
+          "published_pct": 11.86,
+          "price_only_pct": 10.984848484848285,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "PFOE",
+          "calculated_pct": -9.749284285454785,
+          "published_pct": -9.75,
+          "price_only_pct": -9.947520041085244,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "SPHY",
+          "calculated_pct": 1.9899385886148035,
+          "published_pct": 1.99,
+          "price_only_pct": -2.703844528939514,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "CLIP",
+          "calculated_pct": 2.6268611021469157,
+          "published_pct": 2.63,
+          "price_only_pct": 0.1498351813005172,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "IEMG",
+          "calculated_pct": 25.577622878525407,
+          "published_pct": 25.58,
+          "price_only_pct": 24.6057720916395,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "VUG",
+          "calculated_pct": 12.19307961671927,
+          "published_pct": 12.19,
+          "price_only_pct": 11.94195055958669,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "VEA",
+          "calculated_pct": 16.833536698958085,
+          "published_pct": 16.83,
+          "price_only_pct": 15.735553065471342,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "BIV",
+          "calculated_pct": -1.9553399544087968,
+          "published_pct": -1.96,
+          "price_only_pct": -4.738058551617863,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "VXX",
+          "calculated_pct": -33.1693881765572,
+          "published_pct": -33.17,
+          "price_only_pct": -33.16962599168877,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "QQQ",
+          "calculated_pct": 21.10515239379116,
+          "published_pct": 21.11,
+          "price_only_pct": 20.699646758151523,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "ICSH",
+          "calculated_pct": 2.3150282041158876,
+          "published_pct": 2.32,
+          "price_only_pct": -0.3954132068011318,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "IDVZ",
+          "calculated_pct": 9.461020182545754,
+          "published_pct": 9.46,
+          "price_only_pct": 6.982378854625226,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "IEFA",
+          "calculated_pct": 12.532919238084816,
+          "published_pct": 12.53,
+          "price_only_pct": 10.731052984574085,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "DIVZ",
+          "calculated_pct": 4.684821877499901,
+          "published_pct": 4.68,
+          "price_only_pct": 2.8943177974143586,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "PFDE",
+          "calculated_pct": 15.405972122119094,
+          "published_pct": 15.41,
+          "price_only_pct": 15.17033826892944,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "IJH",
+          "calculated_pct": 11.862191775875285,
+          "published_pct": 11.86,
+          "price_only_pct": 10.984848484848285,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "SPYM",
+          "calculated_pct": 14.375149933295962,
+          "published_pct": 14.38,
+          "price_only_pct": 13.475442533034165,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "PFOE",
+          "calculated_pct": -9.749284285454785,
+          "published_pct": -9.75,
+          "price_only_pct": -9.947520041085244,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "IEMG",
+          "calculated_pct": 25.577622878525407,
+          "published_pct": 25.58,
+          "price_only_pct": 24.6057720916395,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "VUG",
+          "calculated_pct": 12.19307961671927,
+          "published_pct": 12.19,
+          "price_only_pct": 11.94195055958669,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "CLIP",
+          "calculated_pct": 2.6268611021469157,
+          "published_pct": 2.63,
+          "price_only_pct": 0.1498351813005172,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "PCHI",
+          "calculated_pct": 0.844474366668968,
+          "published_pct": 0.84,
+          "price_only_pct": -3.8696228008050726,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "VEA",
+          "calculated_pct": 16.833536698958085,
+          "published_pct": 16.83,
+          "price_only_pct": 15.735553065471342,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "VXX",
+          "calculated_pct": -33.1693881765572,
+          "published_pct": -33.17,
+          "price_only_pct": -33.16962599168877,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "QQQ",
+          "calculated_pct": 21.10515239379116,
+          "published_pct": 21.11,
+          "price_only_pct": 20.699646758151523,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "ICSH",
+          "calculated_pct": 2.3150282041158876,
+          "published_pct": 2.32,
+          "price_only_pct": -0.3954132068011318,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "SPHY",
+          "calculated_pct": 1.9899385886148035,
+          "published_pct": 1.99,
+          "price_only_pct": -2.703844528939514,
+          "matches_2dp": true
+        }
+      ],
+      "holding_checks_total": 80,
+      "holding_checks_matched": 80,
+      "ust_characteristics": {
+        "yield": 4.34,
+        "cost": 0.133,
+        "duration": 1.49,
+        "beta": null
+      },
+      "ust_weighted_yield_pct": 4.344532722415863,
+      "ust_weighted_duration_years_using_generator_denominator": 1.4936431491781939,
+      "ust_missing_yield": [],
+      "ust_missing_duration": [
+        "JAAA"
+      ],
+      "ust_missing_duration_weight": 0.0464,
+      "ust_model_returns_weighted_ytd_pct": 1.707203392295198,
+      "ust_model_returns_stored_ytd_pct": 1.707203392295198,
+      "ust_model_returns_daily_max_abs_reconstruction_error_pct": 0.0,
+      "ust_same_weights_price_only_diagnostic_pct": -1.1095206865581297,
+      "ust_diagnostic_missing_active_prices": 0,
+      "ust_model_returns_minus_benchmark_source_bps": 2.3083419203207,
+      "net_toggle_business_days": 188,
+      "net_toggle_ytd_fee_percentage_points": 0.2685714285714285,
+      "net_toggle_ust_ytd_pct": 1.41,
+      "fdrxx_present_in_etf_returns": false
+    },
+    {
+      "as_of": "2026-09-25",
+      "benchmark_generated_at": "2026-09-26T11:06:29Z",
+      "positioning_generated_at": "2026-09-26T11:06:32Z",
+      "benchmark_model_ytd_checks": [
+        {
+          "code": "UST",
+          "calculated_pct": 1.5108501229345705,
+          "published_pct": 1.51,
+          "matches_2dp": true
+        },
+        {
+          "code": "ST",
+          "calculated_pct": 0.7799396166582762,
+          "published_pct": 0.78,
+          "matches_2dp": true
+        },
+        {
+          "code": "INT",
+          "calculated_pct": 6.3800311293712,
+          "published_pct": 6.38,
+          "matches_2dp": true
+        },
+        {
+          "code": "LT",
+          "calculated_pct": 8.38751486055147,
+          "published_pct": 8.39,
+          "matches_2dp": true
+        },
+        {
+          "code": "ULT",
+          "calculated_pct": 8.841212489741945,
+          "published_pct": 8.84,
+          "matches_2dp": true
+        }
+      ],
+      "holding_ytd_checks": [
+        {
+          "model": "UST",
+          "ticker": "VGSH",
+          "calculated_pct": 0.49583433700344237,
+          "published_pct": 0.5,
+          "price_only_pct": -1.9410863272603218,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "VCSH",
+          "calculated_pct": -0.004932374507016224,
+          "published_pct": -0.0,
+          "price_only_pct": -2.9223629750407154,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "VUSB",
+          "calculated_pct": 2.22436492298983,
+          "published_pct": 2.22,
+          "price_only_pct": -0.6019261637239315,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "MINT",
+          "calculated_pct": 3.011282941051552,
+          "published_pct": 3.01,
+          "price_only_pct": 0.30894957145712887,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "OBIL",
+          "calculated_pct": 1.9637074044887015,
+          "published_pct": 1.96,
+          "price_only_pct": -0.47813527243750764,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "VNLA",
+          "calculated_pct": 2.353805899326855,
+          "published_pct": 2.35,
+          "price_only_pct": -0.7733007733010444,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "DFSD",
+          "calculated_pct": -0.137834484674626,
+          "published_pct": -0.14,
+          "price_only_pct": -2.8988529718458222,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "SPHY",
+          "calculated_pct": 0.8828235182874566,
+          "published_pct": 0.88,
+          "price_only_pct": -3.760033798056539,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "XBIL",
+          "calculated_pct": 2.5169961339123192,
+          "published_pct": 2.52,
+          "price_only_pct": 0.0798881565807319,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "JAAA",
+          "calculated_pct": 3.4251696549499,
+          "published_pct": 3.43,
+          "price_only_pct": 0.23724792408059692,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "JPST",
+          "calculated_pct": 2.294156303006578,
+          "published_pct": 2.29,
+          "price_only_pct": -0.434868551097467,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "TBIL",
+          "calculated_pct": 2.631671720952844,
+          "published_pct": 2.63,
+          "price_only_pct": 0.20048115477167006,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "CLIP",
+          "calculated_pct": 2.6780760006486437,
+          "published_pct": 2.68,
+          "price_only_pct": 0.19978024173403774,
+          "matches_2dp": true
+        },
+        {
+          "model": "UST",
+          "ticker": "ICSH",
+          "calculated_pct": 2.355638233485191,
+          "published_pct": 2.36,
+          "price_only_pct": -0.3558718861210397,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "BIV",
+          "calculated_pct": -3.0787117035699474,
+          "published_pct": -3.08,
+          "price_only_pct": -5.829481253210044,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "VGSH",
+          "calculated_pct": 0.49583433700344237,
+          "published_pct": 0.5,
+          "price_only_pct": -1.9410863272603218,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "DFCF",
+          "calculated_pct": -2.393182009774164,
+          "published_pct": -2.39,
+          "price_only_pct": -5.1456766917293395,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "UTWO",
+          "calculated_pct": 0.25852616789390215,
+          "published_pct": 0.26,
+          "price_only_pct": -2.151755379388476,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "DIVZ",
+          "calculated_pct": 3.6682266480478676,
+          "published_pct": 3.67,
+          "price_only_pct": 1.8951676113628357,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "JAAA",
+          "calculated_pct": 3.4251696549499,
+          "published_pct": 3.43,
+          "price_only_pct": 0.23724792408059692,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "OBIL",
+          "calculated_pct": 1.9637074044887015,
+          "published_pct": 1.96,
+          "price_only_pct": -0.47813527243750764,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "SPHY",
+          "calculated_pct": 0.8828235182874566,
+          "published_pct": 0.88,
+          "price_only_pct": -3.760033798056539,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "VCSH",
+          "calculated_pct": -0.004932374507016224,
+          "published_pct": -0.0,
+          "price_only_pct": -2.9223629750407154,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "IDVZ",
+          "calculated_pct": 8.345345147210681,
+          "published_pct": 8.35,
+          "price_only_pct": 5.89207048458118,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "VNLA",
+          "calculated_pct": 2.353805899326855,
+          "published_pct": 2.35,
+          "price_only_pct": -0.7733007733010444,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "PFDE",
+          "calculated_pct": 14.811685408607156,
+          "published_pct": 14.81,
+          "price_only_pct": 14.577264154728574,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "VEA",
+          "calculated_pct": 16.090148704706266,
+          "published_pct": 16.09,
+          "price_only_pct": 14.999199615815527,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "CLIP",
+          "calculated_pct": 2.6780760006486437,
+          "published_pct": 2.68,
+          "price_only_pct": 0.19978024173403774,
+          "matches_2dp": true
+        },
+        {
+          "model": "ST",
+          "ticker": "ICSH",
+          "calculated_pct": 2.355638233485191,
+          "published_pct": 2.36,
+          "price_only_pct": -0.3558718861210397,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "IEFA",
+          "calculated_pct": 11.851251847835309,
+          "published_pct": 11.85,
+          "price_only_pct": 10.060362173038184,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "DIVZ",
+          "calculated_pct": 3.6682266480478676,
+          "published_pct": 3.67,
+          "price_only_pct": 1.8951676113628357,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "SPYM",
+          "calculated_pct": 14.08615715521675,
+          "published_pct": 14.09,
+          "price_only_pct": 13.18873098977813,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "IDVZ",
+          "calculated_pct": 8.345345147210681,
+          "published_pct": 8.35,
+          "price_only_pct": 5.89207048458118,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "BIV",
+          "calculated_pct": -3.0787117035699474,
+          "published_pct": -3.08,
+          "price_only_pct": -5.829481253210044,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "PFDE",
+          "calculated_pct": 14.811685408607156,
+          "published_pct": 14.81,
+          "price_only_pct": 14.577264154728574,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "CLIP",
+          "calculated_pct": 2.6780760006486437,
+          "published_pct": 2.68,
+          "price_only_pct": 0.19978024173403774,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "JAAA",
+          "calculated_pct": 3.4251696549499,
+          "published_pct": 3.43,
+          "price_only_pct": 0.23724792408059692,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "PFOE",
+          "calculated_pct": -10.676877988494782,
+          "published_pct": -10.68,
+          "price_only_pct": -10.873141334788471,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "DFCF",
+          "calculated_pct": -2.393182009774164,
+          "published_pct": -2.39,
+          "price_only_pct": -5.1456766917293395,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "VCSH",
+          "calculated_pct": -0.004932374507016224,
+          "published_pct": -0.0,
+          "price_only_pct": -2.9223629750407154,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "SPHY",
+          "calculated_pct": 0.8828235182874566,
+          "published_pct": 0.88,
+          "price_only_pct": -3.760033798056539,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "PCHI",
+          "calculated_pct": -0.43566717008085565,
+          "published_pct": -0.44,
+          "price_only_pct": -5.090008442667915,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "VEA",
+          "calculated_pct": 16.090148704706266,
+          "published_pct": 16.09,
+          "price_only_pct": 14.999199615815527,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "VUG",
+          "calculated_pct": 12.094506769909152,
+          "published_pct": 12.09,
+          "price_only_pct": 11.843561677530356,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "IEMG",
+          "calculated_pct": 23.76352074984769,
+          "published_pct": 23.76,
+          "price_only_pct": 22.805712585540117,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "VXX",
+          "calculated_pct": -34.64277890600618,
+          "published_pct": -34.64,
+          "price_only_pct": -34.64299206649042,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "QQQ",
+          "calculated_pct": 21.60013435902517,
+          "published_pct": 21.6,
+          "price_only_pct": 21.192883072064706,
+          "matches_2dp": true
+        },
+        {
+          "model": "INT",
+          "ticker": "ICSH",
+          "calculated_pct": 2.355638233485191,
+          "published_pct": 2.36,
+          "price_only_pct": -0.3558718861210397,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "IEFA",
+          "calculated_pct": 11.851251847835309,
+          "published_pct": 11.85,
+          "price_only_pct": 10.060362173038184,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "DIVZ",
+          "calculated_pct": 3.6682266480478676,
+          "published_pct": 3.67,
+          "price_only_pct": 1.8951676113628357,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "IDVZ",
+          "calculated_pct": 8.345345147210681,
+          "published_pct": 8.35,
+          "price_only_pct": 5.89207048458118,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "PFDE",
+          "calculated_pct": 14.811685408607156,
+          "published_pct": 14.81,
+          "price_only_pct": 14.577264154728574,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "SPYM",
+          "calculated_pct": 14.08615715521675,
+          "published_pct": 14.09,
+          "price_only_pct": 13.18873098977813,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "IJH",
+          "calculated_pct": 11.465078106096849,
+          "published_pct": 11.47,
+          "price_only_pct": 10.590909090908895,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "PFOE",
+          "calculated_pct": -10.676877988494782,
+          "published_pct": -10.68,
+          "price_only_pct": -10.873141334788471,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "SPHY",
+          "calculated_pct": 0.8828235182874566,
+          "published_pct": 0.88,
+          "price_only_pct": -3.760033798056539,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "CLIP",
+          "calculated_pct": 2.6780760006486437,
+          "published_pct": 2.68,
+          "price_only_pct": 0.19978024173403774,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "IEMG",
+          "calculated_pct": 23.76352074984769,
+          "published_pct": 23.76,
+          "price_only_pct": 22.805712585540117,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "VUG",
+          "calculated_pct": 12.094506769909152,
+          "published_pct": 12.09,
+          "price_only_pct": 11.843561677530356,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "VEA",
+          "calculated_pct": 16.090148704706266,
+          "published_pct": 16.09,
+          "price_only_pct": 14.999199615815527,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "BIV",
+          "calculated_pct": -3.0787117035699474,
+          "published_pct": -3.08,
+          "price_only_pct": -5.829481253210044,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "VXX",
+          "calculated_pct": -34.64277890600618,
+          "published_pct": -34.64,
+          "price_only_pct": -34.64299206649042,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "QQQ",
+          "calculated_pct": 21.60013435902517,
+          "published_pct": 21.6,
+          "price_only_pct": 21.192883072064706,
+          "matches_2dp": true
+        },
+        {
+          "model": "LT",
+          "ticker": "ICSH",
+          "calculated_pct": 2.355638233485191,
+          "published_pct": 2.36,
+          "price_only_pct": -0.3558718861210397,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "IDVZ",
+          "calculated_pct": 8.345345147210681,
+          "published_pct": 8.35,
+          "price_only_pct": 5.89207048458118,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "IEFA",
+          "calculated_pct": 11.851251847835309,
+          "published_pct": 11.85,
+          "price_only_pct": 10.060362173038184,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "DIVZ",
+          "calculated_pct": 3.6682266480478676,
+          "published_pct": 3.67,
+          "price_only_pct": 1.8951676113628357,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "PFDE",
+          "calculated_pct": 14.811685408607156,
+          "published_pct": 14.81,
+          "price_only_pct": 14.577264154728574,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "IJH",
+          "calculated_pct": 11.465078106096849,
+          "published_pct": 11.47,
+          "price_only_pct": 10.590909090908895,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "SPYM",
+          "calculated_pct": 14.08615715521675,
+          "published_pct": 14.09,
+          "price_only_pct": 13.18873098977813,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "PFOE",
+          "calculated_pct": -10.676877988494782,
+          "published_pct": -10.68,
+          "price_only_pct": -10.873141334788471,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "IEMG",
+          "calculated_pct": 23.76352074984769,
+          "published_pct": 23.76,
+          "price_only_pct": 22.805712585540117,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "VUG",
+          "calculated_pct": 12.094506769909152,
+          "published_pct": 12.09,
+          "price_only_pct": 11.843561677530356,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "CLIP",
+          "calculated_pct": 2.6780760006486437,
+          "published_pct": 2.68,
+          "price_only_pct": 0.19978024173403774,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "PCHI",
+          "calculated_pct": -0.43566717008085565,
+          "published_pct": -0.44,
+          "price_only_pct": -5.090008442667915,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "VEA",
+          "calculated_pct": 16.090148704706266,
+          "published_pct": 16.09,
+          "price_only_pct": 14.999199615815527,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "VXX",
+          "calculated_pct": -34.64277890600618,
+          "published_pct": -34.64,
+          "price_only_pct": -34.64299206649042,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "QQQ",
+          "calculated_pct": 21.60013435902517,
+          "published_pct": 21.6,
+          "price_only_pct": 21.192883072064706,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "ICSH",
+          "calculated_pct": 2.355638233485191,
+          "published_pct": 2.36,
+          "price_only_pct": -0.3558718861210397,
+          "matches_2dp": true
+        },
+        {
+          "model": "ULT",
+          "ticker": "SPHY",
+          "calculated_pct": 0.8828235182874566,
+          "published_pct": 0.88,
+          "price_only_pct": -3.760033798056539,
+          "matches_2dp": true
+        }
+      ],
+      "holding_checks_total": 80,
+      "holding_checks_matched": 80,
+      "ust_characteristics": {
+        "yield": 4.38,
+        "cost": 0.133,
+        "duration": 1.46,
+        "beta": null
+      },
+      "ust_weighted_yield_pct": 4.381948067899117,
+      "ust_weighted_duration_years_using_generator_denominator": 1.4642569357375028,
+      "ust_missing_yield": [],
+      "ust_missing_duration": [
+        "XBIL",
+        "JAAA"
+      ],
+      "ust_missing_duration_weight": 0.0934,
+      "ust_model_returns_weighted_ytd_pct": 1.534495868967345,
+      "ust_model_returns_stored_ytd_pct": 1.534495868967345,
+      "ust_model_returns_daily_max_abs_reconstruction_error_pct": 0.0,
+      "ust_same_weights_price_only_diagnostic_pct": -1.303383970597749,
+      "ust_diagnostic_missing_active_prices": 0,
+      "ust_model_returns_minus_benchmark_source_bps": 2.364574603277436,
+      "net_toggle_business_days": 192,
+      "net_toggle_ytd_fee_percentage_points": 0.2742857142857143,
+      "net_toggle_ust_ytd_pct": 1.24,
+      "fdrxx_present_in_etf_returns": false
+    }
+  ],
+  "sha256": {
+    "data_20260921_v1.pkl": "26f7f3aae77caabde057bbcb433ed795ac8cfc3a1e1075cdc3c43cdbbaff8211",
+    "model_20260921_v1.pkl": "6d6b86fcd5255972357e64a873891a26f2e4195776b4196db4452e8c2847bbd5",
+    "benchmark_seen_sept22.json": "0336ded12204f5c45c6c5d4524b385a477922b8a0bddb26d7d748e00d22aff40",
+    "positioning_seen_sept22.json": "cf1f9d88e27d9ef01d6e75b9063d0e98483b2bf0fcce1bf7896f47058ab59c04",
+    "data_20260925_v1.pkl": "a6845655ce5e811f51996fa6c19cce42444bffcb3b962fb3767e90b37c334217",
+    "model_20260925_v1.pkl": "ca50f6b00631d729d813ca37644c0e31472f5c462c1e91b01cc03e00061b41fb",
+    "model_portfolio_benchmarks.json": "fe15588504fec4fac7c8637bcbb47403c705e3f966eb617c7bd1dd9884d4647c",
+    "positioning_data.json": "8f0c89ba38405e5523f8d9754f13ec2ca0e34780c6b834b17f80f1bce1635b9a",
+    "benchmark_live.py": "d4da24ed2306510794032dd5d05a09c314d6fe17cbe3808f0e65d657ce8633cd",
+    "positioning_live.py": "0781cf3b1149a5222a8778f5cb5057503e0f9a025e97c0be2d9f3821343e0f19",
+    "router_live.mjs": "315adcb9808063541bdee8b448959ce270188f895009cf79fdfd00f6178a8271",
+    "index-BSJ0dYHG.js": "6e8a4bce683bca1cb6c6b458840afc77dcf5b0f9a52dbd77c07d819cddb84f96",
+    "ModelPortfolios-DKBKUb7w.js": "481c8cef35f72e2d1dd3e8bfc718821cdb3754203c5652796ba7d150c31d0793",
+    "index-C5iNecJJ.js": "326d9532774b0a685264f7e90ffffecc45c4c000b2393f8ecbb18643712b2922"
+  }
+}

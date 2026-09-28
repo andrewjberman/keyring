@@ -973,3 +973,19 @@ which limbs engage, four waves of gate fixes and deletions, byte budgets on auto
 efficiency number. RAVC: keep its three evidence rules, delete the rest.
 **Status: DELIVERED -- proposals only; nothing dispatched; no law, gate, skill or memory edited. Repo, git, read-only
 broker and audit-log reads only; no AWS, no vendor.**
+
+## RCN-0019 -- Portal total-return correctness and provenance (Inflection question)
+
+**Date:** 2026-09-28. **Produced under:** `4.0.0_SA_CRO~I`. **Commissioned:** Andrew-direct at the Codex
+terminal; original instruction and clarification in `deliverables/ANDREW_DIRECT_20260928_INFLECTION_PERFORMANCE_INVESTIGATION.md`.
+**Package:** `deliverables/RCN-0019_INFLECTION_PORTAL_PERFORMANCE_20260928.md`, with two reproducible scripts and
+three evidence JSON files under `deliverables/inflection-performance-audit-20260928/`.
+
+**Finding:** the source field is Bloomberg gross-dividend total return, and four dated local source PKLs are
+byte-identical to S3. Both deployed producer handlers match inspected source. All 300 Benchmark return cells and all
+160 Positioning YTD cells reconcile across September 21 and September 25. A confirmed Positioning date-boundary defect
+omits the first day's return from WTD/MTD/QTD: 231 affected historical cells and 224 latest cells; 2026 YTD is unaffected.
+The independent model-holdings reconstruction differs from the selected custom index by 2.36 bps latest YTD, and the
+upstream generic index price-return fallback lacks provenance flags. These are named limits, not an all-correct certificate.
+**Status: DELIVERED to Andrew, investigation only.** Read-only live AWS/S3/deployment and synced source evidence;
+authenticated browser rendering unavailable. No production edit, deployment, client email, or implementation dispatch.
