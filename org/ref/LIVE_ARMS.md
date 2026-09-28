@@ -30,6 +30,11 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   (his `/self-drive` invocation, 2026-09-28 ~22:2xZ); landed by 1.0.0_SA_CTO~O. Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_SELF_DRIVE_O_FABRIC_FOUR_PROJECTS.md`. Stop:
   all four `status: complete`, HELD-AT-STOP, or Andrew's stand-down.
+- `1.0.0_SA_CTO~Z` `/self-drive 30m` over AMGT_CORPUS, AMGT_RESAPP, AMGT_HARVST, and DSGN_AMGTV1 from its L3
+  registration, paired with `2.0.0_SA_COO~X` / `~Z` / `~H` `/canonical-drive <own project> 30m` (+15m); DSGN_AMGTV1's
+  COO joins at seating. Class DIRECTED, chooser Andrew (his `/self-drive` invocation, 2026-09-28 ~22:0xZ); landed by
+  1.0.0_SA_CTO~Z. Record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_220xZ_SELF_DRIVE_AMGT_AND_DSGN_AMGTV1.md`.
+  Stop: every project in scope `status: complete`, HELD-AT-STOP, or Andrew's stand-down.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
@@ -45,16 +50,18 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_COO_GOALS_AND_CTO_SELF_DRIVE_ADJUDICATES.md`.
 - `1.0.0_SA_CTO` fallback adjudicator for LGIC_LGCTFM's `ANDREW_CARD.md` when Andrew is unavailable (one artifact,
   nothing wider): `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260917_23xxZ_CTO_ADJUDICATES_LGCTFM_ANDREW_CARD_IF_ANDREW_UNAVAILABLE.md`.
-- SITE-Z only: `1.0.0_SA_CTO~Z` `/self-drive AMGT_RESAPP & POSN_ASTTAX` 30m (`7,37 * * * *`); `2.0.0_SA_COO~Z`
-  `/drive` POSN_ASTTAX 10m and `2.0.0_SA_COO~ZZZ` `/drive` AMGT_RESAPP 10m, each tick an explicit `/canonical-flow`
-  stage check (DRIVE FORWARD | PARALLELIZE | NUDGE, a nudge only after the live-production probe reports nothing moving
-  across all four planes):
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_222xZ_COO_DRIVE_10M_CANONICAL_FLOW_STAGE_CHECK_AND_REBRAND.md`;
-  `3.0.0_SA_CVO~Z` SYSPARITY cron (`org/tier0/ledger/LD-0318.md`, LD-0319); `4.0.0_SA_CRO~W` harvest remediation loop
+- SITE-Z only: `3.0.0_SA_CVO~Z` SYSPARITY cron (`org/tier0/ledger/LD-0318.md`, LD-0319); `4.0.0_SA_CRO~W` harvest remediation loop
   (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260915_HARVEST_REMEDIATION_LOOP_W.md`; the collection
   mechanism and cadence RESERVED to Andrew).
 
 ## Struck
+
+- SITE-Z `1.0.0_SA_CTO~Z` `/self-drive AMGT_RESAPP & POSN_ASTTAX` 30m, `2.0.0_SA_COO~Z` `/drive` POSN_ASTTAX 10m and
+  `2.0.0_SA_COO~ZZZ` `/drive` AMGT_RESAPP 10m (record
+  `ANDREW_DIRECT_20260911_222xZ_COO_DRIVE_10M_CANONICAL_FLOW_STAGE_CHECK_AND_REBRAND.md`): struck 2026-09-28 by
+  `1.0.0_SA_CTO~Z`. POSN_ASTTAX is CLOSED; the site-Z reboot relaunched every seat with zero crons (record
+  `ANDREW_DIRECT_20260928_195xZ_SITEZ_AMGT_ONE_COO_PER_PROJECT_SEATING.md`); Andrew's `/self-drive` of ~22:0xZ is the
+  new AMGT arm above. A successor does not re-arm the struck row.
 
 - The ~O fabric's three 2026-09-26 rows -- `1.0.0_SA_CTO~O` `/self-drive 30m`, `2.0.0_SA_COO~O` `/canonical-drive 30m`
   COO MODE over all four ~O projects, `3.0.0_SA_CVO~O` `/canonical-drive 30m` CVO MODE (arming record
