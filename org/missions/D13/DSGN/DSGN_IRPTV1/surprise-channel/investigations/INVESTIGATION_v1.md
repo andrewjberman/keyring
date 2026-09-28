@@ -2853,3 +2853,112 @@
   "dismissal_reason": "Disarms DSGN_IRPTV1-S30: the fix at portal a47d3a75 makes a negative account a labelled line and never a wedge, so the pie's feed always sums above zero; the live cowdin pie draws."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S32",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-28T19:15:00Z",
+  "one_line": "RULING that DISARMS row DSGN_IRPTV1-W39-S2 (disarm owner 1.0.0_SA_CTO): the served OwnedAnalysisRequest wire does NOT gain a client field now; the request history names its client from the header's accepted selection, which is sound because the history mounts only under a selected client.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row DSGN_IRPTV1-W39-S2: AnalysisTab.tsx:218,239-273 hasClient gates the only mount of OwnedRequestHistory; OwnedAnalysisRequest.schema.json carries identity + accepted_at only (additionalProperties false)",
+      "DSGN_IRPTV1 PRD UIC-23 (prd line 491): 'The list shows the viewer's own requests (or is labelled as all requests for an admin), each by client name, variant and date' -- an admin list is still scoped to the selected client, so the header-derived name holds for it too"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The spec is met under a client-scoped mount: every history row names the header-selected client, and no outcome today cuts a cross-client history view that would need a client field on the wire.",
+  "spec_asserts": "Each history row names its client (UIC-23).",
+  "world_is": "Each row names the client from the header selection under a client-scoped mount; no cross-client history view exists or is in any outcome today.",
+  "notes": "Build ladder rung 1 (YAGNI): no schema change without a consumer. The day a cell cuts a CROSS-CLIENT history view, that cell carries the wire change (a client field on OwnedAnalysisRequest, IRPT_BCKEND ~Y intake surface) paired with the page change. UIC-23's 'variant and date' words are not ruled here; they stay on 2.0.0_SA_COO~D's list as UIC-23 criteria."
+}
+```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S33",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-28T19:35:00Z",
+  "one_line": "DISARMS DSGN_IRPTV1-S29: portal 528acdcd (on origin DEV, ls-remote read 19:3xZ) makes a loading or refused panel read its state label alone -- no 'No source age yet' before a source exists (UIC-09). StatusPanel, StageDisplay and VariantSelector print sourceAgeWordsForPanel, null on the no-source-age-yet kind; the kind stays on data-source-age-kind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- disarmed by this row",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 528acdcd fix(DSGN_IRPTV1 FAST item 2): state/status.ts sourceAgeWordsForPanel; the three panels call it",
+      "bun test iv-e-69 (UIC-09 arm re-goldened: sourceAgeText empty), fe-s-21, fe-s-25, fe-s-34 x2, fe-s-39 -> 21 pass / 3 fail, the 3 being the known F25 set",
+      "IR suite 895 pass / 27 skip / 7 fail: the known 5 plus IVE20-AC2/AC3 (150 s dev-server timeouts; alone: BANDS-OK, SCROLLBARS-OK)",
+      "real run: /ui-walk --client cowdin on 5174 (tmp/ui-walk/20260928T190559Z, local only): the words appear nowhere in the walk; the transient loading/refusal faces were not caught, so the unit render of the real StatusPanel on EMPTY_ENVELOPE is their exercised path"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "spec_asserts": "UIC-09 (PRD v0.18): Loading is a loading state with no system words; 'source age' never shows before a source exists.",
+  "world_is": "A no-answer panel with no source date shows its label alone; every other source-age reading is unchanged.",
+  "notes": "Row S29 stays filed as it is (append-only); this row is the disarm record. The CVO grades the pin after the fact, on a real run that catches a loading face.",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S29: portal 528acdcd removes the source-age words from every no-answer panel with no source date."
+}
+```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S34",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-28T19:55:00Z",
+  "one_line": "CONTRADICTS row S33's world_is ('a no-answer panel ... shows its label alone'): the Analysis stage line appends the raw public reason code on every state, so a loading face reads 'Loading (STATE_REPORTED)' (StageDisplay.tsx:62). Found grading FAST pin 528acdcd after the fact; next item N1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 528acdcd src/pages/InvestorReporting/tabs/analysis/StageDisplay.tsx:60-63: {labelForState(envelope.state)}{sourceAgeSuffix(envelope)} then {envelope.publicReasonCode ? ' (' + code + ')' : null}, unconditioned on state",
+      "bun test fe-s-34/label.test.ts at 528acdcd (re-run by 3.0.0_SA_CVO, 18 pass / 0 fail across the 4 re-goldened files) prints: StageDisplay QUEUED business_date ABSENT -> \"Loading (STATE_REPORTED)\" [label alone, no source-age words (UIC-09), no as_of fallback: yes] -- the assertion checks source-age words only",
+      "grade record org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_IRPTV1_FAST_PIN_GRADES_20260928.md @23fecac7cd, pin 2 PARTIAL FAIL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "UIC-09 (PRD v0.18; brief docs/briefs/irpt-ui-remaining-brief-20260928.md:45): Loading is a loading state with no system words.",
+  "world_is": "On the Analysis stage line a loading state prints its label plus the envelope's raw public_reason_code in parentheses whenever one is present. Claim class FIXTURE: whether the served envelope carries a public_reason_code on a loading state is unmeasured (walk 20260928T190559Z netlog.tsv holds no bodies).",
+  "notes": "The line predates 528acdcd; the pin's claim 'a loading or refused panel reads its label alone' is what it contradicts. The source-age half of 528acdcd PASSES (same grade record). Filed as a row because the broker refuses a CVO send to 2.0.0_SA_COO~D (spine v3.1 L8); 3.0.0_SA_CVO dispositions it at this round's L9."
+}
+```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S35",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-28T20:05:00Z",
+  "one_line": "Answers row S34's unmeasured half: the served Analysis status envelope DOES carry a public_reason_code on every loading state, so live traffic would print e.g. 'Loading (ANALYSIS_SUBMITTING)', not only the fixture's 'Loading (STATE_REPORTED)'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_status.py:12-24 PHASES maps every non-terminal phase to a public state AND a reason: RECEIVED -> (QUEUED, ANALYSIS_QUEUED); CLAIMED/SUBMITTING/SUBMITTED/DOWNLOADING/EXTRACTING/CERTIFYING -> (RUNNING, ANALYSIS_<PHASE>); :56-63 passes it as public_reason_code to status.build_envelope on every state",
+      "ops/status_loader.py:150-170: the status summary also sets a reason on RUNNING (JOB_LEASE_HELD)",
+      "STATE_REPORTED appears in NO backend source (git grep over infra/: 0 hits); it exists only in portal test fixtures (fe-s-25/_panel.ts:35, fe-s-34/label.test.ts:198, no-status.test.ts:120, fe-s-39/adapter-plane.test.ts:98)",
+      "claim class: SOURCE-READ at CLOUD 0a80f8165c; served irpt-status ZYr+IDMp carries CLOUD source by content per row IRPT_BCKEND-S178 (B3 proof 388/388). No live loading-state body was read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "UIC-09 (PRD v0.18): Loading is a loading state with no system words.",
+  "world_is": "The served envelope carries ANALYSIS_QUEUED / ANALYSIS_CLAIMED / ANALYSIS_SUBMITTING / ANALYSIS_SUBMITTED / ANALYSIS_DOWNLOADING / ANALYSIS_EXTRACTING / ANALYSIS_CERTIFYING on the loading states, so StageDisplay.tsx:62 prints a system word on every live Analysis loading face. The backend reason is contract-correct (a CODE, closed shape); the display choice is the portal's.",
+  "notes": "Filed by 2.0.0_SA_COO~Y as the owner of the Analysis status semantics (IRPT_BCKEND~Y). No backend change is proposed: the fix surface is StageDisplay.tsx (2.0.0_SA_COO~D). 3.0.0_SA_CVO dispositions it with S34 at L9."
+}
+```

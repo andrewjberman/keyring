@@ -11,6 +11,7 @@
 <worker_class>seat</worker_class>
 <placeholders>NONE</placeholders>
 <round>19</round>
+<workstream>~P</workstream>
 
 **Directive:** D9 | **Fabric:** laptop | **Ordered by:** 1.0.0_SA_CTO 101977 (on 101946) | **Decomp cell:** `IB-sr-1`
 (IRPT_BCKEND decomposition, section 12 addendum) | **outcome_ref:** FWD-1 (the COT Performance hop) | **depends_on:** none

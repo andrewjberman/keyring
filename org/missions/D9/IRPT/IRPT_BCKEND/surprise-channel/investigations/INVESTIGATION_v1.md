@@ -10577,3 +10577,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Out of this worker's bounds to fix (paths grant does not reach .tools/safe_deploy_core.py or IAM policy; Step 2 is bounded to invoking the dispatch with qa:true only). IBM19-2-AC2 is graded FAIL as measured; the ENABLE half (Step 3) is filled with these measurements rather than fabricated Success values, per the refusal clause. DISARM: add lib/silver_ids.py to _IRPT_HOLDINGS_CLOSURE and re-mint; grant s3:GetObjectVersion on the two named cross-bucket source prefixes to irpt-49f-holdings-role and irpt-cot-holdings-role (or their source objects' own VersionedInputs read path), then re-run the QA fire."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S181",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-28T19:05:00Z",
+  "one_line": "ROUTING of row S177's producer half (CTO ruling on 2.0.0_SA_COO~P msg 102404): the 49F engine c02_twr_engine.py:264 marks r_net <= -1 as status OK; the fix is a named non-OK status for r_net <= -1 plus a look at the flow-scaling rows, owned outside IRPT_BCKEND by the runners_49f producer lane, PARKED until that lane is seated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.4.0_DS_ClientPlatform",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-S177 (@8de1f7c22f): 28 OK account-days with r_net <= -0.999 YTD across 24 accounts; producer line data/assets/scripts/gold/runners_49f/c02_twr_engine.py:264",
+      "git log -- data/assets/scripts/gold/runners_49f/c02_twr_engine.py: last 5 commits authored by 0.4.0_DS_ClientPlatform~N/~V/~U (read 2026-09-28 ~19:0xZ); CLAUDE.md rule 13: DS owns commit and QA-deploy of data/*/scripts/gold",
+      "get_live_agents 2026-09-28 18:3xZ: no 0.4.0_DS_ClientPlatform serial is live"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A daily time-weighted return at or below -100% for a long account is never emitted as status OK by the producer (row S177).",
+  "world_is": "The producer emits it as OK; the IRPT adapter's round-19 refusal (TO-IB-P19-1) contains the symptom on the page but not in gold.",
+  "notes": "Un-parks when a 0.4.0_DS_ClientPlatform lane is seated: it takes this row as its order of record. NOT in scope of either fix: whether a re-funded account's track record restarts (re-inception); that methodology call is Andrew's, asked by 1.0.0_SA_CTO 2026-09-28."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S182",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-28T19:10:00Z",
+  "one_line": "Every one of the COT eleven-account client's (cowdin) accounts reads the same identity, '****8774 / UTMA', in OVER WHAT, the Holdings pie legend and the Holdings table, so no two accounts can be told apart on the page. The page renders the producer's account display.label verbatim, so the one tail is most likely the Holdings snapshot's own label (claim: inferred; the served bytes were not read).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (IRPT Holdings workstream): read the served holdings snapshot for this client and name whether the eleven account nodes carry one display.label",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run: node .claude/skills/ui-walk/walk.mjs --client cowdin on localhost:5174 @ portal a47d3a75, tmp/ui-walk/20260928T182319Z shot 017 (local only): 11 OVER WHAT rows, 11 legend entries and 11 table rows all read '****8774 / UTMA', with 11 different amounts",
+      "same on DEV 28f5118c before any FAST edit: CRO walk tmp/ui-walk/20260928T174953Z shot 086",
+      "portal src/pages/InvestorReporting/contracts/adapt.ts:1041-1045 carries the producer's display.label verbatim; tabs/holdings/slices.ts:423-425 displayLabelFor prefers it over every page-side name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each account is named distinctly (UIR-32 mask form '****1234 / TYPE' per account; UIC-13 every account reachable from OVER WHAT).",
+  "world_is": "Eleven accounts with eleven different values share one label, so the reachable rows cannot be told apart.",
+  "notes": "Surfaced by DSGN_IRPTV1's FAST item-1 real run. If the producer's labels are distinct, the defect is page-side and returns to 2.0.0_SA_COO~D as a DSGN_IRPTV1 item. Eleven sub-accounts sharing one custodial number is possible; even then the page needs a distinguishing field."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W62-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~62",
+  "surfaced_at": "2026-09-28T19:30:00Z",
+  "one_line": "Off-task in TO-IB-pr-193: infra/aws/lambda/investor-reporting/export/tests/test_submit_async.py::test_the_marked_event_builds_and_the_handle_reaches_the_receipt fails pre-existing, unrelated to this cell's diff -- entry.py:185's `_finalize_on_read` calls `_handler.finalize_export` and gets AttributeError: module 'handler' has no attribute 'finalize_export', though export/handler.py:297 defines it. Reproduced identically against the unmodified HEAD entry.py (my only diff is the REFUSED/FAILED catch added at run_async_submit), and reproduced running that one test alone, so it is not caused by my change and not a collection-order artifact of my own test addition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P: five sibling investor-reporting Lambda dirs (export, performance, holdings, directory, narrative) each ship their own handler.py; a bare `import handler` resolves to whichever same-named module sys.modules cached first in the test process, so any test session pulling in two of them will silently bind the wrong one for the second import -- this looks like that class of defect, not fully diagnosed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run @wk-irpt-p-62: `python -m pytest tests/test_submit_async.py -v` from infra/aws/lambda/investor-reporting/export -- 1 failed (test_the_marked_event_builds_and_the_handle_reaches_the_receipt), 13 passed; traceback at entry.py:185 `_fin.finalize(pending, s3=s3, bucket=bucket, ssm=ssm, finalize_export=_handler.finalize_export)` raising AttributeError: module 'handler' has no attribute 'finalize_export'",
+      "same failure reproduced with entry.py reverted to `git show HEAD:infra/aws/lambda/investor-reporting/export/entry.py` (my task-order edit backed out), same test run in isolation via `-k test_the_marked_event_builds_and_the_handle_reaches_the_receipt`",
+      "infra/aws/lambda/investor-reporting/export/handler.py:297 `def finalize_export(*, submission, pdf_bytes, bucket=None, created_at=None, ...)` -- the attribute exists in that file",
+      "five investor-reporting Lambda subdirectories (export, performance, holdings, directory, narrative) each carry a file literally named handler.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-193 names only entry.py's run_async_submit and one new test in export/tests/test_submit_async.py; it does not ask this worker to make the whole test file's suite green.",
+  "world_is": "The suite carries one pre-existing, unrelated failure (test_the_marked_event_builds_and_the_handle_reaches_the_receipt) that this cell's diff does not touch and does not fix, confirmed present against HEAD before this cell's edit.",
+  "notes": "Not fixed here: out of this cell's <paths> grant and its own defect, not IB-pr-193's. Left exactly as found; my new test (test_a_refused_replay_logs_stage_refused_never_failed) and all 12 other pre-existing tests pass."
+}
+```

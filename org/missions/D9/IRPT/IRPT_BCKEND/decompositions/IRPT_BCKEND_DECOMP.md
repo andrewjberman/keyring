@@ -1049,3 +1049,38 @@ before the S3 log upload at `infra/aws/terraform/cot-pipeline/ssm.tf:63-69`); `b
 that moves `blackdiamond/cot/session` AWSCURRENT. Vendor sign-in only through the document (its scheduler or its existing
 trigger), never by hand.
 
+## 13. ROUND 19, WORKSTREAM ~P (2026-09-28, 2.0.0_SA_COO~P, on PRD ADDENDUM v0.18 @33ae74760b, CTO 102396)
+
+Cut from `STATUS~P.md` @025cef10fd's next-list in its priority order. Base: CLOUD HEAD (MSTR's act-4 drain landed
+@c161a2faca; B3 proof row IRPT_BCKEND-S178). Checks: `deliverables/2.0.0_SA_COO~P/checks/r19/`, each dry-run at the
+base before this cut (build arms FAIL, control arms PASS).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-191` | FWD-3 (Performance backend half), goal criterion 1 at 49F; NEW-01 (rows S176/S177) | WORLD (path floor; the cell builds and tests only, the served move is the COO's act under both halves) | none | A |
+| `IB-pr-192` | FWD-3; UIC-06 backend half and UIC-07 (Since inception from the account's first data point) | WORLD (as above) | `IB-pr-191` (same files: f49_engine.py, entry.py) | A |
+| `IB-pr-193` | FWD-9 (Export) hygiene: a refused async replay logs REFUSED, not FAILED | WORLD (path floor; code and test only) | none | B |
+
+**IB-pr-191 -- the 49F engine never serves an impossible return.** `f49_engine.calculate` refuses by a named class
+`EngineReturnImplausible(EnginePerformanceRefused)` when any linked row in the window carries `r_net <= -1.0` (the
+measured NEW-01 shape: OK, bmv 13,360.59, emv 0.0, cf_net 0.0 on 2026-04-16; 28 such OK account-days YTD across 24
+accounts). The boundary (`performance/entry.py` `build_entry` reasons) names it `DEPENDENCY_UNAVAILABLE`. The
+arithmetic (`parity_period_returns`) and the producer (`c02_twr_engine.py`) are NOT touched: the producer rule is a
+design fork routed to 1.0.0_SA_CTO.
+
+**IB-pr-192 -- Since inception answers from the account's first data point.** A request whose start is the portal's
+Since-inception sentinel `1970-01-01` (UIC-07, measured) is read as the engine lane's ruled period `SI`, anchored at
+the account's first OK `business_date` in `twr_daily`; the report's `dates.actual_start` is that day and
+`returns.period_returns` names `SI`. Every other unruled window (3Y) still refuses as `WindowNotRuled`. The anchor is
+read, never typed; the IB-pr-191 guard applies to SI as to every window.
+
+**IB-pr-193 -- the async export log says what happened.** `export/entry.py` `run_async_submit` logs stage `REFUSED`
+(and re-raises) when `submit_async.run` raises `AsyncSubmitRefused` before the pointer moves; every other exception
+still logs `FAILED`.
+
+**Not cut this round, with the reason:** the live Comparison + export window (K4/K5/K8/K10) is the COO's own act at
+this round's close, under its own packet and both halves (TO-IV-e-78 is complete); the per-headline causal filter has
+no cell text yet (CTO tick 65 names it only as enrichment); the ~P hygiene items that are not code (proof_of_spec
+template path S167, directory Terraform root, cherry-pick review) are record acts, not cells.
+
+fanout: 2 of 2 chains, cap 8.

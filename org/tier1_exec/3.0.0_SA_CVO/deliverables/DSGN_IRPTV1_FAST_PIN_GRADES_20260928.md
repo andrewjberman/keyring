@@ -9,7 +9,8 @@ each landed pin after the fact on the real run's artifact; a FAIL becomes the ne
 real data), not a driver fixture. The walk directory is gitignored (`.gitignore:89` `tmp/`), so each graded PNG is
 bound here by md5.
 
-**Tally:** 1 pin handed over. 1 PASS.
+**Tally:** 2 pins handed over. 1 PASS (`a47d3a75`). 1 PARTIAL FAIL (`528acdcd`: the source-age half passes; the
+"label alone" half fails on the Analysis stage line, next item N1).
 
 ## Grades
 
@@ -28,7 +29,27 @@ Detail for pin 1, read off shot 017 (Cowdin, Anna & Adam; 11 accounts; HOW MUCH 
 - UIC-13: shot 006 shows all 11 OVER WHAT rows with no inner scroll and a "Show fewer" toggle; the shot's name records
   the "Show all 11 accounts" control the walker clicked.
 
-## Observations (not grades; each is outside this pin's claim)
+| 2 | `528acdcd` FAST item 2 (UIC-09, row S29) | no source-age words before a source exists; a loading or refused panel reads its label alone | (a) the four re-goldened test files re-run by this seat at portal HEAD `528acdcd`: 18 pass, 0 fail (iv-e-69 prints `VERDICT: PERFORMANCE-FINISHED-ANSWER-OK`); (b) `tmp/ui-walk/20260928T190559Z/shots/012-cowdin-performance-Account-8774-UTMA-15-8.png`, opened and read: a real refusal face reads one plain sentence with no source-age words; (c) CI `CI - Build & Validate` completed/success; (d) `src/pages/InvestorReporting/tabs/analysis/StageDisplay.tsx:60-63` read | **PARTIAL FAIL** |
+
+Detail for pin 2:
+- **Source-age half: PASS.** Unit render (a) and the real refusal face (b) carry no "No source age yet". The walk's
+  `findings.json`/`summary.md` cannot confirm an absence: the earlier walk 20260928T182319Z also counts 0 for the phrase,
+  yet its shot 006 shows "Loading / No source age yet" on the page. The grade rests on (a) and (b), not on the walk's
+  zero.
+- **"Label alone" half: FAIL on the Analysis stage line.** `StageDisplay.tsx:62` appends the envelope's
+  `publicReasonCode` in parentheses on every state. The pin's own fe-s-34 run prints it:
+  `StageDisplay QUEUED business_date ABSENT -> "Loading (STATE_REPORTED)"`, and still marks the line "label alone ...
+  yes", because the assertion tests only for source-age words. The UIC-09 target (brief `:45`) reads "Loading is a
+  loading state with no system words". Claim class: FIXTURE. Whether the served envelope carries a
+  `public_reason_code` on a loading state was not measured; the walk's `netlog.tsv` holds no bodies. The line predates
+  this pin, but the pin claims "label alone" for the loading panel.
+
+## Next items
+
+- **N1 (pin 2's FAIL):** the Analysis stage line prints the raw public reason code, "(STATE_REPORTED)", beside
+  "Loading" (`StageDisplay.tsx:62`). The fe-s-34 assertion that passes it tests for source-age words only.
+
+## Observations (not grades; each is outside the pin's claim)
 
 Owners below are read from the CRO brief `docs/briefs/irpt-ui-remaining-brief-20260928.md` @c931298153.
 - **O1:** every account, legend entry and OVER WHAT row reads the same "****8774 / UTMA", so the legend "names every

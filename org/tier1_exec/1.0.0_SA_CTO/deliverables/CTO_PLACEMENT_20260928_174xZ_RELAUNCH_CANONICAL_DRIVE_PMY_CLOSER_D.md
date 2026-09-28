@@ -32,6 +32,14 @@ Andrew: "a /canonical-drive approach for all channels except COO~D, which will b
 
 Acts 5 and 7 wait on 3 because retiring the closer grants before the freeze would refuse the seats' own WIP commits.
 
+**Update 2026-09-28 ~19:0xZ.** Acts 3, 4 and 6 are DONE (freezes 025cef10fd / e589729e6a / 37cb971b4a; drain + B3
+proof row S178, pushed origin 5b69865bc7 on Andrew's word; PRD v0.18 @33ae74760b). Act 5's row half is DONE
+(@97cb92cbfc). Act 5's GRANT half (return brief C6) is DEFERRED to IRPT_BCKEND round 19's L10, owner 1.0.0_SA_CTO:
+~M's next-list carries seat-authored ledgered acts (R4 re-mint, cash-line act, B1 drain) on paths only the closer
+lanes grant, and ~M holds four branches as gold drains after R1 (MSTR 102409). Retiring the lanes now would refuse
+that work; at round 19's L10 the lanes retire, or narrow to the paths a named direct act still needs. GATE (x) now
+keys rounds per workstream (@466d764142, row S179).
+
 ## Not armed
 
 `1.0.0_SA_CTO` runs event-driven on this relaunch (operator launch line: "/watcher ONCE ... Event-driven"). Its
