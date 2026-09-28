@@ -23,6 +23,7 @@ import argparse
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 import time
@@ -48,6 +49,8 @@ def main(argv=None):
     ap.add_argument("--out", help="directory to write the captured composition and queue message (for a resident replay)")
     ap.add_argument("--comparison-keys", default="",
                     help="comma-separated catalogue keys: 1 selects the Comparison variant, 2-5 Multi-Comp (none: Overview)")
+    ap.add_argument("--live-env", metavar="FUNCTION",
+                    help="run under that live function's environment variables, /var/task mapped to the extracted zip")
     a = ap.parse_args(argv)
 
     extract = tempfile.mkdtemp(prefix="irpt-proof-")
@@ -59,6 +62,15 @@ def main(argv=None):
                 shutil.copyfile(os.path.join(a.overlay, name), os.path.join(extract, name))
                 overlaid.append(name)
     sys.path.insert(0, extract)
+    live_env = {}
+    if a.live_env:
+        live_env = json.loads(subprocess.run(
+            [r"C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\aws.cmd", "lambda", "get-function-configuration",
+             "--function-name", a.live_env, "--query", "Environment.Variables", "--output", "json"],
+            capture_output=True, text=True, check=True).stdout) or {}
+        live_env = {k: v.replace("/var/task", extract.replace("\\", "/")) for k, v in live_env.items()}
+        os.environ.update(live_env)
+        print("live env of", a.live_env, "(values not printed):", sorted(live_env))
     os.environ.setdefault("IRPT_DIRECTORY_BUCKET_MAP", json.dumps({"49financial": "opal-data-bd", "cottonwood": "opal-data-cot", "inflection": "opal-data-inf"}))
     print("extract", extract, "| overlay", overlaid or "none")
 
@@ -100,6 +112,7 @@ def main(argv=None):
     _ca.CompositionAdmission.validate = validate_reporting_cause
     env = {gi.QUEUE_URL_ENV: "https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation",
            gi.REQUESTS_TABLE_ENV: "irpt-requests", gi.JOBS_TABLE_ENV: "irpt-jobs"}
+    env.update(live_env)
     ports = gi.compose_ports(clients={"dynamodb": ddb, "table": table, "s3": s3, "sqs": sqs}, environ=env,
                              clock=time.time)
     boundary = gi.build_boundary(ports)

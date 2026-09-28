@@ -5,10 +5,30 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-28T00:48Z. Lease FAST until 2026-09-28T01:17:18Z.
+As of 2026-09-28T13:30Z. Lease FAST until 2026-09-28T13:44:34Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
-## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
+## Now (13:30Z 09-28): the GRANT release's generate is LIVE and verified; rebuild 3's gates are committed
+
+- **irpt-status rebuild 3 (packet 31fbdcbf; the CTO half is SIGNED conditional on gates 3 and 4, CTO 102308).**
+  - Both gates PASS on the built zip (S3 version 7Uz6kDd, CodeSha256 ZYr+IDMp).
+  - Gate 4: REQ-67e12718 answers READY ANALYSIS_READY, PER_SECTION, with 51 dates.
+  - Gate 3: 6 reads; under the planned grant 0 are denied. The only change is original_holdings, implicitDeny -> allowed.
+  - Negative control: the live bMMJ zip refuses DATE_SOURCE_OWNER_BINDING after 3 reads.
+  - Record `REBUILD3_GATES_3_4_20260928.md`, with the `status_role_sim.py` planned-policy option: sent to P at 13:00Z;
+    committed once MSTR narrowed the freeze (102334), and the hash went to P for the ledger.
+- **Comparison GRANT release (b6c264b3; CRO SIGNED at e60a5043e8).** Every arm passes on its exact built artifacts.
+  Record: `GRANT_RELEASE_ARMS_20260928.md` @2da2b97711. Results sent to P at 12:43Z.
+  - **Generate D1 is LIVE:** `AdE17rT6` since 13:11:54Z, the proved bytes.
+  - Re-run under the live function's own environment (`offline_submit_proof.py --live-env`): Comparison, Multi-Comp
+    and Overview are ACCEPTED, and the unknown key is REFUSED with 0 writes.
+  - The resident st2 swap (D2) is P's.
+  The first live Comparison window is ready on Y's side: `live_chain.py` WALK_COMPARISON_KEYS gives the ONE K5
+  body (one key Comparison, two Multi-Comp); all three arms validate against the schema. It runs on P's window packet.
+- **Freeze NARROWED** (0.0.0_AB_MSTR 102334): local commits and merges are legal again. No push until MSTR's CLOSE,
+  and a ~10-minute no-commit window is announced separately.
+
+## Window 15 (09-27): READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
 
 - `REQ-67e12718..` went READY at about 16:23Z on resident `lt`, as report `RPT-5288c06d..`, with 2 receives, 3 status GETs, 1 saved GET
   and 0 re-captures. Receive 1 released on `calculating` at 16:07:03Z; the redelivery resumed at 16:22:09Z. K10 is D's.
@@ -171,7 +191,7 @@ and window 4 re-runs K4+K5 (+R1).
 
 ## Write claims
 
-**irpt-status rebuild 2 (5fSyChId) ROLLED BACK at 00:36Z (CTO 102269):** W20 K10 got 500s. The status role lacks a read on
+**Rebuild 3 gates 3 and 4: PASS, the record is uncommitted until the freeze CLOSE (see Now).** **irpt-status rebuild 2 (5fSyChId) ROLLED BACK at 00:36Z (CTO 102269):** W20 K10 got 500s. The status role lacks a read on
 state/original_holdings/, and the zip's errors.py is holdings/errors.py, so refusals crash. bMMJ is live. Rebuild 3 comes after
 05:00Z, with Y's gate tools (@d43884aa01): the collision census, the owner-refusal arm and the role simulation. K10 re-runs on rebuild 3.
 
@@ -245,8 +265,9 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Comparison / Multi-Comp (FWD-4 arms): composition is PROVED on the served generate plus three changes: M's consumer @d7c97910d9 (hashes 4/4 MATCH Y @0a24edfe38), Y's grant patch, and P's get_catalogue wiring. Comparison and Multi-Comp are ACCEPTED, an unknown key is REFUSED (`COMPARISON_RELEASE_READINESS_20260927.md`) | 2.0.0_SA_COO~P ships those three plus the name check in one generate+resident release | that release lands; then Y runs the first live Comparison window |
+| Comparison / Multi-Comp (FWD-4 arms): composition is PROVED on the served generate plus three changes: M's consumer @d7c97910d9 (hashes 4/4 MATCH Y @0a24edfe38), Y's grant patch, and P's get_catalogue wiring. Comparison and Multi-Comp are ACCEPTED, an unknown key is REFUSED (`COMPARISON_RELEASE_READINESS_20260927.md`) | 2.0.0_SA_COO~P applies the GRANT release (b6c264b3, CRO SIGNED; every arm PASS, @2da2b97711) | the apply lands; Y verifies it live, then runs the first live Comparison window |
 | Shares price source (Y2 Shares cells): CTO 100887 ruled (c), refused by name for v1; (b) has no known estate table; (a) goes to Andrew | 2.0.0_SA_COO~Y (re-ask the CTO) | the Dollars journey is graded |
+| generate's unknown-comparison-key refusal answers public code UNEXPECTED (state UNAVAILABLE), not a named code; the portal offers only catalogue keys | 2.0.0_SA_COO~P | a viewer can send a free-text key, or P next edits `resolve_comparison_fields` |
 | `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT | 2.0.0_SA_COO~Y | the next edit to that suite |
 | `reports/tests/test_generate_installed.py:58` expects 22 schemas; the tree holds 23 (fails at P's own tip) | 2.0.0_SA_COO~P | P's next edit to that suite |
 | generate reads `irpt-common` by name (latest), not pinned (P `08d9f2f0b1`); a new layer version moves generate at that root's next apply | 2.0.0_SA_COO~P | irpt-common v6 is built |
@@ -256,8 +277,8 @@ still 0 UPLOAD#/NORMALIZATION#/INPUT# rows in all three firms. Portal 5174 is at
 
 ## Limits
 
-**FREEZE tonight ~03:00-05:00Z** (0.0.0_AB_MSTR 102066): the S19 purge rewrites CLOUD and every local ref. Commit
-nothing then; re-sync the Y worktree on MSTR's DONE steps. All Y work is committed as of 2026-09-27T20:05Z. The served
+**PUSH FREEZE** (0.0.0_AB_MSTR 102334): no push until MSTR's CLOSE; local commits are legal except in the announced
+~10-minute rewrite window. Re-sync the Y worktree on MSTR's CLOSE steps. All Y work is committed as of 2026-09-27T20:05Z. The served
 drift census (`SERVED_DRIFT_CENSUS_20260927.md`, @974ec72ce9): irpt-status is the only served-path drift
 (submission.py, and entry.py's export B0 line), and both ride P's rebuild.
 

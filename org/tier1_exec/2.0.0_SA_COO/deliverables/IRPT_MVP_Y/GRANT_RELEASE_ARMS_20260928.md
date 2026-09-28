@@ -48,3 +48,27 @@ none:** neither has run an Analysis. So this was measured on:
 | B | window 15's, unchanged (the row names another portfolio) | `type=- as_of=-`, **ATTENTION**, 0 REPORT# |
 | E | no tolerance | **READY**, 1 REPORT# |
 | F | C plus a page "Benchmark: 49F Long Term Benchmark" (a Cottonwood report) | **PublicationRefused FOREIGN_FIRM_NAME_IN_REPORT** on each delivery; job CERTIFYING, **0 REPORT#** |
+
+## After P's generate apply (D1): the live function is the proved artifact, and the arms hold under its own environment
+
+Read 13:1xZ, 09-28:
+- **Live code:** `irpt-ycharts-generate` has CodeSha256 `AdE17rT6..`, LastModified 13:11:54Z, Active/Successful. These
+  are the bytes the arms above ran on.
+- **Live configuration:** layer `irpt-common:5` and role `irpt-ycharts-generate-role`.
+- **The environment the earlier proof lacked:** the live function sets 10 environment variables. Two of them,
+  `IRPT_FIRM_REGISTRY` and `IRPT_FIRM_DESTINATION_POLICY`, name files bundled in the zip (`/var/task/...`), and
+  `ids.py`, `keys.py` and `gate.py` read them.
+- **Re-run under that environment:** `offline_submit_proof.py --live-env irpt-ycharts-generate` loads the function's
+  own variables (values not printed) with `/var/task` mapped to the extracted zip. On input `portfolio_99e76df8..`:
+
+| Request | Result |
+|---|---|
+| Comparison `opal_long_term` | ACCEPTED, `P:1728413` frozen |
+| Multi-Comp `opal_short_term` + `opal_intermediate_term` | ACCEPTED, `P:1728415` and `P:1728315` |
+| Overview | ACCEPTED |
+| unknown key | REFUSED "comparison key unknown or ambiguous", 0 writes |
+
+- **Limit:** the refusal's public code is `UNEXPECTED`, with state UNAVAILABLE, not a named code. The portal offers only
+  catalogue keys, so a viewer cannot send one. This is parked with P.
+- **Remaining:** the live ACCEPT is proven only by the first live Comparison window. The resident `st2` swap (D2) is
+  P's next leg.

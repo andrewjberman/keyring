@@ -2,7 +2,10 @@
 irpt-status-role (CTO 102269: the original_holdings grant). Read-only: live reads through the readthrough doubles, and
 iam simulate-principal-policy.
 
-    python status_role_sim.py <scratch dir holding w15state/> <irpt-status zip>
+    python status_role_sim.py <scratch dir holding w15state/> <irpt-status zip> [<planned policy.json>]
+
+With a planned policy document, each read is simulated twice: against the role as it is, and against the role plus that
+document (--policy-input-list), so a grant is graded before it is applied (CTO 102308, rebuild 3 gate 3).
 
 Why: an offline READY on the operator's credentials hid that the ROLE cannot read state/original_holdings/ (window 20,
 5fSyChId). This grades the same reads against the role that will make them."""
@@ -21,6 +24,7 @@ sys.path.insert(0, LIVE)
 import readthrough as rt  # noqa: E402
 
 S, ZIP = sys.argv[1], sys.argv[2]
+PLANNED = open(sys.argv[3], encoding="utf-8").read() if len(sys.argv) > 3 else None
 RID, TENANT = "REQ-67e12718b0ba7c0c70ebb45b", "cottonwood"
 ROLE = "arn:aws:iam::313476888478:role/irpt-status-role"
 extract = tempfile.mkdtemp(prefix="irpt-status-sim-")
@@ -41,7 +45,11 @@ headers = {"x-contract-version": "v1", "x-origin-verify": "cloudfront", "x-user-
            "X-IRPT-Status-Dates": "prospect-v1"}
 answer = boundary.handle({"routeKey": "GET /api/scoped/investor-reporting/status/{jobId}", "headers": headers,
                           "queryStringParameters": {"selected_tenant": TENANT}, "pathParameters": {"jobId": RID}})
-print("answer state:", (answer.get("data") or {}).get("state"), (answer.get("data") or {}).get("public_reason_code"))
+data = answer.get("data") or {}
+dates = data.get("source_dates") or {}
+print("answer state:", data.get("state"), data.get("public_reason_code"), "| date_basis:", dates.get("date_basis"),
+      "| section_dates:", len(dates.get("section_dates") or []), "| refused:",
+      None if data else (answer.get("status") or {}).get("public_reason_code"))
 pairs = set()
 for r in writes.reads:
     kind = r.get("kind", "")
@@ -52,15 +60,26 @@ for r in writes.reads:
         pairs.add((kind, "arn:aws:dynamodb:us-east-1:313476888478:table/%s%s"
                    % (r.get("table"), "/index/" + r["index"] if r.get("index") else "")))
 print("distinct (action, resource) reads:", len(pairs))
+AWS = r"C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\aws.cmd"
+
+
+def simulate(action, resource, extra):
+    cmd = [AWS, "iam", "simulate-principal-policy", "--policy-source-arn", ROLE, "--action-names", action,
+           "--resource-arns", resource, "--query", "EvaluationResults[0].EvalDecision", "--output", "text"]
+    if extra:
+        cmd += ["--policy-input-list", extra]
+    out = subprocess.run(cmd, capture_output=True, text=True)
+    return out.stdout.strip() or ("ERROR " + out.stderr.strip()[:80])
+
+
 denied = []
+print("%-14s %-14s %-24s %s" % ("ROLE NOW", "ROLE+PLANNED" if PLANNED else "", "action", "resource prefix"))
 for action, resource in sorted(pairs):
-    out = subprocess.run([r"C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\aws.cmd", "iam", "simulate-principal-policy",
-                          "--policy-source-arn", ROLE, "--action-names", action, "--resource-arns", resource,
-                          "--query", "EvaluationResults[0].EvalDecision", "--output", "text"], capture_output=True, text=True)
-    decision = out.stdout.strip() or ("ERROR " + out.stderr.strip()[:80])
+    now = simulate(action, resource, None)
+    planned = simulate(action, resource, PLANNED) if PLANNED else ""
     short = resource.split(":::")[-1] if ":::" in resource else resource.split(":table/")[-1]
     prefix = "/".join(short.split("/")[:5])
-    print("%-8s %-24s %s" % (decision[:8], action, prefix))
-    if decision != "allowed":
+    print("%-14s %-14s %-24s %s" % (now[:14], planned[:14], action, prefix))
+    if (planned or now) != "allowed":
         denied.append((action, prefix))
-print("DENIED:", len(denied), sorted(set(denied)))
+print("DENIED%s:" % (" under the planned policy" if PLANNED else ""), len(denied), sorted(set(denied)))

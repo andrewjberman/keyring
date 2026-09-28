@@ -2,7 +2,8 @@
 NORMALIZED, submit the Overview. Exactly one POST of each; no re-POST and no retry.
 
 Env: WALK_PW (read by name by run_upload.py, never printed), WALK_PW_NAME (polled until ParameterNotFound),
-WALK_EMAIL, WALK_DEADLINE, WALK_AUTHORITY.
+WALK_EMAIL, WALK_DEADLINE, WALK_AUTHORITY; the arms: WALK_UPLOAD_FILE, WALK_FILE_TYPE, WALK_REFERENCE_NOTIONAL (K4) and
+WALK_COMPARISON_KEYS (K5).
 Usage: python run_upload.py <out.json> live_chain.py      (or: python live_chain.py <out.json> --dry)
 
 Prints LOGGED_IN once the token is held, so the operator can tell P; K4 starts only after the password parameter reads
@@ -62,8 +63,14 @@ def input_for(upload_id):
 
 
 def k5_body(input_id):
+    """The ONE K5 body. The first Comparison window sets WALK_COMPARISON_KEYS (comma-separated catalogue keys: one is
+    Comparison, two or more Multi-Comp, as offline_submit_proof.py --comparison-keys); unset, it is window 15's
+    Overview exactly."""
     import jsonschema
-    body = dict(ls.BODY, input_id=input_id, request_id="y-live-1203-overview-" + lu.now().strftime("%Y%m%d"))
+    keys = [k for k in os.environ.get("WALK_COMPARISON_KEYS", "").split(",") if k]
+    variant = "overview" if not keys else "comparison" if len(keys) == 1 else "multicomp"
+    body = dict(ls.BODY, input_id=input_id, variant=variant, comparison_keys=keys,
+                request_id="y-live-1203-%s-%s" % (variant, lu.now().strftime("%Y%m%d")))
     jsonschema.Draft202012Validator(json.load(open(ls.SCHEMA, encoding="utf-8"))).validate(body)
     return body
 
@@ -156,7 +163,8 @@ def main():
     s, resp = lu.call("POST", "/api/scoped/investor-reporting/analysis?selected_tenant=" + lu.TENANT, k5, headers)
     d = resp.get("data") if isinstance(resp, dict) else None
     status = resp.get("status") if isinstance(resp, dict) else None
-    result.update(k5_status=s, k5_state=(status or {}).get("state"),
+    result.update(k5_variant=k5["variant"], k5_comparison_keys=k5["comparison_keys"], k5_status=s,
+                  k5_state=(status or {}).get("state"),
                   request_ref=json.dumps(d.get("identity") if isinstance(d, dict) else None)[:300])
     say("K5 POST", s, "| state", (status or {}).get("state"), "| identity", result["request_ref"])
     dump()
