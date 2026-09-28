@@ -10494,3 +10494,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Found by 0.0.0_AB_MSTR on the CTO act-4 B3 check; not blocking the drain (the source is on CLOUD). Owner reconciles the map fields and decides whether the poller should carry the current registry."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S179",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-28T18:30:00Z",
+  "one_line": "GATE (x) of .tools/to-pipeline-gate.py refuses workstream ~M's round-19 issuance because ~P's IB-sr-1 is already in round 19, and it ignores the '# pipeline-override:' its own refusal text offers as the escape; addendum v0.18 items 2-3 make ~P, ~M and ~Y separate round-19 issuers.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of TO-IB-m19-1 + TO-IB-m19-2 (2026-09-28 18:27Z): NOTE 'OVERRIDE taken' on both, then REFUSED 2 violations 'round 19 of IRPT_BCKEND already has an issuance at HEAD (1 order(s): IRPT_BCKEND.TO-IB-s158...)'",
+      ".tools/to-pipeline-gate.py:2015-2019 (message names the override as the escape); :3186-3191 calls _round_issuer_violations with no OVERRIDE_RE read; check_file :2715-2740 honours the override only for its own limbs",
+      "PRD IRPT_BCKEND ADDENDUM v0.18 items 2-3 @33ae74760b; CTO 102397 'each workstream cuts round 19 from its own STATUS next-list now'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A workstream is a scope, not a round; each IRPT_BCKEND workstream issues its own round 19, and a genuinely additional order into an open round takes the audited pipeline-override.",
+  "world_is": "GATE (x) keys the round alone and does not read the override, so the second and third workstreams cannot issue round 19 at all; the audit log records two overrides for a commit that was refused.",
+  "notes": "Blocks ~M's R4 enable and R1 read-backs (orders cut, uncommitted, at the shared tree). ~Y will hit the same limb. Recommendation to the CTO: GATE (x) honours a line-anchored pipeline-override (its message already says so), else rule a per-workstream round key."
+}
+```
