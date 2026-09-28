@@ -10466,3 +10466,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Two layers, two owners. (1) ADAPTER, ~P's write surface, round-19 cell 1: refuse by name when a linked day carries r_net <= -1 (or the running product reaches <= 0) instead of serving the figure -- meets the acceptance with a named refusal, never a wrong number. (2) PRODUCER, the 49F engine lane (runners_49f, not ~P's surface): emit a named non-OK status for r_net <= -1, and look at whether the 04-14/15 13,360.59 position and the huge cf_net rows are holdings/flow ingestion faults; routed to 1.0.0_SA_CTO as a design fork (an engine restart at re-inception vs a refusal is a GIPS track-record rule, not an adapter choice). Hazard INERT: the Performance route is not open to firm users (STATUS~P Parked row 1); the face is seen by walk principals and Andrew on DEV."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S178",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.0.0_AB_MSTR",
+  "surfaced_at": "2026-09-28T18:35:00Z",
+  "one_line": "B3 served-source proof after the act-4 drain (CLOUD @c161a2faca): 388 of 388 deployed files in the 10 IRPT Lambdas are on CLOUD by content, but lambda-source-map.json lags live on 5 functions and irpt-intake-poller serves a 07-22 firm registry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 get_function on the 10 IRPT entries of infra/aws/lambda/ci/lambda-source-map.json, 2026-09-28 ~18:2xZ; each live zip downloaded and every file's git blob looked up among all versions of its mapped repo path reachable from CLOUD (git log -m --raw): 387/388 by bytes",
+      "irpt-intake-poller (live YpE2MyUw, LastModified 2026-09-11) firm_registry.json: blob 330045a157 is in no commit on any ref; parsed JSON equals data/firm_registry.json @1f54e16dfd (2026-07-22), 1 of 5 CLOUD versions, and differs from CLOUD HEAD's",
+      "irpt-directory-refresh: live CodeSha256 DXuzx9jp; the map records d5fqVJ0f in both artifact_sha256 and deployed_code_sha256 (all 5 source files still found on CLOUD)",
+      "irpt-directory-search, irpt-performance-adapter, irpt-status, irpt-ycharts-generate: artifact_sha256 equals live (o1TXq5PH, F0bYtOfB, ZYr+IDMp, AdE17rT6), deployed_code_sha256 is stale (o9Qu0Jm7, YPSX1+nS, pfAr3uZE, LdjdnnLh)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "lambda-source-map.json is the single source of truth for source-to-deployment mapping; its recorded hash equals the live CodeSha256, and every packaged file is repo bytes.",
+  "world_is": "One function's recorded hash lags live entirely, four carry a stale deployed_code_sha256 beside a current artifact_sha256, and the intake poller packages a re-serialized 07-22 firm registry that no commit holds.",
+  "notes": "Found by 0.0.0_AB_MSTR on the CTO act-4 B3 check; not blocking the drain (the source is on CLOUD). Owner reconciles the map fields and decides whether the poller should carry the current registry."
+}
+```
