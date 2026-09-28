@@ -1463,6 +1463,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-r-1 step 0 (AMENDED, row Z-S38): among candidates whose app files and .env key set match the host, 'the base is the newest, and you name every survivor'.",
     "world_is": "Applying 'newest' literally gives 2dedae93df, a release the host is not running (three of its files are not on the host). Building the release on it would ship the MX-r-4 opal_discover/portal_index changes and an ENABLED_INTEGRATIONS value change beside OA-e-1. The worker resolved the base as 6a98a0553a on the content of three further files, an addition to the four the order names, and reports both survivors. The order's tie-break should say to break a tie of survivors by the files in which they differ.",
     "notes": "Not ARMED for this order once the base is 6a98a0553a. The same tie-break in another cell's release order would pick the newest survivor whether or not the host runs it."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S4",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-28T23:40Z",
+    "one_line": "OA-r-1 step 2 STOPPED before any deploy: the release tree's pytest run (the order's four-file list) reads 2 failed, 34 passed, and the order says 'Any failure: STOP, no deploy'. Both failures are in tests/test_portal_grant.py's OPERATOR half (test_admin_accepts_portal_only_candidate: KeyError 'portal_grant'; test_admin_rejects_unknown_portal_channel: message 'scope.portal_channels is not admitted by this contract (no portal_grant)'). They fail identically at the pure base 6a98a0553a: the tests read org/standards/NFRA_OPLGTW_CONTRACT.json, which the release tree does not carry at v1.2 (base has 0 'portal_grant', CLOUD has 1). The four named arms PASSED.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release tree /c/tmp/oa-10-rel, branch rel-nfra-opalai-r2-asker-binding-gateway, HEAD d287ffb346 (base 6a98a0553a + 2254910889 + a2c96703b1 as one commit, GIT_COMMIT_AUTHOR_OVERRIDE used once). Census: git diff --name-only 6a98a0553a HEAD = the 5 expected gateway files, no other.",
+        "cd /c/tmp/oa-10-rel/infra/aws/ec2/opal-gateway && python -m pytest tests/test_asker_binding.py tests/test_asker_scope.py tests/test_portal_grant.py tests/test_identity_scope.py -rA -q -> '2 failed, 34 passed'; transcript at org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~10/OA-r-1_NEGATIVE_ARMS.txt; the four named arms PASSED.",
+        "Control at the pure base: git archive 6a98a0553a infra/aws/ec2/opal-gateway org/standards extracted to /c/tmp/oa-10-basechk; tests/test_portal_grant.py there (the base's own file, the base's own app) -> '2 failed, 5 passed': the same two admin tests.",
+        "git show 6a98a0553a:org/standards/NFRA_OPLGTW_CONTRACT.json | grep -c portal_grant = 0; the same at CLOUD 90cbe69b07 = 1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-r-1 step 2: the four-file pytest list runs in the release tree and any failure stops the deploy; the order expects the list to pass there.",
+    "world_is": "tests/test_portal_grant.py holds an operator half (ops/schwab_entitlement_admin.py) whose two tests read the contract file outside infra/aws/ec2/opal-gateway. The release tree is the base plus five gateway files, so it carries the base's contract (no portal_grant). Those two tests fail there before and after OA-e-1, and neither touches asker_scope.py or tools.py. The worker did not deploy, opened no ledger entry, and touched nothing on the instance beyond the read-only SSM of step 0. Options for the issuer: amend step 2's list to deselect those two tests (with the reason), or supply the v1.2 contract to the census. The worker will not choose.",
+    "notes": "Not ARMED: nothing is deployed. The release worktree /c/tmp/oa-10-rel and branch rel-nfra-opalai-r2-asker-binding-gateway (d287ffb346) exist and are unpushed. Scratch /c/tmp/oa-10-basechk holds the base control and can be removed."
   }
 ]
 ```
