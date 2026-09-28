@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-28T17:5xZ.
+tick here. As of 2026-09-28T18:3xZ.
 
 ## Pins
 
@@ -11,48 +11,52 @@ tick here. As of 2026-09-28T17:5xZ.
 |---|---|
 | Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-28T19:47:43Z (presence-extended) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal candidate pin | local DEV `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `c3dd9ca9`, PROD `a0314f22` (ls-remote read 17:5xZ); local DEV ahead 97, behind 0 -- every commit is this seat's or its workers' |
-| Suite on 28f5118c | 933 pass / 27 skip / 5 fail (the 5 known); tsc -b 0; lint 0 |
+| Portal candidate pin | DEV `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
+| Portal origin | origin DEV `a47d3a75` (pushed by this seat under the lease; ls-remote read 18:3xZ); PROD `a0314f22`. CI for a47d3a75: run 36466179803 success |
+| Suite on a47d3a75 | IR scope 897 pass / 27 skip / 5 fail (the 5 known, by name); tsc -b 0; eslint 0 errors |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
 
 ## Live thread
 
-State: LIVE END TO END on local DEV for Holdings, Performance and Analysis, with two defects on the face: the COT
-eleven-account pie draws nothing (NEW-02, row S30) and UIC-09 reopened (row S29). The last walk was the CRO re-walk
-@f330857833 on DEV 4b9df1e7, which predates the IV-e-70/73/74/79 drains.
+State: LIVE END TO END on DEV for Holdings, Performance and Analysis. Last real run: `/ui-walk --client cowdin`
+on 5174 @a47d3a75 (tmp/ui-walk/20260928T182319Z, local only). S30 disarmed by row S31.
 
-## Round 9 at the boundary
+## Landed under FAST (graded by the CVO after the fact)
 
-Terminal and drained: IV-e-68, 69, 70, 73, 74, 78, 79. Superseded by this lease, unbuilt, rows moved below verbatim:
-IV-e-71, 72, 75, 76, 77 (issuer close in each order).
+| Item | Pin | Rows | Check |
+|---|---|---|---|
+| 1 | portal `a47d3a75` | UIC-10, UIC-12, UIC-13, S30 | iv-e-72 HOLDINGS-ANY-COUNT-OK; real run cowdin shot 017 |
+
+Round 9 at the boundary (@f42e1b00fa): IV-e-68/69/70/73/74/78/79 terminal and drained; IV-e-71/72/75/76/77
+superseded by this lease, unbuilt, their rows carried into Next.
 
 ## Next (in order; a defect that breaks the live thread goes first)
 
-1. **S30 + IV-e-72 rows (UIC-10/12/13):** a negative account is a separate labelled line, never a slice, and the
-   pie's shares sum to the positive total (DrillTree.tsx `donutRows` keeps negatives today); small slices move to the
-   legend; every account reachable from OVER WHAT (IdentityCard.tsx list clipped). Real run: the COT eleven-account client.
-2. **S29 (UIC-09 reopened):** "No source age yet" must not show before any source exists.
+1. **S29 (UIC-09 reopened):** "No source age yet" must not show before any source exists (StatusPanel source-age
+   slot; `NO_SOURCE_AGE_YET`, state/status.ts:342; fe-s-21 tests re-goldened to UIC-09).
+2. **Account identity (new, cowdin walk 18:2xZ):** all 11 cowdin accounts read "****8774 / UTMA" in OVER WHAT, the
+   pie legend and the table -- one tail for every account. Diagnose data vs page first (UIR-32 mask form).
 3. **IV-e-71 rows (UIR-32/34/49):** one account mask everywhere (`****1234 / TYPE`); ALL CATEGORIES draws no one-slice pie.
-4. **IV-e-75 rows (UIC-18..22, W35-S2):** Analysis setup behaves like a form; Export on Analysis opens only on an
+4. **UIC-11 residue:** ACCOUNT_PALETTE[0] is neutral-100 `#f5f5f5`, near-white on the white panel (the first
+   wedge and swatch nearly vanish).
+5. **IV-e-75 rows (UIC-18..22, W35-S2):** Analysis setup behaves like a form; Export on Analysis opens only on an
    answer-bearing report.
-5. **IV-e-77 rows (UIR-45, UIC-14, UIC-17):** one client date format on Performance and the directory stamp; the
-   source line in client words; the scope panel never prints 'unknown'.
-6. **IV-e-76 rows (UIR-04/13/30, W35-S1):** firm display names from the registry generated view. Per CTO 102351 the
+6. **IV-e-77 rows (UIR-45, UIC-14, UIC-17):** one client date format on Performance and the directory stamp; the
+   source line in client words; the scope panel never prints 'unknown' (SCOPE AS OF still reads unknown).
+7. **IV-e-76 rows (UIR-04/13/30, W35-S1):** firm display names from the registry generated view. Per CTO 102351 the
    view target lands in `lib/opal_naming.py`, outside this lease's surface: CTO reads the diff before it lands.
-7. **UIC-03:** no fix of record yet.
-8. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
+8. **UIC-03:** no fix of record yet.
+9. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
 
 ## Write claims
 
-`portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx`, `.../tabs/holdings/slices.ts`,
-`.../global/IdentityCard.tsx` (item 1).
+`portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx`, `.../state/status.ts` (item 1 of Next).
 
 ## Next proof
 
-Item 1: a fixture test (11+ accounts, one negative; 3-account control), then ONE real run of Holdings on 5174 for the
-COT eleven-account client with the pie's non-white pixel share read from the screenshot.
+S29: the loading and refusal status panels show no source-age words (test on the rendered panel per no-answer
+state; real run on 5174 reading the Performance loading face).
 
 ## Dependencies
 

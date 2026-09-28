@@ -2824,3 +2824,32 @@
   "notes": "Not blocking: IVE74-AC1 as written names only 'client name' and 'state in words' as this cell's own scope (verbatim Build text), and both are met; UIC-23's fuller line (variant, date, admin-all-requests) was not re-litigated since the task order's own Build text narrows it. Filed so an L9/L10 reader sees the wire-contract gap and the header-derived resolution were a deliberate reconciliation, not an oversight."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S31",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-28T18:35:00Z",
+  "one_line": "DISARMS DSGN_IRPTV1-S30: the COT eleven-account (cowdin) 'All holdings' pie draws on portal DEV a47d3a75 (on origin DEV, ls-remote read 18:3xZ): 10 positive wedges, the one negative account (-$169,336.52) as a separate labelled line, never a wedge (UIC-12, FAST item 1). S30's blank pie was NOT reproduced on DEV 28f5118c either (CRO walk 20260928T174953Z shot 086 draws, with the negative account as a backwards wedge), so its cause stays inferred: recharts 3 draws nothing once the signed sum is <= 0 (Pie.js `sum > 0`), a state the fix now makes unreachable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- disarmed by this row",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal a47d3a75 (fix(DSGN_IRPTV1 FAST item 1)): DrillTree.tsx partitionPieRows draws amount > 0 only; negative rows render data-slot holdings-pie-negative-line",
+      "bun test iv-e-72.holdings-any-count.test.tsx -> VERDICT: HOLDINGS-ANY-COUNT-OK; S30 CONTROL old-feed signed sum -530212.96 on the 12-account fixture (the old feed would draw nothing), new feed drawn=11, negativeInPie=false",
+      "real run: node .claude/skills/ui-walk/walk.mjs --client cowdin on localhost:5174, tmp/ui-walk/20260928T182319Z shot 017 (local only, never committed): pie drawn, 4 inside labels, negative line shown; walker DISARM REFUSED 18:27:12Z",
+      "negative arm: CRO walk tmp/ui-walk/20260928T174953Z shot 086 on DEV 28f5118c before the fix: pie drawn with 11 wedges and overlapping labels"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "spec_asserts": "UIC-12 (PRD v0.18): a negative account is shown as a separate, labelled line (never as a pie slice), and the pie's shares sum to the positive total it states; NEW-02 acceptance: the accounts pie draws for every client, including one with a negative account.",
+  "world_is": "The pie draws positive accounts only; the labels read recharts' share of the drawn total when a negative account is left out, and a caption states that base. The CVO grades the landed pin after the fact.",
+  "notes": "Row S30 stays filed as it is (append-only); this row is the disarm record.",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S30: the fix at portal a47d3a75 makes a negative account a labelled line and never a wedge, so the pie's feed always sums above zero; the live cowdin pie draws."
+}
+```
