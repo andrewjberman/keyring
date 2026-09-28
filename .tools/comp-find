@@ -447,6 +447,18 @@ def main() -> int:
         elif a == "--cursor":
             i += 1
             cursor = argv[i] if i < len(argv) else None
+        elif a == "--":
+            # everything after `--` is pattern/pathspec, even text that starts with a dash
+            positional.extend(argv[i + 1:])
+            break
+        elif a.startswith("--"):
+            # AN UNKNOWN FLAG USED TO FALL THROUGH INTO THE PATHSPEC. `--width 100` scoped a bare search
+            # to a path named "100" and printed "0 hit(s) across 0 file(s)" -- a well-formed zero over
+            # nothing searched (0.0.0_AB_MSTR~Z, 2026-09-28). Refuse instead of guessing.
+            print("comp-find: ERROR: unknown option %r. Valid: -i --name --files --all --hidden "
+                  "--include-held --corpus --page --limit --band --budget --cursor (--width is "
+                  "comp-read's). To search for text that starts with '--', put it after a bare --." % a)
+            return 2
         else:
             positional.append(a)
         i += 1
@@ -501,6 +513,14 @@ def main() -> int:
         print("comp-find: ERROR: no pattern given.")
         return _usage() or 2
     pattern, pathspec = positional[0], positional[1:]
+    # A plain pathspec that names nothing scans 0 files, and "0 across 0" reads as an absence. Globs
+    # and git pathspec magic are exempt: they may legitimately match nothing on disk by name.
+    missing = [p for p in pathspec if p not in ("", ".") and not any(c in p for c in "*?[:")
+               and not os.path.exists(os.path.join(WS, p))]
+    if missing and corpus != "aws":
+        print("comp-find: ERROR: %d pathspec(s) do not exist: %s -- a search over a path that is not "
+              "there is NO MEASUREMENT, not a zero." % (len(missing), ", ".join(missing[:5])))
+        return 2
 
     if corpus == "aws":
         return _aws_corpus(pattern, pathspec, ignore_case=ignore_case, name_mode=name_mode,
@@ -525,6 +545,14 @@ def main() -> int:
         return 2
     if held_note:
         print("comp-find: %s" % held_note)          # sovereign-held guard: absence is NOT confirmed
+    if pathspec and not files:
+        # THE GENERAL FORM of the missing-path refusal above: ANY pathspec that selects zero files
+        # (a shell glob like '*.md', which this scope matches by PREFIX, not by glob) would print
+        # "0 hit(s) across 0 file(s)" -- a zero over nothing searched.
+        print("comp-find: ERROR: the pathspec %s selects 0 files -- NO MEASUREMENT, not a zero. Pathspecs "
+              "match by directory/file PREFIX (e.g. org/mcp), not by shell glob; filter file types with "
+              "--name '<glob>' --files instead." % " ".join(pathspec[:5]))
+        return 2
 
     terms = _terms(pattern)
     hits = []          # (band, rel, lineno, text)
