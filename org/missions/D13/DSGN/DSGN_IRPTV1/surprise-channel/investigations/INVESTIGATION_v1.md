@@ -2880,3 +2880,32 @@
   "notes": "Build ladder rung 1 (YAGNI): no schema change without a consumer. The day a cell cuts a CROSS-CLIENT history view, that cell carries the wire change (a client field on OwnedAnalysisRequest, IRPT_BCKEND ~Y intake surface) paired with the page change. UIC-23's 'variant and date' words are not ruled here; they stay on 2.0.0_SA_COO~D's list as UIC-23 criteria."
 }
 ```
+
+
+```json
+{
+  "id": "DSGN_IRPTV1-S33",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-28T19:35:00Z",
+  "one_line": "DISARMS DSGN_IRPTV1-S29: portal 528acdcd (on origin DEV, ls-remote read 19:3xZ) makes a loading or refused panel read its state label alone -- no 'No source age yet' before a source exists (UIC-09). StatusPanel, StageDisplay and VariantSelector print sourceAgeWordsForPanel, null on the no-source-age-yet kind; the kind stays on data-source-age-kind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- disarmed by this row",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 528acdcd fix(DSGN_IRPTV1 FAST item 2): state/status.ts sourceAgeWordsForPanel; the three panels call it",
+      "bun test iv-e-69 (UIC-09 arm re-goldened: sourceAgeText empty), fe-s-21, fe-s-25, fe-s-34 x2, fe-s-39 -> 21 pass / 3 fail, the 3 being the known F25 set",
+      "IR suite 895 pass / 27 skip / 7 fail: the known 5 plus IVE20-AC2/AC3 (150 s dev-server timeouts; alone: BANDS-OK, SCROLLBARS-OK)",
+      "real run: /ui-walk --client cowdin on 5174 (tmp/ui-walk/20260928T190559Z, local only): the words appear nowhere in the walk; the transient loading/refusal faces were not caught, so the unit render of the real StatusPanel on EMPTY_ENVELOPE is their exercised path"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "spec_asserts": "UIC-09 (PRD v0.18): Loading is a loading state with no system words; 'source age' never shows before a source exists.",
+  "world_is": "A no-answer panel with no source date shows its label alone; every other source-age reading is unchanged.",
+  "notes": "Row S29 stays filed as it is (append-only); this row is the disarm record. The CVO grades the pin after the fact, on a real run that catches a loading face.",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S29: portal 528acdcd removes the source-age words from every no-answer panel with no source date."
+}
+```

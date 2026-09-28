@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-28T18:3xZ.
+tick here. As of 2026-09-28T19:3xZ.
 
 ## Pins
 
@@ -11,52 +11,52 @@ tick here. As of 2026-09-28T18:3xZ.
 |---|---|
 | Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-28T19:47:43Z (presence-extended) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal candidate pin | DEV `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `a47d3a75` (pushed by this seat under the lease; ls-remote read 18:3xZ); PROD `a0314f22`. CI for a47d3a75: run 36466179803 success |
-| Suite on a47d3a75 | IR scope 897 pass / 27 skip / 5 fail (the 5 known, by name); tsc -b 0; eslint 0 errors |
+| Portal candidate pin | DEV `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
+| Portal origin | origin DEV `528acdcd` (pushed by this seat under the lease; ls-remote read 19:3xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd UNREAD |
+| Suite on 528acdcd | IR scope 895 pass / 27 skip / 7 fail = the known 5 + IVE20-AC2/AC3 dev-server timeouts (pass alone); tsc -b 0; eslint 0 errors |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
 
 ## Live thread
 
 State: LIVE END TO END on DEV for Holdings, Performance and Analysis. Last real run: `/ui-walk --client cowdin`
-on 5174 @a47d3a75 (tmp/ui-walk/20260928T182319Z, local only). S30 disarmed by row S31.
+on 5174 @528acdcd working tree (tmp/ui-walk/20260928T190559Z, local only). S30 disarmed by row S31, S29 by row S33.
 
 ## Landed under FAST (graded by the CVO after the fact)
 
 | Item | Pin | Rows | Check |
 |---|---|---|---|
 | 1 | portal `a47d3a75` | UIC-10, UIC-12, UIC-13, S30 | iv-e-72 HOLDINGS-ANY-COUNT-OK; real run cowdin shot 017 |
+| 2 | portal `528acdcd` | UIC-09, S29 | six source-age files green but the known F25 set; the walk caught no loading face (unit render is the exercised path) |
 
 Round 9 at the boundary (@f42e1b00fa): IV-e-68/69/70/73/74/78/79 terminal and drained; IV-e-71/72/75/76/77
 superseded by this lease, unbuilt, their rows carried into Next.
 
 ## Next (in order; a defect that breaks the live thread goes first)
 
-1. **S29 (UIC-09 reopened):** "No source age yet" must not show before any source exists (StatusPanel source-age
-   slot; `NO_SOURCE_AGE_YET`, state/status.ts:342; fe-s-21 tests re-goldened to UIC-09).
-2. **Account identity (new, cowdin walk 18:2xZ):** all 11 cowdin accounts read "****8774 / UTMA" in OVER WHAT, the
-   pie legend and the table -- one tail for every account. Diagnose data vs page first (UIR-32 mask form).
-3. **IV-e-71 rows (UIR-32/34/49):** one account mask everywhere (`****1234 / TYPE`); ALL CATEGORIES draws no one-slice pie.
-4. **UIC-11 residue:** ACCOUNT_PALETTE[0] is neutral-100 `#f5f5f5`, near-white on the white panel (the first
+1. **IV-e-71 rows (UIR-32/34/49):** one account mask everywhere (`****1234 / TYPE`); ALL CATEGORIES draws no
+   one-slice pie. The pie half lives in the shared `portal/src/components/CategoryViewTree.tsx`, outside this lease's
+   surface: that half is parked below; the mask half is in-surface.
+2. **UIC-23 residue (CTO 102416, row S32):** each Analysis history row names its variant and date in words.
+3. **UIC-11 residue:** ACCOUNT_PALETTE[0] is neutral-100 `#f5f5f5`, near-white on the white panel (the first
    wedge and swatch nearly vanish).
-5. **IV-e-75 rows (UIC-18..22, W35-S2):** Analysis setup behaves like a form; Export on Analysis opens only on an
+4. **IV-e-75 rows (UIC-18..22, W35-S2):** Analysis setup behaves like a form; Export on Analysis opens only on an
    answer-bearing report.
-6. **IV-e-77 rows (UIR-45, UIC-14, UIC-17):** one client date format on Performance and the directory stamp; the
+5. **IV-e-77 rows (UIR-45, UIC-14, UIC-17):** one client date format on Performance and the directory stamp; the
    source line in client words; the scope panel never prints 'unknown' (SCOPE AS OF still reads unknown).
-7. **IV-e-76 rows (UIR-04/13/30, W35-S1):** firm display names from the registry generated view. Per CTO 102351 the
+6. **IV-e-76 rows (UIR-04/13/30, W35-S1):** firm display names from the registry generated view. Per CTO 102351 the
    view target lands in `lib/opal_naming.py`, outside this lease's surface: CTO reads the diff before it lands.
-8. **UIC-03:** no fix of record yet.
-9. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
+7. **UIC-03:** no fix of record yet.
+8. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
 
 ## Write claims
 
-`portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx`, `.../state/status.ts` (item 1 of Next).
+`portal/src/pages/InvestorReporting/tabs/holdings/slices.ts::maskedLabelFor`, `.../tabs/holdings/DrillTree.tsx` Breadcrumbs (item 1 of Next, the mask half).
 
 ## Next proof
 
-S29: the loading and refusal status panels show no source-age words (test on the rendered panel per no-answer
-state; real run on 5174 reading the Performance loading face).
+IV-e-71 mask half: one mask form (`****1234 / TYPE`) on the drill breadcrumb and strategy levels, the same tail as the
+header; a fixture test plus a cowdin/INF drill on 5174.
 
 ## Dependencies
 
@@ -64,7 +64,6 @@ state; real run on 5174 reading the Performance loading face).
 |---|---|---|---|
 | K8 re-run window (adapter RENDER_DELEGATE fix + R11 RUNNING answer) | 2.0.0_SA_COO~P | served export path | AWAITED |
 | K10 re-run window (irpt-status rebuild 3) | 2.0.0_SA_COO~P | served status path | AWAITED |
-| Ruling on row W39-S2 (OwnedAnalysisRequestWire has no client field) | 1.0.0_SA_CTO | row W39-S2 | AWAITED |
 
 ## Parked
 
@@ -72,6 +71,8 @@ state; real run on 5174 reading the Performance loading face).
 |---|---|---|
 | The one-line FAST notice to the CVO ("FAST from 17:47Z; pins graded after the fact") | 3.0.0_SA_CVO | the CVO is seated (not LIVE at 17:5xZ) |
 | NEW-01 (49F YTD -100%, HIGH) | 2.0.0_SA_COO~P | ~P's first post-reboot item (CTO 102358) |
+| All 11 cowdin accounts read "****8774 / UTMA" (the producer's display.label, inferred): row IRPT_BCKEND-S182 @cd42e57b61 | 2.0.0_SA_COO~M | ~M reads the served snapshot; a distinct producer label returns it here as a page item |
+| IV-e-71's one-slice ALL CATEGORIES pie: an additive prop on the shared CategoryViewTree.tsx | 1.0.0_SA_CTO (surface) | the lease surface widens to that file, or a FULL round cuts it |
 
 ## Limits
 
