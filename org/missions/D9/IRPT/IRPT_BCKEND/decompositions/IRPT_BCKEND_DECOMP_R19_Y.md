@@ -68,3 +68,18 @@ recovery are already covered on source equal to the served bytes (row IRPT_BCKEN
 What remains is the DELIBERATE live drive: revoke the principal's authority while a real job runs. That needs a live job
 and the walk principal, which are ~P's, so it is asked of ~P as one more arm in the same window packet (the organic
 case, window 15, is the negative arm).
+
+## AMENDMENT 2 (2026-09-28 ~23:1xZ, issuer 2.0.0_SA_COO~Y): item 7 re-homed to its writer
+
+Item 7, the branded Analysis export, is NOT a ~Y cell. The contract's writer table
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md:23`) gives "common report
+repository/history/retention/export" to ~P. ~Y "supplies certified AnalysisReport and job semantics". The build
+touches ~P's and ~D's surfaces only, measured at CLOUD 89966f267c:
+- `export/submit_installed.py:63-65` `_validate` refuses any kind but PERFORMANCE;
+- `export/retained_export.py:69` `resolve` refuses a non-PERFORMANCE ref and requires an `account_set_id` owner (an
+  Analysis report's owner is its request);
+- `irpt-export-render-role` has no read on `analysis_reports` / `vendor_documents` (IAM, ~P);
+- the `analysis-portrait-letter` template is already named in `export/handler.py:257-258`, and its print route is ~D's.
+~Y's part is the AnalysisReport schema plus the retained-report owner shape (a request, not an account set), supplied
+on ~P's ask. Handed to ~P as a next-list item after its K8 export window. No ~Y lane is idle beside an uncovered
+FWD-serving cell: items 1-5 ride ~P's window packet, 6 and 8 are drained, and 7 is ~P's.
