@@ -86,3 +86,14 @@ SELF-DRIVE SCOPE: ~O fabric -> D6 + 2 D9 projects -> 4 project(s) [NFRA_OPALAI, 
 
 - The pause above is lifted. Re-armed off this record (skill section 0.4) with a new cron; the scope, terms and stop
   are unchanged. No re-plan or report was asked.
+
+## CRON STOPPED 2026-09-28 ~15:3xZ -- Andrew-direct at the 1.0.0_SA_CTO~O terminal
+
+> "kill the crons in this session not needed anymore"
+
+- CronList showed one job, 8abcafba (`7,37 * * * *`, the /self-drive tick). It is deleted, and CronList now reads
+  "No scheduled jobs."
+- His word stops the timer. It does not say the scope is done or retired, and this record does not read it wider than
+  it says. The inbox watcher (a Monitor, not a cron) stays armed. Work that arrives by inbox is still acted on,
+  including the L10 slugs now landing, starting with NFRA_OPALAI at 15:28Z.
+- State: STOPPED-BY-OPERATOR (the timer). Re-arm only on his word, off this record (skill section 0.4).

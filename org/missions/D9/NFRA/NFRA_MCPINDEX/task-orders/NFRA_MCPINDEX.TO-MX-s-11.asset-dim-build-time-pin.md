@@ -102,7 +102,7 @@ Controls run on the instruments:
 - AC1's masked compare, on the perfrp pin, differs from its regeneration ONLY in the `registry@<h16>` token (the
   registry moved since that pin was rendered). Hence the mask.
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~D</slot>
 <fabric>site-z</fabric>
@@ -121,4 +121,3 @@ not re-opened. MX-s-10 step 2 is relayed to 0.7.0_AE_CloudOps~I.
 estate's automated DS deploy path (rule 13), not a seat's hand act. The `code/lib/` pair (09:30:35-36Z) is DS~D's publish.
 The 3 s gap (write before push completion) matches a pre-push hook. Not a row: the writer is a sanctioned mechanism.
 
-<status>complete</status>

@@ -98,14 +98,13 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once 
 The lane is seated by 0.0.0_AB_MSTR~Z on this seat's ask. `0.7.0_AE_CloudOps~A` is on another project (one project per
 Tier-2 seat).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~I</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 
-<status>complete</status>
 <!-- complete flipped by 0.7.0_AE_CloudOps~I 2026-09-26T12:2xZ. AC1 PASS exit=0, AC2 PASS exit=0, AC3 PASS exit=0.
      Instance: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~I/NFRA_MCPINDEX.TO-MX-s-3.silver-etf-rebuild.proof_of_spec.json
      proof-of-spec-check VALID (rc=0), re-run by this seat after 2.0.0_SA_COO~O added the MX-s-3 decomp row @9f323d492d.

@@ -107,11 +107,10 @@ Instance at `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~
 for a test) are the close run's, after G-ACCT and G-AUTH. Cutover hookups: remove the fence line from
 `.claude/settings.json`; retire the BG launch line in `.tools/ajb.ps1`.
 
-<status>pending</status>
+<status>superseded -- CLOSED for round 1 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: the gate's PASS arm (as Opal_Agent) and its negative arm are the close run's, after G-ACCT and G-AUTH (Andrew's, carded by 1.0.0_SA_CTO), which have not landed. Holding it open would deadlock round 1's L10 on an Andrew act. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in round 2 beside OA-t-1, unchanged, once the gates land. Was: pending.</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 
-<status>superseded -- CLOSED for round 1 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: the gate's PASS arm (as Opal_Agent) and its negative arm are the close run's, after G-ACCT and G-AUTH (Andrew's, carded by 1.0.0_SA_CTO), which have not landed. Holding it open would deadlock round 1's L10 on an Andrew act. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in round 2 beside OA-t-1, unchanged, once the gates land. Was: pending.</status>

@@ -126,14 +126,13 @@ silver moves): CTO half offered by 1.0.0_SA_CTO~O (065208Z); the second, non-act
 after PHASE A's announcement. GO is the issuer's, on both halves SIGNED. MX-s-7 (the recorder UTF-8 fix) landed
 first @b8a7da3c17, so step 11's record does not re-arm the mojibake loop.
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~7</slot>
 <fabric>site-z</fabric>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
 
-<status>complete</status>
 <!-- complete flipped by 0.9.0_WK_NFRA_MCPINDEX~7 2026-09-27T10:5xZ. AC1 PASS exit=0 (vendored copies=4 both
      fixes 4 of 4 old guard 0), AC2 PASS exit=0 (functions carrying the fix 4 of 4, sha==CodeSha256=True for all 4).
      Instance: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~7/NFRA_MCPINDEX.TO-MX-s-8.silver-mirror-guard-vendor.proof_of_spec.json

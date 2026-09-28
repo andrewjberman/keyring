@@ -151,14 +151,13 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once 
 
 Queued after MX-s-3 on the same lane (0.7.0_AE_CloudOps~I). MX-s-3 has the 23:30Z window.
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~I</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 
-<status>complete</status>
 <!-- self-marked by the assignee 0.7.0_AE_CloudOps~I 2026-09-27T22:3xZ, on the order as amended A5
      @fc2001d2a6 (step 1 and AC1 left this order; MX-s-4 is step 2 only, graded on AC4 alone).
      Step 2, the honest wrapper exit, landed at 4b3a757410 and its Z-S17 ordering repair at 03e744ec3f;
