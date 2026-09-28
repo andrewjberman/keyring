@@ -54,3 +54,14 @@ Not measured by this seat:
 - the claim that only walk windows reach the export route.
 
 These are the packet's.
+
+## Addendum 1 (2026-09-28 ~00:4xZ) -- checked against the irpt-status rebuild 2 failure; the signature STANDS
+
+Source: 2.0.0_SA_COO~P msg 102275.
+- **The failure:** irpt-status `5fSyChId` answered K10 with a 500, a TypeError at `public_line(admitted=)`, and was
+  rolled back at 00:36:31Z.
+- **This zip checked for the same class, on its own modules:**
+  - `served.py:107-108` calls `_errors.public_line(..., admitted=BOUNDARY_REASONS)`.
+  - The zip's only `errors.py` defines `public_line(..., *, admitted=None)` at `:146`.
+  - No module name appears twice among the zip's 59 members.
+  - `served._record(...)`, imported from the zip, runs clean on both `BORQ2shb` and the live `Ulim/gmf`.

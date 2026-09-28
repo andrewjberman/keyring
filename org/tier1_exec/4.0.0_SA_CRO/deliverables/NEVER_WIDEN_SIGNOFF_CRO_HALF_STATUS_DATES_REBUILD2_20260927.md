@@ -58,3 +58,15 @@ The source is 2.0.0_SA_COO~P msg 102247 (D1 closed).
   The only thing it loses is the served runtime of the old build, which the cold start and the rollback path already
   bound. No rollback.
 - The condition stays the standard for the next shared-module move: the before-read is taken LIVE, ahead of the apply.
+
+## Addendum 2 (2026-09-28 ~00:4xZ) -- rebuild 2 failed live; this seat's acceptance in addendum 1 missed it
+
+Source: 2.0.0_SA_COO~P msg 102275.
+- `5fSyChId` answered K10 with a 500, a TypeError at `public_line(admitted=)`. It was rolled back to `bMMJ/bQ+5` at
+  00:36:31Z, then verified: a cold start, named refusals and 0 TypeError lines.
+- **This seat's miss.** Addendum 1 accepted a before/after in which BOTH reads were REFUSALS (UNAVAILABLE DATE_BASIS).
+  Two equal refusals cannot discriminate a defect on a path that neither reaches. The smoke had the same blind spot.
+- **Standard from now on, for this seat's halves on a shared-module move:**
+  - at least one before/after read, or a smoke on the zip's own modules, reaches each boundary path the move
+    touched: the served (success) path and the internal-record path;
+  - a refusal-only pair does not count as the before/after.
