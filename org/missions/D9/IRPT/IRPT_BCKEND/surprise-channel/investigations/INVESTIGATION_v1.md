@@ -10355,3 +10355,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy (not ~M's lane): grant cot-exporter-ec2-role read-only dynamodb:Scan/GetItem on table/bd-securities in infra/aws/terraform/cot-pipeline/iam.tf (cot_exporter_policy :241), via safe-apply. It is an IAM widening and moves every served COT mix (about 33 points of equity), so it needs its own halves; bd-securities is security-level asset truth (a07 serves all firms from it), not another firm's client data. Until then the Monday R1 read-backs of cot-cash-admission, cot-other-admission and bd-securities-cot-new-p1 cannot pass on served output, and the COT cash-line act is moot on served. Found by 2.0.0_SA_COO~M reading the ad-hoc 2026-09-27 18:46Z COT gold run's outputs."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S174",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-28T12:47:44Z",
+  "one_line": "bd-securities (non-canonical since Andrew's word @871b7458ec) carries firm provenance its readers load whole: firm_origin='inflection' on 222 rows, and classified_run='irpt-m-cot-new-20260926' on 941 rows derived from COT's holdings -- the BD ETFClassifier scans whole items, so the BD, 49F and INF gold load COT-tagged rows today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only boto3 paginated Scan of bd-securities, 2026-09-28 ~01:2xZ: 10,929 of 10,929 items; firm_origin on 222 (all 'inflection'); classified_run 941 'irpt-m-cot-new-20260926' + 204 'irpt-m-once-20260925'; 0 client, account-number, holding or amount fields (the 'account' tokens are product names such as 'SHARE PLAN ACCOUNT')",
+      "data/inf/scripts/classification/classify_assets.py:353 writes firm_origin='inflection'; data/black_diamond/scripts/classification/seed_canonical_securities.py preserves it; 0 readers under data/",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py:48-64: a whole-item paginated scan of bd-securities, every item kept in _ticker_map",
+      "org/critical_paths/.open_deploys/bd-securities-cot-new-p1-m-20260926.json: HELD-SOVEREIGN-GATED; its rollback is DeleteItem per key with condition classified_run = irpt-m-cot-new-20260926 (human confirmation)",
+      "1.0.0_SA_CTO msg 102303 (Andrew-direct, record @871b7458ec): the canonical classification table is etf-classifications; msg 102292's fork on this table is withdrawn"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "cot is a separate firm from bd, never mirror/sync (CLAUDE.md); the shared classification table holds securities, not a firm's provenance (1.0.0_SA_CTO msg 102292: 'no account, holding, client or firm fields', read from one item).",
+  "world_is": "Two attributes tie rows to a firm, and the BD classifier loads them whole: 222 Inflection-origin rows, and 941 rows derived from COT's holdings that the BD, 49F and INF gold read today.",
+  "notes": "Weak facts (a security was once in that book), not client data; measured while adjudicating msg 102292 before its withdrawal. They leave the cross-firm read path when the BD gold classifier moves to etf-classifications (the CTO's same-class row) and when ~M disposes of the held COT-new write. classified_run stays until that open deploy closes, because it is the rollback key; firm_origin should stop being written (classify_assets.py:353, the INF classification writer's lane)."
+}
+```
