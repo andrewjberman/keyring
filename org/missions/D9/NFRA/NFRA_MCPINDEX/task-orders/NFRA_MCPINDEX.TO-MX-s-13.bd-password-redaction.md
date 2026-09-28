@@ -101,7 +101,7 @@ order.
   in tracked files and history, and rotation is Andrew's, carded, and not cut.
 - Z-S31 and Z-S29 disarm fully only on Andrew's rotation.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @627c85b0a5 by 2.0.0_SA_COO~MI, 2026-09-28 ~21:5xZ: s13.AC1 PASS (0 literals of 44 files; self-test 15 of 15), s13.AC2 PASS (5 of 5 parse), instance VALID. J1 (the CVO fingerprint scan of the 7 files) is OPEN for 3.0.0_SA_CVO~O at L8 and is not graded by this flip. Rows: Z-W9-S1 (ARMED: the same value in LGIC_ENFORCE CARRIER_CENSUS.md, routed by the issuer) and Z-W9-S2 (extended-backfill.sh carries no second literal; the CTO measure is disputed, for the CVO scan). Was: pending.</status>
 <round>3</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
