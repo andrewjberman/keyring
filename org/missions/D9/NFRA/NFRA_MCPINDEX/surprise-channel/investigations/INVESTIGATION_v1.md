@@ -2203,6 +2203,46 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~O",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "WHY THIS ROW EXISTS AT ALL, which is a process point about me rather than about fees: I measured all of the above on 2026-09-28 during MX-s-10 step 3 and wrote it only into ANNOUNCE_MX-s-10.md, an MX-s-10 deliverable. MX-s-10 is now SUPERSEDED-for-round, so the finding would have died with the cell it was discovered in. CLAUDE.md section 2 says an off-task finding gets a ROW and the work continues; an announce is not a channel row and does not survive its order. Filed late, and the lateness is the lesson. NOT FIXED, and deliberately not: the one-line repair is the same insertion MX-s-4 made, and opal-bd-fees-download.json sits in infra/aws/ssm/ which is this lane's surface -- but no order covers this producer, and CLAUDE.md forbids implementing a gate or monitor unbidden even where proposing is legal. An honest exit is not an alarm (the issuer ruled exactly that for MX-s-4), so the fix is legal in principle and wants a cell, not a rider. The fees schedule was also left ALONE under MX-s-10's own preflight, which removes its leg only once its caller census reads 0 -- and that census reads 1. ONE THING UNMEASURED: whether the four remaining BD download documents (allocation, realized, transaction, unrealized) also lack an exit. Z-S17 measured their shutdown ORDERING, not their exit honesty, and those two are different properties."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W9-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~9",
+    "surfaced_at": "2026-09-28T22:00Z",
+    "one_line": "A tracked file outside the MX-s-13 redaction set carries the live BD password value on 2 lines.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured by a byte-count of the value taken from HEAD run-daily-downloads.sh across all git ls-files at the worktree: 1 file matched, 2 occurrences, lines 3408 and 3412; the other 43 bd-exporter files and every other tracked file read 0."
+      ]
+    },
+    "spec_asserts": "MX-s-13 names 7 files as the complete redaction set for the live BD password (Z-S31).",
+    "world_is": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/CARRIER_CENSUS.md lines 3408 and 3412 each contain the value the 7-file set carried. Not edited: outside <paths>. No content quoted.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W9-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~9",
+    "surfaced_at": "2026-09-28T22:00Z",
+    "one_line": "extended-backfill.sh: no second literal credential found where the order says the CTO measured one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Line-by-line masked-shape read of every assignment and BD_/PASS line of extended-backfill.sh (lines 15,16,17,22,23,25,37-39,43-45): no credential-shaped literal; the CTO's literal may be a username on line 15 or a since-fixed line -- unresolved by me."
+      ]
+    },
+    "spec_asserts": "MX-s-13 edit 1: extended-backfill.sh carries a DIFFERENT literal elsewhere than the BD_PASSWORD line.",
+    "world_is": "In src/stepwise/extended-backfill.sh the BD_PASSWORD line 16 is already a :? refusal; line 15 is BD_USERNAME (a username, left as ordered); no line holds the redacted value, and a shape scan for mixed letter/digit/symbol tokens of 8+ chars found 0. File left unedited; AC1 reads 0 literals over 44 files.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
