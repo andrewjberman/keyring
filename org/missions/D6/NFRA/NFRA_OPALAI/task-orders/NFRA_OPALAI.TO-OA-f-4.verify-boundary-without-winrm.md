@@ -97,7 +97,7 @@ Dry-run at base (opal_ai fd8ab8a57f):
 - f4.AC1 base: FAIL as expected (`Invoke-Command/ComputerName=2; Start-Process with -Credential -Wait -WorkingDirectory=0`).
 - f4.AC2 base: FAIL as expected (`rc=1 line='none'`: no `-CredPath` parameter, so no BOUNDARY line).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~19</slot>
 <fabric>site-z</fabric>
