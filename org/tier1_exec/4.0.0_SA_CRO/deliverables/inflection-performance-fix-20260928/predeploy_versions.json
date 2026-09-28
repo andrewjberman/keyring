@@ -1,0 +1,99 @@
+{
+  "captured_at": "2026-09-28T23:14:44.671719+00:00",
+  "objects": {
+    "json/positioning/positioning_data.json": {
+      "bucket": "opal-data-portal-v2",
+      "version_id": "Do5scz0LyN5yNJdT.HkV335HP263mfJn",
+      "sha256": "8f0c89ba38405e5523f8d9754f13ec2ca0e34780c6b834b17f80f1bce1635b9a",
+      "etag": "\"ef298fabd3aa8f701d100d7a5baf9492\"",
+      "last_modified": "2026-09-26T11:06:33+00:00",
+      "backup_file": "before_positioning_data.json",
+      "metadata": {},
+      "content_encoding": "gzip"
+    },
+    "json/positioning/opal_aggregate.json": {
+      "bucket": "opal-data-portal-v2",
+      "version_id": "ac6c7S.vjIJ8Kfa5nG9sIMUr8HBwQiJy",
+      "sha256": "4e76c1965f167817927211dd9b1f708ea2c0f2d719fadb3f2fb9f0b12931d659",
+      "etag": "\"68382f09b997b4b9da974db9022112c8\"",
+      "last_modified": "2026-09-26T11:06:33+00:00",
+      "backup_file": "before_opal_aggregate.json",
+      "metadata": {},
+      "content_encoding": "gzip"
+    },
+    "json/benchmarks/etf_returns.json": {
+      "bucket": "opal-data-portal-v2",
+      "version_id": "Aij3lvOniwwUjxQ5JEueeINZup_avjVw",
+      "sha256": "1a25d19cb142dbdf337146a6ab44e30b905a88ae3237424612da9b9a0c81c362",
+      "etag": "\"02774966486264bf8c192f2125b646c9\"",
+      "last_modified": "2026-09-26T11:06:31+00:00",
+      "backup_file": "before_etf_returns.json",
+      "metadata": {},
+      "content_encoding": null
+    },
+    "json/benchmarks/model_portfolio_benchmarks.json": {
+      "bucket": "opal-data-portal-v2",
+      "version_id": "Pxy6ATX1Eah8up3d9.iauhexhaxPMkxX",
+      "sha256": "fe15588504fec4fac7c8637bcbb47403c705e3f966eb617c7bd1dd9884d4647c",
+      "etag": "\"8e60a85a46a693f0fe9edf659e0a40f4\"",
+      "last_modified": "2026-09-26T11:06:31+00:00",
+      "backup_file": "before_model_portfolio_benchmarks.json",
+      "metadata": {},
+      "content_encoding": null
+    },
+    "benchmarks/LATEST.json": {
+      "bucket": "opal-data-portal-v2",
+      "version_id": "ObLWwSKvkQWR.bA1J8VcIw4vAlmR1GsS",
+      "sha256": "430d4afc9afaf47028733cb7a6b33223652e7f8021f6dc605c29aa4c52c2fdbf",
+      "etag": "\"76f03df71c4654d41b9509abe5012261\"",
+      "last_modified": "2026-09-26T11:04:31+00:00",
+      "backup_file": "before_LATEST.json",
+      "metadata": {},
+      "content_encoding": null
+    },
+    "yang-pipeline/yang-generate-positioning.zip": {
+      "bucket": "opal-313476888478-lambda-artifacts",
+      "version_id": "RKnw3YkTo8okvldCf3vrTbDtWejlJjzs",
+      "sha256": "ae207219711f5977454c46af2861b49c5463fe4e095008c889529f9b4e937609",
+      "etag": "\"c46dd033a699248d57367296034c6124\"",
+      "last_modified": "2026-09-15T22:00:23+00:00",
+      "backup_file": "before_artifact_yang-generate-positioning.zip",
+      "metadata": {
+        "content-sha256": "riByGXEfWXdFTEavKGG0nFRj/k4JUAjIiVKfm06Tdgk="
+      },
+      "content_encoding": null
+    },
+    "yang-pipeline/yang-generate-etf-returns.zip": {
+      "bucket": "opal-313476888478-lambda-artifacts",
+      "version_id": "Kn6DO.nGbf0C1_4_D4GJdadqEP_Vy3Zi",
+      "sha256": "6b9d6844d6bf2f94ba271e2c77be604ea645bd1c5b51a5a68f2b8225ad7899a9",
+      "etag": "\"e0b1eb5faec6ee4389b10ebbb9e47797\"",
+      "last_modified": "2026-05-04T18:50:49+00:00",
+      "backup_file": "before_artifact_yang-generate-etf-returns.zip",
+      "metadata": {
+        "content-sha256": "a51oRNa/L5S6Jx4sd75gTqZFvRxbUaWmjyuCJa14mak="
+      },
+      "content_encoding": null
+    }
+  },
+  "functions": {
+    "yang-generate-positioning": {
+      "CodeSha256": "riByGXEfWXdFTEavKGG0nFRj/k4JUAjIiVKfm06Tdgk=",
+      "LastModified": "2026-09-15T22:09:30.000+0000",
+      "RevisionId": "10e13544-fa55-43df-94cf-e5d7178a2fcd",
+      "FunctionArn": "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-positioning",
+      "Runtime": "python3.11",
+      "Role": "arn:aws:iam::313476888478:role/yang-pipeline-lambda-role",
+      "zip_sha256": "ae207219711f5977454c46af2861b49c5463fe4e095008c889529f9b4e937609"
+    },
+    "yang-generate-etf-returns": {
+      "CodeSha256": "a51oRNa/L5S6Jx4sd75gTqZFvRxbUaWmjyuCJa14mak=",
+      "LastModified": "2026-05-04T18:54:49.000+0000",
+      "RevisionId": "2161fe90-65dc-495e-81ac-f646034e126d",
+      "FunctionArn": "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-etf-returns",
+      "Runtime": "python3.11",
+      "Role": "arn:aws:iam::313476888478:role/yang-pipeline-lambda-role",
+      "zip_sha256": "6b9d6844d6bf2f94ba271e2c77be604ea645bd1c5b51a5a68f2b8225ad7899a9"
+    }
+  }
+}
