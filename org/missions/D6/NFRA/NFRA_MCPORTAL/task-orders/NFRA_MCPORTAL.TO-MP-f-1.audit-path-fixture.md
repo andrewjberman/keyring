@@ -77,7 +77,7 @@ Report once, with:
 seat with the project). Checks dry-run at base: AC1 FAILS as expected (md5 moved, 14 passed); AC2 PASSES as expected
 (the bound). The disarm row is the issuer's act at the drain.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
