@@ -1934,6 +1934,31 @@ carries none.
     },
     "spec_asserts": "Z-S33: the seat's only reachable outcomes are rename, remove the enforce file, re-route, or concatenate.",
     "world_is": "A fifth outcome is in-lane and clean: edit the existing builder, where the literal already exists, so the gate WARNs."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S37",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-28T06:38Z",
+    "one_line": "The commit gate requires every build_* function in data/*/scripts/silver/*.py to call coerce_silver_ids(), but that helper exists ONLY in data/inf/scripts/silver/_orion_api_silver_lib.py. Satisfying it from the bd tree means either the FIRST cross-firm code import into data/black_diamond/ or a duplicated second carrier of one convention. Both are precedents; neither is a DS lane's to set.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: .tools/commit-gate.sh BLOCKED the MX-s-6 step 2 commit with three lines on data/black_diamond/scripts/silver/build_bd_assets_dim.py -- missing `from __future__ import annotations`, and build_dim (:85, PRE-EXISTING, April vintage) and build_union_dim (:245, mine) each 'missing coerce_silver_ids() call -- required by ADVI_INFNNA.SILVER-ID-DTYPE-UNIFY'.",
+        "THE HELPER'S ONLY HOME: comp-find 'def coerce_silver_ids' returns 1 hit across 1,761 files -- data/inf/scripts/silver/_orion_api_silver_lib.py:283. The gate's pattern (_SILVER_BUILDER_PATTERNS = ['data/*/scripts/silver/*.py']) is FABRIC-WIDE, so it binds every firm's silver tree to a helper living in one firm's tree.",
+        "NO BD SCRIPT HAS EVER DONE IT: comp-find 'coerce_silver_ids' over data/black_diamond returns a MEASURED ZERO across 178 files. So this is not an established pattern I am declining to follow; it would be a new one.",
+        "THE CALL ITSELF IS SAFE HERE, measured, so this row is about the PRECEDENT and not about risk to this artifact: DEFAULT_SILVER_ID_COLS is (account_id, household_id, rep_id, client_id, registration_id, custodian_id, transaction_id, trans_id). asset_id is NOT among them, and the dim carries none of the eight, so coerce_silver_ids(dim) is a provable no-op ('Missing columns are silently skipped'). It would NOT change the served dim's key dtype, which is str today on both the frozen and the current object.",
+        "WHY NOT JUST COPY IT: .tools/ds-precommit-check.py's own comment warns about exactly this shape -- 'two carriers of one firm-to-token map in this directory, one updated at the rename and one not, nothing comparing them.' A bd-local duplicate of coerce_silver_ids is that defect by construction."
+      ]
+    },
+    "spec_asserts": "ADVI_INFNNA.SILVER-ID-DTYPE-UNIFY, as enforced: every build_* function returning a DataFrame under data/*/scripts/silver/ calls coerce_silver_ids() before returning.",
+    "world_is": "The rule is fabric-wide but its only implementation is firm-local, so the rule cannot be obeyed from three of the four firm trees without creating a cross-firm code dependency or a duplicate. The clean fix is a firm-neutral home (lib/, beside opal_naming.py and trading_calendar.py), which is OUTSIDE this order's <paths> and outside the DS lane. CONSEQUENCE RIGHT NOW: the MX-s-6 step 2 CODE is uncommitted while the silver object it produced is already written and graded PASS -- a producer whose source the shared tree cannot see. That gap is the urgent half, not the precedent.",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "I did NOT import across firms, did NOT copy the helper, and did NOT rename my function to dodge the build_* pattern -- all three would set the precedent quietly. ONE ASK to 1.0.0_SA_CTO~O: name the route -- (a) promote coerce_silver_ids to a firm-neutral lib/ and let every silver tree import it, (b) permit the bd->inf import as a one-off, or (c) exempt pre-LGIC builders under Rule 30's existing-pipeline non-application. I can land (b) in minutes; (a) needs a seat that owns lib/. The `from __future__ import annotations` limb of the same block is uncontroversial and I will add it either way. NOTE the pre-existing build_dim (:85) trips this too, so the file cannot be committed at all until this is ruled -- it is not only my new function."
   }
 ]
 ```
