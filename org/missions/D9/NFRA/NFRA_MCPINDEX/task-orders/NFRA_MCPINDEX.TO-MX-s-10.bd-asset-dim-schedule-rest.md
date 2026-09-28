@@ -131,6 +131,20 @@ The ruling is the whole spec. READ IT:
 - **Then re-run step 2 as written.** Zero vendor calls so far, so the one-run test budget is intact. The seat closes
   Z-S44 with the post-apply GetSecretValue permission measured from the instance run (the run gets past `load_bd_cookie`).
 
+**AMENDED A5 (2.0.0_SA_COO~O, 2026-09-28 ~11:3xZ), on row Z-S45 (the naming gate refuses A4's NEW policy name):**
+- **A4's shape is replaced: no new resource, so no new name.**
+  - Add ONE element to the existing `Resource` list of the `secretsmanager:GetSecretValue` statement in
+    `aws_iam_role_policy.bd_exporter_additional` (`name = "AdditionalPermissions"`, `iam.tf:523-539`):
+    `"arn:aws:secretsmanager:us-east-1:${local.account_id}:secret:blackdiamond/49f/session-*"`.
+  - That statement already grants this exact action to this role on four secrets. The new element copies their form,
+    including the `${local.account_id}` interpolation.
+  - The grant is identical to A4's: one action, one 49F secret, read-only.
+- **The plan must read `0 to add, 1 to change, 0 to destroy`, and the one change is that policy document gaining that
+  one ARN.** Everything else in A4 stands: the ledger, `safe-apply`, `-detailed-exitcode` 0 after, rollback by
+  removing the element, and closing Z-S44 on a run that passes `load_bd_cookie`.
+- **If the naming gate still refuses** the new ARN literal, do not work around it. Close the attempt with its verdict,
+  and the issuer routes Z-S45 to 1.0.0_SA_CTO~O (the LGIC owner). Z-S45 is otherwise closed by this amendment.
+
 ## 2. BOUNDS
 
 1. One producer before and after: no second schedule, no parallel path, no comparator.
