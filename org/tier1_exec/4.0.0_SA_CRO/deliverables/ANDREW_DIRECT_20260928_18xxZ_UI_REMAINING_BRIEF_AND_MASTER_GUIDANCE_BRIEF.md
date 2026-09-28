@@ -39,6 +39,15 @@ Item 2 was DONE in `docs/briefs/irpt-master-guidance-brief-20260928.md` and regi
 against the screenshots. The two audio files were transcribed locally with Whisper and no network. The three
 transcripts are kept in the gitignored `tmp/ui-guidance/20260928/`.
 
+6. ~21:1xZ, the relay word:
+
+> OK give it to CTO and I will discuss with them how to thread it into COO~D workstream.
+
+Done at 21:11:41Z: one message to `1.0.0_SA_CTO` (inbox file
+`20260928T211141Z_4.0.0_SA_CRO_IRPT_master_UI_guidance_brief__Andrew_s_.md`), carrying the brief's path and one line.
+Scope, taken as spoken: the CTO only. Nothing was sent to `2.0.0_SA_COO~D`; Andrew threads it into the ~D workstream
+with the CTO.
+
 ## What this seat does
 
 - Item 1: DONE in `docs/briefs/irpt-ui-remaining-brief-20260928.md` and register
