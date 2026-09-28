@@ -115,3 +115,46 @@ Open and NOT closed by that flip:
 - **`IRPT_BCKEND-S166`** (ARMED) -- the running login script has no build input in the cot tree.
 - **`IRPT_BCKEND-S168`** -- this record's answer 1, and a correction to this seat's own earlier claim that the 09-28
   run would be the cold-boot test.
+
+---
+
+# VERIFIED 2026-09-28 12:4xZ -- answer 1 measured, not projected
+
+Answer 1 was written the night before as a PROJECTION from the Lambda's source and its `mode=session-check`
+probe. The 07:30 ET run has now happened and the projection is confirmed on the live plane, from the
+Lambda's OWN log rather than from anything this seat asserts:
+
+```
+cot-bd-session-trigger invoked at 2026-09-28T11:30:15.239857+00:00 mode=session-refresh
+Lever A: cot cookie POSITIVE-live (probe positive (captured_at=2026-09-27T18:42:27.162Z, age 0.7d <= 7d))
+         -> SKIP OIDC-login mint, direct bronze-run
+SSM RunCommand sent: dd4f49e2-b12e-43c3-b6d6-554ce6c1b341 document=opal-cot-bronze-run attempt=1
+```
+
+Both limbs of the prediction hold:
+
+| predicted 09-27 | measured 09-28 |
+|---|---|
+| `opal-cot-bd-session-fetch` does NOT run | it did not -- the newest session-fetch command is still `cf7fdead` from 09-27, and no new log object appeared under `logs/cot-exporter/session-fetch/` (newest is still `cot-session-autologin-20260927-184053.log`) |
+| Lever A dispatches `opal-cot-bronze-run` directly | `dd4f49e2-b12e-43c3-b6d6-554ce6c1b341`, **Success**, requested 2026-09-28T11:30:32Z |
+| the capture is inside the 7-day bound | the Lambda printed `age 0.7d <= 7d` itself |
+
+The rest of the chain ran unattended and green: `opal-cot-silver-run` `8961c6d4` Success (11:31:49Z),
+`opal-cot-gold-run` `e619c14a` Success (11:33:30Z).
+
+`blackdiamond/cot/session` AWSCURRENT is **unchanged** -- still `9da4e781-7f11-4cf0-b2dd-2980e56db1db`
+created 2026-09-27T18:42:27.771Z. No mint ran, which is the independent confirmation that the skip leg,
+not the mint leg, is what fired.
+
+**What this does NOT change.** The log-on-failure branch is still UNEXERCISED: nothing failed, so nothing
+was logged on the failure path. The next expected `opal-cot-bd-session-fetch` is still when the capture
+passes 7 days, about **2026-10-04 07:30 ET**, or sooner on a negative probe. `IRPT_BCKEND-S165` (the box
+carries no in-run login retry) is untouched and still ARMED with `1.0.0_SA_CTO`.
+
+**One instrument note, because it nearly produced a wrong answer here.** `aws ssm list-commands
+--instance-id ... --max-items 14` did NOT return the bronze invocation, which briefly read as "no bronze
+ran today" and contradicted the prediction. The command existed the whole time; `--max-items` interacts
+with pagination and dropped the row. Querying the command id directly
+(`list-command-invocations --command-id dd4f49e2...`) returned it as Success. This is CLAUDE.md rule 22a's
+paginated-`list-*` trap in its exact shape: the instrument was wrong, not the world, and the discriminator
+was a targeted read rather than a wider page.
