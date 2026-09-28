@@ -73,12 +73,12 @@ org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: P19-2-AC1, P19-2-AC2. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~61/IRPT_BCKEND.TO-IB-pr-192.proof_of_spec.json`,
+Criterion ids: P19-2-AC1, P19-2-AC2. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~61/IRPT_BCKEND.TO-IB-pr-192.since-inception-from-the-first-data-point.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> P19-2-AC1,P19-2-AC2` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** your final message: the commit hash, each criterion's last line, and any surprise row id
-(`IRPT_BCKEND-W19P-S<k>`).
+(`IRPT_BCKEND-W61-S<k>`).
 
 ---
 
