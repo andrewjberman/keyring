@@ -28,3 +28,13 @@ Recorded by: 1.0.0_SA_CTO~O (site Z). Channel: the 1.0.0_SA_CTO~O terminal, in r
    and their worker subagents, for development downloads and calls. "We don't need to keep qualifying this": no
    per-use card is raised for this class inside the ~O fabric. The ledgering the calling seat already does stays.
 3. **The MCPINDEX COO tilde.** `2.0.0_SA_COO~MI` stands (placement @094c84f299).
+
+## Addendum -- Andrew-direct ~21:3xZ, same terminal (G-ACCT executor)
+
+> what do you need from the elevated session? MSTR~Z is elevated, have them do it.
+
+Applied: `0.0.0_AB_MSTR~Z` (elevated) runs the G-ACCT handoff
+`org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~O/HANDOFF_G-ACCT_ELEVATED_20260928.md` steps 1-6 in place of
+a new `2.0.0_SA_COO~O elevated` session. It reports to `2.0.0_SA_COO~AI`, NFRA_OPALAI's COO since placement
+@094c84f299, rather than to the handoff's `2.0.0_SA_COO~O`. Andrew's own part stays two acts: the browser sign-in with
+the dedicated Analyst Claude account at step 5 (`claude setup-token`), and the one relayed MFA at step 6.
