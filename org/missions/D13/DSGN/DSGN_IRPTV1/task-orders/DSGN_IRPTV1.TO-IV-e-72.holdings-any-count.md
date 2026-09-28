@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~38</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-27</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <round>9</round>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -77,3 +77,5 @@ lane: the <paths> block IS the grant; disjoint from every parallel round-9 chain
 </preflight>
 
 Seating: slot ~38, queue position 3 of 3; worktree pair provisioned by `.tools/wk-provision.sh provision DSGN_IRPTV1 38 --path <abs> --portal-ref <DEV at seating>`.
+
+**Issuer close (2.0.0_SA_COO~D, 2026-09-28 ~17:5xZ):** SUPERSEDED by FAST lease, drive-mode.log line 16 (ARM DSGN_IRPTV1 17:47:43Z, CTO msg 102388, placement @1d443e50db on Andrew-direct 17:3xZ record @229b3fd184). No worker was seated and no build exists for this cell; its rows move verbatim to the FAST next-list in org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md, built by 2.0.0_SA_COO~D under /closer-drive and graded by the CVO after the fact.

@@ -12,19 +12,19 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
-- BLAST MODE (Andrew-direct ~17:4xZ, record
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_174xZ_BLAST_MODE_P_M_Y_D_ONLINE_FAST_CLOSER.md`):
-  `2.0.0_SA_COO~D` runs `/closer-drive` on DSGN_IRPTV1 under the FAST lease in `org/mcp/drive-mode.log` (surface
-  `portal/src/pages/InvestorReporting`); ~P, ~M and ~Y run their goal loops below, each reading its per-seat FAST
-  lease `IRPT_BCKEND~<lane>` every tick (C11; same log). The comp-tool rail stays on (call 6 reversed, Andrew ~18:2xZ,
-  `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_182xZ_CALL6_REVERSED_RAIL_STAYS_ON_IN_FAST.md`). Stop: the lease lapses to FULL, or Andrew's stand-down.
-
-- `2.0.0_SA_COO~P` `/loop 20m` DIRECTED over IRPT Performance (49F, INF, COT):
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`; stop = `/verify SOUND`.
-- `2.0.0_SA_COO~M` `/loop 20m` DIRECTED over IRPT Holdings with snapshot model overlay:
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`; stop = `/verify SOUND`.
-- `2.0.0_SA_COO~Y` `/loop 20m` DIRECTED over IRPT Analysis:
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`; stop = `/verify SOUND`. Y never takes over P's shared installation.
+- RELAUNCH 2026-09-28 (Andrew-direct ~17:3xZ, record
+  `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260928_173xZ_RELAUNCH_CTO_COO_DYPM_CANONICAL_DRIVE_D_CLOSER_CRO_UIWALK.md`;
+  placement `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20260928_174xZ_RELAUNCH_CANONICAL_DRIVE_PMY_CLOSER_D.md`).
+  Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. The comp-tool rail stays on.
+  - `2.0.0_SA_COO~D` `/canonical-drive 10m` over DSGN_IRPTV1; the FAST lease (`org/mcp/drive-mode.log`, surface
+    `portal/src/pages/InvestorReporting`) routes each tick to `/closer-drive`. Stop: Andrew's stand-down; a lapse to
+    FULL keeps the loop on the canonical body.
+  - `2.0.0_SA_COO~P`, `~M`, `~Y` `/canonical-drive 10m`, each over its own IRPT_BCKEND workstream (the contract's
+    writer table is the split), leases FULL. First act is the closer hand-back freeze (placement act 3); the loop
+    skips the row until the CTO removes `closer_contract` (act 5). Stop: IRPT_BCKEND `status: closed`, or Andrew's
+    stand-down.
+  - `4.0.0_SA_CRO` `/ui-walk` runs plus Andrew's transcripts, ad hoc, NO cron; findings to 1.0.0_SA_CTO and
+    2.0.0_SA_COO~D.
 - `1.0.0_SA_CTO~O` `/self-drive 30m` over the ~O fabric: D6 (NFRA_OPALAI, NFRA_MCPORTAL) plus NFRA_MCPINDEX and
   NFRA_OPLGTW (D9), on Andrew's governance template:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_O_FABRIC.md` @56050d290d. Chooser
@@ -64,6 +64,13 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   mechanism and cadence RESERVED to Andrew).
 
 ## Struck
+
+- BLAST MODE (2026-09-24 ~17:4xZ, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_174xZ_BLAST_MODE_P_M_Y_D_ONLINE_FAST_CLOSER.md`)
+  and the three DIRECTED `/loop 20m` goal rows of ~P, ~M and ~Y (goal records `ANDREW_DIRECT_20260923_224xZ_COO_P_*`,
+  `ANDREW_DIRECT_20260923_224xZ_COO_M_*`, `ANDREW_DIRECT_20260923_230xZ_COO_Y_*` in `org/tier1_exec/2.0.0_SA_COO/deliverables/`):
+  struck 2026-09-28 by 1.0.0_SA_CTO. Chooser Andrew: the relaunch word routes ~P/~M/~Y to `/canonical-drive` (the
+  stand-down of the goal loops, return brief A3). The goal records stay the done-criteria; a successor does not
+  re-arm these rows.
 
 - `2.0.0_SA_COO~O` `/canonical-drive NFRA_OPLGTW` 30m DIRECTED (relay 97709; on DONE the slot was to go to `~T`
   MDPF_TAXSMA then `~M` NFRA_MCPINDEX): struck 2026-09-24 by `1.0.0_SA_CTO~O`. The chooser is Andrew: his

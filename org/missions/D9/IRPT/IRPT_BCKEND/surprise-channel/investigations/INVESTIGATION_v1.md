@@ -10437,3 +10437,60 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Cause not measured. The CRO infers a first-day flow treated as a full withdrawal, since the series starts the day the account first has data. The trace waits for the reboot, per the checkpoint @6abf6b9c2a and CTO 102357. It starts at the adapter's period-return read for that account (irpt-performance-adapter F0bYtOfB) and at the opal-gips-engine series behind it."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S177",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-28T18:20:00Z",
+  "one_line": "NEW-01 cause MEASURED (row S176): the 49F engine emits status OK r_net -1.0 on 2026-04-16 for the account (key sha256 fc2350a53a8e6334) because its whole value (bmv 13,360.59) vanished with cf_net 0.0; every later day multiplies that zero, so YTD holds -100% while the account now holds ~98.6k. Same class: 28 OK account-days with r_net <= -0.999 YTD across 24 accounts, 17 still invested.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-49financial/gold/advi/canonical/twr_daily/ (registry lookup('49financial') bucket + advi gold_root), read 2026-09-28 ~18:1xZ: date=2026-04-16 holds exactly 1 of 5,931 computed rows with r_net == -1 -- status OK, bmv 13360.59, emv 0.0, cf_net 0.0; 04-15 OK bmv=emv=13360.59 r_net 0.0; 04-10..04-14 and 04-17..06-16 UNCOMPUTABLE-ZERO-BMV; first OK after the gap 06-17 (bmv 100000.0); 09-25 OK emv 98,576.28. The date signature (0.00% 04-15, -100% from 04-16) matches the CRO's shots #138/#139; the one 04-16 wipe in the table is this account",
+      "no account on 04-16 shows a +13,360.59 inflow or value jump (0 of 5,931): the value did not move to a sibling account in this table",
+      "YTD census 184 partitions 2026-01-02..2026-09-25, 1,108,705 OK computed account-days: 28 with r_net <= -0.999 (24 accounts; 9 with emv == 0 and cf_net == 0; the rest r_net from -1.04 to -6942 where cf_net is orders of magnitude above the value change, e.g. 04-28 bmv 2.47M emv 6.04M cf_net 3.57e8); 17 of the 24 accounts hold emv > 0 at 2026-09-25",
+      "producer: data/assets/scripts/gold/runners_49f/c02_twr_engine.py:264 r_net = (emv - cf_net) / bmv - 1.0 with status OK -- no guard on r_net <= -1 (the :237-:257 guards cover bmv only)",
+      "adapter: infra/aws/lambda/investor-reporting/performance/f49_engine.py:199-204 (backend irpt-smoke-p-backend-20260923 @101ec0d8eb, served F0bYtOfB) links running *= 1 + r_net over every OK row and serves the cell; :186 ppr.link_account_period counts the zero-bmv days neutral, so the cell reproduces -1.0 and passes the :205 reproduction check"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An account with positive holdings never answers -100% (CRO acceptance, S176); a daily time-weighted return below -100% is impossible for a long account and is never linked as status OK.",
+  "world_is": "The engine marks a full-value disappearance with no recorded flow, and flow magnitudes far above the value change, as status OK with r_net <= -1; the adapter links them and serves -100% (or a sign-flipped series) for 17 accounts that hold value today.",
+  "notes": "Two layers, two owners. (1) ADAPTER, ~P's write surface, round-19 cell 1: refuse by name when a linked day carries r_net <= -1 (or the running product reaches <= 0) instead of serving the figure -- meets the acceptance with a named refusal, never a wrong number. (2) PRODUCER, the 49F engine lane (runners_49f, not ~P's surface): emit a named non-OK status for r_net <= -1, and look at whether the 04-14/15 13,360.59 position and the huge cf_net rows are holdings/flow ingestion faults; routed to 1.0.0_SA_CTO as a design fork (an engine restart at re-inception vs a refusal is a GIPS track-record rule, not an adapter choice). Hazard INERT: the Performance route is not open to firm users (STATUS~P Parked row 1); the face is seen by walk principals and Andrew on DEV."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S178",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.0.0_AB_MSTR",
+  "surfaced_at": "2026-09-28T18:35:00Z",
+  "one_line": "B3 served-source proof after the act-4 drain (CLOUD @c161a2faca): 388 of 388 deployed files in the 10 IRPT Lambdas are on CLOUD by content, but lambda-source-map.json lags live on 5 functions and irpt-intake-poller serves a 07-22 firm registry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 get_function on the 10 IRPT entries of infra/aws/lambda/ci/lambda-source-map.json, 2026-09-28 ~18:2xZ; each live zip downloaded and every file's git blob looked up among all versions of its mapped repo path reachable from CLOUD (git log -m --raw): 387/388 by bytes",
+      "irpt-intake-poller (live YpE2MyUw, LastModified 2026-09-11) firm_registry.json: blob 330045a157 is in no commit on any ref; parsed JSON equals data/firm_registry.json @1f54e16dfd (2026-07-22), 1 of 5 CLOUD versions, and differs from CLOUD HEAD's",
+      "irpt-directory-refresh: live CodeSha256 DXuzx9jp; the map records d5fqVJ0f in both artifact_sha256 and deployed_code_sha256 (all 5 source files still found on CLOUD)",
+      "irpt-directory-search, irpt-performance-adapter, irpt-status, irpt-ycharts-generate: artifact_sha256 equals live (o1TXq5PH, F0bYtOfB, ZYr+IDMp, AdE17rT6), deployed_code_sha256 is stale (o9Qu0Jm7, YPSX1+nS, pfAr3uZE, LdjdnnLh)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "lambda-source-map.json is the single source of truth for source-to-deployment mapping; its recorded hash equals the live CodeSha256, and every packaged file is repo bytes.",
+  "world_is": "One function's recorded hash lags live entirely, four carry a stale deployed_code_sha256 beside a current artifact_sha256, and the intake poller packages a re-serialized 07-22 firm registry that no commit holds.",
+  "notes": "Found by 0.0.0_AB_MSTR on the CTO act-4 B3 check; not blocking the drain (the source is on CLOUD). Owner reconciles the map fields and decides whether the poller should carry the current registry."
+}
+```
