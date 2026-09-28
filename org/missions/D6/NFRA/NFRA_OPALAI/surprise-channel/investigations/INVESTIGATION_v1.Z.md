@@ -1332,6 +1332,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-r-1 / OA-e-3 / OA-e-9 step 0: the live base is resolved BY CONTENT as the commit whose files ALL match.",
     "world_is": "An app-file md5 set cannot separate a release from an ancestor whose app files are identical, so 'all match' names more than one commit. A release cut on the ancestor would ship the older .env template.",
     "notes": "Remedied by the issuer in the same act (amendment commit): the three orders gain a tie-break on the live .env KEY names against each candidate's deploy template, and the card and the re-confirm record are corrected in place. No release has run, so nothing shipped on the wrong base."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S39",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-28T22:25Z",
+    "one_line": "An OWNER principal cannot hold any data grant without losing every legacy gateway tool, permanently: a profile makes the principal restricted to the Schwab tools its grant allows (a portal-only grant allows none), and a revoked record is a tombstone that never restores the legacy path. So Andrew cannot be profiled as an asker, and the widening of Alyssa to Menachem's entitlements is the only asker-side grant this round can write safely.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/data_entitlement.py docstring at HEAD: 'a profile (restricted): exactly the Schwab tools its active grant's operations allow; every other tool and the direct REST routes are denied'; 'a principal with ANY profile record -- pending, active or revoked -- is restricted. Nothing reactivates the legacy unlisted-user path'.",
+        "data_entitlement.py decide() (~:368-372): access.restricted -> only tools in access.tools pass.",
+        "1.0.0_SA_CTO~O msg 26243 asked for Andrew's portal-only grant; this seat measured the no-narrowing condition before writing, found it fails by construction with no possible rollback, and wrote nothing (msg 26252); the CTO ruled card option (b) instead (msg 26254)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Test card option (a) / CTO msg 26243: an owner can be given a portal-only asker grant without narrowing anything he holds today.",
+    "world_is": "Any profile restricts, and restriction is permanent. An asker grant for an owner or operator seat would silently cost that seat its email, Teams, YCharts, upload and /query/v0 reach.",
+    "notes": "Candidate enrichment item for round 2's L10 (CTO msg 26254): an asker-only grant shape (or an owner class) that scopes the ASKER path without restricting the principal's own tools, specified by the PRD owner. INERT: nothing was written, and no owner holds a profile. It binds any future grant written for a seat that also calls tools itself."
   }
 ]
 ```
