@@ -1253,6 +1253,18 @@ construction).
 `deliverables/0.9.0_WK_AMGT_HARVST~8/`), which is why the following two facts are in the cut instead of in a
 round-9 post-mortem.
 
+> ⛔ **FALSE, AND CORRECTED BY MEASUREMENT 2026-09-28 (`HVST-x-2` AC1, re-verified by the issuer):**
+> `chatter_event` holds **12 rows across 7 securities, 4 of them Lenovo's own**, and `publishers_distinct`
+> reaches **3**. The landed universe is **191** securities, not 89, with **55** carrying a day where
+> `articles_total > 0`. **So FWD-6 was exercisable all along, and FWD-5 is now EXERCISED on Lenovo**
+> (267 of 267 dense days, no gap, strongest-first with 0 sort violations).
+>
+> **THE ERROR SHAPE, kept because it is the reusable part:** `EVENT_MIN_PUBLISHERS = 2` WAS read at the
+> bytes; *"only `sa` has landed listing rows"* was INHERITED from round 7's measurement of a different
+> population at an older vintage -- and `chatter_event` itself was **never read**. Presenting that pair with
+> the measured constant's authority is how an inherited number acquires standing it never earned.
+> **A conclusion is only as measured as its weakest premise.** Row `AMGT_HARVST-Z-W27-S1`.
+
 ⛔ **FWD-6 IS UNSATISFIABLE BY CONSTRUCTION TODAY, AND A CRITERION FOR IT WOULD HAVE PASSED VACUOUSLY.**
 Measured at the bytes: `publication_gold.EVENT_MIN_PUBLISHERS = 2`, `EVENT_MIN_ARTICLES = 2`, qualifying tiers
 `('A','B')`. **Only `sa` has landed listing rows** (round 7: sa 0 -> 40; bbg in hard refusal since 09-15;
@@ -1394,6 +1406,18 @@ failure is quarantined with a named reason.**
 **This is the issuable cell the corrected rule requires, and it carries round 9's JUDGMENT criterion:** *are
 the events shown the real coverage bursts?* A mechanical criterion counts spans; only judgment says the spans
 mean something. Graded by `3.0.0_SA_CVO` at L9, **presented with its output and no verdict.**
+
+> ⛔ **FALSE, AND CORRECTED BY MEASUREMENT 2026-09-28 (`HVST-x-2` AC1, re-verified by the issuer):**
+> `chatter_event` holds **12 rows across 7 securities, 4 of them Lenovo's own**, and `publishers_distinct`
+> reaches **3**. The landed universe is **191** securities, not 89, with **55** carrying a day where
+> `articles_total > 0`. **So FWD-6 was exercisable all along, and FWD-5 is now EXERCISED on Lenovo**
+> (267 of 267 dense days, no gap, strongest-first with 0 sort violations).
+>
+> **THE ERROR SHAPE, kept because it is the reusable part:** `EVENT_MIN_PUBLISHERS = 2` WAS read at the
+> bytes; *"only `sa` has landed listing rows"* was INHERITED from round 7's measurement of a different
+> population at an older vintage -- and `chatter_event` itself was **never read**. Presenting that pair with
+> the measured constant's authority is how an inherited number acquires standing it never earned.
+> **A conclusion is only as measured as its weakest premise.** Row `AMGT_HARVST-Z-W27-S1`.
 
 ⚠ **THE BOUND ROUND 8 ALREADY MEASURED, carried forward so this cell does not re-learn it:** `chatter_event`
 can hold **ZERO rows for every security** while only `sa` has landed listing rows
