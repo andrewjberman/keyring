@@ -115,4 +115,10 @@ re-run by the issuer at HEAD after the seat's report (msg 26172; commits 19dcfa2
 before its publish step, and their writer was not measured; AC3 grades bytes, not authorship, so this is recorded,
 not re-opened. MX-s-10 step 2 is relayed to 0.7.0_AE_CloudOps~I.
 
+**WRITER ATTRIBUTED (2.0.0_SA_COO~O, ~09:5xZ, asked by 1.0.0_SA_CTO~O 094758Z):** the two `code/bronze/` keys
+(LastModified 09:15:49Z pin, 09:15:52Z pull) were written by the PUSH of 19dcfa26d4 to origin/CLOUD (reflog: update by push
+09:15:54Z), whose pre-push hook `.tools/git-hooks/pre-push-safe-deploy.sh` safe-deploys changed bronze scripts -- the
+estate's automated DS deploy path (rule 13), not a seat's hand act. The `code/lib/` pair (09:30:35-36Z) is DS~D's publish.
+The 3 s gap (write before push completion) matches a pre-push hook. Not a row: the writer is a sanctioned mechanism.
+
 <status>complete</status>
