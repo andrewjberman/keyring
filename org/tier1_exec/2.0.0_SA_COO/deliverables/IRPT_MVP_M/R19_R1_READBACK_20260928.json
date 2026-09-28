@@ -1,0 +1,44 @@
+{
+  "legs": [
+    {
+      "slug": "cot-other-admission-m-20260925",
+      "verdict": "PASS",
+      "expected": "C_06's mix carries an 'other' key (value 0 is correct, since batch B is not written), and D_03 compositions show 'unclassified' in place of 'other' for unknown rows",
+      "measured": "gold/views/mix_daily_summary.json firm['2026-09-25'] = {equity: 480537111.889, fixed_income: 81165374.586, alternatives: 2298369.478, cash: 0.0, other: 0.0, total: 564000806.687} -- the 'other' key is present at 0.0, matching the expectation (C_06.client_mix_timeseries.py:173 MIX_ASSET_CLASSES = ['equity','fixed_income','alternatives','cash','other'], but classify_holding/classify_series never assign 'other', so it stays 0 until batch B). gold/views/firm_composition.json composition.unclassified = {count: 24, market_value: 4528666.16}; D_03.composition_artifacts.py:449 classifies '', None or 'unclassified' asset_class rows as 'unclassified' (not 'other') -- matches served bytes.",
+      "served_objects": [
+        {"uri": "s3://opal-data-cot/gold/views/mix_daily_summary.json", "version_id": "JjChSDGOB82r8MSdW47rZ3wQptzmwkIo", "last_modified": "2026-09-27T18:48:24+00:00"},
+        {"uri": "s3://opal-data-cot/gold/views/firm_composition.json", "version_id": "6mtzVeY4HNEyruVLEoEtxoxFSVoiZUd4", "last_modified": "2026-09-28T11:36:12+00:00"}
+      ],
+      "run_evidence": "s3://opal-data-cot/logs/cot-exporter/gold-run/cot-gold-run-20260928-113330.log (VersionId 0MW6eZdSvGGAVEAuxaO3woAQJuilL9sn): the 09-28 scheduled run (started 11:33:34Z). Its C_06 step (line 931, started 11:35:07Z) read watermark 2026-09-25 and logged 'Total: 124  To process: 0' / 'No new partitions -- artifacts are current' (lines 948-950) -- it served the existing gold/views/mix_daily_summary.json unchanged (byte-identical to the prior 09-27T18:48:24Z ad-hoc-run write, since no new trading-day data exists past 2026-09-25 per the trading calendar). D_03/D_04 ran fresh within the same 09-28 11:33-11:41Z run and wrote gold/views/firm_composition.json at 11:36:12Z from that mix.",
+      "surprise_row": null
+    },
+    {
+      "slug": "cot-cash-admission-m-20260925",
+      "verdict": "FAIL",
+      "expected": "relationship z09308463 (0.37 cash at 09-22) shows a cash slice at its measured amount with shares summing to 1; all-cash z09326138 or z09308511 shows 100% cash",
+      "measured": "z09308463: mix = equity 0.62685 ($187,076.11), fixed_income 0.37315 ($111,362.21, sole holding FCASH); z09308511: mix = fixed_income 1.0 ($16,020.10, sole holding FCASH); z09326138: mix = equity 0.958548, fixed_income 0.024162, alternatives 0.01729 (FCASH $10,000 also classified fixed_income). No 'cash' asset_class key appears in any of the three served compositions -- the FCASH-holding slices that should carry the cash admission instead classify as fixed_income.",
+      "served_objects": [
+        {"uri": "s3://opal-data-cot/gold/entities/clients/z09308463_composition.json", "version_id": "VSiD2C07bXuTj2UEu3rAQnxCVNaLlMIR", "last_modified": "2026-09-28T11:36:17+00:00"},
+        {"uri": "s3://opal-data-cot/gold/entities/clients/z09326138_composition.json", "version_id": "NaqHv9CVNbOLbKCq0zPbZ2u0rYcNbgd6", "last_modified": "2026-09-28T11:36:17+00:00"},
+        {"uri": "s3://opal-data-cot/gold/entities/clients/z09308511_composition.json", "version_id": "SPJ5oOy6TFyULuZWb2S34fIGTVY0U27X", "last_modified": "2026-09-28T11:36:18+00:00"}
+      ],
+      "run_evidence": "Same 09-28 11:33:34-11:41Z cot-gold-run (cot-gold-run-20260928-113330.log). D_03/D_04 regenerated these three client compositions fresh at 11:36:17-18Z within that run window, downstream of the run's own C_06 mix_daily_summary.json (watermark 2026-09-25). The run's own log line 1246 carries 'ETFClassifier: scan failed, falling back to empty maps: ... AccessDeniedException ... Scan ... cot-exporter-ec2-role' -- the classification these compositions carry is the fallback's, not the table's, matching data/cot/scripts/gold/lib/etf_classifier.py:108-109's explicit CASH/SWEEP/MONEY-MARKET-name-pattern -> fixed_income mapping.",
+      "surprise_row": "IRPT_BCKEND-W41-S1"
+    },
+    {
+      "slug": "bd-securities-cot-new-p1-m-20260926",
+      "verdict": "FAIL",
+      "expected": "COT's mix moves equity -> fixed_income/alternatives per the signed half (+NEOS $149,663 to fixed_income), and BD's next C_06 run moves 652 accounts per the half",
+      "measured": "COT: CSHI (NEOS ENHANCED INCOME 1-3 MONTH T-BILL ETF) still classifies asset_class='equity' at z09304677 (mv $149,783.67) and z09305627 -- not moved to fixed_income. BD: gold/views/mix_daily_summary.json firm['2026-09-23'] is byte-identical (equity 1,350,215,482.784155 / fixed_income 352,666,154.388452 / alternatives 36,264,342.733521) across the pre-write version (2026-09-25T05:12:45Z) and the first post-write version (2026-09-27T05:16:54Z) -- the half's named reader (the 2026-09-23 partition) shows no move at all.",
+      "served_objects": [
+        {"uri": "s3://opal-data-cot/platinum/firm/mix_summary.json", "version_id": "T9ECZBPOwVd2KJ1g4CYLxBZ3RgGgcUNR", "last_modified": "2026-09-28T11:36:20+00:00"},
+        {"uri": "s3://opal-data-cot/gold/entities/clients/z09304677_composition.json", "version_id": "gu0KNbzymnL14X_OeiKpO5944jE2CKOU", "last_modified": "2026-09-28T11:36:17+00:00"},
+        {"uri": "s3://opal-data-cot/gold/entities/clients/z09305627_composition.json", "version_id": "D9j9N543gNP8qe3ORTbCjyXGIsbQR57K", "last_modified": "2026-09-28T11:36:18+00:00"},
+        {"uri": "s3://opal-data-bd/gold/views/mix_daily_summary.json", "version_id": "TnpShkIWa1HCwl.X0Q.AcPky.rn1yhox", "last_modified": "2026-09-27T05:16:54+00:00"},
+        {"uri": "s3://opal-data-bd/gold/views/mix_daily_summary.json", "version_id": "DJc9gnlj_PSZohGQhxe3j2YAZhk60I5c", "last_modified": "2026-09-25T05:12:45+00:00"}
+      ],
+      "run_evidence": "COT: the same 09-28 cot-gold-run-20260928-113330.log run graded above (S173's AccessDeniedException on cot-exporter-ec2-role -> classify() Layer 4 defaults CSHI to equity). BD: bd-exporter-ec2-role (the bd-gold-layer-runner host's profile) is measured 'allowed' for dynamodb:Scan/GetItem on bd-securities (simulate-principal-policy), so BD's table access is not the blocker; BD's C_06 ran at 2026-09-26T05:14:29Z and 2026-09-27T05:16:54Z (both after the 2026-09-26T03:21:35Z write) per S3 object-version history, but firm['2026-09-23'] in both the pre-write (2026-09-25T05:12:45Z) and post-write (2026-09-27T05:16:54Z) versions of gold/views/mix_daily_summary.json is byte-identical, showing C_06's incremental/watermark logic never re-derives an already-computed historical partition.",
+      "surprise_row": "IRPT_BCKEND-W41-S2"
+    }
+  ]
+}
