@@ -10521,3 +10521,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Blocks ~M's R4 enable and R1 read-backs (orders cut, uncommitted, at the shared tree). ~Y will hit the same limb. Recommendation to the CTO: GATE (x) honours a line-anchored pipeline-override (its message already says so), else rule a per-workstream round key."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S180",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-09-28T17:56:00Z",
+  "one_line": "Selection create answered HTTP 500 once while the COT eleven-account client moved from Performance to Holdings; the page logged 'IrRequestError: investor-reporting selection-create failed', the next POST /selections answered 200 and the page recovered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4.0.0_SA_CRO /ui-walk --deep 20260928T174953Z on portal local DEV 28f5118c: tmp/ui-walk/20260928T174953Z/netlog.tsv line 622 of 847 'POST 500 /api/scoped/investor-reporting/selections', between the COT client's 11 performance GETs and its first holdings GET (walk log 17:55:02-17:55:31Z); findings.json console_errors 'PAGE ERROR: IrRequestError: investor-reporting selection-create failed'",
+      "the other POST /selections of the walk answered 200; one occurrence in 847 requests, not reproduced",
+      "register docs/briefs/irpt-ui-remaining-findings-20260928.json UIW-0928-06 @c931298153; owner by STATUS~P.md irpt-directory-search (directory handler.py + entry.py carry selection create)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Selection create answers every valid scope; a transient failure retries without a page error.",
+  "world_is": "One selection create for a valid eleven-account scope answered 500; the page surfaced a page error before its own retry succeeded.",
+  "notes": "Cause not measured. First read: the irpt-directory-search log group around 17:55Z for the 500's stack. Walker traffic is read-only apart from admitted selection POSTs."
+}
+```
