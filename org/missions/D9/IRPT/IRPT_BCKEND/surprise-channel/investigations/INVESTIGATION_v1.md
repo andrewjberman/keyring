@@ -10411,3 +10411,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Unreachable from the portal: the selection offers catalogue keys only; the catalogue-edit refusal shares the path. Held, not rolled back (ledger irpt-generate-resident-grant-20260928 D1). The remedy is a classifier mapping of MaintainedSourceRefused to a named refusal code in generate, as a STATUS~P next item."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S176",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-28T14:15:00Z",
+  "one_line": "NEW-01 (HIGH): an invested 49F account answers YTD -100.00% on the Performance face; the cumulative series falls from 0.00% on 2026-04-15 to -100.00% on 2026-04-16 and stays there to 2026-09-22.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4.0.0_SA_CRO re-walk on portal DEV 4b9df1e7, docs/briefs/irpt-ui-cleanup-status-20260928.md @f330857833, new_findings NEW-01, shots 20260928T133602Z#138 and #139: the smallest account of the 49F three-account client, invested per Holdings",
+      "1.0.0_SA_CTO msg 102357: the first item after the reboot is a trace to file:line in the Performance path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An account with positive holdings never answers -100%; a first-day funding flow is not a return (the CRO's acceptance line).",
+  "world_is": "The face shows -100.00% YTD for an invested account from its second day of data onward.",
+  "notes": "Cause not measured. The CRO infers a first-day flow treated as a full withdrawal, since the series starts the day the account first has data. The trace waits for the reboot, per the checkpoint @6abf6b9c2a and CTO 102357. It starts at the adapter's period-return read for that account (irpt-performance-adapter F0bYtOfB) and at the opal-gips-engine series behind it."
+}
+```

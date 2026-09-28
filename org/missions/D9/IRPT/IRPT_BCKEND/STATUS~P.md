@@ -45,6 +45,9 @@ None open. Windows 18-20 are CLOSED.
 
 ## Next-list (in order)
 
+0. **FIRST after the reboot, NEW-01 (HIGH, row S176; CTO 102357):** an invested 49F account answers YTD -100%
+   (the series drops from 0% to -100% on 04-16). Trace it to file:line in the Performance path (the adapter F0bYtOfB and
+   the gips series); acceptance: an account with positive holdings never answers -100%.
 1. **After the reboot:** the first live Comparison window (~Y 102340: K4 window 15's Dollars CSV; K5 ONE Comparison,
    opal_long_term, via `live_chain.py` @898fda7783), with K8 (the export, S27's A1 and ~D's page pin TO-IV-e-78) and
    K10 (the page reads REQ-67 READY, rebuild 3's A1). Its own packet and halves.
