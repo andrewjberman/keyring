@@ -46,6 +46,15 @@ The submit control returns to its usable state; the flow never goes silently idl
 render exactly as today. Do NOT add UNAVAILABLE, NOT_READY or any reason code to the pending states; the poll's pending states stay
 queued/running. No backend change; no route added; `envelope.ts` is not edited.
 
+**Wire copy (amendment 1, CTO 102228 / 102238):** contract ruling R11 (ratified, CVO @ab453f59ed; wording @25f7581ded, both in your
+base) makes `export-receipt`'s `data` optional while QUEUED or RUNNING, mirroring R2, and changed
+`<workspace>/docs/contracts/investor-reporting/v1/responses/export-receipt.response.schema.json`. The portal's generated wire copy
+`IR/contracts/wire/responses.ts` is now stale against it: at portal DEV the pinned regeneration test
+`__tests__/dsgn-irptv1/iv-e-26.wire-regen.test.ts` fails with "gen-wire.ts regeneration is not byte-identical to the committed files:
+responses". Regenerate `responses.ts` with the existing generator `__tests__/fe-s-13/gen-wire.ts` against your worktree's schemas (never
+hand-edit a generated file), check that the regenerated `export-receipt` type makes `data` optional as R11 says, and commit it. The
+generator and the schemas are read, never edited.
+
 **Environment:** base your portal worktree on local DEV `8808eeb6`. Do not start any server. Work ONLY in your own <WS>.
 
 ### ACCEPTANCE
@@ -59,7 +68,11 @@ receipt read that throws a non-refusal error shows a named reason in the same el
 `export-refusal` element, and QUEUED -> FAILED shows the FAILED receipt as today. Print `VERDICT: RECEIPT-REFUSAL-NAMED-OK` only when
 every arm holds.
 
-<expected_criteria>IVE78-AC1</expected_criteria>
+<criterion id="IVE78-AC2" cell_refs="IV-e-78"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test ./src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-26.wire-regen.test.ts 2>&1 | tail -8</invocation><expect>1 pass, 0 fail</expect></criterion>
+`IVE78-AC2` -- the wire copy matches R11: the pinned regeneration test passes (byte-identical regeneration, data optional, content pin
+17 of 17). It FAILS at the base (portal DEV) because `responses.ts` predates R11.
+
+<expected_criteria>IVE78-AC1, IVE78-AC2</expected_criteria>
 
 ## BOUNDS
 
@@ -76,6 +89,7 @@ portal/src/pages/InvestorReporting/export/ExportButton.tsx
 portal/src/pages/InvestorReporting/export/submit.ts
 portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx
 portal/src/pages/InvestorReporting/export/ExportModal.tsx
+portal/src/pages/InvestorReporting/contracts/wire/responses.ts
 portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-78.receipt-refusal-named.test.tsx
 portal/src/pages/InvestorReporting/__tests__/
 org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -87,8 +101,8 @@ org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IVE78-AC1. Instance at `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~41/DSGN_IRPTV1.TO-IV-e-78.receipt-refusal-named.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> IVE78-AC1` BEFORE the flip.
+Criterion ids: IVE78-AC1, IVE78-AC2. Instance at `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~41/DSGN_IRPTV1.TO-IV-e-78.receipt-refusal-named.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> IVE78-AC1 IVE78-AC2` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape; surprise rows in the investigation file (id
