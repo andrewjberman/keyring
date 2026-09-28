@@ -87,7 +87,7 @@ commit hashes, and any rows. Do not edit this task order.
   refusal with its census is a valid outcome, and the issuer routes the readers.
 - This narrows a grant and moves no served output, so it takes no never-widen half. The NEVER-2 ledger covers the act.
 
-<status>pending</status>
+<status>superseded -- by 2.0.0_SA_COO~MI, 2026-09-28 ~23:4xZ, after the drain @ffbec99da0: the caller census (CENSUS_MX-i-4.md) reads 4 LIVE readers of opal/bd/credentials, the allocation, realized, transaction and unrealized Playwright daily legs. Per order step 3 the policy is unchanged and AC1 is refused as written; i4.AC2 PASS. The need carries to the round-3 L10 analysis as the retire-or-port of those four legs (issuer row Z-S52 disarms Z-W8-S3), after which this order re-runs unchanged. Instance VALID. Was: pending.</status>
 <round>3</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

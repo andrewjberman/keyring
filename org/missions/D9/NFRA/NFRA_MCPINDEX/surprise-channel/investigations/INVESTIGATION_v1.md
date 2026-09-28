@@ -2572,6 +2572,30 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~MI",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "ARMED because the four schedules fire again tonight and every weekday: a daily automated login attempt against the Black Diamond portal with the live password, failing on the MFA timeout, for as long as the four triggers stand. Disarm is a decision on those four documents (retire the four trigger rules or port off the portal login), which is not this order's. Once the four triggers are gone, MX-i-4 can be re-run: the census is repeatable from the CENSUS file's method, and the one-element removal is the one change the plan should show (0 add, 1 change, 0 destroy). The secret is untouched."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S52",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:36Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W8-S3"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W8-S3 by placement: the four BD Playwright daily legs (allocation, realized, transaction, unrealized) still read opal/bd/credentials and log in to the BD portal every weekday, failing 21 of 21 at the MFA-broken login -- a standing state since 2026-06-23, which this round neither created nor can worsen. MX-i-4 is superseded (the grant stays while live readers exist) and the retire-or-port of those four legs is carried to the round-3 L10 analysis as the one cell that unblocks both MX-i-4 and the transaction feed (Z-S51).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~8/CENSUS_MX-i-4.md: 16 policies read on bd-exporter-ec2-role; only inline AdditionalPermissions grants the secret; 4 LIVE readers (each document's line 22 fetches it; triggers ENABLED at 21:38/21:45/21:53/22:00Z weekdays; 21 of 21 Failed each, the latest runs reaching 'Phase 1: Login' then a Playwright TimeoutError, no AccessDenied).",
+        "MX-s-10/MX-s-12 is the precedent for the port: the asset-dim leg moved off the portal login to the REST pull on the 49F session and passed its scheduled acceptance DELTA=0 at 22:11Z today."
+      ]
+    },
+    "spec_asserts": "Z-W8-S3 (BLOCKING, ARMED): MX-i-4's removal cannot proceed while 4 live documents read the secret; each weekday they make an automated portal login with the live password that fails.",
+    "world_is": "Refusing AC1 was correct (order step 3). Nothing about the grant or the logins changed this round. Whether 5 failed logins per weekday risk an account lockout on the BD portal is UNMEASURED and is named here for the analysis, not assumed either way.",
+    "notes": "Routed to 1.0.0_SA_CTO~O with the round-3 slug: one candidate cell per leg or one batched port on the MX-s-12 pattern, after which MX-i-4 re-runs unchanged."
   }
 ]
 ```
