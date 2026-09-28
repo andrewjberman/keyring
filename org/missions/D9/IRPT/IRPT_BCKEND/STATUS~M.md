@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-28T01:1xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-28T14:1xZ (REBOOT CHECKPOINT, CTO 102346). Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -49,6 +49,24 @@ Andrew-direct 12:4xZ 09-27 ("rec approved", @2c0624a986): every branch reaches C
 each under its ledger (runbook G); the Holdings packages are re-minted from CLOUD before the QA fire (runbook D.0).
 
 ## Next list (in order)
+
+**Post-reboot, 09-28 (read this first):**
+- R4: N1 DONE 4 of 4 (SSM da369659), ledger irpt-holdings-principals-dispatch-m-20260925 CLOSED @95ec2ca2dc.
+  Holdings code (cash rule d306d972f6, UIC-16 a57537bd8a) is merged into CLOUD @dfb62b349d (local); the push upload is
+  pre-authorized to MSTR. The pinned diff was re-run @c1ed5b9e1b: 0 node or amount changes; labels 2,970/875/755;
+  classes 123/30,881/2,577.
+  - NEXT, after the reboot and on CLOUD's rewritten commits (CTO 102323/102342):
+    1. re-mint the Holdings packages AND the directory bundle under ledgers;
+    2. one QA fire: `aws lambda invoke --function-name irpt-holdings-refresh-lambda --payload '{"qa": true}'`;
+    3. re-read the diff at the QA fire's as_of;
+    4. send the ENABLE half to the CTO and CRO, promised ~15:00Z and now after the reboot; tell the CRO.
+- S173 (ARMED): COT gold has never read a classification table. Andrew-direct 12:4xZ: the canonical table is
+  etf-classifications (@871b7458ec). CTO 102323: all three producers (COT gold, BD gold, Holdings) re-point as ONE
+  act with halves AFTER the POSN fill; the gap list went to the POSN owner via MSTR. Coverage @9ab15461ca: COT 39.7%,
+  BD 68.1% of served dollars.
+- HELD: the COT cash-line gold act, Part 2, and runbook A/B/C (CTO 102293/102323).
+- Comparison v2: SHIPPED in ~Y's GRANT release (CRO signed b6c264b3; consumer d7c97910d9).
+
 
 1. Goal /verify: re-verify criterion (3) after Monday's R4 publication (COT `CASH -- CASH` reads `cash`); (1) and (2) are MET.
 2. **CTO R5, with Andrew's two answers** (msg 100951;
