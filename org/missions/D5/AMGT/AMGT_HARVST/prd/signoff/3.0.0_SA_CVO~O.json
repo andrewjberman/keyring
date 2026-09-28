@@ -1,0 +1,12 @@
+{
+  "prd": "AMGT_HARVST_PRD.md",
+  "prd_version": "v0.3",
+  "prd_pin": "5e05cb1d3c72f97169b8091f57568afa22acc36d",
+  "half": "ratified-text",
+  "half_hash": "43375644bc89939558c5ca648c69878acf2558f9f220ada7473c01c286a4f5db",
+  "endpoint_hash": "974dada544a2ee6979cfc4a18c3fc9bf6581ecfbba14d60d4862dc6e516e181e",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_AMGT_HARVST_PRD_v0.3_RATIFIED_TEXT_REVIEW_20260928.md@833263293b",
+  "signed_by": "3.0.0_SA_CVO~O",
+  "signed_at": "2026-09-28T06:18:25Z"
+}
