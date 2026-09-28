@@ -1525,6 +1525,85 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Issuer message: S1 (validator census inherited the nested GIT_DIR) fixed @fd0aa6ba57; S2 (AC1 inner bound) raised 60 s -> 105 s at c7a5391c18.",
     "world_is": "Both hold on this branch: the hook admitted the nested commit and AC1 completed its fence test inside the new bound."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "one_line": "E10's LOGIN_USES=0 is a count over 2026-07-14..2026-09-28, not since the /authorize go-live: the host journal starts 21 days after the commit that registered /authorize.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM i-07dccb1615503ac99 2026-09-28: journalctl -u opal-gateway first line 2026-08-15T03:02:10+0000; journalctl _COMM=uvicorn first line 2026-07-14T09:48:50+0000; /login count 0 on both.",
+        "git log -S: 63e61ca77b 2026-06-23 (authored, UNAPPLIED); org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~16/E10_LOGIN_CENSUS.md."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 section 1: LOGIN_USES is the number of /login requests since the MCP /authorize sign-in went live, read from journalctl -u opal-gateway.",
+    "world_is": "journalctl -u opal-gateway starts 2026-08-15 (the unit rename); the whole journal starts 2026-07-14T09:48:50Z under the earlier unit m365-mcp-gateway. /authorize was registered at 63e61ca77b (2026-06-23). The worker counted both unit names (0 and 0) and named the gap in the census; the 21 days before the journal are unmeasured and not recoverable on the host."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "one_line": "E10 NARROW's 'a config list' is derived from the two existing settings OTP_MAILBOX and MS_INGEST_IDENTITY, because app/config.py is outside the order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/server.py _login_allowed_identities (worker commit on wk-NFRA_OPALAI-16).",
+        "tests/test_login_retire.py::test_login_fails_closed_when_empty passed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 section 1 NARROW: /login admits only the server identities the census named (a config list, fail closed when empty).",
+    "world_is": "The order writes only app/server.py, so a new config key could not be added. The allow-list is computed in server.py from cfg.OTP_MAILBOX and cfg.MS_INGEST_IDENTITY (the two server-held identities the census named); empty -> admits nobody. A separate list key would need config.py and a host .env edit at release."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "one_line": "The census's host read printed the first 4 characters of OTP_BEARER, MS_INGEST_BEARER and the two identity values into the worker's own tool output (never into a committed file).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command output in the worker session 2026-09-28 ~21:55Z (ENV_KEYS block); grep of the committed census for the prefixes: absent."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 bound 3: no token, cache content, secret or email is printed, committed or put in the census.",
+    "world_is": "The worker's SSM script derived the two cache file names from .env and, in an extra diagnostic line, echoed each key's first 4 value characters. Nothing was written to the repo, the census or this row. The prefixes sit in the worker's session output only; a 4-character prefix of a static bearer is not usable as a credential."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S4",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:20Z",
+    "one_line": "e10.AC2.sh cannot pass on this Windows device: it greps pytest -rA lines for 'PASSED tests/test_login_retire.py::<name>' with a forward slash, but pytest here prints 'PASSED tests\test_login_retire.py::<name>' with a backslash. The tests pass; the named-test count reads 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/e10.AC2.sh at HEAD 8ed37b3266 -> 'branch=NARROW named=test_login_narrowed passed=0 failed/errored=0; summary: 2 passed' RESULT: FAIL exit=1.",
+        "python -m pytest tests/test_login_retire.py -rA (cat -A) -> 'PASSED tests\test_login_retire.py::test_login_narrowed$' and '...::test_login_fails_closed_when_empty$'; e10.AC2.sh grep pattern is ^PASSED tests/test_login_retire.py::$want( |$)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 AC2: the test named for the census's branch passed>=1, failed/errored=0, read from e10.AC2.sh.",
+    "world_is": "With pytest printing OS-native path separators, the check's forward-slash pattern matches nothing on this device, so named=0 whatever the tests do (the same script would pass on a POSIX device). The worker did not edit the check or the invocation, and could not change the separator inside its <paths>. Disarm owner is the issuer: the pattern needs to accept either separator, e.g. tests[/\\]test_login_retire.py. The other two OA-e-10 criteria pass and the mutant control fired (guard removed -> both tests fail)."
   }
 ]
 ```
