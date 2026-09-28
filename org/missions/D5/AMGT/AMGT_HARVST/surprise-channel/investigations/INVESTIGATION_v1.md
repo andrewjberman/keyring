@@ -1890,6 +1890,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "ROUND_ANALYSIS.round11.md s.4 cell 1: mount both route keys + table 16->18 + a ledgered deploy + both routes timed from the deployed Lambda 'unlocks ruling 3's push and FWD-5/FWD-6's walk'.",
       "world_is": "A mount plus a code-only redeploy gives two mounted routes that answer an import failure, not data. The package must carry a python3.11 pyarrow build that imports alongside the layer's numpy 2.2.6, plus lib.opal_naming and its registry data, inside Lambda's 250 MiB unzipped ceiling (layer alone is 121.7 MB).",
       "notes": "DISARM (issuer's, same turn): round 12 cuts the deploy cell HVST-a-2 to include making the package import the gold readers, with the wheel source (a sha256-pinned wheel, which is egress to PyPI as in AMGT-tt-2's half, or an owned layer) and the unzipped total against 250 MiB carded on the never-widen halves the CTO signs; a-2's AC1 invokes the deployed Lambda and FAILS on a 200-less timeline route, so an import failure cannot pass silently. No runtime change is admitted without the CTO's word."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S36",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "4.0.0_SA_CRO~Z",
+      "surfaced_at": "2026-09-28T23:20Z",
+      "one_line": "HVST-a-2's preflight premise is false on BOTH planes: opal-amgt-scoped-api-role reads NO amgt/harvest/gold/ prefix, live or in Terraform at HEAD, so the timeline loaders (chatter_daily / chatter_event / article_security_mention) would be refused S3 reads after the mount + package deploy -- the 404 becomes an AccessDenied, not data.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by this seat 2026-09-28 ~23:3xZ, read-only: `iam list-role-policies` on opal-amgt-scoped-api-role = ONE inline policy opal-amgt-scoped-api-grants (4 statements) + AWSLambdaBasicExecutionRole; its opal-data-harvest resources number 22, and NONE is amgt/harvest/gold/* (the only amgt/ prefix is amgt/harvest/state/filing_attempt/*; the rest are publication-links/v1, publications/v1, universe/v1, crosswalk/v1, drafting/v1, peers/v1, management/v1, posture/v1, derived/model_block, packs, scores/v1, the {source}/harvest/{bronze,silver} prefixes, bright-data bronze, and the bucket ARN).",
+          "MEASURED at shared HEAD 846c1b2b34: infra/aws/terraform/harvest/scoped-amgt-api.tf carries 'amgt/harvest' only at :125 and :181, both filing_attempt; no gold prefix is DESIRED either.",
+          "The premise, verbatim in org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-a-2.package-and-deploy-the-timeline-routes.md <preflight>, comp-iam line: 'the function's existing role already reads opal-data-harvest gold (the RESAPP chatter routes)'.",
+          "Found while researching DSGN_AMGTV1 (Andrew-direct 2026-09-28 ~22:3xZ); the gold keys the timeline needs were read by a research agent of this seat under its own credentials, not the Lambda's."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-a-2 preflight: the role already reads opal-data-harvest gold, so mount (HVST-a-1) + package with pyarrow (Z-S35) makes both timeline routes answer with real data.",
+      "world_is": "The role has no gold read on the live or the desired plane. After HVST-a-1 + HVST-a-2 as written, the loaders reach S3 and are refused; a third change (a gold read grant in scoped-amgt-api.tf, safe-applied) is needed before either route can serve data.",
+      "notes": "Disarm is the issuer's (the order is 2.0.0_SA_COO~H's): amend HVST-a-2 to carry the grant, or cut it. This seat does not edit the order or the TF. Not verified: whether the RESAPP chatter routes read gold through some other principal -- the premise cites them; this row says only that THIS role holds no such grant."
     }
   ]
 ```
