@@ -97,7 +97,7 @@ nothing to S3**. Read alone it asserts exactly the belief that produced round 6'
 <proof_of_spec>
   <criterion id="AC1" cell_refs="HVST-w-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~23/scripts/ac1_listing_collision.py</invocation><expect>TWO LISTING APPENDS INSIDE ONE SECOND BOTH LAND, proved against a FAKE in-process s3 client that raises PreconditionFailed on a repeated key exactly as S3 does. Print, in order: (a) a NEGATIVE CONTROL at HEAD's behaviour -- the direct `store.silver_append` call site raising PreconditionFailed on the second append, with the exception text verbatim; (b) the same two appends through the repaired call site, BOTH returning a receipt, with the two distinct object names printed so the suffixed retry is visible; (c) the ROW COUNT landed across both keys, equal to the sum of the two row sets with NO row dropped. A pass requires the negative control to FAIL at HEAD -- a criterion that passes without ever reproducing the defect proves nothing</expect></criterion>
 
-  <criterion id="AC2" cell_refs="HVST-w-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python -m pytest lib/research/harvest/tests/ lib/opal_data_harvest/tests/ -rA 2>&amp;1 | tail -60</invocation><expect>the BEFORE and AFTER counts both stated with every failing test named. `-rA` is used deliberately because `-q` NEVER PRINTS A PASSING TEST'S NODEID, which made a round-7 criterion unsatisfiable by construction (row Z-W21-S1). Expected direction: 3 failed / 160 passed at HEAD moves toward 0 failed, and any test still failing is named with its error text. ⛔ THE WinError 183 CASE IS AN ACCEPTED OUTCOME REPORTED WITH ITS CAUSE, not a failure of this cell: if it is filesystem state rather than logic, say so and LEAVE THE ASSERTION ALONE. A test made green by weakening what it asserts FAILS this criterion</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-w-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python -m pytest lib/research/harvest/tests/ lib/opal_data_harvest/ -rA 2>&amp;1 | tail -60</invocation><expect>the BEFORE and AFTER counts both stated with every failing test named. `-rA` is used deliberately because `-q` NEVER PRINTS A PASSING TEST'S NODEID, which made a round-7 criterion unsatisfiable by construction (row Z-W21-S1). Expected direction: 3 failed / 160 passed at HEAD moves toward 0 failed, and any test still failing is named with its error text. ⛔ THE WinError 183 CASE IS AN ACCEPTED OUTCOME REPORTED WITH ITS CAUSE, not a failure of this cell: if it is filesystem state rather than logic, say so and LEAVE THE ASSERTION ALONE. A test made green by weakening what it asserts FAILS this criterion</expect></criterion>
 
   <criterion id="AC3" cell_refs="HVST-w-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python -m lib.opal_data_harvest run --help 2>&amp;1 | grep -A3 "harvest-grammar"</invocation><expect>the `--harvest-grammar` help text NO LONGER SAYS "writes" for a flag that writes nothing to S3 (row Z-S27). Print the OLD string and the NEW string. The new text states what the flag actually does -- turns on the harvest-grammar bronze/silver row BUILD and passes a harvest_client to Worker -- and does not imply an S3 write</expect></criterion>
 </proof_of_spec>
@@ -107,6 +107,41 @@ nothing to S3**. Read alone it asserts exactly the belief that produced round 6'
 It does not touch `lib/research/harvest/store.py`. It does not change the articles path. It makes no vendor
 call, no network call and no S3 call of any kind. It does not capture anything -- the capture cell is CARDED at
 Andrew pending a per-use vendor word and is not yours.
+
+## 8. AMENDMENT 1 -- AC2's INVOCATION NAMED A DIRECTORY THAT HAS NEVER EXISTED. THE DEFECT IS THE ISSUER'S
+
+**Issuer's act under Rule 27** (the issuer amends its own task-order criteria without a CTO ruling).
+**GATE LIMB THAT GRADES THIS MODIFICATION: GATE (viii)** -- this order declares
+`<placeholders>NONE</placeholders>` at HEAD, so the placeholder limb grades a MODIFIED order. LIMB 6 does not
+fire (it reaches a NEWLY-ADDED order only).
+
+**WHAT WAS WRONG.** AC2's literal invocation read
+`python -m pytest lib/research/harvest/tests/ lib/opal_data_harvest/tests/ -rA`.
+⛔ **`lib/opal_data_harvest/tests/` HAS NEVER EXISTED IN THIS REPO.** Measured: `ls` refuses it, and the 14
+test files of that package are **FLAT** in `lib/opal_data_harvest/` (`test_worker.py`,
+`test_harvest_grammar.py`, `test_silver_from_bronze.py`, ...). pytest treats the missing path as a USAGE
+ERROR, so the run returned `collected 0 items` / rc=4 and **never reached a single test of the 426 behind the
+two named directories.**
+
+**AMENDED TO:** `python -m pytest lib/research/harvest/tests/ lib/opal_data_harvest/ -rA` -- the `/tests/`
+suffix dropped from the second path only. **Nothing else about AC2 changes**: same `-rA`, same expectation,
+same tolerance for the named `WinError 183` failure.
+
+⭐ **THE WORKER WAS RIGHT AND ITS BEHAVIOUR IS THE POINT.** `0.9.0_WK_AMGT_HARVST~23` ran the invocation
+**literally**, reported **FAIL** rather than silently substituting a path that would work, and filed row
+`AMGT_HARVST-Z-W23-S1` naming the ISSUER's re-cut as the disarm. **A worker that had "helpfully" fixed my path
+would have hidden an unread-surface defect inside a green column.** The FAIL is the instrument working.
+
+⛔ **AND IT IS THE EXACT DEFECT CLASS THIS ROUND WAS CUT TO AVOID.** Decomp 20.4 and the round-7 analysis both
+say a criterion written against an UNREAD SURFACE is the defect this project has paid for twice -- and I then
+wrote one into AC2 of the first cell I issued. **I read both call sites of `uploads.py` before writing AC1 and
+did not spend one `ls` on AC2's own second path.** The diligence was real but it was aimed at the interesting
+criterion, not at all three. **COST: one `ls` per path a criterion names, including the boring ones.**
+
+**THE AMENDMENT REACHES BOTH SURFACES, which is round 7's other lesson** (`Z-W22-S4`/`Z-W22-S5` cost two rows
+because I changed the spawn face and not the order file): the worker is resumed with an instruction to merge
+this amendment commit into its branch and re-run AC2 **from the amended file**, so its recorded invocation and
+this order's text are byte-identical rather than merely equivalent.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
