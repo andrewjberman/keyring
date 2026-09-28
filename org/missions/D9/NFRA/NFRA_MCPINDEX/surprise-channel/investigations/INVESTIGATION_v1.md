@@ -2203,6 +2203,30 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~O",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "WHY THIS ROW EXISTS AT ALL, which is a process point about me rather than about fees: I measured all of the above on 2026-09-28 during MX-s-10 step 3 and wrote it only into ANNOUNCE_MX-s-10.md, an MX-s-10 deliverable. MX-s-10 is now SUPERSEDED-for-round, so the finding would have died with the cell it was discovered in. CLAUDE.md section 2 says an off-task finding gets a ROW and the work continues; an announce is not a channel row and does not survive its order. Filed late, and the lateness is the lesson. NOT FIXED, and deliberately not: the one-line repair is the same insertion MX-s-4 made, and opal-bd-fees-download.json sits in infra/aws/ssm/ which is this lane's surface -- but no order covers this producer, and CLAUDE.md forbids implementing a gate or monitor unbidden even where proposing is legal. An honest exit is not an alarm (the issuer ruled exactly that for MX-s-4), so the fix is legal in principle and wants a cell, not a rider. The fees schedule was also left ALONE under MX-s-10's own preflight, which removes its leg only once its caller census reads 0 -- and that census reads 1. ONE THING UNMEASURED: whether the four remaining BD download documents (allocation, realized, transaction, unrealized) also lack an exit. Z-S17 measured their shutdown ORDERING, not their exit honesty, and those two are different properties."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T20:58Z",
+    "one_line": "TO MX-s-12 step 4: .tools/safe-apply.sh refuses the worker (halt-gate exit 3, fail-closed) because the session-keyed serial file resolves the shared session id to the issuer serial 2.0.0_SA_COO~MI, a two-letter lane the gate rejects; the graded 0-add/0-change/5-destroy fees-leg plan is NOT applied.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Command: HALT_ACK=1 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/bd-pipeline apply -input=false -no-color <saved plan> run from the worker worktree with OPAL_AGENT_SERIAL=0.9.0_WK_NFRA_MCPINDEX~8 exported. Output: 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed) ... Resolved serial: 2.0.0_SA_COO~MI', APPLY_RC=3. Terraform was never invoked; nothing was applied.",
+        ".tools/halt-gate-check.sh:68-109 halt_gate_resolve_serial reads ONLY org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial (this checkout, then the shared checkout) and the orphan-cleaned marker; it does NOT read OPAL_AGENT_SERIAL. The worker shares the issuer's CLAUDE_CODE_SESSION_ID, so it resolves as the issuer. The worker worktree has no org/mcp/sessions directory (ls: cannot access).",
+        ".tools/halt-gate-check.sh:71-74 says the sanctioned remedy: 'an issuer may provision a worker's serial inside the worker's worktree, so parallel workers of one session each resolve as themselves'. That file is org/mcp/sessions/<sid>.serial, outside this order's <paths>, so the worker did not write it (order: a path needed but not granted is a BLOCKING row, never an override).",
+        "The plan itself is graded and clean (step 4 G3): 'Plan: 0 to add, 0 to change, 5 to destroy' = aws_cloudwatch_event_rule.bd_fees_pipeline, aws_cloudwatch_event_target.bd_fees_pipeline_target, aws_lambda_permission.eventbridge_fees, module.fees_trigger.aws_cloudwatch_log_group.lambda, module.fees_trigger.aws_lambda_function.this. Zero mentions of aws_instance, bd-49f-fees-runner, its session-chain rule, bd-silver-merge, or any asset-dim resource. Saved plan and text are in the worker scratch dir, outside the repo."
+      ]
+    },
+    "spec_asserts": "TO MX-s-12 step 4: apply the retirement with .tools/safe-apply.sh, never a bare apply, and after apply run terraform plan -detailed-exitcode = 0.",
+    "world_is": "safe-apply cannot name this worker as its principal, so the apply is not executed. The fees leg (bd-fees-pipeline-trigger cron(15 22), bd-fees-trigger) is still live in AWS and would fire at 22:15Z on top of the asset-dim fire; the repo edits and file deletions are committed on the worker branch only. AC2 asserts only the asset-dim rule so it is unaffected.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm is one of: (a) the issuer writes org/mcp/sessions/<sid>.serial inside the worker worktree naming 0.9.0_WK_NFRA_MCPINDEX~8 and the worker re-runs safe-apply against a fresh plan (the worker will re-plan, the saved plan is not trusted after time passes); or (b) the issuer applies from the worker branch. The order forbids step 4 between 22:05Z and 22:40Z, so the window is now until 22:05Z or after 22:40Z; if unapplied before 22:15Z the fees Playwright leg fires once more, which is the state it has been in for 95 days and harmless to data (bronze/fees is written by the REST runner)."
   }
 ]
 ```
