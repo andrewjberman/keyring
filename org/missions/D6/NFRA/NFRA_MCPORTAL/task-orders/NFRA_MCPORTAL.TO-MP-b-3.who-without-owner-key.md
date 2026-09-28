@@ -93,7 +93,7 @@ as expected ("1 failed, 9 passed", 0 cases of the named test); AC2 PASSES as exp
 The writer's grant (`mcportal_grant_writer.tf:87-91`, PutItem/UpdateItem on `POLICY#*` leading keys) already covers
 `POLICY#EMAILDENY#...`. No gate. Slot `~1` continues to MP-a-2 after this drains.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
