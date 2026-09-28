@@ -114,3 +114,5 @@ The slot continues here after MP-b-2.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+<status>superseded -- CLOSED for round 2 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never spawned: its spawn precondition G-HDR (Andrew opens the dashboard; the journal line exists) has not landed. Holding it open would deadlock round 2's L10 on an Andrew act. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in round 3, unchanged, once G-HDR lands. Was: pending.</status>

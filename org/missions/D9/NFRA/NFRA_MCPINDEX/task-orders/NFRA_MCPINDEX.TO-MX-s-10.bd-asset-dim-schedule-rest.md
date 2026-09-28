@@ -218,3 +218,5 @@ GO guards will be read from the SIGNED files.
 <fabric>site-z</fabric>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
+
+<status>superseded -- CLOSED for this round by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. PHASE A is COMPLETE and graded by the issuer (A6 @471c840a0a): the document is ported (Playwright 0, BD_PASSWORD 0), and step 2 measured DELTA=0 on content (ids 12,141 = 12,141, only built_at changed). s10.AC1 and s10.AC3 are NOT graded: they need PHASE B (document DEFAULT + retirements), which waits on the never-widen halves asked @471c840a0a, and on the 22:10Z scheduled fire. NOTHING IS RE-GRADED BY THIS CLOSE. PHASE B RE-CUTS as its own order right after the slug, carrying these AC1-AC3 checks unchanged, the ask file, and the halves as signed. Was: pending.</status>

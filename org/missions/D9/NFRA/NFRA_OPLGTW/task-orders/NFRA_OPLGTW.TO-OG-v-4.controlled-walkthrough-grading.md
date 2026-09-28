@@ -233,3 +233,5 @@ Amended 2026-09-17 ~15:0xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CT
 @df750f1e26; row `NFRA_OPLGTW-W6-S5`): AC5 grades RQ1-RQ6 at the fixed date `2026-09-15`; AC6 and AC7 grade one live,
 unsealed no-date request per master, so PRD C3's explicit-latest coverage stays in the walkthrough and cannot drift. The
 protocol edit rides `TO-OG-o-2`, which precedes this cell (see that order's record). No criterion removed.
+
+<status>superseded -- CLOSED for round 2 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: its data-correctness criterion needs the sealed-expectations salt, which exists only on the laptop (row S42), and gates G-C and G-D are not at HEAD. Holding it open would deadlock the round's L10 on a laptop act and two absent gates. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in the next round, unchanged, once the salt is reachable and G-C/G-D land. Was: pending.</status>

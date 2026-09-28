@@ -133,3 +133,5 @@ inputs still resolve, rather than whether its gate is still shut.
 
 Seating: slot ~6, queue position 5, handed after `OG-v-4` merges AND the G-E and G-F records are at HEAD. Round 1 of
 NFRA_OPLGTW, issued by `2.0.0_SA_COO~O` (seated msg 96971, LD-0567). Decomposition v1 @8768f46770.
+
+<status>superseded -- CLOSED for round 2 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: held on project gate G-E and on OG-v-4's seal (the same salt, row S42). Holding it open would deadlock the round's L10 on those external acts. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in the next round behind OG-v-4. Was: pending.</status>
