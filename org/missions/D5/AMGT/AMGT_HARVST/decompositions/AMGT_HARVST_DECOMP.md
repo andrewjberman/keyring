@@ -1451,3 +1451,96 @@ because escaping can make a recorded invocation align while being unrunnable. Pl
 (`Z-W21-S1`); a whitespace-bearing placeholder is expanded and `NONE` declared (`Z-W22-S6`); scripts in the
 worker's own `deliverables/<serial>/scripts/`, never `.scratch/`; and **the spawn face and the order FILE are
 ONE edit** (`Z-W22-S4`/`S5`).
+
+
+## 22. ROUND 10 -- L5 DECOMPOSITION v1.9, over the round-9 analysis (`ledger/ROUND_ANALYSIS.round9.md` @f330f1a2e2) + PRD v0.3
+
+**Issuer `2.0.0_SA_COO~Y`, 2026-09-28 ~07:1xZ.** Three cells, all LOCAL, all issuable.
+
+### 22.0 DENOMINATORS
+
+Spent series letters **h, r, s, t, u, v, w, x** (25 orders) -> **round 10 is the `y` series.** Worker slots MAX+1
+over 27 -> **`~28`, `~29`, `~30`.**
+
+### 22.1 CELL 1's GATE WAS VERIFIED BY HASH, NOT BY THE STATUS LINE
+
+The round-9 analysis gated cell 1 on the v0.3 ratified half being re-signed. ⛔ **`prd-signoff.py status` is NOT
+the oracle for that and said so misleadingly:** it printed `ratified-text SIGNED ... current` while the stored
+`half_hash` (`fa4257b6...`, `3.0.0_SA_CVO~Z`, v0.2) **differed from** the library's computed
+`half_hashes()['ratified-text']` (`43375644...`). **Routed to `1.0.0_SA_CTO~Z`, which answered that the binding is
+to the ENDPOINT hash BY DESIGN (v3.19 + the 2026-09-24 proportionate sign-off) and the REPORT was the defect --
+fixed @`ea81ad7be3`, now printing "current by ENDPOINT hash; this half's text CHANGED since signed".** Both my
+proposed causes were wrong; the observation was right.
+
+**THE GATE IS NOW GENUINELY CLEAR, measured:** `prd/signoff/3.0.0_SA_CVO~O.json` exists, `prd_version v0.3`, pin
+`5e05cb1d3c`, and its `half_hash` **43375644... MATCHES the computed current hash.** Cell 1 may be cut.
+
+### 22.2 NEVER-1 DOES NOT FIRE, and the zero carries its cause
+
+The analysis required: *"Before the rebuild, list every reader of `chatter_event` / `event_id`; if any is served,
+the rebuild moves served output and carries its never-widen pair."* **The rebuild's diff is NOT delta-zero**
+(12 -> 8 events, plus 2 spans narrowing so their `event_id` changes), so this mattered.
+
+**MEASURED: no served surface reads `chatter_event`.** `comp-find 'chatter_event' portal infra/aws data` ->
+**0 hits across 10,085 files scanned.** ⚠ **The zero's own bounds, stated rather than swallowed:** 1 file
+unreadable, 1,869 binary and 32,708 ephemeral-floor files were NOT searched, so the zero does not cover those.
+The only first-party readers are `publication_gold.py` (which **writes** it) and `timeline_api.py`, which is
+**pure -- the caller supplies the loader** -- and the page that would serve it is **cell 3, not yet built.**
+**So NEVER-1's never-widen pair does NOT fire this round.** ⛔ **It WILL fire the round after cell 3 ships**, and
+that is written here so the next issuer does not re-derive it.
+
+⚠ **AND `event_id` IS THE WRONG TERM TO CENSUS ON:** it returns 408 hits across `portal`/`infra`/`data` --
+`close_event_id` in schwab silver, the OpenAI realtime SDK, globgrph -- **none of them this table.** The term
+that answers the question is `chatter_event`. A census on the generic name would have manufactured a served
+reader that does not exist.
+
+### 22.3 THE THREE CELLS
+
+| id | cell | class | slot |
+|---|---|---|---|
+| `HVST-y-1` | **re-derive the events** under the amended `C-HV-EVENT-SPINE` (publishers counted over tier-A only) | LOCAL | `~28` |
+| `HVST-y-2` | **FWD-4** -- the strength grade re-derived from stored text and matched | LOCAL | `~29` |
+| `HVST-y-3` | **the timeline PAGE** on the company view, over `w-3`'s API, **carrying the round's JUDGMENT criterion** | LOCAL | `~30` |
+
+**`y-1`'s expected diff is NAMED, not discovered** (the CVO measured it at daily grain): **12 -> 8 events**, the
+**4 spurious ones absent**, and **2 spans narrowing so their `event_id` MOVES** -- `BA` 09-07..08 -> 09-08, `HD`
+08-17..20 -> 08-18. Plus `C-HV-GOLD-REBUILDABLE`: a rebuild from the same silver reproduces identical rows.
+⭐ **Naming the `event_id` moves in the criterion matters because `_event_id` is `sha256(security_key|first_day|last_day)`**
+-- a narrowed span is a NEW id, not an edited row, and a criterion that counted only "8 events" would pass while
+silently orphaning two ids.
+
+**`y-3` is the round's JUDGMENT cell** (round-8 rule: the judgment criterion sits on a cell issuable without a
+pending Andrew word). It renders and **READS the screenshot** (`/frontend-dev`), **dev port 5174 ONLY**
+(Andrew-direct 2026-09-24). ⚠ **It touches a PRODUCT file, so it is NOT the author-lands-on-DEV case** -- the CTO
+reviews it. The cell builds; it does not push PROD.
+
+**Fan-out 3**, derived: all three are LOCAL and independent to BUILD. `y-3` grades after `y-1` and `y-2` land,
+which is a grading order, not a dispatch dependency.
+
+### 22.4 ITEM 6 -- RESOLVED AFTER THREE CARRIES, AND THE FIGURE WAS WRONG
+
+The analysis says the round-10 issuance states the 16 rows re-measured **or states in one line why not.** ⛔ **It
+is not 16, and it is not one population.** Measured live from `surprise-channel/remediations/REMEDIATION_v1.md`
+(40 rows, parsed as JSON rather than read off a summary line):
+
+| | |
+|---|---|
+| total rows | **40** |
+| `hazard_standing` ARMED | **28** -- this IS the "28" in "16 of 28" |
+| whose own text says NOT RE-MEASURED (all 40) | **20** |
+| **ARMED *and* not-re-measured** | **14** -- the apples-to-apples figure, **not 16** |
+
+**AND THE 14 SPLIT IN TWO, BY THEIR OWN `remedy` TEXT:**
+- **6 rows** -- *"Executed before round 7 and recorded by the disarm owner: ..."* (`Z-S10`, `Z-S4`, `Z-W10-S2`,
+  `Z-W10-S6`, `Z-W13-S1`, `Z-W15-S1`). **These carry a recorded execution; what they lack is a CLOCK, which is
+  `3.0.0_SA_CVO`'s to write, not a re-measurement.**
+- **8 rows** -- *"Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm
+  record found for this row in the channel"* (`Z-S11`, `Z-S23`, `Z-S3`, `Z-S5`, `Z-W10-S3`, `Z-W10-S8`,
+  `Z-W14-S2`, `Z-W8-S2`). **These are the genuine backlog.**
+
+**WHY IT WAS CARRIED THREE TIMES: "the 16" is an undifferentiated count, and six of its members needed nothing
+from me.** Asking for "the 16 re-measured" as an issuance footnote asked for one act over two populations with
+different owners. **The keepable form is the banked one: N items is not N CAUSES -- print the signature
+distribution before accepting a backlog figure.** The **8** are named above and are the real work; re-measuring
+claims spanning rounds 1-6 is **cell-sized, not an issuance line**, and it is carried as round 11's candidate
+with its members enumerated so the next issuer inherits a list rather than a number.
