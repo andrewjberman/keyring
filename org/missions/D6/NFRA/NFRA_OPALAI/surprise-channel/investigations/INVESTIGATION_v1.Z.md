@@ -1290,84 +1290,189 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "At CLOUD HEAD the suite is already red on 2 of 12, from changes that predate round 2. So E1's R-5 criterion is graded as NO NEW FAILURE against this base (the same 2 named failures, at least 10 passed), never as all-pass. The two failures are the NFRA_OPLGTW OG-z-1 guard's own pins, and they stay open for their owner.",
     "notes": "Filed by the issuer at the cut. INERT: the served gateway does not run tests. The OA-e-1 order carries the base count."
   },
-{
-  "id": "NFRA_OPALAI-Z-W16-S1",
-  "project": "NFRA_OPALAI",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
-  "surfaced_at": "2026-09-28T22:05Z",
-  "one_line": "E10's LOGIN_USES=0 is a count over 2026-07-14..2026-09-28, not since the /authorize go-live: the host journal starts 21 days after the commit that registered /authorize.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "SSM i-07dccb1615503ac99 2026-09-28: journalctl -u opal-gateway first line 2026-08-15T03:02:10+0000; journalctl _COMM=uvicorn first line 2026-07-14T09:48:50+0000; /login count 0 on both.",
-      "git log -S: 63e61ca77b 2026-06-23 (authored, UNAPPLIED); org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~16/E10_LOGIN_CENSUS.md."
-    ]
+  {
+    "id": "NFRA_OPALAI-Z-S37",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-28T21:40Z",
+    "one_line": "G-ACCT cannot run from opal_ai PROD: provision-account.ps1:101 passes New-LocalUser a -Description of 86 characters, the cmdlet's limit is 48, so the real (elevated) run refuses before any act. OA-t-2's dry run and refusal arms never reached New-LocalUser, so the defect shipped to PROD fd8ab8a57f unseen.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z report 20260928T213328Z (elevated run of HANDOFF_G-ACCT_ELEVATED_20260928.md step 2): exit 1, ParameterBindingValidationException 'The character length of the 86 argument is too long ... fewer than or equal to \"48\" characters'; Opal_Agent, the credential file and the state dir all absent after, so no rollback was needed.",
+        "git -C opal_ai show fd8ab8a57f:opal/runtime/provision/provision-account.ps1 :97-101 -- New-LocalUser ... -Description 'Opal Teams-facing runtime agent account (provisioned by provision-account.ps1, OA-t-2)' (86 characters), read by this seat."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~AI",
+    "spec_asserts": "Runbook Part A step 2 / G-ACCT handoff step 2: the real elevated run of provision-account.ps1 creates Opal_Agent and prints one OK line per act.",
+    "world_is": "The real run refuses at act 1 on a parameter-length validation that no unelevated arm exercises. Andrew's switchover sitting (Parts A-B) is held until a fixed script reaches the checkout the run uses.",
+    "notes": "Remedy routed to 1.0.0_SA_CTO~O as ONE ask: a direct-act addendum cell fixing the one Description literal (<=48 chars) in opal_ai, plus how the fix reaches C:\\opal_runtime\\opal_ai before the cutover G-PUSH window."
   },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "OA-e-10 section 1: LOGIN_USES is the number of /login requests since the MCP /authorize sign-in went live, read from journalctl -u opal-gateway.",
-  "world_is": "journalctl -u opal-gateway starts 2026-08-15 (the unit rename); the whole journal starts 2026-07-14T09:48:50Z under the earlier unit m365-mcp-gateway. /authorize was registered at 63e61ca77b (2026-06-23). The worker counted both unit names (0 and 0) and named the gap in the census; the 21 days before the journal are unmeasured and not recoverable on the host."
-},
-{
-  "id": "NFRA_OPALAI-Z-W16-S2",
-  "project": "NFRA_OPALAI",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
-  "surfaced_at": "2026-09-28T22:05Z",
-  "one_line": "E10 NARROW's 'a config list' is derived from the two existing settings OTP_MAILBOX and MS_INGEST_IDENTITY, because app/config.py is outside the order's paths.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/ec2/opal-gateway/app/server.py _login_allowed_identities (worker commit on wk-NFRA_OPALAI-16).",
-      "tests/test_login_retire.py::test_login_fails_closed_when_empty passed."
-    ]
+  {
+    "id": "NFRA_OPALAI-Z-S38",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-28T22:10Z",
+    "one_line": "This seat's R-3 re-confirm (@73e5968e67), the round-2 decomposition and three release/census orders named the served gateway as fe94911257 from a six-file md5 match. The host serves 6a98a0553a (OG-s-1), which descends from fe94911257 and differs from it only in deploy-to-ec2.sh, so an app-file md5 subset matches BOTH and names the ancestor.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~O msg 26242 and 2.0.0_SA_COO~O @e992df46c4: the live .env carries SPRINT_VIEW_ALLOWED_EMAILS, which only 6a98a0553a's deploy template writes.",
+        "git merge-base --is-ancestor fe94911257 6a98a0553a -> true; git diff --stat fe94911257 6a98a0553a -- infra/aws/ec2/opal-gateway -> 1 file, deploy-to-ec2.sh (read by this seat)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-r-1 / OA-e-3 / OA-e-9 step 0: the live base is resolved BY CONTENT as the commit whose files ALL match.",
+    "world_is": "An app-file md5 set cannot separate a release from an ancestor whose app files are identical, so 'all match' names more than one commit. A release cut on the ancestor would ship the older .env template.",
+    "notes": "Remedied by the issuer in the same act (amendment commit): the three orders gain a tie-break on the live .env KEY names against each candidate's deploy template, and the card and the re-confirm record are corrected in place. No release has run, so nothing shipped on the wrong base."
   },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "OA-e-10 section 1 NARROW: /login admits only the server identities the census named (a config list, fail closed when empty).",
-  "world_is": "The order writes only app/server.py, so a new config key could not be added. The allow-list is computed in server.py from cfg.OTP_MAILBOX and cfg.MS_INGEST_IDENTITY (the two server-held identities the census named); empty -> admits nobody. A separate list key would need config.py and a host .env edit at release."
-},
-{
-  "id": "NFRA_OPALAI-Z-W16-S3",
-  "project": "NFRA_OPALAI",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
-  "surfaced_at": "2026-09-28T22:05Z",
-  "one_line": "The census's host read printed the first 4 characters of OTP_BEARER, MS_INGEST_BEARER and the two identity values into the worker's own tool output (never into a committed file).",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "SSM command output in the worker session 2026-09-28 ~21:55Z (ENV_KEYS block); grep of the committed census for the prefixes: absent."
-    ]
+  {
+    "id": "NFRA_OPALAI-Z-S39",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-28T22:25Z",
+    "one_line": "An OWNER principal cannot hold any data grant without losing every legacy gateway tool, permanently: a profile makes the principal restricted to the Schwab tools its grant allows (a portal-only grant allows none), and a revoked record is a tombstone that never restores the legacy path. So Andrew cannot be profiled as an asker, and the widening of Alyssa to Menachem's entitlements is the only asker-side grant this round can write safely.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/data_entitlement.py docstring at HEAD: 'a profile (restricted): exactly the Schwab tools its active grant's operations allow; every other tool and the direct REST routes are denied'; 'a principal with ANY profile record -- pending, active or revoked -- is restricted. Nothing reactivates the legacy unlisted-user path'.",
+        "data_entitlement.py decide() (~:368-372): access.restricted -> only tools in access.tools pass.",
+        "1.0.0_SA_CTO~O msg 26243 asked for Andrew's portal-only grant; this seat measured the no-narrowing condition before writing, found it fails by construction with no possible rollback, and wrote nothing (msg 26252); the CTO ruled card option (b) instead (msg 26254)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Test card option (a) / CTO msg 26243: an owner can be given a portal-only asker grant without narrowing anything he holds today.",
+    "world_is": "Any profile restricts, and restriction is permanent. An asker grant for an owner or operator seat would silently cost that seat its email, Teams, YCharts, upload and /query/v0 reach.",
+    "notes": "Candidate enrichment item for round 2's L10 (CTO msg 26254): an asker-only grant shape (or an owner class) that scopes the ASKER path without restricting the principal's own tools, specified by the PRD owner. INERT: nothing was written, and no owner holds a profile. It binds any future grant written for a seat that also calls tools itself."
   },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "OA-e-10 bound 3: no token, cache content, secret or email is printed, committed or put in the census.",
-  "world_is": "The worker's SSM script derived the two cache file names from .env and, in an extra diagnostic line, echoed each key's first 4 value characters. Nothing was written to the repo, the census or this row. The prefixes sit in the worker's session output only; a 4-character prefix of a static bearer is not usable as a credential."
-},
 {
-  "id": "NFRA_OPALAI-Z-W16-S4",
+  "id": "NFRA_OPALAI-Z-W13-S1",
   "project": "NFRA_OPALAI",
   "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
-  "surfaced_at": "2026-09-28T22:20Z",
-  "one_line": "e10.AC2.sh cannot pass on this Windows device: it greps pytest -rA lines for 'PASSED tests/test_login_retire.py::<name>' with a forward slash, but pytest here prints 'PASSED tests\test_login_retire.py::<name>' with a backslash. The tests pass; the named-test count reads 0.",
+  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~13",
+  "surfaced_at": "2026-09-28T12:00:00Z",
+  "one_line": "Nested commit of SKILL.md refused by the owned-paths lane gate: the order's opal_ai/... path is not matched for the nested repo's commit",
   "class": "BLOCKING",
   "hazard_standing": "INERT",
+  "spec_asserts": "Order OA-e-4 bound 1: git -C opal_ai commit --author <serial> -F <msgfile> -- opal/agent/skills/bbg-teams-assist/SKILL.md lands, and <paths> lists opal_ai/opal/agent/skills/bbg-teams-assist/SKILL.md.",
+  "world_is": "The commit was refused (owned-paths block mode): 'agent=0.9.0_WK_NFRA_OPALAI~13 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The order file exists at HEAD b17a43ca9a and names the path with the opal_ai/ prefix. The edit is in the nested working tree, uncommitted; AC1 (reads nested HEAD) FAILs 0/0/0, AC2 and AC3 PASS. No override used.",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/e10.AC2.sh at HEAD 8ed37b3266 -> 'branch=NARROW named=test_login_narrowed passed=0 failed/errored=0; summary: 2 passed' RESULT: FAIL exit=1.",
-      "python -m pytest tests/test_login_retire.py -rA (cat -A) -> 'PASSED tests\test_login_retire.py::test_login_narrowed$' and '...::test_login_fails_closed_when_empty$'; e10.AC2.sh grep pattern is ^PASSED tests/test_login_retire.py::$want( |$)."
+      "git -C opal_ai commit ... -> 'VIOLATION: opal_ai/opal/agent/skills/bbg-teams-assist/SKILL.md -- lane=ANY_EXEC_OR_AE ... not in permitted_agents'",
+      "e4.AC1.sh at nested HEAD fd8ab8a57f: read_chat_message_images=0; hostedContents/pasted lines=0; decline sentence=0"
     ]
   },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "OA-e-10 AC2: the test named for the census's branch passed>=1, failed/errored=0, read from e10.AC2.sh.",
-  "world_is": "With pytest printing OS-native path separators, the check's forward-slash pattern matches nothing on this device, so named=0 whatever the tests do (the same script would pass on a POSIX device). The worker did not edit the check or the invocation, and could not change the separator inside its <paths>. Disarm owner is the issuer: the pattern needs to accept either separator, e.g. tests[/\\]test_login_retire.py. The other two OA-e-10 criteria pass and the mutant control fired (guard removed -> both tests fail)."
-}
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "NFRA_OPALAI-Z-W13-S2",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~13",
+  "surfaced_at": "2026-09-28T13:00:00Z",
+  "one_line": "Fix fd0aa6ba57 is not live for the nested commit from worktree oa-13: the hook execs the worktree's own .tools",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Issuer message: fd0aa6ba57 is live in the main tree the nested hook execs, so re-running the nested commit clears.",
+  "world_is": "Re-run refused with the identical VIOLATION text. The nested pre-commit wrapper (.git/modules/opal_ai/hooks/pre-commit) runs ${_SUPER}/.tools/git-hooks/owned-paths-check.sh, and _SUPER is /c/tmp/oa-13, whose .tools predates the fix: git merge-base --is-ancestor fd0aa6ba57 HEAD -> 1; git diff HEAD fd0aa6ba57 -- .tools/owned-paths-validate.py shows 15 insertions, 2 deletions. .tools is outside my <paths>, so I cannot bring the fix in.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "nested commit rerun -> same owned-paths VIOLATION",
+      "is-ancestor fd0aa6ba57 HEAD in /c/tmp/oa-13 -> rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+  {
+    "id": "NFRA_OPALAI-Z-W16-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "one_line": "E10's LOGIN_USES=0 is a count over 2026-07-14..2026-09-28, not since the /authorize go-live: the host journal starts 21 days after the commit that registered /authorize.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM i-07dccb1615503ac99 2026-09-28: journalctl -u opal-gateway first line 2026-08-15T03:02:10+0000; journalctl _COMM=uvicorn first line 2026-07-14T09:48:50+0000; /login count 0 on both.",
+        "git log -S: 63e61ca77b 2026-06-23 (authored, UNAPPLIED); org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~16/E10_LOGIN_CENSUS.md."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 section 1: LOGIN_USES is the number of /login requests since the MCP /authorize sign-in went live, read from journalctl -u opal-gateway.",
+    "world_is": "journalctl -u opal-gateway starts 2026-08-15 (the unit rename); the whole journal starts 2026-07-14T09:48:50Z under the earlier unit m365-mcp-gateway. /authorize was registered at 63e61ca77b (2026-06-23). The worker counted both unit names (0 and 0) and named the gap in the census; the 21 days before the journal are unmeasured and not recoverable on the host."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "one_line": "E10 NARROW's 'a config list' is derived from the two existing settings OTP_MAILBOX and MS_INGEST_IDENTITY, because app/config.py is outside the order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/server.py _login_allowed_identities (worker commit on wk-NFRA_OPALAI-16).",
+        "tests/test_login_retire.py::test_login_fails_closed_when_empty passed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 section 1 NARROW: /login admits only the server identities the census named (a config list, fail closed when empty).",
+    "world_is": "The order writes only app/server.py, so a new config key could not be added. The allow-list is computed in server.py from cfg.OTP_MAILBOX and cfg.MS_INGEST_IDENTITY (the two server-held identities the census named); empty -> admits nobody. A separate list key would need config.py and a host .env edit at release."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "one_line": "The census's host read printed the first 4 characters of OTP_BEARER, MS_INGEST_BEARER and the two identity values into the worker's own tool output (never into a committed file).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command output in the worker session 2026-09-28 ~21:55Z (ENV_KEYS block); grep of the committed census for the prefixes: absent."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 bound 3: no token, cache content, secret or email is printed, committed or put in the census.",
+    "world_is": "The worker's SSM script derived the two cache file names from .env and, in an extra diagnostic line, echoed each key's first 4 value characters. Nothing was written to the repo, the census or this row. The prefixes sit in the worker's session output only; a 4-character prefix of a static bearer is not usable as a credential."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S4",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:20Z",
+    "one_line": "e10.AC2.sh cannot pass on this Windows device: it greps pytest -rA lines for 'PASSED tests/test_login_retire.py::<name>' with a forward slash, but pytest here prints 'PASSED tests\test_login_retire.py::<name>' with a backslash. The tests pass; the named-test count reads 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/e10.AC2.sh at HEAD 8ed37b3266 -> 'branch=NARROW named=test_login_narrowed passed=0 failed/errored=0; summary: 2 passed' RESULT: FAIL exit=1.",
+        "python -m pytest tests/test_login_retire.py -rA (cat -A) -> 'PASSED tests\test_login_retire.py::test_login_narrowed$' and '...::test_login_fails_closed_when_empty$'; e10.AC2.sh grep pattern is ^PASSED tests/test_login_retire.py::$want( |$)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 AC2: the test named for the census's branch passed>=1, failed/errored=0, read from e10.AC2.sh.",
+    "world_is": "With pytest printing OS-native path separators, the check's forward-slash pattern matches nothing on this device, so named=0 whatever the tests do (the same script would pass on a POSIX device). The worker did not edit the check or the invocation, and could not change the separator inside its <paths>. Disarm owner is the issuer: the pattern needs to accept either separator, e.g. tests[/\\]test_login_retire.py. The other two OA-e-10 criteria pass and the mutant control fired (guard removed -> both tests fail)."
+  }
 ]
 ```

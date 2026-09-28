@@ -15017,6 +15017,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "The harness transpiles page sources itself and resolves no '@/' alias, so any new header mount that imports through '@/' breaks it for every name. It fails LOUD (CAPTURE_FAILED, sweep rc=1), never as a false OK. Round 45's close-run was therefore read at the published gitlink c3dd9ca9 in an isolated worktree. Once 92a25762 publishes, the published page itself carries the mount and FWD-30 cannot be measured until the harness resolves '@/' (or stubs TimelinePanel with the timeline's exclusion from the three sets stated).",
   "disarm_owner": "2.0.0_SA_COO~Z -- the issuer cuts the harness fix as a round-46 cell ahead of the full FWD-1..FWD-31 pass; the HARVST push stays as authorised.",
   "notes": "Filed without halting; the close-run proceeded on the published tree. No gate is placed on 92a25762's push: Andrew's word stands verbatim."
+},
+{
+  "id": "AMGT_RESAPP-Z-S293",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-28T21:55:00Z",
+  "one_line": "The team's 'served-and-cited' cases are the SECTION HEADINGS: over all 95 live-library dossiers, 34 of 34 non-absent base/upside/downside values read exactly 'Base Case' / 'Upside Case' / 'Downside Case' at locator 0, and 0 carry content -- so FWD-12 limb 3's data half is NOT met and round-46 cell 5 (render the team's cited cases) has nothing to render.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Census 2026-09-28 ~21:5xZ, lib.research.corpus.dossier.read_dossier over the 95 folders of the LIVE research library (library.list_folders), keys via crosswalk.harvester_key + scoped_amgt.resolve_identity: base absent 61 / heading_only 34 / content 0; upside 61 / 34 / 0; downside 61 / 34 / 0; read failures 0. heading_only = value matching ^\\s*<name>\\s+case\\s*:?\\s*$ (case-insensitive).",
+      "AZN_LN_Equity (s3://opal-data-harvest/amgt/harvest/gold/research-dossier/security_key=AZN_LN_Equity/as_of=2026-09-28.4a041c4ddec87ed7.json): fields.cases.base = {value: 'Base Case', citation: {locator: 0, passage: 'Base Case', report_key: ...ASTRAZENECA Research Pack 2026 06 17_v1.pdf}}.",
+      "Producer: lib/research/corpus/dossier.py:701-704 fills fields.cases from _resolve_section_field(case_name.upper() + ' CASE', ...), whose value is the resolved section's text; the measured value is the heading line itself.",
+      "The claim it corrects: 1.0.0_SA_CTO~Z @bfc179c2ea ('cases.base / cases.upside / cases.downside each read SERVED-AND-CITED 34 ... FWD-12 LIMB 3's DATA HALF IS MET'), carried into ROUND_ANALYSIS.round45.md s.4 item 5. That census counted non-null values; it did not read them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "34 of 95 dossiers serve the team's own base/upside/downside cases, cited, so what remains of FWD-12 limb 3 is the page render (FWD-24), a round-46 cell.",
+  "world_is": "The 34 carry only the heading string of the section, cited to locator 0; no dossier carries a team case's content. A render cell would print 'Base Case' as the team's base case. The defect is in AMGT_CORPUS's section extraction, not in AMGT_RESAPP's served path.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- round-46 cell 5 is NOT cut on this measurement (decomposition s.54) and the routing of the extraction fix goes to 1.0.0_SA_CTO~Z; AMGT_CORPUS's issuer owns the extraction surface.",
+  "notes": "Filed at the round-46 cut; I did not halt the other cells."
+},
+{
+  "id": "AMGT_RESAPP-Z-S294",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-28T21:30:00Z",
+  "one_line": "round45/checks/tt-1.AC2.sh (the planted control 'THE VERDICT COUNTS A DROPPED ABSENCE') passes on ANY harness rc=1, so on a tree where the harness crashes (Z-S292) it reads 'YES on 2 of 2' with empty ABSENCES/EXPORT-COMPARE fields -- a control that passes on a blind instrument.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Shared tree (portal DEV @92a25762), 2026-09-28 ~20:0xZ: 'RKT_LN_Equity: harness rc=1;  ; ' and 'AMD_US_Equity: harness rc=1;  ; ' then 'THE VERDICT COUNTS A DROPPED ABSENCE: YES on 2 of 2', exit=0.",
+      "Published tree C:/tmp/r45pub/portal @c3dd9ca9, same two pinned exports: 'ABSENCES page=33 rich=32 same=32 missing=1 extra=0 ; EXPORT-COMPARE NOT OK' (RKT) and 'page=31 rich=30 same=30 missing=1 ... NOT OK' (AMD) -- the control's claim holds, for the right reason, only there.",
+      "The issuer cited the shared-tree run in round45/close-run/PROVENANCE.md @2b3f58e826 and corrected that line in place."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The planted control distinguishes a verdict that counts a dropped absence from one that does not.",
+  "world_is": "It distinguishes rc=1 from rc=0 only; a crash reads as the control firing. The round-46 control (uu-2 AC2) requires the tokens 'missing=1' and 'EXPORT-COMPARE NOT OK' on both exports.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- the issuer; round 46's uu-2 AC2 is the tightened control.",
+  "notes": "The round-45 close-run result stands on the published-tree run; nothing graded in round 45 rested on the crash except the issuer's own first citation."
 }
 ]
 ```

@@ -81,7 +81,7 @@ route first), graded on MX-v-6's harness: ROUTING >= 21 of 27, dataset asks >= 2
 - d3.AC3's pytest bound is 300 s: at 110 s it timed out once under box load, although the suite runs in 10 s alone.
 - Chain: MX-d-3 -> MX-r-4. The enable release carries this fix.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @1328566f78 by 2.0.0_SA_COO~MI, 2026-09-28 ~21:4xZ: d3.AC1 PASS (ROUTING 23 of 27), d3.AC2 PASS (dataset asks 2 of 3: Q05, Q07 HIT; Q22 MISS), d3.AC3 PASS (8 passed), instance VALID. Worker control: 2 of the 4 new ranking tests FAIL on the pre-fix integration. Row Z-W10-S1 records the 4 residual misses as catalog vocabulary and precision defects, not ranking. Was: pending.</status>
 <round>3</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
