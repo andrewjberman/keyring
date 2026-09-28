@@ -75,6 +75,14 @@ VIEWS = (
     ("data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py", "py", ("FIRM_TREES",)),
     (".tools/ds-precommit-check.py", "py", ("_CROSS_FIRM_FOREIGN_BUCKETS", "_CROSS_FIRM_FOREIGN_KEY_PREFIXES")),
     ("data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py", "py", ("ASSET_DIM_REST_PIN",)),
+    ("portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts", "mjs", ("FIRM_DISPLAY_NAMES",)),
+)
+
+# Targets the generator owns WHOLE: the file is nothing but its generated block(s), so _render_view builds it
+# from the blocks alone and never reads a base (the first generate creates it). Every other VIEWS carrier is a
+# hand-kept file with a generated block inside, and its base must exist.
+WHOLE_FILE_TARGETS = (
+    "portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts",
 )
 
 # Which registry file(s) each generated target's renderer reads (LGIC_ENFORCE EN-r-6; row W1-S14): one
@@ -111,6 +119,9 @@ TARGET_REGISTRY_KEYS = {
     # not read systems.json either -- the key grammar is a format, and the source token comes
     # from the scope's own pipeline_trees row.
     "data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py": ("scopes",),
+    # FIRM_DISPLAY_NAMES (DSGN_IRPTV1 IV-e-76, rows UIR-04/13/30, W35-S1; CTO ruling 102351) --
+    # _blk_firm_display_names() reads _tenants() only: each served tenant's key and display_name, scopes.json.
+    "portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts": ("scopes",),
     LOCALS_PATH: ("scopes", "exemptions"),
     VECTORS_PATH: ("scopes", "systems", "exemptions", "resources"),
     TFTEST_PATH: ("scopes", "systems", "exemptions", "resources"),
@@ -809,6 +820,20 @@ def _blk_asset_dim_rest_pin(reg, h16, path):
     return _block("ASSET_DIM_REST_PIN", h16, "#", path, "ASSET_DIM_REST_PIN = " + _py_lit(pin))
 
 
+def _blk_firm_display_names(reg, h16, path):
+    """Tenant key -> display name for the Investor Reporting portal (DSGN_IRPTV1 IV-e-76; CTO ruling 102351).
+
+    The same served-tenant set as FIRM_CONFIG (_tenants(): each scope's own tenant and every alias that is a
+    tenant, pseudo tenants excluded), carrying the display name only -- no bucket or other plane reaches the
+    browser. scopes.json only.
+    """
+    lines = ["export const FIRM_DISPLAY_NAMES = Object.freeze<Record<string, string>>({"]
+    for tid, _s, t, _own in _tenants(reg):
+        lines.append("  %s: %s," % (_js_str(tid), _js_str(t["display_name"])))
+    lines.append("});")
+    return _block("FIRM_DISPLAY_NAMES", h16, "//", path, "\n".join(lines))
+
+
 BLOCKS = {
     "FIRM_CONFIG": _blk_firm_config,
     "firm_bucket_map": _blk_firm_bucket_map,
@@ -817,6 +842,7 @@ BLOCKS = {
     "_CROSS_FIRM_FOREIGN_BUCKETS": _blk_foreign_buckets,
     "_CROSS_FIRM_FOREIGN_KEY_PREFIXES": _blk_foreign_prefixes,
     "ASSET_DIM_REST_PIN": _blk_asset_dim_rest_pin,
+    "FIRM_DISPLAY_NAMES": _blk_firm_display_names,
 }
 
 
@@ -854,6 +880,8 @@ def _mjs_span(text, tag):
 
 
 def _render_view(path, syntax, tags, reg, h16):
+    if path in WHOLE_FILE_TARGETS:
+        return "\n".join(ln for tag in tags for ln in BLOCKS[tag](reg, h16, path)) + "\n"
     base = _read_text(os.path.join(REPO, *path.split("/")))
     if syntax == "json":
         obj = json.loads(base)
@@ -2085,6 +2113,10 @@ def targets_report(extra_targets=None):
         if t.startswith(".tools/"):
             rows.append(("REPO-ONLY", "tools", t,
                          "no S3/Lambda/Terraform claim (repo-local gate script, never packaged)"))
+            continue
+        if t.startswith("portal/"):
+            rows.append(("SHIP", "portal", t,
+                         "portal CI (portal/.github/workflows: ci.yml on DEV, deploy.yml on push to PROD)"))
             continue
         rows.append(("UNCLASSIFIED", "-", t, "no plane claims it"))
     return rows
