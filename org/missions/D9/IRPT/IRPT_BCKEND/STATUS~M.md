@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~M` (CLAUDE). Lease FAST `IRPT_BCKEND~M`, extending while Andrew is active (drive-mode.log). Goal record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`
 (Done = /verify SOUND). The 20-minute goal loop reads this lease first on every tick (C11). Reviewer: `3.0.0_SA_CVO`
-(not live; the FAST line is parked below). As of 2026-09-27T22:5xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
+(not live; the FAST line is parked below). As of 2026-09-28T01:1xZ. Paused 15:27Z-16:03Z (Andrew-direct, CTO 101278/101295); loop re-armed as cron 75ed13d3. Loop: /closer-drive at 30m (cron ae118e19; CTO msg 101099, self-drive arm @ce6aa15a17, FAST to 15:01Z). Loop: /canonical-drive, HOURLY since 19:5xZ (was cron 6f699621 at 10m; every remaining item waits on another seat or the Monday host window) (Andrew-direct ~17:3xZ, @42def02a36); goal cron b26f74dc retired into it.
 
 ## Pins
 
@@ -206,6 +206,7 @@ Done this lease:
 | History purge (CTO @fce766f6ed call 2): all 6 ~M branches carry the purged span; asked MSTR whether its rewrite covers them (19:57Z) | 2.0.0_SA_COO~M | before Monday's merge (runbook H) |
 | UIC-15 (name beside ticker; DSGN_IRPTV1 PRD v0.18, CTO 102106) | 2.0.0_SA_COO~M | rides R4's INF name fill (Monday); re-measure every SECURITY node's name on the enabled publication |
 | UIC-16 (account type in full): CTO 102111 ruled (a). INF fixed on branch `irpt-m-uic16` @9ddc01dbc5 (both label rules, one commit, generator-regenerated directory_runner.py); 49F keeps its Schwab codes until Schwab's registration-code list is in hand (carded to Andrew by the CTO) | 2.0.0_SA_COO~M | INF merges with Monday's R4 act; 49F when the Schwab list arrives |
+| **IRPT_BCKEND-S173 ARMED (01:1xZ 09-28):** the COT gold host cannot read bd-securities (98/131 gold logs AccessDenied, 0 loaded); served COT firm mix equity 85.8% vs 52.5% with the table; blocks runbook A/B/C | 1.0.0_SA_CTO (route the read grant; ruling asked 01:1xZ) | the grant lands and COT is re-measured on the served runtime |
 | IRPT_BCKEND-S124: the bundle mint reads working-tree bytes | owner of .tools/safe_deploy_core.py | next bundle re-mint |
 | COT B_01b deploy. The skip list (52 ruled-out keys + Part 2's 26) and the rule-2 prompt are BUILT on branch irpt-m-b01b-skip @c993550, NOT merged, because a CLOUD commit deploys on the next push. Dry run: 0 new securities, so a first upload makes no OpenAI call. S3 still serves the no-op (S141) | 2.0.0_SA_COO~M | COT's chain adds B_01b: merge + safe-deploy as ONE act under a ledger |
 

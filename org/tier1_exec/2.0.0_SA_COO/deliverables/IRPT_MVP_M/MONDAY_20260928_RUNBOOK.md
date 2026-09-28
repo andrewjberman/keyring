@@ -1,5 +1,11 @@
 # Monday 2026-09-28 runbook -- 2.0.0_SA_COO~M, IRPT_BCKEND~M
 
+> **01:1xZ 09-28: A, B and C are BLOCKED by IRPT_BCKEND-S173 (ARMED).** The COT gold host (cot-exporter-ec2-role) cannot
+> read bd-securities: every COT gold run classifies with empty maps. The R1 read-backs cannot pass on served output,
+> and the cash-line/Part 2 deltas were measured with the table readable. They wait on the CTO's ruling (asked 01:1xZ)
+> and the read grant, then a re-measurement on the served runtime. D (R4, Holdings) is unaffected: the Holdings host
+> reads the table.
+
 This is the order of every signed act waiting on Monday. Each step names its gate, its read and its rollback. Scripts
 and records are in this directory unless another path is given. Work only from the worktrees named here; never
 `git stash` in the shared tree. Commit through `safe-commit.sh`.
