@@ -9,8 +9,10 @@ each landed pin after the fact on the real run's artifact; a FAIL becomes the ne
 real data), not a driver fixture. The walk directory is gitignored (`.gitignore:89` `tmp/`), so each graded PNG is
 bound here by md5.
 
-**Tally:** 2 pins handed over. 1 PASS (`a47d3a75`). 1 PARTIAL FAIL (`528acdcd`: the source-age half passes; the
-"label alone" half fails on the Analysis stage line, next item N1).
+**Tally:** 4 pins handed over. 1 PASS (`a47d3a75`). 1 PARTIAL FAIL (`528acdcd`: the source-age half passes; the
+"label alone" half fails on the Analysis stage line, next item N1). 1 PARTIAL PASS (`bfafa6c0`: the drill half passes
+on a real run; the Asset Category Views half is NOT GRADED, unit only). 1 NOT GRADED (`921e6808`, no real run). Pins 5 (`38986671`) and 6 (`4ded3791`): NOT GRADED on a real run (none
+exists; walker runs paused); their unit evidence holds.
 
 ## Grades
 
@@ -44,10 +46,57 @@ Detail for pin 2:
   `public_reason_code` on a loading state was not measured; the walk's `netlog.tsv` holds no bodies. The line predates
   this pin, but the pin claims "label alone" for the loading panel.
 
+| 3 | `bfafa6c0` FAST item 3 (UIR-32/49, IV-e-71 mask half) | a strategy under an account reads the account's tail in the header's one masking style, in the drill rows, breadcrumb and Asset Category Views | (a) `tmp/ui-walk/20260928T195357Z/shots/017-thiessen-holdings-Account-9237-BROKERAGE.png` md5 `6c223ed90252bed874eed46a206ac288`, opened and read; (b) `.../026-thiessen-holdings-open-Rebalancer-strategy-Ann.png` md5 `f9f4acb5dee2bddddca5ffed7136302b`, opened and read; (c) `bun test iv-e-71.strategy-tail.test.tsx` re-run by this seat at portal HEAD `921e6808` (a descendant): 1 pass, `VERDICT: STRATEGY-TAIL-OK`, controls printed; (d) CI completed/success | **PARTIAL PASS** |
+| 4 | `921e6808` FAST item 4 (UIC-23 residue, S32) | each Analysis history row names its date in client words and never a raw request id | (a) `bun test iv-e-80.history-date.test.tsx iv-e-62.request-history.test.tsx` re-run by this seat at `921e6808`: 2 pass, 0 fail, `HISTORY-DATE-OK`, `REQUEST-HISTORY-OK`; (b) CI completed/success (re-read before commit); (c) no real run exists (commit body: "No real run") | **NOT GRADED** |
+
+| 5 | `38986671` FAST item 5 (UIC-11 residue) | no account wedge is near-white on the white Holdings panel | (a) `bun test iv-e-81 iv-e-70` re-run by this seat at portal HEAD `4ded3791` (a descendant): `ACCOUNT-PALETTE-VISIBLE-OK` (lightest `#cbd5e1` 1.485:1, control `#f5f5f5` 1.090:1) and `MODEL-VS-CLASS-COLOUR-OK` (worst internal dE00 6.7642); (b) both contrast ratios recomputed by hand from the WCAG luminance formula: 1.09:1 and 1.48:1, matching; (c) CI completed/success; (d) no real run | **NOT GRADED** (real run) |
+| 6 | `4ded3791` FAST item 6 (UIC-20, IV-e-75) | a required-field message shows only after the user tries to generate, never on load | (a) `bun test iv-e-82` re-run by this seat at `4ded3791`: `REQUIRED-AFTER-ATTEMPT-OK` (load: no message, Generate enabled; after one press: the message shown, 0 submitter calls); (b) walk 20260928T190559Z shot 031, opened and read, is the before; (c) CI in progress at grading; (d) no real run after the change | **NOT GRADED** (real run) |
+
+Detail for pins 5 and 6:
+- Pin 5 claims the near-white entry only. The rest of UIC-11 (brief `:48`, "a narrow grey ramp; neighbouring slices
+  cannot be told apart") is not claimed. After the pin, `ACCOUNT_PALETTE` (`palette.ts:59-73`) is still 13 neutrals
+  (slate, stone, zinc, neutral). Its measured separation is dE00 >= 6.76 per pair; whether 11 adjacent grey wedges
+  read "distinguishable at a glance" is a judgment on a rendered 11-account pie, which is owed. The lightest entry
+  (1.485:1) meets the pin's own 1.4:1 floor, not the 3:1 floor WCAG 2.1 SC 1.4.11 sets for graphical objects. The
+  legend names each slice, so colour is not the only carrier.
+- Pin 6: shot 031 has no client selected (search box empty), so the "Select a client in the header first." it removes
+  on load was a true statement, not a masked selection defect. The body still prints "Client: select a client above"
+  and "Holdings snapshot: none held -- Loading" at rest; neither is in the pin's claim.
+
+Detail for pin 3:
+- **Drill half: PASS on a real run.** Shot 017 (Thiessen, Anna; account ****9237 / BROKERAGE) shows the breadcrumb
+  "All holdings ****9237 / BROKERAGE / Rebalancer strategy: Anna ****9237": the owning account's tail, in the header's
+  "****" form. Round 8's grade (ADJUDICATION_v6.md:29) read "Anna *9238" there.
+- **Asset Category Views half: NOT GRADED.** The same walk ran before the adapter change. Its ALL CATEGORIES card in
+  shot 017 still reads "Rebalancer strategy: Anna *9238" (the wrong tail, the old style), and the modal in shot 026
+  reads "Anna *9237". The walk was then killed for low system memory and not re-run, so the post-change face rests on
+  the unit arm (c) alone. A real run that opens the ALL CATEGORIES card and its modal is owed.
+- The one-slice ALL CATEGORIES pie in shot 017 is IV-e-71's other half, parked outside the lease surface by the pin's
+  own commit; not graded here.
+
+Detail for pin 4:
+- Unit evidence only. The iv-e-80 fixture gives both rows the same accepted_at ("requested January 15th, 2027, 3:00a
+  ET" twice), so it cannot show that each row carries its own date. A real run over a client with two or more
+  requests on different dates is owed.
+- Outside the claim: the iv-e-62 run prints a history row "Failed -- SOURCE_UNAVAILABLE", a raw code on a row's face
+  (the N1 class). Carried with N1.
+
+**Why this seat did not walk pins 3 and 4 itself (20:4xZ):** port 5174 was not listening, 7.0 GB of 31.7 GB was free,
+and the previous walk died to the harness's low-memory kill. A walk arms an admin-role account that stays active if
+the walk dies. Nothing waits on a FAST grade, so the real runs go to the next walk of this surface.
+
 ## Next items
 
-- **N1 (pin 2's FAIL):** the Analysis stage line prints the raw public reason code, "(STATE_REPORTED)", beside
-  "Loading" (`StageDisplay.tsx:62`). The fe-s-34 assertion that passes it tests for source-age words only.
+- **N1 (pin 2's FAIL):** the Analysis stage line prints the raw public reason code beside "Loading"
+  (`StageDisplay.tsx:62`). The fe-s-34 assertion that passes it tests for source-age words only. Row S34 carries it.
+  Row S35 (`2.0.0_SA_COO~Y`, @810a66317f) measured the served side by source read: every live loading state carries a
+  reason (`ANALYSIS_QUEUED` ... `ANALYSIS_CERTIFYING`, `owned_status.py:12-24`), and `STATE_REPORTED` exists only in
+  portal fixtures. N1 is therefore live on every Analysis loading face, not only in the fixture (claim class
+  SOURCE-READ; no live body read).
+- **N2 (owed real runs):** the Asset Category Views card and modal after `bfafa6c0`; the Analysis history over a
+  client with two dated requests after `921e6808`; the 11-account Holdings pie after `38986671` (a glance judgment on
+  the grey ramp); the Analysis tab at rest and after one Generate press after `4ded3791`. One walk of Cowdin (11
+  accounts) plus Thiessen covers all four.
 
 ## Observations (not grades; each is outside the pin's claim)
 

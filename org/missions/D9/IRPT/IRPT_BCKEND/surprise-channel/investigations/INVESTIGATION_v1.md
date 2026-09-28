@@ -10657,3 +10657,163 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not fixed here: out of this cell's <paths> grant and its own defect, not IB-pr-193's. Left exactly as found; my new test (test_a_refused_replay_logs_stage_refused_never_failed) and all 12 other pre-existing tests pass."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W41-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~41",
+  "surfaced_at": "2026-09-28T19:10:00Z",
+  "one_line": "R1 read-back FAIL for cot-cash-admission-m-20260925: served compositions on the 09-28 COT gold run carry NO 'cash' asset_class anywhere -- z09308463's FCASH slice (0.37315, matching the expected 0.37 cash) and the all-cash z09308511 (100% FCASH) both classify asset_class='fixed_income', because S173's empty-map fallback (ETFClassifier Layer 3 name-pattern match) explicitly routes CASH/SWEEP/MONEY MARKET names to fixed_income, never cash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cot/gold/entities/clients/z09308463_composition.json (VersionId VSiD2C07bXuTj2UEu3rAQnxCVNaLlMIR, generated_at 2026-09-28T11:36:14Z): mix fixed_income pct 0.37315 mv 111362.21, top_holdings FCASH asset_class fixed_income mv 111362.21 pct 1.0 within that class; no 'cash' key anywhere in mix",
+      "s3://opal-data-cot/gold/entities/clients/z09308511_composition.json (VersionId SPJ5oOy6TFyULuZWb2S34fIGTVY0U27X): mix is 100% fixed_income (16020.10), sole holding FCASH asset_class fixed_income pct 1.0; z09326138 (VersionId NaqHv9CVNbOLbKCq0zPbZ2u0rYcNbgd6) is equity 0.958548/fixed_income 0.024162/alternatives 0.01729, also 0% cash -- not all-cash at all",
+      "data/cot/scripts/gold/lib/etf_classifier.py:13-16,108-109: _RE_CASH pattern (CASH|SWEEP|MONEY MARKET|MM FUND|GOVT CASH|MMKT|CASH RESV|CASH RESERVE) explicitly returns 'fixed_income' ('money market / sweep / cash reserve = short-duration FI'); classify() never returns 'cash' from Layer 3/4, only possibly from the DynamoDB item's own asset_class field (Layer 1/2), which S173 shows is unreachable (empty _ticker_map/_name_map on Scan AccessDeniedException)",
+      "s3://opal-data-cot/logs/cot-exporter/gold-run/cot-gold-run-20260928-113330.log line 1246: 'ETFClassifier: scan failed, falling back to empty maps: ... AccessDeniedException ... Scan ... cot-exporter-ec2-role' -- same run (started 11:33:34Z) whose D_03/D_04 steps produced the three compositions above at 11:36:1x-18Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-mr-1 R1 (cot-cash-admission-m-20260925): relationship z09308463 (0.37 cash at 09-22) shows a cash slice at its measured amount with shares summing to 1; all-cash z09326138 or z09308511 shows 100% cash.",
+  "world_is": "On the served 09-28 run, z09308463's cash-equivalent slice (0.37315 of value) and z09308511's entire 100% holding both classify as fixed_income, not cash; z09326138 is not all-cash in the served mix (equity 95.85%). No relationship in the scanned compositions carries a 'cash' asset_class anywhere.",
+  "notes": "Same root cause S173 already names (ARMED, disarm_owner 1.0.0_SA_CTO): without bd-securities table access, ETFClassifier's Layer 3 name-pattern fallback hard-codes CASH/SWEEP/MONEY MARKET names to fixed_income, so the cash-admission deploy's MIX_ASSET_CLASSES 'cash' slot can never populate on served output until the grant lands. Ledger cot-cash-admission-m-20260925 left HELD (R1 unproven); this row supplies the leg's FAIL evidence for TO-IB-mr-1's proof-of-spec instance."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W41-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~41",
+  "surfaced_at": "2026-09-28T19:15:00Z",
+  "one_line": "R1 read-back FAIL for bd-securities-cot-new-p1-m-20260926, both halves: COT's served mix never moves NEOS/CSHI to fixed_income (still equity, same S173 cause), and BD's 2026-09-23 partition in gold/views/mix_daily_summary.json is byte-identical before and after the write -- C_06's incremental watermark never reprocesses an already-computed historical date, so the half's named reader (the 2026-09-23 partition) can never show the move even though bd-exporter-ec2-role can read the table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "COT half: s3://opal-data-cot/gold/entities/clients/z09304677_composition.json (VersionId gu0KNbzymnL14X_OeiKpO5944jE2CKOU) and z09305627_composition.json (VersionId D9j9N543gNP8qe3ORTbCjyXGIsbQR57K), fetched 2026-09-28: CSHI (NEOS ENHANCED INCOME 1-3 MONTH T-BILL ETF, the BD_SECURITIES_COT_NEW_P1_RECEIPT_20260926.json NAME:: resolution target) asset_class equity, mv 149783.67 at z09304677 -- not moved to fixed_income; same S173 empty-map cause (Layer 4 alpha-ticker heuristic defaults CSHI to equity since bd-securities is unreachable from cot-exporter-ec2-role)",
+      "BD half: s3://opal-data-bd/gold/views/mix_daily_summary.json firm['2026-09-23'] is byte-identical across VersionId DJc9gnlj_PSZohGQhxe3j2YAZhk60I5c (2026-09-25T05:12:45Z, pre-write) and VersionId TnpShkIWa1HCwl.X0Q.AcPky.rn1yhox (2026-09-27T05:16:54Z, the first BD run after the 2026-09-26T03:21:35Z write): equity 1350215482.784155, fixed_income 352666154.388452, alternatives 36264342.733521, identical in both -- the half's named reader ('BD C_06 client mix, 2026-09-23 partition') never recomputes",
+      "iam simulate-principal-policy role/bd-exporter-ec2-role (the bd-gold-layer-runner EC2 host's instance profile bd-exporter-profile, confirmed by get-instance-profile) on table/bd-securities: dynamodb:Scan and dynamodb:GetItem both 'allowed' -- BD's table access is NOT the blocker, unlike COT's cot-exporter-ec2-role",
+      "comp-pipescript io C_06.client_mix_timeseries.py (bd-gold): MIX_DAILY_SUMMARY and client_timeseries_key both appear in READS and WRITES (self-write/rolling-window pattern), consistent with an incremental merge that only appends new dates past a watermark and never re-derives an already-sealed one"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-mr-1 R1 (bd-securities-cot-new-p1-m-20260926): COT's mix moves equity -> fixed_income/alternatives per the signed half (+NEOS $149,663 to fixed_income), and BD's next C_06 run moves 652 accounts per the half.",
+  "world_is": "COT's served mix still carries CSHI/NEOS as equity (S173 cause). BD ran twice since the write (2026-09-26T05:14Z and 2026-09-27T05:16Z, both after 2026-09-26T03:21:35Z) with live table access, but the specific 2026-09-23 partition the half names as its reader is frozen at its pre-write values; the $6,852,900/$456,856 move for that partition is absent from served output.",
+  "notes": "Two distinct causes feed one FAIL: the COT leg is S173 (already routed to the CTO); the BD leg is new -- the half's proof method (a dry classify_holding pass over the partition) does not match how the live C_06 pipeline actually serves that partition (incremental, watermark-gated, no re-derivation of a sealed date). Remedy is not ~M's lane: either C_06 gains a forced-recheck mode for a named historical date (mirroring B_00's --force-recent-days), or the half's BD reader is redefined to the next NEW partition rather than one already computed before the write. Ledger bd-securities-cot-new-p1-m-20260926 left HELD (R1 unproven)."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W41-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~41",
+  "surfaced_at": "2026-09-28T19:41:00Z",
+  "one_line": "TO-IB-mr-1's own <proof_of_spec> section names an instance filename ('IRPT_BCKEND.TO-IB-mr-1.proof_of_spec.json') that does not match its own order file's basename ('IRPT_BCKEND.TO-IB-m19-1.r1-readbacks-on-the-0928-cot-run.md') -- .tools/to-pipeline-gate.py's complete-flip search globs deliverables/*/<order-basename>.proof_of_spec.json and refused the flip until the instance was renamed to match. Same class already logged 3x this round (IRPT_BCKEND-W21-S1, and its own citations of W18-S2/W20-S3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (disarmed same turn by the worker: instance renamed to the order's own basename before commit)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-m19-1.r1-readbacks-on-the-0928-cot-run.md <proof_of_spec> section: 'Instance at .../0.9.0_WK_IRPT_BCKEND~41/IRPT_BCKEND.TO-IB-mr-1.proof_of_spec.json' -- the order's own <to_id> tag reads 'IRPT_BCKEND.TO-IB-mr-1', but the file safe-commit staged (this order's own file) is named 'IRPT_BCKEND.TO-IB-m19-1.r1-readbacks-on-the-0928-cot-run.md'",
+      "safe-commit run 2026-09-28 ~19:3xZ: [to-pipeline-gate] REFUSED -- 'flips to complete on PIPELINE-REGISTERED project IRPT_BCKEND, and NO proof-of-spec instance was found beside it'; .tools/to-pipeline-gate.py:2902-2921 globs deliverables/*/<stem>.proof_of_spec.json where stem = the ORDER FILE's own basename, never the internal to_id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The TO's own <proof_of_spec> section names the exact instance path the CTO/COO expect to find (Andrew-direct 2026-08-11 proof-of-spec contract).",
+  "world_is": "The named path uses the internal <to_id> token as the file stem, not the order file's own basename that the pipeline gate's complete-flip search actually globs against -- a citation inside the order that does not resolve against the order's own filename.",
+  "notes": "Not blocking this cell (renamed and refiled before commit, gate now clears). Recommendation carried forward from IRPT_BCKEND-W21-S1: reconcile decomp-cell-id-style to_id values against the actual order-file-basename-keyed gate lookup estate-wide for this round's m19/y19 batches, so future <proof_of_spec> sections cite the resolving name directly."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W61-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~61",
+  "surfaced_at": "2026-09-28T20:15:00Z",
+  "one_line": "TO-IB-pr-191's own <proof_of_spec> block names the instance path 'IRPT_BCKEND.TO-IB-pr-191.proof_of_spec.json' (short form), but .tools/to-pipeline-gate.py's check_complete_flip only accepts a filename built from the TO file's FULL stem ('IRPT_BCKEND.TO-IB-pr-191.engine-never-serves-an-impossible-return.proof_of_spec.json') plus '.proof_of_spec.json'/'_PROOF_OF_SPEC.json' -- the order's own stated name does not satisfy its own flip gate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-191.engine-never-serves-an-impossible-return.md <proof_of_spec> block (this cell's own WORKER FACE, cited verbatim in the task order text): 'Instance at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~61/IRPT_BCKEND.TO-IB-pr-191.proof_of_spec.json'",
+      ".tools/to-pipeline-gate.py check_complete_flip(), read this session: 'stem = os.path.basename(rel).rsplit(\".md\", 1)[0]; names = (stem + \".proof_of_spec.json\", stem + \"_PROOF_OF_SPEC.json\")' -- stem is the TASK ORDER FILENAME's own stem (the long descriptive slug), never the short to_id",
+      "reproduced this session: committing the status flip with the instance saved at the order's literal short-form path was REFUSED by safe-commit.sh / to-pipeline-gate.py layer 2 ('NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.'); renaming the identical, already-VALID (proof-of-spec-check.py rc=0) instance to the full-stem name let the same commit through unchanged otherwise"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order's own <proof_of_spec> instance path is the path that completes the flip.",
+  "world_is": "That literal path fails the gate that enforces the flip; only the full-TO-stem name (undocumented in the order's own text) satisfies it. This worker renamed the instance to the full-stem form (content unchanged, still VALID rc=0 under both names) to complete the flip rather than leaving it pending on a naming mismatch.",
+  "notes": "Same class as a naming convention the issuing COO's own task-order template does not carry: every round-19 ~P cell whose <proof_of_spec> block states a short-form instance name will hit this same refusal at flip time. Disarms when the issuer either (a) states the full-stem name in the template, or (b) the gate accepts the to_id-based short form as an alternate candidate name."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S183",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-28T21:10:00Z",
+  "one_line": "Issuer disposition of the round-19 ~P worker rows: W61-S1 disarmed by amendment f511608f1f; W62-S1 carried to the next ~P round; W61-S2 rides the S181 producer routing (CTO ruling 102424/102425) and IB-pr-192 stays open with the guard strict.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W61-S1 (worker ~61, on CLOUD via drain @4f47d58fe3): the order's <proof_of_spec> named a short-form instance the flip check refuses. Disarmed: TO-IB-pr-192 amended @f511608f1f to the full-stem name and to W<slot>-S<k> row ids; TO-IB-pr-193 was already complete",
+      "W62-S1 (worker ~62, on CLOUD via drain @b02d1e9097): export tests/test_submit_async.py::test_the_marked_event_builds_and_the_handle_reaches_the_receipt fails AttributeError handler.finalize_export -- measured on CLOUD before the merge (1 failed / 12 passed) and after (1 failed / 13 passed): pre-existing, not caused by IB-pr-193. Carried as a cell of the next ~P round",
+      "W61-S2 (worker ~61, on branch wk-IRPT_BCKEND-61 @b1cbe6a302, not yet on CLOUD): measured by the COO -- s3 opal-data-49financial gold/advi/canonical/twr_daily date=2024-07-08 and date=2025-01-09 lack bmv/emv/cf_net while 2024-07-09, 2025-01-08 and 2025-01-10 carry them, all schema_version 1.2, LastModified 2026-08-30. The adapter schema guard refuses every full-history (Since-inception) read. Ruled by 1.0.0_SA_CTO 102425: the repair rides row S181's runners_49f routing; the guard stays strict; IB-pr-192 stays open"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every worker row of the round has a disposition from its issuer, and a live defect outside the round's write grant is routed, never worked around.",
+  "world_is": "W61-S1 is disarmed, W62-S1 is carried, and W61-S2 waits on the producer repair routed under S181.",
+  "notes": "IB-pr-192's AC2 re-runs after the two partitions are repaired; its build (AC1 PASS) stays on wk-IRPT_BCKEND-61 until then."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W63-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~63",
+  "surfaced_at": "2026-09-28T21:05:00Z",
+  "one_line": "TO-IB-yr-1's own <proof_of_spec> section names 'IRPT_BCKEND.TO-IB-yr-1.proof_of_spec.json' (the internal <to_id>), but .tools/to-pipeline-gate.py's complete-flip search globs deliverables/*/<order-file-basename>.proof_of_spec.json, i.e. '...saved-type-refuses-before-generation.proof_of_spec.json' -- same class already logged this round (IRPT_BCKEND-W21-S1, IRPT_BCKEND-W41-S3, and their own citations of W18-S2/W20-S3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (disarmed same turn by the worker: instance renamed to the order's own basename before commit)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-yr-1.saved-type-refuses-before-generation.md <proof_of_spec> section: 'Instance at .../0.9.0_WK_IRPT_BCKEND~63/IRPT_BCKEND.TO-IB-yr-1.proof_of_spec.json' -- the order's own <to_id> tag reads 'IRPT_BCKEND.TO-IB-yr-1', but the order file safe-commit staged is named 'IRPT_BCKEND.TO-IB-yr-1.saved-type-refuses-before-generation.md'",
+      "safe-commit run 2026-09-28 ~21:0xZ: [to-pipeline-gate] REFUSED -- 'flips to complete on PIPELINE-REGISTERED project IRPT_BCKEND, and NO proof-of-spec instance was found beside it'; .tools/to-pipeline-gate.py:2902-2921 globs deliverables/*/<stem>.proof_of_spec.json where stem = the ORDER FILE's own basename, never the internal to_id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The TO's own <proof_of_spec> section names the exact instance path the CTO/COO expect to find (Andrew-direct 2026-08-11 proof-of-spec contract).",
+  "world_is": "The named path uses the internal <to_id> token as the file stem, not the order file's own basename that the pipeline gate's complete-flip search actually globs against -- a citation inside the order that does not resolve against the order's own filename.",
+  "notes": "Not blocking this cell (renamed and refiled before commit, gate now clears; commit 0a1fc245cb on wk-IRPT_BCKEND-63). Fourth occurrence this round of the same recommendation carried in IRPT_BCKEND-W21-S1/W41-S3: reconcile decomp-cell-id-style to_id values against the actual order-file-basename-keyed gate lookup estate-wide."
+}
+```
