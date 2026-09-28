@@ -25,20 +25,6 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
     stand-down.
   - `4.0.0_SA_CRO` `/ui-walk` runs plus Andrew's transcripts, ad hoc, NO cron; findings to 1.0.0_SA_CTO and
     2.0.0_SA_COO~D.
-- `1.0.0_SA_CTO~O` `/self-drive 30m` over the ~O fabric: D6 (NFRA_OPALAI, NFRA_MCPORTAL) plus NFRA_MCPINDEX and
-  NFRA_OPLGTW (D9), on Andrew's governance template:
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_O_FABRIC.md` @56050d290d. Chooser
-  Andrew; landed by 1.0.0_SA_CTO~O. It supersedes this seat's 2026-09-24 `/loop 30m`; the goal of record
-  `ANDREW_DIRECT_20260924_210xZ_CTO_O_GOAL_FINISH_ALL_D6_OPAL_AI.md` stands. NFRA_OPLGTW's CTO leg waits on its
-  re-seat (verdict `cvoO_GOVERNANCE_VERDICT_SELF_DRIVE_O_D9_PROJECTS_20260926.md` @e470835e7c). Stop: DONE read from
-  the register, HELD-AT-STOP, or Andrew's stand-down.
-- `2.0.0_SA_COO~O` `/canonical-drive 30m` COO MODE over NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, NFRA_OPLGTW, paired
-  with the ~O self-drive above (same record; instruction msg 20260926T033555Z). Chooser Andrew ("give every COO its
-  loop instruction now"); landed by 1.0.0_SA_CTO~O. Stop: the self-drive's stop.
-- `3.0.0_SA_CVO~O` `/canonical-drive 30m` CVO MODE over NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, paired with the ~O
-  self-drive above (same record; instruction msg 20260926T033650Z). Chooser 1.0.0_SA_CTO~O (the record's `paired_with`
-  reading); landed by 1.0.0_SA_CTO~O. NFRA_OPLGTW joins after its CVO-leg re-seat. Stop: the self-drive's stop.
-  Stop: no new opal_ai project is left and no `/next-steps` can be named, or his stand-down.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
@@ -64,6 +50,14 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   mechanism and cadence RESERVED to Andrew).
 
 ## Struck
+
+- The ~O fabric's three 2026-09-26 rows -- `1.0.0_SA_CTO~O` `/self-drive 30m`, `2.0.0_SA_COO~O` `/canonical-drive 30m`
+  COO MODE over all four ~O projects, `3.0.0_SA_CVO~O` `/canonical-drive 30m` CVO MODE (arming record
+  `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_O_FABRIC.md`): struck 2026-09-28 by `1.0.0_SA_CTO~O`. The chooser is Andrew:
+  "kill the crons in this session not needed anymore" (stop @33f5ce4752), then the relaunch word of 2026-09-28 ~19:5xZ
+  relayed by `0.0.0_AB_MSTR~Z` -- one COO per project, ZERO crons at launch, loops operator-initiated
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_195xZ_O_FABRIC_ONLINE_ONE_COO_PER_PROJECT.md`). The
+  single COO~O over four projects is split by that record; a successor does not re-arm these rows.
 
 - BLAST MODE (2026-09-24 ~17:4xZ, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_174xZ_BLAST_MODE_P_M_Y_D_ONLINE_FAST_CLOSER.md`)
   and the three DIRECTED `/loop 20m` goal rows of ~P, ~M and ~Y (goal records `ANDREW_DIRECT_20260923_224xZ_COO_P_*`,
