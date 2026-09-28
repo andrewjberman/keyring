@@ -2226,6 +2226,46 @@ carries none.
       "spec_asserts": "TO MX-d-3 act 2: fix the RANKING inside opal_discover so that a dataset ask ranks its dataset first, without editing the catalog (bound 1), the harness or the question set; row Z-W2-S8 names three miss signatures (one common word selects a whole channel, unranked channel, an index ask matches no keyword).",
       "world_is": "Ranking reaches only the 'unranked channel' signature (Q05, Q07). The 'index ask matches no keyword' signature (Q22) needs the ask to select a candidate at all, and no catalog text or keyword links an S&P ask to mkt.01; the honest repairs are a catalog keyword (out of bounds for this order) or an in-code index-name vocabulary (which this worker judged to be special-casing words, so did not add). The 'one common word selects a whole channel' signature (Q09, Q13, Q25) is a PRECISION defect (a weak channel-keyword-only match should return no dataset), which reordering candidates cannot cure; a threshold rule would be a recall risk and was not attempted inside a ranking cell. AC2 (2 of 3 dataset asks first) and AC1 (>=21) both pass.",
       "notes": "Suggested next cells, for the issuer to place: (a) a catalog keyword or index-name row for market-returns asks (catalog owner); (b) a rule that a channel-keyword-only match with zero own-text overlap is returned as a weak candidate or not at all, graded against the harness for recall loss."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W9-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~9",
+    "surfaced_at": "2026-09-28T22:00Z",
+    "one_line": "A tracked file outside the MX-s-13 redaction set carries the live BD password value on 2 lines.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured by a byte-count of the value taken from HEAD run-daily-downloads.sh across all git ls-files at the worktree: 1 file matched, 2 occurrences, lines 3408 and 3412; the other 43 bd-exporter files and every other tracked file read 0."
+      ]
+    },
+    "spec_asserts": "MX-s-13 names 7 files as the complete redaction set for the live BD password (Z-S31).",
+    "world_is": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/CARRIER_CENSUS.md lines 3408 and 3412 each contain the value the 7-file set carried. Not edited: outside <paths>. No content quoted.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W9-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~9",
+    "surfaced_at": "2026-09-28T22:00Z",
+    "one_line": "extended-backfill.sh: no second literal credential found where the order says the CTO measured one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Line-by-line masked-shape read of every assignment and BD_/PASS line of extended-backfill.sh (lines 15,16,17,22,23,25,37-39,43-45): no credential-shaped literal; the CTO's literal may be a username on line 15 or a since-fixed line -- unresolved by me."
+      ]
+    },
+    "spec_asserts": "MX-s-13 edit 1: extended-backfill.sh carries a DIFFERENT literal elsewhere than the BD_PASSWORD line.",
+    "world_is": "In src/stepwise/extended-backfill.sh the BD_PASSWORD line 16 is already a :? refusal; line 15 is BD_USERNAME (a username, left as ordered); no line holds the redacted value, and a shape scan for mixed letter/digit/symbol tokens of 8+ chars found 0. File left unedited; AC1 reads 0 literals over 44 files.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
