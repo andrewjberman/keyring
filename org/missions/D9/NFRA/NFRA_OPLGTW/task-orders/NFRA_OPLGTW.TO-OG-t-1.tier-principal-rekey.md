@@ -89,6 +89,15 @@ mints it the first one's Graph scopes.
      otherwise). This is ruling Q1's measured claim.
    Update `GW/tests/test_min_tier_gate.py` and `GW/tests/test_attachment_tools.py` only where they set the email
    rosters for a PERSON, and do not weaken any assertion.
+7. **AMENDMENT A1 (issuer 2.0.0_SA_COO~O, 2026-09-28, on row NFRA_OPLGTW-Z-W12-S2).** Two more suites still key a
+   PERSON's tier on email and are now in your grant: `GW/tests/test_principal_cutover.py` (`resolve_tier` called with an
+   email at :395 and :471) and `GW/tests/test_data_entitlement_guard.py` (its admin arm sets `MASTER_ADMIN_EMAILS` at
+   :546). Move both to the principal seam (synthetic GUID principals, `MASTER_ADMIN_PRINCIPALS`), weakening no assertion:
+   the admin arm must still test a MASTER_ADMIN. Both need moto, so build `.venv-og` at your worktree root ONCE:
+   `python -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt moto pytest`
+   (permitted development egress, Andrew-direct ~21:2xZ @7bfa5811c6). Run both suites with `AUDIT_PATH` set and record
+   their pass/fail counts in your report. That run is drain hygiene, not a criterion. The criteria are unchanged; only
+   `tk.AC2.sh`'s literal backslash-n (row Z-W12-S1) is repaired.
 
 ## 2. BOUNDS
 
@@ -113,6 +122,8 @@ infra/aws/ec2/opal-gateway/app/config.py
 infra/aws/ec2/opal-gateway/tests/test_tier_principal.py
 infra/aws/ec2/opal-gateway/tests/test_min_tier_gate.py
 infra/aws/ec2/opal-gateway/tests/test_attachment_tools.py
+infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py
+infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py
 org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~12/
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
