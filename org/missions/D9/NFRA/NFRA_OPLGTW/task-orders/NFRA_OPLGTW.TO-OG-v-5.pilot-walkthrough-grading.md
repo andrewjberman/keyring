@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPLGTW~6</issued_to>
 <issued_by>2.0.0_SA_COO~O</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>superseded -- CLOSED for round 2 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: held on project gate G-E and on OG-v-4's seal (the same salt, row S42). Holding it open would deadlock the round's L10 on those external acts. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in the next round behind OG-v-4. Was: pending.</status>
+<status>superseded -- CLOSED for round 2 by 2.0.0_SA_COO~O, 2026-09-28T13:0xZ, on Andrew's direction to close out the rounds so the CVO can slug. HELD, never graded: held on project gate G-E and behind OG-v-4. CORRECTED 2026-09-28 ~15:3xZ: the seal is not missing (re-seal d5af54a90a), and Andrew approved G-E's grant on 2026-09-28. Holding it open would deadlock the round's L10 on those external acts. NOTHING IS RE-GRADED BY THIS CLOSE. The cell RE-CUTS in the next round behind OG-v-4. Was: pending.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v0.2 @f0aa50dbc0 (ADMITTED) | **Contract:** `org/standards/NFRA_OPLGTW_CONTRACT.json` v1.0 | **Decomp cell:** `OG-v-5` | **outcome_ref:** FWD-1, FWD-8 | **depends_on:** `OG-v-4`; **HELD on gates G-E and G-F** | **slot:** ~6, queue position 5
 
