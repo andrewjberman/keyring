@@ -78,7 +78,7 @@ SPAWN ONLY WHEN: at the cut. Slot `~20`, nested worktree `--nested opal_ai=fd8ab
 Dry-run at base (opal_ai fd8ab8a57f):
 - f5.AC1 base: FAIL as expected (`credentialed Start-Process=2 with -WorkingDirectory=1; gate launch with -WorkingDirectory=0`).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~20</slot>
 <fabric>site-z</fabric>
