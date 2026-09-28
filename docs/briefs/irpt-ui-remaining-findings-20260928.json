@@ -1,0 +1,920 @@
+{
+ "schema_version": "1.0",
+ "register": "irpt-ui-remaining-20260928",
+ "supersedes_for_status": "docs/briefs/irpt-ui-cleanup-status-20260928.md (morning grade, walk 20260928T133602Z)",
+ "prior_registers": [
+  "docs/briefs/irpt-ui-cleanup-findings-20260927.json",
+  "docs/briefs/irpt-ui-review-findings-20260926.json"
+ ],
+ "source": {
+  "walk": "20260928T174953Z",
+  "mode": "--deep",
+  "clients": [
+   "the INF four-account client",
+   "the COT eleven-account client",
+   "the 49F three-account client"
+  ],
+  "screenshots": 167,
+  "guard_aborts": 0,
+  "minutes": 14.3,
+  "viewport": "1440 px",
+  "build": "portal local DEV 28f5118c (origin/DEV c3dd9ca9 carries none of it) on vite localhost:5174; 7 commits past the morning's 4b9df1e7 (TO-IV-e-70, 73, 74, 79)",
+  "build_caveat": "Two tracked files (IdentityCard.tsx, DrillTree.tsx) were modified in the working tree at 18:03-18:04Z by ~D's closer-drive; every Identity and Holdings step for the INF and COT clients ran before that (17:50-17:59Z). The 49F Holdings steps (18:00-18:03Z) may have run under a partial hot reload.",
+  "walker_disarm": "18:04:14Z; login with the walk password after disarm HTTP 401 -> REFUSED",
+  "note": "No client names or client dollar figures; screenshots stay in tmp/ui-walk/ (gitignored)."
+ },
+ "outcomes": {
+  "O1": "Performance reads as a finished answer: no 'not supplied' tiles, no raw data dump, no system words on the face.",
+  "O2": "Every period button either answers or says in plain words why it cannot, over a real date range.",
+  "O3": "Holdings charts and lists stay legible at any account count: readable labels, distinct colours, negatives handled, long lists reachable, no empty levels or zero rows.",
+  "O4": "No system name, code or unknown placeholder reaches the face or its first click.",
+  "O5": "Analysis setup behaves like a form: a selection takes, defaults fit the client, errors wait for input.",
+  "O6": "The request list is the viewer's own and speaks client language.",
+  "O7": "A single account's Holdings view is complete: its rows, its total and its layout match that account every time.",
+  "O8": "The data behind the page is current, correct and tells accounts apart.",
+  "O9": "The page follows the design law: one navy band per page, one date format."
+ },
+ "uic_regrade": {
+  "UIC-01": {
+   "morning": "MET",
+   "now": "MET"
+  },
+  "UIC-02": {
+   "morning": "MET",
+   "now": "MET"
+  },
+  "UIC-03": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-04": {
+   "morning": "PARTIAL",
+   "now": "PARTIAL"
+  },
+  "UIC-05": {
+   "morning": "PARTIAL",
+   "now": "PARTIAL"
+  },
+  "UIC-06": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-07": {
+   "morning": "PARTIAL",
+   "now": "PARTIAL"
+  },
+  "UIC-08": {
+   "morning": "MET",
+   "now": "MET"
+  },
+  "UIC-09": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-10": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-11": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-12": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-13": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-14": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-15": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-16": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-17": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-18": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-19": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-20": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-21": {
+   "morning": "NOT_MET",
+   "now": "NOT_MET"
+  },
+  "UIC-22": {
+   "morning": "NOT_OBSERVED",
+   "now": "NOT_OBSERVED"
+  },
+  "UIC-23": {
+   "morning": "NOT_MET",
+   "now": "PARTIAL"
+  }
+ },
+ "closed_on_this_walk": [
+  {
+   "id": "UIC-01",
+   "verdict": "MET (held)",
+   "note": "The missing benchmark and values are one plain line."
+  },
+  {
+   "id": "UIC-02",
+   "verdict": "MET (held)",
+   "note": "The daily series sits behind one click."
+  },
+  {
+   "id": "UIC-08",
+   "verdict": "MET (held)",
+   "note": "Refusals name the reason and who can fix it, codes behind 'Details'."
+  },
+  {
+   "id": "NEW-02",
+   "verdict": "NOT REPRODUCED",
+   "note": "The COT eleven-account pie draws on 28f5118c (#086). Cause of the morning's blank pie not measured; ~D's in-flight partitionPieRows removes the sum<=0 path that blanks it."
+  },
+  {
+   "id": "UIR-30",
+   "verdict": "MET",
+   "note": "The firm shows once on Identity (TO-IV-e-73 merged)."
+  },
+  {
+   "id": "UIR-37",
+   "verdict": "MET on screen",
+   "note": "Models are lavender and the allocation bar grey; asset classes keep blue, green and orange (#040, TO-IV-e-70)."
+  }
+ ],
+ "not_walked": [
+  {
+   "id": "UIR-32 / UIR-49",
+   "note": "The two-account client whose strategy tail differed was not in today's three-client walk."
+  }
+ ],
+ "dropped_walker_hits": [
+  {
+   "what": "pie wedge gap on the 49F account's model pie (#154, #155)",
+   "why": "The three shares sum exactly to the account total; the gap matches a capture taken mid-animation. Not confirmed; re-check on the next walk."
+  },
+  {
+   "what": "design:contrast hits (Analysis, Models dialog)",
+   "why": "Not confirmed by eye, as on 09-27."
+  },
+  {
+   "what": "console '[vite] Failed to reload DrillTree.tsx'",
+   "why": "~D's mid-edit hot reload on the shared working tree, not a product defect."
+  }
+ ],
+ "findings": [
+  {
+   "id": "UIC-03",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "performance / report details",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "Report details still shows 'Partial -- Qualified answer -- not a complete report', PERFORMANCE_PARTIAL, TIME_WEIGHTED, OPAL_ENGINE, a tenant id, two revision hashes and 'unknown' / 'not stated' fields.",
+   "acceptance": "Report details states the method and source in client words (for example 'Time-weighted, net of fees; Opal's performance engine'); codes and hashes stay out of the page.",
+   "screenshots": "20260928T174953Z#135",
+   "status": "known",
+   "known_ref": "UIC-03 (no task order cites it)",
+   "design_rule": "FWD-15 no system codes on the face",
+   "cause": {
+    "claim": "measured",
+    "text": "No fix of record: no round-9 task order cites UIC-03.",
+    "evidence": "walk screenshot(s) 20260928T174953Z#135 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-04",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "performance / monthly table",
+   "grade_this_walk": "PARTIAL",
+   "grade_morning": "PARTIAL",
+   "observed": "The monthly table now states the missing benchmark once, but its account row still reads 'not supplied' for the account name and the ending value.",
+   "acceptance": "The monthly table lists only rows it can fill, or states once what is not available.",
+   "screenshots": "20260928T174953Z#135",
+   "status": "known",
+   "known_ref": "UIC-04 (TO-IV-e-69)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#135 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-05",
+   "outcome": "O1",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "performance / account picker",
+   "grade_this_walk": "PARTIAL",
+   "grade_morning": "PARTIAL",
+   "observed": "The picker keeps '<period> pending' after the figure renders (YTD 5.93% on screen, picker 'YTD pending'; 1Y -100.00% on screen, picker '1Y pending') and reads 'YTD pending' above a refusal.",
+   "acceptance": "The picker's figure follows the selected period and updates when it computes.",
+   "screenshots": "20260928T174953Z#134, 20260928T174953Z#141, 20260928T174953Z#071",
+   "status": "known",
+   "known_ref": "UIC-05 (TO-IV-e-69: wording moved, behaviour did not)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#134, 20260928T174953Z#141, 20260928T174953Z#071 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-06",
+   "outcome": "O2",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~P",
+   "surface": "performance / period presets",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "For the 49F three-account client, 3Y and Since inception answer 'Unavailable', the raw code UNSUPPORTED_OPERATION and a 'Contact support' button, with no plain words.",
+   "acceptance": "A window the service cannot answer says so in words (what is supported, what to choose instead); no code on the face.",
+   "screenshots": "20260928T174953Z#143, 20260928T174953Z#144",
+   "status": "known",
+   "known_ref": "UIC-06 (IRPT_BCKEND backend half; no work recorded)",
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#143, 20260928T174953Z#144 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-07",
+   "outcome": "O2",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "performance / period presets",
+   "grade_this_walk": "PARTIAL",
+   "grade_morning": "PARTIAL",
+   "observed": "'Since inception' now requests 'the account's first data point', but the same window answers UNSUPPORTED_OPERATION (UIC-06), so no since-inception figure is reachable.",
+   "acceptance": "'Since inception' starts at the account's first data point (or its opening date).",
+   "screenshots": "20260928T174953Z#144",
+   "status": "known",
+   "known_ref": "UIC-07 (TO-IV-e-69)",
+   "design_rule": "",
+   "cause": {
+    "claim": "inferred",
+    "text": "The request side moved; the answer side is UIC-06's backend capability.",
+    "evidence": "walk screenshot(s) 20260928T174953Z#144 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-09",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "performance / loading",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "While a report loads the canvas reads 'Loading  No source age yet'; a refusal reads 'Unavailable  No source age yet'.",
+   "acceptance": "Loading is a loading state with no system words; 'source age' never shows before a source exists.",
+   "screenshots": "20260928T174953Z#006, 20260928T174953Z#138, 20260928T174953Z#143",
+   "status": "known",
+   "known_ref": "UIC-09 (TO-IV-e-69 graded it 'already holds')",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#006, 20260928T174953Z#138, 20260928T174953Z#143 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "NEW-01",
+   "outcome": "O8",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~P",
+   "surface": "performance / period return",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "The smallest account of the 49F three-account client still answers -100.00% for YTD and for 1Y; the cumulative series starts at 0.00% and falls to -100.00% the next day.",
+   "acceptance": "An account with positive holdings never answers -100%; a first-day funding flow is not a return.",
+   "screenshots": "20260928T174953Z#139, 20260928T174953Z#141",
+   "status": "known",
+   "known_ref": "IRPT_BCKEND-S176 / S177 (cause measured by ~P)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "Measured by ~P (row S177): the 49F engine emits status OK with r_net -1.0 on the day the account's whole value vanished with no cash flow; every later day multiplies that zero.",
+    "evidence": "walk screenshot(s) 20260928T174953Z#139, 20260928T174953Z#141 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-10",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "holdings / accounts pie",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "With 4 (INF) or 11 (COT) accounts, the pie's slice labels overlap into an unreadable pile.",
+   "acceptance": "Labels never overlap: small slices move to the legend (or a leader line).",
+   "screenshots": "20260928T174953Z#021, 20260928T174953Z#086",
+   "status": "known",
+   "known_ref": "UIC-10 (TO-IV-e-72)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#021, 20260928T174953Z#086 (local, gitignored)"
+   },
+   "in_flight": "~D's closer-drive edit is in the portal working tree, UNCOMMITTED (mtime 18:03-18:04Z, after this walk's Identity and Holdings steps): DrillTree.tsx SMALL_SLICE_SHARE. Not walked; grade on the next walk after it commits."
+  },
+  {
+   "id": "UIC-11",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "holdings / accounts pie",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "The accounts pie still draws 4 or 11 slices in a narrow grey ramp; neighbouring slices cannot be told apart. TO-IV-e-70 (merged 602757a8) moved the asset-class hues, not this palette.",
+   "acceptance": "Adjacent slices are distinguishable at a glance (a palette with enough separation for 11+ accounts).",
+   "screenshots": "20260928T174953Z#021, 20260928T174953Z#086",
+   "status": "known",
+   "known_ref": "UIC-11 (TO-IV-e-70)",
+   "design_rule": "portal colour law",
+   "cause": {
+    "claim": "measured",
+    "text": "The account palette is a narrow grey ramp; IV-e-70 did not touch it.",
+    "evidence": "walk screenshot(s) 20260928T174953Z#021, 20260928T174953Z#086 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-12",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "holdings / accounts pie",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "The COT eleven-account client's negative account (-4.59% of the client) still sits in the accounts table and legend beside the pie, and the table's shares include it.",
+   "acceptance": "A negative account is shown as a separate, labelled line (never as a pie slice), and the pie's shares sum to the positive total it states.",
+   "screenshots": "20260928T174953Z#086",
+   "status": "known",
+   "known_ref": "UIC-12 (TO-IV-e-72)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#086 (local, gitignored)"
+   },
+   "in_flight": "~D's closer-drive edit is in the portal working tree, UNCOMMITTED (mtime 18:03-18:04Z, after this walk's Identity and Holdings steps): DrillTree.tsx partitionPieRows. Not walked; grade on the next walk after it commits."
+  },
+  {
+   "id": "UIC-13",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "identity / over what",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "For the COT eleven-account client, Over what shows 10 rows and cuts the eleventh in half; there is no 'show all'.",
+   "acceptance": "Every account is reachable from Over what (a 'show all' or a scroll affordance); no row is clipped.",
+   "screenshots": "20260928T174953Z#066, 20260928T174953Z#086",
+   "status": "known",
+   "known_ref": "UIC-13 (TO-IV-e-72)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#066, 20260928T174953Z#086 (local, gitignored)"
+   },
+   "in_flight": "~D's closer-drive edit is in the portal working tree, UNCOMMITTED (mtime 18:03-18:04Z, after this walk's Identity and Holdings steps): IdentityCard.tsx OVER_WHAT_SHOWN + 'Show all'. Not walked; grade on the next walk after it commits."
+  },
+  {
+   "id": "UIC-14",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "holdings and performance / source lines",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "Source lines still name internal producers: Allocation and Securities map read 'Source: holdings_snapshot.build_orion_eclipse_meshed.', Performance reads 'Source: opal-gips-engine.', and the category card reads 'Source: Opal Capital Analysis.' rather than the data source.",
+   "acceptance": "The source line names the data source in client words (for example 'Black Diamond, as of ...').",
+   "screenshots": "20260928T174953Z#040, 20260928T174953Z#093, 20260928T174953Z#134",
+   "status": "known",
+   "known_ref": "UIC-14 (TO-IV-e-77, pending)",
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#040, 20260928T174953Z#093, 20260928T174953Z#134 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-15",
+   "outcome": "O3",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "surface": "holdings / models dialog and securities",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "The Models dialog lists bare tickers with no security names; the securities table repeats the ticker in the name column (including 'FID:CASH').",
+   "acceptance": "Every security shows its name beside its ticker.",
+   "screenshots": "20260928T174953Z#038, 20260928T174953Z#027",
+   "status": "known",
+   "known_ref": "UIC-15 (parked on the R4 Holdings enable)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#038, 20260928T174953Z#027 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-16",
+   "outcome": "O3",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "surface": "identity / account label",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "INF account labels still read '... / INDIVIDUAL RETIREMENT AC' on Identity, the pickers, the pie and Analysis.",
+   "acceptance": "An account's type reads in full ('Individual Retirement Account').",
+   "screenshots": "20260928T174953Z#021, 20260928T174953Z#009",
+   "status": "known",
+   "known_ref": "UIC-16 (9ddc01dbc5 on branch irpt-m-uic16, not merged, not served)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#021, 20260928T174953Z#009 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIR-34",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "holdings / drill",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "Drilling an INF account opens a level with one row (one model) drawn as a one-slice pie; the COT drill does the same under 'Client'.",
+   "acceptance": "A drill level with one child is skipped (or shown as a line, not a pie).",
+   "screenshots": "20260928T174953Z#022, 20260928T174953Z#025",
+   "status": "known",
+   "known_ref": "UIR-34 (09-26 register; walker UIW-011/012/018)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#022, 20260928T174953Z#025 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIW-0928-05",
+   "outcome": "O3",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "holdings / securities (all accounts)",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "The All-accounts securities table for the INF four-account client lists dozens of model constituents at 0.00% and $0.00 (positions the accounts do not hold), making the page about 9,600 px tall.",
+   "acceptance": "The securities table lists only positions with a non-zero amount, or folds the zero rows into one stated line.",
+   "screenshots": "20260928T174953Z#027",
+   "status": "new",
+   "known_ref": "",
+   "design_rule": "",
+   "cause": {
+    "claim": "inferred",
+    "text": "The table appears to join the model's constituent list rather than the held positions; data owner ~M if the snapshot carries the zero rows.",
+    "evidence": "walk screenshot(s) 20260928T174953Z#027 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIW-0928-01",
+   "outcome": "O7",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "holdings / single account",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "Choosing an account from the Holdings picker intermittently draws the account's total and category card but an EMPTY client-level table ('Supervision & Advisory', '% of the client', no rows): 5 of 13 account views captured (INF and COT). The other 8 show the account's rows under '% of this account'.",
+   "acceptance": "Every single-account view lists that account's rows (or a loading state until they arrive); an empty header-only table never shows beside a non-zero total.",
+   "screenshots": "20260928T174953Z#030, 20260928T174953Z#031, 20260928T174953Z#095, 20260928T174953Z#097, 20260928T174953Z#098",
+   "status": "new",
+   "known_ref": "",
+   "design_rule": "",
+   "cause": {
+    "claim": "inferred",
+    "text": "Holdings GETs all returned 200; the empty view keeps the client-level shape, which suggests the drill tree's current node is not re-pointed to the newly chosen account on some selections (a render race, not a data gap).",
+    "evidence": "walk screenshot(s) 20260928T174953Z#030, 20260928T174953Z#031, 20260928T174953Z#095, 20260928T174953Z#097, 20260928T174953Z#098 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIW-0928-02",
+   "outcome": "O7",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "holdings / single account",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "On one COT account's view the 'Client' category card stretches to about 1,400 px of empty space, with its figure at the foot.",
+   "acceptance": "A category card is as tall as its content.",
+   "screenshots": "20260928T174953Z#097",
+   "status": "new",
+   "known_ref": "",
+   "design_rule": "portal/DESIGN.md layout",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#097 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIW-0928-03",
+   "outcome": "O7",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "holdings / single account",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "One COT account's own view reads Total Assets $0.00 with no rows; no COT account holds zero (the table's eleven rows are all non-zero, one negative).",
+   "acceptance": "An account's own view states that account's value; a negative account shows its negative value in words, never $0.00.",
+   "screenshots": "20260928T174953Z#095, 20260928T174953Z#086",
+   "status": "new",
+   "known_ref": "related to UIC-12",
+   "design_rule": "",
+   "cause": {
+    "claim": "inferred",
+    "text": "By position it is the third picker option, which matches the third table row, the negative account; a negative total floored or dropped to zero.",
+    "evidence": "walk screenshot(s) 20260928T174953Z#095, 20260928T174953Z#086 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-17",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "identity / about this scope",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "'About this scope' shows 'SCOPE AS OF: unknown' for all three clients.",
+   "acceptance": "The scope panel shows a real date or omits the field.",
+   "screenshots": "20260928T174953Z#005, 20260928T174953Z#066, 20260928T174953Z#133",
+   "status": "known",
+   "known_ref": "UIC-17 (TO-IV-e-77, pending)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#005, 20260928T174953Z#066, 20260928T174953Z#133 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIW-0928-04",
+   "outcome": "O4",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "holdings / ready state",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "Opening one account's Holdings shows 'Ready  Business date age: 7d' over the raw code HOLDINGS_READY before the page fills (walker hit in both walks today, never registered).",
+   "acceptance": "The Holdings loading or ready state carries no system code; a data age, if shown, is in words against the trading calendar.",
+   "screenshots": "20260928T174953Z#153",
+   "status": "new",
+   "known_ref": "",
+   "design_rule": "FWD-15",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#153 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIR-26",
+   "outcome": "O8",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "surface": "identity, pickers, pie, analysis / account labels",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "Every account of a client carries the same label: eleven identical COT labels, three identical 49F labels, four identical INF labels, on Over what, both pickers, the pie legend and the Analysis account list.",
+   "acceptance": "Each account row shows its own masked tail and type.",
+   "screenshots": "20260928T174953Z#086, 20260928T174953Z#134, 20260928T174953Z#021, 20260928T174953Z#124",
+   "status": "known",
+   "known_ref": "UIR-26 (with UIR-15, UIR-17; ~M data)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#086, 20260928T174953Z#134, 20260928T174953Z#021, 20260928T174953Z#124 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIR-03",
+   "outcome": "O8",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "surface": "search / options",
+   "grade_this_walk": "PARTIAL",
+   "grade_morning": "n/a",
+   "observed": "A multi-account client now appears once, but the option's sub-line names ONE account's tail and type for the eleven-account client.",
+   "acceptance": "Each option names a client in client language; a client with several registrations appears once; no raw type code in the option.",
+   "screenshots": "20260928T174953Z#064",
+   "status": "known",
+   "known_ref": "UIR-03",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#064 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIR-23",
+   "outcome": "O8",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "surface": "holdings / as-of date",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "Holdings read as of 2026-09-22 on Monday 2026-09-28; the trading frontier (T-1) is Friday 2026-09-25, three trading days later.",
+   "acceptance": "Holdings read as of the last trading day (T-1), on a scheduled publication.",
+   "screenshots": "20260928T174953Z#021, 20260928T174953Z#153",
+   "status": "known",
+   "known_ref": "UIR-23; IRPT_BCKEND-S152 (ARMED, ~M)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#021, 20260928T174953Z#153 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIR-48",
+   "outcome": "O8",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "surface": "holdings / model amounts",
+   "grade_this_walk": "NOT_OBSERVED",
+   "grade_morning": "n/a",
+   "observed": "Not re-walked today (the clients walked did not reach it); carried as NOT MET from the 09-27 grade.",
+   "acceptance": "Model amounts are the sum of the positions held in that model (or are labelled as target allocations), and the residual is the true unassigned remainder.",
+   "screenshots": "none (not reached on this walk)",
+   "status": "known",
+   "known_ref": "UIR-48",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "prior register"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIR-50",
+   "outcome": "O8",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~M",
+   "surface": "holdings / security class",
+   "grade_this_walk": "NOT_OBSERVED",
+   "grade_morning": "n/a",
+   "observed": "Not re-walked today; carried as NOT MET from the 09-27 grade.",
+   "acceptance": "Every security the ETF Classifier table lists shows its classifier tag, never a collapsed class.",
+   "screenshots": "none (not reached on this walk)",
+   "status": "known",
+   "known_ref": "UIR-50",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "prior register"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIW-0928-06",
+   "outcome": "O8",
+   "owner_project": "IRPT_BCKEND",
+   "owner_seat": "2.0.0_SA_COO~P",
+   "surface": "selection create (backend)",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "Moving the COT eleven-account client from Performance to Holdings, POST /selections answered HTTP 500 once and the page logged 'IrRequestError: investor-reporting selection-create failed'; the next POST answered 200 and the page recovered.",
+   "acceptance": "Selection create answers every valid scope; a transient failure retries without a page error.",
+   "screenshots": "none (not reached on this walk)",
+   "status": "new",
+   "known_ref": "",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "Walk netlog line 622 of 847 and findings.json console_errors; one occurrence, not reproduced. Filed as an IRPT_BCKEND surprise row, owner ~P (irpt-directory-search carries selection create).",
+    "evidence": "prior register"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIR-40",
+   "outcome": "O9",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "all tabs / navy bands",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "Pages still carry several full-width navy bands: 3 on the empty page, 7 on INF Holdings, 4 on 49F Performance.",
+   "acceptance": "One navy band per page (C3).",
+   "screenshots": "20260928T174953Z#001, 20260928T174953Z#021, 20260928T174953Z#134",
+   "status": "known",
+   "known_ref": "UIR-40",
+   "design_rule": "portal/DESIGN.md C3",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#001, 20260928T174953Z#021, 20260928T174953Z#134 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIR-45",
+   "outcome": "O9",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "identity and performance / dates",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "n/a",
+   "observed": "Two date formats on one screen: 'September 22nd, 2026' beside '2026-09-25' in Identity, and 'Answered 2026-01-02' beside 'Answered January 2nd, 2026' on Performance.",
+   "acceptance": "One date format per page.",
+   "screenshots": "20260928T174953Z#005, 20260928T174953Z#134",
+   "status": "known",
+   "known_ref": "UIR-45",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#005, 20260928T174953Z#134 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-18",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "analysis / variant cards",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "Pressing 'Multi-Comp' leaves 'Variant: Overview (0 comparisons)' and shows 'Multi-Comp does not match 0 comparison(s); Overview does.'; the pressed card is barely distinguishable.",
+   "acceptance": "Pressing a card selects it visibly and the form asks for what that variant needs (for example 'Add at least two models'); no system sentence.",
+   "screenshots": "20260928T174953Z#128",
+   "status": "known",
+   "known_ref": "UIC-18 (TO-IV-e-75, pending)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#128 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-19",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "analysis / report title",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "For multi-account clients the default report title still names ONE account ('<client> <one account> -- Overview'), and the title field is cut with trailing asterisks.",
+   "acceptance": "The default title names the client (and the variant), never one account of several.",
+   "screenshots": "20260928T174953Z#128, 20260928T174953Z#064",
+   "status": "known",
+   "known_ref": "UIC-19 (TO-IV-e-75, pending)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#128, 20260928T174953Z#064 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-20",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "analysis / prepared for",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "'Enter the report recipient (up to 200 characters).' shows as a red error on load, before anything is typed.",
+   "acceptance": "Required-field messages appear after the user tries to generate (or leaves the field), not on load.",
+   "screenshots": "20260928T174953Z#124",
+   "status": "known",
+   "known_ref": "UIC-20 (TO-IV-e-75, pending)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#124 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-21",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "analysis / comparisons",
+   "grade_this_walk": "NOT_MET",
+   "grade_morning": "NOT_MET",
+   "observed": "The comparison placeholder is still cut: 'Opal model or ETF symbo'.",
+   "acceptance": "No placeholder or label is truncated at 1440 px.",
+   "screenshots": "20260928T174953Z#128",
+   "status": "known",
+   "known_ref": "UIC-21 (TO-IV-e-75, pending)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#128 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-22",
+   "outcome": "O5",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "analysis / holdings snapshot",
+   "grade_this_walk": "NOT_OBSERVED",
+   "grade_morning": "NOT_OBSERVED",
+   "observed": "The snapshot line read 'as of 2026-09-22 Ready' on every capture; the transient before the read answers was not caught.",
+   "acceptance": "Analysis shows a loading state until the snapshot read answers; a refusal only after it answers.",
+   "screenshots": "20260928T174953Z#124",
+   "status": "known",
+   "known_ref": "UIC-22 (TO-IV-e-75, pending)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#124 (local, gitignored)"
+   },
+   "in_flight": ""
+  },
+  {
+   "id": "UIC-23",
+   "outcome": "O6",
+   "owner_project": "DSGN_IRPTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "surface": "analysis / your analysis requests",
+   "grade_this_walk": "PARTIAL",
+   "grade_morning": "NOT_MET",
+   "observed": "TO-IV-e-74 landed: each row names the client and states its status in words ('Unavailable -- needs attention'). Still open: every row shows 'Open REQ-<hash> . revision 1', the READY job reads 'Ready -- ANALYSIS_READY', a running job reads 'Loading -- Running -- in progress', no row carries its variant or date, the list is not labelled as all requests for an admin, and 'No job submitted from this browser yet.' sits beside six listed requests.",
+   "acceptance": "The list shows the viewer's own requests (or is labelled as all requests for an admin), each by client name, variant and date, with a status in words; a READY job reads Ready.",
+   "screenshots": "20260928T174953Z#128",
+   "status": "known",
+   "known_ref": "UIC-23 (TO-IV-e-74, merged 28f5118c)",
+   "design_rule": "",
+   "cause": {
+    "claim": "measured",
+    "text": "",
+    "evidence": "walk screenshot(s) 20260928T174953Z#128 (local, gitignored)"
+   },
+   "in_flight": ""
+  }
+ ]
+}
