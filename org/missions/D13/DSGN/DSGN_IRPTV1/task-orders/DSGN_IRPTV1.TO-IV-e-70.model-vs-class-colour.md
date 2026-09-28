@@ -25,6 +25,14 @@ CTO ruling UIR-37 (analysis section 2): the Opal MODEL colours are fixed (FWD-12
 
 **Build:** Change `src/lib/chartColors.ts` ASSET_CLASS entries whose hue sits within a stated distance of any Opal model colour (state the distance rule, e.g. CIEDE2000 dE < N, in the file). List every other page that consumes the changed entries in your result (the change reaches them consistently). Give the account palette enough separation for 11+ accounts, sharing no hue with a model or asset-class colour. Add a test that FAILS when any asset-class colour falls within the distance of a model colour.
 
+**Amendment 1 (issuer ruling, 2026-09-28 ~13:2xZ, on row W38-S4):** the ASSET_CLASS registry carries a second STANDING invariant that
+this cell must also keep: `ASSET_CLASS.commodities` (green900, CTO 101649/101681, cells IV-e-49/IV-e-51) clears CIEDE2000 dE00 >= 20 from
+every other MIX_PIE, ASSET_CLASS and model-primary colour, re-measured live by
+`src/pages/AdvisorIntelligence/__tests__/iv-e-49.commodities-distance.test.ts` and `iv-e-51.commodities-chromatic.test.ts`. Under UIR-37
+the asset-class palette yields to the MODEL colours only; it does not yield commodities' ratified colour. So pick the moved entries
+(fixedIncome and any other) to satisfy BOTH bars at once -- a hue outside the green family is allowed. `ASSET_CLASS.commodities` and both
+AdvisorIntelligence tests are read and run, never edited.
+
 **Environment:** the portal worktree is based on the local DEV the issuer names in the spawn prompt (local DEV 3b98939b (round 8 drained), plus any chain this one follows). Other round-9 workers run in parallel on disjoint files; edit only your `<paths>`. Do not start any server. Work ONLY in your own <WS>. A workspace history rewrite runs ~03:00-05:00Z: commit before 03:00Z.
 
 ### ACCEPTANCE
@@ -34,7 +42,11 @@ CTO ruling UIR-37 (analysis section 2): the Opal MODEL colours are fixed (FWD-12
 <criterion id="IVE70-AC2" cell_refs="IV-e-70" judgment="true"/>
 `IVE70-AC2` -- judgment: the rows above read on the running page (round-9 walk), graded by 3.0.0_SA_CVO at L9. Record it as UNVERIFIABLE-BY-INSTRUMENT with a status_reason naming the CVO; never PASS or FAIL.
 
-<expected_criteria>IVE70-AC1, IVE70-AC2</expected_criteria>
+<criterion id="IVE70-AC3" cell_refs="IV-e-70"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test ./src/pages/AdvisorIntelligence/__tests__/iv-e-49.commodities-distance.test.ts ./src/pages/AdvisorIntelligence/__tests__/iv-e-51.commodities-chromatic.test.ts 2>&1 | tail -6</invocation><expect>0 fail</expect></criterion>
+`IVE70-AC3` -- control (amendment 1): the two ratified commodities tests pass UNEDITED against the changed registry. At the base they pass;
+with fixedIncome at green700 they fail 2 of 8 (row W38-S4).
+
+<expected_criteria>IVE70-AC1, IVE70-AC2, IVE70-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -58,8 +70,8 @@ org/missions/D13/DSGN/DSGN_IRPTV1/surprise-channel/investigations/INVESTIGATION_
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IVE70-AC1, IVE70-AC2. Instance at `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~38/DSGN_IRPTV1.TO-IV-e-70.model-vs-class-colour.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> IVE70-AC1,IVE70-AC2` BEFORE the flip.
+Criterion ids: IVE70-AC1, IVE70-AC2, IVE70-AC3. Instance at `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/0.9.0_WK_DSGN_IRPTV1~38/DSGN_IRPTV1.TO-IV-e-70.model-vs-class-colour.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> IVE70-AC1,IVE70-AC2,IVE70-AC3` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape; surprise rows in the investigation file (id `DSGN_IRPTV1-W38-S<k>`).
