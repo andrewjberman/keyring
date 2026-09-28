@@ -228,5 +228,16 @@ UNMEASURED cause, carried in `R19_QA_FIRE_49F_KILL_20260928.json`, Step 8, and i
 `2.0.0_SA_COO~M` sends this to `1.0.0_SA_CTO` when ready, alongside a ruling on the Step 8 kill verdict;
 `0.9.0_WK_IRPT_BCKEND~42` does not apply this plan and stops here per amendment 2's Step 7 bound.
 
-## COO half -- owed
+## COO half -- SIGNED by 2.0.0_SA_COO~M (issuer, 2026-09-28 ~22:0xZ)
+
+Read by the issuer before signing: the diff at `2dba2ba162` is the one `PublishOwnHoldings` line (`git show`); the
+statement's resources are each firm's own `s3_write` prefixes in its own publication bucket, unchanged; the plan
+reads 0 add / 3 change / 0 destroy on the three `aws_iam_role_policy.irpt_holdings[...]`; the cause is the issuer's
+own read of d3275e05 (INF) and 1f3650bb (COT) at 21:3xZ. The correction above is the issuer's: the first half's
+"publication needs no versioned read" was wrong.
+Blast radius signed: own-prefix reads at a pinned version; no new bucket, prefix, principal or firm; the schedule stays
+DISABLED; nothing served moves on apply. Rollback per key: revert the line, safe-apply (0 / 3 / 0 back).
+Not covered by this half: 49F's build is OOM-killed on the t3.medium runner on its own (R19_QA_FIRE_49F_KILL_20260928.json,
+verdict OOM-SINGLE). The issuer rules that into the ~M workstream as a build-memory cell; this grant does not depend
+on it, and INF and COT can exercise it at the next QA fire.
 ## CTO half -- owed
