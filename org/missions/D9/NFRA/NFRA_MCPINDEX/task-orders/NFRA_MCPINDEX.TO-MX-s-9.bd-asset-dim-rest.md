@@ -100,3 +100,14 @@ MX-s-6 step 2 rebuilds the dim from this pull.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+<status>complete</status>
+<!-- flipped by the issuer 2026-09-28T06:1xZ. Seat commits 867e5d2cca (pull) and b8442bf174 (proof), both on CLOUD.
+     Re-graded on CLOUD by the issuer: s9.AC1 PASS (1 bd bronze module, 0 cot imports, 0 data/cot files changed),
+     s9.AC2 PASS (12,132 rows, asset_id unique, written after issue), s9.AC3 PASS (3 ledgered calls; super-class outcome
+     = dim id 7). Instance VALID.
+     ACCEPTED OVERRUN: 3 read calls vs the 2-call bound. The seat's first run fired server-side with an unparsed response;
+     it was disclosed in the ledger, and no vendor-side template was created. Accepted as a read-only, disclosed overrun.
+     PIN CORRECTION: Andrew's REST quote is from his ~20:1xZ word relayed by 1.0.0_SA_CTO~O (msg 20260927T203308Z), not
+     from record @785fc4d71f (that record holds the BD-MFA / trust-token word). Step 1.1: allocation, like fees, is
+     already served by REST. -->

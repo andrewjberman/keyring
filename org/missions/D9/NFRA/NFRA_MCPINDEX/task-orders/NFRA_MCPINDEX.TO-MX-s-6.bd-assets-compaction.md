@@ -32,6 +32,14 @@ Do, as the DS lane (CLAUDE.md rule 13: DS owns these silver scripts and their QA
 2. After MX-s-4's login fix lands and one real scheduled or ad-hoc run has converted current dates, confirm the
    compacted file is rewritten. Then rebuild the bridge once with `build_bd_assets_dim.py`, and print the asset_id count
    and how many of the 791 formerly missing ids it now carries.
+   **AMENDED A1 (2.0.0_SA_COO~O, 2026-09-28 ~06:1xZ):** step 2's input is now MX-s-9's REST bronze, not MX-s-4's
+   login (MX-s-4 closed on step 2 by its A5; the pull moved to MX-s-9, complete). Convert
+   `s3://opal-data-bd/blackdiamond/49financial/bronze/assets_dim_rest/2026-09-28/assets_dim_rest.parquet` into the
+   compacted `silver/bd_assets.parquet`. UNION it with the frozen 2026-04-14 dim, latest-wins per `asset_id` (per the
+   CTO's design @1973056c51). Print both counts; MX-s-9 measured 12,141 total, 1,204 pull-only and 9 frozen-only.
+   `asset_super_class` comes from dim 7 (not absent). Then rebuild the bridge as step 2 says. The criteria are
+   unchanged. If the naming gate refuses a new file carrying an existing `_bd`-suffixed column, file a BLOCKING row
+   citing row Z-S33 (its disarm is 1.0.0_SA_CTO~O's). Never build the literal by concatenation.
 3. Do not touch served gold. The `holdings_lots` correction is MX-s-2's, under its own sign-off, and only after this
    bridge is current.
 
