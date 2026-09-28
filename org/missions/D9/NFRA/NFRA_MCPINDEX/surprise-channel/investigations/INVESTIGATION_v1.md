@@ -2077,6 +2077,31 @@ carries none.
     "spec_asserts": "CLAUDE.md: production pipelines MUST be scheduled; ad-hoc artifacts are never production evidence.",
     "world_is": "The REST pull is ad hoc and unscheduled; the portal path is scheduled but dead.",
     "notes": "Carrier: routed to 1.0.0_SA_CTO~O in this issuer's same-turn message, as the next enrichment. Scope: schedule the REST pull and the dim rebuild, and retire the portal asset-dim download; also the dead fees downloader, per the CTO's design @1973056c51."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S43",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~I",
+    "surfaced_at": "2026-09-28T08:13Z",
+    "one_line": "MX-s-10 step 2 is BLOCKED: both producer scripts are published and byte-current, but the repo-relative dependencies they import are absent from the entire opal-data-bd bucket, so the ported document cannot run on the instance and its ad-hoc test cannot be fired.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The two scripts ARE deployed and current: `comp-pipescript deployed pull_bd_asset_dim_rest.py --pipeline bd-bronze` and `... build_bd_assets_dim.py --pipeline bd-silver` both read MATCH on basis 'raw bytes (working tree and S3 object are byte-identical)'. So this is NOT a stale-deploy finding; the scripts are fine and the GAP IS THEIR DEPENDENCY CLOSURE.",
+        "The import shapes, read at the cited lines rather than assumed: `pull_bd_asset_dim_rest.py:66` does sys.path.insert of FOUR levels above itself then `:67` `from lib import opal_naming`; `build_bd_assets_dim.py:50` inserts `../gold` then `:51` `from lib.etf_classifier import ETFClassifier`. `opal_naming` in turn reads its registry from disk: :54-55 REGISTRY_FILES = (systems, scopes, tiers, exemptions, remediations, resources, reporting_policies).json under :50 REGISTRY_REL='infra/logic/registry', plus :52 SCHEMA_PATH org/standards/NAMING_SCHEMA.json.",
+        "WHOLE-BUCKET key census of opal-data-bd, with a POSITIVE CONTROL so the zeros are readable as absence and not as an out-of-corpus read: opal_naming = 0 keys, trading_calendar = 0 keys, registry/scopes = 0 keys, and the control etf_classifier = 2 keys (it is published, at code/gold/lib/etf_classifier.py, which is why the BUILDER's dependency resolves and the PULL's does not). Under code/ the denominator is 352 keys.",
+        "The existing deploy idiom in the document FLATTENS: the v3 payload's only python fetch was `aws s3 cp s3://opal-data-bd/code/silver/convert_assets_to_silver.py .` into /opt/bd-exporter. A flat copy puts pull_bd_asset_dim_rest.py where its four-levels-up path resolves to `/`, so `from lib import opal_naming` fails before any vendor call is made. The ported document therefore stages a TREE (RUNROOT) rather than a flat pair; that is why the tree shape is commented in it as load-bearing.",
+        "A second, independent requirement found in the same read: the MX-s-9 scheduling spec (s.5) says `--as-of` must be the last COMPLETED trading day via `lib/trading_calendar.prev_trading_day`, never today and never hand-typed, but `pull_bd_asset_dim_rest.py:526` DEFAULTS as_of to `datetime.now(timezone.utc)`. The module will not compute it, and it is a rule-13 DS-owned path so this lane cannot add it. The ported document therefore resolves the date itself and refuses rather than guessing when it cannot -- which makes `lib/trading_calendar.py` a THIRD unpublished dependency, not a nicety."
+      ]
+    },
+    "spec_asserts": "MX-s-10 PHASE A step 1: 'How the instance obtains the two scripts follows the document's existing aws s3 sync/cp pattern. If they are not yet published where the instance reads, that publish is the DS lane's safe-deploy, so file a BLOCKING row naming it.' Step 2 then fires one ad-hoc run of the new command list as the test.",
+    "world_is": "The premise splits. The two SCRIPTS are published and byte-current, so the order's literal condition ('not yet published') reads FALSE for them -- but their dependency closure is not published at all, which produces exactly the failure the condition exists to catch. Publishing needed, to the instance's read channel, is: (1) lib/opal_naming.py; (2) lib/trading_calendar.py; (3) the 7 infra/logic/registry/*.json files; (4) org/standards/NAMING_SCHEMA.json. All four are under data/- and repo-root paths that are rule-13 DS-owned or outside MX-s-10's <paths>, so none is this lane's to publish. Until they land, step 2 cannot be fired and PHASE B must not make the new document DEFAULT -- the ported document carries a BLOCKED: marker on those exact fetch lines for that reason.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Step 2 is REFUSED, not skipped, and the refusal carries its measurement per the order's bound 4. This seat did NOT stage the dependencies into S3 itself: that is a code publish into a DS-owned deploy channel and the order names it as the DS lane's safe-deploy. Everything in PHASE A that does NOT depend on the run was completed: the document is ported (step 1), the caller census is done (step 3), and the Terraform question is answered (step 4). UNMEASURED AND STATED: whether the instance has pandas and a parquet engine is INFERRED, not measured -- the v3 document ran convert_assets_to_silver.py, which imports pandas, so it is very likely present, but the instance is stopped and this seat did not start it to check, because the run it would serve is blocked anyway. If the publish lands and the run then fails on pandas, that is this inference being wrong, not a new cause."
   }
 ]
 ```
