@@ -1,0 +1,718 @@
+{
+ "schema_version": "1.0",
+ "register": "irpt-holdings-basis-silver-inventory-20260928",
+ "brief": "docs/briefs/irpt-holdings-basis-silver-inventory-brief-20260928.md",
+ "asked_by": "1.0.0_SA_CTO msg 102463 (placement item 2 of org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_HOLDINGS_BASED_PERFORMANCE_ALL_FIRMS_SILVER_TO_ONE_GOLD.md)",
+ "measured_at": "2026-09-28T22:5xZ-23:3xZ",
+ "trading_calendar_frontier": "2026-09-28 (Monday, read from lib/trading_calendar.py expected_last_trading_day at 23:0xZ; the last custody business date landed is Friday 2026-09-25 for 49F and COT)",
+ "keyspaces": {
+  "monolith": "s3://opal-data-assets/{source}/{scope}/silver/{feed}/date=YYYY-MM-DD/data.parquet (data/assets/scripts/silver/silver_registry.py)",
+  "legacy_firm_buckets": "s3://opal-data-{bd|inf|cot}/silver/<feed>/<date>.parquet and gold/canonical/<table>/<date>.parquet (flat files)",
+  "lgic_firm_buckets": "opal-data-49financial (gold/advi live), opal-data-cottonwood and opal-data-inflection (irpt/<firm>/gold/holdings only)"
+ },
+ "tables": [
+  {
+   "firm": "49financial",
+   "role": "custody_positions",
+   "bucket": "opal-data-assets",
+   "prefix": "schwab/08335338/silver/dim_position/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 559,
+   "first": "2024-07-08",
+   "last": "2026-09-25",
+   "trading_days_in_window": 558,
+   "grain": "(account_id, business_date, cusip, l_s)",
+   "key_columns": [
+    "account_id",
+    "business_date",
+    "cusip",
+    "l_s"
+   ],
+   "value_columns": [
+    "quantity_settled_unsettled",
+    "market_value_settled_unsettled",
+    "closing_price",
+    "closing_price_unfactored",
+    "factor",
+    "asset_backed_factor",
+    "secprice_lstupdte"
+   ],
+   "price_basis": "Schwab statement closing price per position (factored pair), value = market_value_settled_unsettled",
+   "latest_partition_read": "date=2026-09-25: 106,835 rows, 6,347 accounts; closing_price non-null on all rows, > 0 on 106,785; market value > 0 on 105,280",
+   "note": "ONE partition per trading day (559 partitions over 558 trading days). Reporting master 0008335338; the runner scope in data/assets/scripts/gold/runners_49f/runner_common.py.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "49financial",
+   "role": "custody_balance",
+   "bucket": "opal-data-assets",
+   "prefix": "schwab/08335338/silver/dim_balance/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 559,
+   "first": "2024-07-08",
+   "last": "2026-09-25",
+   "trading_days_in_window": 558,
+   "grain": "(account_id, business_date)",
+   "key_columns": [
+    "account_id",
+    "business_date"
+   ],
+   "value_columns": [
+    "net_mv_plus_cash",
+    "net_mv_positions",
+    "mkt_value_long",
+    "mkt_value_short",
+    "cash_balance_settled_only",
+    "money_mkt_funds",
+    "bank_sweep_ibf",
+    "bank_cash",
+    "margin_balance",
+    "net_credit_debit"
+   ],
+   "price_basis": "Schwab statement account value; V(t) = net_mv_plus_cash (B_00 rule)",
+   "latest_partition_read": "date=2026-09-25: 7,548 accounts; net_mv_plus_cash > 0 on 6,654",
+   "note": "1,201 accounts carry a balance and no position row on 09-25 (cash-only or empty).",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "49financial",
+   "role": "custody_positions_second_master",
+   "bucket": "opal-data-assets",
+   "prefix": "schwab/08242234/silver/dim_position/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 587,
+   "first": "2024-05-24",
+   "last": "2026-09-25",
+   "trading_days_in_window": null,
+   "grain": "(account_id, business_date, cusip, l_s)",
+   "key_columns": [
+    "account_id",
+    "business_date",
+    "cusip"
+   ],
+   "value_columns": [
+    "market_value_settled_unsettled",
+    "closing_price"
+   ],
+   "price_basis": "as 08335338",
+   "latest_partition_read": "not read",
+   "note": "The second Schwab master the registry lists under 49financial (H1: 49 WEALTH MANAGEMENT LLC). Full daily silver (dim_position, dim_balance 587; fact_rps 587); NO gold is built from it and the 49F engine never reads it. Whether its accounts are IRPT clients is unmeasured.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "49financial",
+   "role": "model_overlay",
+   "bucket": "opal-data-assets",
+   "prefix": "smartx/platform/silver/fact_allocation_account_map/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 76,
+   "first": "2026-07-14",
+   "last": "2026-09-28",
+   "trading_days_in_window": null,
+   "grain": "(allocation_id, account_id, run_date)",
+   "key_columns": [
+    "model_id",
+    "rmid",
+    "allocation_id",
+    "account_id",
+    "account_number"
+   ],
+   "value_columns": [
+    "aum_value"
+   ],
+   "price_basis": "SmartX intraday allocation value on the overlay date (never ties to Schwab to the cent, holdings_49f.py header)",
+   "latest_partition_read": "date=2026-09-28: 7,542 rows",
+   "note": "Sibling tables, same span (77 partitions): fact_allocation_positions (121,162 rows; quantity, price, market_value per allocation per as_of), fact_allocation_valuation, fact_model_allocation_roster, fact_model_holdings, fact_model_aum_daily.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "49financial",
+   "role": "vendor_model_performance",
+   "bucket": "opal-data-assets",
+   "prefix": "smartx/platform/silver/fact_model_performance/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 77,
+   "first": "2026-07-14",
+   "last": "2026-09-28",
+   "trading_days_in_window": null,
+   "grain": "(rmid, day, grouping)",
+   "key_columns": [
+    "rmid",
+    "model_id",
+    "day"
+   ],
+   "value_columns": [
+    "pnl_dollar",
+    "pnl_percent",
+    "summary_beginning_market_value",
+    "summary_ending_market_value"
+   ],
+   "price_basis": "SmartX's own model-level daily P&L",
+   "latest_partition_read": "date=2026-09-28: 7,028 rows",
+   "note": "Model grain, not account grain: a comparison point for a MODEL sleeve, not for an account.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "49financial",
+   "role": "vendor_official_performance",
+   "bucket": "opal-data-assets",
+   "prefix": "blackdiamond/49f/bronze/reporting_performance/",
+   "partition_scheme": "YYYY-MM-DD/reporting_performance_<relationship>_<date>.json (BRONZE only)",
+   "partitions": 4,
+   "first": "2026-07-17",
+   "last": "2026-09-01",
+   "trading_days_in_window": null,
+   "grain": "(relationship, pull date)",
+   "key_columns": [
+    "relationship id in the file name"
+   ],
+   "value_columns": [
+    "Black Diamond performancePeriod response"
+   ],
+   "price_basis": "Black Diamond's own TWR for the relationship at the pull's periods",
+   "latest_partition_read": "4 pull dates; per-relationship JSON",
+   "note": "The ONLY landed official 49F vendor performance. Never converted to silver; 4 pulls, not a series. The perfrp_* runners in runners_49f pull it.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "49financial",
+   "role": "gold_prior_art_engine",
+   "bucket": "opal-data-49financial",
+   "prefix": "gold/advi/canonical/twr_daily/",
+   "partition_scheme": "date=YYYY-MM-DD/",
+   "partitions": 559,
+   "first": "2024-07-08",
+   "last": "2026-09-25",
+   "trading_days_in_window": 558,
+   "grain": "(account_id, business_date)",
+   "key_columns": [
+    "account_id",
+    "business_date"
+   ],
+   "value_columns": [
+    "r_net",
+    "r_gross",
+    "bmv",
+    "emv",
+    "cf_net",
+    "cf_gross",
+    "status"
+   ],
+   "price_basis": "flow-adjusted daily TWR from canonical_valuation + flow_ledger (c02_twr_engine.py)",
+   "latest_partition_read": "date=2026-09-25: 7,545 rows",
+   "note": "The engine behind the served 49F Performance. Defects measured today: 26 OK rows / 22 accounts with r_net <= -1 (17 still invested) and 2 near-miss rows, all from a zero-EMV day with cf_net 0 (rows S176/S177); an all-refusal partition emits 11 columns instead of 15 (date=2025-01-09, dim_calendar lacks prev_trading_day; DS~E fact 3).",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "49financial",
+   "role": "gold_prior_art_positions",
+   "bucket": "opal-data-49financial",
+   "prefix": "gold/advi/canonical/canonical_positions/",
+   "partition_scheme": "date=YYYY-MM-DD/",
+   "partitions": 559,
+   "first": "2024-07-08",
+   "last": "2026-09-25",
+   "trading_days_in_window": 558,
+   "grain": "(account_id, business_date, cusip, position_side)",
+   "key_columns": [
+    "account_id",
+    "business_date",
+    "cusip",
+    "position_side",
+    "security_key"
+   ],
+   "value_columns": [
+    "quantity_settled_unsettled",
+    "market_value_settled_unsettled",
+    "closing_price",
+    "factor",
+    "price_stale_days",
+    "zero_price_flag",
+    "zero_qty_nonzero_mv_flag"
+   ],
+   "price_basis": "passthrough of dim_position with quality flags (b01_canonical_positions.py)",
+   "latest_partition_read": "date=2026-09-25: 106,835 rows",
+   "note": "DS~E (msg 102466, via ~P 102467): 2026-09-24 -> 09-25, 6,288 of 6,341 accounts with t-1 positions are fully priceable (99.2%); blockers 48 non-positive t-1 price, 5 no t price, 3 fair_value <= 0; closing_price rides the table, so 49F needs no separate price table.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "49financial",
+   "role": "gold_prior_art_valuation",
+   "bucket": "opal-data-49financial",
+   "prefix": "gold/advi/canonical/canonical_valuation/",
+   "partition_scheme": "date=YYYY-MM-DD/",
+   "partitions": 559,
+   "first": "2024-07-08",
+   "last": "2026-09-25",
+   "trading_days_in_window": 558,
+   "grain": "(account_id, business_date)",
+   "key_columns": [
+    "account_id",
+    "business_date"
+   ],
+   "value_columns": [
+    "net_mv_plus_cash",
+    "fair_value",
+    "accrued_income",
+    "accrual_status"
+   ],
+   "price_basis": "V(t) = dim_balance.net_mv_plus_cash, never reconstructed (b00)",
+   "latest_partition_read": "date=2026-09-25: 7,545 rows",
+   "note": "IN_CLIENT_BOOK boundary applied (dim_boundary).",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "cottonwood",
+   "role": "custody_positions",
+   "bucket": "opal-data-assets",
+   "prefix": "blackdiamond/cottonwood/silver/fact_holdings/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 81,
+   "first": "2026-06-09",
+   "last": "2026-09-25",
+   "trading_days_in_window": 77,
+   "grain": "(AccountID, Asset, date)",
+   "key_columns": [
+    "Relationship ID",
+    "PortfolioID",
+    "AccountID",
+    "Account Number",
+    "AssetID",
+    "CUSIP",
+    "Ticker"
+   ],
+   "value_columns": [
+    "Market Value",
+    "Units",
+    "Unaccrued Market Value",
+    "Accrual",
+    "Cash Equivalent",
+    "Holding Supervised",
+    "Account Supervised"
+   ],
+   "price_basis": "Black Diamond holdings value; NO price column (price is derivable as Market Value / Units where Units is present: 14,616 of 19,784 rows on 09-25)",
+   "latest_partition_read": "date=2026-09-25: 19,784 rows, 984 accounts, 908 with market value > 0",
+   "note": "Vendor column names kept verbatim (silver law). 81 partitions over 77 trading days: some non-trading-day partitions. fact_holdings_s2 is a 5-row second section (c1/c2).",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "cottonwood",
+   "role": "custody_balance",
+   "bucket": "opal-data-assets",
+   "prefix": "blackdiamond/cottonwood/silver/fact_allocations/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 132,
+   "first": "2026-04-22",
+   "last": "2026-09-25",
+   "trading_days_in_window": 109,
+   "grain": "(AccountID, date)",
+   "key_columns": [
+    "AccountID",
+    "relationship_id",
+    "portfolio_id"
+   ],
+   "value_columns": [
+    "account_market_value",
+    "relationship_market_value",
+    "cash_market_value",
+    "cash_allocation",
+    "account_allocation"
+   ],
+   "price_basis": "Black Diamond account market value",
+   "latest_partition_read": "date=2026-09-25: 1,592 rows, 940 accounts",
+   "note": "Starts 2026-04-22, 7 weeks before fact_holdings.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "cottonwood",
+   "role": "model_overlay",
+   "bucket": "opal-data-assets",
+   "prefix": "blackdiamond/cottonwood/silver/fact_model_assignment/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 59,
+   "first": "2026-07-21",
+   "last": "2026-09-28",
+   "trading_days_in_window": null,
+   "grain": "(account, model, date)",
+   "key_columns": [
+    "account",
+    "model"
+   ],
+   "value_columns": [
+    "assignment weight"
+   ],
+   "price_basis": "BD Rebalancer assignment",
+   "latest_partition_read": "not read",
+   "note": "Siblings, same span: fact_model_blend, fact_model_roster, fact_model_definition (59 each). build_cot reads all four.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "cottonwood",
+   "role": "vendor_official_performance",
+   "bucket": "opal-data-assets",
+   "prefix": "blackdiamond/cottonwood/bronze/",
+   "partition_scheme": "feed folders",
+   "partitions": 0,
+   "first": null,
+   "last": null,
+   "trading_days_in_window": null,
+   "grain": "-",
+   "key_columns": [],
+   "value_columns": [],
+   "price_basis": "-",
+   "latest_partition_read": "bronze feeds: account_attributes, allocations, holdings, realized, rebalancer_accounts, rebalancer_model_detail, rebalancer_models, transactions, unrealized",
+   "note": "NO performance feed is landed for Cottonwood in either keyspace. The served page's COT performance comes only from the adapter's per-use Black Diamond plans, which answer DEPENDENCY_UNAVAILABLE today (53 of 53 reads in walk 20260928T174953Z).",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "cottonwood",
+   "role": "gold_prior_art_holdings",
+   "bucket": "opal-data-cot",
+   "prefix": "gold/canonical/holdings/",
+   "partition_scheme": "YYYY-MM-DD.parquet (flat)",
+   "partitions": 124,
+   "first": "2026-04-22",
+   "last": "2026-09-25",
+   "trading_days_in_window": 109,
+   "grain": "(date, account_id, asset_name)",
+   "key_columns": [
+    "date",
+    "account_id",
+    "asset_name",
+    "ticker"
+   ],
+   "value_columns": [
+    "units",
+    "price",
+    "market_value",
+    "source",
+    "bd_units",
+    "schwab_units"
+   ],
+   "price_basis": "price computed in gold (02b), BD vs Schwab units reconciled",
+   "latest_partition_read": "2026-09-25: 19,684 rows",
+   "note": "Legacy keyspace. Daily, with a price column.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "cottonwood",
+   "role": "gold_prior_art_gains",
+   "bucket": "opal-data-cot",
+   "prefix": "gold/canonical/account_gains/",
+   "partition_scheme": "YYYY-MM-DD.parquet (flat)",
+   "partitions": 48,
+   "first": "2026-04-23",
+   "last": "2026-06-09",
+   "trading_days_in_window": 33,
+   "grain": "(date, account_id)",
+   "key_columns": [
+    "date",
+    "account_id"
+   ],
+   "value_columns": [
+    "aua_prior",
+    "aua_current",
+    "price_return",
+    "realized_gl",
+    "income",
+    "growth",
+    "aua_residual"
+   ],
+   "price_basis": "AUA(t)-AUA(t-1) = growth + NNA, NNA the residual (B_03.account_gains.py)",
+   "latest_partition_read": "last 2026-06-09",
+   "note": "STOPPED 2026-06-09; gold/canonical/performance (relationship grain) stopped the same day. COT prices silver stopped 2026-06-07.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "inflection",
+   "role": "custody_positions",
+   "bucket": "opal-data-assets",
+   "prefix": "orion/inflection/silver/fact_positions/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 2343,
+   "first": "2020-04-24",
+   "last": "2026-09-27",
+   "trading_days_in_window": 1613,
+   "grain": "(accountNumber, ticker, date)",
+   "key_columns": [
+    "accountNumber",
+    "accountId",
+    "registrationId",
+    "clientId",
+    "ticker",
+    "productId"
+   ],
+   "value_columns": [
+    "currentShares",
+    "currentPrice",
+    "currentValue",
+    "isManaged",
+    "isCustodialCash",
+    "assetClass"
+   ],
+   "price_basis": "Orion position price and value per row (prior close on the snapshot date, 4.0.0_SA_CRO 10f3cf6f9f)",
+   "latest_partition_read": "date=2026-09-27: 36,103 rows, 960 accounts",
+   "note": "A partition per CALENDAR day (2,343 over 1,613 trading days): weekend/holiday partitions repeat the prior close. Same content as legacy opal-data-inf/silver/assets_v2 (2,345 files, snapshot_date column) and fact_assets (2,345, to 2026-09-28).",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "inflection",
+   "role": "custody_balance",
+   "bucket": "opal-data-inf",
+   "prefix": "silver/api_dims/accounts_v2/",
+   "partition_scheme": "snapshot_date=YYYY-MM-DD/data.parquet",
+   "partitions": 2463,
+   "first": "2020-01-01",
+   "last": "2026-09-28",
+   "trading_days_in_window": 1693,
+   "grain": "(account_id, snapshot_date)",
+   "key_columns": [
+    "account_id",
+    "account_number",
+    "household_id",
+    "rep_id"
+   ],
+   "value_columns": [
+    "ending_mv",
+    "total_cost_basis",
+    "total_gain_loss"
+   ],
+   "price_basis": "Orion account ending market value",
+   "latest_partition_read": "916 rows on the latest partition read; holdings_inf.py header: 876 accounts with current_value, positions tie to current_value to the cent on 876 of 876",
+   "note": "LEGACY keyspace: build_inf reads opal-data-inf, not the monolith. api_dims holds several dims (2,463 dated dirs across them).",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "inflection",
+   "role": "model_overlay",
+   "bucket": "opal-data-assets",
+   "prefix": "eclipse/inflection/silver/fact_portfolios_simple/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 122,
+   "first": "2026-05-15",
+   "last": "2026-09-28",
+   "trading_days_in_window": 92,
+   "grain": "(portfolio, account)",
+   "key_columns": [
+    "portfolio id",
+    "account",
+    "model id"
+   ],
+   "value_columns": [
+    "managed_value",
+    "excluded_value (fact_portfolios_full)"
+   ],
+   "price_basis": "Eclipse model membership; 786 accounts -> exactly one portfolio; 663 portfolios carry a model id, 181 do not (holdings_inf.py header)",
+   "latest_partition_read": "not read",
+   "note": "Siblings, same span: fact_portfolios_full, fact_models (18 models), fact_model_composition (Security Sets, no security rows). Legacy mirror: opal-data-inf/silver/eclipse/<date>/ (121 dirs).",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "inflection",
+   "role": "vendor_official_performance",
+   "bucket": "opal-data-assets",
+   "prefix": "orion/inflection/silver/fact_performance/",
+   "partition_scheme": "date=YYYY-MM-DD/data.parquet",
+   "partitions": 121,
+   "first": "2026-05-03",
+   "last": "2026-09-27",
+   "trading_days_in_window": 101,
+   "grain": "(client_id, date)",
+   "key_columns": [
+    "client_id",
+    "date"
+   ],
+   "value_columns": [
+    "factor"
+   ],
+   "price_basis": "Orion WEEKLY TWR factor per CLIENT (household), inception-based cumulative index (legacy twin opal-data-inf/silver/performance: week_date, twr_factor, cumulative_twr, inception_date)",
+   "latest_partition_read": "date=2026-09-27: 477,762 rows, 313 clients",
+   "note": "Household grain, weekly. Not account grain, not daily. opal-data-inf/silver/performance_dim is a one-off 2026-05-13 table of period TWR by period_basis and gross/net (95,364 rows). The on-demand Orion Reporting/Scope path the adapter uses answered OBJECT_NOT_COVERED for every walked INF account today (25 of 25).",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "inflection",
+   "role": "gold_prior_art_holdings",
+   "bucket": "opal-data-inf",
+   "prefix": "gold/holdings/",
+   "partition_scheme": "YYYY-MM-DD.parquet (flat)",
+   "partitions": 2566,
+   "first": "2019-09-17",
+   "last": "2026-09-25",
+   "trading_days_in_window": 1766,
+   "grain": "(date, account_id, ticker)",
+   "key_columns": [
+    "date",
+    "account_id",
+    "ticker"
+   ],
+   "value_columns": [
+    "units",
+    "price",
+    "market_value",
+    "price_source",
+    "custodian"
+   ],
+   "price_basis": "gold-computed price with price_source",
+   "latest_partition_read": "2026-09-25: 14,571 rows",
+   "note": "Legacy keyspace. A daily per-account per-security holdings gold with a price and its source, back to 2019. positions_cube (2,566) carries units only; gold/timeseries is household grain with return_pct_twr.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  },
+  {
+   "firm": "all",
+   "role": "prices",
+   "bucket": "opal-data-bd",
+   "prefix": "silver/prices/",
+   "partition_scheme": "YYYY-MM-DD.parquet (flat, cumulative)",
+   "partitions": 161,
+   "first": "2026-02-22",
+   "last": "2026-09-27",
+   "trading_days_in_window": 150,
+   "grain": "(date, ticker)",
+   "key_columns": [
+    "date",
+    "ticker",
+    "asset_name"
+   ],
+   "value_columns": [
+    "price",
+    "source"
+   ],
+   "price_basis": "yfinance/BD blended history (bd_price_update.py, build_interpolated_prices.py)",
+   "latest_partition_read": "2026-09-27: 12,482,017 rows (cumulative history per file)",
+   "note": "opal-data-inf/silver/prices is one file (1,442,156 rows); opal-data-cot/silver/prices stopped 2026-06-07. Event rules bd-canonical-prices-daily and inf-canonical-prices-daily are registered.",
+   "claim": "measured",
+   "measured_at": "2026-09-28T22:5xZ-23:3xZ"
+  }
+ ],
+ "findings": [
+  {
+   "id": "IV.1",
+   "finding": "Two keyspaces are live and the IRPT builders read BOTH.",
+   "measured": "The monolith `opal-data-assets` (`{source}/{scope}/silver/{feed}/date=YYYY-MM-DD/data.parquet`, `data/assets/scripts/silver/silver_registry.py`) and the legacy firm buckets `opal-data-bd`, `opal-data-inf`, `opal-data-cot` (`silver/<feed>/<date>.parquet`, flat, plus `gold/canonical/`). `holdings_snapshot.py` reads the monolith for 49F (`schwab/08335338`, `smartx/platform`) and COT (`blackdiamond/cottonwood`) and the LEGACY bucket for INF (`opal-data-inf/silver/api_dims`, `silver/eclipse`; `build_inf`, `INF_SOURCE_BUCKET`). The 49F engine reads the monolith (`runner_common.py` SILVER_BUCKET = opal-data-assets, scope schwab/08335338) and writes gold to `opal-data-49financial`. The LGIC resource registry (`infra/logic/registry/resources.json`, 465 rows) carries no S3 table row of any kind (types are IAM, Lambda, event rules, secrets), so no silver table has a registry address to cite; the gold's address is minted at L4 from `lib/opal_naming.py` (rule 30)."
+  },
+  {
+   "id": "IV.2",
+   "finding": "49 Financial has the deepest per-account per-day custody: one Schwab partition per trading day since 2024-07-08, with a closing price on every position.",
+   "measured": "`dim_position` 559 partitions over 558 trading days; 6,347 accounts with positions on 09-25, closing_price non-null on 106,835 of 106,835 rows. `dim_balance` gives the account value (7,548 accounts). DS~E measured the day-over-day priceability at 99.2% (6,288 of 6,341). The engine's own `canonical_positions` already carries the price and three quality flags (price_stale_days, zero_price_flag, zero_qty_nonzero_mv_flag). A SECOND Schwab master (08242234) has the same silver depth and no gold."
+  },
+  {
+   "id": "IV.3",
+   "finding": "Cottonwood has daily holdings VALUES but no price column, and no landed vendor performance at all.",
+   "measured": "`fact_holdings` (81 partitions, 2026-06-09..09-25) carries Market Value and Units per position; price is derivable where Units is present (14,616 of 19,784 rows on 09-25) and not where it is not. The account value is in `fact_allocations` (from 2026-04-22). No performance feed exists under `blackdiamond/cottonwood/bronze/` or in `opal-data-cot`; the legacy `gold/canonical/account_gains` and `performance` stopped on 2026-06-09 and `silver/prices` on 2026-06-07. The served COT Performance today is the adapter's per-use Black Diamond plan, answering DEPENDENCY_UNAVAILABLE on 53 of 53 reads."
+  },
+  {
+   "id": "IV.4",
+   "finding": "Inflection has the longest history (Orion positions daily since 2020-04-24 with price and value per row) and a WEEKLY household-grain official TWR.",
+   "measured": "`fact_positions` 2,343 partitions (a partition per calendar day, so 1.45 per trading day: weekend partitions repeat the prior close); 960 accounts on 09-27 with currentPrice and currentValue per row; `accounts_v2` gives ending_mv per account (876 tie to the cent). The official Orion performance landed is `fact_performance`: a weekly TWR factor per client_id (313 households), not per account and not daily. A legacy gold `opal-data-inf/gold/holdings` already holds a daily per-account per-security table with price and price_source back to 2019-09-17."
+  },
+  {
+   "id": "IV.5",
+   "finding": "The basis Andrew named is implemented NOWHERE measured; the two calculations that exist are both flow-based.",
+   "measured": "The 49F engine (`c02_twr_engine.py`) links r_net = (emv - bmv - cf) / bmv from `canonical_valuation` and `flow_ledger`, which is how a zero-EMV day with no flow becomes -100% (S177). The three per-firm `account_gains` golds (`data/black_diamond/scripts/gold/B_03.account_gains.py`, `data/cot/.../B_03.account_gains.py`, `data/inf/.../INF_B_03.account_gains.py`, and `runners_49f/c00_account_gains.py`) decompose AUA(t)-AUA(t-1) = growth + NNA with NNA the residual, a transaction-classified identity. Neither computes a weight-pro-rated security return from end-of-day holdings. The nearest surface to Andrew's basis is the per-position price/value columns themselves, which exist on 49F and INF rows and are derivable on COT rows."
+  },
+  {
+   "id": "IV.6",
+   "finding": "The served HoldingsSnapshot already answers 'which accounts, which positions, which values, on which day' per firm, with reconciliation and one identity normalizer.",
+   "measured": "`data/assets/scripts/gold/investor_reporting/holdings_snapshot.py` with `holdings_49f.py` (Schwab meshed with SmartX), `holdings_inf.py` (Orion meshed with Eclipse) and `build_cot` (BD Rebalancer) resolves per firm the account set, the custody clock, the position rows and the tie of positions to the account value, and mints node ids through `_ids/ids.py` and `_ids/raw_keys.json` (the same normalizer the handlers use, rows W1-S7/W2-S11). It is a one-as-of snapshot, not a series, and it runs ad hoc (the served as-of is 2026-09-22 while every silver is at 09-25 or later; row S152). Its reads are the same reads a daily holdings-basis gold needs."
+  },
+  {
+   "id": "IV.7",
+   "finding": "Per account per day, measured on the latest custody partition.",
+   "measured": "49F: 6,347 accounts with positions of 7,548 with a balance (1,201 cash-only or empty), 99.2% priceable day over day. COT: 984 accounts with holdings rows, 908 with market value > 0, of 940 accounts in fact_allocations. INF: 960 accounts with positions of 876 accounts that tie to a balance (916 rows on the accounts dim read). Absent days inside each table's span: none for 49F (one partition per trading day); COT and INF carry extra non-trading-day partitions rather than gaps. Data starts differ: 49F 2024-07-08, COT 2026-06-09 (values from 2026-04-22), INF 2020-04-24, so 'since inception' is a per-account first-holdings-day, not a firm constant."
+  },
+  {
+   "id": "IV.8",
+   "finding": "Official vendor performance already landed is thin and uneven: 4 Black Diamond pulls for 49F, weekly household factors for INF, nothing for COT.",
+   "measured": "49F: `blackdiamond/49f/bronze/reporting_performance/` has 4 pull dates (2026-07-17..2026-09-01), per-relationship JSON from performancePeriod, never converted. INF: weekly TWR factors per household (IV.4). COT: none. SmartX `fact_model_performance` gives a daily model-level P&L for 49F MODEL sleeves. A comparison at pre-set periods therefore has landed material for 49F relationships at 4 dates and INF households weekly; anything else is a NEW vendor pull and needs Andrew's per-use word."
+  },
+  {
+   "id": "IV.9",
+   "finding": "Cash is a different object at each firm and the basis speaks of securities.",
+   "measured": "49F `dim_balance` splits cash_balance_settled_only, money_mkt_funds, bank_sweep_ibf, bank_cash and margin_balance; COT `fact_holdings` flags Cash Equivalent per holding; INF `fact_positions` flags isCustodialCash per position. Whether a money-market or sweep balance carries a daily return, and whether it sits inside or outside the security basket's weights, is not stated anywhere measured and changes the figure for the 1,201 cash-only 49F accounts."
+  },
+  {
+   "id": "IV.10",
+   "finding": "The legacy Black Diamond 49F silver is retired in place and must not be read by the new gold.",
+   "measured": "`opal-data-bd/silver/assets` ends 2026-06-18; `silver/transactions` latest partition has 0 rows and an all-null schema; `silver/unrealized` 0 rows; the monolith mirror `blackdiamond/49financial/silver_legacy/` ends 2026-08-25. The 49F chain moved to Schwab (registry `pipeline_trees`, `trees.advi.silver_master` = 08335338)."
+  },
+  {
+   "id": "IV.11",
+   "finding": "Silver lands on schedules; the IRPT gold does not.",
+   "measured": "Registered event rules: Schwab conversions ride `silver_registry.py` daily; Orion `inf-api-positions-daily`, `inf-api-assets-v2-daily`, `inf-accounts-v2-daily`, `inf-performance-daily`; COT `cot-session-complete` -> `cot-bronze-complete` -> `cot-silver-complete` sentinels and `cot-rebalancer-runner-daily`; SmartX platform daily (77 partitions, 2026-07-14..09-28). The IRPT holdings snapshot and the 49F engine gold are ad hoc or QA-fired (S152; the twr_daily partitions exist because the ADVI chain runs, not because IRPT schedules them)."
+  },
+  {
+   "id": "IV.12",
+   "finding": "The served Performance surface today, per firm (from the CRO walks of 2026-09-28).",
+   "measured": "49F: PERFORMANCE_PARTIAL with a computed figure and no benchmark or values; one account -100.00% (NEW-01), a guard `hcZpXDDo` live but bypassed by retained-report reopen (D1 NOT MET). COT: DEPENDENCY_UNAVAILABLE on every read. INF: OBJECT_NOT_COVERED on every read. 3Y and Since inception: UNSUPPORTED_OPERATION. The Holdings tab serves a 2026-09-22 snapshot at every firm."
+  }
+ ],
+ "outcomes": [
+  {
+   "id": "O1",
+   "outcome": "An advisor at any of the three firms reads, for one account, a daily return series and its period figures computed from that account's own end-of-day holdings only: each day's return is the weight-pro-rated return of the securities it held, weights relative to the account on that day, the delta taken from the previous day, with no inflow or outflow logic (Andrew's call-3 basis, verbatim in the CTO record).",
+   "note": "CANDIDATE THREAD (FWD-1 at L2): a 49 Financial advisor, one invested Schwab account, the YTD window, because 49F has one custody partition per trading day with a closing price on every position (IV.2) and its served figure is the one Andrew has seen wrong (IV.12)."
+  },
+  {
+   "id": "O2",
+   "outcome": "The advisor reads the SAME figure on the Performance page and in the export for every firm, because the page reads ONE gold shape in which the firm is a column, not a code path.",
+   "note": ""
+  },
+  {
+   "id": "O3",
+   "outcome": "An Opal operator can state, for any firm and any day, which silver table supplied the positions and the values, how many accounts were computable, how many were not, and why (no position row, no price, zero value), from the gold's own manifest rather than from a query.",
+   "note": ""
+  },
+  {
+   "id": "O4",
+   "outcome": "An advisor is never shown a return for a day whose holdings did not land: an absent day is absent, the page names the last day it has, and nothing rolls forward or fills with zero.",
+   "note": ""
+  },
+  {
+   "id": "O5",
+   "outcome": "An Opal analyst compares Opal's holdings-basis figure against the vendor's official figure at pre-set periods (Black Diamond for 49F and Cottonwood, Orion for Inflection) and reads the difference with both bases stated, as a bounded check at defined points, never as a standing comparator or a second pipeline.",
+   "note": ""
+  },
+  {
+   "id": "O6",
+   "outcome": "The gold is produced every trading day on a schedule of its own, and its completion manifest names the silver partitions it consumed, so a missed day and a late day read differently from a completed one.",
+   "note": ""
+  },
+  {
+   "id": "O7",
+   "outcome": "A security whose price is missing, stale or zero on a day is handled by one stated rule and surfaced on the account's row, never silently priced at zero or dropped; the account's cash and cash-equivalent balances are handled by one stated rule the face can name.",
+   "note": ""
+  },
+  {
+   "id": "O8",
+   "outcome": "A relationship or client figure composes its accounts' daily returns by the same weight-pro-rated rule, and never by summing or averaging period returns (FWD-3's rule against a fabricated aggregate carries).",
+   "note": ""
+  }
+ ],
+ "sources_folded_in": [
+  "0.4.0_DS_ClientPlatform~E msg 102466 via 2.0.0_SA_COO~P msg 102467 (three 49F facts)",
+  "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_OPEN_CALLS_1_2_APPROVED_3_HOLDINGS_BASED_PERFORMANCE.md (call-3 basis, verbatim)",
+  "org/tier1_exec/4.0.0_SA_CRO/deliverables/NEVER_WIDEN_SIGNOFF_CRO_HALF_ADAPTER_IMPLAUSIBLE_GUARD_20260928.md (D1 result)",
+  "docs/briefs/irpt-master-guidance-brief-20260928.md AD-14 (served reality per firm)"
+ ]
+}
