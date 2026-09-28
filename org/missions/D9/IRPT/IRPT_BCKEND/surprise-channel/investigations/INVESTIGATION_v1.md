@@ -10764,3 +10764,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "IB-pr-192's AC2 re-runs after the two partitions are repaired; its build (AC1 PASS) stays on wk-IRPT_BCKEND-61 until then."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W63-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~63",
+  "surfaced_at": "2026-09-28T21:05:00Z",
+  "one_line": "TO-IB-yr-1's own <proof_of_spec> section names 'IRPT_BCKEND.TO-IB-yr-1.proof_of_spec.json' (the internal <to_id>), but .tools/to-pipeline-gate.py's complete-flip search globs deliverables/*/<order-file-basename>.proof_of_spec.json, i.e. '...saved-type-refuses-before-generation.proof_of_spec.json' -- same class already logged this round (IRPT_BCKEND-W21-S1, IRPT_BCKEND-W41-S3, and their own citations of W18-S2/W20-S3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (disarmed same turn by the worker: instance renamed to the order's own basename before commit)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-yr-1.saved-type-refuses-before-generation.md <proof_of_spec> section: 'Instance at .../0.9.0_WK_IRPT_BCKEND~63/IRPT_BCKEND.TO-IB-yr-1.proof_of_spec.json' -- the order's own <to_id> tag reads 'IRPT_BCKEND.TO-IB-yr-1', but the order file safe-commit staged is named 'IRPT_BCKEND.TO-IB-yr-1.saved-type-refuses-before-generation.md'",
+      "safe-commit run 2026-09-28 ~21:0xZ: [to-pipeline-gate] REFUSED -- 'flips to complete on PIPELINE-REGISTERED project IRPT_BCKEND, and NO proof-of-spec instance was found beside it'; .tools/to-pipeline-gate.py:2902-2921 globs deliverables/*/<stem>.proof_of_spec.json where stem = the ORDER FILE's own basename, never the internal to_id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The TO's own <proof_of_spec> section names the exact instance path the CTO/COO expect to find (Andrew-direct 2026-08-11 proof-of-spec contract).",
+  "world_is": "The named path uses the internal <to_id> token as the file stem, not the order file's own basename that the pipeline gate's complete-flip search actually globs against -- a citation inside the order that does not resolve against the order's own filename.",
+  "notes": "Not blocking this cell (renamed and refiled before commit, gate now clears; commit 0a1fc245cb on wk-IRPT_BCKEND-63). Fourth occurrence this round of the same recommendation carried in IRPT_BCKEND-W21-S1/W41-S3: reconcile decomp-cell-id-style to_id values against the actual order-file-basename-keyed gate lookup estate-wide."
+}
+```
