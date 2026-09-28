@@ -74,6 +74,7 @@ VIEWS = (
     ("infra/aws/lambda/investor-reporting/_authz/loaders.py", "py", ("bucket_for",)),
     ("data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py", "py", ("FIRM_TREES",)),
     (".tools/ds-precommit-check.py", "py", ("_CROSS_FIRM_FOREIGN_BUCKETS", "_CROSS_FIRM_FOREIGN_KEY_PREFIXES")),
+    ("data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py", "py", ("ASSET_DIM_REST_PIN",)),
 )
 
 # Which registry file(s) each generated target's renderer reads (LGIC_ENFORCE EN-r-6; row W1-S14): one
@@ -103,6 +104,13 @@ TARGET_REGISTRY_KEYS = {
     "infra/aws/lambda/investor-reporting/_authz/loaders.py": ("scopes",),
     "data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py": ("scopes", "tiers"),
     ".tools/ds-precommit-check.py": ("scopes",),
+    # ASSET_DIM_REST_PIN -- _blk_asset_dim_rest_pin() reads the scope row only (its key, short,
+    # pipeline_trees[].vendor and the routed bucket alias). It does NOT read tiers.json: this
+    # pipeline is pre-LGIC and its bronze sits in the firm's ROUTED bucket alias, not the tier
+    # home, so a tiers.json move must leave these bytes unchanged (r6-undeclared-inert). It does
+    # not read systems.json either -- the key grammar is a format, and the source token comes
+    # from the scope's own pipeline_trees row.
+    "data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py": ("scopes",),
     LOCALS_PATH: ("scopes", "exemptions"),
     VECTORS_PATH: ("scopes", "systems", "exemptions", "resources"),
     TFTEST_PATH: ("scopes", "systems", "exemptions", "resources"),
@@ -769,6 +777,38 @@ def _blk_foreign_prefixes(reg, h16, path):
     return _block("_CROSS_FIRM_FOREIGN_KEY_PREFIXES", h16, "#", path, "_CROSS_FIRM_FOREIGN_KEY_PREFIXES = " + _py_lit(m))
 
 
+def _blk_asset_dim_rest_pin(reg, h16, path):
+    """The 49F names the BD asset-dim REST pull resolves, pinned at BUILD time.
+
+    The instance that runs the pull has no registry and no NAMING_SCHEMA, and the multi-firm
+    registry must never travel to a firm's bucket (Z-S43 ruling). So the values the module used
+    to resolve through opal_naming at import are rendered here instead.
+
+    scopes.json ONLY -- see the note beside this target's TARGET_REGISTRY_KEYS row.
+    """
+    scope = lookup("49financial", reg)
+    trees = [t for t in (scope.get("pipeline_trees") or []) if t.get("vendor")]
+    if not trees:
+        raise RegistryError("scope 49financial registers no pipeline tree vendor")
+    vendor = trees[0]["vendor"]
+    bucket = next((a["spelling"] for a in (scope.get("aliases") or [])
+                   if "bucket" in (a.get("planes") or []) and a.get("routed")), scope["bucket"])
+    tier, table = "bronze", "assets_dim_rest"
+    pin = {
+        "scope": scope["key"],
+        "scope_short": scope["short"],
+        "vendor": vendor,
+        "bucket": bucket,
+        "tier": tier,
+        "table": table,
+        # key.grammar is {source}/{scope}/{tier}/{table}/{partition}; this is that key with the
+        # partition left to the caller, so the module appends it and never composes a name.
+        "key_prefix": "%s/%s/%s/%s" % (vendor, scope["key"], tier, table),
+        "object": "assets_dim_rest.parquet",
+    }
+    return _block("ASSET_DIM_REST_PIN", h16, "#", path, "ASSET_DIM_REST_PIN = " + _py_lit(pin))
+
+
 BLOCKS = {
     "FIRM_CONFIG": _blk_firm_config,
     "firm_bucket_map": _blk_firm_bucket_map,
@@ -776,6 +816,7 @@ BLOCKS = {
     "FIRM_TREES": _blk_firm_trees,
     "_CROSS_FIRM_FOREIGN_BUCKETS": _blk_foreign_buckets,
     "_CROSS_FIRM_FOREIGN_KEY_PREFIXES": _blk_foreign_prefixes,
+    "ASSET_DIM_REST_PIN": _blk_asset_dim_rest_pin,
 }
 
 
