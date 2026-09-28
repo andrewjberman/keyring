@@ -5,7 +5,7 @@ v1.4 (COO_Y.md, CONTROL.md apply). Reviewer `3.0.0_SA_CVO` (grades landed pins a
 Drive: `/closer-drive IRPT_BCKEND~Y` every 30m (cron 81b07667, re-armed 16:0xZ after the pause), per CTO 101100
 (Andrew-direct ~03:0xZ, 09-26; record `ANDREW_DIRECT_20260926_03xxZ_SELF_DRIVE_LAPTOP_DIRECTIVES_IRPT.md`). Vendor API egress
 is permitted but ledgered; served moves need the CTO's never-widen half. Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md`.
-As of 2026-09-28T00:05Z. Lease FAST until 2026-09-28T00:33:18Z.
+As of 2026-09-28T00:48Z. Lease FAST until 2026-09-28T01:17:18Z.
 Detail history: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md` (13:45Z).
 
 ## Now: WINDOW 15 is READY live, the first Analysis report (`LIVE_WINDOW15_EVIDENCE_20260927.md`)
@@ -171,8 +171,9 @@ and window 4 re-runs K4+K5 (+R1).
 
 ## Write claims
 
-**irpt-status STATUS DATES SERVED (rebuild 2, 5fSyChId, 00:02:49Z 09-28), verified live:** the bytes equal the pre-apply
-artifact Y checked. Window 15 reads READY ANALYSIS_READY, PER_SECTION, 51 dates; 0 errors. K10 (D) is unblocked.
+**irpt-status rebuild 2 (5fSyChId) ROLLED BACK at 00:36Z (CTO 102269):** W20 K10 got 500s. The status role lacks a read on
+state/original_holdings/, and the zip's errors.py is holdings/errors.py, so refusals crash. bMMJ is live. Rebuild 3 comes after
+05:00Z, with Y's gate tools (@d43884aa01): the collision census, the owner-refusal arm and the role simulation. K10 re-runs on rebuild 3.
 
 **irpt-status rebuild HyEyoJ67 FAILED at cold start and is ROLLED BACK** (Y caught it with 0 invocations; CTO 102204; live
 bMMJ/bQ+5 from 23:15:47Z, verified byte-identical; the one invocation since was P's post-rollback proof; 0 errors). The fix is

@@ -99,3 +99,21 @@ The rebuild's `prospect_dates.py` is `e5bae585..`.** No live XLSX job exists yet
   - Window 15's status read with the portal header answers **READY ANALYSIS_READY, PER_SECTION, 51 dates**.
   - CloudWatch since the apply: 1 invocation (the post-apply cold start), **0 errors**.
   - The screen defect found before K10 is closed in production. K10 can read the row as READY.
+
+## ~00:3xZ 09-28: rebuild 2 (5fSyChId) 500s in window 20. Rolled back (CTO 102269); rebuild 3 after 05:00Z
+
+- D's K10 read REQ-67e12718's status 3 times and got 3x HTTP 500. The CloudWatch logs show two defects that Y's
+  offline checks could not see:
+  1. **IAM:** `irpt-status-role` has no `s3:GetObjectVersion` on `irpt/*/state/original_holdings/*`. The template date
+     proof reads the original upload there. Y's harness had run on the operator's credentials.
+  2. **A flat-zip collision:** the zip's `errors.py` is `holdings/errors.py`, not `_authz/errors.py`, so HEAD
+     `served.py`'s refusal record raises TypeError (`public_line(admitted=)`). Every owner-read refusal becomes a 500.
+     Y's smoke used an unauthenticated request, and P's refusal check used a bad tenant, which is refused before that
+     path.
+- The CTO ruled rollback (bMMJ live at 00:36:25Z, verified) and rebuild 3 with HEAD `_authz` errors/enforce, a
+  collision census, the scoped grant, and two arms.
+- Y's gate tools (@d43884aa01), each proved to discriminate:
+  - `zip_module_census.py` names every collision's winner; 5fSyChId FAILs.
+  - `zip_cold_start_smoke.py --owner-refusal` sends window 20's exact shape; 5fSyChId FAILs with the TypeError and
+    bMMJ PASSes.
+  - `status_role_sim.py` grades window 15's 6 reads against the role; exactly 1 deny, on `original_holdings`.
