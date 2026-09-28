@@ -2548,3 +2548,31 @@
   "notes": "Row W36-S3 stays filed as it is (append-only); this row is the disarm record. Repository freeze (0.0.0_AB_MSTR) forbids any git write at the time this row is filed -- the 5 files' edits are proven in the worktree (measured above) but not yet committed; the issuer continues this worker after the freeze to commit and flip TO-IV-e-79's status."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W36-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~36",
+  "surfaced_at": "2026-09-28T13:45:00Z",
+  "one_line": "The proof instance's 4 PENDING-THIS-COMMIT artifact rows (portal test files) had to be re-pinned to the portal repo's actual commit hash before the complete-flip could pass -- the outer pipeline gate's POST-COMMIT artifact-resolution walks the WORKSPACE repo's tree/object store, which cannot see a portal-only (submodule) commit's paths, so a PENDING sentinel read as ABSENT there once the portal commit (and then the workspace instance commit) existed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- resolved in-place by this row's own act",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit 6521cb0966b896676a1ab16e0b0be6dc89a2efb4 (branch wk-DSGN_IRPTV1-36-portal, LOCAL) carries the 4 re-goldened files exactly as the instance's deploy_evidence describes",
+      "workspace commit attempt with the 4 rows left at PENDING-THIS-COMMIT: `.tools/to-pipeline-gate.py`'s check_complete_flip ran the checker POST-COMMIT against instance commit 67afd4c8b1 and refused with 4x 'artifact-resolution: ... is PENDING-THIS-COMMIT but is ABSENT at the instance's commit 67afd4c8b1' -- the outer repo's `git diff-tree`/`git cat-file -e <workspace-commit>:portal/...` cannot resolve a path that lives only inside the portal submodule's own object store",
+      "re-pinning the same 4 rows to the portal commit hash 6521cb0966b896676a1ab16e0b0be6dc89a2efb4 (the exact pattern already used, unmodified, on this instance's 5th row, iv-e-23.parity-kept.test.ts, pinned to portal HEAD 01b9f1d0aaae324b049b63e635c8c5cf7c7ff75d) makes the checker read all 5 rows as UNRESOLVED-HERE (`.tools/proof-of-spec-check.py` artifact_resolution_check: 'commit not in local store; announced, not asserted') rather than a violation",
+      "`python .tools/proof-of-spec-check.py <instance> IVE79-AC1` after the re-pin: VALID (rc=0), artifact-resolution line reads '0 resolved at pin / 0 PENDING co-committed / 0 pending-on-worktree / 5 UNRESOLVED-HERE / 0 s3_object -- denominator 5 row(s)'"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Corrected the instance's own pin field to match the artifact's true (portal-repo) commit, using the identical pattern the instance's own 5th row already carried unmodified -- no test weakened, no gate bypassed, no override token used; the gate's own UNRESOLVED-HERE class exists exactly for a commit-ish this checker's repo cannot see.",
+  "spec_asserts": "The two-repo worktree pair (workspace + portal) is the order's own <Environment> and BOUNDS shape; a proof instance naming a portal artifact must be resolvable by the pipeline gate without a violation once both commits exist.",
+  "world_is": "The gate's artifact-resolution check is written for a single-repo tree; it correctly classifies a portal-only commit-ish as UNRESOLVED-HERE (announced, not a violation) when the row carries that commit-ish directly, but a PENDING-THIS-COMMIT sentinel resolved against the WORKSPACE commit reads as ABSENT for a path that only ever lands in the portal repo -- a structural gap for any two-repo worker, not specific to this order.",
+  "notes": "Not fixed by editing the gate or checker (outside this order's <paths> grant, and a tooling change is wider than this cell). Filed as OBSERVATION/INERT because the workaround already existing in the schema (a direct commit-ish pin) fully resolves it for this instance; a future two-repo PENDING-THIS-COMMIT row would hit the same gap."
+}
+```
