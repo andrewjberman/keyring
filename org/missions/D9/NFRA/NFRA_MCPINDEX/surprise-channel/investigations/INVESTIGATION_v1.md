@@ -1861,6 +1861,31 @@ carries none.
     "disarm_owner": "1.0.0_SA_CTO~O",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No gate was edited and no enforce file was touched. ONE ASK, non-urgent: whether the context rule should carry the same 'already at HEAD, mints nothing' grandfather the S3Key rule already has. If yes it is a gate edit in the gate owner's lane, not a registry row at all. This lane has no further act here; MX-s-9 landed clean at WARN 1."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S34",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~D",
+    "surfaced_at": "2026-09-28T06:10Z",
+    "one_line": "MX-s-6 step 2 as amended (A1 @f87d5b8b77, relayed 060646Z) says to convert the MX-s-9 REST bronze INTO silver/bd_assets.parquet. Those are different objects at different GRAINS: the target is 3,449,107 TRANSACTION rows over 31 columns; the bronze is 12,132 ASSET rows over 15. Executing it as written would destroy the transaction set and break the very builder the step then asks me to run.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TARGET MEASURED (pyarrow metadata + a 200,000-row batch, read from the live object): s3://opal-data-bd/silver/bd_assets.parquet = 3,449,107 rows, 31 columns, 4 row groups. asset_id is NOT unique (3,095 distinct in the 200k sample). It carries transaction_id, trade_date, settle_date, entry_date, price, transaction_type, transaction_sub_type, external_flow, has_contra_account, contra_account_number, Contra Account Name, Description, Action -- transaction-grain columns that have no counterpart at asset grain.",
+        "SOURCE MEASURED: the MX-s-9 bronze s3://opal-data-bd/blackdiamond/49financial/bronze/assets_dim_rest/2026-09-28/assets_dim_rest.parquet = 12,132 rows, 15 columns, asset_id UNIQUE. It is a qt4 (UnrealizedGainLoss) dimension selection: one row per held asset, by construction. It carries no transaction_id and no trade_date.",
+        "THE CONSEQUENTIAL DEPENDENCY: build_bd_assets_dim.py -- the builder step 2 then asks me to run -- reads silver/bd_assets.parquet and derives first_seen_trade_date, last_seen_trade_date and txn_count by groupby('asset_id') over trade_date and transaction_id. If the bronze is written there, those three columns lose their only source and the builder cannot produce the dim at all. The instruction is self-defeating in its own next clause.",
+        "THE OTHER HALF IS ALSO NOT A DROP-IN: silver/bd_assets_dim.parquet = 10,937 rows, 22 columns. The bronze does not carry 12 of them: asset_super_class_bd, coupon_rate, first_payment_date, last_payment_date, custodial_cost_basis_sync, first_seen_trade_date, last_seen_trade_date, txn_count, asset_super_class_blend, super_class_source, opal_asset_class, built_at. A naive union would silently drop 12 columns from a served silver artifact.",
+        "WHY THE AMENDMENT READS PLAUSIBLY, stated as a mechanism and not as blame: my own 060236Z report gave the union counts (12,141 / 1,204 / 9) WITHOUT naming which artifact they were measured against. They are the pull against bd_assets_dim.parquet (the DIM), never against bd_assets.parquet (the TXN file). Two artifacts whose names differ by one suffix, one of which I cited by count and not by name. The ambiguity is mine before it is the amendment's."
+      ]
+    },
+    "spec_asserts": "MX-s-6 step 2 as amended: 'convert your REST bronze into the compacted silver/bd_assets.parquet, union with the 04-14 dim latest-wins (print both counts), then rebuild the bridge', criteria unchanged (s4.AC2 = bd_assets.parquet rewritten, s4.AC3 = bd_assets_dim.parquet rewritten).",
+    "world_is": "s4.AC3 is reachable from the MX-s-9 bronze; s4.AC2 is NOT, and no qt4 pull can reach it. bd_assets.parquet is fed by the TRANSACTION feed (qt2), so it stays gated on MX-s-4's login fix or on a separate REST transaction pull -- which is exactly what the UNAMENDED MX-s-6 said ('its step 2 depends on MX-s-4's login fix'). The amendment removed a dependency that the artifact grain still enforces. THE REACHABLE PATH for the dim, which this seat can execute on one word and has NOT executed: start from the frozen dim (all 22 columns), refresh identity and class on the 10,928 overlapping asset_ids from the pull, append the 1,204 new ones with the txn-derived columns NULL carrying the claim 'absent' (they have no transaction history in the frozen file) and the blend recomputed through the builder's own ETFClassifier -- 12,141 rows, 22 columns, no column lost.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOTHING WAS WRITTEN. No silver key was touched and no builder was run; the two reads above are reads. I am not treating this as a refusal of the step's INTENT -- the intent (make the dim current from the REST pull) is right and is reachable. What is not reachable is the named target for s4.AC2. ONE ASK to 2.0.0_SA_COO~O: re-cut step 2 as the dim-only path above, and leave s4.AC2 gated on the transaction feed. If instead a REST transaction pull is wanted, that is a new cell shaped like MX-s-9 but on qt2, and this lane can take it."
   }
 ]
 ```
