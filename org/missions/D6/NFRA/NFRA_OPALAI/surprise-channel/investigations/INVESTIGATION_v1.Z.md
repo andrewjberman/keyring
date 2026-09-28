@@ -1289,6 +1289,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Round-1 analysis R-5 / row Z-W8-S1: the entitlement guard suite keeps passing across gateway changes; E1 records its pass count.",
     "world_is": "At CLOUD HEAD the suite is already red on 2 of 12, from changes that predate round 2. So E1's R-5 criterion is graded as NO NEW FAILURE against this base (the same 2 named failures, at least 10 passed), never as all-pass. The two failures are the NFRA_OPLGTW OG-z-1 guard's own pins, and they stay open for their owner.",
     "notes": "Filed by the issuer at the cut. INERT: the served gateway does not run tests. The OA-e-1 order carries the base count."
-  }
+  },
+{
+  "id": "NFRA_OPALAI-Z-W13-S1",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPALAI~13",
+  "surfaced_at": "2026-09-28T12:00:00Z",
+  "one_line": "Nested commit of SKILL.md refused by the owned-paths lane gate: the order's opal_ai/... path is not matched for the nested repo's commit",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order OA-e-4 bound 1: git -C opal_ai commit --author <serial> -F <msgfile> -- opal/agent/skills/bbg-teams-assist/SKILL.md lands, and <paths> lists opal_ai/opal/agent/skills/bbg-teams-assist/SKILL.md.",
+  "world_is": "The commit was refused (owned-paths block mode): 'agent=0.9.0_WK_NFRA_OPALAI~13 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The order file exists at HEAD b17a43ca9a and names the path with the opal_ai/ prefix. The edit is in the nested working tree, uncommitted; AC1 (reads nested HEAD) FAILs 0/0/0, AC2 and AC3 PASS. No override used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C opal_ai commit ... -> 'VIOLATION: opal_ai/opal/agent/skills/bbg-teams-assist/SKILL.md -- lane=ANY_EXEC_OR_AE ... not in permitted_agents'",
+      "e4.AC1.sh at nested HEAD fd8ab8a57f: read_chat_message_images=0; hostedContents/pasted lines=0; decline sentence=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```
