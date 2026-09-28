@@ -2203,6 +2203,29 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~O",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "WHY THIS ROW EXISTS AT ALL, which is a process point about me rather than about fees: I measured all of the above on 2026-09-28 during MX-s-10 step 3 and wrote it only into ANNOUNCE_MX-s-10.md, an MX-s-10 deliverable. MX-s-10 is now SUPERSEDED-for-round, so the finding would have died with the cell it was discovered in. CLAUDE.md section 2 says an off-task finding gets a ROW and the work continues; an announce is not a channel row and does not survive its order. Filed late, and the lateness is the lesson. NOT FIXED, and deliberately not: the one-line repair is the same insertion MX-s-4 made, and opal-bd-fees-download.json sits in infra/aws/ssm/ which is this lane's surface -- but no order covers this producer, and CLAUDE.md forbids implementing a gate or monitor unbidden even where proposing is legal. An honest exit is not an alarm (the issuer ruled exactly that for MX-s-4), so the fix is legal in principle and wants a cell, not a rider. The fees schedule was also left ALONE under MX-s-10's own preflight, which removes its leg only once its caller census reads 0 -- and that census reads 1. ONE THING UNMEASURED: whether the four remaining BD download documents (allocation, realized, transaction, unrealized) also lack an exit. Z-S17 measured their shutdown ORDERING, not their exit honesty, and those two are different properties."
+  },
+  {
+      "id": "NFRA_MCPINDEX-Z-W10-S1",
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~10",
+      "surfaced_at": "2026-09-28T22:10Z",
+      "one_line": "MX-d-3 ranking fixed 2 of the 3 dataset misses (Q05, Q07); Q22 (an index ask matching no keyword) and the 3 false positives Q09, Q13, Q25 are not ranking defects and stay MISS at 23 of 27.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~MI",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "run_routing.py before the fix: MISSES Q05, Q07, Q09, Q13, Q22, Q25, ROUTING 21 of 27; after the fix: MISSES Q09, Q13, Q22, Q25, ROUTING 23 of 27 (Q05 and Q07 route first to json/benchmarks/model_portfolio_benchmarks.json).",
+              "app/refs/DATA_CATALOG.yaml carries no S&P/SPX/index-name vocabulary on any channel that holds a row: the only hit is the example ask 'where did the SPX close?' on bloomberg_standing_read, a channel with 0 rows. mkt.01 is reached by no keyword an S&P ask contains (Q22 -> candidates=0).",
+              "Q09 ('holdings'), Q13 ('inflection') and Q25 ('value') are asks whose expected answer is NOT_CATALOGUED but each contains one channel keyword, so the channel's rows are still returned; the routed tool changes with ranking (Q25 moved from correlation_data to tier1-snapshot) but the ask still routes to a dataset."
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO MX-d-3 act 2: fix the RANKING inside opal_discover so that a dataset ask ranks its dataset first, without editing the catalog (bound 1), the harness or the question set; row Z-W2-S8 names three miss signatures (one common word selects a whole channel, unranked channel, an index ask matches no keyword).",
+      "world_is": "Ranking reaches only the 'unranked channel' signature (Q05, Q07). The 'index ask matches no keyword' signature (Q22) needs the ask to select a candidate at all, and no catalog text or keyword links an S&P ask to mkt.01; the honest repairs are a catalog keyword (out of bounds for this order) or an in-code index-name vocabulary (which this worker judged to be special-casing words, so did not add). The 'one common word selects a whole channel' signature (Q09, Q13, Q25) is a PRECISION defect (a weak channel-keyword-only match should return no dataset), which reordering candidates cannot cure; a threshold rule would be a recall risk and was not attempted inside a ranking cell. AC2 (2 of 3 dataset asks first) and AC1 (>=21) both pass.",
+      "notes": "Suggested next cells, for the issuer to place: (a) a catalog keyword or index-name row for market-returns asks (catalog owner); (b) a rule that a channel-keyword-only match with zero own-text overlap is returned as a weak candidate or not at all, graded against the harness for recall loss."
   }
 ]
 ```
