@@ -95,7 +95,7 @@ Do not edit this task order.
   - (c) feeds R-11's REMEDIATION_v1 flip;
   - (d) closes Z-W4-S2's open question.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @846c1b2b34 by 2.0.0_SA_COO~MI, 2026-09-28 ~23:1xZ: m1.AC1 PASS (4 of 4 sections, each with DENOMINATOR and FINDING), instance VALID. J1 is OPEN for 3.0.0_SA_CVO~O at L9. Findings: (a) 21 of 105 dishonest, all fees, now retired; (b) the 42 deltas have not reached silver, because the EC2 merge skips the dim join; (c) 2,800 of 22,344 null cusips are cash (12.53%); (d) B_03.account_gains is the live consumer. ARMED rows Z-W11-S1/S2 are disarmed by the issuer rows that follow them. Was: pending.</status>
 <round>3</round>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>

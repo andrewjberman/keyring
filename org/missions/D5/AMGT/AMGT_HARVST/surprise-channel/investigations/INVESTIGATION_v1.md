@@ -1892,6 +1892,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "notes": "DISARM (issuer's, same turn): round 12 cuts the deploy cell HVST-a-2 to include making the package import the gold readers, with the wheel source (a sha256-pinned wheel, which is egress to PyPI as in AMGT-tt-2's half, or an owned layer) and the unzipped total against 250 MiB carded on the never-widen halves the CTO signs; a-2's AC1 invokes the deployed Lambda and FAILS on a 200-less timeline route, so an import failure cannot pass silently. No runtime change is admitted without the CTO's word."
     },
     {
+      "id": "AMGT_HARVST-Z-S36",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "4.0.0_SA_CRO~Z",
+      "surfaced_at": "2026-09-28T23:20Z",
+      "one_line": "HVST-a-2's preflight premise is false on BOTH planes: opal-amgt-scoped-api-role reads NO amgt/harvest/gold/ prefix, live or in Terraform at HEAD, so the timeline loaders (chatter_daily / chatter_event / article_security_mention) would be refused S3 reads after the mount + package deploy -- the 404 becomes an AccessDenied, not data.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by this seat 2026-09-28 ~23:3xZ, read-only: `iam list-role-policies` on opal-amgt-scoped-api-role = ONE inline policy opal-amgt-scoped-api-grants (4 statements) + AWSLambdaBasicExecutionRole; its opal-data-harvest resources number 22, and NONE is amgt/harvest/gold/* (the only amgt/ prefix is amgt/harvest/state/filing_attempt/*; the rest are publication-links/v1, publications/v1, universe/v1, crosswalk/v1, drafting/v1, peers/v1, management/v1, posture/v1, derived/model_block, packs, scores/v1, the {source}/harvest/{bronze,silver} prefixes, bright-data bronze, and the bucket ARN).",
+          "MEASURED at shared HEAD 846c1b2b34: infra/aws/terraform/harvest/scoped-amgt-api.tf carries 'amgt/harvest' only at :125 and :181, both filing_attempt; no gold prefix is DESIRED either.",
+          "The premise, verbatim in org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-a-2.package-and-deploy-the-timeline-routes.md <preflight>, comp-iam line: 'the function's existing role already reads opal-data-harvest gold (the RESAPP chatter routes)'.",
+          "Found while researching DSGN_AMGTV1 (Andrew-direct 2026-09-28 ~22:3xZ); the gold keys the timeline needs were read by a research agent of this seat under its own credentials, not the Lambda's."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-a-2 preflight: the role already reads opal-data-harvest gold, so mount (HVST-a-1) + package with pyarrow (Z-S35) makes both timeline routes answer with real data.",
+      "world_is": "The role has no gold read on the live or the desired plane. After HVST-a-1 + HVST-a-2 as written, the loaders reach S3 and are refused; a third change (a gold read grant in scoped-amgt-api.tf, safe-applied) is needed before either route can serve data.",
+      "notes": "Disarm is the issuer's (the order is 2.0.0_SA_COO~H's): amend HVST-a-2 to carry the grant, or cut it. This seat does not edit the order or the TF. Not verified: whether the RESAPP chatter routes read gold through some other principal -- the premise cites them; this row says only that THIS role holds no such grant."
+    },
+    {
       "id": "AMGT_HARVST-Z-W35-S1",
       "project": "AMGT_HARVST",
       "fabric": "site-z",
@@ -1914,6 +1938,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "HVST-a-1 s.1 step 4 and AC2: 'Change no other assertion' and 'the api suite passes ... a pre-existing failure elsewhere is reported ... never repaired'; the cut assumed the only tests pinning the table size were test_scoped_amgt_mount.py and test_timeline_routes.py.",
       "world_is": "Two further tests pin the table length at 16 and fail once the table returns 18; they are not pre-existing failures but a direct consequence of the mount, and outside the write grant. Left as is, the api suite is red on CLOUD after this branch drains. Remedy for the issuer: amend HVST-a-1's <paths> to add the two test files and move each len == 16 to 18 (test_19 also enumerates the AMGT-rk-6 leaves; the two timeline leaves need no new leaf count), or accept the red suite until a-2.",
       "notes": "Worker leaves the TO status open: AC2 FAIL is the recorded output. No terraform, AWS, deploy or push was run."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W35-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~35",
+      "surfaced_at": "2026-09-29T00:10Z",
+      "one_line": "RESOLUTION of AMGT_HARVST-Z-W35-S1: the issuer's AMENDMENT 1 to HVST-a-1 (CLOUD @15caf6ed3b) added the two out-of-scope tests to <paths>; their pinned table length moved 16->18 and the api suite reads 256 passed of 256 collected.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED in worktree wk-hvst-r12-35 after merging CLOUD: `python -m pytest lib/research/api/tests/ -rA --tb=line` = 256 passed, 256 collected, rc 0; test_route_table_still_has_sixteen_entries and test_19_the_route_set_did_not_move_and_the_retired_table_is_not_named both PASSED.",
+          "Edits: test_slash_safe_security_route.py assert, its message and the section comment 16->18; test_generation_and_pool_routes.py assert at :663 16->18; nothing else in either file. Instance: deliverables/0.9.0_WK_AMGT_HARVST~35/AMGT_HARVST.TO-HVST-a-1.mount-the-two-timeline-routes.proof_of_spec.json."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Z-W35-S1 world_is: two tests pin the table length at 16 and fail once the table returns 18; remedy is an issuer amendment of <paths> (issuer ruling relayed to the worker, AMENDMENT 1 @15caf6ed3b).",
+      "world_is": "The remedy landed and was applied as bound 4 allows; Z-W35-S1's ARMED standing is spent by this. The row Z-W35-S1 itself is left as filed (append-only); the issuer's disposition row carries its close.",
+      "notes": "Filed as a NEW row because the gate refuses an in-place edit of Z-W35-S1 (content hash mutation); the issuer asked for a resolution note on the row and this is that note in the only form the channel admits."
     }
   ]
 ```
