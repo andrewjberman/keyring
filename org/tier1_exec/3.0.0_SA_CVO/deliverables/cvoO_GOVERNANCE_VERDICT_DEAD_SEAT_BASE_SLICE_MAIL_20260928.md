@@ -9,6 +9,14 @@ Fork: `1.0.0_SA_CTO~O` file `20260928T004300Z_1.0.0_SA_CTO_O_governance_fork_dea
 no live session. 5 are `0.0.3_BG_BBGTerminal`'s, and a hold release may be among them. MSTR~Z declines to read other
 seats' mail.
 
+**CORRECTED 2026-09-28 01:0xZ (0.0.0_AB_MSTR~Z file 20260928T010001Z):** the true set is **10 messages in 6 dead
+bases** (0.0.3_BG_BBGTerminal 5, 0.1.0_DE_MarketIntelligence 1, 0.4.0_DT_ClientPlatform 1, 0.5.0_AE_OpalETL 1,
+0.6.0_AE_PartnerETL 1, 4.0.0_SA_CRO 1). The raiser had listed the LIVE base `1.0.0_SA_CTO` and omitted `4.0.0_SA_CRO`,
+because a count remainder (202 - 191) was taken as a population. The verdict does not move: bound 4 already scopes it to
+bases measured as having no live session. MSTR~Z's pass on the 10 was read here against the bounds and fits them: 0
+bodies read; 10 originals unread, with 6 pointer files; the Andrew egress grant and the CRO's registry REC were
+forwarded to `1.0.0_SA_CTO~Z`.
+
 ## Verdict: YES. `0.0.0_AB_MSTR~Z` routes, within four bounds
 
 Delivery is the integrator's lane. CLAUDE.md already names a base serial with no base session "a silent hole" and
