@@ -1775,6 +1775,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "No task order in this project names which securities/alias source is the CURRENT one to build or re-derive gold against; five prior ACs across ~4/~5/~6/~13 cite the same static ~4/securities.json path by name as a working example invocation.",
       "world_is": "The static file is 49/55 security_keys short of the universe the newest landed gold snapshot actually covers, and the module built to replace it (`universe_securities.py`, 2b) is live and correctly resolves all 55. The static path is not wrong to have existed, but citing it as if it were still the build's current input would be.",
       "notes": "Not a code defect; no producer changed. Filed so a later cell does not copy the ~4/securities.json invocation shape out of the prior ACs' examples and silently narrow its own measurement to 6 of 55 securities. DISARM (COO's): either retire/relabel the ~4/securities.json file's citations as historical-only, or land a committed securities.json built from a pinned `universe_securities.build()` run so later cells have one CURRENT, reproducible alias source to cite instead of a live call each time."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W34-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~34",
+      "surfaced_at": "2026-09-28T13:00:00Z",
+      "one_line": "HVST-z-3's premise that all 8 dotted-string sites are silent no-ops is true of ONE site only (test_verification.py:18, the patch.dict variant, and its test is skipped): the other 7 resolved to the SAME module object the code under test uses, and test_worker.py:51 works by the stdlib-singleton coincidence -- so 7 of 8 sites were never a miss, and the class's live cost was 1 no-op on a quarantined test.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED in-process under real pytest collection, deliverables/0.9.0_WK_AMGT_HARVST~34/scripts/ac1_per_site_negative_control.py: string target read through the code-under-test's module gives the mock for posture x4 (crosswalk.resolve x3, engine.peers x1), scoped_amgt watchlist.store.star, retrieval_provenance harvest.store._default_client -- because those tests import lib.research.* absolutely AND the code under test does too (membership.py:161, comparable.py:179, scoped_amgt.py:3224, __main__.py:182), so pytest's rootdir naming (posture.tests.test_posture, api.tests.test_scoped_amgt) never enters the identity.",
+          "test_verification.py:18: code under test lives in `opal_data_harvest.verification` (repair.__module__), the string target imports `lib.opal_data_harvest.verification`, and the two REGISTRY dicts are NOT the same object -> the patch.dict was a no-op (demonstrated: after patch, cut.REGISTRY still read the unpatched value). The test carrying it is @unittest.skip (HVST-x-1 item 3 QUARANTINE), so no passing test depended on it.",
+          "test_worker.py:51: lib.opal_data_harvest.transport is NOT opal_data_harvest.transport (False), but `.time` is the same stdlib object (True); control on the same split with a non-singleton name (transport.retry_seconds) does NOT reach the code under test's module (False)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Z-W26-S1 / HVST-z-3 section 1: a dotted-string patch target silently no-ops when pytest imports the test under a different module name, and the 8 listed sites are that defect.",
+      "world_is": "The split is real only where the TEST FILE is loaded under a rootdir-derived name AND the code under test is reached through the test's own relative import (the opal_data_harvest tests: worker, verification). Where the test imports absolute lib.* names (posture, scoped_amgt) or the code under test imports lib.* absolutely (the __main__ store import), string and object are the same module and the patch always took effect. All 8 sites were re-targeted with patch.object / monkeypatch.setattr on the module object the test file imports (per-site fix chosen; no lib/__init__.py and no import-mode change, which was not proved harmless across the estate). AC3's census now reads 0 of 309 files.",
+      "notes": "Not a defect and no hold. Filed so the three earlier rows are not read as 8 live no-ops. No behaviour was newly exposed: the AC2 suites read 78 passed, 1 skipped before and after, collected 79 both times. The patch.dict fix on the skipped test cannot be exercised through pytest (quarantined); it is proved by AC1's direct patch.dict read-through."
     }
   ]
 ```
