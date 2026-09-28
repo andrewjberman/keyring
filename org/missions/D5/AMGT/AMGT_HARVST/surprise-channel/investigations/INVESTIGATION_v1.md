@@ -1654,6 +1654,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "AC2's invocation, as cut, collects and runs both real test suites (lib/research/harvest/tests/ and lib/opal_data_harvest's tests) and prints their combined before/after pass-fail counts.",
       "world_is": "The second path segment names a directory that has never existed in this repo; pytest's own multi-path collection refuses the WHOLE invocation on the first bad path, so it produces zero counts from either directory, not a partial result. This worker did not re-path the invocation (standing instruction) and grades AC2 on the literal output alone.",
       "notes": "DISARM IS THE ISSUER'S, not this worker's (rule 27, L6, amend-without-CTO-ruling): re-cut AC2's invocation to `python -m pytest lib/research/harvest/tests/ lib/opal_data_harvest/ -rA` (drop the `/tests/` suffix on the second path), which is exactly the historical AC3 command from HVST-v-1 plus the sibling suite. This worker's own two production edits (lib/opal_data_harvest/uploads.py, lib/opal_data_harvest/__main__.py) are otherwise unaffected -- the diagnostic run above shows them landing with zero regression against the corrected command."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W27-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~27",
+      "surfaced_at": "2026-09-28T05:11:49Z",
+      "one_line": "HVST-x-2's premise (chatter_event holds ZERO rows for every security, universe is 89) is STALE: landed gold now carries 191 securities and 12 chatter_event rows across 7 of them, including 4 for Lenovo (992_HK_Equity) itself -- both FWD-5 and FWD-6 are EXERCISABLE, not just one.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~Y",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "AC1's literal invocation, this worktree, reading the NEWEST landed `chatter_daily`/`chatter_event` gold snapshots (`amgt/harvest/gold/chatter_daily/date=2026-09-24/part-20260924T105051Z.parquet`, `amgt/harvest/gold/chatter_event/date=2026-09-24/part-20260924T134754Z.parquet`): distinct securities carrying any chatter_daily row = 191 (not the round-7-measured 89); securities with >=1 day articles_total>0 = 55 of 191; chatter_event rows = 12 total across 7 of 191 securities: {'992_HK_Equity': 4, 'BA_US_Equity': 2, 'COST_US_Equity': 2, 'DELL_US_Equity': 1, 'HD_US_Equity': 1, 'MSFT_US_Equity': 1, 'NVDA_US_Equity': 1}; max publishers_distinct observed on any chatter_daily row = 3 against EVENT_MIN_PUBLISHERS=2.",
+          "AC2's literal invocation exercised FWD-5 on 992_HK_Equity (Lenovo, the spec's own acceptance security, section 8, confirmed exercisable by the AC1 read): dense series of 267 days from 2026-01-01 to 2026-09-24 with no gap (days_in_range == days_returned == 267), 21 of those days carry articles_total>0, and the day 2026-05-22 (articles_total=3) opens to a 3-row strongest-first list (tier A, A, then B; 0 pairwise sort violations).",
+          "AC4's literal invocation presented all 12 landed chatter_event rows with their spans, lead_headlines and article headlines -- Lenovo's own 4 events include a real earnings-beat cluster (2026-02-12, 'Lenovo Posts Earnings Beat on AI-Driven Demand', 2 tier-A articles from 2 publishers) and a shared-industry item (2026-06-01, lead 'Nvidia Introduces First PCs Designed for AI Agents', shared verbatim as the lead across 992_HK_Equity/DELL/MSFT/NVDA the same day).",
+          "Task order HVST-x-2 section 2 states as measured fact: 'publication_gold.EVENT_MIN_PUBLISHERS = 2 and only sa has landed listing rows, so chatter_event can hold ZERO rows for every security', and section 2/round-7 both cite the universe as 89 securities -- both are the state of the world at round 7/8's measurement, before this project's later listing captures (HVST-v-2, HVST-s-1) and gold rebuilds landed."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The task order's own premise: chatter_event holds ZERO rows for every security (FWD-6's arm is UNEXERCISABLE by construction), and the universe to measure against is 89 securities (round 7's number).",
+      "world_is": "Landed gold has moved past both premises: the universe is now 191 securities and chatter_event carries 12 rows across 7 securities, so BOTH FWD-5 and FWD-6 are exercisable today, on Lenovo's own data as the spec's section 8 acceptance expects. Neither premise was wrong when written; both are stale relative to gold that has since been rebuilt.",
+      "notes": "Not a defect in any module -- no code change follows from this row. Filed because a later round or the L9 CVO read reasoning from this task order's premise (e.g. 'FWD-6 cannot be exercised yet') would be reasoning from a denominator two rebuilds out of date. DISARM IS THE ISSUER'S: the round-9/round-10 analysis should re-quote the universe size and chatter_event coverage from a fresh read rather than carrying forward 89/zero."
     }
   ]
 ```
