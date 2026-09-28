@@ -2499,6 +2499,54 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~MI",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "INERT: served pages in this estate read through the v2_portal Lambdas, which were searched. The exclusion is stated in the (d) record rather than hidden."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S50",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W11-S1"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W11-S1 as an instrument trap, not a live hazard: every BD trigger runs its SSM document at $LATEST, so a read of the DEFAULT version (a bare get-document) is the wrong object. Standing issuer rule for this project's cells: read and grade BD SSM documents at --document-version $LATEST, and record DefaultVersion and LatestVersion beside the finding.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W11-S1 (worker ~11): allocation default v3 vs $LATEST v4 and transaction default v1 vs $LATEST v2 differ in logic; the executed $LATEST versions carry the honest exit, the defaults do not (org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (a)).",
+        "MX-s-12's acceptance run ssm 16d855de reads DocumentVersion $LATEST (worker ~8 proof); asset-dim is v4 as both DefaultVersion and LatestVersion, so the one document this project deploys is not split."
+      ]
+    },
+    "spec_asserts": "Z-W11-S1 (ARMED): a reader grading a BD document by `get-document` without a version reads a version the schedule never runs.",
+    "world_is": "No run executes a default version; what runs is honest on the four daily Playwright documents (SSM Failed on failure). The hazard is a mis-read by a seat, which this rule and the round-3 battery's practice close. Aligning DEFAULT to $LATEST on allocation/transaction is carried to the round-3 L10 enrichment list, not acted on here (those documents are the dead Playwright legs, see Z-S51).",
+    "notes": "No other seat's cell in flight reads those two documents."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S51",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W11-S2"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W11-S2 by placement, not repair: the daily BD transaction merge skips the bd_assets_dim cusip join on the EC2 path and wrote 0-row partitions on 10 of 10 file-processing runs. That is a PRE-EXISTING state of the transaction feed (its Playwright download fails 21 of 21), not one this round created or can worsen; the repair is a DS-lane silver cell routed to the round-3 L10 analysis with the measurement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W11-S2 (worker ~11): '[enrich] bd_assets_dim unavailable; skipping cusip join' in 10 of 10 runs of 21 in SSM retention that processed a file; all 10 wrote a 0-row partition (org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (b)).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (a): opal-bd-transaction-download (and allocation, realized, unrealized) SSM Failed on 21 of 21 runs -- the Playwright portal leg BD's MFA broke, the same class Z-S42 had for asset-dim."
+      ]
+    },
+    "spec_asserts": "Z-W11-S2 (ARMED): the dim MX-s-6/MX-s-12 keep current is joined into silver transactions daily (merge-daily-incremental.py:57), so dim cusip changes reach silver.",
+    "world_is": "The join is skipped on the path that runs, and the transaction feed itself produces no rows while its download fails. The dim's currency does not reach silver transactions today. The question the analysis must place: is BD transaction data flowing by any other producer (a REST runner, as fees has), and if not, the transaction leg needs the MX-s-10/MX-s-12 port. Both are DS/AE-lane cells, not this round's cut.",
+    "notes": "Routed as a candidate enrichment item, with Z-W11-S1's DEFAULT/$LATEST alignment, to 1.0.0_SA_CTO~O through the round-3 slug. No served output moves by this row."
   }
 ]
 ```
