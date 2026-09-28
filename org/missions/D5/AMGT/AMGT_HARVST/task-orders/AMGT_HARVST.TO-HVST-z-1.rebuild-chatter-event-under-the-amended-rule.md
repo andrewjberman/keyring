@@ -99,7 +99,7 @@ No delete of any kind. No `chatter_daily`. No code change. No vendor call. No po
    the never-widen radius honest: the signed act is a PUT, not a code change.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~32</slot>
 <fabric>site-z</fabric>
