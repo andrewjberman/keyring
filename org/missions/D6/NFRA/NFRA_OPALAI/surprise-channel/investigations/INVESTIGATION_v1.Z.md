@@ -1289,6 +1289,50 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Round-1 analysis R-5 / row Z-W8-S1: the entitlement guard suite keeps passing across gateway changes; E1 records its pass count.",
     "world_is": "At CLOUD HEAD the suite is already red on 2 of 12, from changes that predate round 2. So E1's R-5 criterion is graded as NO NEW FAILURE against this base (the same 2 named failures, at least 10 passed), never as all-pass. The two failures are the NFRA_OPLGTW OG-z-1 guard's own pins, and they stay open for their owner.",
     "notes": "Filed by the issuer at the cut. INERT: the served gateway does not run tests. The OA-e-1 order carries the base count."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W11-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~11",
+    "surfaced_at": "2026-09-28T21:45Z",
+    "one_line": "The nested commit the order prescribes is refused by the owned-paths pre-commit hook for a path the order's own <paths> block names: the hook's worker-grant census runs git with the nested repo's GIT_DIR inherited, so it finds no task orders and admits nothing. The three OA-e-2 nested edits are made and UNCOMMITTED; the worker did not bypass the gate.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git -C opal_ai commit --author '0.9.0_WK_NFRA_OPALAI~11 <...>' -F msg -- opal/agent/hooks/concierge-gate.sh opal/agent/hooks/test_concierge_gate.sh opal/agent/refs/RELAUNCH.md` -> ERROR owned-paths lane violation(s), 3 of 3 paths: 'agent=0.9.0_WK_NFRA_OPALAI~11 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The three paths are named verbatim, parent-relative (opal_ai/opal/agent/...), in TO-OA-e-2 section 3 <paths>, whose <status> is pending and <issued_to> is this serial.",
+        "MEASURED, same input, two environments: `printf 'opal_ai/opal/agent/hooks/concierge-gate.sh' | python3 .tools/owned-paths-validate.py --check-agent 0.9.0_WK_NFRA_OPALAI~11 .owned-paths.yaml` from the parent worktree C:/tmp/oa-11 -> no VIOLATION line (rc 0); the same command with GIT_DIR set to the nested repo's absolute git dir -> 'VIOLATION: ... not in permitted_agents ... no NON-TERMINAL task order'. Git exports GIT_DIR/GIT_INDEX_FILE into a pre-commit hook.",
+        "CODE .tools/owned-paths-validate.py _worker_orders (lines ~176-205) runs `git ls-files` and `git show HEAD:<path>` with cwd=root but the hook's environment, so GIT_DIR outranks cwd and the census reads the nested repo. .tools/git-hooks/owned-paths-check.sh defines `_git_x` (env -u GIT_DIR ...) for exactly this hazard and applies it to its own superproject probe, but the validator subprocess calls do not.",
+        "The hook wrapper at the shared module's hooks/pre-commit (C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.git/modules/opal_ai/hooks/pre-commit) resolves the superproject to C:/tmp/oa-11 correctly; the prefix rebase to opal_ai/<path> is correct; only the census env is wrong."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OA-e-2 section 2.1: the worker commits its nested files with `git -C opal_ai commit --author ... -F <msgfile> -- <nested paths>`, and the order's <paths> is the write grant.",
+    "world_is": "The gate refuses that commit for a granted path (validator census reads the wrong repo under a hook's GIT_DIR). The worker did not use --no-verify, GIT_COMMIT_AUTHOR_OVERRIDE or plumbing (order section 2.3: no route the face does not name). Edits sit in the worktree C:/tmp/oa-11/opal_ai (branch wk-NFRA_OPALAI-11-opal_ai, HEAD fd8ab8a57f, 3 modified files). e2.AC1 and e2.AC2 read the nested ref and cannot pass until a commit exists; e2.AC3 reads PASS only vacuously (0 files changed). Fix owner is the tooling lane: env -u GIT_DIR -u GIT_INDEX_FILE -u GIT_WORK_TREE on the census subprocesses in _worker_orders, or the issuer commits the three files after reading them.",
+    "notes": "Nested-commit workers before this round were never graded by this hook (row Z-W5-S1: the hook was absent from the shared module), so this path had not been exercised by a worker. The COO decides whether to commit the three files or to fix the validator and re-issue."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W11-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~11",
+    "surfaced_at": "2026-09-28T21:50Z",
+    "one_line": "e2.AC1 bounds the fence's own test at 60 s (`timeout 60 bash $TT`), but test_concierge_gate.sh takes about 89 s on this device (28 cases, one jq process chain per case), so AC1 reads 'no summary' and FAILs even on a correct commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: e2.AC1.sh at the pinned/unchanged HEAD printed \"fence test 'no summary'\" (the 60 s bound cut the test before its RESULT line). The same script text is `summ=$(timeout 60 bash \"$TT\" ...)`.",
+        "MEASURED: `time (timeout 500 bash test_concierge_gate.sh | tail -5)` on the edited working tree -> 'RESULT: 28 passed, 0 failed (denominator: 28 cases)', real 1m28.708s. The new deny arm reads 'ok [DENY] -bbg opal_data_refresh_upload'. A first run under `timeout 60` was 'Terminated' before any RESULT line."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "e2.AC1 expects `fence test 'RESULT: N passed, 0 failed ...'` within its own bounds.",
+    "world_is": "The fence test's runtime on this device exceeds the check's inner 60 s bound, so the criterion cannot be met as written regardless of the commit. The worker did not repair the criterion. The edited fence itself passes its whole test (28 of 28) and the three arms of AC1 were exercised by the test's own cases (upload DENY, -bbg whoami/poll PASS, send_email DENY) on the UNCOMMITTED working tree.",
+    "notes": "Suggested for the issuer: raise the inner bound to 240 s (the outer 120 s harness bound also needs to admit it), or replace the full-suite call with the upload arm only."
   }
 ]
 ```
