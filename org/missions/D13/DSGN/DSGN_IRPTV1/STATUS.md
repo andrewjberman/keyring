@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-28T23:1xZ.
+tick here. As of 2026-09-28T23:3xZ.
 
 ## Pins
 
@@ -11,9 +11,9 @@ tick here. As of 2026-09-28T23:1xZ.
 |---|---|
 | Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-28T19:47:43Z (presence-extended) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal candidate pin | DEV `d516158f` (FAST item 15, AD-03) on `8d12987e` (FAST item 14, UIC-03) on `2febba0b` (FAST item 13, IV-e-76) on `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `d516158f` (pushed by this seat under the lease; ls-remote read 23:1xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success; 2febba0b run 36492054339 success; 8d12987e run 36495184912 success; d516158f UNREAD |
-| Suite on d516158f | IR scope: the known 5 only, counted line by line (IVE19-AC1/AC2 re-goldened to AD-03); tsc -b 0; eslint clean |
+| Portal candidate pin | DEV `1f6612c8` (FAST item 16, AD-01/02 card) on `d516158f` (FAST item 15, AD-03) on `8d12987e` (FAST item 14, UIC-03) on `2febba0b` (FAST item 13, IV-e-76) on `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
+| Portal origin | origin DEV `1f6612c8` (pushed by this seat under the lease; ls-remote read 23:3xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success; 2febba0b run 36492054339 success; 8d12987e run 36495184912 success; d516158f run 36496901922 success; 1f6612c8 UNREAD |
+| Suite on 1f6612c8 | IR scope 910 pass / 27 skip / 5 fail = the known 5, counted line by line; tsc -b 0; eslint 0 errors |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
 
@@ -41,6 +41,7 @@ on 5174 @528acdcd working tree (tmp/ui-walk/20260928T190559Z, local only). S30 d
 | 13 | portal `2febba0b` | IV-e-76 (UIR-04/13/30, W35-S1): firm names from the registry view | iv-e-89 FIRM-NAMES-REGISTRY-OK, iv-e-56 re-goldened; landed after the CTO's naming-gate fix @85febf3bd1 (102449) |
 | 14 | portal `8d12987e` | UIC-03 + CTO ruling 102453 (AD-15): method/source in words; codes, hashes, producer names off the face | iv-e-90 METHOD-SOURCE-WORDS-OK; F40/F47/IVE63 re-goldened; no real run (walks paused) |
 | 15 | portal `d516158f` | AD-03: Holdings loses Allocation, Report details, Unique accounts / source dates | iv-e-91 HOLDINGS-PANELS-REMOVED-OK; iv-e-19 re-goldened; no real run (walks paused) |
+| 16 | portal `1f6612c8` | AD-01/02 card: L-1 accounts -> Models / SMAs / Client from served amounts | iv-e-92 L0-CARD-OK; the shape is not served yet (~M next round), so today's data keeps the previous path |
 
 Round 9 at the boundary (@f42e1b00fa): IV-e-68/69/70/73/74/78/79 terminal and drained; IV-e-71/72/75/76/77
 superseded by this lease, unbuilt, their rows carried into Next.
@@ -52,14 +53,11 @@ Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_OP
 the MDPF card renders navy as Andrew's screenshot (C3 departure recorded by the CTO); commodities-gold lands in the
 shared colour registry as a separate change the CTO reads first.
 
-1. **AD-01 + AD-02 (P0 URGENT; AD-03 landed as item 15):** Holdings is two components -- the canonical All Categories card (L-1 accounts -> L0
-   Models / SMAs / Client -> L1 -> L2, hover preview and HeroDialog) and the tree map with the holdings table beneath,
-   both re-scoping to the card's selection; L0 is always Models / SMAs / Client, never 'Rebalancer strategy'.
-   ~M named the shape (msg 102469): L-1 = ACCOUNT; its children are MODEL_LEAF nodes plus one SLEEVE 'Client';
-   SECURITY below; L0 = the first segment of each leaf's hierarchy_path (Models > Primary|Custom, SMA, Client) -- build
-   against that grouping, never node depth. COT's 'Rebalancer strategy' wrapper is removed on ~M's side (pin follows
-   R4's first enabled publication). The shared CategoryViewTree is outside this lease's surface: the adapter
-   (DrillTree mdpfResultFromSnapshot) is in-surface.
+1. **AD-01 remainder (item 16 landed the card adapter):** remove DrillTree's own donut, slice table and breadcrumb
+   below the card, and show the tree map + holdings table at rest (not behind 'More holdings views'). The account
+   picker's removal and the map/table re-scoping to the card's selection need a selection callback from the shared
+   CategoryViewTree (portal/src/components, outside this lease's surface) -- parked below. ~M's served shape (msg
+   102476, CATEGORY nodes; the wire kind mapping lands with its schema) arrives in ~M's next round.
 2. **AD-04 + AD-05:** port Positioning's tree map and table; commodities colour waits on the CTO, the GLD class on ~M.
 3. **AD-06..AD-09:** the Analysis three-page flow, the canonical modals, readable results (~Y owns result content).
 4. **AD-10..AD-13:** account labels (with ~M), search only, clients that open (with ~P/~M), remove About this scope.
@@ -72,15 +70,14 @@ shared colour registry as a separate change the CTO reads first.
 
 ## Next proof
 
-AD-01/02: the All Categories card groups each account's leaves by the first hierarchy_path segment into Models / SMAs
-/ Client (L0), with the accounts as L-1, fed through DrillTree's mdpfResultFromSnapshot adapter; a fixture carrying a
-'Rebalancer strategy' wrapper and one without, both reading Models / SMAs / Client.
+AD-01 remainder: Holdings renders the All Categories card, then the tree map with the holdings table under it at rest;
+DrillTree's own donut, slice table and breadcrumb are gone. A render test on the Holdings tab.
 
 ## Dependencies
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| Holdings shape: L-1 ACCOUNT, L0 by first hierarchy_path segment (Models / SMA / Client), no Rebalancer-strategy wrapper | 2.0.0_SA_COO~M | msg 102469; pin after R4's first enabled publication | AWAITED (build against the shape now, fixtures) |
+| Holdings shape: L-1 ACCOUNT (total), L0 CATEGORY nodes Models / SMAs / Client per account (amounts served), L1 leaves, L2 securities; no Rebalancer-strategy wrapper | 2.0.0_SA_COO~M | msg 102476 (CTO 102473/102475); next-round cell, pin at serve | AWAITED (card adapter built against it, item 16) |
 | K8 re-run window (adapter RENDER_DELEGATE fix + R11 RUNNING answer) | 2.0.0_SA_COO~P | served export path | AWAITED |
 | K10 re-run window (irpt-status rebuild 3) | 2.0.0_SA_COO~P | served status path | AWAITED |
 
@@ -94,6 +91,7 @@ AD-01/02: the All Categories card groups each account's leaves by the first hier
 | UIC-23's variant word on each history row: the served OwnedAnalysisRequestWire carries identity + accepted_at only | 1.0.0_SA_CTO (wire field, ~Y intake surface) | a variant field lands on the history wire, or the CTO rules the row names no variant |
 | W35-S2 (Export on Analysis): the page holds no answer-bearing Analysis report to export -- the live list read (listAnalysisRequests) is refused, so AnalysisTab's report is always null, and the owned-report view (AnalysisReportSliceView) carries sections but not the binding buildAnalysisSubmitRequest needs (input revision, configuration, artifact hash). Export on Analysis correctly stays closed | 2.0.0_SA_COO~Y (analysis read surface) with 1.0.0_SA_CTO | a served read returns an answer-bearing Analysis report with its binding, or the owned report carries the binding fields |
 | UIC-14 (Holdings source line in client words): the producer names embed firm tokens (49f/inf/cot), so a hand-typed producer-to-source map is refused by the LGIC naming gate (ENFORCE, DEC-6: read through lookup()). It needs the registry-generated view, the same path CTO 102351 set for IV-e-76, in lib/opal_naming.py outside this lease's surface. Build and test parked at .runtmp/parked/iv-e-87.source-client-words.test.ts (local) | 1.0.0_SA_CTO (ruled, CTO 102444: no function-name-to-vendor map; ~M's Holdings snapshot will carry its source vendor keys, rendered as words from a registry vendor view) | 2.0.0_SA_COO~M serves the snapshot's source vendor keys (and the registry vendor view lands) |
+| AD-01's account picker removal and the tree map / table re-scoping to the card's selection: CategoryViewTree (portal/src/components, shared with Model Portfolios) exposes no selection callback | 1.0.0_SA_CTO (surface) | the lease surface widens to CategoryViewTree for an additive onSelect prop, or the CTO rules another carrier |
 | IV-e-71's one-slice ALL CATEGORIES pie: an additive prop on the shared CategoryViewTree.tsx | 1.0.0_SA_CTO (surface) | the lease surface widens to that file, or a FULL round cuts it |
 
 ## Limits
