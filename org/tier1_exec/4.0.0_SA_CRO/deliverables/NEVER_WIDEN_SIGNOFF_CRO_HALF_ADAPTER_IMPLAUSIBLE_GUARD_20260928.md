@@ -78,6 +78,38 @@ across 24 accounts". The guard moves **26 of the 28** (22 accounts). The other *
   row S181. It is not a condition of this act.
 - **A1 (the next walk window):** the NEW-01 account's YTD shows a named refusal, and a control still shows its figure.
 
+## D1 RESULT (22:1xZ): NOT MET. The served page reads RETAINED reports, and the guard is not on that path
+
+- **Apply:** ~P applied `hcZpXDDo` at 22:02:49Z (msg 102441). Read here: get-function CodeSha256 `hcZpXDDo...`,
+  Active, Successful.
+- **BEFORE-read** (walks `20260928T214746Z` #012 and `20260928T215633Z` #006, on F0bYtOfB):
+  - NEW-01, 1Y: -100.00%, report revision `790fe675...`.
+  - Control, YTD: 5.93%.
+- **AFTER-read** (walk `20260928T220437Z` #013, on hcZpXDDo): NEW-01, 1Y: **-100.00%**. Report revision `790fe675...`,
+  byte-equal to the before-read.
+- **Why, measured in CloudWatch `/aws/lambda/irpt-performance-adapter`:** every Performance read in both walks was a
+  retained-report reopen, and none ran the engine.
+
+| window | `irpt_retained_phases` reopen | `irpt_engine_phases` |
+|---|---|---|
+| 21:47-21:59Z (before) | 16 | 0 |
+| 22:04-22:10Z (after) | 10 | 0 |
+
+  `f49_engine.calculate`, where the guard lives, was never called. The -100% report computed before the apply is
+  retained and reopened.
+- **This seat's miss, stated:**
+  - The half's blast radius read the guard on the compute path (the zip's `calculate` against live `twr_daily`). It
+    did not count the second reader of the served figure, the retained-report store.
+  - This seat's own BEFORE-read was therefore non-discriminating by construction: a reopened report reads the same
+    on both zips.
+  - The rule this half cites (N writers = N rules read) was not applied to the READ side.
+- **Standing:**
+  - The act widened nothing, so no rollback is asked.
+  - D1 stays OPEN: the act's claimed effect is not exercised on the served surface.
+  - It can close only after the retained 49F reports whose window links an `r_net <= -1` day are invalidated or
+    recomputed through the guard, followed by a walk that shows the named refusal.
+  - That remedy is ~P's to design.
+
 ## What this half signs against
 
 - Packet blob `f7d4faf1`.
