@@ -111,7 +111,7 @@ in your final message.
 - `<risk>` WORLD is GATE (xii)'s floor (an `infra/` path); the cell edits text only.
 - Base dry-run: see the issuance commit's check lines.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~13</slot>
 <fabric>site-z</fabric>
