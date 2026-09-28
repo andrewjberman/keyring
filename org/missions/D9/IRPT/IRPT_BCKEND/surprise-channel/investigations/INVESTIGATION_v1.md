@@ -10932,3 +10932,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Found by 3.0.0_SA_CVO reading a DSGN_IRPTV1 walk; not a DSGN pin's claim. pr-191 is REOPENED as IB-pr-194 (b6e0525927). 3.0.0_SA_CVO dispositions it at round 19's L9."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S187",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-28T23:30:00Z",
+  "one_line": "Worker slot ids have no allocator across workstreams: 0.9.0_WK_IRPT_BCKEND~63 was issued by ~Y (TO-IB-yr-1, 20:45Z) and then by ~P (TO-IB-pr-191 reopened, 22:26Z). No overlap happened this time, but the author line and the grant key now name two different workers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO (owner of the S179 per-workstream keying in .tools/to-pipeline-gate.py GATE (x))",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-IB-yr-1 <issued_to>0.9.0_WK_IRPT_BCKEND~63</issued_to> added @ecbb08548f (20:45Z); terminal and drained @ec8f69f718 (21:12Z)",
+      "TO-IB-pr-191 <issued_to>0.9.0_WK_IRPT_BCKEND~63</issued_to> added @b6e0525927 (22:26Z, ~P's reopen and re-cut); drained @ae8da14d12",
+      "the worker grant is read per serial from every NON-TERMINAL order issued to it (dispatch Step 4, RULING 1 shape (c)); had both orders been open at once, each ~63 worker would hold the union of two workstreams' <paths>",
+      "commits authored 0.9.0_WK_IRPT_BCKEND~63 now come from two different subagents (0a1fc245cb, fc7f3e95c6 for ~Y; 53530b7d9f for ~P)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker serial names one worker, so its grant (the <paths> of its non-terminal orders) is one cell's write set (dispatch Step 4; CLAUDE.md rule 27, disjoint workstream write surfaces).",
+  "world_is": "Slot numbers are picked by each issuer by hand (next number above those seen), so two workstreams can pick the same slot; the gate keys rounds per workstream (S179) but not worker slots.",
+  "notes": "INERT now (both orders terminal, no time overlap). Cheap disarm options for the owner: a per-workstream slot band, or a gate limb refusing a newly-added order whose <issued_to> already holds a non-terminal order from another workstream. ~Y's own practice from here: take slots from a ~Y band (7x) until ruled."
+}
+```
