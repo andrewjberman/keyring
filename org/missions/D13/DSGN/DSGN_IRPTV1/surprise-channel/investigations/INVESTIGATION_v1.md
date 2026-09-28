@@ -2491,3 +2491,111 @@
   "notes": "Not blocking this cell's own criterion (IVE69-AC1 passes standalone, isolated and in a no-regression batch of 18 sibling files). Filed per BOUNDS ('never fix a neighbouring defect') rather than touched -- contracts/adapt.ts and contracts/envelope.ts are read-only here."
 }
 ```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W38-S4",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~38",
+  "surfaced_at": "2026-09-28T00:58:04Z",
+  "one_line": "IV-e-70's CTO-directed fix (ASSET_CLASS.fixedIncome green500 -> green700, chosen to clear this cell's own dE00>=10 model-distance bar with a 21.7 margin) breaks two ALREADY-RATIFIED tests outside this cell's <paths>: iv-e-49.commodities-distance.test.ts and iv-e-51.commodities-chromatic.test.ts (both in src/pages/AdvisorIntelligence/__tests__/) now FAIL, because ASSET_CLASS.commodities (green900, CTO 101681) is only dE00=14.0141 from the NEW fixedIncome value -- below their own ratified dE00>=20 bar -- so their live mechanical census now picks a different 'winner' (PALETTE.pink800) than what commodities actually holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO names which side moves (commodities' own colour, re-ruled again; or IV-e-70's fixedIncome pick, chosen differently); the fix lands via a direct act whose <paths> grant covers src/pages/AdvisorIntelligence/__tests__/ and/or src/lib/chartColors.ts's ASSET_CLASS.commodities entry -- both out of this cell's own <paths> grant (chartColors.ts IS in grant, but re-picking fixedIncome to also satisfy an unrelated cell's ratified invariant is not this cell's call, and the AdvisorIntelligence test files are not in grant at all).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-DSGN_IRPTV1-38/portal (uncommitted, this cell's edit): `bun test src/pages/AdvisorIntelligence/__tests__/iv-e-49.commodities-distance.test.ts src/pages/AdvisorIntelligence/__tests__/iv-e-51.commodities-chromatic.test.ts` -> 6 pass, 2 fail",
+      "iv-e-49's own console output: 'MINIMUM dE00 = 14.0141 against ASSET_CLASS.fixedIncome (#047857) (bar=20)' -- VERDICT: COMMODITIES-DISTANCE-FAIL",
+      "iv-e-51's own console output: 'WINNER: PALETTE.pink800 (#9d174d) ... but MIX_PIE.commodities/ASSET_CLASS.commodities hold #064e3b' -- VERDICT: COMMODITIES-CHROMATIC-FAIL",
+      "both tests read ASSET_CLASS live (never a hand-copied literal), so this is a genuine population shift from IV-e-70's edit, not a stale/pinned assertion; before this cell's edit (fixedIncome=green500), the same census measured commodities' minimum at dE00=38.8291 (this cell's own iv-e-70.model-class-colour.test.ts console line), comfortably clear",
+      "src/pages/AdvisorIntelligence/__tests__/ is not in this task order's <paths> grant (grant: portal/src/lib/chartColors.ts, tabs/holdings/{palette.ts,DrillTree.tsx}, InvestorReporting/__tests__/, the surprise-channel file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IV-e-49/IV-e-51 (CTO 101649/101681, ratified prior cells): ASSET_CLASS.commodities clears CIEDE2000 dE00 >= 20 from every MIX_PIE, ASSET_CLASS and model-primary colour, mechanically re-verified against the live registry on every run.",
+  "world_is": "ASSET_CLASS is one shared registry two different cells' ratified invariants both constrain from different directions (IV-e-70: every entry >=10 from a model colour; IV-e-49/51: commodities >=20 from every OTHER entry, including now-changed fixedIncome). Moving fixedIncome to satisfy the first invariant, with real margin (21.7), moved it close enough to commodities' own green900 (14.0) to break the second. No fixedIncome replacement in the 'still green' family clears both bars simultaneously by a wide margin: green600 (10.62 from models, thin) is the closest candidate that also clears commodities (24.88), but every darker green (700/800) that comfortably clears the model bar sits closer to green900.",
+  "notes": "Not blocking this cell's own criteria (IVE70-AC1 passes; the invocation the task order names is unaffected). Filed because the task order's Build text scopes this cell to ASSET_CLASS/chartColors.ts/ACCOUNT_PALETTE only, with no path to also touch AdvisorIntelligence's tests or re-litigate commodities' own CTO-ruled colour -- per BOUNDS ('never fix a neighbouring defect') this is surfaced, not silently patched by picking a weaker fixedIncome value to route around it."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W38-S2",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~38",
+  "surfaced_at": "2026-09-28T00:58:04Z",
+  "one_line": "The redesigned ACCOUNT_PALETTE's slate-400 entry (#94a3b8) coincidentally equals DrillTree.tsx#colorForSlice's own empty/unresolvable-label fallback literal ('#94a3b8', DrillTree.tsx:375) -- a different, near-dead code path (colorForSlice's own callee getModelColor never returns null for a non-empty name, since it always falls through to a hashed EXTENDED_MODEL_COLORS entry), kept rather than swapped out because excluding it from the farthest-point search measurably worsens the palette's worst-case pairwise separation (6.7642 -> 6.0701 dE00 for the same 14-entry count).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- informational; would disarm via either DrillTree.tsx#colorForSlice's fallback literal changing (out of this cell's Build text) or ACCOUNT_PALETTE dropping slate-400 (a documented, deliberate quality tradeoff this cell already weighed)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:375 (read-only, this cell's grant covers it but the fallback literal is unrelated to Build text): `return getModelColor(getCanonicalModelName(bare))?.primary ?? '#94a3b8'`",
+      "portal/src/pages/InvestorReporting/tabs/holdings/palette.ts (this cell's edit): ACCOUNT_PALETTE's 5th entry is '#94a3b8', // slate-400",
+      "computed (python, CIEDE2000 self-implementation matching this cell's test file's own math): excluding #94a3b8 from the candidate pool and re-running the same farthest-point search over the same constrained Tailwind slate/zinc/neutral/stone set yields a 14-entry palette whose worst pairwise dE00 is 6.0701, versus 6.7642 keeping it -- an ~11% quality loss for a fallback path colorForSlice's own comment implies is unreachable for a non-empty displayName"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ACCOUNT_PALETTE entries share no hue with a model or asset-class colour (UIR-37 applied to accounts); this cell's own test asserts that against MODEL_PORTFOLIO_COLORS + EXTENDED_MODEL_COLORS + ASSET_CLASS only, not against every other hardcoded fallback constant in the file.",
+  "world_is": "One ACCOUNT_PALETTE entry happens to equal one unrelated, effectively-unreachable fallback constant elsewhere in the same file. Not a model or asset-class colour, so this cell's own IVE70-AC1 test (which checks exactly that) is unaffected and correctly does not flag it.",
+  "notes": "Not blocking. Filed as a found-off-task observation per the surprise-channel's own standing instruction, not because it fails any stated criterion."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W38-S3",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~38",
+  "surfaced_at": "2026-09-28T00:58:04Z",
+  "one_line": "portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts's own IV-e-43 comment (lines 34-36) says its page-local Equity override is 'PALETTE.blue500, one step darker than ... blue500' but the code on the next line actually holds PALETTE.blue600 -- the comment's claimed value contradicts the code beside it. Pre-existing (predates this cell), out of this cell's <paths> (assetClass.ts is read-only here).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "a direct act whose <paths> grant covers portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-DSGN_IRPTV1-38/portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts:34-36 (unedited by this cell): comment reads '// IV-e-43 (UIR-37): PALETTE.blue500, one step darker than the shared ASSET_CLASS.equity (blue500) -- never Long Term's own canonical blue500.' immediately above `Equity: PALETTE.blue600,`",
+      "this cell's <paths> grant does not include assetClass.ts, so no fix landed here"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "n/a -- a code comment's own factual claim about the value on the next line.",
+  "world_is": "The comment names 'PALETTE.blue500' as the override value; the code it describes is 'PALETTE.blue600'. One of the two is wrong; this cell did not determine which (out of grant), only that they disagree.",
+  "notes": "Not blocking. Cosmetic/documentation-only; the runtime value (blue600) is what every test in this cell's own no-regression batch (iv-e-25/31/43/59) observed and passed against, so the CODE, not the comment, is presumably the intended, ratified value."
+}
+```
+
+```json
+{
+  "id": "DSGN_IRPTV1-W38-S5",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_DSGN_IRPTV1~38",
+  "surfaced_at": "2026-09-28T13:45:00Z",
+  "one_line": "DISARMS DSGN_IRPTV1-W38-S4: amendment 1 to TO-IV-e-70 (issuer ruling, 2026-09-28 ~13:2xZ) named exactly the side S4 flagged as out of this cell's call -- re-pick fixedIncome to also clear commodities' own dE00>=20 bar -- and scoped it INTO this cell. ASSET_CLASS.fixedIncome now takes PALETTE.lime600 (#65a30d) instead of green700: clears IV-e-70's own dE00>=10 model bar (17.9307, margin 7.93) AND IV-e-49/51's ratified dE00>=20 commodities bar (28.1954, matching green900's own pre-existing documented margin against ASSET_CLASS.other) with real margin on both, never a borderline pass. ASSET_CLASS.commodities itself is UNCHANGED (green900, read-only per the amendment).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- disarmed by this row; the act is complete and re-verified below",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-DSGN_IRPTV1-38/portal (uncommitted, this cell's amendment-1 edit): `bun test src/pages/AdvisorIntelligence/__tests__/iv-e-49.commodities-distance.test.ts src/pages/AdvisorIntelligence/__tests__/iv-e-51.commodities-chromatic.test.ts` -> 6 pass, 0 fail (both AdvisorIntelligence test files themselves UNEDITED, per the amendment's own text)",
+      "iv-e-49's own console output now reads: 'MINIMUM dE00 = 28.1954 against ASSET_CLASS.other (#6b7280) (bar=20)' -- VERDICT: COMMODITIES-DISTANCE-OK",
+      "iv-e-51's own console output now reads: 'WINNER: PALETTE.green900 (#064e3b) min dE00=28.1954 against MIX_PIE.other(#6b7280)' -- VERDICT: COMMODITIES-CHROMATIC-OK (green900 is again the mechanical winner, matching what ASSET_CLASS.commodities/MIX_PIE.commodities actually hold)",
+      "wk-DSGN_IRPTV1-38/portal: `bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-70.model-class-colour.test.ts` -> 4 pass, 0 fail, console prints 'VERDICT: MODEL-VS-CLASS-COLOUR-OK' -- 'ASSET_CLASS.fixedIncome (#65a30d): min dE00=17.9307 vs 50/50 ST/INT(#a3e635)', both arms hold",
+      "src/lib/chartColors.ts ASSET_CLASS.commodities line is unchanged (still `PALETTE.green900`) -- diff of this cell's edit touches only the fixedIncome line, the two doc comments (ASSET_CLASS's own header, getAssetClassTextColor's), and getAssetClassTextColor's lightBackgrounds array (lime600 added, needing dark ink: white-on-lime600 measures 3.089:1 below the 4.5:1 bar, gray900-on-lime600 measures 5.743:1)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "spec_asserts": "Amendment 1 (issuer ruling on row W38-S4): 'pick the moved entries (fixedIncome and any other) to satisfy BOTH bars at once -- a hue outside the green family is allowed... ASSET_CLASS.commodities and both AdvisorIntelligence tests are read and run, never edited.'",
+  "world_is": "fixedIncome now holds PALETTE.lime600, a lime/olive-green PALETTE token not on the emerald ramp green500-900 sit on (dE00=28.1954 from green900, versus green700's 14.0141): both this cell's own model-distance bar and the neighbouring cells' commodities-distance bar clear simultaneously, with neither AdvisorIntelligence test file touched.",
+  "notes": "S4's own text named the disarm precisely: '1.0.0_SA_CTO names which side moves' -- amendment 1 is that naming, delivered as an issuer ruling on this task order rather than a separate CTO ruling elsewhere, and it named fixedIncome's own pick as the side that moves. IVE70-AC3 (this order's own criterion) now asserts the same 6-pass/0-fail result directly.",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-W38-S4: under IV-e-70 amendment 1 fixedIncome was re-picked to lime600 (#65a30d), which clears both the model-distance bar (dE00 >= 10) and commodities' ratified dE00 >= 20; the AdvisorIntelligence iv-e-49/51 tests pass unedited (IVE70-AC3, 6 pass / 0 fail)."
+}
+```
