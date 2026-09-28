@@ -4,10 +4,9 @@ Seat `2.0.0_SA_COO~P` (CLAUDE). Contract `org/tier1_exec/1.0.0_SA_CTO/deliverabl
 Reviewer `3.0.0_SA_CVO` grades landed pins after the fact while the lease is FAST.
 Drive: the /closer-drive loop resumed on Andrew-direct "recs approved for all" (CTO 101296); cron 312e843c.
 Goal: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_P_GOAL_PERFORMANCE_REPORTING_THREE_FIRMS_LOOP_20M.md`.
-As of 2026-09-28T13:2xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
-**MSTR freeze (102315, 12:50Z, Andrew-direct "Purge now, then push"):** no commit, merge, push or worktree add in any
-tree until MSTR's CLOSE; file edits are fine. On CLOSE: `git reset --mixed HEAD` in each worktree, then commit the
-ledgers, this file, row S175 and the drive log.
+As of 2026-09-28T14:1xZ. Earlier forms of this file are in git (`git log -p -- <this file>`).
+**Fabric reboot checkpoint (CTO 102345, Andrew-direct):** start nothing new; after MSTR's CLOSE: /log, /handoff,
+worktrees clean, READY-FOR-REBOOT to 0.0.0_AB_MSTR. Pushes stay frozen until CLOSE (MSTR 102333).
 
 ## Pins (served)
 
@@ -17,7 +16,7 @@ ledgers, this file, row S175 and the drive log.
 | irpt-export-render | **`BORQ2shb..`** since 12:51:49Z: S27, a pending `exr_` receipt answers RUNNING per R11 (on `Ulim/gmf`'s async submit, withheld prose, binding, authorizer). Before = after on the refusal branch | irpt-export-receipt-running-20260928 (D1 closed, uncommitted; A1 = the RUNNING branch live) |
 | irpt-ycharts-generate | **`AdE17rT6..`** since 13:11:54Z: the GRANT. Comparison and Multi-Comp ADMITTED on the served bytes (P:1728413; P:1728415 + P:1728315); Overview unchanged; unknown key REFUSED (as UNEXPECTED, row S175). Rollback Iu3nADja | irpt-generate-resident-grant-20260928 CLOSED (uncommitted) |
 | Resident | **`/opt/irpt-resident/fe64236bbb-st2`** since 13:17:56Z (st + GRANTED catalogue + foreign-firm name check); st kept for rollback | same, CLOSED |
-| irpt-status | **`bMMJ/bQ+5..`** (rolled back 00:36:31Z). Rebuilds 1 and 2 failed (cold start; pin-skewed errors.py + no original_holdings grant). Rebuild 3 (ZYr+IDMp, 31fbdcbf): both halves SIGNED (CTO 102307 @472a6d0d94, CRO 102327 uncommitted), ~Y gates 3+4 PASS (102329, uncommitted); applies once ~Y's gates are COMMITTED and cited | irpt-status-dates-rebuild(2)-* CLOSED as failed deploys |
+| irpt-status | **`ZYr+IDMp..`** since 14:04:55Z (rebuild 3: bMMJ + submission.py + prospect_dates.py) + the original_holdings read grant. Live: REQ-67 status-dates read READY PER_SECTION, 51 section dates; refusals unchanged (FIRM_BINDING, DATE_BASIS). Rollback 7xPCOM83 | irpt-status-dates-rebuild3-20260928 (D1 closed; A1 = the K10 page read) |
 | irpt-directory-search | `o1TXq5PH..` | irpt-uir07-search-rank-20260926 CLOSED |
 | Backend branch | `irpt-smoke-p-backend-20260923` @5c0185fee2 (not pushed) |  |
 | Publish worktree | `irpt-p-publish-20260923` @8aba435a00 (not pushed) |  |
@@ -46,14 +45,10 @@ None open. Windows 18-20 are CLOSED.
 
 ## Next-list (in order)
 
-1. **After MSTR's CLOSE:** re-sync each worktree (`git reset --mixed HEAD`); commit the S27 and GRANT ledgers, this
-   file, row S175 and the drive log.
-2. **irpt-status rebuild 3:** apply once ~Y commits gates 3+4 and the ledger cites both (CTO 102307, CRO 102327):
-   live before-reads (owner refusal + REQ-67), safe-apply 0/2/0, readback + cold start, after-reads (refusal unchanged,
-   REQ-67 READY PER_SECTION) or a same-turn rollback of code AND grant.
-3. **A new K8 + K10 window** on all of the above plus ~D's S27 page pin (TO-IV-e-78); it also carries S27's A1
-   (the RUNNING branch live) and the first live Comparison.
-4. UIC-06; next round's per-headline causal filter.
+1. **After the reboot:** the first live Comparison window (~Y 102340: K4 window 15's Dollars CSV; K5 ONE Comparison,
+   opal_long_term, via `live_chain.py` @898fda7783), with K8 (the export, S27's A1 and ~D's page pin TO-IV-e-78) and
+   K10 (the page reads REQ-67 READY, rebuild 3's A1). Its own packet and halves.
+2. UIC-06; next round's per-headline causal filter.
 
 **Gates in force:**
 - every zip gets `flat_zip_module_census.py` (shared-package pin skew) plus ~Y's census and smoke BEFORE apply;
