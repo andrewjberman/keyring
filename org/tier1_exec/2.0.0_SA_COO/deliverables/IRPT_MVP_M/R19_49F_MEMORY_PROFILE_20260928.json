@@ -1,0 +1,71 @@
+{
+  "measured_by": "0.9.0_WK_IRPT_BCKEND~42",
+  "task_order": "IRPT_BCKEND.TO-IB-m19-2 amendment 3, Step 9",
+  "method": "psutil RSS sampled every 30ms on a background thread, plus before/after markers wrapped around holdings_snapshot.run_firm(\"49financial\", real boto3 s3, qa=True, upload=False, local_out=<scratch dir>, as_of=None) and its called stages (build_snapshot/build_49f_actual/recompute_weights/reconcile_before_after/validate_snapshot/redistribute_holdouts/holdouts_held/land/gold_parquet_bytes/canonical_bytes). No upload=True at any point; local_out wrote candidate bytes only to the worker's own .scratch/ directory, never to S3.",
+  "custody_date": "2026-09-25",
+  "overlay_date": "2026-09-28",
+  "before": {
+    "peak_rss_mb": 2151.9,
+    "baseline_rss_mb": 108.1,
+    "stages": [
+      {"stage": "start", "rss_mb": 108.1},
+      {"stage": "s3_client_ready", "rss_mb": 122.3},
+      {"stage": "after_read:dim_balance (7548 rows)", "rss_mb": 171.4, "delta_mb": 43.8},
+      {"stage": "after_read:dim_position (106835 rows)", "rss_mb": 415.6, "delta_mb": 244.2},
+      {"stage": "after_read:fact_allocation_account_map (7542 rows)", "rss_mb": 420.7, "delta_mb": 5.1},
+      {"stage": "after_read:fact_model_allocation_roster (10101 rows)", "rss_mb": 422.8, "delta_mb": 2.1},
+      {"stage": "after_read:fact_allocation_valuation (10101 rows)", "rss_mb": 427.6, "delta_mb": 4.8},
+      {"stage": "after_read:fact_allocation_positions (121162 rows)", "rss_mb": 496.3, "delta_mb": 68.7},
+      {"stage": "after_read:dim_asset (2474 rows, full Schwab security master)", "rss_mb": 499.8, "delta_mb": 3.5},
+      {"stage": "node-building loop in build_49f_actual (before:recompute_weights)", "rss_mb": 935.6, "delta_mb": 435.8},
+      {"stage": "after:build_49f_actual (locals GC'd on return)", "rss_mb": 717.5, "delta_mb": -228.3},
+      {"stage": "after:redistribute_holdouts -- full json.loads(json.dumps(snapshot)) deep-copy of all 152,280 nodes for the difference-control build", "rss_mb": 1307.6, "delta_mb": 567.4},
+      {"stage": "before:gold_parquet_bytes (land/publish serialization)", "rss_mb": 1489.1, "delta_mb": 181.5},
+      {"stage": "after:gold_parquet_bytes (marked checkpoint; true sampled peak fell inside this window)", "rss_mb": 1766.8, "delta_mb": 277.7},
+      {"stage": "run_firm_done", "rss_mb": 1436.6}
+    ],
+    "peak_enclosing_stage_window": ["after:canonical_bytes", "after:gold_parquet_bytes"],
+    "reading": "Two transient blocks dominate above the ~500 MB source-read floor: (1) the account loop in build_49f_actual building 152,280 node dicts (+436 MB), largely unavoidable output-proportional cost; (2) redistribute_holdouts's full-snapshot JSON round-trip deep-copy for the difference-control ('wrong') build (+567 MB) -- the single largest, and the only ONE with no matching read afterward (only ACCOUNT-kind node_id/amount and the small attribution_holdouts/custody_totals blocks are ever read back from the copy); gold_parquet_bytes's per-node canonical_bytes + DataFrame + parquet conversion then adds its own transient peak on top of whatever redistribute_holdouts left resident."
+  },
+  "after": {
+    "peak_rss_mb": 1553.8,
+    "baseline_rss_mb": 108.2,
+    "stages": [
+      {"stage": "start", "rss_mb": 108.2},
+      {"stage": "s3_client_ready", "rss_mb": 122.4},
+      {"stage": "after_read:dim_balance (7548 rows)", "rss_mb": 171.8, "delta_mb": 44.2},
+      {"stage": "after_read:dim_position (106835 rows)", "rss_mb": 413.4, "delta_mb": 241.6},
+      {"stage": "after_read:fact_allocation_account_map (7542 rows)", "rss_mb": 419.8, "delta_mb": 6.4},
+      {"stage": "after_read:fact_model_allocation_roster (10101 rows)", "rss_mb": 422.0, "delta_mb": 2.2},
+      {"stage": "after_read:fact_allocation_valuation (10101 rows)", "rss_mb": 426.9, "delta_mb": 4.9},
+      {"stage": "after_read:fact_allocation_positions (121162 rows)", "rss_mb": 491.5, "delta_mb": 64.6},
+      {"stage": "after_read:dim_asset (2474 rows)", "rss_mb": 495.1, "delta_mb": 3.6},
+      {"stage": "node-building loop in build_49f_actual (before:recompute_weights)", "rss_mb": 931.3, "delta_mb": 436.2},
+      {"stage": "after:build_49f_actual (locals GC'd on return)", "rss_mb": 714.1, "delta_mb": -226.4},
+      {"stage": "after:redistribute_holdouts -- narrowed copy (ACCOUNT-kind nodes + attribution_holdouts + custody_totals only); 49F measures 0 unassigned accounts so this run also takes the vacuous branch", "rss_mb": 735.7, "delta_mb": 0.0},
+      {"stage": "before:gold_parquet_bytes", "rss_mb": 917.6, "delta_mb": 181.9},
+      {"stage": "after:gold_parquet_bytes", "rss_mb": 1170.7, "delta_mb": 253.1},
+      {"stage": "run_firm_done", "rss_mb": 952.6}
+    ],
+    "peak_enclosing_stage_window": ["after:canonical_bytes", "after:gold_parquet_bytes"],
+    "reading": "redistribute_holdouts's +567 MB transient is gone (0.0 MB delta now); everything upstream of it (source reads, node-building) is unchanged (same row counts, same MB, run-to-run noise only). Sampled true peak 1553.8 MB, inside the gold_parquet_bytes window, same as before -- that stage was never touched and is not needed to clear the 2,000 MB target."
+  },
+  "change": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py: redistribute_holdouts() (THE DIFFERENCE CONTROL, called from run_firm for every firm) previously built its isolated 'wrong' copy via `json.loads(json.dumps(snapshot))` -- a full deep-copy of every node (SLEEVE/MODEL_LEAF/SECURITY/CASH included), even though this function, holdouts_held(), and run_firm()'s difference_control block only ever read back ACCOUNT-kind node_id/node_kind/amount plus the small attribution_holdouts and custody_totals blocks (verified by reading every use site and by test_holdouts.py, which asserts only on ACCOUNT-kind nodes and the _redistributed aggregate). Replaced the full deep-copy with a copy of exactly what is read/mutated: a list of ACCOUNT-kind {node_id, node_kind, amount} dicts, a copy.deepcopy of attribution_holdouts (the only mutated block), and a bare reference to custody_totals (read-only, never mutated in this function). Same formulas, same branches, same field names and values on the returned object -- only the population copied narrowed to what downstream code touches. Added `import copy` (stdlib) to the same file. holdings_snapshot.py is shared by all three firms and is also a member of the directory chain's separate `investor-reporting.tar.gz` bundle (per the order's own note) -- this change does not touch that bundle (never re-minted here) and does not change output for INF/COT (same narrowing logic; INF/COT were not profiled here but the function's read/write contract is identical for every firm). holdings_49f.py itself is unchanged.",
+  "output_identity": {
+    "method": "Built the 49F candidate before and after the change (same custody_date=2026-09-25, overlay_date=2026-09-28, qa=True, upload=False, local_out only) and diffed the two local platinum JSON candidates node-by-node.",
+    "node_count_before": 152280,
+    "node_count_after": 152280,
+    "node_id_sets_equal": true,
+    "field_level_diffs_on_amount_classification_node_kind_basis": 0,
+    "sum_of_all_node_amounts_before": 6947408336.564604,
+    "sum_of_all_node_amounts_after": 6947408336.564604,
+    "sums_equal": true,
+    "top_level_keys_before": ["attribution_holdouts", "clocks", "coverage", "custody_totals", "nodes", "scope", "source_set_revision"],
+    "top_level_keys_after": ["attribution_holdouts", "clocks", "coverage", "custody_totals", "nodes", "scope", "source_set_revision"],
+    "only_difference": "clocks.as_of_timestamp (wall-clock build stamp, e.g. 2026-09-28T22:15:29Z vs 2026-09-28T22:21:14Z) -- business_date/custody_as_of/overlay_as_of/source_as_of are identical",
+    "verdict": "IDENTICAL (node set, amounts, and every classification field); only the run-time wall-clock stamp differs, as expected of two separate runs"
+  },
+  "pytest_summary": "7 failed, 270 passed, 7 errors in 19.05s (python -m pytest data/assets/scripts/gold/investor_reporting/tests -q) -- the 7 failures + 7 errors are ALL in test_holdings_inf.py/test_inf_positions.py on ModuleNotFoundError: No module named 'lib.silver_ids', a pre-existing test-isolation defect unrelated to this change (git diff --stat for this session touches only holdings_snapshot.py; the same INF tests pass 12/12 when test_holdings_inf.py is run alone). Root cause measured and filed as a surprise row, not fixed here (out of this order's <paths> grant): test_bundle_manifest_stamp.py permanently inserts .tools onto sys.path (never pops it) to import .tools/safe_deploy_core; .tools/lib/ is itself a real package (tooling helper, e.g. project_registry.py) distinct from the repo-root lib/ package (silver_ids.py, opal_naming.py, etc.) that _orion_api_silver_lib.py needs -- once anything imports bare `lib` while .tools sits ahead of the repo root on sys.path, Python caches sys.modules['lib'] pointing at .tools/lib/, and every later `from lib.silver_ids import ...` in the same process fails with ModuleNotFoundError regardless of a correct later sys.path.insert, because Python resolves an already-imported package's submodules from its cached __path__, not by re-walking sys.path.",
+  "target_local_peak_rss_mb": 2000,
+  "result": "peak_rss_mb dropped from 2151.9 to 1553.8 (-598.1 MB, -27.8%), under the 2,000 MB target."
+}

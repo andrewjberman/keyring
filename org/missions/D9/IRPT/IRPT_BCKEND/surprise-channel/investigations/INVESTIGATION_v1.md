@@ -10846,3 +10846,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Out of this worker's bounds to fix (paths grant does not reach IAM policy beyond the three READS statements the signed request covered; the WORLD-act bound admits only 'apply the signed one-line grant ... nothing else'). AC2 and AC3 (amendment 1's Success-id check) are graded FAIL as measured. DISARM: (a) determine whether PublishOwnHoldings needs s3:GetObjectVersion for its own read-after-write check, or whether publication.py's verification should read by ETag/no-version instead, and get a new never-widen half signed for whichever; (b) isolate 49financial's silent hang (retry storm, network stall, or a genuinely larger snapshot needing more than 3600s) before any further fire."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W42-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~42",
+  "surfaced_at": "2026-09-28T22:25:00Z",
+  "one_line": "Amendment 3 Step 9's required `python -m pytest data/assets/scripts/gold/investor_reporting/tests -q` run (unrelated to this session's own code change) shows 7 failed, 270 passed, 7 errors -- all 14 in test_holdings_inf.py/test_inf_positions.py on ModuleNotFoundError: No module named 'lib.silver_ids', a pre-existing sys.path name collision, not caused by this session's edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (route to whichever seat owns .tools/ test isolation; not blocking this cell)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat this session touches only data/assets/scripts/gold/investor_reporting/holdings_snapshot.py (+ the unrelated portal submodule pointer); `python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_holdings_inf.py -q` run ALONE: 12 passed -- the failure only appears when the whole tests/ directory collects together",
+      "full traceback: data/assets/scripts/gold/investor_reporting/tests/test_holdings_inf.py -> holdings_inf.py:131 _eclipse_prefix() -> data/inf/scripts/silver/convert_eclipse_portfolios_to_silver.py:42 -> data/inf/scripts/silver/_orion_api_silver_lib.py:284 'from lib.silver_ids import ...' -> ModuleNotFoundError: No module named 'lib.silver_ids'",
+      "a pytest plugin hook (pytest_runtest_logstart) printed sys.modules['lib'].__file__ at the moment of every subsequent INF test: 'C:\\...\\wk_irpt_bckend_42\\.tools\\lib\\__init__.py' -- NOT the repo-root lib/ package that carries silver_ids.py",
+      "data/assets/scripts/gold/investor_reporting/tests/test_bundle_manifest_stamp.py:22-24 does `sys.path.insert(0, str(TOOLS))` (TOOLS = the repo's .tools/ dir) then `import safe_deploy_core as sdc`, and never pops .tools back off sys.path; .tools/lib/ is itself a real, unrelated package (.tools/lib/project_registry.py etc.) with the same top-level name `lib` as the repo-root data package -- whichever resolves a bare `import lib`/`from lib import X` first while .tools sits on sys.path wins the sys.modules['lib'] cache slot for the rest of the pytest process, and _orion_api_silver_lib.py's own `sys.path.insert(0, _REPO_ROOT)` (line ~281) cannot undo an already-cached package: Python resolves a submodule import against the cached package's __path__, never by re-walking sys.path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 3 Step 9: run the investor_reporting test suite and record its summary line -- implicitly, that the suite's result reflects this session's code, not an unrelated collection-order artifact.",
+  "world_is": "Two same-named top-level packages (repo-root lib/ and .tools/lib/) coexist in the tree; one test file's permanent sys.path mutation makes the INF chain's `from lib.silver_ids import ...` resolve to the wrong one whenever the full investor_reporting test directory runs together, independent of any change to holdings code. This session recorded the real (unweakened) summary line as required and did not touch test_bundle_manifest_stamp.py, .tools/, or lib/ (all outside this order's <paths>).",
+  "notes": "Fix sketch for whoever takes this: either scope test_bundle_manifest_stamp.py's sys.path.insert to a `finally`-popped context, or rename/alias one of the two `lib` packages so they cannot collide, or have _orion_api_silver_lib.py import repo-root lib/ by explicit file path (importlib.util.spec_from_file_location) instead of a bare package name. Not blocking IBM19-2-AC1/AC2/AC3 or this order's Step 9 (none of its checks read the pytest summary line's pass/fail count)."
+}
+```
