@@ -1,0 +1,110 @@
+{
+ "firm": "49financial",
+ "served_revision": "9ab377cef98f0cc16afac867a5d487ccb16666d03432e939c25a2381ed1826ed",
+ "served_latest_date": "2026-09-22",
+ "candidate": ".scratch/r4d28/49financial/opal-data-49financial/irpt/49financial/platinum/holdings/date=2026-09-22/c3aa140a47054ec2fc42e76f493d2ee8cc68e1719fe8477e64c51ccfea0aa16e.json",
+ "candidate_business_date": "2026-09-22",
+ "counts": {
+  "label_account": 2970,
+  "display_other": 67,
+  "classification": 123
+ },
+ "dollars": {},
+ "examples": {
+  "label_account": [
+   {
+    "node_id": "acc_000177fc677e10d397f36d43",
+    "served": "****4636 / IRA",
+    "candidate": "****0533 / IRA"
+   },
+   {
+    "node_id": "acc_0010de3a921e3e1fbb55bd28",
+    "served": "****7261 / S1",
+    "candidate": "****9072 / IRA"
+   },
+   {
+    "node_id": "acc_003d062bd06cf6a206977856",
+    "served": "****0704 / IRA",
+    "candidate": "****7294 / IRA"
+   },
+   {
+    "node_id": "acc_003fa2974a2724701ff89ae5",
+    "served": "****2189 / IRA",
+    "candidate": "****2882 / S1"
+   },
+   {
+    "node_id": "acc_00a5fafba5bf9d769c451614",
+    "served": "****2832 / IRA",
+    "candidate": "****7364 / S1"
+   }
+  ],
+  "display_other": [
+   {
+    "node_id": "acc_05774b733662787ddca457e4:client:position:10d8076779f8320a3229c1953afca711b01cc067de41b8f3e5d0ea2c24473b08",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_1701be6e22d57df5ab1de852:client:position:5340d72bd0f27cf8a920f98b37d59c339b0ea4e53451fa85244ff4e9368143ce",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_1ac3aa39e898ee43cb2422b1:client:position:9c6c590517f23107aaa14ed3a04526d391f8adb1bf715b2c19ce1fea54c3bc4c",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_20a9c44638840cc2f24b7dce:client:position:0b64e9b9139d8b037f2b5ab23b86ab0d8cf8ea353c1ebfe84463847138028e80",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_2a7d66f7082f0e0b2d0af4fb:client:position:03e64bf665185e88ec037c226514b24b909590d1a68a74fb4a79f66553fe1134",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "classification": [
+   {
+    "node_id": "acc_05774b733662787ddca457e4:client:position:10d8076779f8320a3229c1953afca711b01cc067de41b8f3e5d0ea2c24473b08",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_0a7915bb4680e9423bec18ad:client:position:48f94a32a4cbcd452215bb8d381fdda97037bd684ee2a2cddac421847ba1fcee",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class",
+     "asset_class_basis",
+     "sub_asset_class"
+    ]
+   },
+   {
+    "node_id": "acc_1701be6e22d57df5ab1de852:client:position:5340d72bd0f27cf8a920f98b37d59c339b0ea4e53451fa85244ff4e9368143ce",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class",
+     "asset_class_basis",
+     "classification",
+     "sub_asset_class"
+    ]
+   },
+   {
+    "node_id": "acc_17276b6d2446da82f2840354:client:position:329138659e05365af2b912b1cfe87dcdc2dfd4197c941634b4b2615175734a69",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class_basis",
+     "sub_asset_class"
+    ]
+   },
+   {
+    "node_id": "acc_1ac3aa39e898ee43cb2422b1:client:position:9c6c590517f23107aaa14ed3a04526d391f8adb1bf715b2c19ce1fea54c3bc4c",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class",
+     "asset_class_basis",
+     "classification",
+     "sub_asset_class"
+    ]
+   }
+  ]
+ }
+}

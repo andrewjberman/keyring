@@ -1,0 +1,101 @@
+{
+ "firm": "inflection",
+ "served_revision": "ba9001d5baa4054e61dc1ccf51a226e8c0782551a2f5f1282965129c10c36773",
+ "served_latest_date": "2026-09-22",
+ "candidate": ".scratch/r4d28/inflection/opal-data-inflection/irpt/inflection/platinum/holdings/date=2026-09-22/611f6e21a73af47c091d45141854a609929faacaf21bbf10186dcad936459bb8.json",
+ "candidate_business_date": "2026-09-22",
+ "counts": {
+  "label_account": 875,
+  "display_other": 30881,
+  "classification": 30881
+ },
+ "dollars": {},
+ "examples": {
+  "label_account": [
+   {
+    "node_id": "acc_002c686393f239134019d60f",
+    "served": "****5686 / TRUST",
+    "candidate": "****9882 / Individual Retirement Account"
+   },
+   {
+    "node_id": "acc_0051606d2db6c099080bcf60",
+    "served": "****1990 / ROTH",
+    "candidate": "****2059 / Joint"
+   },
+   {
+    "node_id": "acc_0059665adf10c75ff5e6ce04",
+    "served": "****5152 / SIMPLE",
+    "candidate": "****1430 / Individual"
+   },
+   {
+    "node_id": "acc_008571bae160de04a43dfe2a",
+    "served": "****0061 / JOINT",
+    "candidate": "****0061 / Joint"
+   },
+   {
+    "node_id": "acc_00efd83cb93fc0e70aec060f",
+    "served": "****7666 / INDIVIDUAL RETIREMENT AC",
+    "candidate": "****7666 / Individual Retirement Account"
+   }
+  ],
+  "display_other": [
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:03aadea1a657fcb23a3bb1a17d0459ce",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:04bb935fa50dd01d8a1a2218c4de848b",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:06c136258b08c12b24f7d421eb9c4a24",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:097bd8c16bcc01102cfd6d1e70332618",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:0c05611c5446d2fa3778d22b2d3a89ff",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "classification": [
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:03aadea1a657fcb23a3bb1a17d0459ce",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:04bb935fa50dd01d8a1a2218c4de848b",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:06c136258b08c12b24f7d421eb9c4a24",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:097bd8c16bcc01102cfd6d1e70332618",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_002c686393f239134019d60f:model:6:position:0c05611c5446d2fa3778d22b2d3a89ff",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   }
+  ]
+ }
+}
