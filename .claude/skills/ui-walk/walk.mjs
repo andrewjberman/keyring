@@ -23,7 +23,7 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, settleExtraMs: 0 }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, settleExtraMs: 0, periodsPerAccount: false }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
@@ -37,6 +37,7 @@ for (let i = 0; i < argv.length; i++) {
   // Extra wait after every settle, for a read whose answer lands after networkidle (a retained Performance
   // reopen fires after the account switch, so a 1200 ms settle screenshots "Loading"). Default 0: unchanged.
   else if (a === '--settle-extra-ms') opt.settleExtraMs = Number(argv[++i])
+  else if (a === '--periods-per-account') opt.periodsPerAccount = true
   else throw new Error('unknown argument ' + a)
 }
 if (!opt.routes.length) opt.routes.push('/investor-reporting')
@@ -212,6 +213,36 @@ async function exploreScope(page, scopeSel, label) {
     await checks(page, `${label}-open-${txt.slice(0, 24) || i}`)
     await page.keyboard.press('Escape').catch(() => {})
     await page.waitForTimeout(300)
+  }
+}
+
+// ---- periods per account: on the Performance tab, select EACH account of the picker and press each period preset once,
+// so a period figure is read for every account rather than for whichever account the select loop left selected.
+// Presets are matched by their exact label; a preset that is not on the page is simply not pressed. No write is reachable.
+const PERIOD_WORDS = /^(YTD|QTD|1Y|3Y|Since inception)$/i
+async function periodsPerAccount(page, scopeSel, label) {
+  const selects = page.locator(`${scopeSel} select`)
+  const nSel = await selects.count().catch(() => 0)
+  for (let i = 0; i < nSel && timeLeft(); i++) {
+    const sel = selects.nth(i)
+    const name = (await sel.getAttribute('aria-label').catch(() => null)) || `select-${i}`
+    const values = await sel.locator('option').evaluateAll((os) => os.map((o) => ({ v: o.value, t: (o.textContent || '').trim() }))).catch(() => [])
+    for (const o of values.slice(0, 8)) {
+      if (!timeLeft()) break
+      await sel.selectOption(o.v).catch(() => {})
+      await settle(page, 2500)
+      const btns = page.locator(`${scopeSel} button:visible`)
+      const n = await btns.count().catch(() => 0)
+      const labels = []
+      for (let k = 0; k < n; k++) labels.push((((await btns.nth(k).innerText().catch(() => '')) || '')).replace(/\s+/g, ' ').trim())
+      for (const txt of labels.filter((t) => PERIOD_WORDS.test(t))) {
+        if (!timeLeft()) break
+        const b = page.locator(`${scopeSel} button:visible`, { hasText: new RegExp(`^${txt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }).first()
+        await b.click({ timeout: 3000 }).catch(() => {})
+        await settle(page, 2500)
+        await checks(page, `${label}-${name}-${o.t.slice(0, 24)}-period-${txt.slice(0, 16)}`)
+      }
+    }
   }
 }
 
@@ -402,6 +433,7 @@ try {
               log('DRILL PATHS', JSON.stringify(p).slice(0, 400))
             }
             await exploreScope(page, '[data-slot="tabs"]', `${client}-${name}`)
+            if (opt.periodsPerAccount && /performance/.test(name)) await periodsPerAccount(page, '[data-slot="tabs"]', `${client}-${name}`)
             if (opt.deep) {
               const pressed = await pressAll(page, '[data-slot="tabs"]', `${client}-${name}`)
               log('PRESSED', name, JSON.stringify(pressed).slice(0, 300))

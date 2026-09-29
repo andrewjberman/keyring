@@ -55,7 +55,13 @@ warns when the account has been armed for more than 60 minutes.
 /ui-walk --route /model-portfolios         -> any other route (generic explore: details, selects, popups)
 /ui-walk --deep --client "..."             -> also press every enabled button on each tab once (period presets, variant
                                               cards, map chips, sort headers, toggles); never a DO_NOT_CLICK word
+/ui-walk --periods-per-account --client ".." -> on the Performance tab, select EACH picker account (first 8) and press
+                                              YTD / QTD / 1Y / 3Y / Since inception once each, checks after every press
 ```
+
+`--periods-per-account` exists because a period figure is otherwise read only for whichever account the select loop
+left selected; it presses presets by exact label, so a preset the page does not show is not pressed, and no new write
+is reachable. Use it for a per-account AFTER read after a provider or adapter switch.
 
 `--deep` presses one button per round, re-reading the tab each time, and presses Escape after each press, so a
 dialog never blocks the next tab. File pickers are `<input type=file>` and are never pressed. A deep walk takes
