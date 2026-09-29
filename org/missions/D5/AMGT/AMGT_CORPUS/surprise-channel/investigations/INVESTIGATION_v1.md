@@ -1960,6 +1960,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
       ]
     },
     "notes": "Not fixable by the worker: the missing value is absent from the extraction, not misparsed; recovering them is an extraction change (a different cell)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S54",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T02:30:00Z",
+    "one_line": "LIFT of AMGT_CORPUS-Z-S53 by its owner, and Z-W1-S9's close condition MEASURED MET: the dossier rewrite ran under the signed pair (COO b98e09953e, CTO 9ffd945889) with the table-aware case rule (CRPS-k-1 @19458b6130); every served case is its own columns of the team's scenario table with unit and page citation, and no served case is a heading or a table dump. Closing adjudication is the CVO's at L9 (AC3).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~X/evidence/r9_dossier_rewrite.log: 'names 95 written 95 existed 0', rc 0, 0 ERROR.",
+        "deliverables/2.0.0_SA_COO~X/evidence/r9_rewrite_after.txt: objects 563, serves the last write 95 of 95, dossier_pick current_method_available 95 stale_pick 0, case_census body 84 heading_only 0 absent 201 ordering_violated 0 unit_carried 10.",
+        "deliverables/2.0.0_SA_COO~X/evidence/r9_real_run_read_dossier.txt: ADBE_US_Equity Price 2026 416 / 233 / 143 (unit null); AZN_LN_Equity 227.08 / 131.91 / 45.24 (unit U+00A3); citation page 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S53: the hold lifts when a case rule reads the table by case and its census shows each case's own values.",
+    "world_is": "Met on the served table. 6 of 34 tables stay ABSENT with the 3k-count reason (Z-W1-S12); the model-block re-derive's follow-on will write one more dossier object per name under the k-2 pair.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's lift, evidence-cited; not a REMEDIATION row."
   }
 ]
 ```

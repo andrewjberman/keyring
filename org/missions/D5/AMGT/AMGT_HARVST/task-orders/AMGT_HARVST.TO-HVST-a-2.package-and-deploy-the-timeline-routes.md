@@ -128,7 +128,17 @@ two); the ONE entry names both orders. Criteria unchanged; each project's graded
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~H`, 2026-09-29 ~02:2xZ):** LANDED by `0.7.0_AE_CloudOps~A` as ONE combined act with
+AMGT_RESAPP `AMGT-uu-4` (entry `amgt-combined-uu4-a2-scoped-amgt-timeline-and-adjusted-base-20260929` CLOSED 14 of 14,
+close commit `0d54b880cf`). **Re-measured by the issuer on the served plane BEFORE the actor's report (02:10Z):**
+`a-2.AC1` PASS (18 routes under `/api/scoped/amgt/`; `/timeline` 200, 3 events, 2.41 s; `/timeline/day/2026-05-22`
+200, 3 articles, 8.85 s; in-region Lambda REPORT duration) and `a-2.AC2` PASS (CodeSha256 `CtIvirv...` off the base,
+new artifact version `zEAUAvUP...` latest, rollback version `0XDw5hJW...` standing, `/thesis` `/overlay` `/peers` 200).
+Instance `deliverables/0.7.0_AE_CloudOps~A/AMGT_HARVST.TO-HVST-a-2.package-and-deploy-the-timeline-routes.proof_of_spec.json`
+VALID rc=0. Package unzipped 253,105,932 B (96.6% of 262,144,000); IAM 25 -> 33 resources, gold 0 -> 3 (the five
+silver entries are redundant children, COO half s.10). Rows `Z-S35`, `Z-S36`, `Z-S38`, `Z-S39` have their remedy
+EXERCISED by this act.
+<status>complete</status>
 <round>12</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
