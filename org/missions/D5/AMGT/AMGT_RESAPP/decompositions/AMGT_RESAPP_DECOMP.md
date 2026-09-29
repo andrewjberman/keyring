@@ -6639,3 +6639,85 @@ fanout:
   page order is DSGN_AMGTV1's; a forward-P/E-history anchor is recorded as an option needing a Bloomberg pull no word has named.
 - FWD-30 held from REALIZED by the page half (DEV only; Andrew's hold on pushes and merges).
 - The team-case RENDER is DSGN_AMGTV1's (fork F5), under CTO msg 26430's unit rule.
+
+## 56. ROUND 48 -- THE RE-LAND ON THE CANONICAL PREFIX, THE SERVED COMPANY NAME AND CLASSIFICATION, AND THE EXPORT'S WORDING FROM ONE SOURCE. Three cells, four orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 47 ANALYSIS** (`ledger/ROUND_ANALYSIS.round47.md` @`657b9283a2`, s.4
+three items; round 47 CLOSED). Rulings carried: one writer per artifact (`exportCompare.harness.cjs` = DSGN_AMGTV1;
+`render_pack.py` = AMGT_RESAPP); a change to the other project's artifact is asked through that project's round. No outcome is
+added, so no L4-R half re-opens.
+
+### 56a. THE THREE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 re-land vv-4 on `amgt/harvest/gold/research_dossier/` (fresh pair, STOP limb 6 kept) | `AMGT-ww-1` (seat order, WORLD): the ONE redeploy of the round |
+| 2 the served company name and classification on list rows | `AMGT-ww-2` (the server-side join) + `AMGT-ww-3` (the table's own writer moves the library's missing rows, under a pair naming both branches) + `AMGT-ww-1` (served, with ONE DynamoDB read grant) |
+| 3 the export's wording from ONE source (`W4-S1` (b)) | `AMGT-ww-4` (the served definition, read by `render_pack`) + `AMGT-ww-1` (served). The page's switch to the served definition is DSGN_AMGTV1's, asked through its round |
+
+### 56b. MEASUREMENTS THE CUT RESTS ON
+
+1. **AMGT_CORPUS r12 is drained** (`d0141a6a76`, CRPS-n-1 complete): `research_dossier/` holds 95 objects, the legacy
+   `research-dossier/` 846 untouched; `read_dossier('AMD_US_Equity')` reads `.../research_dossier/security_key=AMD_US_Equity/...`.
+   The deployed function is the rolled-back `CtIvirvM...EAOM=`; its pool-prefix list holds 29 entries.
+2. **etf-classifications** (key `ticker`, the BARE ticker): 285 items; of the 95 library bare tickers 36 are held (36 of 36 the
+   same company), 59 absent, 0 collisions among the 95; `sector` is unset on all 36; `sub_asset_class` = the GICS sector for a
+   constituent equity (Andrew's ruling 2026-08-25, the writer's own comment). Ranking rows carry `ticker` as `"BA US"`.
+3. **The table's writer** is `seed-etf-constituents.py` (universe = the served ETF positioning artifact); it preserves an
+   existing row's name by default and never writes the ticker as a name. Both POSN projects read `status: closed`, so no owning
+   round is open; the AMGT universe is added to the writer by this round (analysis s.4 row 2: "POSN's writer moves the AMGT rows").
+   The shared tree holds an uncommitted edit to that file (row `Z-S301`).
+4. **No clean name for 59 names:** the stored block's NAME is all-caps; Andrew-direct 2026-08-25 forbids all-caps names in this
+   table. The 59 rows land with their classification and a WITHHELD name (row `Z-S300`).
+5. **The page's words:** `modelSheet.ts` `LINE_NAMES` (25 entries) and `ModelTab.tsx` `formulaInWords` (a five-step regex chain).
+   `render_pack` prints mnemonics: `_figures_table` (`:445-452`, a "Mnemonic" column), and the raw formula in `_model_case_line`.
+
+### 56c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ww-2` | LIST ROWS CARRY THE SERVED COMPANY NAME AND CLASSIFICATION, JOINED SERVER-SIDE | `~171` | worker | SERVED | `lib/research/api/scoped_amgt.py`, `lib/research/api/*.py` + tests |
+| `AMGT-ww-4` | THE EXPORT'S WORDS COME FROM ONE SERVED DEFINITION | `~171` (after ww-2) | worker | SERVED | `lib/research/api/scoped_amgt.py`, `lib/research/print/render_pack.py` + tests |
+| `AMGT-ww-3` | THE TABLE'S OWN WRITER GAINS THE RESEARCH LIBRARY AS A UNIVERSE | `~172` | worker | WORLD | `infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py` + its test |
+| `AMGT-ww-1` | THE REDEPLOY ON THE CANONICAL PREFIX | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (the prefix entry typed as builder output, ONE DynamoDB read grant, the apply), its deliverables, the ledger |
+
+ww-3's real write is the ISSUER's act at its drain, under a never-widen pair (COO + CTO halves) naming both branches: CREATE a
+row the table does not hold, PRESERVE a row it holds.
+
+### 56d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's three items; each lands in one build cell (item 2 in two, split by write surface: code vs. the
+  table's writer); the one served act is shared.
+- **(ii) Same grain.** One join, one table move, one definition, one deploy.
+- **(iii) Intent.** One axis: the served page and export name things in words from one source.
+- **(iv) What a cell does NOT move.** ww-2 moves no table row and no page file; ww-3 moves no existing row (36 byte-unchanged) and
+  the positioning universe's plan is unchanged; ww-4 moves no number and no page file; ww-1 moves exactly its pair's radius.
+
+### 56e. EDGES AND FAN-OUT
+
+```
+ww-2 -> ww-4   (same worker, same file: scoped_amgt.py -- a file edge)
+ww-2 -> ww-1   (the served join + its read grant)
+ww-4 -> ww-1   (the served definition)
+ww-3 -> (none) (the table write is the issuer's act at its drain; ww-1's AC3 reads SERVED names from the 36 already held)
+EXTERNAL: AMGT_CORPUS CRPS-n-1 -> ww-1 -- MET at the cut (d0141a6a76; 95 under research_dossier/)
+fanout:
+  cap: 3
+  orders_total: 4
+  chains_total: 2                      # {ww-2 -> ww-4 -> ww-1}, {ww-3}
+  wave_0: [ww-2, ww-3]                 # slots ~171, ~172, now; ~171 continues with ww-4
+  wave_1: [ww-4]                       # slot ~171 after ww-2 drains
+  wave_2: [ww-1]                       # a seat order: after ww-2 and ww-4 merge and both never-widen halves are committed
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: ww-1's build pip-downloads its pinned wheels (declared); checks read Opal's own S3, DynamoDB and deployed function (read-only)
+  route_change: none (payload fields only)
+  no_promote: true
+```
+
+### 56f. CARRIED
+
+- The 59 withheld names (`Z-S300`): a mixed-case source is an enrichment item for the round-48 analysis.
+- The page reading the served line names and formula words: asked of DSGN_AMGTV1 through its round at ww-4's drain.
+- FWD-30 held from REALIZED by the page half until DSGN_AMGTV1's harness cell (`Z-S297`) lands.

@@ -15305,6 +15305,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "The literal's only HEAD carrier is a */tests/* fixture, which the gate excludes by design. Extending _carried_at_head to the OUT-OF-PATTERN branch would still read it NEW. The rollback is the lawful path; re-landing is R20 (Andrew's act) or R19 (AMGT_CORPUS round 12).",
   "disarm_owner": "N/A -- INERT: the verdict's else-branch was executed, so nothing acted on the wrong premise. The correction stands so the ruling's record is not read as grounded on a valid carrier.",
   "notes": "The transferable part: when citing a file as evidence that a GATE will accept something, check the gate's own admissibility filter for that file, not only that the bytes exist. A carrier the instrument does not count is not a carrier. Cost: reading the helper's filter, 20 lines."
+},
+{
+  "id": "AMGT_RESAPP-Z-S300",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-29T11:40:00Z",
+  "one_line": "Round 48 cell 2 (the served company name): 59 of the 95 research-library names have no etf-classifications row, and the only stored name source for them, the model block's NAME figure, is ALL-CAPS ('ADVANCED MICRO DEVICES', 'ALPHABET INC-CL A', 'RECKITT BENCKISER GROUP PLC'). Andrew-direct 2026-08-25 requires the table's names 'properly capitalized (no all caps)', and the table's writer rejects title-casing. So ww-3 writes those 59 rows with their classification and WITHHOLDS the name; ww-2 serves them as name_state ABSENT with a reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "etf-classifications scan 2026-09-29 ~11:0xZ: 285 items; 36 of the 95 library bare tickers held (all 36 the same company as the block's NAME; ICT differs only by abbreviation), 59 absent, 0 bare-ticker collisions among the 95.",
+      "Stored blocks round46/checks/fixtures/blocks: NAME = 'ADVANCED MICRO DEVICES', 'ALPHABET INC-CL A', 'RECKITT BENCKISER GROUP PLC'; GICS_SECTOR_NAME mixed-case on all three.",
+      "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py docstring: Andrew-direct 2026-08-25 'properly capitalized (no all caps)'; the NAME-CORRECTIONS comment rejects title-casing as lossy; clean_name never falls back to the ticker.",
+      "resolve_identity for the library names carries no company name (security_key, display_ticker, bloomberg only)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-47 analysis s.4 row 2: the served company name and classification on list rows, joined server-side from etf-classifications.",
+  "world_is": "The classification can be served for all 95 names after ww-3. The name can be served for 36; for 59 there is no properly-capitalised source in Opal's stores. A source would be Bloomberg's mixed-case long company name (a vendor pull needing Andrew's per-use word) or a literal name map (59 rows someone writes).",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): ww-3 withholds the 59 names rather than write all-caps or the ticker; the name source is an enrichment item for the CTO's round-48 analysis.",
+  "notes": "No wait is created: rows land classified and the page shows ABSENT names honestly. Cost of the check that found it: reading three stored blocks."
+},
+{
+  "id": "AMGT_RESAPP-Z-S301",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-29T11:40:00Z",
+  "one_line": "The shared tree carries an UNCOMMITTED 19-line edit to seed-etf-constituents.py (the CASH line renamed 'Cash & Cash Equivalents' and CASH&OTHER dropped; batch writes drop empty-string values because the sub-asset-class-index GSI refuses ''), mtime 2026-09-29 05:42Z, author unknown. Round 48's ww-3 edits the same file on a worker branch, so the drain merge will refuse while that edit stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat on the shared tree: seed-etf-constituents.py 13 insertions, 6 deletions; last commit on the file b3d830094c (1.0.0_SA_CTO~Z, 2026-08-25).",
+      "ls --full-time: 2026-09-29 01:42:34 -0400."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker branch drains into the shared tree with safe-merge.",
+  "world_is": "git refuses a merge that would overwrite an uncommitted change, so no work is lost; the drain stops on this file until the edit is committed by its author or the drain is resolved by the issuer.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer, at the ww-3 drain): read the working-tree diff again; if it still stands, ask 0.0.0_AB_MSTR~Z to name its owner before merging. Never stash or discard it.",
+  "notes": "The worker's order carries the empty-string rule as a requirement of its own write, so ww-3 does not depend on the uncommitted edit."
 }
 ]
 ```
