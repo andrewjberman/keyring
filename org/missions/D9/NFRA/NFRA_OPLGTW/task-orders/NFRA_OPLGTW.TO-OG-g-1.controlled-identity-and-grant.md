@@ -89,6 +89,14 @@ answer everything destroys the evidence the walkthrough exists to produce. The a
 subset, and the evidence file NAMES at least one in-scope request that must SUCCEED and one adjacent request that must
 be REFUSED, with the reason each way. A scope you cannot justify from the sources above is not in the grant.
 
+**AMENDMENT A4 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~09:4xZ, on row Z-S14).** "The accounts and columns stay a bounded
+subset" holds for COLUMNS and DATES only. Under the CTO's ruling (1) (@8bf2bf37c6, folded as A2) the grant's accounts
+are the seal's set, and A3's measurement shows that set is every account of both masters (7460 + 7548). The seal forces
+this: RQ2-2..RQ2-6 are aggregates that stop hash-matching under any account subset. The account dimension therefore
+yields NO refusal. The must-be-REFUSED request comes from the column dimension (a catalog field outside the grant) or
+the date dimension (a qualified date outside `fixed_dates`), with master, dataset and operation held identical. No
+criterion changes. J1 is not graded against an account-scoped refusal.
+
 ## ACCEPTANCE
 
 Six mechanical criteria, above the usual three, for one stated reason: a gate-evidence order with a live write has six
