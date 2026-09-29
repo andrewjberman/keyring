@@ -85,6 +85,44 @@ point <= -1); rows B-F as read; the rollback branch measured live at 10:58-11:12
 3. The fix is two lines in the installer, and a test now covers it (`test_holdings_gold.py` +36 at 66469ce943); the
    lesson recorded in r2 addendum 2 -- the read-back requests each ruled window once -- is now the packet's step 5.
 
+## Addendum 1 (2026-09-29 16:4xZ) -- section 3's promised census through the r3 bytes to 2026-09-28: corroborates ~P on every count both read; not a gate
+
+- **Instrument:** this seat's `adapter_census.py` (scratchpad, not committed) imports `holdings_gold`, `retained`, `ids` and
+  `tenants` from the extracted `TBy0pL` zip (asserted by `__file__`), with `f49_engine.map_account` and
+  `parity_period_returns.period_window` from the zip's own `runners_49f` directory, over the versioned local cache
+  `gold_v021/` (558 partitions, each pinned by VersionId in its MANIFEST; last 2026-09-28 14:45:04Z, the S205 rewrite).
+  One read = one canonical id, a permitted set of one, the opaque 49F firm id, one window; `retained.implausible_engine_series`
+  applied after each `calculate`, as the fresh path does. Windows: YTD 2026-01-01..09-28 and 1Y 2025-09-28..09-28 by the
+  engine's `period_window`, SI from `SINCE_INCEPTION_START`. Harness-side only: `ids.opaque_account` memoized (a pure
+  function; named item 4) -- it moves no value, only the clock (7,548 reads in 132 s / 162 s / 227 s).
+
+| window | reads | SERVED | REFUSED | ERROR | <= -100% | >= +100% (tail, figure) | min / max | PARTIAL (excluded rows) |
+|---|---|---|---|---|---|---|---|---|
+| YTD | 7,548 | 6,766 | 782 | 0 | 0 | 2: ..4180 +186.51%, ..2297 +145.36% | -59.70% / +186.51% | 1,526 |
+| 1Y | 7,548 | 6,775 | 773 | 0 | 0 | 3: ..4180 +186.51%, ..8562 +138.48%, ..2297 +135.35% | -64.98% / +186.51% | 2,027 |
+| SI | 7,548 | 6,831 | 717 | 0 | 0 | 6: ..2297 +224.82%, ..2191 +212.20%, ..4180 +186.51%, ..7477 +127.91%, ..8562 +125.43%, ..4060 +101.06% | -72.55% / +224.82% | 3,677 |
+
+- Every refusal is the one name `holdings gold carries no OK row inside the window`, and the refused sets nest (SI within
+  1Y within YTD: 0 accounts refused on a wider window and served on a narrower one). This agrees with ~P's section-2
+  census on every count both read (0 UNEXPECTED; YTD 2 / 1Y 3 / SI 6 at or above +100%; none at or below -100%) and
+  with section 2's cold-period probe on ..0090 (SI +11.39%) and the larger ..2297 (YTD +145.36%, 1Y +135.35%, SI +224.82%).
+- **The named set's expected page answers for condition 3's AFTER read** (the adapter's own code on the same bytes and
+  gold the page will read after the apply; a tail shared by two or three accounts lists each, and ~D pairs the pressed
+  mask): control ..5669 = 0.00% / 0.00% / -0.28% (P) and +3.92% / +5.65% / +19.92% (P) for YTD / 1Y / SI; NEW-01 ..5236
+  = -0.81% / -0.81% / -0.81% (P); ..0695 = +3.82% (P) on all three; ..4581 = 0.00% (P), 0.00% (P) and +4.33% / +5.70% /
+  +17.78%; ..4714 = -6.11% (P) / -64.98% (P) / -64.98% (P); ..0090 = +7.08% / +9.12% (P) / +11.39% (P); the six SI accounts
+  as tabled, their smaller namesakes ..2297 +6.45% / +9.07% / +6.27%, ..2191 -17.15% / +18.52% / +24.91%, ..4180 +6.04% /
+  +8.57% / +23.72%, ..7477 -2.40% / -2.55% / -1.73%. (P) = the PARTIAL absence for excluded rows rides the answer.
+- **Correction carried to the W24 half (its addendum 2):** ..0273 is not in the 2026-09-28 key set at all -- its last
+  gold row is 2026-04-27 (452 rows from 2024-07-09, every one OK at 0.00%; 106 partitions since without it). The adapter
+  maps on the window's last day, so at this END its answer for ..0273 is the mapping refusal (`engine account mapping
+  missing or duplicate`), not the 0.00% PARTIAL figure this seat wrote in W24 addendum 1 condition 5. The page cannot
+  press it (not in the directory) and the adapter would refuse it; ..4714 stays the pressed substitute, figures above.
+- **Named item 4 (row IRPT_BCKEND-S212):** every read pays `f49_engine.map_account`'s sweep -- `opaque_account` over every
+  key of the day (7,548) to find the one canonical match -- before its first partition read: 1.8-2.5 s per read measured
+  here (three sweeps; 0.15 ms per key). It is the `map_ms` of the served `irpt_holdings_phases` line ~P reads at
+  condition 2, inside the 48 s bound, paid once per press; a five-period press set pays it five times. Not a condition.
+
 ## What this half signs against
 
 - Packet blob `6b256e41e4`; commits 66469ce943 and 23126d4739; artifact `+h/AH/RY` (S3 `TBy0pL`) with its census against

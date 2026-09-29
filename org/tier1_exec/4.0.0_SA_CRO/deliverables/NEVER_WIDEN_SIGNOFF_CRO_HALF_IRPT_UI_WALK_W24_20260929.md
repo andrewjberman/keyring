@@ -77,6 +77,14 @@ per body and capped at six.
 
 **RE-SIGNED** on blob `3089695cc6`.
 
+## Addendum 2 (2026-09-29 16:4xZ) -- correction to condition 5: ..0273's expected adapter answer is a refusal, not 0.00%
+
+- The r3 half's addendum 1 census (2026-09-28, the TBy0pL bytes) finds ..0273 absent from the day's key set: its last
+  gold row is 2026-04-27, so the adapter's mapping on the window's last day refuses it (`engine account mapping missing
+  or duplicate`). Condition 5's "0.00% PARTIAL" is withdrawn; nothing else in condition 5 moves -- ~D presses ..4714 in
+  its place, whose expected figures (YTD -6.11%, 1Y -64.98%, SI -64.98%, each PARTIAL) and the rest of the set's are in
+  that addendum. Signature unchanged.
+
 ## What this half signs against
 
 - Packet blob `49148a2d2a`; W22's text (`1f3bf0914f`) with this seat's conditions; ~Y's arms @34a27a5b41; part P's K10
