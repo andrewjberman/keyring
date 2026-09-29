@@ -1,0 +1,938 @@
+{
+ "trunk": "CLOUD",
+ "denominator": 57,
+ "rows": [
+  {
+   "path": "C:/Users/Opal Bloomberg/Desktop/cto_o_tflocal",
+   "branch": "cto-o-tflocal",
+   "head": "66f3b6057c",
+   "last_commit": "09-28 21:47",
+   "last_author": "1.0.0_SA_CTO~Z",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 1,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M .tools/naming-gate.py"
+   ]
+  },
+  {
+   "path": "C:/Users/Opal Bloomberg/Desktop/wk-hvst-r18-45",
+   "branch": "wk-AMGT_HARVST-45",
+   "head": "4d86812a13",
+   "last_commit": "09-29 10:08",
+   "last_author": "2.0.0_SA_COO~H",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 4,
+   "untracked": 4,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M lib/research/harvest/publication_gold.py",
+    " M lib/research/harvest/tests/test_universe_securities.py",
+    " M lib/research/harvest/universe_securities.py",
+    " M org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md"
+   ]
+  },
+  {
+   "path": "C:/Users/Opal Bloomberg/Desktop/wk-hvst-z2-r11",
+   "branch": "wk-hvst-z2-r11",
+   "head": "7e4f50c6dd",
+   "last_commit": "09-28 09:41",
+   "last_author": "0.7.0_AE_CloudOps~I",
+   "ahead_of_trunk": 614,
+   "patch_unique": 3,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~33/"
+   ]
+  },
+  {
+   "path": "C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r4-15",
+   "branch": "wk-nfra_mcpindex-4-15",
+   "head": "5a450314de",
+   "last_commit": "09-29 03:06",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~15",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 5,
+   "untracked": 2,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M infra/aws/ec2/opal-gateway/app/data_entitlement.py",
+    " M infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py",
+    " M infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml",
+    " M infra/aws/ec2/opal-gateway/tests/test_portal_index.py"
+   ]
+  },
+  {
+   "path": "C:/tmp/coo-y-leadpanel-20260924",
+   "branch": "closer/amgt-leadpanel-y-20260924",
+   "head": "6e9868b903",
+   "last_commit": "09-23 23:44",
+   "last_author": "2.0.0_SA_COO~Y",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 3,
+   "untracked": 2,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M infra/aws/terraform/harvest/chatter-axis-schedule.tf",
+    " M infra/aws/terraform/harvest/lambda_src/build_zip.py",
+    " M infra/aws/terraform/harvest/lambda_src/lambda_function.py",
+    "?? infra/aws/terraform/harvest/build-and-upload-chatter-axis.sh"
+   ]
+  },
+  {
+   "path": "C:/tmp/mx-dep4",
+   "branch": "dep-nfra-mcpindex-r3-gateway",
+   "head": "b9957034b5",
+   "last_commit": "09-28 22:45",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~10",
+   "ahead_of_trunk": 2,
+   "patch_unique": 2,
+   "tracked_dirty": 1,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M mcportal"
+   ]
+  },
+  {
+   "path": "C:/tmp/mx-dep5",
+   "branch": "dep-nfra-mcpindex-r4-gateway",
+   "head": "ca48cd5482",
+   "last_commit": "09-29 04:30",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~14",
+   "ahead_of_trunk": 2,
+   "patch_unique": 2,
+   "tracked_dirty": 1,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M mcportal"
+   ]
+  },
+  {
+   "path": "C:/tmp/mx-dep6",
+   "branch": "dep-nfra-mcpindex-r4-gateway-b",
+   "head": "28bb386f93",
+   "last_commit": "09-29 06:11",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~14",
+   "ahead_of_trunk": 2,
+   "patch_unique": 2,
+   "tracked_dirty": 1,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M mcportal"
+   ]
+  },
+  {
+   "path": "C:/tmp/mx-rb4",
+   "branch": "(detached)",
+   "head": "d287ffb346",
+   "last_commit": "09-28 19:32",
+   "last_author": "0.9.0_WK_NFRA_OPALAI~10",
+   "ahead_of_trunk": 14,
+   "patch_unique": 8,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/mx-rb5",
+   "branch": "(detached)",
+   "head": "4248b70b39",
+   "last_commit": "09-28 23:51",
+   "last_author": "0.9.0_WK_NFRA_OPLGTW~11",
+   "ahead_of_trunk": 20,
+   "patch_unique": 12,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/mx-rb6",
+   "branch": "(detached)",
+   "head": "63264dfb22",
+   "last_commit": "09-29 04:24",
+   "last_author": "0.9.0_WK_NFRA_OPLGTW~11",
+   "ahead_of_trunk": 21,
+   "patch_unique": 13,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/mx-rel3",
+   "branch": "rel-nfra-mcpindex-r3-gateway",
+   "head": "2dedae93df",
+   "last_commit": "09-28 18:26",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~10",
+   "ahead_of_trunk": 16,
+   "patch_unique": 9,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/mx-rel4",
+   "branch": "rel-nfra-mcpindex-r3-gateway-b",
+   "head": "3371f18803",
+   "last_commit": "09-28 21:02",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~10",
+   "ahead_of_trunk": 17,
+   "patch_unique": 10,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/mx-rel5",
+   "branch": "rel-nfra-mcpindex-r4-gateway",
+   "head": "0001c9bb53",
+   "last_commit": "09-29 04:28",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~14",
+   "ahead_of_trunk": 22,
+   "patch_unique": 14,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/mx-rel6",
+   "branch": "rel-nfra-mcpindex-r4-gateway-b",
+   "head": "a7e15b2220",
+   "last_commit": "09-29 05:18",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~14",
+   "ahead_of_trunk": 22,
+   "patch_unique": 14,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/oa-10",
+   "branch": "wk-NFRA_OPALAI-10",
+   "head": "766e0f204d",
+   "last_commit": "09-29 01:50",
+   "last_author": "2.0.0_SA_COO~AI",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 1,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M infra/aws/ec2/opal-gateway/audit.jsonl",
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/tmp/oa-10-rb2",
+   "branch": "rb-nfra-opalai-r2-asker-binding-base-v2",
+   "head": "71ef0f4bec",
+   "last_commit": "09-28 20:22",
+   "last_author": "0.9.0_WK_NFRA_OPALAI~10",
+   "ahead_of_trunk": 1,
+   "patch_unique": 1,
+   "tracked_dirty": 1,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M mcportal"
+   ]
+  },
+  {
+   "path": "C:/tmp/oa-10-rel",
+   "branch": "rel-nfra-opalai-r2-asker-binding-gateway",
+   "head": "d287ffb346",
+   "last_commit": "09-28 19:32",
+   "last_author": "0.9.0_WK_NFRA_OPALAI~10",
+   "ahead_of_trunk": 14,
+   "patch_unique": 8,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/oa-10-rel2",
+   "branch": "rel-nfra-opalai-r2-asker-binding-gateway-v2",
+   "head": "20a58c4edb",
+   "last_commit": "09-28 20:45",
+   "last_author": "0.9.0_WK_NFRA_OPALAI~10",
+   "ahead_of_trunk": 2,
+   "patch_unique": 2,
+   "tracked_dirty": 1,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M mcportal"
+   ]
+  },
+  {
+   "path": "C:/tmp/oa-10-sw-rb2",
+   "branch": "rb-nfra-opalai-r2-asker-switch-on-base-v2",
+   "head": "e25660d99c",
+   "last_commit": "09-28 23:16",
+   "last_author": "0.9.0_WK_NFRA_OPALAI~10",
+   "ahead_of_trunk": 1,
+   "patch_unique": 1,
+   "tracked_dirty": 1,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M mcportal"
+   ]
+  },
+  {
+   "path": "C:/tmp/oa-10-sw-rel",
+   "branch": "rel-nfra-opalai-r2-asker-switch-on-gateway",
+   "head": "f791522306",
+   "last_commit": "09-28 23:11",
+   "last_author": "0.9.0_WK_NFRA_OPALAI~10",
+   "ahead_of_trunk": 19,
+   "patch_unique": 11,
+   "tracked_dirty": 0,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": []
+  },
+  {
+   "path": "C:/tmp/oa-10-sw-rel2",
+   "branch": "rel-nfra-opalai-r2-asker-switch-on-gateway-v2",
+   "head": "a48b9ce3c2",
+   "last_commit": "09-28 23:25",
+   "last_author": "0.9.0_WK_NFRA_OPALAI~10",
+   "ahead_of_trunk": 2,
+   "patch_unique": 2,
+   "tracked_dirty": 1,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M mcportal"
+   ]
+  },
+  {
+   "path": "C:/tmp/oa-15",
+   "branch": "wk-NFRA_OPALAI-15",
+   "head": "5ff639cd0f",
+   "last_commit": "09-28 19:18",
+   "last_author": "2.0.0_SA_COO~AI",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 1,
+   "untracked": 3,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M opal_ai",
+    "?? .scratch/",
+    "?? .scratch_msg1",
+    "?? .scratch_msg2"
+   ]
+  },
+  {
+   "path": "C:/tmp/og-x3-rb",
+   "branch": "(detached)",
+   "head": "d287ffb346",
+   "last_commit": "09-28 19:32",
+   "last_author": "0.9.0_WK_NFRA_OPALAI~10",
+   "ahead_of_trunk": 14,
+   "patch_unique": 8,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/og-x3-rb2",
+   "branch": "(detached)",
+   "head": "7c7ebe14d3",
+   "last_commit": "09-28 23:15",
+   "last_author": "0.9.0_WK_NFRA_OPALAI~10",
+   "ahead_of_trunk": 1,
+   "patch_unique": 1,
+   "tracked_dirty": 1,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M mcportal"
+   ]
+  },
+  {
+   "path": "C:/tmp/og-x3-rel",
+   "branch": "rel-nfra-oplgtw-stream-export",
+   "head": "7b729821a9",
+   "last_commit": "09-28 21:18",
+   "last_author": "0.9.0_WK_NFRA_OPLGTW~11",
+   "ahead_of_trunk": 15,
+   "patch_unique": 9,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/og-x3-rel2",
+   "branch": "rel-nfra-oplgtw-stream-export-v2",
+   "head": "4248b70b39",
+   "last_commit": "09-28 23:51",
+   "last_author": "0.9.0_WK_NFRA_OPLGTW~11",
+   "ahead_of_trunk": 20,
+   "patch_unique": 12,
+   "tracked_dirty": 1,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M infra/aws/ec2/EC2_MANIFEST.json",
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/og-x4-rb",
+   "branch": "(detached)",
+   "head": "4248b70b39",
+   "last_commit": "09-28 23:51",
+   "last_author": "0.9.0_WK_NFRA_OPLGTW~11",
+   "ahead_of_trunk": 20,
+   "patch_unique": 12,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/og-x4-rel",
+   "branch": "rel-nfra-oplgtw-export-flat",
+   "head": "63264dfb22",
+   "last_commit": "09-29 04:24",
+   "last_author": "0.9.0_WK_NFRA_OPLGTW~11",
+   "ahead_of_trunk": 21,
+   "patch_unique": 13,
+   "tracked_dirty": 1,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M infra/aws/ec2/EC2_MANIFEST.json",
+    "?? mcportal/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-crps14-5",
+   "branch": "wk-crps14-5",
+   "head": "2177e483a2",
+   "last_commit": "09-29 10:20",
+   "last_author": "2.0.0_SA_COO~D",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 180,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADHC_HISTRY.001.raw-transaction-forensics.md",
+    " M org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFGRO.008.dsc-infc02-epsilon-coverage-diagnosis.md",
+    " M org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFGRO.009.dsc-infc02-twr-factor-rebuild-method-y.md",
+    " M org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFGRO.TO-000.ds-cashflow-taxonomy-yaml-and-inf-c-01-refactor.md"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-dsgn-amgtv1-13",
+   "branch": "wk-DSGN_AMGTV1-13",
+   "head": "2177e483a2",
+   "last_commit": "09-29 10:20",
+   "last_author": "2.0.0_SA_COO~D",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 3,
+   "untracked": 2,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M .claude/skills/ui-walk/SKILL.md",
+    " M .claude/skills/ui-walk/walk.mjs",
+    " M org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md",
+    "?? .claude/skills/ui-walk/signin_detect.mjs"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-report-4-4",
+   "branch": "wk-NFRA_REPORT-4-4",
+   "head": "3a326b7a7c",
+   "last_commit": "09-10 13:21",
+   "last_author": "2.0.0_SA_COO~ZZ",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 1,
+   "untracked": 2,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M org/missions/D12/NFRA/NFRA_REPORT/surprise-channel/investigations/INVESTIGATION_v1.md",
+    "?? .scratch/",
+    "?? org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~4/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wt-cvoz-harvst",
+   "branch": "cvo-z-harvst-l4r",
+   "head": "43bd487a55",
+   "last_commit": "09-23 15:47",
+   "last_author": "3.0.0_SA_CVO~Z",
+   "ahead_of_trunk": 3,
+   "patch_unique": 3,
+   "tracked_dirty": 1,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "M infra/aws/terraform/yang-pipeline/etf-classifications.tf"
+   ]
+  },
+  {
+   "path": "C:/Users/Opal Bloomberg/Desktop/wk-hvst-r16-42",
+   "branch": "wk-AMGT_HARVST-42",
+   "head": "d1aa40bb03",
+   "last_commit": "09-29 07:33",
+   "last_author": "0.9.0_WK_AMGT_HARVST~42",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/Users/Opal Bloomberg/Desktop/wk-hvst-r17-43",
+   "branch": "wk-AMGT_HARVST-43",
+   "head": "21328b886a",
+   "last_commit": "09-29 08:41",
+   "last_author": "0.9.0_WK_AMGT_HARVST~43",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/Users/Opal Bloomberg/Desktop/wk-hvst-r17-44",
+   "branch": "wk-AMGT_HARVST-44",
+   "head": "40d2b2e3e8",
+   "last_commit": "09-29 08:35",
+   "last_author": "0.9.0_WK_AMGT_HARVST~44",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-11",
+   "branch": "wk-nfra_mcpindex-3-11",
+   "head": "661bf81294",
+   "last_commit": "09-28 19:06",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~11",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r4-14",
+   "branch": "wk-nfra_mcpindex-4-14",
+   "head": "d16f7a86b3",
+   "last_commit": "09-29 06:31",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~14",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r4-16",
+   "branch": "wk-nfra_mcpindex-4-16",
+   "head": "f235f9942f",
+   "last_commit": "09-29 02:42",
+   "last_author": "0.9.0_WK_NFRA_MCPINDEX~16",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/tmp/ae-a-vv4",
+   "branch": "ae-a-vv4-r47",
+   "head": "fc1e7bc8fd",
+   "last_commit": "09-29 03:27",
+   "last_author": "1.0.0_SA_CTO~O",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 2,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? org/critical_paths/.open_deploys/amgt-resapp-vv4-reissue-basis-formula-and-team-cases-20260929.json",
+    "?? org/critical_paths/change_management/20260929T0809Z_amgt-resapp-vv4-reissue-basis-formula-and-team-cases-20260929_deploy_completion.md"
+   ]
+  },
+  {
+   "path": "C:/tmp/mp3-1",
+   "branch": "wk-NFRA_MCPORTAL-1",
+   "head": "ab97798b03",
+   "last_commit": "09-29 01:54",
+   "last_author": "2.0.0_SA_COO~MP",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 3,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/",
+    "?? infra/aws/lambda/layers/mcportal-grant-writer-deps/.build/",
+    "?? infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-crps10-1",
+   "branch": "wk-crps10-1",
+   "head": "75dd5905ad",
+   "last_commit": "09-29 01:28",
+   "last_author": "0.9.0_WK_AMGT_CORPUS~1",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 3,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/",
+    "?? org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round10/l1_AC4.sh",
+    "?? org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round10/l1_import.py"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-crps12-1",
+   "branch": "wk-crps12-1",
+   "head": "ce3192a363",
+   "last_commit": "09-29 06:21",
+   "last_author": "0.9.0_WK_AMGT_CORPUS~1",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-crps13-1",
+   "branch": "wk-crps13-1",
+   "head": "d1c92f63c1",
+   "last_commit": "09-29 08:53",
+   "last_author": "0.9.0_WK_AMGT_CORPUS~1",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-crps14-1",
+   "branch": "wk-crps14-1",
+   "head": "a592fb2bf0",
+   "last_commit": "09-29 10:19",
+   "last_author": "2.0.0_SA_COO~X",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": []
+  },
+  {
+   "path": "C:/tmp/wk-crps14-2",
+   "branch": "wk-crps14-2",
+   "head": "2177e483a2",
+   "last_commit": "09-29 10:20",
+   "last_author": "2.0.0_SA_COO~D",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": []
+  },
+  {
+   "path": "C:/tmp/wk-crps14-3",
+   "branch": "wk-crps14-3",
+   "head": "2177e483a2",
+   "last_commit": "09-29 10:20",
+   "last_author": "2.0.0_SA_COO~D",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": []
+  },
+  {
+   "path": "C:/tmp/wk-dsgn-amgtv1-10",
+   "branch": "wk-DSGN_AMGTV1-10",
+   "head": "33e6ee2cd5",
+   "last_commit": "09-29 06:57",
+   "last_author": "0.9.0_WK_DSGN_AMGTV1~10",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-dsgn-amgtv1-11",
+   "branch": "wk-DSGN_AMGTV1-11",
+   "head": "eb54139407",
+   "last_commit": "09-29 06:46",
+   "last_author": "0.9.0_WK_DSGN_AMGTV1~11",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-dsgn-amgtv1-12",
+   "branch": "wk-DSGN_AMGTV1-12",
+   "head": "61f61d8d96",
+   "last_commit": "09-29 06:55",
+   "last_author": "0.9.0_WK_DSGN_AMGTV1~12",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-dsgn-amgtv1-15",
+   "branch": "wk-DSGN_AMGTV1-15",
+   "head": "2177e483a2",
+   "last_commit": "09-29 10:20",
+   "last_author": "2.0.0_SA_COO~D",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": []
+  },
+  {
+   "path": "C:/tmp/wk-dsgn-amgtv1-16",
+   "branch": "wk-DSGN_AMGTV1-16",
+   "head": "2177e483a2",
+   "last_commit": "09-29 10:20",
+   "last_author": "2.0.0_SA_COO~D",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 0,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": []
+  },
+  {
+   "path": "C:/tmp/wk-dsgn-amgtv1-9",
+   "branch": "wk-DSGN_AMGTV1-9",
+   "head": "d14d33adc7",
+   "last_commit": "09-29 06:47",
+   "last_author": "0.9.0_WK_DSGN_AMGTV1~9",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 1,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-oplgtw-10",
+   "branch": "wk-NFRA_OPLGTW-10",
+   "head": "2df96ab2b2",
+   "last_commit": "09-28 20:27",
+   "last_author": "0.9.0_WK_NFRA_OPLGTW~10",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 2,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/",
+    "?? .venv-og/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-oplgtw-11",
+   "branch": "wk-NFRA_OPLGTW-11",
+   "head": "b6e52b09d5",
+   "last_commit": "09-29 05:01",
+   "last_author": "0.9.0_WK_NFRA_OPLGTW~11",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 2,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/",
+    "?? .venv-og/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-oplgtw-12",
+   "branch": "wk-NFRA_OPLGTW-12",
+   "head": "62e58c94ef",
+   "last_commit": "09-28 20:34",
+   "last_author": "0.9.0_WK_NFRA_OPLGTW~12",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 2,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/",
+    "?? .venv-og/"
+   ]
+  },
+  {
+   "path": "C:/tmp/wk-oplgtw-13",
+   "branch": "wk-NFRA_OPLGTW-13",
+   "head": "a10ce5eb72",
+   "last_commit": "09-28 21:45",
+   "last_author": "0.9.0_WK_NFRA_OPLGTW~13",
+   "ahead_of_trunk": 0,
+   "patch_unique": 0,
+   "tracked_dirty": 0,
+   "untracked": 2,
+   "status_readable": true,
+   "prunable": false,
+   "dirty_sample": [
+    "?? .scratch/",
+    "?? .venv-og/"
+   ]
+  }
+ ]
+}
