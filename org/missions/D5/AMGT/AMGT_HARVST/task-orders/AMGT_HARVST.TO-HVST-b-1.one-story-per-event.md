@@ -76,6 +76,8 @@ dropped, tier-A articles single-linked on >= 1 shared token.
 
   <criterion id="AC2" cell_refs="HVST-b-1"><invocation>python -m pytest lib/research/harvest/tests/test_publication_gold_event.py -rA --tb=line</invocation><expect>the event tests pass with the new tests NAMED in the -rA output (calendar words do not link; per-story events on an unrelated-story day; distinct ids for two stories on one day; the NVDA-shape paraphrase stays one event); the pass count BEFORE and AFTER printed (base: 15 passed) and the collected count not falling except by a replaced assertion, which is named</expect></criterion>
 
+  <criterion id="AC4" cell_refs="HVST-b-1"><invocation>python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~39/scripts/ac4_no_graded_lead_regresses.py</invocation><expect>AMENDMENT 1 (row AMGT_HARVST-Z-S40): NO LEAD THE ROUND-12 L9 GRADED AS NAMING ITS BURST REGRESSES. In memory over the landed data with the NEW rule, for each served event that is KEPT (same span), print the served lead and the rebuilt lead; PASS only if every kept event's rebuilt lead EQUALS its served lead -- above all BA_US_Equity 2026-09-08 keeps "Boeing Delivers 51 Jets in August, Lowest in Four Months" (its runway headline is an unrelated story that does not qualify alone and must not join the deliveries story). Print the story each of BA 09-08's tier-A headlines lands in, and which shared term (if any) linked them. At the merged b-1 rule (CLOUD 21cea628b4) BA 09-08 FAILS (lead moves to the runway headline via the token "jet")</expect></criterion>
+
   <criterion id="AC3" cell_refs="HVST-b-1"><invocation>python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~39/scripts/ac3_rebuildable_twice.py</invocation><expect>C-HV-GOLD-REBUILDABLE HOLDS UNDER THE NEW RULE: two in-memory builds over the same landed input serialise to byte-identical parquet (both sha256 and the row count printed), including a build over the input in reversed row order</expect></criterion>
 </proof_of_spec>
 
@@ -95,9 +97,19 @@ It writes no gold, changes no threshold, and does not grade FWD-6.
 3. **AC1 base:** its arm (c) FAILS at the base (BA 09-08 linked on "august"); arms (a) and (b) hold at the base. AC2
    base: 15 passed (the `a-3` drain). Scripts are worker-written as in every round of this project.
 
+**AMENDMENT 1 (issuer, 2026-09-29 ~04:5xZ) -- REOPENED on row `AMGT_HARVST-Z-S40`.** Drained @`89674edbe5` with AC1-AC3
+PASS, then the issuer's pre-signing read of the merged rule found a SERVED REGRESSION the criteria could not see: rebuilt
+in memory at `21cea628b4`, `BA_US_Equity` 2026-09-08 leads with the runway headline again, because it over-merges into the
+deliveries story on "jet" and the lead is the story's earliest tier-A article. The round-12 L9 graded the deliveries lead
+as naming the burst. **The gap is the issuer's: the STOP limb guarded membership of six events, not the leads the last
+round graded.** Added: **AC4** (every kept event's rebuilt lead equals its served lead). The fix to the over-merge is the
+worker's to choose and state, inside this order's `<paths>`; AC1-AC3 must still PASS. **Four mechanical criteria, one
+over the diet, and the reason is one line: AC4 guards the outcome the previous round graded, which no other criterion
+reads.** The same worker (`~39`) is continued. `HVST-b-2` does not start until this lands.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>complete</status>
+<status>in_progress</status>
 <round>13</round>
 <slot>~39</slot>
 <fabric>site-z</fabric>

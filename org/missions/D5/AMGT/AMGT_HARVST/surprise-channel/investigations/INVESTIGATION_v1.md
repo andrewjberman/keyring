@@ -2206,6 +2206,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "HVST-b-1 face section 1: NVDA 06-01's 'only shared token (nvidia) is dropped as ubiquitous, pc is below the 3-character floor'.",
       "world_is": "With three same-day headlines out of four, 'pc' is as frequent as the name; the name is only separable by spread over days, and a security with a single burst has too few days to show it, so its headlines are linked on the name (never split). Thin securities (under 4 titled tier-A headlines) are likewise never split.",
       "notes": "A single-burst security's unrelated same-day stories will not be separated by this rule; round-13's served rows are the first test on more than one such security."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S40",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-29T05:01:34Z",
+      "one_line": "HVST-b-1's merged one-story rule would REGRESS a served lead the round-12 L9 graded right: rebuilt in memory at CLOUD 21cea628b4, BA_US_Equity 2026-09-08 leads with 'Everything to Know About the Boeing Jet That Overshot a Miami Runway' again (served today: 'Boeing Delivers 51 Jets in August...'), because the runway headline over-merges into the deliveries story on the generic token 'jet' and the lead is the story's earliest tier-A article. b-1's STOP limb guarded the six one-company events only, so its criteria passed.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by the issuer, read-only, at CLOUD 21cea628b4: publication_gold.event_rows over the newest mention snapshot (263 rows) + silver headlines (120) yields 7 events; per served event the rebuilt lead is SAME on 6 of the 7 kept, MOVED on BA 09-08 (deliveries -> runway); articles_total 4->3 there and 3->2 on 992_HK 05-22 (tier-B dropped).",
+          "The worker disclosed the over-merge itself (HVST-b-1 report: 'BA 09-08's Barrons runway headline joins the deliveries pair on \"jet\"'); the round-12 L9 (ADJUDICATION_v20.md @19dfdd2579) read BA 09-08's tier-A stories as unrelated and graded its deliveries lead as naming the burst (7 of 8).",
+          "Under the C-HV-EVENT-SPINE round-12 addendum a runway story of 1 tier-A article does not qualify on its own, so the correct outcome is the deliveries story alone as the event, leading with the deliveries headline."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-b-1 AC1 STOP limb: the six one-company events keep span and tier-A membership (6/6) -- PASS; nothing guarded the LEADS the round-12 L9 graded right.",
+      "world_is": "A b-2 rebuild on the merged rule would ship a timeline whose BA 09-08 lead names the minority story, undoing round 12's graded fix on the served page. b-2 is HELD: the issuer will not sign its pair over a known served regression.",
+      "notes": "DISARM (issuer, same turn): HVST-b-1 is REOPENED by AMENDMENT 1 with a criterion that no lead the round-12 L9 graded as naming its burst regresses (7 kept events: rebuilt lead == served lead), and the same worker is continued to fix the over-merge by a mechanism it states; b-2's pair is written only after that lands. The criterion gap is the issuer's: the STOP limb covered membership, not the outcome the previous round graded."
     }
   ]
 ```
