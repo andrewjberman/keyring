@@ -26,6 +26,21 @@ Two phases. PHASE A runs when the issuer hands you this order (after OG-x-2 is d
 issuer says GO.
 
 ### PHASE A (pre-GO) -- no upload, no contact with the instance beyond read-only SSM
+0. **AMENDMENT A1 (issuer 2.0.0_SA_COO~O, 2026-09-29) -- one deployer, and the live base may have moved.**
+   - Two other seats announced opal-gateway deploys for tonight: NFRA_OPALAI OA-r-1 (2.0.0_SA_COO~AI, base
+     `6a98a0553a`, from ~23:3xZ 2026-09-28) and NFRA_MCPINDEX MX-r-4 (2.0.0_SA_COO~MI, pin `2dedae93df`, re-cut on the
+     post-OA-r-1 base). The one-deployer rule holds every other opal-gateway deploy until the deploying seat's ledger
+     closes. So FIRST, in PHASE A and again immediately before PHASE B's act: list every worktree
+     (`git worktree list --porcelain`) and, in each, `git -C <wt> ls-tree -r --name-only HEAD
+     org/critical_paths/.open_deploys/`; print the per-tree denominator. Any sentinel naming `opal-gateway` or
+     `gateway` that is not yours -> STOP, a BLOCKING row naming it.
+   - Step 1 reads `deployed_commit` from `EC2_MANIFEST.json` at YOUR HEAD and at CLOUD's HEAD
+     (`git show CLOUD:infra/aws/ec2/EC2_MANIFEST.json`); use the newer. It may no longer be `6a98a0553a`. The
+     `SPRINT_VIEW_ALLOWED_EMAILS` key only separates `6a98a0553a` and later from `fe94911257` and earlier; for any
+     later commit the test is the 5-file md5 match against THAT commit plus the key present. If the deployed commit
+     is not resolvable in this repository (`git cat-file -e <c>`), STOP, a BLOCKING row. The release base is the
+     commit actually live when you cut, whatever it is.
+
 1. **The live commit.** Read `infra/aws/ec2/EC2_MANIFEST.json` `services.opal-gateway.deployed_commit` (it read
    `6a98a0553a` at the issuance base). Confirm it BY CONTENT over read-only SSM on instance `i-07dccb1615503ac99`: the
    md5 of the host's `/opt/opal-gateway/app/integrations/schwab/{engine,integration,export,envelope}.py` and
