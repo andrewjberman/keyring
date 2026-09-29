@@ -11931,3 +11931,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Per the task order's own bound this stops here: the INF schedule below (schedule.tf) reuses 49F's cron (07:30 America/New_York, MON-FRI) rather than inventing a same-day-optimized cadence, because that time trivially satisfies 'fire after the worst case with margin' for whichever day the UNEDITED handler computes (T-1, already landed a full day earlier) -- it is a safe, not an optimized, choice. The 09-28/09-29 landing gap is carried here as a measured fact only; it is a live pipeline-currency question outside this cell's <paths> and is not this row's hazard."
 }
 ```
+
+## ~P issuer row -- S205 disarm record
+
+```json
+{
+  "id": "IRPT_BCKEND-S209",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-29T15:36:00Z",
+  "one_line": "DISARM RECORD for IRPT_BCKEND-S205 (ARMED @36f0424d3a, disarm_owner 2.0.0_SA_COO~P): all four disarm steps met -- the scheduled 49F producer runs the v0.21 code with its source named, 2026-09-28 is re-emitted through it, E3-AC4 passes through 2026-09-28, and the r3 census on the rewritten gold is clean. S205 is DISARMED as of this row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ledger irpt-holdings-performance-producer-v021-20260929 CLOSED @969b4deffd: irpt-holdings-performance-lambda gLRGHIyi (14:42:51Z), schedule input source schwab_08335338; both halves (CTO 102832, CRO 102838)",
+      "date=2026-09-28 re-emitted 14:45:04Z (version q6nwcljY) by ONE invoke with the schedule's exact input: 0 OK rows at abs(r) >= 1 (was 17)",
+      "e3_ac4_49f_reemit_v020.py 2026-09-28: 558 days, 0 absent, 0 OK abs(r) >= 1, leveraged on 558, manifests 558 of 558 -> PASS; 4.0.0_SA_CRO read the same at 15:32Z (102871)",
+      "checks/r20/adapter_cold_census.py on the r3 artifact TBy0pL, end 2026-09-28, rewritten gold: 0 UNEXPECTED over 7,548 accounts x 4 periods; >= +100% YTD 2 / QTD 0 / 1Y 3 / SI 6 (the 14 S205 accounts gone); <= -100% 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S205's own disarm: (1) r3 held; (2) the producer redeployed on v0.21 under both halves; (3) 2026-09-28 re-emitted with 0 OK rows at abs(r) >= 1; (4) the r3 census re-run.",
+  "world_is": "All four met at 15:3xZ. The CRO half's condition 3 -- Wednesday's 11:30Z scheduled fire, read from its partition -- is carried to the r3 ledger as a read, not a disarm step.",
+  "notes": "Filed as a new row because an ARMED row is not edited in place (surprise-row gate)."
+}
+```
