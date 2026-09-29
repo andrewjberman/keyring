@@ -2,7 +2,7 @@
 
 <to_id>IRPT_BCKEND.TO-IB-pr-221</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~73</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~74</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-29</issued_date>
 <status>pending</status>
@@ -12,6 +12,8 @@
 <placeholders>NONE</placeholders>
 <round>22</round>
 <workstream>~P</workstream>
+
+**AMENDMENT 1 (2026-09-29 ~08:5xZ, issuer, row S197):** slot ~73 -> ~74 before any spawn; ~Y's TO-IB-yr-221 (@52e63f09ee) also holds ~73.
 
 **Directive:** D9 | **Fabric:** laptop | **Ordered by:** 1.0.0_SA_CTO ROUND-19 ANALYSIS section 6 item 1 ("then Inflection
 and Cottonwood on the holdings gold, in that order (ruling 11)"); PRD ADDENDUM v0.19 rulings 10-12, v0.20 rulings 13-17 |
@@ -91,11 +93,11 @@ org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: P22-1-AC1, P22-1-AC2, P22-2-AC1. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~73/IRPT_BCKEND.TO-IB-pr-221.adapter-reads-the-inflection-gold.proof_of_spec.json`,
+Criterion ids: P22-1-AC1, P22-1-AC2, P22-2-AC1. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~74/IRPT_BCKEND.TO-IB-pr-221.adapter-reads-the-inflection-gold.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> P22-1-AC1,P22-1-AC2,P22-2-AC1` BEFORE the flip.
 </proof_of_spec>
 
-**REPORT:** your final message: the commit hash, each criterion's last line, and any surprise row id (`IRPT_BCKEND-W73-S<k>`).
+**REPORT:** your final message: the commit hash, each criterion's last line, and any surprise row id (`IRPT_BCKEND-W74-S<k>`).
 
 ---
 

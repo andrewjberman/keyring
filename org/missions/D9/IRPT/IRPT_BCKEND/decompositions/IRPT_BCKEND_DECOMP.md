@@ -1220,7 +1220,7 @@ and COT are the following cells: they are named here, and are cut once their sha
 | `IB-pr-221` | FWD-3 (INF): holdings_gold per firm + holdings_sources in retained + installed composes INF; the Orion read retires for INF (both readers in the criteria) | WORLD (Lambda source) | ~E r3 (INF gold, complete) | P22a |
 | `IB-er-401` | FWD-3 (COT): gold for every COT account 2026-06-10..2026-09-25, manifest complete, under v0.20 | WORLD (new gold objects; nothing served moves) | ~E r3 (the producer on v0.20) | E4a |
 
-IB-pr-221 goes to worker slot 73 (S197: 1 + max(author lines 72, issued_to 72, branches 61)). IB-er-401 goes to
+IB-pr-221 goes to worker slot 74 (S197: 1 + max(author lines 72, issued_to 72, branches 61) was 73 at the cut, but ~Y's TO-IB-yr-221 took 73 in the same window @52e63f09ee; amendment 1 re-slots to 74 before any spawn). IB-er-401 goes to
 0.4.0_DS_ClientPlatform~E (rule 13).
 
 fanout: 2 of 2 chains, cap 8.
