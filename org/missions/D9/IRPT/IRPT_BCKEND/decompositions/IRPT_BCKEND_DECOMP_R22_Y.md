@@ -20,3 +20,10 @@ REQ-3a1b73a8 has been in the DLQ since 09-27.
 
 Edges: IB-yr-211 -> IB-yr-221 (one file). fanout: 1 of 1 chains, cap 8. Slot maxima (S197 ruling): authors 72, orders
 72, branches 61, so ~73.
+
+**Amendment 1 (2026-09-29 ~09:4xZ, issuer ruling on CTO 102688 / CRO 102684).** Cell `IB-yr-221` now ENDS the job at
+the bound: the row moves from RESOLVING to the existing terminal NEEDS_CORRECTION with reason RESOLVE_RETRY_EXHAUSTED,
+the resident prints `state=ATTENTION code=RESOLVE_RETRY_EXHAUSTED`, and the message is deleted, so the client's 960 s
+redrive stops. Still no new row state. Check `test_fourth_retry_ends_attention_by_name` replaces
+`test_gives_up_by_name_before_the_dlq`; dry-run at the worker's @c125c68396: AC1 FAIL as expected, AC2 and AC3 PASS.
+Worker ~73 continues on its branch.
