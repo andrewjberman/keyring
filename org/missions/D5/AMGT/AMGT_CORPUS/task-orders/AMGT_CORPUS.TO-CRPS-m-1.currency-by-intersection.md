@@ -41,6 +41,13 @@ CAD; SPOT `$` on USD; TTE `$` on EUR; UNVGY `$` on USD.
 3. Implement the rule literally for every name. **By this rule SHOP_CN_Equity (`$` on a CAD listing) gets CAD** -- the analysis
    expected only CPA, SPOT, UNVGY to move; do not special-case SHOP either way. The issuer's never-widen pair decides it before
    anything is served; report SHOP's line explicitly.
+6. **AMENDMENT 1 (issuer, on the CTO half's refusal, `ledger/NEVER_WIDEN_ROUND11_DOSSIER_REWRITE_CTO_HALF.md`):** the CTO
+   amended its round-10 ruling 2. A currency is set only where the intersection rule of item 1 gives exactly one code AND the
+   symbol is NOT a bare `$` on a non-USD dollar listing (CAD, AUD, NZD, HKD, SGD and any other `$`-currency). There the
+   currency stays `null` with the basis `"a bare $ on a non-USD dollar listing: the pack may state the reporting currency"`.
+   A bare `$` on a USD listing still sets USD; every other symbol keeps the intersection rule. Why (the CTO's measurement):
+   SHOP_CN's pack implies a price of ~173.5 against a CAD `PX_LAST` of 206.0 and Shopify reports in USD -- the payload cannot
+   tell CAD from USD. Add tests: `$` + CAD -> null with the new basis; `$` + AUD -> null; `$` + USD -> USD.
 4. `lib/research/corpus/tests/test_dossier_case_currency_intersection.py` (new): `$` + USD -> USD; `$` + CAD -> CAD; `$` + EUR ->
    null (differs); pound + GBp -> null (differs); euro + EUR -> EUR; no symbol -> null (not stated); no listing -> null.
 5. `test_dossier_case_unit.py` may change only where it pins the old ambiguous-`$` outcome; name each such test.
@@ -67,15 +74,17 @@ READ-ONLY: every other file, every S3 object. Scratch `.scratch/m1/`.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-m-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round11/m1_AC1.sh</invocation><expect>(?m)^\d+ passed(, \d+ subtests passed)? in </expect></criterion>
-  <criterion id="AC2" cell_refs="CRPS-m-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round11/m1_AC2.sh</invocation><expect>(?m)^m1 names 95 currency_set \d+ .*CPA_US_Equity=USD.*ML_FP_Equity=EUR.*SPOT_US_Equity=USD.*UNVGY_US_Equity=USD</expect></criterion>
+  <criterion id="AC2" cell_refs="CRPS-m-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round11/m1_AC2.sh</invocation><expect>(?m)^m1 names 95 currency_set 4 CPA_US_Equity=USD ML_FP_Equity=EUR SPOT_US_Equity=USD UNVGY_US_Equity=USD$</expect></criterion>
+  <criterion id="AC3" cell_refs="CRPS-m-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round11/m1_AC3.sh</invocation><expect>(?ms)^m1 SHOP_CN_Equity listing CAD currency None basis a bare \$ on a non-USD dollar listing.*^m1 CPA_US_Equity listing USD currency USD </expect></criterion>
 </proof_of_spec>
 
-- AC1 the built behaviour; AC2 the seam probe over every resolved name's real extraction and block: CPA, SPOT and UNVGY now
-  carry USD and ML keeps EUR (the census prints every set name, SHOP included, sorted).
+- AC1 the built behaviour; AC2 the seam probe over every resolved name's real extraction and block: exactly CPA, SPOT and
+  UNVGY carry USD and ML keeps EUR -- SHOP is NOT in the set (AMENDMENT 1); AC3 the SHOP arm and its control: SHOP_CN reads null
+  with the carve-out's basis, a `$` on a USD listing (CPA) still reads USD.
 
 ## 6. WHEN YOU ARE DONE
 1. Instance at `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-m-1.currency-by-intersection.proof_of_spec.json`.
-2. `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing-order <this order>` rc 0.
+2. `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <this order>` rc 0.
 3. Flip `<status>` to `complete` only if every criterion passes; commit the files you changed plus the instance.
 4. Report ONCE: AC2's full line (every set name); SHOP's currency and basis; then the issuer continues you on `CRPS-m-2`.
 
@@ -84,6 +93,10 @@ READ-ONLY: every other file, every S3 object. Scratch `.scratch/m1/`.
 **ISSUER NOTES:** round-10 analysis s.2 ruling 2 + s.4 item 1 @`8b54c2b4fd`. The analysis expects "CPA, SPOT, UNVGY -> USD, and
 no other name moves"; its own intersection rule also moves SHOP_CN (`$` on CAD) -> CAD. Built literally; decided in the pair.
 Checks dry-run at the base: AC1 FAIL (no tests ran); AC2 FAIL ('m1 names 95 currency_set 1 ML_FP_Equity=EUR').
+**AMENDMENT 1 (2026-09-29 ~08:5xZ, issuer):** on the CTO half's refusal (SHOP_CN: CAD cannot be told from USD), rule 6 adds the
+carve-out; AC2's expect tightened to the exact set without SHOP; AC3 (the SHOP arm + a USD `$` control) added. Dry-run at
+trunk b274848977: AC2 FAIL (SHOP_CN=CAD in the set), AC3 FAIL (SHOP currency CAD), its control arm PASS (CPA USD). The order
+is REOPENED (`pending`) for the same worker; the CTO re-signs on the re-measured half.
 
 <risk>SERVED</risk>
 <status>complete</status>

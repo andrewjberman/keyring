@@ -2294,6 +2294,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "HVST-c-1 AC2 expectation: 'the distribution of tier-A/B articles per (security, day) and per merged run (the qualifying merge, gap <= 1 day)'.",
       "world_is": "The order did not fix the unit of a merged run; the verdict reads differently on the loosest unit (EXERCISED) and the rule's unit (UNEXERCISED). No reading yields a held-out burst. Also added beyond the order: AC1's tier-A-less same-security cluster supplement (6 clusters, all tier-B, none a story by the rule) and AC4's part 3 listing of all held-out tier-A/B rows.",
       "notes": "Stated for the L9 read of AC4 and the round-14 analysis; no code or served state touched."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~41",
+      "surfaced_at": "2026-09-29T08:56:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W41-S1",
+      "one_line": "HVST-d-1 AC2 (d): with the 'Amazon' alias the AMZN crash coverage forms ONE event of 3 articles on 2026-09-07 only, led by barrons 'Scene of Fatal Amazon Plane Crash', not the 6-article, 09-06..09-10 burst the ruling pictures; bbg's 09-06 first report and its 09-10 NTSB piece are outside it.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~41/ac2_output.txt (d): 1 NEW event, AMZN_US_Equity 2026-09-07..2026-09-07 days=1 articles=3 A=2 B=1 pubs=3, tier-A publishers barrons and wsj, lead barrons:WP-BAR-0001904504; members barrons 1904504 (A), wsj 59813697 (A), bbg TL0J5YKJH6V500 (B).",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~41/ac2_output.txt (e): AMZN stories (4): [TKNDM8T96OSI00], [TKQWO4KK3NYB00], [TKYJAAVTTCZL00, WP-BAR-0001904504, 59813697, TL0J5YKJH6V500, WP-BAR-0001904706], [TL4E5FKJH6V400]. bbg TKYJAAVTTCZL00 (09-06, tier A, 'Amazon Cargo Plane Overshoots Runway in Miami, Killing Five') is in the crash story but its day has ONE tier-A publisher, so it is outside the merged qualifying span (row Z-W40-S2's mechanism); bbg TL4E5FKJH6V400 (09-10, tier A) is a story of its own, and barrons 1904706 (09-08, tier B, Boeing headline) is in the story but outside the span.",
+          "lib/research/harvest/publication_gold.py event_rows: an event is the qualifying days' merged run of ONE story; only articles inside [first_day, last_day] are members. The name-detection step strips only 'amazon' from AMZN's six tier-A headlines (the burst SURVIVES it: Z-W40-S1 does not bite here), so the narrowness comes from the span rule and from the 09-10 headline sharing 'crash' and 'fatal' with the story but being kept out by the tight-cluster refusal, not from the alias."
+        ]
+      },
+      "spec_asserts": "HVST-d-1 AC2 (d) expected 'every NEW event (expected: AMZN's crash burst)'; ROUND_ANALYSIS.round14 s.2 pictures the crash articles as one burst of tier A/B articles.",
+      "world_is": "The alias change makes the crash coverage reach tier A and yields ONE AMZN event, but a narrow one: 3 of the 6 crash-pattern articles, one day, and a lead that is not the first report. HVST-d-2 will serve exactly this event if it builds from securities.universe.json.",
+      "notes": "ARMED because the d-2 never-widen pair must name this event as the expected outcome (both branches), and a reader of the served event sees a smaller story than the coverage. Not fixed here (the order forbids a tier-rule or one-story-rule change). Scripts: ac2_rebuild_in_memory.py."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~41",
+      "surfaced_at": "2026-09-29T08:57:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W41-S2",
+      "one_line": "HVST-d-1 AC2 (a): the 'Amazon' alias moves EXISTING served rows beyond tier: the matcher sums every alias independently, so mention_count of AMZN rows jumps (crash article 2 -> 10), and AMZN joins the co-mention list of 27 existing pairs across 14 securities (BA, COST, HD, 992_HK, NVDA, ...), including all 5 securities behind the 7 served events.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~41/ac2_output.txt (a): 'existing pairs whose CO-MENTION list moves under the alias change = 27, across securities [992_HK, AAPL, BAC, BA, COST, HD, INTC, JNJ, MU, NOVN_SW, NVDA, TSLA, ULVR_LN, UL_US]'; 8 existing AMZN pairs change tier/flags/count (mention_count 1->2, 1->4, 2->8, 2->5, 2->10, 2->5, 2->7, 1->2).",
+          "lib/research/harvest/publication_gold.py _match_counts: 'every alias independently, summed', so 'Amazon' also matches inside 'Amazon.com' and 'Amazon.com Inc'; the same overlap already exists for 'Apple Inc' + 'Apple'.",
+          "The move is on the same 263 served rows plus 12 new ones (275); the mention comparison in ac2 is over signal_tier, the two flags, mention_count, blocks_hit and match_forms, and co_mentioned_securities is reported separately, so a served-row diff at HVST-d-2 will show co-mention/is_roundup changes on rows whose tier did not move."
+        ]
+      },
+      "spec_asserts": "HVST-d-1 face section 1: the rebuild's effect is read as new matches and tier moves on Amazon's own rows.",
+      "world_is": "The alias change is not confined to AMZN rows: the co_mentioned_securities and co_mention_count columns of 27 already-served pairs of other securities change, so HVST-d-2's served diff is wider than AMZN's row delta; whether any is_roundup flag flips is not printed here.",
+      "notes": "ARMED for HVST-d-2's never-widen pair: its blast radius has to name co_mention columns of other securities, not only AMZN. Not fixed here."
     }
   ]
 ```
