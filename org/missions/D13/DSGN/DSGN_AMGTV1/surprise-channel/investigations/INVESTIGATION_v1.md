@@ -323,6 +323,46 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO-AV-w-1 AC1 runs walk.mjs --route /security-analysis from bash and expects WALK VOID and a non-zero exit.",
     "world_is": "Under MSYS the route arrives mangled; walk.mjs now strips a leading drive-and-Git prefix from --route values (in the cell's paths), after which walkvoid.sh reads YES exit=0. A walk started from Git Bash without that strip would have failed on the goto, not on the sign-in page."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W23-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~23",
+ "surfaced_at": "2026-09-29T16:00Z",
+ "one_line": "modelPattern.harness.cjs check negative_values_signed is anchored on '<td data-model-cell=\"true\" class=' which M1 (data-model-cell carries the served value) necessarily removes; the harness is not in AV-u-5 <paths>, so it cannot be re-anchored.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal wk-DSGN_AMGTV1-23-portal@ae1be3c8: node src/pages/SecurityAnalysis/__harness__/modelPattern.harness.cjs -> CHECKS-OK 11 of 12, CHECKS-WRONG-WAY negative_values_signed (0 of 155 cell texts match)",
+   "modelPattern.harness.cjs:155 regex /<td data-model-cell=\"true\" class=\"[^\"]*\">([^<]*)/g"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-u-5 AC2 expects modelPattern.harness.cjs:12 green, and the order lets a re-anchor happen only in a harness named in <paths>.",
+ "world_is": "The harness is in portal/src/pages/SecurityAnalysis/__harness__/, not in <paths>. Needed re-anchor: cell regex to /<td data-model-cell=\"[^\"]*\"(?: data-model-year=\"[^\"]*\")? class=\"[^\"]*\">([^<]*)/g, claim unchanged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W23-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~23",
+ "surfaced_at": "2026-09-29T16:00Z",
+ "one_line": "attrs.cjs arm 3 compares posture visible text to fixtures/attrs.visible.base.json, captured on DEV 4f927ad0 before AV-u-2; AV-u-2 (already on this slot's branch) changed the posture words, so arm 3 reads 'visible changed: [posture]' regardless of this cell.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "attrs.cjs on ae1be3c8: arm 3 reason attrs 12 of 12 and no-call reason OK; only visible changed: [\"posture\"]",
+   "printed NOW vs BASE posture text differ only in 'Citation not resolved -- ...' vs 'cite not resolved -- ...' and the footer '9 of the 18 citations can be shown on this page' vs '9 of 18 cite(s) resolved' (AV-u-2's words)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-u-5 AC1 expects 3 of 3 arms with each surface's visible text unchanged against the base snapshot.",
+ "world_is": "The snapshot lives in the issuer's read-only round6/fixtures and pre-dates AV-u-2. It needs regenerating (ATTRS_SNAPSHOT=1) after AV-u-2, or the posture key excluded. Not writable by this worker."
 }
 ]
 ```
