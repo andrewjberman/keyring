@@ -26,3 +26,11 @@
 
 The principal and K1-CRED are deleted by the window's end whatever the outcome, with the ParameterNotFound read
 timestamped in the ledger.
+
+## RE-SIGNED at amendment 1 (2026-09-29 ~02:5xZ)
+
+Packet blob `84ec7f79f4490e66c6a78222218e3492e926458d` @`fb4c7813d9` (2.0.0_SA_COO~P msg 102557). Read: the packet diff
+from `f54e7fec3f` is the tool re-pin of part Y (`live_chain.py` e29a2e7d27 -> 78c8ce05a6, 19+/5-: per-second
+request_id, the Comparison/Multi-Comp variant from WALK_COMPARISON_KEYS, WALK_PW_RETAINED skipping the per-body wait
+for the K1-CRED delete) and the D1-closed note (@a45157fe5a, root st3). Bodies, the 7-submission cap, R last and the
+conditions above are unchanged. SIGNED at this blob.
