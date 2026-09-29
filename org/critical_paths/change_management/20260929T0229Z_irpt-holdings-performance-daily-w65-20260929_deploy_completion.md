@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| A1 | s3-prefix | opal-313476888478-lambda-artifacts investor-reporting/irpt-holdings-performance-lambda.zip | build-and-upload OK line + head-object sha256 metadata == zip sha256 |  | OPEN |
+| A1 | s3-prefix | opal-313476888478-lambda-artifacts investor-reporting/irpt-holdings-performance-lambda.zip | build-and-upload OK line + head-object sha256 metadata == zip sha256 | build-and-upload investor-reporting irpt-holdings-performance-lambda: s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-holdings-performance-lambda.zip sha256 a1ZUOSw5lg5CH2Fe6Dq7UsZSpbiXQtwFRNp084Cerms= 112985 bytes; head-object write VERIFIED (size+sha256 metadata match) | CLOSED 20260929T023140Z |
 | A2 | activation | module.irpt_holdings_performance / module.irpt_holdings_performance_schedule | plan (new resources only), safe-apply success, readback (get-function + get-schedule ENABLED) |  | OPEN |
 | V1 | verify | one invoke of irpt-holdings-performance-lambda for the latest computable trading day | manifest object at the address the invoke's own return names, read back from S3 |  | OPEN |
 | V2 | verify | 0-diff re-plan of the holdings-performance root | terraform plan reads No changes |  | OPEN |
@@ -20,3 +20,4 @@
 ## Log
 
 - 20260929T022906Z OPENED by 0.9.0_WK_IRPT_BCKEND~65 with 4 leg(s)
+- 20260929T023140Z LEG A1 closed: build-and-upload investor-reporting irpt-holdings-performance-lambda: s3://opal-313476888478-lambda-artifacts/investor-r
