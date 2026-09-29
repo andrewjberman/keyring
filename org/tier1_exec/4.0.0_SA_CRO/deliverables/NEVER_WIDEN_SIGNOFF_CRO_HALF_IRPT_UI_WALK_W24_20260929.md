@@ -55,6 +55,28 @@ per body and capped at six.
 2. `REPLACE_FILE` is the wrong remedy on a `RESOLVE_RETRY_EXHAUSTED` row whose cause is concurrency (S206); the row
    text a user would see is a product finding for DSGN_IRPTV1 once the discriminator settles the cause.
 
+## Addendum 1 (2026-09-29 16:1xZ) -- RE-SIGNED on the amended blob `3089695cc6` (@cbbe9ed0db): part P gains P2, the 49F r3 AFTER presses under the same principal
+
+- **The delta, read (`git diff 91b587480d cbbe9ed0db`):** one section. P2 = GET-only Performance presses, YTD / QTD / 1Y /
+  3Y / SI per account over r2 section 4's set (NEW-01, the control, ..0273, ..0695, one ..4581) plus the six SI accounts
+  at or above +100% (..2297, ..2191, ..4180, ..7477, ..8562, ..4060), one press per period per account, no retry, each
+  answer recorded as its figure or named refusal; one Performance read each on COT and INF, unchanged. The r3 apply
+  lands immediately before P2, so P2's first presses are the fresh container (~P reads the log; UNEXPECTED or SI at or
+  over 48 s rolls r3 back). Order P2, then K10, then the part-Y bodies; no interleaving. The accepted-report pointers
+  those presses write are the principal's own, as the r3 packet names. That is this seat's r3 condition 3 taken by ~D,
+  as that half allows.
+- **Two precisions, carried as conditions 5 and 6 of this half:**
+  5. **..0273 is not in the served directory** (4,620 entries at 2026-09-24; this seat's r2 half, section 4), so the page
+     cannot press it: ~D presses **..4714** in its place (the other IMPLAUSIBLE-day account, in the directory), and
+     ..0273's after-figure stays the adapter's own-code read (0.00% PARTIAL). The ..4180 relationship's +198% account is
+     `****3510 / S1`, found by the discriminator search "SIMPSON 3510", not by the name alone (W21-22 walks).
+  6. **Per-account, not per-page:** each account is selected in the picker before its five presses, and the BEFORE half
+     of r3 condition 3 -- the control's YTD / 1Y / SI and one of the six SI accounts on `qfxZ0DzB` -- is pressed in the
+     same session before the apply, so the read-back has a before and an after on one instrument.
+- Conditions 1-4 carry unchanged.
+
+**RE-SIGNED** on blob `3089695cc6`.
+
 ## What this half signs against
 
 - Packet blob `49148a2d2a`; W22's text (`1f3bf0914f`) with this seat's conditions; ~Y's arms @34a27a5b41; part P's K10
