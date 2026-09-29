@@ -86,7 +86,7 @@ READ-ONLY: every other file (`gold.py`, `lib/opal_naming.py` included), every S3
 is HELD until the pair is signed and runs in one window with the rewrite (decomposition v12.0 s.1a).
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>12</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
