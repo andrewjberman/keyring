@@ -2022,6 +2022,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "The stored 535-byte 403 bodies exist to compare against and the live body's structure can be set beside them.",
       "world_is": "Only the length (14 of 14 non-200 www.bloomberg.com responses, 13 stored + live) is comparable; structural identity is NOT MEASURABLE. AC2 reports the length match and the appId match, and no more.",
       "notes": "Filed, not chased. Now that the live body is retained in ac1_capture.json (a refusal page, no credential), the NEXT producer 403 can be compared to it -- the worker's transport does not persist 403 bodies, so that would need the producer to keep them; that is a proposal only, not implemented here."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S37",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-29T00:25Z",
+      "one_line": "safe-merge.sh's --continue foreign-path guard whitelists whatever the INDEX holds when the merge conflicts, not what the MERGE staged: a peer that stages between the pre-merge clean-index check (:208) and the state snapshot (:248) has its files committed under the draining seat's name. It happened: this seat's drain merge 2751f0be77 (HVST-a-3) landed 0.7.0_AE_CloudOps~A's NEVER-2 entry + sentinel for AMGT_RESAPP uu-4.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: 2751f0be77 vs its first parent adds 12 paths; its second parent (the worker branch) vs the merge-base adds 10. The 2 extra are org/critical_paths/.open_deploys/amgt-resapp-uu4-scoped-amgt-adjusted-base-20260928.json and change_management/20260928T2357Z_amgt-resapp-uu4-scoped-amgt-adjusted-base-20260928_deploy_completion.md (author in the entry: 0.7.0_AE_CloudOps~A, opened 2026-09-28T23:57:25Z); neither parent carries either file.",
+          "The same check over this seat's other four drain merges (4350d5af00, 03e86f2909, 180989c8a8, 2dd09b20b9): landed == branch in every case, 0 foreign.",
+          "safe-merge.sh:208 refuses a dirty index BEFORE `git merge --no-commit`; :248 writes $STATE from `git diff --cached --name-only` AFTER the merge conflicts; :172-190 (--continue) refuses only paths absent from $STATE. A path a peer stages inside the merge's own run time is therefore recorded as the merge's own."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "safe-merge.sh :171-175: '--continue ... compare against what the MERGE staged when it conflicted. A path staged now that the merge did not put there is another seat's work' -- refused.",
+      "world_is": "$STATE is an index snapshot, not the merge's contribution, so the guard is blind to anything staged during the merge itself -- the busiest window on a contended tree. The swept content is byte-unchanged and committed (the entry reads back from HEAD, which NEVER-2 wants); the harm is authorship and the owner's own commit finding nothing to stage. Owner told: msg to 0.7.0_AE_CloudOps~A 2026-09-29T00:19:55Z.",
+      "notes": "DISARM (this seat, same turn, by PROCEDURE): before any --continue, compare `git diff --cached --name-only` against `git diff --name-only $(git merge-base HEAD MERGE_HEAD) MERGE_HEAD` plus the conflicted paths, and unstage nothing that is not ours without its owner. TOOL FIX, proposed to the script's authoring lane (2.0.0_SA_COO base; no base session live): write $STATE from the merge's OWN contribution (merge-base..MERGE_HEAD names + --diff-filter=U), never from the index snapshot. Proposing is legal; this seat does not implement it (CLAUDE.md section 2(a))."
     }
   ]
 ```
