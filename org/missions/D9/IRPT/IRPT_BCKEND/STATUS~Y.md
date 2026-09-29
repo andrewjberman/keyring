@@ -71,6 +71,62 @@ arm did not run (W22 carries no arm R). Target Weight IS proven through the vend
 scanned). The four carried report arms each need ONE more window packet from `2.0.0_SA_COO~P`, and no code is owed by
 ~Y for any of them. Leg D1 credoff was handed to ~P at 14:32:50Z.
 
+## 0b. Window 24 WALKED and ROUND 23 CUT (2026-09-29 evening)
+
+### W24: zero reports, and the blocking reason named
+
+Proof: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/W24/PART_Y_EVIDENCE_20260929.md` @e146a80a3d. Packet blob
+`3089695cc6` @cbbe9ed0db (amendment 1 is part P only); CTO 102899, CRO 102904; ledger
+`irpt-ui-walk-principal-w24-20260929`. GO 17:25Z, **Y1 fired 17:26:11Z**, part Y complete 18:00:20Z, **18 min inside
+the 18:18:34Z cap**. Credoff handed to ~P 18:03:10Z.
+
+| arm | firm | terminal state |
+|---|---|---|
+| 1 Multi-Comp | cottonwood | NORMALIZED 2 s -> **ATTENTION `SESSION_REFRESH_ALREADY_USED`** 17:41:39Z |
+| 2 Target Weight n=1000 XLSX | cottonwood | **NEEDS_CORRECTION `RESOLVE_RETRY_EXHAUSTED`** (issuer's overlap; S215) |
+| 3 Overview | 49financial | NORMALIZED 2 s -> **ATTENTION `SESSION_REFRESH_ALREADY_USED`** 18:00:00Z |
+| 4 Overview | inflection | **CAP-TRUNCATED by name**, 18 min remained |
+
+The S206 discriminator was **dropped by name** (~P 102921) on ~Y's measured budget. **ZERO reports; all four report
+arms still carry** -- Multi-Comp, the Target Weight report, the first certified 49financial, and a certified
+Inflection. DLQ 1 before and 1 after, equal, so no BLOCKING row was owed there.
+
+### Rows this lane filed
+
+- **`IRPT_BCKEND-S215`** @b902e33b15 -- **S206 CONFIRMED on a second build.** A defect in `w24_run_arms.sh` (an MSYS
+  path embedded in a `python -c` source body, which MSYS does not convert) skipped the jobs-terminal wait and
+  overlapped arms 1-2, running the dropped discriminator by accident: arm 1 solo NORMALIZED, arm 2 into its live
+  generation exhausted. First reproduction off `wnt7hjAB`. Provenance recorded as the issuer's defect: not designed,
+  not pre-registered, not randomised.
+- **`IRPT_BCKEND-S218`** @e146a80a3d -- **BLOCKING / ARMED**, `disarm_owner` `2.0.0_SA_COO~P`. Both jobs that reached
+  the vendor, two tenants, each SOLO, died at the session refresh. `inrij6hL` 2 of 2; `wnt7hjAB` 1 of 2.
+- **W22's `screen` link is now EVALUATED and NOT MET** (addendum @2912983044): `RPT-2e21b52e` sections serve 200 /
+  UNAVAILABLE / `UNEXPECTED` / "bundle was not rendered". The deleted walk principal is NOT the cause -- an ownership
+  failure would serve `NOT_AUTHORIZED`, and `interactive_access.authorize_current` returns True for any `OPAL_GLOBAL`
+  viewer regardless of the stored `principal_id`. The missing artifact is the rendered bundle. ~P owns that row (S213).
+
+### Round 23 ~Y: cut and spawned
+
+`decompositions/IRPT_BCKEND_DECOMP_R23_Y.md`, **one cell `IB-yr-231`**, order `TO-IB-yr-231` @4f2a591f61, worker
+`~83` on `wk-IRPT_BCKEND-83` (spawned @cb7e028c6c, `pending`). fanout 1 of 1, cap 8.
+
+The mechanism that shaped it: `refresh_session()` is reachable only from `step()` on an `eviction_verdict`, so
+`SESSION_REFRESH_ALREADY_USED` means the job was **evicted twice**, the first eviction spending the one admitted
+refresh. `1.0.0_SA_CTO` ruled a pre-claim session fix (102967) and then **amended on that reading** (102970):
+observe, discriminate, remedy, with the one-refresh allowance unchanged in every branch. The cell is the observation
+only -- journal the matched verdict per eviction and the job's terminal ATTENTION code. It closes `S207` as a side
+effect. Steps 2 and 3 are deliberately uncut: step 2 is a live read this lane performs once the journal carries the
+verdict, step 3 the amendment that reading decides.
+
+Base dry-run, measured: AC1 FAIL, AC2 FAIL, AC3 PASS both parametrizations.
+
+### What this lane is waiting on
+
+1. **Worker `~83`** to finish `IB-yr-231` (running at this write).
+2. Then `2.0.0_SA_COO~P` to rebuild the resident carrying it -- served code never moves by ~Y.
+3. Then **one solo job on a cold resident** (step 2), which needs an Analysis window packet from ~P.
+4. The four report arms remain blocked behind S218 for as long as no job can reach the vendor session.
+
 ## 1. Pins
 
 | What | Value |
