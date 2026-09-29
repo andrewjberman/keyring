@@ -2115,6 +2115,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The two tests that pin the version literal sit in test_dossier_case_unit.py and test_dossier_case_body.py, neither in this order's <paths>; the corpus suite reads red on them until the issuer widens the paths or updates them. test_dossier_case_layouts.py needed no change: it pins neither the version nor a reason on a placed name when no word reader is passed.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Filed, not fixed. Same class as Z-W1-S13 (disarmed by Z-S56 through a path amendment)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S57",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T08:32:00Z",
+    "one_line": "DISARM of AMGT_CORPUS-Z-W1-S14 by its owner: the two method-version tests the ruled /4 bump turned red were updated under the issuer's AMENDMENT 1 to CRPS-m-2 (e119939999); the corpus suite reads 438 passed on the merged trunk (b274848977).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment commit e119939999: CRPS-m-2 <paths> gains tests/test_dossier_case_unit.py and tests/test_dossier_case_body.py; rule 7.",
+        "Worker commit 1cfd1e6737: both tests assert amgt-corpus-dossier/4; issuer re-grade at 1cfd1e6737: lib/research/corpus/tests 438 passed.",
+        "Chain merged at b274848977."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W1-S14: the /4 bump turns two tests outside the grant red.",
+    "world_is": "Granted and updated; the suite is green on the trunk.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's disarm, evidence-cited; same class as Z-W1-S13 / Z-S56 in round 10. A METHOD_VERSION bump ruled at a cut should grant the tests that pin the old version in the same order (a cutting lesson)."
   }
 ]
 ```
