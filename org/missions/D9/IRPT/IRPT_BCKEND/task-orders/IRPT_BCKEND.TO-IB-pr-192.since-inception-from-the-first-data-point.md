@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~61</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-28</issued_date>
-<status>pending</status>
+<status>superseded -- PRD ADDENDUM v0.19 @65f3dde719 (ADMITTED) ruling 6: "Since inception starts at each account's first landed holdings day" in the consolidated holdings-basis gold (Andrew-direct 2026-09-28 ~22:4xZ), which retires the 49F engine read this cell built on (ruling 12). The cell's build (AC1 PASS on wk-IRPT_BCKEND-61 @b1cbe6a302) is not merged; its live AC2 stayed blocked on the twr_daily partitions (row W61-S2). Set by the issuer 2026-09-29 ~00:3xZ.</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
