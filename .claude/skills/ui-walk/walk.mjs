@@ -196,7 +196,7 @@ async function exploreScope(page, scopeSel, label) {
       if (!timeLeft()) break
       await sel.selectOption(o.v).catch(() => {})
       await page.waitForLoadState('networkidle', { timeout: 6000 }).catch(() => {})
-      await page.waitForTimeout(1200)
+      await page.waitForTimeout(1200 + opt.settleExtraMs)
       await checks(page, `${label}-${name}-${o.t.slice(0, 24)}`)
     }
   }
