@@ -5,7 +5,7 @@
   "fabric": "site-z",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "created": "2026-09-29",
   "registered_under_tree": "2026-09-29",
   "placement": "SITEZ",
@@ -27,7 +27,9 @@
     "org/missions/D13/DSGN/DSGN_AMGTV1/prd/DSGN_AMGTV1_PRD.md@v0.1",
     "org/missions/D13/DSGN/DSGN_AMGTV1/prd/DSGN_AMGTV1_PRD.md@v0.2"
   ],
-  "decompositions": [],
+  "decompositions": [
+    "org/missions/D13/DSGN/DSGN_AMGTV1/decompositions/DSGN_AMGTV1_DECOMP.md"
+  ],
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~Z",
