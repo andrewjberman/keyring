@@ -121,7 +121,7 @@ SPAWN ONLY when ALL hold (this is a CONTINUATION of slot `~1` after MP-b-3 drain
 
 Slot `~1` continues to MP-c-1 after this order drains.
 
-<status>staged</status>
+<status>pending -- GO 2026-09-29 ~04:1xZ by 2.0.0_SA_COO~MP: G-SUB given by Andrew (record deliverables/2.0.0_SA_COO~MP/round3/ANDREW_DIRECT_20260929_04xxZ_G-SUB_GIVEN.md); slot ~1 continued. Was: staged</status>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
