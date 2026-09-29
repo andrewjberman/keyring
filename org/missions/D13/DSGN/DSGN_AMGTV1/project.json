@@ -24,7 +24,8 @@
     "org/missions/D13/DSGN/DSGN_AMGTV1/prd/DSGN_AMGTV1_PRD.md"
   ],
   "prd_lineage": [
-    "org/missions/D13/DSGN/DSGN_AMGTV1/prd/DSGN_AMGTV1_PRD.md@v0.1"
+    "org/missions/D13/DSGN/DSGN_AMGTV1/prd/DSGN_AMGTV1_PRD.md@v0.1",
+    "org/missions/D13/DSGN/DSGN_AMGTV1/prd/DSGN_AMGTV1_PRD.md@v0.2"
   ],
   "decompositions": [],
   "decomposition_lineage": [],
@@ -37,7 +38,7 @@
   },
   "coo_lane": "2.0.0_SA_COO~D",
   "fabric_ruling": "site-z -- Andrew-direct 2026-09-28 ~22:4xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'COO~D is fine, because they are on separate boxes, so there shouldn't be any overlap. DSGN_AMGTV1 will be owned by the sitez box, so it should not interfere with any COO~D ops on the laptop box.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_DSGN_AMGTV1_SEATS_ON_COO_D_SITEZ.md). D13 is placed LAPTOP; this member is the named per-member exception the register header reserves to Andrew per case (DIRECTIVES.yaml:24-26), adjudicated by 3.0.0_SA_CVO~Z msg 26308 (REC (a) CONCUR). directives-check displays D13 as LAPTOP for this member: display only, no tool routes member work by directive placement.",
-  "blocking": "L4 PRD v0.1 landed; L4-R owed: 3.0.0_SA_CVO~Z signs the ratified-text half (ENDPOINT + CONTRACTS); the brief half is accepted because the CRO wrote the brief. L5 (2.0.0_SA_COO~D) follows the sign-off.",
+  "blocking": "PRD v0.2 ADMITTED (ratified-text SIGNED by 3.0.0_SA_CVO~Z @5a222f83d6; brief half auto). L5 decomposition and the round-1 issuance (the Valero thread) are 2.0.0_SA_COO~D's.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPOINT_FORWARD_20260928.md",

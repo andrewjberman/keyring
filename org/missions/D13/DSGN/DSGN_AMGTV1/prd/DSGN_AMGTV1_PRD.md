@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -21,7 +21,9 @@ signed-in `/ui-walk` (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DI
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
-Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPOINT_FORWARD_20260928.md` @`3d7fc6695e`.
+Landed from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPOINT_FORWARD_20260928.md` @`3d7fc6695e` verbatim
+except one sentence: FWD-3's ACCEPT dropped "The form is Andrew's call (fork F1)." because F1 was ruled @`ac5433b35b`
+before this landing (v0.2 wording, `3.0.0_SA_CVO~Z` condition 1).
 
 ```
   FWD-1  A portfolio manager opens Security Analysis, finds Valero in today's
@@ -129,7 +131,9 @@ name, classification, rank change, currency, citation and verdict on the page is
 (`lib/research/api/scoped_amgt.py`, the scoped AMGT API). **A field the page needs and the payload lacks is an ASK to its
 owning project, never a page-side computation** (F5; brief Part II): the page does not rank, classify, convert a currency,
 derive a rank change or choose whose recommendation a sentence is. A value the payload does not carry renders as a
-designed empty state naming what is missing and whose it is to fill.
+designed empty state naming, in plain words, what is missing and which team fills it (for example "the research
+team's pack does not include this yet") -- never a project code, serial or storage path (FWD-11; v0.2 wording,
+`3.0.0_SA_CVO~Z` condition 2).
 
 **C-ESTATE-FIXTURES.** Cards, modals, charts, empty states and footers are the estate's own pieces (brief IV.3, IV.5):
 `HeroDialog` + `DialogStamp`, `Panel` / `PanelHeader` / `PanelFooter` / `SmartPanelFooter`, `ChartLegend`, `DataTooltip`,
@@ -202,6 +206,9 @@ criteria at L9 on the PNGs, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
 
+- v0.2 (2026-09-29, `1.0.0_SA_CTO~Z`): two wording conditions from `3.0.0_SA_CVO~Z`'s ratified-text SIGN @`5a222f83d6`
+  (review `DSGN_AMGTV1_L4R_RATIFIED_TEXT_REVIEW_20260929_Z_SIGN.md` @`82fb40d877`): the ENDPOINT header states FWD-3's dropped
+  fork sentence; C-PRESENTATION-ONLY names an empty state's owner in words. No ENDPOINT change; no half re-opens.
 - v0.1 (2026-09-29, `1.0.0_SA_CTO~Z`): ENDPOINT landed from @`3d7fc6695e`, confirmed by Andrew's ~02:2xZ word; CONTRACTS from
   the brief's Parts II, IV and VII and the F1-F5 ruling @`ac5433b35b`.
 
