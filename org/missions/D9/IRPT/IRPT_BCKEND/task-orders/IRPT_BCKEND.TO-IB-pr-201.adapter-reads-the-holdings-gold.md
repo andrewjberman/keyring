@@ -2,10 +2,10 @@
 
 <to_id>IRPT_BCKEND.TO-IB-pr-201</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~64</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~77</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-29</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -20,6 +20,25 @@ for account 0010498003, 184 YTD partitions)
 ---
 
 ## WORKER FACE
+
+**AMENDMENT 2 (2026-09-29 ~11:2xZ, issuer, on 1.0.0_SA_CTO 102736 / 102746 and 4.0.0_SA_CRO 102735 / 102737) -- REOPENED
+for ONE fix; this is the whole of your work.** The switch built here (drained @a595a14264, served as hD7G6YT1 at
+10:14Z) was ROLLED BACK at 10:58Z: every served 49F YTD/QTD/1Y answered UNEXPECTED with
+`ModuleNotFoundError: No module named 'parity_period_returns'`.
+- Before the switch, `installed._engine_source()` put `data/assets/scripts/gold/runners_49f` on `sys.path`.
+- `installed._holdings_source()` replaced it and inserts nothing.
+- `holdings_gold._period_for` -> `f49_engine.ruled_period_for` still lazily imports `parity_period_returns`, which the
+  zip carries at `data/assets/scripts/gold/runners_49f/`.
+- Since inception skips `_period_for`, so the cold start and the since-inception answer passed.
+
+**Build (49F ALONE, CTO 102746: no Inflection change rides this artifact):** in
+`C:/Users/AndrewBerman/Desktop/ajb_workspace/infra/aws/lambda/investor-reporting/performance/installed.py`, make
+`build_runtime` put the packaged `data/assets/scripts/gold/runners_49f` directory on `sys.path`, beside `lib` and
+`investor_reporting`, found from the same `root` it already resolves. Add a test. Change nothing else.
+
+The criteria for THIS amendment are P20-3-AC1 (the packaged layout resolves a ruled period) plus P20-1-AC2 and P20-2-AC1
+(unchanged behaviour). P20-1-AC1 stays as written below and is not re-graded here.
+
 
 ### THE CELLS
 
@@ -76,7 +95,13 @@ asks your RetainedPerformance(holdings_source=...) for the same window. Arm A: t
 chain, and the engine report is not reopened. Arm B: asking again reopens it unchanged, with no second gold read.
 Base: FAIL (holdings_gold absent; the pre-switch half runs clean).
 
-<expected_criteria>P20-1-AC1,P20-1-AC2,P20-2-AC1</expected_criteria>
+<criterion id="P20-3-AC1" cell_refs="IB-pr-201"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r20/p20_3_ac1_packaged_ruled_period.py" .</invocation><expect>P20-3-AC1 PASS</expect></criterion>
+`P20-3-AC1` (amendment 2) -- the adapter layout is built from the source map using your worktree's bytes. In an
+interpreter whose import path is only that layout, `installed.build_runtime(...)` then `holdings_gold._period_for` for YTD
+resolves without ModuleNotFoundError. Base: FAIL (`No module named 'parity_period_returns'`); with the one-line insert:
+PASS (measured at the cut).
+
+<expected_criteria>P20-3-AC1,P20-1-AC2,P20-2-AC1</expected_criteria>
 
 ## BOUNDS
 
@@ -102,12 +127,12 @@ org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: P20-1-AC1, P20-1-AC2, P20-2-AC1. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~64/IRPT_BCKEND.TO-IB-pr-201.adapter-reads-the-holdings-gold.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> P20-1-AC1,P20-1-AC2,P20-2-AC1` BEFORE the flip.
+Criterion ids: P20-3-AC1, P20-1-AC2, P20-2-AC1 (amendment 2). Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~77/IRPT_BCKEND.TO-IB-pr-201.adapter-reads-the-holdings-gold.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> P20-3-AC1,P20-1-AC2,P20-2-AC1` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** your final message: the commit hash, each criterion's last line, and any surprise row id
-(`IRPT_BCKEND-W64-S<k>`).
+(`IRPT_BCKEND-W77-S<k>`).
 
 ---
 
