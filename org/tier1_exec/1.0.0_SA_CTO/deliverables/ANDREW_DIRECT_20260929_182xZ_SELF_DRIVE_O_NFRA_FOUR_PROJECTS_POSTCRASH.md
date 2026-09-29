@@ -32,3 +32,6 @@
 ## Log
 
 - 2026-09-29 ~18:3xZ ARMED by 1.0.0_SA_CTO~O.
+- 2026-09-29 ~19:2xZ (tick 3): paired_with gains `/canonical-drive NFRA_OPALAI 30m` at 2.0.0_SA_COO~AI (respawned
+  18:51Z). All three COO halves arm now, not after the checkout removals, which wait on Andrew's word and gate
+  nothing (msgs 26668-26670).
