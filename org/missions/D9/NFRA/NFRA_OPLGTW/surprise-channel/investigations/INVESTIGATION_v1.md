@@ -4769,3 +4769,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "For the PRD revision or an engine cell: either add the measured overshoot to the reserve or lower the kill threshold below the cap so the recorded peak cannot exceed it."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S14",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T09:05Z",
+  "one_line": "Measured under A3: the sealed account set is EVERY account in both masters (7460 and 7548, 15008 in all), so ruling (1)'s grant cannot be the 'bounded subset' of accounts TO-OG-g-1 requires -- and the seal FORCES that, because RQ2-2..RQ2-6 are aggregates whose hashes break under any account subset.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-09-29 by probes/og_g1_accounts.py under the A3 grant (GetObject by pinned VersionId on the 5 seal objects, pyarrow decode, counts only): master 08242234 -> 7460 distinct accounts; master 08335338 -> 7548. Per object rows/distinct: 08242234 dim_balance 09-25 7460/7460, 09-24 7452/7452; 08335338 dim_balance 09-25 7548/7548, 09-24 7540/7540, dim_position 09-25 106835 rows/6347 distinct. 5 of 5 objects read.",
+      "ORDER TEXT: 'BOUND IT SO THE DENIAL CASES STILL EXIST ... The accounts and columns stay a bounded subset' -- the columns ARE a bounded subset (15 of the contract catalog's 29), the accounts are not and cannot be.",
+      "WHY THE SEAL FORCES IT: WALKTHROUGH_PROTOCOL.md s.4 -- RQ2-2 'the sum of mkt_value_long and, separately, the sum of mkt_value_short ... how many accounts hold a negative value in each field'; RQ2-3, RQ2-4, RQ2-5, RQ2-6 are likewise sums over the object. An account subset changes every one of those aggregates, so the answers would no longer hash-match SEALED_EXPECTED_V2.json. Ruling (1) is the only value under which the sealed answers can verify.",
+      "PHYSICAL COLUMN: the count is taken on account_id, not the contract catalog's account_ref -- app/integrations/schwab/datasets.json:12 'The source column is account_id (schwab_schemas.py:169, CORE)'; account_ref is the Gateway's keyed HMAC over it and exists only in responses (app/account_ref.py:3-8). The HMAC is injective per master, so the COUNT is the same either way.",
+      "FEASIBILITY, measured not assumed: every id is exactly 10 characters, so scope.accounts serialises to about 195102 bytes -- 47.6% of DynamoDB's 400 KB item limit. The ruled grant fits in one item.",
+      "NO A-ROW DEPENDS ON AN ACCOUNT-DIMENSION REFUSAL, checked: A6 step 4 ('a total filtered or grouped by a field outside the grant') is a COLUMN refusal and still fires; A6 step 3 ('which other people have Schwab access') is about not revealing other principals, not grant scope; A10 is about copied/expired download links, not scope."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The grant's accounts are a bounded subset, so the account dimension yields a refusal discriminator like the column and date dimensions do.",
+  "world_is": "The grant's accounts are the whole population of both masters, because the seal's aggregate answers force it. The account dimension therefore yields NO refusal discriminator, and every refusal OG-v-7 grades must come from the COLUMN dimension (the evidence file's must-be-refused request is bank_cash, a real catalog field outside the grant, holding master/dataset/date/operation identical) or the DATE dimension (2026-09-23, a real qualified date outside the fixed_dates grant). Both are recorded in the evidence file and neither is affected.",
+  "notes": "INERT: nothing is blocked and the ruling stands -- this records WHY it is right and what it costs, so OG-v-7's grader does not look for an account-scoped refusal that cannot exist. It also corrects the order's 'accounts and columns stay a bounded subset' clause, which holds for columns only."
+}
+```
