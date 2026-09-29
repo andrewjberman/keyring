@@ -2405,6 +2405,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "TO HVST-e-2 AC1 (a): BEFORE expected as at the cut in section 2; if different, STOP before the first put. The criterion invocation is the one script.",
       "world_is": "After the act the S3 state no longer equals the cut, so the same invocation prints the STOP branch and rc 1. That is the designed behaviour of (a), not a defect. The instance therefore records the act's own output for AC1 and cites ac1_post_act_verify.py (read-only, re-runnable) for the AFTER, moved-rows and prior-parts checks.",
       "notes": "INERT. Grader note for L9: re-run ac1_post_act_verify.py, not the write-once script."
+    },
+    {
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~44",
+      "surfaced_at": "2026-09-29T12:20:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W44-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "one_line": "HVST-f-2: bounding the name stems by the matched aliases stops a story's words being read as the name, and also stops a brand or ticker stem that is in no alias being stripped; served events unmoved 8 of 8, 0 of 29 securities' stems changed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~44/scripts/ac2_served_events_unmoved.py: name stems old vs new identical for all 29 securities with tier-A/B rows in the served snapshot (275 rows, 56 securities)",
+          "lib/research/harvest/publication_gold.py _security_name_tokens: a stem is a name only if it is also a stem of a matched alias (_alias_stems)"
+        ]
+      },
+      "spec_asserts": "TO HVST-f-2 section 1: read the security's name from the stems of its own matched aliases instead of, or bounding, the inference from headline frequency; the criteria grade the outcome.",
+      "world_is": "The mechanism chosen bounds the frequency inference by the alias stems (intersection). A security named in its headlines by a ticker or brand in no alias (round-16 census: UPS, Google) no longer has that word stripped when its sample passes the frequency test, so that word becomes a linking term; no served security is in that state today (0 of 29 changed), and the round-16 ruling already places the ticker/brand under-count in its own per-security census.",
+      "notes": "INERT. Rows with no match_forms keep the old inference (a hand-built row or one predating the column); every real mention row carries the column (275 of 275)."
     }
   ]
 ```

@@ -76,7 +76,7 @@ No gold write, no alias change, no tier change, no vendor call. It does not grad
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~44</slot>
 <fabric>site-z</fabric>
