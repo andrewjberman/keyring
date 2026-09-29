@@ -12318,3 +12318,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "NOT a replay request; nothing was retried and the window's cap is spent. This is ARMED because it is not window-local: every future Analysis window produces zero reports until the session path is repaired, so it blocks the four carried report arms (Multi-Comp, Target Weight, the first certified 49financial, Inflection) indefinitely rather than for one cap. Two reads would locate it, neither inside a walk window and neither ~Y's to make: (1) why the resident holds no usable vendor session at job start on inrij6hL -- whether the 15:00Z build, the r3 apply, or the session store is responsible; (2) whether one admitted refresh per request is the right allowance when the first act already needs one. If the answer to (2) is no, the fix is a contract change in resident_worker.refresh_session and belongs to 1.0.0_SA_CTO, not to a walk."
 }
 ```
+
+## ~Y worker row -- IB-yr-231: BOUNDS says the generate suite is read-only, <paths> grants test_resident_worker.py
+
+```json
+{
+  "id": "IRPT_BCKEND-W83-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~83",
+  "surfaced_at": "2026-09-29T19:39:00Z",
+  "one_line": "TO-IB-yr-231 BOUNDS calls the generate test suite READ-ONLY while the same order's <paths> grant tests/test_resident_worker.py; I read <paths> as the write grant and added one test there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-yr-231.name-the-eviction-and-the-job-attention.md BOUNDS: 'The check in R23_CHECKS/ and the generate test suite are READ-ONLY' vs its <paths> block listing infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py",
+      "commit 7fc1a123f0 on wk-IRPT_BCKEND-83 adds test_eviction_and_attention_lines_name_a_real_verdict_and_job (19 lines, additive, no existing test edited); the suite ran 40 passed, 8 skipped afterwards (39 passed, 8 skipped before)",
+      "reason for the added test: the R23 check's 'job=' assertion also passes when the job id is printed as the '?' fallback token; the added test asserts no '=?' and a real verdict name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BOUNDS: the generate test suite is read-only; <paths>: test_resident_worker.py is writable.",
+  "world_is": "The two clauses of one order conflict; the <paths> block is the lane gate's write grant, so the edit was admitted, and it is additive only. The issuer may revert that one test if the BOUNDS wording was intended.",
+  "notes": "No behaviour or criterion affected; AC1-AC3 pass without the added test."
+}
+```
