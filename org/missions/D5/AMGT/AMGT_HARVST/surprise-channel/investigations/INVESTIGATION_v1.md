@@ -2673,6 +2673,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "HVST-j-1 item 1: update the route comment's path to .../timeline/event/{event_id}; write surface is timeline_api.py, harvest tests, deliverables folder, and this channel.",
       "world_is": "timeline_api.py's own route comment is updated, but the wiring-section comment in scoped_amgt.py (outside <paths>) still names <first_day>. Comment only; no behaviour depends on it and the route stays unwired and unmounted.",
       "notes": "Left as is; any later mount cell that touches scoped_amgt.py should correct the comment and TIMELINE_ROUTES together."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W48-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~48",
+      "surfaced_at": "2026-09-29T23:10:00Z",
+      "one_line": "Row Z-W41-S1 and the round-20 cell treat the AMZN plane-crash coverage as a 6-article 2026-09-06..09-10 burst of ONE story; under the served story test (publication_gold._security_stories) it is 5 articles on 09-06..09-08 plus a separate 1-article story on 09-10, so no span rule that reuses the story test can join the 09-10 piece.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~48/j2_ac1_output.txt section (c), from scripts/j2_ac1_story_span_census.py run 2026-09-29 over served mention part-20260929T192610Z: AMZN tier A/B rows=10, stories=4; story 2 = 5 rows 2026-09-06..09-08 (bbg 09-06 A, barrons 09-07 A, wsj 09-07 A, bbg 09-07 B, barrons 09-08 B); story 3 = 1 row 2026-09-10 (bbg 'Amazon Jet Tried to Abort Landing Before Fatal Crash, NTSB Says')",
+          "the candidate at both gap 1 (EVENT_MAX_GAP_DAYS) and gap 0 yields the same AMZN event: 472a1836a7be span 09-06..09-08, 5 articles; the 09-10 piece is in no event under either",
+          "lib/research/harvest/publication_gold.py _security_stories: two tier-A articles link only within window = max_gap_days + 1 = 2 days (linked(): abs(days[i]-days[j]) > window -> False). The 09-10 bbg piece is 3 days from the nearest other tier-A article (09-07 barrons/wsj) although it shares terms with them (crash, fatal, jet, ntsb after 'amazon' is dropped; measured with _story_tokens), so it is its own story on the DAY WINDOW, not on words"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "ROUND_ANALYSIS.round19.md s.2 ruling 3 / row Z-W41-S1: the AMZN coverage is a 6-article 2026-09-06..09-10 burst of one story, split by the served span rule into a 3-article 09-07-only event; the census asks what a same-story-consecutive-days span rule changes.",
+      "world_is": "Two things are conflated in the row. The served SPAN rule is what cuts 09-06 (1 article, one publisher, not a qualifying day) and 09-08 (tier B only) off the 09-07 event: the candidate recovers both, giving 5 articles 09-06..09-08. The served STORY test is what cuts 09-10 off, through its 2-day link window between tier-A articles (not through headline words, which the 09-10 piece shares with the 09-07 pieces): bbg's 09-10 piece is its own 1-article story, which no span rule reusing the story test can join. The 6-article burst exists only if the story test is also changed, which this cell may not do (standing clause 1). The census makes no verdict on either change.",
+      "notes": "INERT: measurement only, nothing served is affected. For the CTO at round 20's analysis: ruling on the span rule alone yields the 5-article event; a 6-article event needs a ruling on the story test's link window as well."
     }
   ]
 ```
