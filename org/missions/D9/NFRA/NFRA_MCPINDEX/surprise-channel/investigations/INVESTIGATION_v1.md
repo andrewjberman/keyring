@@ -2596,6 +2596,53 @@ carries none.
     "spec_asserts": "Z-W8-S3 (BLOCKING, ARMED): MX-i-4's removal cannot proceed while 4 live documents read the secret; each weekday they make an automated portal login with the live password that fails.",
     "world_is": "Refusing AC1 was correct (order step 3). Nothing about the grant or the logins changed this round. Whether 5 failed logins per weekday risk an account lockout on the BD portal is UNMEASURED and is named here for the analysis, not assumed either way.",
     "notes": "Routed to 1.0.0_SA_CTO~O with the round-3 slug: one candidate cell per leg or one batched port on the MX-s-12 pattern, after which MX-i-4 re-runs unchanged."
+  },
+  {
+      "id": "NFRA_MCPINDEX-Z-W10-S2",
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~10",
+      "surfaced_at": "2026-09-29T01:50Z",
+      "one_line": "MX-r-4 PHASE B step 8 cannot start from the pin's release tree: safe-ec2-deploy.sh's HALT-GATE admits a worker only while a non-terminal task order issued_to it is at HEAD of the calling tree, and mx-rel4 (HEAD 3371f18803, cut at d287ffb346) carries none; exit 3, before any upload.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~MI",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "safe-ec2-deploy.sh run from /c/tmp/mx-rel4 at 2026-09-29 ~01:4xZ, twice: 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', DEPLOY-EXIT=3, both times after 'OK: Pre-deployment checks passed' and before any S3 upload or SSM call. First run resolved serial 2.0.0_SA_COO~MI (the shared root's session serial file); after provisioning the worker's own serial file (gitignored org/mcp/sessions/<session-id>.serial, the mechanism halt-gate-check.sh's own comment names) it resolved 0.9.0_WK_NFRA_MCPINDEX~10 and was refused for the reason quoted: a spine-v3 worker is admitted only while a NON-TERMINAL task order under <CODE> is issued_to it at HEAD of the calling tree.",
+              "Precedent for the workaround: commit 54e26d66a0 (NFRA_OPALAI OA-r-1) is a DEPLOY-ONLY commit, CLOUD tree with infra/aws/ec2/opal-gateway replaced by the release commit's, never merged, 'so the halt gate finds the worker's task order at HEAD'. That route changes the deployed commit hash, and both never-widen halves and G-A were signed on hash 3371f18803.",
+              "State at the block: nothing uploaded (latest artifact still 402043 B, LastModified 2026-09-29T00:44:48Z), no SSM deploy command, host .env still 'ycharts opal_portal globgrph'. Ledger nfra-mcpindex-r3-gateway-enable is OPEN (entry+sentinel committed a05831a52b, L4 closed, L1-L3 open, 4 h window)."
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO MX-r-4 step 8 and the signed GO: deploy from the RELEASE worktree /c/tmp/mx-rel4 with ITS scripts, `bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`, on pin 3371f18803; the issuer measured N1 (HEAD 3371f18803, mcportal a3bff71, 0 status lines) as the guard.",
+      "world_is": "The wrapper's halt gate refuses the pin's own tree for a worker, so the act as written cannot run. The two ways forward are the issuer's and the signers' to choose, not the worker's: (a) a DEPLOY-ONLY commit on top of 3371f18803 that adds the task order (as OA-r-1 did), whose gateway directory equals the pin's, at the cost of a new deployed hash and a delta re-sign; (b) the issuer runs the deploy from a tree where the gate admits it. HALT_GATE_REPO_ROOT is set unconditionally at safe-ec2-deploy.sh:57 and the gate was not overridden.",
+      "notes": "MX-r-3 and OG-s-1 ran this wrapper from their release trees; what admitted them is not recorded in this file set (not measured here). Nothing was deployed, so nothing is half-landed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S53",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T03:03Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W9-S1"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W9-S1: the live BD value at org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/CARRIER_CENSUS.md :3408/:3412 is replaced by the Secrets Manager placeholder at HEAD, under the CTO ruling @8ed938b2d7 (the redaction set is 8 files) and MX-s-13 A1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker ~9 commit 8e59257146, drained 720eb2de32: 2 lines changed in that file, value count 2 -> 0 (worker count-only check); row LGIC_ENFORCE-Z-W9-S1 filed in LGIC_ENFORCE's channel.",
+        "Issuer shape scan on CLOUD: 0 literals in the file after the detector's escaped-quote fix, with positive control 1/1 on the pre-redaction bytes @3c9a7dce69 (5498ce662d)."
+      ]
+    },
+    "spec_asserts": "Z-W9-S1 (ARMED): the live value sits in a tracked file outside the 7-file set.",
+    "world_is": "At HEAD the 8-file set carries 0 literals by shape; the CVO's fingerprint scan (MX-s-13 J1, L8) is the oracle. History is not scrubbed and the credential is not rotated -- both Andrew's (rotation LATER; no scrub), so Z-S29/Z-S31 stay open on rotation.",
+    "notes": "Issuer disarm owed since the A1 grade; recorded at the round-3 close."
   }
 ]
 ```

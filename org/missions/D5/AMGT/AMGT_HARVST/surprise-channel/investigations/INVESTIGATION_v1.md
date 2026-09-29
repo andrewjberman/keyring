@@ -2120,6 +2120,49 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "Both loaders LIST before they GET, and s3:ListBucket is a bucket-level action the GetObject grant does not confer. The role's single ListBucket statement is prefix-conditioned onto a set that excludes both the gold prefix and the five silver article prefixes, so with the named grant applied the range route is denied at its gold list and the day route is denied again at its silver join. AC1 would FAIL 200-with-data and fire the combined rollback -- a production apply that moves CodeSha256 twice for a result predictable before the upload. This is AMENDMENT 1's own class (row Z-S36, an IAM claim that was an inference rather than a read) one limb deeper: that amendment corrected the ACTION on the object and did not reach the bucket-level action the same call needs.",
       "disarm_owner": "2.0.0_SA_COO~H -- the issuer of HVST-a-2 and signer of its COO half, with 1.0.0_SA_CTO~Z re-reading the radius. Either the grant becomes s3:GetObject + s3:ListBucket with amgt/harvest/gold/ and the five <source>/harvest/silver/article/ prefixes added to the existing condition, or the cell is a round-13 redesign. This lane does not widen IAM: a-2's bound 1 admits one grant and no other.",
       "notes": "Held BEFORE the upload rather than discovering it at AC1, so no artifact version and no CodeSha256 move was spent on it. Asked COO~H in one message (20260929T013801Z). The combined NEVER-2 entry amgt-combined-uu4-a2-scoped-amgt-timeline-and-adjusted-base-20260929 stays OPEN with legs SHA, SIZE and CLOSURE proven and the irreversible legs untouched; its window is 8h from 01:15Z. The build-script change (act 1) is committed and re-runnable: pyarrow==16.1.0 in VENDOR_PINS with its sha256 printed before unpack, lib.opal_naming in the closure roots, the 8 registry data members, build_zip.py's prune set, two admitted native wheels, and the stop-limb-2 size gate."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W37-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~37",
+      "surfaced_at": "2026-09-29T02:56Z",
+      "one_line": "The resumed w-2 capture reached seekingalpha.com ONCE and got HTTP 402 (351 B) on the account check /api/v3/account/1btfwdu/info, where the last sa run (09-26 09:44Z, CALL 1 of ledger ~22) got HTTP 200 (5,149 B). The producer classed it account_or_harvester_unavailable and set a 3600 s sa cooldown to 03:49:20Z, so the other 4 jobs were suppressed, 0 listing pages and 0 articles were fetched, and the capture stopped at the first suppression. Cause of the 402 is NOT MEASURED.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: events.jsonl (main tree runtime) row {'event':'http','publisher':'sa','path':'/api/v3/account/1btfwdu/info','status':402,'bytes':351,'at':'2026-09-29T02:49:20.98Z'}; the same path returned 200 / 5,149 B on 2026-09-26 (org/missions/D5/AMGT/AMGT_HARVST/ledger/VENDOR_CALLS_0.9.0_WK_AMGT_HARVST_22.md CALL 1). Guards were installed and verified in the runner's own process (11 of 11 entry points IS_GUARD=True, w2_ac1_output.txt); guard trips 0, re-auth 0, verification repairs 0, browsers 0, Moonshot calls 0 (w2_ac7_output.txt).",
+          "MEASURED: progress.sqlite3 cooldown row for sa now (until 1790653760.98 = 2026-09-29T03:49:20Z, reason account_or_harvester_unavailable, the producer's own 3600 s cooldown); plan cursor advanced 8 -> 13 (5 jobs consumed: BP attempted, BA/BTI/BZLFF/CDNS cooldown-suppressed); the four suppressed jobs never read their known_ids.",
+          "AC2 (upload-harvest) then read a sa outbox with 0 pending rows and every sa delta was +0 (w2_ac2_output.txt); AC4 has 0 skips to present (w2_ac4_output.txt)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-w-2: the saved sa session that served 4 requests on 09-26 still serves; up to 25 jobs capture new sa articles behind --new-only.",
+      "world_is": "The first request of the resumed capture, the account check, returned HTTP 402 (a payment/entitlement status). Whether that is the subscription, the saved session, the 00:21Z incident's submitted sign-in from this IP, or a Seeking Alpha-side change is unmeasured; the last 200 was 2026-09-26 09:45Z and the 00:21Z incident sits between it and the 402 (02:49Z), so the data cannot separate them. sa capture is unreachable until an account-holder looks; the cooldown itself clears at 03:49Z without action.",
+      "notes": "A zero is an acceptable outcome (order clause 3) and the run stopped at the first suppression rather than waiting out the cooldown (the criterion's timeout is 1800 s; the cooldown is 3600 s) or retrying, which the word does not allow. What an account-holder can read that this seat cannot: whether the Seeking Alpha subscription is active and whether the account shows the 00:21Z sign-in. NON-APPLICATION: nothing in the producer or the estate was changed."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W37-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~37",
+      "surfaced_at": "2026-09-29T02:57Z",
+      "one_line": "HVST-w-2's premise 'the sa-symbol ceiling HVST-v-2 measured: 25 of 89 resolved securities carry a usable sa_symbol' is stale at this HEAD: lib/opal_data_harvest/config.json now names symbol_resolution_source SA_SYMBOLS_MERGED_89_20260927.json and the runner read 89 of 89 securities WITH an sa_symbol (0 without), so the 25-job cap is a cap on jobs, not a ceiling on resolvable securities, and no job is 'skipped for a missing sa_symbol'.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by AC1 (w2_ac1_output.txt): 'universe: 89 securities, 89 with an sa_symbol (0 without)'; the plan's next 25 jobs all carry a symbol (BP, BA, BTI, BZLFF, CDNS, CNI, CELH, ...).",
+          "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-w-2.capture-capped-new-only.md clause 0.1 states the 25-of-89 ceiling; lib/opal_data_harvest/config.json symbol_resolution_source = org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/SA_SYMBOLS_MERGED_89_20260927.json."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Only 25 of 89 securities carry a usable sa_symbol, so 25 jobs is the ceiling and the rest would be skipped for a missing symbol.",
+      "world_is": "All 89 resolve at this HEAD. The cap (5 x 5 jobs) still bounds the capture; the missing-symbol bucket of AC1 reads 0 of N.",
+      "notes": "No effect on this cell's outcome (the capture stopped on the 402, row Z-W37-S4). Filed so a later cut does not size a capture against 25."
     }
   ]
 ```

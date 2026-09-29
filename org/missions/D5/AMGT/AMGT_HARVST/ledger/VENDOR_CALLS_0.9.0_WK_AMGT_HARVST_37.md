@@ -43,3 +43,39 @@ vision call is covered or was reached.
 | what it may have done to the vendor account | UNKNOWN: a submitted sign-in plus two bot-wall interactions from this IP on 2026-09-29T00:21Z. The account-side effect (a flagged login, a lockout, an email) is not observable from here |
 | evidence | `.scratch/auth/20260929T002023Z-sa-33f4b866/` in this worktree (untracked, NOT committed: it holds screenshots of the login form): `run.log`, `auth-evidence.json`, `harvest_*_step{0..4}_*.png`, `hold-trace/` |
 | disposition | **STOPPED per w-2 clause 3.** No capture invocation was made after this; the order stays `pending`; row `AMGT_HARVST-Z-W37-S3` is BLOCKING and asks `2.0.0_SA_COO~H` whether the capture may proceed |
+
+## INCIDENT 1 SPEND -- ESTIMATE-UPPER-BOUND
+
+| field | value |
+|---|---|
+| seat | `0.9.0_WK_AMGT_HARVST~37` (worker of `2.0.0_SA_COO~H`, task order `HVST-w-2` AC5 = guard (c)), written 2026-09-29T02:46:50Z BEFORE any capture |
+| what is bounded | the Kimi vision-model calls made by the 00:21Z incident (`INCIDENT 1` above; row `AMGT_HARVST-Z-W37-S3`) |
+| method | LOCAL evidence only: the incident's `run.log` (59 lines; copy with the account e-mail redacted: `deliverables/0.9.0_WK_AMGT_HARVST~37/ac5_incident_runlog_redacted.txt`), the saved screenshots' PNG headers, and the harvester source `org/tier1_exec/4.0.0_SA_CRO/scripts/sa_harvest_session.py`. CTO ruling msg 26396 method |
+| calls counted | **3** vision-classified steps [('0', 'ANON'), ('1', 'LOGIN'), ('2', 'BOT_WALL')] (state token `(kimi)`); **2** cache hits, `no Kimi call` [('3', 'BOT_WALL'), ('4', 'LOGIN')]; retry lines (`KIMI_ERROR/EMPTY/UNPARSED`) in the log: 0; vision-locate lines in the log: 0 (the press-and-hold and sign-in clicks were DOM-driven) |
+| model | `kimi-k3` (from the run's own header line) |
+| output tokens, upper bound | 3 calls x `max_tokens` 4000 = **12000** (the classify calls' actual default is 1500; 4000 is the order's bound) |
+| input tokens, upper bound | 3 x (4096 image + 500 prompt) = **13788**. ASSUMPTION, labelled: 4096 image tokens per screenshot is a cap not read from the provider; the screenshot sizes ([('0', (1366, 860)), ('1', (1366, 860)), ('2', (1366, 860))]) give w*h/750 = [1567, 1567, 1567] |
+| rate card | UNMEASURED -- no 'kimi-k3' text in the page (status 200, 279803 bytes) -- URL `https://platform.moonshot.ai/docs/pricing/chat`, read 2026-09-29T02:46:49.665340+00:00, HTTP 200, 279803 bytes (ONE unauthenticated GET; no key, no account, no API, no console) |
+| **estimate (UPPER BOUND)** | **UNMEASURED (no kimi-k3 rate could be read; the call/token bound above stands)** |
+| provider-read figure | **NOT MEASURED** -- an account-holder item (the Moonshot console/usage view); no console, usage or `api.moonshot.ai` endpoint was called by this cell |
+| what this is not | not a measurement and not a refund claim; it bounds the incident only |
+
+## CALL 2 -- seekingalpha.com, 2026-09-29T02:49:19Z -> 02:49:21Z
+
+| field | value |
+|---|---|
+| seat | `0.9.0_WK_AMGT_HARVST~37` (worker of `2.0.0_SA_COO~H`, task order `HVST-w-2` AC1, invocation 1 of at most 5) |
+| vendor | seeking-alpha (seekingalpha.com) |
+| endpoint class | REST: `/api/v3/account/{id}/info`, `/api/v3/symbols/{symbol}/news`, `/api/v3/articles/{id}` |
+| mechanism | `python -m lib.opal_data_harvest run --publishers sa --harvest-grammar --new-only --all-securities --max-jobs 5 --runtime-root "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest"` -- executed by calling `lib.opal_data_harvest.__main__.main()` INSIDE `ac1_capped_capture.py`'s own process with the re-auth / browser / Moonshot guards installed and verified in that process (AMENDMENT 1); rc 2 |
+| agent-turn fetch? | **NO.** Scripted producer only, driven by the committed runner from the command line; the worker made no request by hand |
+| scope attempted | 5 jobs: [('security-a37b3e6572f2baa4', 'BP', 'account_or_harvester_unavailable', 0), ('BA', 'BA', 'cooldown', 0), ('security-5add5df440ab11d9', 'BTI', 'cooldown', 0), ('security-73a875367d30f674', 'BZLFF', 'cooldown', 0), ('security-3462e34827110ede', 'CDNS', 'cooldown', 0)] |
+| requests made | **1**, from `events.jsonl` (sa http events, delta over this invocation): [('info', 402, 351)] |
+| authorization | Andrew-direct 2026-09-28 ~18:05Z, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_1805Z_OPEN_CALLS_FOUR_RULINGS.md` ruling 2 (`w-2` YES, stated cap, `--new-only`); resumed by the CTO ruling @`74e1eea534` behind three guards. Spend, contracts, entitlements and hold-lifts NOT covered |
+| credential used | the SAVED sa session envelope `.runtime/opal-data-harvest/secrets/sa.dpapi` in the MAIN tree (the producer's designed read); no login |
+| re-auth fired? | **NO -- measured.** receipts auth_refreshes=0, verification_repairs=0; forbidden events 0; guard trips 0; browser/subprocess launches 0 |
+| result | rc 2; job statuses ['account_or_harvester_unavailable', 'cooldown'] |
+| bytes retained | 0 article bodies accepted into the LOCAL outbox (harvest_raw / harvest_listing); nothing else |
+| S3 written | not by this call (`run` writes the local outbox; AC2's `upload-harvest` is the S3 leg) |
+| spend | none |
+| evidence | `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~37/w2_ac1_output.txt`, `w2_ac1_state.json` |

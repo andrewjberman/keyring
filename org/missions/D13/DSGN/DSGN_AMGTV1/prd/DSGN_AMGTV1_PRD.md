@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -16,14 +16,14 @@
 **Author:** `1.0.0_SA_CTO~Z` (L4), 2026-09-29. **Brief:** `4.0.0_SA_CRO~Z`, from Andrew's walk memo, his 12 snapshots and a
 signed-in `/ui-walk` (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260928_223xZ_DSGN_AMGTV1_WALK_MEMO_UIWALK_FIXTURE_PORT_BRIEF.md`).
 **Registered** @`2f8568fd32` (D13, fabric site-z, the named per-member exception). **COO:** `2.0.0_SA_COO~D` on site Z.
-**CVO:** `3.0.0_SA_CVO~Z`. **Endpoint** confirmed by Andrew's word of 2026-09-29 ~02:2xZ (record
+**CVO:** `3.0.0_SA_CVO~Z`. **ENDPOINT note (v0.2, outside the signed section):** the ENDPOINT below is the endpoint
+record @`3d7fc6695e` verbatim except FWD-3's ACCEPT, which dropped "The form is Andrew's call (fork F1)." because F1 was
+ruled @`ac5433b35b` before landing (`3.0.0_SA_CVO~Z` condition 1). **Endpoint** confirmed by Andrew's word of 2026-09-29 ~02:2xZ (record
 `ANDREW_DIRECT_20260929_022xZ_NOTHING_WAITS_ON_ANDREW_SELF_DRIVE_RESOLVES_CALLS.md`, call 2); forks F1-F5 ruled @`ac5433b35b`.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
-Landed from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPOINT_FORWARD_20260928.md` @`3d7fc6695e` verbatim
-except one sentence: FWD-3's ACCEPT dropped "The form is Andrew's call (fork F1)." because F1 was ruled @`ac5433b35b`
-before this landing (v0.2 wording, `3.0.0_SA_CVO~Z` condition 1).
+Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPOINT_FORWARD_20260928.md` @`3d7fc6695e`.
 
 ```
   FWD-1  A portfolio manager opens Security Analysis, finds Valero in today's
@@ -147,6 +147,12 @@ govern.
 fallback order filing -> dossier -> Bloomberg -> Lusha -> search, every vendor leg on Andrew's per-use word, the page
 naming each roster's source; F4 Opal Data Harvest only on the timeline in round 1; F5 this project owns presentation,
 AMGT_RESAPP keeps the payloads.
+
+**C-CASE-UNIT (v0.3, AMGT_CORPUS round-9 analysis ruling 1).** A team case figure carries `unit_as_written` (the symbol the
+team typed) and a `currency` that may be null. The page prints the team's figure with the team's symbol and "as written in
+the team's pack", and never beside the Price tile as if in the listing's currency (on 5 of 8 names read, the symbol is not
+the listing currency). FWD-4's "every money figure in the company's own currency" binds served figures, not a pack's typed
+symbol.
 
 **C-ASKS (owned elsewhere; this project renders them when served):**
 

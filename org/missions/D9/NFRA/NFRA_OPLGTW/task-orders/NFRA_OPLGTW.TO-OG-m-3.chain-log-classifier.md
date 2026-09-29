@@ -163,7 +163,7 @@ Report once per phase.
   previous: no; s3 read grants exact 1 of 2; env = locals: no -- RESULT: FAIL"; dc.AC3 "entry files at HEAD=0 -- RESULT:
   FAIL". All three FAIL as expected (build checks).
 
-<status>staged</status>
+<status>complete</status>
 <round>5</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>

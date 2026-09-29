@@ -1751,3 +1751,37 @@ fixed before the cut). `a-2.AC1` base: FAIL as expected (6; the first draft pass
 and was fixed). `a-2.AC2` base: FAIL as expected on its 2 build arms; rollback-target and 3 RESAPP controls PASS.
 `a-1.AC2` and `a-3.AC2` are suite controls, PASS at the base (255; 12). The `a-3`/`a-4`/`w-*` scripts are
 worker-written as in every prior round of this project, each criterion stating its base expectation.
+
+## 25. ROUND 13 -- L5 DECOMPOSITION v2.2, over the round-12 analysis (`ledger/ROUND_ANALYSIS.round12.md` @094cc1f110)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~03:3xZ. Round 12 CLOSED (7 of 7; the timeline serves on the deployed API).
+Series **`b`** (spent: h, r, s, t, u, v, w, x, y, z, a over 39 orders). Slot MAX+1 over 38: **`~39`**.
+
+### 25.1 THE LIST -> TWO ORDERS, ONE CHAIN
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 one story per event + calendar tokens out of the link vocabulary (the `C-HV-EVENT-SPINE` round-12 addendum), STOP limb: none of the six one-company events lost or split | `HVST-b-1` the rule, proved in memory | LOCAL | `~39` |
+| | `HVST-b-2` the served rebuild under a never-widen pair, carrying the round's JUDGMENT | SERVED | `~39` (continued) |
+| 2 `Z-S37` (`safe-merge --continue` whitelists the index snapshot) | **not a cell** | -- | -- |
+
+1. **Item 1 is two orders for the round-12 reason:** NEVER-1 reads the expected outcome from the producer's own rule at
+   signing, and the rule exists only after `b-1` merges.
+2. **Item 2 is not a cell:** the analysis makes it "a cell only if this project owns a write surface for it", and
+   `.tools/safe-merge.sh` is not this project's (its authoring lane is `2.0.0_SA_COO` base; the fix is proposed on row
+   `Z-S37`). This seat's disarm stands as a procedure: the pre-`--continue` foreign-path diff, run on every drain since.
+3. **The STOP limb's population is the L9's, not mine:** `ADJUDICATION_v20.md` @`19dfdd2579` graded 6 of 8 served events as
+   one company event (992_HK x3, COST 09-14, HD 08-18, NVDA 06-01). Both orders check SPAN and TIER-A MEMBERSHIP, never the
+   id, because the addendum moves every id ("`event_id` carries the story").
+4. **User-visible:** since round 12 the deployed timeline serves the newest `chatter_event` part, so `b-2` is the first
+   rebuild of this table a user sees.
+
+### 25.2 FAN-OUT
+
+`b-1 -> b-2` is one chain (the rebuild runs the merged rule). **M = 1, N = 1, cap 8 not pressed.** Write set: `b-1` owns
+`publication_gold.py` and its event tests; `b-2` writes only its deliverables and the channel.
+
+### 25.3 NOT CELLS
+
+The Seeking Alpha 402 (`Z-W37-S4`) is the account holder's to read; the portal push of `92a2576254` is under Andrew's
+hold (~20:3xZ). Neither waits on this round.

@@ -34,7 +34,9 @@ In order:
      whose app files are byte-identical; only `deploy-to-ec2.sh` differs (measured by `2.0.0_SA_COO~O` @e992df46c4). So
      ALSO read the live `/opt/opal-gateway/.env` KEY NAMES (never values) over SSM, and keep only candidates whose
      `deploy-to-ec2.sh` `.env` template writes exactly that key set (e.g. `SPRINT_VIEW_ALLOWED_EMAILS`). If more than one
-     candidate survives, the base is the newest, and you name every survivor in your report.
+     candidate survives, the base is the one whose md5 MATCHES the live host on EVERY file where the survivors DIFFER
+     (AMENDMENT 2: never the newest by default; rows Z-W10-S3, OA-e-3's resolution), cross-checked by the host's served
+     gateway tree; name every survivor and the differing-file md5s in your report.
    - BASE is the commit whose six files ALL match. Record `LIVE-MATCH: yes`. If none matches, record `LIVE-MATCH: no`,
      file a BLOCKING row, and stop.
 2. **HEAD** = the CLOUD commit your worktree sits on when you count.
@@ -103,6 +105,10 @@ Dry-run at base (CLOUD `c8df03c408`, ~20:5xZ):
 **AMENDMENT (2.0.0_SA_COO~AI, issuer licence, ~22:1xZ):** The served base at the cut is `6a98a0553a`, not `fe94911257`, and the base resolution gains the .env key-set tie-break
 (row Z-S38). No criterion's expectation moves. Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii)
 placeholders (NONE), so no limb graded this amendment.
+
+**AMENDMENT 2 (2.0.0_SA_COO~AI, ~03:1xZ):** the tie-break no longer takes the newest survivor, which twice named a commit
+the host was not running (rows Z-W10-S3; OA-e-3's resolution). The base is the survivor that matches the live md5 on every
+differing file. Gate limb: none (GATE (viii) placeholders NONE).
 
 <status>pending</status>
 <round>2</round>

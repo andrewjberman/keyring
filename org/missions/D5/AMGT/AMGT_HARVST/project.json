@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-09-28T22:55:00Z",
+  "last_updated": "2026-09-29T03:35:00Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -65,6 +65,11 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v2.1",
       "note": "L5 recut + L6 issuance, 2026-09-28, 2.0.0_SA_COO~H. Round 12 over ROUND_ANALYSIS.round11.md @91276ffa94: five items -> seven orders (a-1..a-4, w-5, w-2, w-4), section 24; rows Z-S35 (package cannot import pyarrow) filed at the cut. (v1.5-v2.0, rounds 6-11, are recorded in the decomp's sections 17-23 and were never added to this list.)"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v2.2",
+      "note": "L5 recut + L6 issuance, 2026-09-29, 2.0.0_SA_COO~H. Round 13 over ROUND_ANALYSIS.round12.md @094cc1f110: one story per event (C-HV-EVENT-SPINE round-12 addendum) as b-1 (rule, in memory, STOP limb on the six one-company events) -> b-2 (served rebuild under a pair); Z-S37 not a cell; section 25."
     }
   ],
   "leads": [
