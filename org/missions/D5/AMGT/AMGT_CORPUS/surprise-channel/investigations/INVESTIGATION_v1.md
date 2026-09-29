@@ -2335,6 +2335,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The check names the foreign paths but did not stop the commit in this run; a concurrent seat's staged files rode the merge commit under the merging seat's author.",
     "notes": "Nothing lost and nothing reverted (history on CLOUD is not rewritten). The hazard is authorship and a mixed commit, not content. The owner of safe-merge.sh is not this seat; this row reports the observed behaviour. Mitigation for this seat: re-check the index immediately before --continue.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S60",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T20:42:00Z",
+    "one_line": "DISARM of AMGT_CORPUS-Z-W5-S5 by its owner: the five period-led ML_FP pillars the PDF reader missed are now read (order CRPS-p-5 AMENDMENT 1) and SERVED -- read_dossier ML_FP_Equity returns 5 pillars with text; ML_FP no longer serves ABSENT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment commit af9e934ae2 (reader accepts a bold_first lead ending in '.' inside the thesis block); worker tip a53f4c4bfc re-graded VALID by the issuer (AC2 'p5 ML_FP_Equity pillars 5 empty_text 0 | IMB_LN_Equity pillars 6 empty_text 0 | ADBE_US_Equity pillars 2 empty_text 0'); merged 34bbf74213 under pair COO 69e88e71ad / CTO 9e1da13005.",
+        "Change entry amgt-corpus-r14-continuation-v3 CLOSED, 4 of 4 legs: continuation --write 95/95 (225 -> 320), dossier --write 95/95 (95 -> 190).",
+        "20:39:25Z read_dossier ML_FP_Equity: pillars 5 empty_text 0, leads 'Irreplaceable brand and pricing power', 'Mix shift to premium', 'FCF Generation', 'Beyond tires', 'EV-agnostic positioning'; field diff new vs prior object over 95 of 95 names: thesis_pillars changed on ML_FP_Equity only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-W5-S5: ML_FP serves thesis_pillars ABSENT although its source states five pillars the PDF reader never sees.",
+    "world_is": "ML_FP's served dossier carries the five source pillars; 'Nearing turn in cycle' (no body) is dropped by the empty-text rule.",
+    "notes": "Z-W5-S6 (the served lead drops the trailing period, as colon leads drop the colon) stands INERT; no change ruled.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
