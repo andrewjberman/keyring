@@ -164,7 +164,7 @@ the deployed commit 110d93fb73 instead, so the cell is re-cut onto the current g
 - One deployer at a time: the NFRA_OPLGTW switchover sitting (Andrew's call 2 = a) touches the gateway. The GO reads
   `.open_deploys/` across every live worktree first.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @6334ce5322 by 2.0.0_SA_COO~MI, 2026-09-29 ~03:0xZ: r4.AC1 PASS (the ledger nfra-mcpindex-r3-gateway-enable closed, 4 of 4 legs; sentinel gone), r4.AC2 PASS (a live SSM read: /health 200, 2 of 2 shipped, ENABLED_INTEGRATIONS = ycharts opal_portal globgrph opal_discover portal_index), instance VALID. The worker N2 read-back showed tools 46 -> 51 (0 removed; opal_discover, opal_describe and 3 mdpf_*). The host serves deploy-only 0bce8d322a, whose gateway tree is pin 3371f18803 (09ccfc39ad). J1 (the close run) is OPEN: NOT RUN, because no authenticated route to the tools exists from a worker or from this seat, whose MCP tool list was fixed at connect. The first live exercise is a principal session with a refreshed tool list, which is Andrew's speed test (G-ASKER record @7bfa5811c6). The CVO grades J1 on it. Was: pending.</status>
 <round>3</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
