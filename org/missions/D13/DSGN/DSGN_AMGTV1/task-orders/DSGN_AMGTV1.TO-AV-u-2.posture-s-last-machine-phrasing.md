@@ -92,7 +92,7 @@ outer commit hashes, and any row.
 
 **ISSUER NOTES:** round 6 = round-5 analysis s.4 item 2, ruling 5. The next order of this slot (AV-u-5, the data attributes) also edits PostureTab.tsx. Base 4f927ad0: posturewords 1 of 3; green 3 of 3; U2 bound 2 of 2.
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~23</slot>
 <fabric>site-z</fabric>
