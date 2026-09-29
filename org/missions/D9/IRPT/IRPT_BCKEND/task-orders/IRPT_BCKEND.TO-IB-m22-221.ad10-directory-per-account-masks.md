@@ -2,7 +2,7 @@
 
 <to_id>IRPT_BCKEND.TO-IB-m22-221</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~75</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~78</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-29</issued_date>
 <status>pending</status>
@@ -84,7 +84,7 @@ expected.
   push until its members are signed). The Lambda contract copy is NOT yours to edit (2.0.0_SA_COO~P's shared
   packaging); name it in the release order.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row
-  (id `IRPT_BCKEND-W75-S<k>`), and do not weaken the test to pass.
+  (id `IRPT_BCKEND-W78-S<k>`), and do not weaken the test to pass.
 
 <paths>
 data/assets/scripts/gold/investor_reporting/
@@ -102,7 +102,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IBM22-221-AC1, IBM22-221-AC2, IBM22-221-AC3. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~75/IRPT_BCKEND.TO-IB-m22-221.ad10-directory-per-account-masks.proof_of_spec.json`,
+Criterion ids: IBM22-221-AC1, IBM22-221-AC2, IBM22-221-AC3. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~78/IRPT_BCKEND.TO-IB-m22-221.ad10-directory-per-account-masks.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> IBM22-221-AC1,IBM22-221-AC2,IBM22-221-AC3` BEFORE the flip.
 </proof_of_spec>
 
@@ -151,4 +151,21 @@ discriminator"). So `account_masks` in the directory alone still shows the head 
 Criteria unchanged; `holdings_snapshot.py` is inside the existing grant (`data/assets/scripts/gold/investor_reporting/`).
 The running worker spawned before this amendment; if its build lacks steps 6-7 the issuer reopens the order to a new
 slot, as TO-IB-m21-213 amendment 1 did. Gate limb: none graded this modification (LIMB 6 fires on new orders only).
+
+## AMENDMENT 3 (2026-09-29 11:3xZ, issuer 2.0.0_SA_COO~M) -- reopened to slot ~78 for amendments 1-2; READ THIS FIRST
+
+The first build (0.9.0_WK_IRPT_BCKEND~75, branch `wk-IRPT_BCKEND-75` @4ecbaca410, NOT yet drained) passed AC1-AC3 but
+was spawned before amendments 1-2, so it lacks two things. Your worktree starts from CLOUD with that branch already
+merged in, so its directory build, schema edit, tests, summary and half are in front of you. Do only this:
+1. Amendment 2 step 6: `holdings_snapshot.py` `_directory_account_labels` reads `account_masks` when present
+   (`account_id` -> its own mask), falling back to the entry's `masked_discriminator`; correct its docstring; add the
+   two cases to `tests/test_directory_account_masks.py`.
+2. Rewrite the half's `## Release order` to the four steps of amendments 1-2: (1) the handlers' `_contracts` copy
+   (2.0.0_SA_COO~P is cutting it now), (2) the portal reader on PROD (`directory-browse.ts` accepting the key; portal
+   DEV 27eae57a, carried in the pending PROD hotfix), (3) the directory bundle re-mint, (4) the Holdings re-mint after it.
+   Add the Holdings snapshot's `_directory_account_labels` and the portal `IdentityCard.tsx:176-185`
+   (`accountListFromSnapshot`) to the readers census.
+3. Re-run AC1-AC3; re-validate the proof instance under your own slot's deliverables folder; flip `<status>` to
+   `complete`. Row IRPT_BCKEND-W75-S1 stands (disarm owner ~P); do not re-file it.
+Gate limb: none graded this modification (LIMB 6 fires on new orders only).
 
