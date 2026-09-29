@@ -115,6 +115,12 @@ issuer says GO.
     and `deployed_by`; `mcportal_commit` unchanged; a `release_note` naming CLOUD's still-unreleased gateway commits.
     Commit it. Close every leg with its proof, commit the close, then run the criteria.
 
+**AMENDMENT A3 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~05:4xZ, on rows Z-W11-S8/S9).** The deploy is done and verified;
+the criteria were the defect. AC1/AC2 `<expect>` now match the scripts' printed form (regex); `xr.AC3.sh` probes the
+shipped `engine.py` for `read_export_batches` (no artifact ships `tests/`) and compares ENABLED_INTEGRATIONS to the value
+at the cut, the 5 ids after MX-r-4. `previous_deployed_commit` = `f791522306` (the committed release; its deploy-only twin
+`7c7ebe14d3` is named in the release note) is RULED correct. Re-run AC1-AC3 as written; no other act.
+
 ## 2. BOUNDS
 
 1. Terraform, the ALB, the host, its role and its secrets are untouched. `safe-ec2-deploy.sh` and `deploy-to-ec2.sh`
@@ -139,9 +145,9 @@ Rows: `org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIG
 ## 4. PROOF OF SPEC (literal; run from your worktree root after the ledger close is committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC1.sh; echo "exit=$?"</invocation><expect>sentinel at HEAD=no; listed OPEN/HELD=0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC2.sh; echo "exit=$?"</invocation><expect>descends=yes -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC3.sh; echo "exit=$?"</invocation><expect>/health=200; streaming export on host 1; schwab files equal deployed_commit 4 of 4; ENABLED_INTEGRATIONS unchanged=yes -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC1.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no; listed OPEN/HELD=0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC2.sh; echo "exit=$?"</invocation><expect>(?s)descends=yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC3.sh; echo "exit=$?"</invocation><expect>(?s)/health=200; streaming export on host 1; schwab files equal deployed_commit 4 of 4; ENABLED_INTEGRATIONS unchanged=yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1` -- NEVER-2: the entry is committed at HEAD, the sentinel gone, the OPEN/HELD scan clean with its denominator.
