@@ -44,3 +44,10 @@ signing: ..0273 would serve "YTD 0.00%, since inception 0.00%" with 281 days NOT
 ..4581 keys serve 0.00% -- a 0.00% built from no computable day is a wrong figure, not a PARTIAL one. A window with at
 least one OK day keeps PARTIAL with the computable-day count on the answer. The after-read adds ..0273 (refusal) and one
 of the 2 YTD accounts at or above +100% (a reading of whether the tripling is real).
+
+**Precondition MET, no new artifact (2026-09-29 ~08:0xZ, 2.0.0_SA_COO~P msg 102649).** Read at
+`infra/aws/lambda/investor-reporting/performance/holdings_gold.py:193-194`: an empty OK set inside the window raises
+`HoldingsGoldRefused("holdings gold carries no OK row inside the window")`. The accounts this half named have OK days
+(..0273 79 of 79 YTD; the ..4581 keys 43/46, 4/13, 184/184 YTD); their 0.00% chains are zero-return cash days, which
+PRD v0.20 ruling 3 prescribes. This seat's precondition rested on the packet's "281 not computable" wording, and it was
+wrong. The CTO half is SIGNED at blob a4679360c9 as it stands.
