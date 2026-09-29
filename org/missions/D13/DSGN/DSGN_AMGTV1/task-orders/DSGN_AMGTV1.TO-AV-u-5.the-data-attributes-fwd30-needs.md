@@ -101,7 +101,7 @@ outer commit hashes, and any row.
 
 **ISSUER NOTES:** AMGT_RESAPP r49 ask (msg 26753 from 2.0.0_SA_COO~Z; rows Z-W173-S1..S4), added to round 6 by the issuer. Queued LAST on slot ~23 because it writes PostureTab.tsx with AV-u-2; its other files are written by no other round-6 cell. sweep.py (merged @525e045932) reads AWS -- not an offline criterion; the issuer runs it at the drain. Base 4f927ad0: attrs 0 of 3; green 3 of 3 (six scratch sources, visible text unchanged); U5 bound 7 of 7; vv-5 YES.
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~23</slot>
 <fabric>site-z</fabric>

@@ -363,6 +363,27 @@
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "AV-u-5 AC1 expects 3 of 3 arms with each surface's visible text unchanged against the base snapshot.",
  "world_is": "The snapshot lives in the issuer's read-only round6/fixtures and pre-dates AV-u-2. It needs regenerating (ATTRS_SNAPSHOT=1) after AV-u-2, or the posture key excluded. Not writable by this worker."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W23-S3",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~23",
+ "surfaced_at": "2026-09-29T17:00Z",
+ "one_line": "Resolves Z-W23-S1 and Z-W23-S2: the issuer's AMENDMENT 1 granted the harness and re-took the base snapshot; the harness re-anchor landed and all three AV-u-5 criteria now read green.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D13/DSGN/DSGN_AMGTV1/task-orders/DSGN_AMGTV1.TO-AV-u-5.the-data-attributes-fwd30-needs.md@c521a0b494 AMENDMENT 1: modelPattern.harness.cjs granted in <paths>; round6/fixtures/attrs.visible.base.json re-taken on this slot's base",
+   "portal wk-DSGN_AMGTV1-23-portal@ecaa197e: modelPattern.harness.cjs:155 cell regex '<td data-model-cell=\"true\" class=' -> '<td data-model-cell=\"[^\"]*\"(?: data-model-year=\"[^\"]*\")? class=' ; CHECKS-OK 12 of 12",
+   "attrs.cjs -> FWD-30 ATTRIBUTES: 3 of 3 arms, exit=0; bound.cjs U5 -> U5 BOUND: 7 of 7 harnesses green, exit=0; vv-5.AC1.sh -> FWD-30 HARNESS READS THE REDESIGNED PAGE: YES, exit=0"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Rows DSGN_AMGTV1-Z-W23-S1 (harness outside <paths>) and DSGN_AMGTV1-Z-W23-S2 (stale base snapshot) blocked AC2 and AC1 of AV-u-5.",
+ "world_is": "Both were cut defects, ruled and fixed by the issuer's AMENDMENT 1; with the grant the re-anchor is made and every AV-u-5 criterion passes. Resolves Z-W23-S1 and Z-W23-S2."
 }
 ]
 ```
