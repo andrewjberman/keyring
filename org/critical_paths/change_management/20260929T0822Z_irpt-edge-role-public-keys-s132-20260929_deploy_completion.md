@@ -21,3 +21,4 @@
 - 20260929T082209Z OPENED by 2.0.0_SA_COO~P with 3 leg(s)
 - 20260929T082301Z LEG P1 closed: Main tree, .tools/terraform.exe (the W69-S1 substitute not used here), 08:2xZ: plan -target=aws_iam_role_policy.lambda_e
 - 20260929T100339Z LEG D1 closed: Both halves at HEAD naming blob 12db1763: CTO 3911da0867 (102687), CRO @c88e9e5713 (102695, two conditions). Simulator B
+- 20260929T1036Z A1 EVIDENCE (partial; the CRO's signed-in walk closes it): edge logs /aws/lambda/us-east-1.auth-validator-edge swept in every region since 10:01Z: 224 REPORT (requests), 12 Init Duration (cold starts of the post-apply role), 0 AccessDenied / not authorized. W69-S2 plan read (sweep-1 ask): the untargeted portal-auth plan's aws_wafv2_web_acl.opal_cloudfront_protection diff removes and re-adds rule blocks with IDENTICAL attributes (set-identity churn; 0 attribute lines differ) -- an untargeted apply re-asserts the same rules; W69-S2 stays INERT.
