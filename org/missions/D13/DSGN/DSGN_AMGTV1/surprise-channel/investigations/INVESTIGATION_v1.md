@@ -66,6 +66,28 @@
     "spec_asserts": "The task order's BOUNDS: only the four portal files change and 'every other tab, page and harness: unchanged'; the bound criterion AC3 names only drafting.harness.cjs and thesisLadder.harness.cjs. The cell's own build item requires ThesisCards to open the estate's HeroDialog imported from '@/ui/components/graphic/HeroGraphic'.",
     "world_is": "A third harness, tabs.harness.cjs, walks the whole page including ThesisTab, so the required HeroGraphic import breaks its load. The worker cannot edit it (outside <paths>) and did not; AC1-AC3 are unaffected (all three read green), so the order stays completable and the regression is left for the issuer.",
     "notes": "This file did not exist in the worker's worktree; the worker created it with this header, as the order's <paths> names it. A sibling slot creating the same file independently reconciles by union of rows under one header."
+  },
+  {
+    "id": "DSGN_AMGTV1-Z-W3-S2",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~3",
+    "surfaced_at": "2026-09-29T06:25Z",
+    "one_line": "AV-t-4 cannot reach tabs.harness.cjs 20 of 20 by the stub alone: with the HeroGraphic stub the harness loads, but check thesis_sentences_and_one_chart reads false (markers 0 of 38 on BA) because AV-t-3 moved every drafted sentence off the Thesis face into card windows.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- amend AV-t-4 (or cut a follow-on) so the check is re-anchored to the face plus each ThesisCardDetail window body, as AV-t-3 did for drafting.harness.cjs and thesisLadder.harness.cjs; until then tabs.harness.cjs reads CHECKS-WRONG-WAY thesis_sentences_and_one_chart (19 of 20).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "in this worktree after merging CLOUD and portal DEV 5fac7a37 and adding the HeroGraphic STUBS entry: node tabs.harness.cjs prints 'CHECK thesis_sentences_and_one_chart false (expected true)' and 'CHECKS-WRONG-WAY thesis_sentences_and_one_chart'; every other check reads true; the per-name detail prints sentences 38, markers 0 (also 35/0, 38/0, 36/0, 38/0)",
+        "tabs.harness.cjs:314-319 counts countOf(html, 'data-drafted-sentence=\"') === sentences over the thesis-tab render; the face carries no data-drafted-sentence since ThesisCards.tsx renders them only inside HeroDialog (closed in a static render)",
+        "bound.cjs TABS tabs.harness.cjs:20 errorEmpty.harness.cjs:12 drafting.harness.cjs:8 thesisLadder.harness.cjs:10 -> 'TABS BOUND: 3 of 4 harnesses green', exit=1 (errorEmpty 12 of 12, drafting 8 of 8, thesisLadder 10 of 10 green; tabs.harness.cjs rc=1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order: add ONE STUBS entry for HeroGraphic; 'No check is removed, re-anchored or loosened; the 20 claims stay exactly as they are'; AC1 expects TABS BOUND: 4 of 4 harnesses green (tabs 20 of 20).",
+    "world_is": "The stub fixes the load only. The 20th claim, that every drafted sentence reaches the Thesis tab render, is false of the merged page as built and ruled by AV-t-3 (sentences live in windows), so 20 of 20 needs that one check re-anchored, which the order forbids. The worker did not re-anchor it; the stub is committed, W3-S1 is NOT dispositioned, and the order stays open."
   }
 ]
 ```
