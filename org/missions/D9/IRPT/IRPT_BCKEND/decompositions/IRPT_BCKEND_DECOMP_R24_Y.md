@@ -61,3 +61,41 @@ inventing advice.
 
 Edges: none; `IB-yr-241` is a single independent cell. **fanout: 1 of 1 chains, cap 8.** Slot: measured per S197 at
 this write.
+
+
+## Amendment 1 (2026-09-29 ~21:2xZ) -- W2-04/05 is UNBLOCKED and cut as `IB-yr-242`; the rectangle is now 2 cells
+
+Two CTO decisions closed the two open questions this round carried. Both are recorded here because an inbox is not a
+record.
+
+**Decision 103035 -- no substitution, and the degrade path is ruled.** The ticker -> name half stays on
+etf-classifications: *"Andrew is retiring bd-securities, so a new reader of it is the fork he named."* That is a
+reason this lane did not have, and it overrides the coverage argument -- a 95%-coverage source is worthless if
+reading it creates a fork Andrew has forbidden. The gap is instead `MDPF_SECCLASS`'s first need, backfilled through
+the FWD-7 scheduled path with bd-securities as reviewed INPUT only. **The rule for this cell:** a ticker
+etf-classifications lacks **shows its ticker verbatim with no name, never "Comparison N"**.
+
+**Decision 103038 -- shape B, on this lane's recommendation.** `_contracts/ResolvedScope.schema.json` is
+`additionalProperties: false` with 12 properties and 9 required, and the composer documents the gap itself
+(`GenerateComposer.tsx:20-25`: ResolvedScope v1 *"carries no catalogue of selectable comparisons"*), so the catalogue
+could not be added quietly. Of the two homes -- (A) a v1->v2 contract change on a ratified schema, or (B) a sibling
+scoped GET -- **B is ruled**, because the catalogue is page PREFILL rather than scope or entitlement, it moves no
+ratified contract, and A would re-open the L4-R halves.
+
+**`IB-yr-242` conditions, verbatim from 103038:** the route sits under the existing
+`/api/scoped/investor-reporting/` family **behind the same authz guard and tenant check**; it gets **its own new
+`_contracts` schema (v1, `additionalProperties: false`)** and the portal validates against it; **any new resource name
+is builder output (rule 30)**; and **a named entry is only one whose name comes from the model catalogue or
+etf-classifications -- any other ticker shows verbatim.**
+
+| cell | item | outcome served | risk | worker | depends on | checks (base dry-run at CLOUD HEAD) |
+|---|---|---|---|---|---|---|
+| `IB-yr-242` | a sibling scoped GET serves the comparison catalogue -- the model catalogue's 4 entries joined to etf-classifications for ticker -> name -- behind the existing authz guard and tenant check, against its own new v1 `_contracts` schema; an entry with no name from either source carries its TICKER VERBATIM and never a positional label | FWD-4 (W2-04/05: the page can resolve and NAME a comparison before Add, and refuse at Add) | WORLD (a new served route) | to be measured per S197 at the cut | none -- 103038 settled the shape, 103035 the source | `R24_CHECKS/test_r24_y2_catalogue_read.py` -- to be written and dry-run at the cut |
+
+**Rectangle now: 2 cells, `IB-yr-241` and `IB-yr-242`. fanout: 2 of 2 chains, cap 8.** W2-07 remains not cut and
+already covered (S206 confirmed at S215; S218's observation is round 23's `IB-yr-231`, complete and graded).
+
+**L6 is the next act for both cells** -- battery, base dry-run, order, spawn. Round 23 is why they are not rushed
+into this tick: its first battery failed all four criteria on a harness error, and only exercising the control
+revealed that the two red criteria were measured absences rather than a broken fixture. A cell cut against an
+unexercised battery is a cell cut blind.
