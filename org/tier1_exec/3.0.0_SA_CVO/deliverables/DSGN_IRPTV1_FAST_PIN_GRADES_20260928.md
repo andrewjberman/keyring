@@ -173,6 +173,29 @@ Performance and Analysis do not import those two files. Shots opened and read: 0
   series start 2026-04-15, end 2026-09-22 -100.00%. That is after `~P`'s re-verified pr-191/IB-pr-194 drain
   (`ae8da14d12`). The source still names "opal-gips-engine".
 
+## Pins 17-22 (2026-09-29 04:5xZ; no signed-in walk after 00:12Z)
+
+| pin | claim | evidence | grade |
+|---|---|---|---|
+| 17 `84854311` (AD-01 remainder, W17-S1) | Holdings is two components; the All Categories card is the drill | commit body: "No real run: walker runs stay paused"; CI success | **NOT GRADED** (real run) |
+| 18 `5ff990dc` | Holdings map and table in Positioning's classes, order and colours | commit body: "No real run"; iv-e-94 named; CI success | **NOT GRADED** (real run) |
+| 19 `ee949234` (CTO 102510) | one holdings tree map for Positioning and IR, extracted with no visible change | `deliverables/2.0.0_SA_COO~D/item19/README.md` and PNGs read: `before-positioning.png` = `after-positioning.png` byte for byte (md5 `ced60ba2...`), and the control with one holding removed differs (md5 `fc01e7d0...`, bbox (111,670,1377,2037)), so the check can see a change; CI success | **PASS** (refactor identity). Claim class DRIVER-FIXTURE: `ui-smoke.mjs` over the served `opal-data-portal-v2` JSON, not a signed-in walk. IR's live map is not covered (the README says so) |
+| 20a `b9d49989` | one holdings breakdown table, extracted | same method: Positioning Characteristics after = before (md5 `ced60ba2...`), Performance view after20 = before20 (md5 `0801c585...`); CI success | **PASS** (refactor identity), same claim class |
+| 20b `d6f740cc` | IR's Securities table is Positioning's breakdown table: light ground, navy ink, never sums | `item19/ir-holdings-1440.png` (md5 `5800639d...`), opened and read: the Securities table sits on a white panel in navy ink; the class cells carry colour; no total row; CI success | **PASS on its claim**. Claim class DRIVER-FIXTURE (the Cottonwood Trust $200,000 two-holding fixture) |
+| `50eb1d56` | PerformanceReport provider OPAL_HOLDINGS reaches the page (wire regenerated) | IVE17-AC2 REGENERATED-OK per the commit; CI success; no render | NOT GRADED (no render; a contract regeneration) |
+| 22 `cabe0d5c` | Analysis is a three-page flow | commit body cites a real render through the IVE20 census driver, but no image is kept; CI success | **NOT GRADED** (no artifact this seat can read) |
+
+Observations from `ir-holdings-1440.png`, outside each pin's claim:
+- **O-a (a ruling conflict, for 1.0.0_SA_CTO):** the Securities Map and Securities footers read "Source:
+  investor_reporting/holdings_publisher." (`slices.ts:344` prints the served `provenance.sourceCoordinate` under IV-e-63
+  / R10 101758, "the source line names the actual source"). Pin 14 moved the Performance face off internal producer
+  names under ruling 102453 (UIC-03). The two rulings disagree on whether a producer path may be the visible source.
+  It is not a regression from pins 19-20; the 09-24 grade read "Opal Capital Analysis" because that snapshot's nodes
+  carried no coordinate.
+- **O-b:** the page carries five full-width navy bands (IDENTITY, the ALL CATEGORIES card, and the SECURITIES MAP and
+  SECURITIES header/footer bands) against C3's one band per page. The ALL CATEGORIES card is navy on Andrew's call
+  1(a); the others are the known band-valued Panel variants (portal CLAUDE.md "Known divergence").
+
 ## Next items
 
 - **N1 (pin 2's FAIL):** the Analysis stage line prints the raw public reason code beside "Loading"
