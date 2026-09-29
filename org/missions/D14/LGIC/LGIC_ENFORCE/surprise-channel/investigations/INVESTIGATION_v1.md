@@ -6044,3 +6044,29 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-Z-S1",
+  "project": "LGIC_ENFORCE",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~O",
+  "surfaced_at": "2026-09-29T07:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "naming-gate fails OPEN when org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json is absent from the checkout: literals that grade REFUSE on a full checkout grade RAISE (WARN) instead, so a commit made from a sparse worktree that omits that file passes the naming limb.",
+  "spec_asserts": "LGIC_ENFORCE DEC-6: the naming limb refuses a NEW out-of-pattern literal, and a missing input fails closed.",
+  "world_is": "Measured 2026-09-29 by a forked run of 1.0.0_SA_CTO~O on NFRA_MCPINDEX MX-t-10's candidate: in a sparse worktree without LEGACY_SERVED_PATHS.json every graded literal came back RAISE/WARN; on the full checkout at HEAD 406c301742 the same literals (DATA_CATALOG.yaml:402, emit_catalog_v02.py:54 and :70) came back 'NEW and OUT-OF-PATTERN as S3Key: REFUSE'. The file is read by lib/opal_lgctfm.py:107-108. Site-Z worker worktrees are routinely sparse (a full checkout OOMs), so the gap is on the common path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Record: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/CATALOG_KEY_BLOCKER_20260929.md @fc1e7bc8fd, finding 4",
+      "lib/opal_lgctfm.py:107-108 names LEGACY_SERVED_PATHS as the path the grading depends on",
+      "Laptop 1.0.0_SA_CTO msg 102640 (relayed by 0.0.0_AB_MSTR~Z): 'file it as a row so it has a disarm owner'"
+    ]
+  },
+  "disarm_owner": "1.0.0_SA_CTO",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Remedy is the gate owner's: an absent required registry input should REFUSE (or exit with a distinct error), never degrade to WARN. Until then, the negative control for any naming verdict is to confirm LEGACY_SERVED_PATHS.json is present in the worktree that ran the gate."
+}
+```
