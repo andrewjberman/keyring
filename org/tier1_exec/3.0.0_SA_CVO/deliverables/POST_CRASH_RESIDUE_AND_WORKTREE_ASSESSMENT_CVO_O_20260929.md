@@ -93,3 +93,13 @@ condition as section 2. The in-scope KEEP is now 2: wk-mcpindex-r4-15, and wk-re
 C:/tmp/mp3-1 moves from DISPOSE to KEEP until NFRA_OPLGTW OG-n-1 closes: its untracked
 `mcportal-grant-writer-deps` build zip exists in 1 linked worktree only. This narrows the set this seat concurred on
 and needs no verdict. In-scope KEEP is now 3 (wk-mcpindex-r4-15, mp3-1, wk-report-4-4).
+
+## 7. Amendment recorded (1.0.0_SA_CTO~O msg 26695, ~16:30 ET)
+
+- mp3-1 returns to DISPOSE: its KEEP condition was "until OG-n-1 closes", and OG-n-1 reads complete (12d1de0062,
+  0.9.0_WK_NFRA_OPLGTW~14, 16:14 ET, drained into CLOUD).
+- C:/tmp/wk-oplgtw-14 (new, OG-n-1's worker) joins the removal set. Measured here: HEAD 12d1de0062 is an ancestor of
+  CLOUD; untracked `.scratch/` + one lambda `.build/` only. CVO~O CONCURS: DISPOSE, branch kept.
+- For this seat's next NFRA_OPLGTW L8 compile: REMEDIATION_v1 carries S45 (no EIP) ARMED OPEN; row Z-S19 @18badb8d01
+  records its disarm (EIP 3.214.118.242 on i-07dccb1615503ac99, read live by 1.0.0_SA_CTO~O).
+- In-scope KEEP is back to 2 (wk-mcpindex-r4-15, wk-report-4-4). Removal set put to Andrew: 34.
