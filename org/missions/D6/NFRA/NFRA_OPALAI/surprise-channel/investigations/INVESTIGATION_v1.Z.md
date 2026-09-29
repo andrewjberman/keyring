@@ -1848,6 +1848,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "notes": "Repaired by this seat at 9353136df3 (the worker's own record carried under the audited SHARED_CLOUD_OPS override; no new content). For the safe-merge owner: a drain should fail loud when a path the branch changed is absent from the merge commit. OA-r-1's drain (9f520b8bb3) carried its manifest change correctly, so this is intermittent or state-dependent."
   },
   {
+    "id": "NFRA_OPALAI-Z-S44",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-29T05:40Z",
+    "one_line": "safe-merge.sh reported '*** CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED ***' (1 conflicted path, --continue/--abort advice) when the merge never started: git failed to create .git/index.lock (another process held it), 'fatal: stash failed', and no MERGE_HEAD existed afterwards.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/c/tmp/e9drain.log (OA-e-9 drain of wk-NFRA_OPALAI-10): 'error: Unable to create .../.git/index.lock: File exists' ... 'fatal: stash failed' ... 'safe-merge: *** CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED. *** 1 conflicted path(s):' with no path listed.",
+        "Immediately after: test -f .git/MERGE_HEAD -> absent; git diff --name-only --diff-filter=U -> empty; 72870fc8d6 not an ancestor of HEAD."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-merge.sh: a CONFLICT verdict means an open merge the caller must resolve with --continue or --abort.",
+    "world_is": "A lock race is reported as a CONFLICT. A caller following the advice would run --continue or --abort against a merge that does not exist, which in a shared tree acts on whichever peer's MERGE_HEAD is present at that moment.",
+    "notes": "For the safe-merge owner: distinguish a failed git invocation (lock, stash failure) from an open merge by testing MERGE_HEAD before printing CONFLICT. This seat retried after the lock cleared."
+  },
+  {
     "id": "NFRA_OPALAI-Z-W10-S7",
     "project": "NFRA_OPALAI",
     "fabric": "site-z",

@@ -81,7 +81,7 @@ base: AC1 FAIL (no tests ran); AC2 FAIL (`l4 planted_underscore rc 0`, no REFUSE
 ratio 0.659...`).
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

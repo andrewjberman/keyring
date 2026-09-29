@@ -42,6 +42,16 @@ from the pack. The listing's currency is on the name's stored model block, which
    EXACTLY: `case_census names <N> slots <3N> body <B> heading_only <H> absent <A> sum <S> ordering_held <h> ordering_violated <v> ordering_na <n> unit_carried <u> currency_set <c> currency_null <z>`
    where `currency_set` + `currency_null` = `unit_carried` + (names with a readable table and no symbol) -- i.e. every name
    with served cases is in exactly one of the two.
+7. **AMENDMENT (issuer, on `2.0.0_SA_COO~Z` msg 26444):** `from lib.research.corpus import dossier` must load NO PDF library
+   (`fitz` / `pymupdf`): AMGT_RESAPP's scoped API will serve the team's cases through `read_dossier`, and its Lambda carries
+   no PyMuPDF. Today `dossier` imports `lib.research.corpus.extract`, whose module top does `import fitz` (extract.py:56).
+   Move that import (and any other PDF-library import `dossier` pulls in at load) inside the functions that use it; no
+   behaviour changes.
+8. **AMENDMENT 2 (issuer, on row `Z-W1-S13`):** three existing tests pin exactly what this order changes on purpose; update
+   them to the new truth and nothing else -- `test_dossier_case_body.py::test_method_version_is_bumped_to_2` (to /3),
+   `test_dossier_case_body.py::test_case_census_prints_per_name_states_and_the_exact_summary_line` (the appended columns),
+   `test_dossier_case_layouts.py::test_a_round_9_k5_table_is_unchanged` (`unit` -> `unit_as_written`). The corpus suite
+   must read green.
 6. `lib/research/corpus/tests/test_dossier_case_unit.py` (new): euro on a EUR listing -> EUR; `$` on a USD listing -> null,
    ambiguous; pound on a GBp listing -> null, differs; no symbol -> null, not stated; no listing currency -> null.
 
@@ -51,6 +61,8 @@ from the pack. The listing's currency is on the name's stored model block, which
 lib/research/corpus/dossier.py
 lib/research/corpus/tests/test_dossier_case_unit.py
 lib/research/corpus/tests/test_dossier_case_table.py
+lib/research/corpus/tests/test_dossier_case_body.py
+lib/research/corpus/tests/test_dossier_case_layouts.py
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-l-1.case-unit-carries-its-claim.md
 </paths>
@@ -71,17 +83,19 @@ READ-ONLY: every other file, every S3 object. Scratch `.scratch/l1/`.
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-l-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round10/l1_AC1.sh</invocation><expect>(?m)^\d+ passed(, \d+ subtests passed)? in </expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-l-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round10/l1_AC2.sh</invocation><expect>case_census names ([1-9]\d*) slots \d+ body [1-9]\d* heading_only 0 absent \d+ sum \d+ ordering_held \d+ ordering_violated \d+ ordering_na \d+ unit_carried \d+ currency_set \d+ currency_null \d+</expect></criterion>
+  <criterion id="AC4" cell_refs="CRPS-l-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round10/l1_AC4.sh</invocation><expect>l1 dossier_import pdf_libs_loaded none read_dossier_callable True</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-l-1" judgment="true"/>
 </proof_of_spec>
 
-- AC1 the built behaviour; AC2 the seam probe over every resolved name's real extraction and block. AC3 (JUDGMENT, graded by
+- AC1 the built behaviour; AC2 the seam probe over every resolved name's real extraction and block. AC4 (fourth criterion; reason: a
+  cross-project consumer's Lambda cannot import a PDF library, amendment of msg 26444): importing `dossier` loads no PDF library. AC3 (JUDGMENT, graded by
   `3.0.0_SA_CVO~Z` at L9 on the served rewrite, never by you): *does every served case's unit say only what the pack states,
   with a currency only where the pack and the listing agree on exactly one?* Record it under `UNVERIFIABLE-BY-INSTRUMENT`
   with a `status_reason` naming the CVO.
 
 ## 6. WHEN YOU ARE DONE
 1. Instance at `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-l-1.case-unit-carries-its-claim.proof_of_spec.json`.
-2. `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <this order>` rc 0.
+2. `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4 --governing-order <this order>` rc 0.
 3. Flip `<status>` to `complete` only if every mechanical criterion passes; commit the files you changed plus the instance.
 4. Report ONCE: AC2's line; per name with a unit: symbol, listing currency, `currency`, `currency_basis`.
 
@@ -91,8 +105,15 @@ READ-ONLY: every other file, every S3 object. Scratch `.scratch/l1/`.
 ran); AC2 FAIL (base line ends at `unit_carried 10`). The drain: ONE pair for chain A's rewrite (l-3 + l-1); `METHOD_VERSION` /3 (ruled at
 the cut: the chain moves no input, so without the bump `write_one`'s no-op would write 0 on every name) -> every name writes.
 
+**AMENDMENT 1 (2026-09-29 ~05:0xZ, issuer):** rule 7 + AC4 on `2.0.0_SA_COO~Z` msg 26444 (AMGT_RESAPP round-46 ruling 3
+@`0e405cc330`: the scoped API serves the team cases through `read_dossier`; no PyMuPDF in its Lambda). One file already in
+this order's `<paths>`; no served output moves. AC4 dry-run at the base: FAIL as expected (`pdf_libs_loaded fitz,pymupdf`).
+**AMENDMENT 2 (same window, issuer):** `<paths>` gains `tests/test_dossier_case_body.py` and `tests/test_dossier_case_layouts.py`;
+rule 8 updates the three tests row `Z-W1-S13` names (the worker correctly refused to edit outside its grant). The order is
+REOPENED (`pending`) by this amendment so the same worker continues on the same face.
+
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

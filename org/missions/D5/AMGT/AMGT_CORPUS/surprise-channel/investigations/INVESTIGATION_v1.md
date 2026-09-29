@@ -2006,6 +2006,70 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "An unresolvable key form is graded ABSENT with a data reason, indistinguishable from a real 'no consensus EPS' verdict.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Found by the CTO while re-measuring the k-2 expected outcome for its never-widen half; filed, not investigated. The remedy is a refusal on a key that resolves to no landed stamp, or normalising the key form at the parse."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-29T05:00:00Z",
+    "one_line": "CRPS-l-4 premise differs: the underscore key does not fail to resolve a stamp; security_key() maps both forms to the same sec_key so the stamp resolves, and the failure is that the landed refdata/histdata are keyed by the Bloomberg string, so the underscore string indexes an empty block.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/research/model_block_pull.py security_key = security.replace(' ','_') (identity on the underscore form); _cases_report_figures reads ref.get(security, {}) / hist.get(security, []) / best['1FY'].get(security) by the raw input string -> empty figures for AMD_US_Equity.",
+        "Refusal built on the observed condition (no stamp, or an empty figure set) at branch wk-crps10-3; the REFUSE text says 'no landed raw stamp' as ruled although the measured cause is 'string is no key in the landed raw'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order says the underscore form resolves to no (or the wrong) landed raw stamp.",
+    "world_is": "The stamp resolves; the landed block holds no entry under the underscore string, so figures are empty. Refusal keys on that.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S12",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-29T05:00:00Z",
+    "one_line": "CRPS-l-2 census: two of the 22 paired names carry a team unit symbol that disagrees with the listing currency (ORA_FP and SAP_GY: team_unit $, listing EUR), so the 0.94 / 0.90 ratios pair figures whose units the served data itself contradicts; units are printed, never converted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m lib.research.corpus.base_census (worktree wk-crps10-2, branch base f59d76dee8) -> 'base ORA_FP_Equity team 19.2400 rule 20.4867 ratio 0.9391 year 2026E rule_status SERVED team_unit $ listing EUR' and 'base SAP_GY_Equity team 144.2800 rule 159.6087 ratio 0.9040 year 2026E rule_status SERVED team_unit $ listing EUR'; ML_FP_Equity carries team_unit \u20ac listing EUR."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census pairs the team Base Price with the rule Base per name and prints each unit without converting.",
+    "world_is": "For ORA and SAP the team's own unit symbol is a dollar sign on a EUR-listed name; the pairing is arithmetically valid but the two figures may not be in one currency, which the census does not judge.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Filed, not investigated; whether the dollar sign is the team's currency (ADR-style estimate) or an extraction slip is outside this cell."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S13",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T05:30:00Z",
+    "one_line": "CRPS-l-1 (unit_as_written + currency, METHOD_VERSION /3) breaks 3 tests in files outside its <paths>: test_dossier_case_body.py::test_method_version_is_bumped_to_2 (pins /2), test_dossier_case_body.py::test_case_census_prints_per_name_states_and_the_exact_summary_line (pins the census final line without the two new columns), and test_dossier_case_layouts.py::test_a_round_9_k5_table_is_unchanged (reads base['unit'], the key l-1 replaces). Not edited: the write grant excludes them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PYTHONPATH=. python -m pytest lib/research/corpus/tests/test_dossier_case_unit.py test_dossier_case_table.py test_dossier_case_body.py test_dossier_case_layouts.py -q -> '3 failed, 34 passed'; the three named above, each failing on a value l-1's ruling changes on purpose (METHOD_VERSION literal, census line, the retired `unit` key).",
+        "Order CRPS-l-1 <paths> lists test_dossier_case_table.py only among existing tests; the l-1 bound names the METHOD_VERSION bump and the census line."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-l-1 bounds: bump METHOD_VERSION to /3; the census keeps its line and appends two columns; unit is replaced by unit_as_written; test_dossier_case_table.py may change where it pins the old unit key or census line.",
+    "world_is": "Three further tests pin those same values in two files the order does not grant; the corpus suite is red on them until the issuer (or a later order) updates them: body.py line 158 -> /3, body.py line 130-131 -> the line with 'currency_set 0 currency_null 2'-style tail, layouts.py line 125 -> base['unit_as_written'].",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Filed, not fixed. A drain that runs the whole lib/research/corpus/tests directory reads 3 failures until these are updated."
   }
 ]
 ```

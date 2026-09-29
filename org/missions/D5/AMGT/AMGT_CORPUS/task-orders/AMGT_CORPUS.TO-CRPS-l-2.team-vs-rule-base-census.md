@@ -89,7 +89,7 @@ READ-ONLY: every other file (`dossier.py`, `case_rule.py`, `model_block_pull.py`
 ran); AC2 FAIL (No module named lib.research.corpus.base_census). Re-run by this seat after chain A's rewrite as the real run.
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
