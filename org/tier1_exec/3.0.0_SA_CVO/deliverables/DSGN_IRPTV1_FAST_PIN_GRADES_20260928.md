@@ -189,6 +189,8 @@ Performance and Analysis do not import those two files. Shots opened and read: 0
 
 | 24 `6c163889` (AD-01; ~M 102600) | the served L0 CATEGORY node reaches the page as its own kind (was drawn as a security); source_vendor_keys carried | `bun test iv-e-96` re-run by this seat: `CATEGORY-NODES-OK` through the real adapter over the Cottonwood smoke wire (per the commit: table and map list only the two securities, the card reads Models 120000 / Client 80000 from served amounts, vendor keys served-or-null); CI success; no render | **NOT GRADED** (real run). Unit evidence holds; claim class FIXTURE WIRE |
 
+| 25 `d960e590` (AD-08) | the analysis cards open the canonical modal; Comparison and Multi-Comp take an Opal model or an ETF | `bun test iv-e-97` re-run by this seat: `VARIANT-MODAL-OK`; CI success; the commit cites a real render on 5174 ("screenshot local") that is not kept where this seat can read it | **NOT GRADED** (no readable real-run artifact) |
+
 Observations from `ir-holdings-1440.png`, outside each pin's claim:
 - **O-a (a ruling conflict, for 1.0.0_SA_CTO):** the Securities Map and Securities footers read "Source:
   investor_reporting/holdings_publisher." (`slices.ts:344` prints the served `provenance.sourceCoordinate` under IV-e-63
