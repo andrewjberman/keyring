@@ -1979,6 +1979,49 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Z-W35-S1 world_is: two tests pin the table length at 16 and fail once the table returns 18; remedy is an issuer amendment of <paths> (issuer ruling relayed to the worker, AMENDMENT 1 @15caf6ed3b).",
       "world_is": "The remedy landed and was applied as bound 4 allows; Z-W35-S1's ARMED standing is spent by this. The row Z-W35-S1 itself is left as filed (append-only); the issuer's disposition row carries its close.",
       "notes": "Filed as a NEW row because the gate refuses an in-place edit of Z-W35-S1 (content hash mutation); the issuer asked for a resolution note on the row and this is that note in the only form the channel admits."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W37-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~37",
+      "surfaced_at": "2026-09-28T23:50Z",
+      "one_line": "The `bloomberg/session` the order told AC1 to ride is NOT the session the producer used for the 12 stored 403s: it was captured 2026-09-11T05:13Z (426.5 h old at the call), carries 63 cookies, and its _px3/_px2 expired 4.1 min after capture -- while the producer's DPAPI vault session was captured 2026-09-26T22:07Z with 155 cookies. So AC1's one live 403 is evidence about the PARKED session and the endpoint, not a replay of the producer's own refusal.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by AC1 at 2026-09-28T23:44Z: org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~37/ac1_capture.json session_captured_at=2026-09-11T05:13:28Z, session_age_hours=426.52, cookie_count=63; px_cookies _px3/_px2 expires 2026-09-11T05:17:35Z.",
+          "MEASURED by AC2 (ac2_output.txt section 4) from the main tree's secrets/bbg.dpapi: vault bundle captured_at=2026-09-26T22:07:12Z, cookies=155, http_updated_at=2026-09-27T23:02:38Z; the 09-15 session (bbg-search-contract/session-after.dpapi) captured_at=2026-09-15T03:42:10Z, cookies=173. Three different sessions on the same account.",
+          "The order's own text (section 0 clause 2) names the parked session as the transport's designed session; the decomp's hypothesis list treats 'session-age' as a live axis, which a 426 h session cannot test in the producer's regime."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC1's one call on the parked session would show the same refusal the producer's 403s show, so its status/body classification is the diagnostic observation of Z-S32.",
+      "world_is": "The parked session is 17 days older than the producer's and its PX cookies were dead 4 min after capture. Its 403 does not vary session age against the producer's regime; what it does show is that a session with no live PX trust, a different cookie set and a different capture path gets the SAME 535-byte PX block JSON on the same path. AC2 therefore rules session age out from the STORED events and vault ages, not from the live call.",
+      "notes": "Filed, not chased. Nothing here is armed: AC1 wrote no bronze/silver/gold and the parked secret was only read. COST of the lesson: compare the captured_at of the session a diagnostic rides against the session of the evidence it is set beside before reading the two as one population."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W37-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~37",
+      "surfaced_at": "2026-09-28T23:52Z",
+      "one_line": "The order's AC1/AC2 ask whether the live 403 is 'byte-identical in structure to the stored 535-byte bodies', but NO producer 403 body is stored anywhere: events.jsonl carries a byte COUNT only (12 of 12 search/query 403s and the one article 403 read 535). The only stored 403 bodies are 4 browser-context HTML pages (13,928 B, 'Are you a robot?', PX appId PX8FCGYgk4) from the 09-15 contract probes, a different response class.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by AC2 section 5 (ac2_output.txt): 12 of 12 search/query 403 events and 1 of 1 article 403 event carry bytes=535 and no body; the four bbg-*.dpapi / bbg-search-contract/response-*.dpapi files that hold a 403 body decrypt to 13,928-byte HTML (3 distinct sha256, appId PX8FCGYgk4).",
+          "The live AC1 403 is application/json, 535 B, PX keys altBlockScript/appId/blockScript/customLogo/firstPartyEnabled/hostUrl/jsClientSrc/uuid/vid, appId PX8FCGYgk4, served by Varnish/Fastly -- matching the stored pages' PX tenant and the stored producer bodies' LENGTH only."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The stored 535-byte 403 bodies exist to compare against and the live body's structure can be set beside them.",
+      "world_is": "Only the length (14 of 14 non-200 www.bloomberg.com responses, 13 stored + live) is comparable; structural identity is NOT MEASURABLE. AC2 reports the length match and the appId match, and no more.",
+      "notes": "Filed, not chased. Now that the live body is retained in ac1_capture.json (a refusal page, no credential), the NEXT producer 403 can be compared to it -- the worker's transport does not persist 403 bodies, so that would need the producer to keep them; that is a proposal only, not implemented here."
     }
   ]
 ```
