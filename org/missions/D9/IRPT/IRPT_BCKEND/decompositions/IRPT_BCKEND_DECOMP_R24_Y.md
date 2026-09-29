@@ -99,3 +99,40 @@ already covered (S206 confirmed at S215; S218's observation is round 23's `IB-yr
 into this tick: its first battery failed all four criteria on a harness error, and only exercising the control
 revealed that the two red criteria were measured absences rather than a broken fixture. A cell cut against an
 unexercised battery is a cell cut blind.
+
+
+## Amendment 2 (2026-09-29 ~22:1xZ) -- `IB-yr-241` needs NO new field and NO contract change; it rides `actions[]`
+
+**Issuer amendment, on a measured contract read, before the order was cut.** Cell `IB-yr-241` as first written said the
+status wire "serves, alongside `state` and `public_reason_code`, a short human correction sentence", which implies a
+NEW FIELD. That would have been wrong twice over, and the contracts say so:
+
+1. `_contracts/StatusEnvelope.schema.json` is **`additionalProperties: false`** with 7 properties, and
+   `PublicStatusEnvelope` likewise with 6. A new field is a contract change.
+2. `public_reason_code` is documented from the PRD CONTRACTS table @62301f71e0, required-meaning **item 5 of 6**, as
+   *"a code, never a message"*. Putting words there is forbidden by the contract's own text, and adding a 7th meaning
+   would be a PRD change, not a cell.
+
+**But the envelope already has the right home.** `actions[]` items are `{action, safe, description}`, all three
+REQUIRED, `additionalProperties: false`, and:
+
+- `action` is an **enum that already contains `CORRECT`** -- `["RETRY", "RESUME", "RESYNC", "CORRECT", "WAIT", "NONE"]`;
+- `description` is a required string, documented as *"what the action does"*;
+- `safe` is `const: true` -- *"only SAFE actions are offered; an unsafe one is omitted rather than flagged"*.
+
+And it is already used for prose on the live wire: W22's Y1 K5 response carried
+`"actions": [{"action": "WAIT", "safe": true, "description": "accepted work is queued for processing"}]`.
+
+**So the cell is: when a request needs correcting, the envelope offers `{"action": "CORRECT", "safe": true,
+"description": "<the words>"}`, the words derived from the server's own `job_detail` / finding.** No new field, no
+contract change, no PRD change, and no new enum value -- the CTO's *"correction words on the status wire"* is served by
+the wire as it already stands. This is strictly more conservative than the first wording and it is the issuer's to
+rule (the cell's shape inside its own decomposition), so it needs no further decision.
+
+**Consequence for the battery:** the criteria assert on `actions[]`, not on a new key, and one of them is a control
+that the envelope's 7 properties are unchanged and still validate against `StatusEnvelope.schema.json`. A cell that
+changed the contract would fail its own control.
+
+**Also carried into the cell from `IB-yr-231`:** the words are chosen from an ENUMERATED server-side mapping, never
+free text and never an exception body -- `RESOLVE_RETRY_EXHAUSTED` in particular must NOT say "replace the file",
+because rows `IRPT_BCKEND-S206` and `IRPT_BCKEND-S215` measured that as the wrong remedy.
