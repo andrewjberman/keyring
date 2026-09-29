@@ -3,17 +3,17 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-29T00:2xZ.
+tick here. As of 2026-09-29T00:4xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-29T00:52:03Z (presence-extended; read 00:23Z) |
+| Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-29T01:11:08Z (presence-extended; read 00:42Z) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal candidate pin | DEV `84854311` (FAST item 17, AD-01 remainder) on `1f6612c8` (FAST item 16, AD-01/02 card) on `d516158f` (FAST item 15, AD-03) on `8d12987e` (FAST item 14, UIC-03) on `2febba0b` (FAST item 13, IV-e-76) on `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `84854311` (pushed by this seat under the lease; ls-remote read 00:2xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success; 2febba0b run 36492054339 success; 8d12987e run 36495184912 success; d516158f run 36496901922 success; 1f6612c8 run 36498832251 success; 84854311 unread at this write |
-| Suite on 84854311 | IR scope 911 pass / 27 skip / 5 fail = the known 5, counted line by line; tsc -b 0; eslint 0 errors |
+| Portal candidate pin | DEV `5ff990dc` (FAST item 18, AD-04/05 in-surface half) on `84854311` (FAST item 17, AD-01 remainder) on `1f6612c8` (FAST item 16, AD-01/02 card) on `d516158f` (FAST item 15, AD-03) on `8d12987e` (FAST item 14, UIC-03) on `2febba0b` (FAST item 13, IV-e-76) on `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
+| Portal origin | origin DEV `5ff990dc` (pushed by this seat under the lease; ls-remote read 00:4xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success; 2febba0b run 36492054339 success; 8d12987e run 36495184912 success; d516158f run 36496901922 success; 1f6612c8 run 36498832251 success; 84854311 run 36502989377 success; 5ff990dc run 36504594401 in progress at this write |
+| Suite on 5ff990dc | IR scope 912 pass / 27 skip / 5 fail = the known 5, counted line by line; tsc -b 0; eslint 0 errors |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
 
@@ -43,6 +43,7 @@ on 5174 @528acdcd working tree (tmp/ui-walk/20260928T190559Z, local only). S30 d
 | 15 | portal `d516158f` | AD-03: Holdings loses Allocation, Report details, Unique accounts / source dates | iv-e-91 HOLDINGS-PANELS-REMOVED-OK; iv-e-19 re-goldened; no real run (walks paused) |
 | 16 | portal `1f6612c8` | AD-01/02 card: L-1 accounts -> Models / SMAs / Client from served amounts | iv-e-92 L0-CARD-OK; the shape is not served yet (~M next round), so today's data keeps the previous path |
 | 17 | portal `84854311` | AD-01 remainder: the card is the drill, tree map + table at rest; W17-S1 + F39-AC6/AC7 re-homed onto the card (CTO 102488); negative / unsupplied rows named under the card (UIC-12/UIR-34) | iv-e-93 HOLDINGS-TWO-COMPONENTS-OK; 14 pins re-goldened, each named in the commit; no real run (walks paused) |
+| 18 | portal `5ff990dc` | AD-04/05 in-surface half: registry colours in Positioning's class order, Other grey; table by (class, weight); zero rows gone; tooltip names beside tickers | iv-e-94 POSITIONING-ORDER-OK; IVE27-AC2 + IVE43 UIR-25(c) re-goldened; no real run (walks paused) |
 
 Round 9 at the boundary (@f42e1b00fa): IV-e-68/69/70/73/74/78/79 terminal and drained; IV-e-71/72/75/76/77
 superseded by this lease, unbuilt, their rows carried into Next.
@@ -54,7 +55,9 @@ Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_OP
 the MDPF card renders navy as Andrew's screenshot (C3 departure recorded by the CTO); commodities-gold lands in the
 shared colour registry as a separate change the CTO reads first.
 
-1. **AD-04 + AD-05:** port Positioning's tree map and table; commodities colour waits on the CTO, the GLD class on ~M.
+1. **AD-04 remainder:** the map and table rendered by Positioning's own component (a shared extraction out of
+   pages/Positioning/tabs/HoldingsTab.tsx) -- outside the lease surface, asked of the CTO 00:4xZ. AD-05's commodities
+   gold is the CTO's registry change; GLD's class is ~M's.
 2. **AD-06..AD-09:** the Analysis three-page flow, the canonical modals, readable results (~Y owns result content).
 3. **AD-10..AD-13:** account labels (with ~M), search only, clients that open (with ~P/~M), remove About this scope.
 4. **AD-14:** on ~P in parallel (name the COT dependency, then make each firm answer).
