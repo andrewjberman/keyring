@@ -2643,6 +2643,75 @@ carries none.
     "spec_asserts": "Z-W9-S1 (ARMED): the live value sits in a tracked file outside the 7-file set.",
     "world_is": "At HEAD the 8-file set carries 0 literals by shape; the CVO's fingerprint scan (MX-s-13 J1, L8) is the oracle. History is not scrubbed and the credential is not rotated -- both Andrew's (rotation LATER; no scrub), so Z-S29/Z-S31 stay open on rotation.",
     "notes": "Issuer disarm owed since the A1 grade; recorded at the round-3 close."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T04:20Z",
+    "one_line": "MX-s-14 step 1 names a build-time pin `_transaction_rest_pin.py`, but a generated pin needs a target in lib/opal_naming.py (VIEWS, TARGET_REGISTRY_KEYS, BLOCKS), and lib/ is outside this cell's <paths>; the module was built on the existing generated asset-dim pin instead.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_naming.py:69-78 VIEWS lists the generated carriers, and only `_asset_dim_rest_pin.py` is a BD pin; :99-117 TARGET_REGISTRY_KEYS and :812-820 BLOCKS carry one row/one renderer each for it. `python lib/opal_naming.py generate --help` takes only --out and --target, with no way to name a new block, so a `_transaction_rest_pin.py` cannot be rendered without a lib/opal_naming.py edit.",
+        "TO MX-s-14 <paths> (worker face lines 66-76): `_transaction_rest_pin.py` is granted, `lib/opal_naming.py` and `infra/logic/registry/` are not; CLAUDE.md rule 30: a builder refusal is a registry row to add, never a hand-typed workaround.",
+        "comp-pipescript deployed --firm bd at 2026-09-29 ~04:1xZ: `[BRONZE] _asset_dim_rest_pin.py MATCH` (the pin the instance already reads)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-s-14 step 1: the module's names are resolved at BUILD time (the MX-s-11 pin), written to data/black_diamond/scripts/bronze/_transaction_rest_pin.py, with no lib.opal_naming import at run time.",
+    "world_is": "No generator target exists for a transaction pin and this cell cannot add one. pull_bd_transaction_rest.py therefore loads scope/vendor/bucket from the already-published generated `_asset_dim_rest_pin.py` (staged beside it by the document) and carries two legacy literals, the forwardfill prefix and `TXN_DAILY_` stem, copied from download-daily-transaction.ts and merge-daily-incremental.py; no pin file was hand-typed. A lib/opal_naming.py target (with its registry row) is the DS/LGIC lane's commit; the module's PIN block is the only line to swap after it.",
+    "notes": "Naming gate is WARN today (LGIC_ENFORCE); the departure is stated in the module docstring."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T04:21Z",
+    "one_line": "MX-s-14 step 3 (the one ad-hoc test run, and step 1's discovery read) cannot start: the instance stages the module from s3://opal-data-bd/code/bronze/, publishing it there is the DS lane's safe-deploy, and that lane is not this worker's; stopped after steps 1-2 as instructed, with no vendor call made.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLAUDE.md rule 13: DS owns commit->QA-deploy for data/*/scripts/{gold,silver,bronze}/*.py including `aws s3 cp`; enforced by .tools/safe-deploy.sh.",
+        "TO MX-s-14 step 2: 'Publishing the module and its closure to where the instance reads is the DS lane's safe-deploy, the MX-s-11 pattern'; precedent MX-s-10 PHASE A step 1 ('file a BLOCKING row naming it').",
+        "comp-pipescript deployed --firm bd at ~04:1xZ lists no pull_bd_transaction_rest.py (the asset-dim pin is MATCH); the edited document stages `code/bronze/pull_bd_transaction_rest.py` and `code/bronze/_asset_dim_rest_pin.py`.",
+        "Vendor calls made by this worker: 0 (the session secret is the instance role's; the module was exercised offline against synthetic workbooks only)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-s-14 step 3: run the edited commands once via ssm send-command and record the bronze object's row count, date range and the vendor call count; step 1: record the one discovery read of the export template.",
+    "world_is": "The commands stage a module that is not published. The unblock is one DS-lane publish of exactly one object, `code/bronze/pull_bd_transaction_rest.py` (this branch's bytes), beside the existing `_asset_dim_rest_pin.py` already MATCH; then the step-3 run can be re-issued. Not measured: the template's dateRangeType and stored window (the module keeps the persisted template's own window, as the Playwright leg did, and refuses loudly if the roster has 0 or more than 1 name match); whether the instance role may write the module's `staging/mx-s-14/` test prefix.",
+    "notes": "The module has a --stage flag that lands the test object under staging/mx-s-14/transactions/ so the test moves nothing the silver merge reads."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T04:22Z",
+    "one_line": "The bronze prefix this port must reproduce already holds a second family of names: 98 TRANSACTIONS_DAILY_* keys (2026-06-24..2026-09-29, the latest two 4.3 KB stubs) beside the 97 TXN_DAILY_* keys the Playwright leg wrote (last 2026-06-18), so the port writes a TXN_DAILY_ key next to another producer's TRANSACTIONS_DAILY_ key for the same day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "`aws s3 ls s3://opal-data-bd/forwardfill_v2/transactions/` at 2026-09-29: 196 lines = 98 TRANSACTIONS_DAILY_*, 97 TXN_DAILY_*, 1 `_complete/` prefix; TXN_DAILY_ ends 2026-06-18 (LastModified 2026-06-19), TRANSACTIONS_DAILY_ begins 2026-06-24 (LastModified 2026-07-06) and runs to 2026-09-29; 09-28 and 09-29 are 4356 and 4355 bytes.",
+        "data/cot/scripts/bronze/cot_bronze_ingest.py:9 and :348 name that pattern (`forwardfill_v2/{table}/{TABLE}_DAILY_{date}.xlsx`, `TRANSACTIONS_DAILY_{run_date}.xlsx`) as its landing key; that the objects in opal-data-bd are its writes is INFERRED from the name, not measured (its BD_S3_BUCKET default is opal-data-cot).",
+        "data/black_diamond/scripts/silver/merge-daily-incremental.py:182-216: the merge lists every .xlsx under the prefix, keys its skip on the object's ETag, and already documents 'the historical TXN_DAILY_* -> TRANSACTIONS_DAILY_* rename'; it dedups on transaction_id against 30 days of silver partitions."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-s-14 step 1 and bound 1: the pull writes the SAME bronze key(s) the Playwright leg wrote, so the downstream merge is unchanged, and there is one producer before and after.",
+    "world_is": "The Playwright key (TXN_DAILY_<date>) is what the module writes, as ordered. Whether the merge's transaction_id dedup makes a second same-day file harmless, and whether the TRANSACTIONS_DAILY_ producer is the cot ingest or another 49F path, are not measured here; the count of silver rows a TXN_DAILY_ landing would add on top of a TRANSACTIONS_DAILY_ file for the same date is the number the issuer needs before PHASE B.",
+    "notes": "Nothing was written by this worker; the test run's --stage flag keeps the test object out of the merge's prefix."
   }
 ]
 ```
