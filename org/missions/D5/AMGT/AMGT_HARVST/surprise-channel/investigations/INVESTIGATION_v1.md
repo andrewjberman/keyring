@@ -2558,6 +2558,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "TO section 1 ruling 1: a ticker needs its own case rule because the served matcher is case-insensitive; clause 3: write the securities file with universe_securities' own CLI.",
       "world_is": "The matcher takes ONE alias list, all case-insensitive, so a case-sensitive ticker cannot ride in `aliases`. The cell carries them in a separate field `ticker_aliases` (list, may be empty) that publication_gold._span_pattern reads. A securities file with the field, read by a matcher without it, drops every ticker form and every rule-admitted count without any failure; the reverse (old file, new code) reads no field and matches exactly as before (the pattern is byte-identical when there are no exact forms; test_the_matcher_is_byte_identical_to_the_old_one_without_exact_forms). Whole-brand names ride in `aliases` and survive either way.",
       "notes": "INERT. HVST-g-2's rebuild must run the worktree code at the drain's HEAD, not a copy from before this cell."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W45-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~45",
+      "surfaced_at": "2026-09-29T19:50:00Z",
+      "one_line": "HVST-g-2: g2_before_state.json (the AC1 BEFORE record) was overwritten by a re-run of the dry step AFTER the puts and restored from the verbatim pre-put output; no S3 object was touched.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/g2_pre_put_dry_output.txt: the untouched pre-put record (rc 0, 19:24Z), from which the JSON was rebuilt field by field",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/g2_ac1_output.txt is byte-identical (cmp) to a fresh AC1 run over the restored g2_before_state.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/scripts/g2_pre_put_dry.py: no argparse, so any argument (a --help probe) runs the whole dry step and rewrites the JSON"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO section 1 clause 5: the pre-put dry step records the BEFORE state to a g2_* file, written once before the first put; post-act verification is a separate read-only script.",
+      "world_is": "After the three puts this worker ran `g2_pre_put_dry.py --help` as a syntax probe; the script has no argument parser, so it re-ran and rewrote g2_before_state.json with the AFTER state (its stdout went to /dev/null; the dry-step verdict would have printed STOP). The worker rebuilt the JSON from g2_pre_put_dry_output.txt, which is the verbatim pre-put output and was not touched. The restored file carries the original recorded_utc (2026-09-29T19:24:42.232530+00:00, taken from the AC1 output). It is a reconstruction, not the original bytes; the .txt is the primary record.",
+      "notes": "INERT. Read-only against S3 both times: no put, no delete. Reader of the BEFORE record should take g2_pre_put_dry_output.txt as the primary evidence."
     }
   ]
 ```
