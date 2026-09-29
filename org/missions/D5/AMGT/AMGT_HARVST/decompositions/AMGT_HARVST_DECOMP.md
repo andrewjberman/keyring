@@ -1802,3 +1802,22 @@ sample); the largest served event is 3 articles over 1 day. **So the held-out ev
 impossible here;** the order adds a RECALL arm (held-out near-miss stories laid out for L9) inside the ruling's intent.
 **Fan-out: 1 of 1 chain, N = 1.** NOT cells: the event route (`Z-W39-S1`, ruled not cut), the portal push (Andrew's hold),
 the Seeking Alpha 402 (the account holder), a further bbg diagnostic (its own word), `Z-S37` (the tool's authoring lane).
+
+## 27. ROUND 15 -- L5 DECOMPOSITION v2.4, over the round-14 analysis (`ledger/ROUND_ANALYSIS.round14.md` @f00c9a0c43)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~08:4xZ. Round 14 CLOSED (1 of 1; 0 held-out events, round 13 stays IN-SAMPLE).
+Series **`d`** (spent: h, r, s, t, u, v, w, x, y, z, a, b, c over 42 orders). Slot MAX+1 over 40: **`~41`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1a common-name aliases: universe census of non-suffix tails, `.com` at minimum, `Z-W40-S1` read first, proved in memory | `HVST-d-1` | LOCAL | `~41` |
+| 1b rebuild mention + daily + event under a never-widen pair; false-hit sample and new-event judgment at L9 | `HVST-d-2` | SERVED | `~41` (continued) |
+
+**Split for the NEVER-1 reason of rounds 12-13:** the pair reads its expected diff from `d-1`'s merged rule. **Measured at
+the cut (CLOUD `b907d17f1c`):** the served mention (263 rows, 55 securities) and daily (50,997 rows) parts were built on
+09-24 by `2.0.0_SA_COO~Y` from `universe_securities.build()` over pool `universe/v1/2026-09-16.json` (191 securities, sa
+join off) -- not from the `~4` 6-security file -- so both cells pin that input; 1 of 191 alias sets carries a dot tail
+(AMZN); silver grew 118 -> 120 articles since, so `d-1` attributes every moved row ALIAS or DRIFT. **Issuer widening, carded
+to the CTO:** `chatter_daily` joins the radius because `build_daily` reads the newest mention part and `/timeline` serves it.
+**Fan-out: 1 of 1 chain (d-1 -> d-2, one worker), N = 1.** NOT cells: the event route (`Z-W39-S1`), the portal push
+(Andrew's hold), the Seeking Alpha 402 (the account holder), `Z-S37` (the tool's authoring lane).
