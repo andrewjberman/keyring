@@ -3184,6 +3184,27 @@ carries none.
     "spec_asserts": "MX-r-5 issuer notes: opal-gateway/** granted on the rel- and dep- branches, the MX-r-4 A2 pattern.",
     "world_is": "Two uses, one per branch, each carrying only the gateway directory; neither branch is merged or pushed. The issuer confirms or refuses the reading before PHASE B.",
     "notes": "Uses: 2 of 2 needed; none on the worker branch."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T08:40Z",
+    "one_line": "MX-r-5 A2 step 6 asks that the census 'is still 7 files', but A2 step 3 puts test_entitlement_admin.py on the rel- and dep- branches, so the git census over infra/aws/ec2/opal-gateway is now 8 files; the shipped artifact still differs from live in exactly 4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git diff --stat 4248b70b39 0001c9bb53 -- infra/aws/ec2/opal-gateway`: 8 files, 551 insertions, 49 deletions; the 7 of the first pin plus tests/test_entitlement_admin.py (+3 -2). The dep tree (ca48cd5482) has the same gateway tree object d2debddbd3e3977b0ed1ef0db00a4afd457be394.",
+        "Artifacts rebuilt without upload from the release tree and from live: 75 of 79 files identical, the same 4 differ (data_entitlement.py, opal_discover/integration.py, portal_index/integration.py, DATA_CATALOG.yaml); tests/ is not in the artifact."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2 step 6: re-prove that the census is still 7 files.",
+    "world_is": "Both A2 edits were carried as ruled; one of them is a test file that was not in the first census. The count of files in the git census is 8, and the count of shipped files that differ is 4 (unchanged). The reading of 'census' as the git diff is the worker's; the issuer states which count the CTO's G-A reads.",
+    "notes": "Filed as a form-level departure from the order's letter, not a defect in the release."
   }
 ]
 ```
