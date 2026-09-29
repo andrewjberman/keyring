@@ -17,6 +17,17 @@
 The option text he selected: "I spawn 0.2.0_DT to run /prod-deploy for DEV 27eae57a (clean DEV, zero TypeScript errors,
 merge forward, push, CI-verified), then tell ~D and ~M."
 
+## AMENDMENT ~13:5xZ -- the target is DEV 18899c96, on Andrew's second word
+
+`0.2.0_DT_PortfolioAnalytics~P` (msg 102825) measured origin/DEV at 18899c96748e, not 27eae57a. The extra commit is
+2.0.0_SA_COO~D's 13:18Z "build(DSGN_IRPTV1 FAST item 29): DirectoryEntry wire type regenerated from the committed
+schema -- account_masks (AD-10)". It landed BEFORE the card: MSTR's DEV read was stale, and the error is MSTR's. MSTR
+did not widen the word; it asked. The card, verbatim: "The PROD promotion you approved named DEV 27eae57a, but DEV had
+already moved one commit to 18899c96 before your answer (my ls-remote was stale). The extra commit is ~D's
+DirectoryEntry wire type regenerated for the same account_masks reader (AD-10), CTO-approved. Promote which?"
+Andrew's answer, verbatim: "Promote 18899c96 (Recommended)". The promotion is 137 commits over PROD a0314f22. Any
+DEV commit after 18899c96 is NOT covered.
+
 ## Measured at the card
 
 - origin/DEV 27eae57abe (ls-remote 12:14Z by 2.0.0_SA_COO~D; re-read by MSTR), origin/PROD a0314f22a5, 136 commits
