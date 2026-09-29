@@ -13,7 +13,7 @@
 comp-schedule: DECLARED-NOT-APPLICABLE -- no cron, alarm, monitor or cadence.
 comp-iam: DECLARED-NOT-APPLICABLE -- local reads; nothing served, nothing written to AWS.
 comp-adversary: RUN by the issuer at the cut -- AC1 proves the reader on the walked no-officer name against the real proxy; AC2 is the census with every denominator printed and a reason on every name that does not gain.
-EGRESS CLASS, declared: EDGAR (data.sec.gov, www.sec.gov) through the EXISTING lib/research/filings/fetch.py path and its SEC User-Agent -- read-only, no new vendor. Authorized for this order at its spawn (see the record face).
+EGRESS CLASS, declared: EDGAR (data.sec.gov, www.sec.gov) through the EXISTING lib/research/filings/fetch.py path and its SEC User-Agent -- read-only, no new vendor. Authorized: Andrew-direct R-21 (vendor egress for AMGT, scripted, never an agent turn).
 </preflight>
 
 ## 1. THE CELL -- `AMGT-xx-3` (round 49, decomposition s.57)
@@ -46,7 +46,9 @@ Nothing is served or persisted by this order; serving is a later round's, under 
 ## 2. BOUNDS
 
 1. Write only the new module and its tests. `roster.py`, `fetch.py`, the scoped API and the page are READ-ONLY.
-2. EDGAR reads only through fetch.py's functions; honour its User-Agent; no other host. No S3 write, no deploy.
+2. EDGAR reads only through fetch.py's functions (or this order's committed module); honour its User-Agent; no other host.
+   NEVER an agent-side HTTP call: no curl, wget, browser or ad-hoc request from your own turn -- every EDGAR read is a run of
+   committed, re-runnable code. No S3 write, no deploy.
 3. Standing: no install, no push, no promote, no vendor call. REFUSE, do not rescue.
 4. Python from the repo root with `PYTHONPATH="$(pwd)"`.
 
@@ -81,6 +83,8 @@ FAIL, AC2 FAIL (no proxy_officers module). **SPAWN HELD at the cut:** EDGAR is e
 Autonomy exclusion); fetch.py's own authority is Andrew-direct 2026-09-15 ~05:42Z, a session grant. The call is put to
 1.0.0_SA_CTO~Z (its arm pitches a reserved call to 3.0.0_SA_CVO~Z). On a GRANT the issuer spawns ~175 on this face unchanged and
 records the grant here; on a REFUSAL the issuer amends this order to a no-network cut (fixture-only) and says so.
+
+**AMENDMENT 1 (2026-09-29 ~21:55Z, issuer 2.0.0_SA_COO~Z): SPAWN UN-HELD.** 1.0.0_SA_CTO~Z msg 26728, ruling `ledger/ROUND_ANALYSIS.round48.md` s.4a-bis @8578f73789: Andrew-direct R-21 (`AMGT_COMPLETION_20260923/RULINGS.md` @b390c36444, read by the issuer at that commit) grants vendor egress for AMGT, BROAD ON AUTHORITY and NARROW ON MECHANISM -- verbatim "you have all the egress you want for vendors ... the pull should be deterministic/scripted in nature". EDGAR is inside it through fetch.py. Condition carried onto the face (bound 2): every EDGAR call through fetch.py or this order's committed module, never an agent-side HTTP call. Gate: GATE (viii) grades a MODIFIED order that declares `<placeholders>` (this one does); no other limb.
 
 <status>pending</status>
 <round>49</round>
