@@ -14,7 +14,7 @@
 <workstream>~M</workstream>
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `SC-k-2` (`decompositions/MDPF_SECCLASS_DECOMP.md`) |
-**outcome_ref:** FWD-8, FWD-3 | **depends_on:** IRPT_BCKEND IB-mr-251 drained (same seed source; spawned after it)
+**outcome_ref:** FWD-8, FWD-3 | **depends_on:** none (amendment 1: IB-mr-251 is held from CLOUD; this order carries its PHYS row)
 
 ---
 
@@ -39,8 +39,12 @@ anything in bd-securities."** Neither seeder reads bd-securities, and nothing yo
 
 **Build (LOCAL build + record: no seed run against the table, no deploy):**
 1. **Seed source.** Give every row in `etf_classification.py` an `instrument_kind` and, where GICS knows it, an
-   `industry`. GLD, PHYS and VXX are `fund`. Absent means absent: never default either field. Keep IB-mr-251's PHYS row
-   exactly as it landed.
+   `industry`. GLD, PHYS and VXX are `fund`. Absent means absent: never default either field.
+   **Amendment 1:** IRPT_BCKEND IB-mr-251 is held on its branch, so its PHYS row is NOT on CLOUD. Add it here,
+   byte-identical to 251's commit `40b86ffab3` (read it with `git show 40b86ffab3 -- infra/aws/lambda/v2_portal/_shared/etf_classification.py`):
+   `'PHYS': 'commodities'` in the class map, `'PHYS': 'passive'` in the management-style map, `'PHYS': 'Metals'` in
+   the sub-asset map, `'PHYS': 'Gold'` beside GLD in the exposure map, and `'PHYS': 'Sprott Physical Gold Trust'` in
+   the name map, with 251's comments. The identical lines then merge cleanly when 251 drains.
 2. **Seed path.** `seed-etf-classifications.py` writes both fields and sets `classified_by = "seed"`. The
    constituents seeder writes `instrument_kind = single_security` for its stock rows, plus `industry`. Neither may
    change an existing row's `asset_class` or `sub_asset_class` except where the census lists it.
