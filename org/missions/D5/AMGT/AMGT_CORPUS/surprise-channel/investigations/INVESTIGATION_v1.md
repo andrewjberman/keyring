@@ -2445,6 +2445,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Branch 1 (population 0, today) writes nothing, so the hazard is dormant; branch 2 would fork the registration ledger between the pinned checkout and CLOUD.",
     "notes": "Named in the round-16 pair's COO half for the CTO half to grade. Candidate remedies (the CTO's call): point AMGT_REGISTRATIONS_PATH at one durable shared location in the task action, or carry the pinned checkout's registrations delta back to CLOUD as a committed act after each non-empty fire. Disarm owner is this seat until ruled.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S64",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T23:35:00Z",
+    "one_line": "The model-block writer (integrations/bloomberg/research/model_block_pull.py) puts slash tickers under a LITERAL '/' key -- derived/model_block/BP/_LN_Equity/... (6 objects) -- and never through crosswalk.slash_safe_key, so BP/ LN and NG/ LN sit outside C-SLASH-SAFE-KEY on this surface; 0 objects exist under the slash-safe form BP-SLASH-_LN_Equity.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer's own S3 list 2026-09-29 ~23:3xZ, bucket opal-data-harvest: derived/model_block/BP/_LN_Equity/ 6 objects; derived/model_block/BP-SLASH-_LN_Equity/ 0; derived/model_block/IMB_LN_Equity/ 9 (control).",
+        "CRPS-s-1 census (0.9.0_WK_AMGT_CORPUS~1, merged 01682baecd): 'the producer does not call slash_safe_key; no -SLASH- key exists' across 618 objects / 99 prefixes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "lib/research/identity/crosswalk.py C-SLASH-SAFE-KEY: 'An entity id sits in a partition, minted by the crosswalk' (security_key_partition / slash_safe_key).",
+    "world_is": "The dossier and the corpus write the slash-safe partition; the model-block producer writes the raw '/' key. Readers of the model block work today because they read the same raw form.",
+    "notes": "Not this project's writer (integrations/bloomberg/research/, AMGT_RESAPP's model-block producer). Carried to the round-17 analysis for routing; no served read is broken today.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
