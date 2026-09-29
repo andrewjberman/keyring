@@ -15444,6 +15444,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "96 folders, 95 read OK, 1 read failure. The folder for the failing name was created 2026-09-29T12:54:45Z, i.e. BEFORE the half's ~13:1xZ measurement, so this is not a population that grew after the half was written; the name has a research-library folder but no registration in the identity store this seat can see from site Z. Whether the half's 0-failure read differed because the identity store held the name then, or because that measurement ran on another device whose OneDrive or crosswalk state differed, is NOT settled by this seat's evidence and is not this cell's surface.",
   "disarm_owner": "2.0.0_SA_COO~Z (issuer, round 48): the ROLLBACK named in both halves is the issuer's to call, and this seat has NOT rolled back -- the failing arm is causally isolated from the act (above), so a rollback would remove grants that are serving team_cases for 95 of 96 names and would not move the failing number by one. The issuer rules whether AC2's 'failed 0' clause is met at a population the act does not control, or is re-cut against the identified population; registering 'Hitachi 6501 JP' in the identity store is the AMGT_CORPUS / identity owner's act, not this lane's.",
   "notes": "INERT: nothing is degrading and no served output moved (limbs 5 and 6 byte-equal). The deploy is fully landed, not half-landed: both resources applied, re-plan 0-diff, AC1 and AC3 PASS. NEVER-2 entry amgt-resapp-ww1-redeploy-research-dossier-restart-20260929 is deliberately left OPEN at leg V1 so it BLARES to the COO rather than reading closed on a criterion this seat did not grade."
+},
+{
+  "id": "AMGT_RESAPP-Z-S304",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-09-29T19:35:00Z",
+  "one_line": "Two signed never-widen acts overlapped on one served surface: AMGT_HARVST g-2 put new chatter_daily/event/mention parts at 19:26-19:27Z while ww-1's NEVER-2 entry sat at leg V1, whose limb 5 reads /timeline byte-equal to a pre-apply capture (18:57Z) as the rollback trigger. AMD, BA and GOOGL are in g-2's moved 50, so their /timeline moves on DATA alone and would have read as a deploy ROLLBACK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 newest parts: chatter_daily part-20260929T192649Z (LastModified 19:26:55Z), chatter_event part-20260929T192706Z, article_security_mention part-20260929T192610Z.",
+      "g-2 moved-50 list (CTO~Z's AC2 rerun, cmp-identical to deliverables/2.0.0_SA_COO_H/round18/g2_signing_ac2_rerun.txt lines 562-611): AMD 121 cells, BA 32, GOOGL 1; 1299_HK absent.",
+      "ww-1 captures (deliverables/0.7.0_AE_CloudOps~A/ww1-captures): pre-apply 18:57:01Z, post-apply 19:21:10Z (before g-2, so its 9-of-9 byte-equal read is valid), post-g2 19:37:28Z: AMD timeline bf78f92eeb2acc86 -> e44c96037e8a, BA 803e12846a89c037 -> ebb9ee32ddfa, GOOGL cf1c63d3f41f524c -> dde9bdb41d98 (moved); AMD print 0a2bdf35fb1d54f6 and BA print 481422cab86a5a1f unchanged.",
+      "lib/research/print/render_pack.py carries no chatter/timeline/mention reader (Grep: 0 code hits), so /print is independent of g-2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each never-widen half names its own blast radius; ww-1 V1 limb 5: /timeline and /print byte-equal to the pre-apply capture, either moving is a ROLLBACK.",
+  "world_is": "The halves were each correct alone; neither named the other act in its window. CTO~Z ruled (msgs 26678/26679, ~19:36Z): an AMD/BA/GOOGL /timeline move is not a rollback by itself and is attributed against g-2's section (b); 1299_HK /timeline and all four /print stay byte-equal. The post-g2 capture bears that out.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer of ww-1): record the attribution in the entry's V1 leg and close it on the valid 19:21Z post-apply read plus the post-g2 attribution.",
+  "notes": "Class lesson for later pairs: a sign-off reads the OTHER open NEVER-2 entries whose surface overlaps its writes. CTO~Z's p-5 half (@9e1da13005) sequences its merge after ww-1 V1 for this reason."
 }
 ]
 ```
