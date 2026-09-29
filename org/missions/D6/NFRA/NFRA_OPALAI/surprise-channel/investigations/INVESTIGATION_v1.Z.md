@@ -1781,6 +1781,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Issuer amendment 4: the halt gate admits the worker once the OA-r-1 task order, byte-identical to CLOUD, is committed as one record-only commit under the audited author override.",
     "world_is": "The override that safe-commit honours for a lane refusal does not reach the TO issuance gate, which refuses a worker adding a task order, an unregistered project and a missing dep_stage. Passing it needs one of: a '# pipeline-override:' line in the file (not byte-identical, and an audit-log write in the release tree), project.json plus dep_stage=EXECUTING beside it (more files in the release branch), or a committer that is 2.0.0_SA_COO or a ~lane of it (the issuer commits it). The worker took none of them: each changes the ruled bytes or the ruled identity. Also unresolved: the halt gate reads only ls-files + HEAD of the calling worktree, so any admitted route still needs the file in HEAD of both trees.",
     "notes": "Not ARMED: nothing is deployed, no ledger entry open. Everything before the act is proven and waiting: release d287ffb346, transcript, rollback 79 of 79, .env render."
+  },
+  {
+      "id": "NFRA_OPALAI-Z-W22-S1",
+      "project": "NFRA_OPALAI",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_OPALAI~22",
+      "surfaced_at": "2026-09-29T01:23Z",
+      "one_line": "A store-borne `portal_channels: []` never reaches handle_asker_query's new branch: the real grant parser rejects an empty list as Malformed, so it is refused asker_store_unavailable, not asker_no_portal_channels.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "infra/aws/ec2/opal-gateway/app/data_entitlement.py:204-206 _strings(): raises Malformed 'must be a non-empty list of strings' for an empty list; :243-244 calls it whenever the key is present.",
+              "Measured in worktree wk-NFRA_OPALAI-22: with a fake store carrying portal_channels [] the handler returned code asker_store_unavailable, guard_denied True, no data, no fetch (first run of tests/test_asker_nochannels.py, before the empty-arm was rewritten).",
+              "Only an ABSENT key parses to an empty frozenset, and that path is refused asker_no_portal_channels (test_grant_without_portal_channels_denied PASSED)."
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "OA-f-7 cell: an active profile whose grant has `portal_channels: []` is refused `asker_no_portal_channels`, and no fetch runs (tests built with fakes like test_asker_binding.py's fake store).",
+      "world_is": "Through the real store and parser, `portal_channels: []` is refused earlier with asker_store_unavailable (still fail closed, nothing fetched), because data_entitlement.py (outside this order's paths, bound 1) rejects the empty list. The empty-set branch is reachable only when the key is absent. test_grant_with_empty_portal_channels_denied therefore asserts the store-borne [] is refused (code asker_store_unavailable or asker_no_portal_channels, no fetch) and reaches the handler's empty-set branch with a fake access layer (de.current_access wrapped to return the parsed grant with an empty portal_channels set). If the issuer wants the literal code for [], that is a data_entitlement.py change, not this order's.",
+      "notes": "Not ARMED: both shapes fail closed with nothing fetched."
   }
 ]
 ```
