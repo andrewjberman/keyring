@@ -19,3 +19,13 @@ In response to the question naming WCMG, GQGU, TSEL, BASG, ETFT and PCLG:
 > Yeah if they have less than 2Y of history, then we just get as much as we can up to that threshold. Also, if BQL is really just for all the "characteristics", and we can get holdings data every day just no beta/etc., that is fine. Most of that stuff can be derived after the fact if we really need it based on the holdings. All we need is daily holdings. If all we can get is weekly, fine, if all we can get is quarterly, less good, but fine.
 
 The paired assessment records the live read-only Bloomberg probes, issuer-source retrievals, available historical examples and proposed lightweight collection approach. No other seat was dispatched.
+
+## Bloomberg documentation follow-up, verbatim
+
+Recorded September 29, 2026, 15:36 ET, direct Codex user channel. Receipt timestamps were not exposed.
+
+> Ok Im interested. First of all, are you saying there might be another BBG endpoint that we can go around for this purpose?
+
+> Check these out: "C:\Users\Opal Bloomberg\Downloads\BLPAPI-Core-User-Guide.pdf" "C:\Users\Opal Bloomberg\Downloads\BLPAPI-Core-Developer-Guide.pdf", they are docs on BBG API, maybe a clue in here
+
+The follow-up is recorded in `BBG_GUIDES_FOLLOWUP.md`; it covers document review and read-only live API tests, with no account configuration changes or external correspondence.

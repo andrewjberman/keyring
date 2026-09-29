@@ -6,6 +6,8 @@
 **Measured:** 2026-09-29, approximately 15:13-15:22 ET.
 **Status:** Research assessment and implementation proposal; no production collector installed.
 
+**Subsequent Bloomberg clarification:** [Guide review and live tests](BBG_GUIDES_FOLLOWUP.md) found a non-BQL top-ten holdings field working for five of six ETFs. Complete portfolios remain unproven through Bloomberg. The follow-up also exercises historical bulk overrides and the distinct custom-portfolio request operation.
+
 ## Decision
 
 Use issuer holdings for the lightweight version. Current full-portfolio data was retrieved for all six confirmed ETFs. BASG and GQGU have publicly accessible dated files, with samples reaching their launch periods. The other four have current holdings plus periodic portfolio disclosures; a daily historical archive was not established for those four in this assessment. Start preserving daily snapshots and backfill actual available dates, capped at two years. Weekly or quarterly observations are acceptable under Andrew's revised direction; retain their actual dates.
