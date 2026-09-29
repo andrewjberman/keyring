@@ -508,7 +508,7 @@ directives:
       Placement attaches to the DIRECTIVE, never to a member (LD-0498, LD-0502), so a future move is one row and not N."
     members:
       subgroups: []
-      projects: [DSGN_REBRND, DSGN_IRPTV1]
+      projects: [DSGN_REBRND, DSGN_IRPTV1, DSGN_AMGTV1]
       members_note: "First member registered 2026-09-11 by 1.0.0_SA_CTO at L3 (Rule 27 L3 clause: the CTO writes every
         carrier itself): DSGN_REBRND (Portal Visual Elevation; minted DSGN_PORTALVIS at L3, renamed the same hour on Andrew's word 'DSGN_REBRND (what i would call this project)'), macro DSGN ratified on Andrew's word (LD-0552), lead
         2.0.0_SA_COO~D (promoted from 0.1.1_RD_MarketPerformance on his word ~07:5xZ). Brief
@@ -520,7 +520,20 @@ directives:
         COO~D. Tell CTO that.' (record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_052xZ_DSGN_IRPTV1_OWN_PROJECT_D13_COO_D.md);
         lead 2.0.0_SA_COO~D. Brief docs/briefs/irpt-page-remediation-brief-20260924.md; endpoint
         org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_DSGN_IRPTV1_20260924.md. MACROS.yaml unchanged: DSGN is
-        already D13's ratified macro (LD-0552)."
+        already D13's ratified macro (LD-0552).
+        Third member registered 2026-09-29 by 1.0.0_SA_CTO~Z at L3: DSGN_AMGTV1 (Security Analysis page redesign),
+        named by Andrew-direct 2026-09-28 ~22:3xZ at the 4.0.0_SA_CRO~Z terminal (record
+        org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260928_223xZ_DSGN_AMGTV1_WALK_MEMO_UIWALK_FIXTURE_PORT_BRIEF.md);
+        lead 2.0.0_SA_COO~D ON SITE Z. Brief docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md; endpoint
+        org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPOINT_FORWARD_20260928.md.
+        PER-MEMBER PLACEMENT EXCEPTION -- THE FIRST: DSGN_AMGTV1 is owned by SITE Z while D13 stays placed LAPTOP. Andrew-direct
+        2026-09-28 ~22:4xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'COO~D is fine, because they are on separate boxes, so
+        there shouldn't be any overlap. DSGN_AMGTV1 will be owned by the sitez box, so it should not interfere with any COO~D
+        ops on the laptop box.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_DSGN_AMGTV1_SEATS_ON_COO_D_SITEZ.md).
+        The header reserves placement exceptions to him per case (:24-26); adjudicated by 3.0.0_SA_CVO~Z msg 26308. A later
+        move of D13 does NOT move this member without his word. directives-check.py displays D13 as LAPTOP for this member:
+        that is display only; no tool routes member work by directive placement (readers directives-check.py:182,
+        integrate-directives.py:106)."
     stance: "MINTED BY ANDREW 2026-09-11 ~07:0xZ at the 0.0.0_AB_MSTR terminal, VERBATIM and entire:
       'I need a new directive, D13 which will be Design. Get that into directives.yaml'. That is the whole
       of his word; everything else in this row is the register owner supplying REQUIRED FIELDS and is
