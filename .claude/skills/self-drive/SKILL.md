@@ -1,6 +1,6 @@
 ---
 name: self-drive
-description: Drive ONE scope of the directive register to completion on a self-ending loop: `/self-drive D4`, `/self-drive <CODE>`, `/self-drive sitez directives`. Each tick runs /open-calls restricted to the scope and closes every call the same tick -- on this seat's own rec by default, after CRO pattern research for a DESIGN fork, by CVO verdict for a GOVERNANCE fork -- spawning any needed seat that is not live; persists until the register reads the scope done, then turns itself off; delta-driven log. While armed, the scope is the only work. Operator-initiated; NOT /drive.
+description: Drive ONE scope of the directive register to completion on a self-ending loop: `/self-drive D4`, `/self-drive <CODE>`, `/self-drive sitez directives`. Each tick closes every open call in scope the same tick -- on this seat's own rec by default, after CRO pattern research for a DESIGN fork, by CVO verdict for a GOVERNANCE fork -- spawning any needed seat that is not live; persists until the register reads the scope done, then turns itself off; delta-driven log. While armed, the scope is the only work. Operator-initiated; NOT /drive.
 ---
 
 # /self-drive — drive a DIRECTIVES.yaml scope to DONE: the driver closes every open call each tick, then proceeds, on a loop that ends itself
