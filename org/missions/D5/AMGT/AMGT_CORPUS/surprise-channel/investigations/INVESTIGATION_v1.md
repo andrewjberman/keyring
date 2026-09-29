@@ -2423,6 +2423,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "At ccf2a27c6b the --continue path refuses a staged path the merge did not record; the fix is LOCAL on CLOUD (push held on Andrew).",
     "notes": "The residual named in ccf2a27c6b's body (a peer path that also differs between the two sides) stays with the tool's owner.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S63",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T22:52:00Z",
+    "one_line": "A scheduled induction fire with a non-empty population appends its registration rows to lib/research/identity/registrations.json IN THE PINNED CHECKOUT (the task's WorkingDirectory), not in CLOUD's copy; the pool crosswalk carries the new names, but CLOUD's registrations.json does not, so a later crosswalk build from CLOUD inputs (crosswalk --write-pool, add_security, build_universe) would publish a record set WITHOUT them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/identity/crosswalk.py: REGISTRATIONS_PATH_DEFAULT = 'lib/research/identity/registrations.json' (relative; read and appended relative to the process cwd unless AMGT_REGISTRATIONS_PATH is set); add_security --write-pool appends the row and builds the pool document from it (round 15: registrations.json 70 -> 71 in the tree it ran from, committed 7581890b07).",
+        "lib/research/corpus/schedule_induction.ps1 @bb2f3dbb18: New-ScheduledTaskAction ... -WorkingDirectory <repo parent>/opal-pinned/<task>/<sha12> (a detached checkout); the action sets only OPAL_INDUCTION_FIRE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS.round15.md s.2: the daily trigger registers every new EVIDENCED folder through add_security's scripted path, from a pinned commit.",
+    "world_is": "Branch 1 (population 0, today) writes nothing, so the hazard is dormant; branch 2 would fork the registration ledger between the pinned checkout and CLOUD.",
+    "notes": "Named in the round-16 pair's COO half for the CTO half to grade. Candidate remedies (the CTO's call): point AMGT_REGISTRATIONS_PATH at one durable shared location in the task action, or carry the pinned checkout's registrations delta back to CLOUD as a committed act after each non-empty fire. Disarm owner is this seat until ruled.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
