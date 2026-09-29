@@ -523,3 +523,12 @@ step 1, merged early by the issuer). `0.0.0_AB_MSTR~Z` re-runs G-ACCT steps 1-3,
 
 Chain: slot `~22`, direct act; it SHIPS INSIDE OA-e-3's narrow release (OA-e-3 amendment 1), which now waits on its drain.
 J1 PASS (CVO @c180d84b36) met G-SCOPE's condition.
+
+## ADDENDUM R2-A6 -- the launcher starts claude.exe by a bare name, off Opal_Agent's PATH (issuer ruling, obligation 7)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-8` | new `opal_ai/opal/runtime/resolve-claude.ps1` (the config's optional `claude_exe`, then PATH, else a loud `LAUNCHER: REFUSE CLAUDE-NOT-FOUND`, exit 5); `launcher.ps1` starts Claude Code from the resolved path; the example config names the key | LOCAL |
+
+Chain: alone, slot `~23`, direct act, nested base the local round-2 DEV @dcececf53c. G-ACCT step 4 measured the install
+at C:\Users\Opal_Agent\.local\bin\claude.exe, not on Opal_Agent's PATH (0.0.0_AB_MSTR~Z report 02:16Z).
