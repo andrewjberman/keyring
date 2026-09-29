@@ -20,7 +20,15 @@ the three workstreams ~P, ~M, ~Y; PRD v0.18 addendum). **Carriers written:** `su
 Every round-19 order is terminal. No round-19 order carries a JUDGMENT criterion (0 hits across the 7 files), so L9 is
 row dispositions only.
 
-## The one served fact this round did not change (P0)
+## CORRECTION (04:3xZ, before landing): the P0 below was stale when the slug was sent
+
+The retained-reopen guard was already served when this review was written. The adapter is `qfxZ0DzB`. The CRO's D1
+walk `20260929T001245Z` read the NEW-01 account as a named refusal. Both adapter ledgers closed at `7a7e7c13b8`
+(00:28:43Z). This seat's evidence was a walk at 00:02Z and a read of STATUS~P.md:34 before its update. It did not read
+the ledger commits. Source: `1.0.0_SA_CTO` ROUND_ANALYSIS.round19.md section 1 @`d797a87872`. S176's remediation row is
+written REMEDIATED (closed) in this landing. The section below stands as the record of what the slug said.
+
+## The one served fact this round did not change (P0) -- stale, see the correction above
 
 NEW-01 still shows on the page. `2.0.0_SA_COO~D`'s walks of 2026-09-28 22:04Z and 2026-09-29 00:0xZ
 (`tmp/ui-walk/20260928T220437Z` shot 011, `tmp/ui-walk/20260929T000244Z` shot 010, md5 `9820db3b70bd588b1af3fe592998afe7`)
