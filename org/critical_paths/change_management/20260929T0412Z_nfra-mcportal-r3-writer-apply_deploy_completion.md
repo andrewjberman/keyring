@@ -12,11 +12,13 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | layer build: PyJWT 2.13.0 cryptography 49.0.0 cffi 2.1.0 pycparser 3.0 manylinux2014 cp312 | zip sha256 + member count |  | OPEN |
-| L2 | verify | staged package build (build_package.py) | staged dir listing |  | OPEN |
+| L1 | verify | layer build: PyJWT 2.13.0 cryptography 49.0.0 cffi 2.1.0 pycparser 3.0 manylinux2014 cp312 | zip sha256 + member count | layer zip sha256=a0ef01c5c9c6f443.. 180 members, wheels PyJWT-2.13.0 cryptography-49.0.0 cffi-2.1.0 pycparser-3.0 (manylinux2014_x86_64 cp312) | CLOSED 20260929T041610Z |
+| L2 | verify | staged package build (build_package.py) | staged dir listing | build_package.py staged 11 files under .build/staged, lambda_function.py at root | CLOSED 20260929T041611Z |
 | L3 | activation | safe-apply targeted apply of mcportal_grant_writer.tf resources (7 add, 0 change, 0 destroy) | apply complete line |  | OPEN |
 | L4 | verify | live no-header invoke -> REFUSED NO-OWNER-HEADER + record in table | invoke output |  | OPEN |
 
 ## Log
 
 - 20260929T041242Z OPENED by 0.9.0_WK_NFRA_MCPORTAL~1 with 4 leg(s)
+- 20260929T041610Z LEG L1 closed: layer zip sha256=a0ef01c5c9c6f443.. 180 members, wheels PyJWT-2.13.0 cryptography-49.0.0 cffi-2.1.0 pycparser-3.0 (manyl
+- 20260929T041611Z LEG L2 closed: build_package.py staged 11 files under .build/staged, lambda_function.py at root
