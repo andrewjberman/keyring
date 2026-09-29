@@ -2914,6 +2914,165 @@ carries none.
     "spec_asserts": "Z-W15-S2 (ARMED): the new portal_index tool is absent from INDEX_TOOLS, so the entitlement layer denies it.",
     "world_is": "Fixed on CLOUD, not yet served. MX-r-5 ships the tool and its entitlement in one release (no ETF tool, per 1.0.0_SA_CTO~O msg 26487); r5.J1 grades the live call.",
     "notes": "The MX-t-10 ETF patch stays uncommitted and byte-frozen pending the LGIC ruling on Z-W15-S5."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T04:20Z",
+    "one_line": "MX-s-14 step 1 names a build-time pin `_transaction_rest_pin.py`, but a generated pin needs a target in lib/opal_naming.py (VIEWS, TARGET_REGISTRY_KEYS, BLOCKS), and lib/ is outside this cell's <paths>; the module was built on the existing generated asset-dim pin instead.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_naming.py:69-78 VIEWS lists the generated carriers, and only `_asset_dim_rest_pin.py` is a BD pin; :99-117 TARGET_REGISTRY_KEYS and :812-820 BLOCKS carry one row/one renderer each for it. `python lib/opal_naming.py generate --help` takes only --out and --target, with no way to name a new block, so a `_transaction_rest_pin.py` cannot be rendered without a lib/opal_naming.py edit.",
+        "TO MX-s-14 <paths> (worker face lines 66-76): `_transaction_rest_pin.py` is granted, `lib/opal_naming.py` and `infra/logic/registry/` are not; CLAUDE.md rule 30: a builder refusal is a registry row to add, never a hand-typed workaround.",
+        "comp-pipescript deployed --firm bd at 2026-09-29 ~04:1xZ: `[BRONZE] _asset_dim_rest_pin.py MATCH` (the pin the instance already reads)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-s-14 step 1: the module's names are resolved at BUILD time (the MX-s-11 pin), written to data/black_diamond/scripts/bronze/_transaction_rest_pin.py, with no lib.opal_naming import at run time.",
+    "world_is": "No generator target exists for a transaction pin and this cell cannot add one. pull_bd_transaction_rest.py therefore loads scope/vendor/bucket from the already-published generated `_asset_dim_rest_pin.py` (staged beside it by the document) and carries two legacy literals, the forwardfill prefix and `TXN_DAILY_` stem, copied from download-daily-transaction.ts and merge-daily-incremental.py; no pin file was hand-typed. A lib/opal_naming.py target (with its registry row) is the DS/LGIC lane's commit; the module's PIN block is the only line to swap after it.",
+    "notes": "Naming gate is WARN today (LGIC_ENFORCE); the departure is stated in the module docstring."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T04:21Z",
+    "one_line": "MX-s-14 step 3 (the one ad-hoc test run, and step 1's discovery read) cannot start: the instance stages the module from s3://opal-data-bd/code/bronze/, publishing it there is the DS lane's safe-deploy, and that lane is not this worker's; stopped after steps 1-2 as instructed, with no vendor call made.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLAUDE.md rule 13: DS owns commit->QA-deploy for data/*/scripts/{gold,silver,bronze}/*.py including `aws s3 cp`; enforced by .tools/safe-deploy.sh.",
+        "TO MX-s-14 step 2: 'Publishing the module and its closure to where the instance reads is the DS lane's safe-deploy, the MX-s-11 pattern'; precedent MX-s-10 PHASE A step 1 ('file a BLOCKING row naming it').",
+        "comp-pipescript deployed --firm bd at ~04:1xZ lists no pull_bd_transaction_rest.py (the asset-dim pin is MATCH); the edited document stages `code/bronze/pull_bd_transaction_rest.py` and `code/bronze/_asset_dim_rest_pin.py`.",
+        "Vendor calls made by this worker: 0 (the session secret is the instance role's; the module was exercised offline against synthetic workbooks only)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-s-14 step 3: run the edited commands once via ssm send-command and record the bronze object's row count, date range and the vendor call count; step 1: record the one discovery read of the export template.",
+    "world_is": "The commands stage a module that is not published. The unblock is one DS-lane publish of exactly one object, `code/bronze/pull_bd_transaction_rest.py` (this branch's bytes), beside the existing `_asset_dim_rest_pin.py` already MATCH; then the step-3 run can be re-issued. Not measured: the template's dateRangeType and stored window (the module keeps the persisted template's own window, as the Playwright leg did, and refuses loudly if the roster has 0 or more than 1 name match); whether the instance role may write the module's `staging/mx-s-14/` test prefix.",
+    "notes": "The module has a --stage flag that lands the test object under staging/mx-s-14/transactions/ so the test moves nothing the silver merge reads."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T04:22Z",
+    "one_line": "The bronze prefix this port must reproduce already holds a second family of names: 98 TRANSACTIONS_DAILY_* keys (2026-06-24..2026-09-29, the latest two 4.3 KB stubs) beside the 97 TXN_DAILY_* keys the Playwright leg wrote (last 2026-06-18), so the port writes a TXN_DAILY_ key next to another producer's TRANSACTIONS_DAILY_ key for the same day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "`aws s3 ls s3://opal-data-bd/forwardfill_v2/transactions/` at 2026-09-29: 196 lines = 98 TRANSACTIONS_DAILY_*, 97 TXN_DAILY_*, 1 `_complete/` prefix; TXN_DAILY_ ends 2026-06-18 (LastModified 2026-06-19), TRANSACTIONS_DAILY_ begins 2026-06-24 (LastModified 2026-07-06) and runs to 2026-09-29; 09-28 and 09-29 are 4356 and 4355 bytes.",
+        "data/cot/scripts/bronze/cot_bronze_ingest.py:9 and :348 name that pattern (`forwardfill_v2/{table}/{TABLE}_DAILY_{date}.xlsx`, `TRANSACTIONS_DAILY_{run_date}.xlsx`) as its landing key; that the objects in opal-data-bd are its writes is INFERRED from the name, not measured (its BD_S3_BUCKET default is opal-data-cot).",
+        "data/black_diamond/scripts/silver/merge-daily-incremental.py:182-216: the merge lists every .xlsx under the prefix, keys its skip on the object's ETag, and already documents 'the historical TXN_DAILY_* -> TRANSACTIONS_DAILY_* rename'; it dedups on transaction_id against 30 days of silver partitions."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-s-14 step 1 and bound 1: the pull writes the SAME bronze key(s) the Playwright leg wrote, so the downstream merge is unchanged, and there is one producer before and after.",
+    "world_is": "The Playwright key (TXN_DAILY_<date>) is what the module writes, as ordered. Whether the merge's transaction_id dedup makes a second same-day file harmless, and whether the TRANSACTIONS_DAILY_ producer is the cot ingest or another 49F path, are not measured here; the count of silver rows a TXN_DAILY_ landing would add on top of a TRANSACTIONS_DAILY_ file for the same date is the number the issuer needs before PHASE B.",
+    "notes": "Nothing was written by this worker; the test run's --stage flag keeps the test object out of the merge's prefix."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T06:50Z",
+    "one_line": "Rows Z-W17-S1 (pin target needs lib/opal_naming.py) and Z-W17-S2 (DS-lane publish of the module) LAPSE: MX-s-14 amendment A1 drops the new REST module, and pull_bd_transaction_rest.py is removed from this branch in a git rm commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment A1 of TO MX-s-14 (2.0.0_SA_COO~MI, CLOUD @a56cbfd460, confirmed by 1.0.0_SA_CTO~O): 'Drop step 1 (the new module) ... Rows Z-W17-S1 and Z-W17-S2 lapse with it'; a new REST pull writing TXN_DAILY_ would be a second writer beside bd-49f-session-daily's TRANSACTIONS_DAILY_ (this worker's row Z-W17-S3).",
+        "Issuer message to this worker: remove pull_bd_transaction_rest.py from the branch in a commit so the drain carries no unused writer. Module lifetime on the branch: added 16d142659d, removed in this branch's next commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rows Z-W17-S1 and Z-W17-S2 (both BLOCKING, INERT) asserted a pin target and a DS-lane publish were owed for the new REST module.",
+    "world_is": "Neither is owed: no module is published or used. The pin target (S1) and the publish (S2) are not needed; the module named superseded in ANNOUNCE_MX-s-14.md. The step-3 test ran instead as the edited command list, merge only, with 0 vendor calls.",
+    "notes": "S1 and S2 stay in the file (append-only); this row is their lapse record. Their disarm_owner stays 2.0.0_SA_COO~MI to disposition."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T07:10Z",
+    "one_line": "Stripping the dead download from opal-bd-allocation-download makes its success branch reachable for the first time since 2026-06-23: on a merge rc 0 the document invokes the bd-price-update Lambda (async), which has not been invoked by this document in 70 of 70 dated runs; the edited document keeps that invoke.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Served opal-bd-allocation-download $LATEST (version 4), read live 2026-09-29: after the merge it runs `if [ $DOWNLOAD_RC -ne 0 ] || [ $MERGE_RC -ne 0 ]; ... exit 1`, and only past that `aws lambda invoke --function-name bd-price-update --invocation-type Event`. logs/allocation-download-2026-09-28.log: `ERROR: Pipeline failed (download_rc=1 merge_rc=0) - skipping bd-price-update`.",
+        "DEAD_PROOF_MX-i-5.md (worker ~16): allocation download dead 70 of 70 dated logs since 2026-06-23, so the invoke has been skipped on every one of them.",
+        "infra/aws/lambda/bd-pipeline/bd-allocation-trigger/lambda_function.py docstring: 'SSM doc invokes bd-price-update Lambda after download completes'.",
+        "The PHASE A test of the edited list ran WITHOUT that invoke (removed from the test command list only), so no downstream Lambda was fired by this worker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2: apply the transaction strip identically to the allocation document, keeping the merge, the log upload, the shutdown-before-exit and the honest exit on the merge's rc.",
+    "world_is": "The allocation document has one step after the merge that the other three lack: the bd-price-update invoke, gated on both rcs. With the download gone the gate reads the merge rc alone, so the first PHASE B fire calls bd-price-update. What that Lambda does with a daily call after a 3-month gap is NOT measured here. The issuer decides before PHASE B: keep the invoke (as the edited file does) or strip it.",
+    "notes": "Whether bd-price-update is also invoked by another path (its own schedule or the bronze-complete rule) is not measured."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T07:11Z",
+    "one_line": "The A1 transaction test ran on i-0e6f6dc014fdcf1cd (bd-assets), but bd-transactions-trigger targets i-00c7568bc510f7423 (bd-transactions); the merge-only run was repeated on the right instance and both read rc 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration EC2_INSTANCE_ID, 2026-09-29: bd-transactions-trigger i-00c7568bc510f7423; bd-allocation-trigger, bd-realized-trigger and bd-unrealized-trigger all i-0800437d1dbb0b5cc. ec2 describe-instances: all three instances share bd-exporter-profile, t3.medium, Names bd-transactions / bd-allocations / bd-assets.",
+        "A1 test command cdb144c8-b4de-4ef1-b5d8-4c36509ca6fc ran on i-0e6f6dc014fdcf1cd (the asset-dim instance): Success rc 0, wrote silver/transactions/2026-09-29.parquet (0 rows). Repeat command e3047e12-0cce-4098-8e96-93e429c918d1 on i-00c7568bc510f7423: Success rc 0, `Previously processed: 195 files`, `No new files to process`.",
+        "The second run overwrote logs/transaction-download-2026-09-29.log (S3 versioning holds the first)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A1 step 3: one ad-hoc run of the edited command list, merge only, as the test.",
+    "world_is": "The instance for that run was chosen from the asset-dim precedent, not from the trigger. Both instances carry the same profile and the merge downloads its script from S3, so the result is the same; the repeat on the trigger's own instance is the one the announcement cites. No vendor call was made by either run.",
+    "notes": "The repeat is a second merge-only run for the transaction document (0 vendor calls, 0 new files)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T07:30Z",
+    "one_line": "safe-commit REFUSED the three A2 documents (opal-bd-allocation/realized/unrealized-download.json, lane CLOUD_OPS_OR_ETL): this branch's copy of the MX-s-14 order predates amendment A2 and its <paths> do not grant them; the edits are in the worktree, uncommitted, and copied under the deliverables folder.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit -- <the 3 documents + deliverables + channel>, 2026-09-29 ~07:2xZ: `ERROR: owned-paths lane violation(s) detected (block mode)`, one VIOLATION line per document, lane=CLOUD_OPS_OR_ETL; `safe-commit did NOT commit (rc=1)`; nothing was committed in that call.",
+        "The order at this branch's HEAD carries 0 references to opal-bd-allocation-download.json in its <paths>; the order at CLOUD @1d62ade62e carries 3 (git show CLOUD:<order> | grep -c => 3; the branch file => 0). A2 was committed on CLOUD after this branch was cut, and this worker may not merge CLOUD (issuer message: the branch cannot fast-forward, and workers never merge).",
+        "sha256 (first 16) of the three edited documents in the worktree: allocation 559048c8290150fc, realized 570538ea79ddfe59, unrealized b33bb4201627f2d8; copies under deliverables/0.9.0_WK_NFRA_MCPINDEX~17/edited_documents/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2: apply the transaction edit to the allocation, realized and unrealized documents; the granted paths are the order's <paths> (the lane gate admits exactly those).",
+    "world_is": "The gate reads the order at the branch's HEAD, which lacks the A2 grant, so the three repo files cannot be committed by this worker. Not worked around: no override, no order edit. Carrier so the edit is not lost: the byte-identical copies in the deliverables folder (a granted path), committed. Unblock, the issuer's choice: bring the A2 order text onto this branch (a CLOUD merge by the issuer) and this worker recommits the three files, or copy the three files from edited_documents/ at the drain.",
+    "notes": "The A2 tests ran from the edited command lists (built from the working-tree files) and are recorded in ANNOUNCE_MX-s-14.md."
   }
 ]
 ```
