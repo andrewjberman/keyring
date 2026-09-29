@@ -2361,6 +2361,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "COO half s.4.2 (and CTO half s.1): ALIAS = AMZN 161 cells, TSM 215 cells; DRIFT range extension = 955 rows; read as disjoint sets.",
       "world_is": "The two lists overlap by 5 AMZN cells and 5 TSM cells. AC1's check adds the extension days to its moved count to reproduce 161 and 215 (156 + 5, 210 + 5), and the served rows moved exactly as the halves name: no cell outside AMZN and TSM moved on any day <= 2026-09-24, and 955 extension rows landed.",
       "notes": "INERT: a counting convention in the halves, no served row differs from what they name. Recorded because a reader who takes 161 as ALIAS-only would look for 5 alias cells that are extension cells."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~42",
+      "surfaced_at": "2026-09-29T11:35:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W42-S1",
+      "one_line": "HVST-e-2: the AC1 act ran at 11:22Z under a command the worker meant as a dry run, and its stdout was cut at 60 lines by a pipe to head; the act itself was the sanctioned one and landed inside the pair.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~42/e2_ac1_output.txt (header states what was captured and what was cut)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~42/e2_ac1_post_act_verify_output.txt: AC1-POST-ACT PASS; mention parts 4 -> 5, daily 5 -> 6, event 7 -> 7, 0 OUTSIDE THE PAIR",
+          "S3 written keys: amgt/harvest/gold/article_security_mention/date=2026-09-29/part-20260929T112204Z.parquet ETag=b8118b05d3160c7c31b4955c22732afe; amgt/harvest/gold/chatter_daily/date=2026-09-29/part-20260929T112222Z.parquet ETag=06025a62eb771b336f33fe097d50c61c"
+        ]
+      },
+      "spec_asserts": "TO HVST-e-2 s.2/s.3: one build-mention then one build-daily, each once, AC1 prints (a)-(e) in order; the halves cover exactly that act at as-of 2026-09-29 or 2026-09-30.",
+      "world_is": "The worker patched a --dry-run flag into the AC1 script, the patch did not apply (its anchor string did not match), and the script was run anyway piped through head -60. The full act ran (a pre-put in-memory prediction inside the pair had passed first, as the script always does), both puts landed once each, and the pipe cut the printed output after step (d); steps (e) and the S3 key list were not captured from that run.",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "INERT: no second put is possible from the script (a re-run stops at step (a) because the BEFORE state changed) and nothing was deleted. Recovery of the record: the captured output is saved verbatim as e2_ac1_output.txt, and ac1_post_act_verify.py re-reads (c), (d), (e) from S3 into e2_ac1_post_act_verify_output.txt. Not recoverable from S3 now: a BEFORE listing of the ETags of the OLDER prior parts (the newest-before ETags equal the COO half s.3; the 09-24 mention/daily and 09-29T062617Z event ETags equal the round-15 d-2 script's recorded BEFORE_EXPECT)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~42",
+      "surfaced_at": "2026-09-29T11:36:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W42-S2",
+      "one_line": "HVST-e-2: AC1's literal invocation is write-once, so a verifier re-running it after the act reads the STOP branch of step (a), not the pass output.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~42/scripts/ac1_rebuild_two_tables.py step (a): compares S3 to the COO half s.3 BEFORE state and stops before any put when it differs",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~42/e2_ac1_post_act_verify_output.txt: newest mention part is 20260929T112204Z, not the s.3 part 20260929T092419Z"
+        ]
+      },
+      "spec_asserts": "TO HVST-e-2 AC1 (a): BEFORE expected as at the cut in section 2; if different, STOP before the first put. The criterion invocation is the one script.",
+      "world_is": "After the act the S3 state no longer equals the cut, so the same invocation prints the STOP branch and rc 1. That is the designed behaviour of (a), not a defect. The instance therefore records the act's own output for AC1 and cites ac1_post_act_verify.py (read-only, re-runnable) for the AFTER, moved-rows and prior-parts checks.",
+      "notes": "INERT. Grader note for L9: re-run ac1_post_act_verify.py, not the write-once script."
     }
   ]
 ```
