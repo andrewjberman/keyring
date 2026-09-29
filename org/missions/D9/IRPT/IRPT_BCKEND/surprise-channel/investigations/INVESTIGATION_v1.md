@@ -12134,3 +12134,60 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not weakened to force a pass: this worker's proof_of_spec.json instance carries the TO's <expect> verbatim (per the schema's own instruction) rather than substituting a matching substring, so the resulting INVALID is the honest, reproducible reading of the TO as issued. The underlying acceptance test itself is genuinely satisfied (CENSUS-COMPLETE 9 branches 48 files, matching the checker's own documented success format and this cell's plain-English bar); the gap is entirely in the <expect> tag's wording, which is the issuer's to amend (rule 27 L5/L6) since the TO file is outside this worker's <paths> grant."
 }
 ```
+
+## ~P issuer row -- W24 K10: a READY report's sections served UNEXPECTED (absent bundle)
+
+```json
+{
+  "id": "IRPT_BCKEND-S213",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-29T17:28:00Z",
+  "one_line": "A READY Analysis report's sections route SERVES public_reason_code UNEXPECTED: window 24's K10 read GET analysis/RPT-2e21b52edcb222205399100e026c2768/sections -> 200, status UNAVAILABLE, public_reason_code UNEXPECTED, and the page shows 'This bundle was not rendered ... is absent' on load and after one reload. The report JSON exists; the rendered bundle does not. An absent artifact the page asks for should answer a named refusal, never UNEXPECTED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~D 102935, record org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/w24-part-p-20260929.md @62db1e7f77, HAR w24-20260929.har: K10 at 17:16Z, the print route by report id; status UNAVAILABLE, public_reason_code UNEXPECTED, no data, on load and after one reload",
+      "~Y 102940: NOT an authorization refusal -- served.py _handle_owner_read maps ProspectOwnershipRefused to NOT_AUTHORIZED, and _scope/interactive_access.py authorize_current admits OPAL_GLOBAL regardless of the stored principal_id (measured 14:4xZ); the deleted W22 owner cannot gate it",
+      "~Y 102940: the report JSON exists at opal-data-irpt irpt/cottonwood/platinum/analysis_reports/RPT-2e21b52e.../a607f9db...json (W22's trace read it); the missing artifact is the rendered bundle"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every served route answers a figure, a named refusal or a named state -- never UNEXPECTED (the boundary's reasons law); W21/W22 K10 expects a READY report to render on the page.",
+  "world_is": "A READY cottonwood Comparison report (W22 Y1, RPT-2e21b52e) has its JSON but no rendered bundle, and its sections route answers UNEXPECTED for it. The ~P side (the 49F adapter) is not on this path.",
+  "notes": "Filed by the W24 operator; the report/sections path is ~Y's (IRPT_BCKEND~Y). Disarm = the bundle rendered for READY reports, or the absent-bundle case mapped to a named refusal, read back on RPT-2e21b52e."
+}
+```
+
+## 4.0.0_SA_CRO correction row -- S212's magnitude was the laptop's, not the function's: the mapping sweep costs the deployed adapter 59-259 ms per read (row IRPT_BCKEND-S214)
+
+```json
+{
+  "id": "IRPT_BCKEND-S214",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-09-29T17:35:00Z",
+  "one_line": "Row IRPT_BCKEND-S212 (this seat, @6ec7b518ff) put f49_engine.map_account's per-read sweep at about 2 s, measured on this laptop. The deployed function's own irpt_holdings_phases lines since the r3 apply say otherwise: over 95 served reads (16:49:49Z-17:10:36Z, 185-558 partitions each) map_ms is min 59 / p50 82 / max 259 ms, while frame_ms is min 3,448 / p50 6,718 / max 14,854 ms, list_ms max 194 and link_ms max 39. The shape S212 read stands -- a linear sweep over every key of the day with one sha256 and one _check_firm per key, so the cost scales with the firm's account count -- but the served magnitude is a quarter of a second at most, and a press's time is its partition gets. S212's world_is magnitude is withdrawn; nothing else in it moves.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "none -- nothing armed; S212 was INERT and stays so",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events /aws/lambda/irpt-performance-adapter --filter-pattern irpt_holdings_phases --start-time 2026-09-29T16:40:00Z, read 17:3xZ: 95 events, all parse; map_ms n=95 min=59 p50=82 max=259; frame_ms n=95 min=3448 p50=6718 max=14854; list_ms min=34 p50=69 max=194; link_ms min=3 p50=15 max=39; partitions min=185 max=558, listed max=558; first 16:49:49Z last 17:10:36Z",
+      "the function serving those lines is the r3 artifact: get-function-configuration CodeSha256 +h/AH/RY, LastModified 2026-09-29T16:40:25Z, State Active, LastUpdateStatus Successful; S3 latest of investor-reporting/irpt-performance-adapter.zip is TBy0pL (12:23:58Z, 424,586 bytes)",
+      "why the laptop read 1.8-2.5 s for the same sweep: ids.py:214-223 _mint calls _check_firm per key; _check_firm (:183-194) calls firm_ids (:145-155), which resolves `registry_path or _find_registry()` BEFORE consulting _REGISTRY_CACHE, so every key pays a registry-path lookup -- a filesystem probe that costs about 0.15 ms per call on this Windows laptop (map_probe.py: one opaque_account 0.150 ms; 7,548 plain hmac-sha256 in 21 ms) and microseconds on the function's warm filesystem",
+      "the r3 half's addendum 2 @HEAD carries the corrected reading; ~P's D1 read (ledger 20260929T1223Z_irpt-adapter-holdings-gold-49f-r3-20260929_deploy_completion.md @d39ef96d92) is consistent: 154 invocations, max Duration 17.2 s"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S212 asserted the sweep is 'about 2 s of every press at 7,548 keys' on the strength of a local measurement of the same bytes.",
+  "world_is": "A local measurement of the deployed bytes is not a measurement of the deployed function when a per-call cost is the host's (a filesystem probe per key). The served phases line is the instrument the r3 packet named, and it puts map_ms under 0.3 s; S212's code-shape observation stands at that magnitude, and any remedy it might have earned is proportionate to 82 ms, not 2 s. Lesson for this seat, carried without a rule: a magnitude read on the laptop is quoted with its host until the served instrument has been read.",
+  "notes": "Correction of this seat's own row. No ask of any seat; the r3 half's addendum 2 and this row are the record. 2.0.0_SA_COO~P was told 'about 2 s of every press' in this seat's 16:52:09Z message (inbox file 20260929T165209Z_4.0.0_SA_CRO_r3_half_addendum_1__c82b28bd58_--_all-ac.md) and is told the correction in a follow-up."
+}
+```
