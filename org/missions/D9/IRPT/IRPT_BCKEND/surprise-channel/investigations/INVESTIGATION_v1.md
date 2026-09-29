@@ -11303,3 +11303,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Two causes remain open: (a) the resident's prepared comparisons were empty at generation (composition -> recipe_inputs); (b) the vendor ignored secondarySecurity. Next measurement, off-window: the resident's recipe_inputs for this REQ at the served st3 code (offline_submit/resident_job_preflight shape) and the body it would send. Certification must also refuse a Comparison whose PDF prints none of the chosen models. The report is visible only to the W21 principal (deleted at 05:15Z); no other viewer is affected."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W44-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~44",
+  "surfaced_at": "2026-09-29T02:00:00Z",
+  "one_line": "TO-IB-m20-202 step 4 (run the investor_reporting suite): test_holdings_rearm_trigger.py::test_rearm_trigger_live FAILS live -- the irpt-holdings-snapshot schedule is ENABLED (IB-mr-201) while the served Lambda bundle lacks 7 files this cell's own producer needs, including holdings_49f.py and holdings_inf.py -- a live schedule calling stale code, independent of this cell's local shape change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (issuer of round 20 workstream ~M, which owns IB-mr-201's schedule-enable and IB-mr-204's first-fire read-back)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_holdings_rearm_trigger.py -q -p no:cacheprovider rc=1: 'S71 ARMED: irpt-holdings-snapshot is ENABLED while the served bundle lacks ['data/assets/scripts/gold/investor_reporting/holdings_49f.py', 'data/assets/scripts/gold/investor_reporting/holdings_inf.py', 'data/assets/scripts/gold/investor_reporting/holdings_membership.py', 'data/assets/scripts/gold/investor_reporting/inf_positions.py', 'data/assets/scripts/gold/investor_reporting/source_inputs.py', 'infra/aws/lambda/investor-reporting/holdings/publication.py', 'infra/aws/lambda/investor-reporting/reports/currency_authority.py']'.",
+      "Captured stdout: 'REARM-TRIGGER LIVE: schedule irpt-holdings-snapshot = ENABLED; served bundle VersionId ceQmSBtiOg2BeE_f6XC_4uWbt2Jjx3wm ETag 4155283a1b77394259ff809611f28a8e, 10 member(s); runner opens 12; missing 7 -> FAIL'.",
+      "Reproduced on an unmodified investor_reporting tree (the file is untouched by this worker's diff; it fails identically run alone or inside the full suite), so this is independent of TO-IB-m20-202's node-shape change and not caused by it.",
+      "The 7 missing files include this very cell's edited producers (holdings_49f.py, holdings_inf.py): if the schedule fires before the bundle is re-minted, it runs the PRE-change shape regardless of what lands here -- IB-mr-202's own change is one more reason the bundle needs re-minting, tying this row to the never-widen half already required by this cell (NEVER_WIDEN_HALF_REQUEST_HOLDINGS_L0_CATEGORIES_20260929.md)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-m20-202 step 4: 'Run the investor_reporting suite ... report any other [failures beyond the pre-existing lib.silver_ids 7 failed/7 errors, row W42-S3]'.",
+  "world_is": "One additional failure exists beyond that pre-existing class: a LIVE check (test_rearm_trigger_live) shows the production schedule already ENABLED (a sibling round-20 cell, IB-mr-201) against a served Lambda bundle that is missing 7 source files, including two this cell edits. The suite invocation the task order asked for surfaced a live-AWS hazard outside this cell's grant, not a defect in the L0-category change."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W44-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~44",
+  "surfaced_at": "2026-09-29T05:00:00Z",
+  "one_line": "TO-IB-m20-203 AMENDMENT 1 R2 (row IRPT_BCKEND-W44-S1's resolution): S1's guard was watching the wrong bundle -- test_holdings_rearm_trigger.py re-pointed from the `investor_reporting` directory bundle (never run by the enabled schedule) to the three `irpt_holdings_{49f,inf,cot}` standalone bundles the schedule's own dispatch actually fetches; all three now read PASS live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py:104 reads IRPT_HOLDINGS_BUNDLE_MAP (infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf local.irpt_holdings_bundle_map, from HOLDINGS_FIRM_PRINCIPAL_GRANTS_20260925.json code_object) -- one SSM command per firm fetching that firm's OWN irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz, never the `investor_reporting` directory bundle S1's guard checked.",
+      "OLD target (S1, pre-amendment): `find_bundle('investor_reporting')` -> served bundle with 10 members (S3 metadata source-repo-paths), 7 short of the 12 the runner opens -- live rc=1 'S71 ARMED ... missing 7' (test at CLOUD@724f505977).",
+      "NEW target (this row): `[n for n, b in safe_deploy_core.STANDALONE_BUNDLES.items() if RUNNER in b['members']]` -> irpt_holdings_49f/inf/cot, each a manifest-stamped bundle (SHA256SUMS read from the object body, not S3 metadata) with 41 members apiece -- live run: 'REARM-TRIGGER LIVE: schedule irpt-holdings-snapshot = ENABLED; ... served {...41...41...41...}; runner opens 12; missing {} -> PASS' (python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_holdings_rearm_trigger.py -q -s rc=0, 3 passed).",
+      "The mutant arm (schedule ENABLED, one file removed from one target bundle's real member list) still FAILS as it must, and the same list DISABLED still PASSES -- the retargeted guard is not vacuously green."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 R2: 're-point the guard at those three ... keep its verdict ... and its SKIP-is-not-a-pass rule. Run it live: it must PASS now. Record the old and new targets in row W44-S1's resolution.'",
+  "world_is": "Recorded here rather than as an edit to S1 (append-only channel, existing rows never edited): the retarget is DONE and the live guard now PASSES against the bundles the schedule actually dispatches. This is evidence for 2.0.0_SA_COO~M (S1's named disarm_owner) to weigh in disarming/graduating S1 -- this worker's row states the form (old target FAILED against the wrong bundle; new target PASSES against the right one) and does not itself disarm S1 or adjudicate its disposition (adjudicates/GRADUATED are the CVO's L9 fields, refused on a worker's row by .tools/surprise-row-gate.py A-1)."
+}
+```

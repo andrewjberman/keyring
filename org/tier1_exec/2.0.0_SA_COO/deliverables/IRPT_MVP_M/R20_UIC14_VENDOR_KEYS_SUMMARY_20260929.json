@@ -1,0 +1,45 @@
+{
+  "measured": "python data/assets/scripts/gold/investor_reporting/holdings_snapshot.py --qa --firms all --local-out .scratch/r20_m203/out (real S3 reads, qa=True, upload=False, no publish, business_date=2026-09-25) -- 0.9.0_WK_IRPT_BCKEND~44, TO-IB-m20-203, cell IB-mr-203, CLOUD @724f505977",
+  "cause": "CTO ruling UIC-14 (msg 102443): the Holdings builder writes each snapshot's source vendor keys (registry vendor keys) into its output, so the portal turns keys into words and no function-name map exists.",
+  "registry_source": "infra/logic/registry/systems.json",
+  "registry_vendor_keys": ["anthropic", "barrons", "blackdiamond", "bloomberg", "bright-data", "eclipse", "filings-xbrl", "fred", "ft", "issuer-site", "lusha", "msci", "openai", "orion", "pathfinder", "schwab", "sec", "seeking-alpha", "smartx", "trueshares", "wsj", "ycharts"],
+  "derivation": "holdings_snapshot.source_vendor_keys(manifest_source_text) -- word-bounded, case-insensitive match of each registry VENDOR-class key against the builder's OWN pre-existing manifest['source'] free-text description (never a per-firm constant); an unrecognized source is REFUSED (raises), never labelled.",
+  "output_field": "$.source_vendor_keys (top-level array on the published HoldingsSnapshot document, docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json, additive optional property per the v1 immutability rule)",
+  "firms": [
+    {
+      "firm": "49financial",
+      "manifest_source": "schwab/08335338/silver + smartx/platform/silver",
+      "vendor_keys": ["schwab", "smartx"],
+      "output_field": "$.source_vendor_keys",
+      "real_local_build": {
+        "business_date": "2026-09-25", "node_count": 152280, "unique_account_count": 7548,
+        "schema_valid": true,
+        "local_platinum_key": "irpt/49financial/platinum/holdings_qa/date=2026-09-25/7defb39f93ccbe5750b75ba43674b119b10c3eaa3e3fb68e3ca7fefa2b2322a9.json"
+      }
+    },
+    {
+      "firm": "inflection",
+      "manifest_source": "Orion accounts_v2 + positions_mv (custody) x Eclipse portfolios (membership)",
+      "vendor_keys": ["eclipse", "orion"],
+      "output_field": "$.source_vendor_keys",
+      "real_local_build": {
+        "business_date": "2026-09-25", "node_count": 32405, "unique_account_count": 878,
+        "schema_valid": true,
+        "local_platinum_key": "irpt/inflection/platinum/holdings_qa/date=2026-09-25/56d8d9410bc57669cca506643f42f5d4049902515883cc4797682b6c25936eea.json"
+      }
+    },
+    {
+      "firm": "cottonwood",
+      "manifest_source": "blackdiamond/cottonwood/silver",
+      "vendor_keys": ["blackdiamond"],
+      "output_field": "$.source_vendor_keys",
+      "real_local_build": {
+        "business_date": "2026-09-25", "node_count": 17637, "unique_account_count": 938,
+        "schema_valid": true,
+        "local_platinum_key": "irpt/cottonwood/platinum/holdings_qa/date=2026-09-25/1856e08d6c4724d06e53e28d273903d8ec267fabdba4500ad476b22f50617357.json",
+        "assigned_strategy_field_note": "AMENDMENT 1 R1 (row IRPT_BCKEND-W44-S1), riding this same cell: 464 of 938 ACCOUNT nodes carry an assigned_strategy field in this same real build -- the same population IB-mr-202's commit measured as the removed MODEL_WRAPPER node count (464 -> 0)."
+      }
+    }
+  ],
+  "note": "Real local builds only, no upload, no mint, no publish (worker BOUNDS). Node counts and totals are bit-identical to IB-mr-202's own real local build of the same business_date (152280/32405/17637 nodes; 49financial/inflection/cottonwood), confirming this cell's field addition moves no economics."
+}
