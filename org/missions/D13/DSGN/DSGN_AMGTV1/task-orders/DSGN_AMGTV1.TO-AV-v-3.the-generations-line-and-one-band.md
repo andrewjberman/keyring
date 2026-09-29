@@ -97,7 +97,7 @@ second order (after AV-v-2; one file, `RankedChart.tsx`). Base 09bd04b1: gens.cj
 sentence + LeadPanel caption moved into PanelContent) 3 of 3; V3 bound 4 of 4. Band evidence MEASURED from walk C shot 004 pixels
 (header y150-190 and footer y800-875 rgb(10,23,51); body y215-300 rgb(25,38,67)).
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~19</slot>
 <fabric>site-z</fabric>
