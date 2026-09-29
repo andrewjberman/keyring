@@ -1208,3 +1208,19 @@ Slots: `1 + max(n)` over the WK~n author lines at HEAD is 67 (row S187's rule), 
 IB-pr-211 and IB-pr-214 edit different files in one package; they drain separately and meet in the one rebuild.
 
 fanout: 4 of 4 chains, cap 8.
+
+## 19. ROUND 22 (workstream ~P) and ROUND 4 (workstream ~E) (2026-09-29 ~08:4xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND-19 ANALYSIS section 6 item 1, PRD v0.19 rulings 10-12 and ruling 11's order, v0.20 rulings 13-17)
+
+Inflection's gold is complete (~E round 3), so its adapter switch is the next thread hop. Cottonwood, the third firm,
+gets its gold. INF's FWD-13 comparison points (weekly Orion household factors) and the daily runner's widening to INF
+and COT are the following cells: they are named here, and are cut once their shapes are read.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-221` | FWD-3 (INF): holdings_gold per firm + holdings_sources in retained + installed composes INF; the Orion read retires for INF (both readers in the criteria) | WORLD (Lambda source) | ~E r3 (INF gold, complete) | P22a |
+| `IB-er-401` | FWD-3 (COT): gold for every COT account 2026-06-10..2026-09-25, manifest complete, under v0.20 | WORLD (new gold objects; nothing served moves) | ~E r3 (the producer on v0.20) | E4a |
+
+IB-pr-221 goes to worker slot 74 (S197: 1 + max(author lines 72, issued_to 72, branches 61) was 73 at the cut, but ~Y's TO-IB-yr-221 took 73 in the same window @52e63f09ee; amendment 1 re-slots to 74 before any spawn). IB-er-401 goes to
+0.4.0_DS_ClientPlatform~E (rule 13).
+
+fanout: 2 of 2 chains, cap 8.

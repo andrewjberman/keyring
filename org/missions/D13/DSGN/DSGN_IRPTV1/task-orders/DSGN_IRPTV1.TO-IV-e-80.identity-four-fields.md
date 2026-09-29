@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_IRPTV1~42</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-29</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>

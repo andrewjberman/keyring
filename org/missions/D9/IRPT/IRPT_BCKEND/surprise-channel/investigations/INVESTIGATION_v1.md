@@ -11580,3 +11580,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Two candidate producer rules, the CTO's to choose (v0.21): (a) the day after an IMPLAUSIBLE-RETURN day is NOT COMPUTABLE for that account with its reason named (one post-pass per account over the emitted days); (b) the keys whose price moved out of band on the voided day price against the last plausible price on the next day. Either re-emits 557 partitions (~25 minutes measured today). INERT while the adapter stays at qfxZ0DzB; arms when hD7G6YT1 serves without the ruling. Not a producer defect: the producer implements ruling 16 as written."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S201",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-29T09:25:00Z",
+  "one_line": "Only the cot login env is pinned LF: the 49F login env and the smartx exporter's production.env have no eol rule, so on an autocrlf=true checkout their working copies can carry CRLF and a deploy that uploads a working copy would put a trailing CR into every sourced value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (holds the order that found it, TO-IB-m21-212; cuts the one-line .gitattributes cell for the siblings -- CTO read @76a44392fd condition 3)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "census: every file under infra/aws/ec2 (591 scanned, node_modules/__pycache__ excluded) ending .env or .env.example -> 4 hits: bd-49f-auto-login/secret-ids.env (working CR 0, blob CR 0, eol unspecified); bd-cot-auto-login/secret-ids.env (working CR 35 on the shared tree, blob CR 0, eol lf since 626033ace0); opal-gateway/.env.example (CR 0, unspecified, an example file); smartx-exporter/config/production.env (working CR 263, blob CR 0, eol unspecified)",
+      "the cot case is measured in org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/IRPT_BCKEND_R21_S165_PORT_DIFF_20260929.md section 5a: BD_FIRM_ID=cot<CR> on disk vs BD_FIRM_ID=cot in the blob; the box wrapper sources the file with bash",
+      "the CTO's read of the cot port names the siblings as the same hazard and asks for a row with an owner: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_READ_COT_LOGIN_PORT_DIFF_20260929.md condition 3 (@76a44392fd)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A config file a Linux box sources carries the same bytes the repo committed (LF), whichever device checked it out.",
+  "world_is": "Blobs are LF everywhere, but only the cot env has an eol=lf rule; the smartx production.env working copy on this laptop is CRLF (263 CR) and the 49F env happens to be LF only because of how it was last written.",
+  "notes": "INERT: no deploy of either sibling is in flight, and a deploy that uploads blob bytes is unaffected. Arms the moment a deploy uploads a CRLF working copy. Remedy: one .gitattributes cell, `infra/aws/ec2/**/*.env text eol=lf`, then renormalize; I did not take it inside TO-IB-m21-212, whose grant is the cot folder."
+}
+```
