@@ -84,7 +84,7 @@ AC2 PASS (36 of 36 unchanged), AC3 FAIL (no tests dir). At the drain the issuer 
 (its dry-run over every live name), gets the CTO half, runs the real write, then `ww-3.AC3.py` (95 of 95 held; FAIL at the cut,
 36) and AC2 again. Rows Z-S300 (59 names withheld) and Z-S301 (the uncommitted edit on the shared tree).
 
-<status>pending</status>
+<status>complete</status>
 <round>48</round>
 <slot>~172</slot>
 <fabric>site-z</fabric>
