@@ -77,7 +77,7 @@ READ-ONLY: every other file in the repository, every S3 object, the research lib
 **ISSUER NOTES:** round-13 analysis s.4 item 2 @`f1c482d24f` (msg 26603). Checks dry-run at the base `dbafd14c52`: p2_AC1 FAIL (no drive line); p2_AC2 FAIL (no tests ran); p2_AC3 PASS (paths_outside_grant 0).
 Hitachi 6501 JP (Z-S58) stays the organic negative arm; not re-driven.
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
