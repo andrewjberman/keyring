@@ -419,6 +419,10 @@ CODE_TREES: dict[str, dict] = {
 # sys.modules trace against this worktree's HEAD (2dccc70d49, post lib/silver_ids.py landing 8cd218cd05) adds
 # exactly one file -- lib/silver_ids.py, imported by data/inf/scripts/silver/_orion_api_silver_lib.py -- and drops
 # none: 30 modules and 11 data files (41 total).
+# RE-MEASURED 2026-09-29 (0.9.0_WK_IRPT_BCKEND~66, TO-IB-m21-213, IB-mr-213): a sys.modules + open() trace of
+# `import holdings_49f` then `schwab_account_codes.full_name(...)` against this worktree's HEAD adds exactly two
+# files -- schwab_account_codes.py (new module, imported by holdings_49f.py and directory_runner.py for UIC-16 at
+# 49F) and its data file schwab_account_codes.json -- and drops none: 31 modules and 12 data files (43 total).
 # ---------------------------------------------------------------------------
 _IRPT_HOLDINGS_CLOSURE = (
     "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py",
@@ -429,6 +433,8 @@ _IRPT_HOLDINGS_CLOSURE = (
     "data/assets/scripts/gold/investor_reporting/holdings_membership.py",
     "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
     "data/assets/scripts/gold/investor_reporting/inf_positions.py",
+    "data/assets/scripts/gold/investor_reporting/schwab_account_codes.py",
+    "data/assets/scripts/gold/investor_reporting/schwab_account_codes.json",
     "data/assets/scripts/gold/investor_reporting/source_inputs.py",
     "data/assets/scripts/silver/rebalancer_schemas.py",
     "data/black_diamond/scripts/gold/lib/etf_classifier.py",
