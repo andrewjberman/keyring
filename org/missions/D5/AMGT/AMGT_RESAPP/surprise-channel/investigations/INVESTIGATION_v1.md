@@ -15645,6 +15645,49 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "Task order AMGT-yy-2 s.1: 'On the four names the dossier holds 15 pillars; /thesis serves 0', and AC1 expects 'pillars 15 of 15 over 4 names'; thesis_pillars is 'every dossier pillar, in order, as the dossier holds it'.",
   "world_is": "The dossier holds 13 pillars on those four names. For AMD_US it holds an absent-field object where a list would be. The built adapter serves thesis_pillars [] plus dossier_fields.thesis_pillars_absent {status ABSENT, reason: the dossier's own text} so an empty list is never read as 'the report had none'; that sibling key is an addition the order did not name.",
   "notes": "The issuer decides whether to amend AC1's checker/expectation (13, list-only want_p) or to rule the absent-pillars shape. The build itself is complete and AC2 passes (337 passed, 0 failed)."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T23:00:00Z",
+  "one_line": "AMGT-yy-3: the proxy-derived M-1 object carries fields management.schema.json (additionalProperties false) does not declare, and officer source 'proxy' where the schema enum is filing|bloomberg; the schema is outside this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/management/management.schema.json: top-level additionalProperties false; officer.source enum ['filing','bloomberg']; roster_source enum ['FILING','BLOOMBERG_FALLBACK',null]. The planned object (proxy_officers --persist --dry-run) adds officer_set, officer_set_label, source_form, source_url, retrieved_at, document_sha256 and writes officers with source 'proxy'.",
+      "enrich.write_document (the pool writer the object goes through) does not call enrich.validate, so the write is not refused; only a validating reader (enrich.validate in the reproject commands, test_reproject_public_profile.py) would reject the object.",
+      "read_management serves the object because roster_status is RESOLVED and it takes the last branch; roster_source reads null (the officers' source is not 'filing')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order AMGT-yy-3 s.1: the object carries officer_set, officer_set_label, source_form, source_accession, source_url, retrieved_at, document_sha256 and is written through the roster batch's own pool writer.",
+  "world_is": "The schema would REFUSE that object if validated. The order's paths exclude the schema, so it is unchanged; a proxy object under management/v1/ fails any later enrich.validate on it (reproject commands) until the schema declares the new fields and the 'proxy' source.",
+  "notes": "The issuer/CTO decides whether yy-5 persists before or after a schema amendment; nothing is written by this order."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T23:01:00Z",
+  "one_line": "AMGT-yy-3: rk-77's pinned test test_resolved_block_gains_only_roster_source failed when read_management gained three null keys; its exclusion list was widened, and importing fetch.py prints a fitz line to stdout that broke the checker's one-JSON read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "api-suite.sh after the pass-through: '1 failed, 339 passed' -- lib/research/api/tests/test_fallback_roster_served.py::test_resolved_block_gains_only_roster_source, 'every other key equals the pinned pre-change block' (it excluded only roster_source and roster_source_basis). With _NEW_KEYS adding officer_set, officer_set_label, source_form and an assertion they read None on a filing roster: 340 passed, 0 failed.",
+      "yy_neo.py --plane plan first read 'plan stdout is not one JSON object': `python -c 'import lib.research.management.proxy_officers'` prints 'warning: The `fitz` API is deprecated ...' to STDOUT at import. The module's imports of fetch and roster now run under redirect_stdout(sys.stderr); after it AC1 reads YES."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order AMGT-yy-3 s.1 item 2: 'Nothing else in its output moves'; --dry-run prints ONE object on stdout.",
+  "world_is": "Three new null keys DO move the RESOLVED block's key set, so a test that pins the block against a pre-change copy had to name them; and the estate's import chain writes a non-JSON line to stdout.",
+  "notes": "Both edits are inside the order's paths; the new keys are the ones the order names."
 }
 ]
 ```
