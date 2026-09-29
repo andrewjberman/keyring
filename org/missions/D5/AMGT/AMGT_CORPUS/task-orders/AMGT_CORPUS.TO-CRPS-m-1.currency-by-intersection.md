@@ -99,7 +99,7 @@ trunk b274848977: AC2 FAIL (SHOP_CN=CAD in the set), AC3 FAIL (SHOP currency CAD
 is REOPENED (`pending`) for the same worker; the CTO re-signs on the re-measured half.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
