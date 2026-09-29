@@ -12225,3 +12225,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Weigh this as a natural experiment, not a designed one: it was caused by my defect, nothing was pre-registered and the pair was not randomised. What it closes is the single gap S206 carried, that every prior exhaustion sat on one generate build. A deliberate discriminator is still worth a window that has the cap for it, but its value is now mainly to time the recovery rather than to establish the effect. The remedy question is unchanged and is not ~Y's to rule: whether the resident's provider read is single-flight per host, and whether a receive that never reached the provider should count against the four-receive bound."
 }
 ```
+
+## ~P issuer row -- Inflection Orion positions stopped after 2026-09-27
+
+```json
+{
+  "id": "IRPT_BCKEND-S216",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-29T17:50:00Z",
+  "one_line": "Inflection's Orion POSITIONS stopped landing after 2026-09-27: opal-data-assets orion/inflection/bronze/positions/ ends at 2026-09-27.jsonl.gz and orion/inflection/silver/fact_positions/ ends at date=2026-09-27 (both 09-27 13:05Z, every earlier day at 13:05Z). opal-assets-silver-orion started at 09-28 13:05Z, 09-28 16:00Z and 09-29 16:00Z and logged nothing beyond START -- a silent no-op. Two trading days (09-28, 09-29) are missing. It blocks the INF holdings producer's first fire (the built producer answers rc 1: 'no orion/inflection/silver/fact_positions/date=2026-09-28/ -- day-t holdings partition not present') and so the INF adapter switch (pr-221), which CTO 102832 ties to a scheduled INF fire.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 list opal-data-assets orion/inflection/silver/fact_positions/ (17:36Z): date=2026-09-14..2026-09-27 each first object 13:05Z; no date=2026-09-28, no date=2026-09-29",
+      "s3 list orion/inflection/bronze/positions/ (17:4xZ): last objects 2026-09-24/25/26/27.jsonl.gz each at 13:05Z; nothing after 09-27",
+      "CloudWatch /aws/lambda/opal-assets-silver-orion 09-27..09-29: START at 09-28 13:05Z, 09-28 16:00Z, 09-29 16:00Z and no other line (no error, no write, no refusal)",
+      "the built INF producer (ifXqxmjU) dry run with source orion, 17:3xZ: target 2026-09-28 ABSENT, rc 1; the Inflection transactions pull is healthy (inf-api-txn 09-29 11:32Z: 145 rows for 2026-09-28)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Inflection's Orion positions land each day (next-day or same-day at 13:05Z, as they did through 09-27); the INF holdings producer and the INF adapter switch read them.",
+  "world_is": "Nothing landed for 09-28 or 09-29 and the function that writes them logs no reason. The owner of the Orion positions pull is not named in this channel; routed to 1.0.0_SA_CTO for placement. ~P holds the INF producer's served move and the INF switch until it lands.",
+  "notes": "disarm_owner is ~P only as the holder of the blocked INF acts; the remedy is the positions pull's owner, to be placed by 1.0.0_SA_CTO."
+}
+```
