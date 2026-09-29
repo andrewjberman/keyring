@@ -89,7 +89,7 @@ Report once: what changed and where, the AC1/AC2 output lines, the portal and ou
 Scratch GREEN arm for AC1: 4 of 4. Hop 3 cannot pass FWD-1 until AMGT_RESAPP serves the name (C-ASKS row 1); this cell builds
 its consumer. Worker class light: under 100 product lines.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
