@@ -100,7 +100,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-3 analysis s.5 item 1; R-15 disarms Z-W8-S3 THIS round. Dry-run at base: i5.AC1 FAIL (0 of 4 DISABLED; the control ENABLED), i5.AC2 FAIL (no plan), i5.AC3 FAIL (no proof). MX-s-14 later RE-ENABLES bd-transaction-pipeline-trigger only in its own PHASE B, on the ported document.
 
-<status>pending</status>
+<status>superseded -- by 2.0.0_SA_COO~MI, 2026-09-29 ~07:1xZ, after the drain @09c0663ca1: the per-document dead proof (DEAD_PROOF_MX-i-5.md, worker ~16) reads all 4 BD Playwright documents LIVE. The download step is dead in all 4 (70 of 70 logs since 2026-06-22 exit 1), but each document's merge step succeeds (70 of 70) and writes silver/<leg>/ from the bd-49f REST producer's input, so disabling any trigger would stop that leg's silver ingestion. 0 rules disabled, no Terraform change. Z-W8-S3 disarms instead through MX-s-14 A2 (strip the Playwright step and the credential read from all 4 documents, keep each merge). Z-W16-S1 is disarmed by the issuer row that follows it. Was: pending.</status>
 <round>4</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

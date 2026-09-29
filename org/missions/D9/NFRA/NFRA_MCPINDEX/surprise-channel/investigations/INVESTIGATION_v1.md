@@ -2797,6 +2797,30 @@ carries none.
     "spec_asserts": "MX-i-5 step 1 and R-15: each of the 4 legs is proven dead at two grains, the leg's own output prefix shows 0 objects since LAST_NON_FAILING, so all 4 rules are disabled (AC2 4 to change, AC3 OUTPUT_SINCE 0 x4). Issuer ruling of 2026-09-29 ~06:2xZ: dead is proven per DOCUMENT across EVERY step.",
     "world_is": "The download step is dead in all 4; every document also runs a merge step (step 4) that succeeds (Merge exit code 0 in 70 of 70 runs per leg) and writes silver/<leg>/ partitions and its manifest. The attribution to the leg is INFERRED from time of day (the bronze producer lands at 00:00-01:30Z, the leg fires 21:38-22:00Z), not from a principal: no S3 data-event trail was read. By the ruled predicate all 4 read LIVE. Row-bearing own-window silver writes: realized through 2026-09-28; transaction through 2026-07-17; allocation and unrealized through 2026-07-02 (allocation has no own-window write of any kind after 2026-07-03T22:00:50Z). Nothing was changed: no Terraform edit, no plan.",
     "notes": "Which of the 4 the issuer treats as disarmable on the 0-row-only evidence (allocation, unrealized) is the issuer's ruling, not measured here. The daily failed login and secret read stay live until that ruling, which is why the row is ARMED."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S54",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T06:52Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W16-S1"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W16-S1 by ruling: no BD daily document is dead (each merge step writes silver), so none is disabled (MX-i-5 superseded, 0 rules changed). The daily failed portal logins that Z-W8-S3 names are removed by STRIPPING the Playwright step and the credential read from all 4 documents while keeping each merge (MX-s-14 A2), under one never-widen ask.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~16/DEAD_PROOF_MX-i-5.md (drained 09c0663ca1): the download step is dead in 4 of 4 (70 of 70 logs since 2026-06-22 exit 1); the merge step succeeds 70 of 70 and writes silver/<leg>/ (realized 35 of 35 row-bearing).",
+        "1.0.0_SA_CTO~O confirmed the per-document reading for the transaction leg (msg 26471); MX-s-14 A1's merge-only test run cdb144c8 Success, 0 vendor calls."
+      ]
+    },
+    "spec_asserts": "Z-W16-S1 (ARMED): the 4 legs cannot be disabled because each one's merge is live; the order's premise does not hold.",
+    "world_is": "Nothing was applied. The hazard, the daily failed logins and the secret read, stands until MX-s-14 PHASE B publishes the stripped documents under its never-widen halves. That act is sequenced this round.",
+    "notes": "MX-i-4 (least privilege on opal/bd/credentials) can re-run after MX-s-14 PHASE B removes the 4 readers."
   }
 ]
 ```

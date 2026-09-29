@@ -96,7 +96,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-3 analysis s.5 item 4. The issuer scoped the analysis's 'ETF dataset ask routes first 1 of 1' to what is reachable without widening (AC2's two states), because the catalog holds no platinum/etfs row and adding one is RESERVED to Andrew (DATA_CATALOG.yaml:32; RESERVED card to 1.0.0_SA_CTO~O).
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @8a8de7f5bd by 2.0.0_SA_COO~MI, 2026-09-29 ~07:1xZ, as amended A1: d5.AC1 PASS (ROUTING 27 of 27), d5.AC2 PASS (the ETF ask NOT_CATALOGUED while 0 platinum/etfs rows exist; it flips to routed-first when MX-t-10 lands), d5.AC3 PASS (dataset asks 3 of 3), instance VALID. The harness now compares by dataset (a routed purpose-built tool resolves to its catalog key); the planted mislabel drops by exactly one. Z-W14-S3 (the weak-match rule's recall on asks the harness does not hold) is carried to L8. Was: pending.</status>
 <round>4</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

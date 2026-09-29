@@ -75,6 +75,31 @@ REST module.**
 - **Z-W11-S2 (the dim join the merge skips on this path) now sits on THIS document's merge.** It is not fixed here; it
   stays a stated dependency.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-09-29 ~07:1xZ) -- the strip covers ALL FOUR BD daily documents (disarms Z-W8-S3 THIS
+round).**
+- MX-i-5's per-document proof (`deliverables/0.9.0_WK_NFRA_MCPINDEX~16/DEAD_PROOF_MX-i-5.md`) reads all 4 LIVE: the
+  download step is dead, and the merge step writes silver.
+- So the remedy for the daily failed portal logins is to STRIP, not to disable. Apply A1's transaction edit identically
+  to `infra/aws/ssm/opal-bd-allocation-download.json`, `opal-bd-realized-download.json` and
+  `opal-bd-unrealized-download.json`:
+  - remove the Playwright download step, the credential fetch and the `scripts/src` sync;
+  - keep the merge step BYTE-UNCHANGED, the log upload, the shutdown armed before the failure exit, and the honest exit
+    on the merge's rc.
+- **PHASE A, per document:**
+  - ONE ad-hoc run of the edited list: merge only, no vendor call;
+  - record the merge input files, the silver partition written and its rows;
+  - the prior scheduled merge's row count as the baseline;
+  - the rollback. The triggers run `$LATEST`, so rollback is re-publishing the prior `$LATEST` content as the next
+    version.
+  - Extend `ANNOUNCE_MX-s-14.md` to all 4 documents.
+- **PHASE B:** ONE never-widen ask covers the 4 document writes, and ONE NEVER-2 ledger with a leg per document. The
+  acceptance is each leg's next scheduled weekday fire (21:38, 21:45, 21:53, 22:00Z).
+- **Criteria:** AC1-AC3 grade the transaction document as written. The same predicates on the other 3 documents are
+  recorded in the proof as per-document rows, and are graded at L9 (the CVO reads the proof).
+- **Paths granted in addition:** `infra/aws/ssm/opal-bd-allocation-download.json`,
+  `infra/aws/ssm/opal-bd-realized-download.json`, `infra/aws/ssm/opal-bd-unrealized-download.json`, and the ledger
+  sentinel `org/critical_paths/.open_deploys/nfra-mcpindex-bd-playwright-strip.json`.
+
 ## 2. BOUNDS
 
 1. One producer before and after: no second schedule, no parallel path, no comparator.
@@ -89,6 +114,10 @@ REST module.**
 data/black_diamond/scripts/bronze/pull_bd_transaction_rest.py
 data/black_diamond/scripts/bronze/_transaction_rest_pin.py
 infra/aws/ssm/opal-bd-transaction-download.json
+infra/aws/ssm/opal-bd-allocation-download.json
+infra/aws/ssm/opal-bd-realized-download.json
+infra/aws/ssm/opal-bd-unrealized-download.json
+org/critical_paths/.open_deploys/nfra-mcpindex-bd-playwright-strip.json
 infra/aws/terraform/bd-pipeline/
 infra/aws/ec2/bd-exporter/src/stepwise/download-daily-transaction.ts
 org/critical_paths/change_management/
