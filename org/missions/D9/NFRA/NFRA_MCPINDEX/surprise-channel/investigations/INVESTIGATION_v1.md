@@ -3275,6 +3275,49 @@ carries none.
     "spec_asserts": "The CTO half of the never-widen ask: at GO re-read live = 4248b70b39, else re-cut; the pin, the rollback proof and the G-A were all cut against 4248b70b39.",
     "world_is": "The shared host moved once between the PHASE A read and the GO (another project's narrow release, itself sanctioned). R1 held: the mismatch was read by content before any act. The signed hash (0001c9bb53 / tree d2debddbd3) is not the one that will deploy; the re-cut carries the same 8 files, blob-identical, on the new base.",
     "notes": "For the record: the gap between a PHASE A pin and its GO is the window in which a second releaser can land; an R1 content read at GO is what closed it here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T10:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "safe-ec2-deploy.sh's halt gate refused the MX-r-5 deploy (exit 1, before any build or upload) on 208 pending inbox items with 0 STOP lines; the worker read them and re-ran with HALT_ACK=1, which the MX-r-4 precedent allows only when the gate reads 0 STOP.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/c/tmp/mx-dep6-deploy.haltgate-refusal.log: 'HALT-GATE: 208 pending message(s)' then 'blocked ... re-run with HALT_ACK=1', DEPLOY-EXIT=1. The 208 items: the ten most frequent sender labels account for 202 (141 deploy_ledger.py gate-bypass scan, ~53 days old; 16, 13, 10, 3, 2, 2, 2, 2 deploy_ledger.py on-behalf-of or HELD-STALE nudges for other seats; 11 from 4.0.0_SA_CRO~W), the other 6 were not tabulated, and the log tail shows an AMGT mail header and a RED for ledger irpt-status-dates-rebuild3-20260928 open 23.1h; 0 lines containing STOP; 0 naming opal-gateway or nfra-mcpindex.",
+        "Run 2 with HALT_ACK=1: 'HALT_ACK set -- messages acknowledged. Proceeding.' DEPLOY-EXIT=0. The issuer's R3 (112 worktrees, 0 live gateway acts) was the GO's own guard."
+      ]
+    },
+    "spec_asserts": "MX-r-5 Phase B step 2: deploy from /c/tmp/mx-dep6 with `bash infra/aws/ec2/safe-ec2-deploy.sh ...`, with no ack named.",
+    "world_is": "The halt gate needs an ack whenever the base inbox is non-empty; it was non-empty with unrelated mail. The ack was given by the worker on the precedent, not named in the GO.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "notes": "For the next release order: name HALT_ACK=1 in the deploy step, as the MX-r-4 rollback command does."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T10:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The PHASE B instruction 'git merge --ff-only CLOUD first' could not be followed: the wk branch already held its own ledger-open commit 4d0a2f7f61 (the NEVER-2 entry and sentinel, required before the act), so CLOUD was merged with a plain `git merge` (merge commit 9c24662a4b), never a rebase.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git merge --ff-only CLOUD` at the manifest step: 'Not possible to fast-forward, aborting' (wk branch 4d0a2f7f61 ahead of CLOUD's merge base, CLOUD ahead of the branch by other seats' drives). `git merge CLOUD --no-edit` -> merge commit 9c24662a4b, 0 conflicts; no rebase, no history rewrite.",
+        "The first ff-only merge, before the ledger opened, succeeded (branch = CLOUD e468d94221)."
+      ]
+    },
+    "spec_asserts": "MX-r-5 PHASE B: commit on the wk branch after `git merge --ff-only CLOUD`.",
+    "world_is": "The ledger entry must be committed before the deploy act and CLOUD moved during the deploy, so a fast-forward at commit time was impossible; the merge commit carries CLOUD's newer files.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
   }
 ]
 ```
