@@ -110,7 +110,7 @@ placeholders (NONE), so no limb graded this amendment.
 the host was not running (rows Z-W10-S3; OA-e-3's resolution). The base is the survivor that matches the live md5 on every
 differing file. Gate limb: none (GATE (viii) placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~10</slot>
 <fabric>site-z</fabric>
