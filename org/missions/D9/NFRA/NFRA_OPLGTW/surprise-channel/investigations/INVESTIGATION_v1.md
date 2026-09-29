@@ -4685,3 +4685,35 @@ name the one known failure instead of silently inheriting it.
   "notes": "Issuer may amend the two <expect> patterns to regexes that the scripts' output satisfies, e.g. (?s)sentinel at HEAD=no; listed OPEN/HELD=0.*RESULT: PASS.*exit=0 and (?s)descends=yes.*RESULT: PASS.*exit=0, and re-run the checker on the same instance."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S13",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-29T06:20Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by amendment, as disarm_owner. Z-S9 (no prepare subcommand): OG-g-1 A2 names validate_candidate() via import. Z-S10 (AC3 vs AC6): ruled by 1.0.0_SA_CTO~O @8bf2bf37c6 -- AC6 wins; redacted diff + SHA-256 of the unredacted diff, folded as OG-g-1 A2 (A1's SSM copy superseded). Z-S11 (fixed-dates grant vs A7's latest date): OG-v-7 OGV7-AC6 bounded to the grant's dates, amendment @ce520eb13e. Z-S12 (unfileable Z-OG-S ids): OG-g-1 A2 names the admitted NFRA_OPLGTW-Z-S<k> shape.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S9",
+    "NFRA_OPLGTW-Z-S10",
+    "NFRA_OPLGTW-Z-S11",
+    "NFRA_OPLGTW-Z-S12"
+  ],
+  "one_line": "The issuer disarms Z-S9..Z-S12 (0.7.0_AE_CloudOps~OG's rows on OG-g-1) by amendment: OG-g-1 A2 and OG-v-7's AC6 bound.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-g-1 A2 in task-orders/NFRA_OPLGTW.TO-OG-g-1.controlled-identity-and-grant.md (this commit)",
+      "OG-v-7 A1 @ce520eb13e (OGV7-AC6 bounded to the grant's fixed dates)",
+      "1.0.0_SA_CTO~O ruling deliverables/1.0.0_SA_CTO~O/RULING_G-C_ACCOUNTS_AND_Z-S10_20260929.md @8bf2bf37c6",
+      "ops/schwab_entitlement_admin.py:140 validate_candidate; :421 activate is the only validating subcommand"
+    ]
+  },
+  "spec_asserts": "OG-g-1's AC3 invocation, its AC3/AC6 pair, its row-id shape, and OG-v-7's AC6 were each executable as written.",
+  "world_is": "Each was not; each is now amended so it can pass on the evidence the order produces, with no criterion weakened."
+}
+```

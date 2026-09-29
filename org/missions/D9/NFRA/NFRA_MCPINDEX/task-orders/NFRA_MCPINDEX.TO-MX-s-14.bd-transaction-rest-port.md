@@ -53,6 +53,28 @@ Also read the MX-s-9 REST module: `data/black_diamond/scripts/bronze/pull_bd_ass
 7. The acceptance is the next scheduled 21:53Z weekday fire (AC3), never ad hoc. Record its output's `OUTPUT_KEY` and
    the bronze object's row count. Close the ledger.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-29 ~06:3xZ) -- RE-SCOPED: strip the dead step and KEEP the merge. There is NO new
+REST module.**
+- Your row Z-W17-S3 was right to flag a second producer.
+  - The issuer measured `TRANSACTIONS_DAILY_*` landing daily at ~00:02Z. That matches `bd-49f-session-daily`
+    (cron(0 0 * * ? *)), the LIVE 49F REST session chain.
+  - `merge-daily-incremental.py` already lists `TRANSACTIONS_DAILY_*` (its own tests).
+  - A new REST pull writing `TXN_DAILY_` would be a SECOND writer for the same day. That is a shadow pipeline, which
+    CLAUDE.md forbids.
+- **Drop step 1 (the new module).** Do not publish it or commit it for use. Leave your built module on your branch
+  UNUSED, and name it superseded in the announcement. Rows Z-W17-S1 and Z-W17-S2 lapse with it.
+- **Step 2 becomes:** edit `infra/aws/ssm/opal-bd-transaction-download.json` to REMOVE the Playwright download step and
+  every portal-credential read. KEEP the merge step, the honest exit, the shutdown armed before the failure exit, and
+  the log upload.
+- **Step 3 becomes:** ONE ad-hoc run of the edited command list (the merge only: no vendor call), as the test. Record
+  the merge's input files and the silver partition it writes.
+- **PHASE B unchanged in shape:** publish, set DEFAULT == `$LATEST`, the rule stays ENABLED (MX-i-5 will NOT disable
+  a LIVE document), and the acceptance is the next scheduled 21:53Z fire.
+- AC1 and AC3 are re-issued to grade this: Playwright 0, BD_PASSWORD 0, the merge present, Default == Latest; and a
+  successful scheduled run under the honest exit. AC2 stands.
+- **Z-W11-S2 (the dim join the merge skips on this path) now sits on THIS document's merge.** It is not fixed here; it
+  stays a stated dependency.
+
 ## 2. BOUNDS
 
 1. One producer before and after: no second schedule, no parallel path, no comparator.
