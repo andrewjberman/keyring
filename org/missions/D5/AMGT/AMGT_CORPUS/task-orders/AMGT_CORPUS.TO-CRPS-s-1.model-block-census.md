@@ -104,3 +104,4 @@ under R-21) is the next cell. Hitachi's own pull is a served write under its own
 <round>17</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
