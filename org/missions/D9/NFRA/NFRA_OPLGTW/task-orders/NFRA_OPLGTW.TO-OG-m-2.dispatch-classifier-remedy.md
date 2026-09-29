@@ -18,6 +18,22 @@ EGRESS CLASS, declared: NONE beyond Opal's own AWS (S3, Lambda, IAM via Terrafor
 
 ## 1. THE CELL -- `OG-m-2` (decomposition addendum R2-E.1, item E11 remedy)
 
+> **AMENDMENT A3 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~02:0xZ) -- THIS ORDER IS NOW OG-m-2a ONLY; it supersedes items 1 and 6
+> (A2) below and narrows items 4 and 5.** Ruling 1.0.0_SA_CTO~O msg 26360 on your row Z-W15-S3: the chain-log key sits on
+> ADVI_FIRMBKTS's live-remediation surface and no waiver is typed. SPLIT:
+> - **OG-m-2a, this order, now:** item 2 (the qualified-marker gate, S3 path only) and item 3 (never re-dispatch), with
+>   IAM on the MARKER ARN ONLY: `s3:GetObject` AND `s3:GetObjectVersion` on `arn:aws:s3:::opal-data-assets/schwab/08335338/meta/complete/*`. NO chain-log
+>   grant, NO chain-log literal, NO Terraform local, NO env var. The classifier stays exactly as deployed today
+>   (`_classify(stdout)`): REVERT every classifier and chain-log change in `lambda_function.py` and `advi_49f_floor.tf`
+>   (keep your patch in your deliverables for 2b). The e2be5c2f42 `_trigger_identity` rider stays (it yields the key).
+> - **OG-m-2b, HELD, BLOCKING on Z-W15-S3:** the chain-log classifier; not in this order.
+> - **Tests (item 5 narrowed):** exactly 3 of the 6 -- `test_incomplete_marker_does_not_dispatch`,
+>   `test_qualified_marker_dispatches_once`, `test_floor_event_reads_no_marker`. Remove the three classifier tests.
+> - **Plan guard:** the targeted plan changes the inline policy (+ the marker statement) and the function's code only; no
+>   env var, no `aws_ssm_document`, no other resource. Otherwise STOP, a BLOCKING row.
+> - **Authority:** both CTO signatures cover 2a as a strict SUBSET of the signed write set (msg 26360); the CVO's
+>   confirmation is the issuer's to read before PHASE B GO. `dr.AC1.sh` and `dr.AC2.sh` are amended in this commit.
+
 **What was measured** (OG-m-1, `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~13/MARKER_STORM_READ.md`
 and `.json`; rows `NFRA_OPLGTW-Z-W13-S1`, `-Z-W13-S2`), window 2026-09-15T23:45Z..2026-09-28T23:45Z:
 - 104 dispatcher invocations: 91 from `aws:s3` (the silver-complete accelerator), 13 from `advi.49f.scheduled-floor`.
@@ -71,8 +87,8 @@ their logs by exactly this rule: the key's `TS` equals the invocation's `Executi
 3. **Never re-dispatch.** No branch calls `send_command` more than once per invocation, and none retries on UNKNOWN,
    ABORT or REFUSED (the floor is tomorrow's retry; the module docstring's CHAIN-plane rule stands).
 4. **IAM, in `infra/aws/terraform/opal-assets/advi_49f_floor.tf` `aws_iam_role_policy.advi_49f_gold_dispatch` ONLY:** add
-   `s3:GetObject` on `arn:aws:s3:::opal-data-49financial/gold/advi/_logs/chain_*` and `s3:GetObject` on
-   `arn:aws:s3:::opal-data-assets/schwab/08335338/meta/complete/*`. No `ListBucket`, no other action or resource. (Without
+   `s3:GetObject` on `arn:aws:s3:::opal-data-49financial/gold/advi/_logs/chain_*` and `s3:GetObject` AND `s3:GetObjectVersion` on
+   `arn:aws:s3:::opal-data-assets/schwab/08335338/meta/complete/*` (AMENDMENT A1, row Z-W15-S1: a read at `versionId` needs `s3:GetObjectVersion`). No `ListBucket`, no other action or resource. (Without
    `ListBucket` an absent key reads `AccessDenied`, not `NoSuchKey`: treat both as absent.) Touch no other resource in
    that file or root.
 5. **Tests.** New `infra/aws/lambda/opal-assets/tests/test_advi_49f_gold_dispatch_remedy.py` (stdlib `unittest.mock`;
@@ -88,6 +104,25 @@ their logs by exactly this rule: the key's `TS` equals the invocation's `Executi
    - `test_qualified_marker_dispatches_once`: the same event shape with `qualified`; `send_command` called exactly once.
    - `test_floor_event_reads_no_marker`: a `{"source": "advi.49f.scheduled-floor"}` event makes no marker `GetObject`
      and dispatches once.
+
+6. **AMENDMENT A2 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~01:3xZ, on your row Z-W15-S2; ruling 1.0.0_SA_CTO~O msg 26358).**
+   The naming gate refused the new literal chain-log prefix. `exemptions.json` is the WRONG carrier (it holds the
+   cross-firm fence's principal exemptions), and `NAMING_LEGACY_READS` admits no `.tf` line. Take this route, in order,
+   running `python .tools/naming-gate.py` on each candidate BEFORE `safe-commit.sh`, and report which step passed:
+   - **(i)** If `lib/opal_naming.py` `address()` can emit the chain-log key, use its output (rule 30's first route).
+   - **(ii)** Otherwise add NO new literal. The existing prefix the SSM document already writes
+     (`infra/aws/terraform/opal-assets/advi_49f_floor.tf:272-290`) becomes ONE Terraform `local`. The SSM document's
+     upload target, the IAM `Resource` ARN (item 4) and a NEW `environment_variables` entry on
+     `module "advi_49f_gold_dispatch"` (`advi_49f_floor.tf:196`) all read that local. `lambda_function.py` reads the
+     env var (fail closed if it is unset: the classifier then reads UNKNOWN(chain_log=unconfigured) and says so), so
+     no Python literal of the prefix remains. The tests set the env var.
+   - **(iii)** If the gate still refuses that ONE local line, it is a missing registry row: STOP, file its EXACT
+     refusal text as a BLOCKING row, and take no override. The issuer routes the row.
+   **Guard on (ii):** the targeted plan must show the SSM document UNCHANGED (its rendered content equals today's, the
+   refactor is source-only); the only changes allowed are the inline policy (item 4) and the function (new code +
+   the one env var). A plan that changes `aws_ssm_document` or any other resource: STOP, a BLOCKING row. The
+   never-widen halves (CTO @c7510ec012 + @a64d56a357, CVO @5dd05929f5) remain the authority; guard M3's diff bound
+   now also admits the env-var read. Criteria unchanged.
 
 ## 2. BOUNDS
 
@@ -157,8 +192,8 @@ Rows: `org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIG
 ## 4. PROOF OF SPEC (literal; run from your worktree root after the ledger close is committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-m-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/dr.AC1.sh; echo "exit=$?"</invocation><expect>named tests passed 6 of 6; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-m-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/dr.AC2.sh; echo "exit=$?"</invocation><expect>live sha = artifact sha: yes; moved off previous: yes; zip member = HEAD bytes: yes; GetObject resources exact 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-m-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/dr.AC1.sh; echo "exit=$?"</invocation><expect>named tests passed 3 of 3; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-m-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/dr.AC2.sh; echo "exit=$?"</invocation><expect>live sha = artifact sha: yes; moved off previous: yes; zip member = HEAD bytes: yes; GetObject resources exact 1 of 1 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-m-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/dr.AC3.sh; echo "exit=$?"</invocation><expect>sentinel at HEAD=no; listed OPEN/HELD=0 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -185,7 +220,7 @@ Report once per phase.
 - The live package predates `e2be5c2f42`'s `_trigger_identity` (never applied); this deploy ships it. Named in the ask.
 - Declared class WORLD: a Lambda code change and an IAM grant on the live 49F dispatch path.
 
-<status>staged</status>
+<status>complete</status>
 <round>4</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>

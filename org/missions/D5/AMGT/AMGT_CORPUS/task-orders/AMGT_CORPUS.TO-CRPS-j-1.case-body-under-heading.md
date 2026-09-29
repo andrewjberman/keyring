@@ -116,7 +116,7 @@ inputs equal -> 0), a change entry, `dossier --write --workers 10`, verify objec
 `--pick-census stale_pick 0`, `--case-census`; the CVO grades AC3 on the served table.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

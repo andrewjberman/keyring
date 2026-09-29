@@ -58,10 +58,18 @@ change reaches colleagues only through Andrew's release.
    `GO`.
 2. **Release tree:**
    - `git worktree add -b rel-nfra-opalai-r2-asker-switch-on-gateway /c/tmp/oa-10-sw-rel <base>`, then cherry-pick
-     `--no-commit` ONLY this cell's commit(s) from A;
+     `--no-commit` ONLY this cell's commit(s) from A AND OA-f-7's code commit(s) (named in the COO's continuation;
+     AMENDMENT 1);
    - restore every file outside `infra/aws/ec2/opal-gateway/` to the base, and commit;
-   - census: `diff --stat <base> HEAD -- infra/aws/ec2/opal-gateway` names ONLY `app/identity_scope.py` and
-     `tests/test_identity_scope.py`. Anything else: STOP;
+   - census: `diff --stat <base> HEAD -- infra/aws/ec2/opal-gateway` names ONLY `app/identity_scope.py`,
+     `tests/test_identity_scope.py`, and OA-f-7's `app/asker_scope.py`, `tests/test_asker_nochannels.py` and the
+     asker test files it touched (`tests/test_asker_scope.py`, `tests/test_asker_binding.py`,
+     `tests/test_portal_grant.py`). Anything else: STOP;
+   - DEPLOY TREE (AMENDMENT 1, the OA-r-1 amendment-5 route): the halt gate admits you only from a tree whose HEAD
+     holds your order. So build `rel-nfra-opalai-r2-asker-switch-on-gateway-v2` at `/c/tmp/oa-10-sw-rel2` on CLOUD, with
+     ONLY `infra/aws/ec2/opal-gateway` replaced by the release branch's tree. PROVE
+     `HEAD:infra/aws/ec2/opal-gateway` equals the release tip's before any act. Build the rollback `-v2` the same way on
+     the base's gateway tree. The -v2 branches are deploy-only and never merged;
    - the audited `GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPALAI~10` is authorized for exactly the release-branch
      commit(s). Name each use.
 3. **Rollback proven before the act:** rebuild `<base>`'s artifact from a clean tree (`/c/tmp/oa-10-sw-rb`) WITHOUT
@@ -97,6 +105,11 @@ Act outside US business hours only (row Z-S24).
 infra/aws/ec2/EC2_MANIFEST.json
 infra/aws/ec2/opal-gateway/app/identity_scope.py
 infra/aws/ec2/opal-gateway/tests/test_identity_scope.py
+infra/aws/ec2/opal-gateway/app/asker_scope.py
+infra/aws/ec2/opal-gateway/tests/test_asker_nochannels.py
+infra/aws/ec2/opal-gateway/tests/test_asker_scope.py
+infra/aws/ec2/opal-gateway/tests/test_asker_binding.py
+infra/aws/ec2/opal-gateway/tests/test_portal_grant.py
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-opalai-r2-asker-switch-on-gateway.json
 org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~10/**
@@ -136,7 +149,10 @@ record @f8d1103a38).
 SPAWN ONLY WHEN (continue slot `~10`):
 - OA-e-3 spawns only after OA-r-1 has closed with its three negative arms passing AND 3.0.0_SA_CVO~O has graded J1
   PASS.
-- OA-e-2 has drained (decomposition R2.2 join: E3 lands only after E1 and E2).
+- OA-e-2 has drained (decomposition R2.2 join: E3 lands only after E1 and E2). MET (e29e0ddd0d).
+- AMENDMENT 1: OA-f-7 has drained (the fail-closed channel rule ships in THIS release, CTO ruling msg 26343).
+- AMENDMENT 1: 2.0.0_SA_COO~MI's MX-r-4 gateway ledger is CLOSED (it took the slot after OA-r-1); re-resolve the base
+  after it. J1 PASS is MET (CVO @c180d84b36, relayed by CTO msg 26343).
 - No other gateway deploy entry is OPEN, and the act window is outside US business hours (Z-S24).
 
 Dry-run at base (CLOUD `c8df03c408`, ~20:5xZ):
@@ -148,6 +164,11 @@ Dry-run at base (CLOUD `c8df03c408`, ~20:5xZ):
 **AMENDMENT (2.0.0_SA_COO~AI, issuer licence, ~22:1xZ):** The served base at the cut is `6a98a0553a`, not `fe94911257`, and the base resolution gains the .env key-set tie-break
 (row Z-S38). No criterion's expectation moves. Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii)
 placeholders (NONE), so no limb graded this amendment.
+
+**AMENDMENT 1 (2.0.0_SA_COO~AI, issuer licence, ~01:1xZ):** the release also ships OA-f-7 (the CTO's fail-closed ruling on
+an asker grant with no portal_channels, msg 26343), so the switch-on never goes live with the open default. The census and
+`<paths>` gain those files. The deploy tree follows OA-r-1 amendment 5 (CLOUD-based, gateway-tree-hash proven). The spawn
+waits on OA-f-7's drain and ~MI's MX-r-4 close. No criterion moves. Gate limb: none (GATE (viii) placeholders NONE).
 
 <status>pending</status>
 <round>2</round>

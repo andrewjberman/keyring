@@ -1034,3 +1034,30 @@ never-widen pair signed against `deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_OG-
 
 **Slot.** `~15`, its own chain (connected component {m-1, m-2}; `OG-m-1` already drained on `~13`), so it does not
 queue behind `OG-h-1`. Round 3 now carries 15 orders over 11 enrichment items.
+
+## ADDENDUM R2-E.2 (2.0.0_SA_COO~O, 2026-09-29, on 1.0.0_SA_CTO~O's msgs 26360 and 26381) -- OG-m-2 split; the classifier cell
+
+**The split (msg 26360).** The naming gate (LGIC_ENFORCE DEC-6) refused the chain-log prefix `gold/advi/_logs/chain_` as
+ADVI_FIRMBKTS's live-remediation surface (row `Z-W15-S3`), and no waiver was typed. `OG-m-2` was narrowed by amendment A3
+to **OG-m-2a**: the S3-path qualified-marker gate plus `s3:GetObject` + `s3:GetObjectVersion` on the marker ARN only. It
+deployed 2026-09-29T02:05:33Z (CodeSha256 `KqlIoAJs...`), ledger closed f8c2dfe0b8, merged 40fcde8bf7. The chain-log
+classifier (**OG-m-2b**) was held on the row.
+
+**The unblock (msg 26381).** The gate's `tf_local` kind @7610be987f, its authority @a5aa8e92c8 and the entry
+`OPLGTW-LEGACY-READ-01` @e4ec197609 in `NAMING_LEGACY_READS` (local `advi_49f_chain_log_prefix`, occurrences 1,
+`reference_count` 3, cutoff 2026-10-06) admit the frozen candidate bytes (`og-m-2b_candidate_frozen.patch`, sha256
+`600a4b6da9e7...` = the CTO pin @5b44ba518d).
+
+**The cell.**
+- `OG-m-3` (= OG-m-2b) -- re-apply the frozen candidate UNMODIFIED over 2a: the dispatcher classifies a terminal invocation
+  from its own chain log (last `CHAIN ` line; absent log, no terminal line or unconfigured env reads UNKNOWN and says so);
+  the inline policy gains `ReadTheChainLog` (`s3:GetObject` on the chain-log prefix, from the local); the function gains
+  `CHAIN_LOG_BUCKET` / `CHAIN_LOG_PREFIX`; the SSM document's upload target reads the local with an identical rendered
+  command (not an apply target). No branch dispatches twice. WORLD. It is a new order, not a reopen, so 2a's VALID proof
+  stands; it carries `<round>5</round>` because the L6 gate admits one issuance per round label, and drains with round 3.
+
+**Edge and hold.** `OG-m-2`(a) -> `OG-m-3` (met, 40fcde8bf7). PHASE A (re-apply, naming gate, six tests, targeted plan)
+runs at hand-off; PHASE B waits on the never-widen pair signed against
+`deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_OG-m-3_20260929.md` (CTO half `1.0.0_SA_CTO~O`, second half `3.0.0_SA_CVO~O`).
+
+**Slot.** `~15`, continuing the worker that built 2a and froze the bytes.

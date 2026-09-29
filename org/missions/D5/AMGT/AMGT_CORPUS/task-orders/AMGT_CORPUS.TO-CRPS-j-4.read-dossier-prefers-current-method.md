@@ -88,7 +88,7 @@ the base @`e3fd90cb63`: AC1 FAIL (no test file), AC2 FAIL (argparse refuses `--p
 object is `/1` = current, so AC2 reads `current_method_available 95 stale_pick 0` after the build; the discrimination is AC1.
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

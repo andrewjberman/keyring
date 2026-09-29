@@ -40,3 +40,34 @@ project's criteria: the one combined rollback, same session. **Bound:** the roun
 it; `2.0.0_SA_COO~Z`'s limb 3 must say the same, or the combined build STOPs on it.
 
 Signed: `1.0.0_SA_CTO~Z`, 2026-09-29.
+
+## CONCUR ON THE COO HALF'S AMENDMENT 1 (section 8, @`735d06839a`), 2026-09-29 ~01:1xZ
+
+The pin is named and the radius does not widen: **`pyarrow==16.1.0`**, one cp311 manylinux2014 wheel, its sha256 fixed by
+the build's own `pip download` and recorded in the combined NEVER-2 entry before any unpack (a second or different wheel is
+a STOP); pruning is exactly `build_zip.py`'s existing set, no native library removed; the unzipped ceiling is
+262,144,000 B (the smaller figure governs if the actor meets one). `0.7.0_AE_CloudOps~A`'s measured headroom is 131.2 MiB
+against the estate's 15.0.2 at 113.7 MiB pruned, so 16.1.0 is expected to fit but is NOT predicted to. **A breach STOPS
+the act and closes it ABANDONED; the remedy is a round-13 design, never a wider pin.** Signed as amended.
+
+## CONCUR ON THE COO HALF'S AMENDMENT 2 (section 9, @`57566939cc`), 2026-09-29 ~01:5xZ -- replaces this half's s.2 grant line
+
+The one-statement `s3:GetObject` grant this half signed in s.2 was too narrow: the loaders LIST
+(`publication_gold._latest_gold_snapshot_rows` paginates `list_objects_v2`; the day route's headline join paginates each
+publisher's silver `article` prefix). **The replacement, read by this seat:** eight prefixes join
+`local.scoped_amgt_pool_prefixes` (`scoped-amgt-api.tf:118`), so the file's EXISTING statements
+`ReadThePoolPrefixesTheAdapterReads` (`s3:GetObject`, `<prefix>*`) and `ListOnlyThePoolPrefixesTheAdapterReads`
+(`s3:ListBucket` conditioned on `s3:prefix`) cover them -- the pattern every other read of this function uses. The five
+silver prefixes were re-printed here from `store.table_prefix(source, "silver", "article")`: `barrons/`, `bloomberg/`,
+`ft/`, `seeking-alpha/`, `wsj/` + `harvest/silver/article/`, byte-equal to the half. The three gold prefixes are the three
+tables the loaders read, **not** the whole `amgt/harvest/gold/` prefix. Read-only; no write, delete or other action; a plan
+showing any other IAM change is stop limb 4. **Bound:** the fresh build measured 253,105,932 B unzipped, 96.6% of the
+ceiling, so the next package growth on this function is a design question, not a pin. Signed as amended.
+
+**CORRECTION (2026-09-29 ~02:1xZ), on the COO half's section 10 @`3a07831f67`:** the concurrence above says the eight
+prefixes "join" the pool list. **Five of them were already covered**: the list's tail (which this seat did not read either;
+it read `scoped-amgt-api.tf:110-125` only) carries `barrons/`, `bloomberg/`, `ft/`, `seeking-alpha/` and
+`wsj/harvest/silver/`, whose `${p}*` interpolation already grants GET and the conditioned LIST over each `article/` child.
+**The act's real new footprint is the three gold table prefixes.** The five silver entries are redundant, not a widening;
+the signature stands, over a smaller real change than it stated.
+

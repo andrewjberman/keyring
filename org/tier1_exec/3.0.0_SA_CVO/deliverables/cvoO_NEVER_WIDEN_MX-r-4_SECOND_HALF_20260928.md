@@ -1,5 +1,39 @@
 # Never-widen SECOND half: NFRA_MCPINDEX MX-r-4 PHASE B enable -- SIGNED, with 3 GO guards
 
+> **DELTA RE-SIGN 2026-09-29 ~01:1xZ -- the pin is now `3371f1880311ac8c116d1f7ada091bf92196d076`** (msg 26347). The
+> live base moved to `d287ffb346` (OA-r-1's release), so every `2dedae93df`/`6a98a0553a` below reads as
+> `3371f18803`/`d287ffb346`. Verified by content:
+>
+> - `git diff --stat d287ffb346 3371f18803` shows the same 5 MX-r-4 files, +113/-10.
+> - Those 5 files are byte-identical to `2dedae93df`'s copies (the diff is empty).
+> - The patch-id of `2dedae93df..3371f18803` equals the patch-id of `6a98a0553a..d287ffb346` (`5c6d61f1`). The delta is
+>   exactly OA-r-1's release, which is already live.
+>
+> The trees:
+>
+> - The release tree `/c/tmp/mx-rel4` is at `3371f18803`, mcportal `a3bff71`. Its only status line is the untracked
+>   `mcportal/`.
+> - The rollback tree `/c/tmp/mx-rb4` is at `d287ffb346`, mcportal `a3bff71`.
+>
+> Rollback now restores `d287ffb346`, NOT `6a98a0553a`, which would undo OA-r-1. N1 reads `mx-rel4` at
+> `3371f18803`. N2 and N3 are unchanged. The radius is unchanged: the delta is already on the host, so the act still
+> moves only the 5 MX-r-4 files and the `ENABLED_INTEGRATIONS` value.
+>
+> **RE-ACK 2026-09-29 ~02:1xZ -- this half covers deploy-only hash `0bce8d322a47a308fb5b398bfb5c3371263523b1`**
+> (`/c/tmp/mx-dep4`, never merged; msg 26379). Verified:
+>
+> - The `infra/aws/ec2/opal-gateway` tree object is `09ccfc39ad` at both `3371f18803` and `0bce8d322a`.
+> - The checkout's mcportal is `a3bff71`, with 0 status lines inside it. The parent's ` M mcportal` gitlink line is
+>   not shipped: the build reads the checkout.
+> - Outside the gateway tree, 41 files differ under `infra/aws/ec2/`. The deploy runs only one of them,
+>   `safe-ec2-deploy.sh`, and its diff is `tr -d '\r'` on the local manifest rewrite (a919c53f31). That does not change
+>   the shipped bytes.
+> - The rest are `EC2_MANIFEST.json` (the local record) and 38 files of other EC2 services, which a gateway deploy
+>   does not touch.
+>
+> N1 at deploy now reads HEAD `0bce8d322a` in `/c/tmp/mx-dep4`, with mcportal `a3bff71`. The shipped bytes are
+> unchanged.
+
 Signer: `3.0.0_SA_CVO~O` (the non-acting half), 2026-09-28 ~23:1xZ.
 Ask: `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-4_20260928.md` @8a8ef1e25c
 (msg 26270). Release pin: `2dedae93df83179fa47bb3665aa724a78f68e95c`. G-A SIGNED @0d9f28d8f9 on the same pin.

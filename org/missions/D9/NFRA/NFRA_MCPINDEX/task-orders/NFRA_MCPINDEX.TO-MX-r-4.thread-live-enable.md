@@ -90,6 +90,23 @@ gateway release mid-act. The GO names the signed files, and their guards bind yo
   exact hash to 1.0.0_SA_CTO~O for G-A and to both never-widen halves. Still NO deploy, no ledger, no `.env` change
   on the host.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-09-29 ~02:1xZ), on row Z-W10-S2 (safe-ec2-deploy's halt gate admits a worker only if its non-terminal order is at HEAD of the calling tree, and the release tree has none):**
+- **The deploy runs from a DEPLOY-ONLY tree:**
+  - a worktree cut from CLOUD HEAD, on branch `dep-nfra-mcpindex-r3-gateway`, NEVER merged and never pushed;
+  - in it, the whole directory `infra/aws/ec2/opal-gateway` is replaced by the release pin's (3371f18803). Use
+    `git rm -r -q` on the directory, then `git checkout 3371f18803 -- infra/aws/ec2/opal-gateway`;
+  - commit it as ONE deploy-only commit under the audited `GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~10`.
+  This is the OA-r-1 pattern (54e26d66a0, NFRA_OPALAI issuer amendment 5).
+- **Granted for that commit only:** `infra/aws/ec2/opal-gateway/**` on the dep- branch.
+- **Prove before the GO, then STOP:**
+  - `git diff --stat 3371f18803 <dep> -- infra/aws/ec2/opal-gateway` is empty;
+  - rebuild the artifact from the dep tree and from 3371f18803 WITHOUT uploading, and compare them per file, N of N
+    identical, N printed;
+  - the halt gate reads this order at the dep tree's HEAD, with `<issued_to>` you and `<status>` pending.
+  The issuer takes the dep hash to both signers (the CVO's N1 names HEAD 3371f18803) and GOs.
+- **N1 at the deploy** reads the dep tree: HEAD = <dep>, its gateway dir equal to 3371f18803's, and mcportal a3bff71
+  with 0 status lines. N2, N3 and rollback via mx-rb4 are unchanged.
+
 ## 2. BOUNDS
 
 1. Terraform, the ALB, the host's role and its secrets are untouched. `safe-ec2-deploy.sh` is READ, never edited.
