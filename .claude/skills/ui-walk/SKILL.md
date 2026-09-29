@@ -67,6 +67,8 @@ The skill runs:
 node .claude/skills/ui-walk/walk.mjs [--route R]... [--client "text"]... [--max-minutes 40] [--headed]
 ```
 
+`--no-login` skips the account and sign-in (the signed-out control); any step that lands on the sign-in page prints `WALK VOID: step <label> landed on the sign-in page`, records `walker:signed-out` and exits 3.
+
 Repeat `--client` for several clients. Use a client with several accounts: most defects live there. The whole
 Investor Reporting walk takes about 5 minutes per client.
 

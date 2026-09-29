@@ -6,7 +6,7 @@
 //
 // Usage (from any cwd):
 //   node .claude/skills/ui-walk/walk.mjs [--base http://localhost:5174] [--route /investor-reporting]
-//        [--client "Thiessen, Anna"]... [--max-minutes 40] [--no-arm] [--keep-armed] [--headed]
+//        [--client "Thiessen, Anna"]... [--max-minutes 40] [--no-arm] [--keep-armed] [--headed] [--no-login]
 //
 // By default it ARMS the account, walks, and DISARMS in a finally block (always, even on failure).
 import { createRequire } from 'node:module'
@@ -14,6 +14,7 @@ import { execFileSync } from 'node:child_process'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import { isSignInPage } from './signin_detect.mjs'
 
 // UI_WALK_ROOT lets a copy of this file in a linked worktree drive the shared tree's portal/node_modules and tmp/.
 const ROOT = process.env.UI_WALK_ROOT || fileURLToPath(new URL('../../../', import.meta.url))
@@ -24,11 +25,14 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, login: true }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
-  else if (a === '--route') opt.routes.push(argv[++i])
+  else if (a === '--route') {
+    // Git Bash (MSYS) rewrites a leading-slash argv into "C:/Program Files/Git/<route>" before node sees it; undo that.
+    opt.routes.push(argv[++i].replace(/^[A-Za-z]:[\\/].*?[\\/]Git(?=[\\/])/i, '').replace(/\\/g, '/'))
+  }
   else if (a === '--client') opt.clients.push(argv[++i])
   else if (a === '--security') opt.securities.push(argv[++i])
   else if (a === '--max-minutes') opt.maxMinutes = Number(argv[++i])
@@ -36,6 +40,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--keep-armed') opt.keepArmed = true
   else if (a === '--headed') opt.headed = true
   else if (a === '--deep') opt.deep = true
+  else if (a === '--no-login') opt.login = false
   else throw new Error('unknown argument ' + a)
 }
 if (!opt.routes.length) opt.routes.push('/investor-reporting')
@@ -157,7 +162,22 @@ const CHECKS = () => {
   return out
 }
 
+let walkVoid = false
+class WalkVoid extends Error {}
 async function checks(page, label) {
+  if (label !== 'login-failed') {
+    const probe = await page.evaluate(() => {
+      const vis = (el) => { if (!el) return false; const r = el.getBoundingClientRect(); const s = getComputedStyle(el); return r.width > 0 && r.height > 0 && s.visibility !== 'hidden' && s.display !== 'none' }
+      return { path: location.pathname, hasEmail: vis(document.querySelector('#email')), hasPassword: vis(document.querySelector('#password')) }
+    }).catch(() => null)
+    if (probe && isSignInPage(probe)) {
+      walkVoid = true
+      const file = await shot(page, label)
+      findings.push({ step: label, screenshot: file, claim: 'measured', check: 'walker:signed-out', observed: `step ${label} landed on the sign-in page (${probe.path})` })
+      log(`WALK VOID: step ${label} landed on the sign-in page`)
+      throw new WalkVoid(`step ${label} landed on the sign-in page`)
+    }
+  }
   const file = await shot(page, label)
   const items = await page.evaluate(CHECKS).catch((e) => [{ check: 'walker:error', observed: 'checks failed: ' + e.message.split('\n')[0] }])
   for (const it of items) findings.push({ step: label, screenshot: file, claim: 'measured', ...it })
@@ -356,8 +376,11 @@ let armedHere = false
 let browser
 const t0 = Date.now()
 try {
-  if (opt.arm) { log(py('arm').trim()); armedHere = true } else log(py('status').trim())
-  const password = py('secret', { UI_WALK_CHILD: '1' })
+  let password = null
+  if (opt.login) {
+    if (opt.arm) { log(py('arm').trim()); armedHere = true } else log(py('status').trim())
+    password = py('secret', { UI_WALK_CHILD: '1' })
+  } else log('NO LOGIN: signed-out control, the walker account is not touched')
   try {
     browser = await chromium.launch({ channel: 'msedge', headless: !opt.headed })
   } catch {
@@ -387,18 +410,20 @@ try {
   })
 
   // login through the local dev build
-  step = 'login'
-  await page.goto(opt.base + '/login', { waitUntil: 'domcontentloaded', timeout: 30000 })
-  await page.fill('#email', EMAIL)
-  await page.fill('#password', password)
-  await page.click('button[type=submit]')
-  await page.waitForURL((u) => !/\/login/.test(u.pathname), { timeout: 30000 }).catch(() => {})
-  await settle(page)
-  if (/\/login/.test(new URL(page.url()).pathname)) {
-    await checks(page, 'login-failed')
-    throw new Error('login did not complete (still on /login) -- see the login-failed shot')
+  if (opt.login) {
+    step = 'login'
+    await page.goto(opt.base + '/login', { waitUntil: 'domcontentloaded', timeout: 30000 })
+    await page.fill('#email', EMAIL)
+    await page.fill('#password', password)
+    await page.click('button[type=submit]')
+    await page.waitForURL((u) => !/\/login/.test(u.pathname), { timeout: 30000 }).catch(() => {})
+    await settle(page)
+    if (/\/login/.test(new URL(page.url()).pathname)) {
+      await checks(page, 'login-failed')
+      throw new Error('login did not complete (still on /login) -- see the login-failed shot')
+    }
+    log('LOGGED IN at', page.url())
   }
-  log('LOGGED IN at', page.url())
 
   for (const route of opt.routes) {
     if (!timeLeft()) break
@@ -478,8 +503,10 @@ try {
     }
   }
 } catch (e) {
-  findings.push({ step, check: 'walker:error', claim: 'measured', observed: String(e.message || e).split('\n')[0] })
-  log('ERROR', String(e.message || e).split('\n')[0])
+  if (!(e instanceof WalkVoid)) {
+    findings.push({ step, check: 'walker:error', claim: 'measured', observed: String(e.message || e).split('\n')[0] })
+    log('ERROR', String(e.message || e).split('\n')[0])
+  }
 } finally {
   if (browser) await browser.close().catch(() => {})
   if (armedHere && !opt.keepArmed) { try { log(py('disarm').trim()) } catch (e) { log('DISARM FAILED -- run: python .claude/skills/ui-walk/ui_walker_account.py disarm', String(e.stderr || e.message).slice(0, 300)) } }
@@ -505,5 +532,6 @@ try {
     'Screenshots and findings are under this folder (gitignored: they carry client data).'].join('\n')
   writeFileSync(path.join(OUT, 'summary.md'), md + '\n')
   log('OUT', OUT)
-  log(`SUMMARY: ${unique.length} unique finding(s) from ${findings.length} observations, ${shotN} screenshot(s), ${guard.length} guard abort(s), ${stubbed} telemetry stubbed, ${apiIssues.length} API issue(s), ${consoleErrors.length} console error(s)`)
+  log(`SUMMARY: ${unique.length} unique finding(s) from ${findings.length} observations, ${shotN} screenshot(s), ${guard.length} guard abort(s), ${stubbed} telemetry stubbed, ${apiIssues.length} API issue(s), ${consoleErrors.length} console error(s), walk void: ${walkVoid ? 'yes' : 'no'}`)
+  if (walkVoid) process.exitCode = 3
 }
