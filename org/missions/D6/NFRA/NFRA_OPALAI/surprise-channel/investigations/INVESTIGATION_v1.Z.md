@@ -1846,6 +1846,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "/dispatch Step 5 + safe-merge.sh: the drain merge lands the worker's branch as merged, graded on the merged index, or refuses loud.",
     "world_is": "A lane-owned path the branch changed was dropped from the merge commit without a refusal. The correct content sat uncommitted in the shared tree, where another seat's commit or checkout could have lost it, and CLOUD's manifest named a release the host no longer served. The mechanism (index manipulation by safe-merge or a hook, versus a concurrent seat) is NOT measured here.",
     "notes": "Repaired by this seat at 9353136df3 (the worker's own record carried under the audited SHARED_CLOUD_OPS override; no new content). For the safe-merge owner: a drain should fail loud when a path the branch changed is absent from the merge commit. OA-r-1's drain (9f520b8bb3) carried its manifest change correctly, so this is intermittent or state-dependent."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S7",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-29T05:10Z",
+    "one_line": "OA-e-9's population command, git rev-list --no-merges BASE..HEAD -- infra/aws/ec2/opal-gateway, counts 51 commits, but the same range with --full-history counts 53: git's default history simplification drops two gateway commits that CLOUD holds. Both are this worker's OA-e-3 commits (c06a3a4379, 685fabc691), which are on the host through the release branch's cherry-picks. The census DENOMINATOR is 51 because AC2 fixes the command; the two are listed under the table, not as rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git rev-list --no-merges f791522306..60fb85b5dd -- infra/aws/ec2/opal-gateway | wc -l = 51; the same with --full-history = 53; comm -13 of the two sorted lists = 685fabc691 and c06a3a4379 (both 0.9.0_WK_NFRA_OPALAI~10, OA-e-3 part A).",
+        "git merge-base --is-ancestor c06a3a4379 HEAD and 685fabc691 HEAD both true (they are on CLOUD). The cause is git's default history simplification (a merge treated as TREESAME to one parent for the path); which merge did it was not traced.",
+        "org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/e9.AC2.sh recounts with the default command, so it agrees with 51."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-9 step 3: the population is git rev-list --no-merges <BASE>..<HEAD> -- infra/aws/ec2/opal-gateway; its count is the DENOMINATOR.",
+    "world_is": "The default command undercounts CLOUD's gateway commits here (by the simplification named above). It hid two commits here, both released. A later census that reads the same command can hide an UNRELEASED commit the same way. The worker followed the face and reported the two separately.",
+    "notes": "Not ARMED for this order. The E9 move should cut its population with --full-history, or from the tree diff BASE..HEAD, so a hidden commit cannot go unmoved."
   }
 ]
 ```
