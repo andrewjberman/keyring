@@ -26,6 +26,39 @@ Two phases. PHASE A runs when the issuer hands you this order (after OG-x-2 is d
 issuer says GO.
 
 ### PHASE A (pre-GO) -- no upload, no contact with the instance beyond read-only SSM
+0. **AMENDMENT A1 (issuer 2.0.0_SA_COO~O, 2026-09-29) -- one deployer, and the live base may have moved.**
+   - Two other seats announced opal-gateway deploys for tonight: NFRA_OPALAI OA-r-1 (2.0.0_SA_COO~AI, base
+     `6a98a0553a`, from ~23:3xZ 2026-09-28) and NFRA_MCPINDEX MX-r-4 (2.0.0_SA_COO~MI, pin `2dedae93df`, re-cut on the
+     post-OA-r-1 base). The one-deployer rule holds every other opal-gateway deploy until the deploying seat's ledger
+     closes. So FIRST, in PHASE A and again immediately before PHASE B's act: list every worktree
+     (`git worktree list --porcelain`) and, in each, `git -C <wt> ls-tree -r --name-only HEAD
+     org/critical_paths/.open_deploys/`; print the per-tree denominator. Any sentinel naming `opal-gateway` or
+     `gateway` that is not yours -> STOP, a BLOCKING row naming it.
+   - Step 1 reads `deployed_commit` from `EC2_MANIFEST.json` at YOUR HEAD and at CLOUD's HEAD
+     (`git show CLOUD:infra/aws/ec2/EC2_MANIFEST.json`); use the newer. It may no longer be `6a98a0553a`. The
+     `SPRINT_VIEW_ALLOWED_EMAILS` key only separates `6a98a0553a` and later from `fe94911257` and earlier; for any
+     later commit the test is the 5-file md5 match against THAT commit plus the key present. If the deployed commit
+     is not resolvable in this repository (`git cat-file -e <c>`), STOP, a BLOCKING row. The release base is the
+     commit actually live when you cut, whatever it is.
+
+   **AMENDMENT A2 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~03:0xZ) -- RE-CUT on whatever is live after the gateway queue.**
+   The queue is NFRA_MCPINDEX MX-r-4 (CLOSED 02:5xZ; host serves deploy-only `0bce8d322a`, gateway tree `09ccfc39ad` =
+   release pin `3371f18803` = `d287ffb346` + 5 files, `.env` ENABLED_INTEGRATIONS `ycharts opal_portal globgrph
+   opal_discover portal_index`), then NFRA_OPALAI OA-e-3, then this order. Your PHASE A release tree @7b729821a9 on
+   `d287ffb346` is STALE: discard it (do not deploy it) and re-cut:
+   - The live base may be a DEPLOY-ONLY commit that CLOUD's `EC2_MANIFEST.json` does not name yet (the deploying seat's
+     drain lands the manifest later). Resolve the live base BY CONTENT, never by the manifest alone: take the deploying
+     seat's announced release pin or deploy-only commit as the candidate, and confirm on the host (read-only SSM) that
+     every file under `/opt/opal-gateway/app/` you can compare equals that candidate's gateway tree, plus the `.env`
+     ENABLED_INTEGRATIONS value. If you cannot name a candidate whose gateway tree matches the host, STOP, a BLOCKING row.
+   - The release tree = that live gateway tree + ONLY `0c3d545002`'s 9 gateway files. It MUST carry the live
+     `deploy-to-ec2.sh` unchanged, so its ENABLED_INTEGRATIONS line writes exactly the host's current value: an older
+     line would disable another project's integrations. Census: the release differs from the live gateway tree ONLY
+     in `0c3d545002`'s files.
+   - Steps 4-8 are re-run on the new tree (tests, mcportal pin, rollback proven against the NEW live artifact, blast
+     radius with the NEW tool count and ENABLED_INTEGRATIONS). Step 9's BEFORE reads compare to the NEW step 7.
+   - Your abandoned ledger stays ABANDONED; PHASE B opens a fresh entry under the same slug with a new timestamp.
+
 1. **The live commit.** Read `infra/aws/ec2/EC2_MANIFEST.json` `services.opal-gateway.deployed_commit` (it read
    `6a98a0553a` at the issuance base). Confirm it BY CONTENT over read-only SSM on instance `i-07dccb1615503ac99`: the
    md5 of the host's `/opt/opal-gateway/app/integrations/schwab/{engine,integration,export,envelope}.py` and
@@ -82,6 +115,12 @@ issuer says GO.
     and `deployed_by`; `mcportal_commit` unchanged; a `release_note` naming CLOUD's still-unreleased gateway commits.
     Commit it. Close every leg with its proof, commit the close, then run the criteria.
 
+**AMENDMENT A3 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~05:4xZ, on rows Z-W11-S8/S9).** The deploy is done and verified;
+the criteria were the defect. AC1/AC2 `<expect>` now match the scripts' printed form (regex); `xr.AC3.sh` probes the
+shipped `engine.py` for `read_export_batches` (no artifact ships `tests/`) and compares ENABLED_INTEGRATIONS to the value
+at the cut, the 5 ids after MX-r-4. `previous_deployed_commit` = `f791522306` (the committed release; its deploy-only twin
+`7c7ebe14d3` is named in the release note) is RULED correct. Re-run AC1-AC3 as written; no other act.
+
 ## 2. BOUNDS
 
 1. Terraform, the ALB, the host, its role and its secrets are untouched. `safe-ec2-deploy.sh` and `deploy-to-ec2.sh`
@@ -106,9 +145,9 @@ Rows: `org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIG
 ## 4. PROOF OF SPEC (literal; run from your worktree root after the ledger close is committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC1.sh; echo "exit=$?"</invocation><expect>sentinel at HEAD=no; listed OPEN/HELD=0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC2.sh; echo "exit=$?"</invocation><expect>descends=yes -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC3.sh; echo "exit=$?"</invocation><expect>/health=200; streaming export on host 1; schwab files equal deployed_commit 4 of 4; ENABLED_INTEGRATIONS unchanged=yes -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC1.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no; listed OPEN/HELD=0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC2.sh; echo "exit=$?"</invocation><expect>(?s)descends=yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OG-x-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC3.sh; echo "exit=$?"</invocation><expect>(?s)/health=200; streaming export on host 1; schwab files equal deployed_commit 4 of 4; ENABLED_INTEGRATIONS unchanged=yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1` -- NEVER-2: the entry is committed at HEAD, the sentinel gone, the OPEN/HELD scan clean with its denominator.
@@ -133,7 +172,7 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 - GO: both halves SIGNED, off-hours, and "deploying" announced by the issuer.
 - The declared class is WORLD: a deploy and GATE (xii)'s floor (`infra/` path).
 
-<status>staged</status>
+<status>complete</status>
 <round>3</round>
 <slot>~11</slot>
 <fabric>site-z</fabric>

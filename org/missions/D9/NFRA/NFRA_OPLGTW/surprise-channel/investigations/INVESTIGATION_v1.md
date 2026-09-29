@@ -4534,3 +4534,154 @@ name the one known failure instead of silently inheriting it.
   "notes": "INERT: the correction is mechanical and is recorded here so the renumbering is not read later as a seat inventing its own ids. The issuer may prefer a '-OG-' segment to be admitted by both patterns; that is a gate edit, not a row edit, and is not this seat's write surface."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T01:40Z",
+  "one_line": "The OG-x-3 step-0 one-deployer census reads a gateway sentinel with status OPEN in 19 old rollback/release worktrees (nfra-oplgtw-og-r-1-first-release.json, opened 2026-09-18) although CLOUD carries the entry CLOSED and no sentinel; no live gateway deploy is open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Census 2026-09-29T01:2xZ: git worktree list --porcelain = 103 trees; per-tree count of git ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/ printed for each (range 3 to 15 entries; the main tree 14; this worktree 14). A content scan of the 51 distinct sentinel blobs for the string 'gateway' found ONE gateway-deploy sentinel at a tree HEAD: nfra-oplgtw-og-r-1-first-release.json in C:/tmp/mp-2-rb (status OPEN, author 0.9.0_WK_NFRA_OPLGTW~2, opened 2026-09-18T05:07Z). The working directories of 18 more rb/rel trees (mp-2-rel, mp-2-rel2, mx-rb, mx-rb3, mx-rb4, mx-rel, mx-rel3, mx-rel4, oa-10-rb, oa-10-rel, oa-8-rb, oa-8-rel, oa-9-rb, oa-9-rel, og-rb, og-rel, og-s1-rb, og-s1-rel) hold an uncommitted copy of the same file.",
+      "CLOUD (c180d84b36): org/critical_paths/change_management/20260918T0507Z_nfra-oplgtw-og-r-1-first-release_deploy_completion.md reads 'Status: CLOSED -- nothing stranded -- closed 20260918T070646Z'; git ls-tree CLOUD org/critical_paths/.open_deploys/nfra-oplgtw-og-r-1-first-release.json = 0 entries (removed by 45d1e43657).",
+      "No sentinel naming opal-gateway exists at CLOUD, at any live worker or slot worktree (oa-*, mx-*, wk-*), or in any working directory except those 19 rb/rel copies; the OA-r-1 release is closed (EC2_MANIFEST at CLOUD records d287ffb346 at 2026-09-29T00:45:15Z) and no MX-r-4 sentinel exists yet."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A1 step 0: any sentinel naming opal-gateway or gateway that is not the worker's own means STOP.",
+  "world_is": "Read literally, the census stops on a closed 09-18 deploy whose sentinel file survives in dead rollback/release trees, so it can never read clean while those trees exist. Read by intent, no other seat is deploying the gateway at 2026-09-29T01:2xZ. This worker finished PHASE A, which is read-only and creates only local worktrees, and reports the census here; it is repeated at PHASE B.",
+  "notes": "Issuer ruling wanted before PHASE B: either the census counts only trees whose branch is not an archived rb/rel tree, or those 19 stale copies are removed by their owner. The literal STOP was NOT filed as BLOCKING because the sentinel's ledger is closed on CLOUD; if the issuer reads the rule literally, this row is the BLOCKING record."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T01:41Z",
+  "one_line": "The live S3 artifact is opal-gateway-54e26d66a0.tar.gz, not opal-gateway-d287ffb346.tar.gz: OA-r-1 deployed from a never-merged deploy-only tree whose HEAD short is 54e26d66a0 while EC2_MANIFEST records d287ffb346.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/ (27 objects): opal-gateway-54e26d66a0.tar.gz 402043 bytes LastModified 2026-09-29T00:44:45Z and opal-gateway-latest.tar.gz 402043 bytes 00:44:48Z; head-object on opal-gateway-d287ffb346.tar.gz = 404.",
+      "git log -1 54e26d66a0: 'deploy-only(NFRA_OPALAI OA-r-1) ... CLOUD tree with infra/aws/ec2/opal-gateway replaced by the release commit d287ffb346's ... NEVER merged'; git diff --stat 54e26d66a0 d287ffb346 -- infra/aws/ec2/opal-gateway = 0 files, so the gateway directory is identical.",
+      "Rollback build from a clean tree at d287ffb346 with mcportal a3bff71ffa: 79 files; the live artifact opal-gateway-54e26d66a0 extracted: 79 files; diff -rq empty (79 of 79 identical)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-x-3 step 6: the live artifact is s3://.../opal-gateway-<live short>.tar.gz.",
+  "world_is": "The live artifact's key names the deploy-only tree's HEAD, not the manifest's deployed_commit. The comparison was made against the key that exists; the file sets match.",
+  "notes": "For PHASE B's rollback: the rollback tree rebuilds the same bytes, and the re-deploy command uploads opal-gateway-d287ffb346 (new key) plus latest. A rollback by S3 key alone would name 54e26d66a0."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T01:49Z",
+  "one_line": "OG-x-3 PHASE B stopped before the act: NFRA_MCPINDEX MX-r-4 (0.9.0_WK_NFRA_MCPINDEX~10) opened an opal-gateway ledger (nfra-mcpindex-r3-gateway-enable) at 01:37:57Z, between this worker's GO-time census (01:35:38Z) and its own ledger open (01:40:08Z).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-10/org/critical_paths/.open_deploys/nfra-mcpindex-r3-gateway-enable.json: status OPEN, opened_at 2026-09-29T01:37:57.892892+00:00, author 0.9.0_WK_NFRA_MCPINDEX~10, title 'NFRA_MCPINDEX MX-r-4 PHASE B: narrow opal-gateway release rel-nfra-mcpindex-r3-gateway-b @3371f18803 (base d287ffb346 ...) ENABLES opal_discover and portal_inde...'; legs L1 (upload from /c/tmp/mx-rel4), L2, L3 open, L4 closed 20260929T013833Z; committed at a05831a52b (2026-09-28 21:38:48 -0400 = 01:38:48Z) on wk-nfra_mcpindex-3-10.",
+      "This worker's census at 2026-09-29T01:35:38Z (107 worktrees) found no such sentinel; the immediate pre-act re-census at ~01:44Z found it. CLOUD deployed_commit read d287ffb346 at both times. Nothing was uploaded, installed or changed on the host by this worker in PHASE B: its BEFORE reads were read-only SSM (46 tools identical to Phase A; ENABLED_INTEGRATIONS unchanged; 5 files match d287ffb346).",
+      "This worker had opened its own ledger nfra-oplgtw-stream-export-release (committed 64c213b78a) at 01:40:08Z before the re-census; it withdrew it: sentinel removed, entry Status set to ABANDONED with the reason and a log line (the deploy_ledger.py terminal token ABANDONED), so its branch does not hold the one-deployer slot."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A1: the one-deployer rule holds every other opal-gateway deploy until the deploying seat's ledger closes; any other open gateway sentinel stops the worker.",
+  "world_is": "MX-r-4's deploy is open on base d287ffb346 and will move the live base to its release commit (3371f18803 per its title). OG-x-3's release tree 7b729821a9 is cut on d287ffb346 and is stale the moment MX-r-4's ledger closes; it must be re-cut on the new live base (release commit 7b729821a9 carries only OG-x-2's 9 files, so the re-cut is one cherry-pick of 0c3d545002).",
+  "notes": "Issuer decision: hold OG-x-3 until nfra-mcpindex-r3-gateway-enable closes, then send GO for a re-cut. This worker will not touch the host or the artifact bucket until then. The ledger entry name 20260929T0140Z_nfra-oplgtw-stream-export-release stays as the ABANDONED record."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T04:40Z",
+  "one_line": "OG-x-3 PHASE B stopped at the GO census, before any ledger or act: NFRA_MCPORTAL MP-a-2 (0.9.0_WK_NFRA_MCPORTAL~1) holds an OPEN sentinel nfra-mcportal-r3-writer-apply whose title and targets name the opal-gateway Terraform root and a 'gateway line'; the base, host files, tool count and ENABLED_INTEGRATIONS are all unchanged.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/mp3-1 (branch wk-NFRA_MCPORTAL-1, HEAD 35346c951c, 2026-09-29 00:22:38 -0400) org/critical_paths/.open_deploys/nfra-mcportal-r3-writer-apply.json: status OPEN, opened_at 2026-09-29T04:12:42Z, author 0.9.0_WK_NFRA_MCPORTAL~1; title 'NFRA_MCPORTAL MP-a-2: grant writer apply, branch=sub (gateway line keys=email,exp,family_name,...)... ROLLBACK (all 7 resources new): safe-apply-gated targeted destroy in infra/aws/terraform/opal-gateway of aws_lambda_function.mcportal_grant_writer, aws_lambda_layer_version..., aws_iam_role.mcport...'; legs L1 and L2 (verify) closed 20260929T0416Z, L3 (safe-apply targeted apply of mcportal_grant_writer.tf, 7 add 0 change 0 destroy) and L4 (live invoke) open.",
+      "Its act is a Terraform apply of 7 NEW resources (a Lambda, its layer, an IAM role) in the infra/aws/terraform/opal-gateway root; it does not name the EC2 instance, /opt/opal-gateway, the artifact bucket prefix ec2/opal-gateway/ or deploy-to-ec2.sh. My PHASE B act is safe-ec2-deploy.sh (S3 upload + SSM install + restart of opal-gateway.service) and touches no Terraform.",
+      "GO-time reads, all unchanged from PHASE A (SSM commands on i-07dccb1615503ac99 at 2026-09-29T04:2xZ): 76 of 76 host files = 7c7ebe14d3's gateway tree (manifest identical to the PHASE A manifest), ENABLED_INTEGRATIONS=ycharts opal_portal globgrph opal_discover portal_index, 27 .env keys, /health 200, 51 tools with the sorted diff against tools_before_phaseA_recut.txt empty. Census over 122 worktrees, HEAD scan of 52 distinct sentinel blobs and a working-directory scan of every tree: the nfra-mcportal sentinel (HEAD of C:/tmp/mp3-1 and its working copy) is the only gateway-naming OPEN sentinel besides the superseded og-r-1 slug."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A1 step 0: any OTHER open sentinel naming opal-gateway or gateway stops the worker; the issuer's GO message repeats it.",
+  "world_is": "On a literal reading the census stops here. On the measured act it is a different plane (Terraform, new resources, no shared file with the EC2 code deploy), so the two would not collide. This worker did not open a ledger and touched nothing on the host or the artifact bucket.",
+  "notes": "Issuer decision wanted: either (a) rule the MP-a-2 sentinel out of the one-deployer rule (Terraform apply of new Lambda resources, disjoint from the EC2 code path) and send GO again, or (b) hold until nfra-mcportal-r3-writer-apply closes. On GO the worker repeats the census and BEFORE reads, then runs steps 10-13 from /c/tmp/og-x3-rel2 (release 4248b70b39)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T05:45Z",
+  "one_line": "xr.AC3 of OG-x-3 cannot pass as written: it looks for tests/test_schwab_export_stream.py on the host, which no gateway artifact ships, and expects ENABLED_INTEGRATIONS=ycharts opal_portal globgrph, the value before MX-r-4; the host's value is the five ids, unchanged by this deploy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC3.sh run at HEAD 1f15da8f48 (SSM commands 564c50e6-58d8-4169-be5c-b0958ee92c84 and bb8aef48-d382-4b12-bd4e-3e2d55f6d791, both Status=Success): 'health=200; streaming export on host 0; schwab files equal deployed_commit 4 of 4; ENABLED_INTEGRATIONS unchanged=no' -> RESULT: FAIL, exit=1.",
+      "deploy-to-ec2.sh's tar step packs app, deploy, requirements.txt, identity_tool_allowlist.txt and the dashboard bundle with --exclude infra ...; a rebuilt 79-file artifact and the live opal-gateway-7c7ebe14d3.tar.gz both contain no tests/ directory (diff -rq empty, 79 of 79), so /opt/opal-gateway/tests/ cannot exist on any release.",
+      "Host .env ENABLED_INTEGRATIONS read over SSM before (05:1xZ) and after (05:23Z) the deploy: 'ycharts opal_portal globgrph opal_discover portal_index' both times (MX-r-4 added the last two; amendment A2 of the order names the same value). The check compares against the 3-id string, so 'unchanged=no' although this act changed nothing.",
+      "What the host does show: engine.py b06a27f7317b1f664f75c66d757e8491, integration.py f436630c352d0cedfd1dbaedc67b43d3, export.py c9943e7840e2e1ea2cb97df75feccf90, envelope.py 651359f19abc63a2b77811df1f3fbf29 = 4248b70b39's bytes, 4 of 4; 76 of 76 files of the shipped tree; /health 200; 51 tools."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-x-3 AC3: the host carries OG-x-2's test module and ENABLED_INTEGRATIONS reads 'ycharts opal_portal globgrph'.",
+  "world_is": "The deploy is verified by content on every other axis, but the criterion as cut reads FAIL for two reasons that are properties of the check, not of the deploy. Recorded FAIL, the order is left open, and no criterion was edited by this worker.",
+  "notes": "Issuer to amend xr.AC3.sh (test-module probe -> the host's schwab/integration.py contains the streaming reader, e.g. a grep for read_export_batches in engine.py; ENABLED_INTEGRATIONS literal -> the host's value at the cut) and re-run, or rule the two readings; then the flip is a re-run of AC3 plus the proof instance's AC3 row."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T05:52Z",
+  "one_line": "The <expect> patterns of OG-x-3's AC1 and AC2 ('sentinel at HEAD=no; listed OPEN/HELD=0 -- RESULT: PASS -- exit=0', 'descends=yes -- RESULT: PASS -- exit=0') cannot match the verbatim output of their xr scripts, so proof-of-spec-check refuses a PASS row for either although both scripts print RESULT: PASS and exit 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "xr.AC1.sh output at HEAD 1f15da8f48: 'entry files at HEAD=2; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR: 13 of 13 sentinel(s) scanned' newline 'RESULT: PASS' newline 'exit=0'. xr.AC2.sh: 'deployed_commit=4248b70b39... previous=f791522306... descends=yes; gateway files shipped 9, outside OG-x-2's set 0; streaming export carried 1' newline 'RESULT: PASS' newline 'exit=0'.",
+      "python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 with those outputs as output_evidence and status PASS: 'VIOLATION: acceptance[AC1]: status=PASS but output_evidence does NOT match expect ...' and the same for AC2, INVALID rc=1 (checker code: re.search(expect, output_evidence, DOTALL|MULTILINE)). The ' -- ' between the fragments is a literal in that search."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's <expect> clauses decide AC1 and AC2 mechanically.",
+  "world_is": "The two rows are recorded UNVERIFIABLE-BY-INSTRUMENT with the script's RESULT line as the substitute oracle, rather than fitted by re-flowing the output to match the pattern.",
+  "notes": "Issuer may amend the two <expect> patterns to regexes that the scripts' output satisfies, e.g. (?s)sentinel at HEAD=no; listed OPEN/HELD=0.*RESULT: PASS.*exit=0 and (?s)descends=yes.*RESULT: PASS.*exit=0, and re-run the checker on the same instance."
+}
+```
