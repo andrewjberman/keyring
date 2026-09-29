@@ -158,6 +158,18 @@ account identifier replaced by its account reference. AC3's probe re-runs `prepa
 compares the fresh diff's sha256 to the recorded one. AC6 is unchanged. The one added AWS write is that SSM parameter
 (PutParameter/GetParameter under `/opal/nfra_oplgtw/ogg1/` only); nothing else in AWS changes.
 
+**AMENDMENT A2 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~06:2xZ; ruling 1.0.0_SA_CTO~O @8bf2bf37c6, msg 26461; rows Z-S9,
+Z-S10, Z-S12). SUPERSEDES A1's off-repo SSM copy: there is NO SSM write in this order.**
+- **Accounts (ruling 1):** the grant's accounts are EXACTLY the set `SEALED_EXPECTED_V2.json` was computed over, per
+  master. Record the COUNT per master, never an identifier.
+- **AC3 (ruling 2, AC6 wins; row Z-S9):** the operator command has no `prepare` subcommand. AC3's probe imports
+  `infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py` and calls `validate_candidate(raw, contract)` on the
+  off-repo candidate (the one `activate` validates first) -- no write. The evidence file carries the scope diff with
+  every account identifier REDACTED, plus the SHA-256 of the UNREDACTED diff; the probe recomputes the unredacted
+  diff from the candidate and compares the SHA-256. AC6 is unchanged.
+- **Row ids (row Z-S12):** surprise rows use `NFRA_OPLGTW-Z-S<k>`; the `Z-OG-S<k>` shape named below is superseded.
+- **Status:** this order's only remaining wait is a person creating the M365 test user (evidence file section 6).
+
 ## BOUNDS
 
 - **Grant.** Your write surface is the `<paths>` block below and this order's own file (for the `<status>` flip).
