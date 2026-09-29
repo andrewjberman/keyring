@@ -3371,6 +3371,28 @@ carries none.
     "spec_asserts": "Every BLOCKING row carries an issuer disposition before the round closes.",
     "world_is": "Two of the three are moot under the amended order. The third is blocked on a registry act outside this lane; MX-t-10 is ruled at the round-4 close (complete or carried to round 5).",
     "notes": "If the registry row lands before the 22:00Z close tick, continue a fresh ~15 on the frozen worktree and re-run t10.AC1/AC2 before committing."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S61",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T22:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-14 acceptance fires ran clean but did not exercise the silver WRITE: all 4 scheduled fires (21:39/21:46/21:53/22:00Z) read SSM Success on the new versions (v3/v3/v3/v5) with merge exit 0, and each merge logged 0 new files. Ledger L5/L9 stay OPEN under an external hold; the write arm is proven by the next scheduled fire that finds a new input.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm list-commands since 21:30Z: 32844c37 unrealized, 34d92792 realized, a6fd0313 transaction, 0116fad0 allocation -- Success each; describe-document Default==Latest 3/3/3/5.",
+        "s3://opal-data-bd/logs/<leg>-download-2026-09-29.log: 'No new ... files to process', 'Merge exit code: 0' on all 4 (previously processed 74/144/195/131).",
+        "forwardfill_v2 newest: realized 2026-09-29.xlsx landed 00:07:57Z and silver/realized/2026-09-29.parquet was written 07:02:56Z; silver/transactions/2026-09-29.parquet 06:37:01Z; unrealized and allocations inputs newest 2026-09-25 (weekly, landed 2026-09-27 00:1xZ)."
+      ]
+    },
+    "spec_asserts": "Ledger L5/L9 proof = SSM Success on the new version, the merge log line, and the silver partition written by tonight's scheduled fires.",
+    "world_is": "Today's realized/transactions inputs had already been merged at 06:37Z and 07:02Z, before the 08:25Z publish -- by timing, worker ~17's pre-publish runs (INFERRED, not attributed by a log); unrealized/allocations inputs are weekly. So tonight's fires had nothing to write. ABSENT is not EXERCISED: the write arm on the stripped documents is unproven.",
+    "notes": "Issuer ruling: do NOT fire an ad-hoc run -- it would consume the next input and destroy the scheduled discriminator, which is how tonight's was lost. Re-read 2026-09-30 after the 21:46/21:53Z fires (realized, transaction: expect 'Found 1 new' and a silver/<leg>/2026-09-30 partition written by the fire); unrealized L5 and allocation L9 at the 2026-10-05 21:38/22:00Z fires. MX-s-14 is ruled at the round-4 close: complete once written, or its residual legs carried into round 5."
   }
 ]
 ```
