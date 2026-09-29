@@ -75,6 +75,12 @@ AC2 PASS (308 passed). SERVED: reaches the Lambda at ww-1 with the DynamoDB read
 Names for 59 library tickers stay ABSENT until a clean source exists (row Z-S300).
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29 ~12:2xZ):** drained @7ea218afad (worker 1a2ea2c06e). The issuer re-ran both criteria on
+the merged FULL tree: AC1 PASS (ranking rows read 2, YES, exit=0); AC2 PASS (315 passed, exit=0). The worker's AC2 FAIL was an
+instrument absence the issuer caused -- the sparse cone lacked `infra/logic`, `infra/aws/terraform/harvest` and
+`portal/.../__harness__` (rows Z-W171-S1, -S2; no code defect; the 28 non-passes all FileNotFoundError outside the cone). The code
+calls `dynamodb:GetItem` only; ww-1 grants exactly that on `etf-classifications`. SERVED: reaches the Lambda at ww-1.
+<status>complete</status>
 <round>48</round>
 <slot>~171</slot>
 <fabric>site-z</fabric>
