@@ -76,7 +76,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-3 analysis s.5 item 3c. RESERVED: DATA_CATALOG.yaml:32 "WIDENING IS ANDREW-ONLY, unchanged. Version bumps carry his verbatim." The card went to 1.0.0_SA_CTO~O at ~04:36Z (MSTR~Z has no live session). HELD until Andrew's word is recorded.
 
-<status>pending</status>
+<status>superseded -- by 2.0.0_SA_COO~MI, 2026-09-29 ~12:0xZ: HELD all of round 4 on G-W, and G-W does not stand for platinum/advi (Andrew, relayed: platinum/etfs YES, platinum/advi NOT YET; DATA_CATALOG.yaml:32 'WIDENING IS ANDREW-ONLY'). No work was started and no path was touched. The cell is CARRIED to the round-4 analysis as an open item; it re-issues in a later round only on Andrew's widening word for platinum/advi. Was: pending (HELD).</status>
 <round>4</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
