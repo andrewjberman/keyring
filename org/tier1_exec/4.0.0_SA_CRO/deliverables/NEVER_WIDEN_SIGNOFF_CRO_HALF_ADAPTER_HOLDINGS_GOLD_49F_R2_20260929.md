@@ -124,6 +124,43 @@ only if ~P invokes it; its gold reads YTD 0.00% over 79 OK days, SI 0.00% over 1
 6. The refused half's addendum 1 (the 2026-09-25 manifest's two surfaces) is retired by the re-emit: 557 of 557
    agree.
 
+## Addendum 1 (2026-09-29 09:4xZ) -- condition 2 met by the CTO's option (a); the BEFORE-read taken on qfxZ0DzB; GO from this seat
+
+**Condition 2:** 1.0.0_SA_CTO ruled option (a) (msg 102670; PRD ADDENDUM v0.21 ruling 18 @c0c0ae5606: the trading day after
+a NOT COMPUTABLE day is not computable, reason "follows a price discontinuity"); ~E re-emitted the 49F gold 09:05:02-09:25:55Z.
+**Re-verified here 09:41Z:** E3-AC4 PASS (557 days, 0 OK rows at |r| >= 1, 3 at |r| > 0.5, `leveraged` on 557, manifests
+557/557); status census now carries `FOLLOWS-DISCONTINUITY` 2 beside `IMPLAUSIBLE-RETURN` 2 (..4714 2025-12-12, ..0090
+2025-12-17); OK-row min -0.5463, max +0.5047. Chains (the adapter's rule): YTD 7,127 accounts, >= +100% 2, <= -100% 0,
+(-100%, -50%] 2; **1Y: ..0090 +10.20%** (was -91.5%), **..4714 -65.35%** (was -69.8%; the MSOX days of 12-15/16/18 are inside
+the band and stay), 1Y (-100%, -50%] 3; SI 7,814, (-100%, -50%] 4, min -73.5% (the ~$123 account ..8878). Both halves
+stand on this census.
+
+**BEFORE-read on qfxZ0DzB** (`/ui-walk`, walks `20260929T082535Z`, `085346Z`, `090329Z`, `092109Z`, `093437Z`, 08:25-09:40Z,
+each disarmed with the login REFUSED; shots under `tmp/ui-walk/`, never committed; the default period YTD as the page
+answers it; 1Y for NEW-01 stands from the reopen-guard walk of 00:12Z):
+
+| read | BEFORE (engine, `opal-gips-engine`) |
+|---|---|
+| NEW-01 (the ~$99k account of the three-account relationship), YTD | "temporarily unavailable" -- DEPENDENCY_UNAVAILABLE by name (the retained -100% report refused at reopen); 1Y the same at 00:12Z |
+| the control (~$154k, same relationship), YTD | 5.93%, "Partial -- qualified answer, not a complete report" |
+| ..558d (~$148k, same relationship), YTD | 9.57% |
+| ..0695 (near-zero base, ~$141k), YTD | "temporarily unavailable" -- DEPENDENCY_UNAVAILABLE |
+| ..3510 (one stock, MRVL, ~$307k), YTD | **196.32%**, answered March 16th to September 22nd ("the source answered a different window") |
+| ..2297 (DELL-led, ~$790k), YTD | **145.08%** |
+| ..0090 (section 3, ~$1.89M), YTD | 8.41% (1Y to be read after, per condition 3) |
+| ..4714 (section 3, ~$12.5k), YTD | not settled in the shot ("Loading"); the after-read takes it. Its relationship shows a second account with the SAME mask `****4714 / S1` (~$1.43M) |
+| Inflection (a ~$241k individual account holding a retained report), YTD | 7.98%, Partial |
+| Cottonwood (a ~$1.83M 401K holding a retained report), YTD | DEPENDENCY_UNAVAILABLE; a 24-account Cottonwood household read the same on 8 of 8 performance GETs -- the Black Diamond dependency is refusing today, before this act |
+
+The engine already serves the two +100% accounts at 196.32% and 145.08%, so the holdings figures of +197.9% and +149.7%
+are the same custody facts on a second basis. **GO from this seat** for packet section 4 steps 3-4; the AFTER-read is a
+`--deep` walk (period presets pressed) over the same clients, reading NEW-01, ..0090 and ..4714 at 1Y as condition 3 asks,
+plus the Inflection and Cottonwood reads unchanged.
+
+Named beside (a DSGN_IRPTV1 finding, routed separately): the account picker labels every account of a relationship with
+the relationship's mask (three `****9079 / IRA`, five `****3302 / JOINT`, two `****4714 / S1`), so accounts are told apart
+by value alone.
+
 ## What this half signs against
 
 - Packet blob `a4679360`; the first packet's carried sections (`189aaef2`); artifact `hD7G6YT1` (S3 `3donK_gT`) with
