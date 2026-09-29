@@ -2696,6 +2696,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "ROUND_ANALYSIS.round19.md s.2 ruling 3 / row Z-W41-S1: the AMZN coverage is a 6-article 2026-09-06..09-10 burst of one story, split by the served span rule into a 3-article 09-07-only event; the census asks what a same-story-consecutive-days span rule changes.",
       "world_is": "Two things are conflated in the row. The served SPAN rule is what cuts 09-06 (1 article, one publisher, not a qualifying day) and 09-08 (tier B only) off the 09-07 event: the candidate recovers both, giving 5 articles 09-06..09-08. The served STORY test is what cuts 09-10 off, through its 2-day link window between tier-A articles (not through headline words, which the 09-10 piece shares with the 09-07 pieces): bbg's 09-10 piece is its own 1-article story, which no span rule reusing the story test can join. The 6-article burst exists only if the story test is also changed, which this cell may not do (standing clause 1). The census makes no verdict on either change.",
       "notes": "INERT: measurement only, nothing served is affected. For the CTO at round 20's analysis: ruling on the span rule alone yields the 5-article event; a 6-article event needs a ruling on the story test's link window as well."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W50-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~50",
+      "surfaced_at": "2026-09-29T23:40:00Z",
+      "one_line": "The order says HD's served event is led by a barrons article; the NEWEST served chatter_event part (part-20260929T192706Z) leads HD with bbg:TJX9W8T96OSJ00 (2026-08-18 only) -- the barrons lead is in the three parts up to 20260924T134754Z.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~50/k2_ac1_output.txt section (c), from scripts/k2_ac1_updated_time_census.py run 2026-09-29: 8 chatter_event parts scanned; HD lead is barrons:WP-BAR-0001875805 in part-20260922T215254Z, part-20260923T021336Z, part-20260924T134754Z (event 2026-08-17..2026-08-20, 7 articles); from part-20260928T210944Z through part-20260929T192706Z (the newest) HD's one event is 2026-08-18..2026-08-18, 2 articles, lead bbg:TJX9W8T96OSJ00 'Home Depot Results Beat Estimates, Overcoming Housing Slump' (published_utc 2026-08-18 10:03:19.783Z)",
+          "the barrons article barrons:WP-BAR-0001875805 ('Home Depot Stock Rises as Earnings Defy Housing Slump', published_utc 2026-08-17 16:24Z) is still a tier A HD row in the newest article_security_mention snapshot but is in no served HD event today"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "ROUND_ANALYSIS.round20.md s.2 ruling 3 and the order s.1: HD's served event is led by a barrons article stored at published_utc 2026-08-17 16:24Z; choosing the earliest published_utc promotes it.",
+      "world_is": "That was true of the served parts through 2026-09-24. The served events since part-20260928T210944Z carry HD as a one-day, two-article event led by bbg (earliest published_utc among its members, 2026-08-18). The census (c) therefore prints both: the newest snapshot's lead with every time value, and the barrons article that led the earlier parts with every time value. Neither has an updated or modified time in silver or bronze (barrons: published, published_utc, published_date_utc, fetched_at, first_discovered_at, run_stamp only). The census records no ruling on which lead the CTO means.",
+      "notes": "INERT: measurement only. The question the CTO put (does silver carry an updated time?) is answered independently of which HD lead is meant: barrons, bbg and ft carry none; wsj carries one on 11 of 26 and sa on 5 of 46."
     }
   ]
 ```
