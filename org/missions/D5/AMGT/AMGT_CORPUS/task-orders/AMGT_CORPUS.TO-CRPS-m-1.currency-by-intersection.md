@@ -86,7 +86,7 @@ no other name moves"; its own intersection rule also moves SHOP_CN (`$` on CAD) 
 Checks dry-run at the base: AC1 FAIL (no tests ran); AC2 FAIL ('m1 names 95 currency_set 1 ML_FP_Equity=EUR').
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
