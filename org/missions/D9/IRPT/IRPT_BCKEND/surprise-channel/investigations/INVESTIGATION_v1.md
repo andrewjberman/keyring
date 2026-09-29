@@ -11247,3 +11247,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not a naming-gate defect and not a criterion weakening: E2-AC3's own check (schedule ENABLED, cron, target) never touches this bucket, so the schedule criterion would have graded PASS even with the broken role -- the failure was caught only because the task order's OWN deploy discipline (ledger leg V1, one real invoke with its manifest row written) is stricter than the acceptance criterion. That gap between 'the graded criterion' and 'the deploy discipline's own proof requirement' is what actually surfaced this row, not the criterion itself."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S193",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-29T03:58:00Z",
+  "one_line": "Window 21 part Y: 3 of 6 uploads (Y2, Y4, Y6) sat in RESOLVING past live_chain's 600 s wait, so their Analysis bodies were never submitted; the 3 that resolved (Y1, Y3, Y5) did so in 2-3 s. Y4 resolved at ~03:48Z, 15 min after upload, matching the resident's 900 s retain.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (resident resolve_upload is ~Y's Analysis surface)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W21 part Y call logs org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/W21/Y1..Y6_*.json (scrubbed): uploads at 03:21:01 (Y1, NORMALIZED 03:21:04), 03:22:43 (Y2, RESOLVING), 03:32:49 (Y3, NORMALIZED 03:32:52), ~03:33 (Y4, RESOLVING), 03:43:15 (Y5, NORMALIZED 03:43:17), 03:43:31 (Y6, RESOLVING). Strict alternation in submission order",
+      "irpt-requests NORMALIZATION# rows read 03:51:42Z: UP-307ce2 (Y2) RESOLVING, UP-3c26d4 (Y4) NORMALIZED, UP-b2ca0d (Y6) RESOLVING",
+      "irpt-generation 03:40:34Z: 0 visible, 4 not-visible, VisibilityTimeout 900; irpt-generation-dlq 1 visible (not read: ~P's queue)",
+      "one consumer only: 0 Lambda event source mappings on irpt-generation; host ps shows one resident_main (st3, PID 261514). poll_once receives MaxNumberOfMessages=1 (resident_worker.py:390), so a batch drop is ruled out",
+      "resident journal 03:20Z+: READ_BACK_PENDING:CALCULATING and READ_BACK_PENDING:WAF_CHALLENGE retains on generation messages; no resolve_upload outcome lines are logged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An upload the resident can resolve reaches NORMALIZED in seconds whatever else is queued, so a window's bodies each get their one K5 (W21-3; live_chain's K4 wait).",
+  "world_is": "While generation jobs hold the vendor session (CALCULATING / WAF retains), resolve_upload messages wait on a 900 s retain cycle, measured on Y4 (15 min). An upload that misses the walker's wait gets no body, per the packet's no-retry rule.",
+  "notes": "Cause INFERRED, not measured: resolve_upload returns RETRY (kept 900 s) when the vendor session is busy. The strict alternation is unexplained by that alone. Next measurement, off-window: the resident's resolve_upload RETRY reason (it logs none today), plus a read of the DLQ message by its owner ~P. Y2, Y4 and Y6 grade FAIL-NAMED (K4 only) in the window record; no body was retried."
+}
+```
