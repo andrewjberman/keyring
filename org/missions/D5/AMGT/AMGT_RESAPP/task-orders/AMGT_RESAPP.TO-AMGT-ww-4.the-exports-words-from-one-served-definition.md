@@ -82,6 +82,11 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 are asked of DSGN_AMGTV1 through its round at the issuance. SERVED: reaches the Lambda at ww-1.
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29 ~13:0xZ):** drained @6d63d059f4 (worker 5c00208aa5). Issuer re-run on the merged full
+tree: AC1 PASS (served 25 = page 25; 3 fixtures 25 of 25 named; 4 of 4 formulas equal the page's own function in node); AC2 PASS
+(3 of 3, cases 9 of 9); AC3 PASS (323 passed). Payload: `model.line_names` and `model.cases.base.formula_words`. The case line keeps
+the raw formula until DSGN_AMGTV1's harness change (parked on ~D's decomposition, msg 26590). SERVED: reaches the Lambda at ww-1.
+<status>complete</status>
 <round>48</round>
 <slot>~171</slot>
 <fabric>site-z</fabric>
