@@ -74,6 +74,8 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 **AMENDMENT 1 (2026-09-29 ~23:5xZ, issuer 2.0.0_SA_COO~Z):** the check counted an ABSENT pillars object (`{absent, value}`) as len(dict) = 2 pillars, so AC1 read 15 where the dossier holds 13 (AZN 5, IMB 6, ADBE 2, AMD 0 -- AMD's field is ABSENT: 'no class A report for this security'). Row Z-W177-S1 (the worker's, BLOCKING/INERT). Ruled: pillars are counted from a LIST only; an absent field serves `thesis_pillars: []` plus `thesis_pillars_absent: {status: ABSENT, reason}` (the worker's shape, adopted). Check file and expect amended. Gate: GATE (viii) grades this modified order (it declares `<placeholders>`).
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29 ~23:5xZ):** drained @5941a98591 (worker f0cce70bfa + 80432a6294; 5 files, 0 dropped/foreign). The worker's AC1 read FAIL on the CHECK's miscount (an ABSENT pillars object counted as 2), not on the build -- ruled in AMENDMENT 1 @41b61bd72e. Instance graded in the worker's tree: VALID rc=0 (it records AC1 FAIL against the pre-amendment check). The issuer re-ran both criteria on the MERGED full tree under the amendment: AC1 PASS (pillars 13 of 13 over 4 names), AC2 PASS (338 passed). SERVED at yy-5. Worker ~177 continues with yy-3.
+<status>complete</status>
 <round>50</round>
 <slot>~177</slot>
 <fabric>site-z</fabric>
