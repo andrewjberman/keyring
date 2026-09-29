@@ -72,7 +72,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 **ISSUER NOTES:** round-46 analysis s.4 item 3 (rows Z-W167-S1, -S2), widened at the cut to the fourth harness (`tabs`, HeroGraphic)
 measured the same way. Base at portal DEV 5fac7a37 (measured on the shared tree after DSGN_AMGTV1's merges): AC1 FAIL (0 of 3 load), AC2 FAIL (4 wrong-way). LOCAL: the instruments only.
 
-<status>pending</status>
+<status>complete</status>
 <round>47</round>
 <slot>~169</slot>
 <fabric>site-z</fabric>

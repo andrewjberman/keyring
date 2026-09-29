@@ -15156,6 +15156,49 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "The order says: 'FWD-12 limb 3 / FWD-24: the team's cited cases are known heading-only (row Z-S293) -- measure and say so, do not re-derive it.'",
   "world_is": "RESAPP FWD-12 and FWD-24 are different fences from the ones the sentence names, so the sentence cannot be applied to them as written. I measured RESAPP's FWD-12 and FWD-24 as their fences read, and recorded the Z-S293 fact (team cases are headings, nothing renders them) by citation in both rows, not re-derived. The RESAPP page renders the model block's own Base/Upside/Downside case lines (70 Base SERVED of 95); nothing on the page renders the dossier's team cases.",
   "notes": "Filed without halting. The numbering collision (two projects' FWD-12 and FWD-24 read as one) is the issuer's to resolve at the round-46 analysis; this lane adjudicates nothing."
+},
+{
+  "id": "AMGT_RESAPP-Z-W169-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~169",
+  "surfaced_at": "2026-09-29T06:26:06Z",
+  "one_line": "Behind the two loader gaps the order names, shell.harness.cjs and tabs.harness.cjs each carried a further check reading the wrong way that the order does not name (shell: stat_tiles, tooltip_carries_provenance; tabs: thesis_sentences_and_one_chart); AC1 (rc=0) cannot pass without them, so each was read against the page and brought to the current contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "shell.harness.cjs after the loader stubs: 'CHECKS-WRONG-WAY stat_tiles,tooltip_carries_provenance' (stat_tiles 0, expected 7). Page: portal bdf07b6b (DSGN_AMGTV1 AV-t-2) 'four header cards replace the seven Stat tiles' -- HeaderCards.tsx renders 4 data-header-card buttons; the mnemonic and value moved from the tile hover tooltip into the card window (HeaderCardDetail: data-card-figure-mnemonic, '$162B' for CUR_MKT_CAP).",
+      "tabs.harness.cjs after the HeroGraphic stub: 'CHECKS-WRONG-WAY thesis_sentences_and_one_chart' (face counts of data-drafted-sentence no longer equal the bundle's sentences). Page: portal c69bd91a (DSGN_AMGTV1 AV-t-3) folds every drafted sentence into the three card windows (ThesisCards.tsx: 'every drafted sentence of the bundle is reachable in exactly one window'); the face carries the chart and three closed cards.",
+      "Both are case (a): an old page contract a later ratified cell changed. No page is wrong; no check deleted or made vacuous. Fixed at portal 7b009ea9 (branch wk-AMGT_RESAPP-169-portal)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order names, for shell, 'Cannot find module @/api/api-client ... shell also has a second, older break behind it' and, for tabs, 'Cannot find module @/ui/components/graphic/HeroGraphic'; only leadPanelPattern's four checks are named as reading the wrong way.",
+  "world_is": "Once each harness loads, shell reads 2 of 10 checks the wrong way and tabs reads 1 of 20 the wrong way, all three from the page's Sept-28/29 DSGN_AMGTV1 redesign (AV-t-2, AV-t-3). Shell also needed four more stubs it never carried (HeroGraphic, HelperTip, PanelFooter, Segmented). The order's AC1 counts 'load and pass', so these were in scope of the cell's intent and were handled by its (a)/(b) rule.",
+  "notes": "Filed without halting. The check names stat_tiles and tooltip_carries_provenance became header_cards and card_window_carries_provenance; no other file references them (census read before renaming; only shell.harness.cjs, the rl-2 order text and its session log, and DSGN t-2.AC1.cjs, which reads the page, not this harness)."
+},
+{
+  "id": "AMGT_RESAPP-Z-W169-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~169",
+  "surfaced_at": "2026-09-29T06:26:06Z",
+  "one_line": "The cause of leadPanelPattern's four wrong-way checks is not (only) round 38's rm-5 change as the order says: three read wrong through a caption-slice boundary that rm-2's PanelFooter class change (4aa49151) broke, and rows_rendered through AV-t-1's row-lead markup (abcec1b2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Caption markup as rendered: data-source-caption='generation' and 'disclosure' are sibling blocks, each 'whitespace-normal break-words' (rm-5 da76356a's contract, which the harness already encodes), the generation line carries id, as_of and requested_as_of. What broke is the harness's slice end: it searched for '<div class=\"text-right flex-shrink-0\">', which PanelFooter renders as 'text-right min-w-0' since 4aa49151 (rm-2), so captionSlice was null and source_caption_wraps, disclosure_own_line and caption_facts_unchanged failed together.",
+      "rows_rendered: RankedList.tsx now renders <div data-row-lead ...> before the class, and moves the ticker to data-row-ticker when a name is served (abcec1b2, DSGN_AMGTV1 AV-t-1); the harness's regex required '<div class=\"text-sm font-bold ...'. Case (a) for all four; the page is right. Fixed at portal 7b009ea9."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says leadPanelPattern 'predates round 38's rm-5 change to the lead panel's Source caption' as the cause of the four wrong-way checks.",
+  "world_is": "After the fix: 15 CHECK lines, CHECKS-WRONG-WAY none, rc=0. The caption slice and the row read were each stale against a different, later change than rm-5.",
+  "notes": "Filed without halting."
 }
 ]
 ```
