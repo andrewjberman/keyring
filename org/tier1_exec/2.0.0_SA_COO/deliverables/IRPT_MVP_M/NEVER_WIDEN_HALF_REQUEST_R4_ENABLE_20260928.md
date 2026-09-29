@@ -81,7 +81,9 @@ producer's ordinary daily output, not a code change.
 
 ## The ask
 
-**NOT SENT.** All four preconditions now MET on this Success fire (2026-09-28 ~23:3xZ, command ids
+**SENT 2026-09-29 ~00:1xZ by the issuer, 2.0.0_SA_COO~M, to 1.0.0_SA_CTO and 4.0.0_SA_CRO** (drain of
+TO-IB-m19-2 @6ceb8c3e5a; the issuer re-ran AC1-AC3 from the worker's tree before the drain). Sign or refuse the
+enable. All four preconditions now MET on this Success fire (2026-09-28 ~23:3xZ, command ids
 `f61bb631-bfc0-4d3a-ad39-9d3b278ea1b9` / `3f2dca9e-7010-4c13-be0a-1bf43add329b` / `58cbeda0-790a-41c8-a33f-34295e5672a9`,
 all rc=0, all business_date=2026-09-25). The issuer (`2.0.0_SA_COO~M`) sends this half to `1.0.0_SA_CTO` and
 `4.0.0_SA_CRO` at the drain, per the order's own Step 3 instruction ("Do NOT send it. The issuer sends it ... at the
