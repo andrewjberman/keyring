@@ -131,7 +131,7 @@ FAIL (0 of 8), AC3 PASS (2 of 2; floor control 9 RED). Scratch GREEN arm: AC1 3 
 until AMGT_CORPUS serves the team's recommendation (C-ASKS row 5); this cell renders the served state with its reason (PRD
 :171-173), and that route is round 2's first enrichment input.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
