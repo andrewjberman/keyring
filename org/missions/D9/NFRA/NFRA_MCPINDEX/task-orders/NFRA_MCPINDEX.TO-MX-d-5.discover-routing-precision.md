@@ -39,6 +39,21 @@ EGRESS CLASS, declared: NONE.
    you run, it must come first. AC2 grades both states.
 4. Tests on a synthetic catalog. Run AC1-AC3 and commit.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-29 ~07:1xZ) -- the harness compares by DATASET, not by route vocabulary.**
+- **Measured at the issuer's re-grade on CLOUD** after the MX-d-5 drain (d1bbe77360) joined MX-t-9's row:
+  - ROUTING 25 of 27; dataset asks 1 of 3; d5.AC3 FAILs.
+  - The misses are Q05 and Q07: `routed=mdpf_get_model_benchmarks expected=query_v0:json/benchmarks/model_portfolio_benchmarks.json`.
+  - That is R-13 working. The purpose-built tool reads EXACTLY the expected dataset. The harness still encodes the
+    pre-R-13 route.
+- **Granted for this fix only:** `infra/aws/ec2/opal-gateway/tests/routing/run_routing.py`.
+  - The harness resolves a routed purpose-built tool to its catalog `portal_datasets` row's dataset key, through the
+    row's `read_tool` + `accessor` and that accessor's channel key.
+  - It then scores HIT when that key equals the expected key.
+  - The question set (`questions.yaml`) is NOT edited.
+  - `--plant-mislabel` must still drop the score by exactly one.
+- Re-run AC1-AC3 on a tree that carries MX-t-9 (your worktree is fast-forwarded to CLOUD), and update the proof
+  instance.
+
 ## 2. BOUNDS
 
 1. The harness and its question set are READ, never edited.
@@ -50,6 +65,7 @@ EGRESS CLASS, declared: NONE.
 <paths>
 infra/aws/ec2/opal-gateway/app/integrations/opal_discover/
 infra/aws/ec2/opal-gateway/tests/test_opal_discover.py
+infra/aws/ec2/opal-gateway/tests/routing/run_routing.py
 infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml
 workflows/atom_decomposition/emit_catalog_v02.py
 workflows/atom_decomposition/catalog_entries/
