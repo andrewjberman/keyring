@@ -84,7 +84,7 @@ outer commit hashes, and any row.
 execdetail 2 of 3; green arm (scratch: reason to `data-exec-reason`, removed from the drawer's text) 3 of 3; V5 bound 4 of 4.
 FWD-7's officer-from-a-second-source half is AMGT_RESAPP's producer ask (b) -- not this cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~21</slot>
 <fabric>site-z</fabric>
