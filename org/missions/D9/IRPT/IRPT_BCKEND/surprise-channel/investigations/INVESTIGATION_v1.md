@@ -11551,3 +11551,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not remediated: the retry port (row S165, TO-IB-m21-212 Part 1) neither creates nor worsens this -- the loop breaks on rc===0 exactly as the single attempt exited on it -- but it now sits one line from ported code, so it is filed rather than left for the next reader. Named in section 4 of org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/IRPT_BCKEND_R21_S165_PORT_DIFF_20260929.md (@c7f136c9d8) as a deliberate NOT-PORTED divergence, alongside classifyByDom. If the issuer wants it, it is a one-hunk addition to the same candidate."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S200",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-09-29T08:28:00Z",
+  "one_line": "v0.20 ruling 16 voids the day a custody price discontinuity crosses +/-100% but not the day it reverts: the reversion day prices against the glitched t-1 price, lands inside the band as OK, and the chain serves it -- account ..0090 (~$1.9M) reads 1Y -91.5% and SI -91.4% off DLCFX 17.48 -> 546.00 -> 16.21 and DIEFX 16.12 -> 384.00 -> 14.61 on 2025-12-17/18; ..4714 reads 1Y -69.8% off MSOX 3.82 -> 7.94 -> 6.91 on 2025-12-12/15.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Gold holdings_performance_daily (49F, re-emitted 06:43-07:08Z under v0.20 @f302ab14cd): exactly 2 IMPLAUSIBLE-RETURN rows over 557 partitions -- ..0090 2025-12-17 (account_value 1,832,575.47, 27 holdings) and ..4714 2025-12-12 (11,612.84, 2 holdings). The next OK rows: ..0090 2025-12-18 daily_return -0.923274 (account_value 21,828,083.71, i.e. the glitched t-1 book); ..4714 2025-12-15 -0.129723, 12-16 +0.374818, 12-18 -0.505859.",
+      "Silver opal-data-assets/schwab/08335338/silver/dim_position, closing_price by day for ..0090's holdings: DLCFX 12-16 17.48, 12-17 546.00, 12-18 16.21, 12-19 16.35 (max MV 14,652,936); DIEFX 12-16 16.12, 12-17 384.00, 12-18 14.61, 12-19 14.70 (max MV 6,173,105); the other 26 holdings move within [0.67, 1.5] day over day. For ..4714: MSOX 12-11 3.82, 12-12 7.94, 12-15 6.91, 12-16 9.50.",
+      "The adapter's rule (holdings_gold.py, artifact hD7G6YT1: prod(1 + daily_return) - 1 over OK rows in the window; the fresh path refuses only a linked point <= -1) applied to the re-emitted gold, windows ending 2026-09-25: ..0090 YTD +0.0771 (184 of 184), 1Y -0.9154 (250 OK of 251), SI -0.9140 (276 of 282); ..4714 YTD -0.0710, 1Y -0.6984 (227 of 229), SI -0.6984. Both accounts are in the served 49F directory (2026-09-24, 4,620 entries).",
+      "Every other account whose chain reads at or under -50% has no IMPLAUSIBLE day in its window and its silver price path is sustained rather than a one-day edge: ..7501 (~$1.1M) JFB 29.87 (02-13) -> 17.00 (02-17) -> 20.90 -> 19.63 (03-24) -> 9.01 (03-25) -> 8.23; ..8878 (~$123); ..7828 (~$33k, no day beyond +/-30%).",
+      "Read in full: org/tier1_exec/4.0.0_SA_CRO/deliverables/NEVER_WIDEN_SIGNOFF_CRO_HALF_ADAPTER_HOLDINGS_GOLD_49F_R2_20260929.md section 3 (SIGNED on packet blob a4679360 with condition 2: the case is ruled in the CTO's half before the apply, or the interim is accepted by name with this row as its carrier)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD ADDENDUM v0.20 ruling 16: 'An account day whose basket return is at or below -100%, or at or above +100%, is NOT COMPUTABLE with the reason named in the manifest (a price discontinuity until shown otherwise); the period figure is PARTIAL over it.' Ruling 2 / holdings_performance.py: r_i(t) = price(i,t)/price(i,t-1) - 1 on a positive price both days.",
+  "world_is": "A one-day price discontinuity produces two out-of-line days. The producer voids the first (it crosses the band) and keeps the second, whose t-1 price is the value the producer just marked implausible; -92.3% is inside the band, so the row is OK and the adapter chains it. The served 1Y for a ~$1.9M relationship would read -91.5% while its YTD reads +7.7%.",
+  "notes": "Two candidate producer rules, the CTO's to choose (v0.21): (a) the day after an IMPLAUSIBLE-RETURN day is NOT COMPUTABLE for that account with its reason named (one post-pass per account over the emitted days); (b) the keys whose price moved out of band on the voided day price against the last plausible price on the next day. Either re-emits 557 partitions (~25 minutes measured today). INERT while the adapter stays at qfxZ0DzB; arms when hD7G6YT1 serves without the ruling. Not a producer defect: the producer implements ruling 16 as written."
+}
+```
