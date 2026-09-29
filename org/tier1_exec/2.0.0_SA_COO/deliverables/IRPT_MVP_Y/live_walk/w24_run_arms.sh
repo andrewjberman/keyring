@@ -77,17 +77,24 @@ for row in "${ARMS[@]}"; do
   rc=$?
   say "  live_chain rc=$rc"
 
+  # The out path MUST arrive as ARGV. MSYS converts a unix path in argv to a Windows path, but NOT one embedded in
+  # the -c source text: Windows Python then reads /c/Users/... as C:\c\Users\... and the open fails silently, the REQ
+  # reads empty, the jobs-terminal wait is skipped and the next arm starts concurrently -- which is the exact S206
+  # failure. Measured live in W24 at 17:26Z (row IRPT_BCKEND-S212).
   req=$(python -c "
-import json,sys
+import json,re,sys
 try:
-    d=json.load(open(r'$OUT/$base.json',encoding='utf-8'))
-    r=d.get('request_ref') or ''
-    import re
-    m=re.search(r'REQ-[0-9a-f]+', r)
+    d=json.load(open(sys.argv[1],encoding='utf-8'))
+    m=re.search(r'REQ-[0-9a-f]+', d.get('request_ref') or '')
     print(m.group(0) if m else '')
-except Exception:
+except Exception as exc:
+    print('', file=sys.stderr)
+    print('REQ-READ-FAILED:%s' % exc, file=sys.stderr)
     print('')
-")
+" "$OUT/$base.json")
+  if [ -z "$req" ]; then
+    say "  WARNING: no REQ parsed from $OUT/$base.json -- NOT starting the next arm blind"
+  fi
   if [ -z "$req" ]; then
     say "  no REQ (K4 did not normalize, or K5 not made) -- nothing to wait on; next arm"
     continue
