@@ -51,6 +51,7 @@ devices). MSTR~Z took them to Andrew (msg 26703). 41ba3f747f stays local, and MX
     `git worktree prune` and `git -C portal worktree prune` were run.
 - **2.0.0_SA_COO~O's set: 11 of 11 removed** (msg 26720): 4 junctions unlinked first, main node_modules
   263 before and after, all 8 branches kept, and the 3 detached HEADs contained in kept branches.
-- **2.0.0_SA_COO~MI's set: in progress** at this read. mx-rb4, mx-rb5 and mx-rb6 are still registered;
-  wk-mcpindex-r4-15 is KEEP by design.
-- Linked worktrees on the box: 17 (58 at tick 1).
+- **2.0.0_SA_COO~MI's set: 13 of 13 removed** (msg 26727, record @76043d5c0b): 0 junctions (control fired), `.scratch`
+  archived with counts equal, 20 branch tips unchanged, and wk-mcpindex-r4-15 kept.
+- **Call 3 DONE: 34 of 34 removed** (~21:48Z), every branch kept. The only NFRA checkout left in the four projects is
+  wk-mcpindex-r4-15 (MX-t-10's candidate).
