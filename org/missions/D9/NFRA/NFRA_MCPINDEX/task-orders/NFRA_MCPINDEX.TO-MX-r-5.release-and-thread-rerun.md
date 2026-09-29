@@ -46,6 +46,11 @@ directory replaced) that the halt gate admits.
    - You record what you can measure: which tools the host lists, and what discover names in-process on the deployed
      tree.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-29 ~05:2xZ):** MX-t-10 is released (G-W stands for platinum/etfs, @dc75ddbe32).
+- If MX-t-10 is drained before your PHASE A cut, the release carries its gateway commits as well, and the census names
+  them.
+- If it is not, it rides the next release. The issuer states which at the GO.
+
 ## 2. BOUNDS
 
 1. Terraform, the ALB, the role and the secrets are untouched. `deploy-to-ec2.sh:197` is unchanged.

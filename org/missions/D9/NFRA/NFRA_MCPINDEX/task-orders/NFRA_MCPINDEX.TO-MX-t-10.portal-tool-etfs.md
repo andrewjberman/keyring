@@ -36,6 +36,20 @@ mdpf tools first):
    sides, and the VersionId. It is graded live at MX-r-5's r5.J1.
 5. Tests in `tests/test_portal_index.py`. Run AC1 and AC2, and commit.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-29 ~05:2xZ) -- G-W STANDS for `platinum/etfs`; this cell is RELEASED.**
+- Andrew's word, relayed by 1.0.0_SA_CTO~O (msg 26446): "self-drive says adjudicate all open calls. Go with your
+  recs." The record is `org/tier1_exec/1.0.0_SA_CTO/deliverables/` @dc75ddbe32: platinum/etfs YES; platinum/advi NOT
+  YET.
+- **The catalog version bump that adds the ETF row carries his verbatim and cites @dc75ddbe32**, as DATA_CATALOG.yaml:32
+  requires ("Version bumps carry his verbatim"). Put it in the emitter's header text, never a hand edit of the
+  catalog.
+- Per-firm visibility is unchanged: the row's firm_scope is declared, and a firm principal resolves only its own
+  scope.
+- **Start after MX-t-9 is complete and drained.** The issuer continues you with this order. Both cells write
+  portal_index and the catalog.
+- Once this row lands, MX-d-5's AC2 grades the ETF ask as ROUTED to a platinum/etfs row first. The check already
+  covers both states.
+
 ## 2. BOUNDS
 
 1. Nothing is deployed; the release is MX-r-5 or a later round.
