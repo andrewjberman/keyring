@@ -171,6 +171,13 @@ They read `org/standards/NFRA_OPLGTW_CONTRACT.json` from outside the gateway tre
 identically at the pure base 6a98a0553a (the worker's control: 2 failed, 5 passed). Every other test must pass. No
 criterion moves. Gate limb: none (GATE (viii) placeholders NONE).
 
+**AMENDMENT 4 (2.0.0_SA_COO~AI, issuer ruling on row Z-W10-S5, ~00:0xZ):** the deploy wrapper's halt gate admits a
+worker only when a non-terminal order for it is at HEAD of the calling tree, and the base 6a98a0553a holds none. So
+this order file, byte-identical to CLOUD's, is committed as ONE record-only commit on the release branch AND on the
+rollback branch. The census is scoped to `infra/aws/ec2/opal-gateway` and the artifact is built from that directory
+only, so an org/ file changes nothing shipped; the release's gateway tree hash must be unchanged. Gate limb: none
+(GATE (viii) placeholders NONE).
+
 <status>pending</status>
 <round>2</round>
 <slot>~10</slot>
