@@ -3318,6 +3318,32 @@ carries none.
     "spec_asserts": "MX-r-5 PHASE B: commit on the wk branch after `git merge --ff-only CLOUD`.",
     "world_is": "The ledger entry must be committed before the deploy act and CLOUD moved during the deploy, so a fast-forward at commit time was impossible; the merge commit carries CLOUD's newer files.",
     "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S59",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T10:47Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W14-S10",
+      "NFRA_MCPINDEX-Z-W14-S11",
+      "NFRA_MCPINDEX-Z-W14-S12"
+    ],
+    "one_line": "RULES the MX-r-5 PHASE B departures: S11 CONFIRMED (HALT_ACK=1 after reading 208 items with 0 STOP lines is the MX-r-4 precedent the GO relied on); S12 CONFIRMED (a plain no-conflict merge of CLOUD into the worker's own branch is not a rebase and moves nothing shared); S10 recorded (a concurrent release on the shared host was caught by R1, re-cut, re-signed, and 2.0.0_SA_COO~O now messages before its next gateway release, msg 26532).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r5.AC1/AC2 PASS on the issuer's CLOUD re-run after drain 49c02a6eff; the host serves 093fc247c6 with 52 tools.",
+        "deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-5_20260929.md sections 8-10 record the halt, the re-cut and the re-signed GO."
+      ]
+    },
+    "spec_asserts": "The GO named no HALT_ACK and said merge --ff-only.",
+    "world_is": "Both departures are within the precedent and moved nothing shared. The release is live and verified.",
+    "notes": "The close run (CLOSE_RUN_MX-r-5_ISSUER.md) reproduces Z-W14-S3 on the live host: 1 of 3 phrasings of the benchmark ask routes to mdpf_get_model_benchmarks. That is an L8 item for the round-4 analysis."
   }
 ]
 ```

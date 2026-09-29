@@ -113,7 +113,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-3 analysis s.5 items 2 (release), 3a (release) and 5 (the re-run + r5.J1). `infra/aws/ec2/opal-gateway/**` is granted ONLY on the never-merged dep- and rel- branches (the MX-r-4 A2 pattern). HELD cells MX-t-10/11 ride a later release once G-W stands.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @49c02a6eff by 2.0.0_SA_COO~MI, 2026-09-29 ~10:4xZ: r5.AC1 PASS (ledger nfra-mcpindex-r4-gateway-release entry at HEAD, sentinel removed, 19 of 19 sentinels scanned), r5.AC2 PASS (SSM Success, /health 200, both integrations shipped and enabled, the 5-id line unchanged), proof instance VALID. The narrow release 093fc247c6 (tree 2e839aeec9, re-cut on live 63264dfb22 after the R1 halt) is LIVE: 51 -> 52 tools (+mdpf_get_model_benchmarks, 0 removed), 79 of 79 host files equal the artifact. r5.J1 is JUDGMENT, graded at L9 by 3.0.0_SA_CVO~O on deliverables/2.0.0_SA_COO~MI/round4/CLOSE_RUN_MX-r-5_ISSUER.md. Was: pending.</status>
 <round>4</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
