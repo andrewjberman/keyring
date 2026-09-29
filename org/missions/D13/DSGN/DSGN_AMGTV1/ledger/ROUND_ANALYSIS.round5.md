@@ -58,6 +58,8 @@ day**. It does not mean the publisher wrote about the name.
 - When the day carries articles, the day's article list already names them, and the searched line says "N found".
 - The word "covered" does not appear in visible text. The API field names are unchanged (`publishers_covered*`).
 - Everything else in cell 1 stands.
+- **Cell 4's walk also carries AMGT_HARVST's FWD-5 and FWD-6 as named judgments** (HARVST round-19 analysis, ruling 5).
+  The timeline panel `92a2576254` is on origin/DEV, and one walk grades both projects' clauses on the same panel.
 
 ## 3. FWD GRADES
 
