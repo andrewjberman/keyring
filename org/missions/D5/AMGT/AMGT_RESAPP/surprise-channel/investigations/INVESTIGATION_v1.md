@@ -15492,6 +15492,115 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "62 of 96 OK. Attribution by construction and by line content points at the PAGE side (DSGN_AMGTV1 rounds 3-4 wording changes the export-compare harness still keys on), not at the ww-1 deploy; this is the round-47 hazard 'two projects write FWD-30's instruments' (packet s.5 item 2) recurring. Not proven by a controlled run: a re-run with portal at a pre-round-3 commit would settle it and was not run here.",
   "disarm_owner": "2.0.0_SA_COO~Z (issuer): carried in the round-48 drain-end packet to 3.0.0_SA_CVO~Z and to 1.0.0_SA_CTO~Z's round-48 analysis; the fix (which side's absence wording FWD-30 keys on, and one writer for the harness) is a CTO WHAT across AMGT_RESAPP and DSGN_AMGTV1; the page/harness write surface is 2.0.0_SA_COO~D's.",
   "notes": "No served output regressed that a reader sees: the page and the export each still state every absence; they state three of them differently. The CAPTURE_FAILED row is the Z-S303 folder."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~173",
+  "surfaced_at": "2026-09-29T22:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W173-S1",
+  "one_line": "The page carries NO data attribute for a figure's VALUE or for the identity line (sector, country, currency), so FWD-30's page reader keys FIGURES on line + year (HEADER mnemonic, FISCAL mnemonic + year) and the three identity mnemonics are dropped from the export side.",
+  "spec_asserts": "AMGT-xx-1 item 1: a figure is keyed 'as line + year + value' from data-model-row / data-model-cell / data-card-figure-*; where the page has no attribute for a fact the worker files a row and grades the class on what the attributes carry.",
+  "world_is": "ModelTab.tsx:126 renders `<td data-model-cell>` with the value only as text (no value attribute, no year attribute; the year is the sheet's <th> column header); HeaderCards.tsx:107-109 (data-card-figure-*) carries the mnemonic and state, never the value; SecurityOverlay's IdentityHeader prints 'Information Technology -- US' as a bare <div class='text-xs'> and the price currency inside the tile text, with no attribute, while the export's Header table carries GICS_SECTOR_NAME, CNTRY_OF_DOMICILE, CRNCY rows. A wrong VALUE on either side therefore reads equal; a missing identity-line row reads equal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "page_render.cjs over the served capture of AMD_US_Equity, portal DEV ea248519 (src/pages/SecurityAnalysis): data-card-figure-mnemonic set = 7 SERVED mnemonics (PX_LAST, CUR_MKT_CAP, VOLUME_AVG_30D, NET_DEBT, CURR_ENTP_VAL, EQY_BETA, SI_PERCENT_EQUITY_FLOAT); the export's Header table = those 7 + CNTRY_OF_DOMICILE, CRNCY, GICS_SECTOR_NAME (script diff run 2026-09-29T21:5xZ, all three names identical).",
+      "Grade on this key over the live library, served plane: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py --served --live --require-cases: OK 95 of 96 (the one NOT_OK is S5), FIGURES equal on all 95; the price/figure text plant AC3 (a) moves nothing, by construction."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): asks DSGN_AMGTV1 for the attribute through its round; until then the class is graded on what the attributes carry",
+  "notes": "Ask for DSGN_AMGTV1: `data-model-cell-value` (the served value as served) on the cell, `data-card-figure-value` on the header figure, and an attribute on the identity line's three scalars. Nothing under portal/ was edited."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~173",
+  "surfaced_at": "2026-09-29T22:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W173-S2",
+  "one_line": "Three absences state their served REASON only in visible words (peers absent column, description absence, posture no-call), so ABSENCES keys them on identity alone: (PEERS_COLUMN, column), (DESCRIPTION, ABSENT), (POSTURE_NO_CALL).",
+  "spec_asserts": "AMGT-xx-1 item 1: an absence is keyed 'as its section + served reason code or field' from the page's data attributes, never from visible text.",
+  "world_is": "PeersTab: `<li data-absent-column='Shares'>Shares: ABSENT -- <reason></li>` -- the attribute is the column name, the reason is text. HeaderBrief: `<p data-header-description='ABSENT'>Description: ABSENT -- <reason></p>` -- status only. PostureTab ServedPosture: `data-posture-verdict='absent'` with the reason inside the sentence `postureVerdictSentence + ': ' + plainReason(reason)` and no reason attribute (only the NOT-SERVED branch carries data-posture-reason). A page that rewords or changes one of these three reasons cannot move the grade; the export's reason can drift from the page's unseen.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Rendered ASML_NA_Equity / BABA_US_Equity / AMD_US_Equity from their served captures (portal DEV ea248519 (src/pages/SecurityAnalysis)): data-absent-column x12 with the reason only in the li text; data-header-description='ABSENT' x1 (thesis window) with the reason in the p text; ASML posture status SERVED, data-posture-verdict='absent', data-posture-verdict-word='ABSENT', no data-posture-reason.",
+      "The export side states all three in the same words the round-48 wording failures compared (row Z-S305): rich 'Shares: ABSENT -- ...', 'Description: ABSENT -- ...', 'ABSENT -- no call was made: ...'."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): asks DSGN_AMGTV1 for the attribute through its round; until then the class is graded on what the attributes carry",
+  "notes": "Ask for DSGN_AMGTV1: `data-absent-reason` on the peers li, `data-header-description-reason` on the description line, `data-posture-no-call-reason` on the posture verdict tile. Once they land the three keys gain their reason with no other change to the grade."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~173",
+  "surfaced_at": "2026-09-29T22:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W173-S3",
+  "one_line": "A SERVED case's VALUE and currency ride no data attribute, so CASES keys a served case on (name, SERVED, formula) and an absent one on (name, ABSENT, served reason).",
+  "spec_asserts": "AMGT-xx-1 item 1: CASES read from data-model-case-status / data-model-case-reason.",
+  "world_is": "ModelTab.tsx:287-295: `<p data-model-case=name data-model-case-status=status data-model-case-formula=formula data-model-case-reason=reason>` and the served value + currency (`652.73 USD`) only as text. Two pages that print different numbers for the same case read equal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ASML_NA_Equity served capture rendered at portal DEV ea248519 (src/pages/SecurityAnalysis): Base case data-model-case-status='SERVED' data-model-case-formula='Bloomberg consensus EPS (FY1, BEST_EPS) x adjusted trailing-...' with the number in the p text only; 288 page case keys over 96 folders, 285 equal the export's (the 3 unequal are S5's refused pack)."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): asks DSGN_AMGTV1 for the attribute through its round; until then the class is graded on what the attributes carry",
+  "notes": "Ask for DSGN_AMGTV1: `data-model-case-value` and `data-model-case-currency`."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~173",
+  "surfaced_at": "2026-09-29T22:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W173-S4",
+  "one_line": "The thesis-driver chart's absence has no shared key: the page's data-driver-chart-reason is the served reason, the export's 'The chart: ABSENT -- the thesis driver is \"<series>\"' names the series; and the export states it on an UNDRAFTED thesis (AMD) whose page renders no chart element. Not graded.",
+  "spec_asserts": "C-EXPORT-ADDS-NOTHING (render_pack.py:686-892): nothing in the export that is not on the page; FWD-30 'absence by absence'.",
+  "world_is": "ThesisDriverChart.tsx renders `<div data-driver-chart='ABSENT' data-driver-chart-reason=<served reason> data-driver-chart-probed=<n>>` only when the thesis is drafted; render_pack._thesis_driver_chart_markdown writes 'The chart: ABSENT' (+ the series in words) on every name. On AMD_US_Equity the page has no data-driver-chart element at all, the export has the line; on ASML and BABA both state an absence but of different content (reason vs series). Also carried by the page with no export counterpart, so not compared: data-posture-cite's data-cite-resolved flag (BABA: 13 of 17 resolved), data-posture-absent-source / data-posture-missing-sources (evidence-coverage absences), data-team-case-* (research-team Base case).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First run of this reader with the chart as a graded class: AMD_US_Equity NOT_OK 'ABSENCES differ', rich-only ('DRIVER_CHART','ABSENT'); ASML and BABA OK only once the MODEL_NOTE reader skipped the chart line (script run 2026-09-29T21:57Z, --diff).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py keeps the class out of both sides and says so in its docstring."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): a decision whether the export's chart-absence line for an undrafted thesis is an export defect (an ask of the export's owner) or the page should carry an attribute; carried to the CTO's round-49 analysis",
+  "notes": "This is the one place the attribute grade is deliberately looser than the harness it replaces, which matched the bare line only when a series named it (word match, failing on ASML and BABA)."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~173",
+  "surfaced_at": "2026-09-29T22:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W173-S5",
+  "one_line": "At 2026-09-29T22:01Z the served FWD-30 grade on the attribute key is 95 of 96 identified names; the one NOT_OK is 6501_JP_Equity, whose identity now RESOLVES (so it is graded, not 'unidentified') while the deployed print route REFUSES it, leaving the export side a 173-byte refusal body.",
+  "spec_asserts": "AMGT-xx-1 item 4: a folder whose identity does not resolve (today Hitachi 6501 JP) is COUNTED as unidentified and printed.",
+  "world_is": "sa.resolve_identity now returns security_key '6501_JP_Equity' for that folder; the deployed print?format=rich answers `{\"refused\": true, \"reason\": \"no printable pack for '6501_JP_Equity': identity MEASURED, landed display form None -- the renderer is never handed a form this module made up\"}` while the page renders a full Security Analysis (page keys: 3 CASES, ABSENCES for description, exec, posture). The 'unidentified' path is exercised by a folder that resolves to nothing (`NOT A REAL FOLDER XYZ`: 'UNIDENTIFIED ... not graded', 'unidentified 1 of 2 folders', rc 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Full served sweep, 96 folders, read_at 2026-09-29T21:58:53Z: 'served over 96 of 96 folders: OK 95, NOT_OK 1, CAPTURE_FAILED 0'; 'FWD-30 GRADE: equal 95 of 96 identified names; unidentified 0 of 96 folders; keyed on: data-attributes'; 6501_JP_Equity 'ABSENCES+CASES differ'.",
+      ".scratch cache of the capture (worktree C:/tmp/r49-173): 6501_JP_Equity.rich.md = 173 bytes, the refusal JSON above."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): the display form for 6501 JP is the crosswalk's (AMGT_CORPUS / identity); the grade reads 95 of 96 until that lands",
+  "notes": "Round 48's reading of the same folder was a TypeError on key None (row Z-S303); the identity has resolved since."
 }
 ]
 ```
