@@ -684,6 +684,28 @@
     "spec_asserts": "The gateway suite is a drain instrument that finishes.",
     "world_is": "The suite stalls in the full-run context on this box, so the drain grades the affected files and the audit-file bound instead of a full-suite verdict.",
     "notes": "Not this project's surface (the Schwab engine is NFRA_OPLGTW's). Recorded only; the drain for MP-f-1 rests on the three audit-reaching files plus the engine-file A/B."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S15",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-29T04:50Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The halt gate refuses every TWO-LETTER lane serial: .tools/halt-gate-check.sh halt_gate_validate_serial (:199-204) admits a ~lane only as a single uppercase letter ([A-Z]), so 2.0.0_SA_COO~MP, ~MI and ~AI -- all seated 2026-09-28 by placement @094c84f299 -- fail closed (exit 3) on their own safe-apply / safe-ec2-deploy. It surfaced when MP-a-2's worker ran safe-apply under this seat's session: the gate resolved the shared session serial file to 2.0.0_SA_COO~MP and refused it (row Z-W1-S6).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/halt-gate-check.sh:154-155 comment 'a ~lane suffix must be a single uppercase letter (every fabric lane is: ~A..~E, ~Z...)'; :201-204 case \"$lane\" in [A-Z]) : ;; *) return 1 ;; esac.",
+        "Worker 0.9.0_WK_NFRA_MCPORTAL~1 report on MP-a-2: safe-apply stopped at the halt gate, which resolved 2.0.0_SA_COO~MP from the session serial file and failed closed on the two-letter lane; terraform never ran.",
+        "Placement record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_195xZ_O_FABRIC_ONLINE_ONE_COO_PER_PROJECT.md seats ~MI, ~MP, ~AI."
+      ]
+    },
+    "spec_asserts": "Every seated serial can pass its own halt gate.",
+    "world_is": "Three seated ~O COO lanes cannot safe-apply or safe-ec2-deploy as themselves. For THIS project it is routed around by the gate's own worker path (:71-73: an issuer-provisioned serial file inside the worker's worktree), so no act waits on the fix.",
+    "notes": "The gate is 1.0.0_SA_CTO's (last authored 72897184fd). Remedy is a one-line class widening ([A-Z] -> [A-Z] or [A-Z][A-Z]) plus a test arm; it is the gate owner's, not this seat's."
   }
 ]
 ```
