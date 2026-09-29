@@ -623,5 +623,92 @@
         "sha256": "926efc3c50300a0e55946de92b7540dd67bda2ccd49ffb7005a45b5562e07737"
       }
     ]
+  },
+  "reclamation_pass2_update": {
+    "source_message_id": 26625,
+    "verification_at": "2026-09-29T13:35:19.404350-04:00",
+    "summary": {
+      "manifest_rows": 70,
+      "verdicts": {
+        "UNTRACKED": 7,
+        "UNTRACKED-BIG-SCRATCH": 2,
+        "NOT-DRAINED": 21,
+        "LIVE-NOW": 2,
+        "OK": 38
+      },
+      "OK_rows": 38,
+      "OK_paths_absent": 38,
+      "OK_heads_reachable": 38,
+      "OK_heads_ancestor_of_CLOUD_now": 38,
+      "OK_logical_GiB_sum": 67.14,
+      "nonOK_paths_present": 32,
+      "archive_dirs": 37,
+      "archive_dirs_present": 37
+    },
+    "volume_and_events": {
+      "measured": "2026-09-29T13:35:20.7019322-04:00",
+      "capacity_bytes": 508636950528,
+      "free_bytes": 131521900544,
+      "volsnap_events": [
+        {
+          "time": "2026-09-29T12:10:55.9022363-04:00",
+          "id": 35,
+          "record": 565645,
+          "message": "The shadow copies of volume C: were aborted because the shadow copy storage failed to grow."
+        },
+        {
+          "time": "2026-09-29T12:10:18.5018638-04:00",
+          "id": 24,
+          "record": 565644,
+          "message": "There was insufficient disk space on volume C: to grow the shadow copy storage for shadow copies of C:.  As a result of this failure all shadow copies of volume C: are at risk of being deleted."
+        }
+      ]
+    },
+    "source_discrepancies": "Resolved by MSTR26627: approved48=38removed+10skipped; other22=21NOT-DRAINED+og-x4-rb LIVE-NOW outside drained subset. Exact approval clock unrecorded; MSTR says preceded first removal13:21:13. Removal rows end13:31:17, husk cleanup~13:33 per MSTR.",
+    "limits": "Current HEAD ancestry and reachability verified; does not independently recreate execution-time safety checks or byte-compare scratch archives. ShadowStorage CIM query failed initialization; reported maximum/copy timestamp not independently verified.",
+    "source_fingerprints": [
+      {
+        "local_file": "MSTR_RESIDUE_TABLE.md",
+        "bytes": 4642,
+        "sha256": "7ac98c87b7d69d8d981ca0a9412f8d9a42188d2da4c9b9fe122762c8e861f112"
+      },
+      {
+        "local_file": "mstr-reclaim-drained-go.jsonl",
+        "bytes": 17506,
+        "sha256": "225c6f39d14414b69c93dddf33c71c8bde1d51fc5c921c808f97c69c07bfccb6"
+      },
+      {
+        "local_file": "cro-reclamation-pass2-verification.json",
+        "bytes": 113087,
+        "sha256": "777e3774024f0f4191a68984db30726f741d066187e5ac4a2a16771a63e63510"
+      },
+      {
+        "local_file": "cro-pass2-volume-vss.json",
+        "bytes": 1028,
+        "sha256": "b407eb6037224c83446a4674bea70ea2499506fda29822512a3a2f862fe8e2f1"
+      }
+    ],
+    "correction_message_id": 26627,
+    "skipped_subset_verified": {
+      "count": 10,
+      "names": [
+        "wk-oplgtw-10",
+        "wk-oplgtw-11",
+        "wk-oplgtw-12",
+        "wk-oplgtw-13",
+        "mp3-1",
+        "oa-15",
+        "wk-crps10-1",
+        "wk-mcpindex-r3-11",
+        "wk-mcpindex-r4-16",
+        "ae-a-vv4"
+      ],
+      "all_match_nonOK_manifest_rows_and_current_paths": true
+    },
+    "corrected_table_fingerprint": {
+      "local_file": "MSTR_RESIDUE_TABLE.md",
+      "bytes": 4642,
+      "sha256": "7ac98c87b7d69d8d981ca0a9412f8d9a42188d2da4c9b9fe122762c8e861f112"
+    }
   }
 }

@@ -4,6 +4,12 @@
 Commission and limits: [Andrew-direct record](../ANDREW_DIRECT_20260929_SITE_Z_CRASH_INVESTIGATION.md).
 Research and recommendations only. No remediation dispatched or destructive operation executed by CRO.
 
+**Latest update, 13:35 ET:** a second MSTR pass removed 38 more checkouts.
+CRO verified 38/38 paths absent and HEADs reachable and ancestral to current
+CLOUD; C: measured **122.49 GiB free**. Across the two verified passes, 71
+checkouts were removed. [Pass 2 and VSS evidence](RECLAMATION.md#5-pass-2-and-vss-addendum--1335-et)
+records the reconciled manifest denominator and corrected source clocks.
+
 **Update, 13:01 ET:** MSTR subsequently executed an Andrew-approved, narrower
 cleanup: 33 checkouts / 44.67 GiB logical contents. CRO verified their absence and
 all 33 HEADs' reachability; C: measured 50.95 GiB free. See the
@@ -56,6 +62,7 @@ September 28 before recurring.
 | 11:39:56–11:40:36 | Dump captured, but next-capture initialization also reported errors | MEMORY.DMP and minidump exist and load. Volmgr 162 reports successful generation; events 46/164 report initialization/dedicated-dump configuration failures. Do not treat the present dump as proof that the next capture is ready. |
 | 11:40:10–11:40:29 | FontCache/CAMSvc terminated; tripwire resumed | Both services subsequently measured running. The reboot did not itself repair Python. |
 | ~11:52–11:55 | MSTR removed two Python314 Machine PATH entries | Today's backup and fresh-shell Python verification. CRO did not repeat this change. |
+| 12:10:18–12:10:55 | Shadow-copy storage could not grow; C: shadow copies aborted | Volsnap 24/35, records 565644/565645, independently re-read after MSTR's pass-2 notice. Confirms post-reboot capacity pressure; does not quantify the later 12:20–12:31 drain. |
 | 12:16:21 and 12:16:36 | Python Add to Path reconfigured again during another broad MSI sweep | Application records 431248 and 431300. MSTR reports a concurrent PATH relapse; this supports MSI repair as the recurring writer, with the initiating process still to be established. |
 | 12:24:50 | Python Add to Path product removal completed | MsiInstaller 11724/1034, records 431337/431338. MSTR reports performing this additional intervention and re-stripping PATH. This was not performed by CRO under its investigation authorization. |
 

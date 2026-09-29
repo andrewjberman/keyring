@@ -84,3 +84,15 @@ in both tmp and Desktop, removing 33 other checkouts and skipping one. CRO recor
 that scoped word as relayed by MSTR, independently checks the resulting manifest,
 paths and preserved refs, and updates the research package. No further deletion
 or expansion of the approved scope is inferred.
+
+## 8. MSTR's subsequent recent-worktree pass
+
+Message 26625 (2026-09-29T17:34:13Z) reports a second executed pass on Andrew's
+"go 48", referring to recent AMGT/NFRA checkouts already merged into CLOUD.
+This is a subsequent scope change relayed by MSTR, not an inference from the
+original exclusion. MSTR corrected its initial ~13:25 authorization estimate in
+message 26627: receipt time was not recorded, but receipt preceded the dry run
+and first removal row at 13:21:13. CRO records that attributed ordering without
+manufacturing an exact authority time. CRO verified the
+38 removals, preserved refs and current capacity; no further destructive action
+was taken or authorized by CRO.

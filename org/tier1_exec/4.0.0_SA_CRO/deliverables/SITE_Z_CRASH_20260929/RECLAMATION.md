@@ -4,6 +4,10 @@ Andrew asked the two seats to divide the work. MSTR owns developer-residue revie
 CRO owns incident evidence, dedicated dump backing, pagefile and crash causality.
 This document recommends scope. It does not authorize or execute deletion.
 
+**Latest update 13:35 ET:** section 5 records a second executed MSTR pass and
+independent verification. The earlier 70-worktree exclusion was specific to
+pass 1; MSTR reports subsequent Andrew authority for eligible recent worktrees.
+
 **Updated 13:01 ET:** the execution addendum in section 4 supersedes the provisional
 proposal and resolves its count/time discrepancies. Sections 1–3 retain the
 pre-execution record; their candidate totals are not the executed scope.
@@ -122,3 +126,77 @@ resolve the SentinelMonitor deadlock, restore the damaged CRPS14-5 checkout,
 recover the empty message, or prove future crash-capture readiness. The proposed
 owners and remaining prevention actions in the main brief still apply. CRO
 performed read-only verification and record updates, with no destructive action.
+
+## 5. Pass 2 and VSS addendum — 13:35 ET
+
+Source: exact MSTR~Z message **26625**, timestamp **17:34:13Z**, the residue table's
+`EXECUTED pass 2` section, and local `mstr-reclaim-drained-go.jsonl`.
+MSTR relays Andrew's **"go 48"**, referring to recent AMGT/NFRA checkouts whose
+HEADs had already merged into local CLOUD. This subsequent scoped instruction is
+reported by the executing seat; CRO performed verification only.
+
+### 5.1 Independently verified results
+
+The manifest contains **70 rows**, not 48:
+
+| Recorded verdict | Count | Current CRO observation |
+|---|---:|---|
+| OK | **38** | All paths absent; all HEADs reachable from kept refs and ancestors of current CLOUD |
+| NOT-DRAINED | 21 | All paths remain |
+| UNTRACKED | 7 | All paths remain |
+| UNTRACKED-BIG-SCRATCH | 2 | Both paths remain |
+| LIVE-NOW | 2 | Both paths remain |
+
+The removed rows total **67.14 GiB logical** using rounded per-checkout sizes.
+**37/37** archive directories named in these rows exist; contents were not
+independently byte-compared. The initial manifest marks 29 removals `gone=true`
+and nine `gone=false`. MSTR reports subsequently removing those nine empty
+directory trees after checking that they contained zero files and pruning
+registrations. CRO verified that all nine are now absent; CRO did not repeat
+either destructive operation.
+
+At **13:35:20.702 ET**, C: had **131,521,900,544 bytes = 122.49 GiB free**.
+MSTR reports its own before/after reads of 50.98→122.41 GiB. These are different
+measurement instants; summed logical sizes do not measure the net allocation
+change under concurrent writes. Combined with pass 1, the manifests record
+**71 removed checkouts and 111.81 GiB summed logical contents**.
+
+**Source correction, MSTR message 26627 at 13:36:51 ET:** the earlier ~13:25
+authorization estimate and 13:20–13:40 pass header were wrong. MSTR says the
+"go 48" receipt clock was not recorded, but receipt preceded the dry run and
+first removal. Manifest OK rows span **13:21:13–13:31:17**; MSTR places the empty
+directory cleanup at approximately **13:33**. The exact authorization time is
+not independently reconstructed.
+
+MSTR also mapped the ten skips within the original 48: seven UNTRACKED
+(`wk-oplgtw-10/11/12/13`, `mp3-1`, `oa-15`, `wk-crps10-1`), two BIG-SCRATCH
+(`wk-mcpindex-r3-11`, `wk-mcpindex-r4-16`), and one LIVE-NOW (`ae-a-vv4`). CRO
+matched all ten names/verdicts to the manifest and confirmed their paths remain.
+The other LIVE-NOW entry, `og-x4-rb`, was outside the original drained subset,
+according to MSTR. Thus **48 = 38 removed + 10 skipped**; the remaining 22 of
+the 70-row scan are 21 NOT-DRAINED plus `og-x4-rb`. The execution-time eligibility
+of the two LIVE-NOW rows remains attributed to MSTR, not recreated from present
+branch ancestry.
+
+### 5.2 Additional post-reboot VSS evidence
+
+CRO independently re-read these System events:
+
+| ET | Event / record | Recorded condition |
+|---|---|---|
+| **12:10:18.502** | Volsnap **24**, record **565644** | C: had insufficient disk space to grow shadow-copy storage; existing copies were at risk of deletion |
+| **12:10:55.902** | Volsnap **35**, record **565645** | C: shadow copies were aborted because shadow-copy storage failed to grow |
+
+These confirm post-reboot capacity pressure and a failure of shadow-copy
+protection. They do **not** quantify VSS growth or identify the writer behind the
+12:20–12:31 free-space decline. That interval remains unattributed.
+
+MSTR also reports a shadow-storage maximum of "9.47 GB" and one retained copy
+dated 12:59:29, based on its elevated `admin-scan.log`. Those details were not
+independently reverified: CRO's non-elevated `Win32_ShadowStorage` query returned
+initialization failure (`0x80041014`). The query error is not proof that VSS is
+currently malfunctioning. No snapshot was deleted or resized by CRO.
+
+The capacity relief is substantial. SentinelMonitor remediation, checkout and
+message recovery, reliable capacity admission, and crash-capture readiness remain
+separate open actions; successful reclamation is not evidence they are resolved.

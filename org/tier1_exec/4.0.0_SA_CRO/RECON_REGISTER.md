@@ -1026,3 +1026,23 @@ classification time was approximately 12:18-12:28, not the future12:30-12:45
 labels. Both are corrected in the package's execution addendum. The final
 33-checkout scope is distinct from either proposal. Remaining driver, damaged
 checkout, messaging and prevention findings stand. CRO executed no deletion.
+
+
+### RCN-0019 downstream addendum ? 2026-09-29 13:35 ET, CRO~Z
+
+MSTR message26625 reports a second pass on Andrew's subsequent "go48" for
+eligible recent AMGT/NFRA checkouts. CRO independently verified38removed paths
+absent and38HEADs reachable and ancestral to currentCLOUD;37archive directories
+present. Pass2 logical total67.14GiB; combined passes71checkouts/111.81GiB.
+Fresh free space13:35:20:131,521,900,544bytes (122.49GiB). The70-row manifest has
+38OK,21NOT-DRAINED,7UNTRACKED,2BIG-SCRATCH,2LIVE-NOW. Message26627 reconciles the
+approved48 as38removed plus10skipped; CRO matched all10names/verdicts and retained
+paths. Removal rows ran13:21:13-13:31:17; MSTR reports husk cleanup~13:33.
+Its initial~13:25approval estimate was wrong; receipt clock was not recorded,
+but MSTR says receipt preceded dry run/removal. Exact approval time remains unknown.
+
+Volsnap24/35 at12:10:18/55 (records565644/565645) independently confirm post-reboot
+shadow-storage growth failure and aborted copies. They do not identify the writer
+behind12:20-12:31space loss. MSTR's reported storage maximum/copy timestamp remain
+attributed; CRO's non-elevated CIM query failed initialization. No destructive
+CRO action. Driver, damaged-checkout, delivery and prevention findings remain open.
