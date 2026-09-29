@@ -15418,6 +15418,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "The write moves only those keys, and no scheduled reader changes. The hazard is a latent SECOND-ORDER copy: a manual re-run of seed_bd_securities.py would carry six foreign-company rows into bd-securities over the names BD holds there.",
   "disarm_owner": "2.0.0_SA_COO~Z (issuer): named in the ww-3 COO half and put to 1.0.0_SA_CTO~Z with the pair; the script's own guard (skip a row whose updated_by marks the amgt-library universe, or refuse an overwrite) is the BD script owner's change, asked through that owner's round if the CTO routes it.",
   "notes": "INERT because nothing schedules the script and this act does not run it. The underlying design fact (bare-ticker keys across exchanges) predates this round."
+},
+{
+  "id": "AMGT_RESAPP-Z-S303",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-29T19:30:00Z",
+  "one_line": "ww-1 AC2 exits 1 on ONE arm only: 1 of 96 research-library folders, 'Hitachi 6501 JP', resolves to a harvester_key but to NO security_key, so AC2 counts it a read failure and its 'failed 0' clause cannot be met. The failure is produced ENTIRELY IN THE LOCAL HARNESS before any Lambda call (vv-4.AC3.py:39-40 invokes the deployed route only `if key`), so neither the ww-1 artifact nor its two grants can cause it or cure it. Every substantive AC2 arm passes at full strength: formula as ruled 70 of 70, team_cases as the dossier holds them 95 of 95 names, 102 cases SERVED.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "vv-4.AC3.py true exit=1, measured WITHOUT a pipe (an earlier read of this criterion took $? after '| tail', which is tail's status, not the script's, and read a false 0). Printed: 'reads OK 95 of 96 (failed 1); base SERVED 70, formula as ruled 70 of 70; team_cases as the dossier holds them 95 of 95 names, 102 case(s) SERVED' and 'READ-FAILED None {no_identity: Hitachi 6501 JP}'.",
+      "The script's own rule, vv-4.AC3.py:71-72: ok = n_fail == 0 and n_base and n_formula == n_base and n_team_ok == n_read and n_team_served > 0; return 0 if ok else 1. n_fail==1 is the ONLY false conjunct.",
+      "Causal isolation, read at vv-4.AC3.py:39-40: key = sa.resolve_identity(crosswalk.harvester_key(folder, pilots)[0]).get('security_key'); the deployed function is invoked only `if key`, else (None, {'no_identity': folder}). For this folder the Lambda is NEVER called, so the deployed bytes and the two new grants are not in its causal path.",
+      "Direct diagnostic over the whole population, 2026-09-29 ~19:28Z: 96 folders, EXACTLY 1 with no security_key. folder='Hitachi 6501 JP' -> harvester_key='security-d7abbd8922c03d67' -> security_key=None. Folder mtime AND ctime both 2026-09-29T12:54:45Z.",
+      "AC1 PASS (true exit=0, no pipe): CodeSha256 moved CtIvirvM...EAOM= -> lg6NJ2JL...B3s=, LastUpdateStatus Successful. AC3 PASS (true exit=0, re-run without a pipe): rankings rows 2 name SERVED 2, line_names 25, 'SERVES THE NAMES AND THE WORDS: YES'.",
+      "Never-widen limbs 5 and 6 HOLD on OUTPUT: 9 of 9 captured route artifacts byte-equal pre- vs post-apply (full sha256, not a truncated digest), with the positive control that the function's CodeSha256 DID move between the two captures."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ww-1 COO never-widen half, EXPECTED OUTCOME arm 1, measured 96 names with 0 read failures at ~13:1xZ; the task order's AC2 expectation reads 'reads OK N of N (failed 0)'.",
+  "world_is": "96 folders, 95 read OK, 1 read failure. The folder for the failing name was created 2026-09-29T12:54:45Z, i.e. BEFORE the half's ~13:1xZ measurement, so this is not a population that grew after the half was written; the name has a research-library folder but no registration in the identity store this seat can see from site Z. Whether the half's 0-failure read differed because the identity store held the name then, or because that measurement ran on another device whose OneDrive or crosswalk state differed, is NOT settled by this seat's evidence and is not this cell's surface.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer, round 48): the ROLLBACK named in both halves is the issuer's to call, and this seat has NOT rolled back -- the failing arm is causally isolated from the act (above), so a rollback would remove grants that are serving team_cases for 95 of 96 names and would not move the failing number by one. The issuer rules whether AC2's 'failed 0' clause is met at a population the act does not control, or is re-cut against the identified population; registering 'Hitachi 6501 JP' in the identity store is the AMGT_CORPUS / identity owner's act, not this lane's.",
+  "notes": "INERT: nothing is degrading and no served output moved (limbs 5 and 6 byte-equal). The deploy is fully landed, not half-landed: both resources applied, re-plan 0-diff, AC1 and AC3 PASS. NEVER-2 entry amgt-resapp-ww1-redeploy-research-dossier-restart-20260929 is deliberately left OPEN at leg V1 so it BLARES to the COO rather than reading closed on a criterion this seat did not grade."
 }
 ]
 ```
