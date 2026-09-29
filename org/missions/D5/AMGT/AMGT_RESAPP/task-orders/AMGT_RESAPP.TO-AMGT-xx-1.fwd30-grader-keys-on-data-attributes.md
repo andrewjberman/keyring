@@ -90,7 +90,7 @@ compare_facts), AC3 FAIL (no render_page_html / page_facts_from_html). The issue
 --require-cases` sweep over 96 folders, expected 95 of 95 identified equal, Hitachi printed unidentified. Worktree with portal at
 DEV `ea248519`.
 
-<status>pending</status>
+<status>complete</status>
 <round>49</round>
 <slot>~173</slot>
 <fabric>site-z</fabric>
