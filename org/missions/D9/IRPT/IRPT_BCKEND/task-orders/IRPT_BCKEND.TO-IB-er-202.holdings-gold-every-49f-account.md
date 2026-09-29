@@ -5,7 +5,7 @@
 <issued_to>0.4.0_DS_ClientPlatform~E</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-29</issued_date>
-<status>pending</status>
+<status>complete -- E2-AC1 PASS (6,341 silver accounts at 2026-09-24, 7,540 gold rows, 0 missing, 0 duplicated; manifest 6341/6338/3 complete=True) and E2-AC2 PASS (557 of 557 trading days 2024-07-09..2026-09-25, 0 missing), both exit 0 read unpiped. 557 partitions on each gold table, missing 0 / extra 0 by ListObjectsV2; 3,188,339 rows read back from the 557 parquet footers, equal to the producer's tally; 0 empty partitions; every partition complete=True. Completeness mutant FIRED (one held account dropped -> AC1 FAIL with the manifest still claiming complete) and restored. 13 unit tests pass; proof-of-spec VALID rc=0; naming gate PASS 0 REFUSE. Ledger irpt-holdings-gold-all-49f-20260929. No reader switched; the schedule is IB-er-203 and was not built here.</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
