@@ -172,7 +172,7 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 - GO: both halves SIGNED, off-hours, and "deploying" announced by the issuer.
 - The declared class is WORLD: a deploy and GATE (xii)'s floor (`infra/` path).
 
-<status>staged</status>
+<status>complete</status>
 <round>3</round>
 <slot>~11</slot>
 <fabric>site-z</fabric>
