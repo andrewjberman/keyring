@@ -11665,3 +11665,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "NOT REMEDIATED HERE and nothing was weakened to pass: E4-AC1 and E4-AC2 are NOT claimed. Everything that does not depend on the key IS built and committed -- the Cottonwood price rule (Market Value / Units, selected structurally by an entry declaring no price_column), the absent- and zero-Units exclusions, and the text cash flag ('true'/'false' as strings, where astype(bool) on 'false' is True and would have made every holding cash silently) -- with 4 new tests, 45 passing. The moment lookup('<key>') resolves to cottonwood, the entry is about six declared fields and the run is one command. RECOMMENDED REMEDY, in preference order: (a) 1.0.0_SA_CTO adds a registry row keyed `z09` with firm cottonwood, exactly parallel to 08335338 -> 49financial, which is measured, vendor-issued and gate-clean; (b) LGIC_ENFORCE admits the declaration's registry_key field as a permitted lookup context, which fixes the class rather than the instance. (a) unblocks this cell today; (b) is the one that stops this recurring at the next firm."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W75-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~75",
+  "surfaced_at": "2026-09-29T11:20:00Z",
+  "one_line": "Building AD-10's additive `account_masks` onto every DirectoryEntry (IB-mr-221) makes the pre-existing test_inf_entries_validate_against_the_contract go red and would make dr.main()'s own built-in validation report a schema ERROR on every entry, because both validate against the DEPLOYED Lambda contract copy (out of this order's lane to edit), which is additionalProperties:false and has not gained the field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P -- owns infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json (shared packaging); disarms when that copy gains account_masks, the FIRST step of the release order in org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_DIRECTORY_AD10_20260929.md",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_directory_runner.py -q (this session, after the AD-10 build): 1 failed, 19 passed -- test_inf_entries_validate_against_the_contract: \"entry[0] $: Additional properties are not allowed ('account_masks' was unexpected)\", 4 more items behind it (all 4 built entries)",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:126-127 CONTRACT_PATH = infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json (the deployed handler's packaged copy, NOT docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json this cell edited)",
+      "diff docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json (this session, before this cell's edit): identical property sets aside from a cosmetic $id difference -- so the two copies agreed until this build",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:927,976-980 (validate_entries called from run_firm/main; a non-empty validation_errors list sets rc_out=1 and prints an ERROR line per entry) -- so any real `python directory_runner.py` run before the Lambda copy is updated returns rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build step 1: \"Today's masked_discriminator stays exactly as it is (the head row) so current readers keep working.\" Build step 5 treats the Lambda contract copy as NOT this cell's to edit and names updating it as the FIRST step of a release order, implying the additive build itself is safe to land ahead of that release step.",
+  "world_is": "The runner validates its own output against the Lambda's packaged contract copy (CONTRACT_PATH), which this order's BOUNDS explicitly forbid editing. The moment `_entry()` emits `account_masks` on every entry (required by this cell's build step 2), that copy's additionalProperties:false rejects every entry: the pre-existing test_inf_entries_validate_against_the_contract goes from green to red on this branch, and `main()` would exit 1 with a schema ERROR line per entry on any real run -- not just a served-document risk, a LOCAL validation regression, until the release order's first step lands.",
+  "notes": "Not remediated here: the Lambda contract copy is out of this order's <paths> grant by explicit BOUNDS instruction, and widening my own grant to fix it would itself be the widening the order forbids. AC1 scopes only to the new test_directory_account_masks.py file (which validates against the edited docs/contracts copy, not CONTRACT_PATH), so this does not block that criterion; recorded here because it is a real, measured regression left on the branch and the release order in the NEVER_WIDEN half is the disarm path. Full-suite evidence: python -m pytest data/assets/scripts/gold/investor_reporting/tests -q -> 1 failed, 311 passed (only this one test)."
+}
+```
