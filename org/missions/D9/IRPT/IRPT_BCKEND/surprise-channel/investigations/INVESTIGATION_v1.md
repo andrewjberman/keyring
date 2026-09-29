@@ -11276,3 +11276,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Cause INFERRED, not measured: resolve_upload returns RETRY (kept 900 s) when the vendor session is busy. The strict alternation is unexplained by that alone. Next measurement, off-window: the resident's resolve_upload RETRY reason (it logs none today), plus a read of the DLQ message by its owner ~P. Y2, Y4 and Y6 grade FAIL-NAMED (K4 only) in the window record; no body was retried."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S194",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-29T04:25:00Z",
+  "one_line": "The first live Comparison (W21 Y1, REQ-e4b7f5ab, RPT-1f49504f) went READY and CERTIFIED, but its PDF prints no comparison: the 'Portfolio Comparison' pages show only the client portfolio, and 'Opal Long-Term' (P:1728413, frozen in the composition) appears nowhere. The certifier passed a Comparison that does not compare.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (recipe.generation_body / resident comparison inputs / certify are ~Y's Analysis surface)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "case_trace.py cottonwood REQ-e4b7f5aba7fb218c37f28002 (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/W21/CASE_TRACE_Y1_REQ-e4b7f5ab.txt): 19 MATCH / 1 MISMATCH / 2 NOT_EVALUATED. MISMATCH: 'the PDF prints exactly the chosen comparisons' printed={}. MATCH: the composition freezes opal_long_term as P:1728413 'Opal Long-Term'",
+      "the retained PDF (28 pages, sha256 8b51dfe9.., by the version its ARTIFACT row names), pdfplumber text: 'Long-Term' 0 pages, '1728413' 0 pages; pages 2-3 'Portfolio Comparison' list one portfolio (IRPT REQ-e4b7f5ab r1) under 'Sec A Sec B'",
+      "recipe.generation_body (ycharts/generate/recipe.py:718, ~776-795) puts a COMPARISON's first comparison in secondarySecurity only when prepared['comparisons'] is non-empty; the job row does not retain the body sent"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-4: a Comparison report compares the portfolio to the chosen model; the certified report carries what was asked (case_trace link 'the vendor compared what was asked').",
+  "world_is": "The vendor PDF and the certified report carry the portfolio alone; certification does not check the comparison, so READY is published for a Comparison without one.",
+  "notes": "Two causes remain open: (a) the resident's prepared comparisons were empty at generation (composition -> recipe_inputs); (b) the vendor ignored secondarySecurity. Next measurement, off-window: the resident's recipe_inputs for this REQ at the served st3 code (offline_submit/resident_job_preflight shape) and the body it would send. Certification must also refuse a Comparison whose PDF prints none of the chosen models. The report is visible only to the W21 principal (deleted at 05:15Z); no other viewer is affected."
+}
+```
