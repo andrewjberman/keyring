@@ -11356,3 +11356,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Recorded here rather than as an edit to S1 (append-only channel, existing rows never edited): the retarget is DONE and the live guard now PASSES against the bundles the schedule actually dispatches. This is evidence for 2.0.0_SA_COO~M (S1's named disarm_owner) to weigh in disarming/graduating S1 -- this worker's row states the form (old target FAILED against the wrong bundle; new target PASSES against the right one) and does not itself disarm S1 or adjudicate its disposition (adjudicates/GRADUATED are the CVO's L9 fields, refused on a worker's row by .tools/surprise-row-gate.py A-1)."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S195",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-09-29T05:11:00Z",
+  "one_line": "holdings_performance_daily (49F gold) carries OK rows the adapter would chain into served figures of +1e57 and under -100%: the producer keys the day-t price by cusip alone while 41 silver rows/day carry cusip '' across 33 accounts (one shared price, 14.685, for 21 cash-like positions priced 1.00), and four OK rows read r <= -1 over a near-zero net base (margin debit).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py:264-275 @e29adc9fa7: t-1 price = first per (account, cusip); day-t price = p1.groupby(['cusip'])['_p1'].first() -- one price per key. opal-data-assets/schwab/08335338/silver/dim_position/date=2026-09-24 and 2026-09-25: 41 rows with cusip == '' (empty string, not null) across 33 accounts, 18 distinct closing prices (0.00, 1.00, 2.96 ... 14.685), 21 rows priced 1.00 with quantity == market value; groupby('cusip').first() at the blank key = 14.685 both days.",
+      "Gold date=2026-09-25: 17 OK rows with daily_return = 13.685 (= 14.685/1.00 - 1), each a one-holding account whose only position is priced 1.00 on both days in the silver. Gold date=2025-09-09 account ..0273: r = 439.43 from one cusip-less position at 0.31 (value 225.48) priced at the day's first cusip-less price 51.6872 over a base of 85.04 (cash -140.44). Window census over 557 partitions: 2,780,996 OK rows; 4,061 with |r| > 0.5 across 44 accounts.",
+      "Four OK rows with r <= -1: 2024-08-01 ..4581 -1.122 (base 1,023.70, included 99,799.23, cash -98,775.53); 2024-11-18 ..9176 -3.466 (base 4.87); 2025-02-20 ..9461 -2.103 (base 65.45); 2026-03-18 ..0695 -1.886 (base 752.91, included 109,226.44, cash -108,473.53). The docstring at :26-28 says a holdings-based return CANNOT reach -1.",
+      "The adapter's rule (irpt-performance-adapter.zip S3 ABB89j26 = qosuSxAf, holdings_gold.py:191-203: running *= 1 + daily_return over OK rows; only guard math.isfinite) applied to the gold over windows ending 2026-09-25 -- YTD 7,127 accounts: 22 chains >= +100% (18 >= +1,000%, max 1.13e57), 2 <= -100%, 10 in (-100%, -50%]; 1Y 7,300: 36 / 2; SI 7,814: 42 / 5, one non-finite. 28 of the 34 YTD accounts outside (-50%, +100%) held a cusip-less position at t-1 of their extreme day.",
+      "Manifests: 556 of 557 carry complete=True; holdings_performance_manifest/date=2026-09-25/manifest.json (03:04:26Z, 1,477 bytes) has no complete/computable_count/not_computable_count/accounts_with_prior_holdings keys (the shape before manifest_counts, e29adc9fa7). CTO 102520's condition reads MET in packet 189aaef2; measured 556/557.",
+      "None of the six accounts behind the 23 retained 49F reports holds a cusip-less position at 2026-09-24; NEW-01's account chains +0.49% (69 OK of 181 days) and the control 5.16%, so the packet's own before/after read passes on both mechanisms' absence. Full read: org/tier1_exec/4.0.0_SA_CRO/deliverables/NEVER_WIDEN_SIGNOFF_CRO_HALF_ADAPTER_HOLDINGS_GOLD_49F_20260929.md (REFUSED on blob 189aaef2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.19 rulings 2-4 as fixed in holdings_performance.py:11-19: r_i(t) = price(i,t)/price(i,t-1) - 1 on the holding's OWN price, a closing price being 'an attribute of the security'; a holding without a positive price on both days is EXCLUDED; the docstring's claim that a holdings-based return cannot reach -1 while any held position keeps a price. Packet 189aaef2 and CTO 102520: 557 of 557 manifests complete=True.",
+  "world_is": "The silver carries 41 positions per day with no cusip, so the per-key day-t price gives all of them the partition's first cusip-less price; 17 OK rows at 2026-09-25 read +1368.5% and the adapter's chain reads 1e57 year to date for 18 accounts and >= +100% for 22 of 7,127. Four OK rows read r <= -1 because the base is the small residual of a large book and a margin debit. 556 of 557 manifests carry the completeness triple; date=2026-09-25's does not.",
+  "notes": "INERT today only because the adapter is pinned at qfxZ0DzB (window 21) and this seat's half is REFUSED; the row ARMS the moment qosuSxAf serves. The producer fix belongs to workstream ~E (0.4.0_DS_ClientPlatform~E, TO-IB-er-201/202): a cusip-less position is never priced by key (excluded under ruling 4, or carried as cash for the price-1.00 quantity-equals-value rows -- the CTO's ruling), re-emit 557 partitions and manifests, one unit test with two cusip-less positions at different prices. The near-zero-base rows need a rule (a base floor or a fifth status with its four-postulate record). The adapter's fresh path should refuse what its reopen path refuses (any series point <= -1). Named beside, not a ground: every comparable retained account chains below the engine (0.8-9.5 points), consistent with a price-only return."
+}
+```

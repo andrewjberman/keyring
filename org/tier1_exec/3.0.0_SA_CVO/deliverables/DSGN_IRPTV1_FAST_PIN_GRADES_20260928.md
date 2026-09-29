@@ -185,6 +185,8 @@ Performance and Analysis do not import those two files. Shots opened and read: 0
 | `50eb1d56` | PerformanceReport provider OPAL_HOLDINGS reaches the page (wire regenerated) | IVE17-AC2 REGENERATED-OK per the commit; CI success; no render | NOT GRADED (no render; a contract regeneration) |
 | 22 `cabe0d5c` | Analysis is a three-page flow | commit body cites a real render through the IVE20 census driver, but no image is kept; CI success | **NOT GRADED** (no artifact this seat can read) |
 
+| `e5e96606` (W21 part P K8) | the export receipt poll keeps going through a data-less RUNNING read instead of throwing and going idle | `bun test iv-e-95` re-run by this seat: `RECEIPT-RUNNING-DATALESS-OK` (3 reads, only READY reported; control RUNNING-only ends null at the bound, no throw), over the SERVED W21 receipt body (`exr_f3a8ba9c...`, record `w21-part-p-walk-20260929.md`); the commit reports the same test crashing on the old `submit.ts`; CI success | **PASS** (claim class SERVED-BODY REPLAY; the live page not re-walked) |
+
 Observations from `ir-holdings-1440.png`, outside each pin's claim:
 - **O-a (a ruling conflict, for 1.0.0_SA_CTO):** the Securities Map and Securities footers read "Source:
   investor_reporting/holdings_publisher." (`slices.ts:344` prints the served `provenance.sourceCoordinate` under IV-e-63
