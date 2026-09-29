@@ -46,6 +46,19 @@
    "no industry group ... on the object's comparable selection", "the object validated 18 of 18"): cell 2.
 6. **v-2's muted lines keep bright dots:** cell 3, with the company-name labels (below).
 
+### 2a. CORRECTION TO RULING 2 AND CELL 1 (~22:3xZ, on `3.0.0_SA_CVO~Z` AMGT_HARVST `ADJUDICATION_v27` section 2), before the round-6 cut
+
+**"covered by Seeking Alpha" is WRONG wording and is withdrawn.** By the producer's definition
+(`publication_gold.py:553-592`, `:652-658`), a publisher "covers" a day when its **listing SEARCH for the name reached that
+day**. It does not mean the publisher wrote about the name.
+- The CVO opened 992 HK 2026-09-23 and ASML_NA's first, middle and last PARTIAL days. **Every one serves 0 articles.**
+- "Covered by" would send a PM looking for an article that does not exist.
+- **Cell 1's wording is instead:** a PARTIAL day says which publishers were **searched** and what was found, and which
+  were **not reached**. For example: "Searched: Seeking Alpha -- nothing found. Not reached: 4 other publishers."
+- When the day carries articles, the day's article list already names them, and the searched line says "N found".
+- The word "covered" does not appear in visible text. The API field names are unchanged (`publishers_covered*`).
+- Everything else in cell 1 stands.
+
 ## 3. FWD GRADES
 
 - **FWD-4, FWD-9: REALIZED**, standing.
@@ -68,7 +81,7 @@
 
 | # | cell | outcome | note |
 |---|---|---|---|
-| 1 | **The timeline panel: a designed error state, the covering publisher named, a legible PARTIAL legend** | FWD-5, FWD-11 | On a non-200 the band shows the estate's designed error state, never the loading skeleton; a planted 500 is the positive control. A PARTIAL day names its publisher in words from `publishers_covered_codes` (sa -> "Seeking Alpha", wsj -> "The Wall Street Journal"), with no code in visible text. The PARTIAL legend ink reaches at least 4.5:1 on the band. |
+| 1 | **The timeline panel: a designed error state, the covering publisher named, a legible PARTIAL legend** | FWD-5, FWD-11 | On a non-200 the band shows the estate's designed error state, never the loading skeleton; a planted 500 is the positive control. A PARTIAL day says which publishers were SEARCHED and what was found, and which were NOT REACHED, in words from `publishers_covered_codes` (sa -> "Seeking Alpha", wsj -> "The Wall Street Journal"). It never says "covered by", and no code appears in visible text (s.2a). The PARTIAL legend ink reaches at least 4.5:1 on the band. |
 | 2 | **Posture's last machine phrasing** | FWD-10 | The 3 residual cites and the footer read as words a PM follows (ruling 5). The census gains the phrase class it missed. |
 | 3 | **History view: muted dots, then names** | FWD-3 | The dots of unpicked lines mute with their lines. Line labels read the served company `name` once AMGT_RESAPP deploys `xx-2`; until then the cell proves the label path on a fixture carrying `name`, and the walk grades it only on the served name. |
 | 4 | **The round's walk grades FWD-1, FWD-2 and FWD-11 by name** | FWD-1, FWD-2, FWD-11 | JUDGMENT, graded by the CVO at L9: (a) all four lead-panel lists show name, ticker, asset class, sub-asset class, sector, the period figure and places moved (FWD-2's ACCEPT); (b) FWD-1's journey, hop by hop, on its thread (Valero); (c) the side-by-side read against Market, Positioning and Philosophy (FWD-11's ACCEPT). A signed-out control runs first. |
