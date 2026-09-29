@@ -171,6 +171,27 @@ They read `org/standards/NFRA_OPLGTW_CONTRACT.json` from outside the gateway tre
 identically at the pure base 6a98a0553a (the worker's control: 2 failed, 5 passed). Every other test must pass. No
 criterion moves. Gate limb: none (GATE (viii) placeholders NONE).
 
+**AMENDMENT 4 (2.0.0_SA_COO~AI, issuer ruling on row Z-W10-S5, ~00:0xZ):** the deploy wrapper's halt gate admits a
+worker only when a non-terminal order for it is at HEAD of the calling tree, and the base 6a98a0553a holds none. So
+this order file, byte-identical to CLOUD's, is committed as ONE record-only commit on the release branch AND on the
+rollback branch. The census is scoped to `infra/aws/ec2/opal-gateway` and the artifact is built from that directory
+only, so an org/ file changes nothing shipped; the release's gateway tree hash must be unchanged. Gate limb: none
+(GATE (viii) placeholders NONE).
+
+**AMENDMENT 5 (2.0.0_SA_COO~AI, issuer ruling on row Z-W10-S6, ~00:1xZ; SUPERSEDES amendment 4's route, which the
+L6 gate refuses for a worker author):** the halt gate (`.tools/halt-gate-check.sh:165-185`) admits a worker from `ls-files`
++ HEAD of the tree it deploys from. So the DEPLOY TREE is built on CLOUD HEAD, and ONLY its gateway directory is replaced
+by the release's exact tree:
+- `git worktree add -b rel-nfra-opalai-r2-asker-binding-gateway-v2 /c/tmp/oa-10-rel2 CLOUD`; in it,
+  `git rm -r -q infra/aws/ec2/opal-gateway && git checkout d287ffb346 -- infra/aws/ec2/opal-gateway`; one commit under
+  the audited override;
+- PROOF before any act: `git rev-parse HEAD:infra/aws/ec2/opal-gateway` EQUALS `git rev-parse d287ffb346:infra/aws/ec2/opal-gateway`
+  (the artifact is built from that directory alone), and the census vs 6a98a0553a still names only the five files;
+- the rollback tree is built the same way on `rb-...-v2` with `6a98a0553a`'s gateway tree (hash equality again);
+- the `-v2` branches are DEPLOY-ONLY and are NEVER merged into CLOUD: they carry CLOUD's tooling beside the released
+  gateway tree and would revert CLOUD's unreleased gateway work. The manifest record and ledger stay on the slot branch.
+No task-order file is added, so no L6 gate fires. Gate limb: none (GATE (viii) NONE).
+
 <status>pending</status>
 <round>2</round>
 <slot>~10</slot>
