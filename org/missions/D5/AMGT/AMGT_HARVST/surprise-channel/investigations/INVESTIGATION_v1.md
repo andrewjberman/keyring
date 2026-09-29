@@ -2340,6 +2340,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "HVST-d-1 face section 1: the rebuild's effect is read as new matches and tier moves on Amazon's own rows.",
       "world_is": "The alias change is not confined to AMZN rows: the co_mentioned_securities and co_mention_count columns of 27 already-served pairs of other securities change, so HVST-d-2's served diff is wider than AMZN's row delta; whether any is_roundup flag flips is not printed here.",
       "notes": "ARMED for HVST-d-2's never-widen pair: its blast radius has to name co_mention columns of other securities, not only AMZN. Not fixed here."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~41",
+      "surfaced_at": "2026-09-29T09:31:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W41-S3",
+      "one_line": "HVST-d-2 pair reads: the COO half s.4.2 counts AMZN 161 and TSM 215 daily cells 'moved' over the whole new range, but only 156 and 210 are cells that MOVED on days <= 2026-09-24; the other 5 each are extension cells (2026-09-25..29), so the count is not an ALIAS-only figure.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~41/d2_ac1_output.txt (d): 'daily: moved cells by security (days <= 2026-09-24): {AMZN_US_Equity: 156, TSM_US_Equity: 210} ; extension cells (2026-09-25..2026-09-29) for all 191 securities: 955' -- 156 + 5 = 161 and 210 + 5 = 215, the figures the COO half names.",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round15/NEVER_WIDEN_HALF_COO_D2.md s.4.2: 'AMZN_US_Equity 161 cells ... TSM_US_Equity 215 cells' listed under ALIAS, and 'DRIFT, range extension: 955 new rows' listed separately, so the 5 extension cells of each are in both lists."
+        ]
+      },
+      "spec_asserts": "COO half s.4.2 (and CTO half s.1): ALIAS = AMZN 161 cells, TSM 215 cells; DRIFT range extension = 955 rows; read as disjoint sets.",
+      "world_is": "The two lists overlap by 5 AMZN cells and 5 TSM cells. AC1's check adds the extension days to its moved count to reproduce 161 and 215 (156 + 5, 210 + 5), and the served rows moved exactly as the halves name: no cell outside AMZN and TSM moved on any day <= 2026-09-24, and 955 extension rows landed.",
+      "notes": "INERT: a counting convention in the halves, no served row differs from what they name. Recorded because a reader who takes 161 as ALIAS-only would look for 5 alias cells that are extension cells."
     }
   ]
 ```

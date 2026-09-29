@@ -93,7 +93,7 @@ No delete, no code change, no vendor call, no portal work, no event-route wiring
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~41</slot>
 <fabric>site-z</fabric>
