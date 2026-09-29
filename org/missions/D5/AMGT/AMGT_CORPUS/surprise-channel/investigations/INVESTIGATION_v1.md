@@ -1893,6 +1893,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The two statements conflict for one existing test whose fixture omits method_version; I kept the test unmodified and let an absent method_version stay inputs-only, so a stored object with no method_version is never treated as a different method.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Behaviour differs from the literal rule only for an object with no method_version, none of which exist in the served table."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S53",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T00:58:00Z",
+    "one_line": "DISARM BY HOLD of AMGT_CORPUS-Z-W1-S9 by its owner: this seat runs NO dossier --write (the round-8 served rewrite included) until a case rule reads the scenario table by case. The writer census is this seat alone (the Z-S46 census stands: dossier --write runs only in this seat's drain acts; no scheduled producer writes the table).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Chain A merged at c858a00330 (worker tip 8945d6b4cb): dossier --case-census reads 'case_census names 95 slots 285 body 34 heading_only 68 absent 183 sum 285'; all 34 body slots DOWNSIDE, each the whole table's cells.",
+        "The served table is untouched: no dossier --write has run since round 7's rewrite (objects 468; METHOD_VERSION is now /2 in code, every stored object /1, so read_dossier's fallback serves the /1 objects exactly as before).",
+        "Issuer's direct read of ADBE_US_Equity and ZTS_US_Equity page 0: after the three case labels, 15 year headers (2026E-2030E x3) then rows EPS, Multiple, Price, Return of 15 values each -- values 1-5 Upside, 6-10 Base, 11-15 Downside (ADBE Multiple 16.0x / 9.0x / 6.0x, Price 2026 416 / 233 / 143)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v8.0 s.5: chain A VALID -> the pair -> dossier --write --workers N over 95 names.",
+    "world_is": "Chain A is VALID and merged; the rewrite it enables would serve a numeric dump as the Downside case. Held. The team's case numbers are present and positionally readable by case; a table-aware rule is the round-8 packet's lead enrichment candidate.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's). Lifts when a case rule reads the table by case and its census shows each case's own values."
   }
 ]
 ```
