@@ -1139,3 +1139,20 @@ its manifest at the builder addresses (ruling 9), the method of call 3 (rulings 
 thread account over the YTD trading days. The schedule, the other two firms and the adapter switch are later rounds.
 
 fanout: 1 of 1 chains, cap 8.
+
+
+## 15. ROUND 20, WORKSTREAM ~P (2026-09-29 ~01:2xZ, issuer 2.0.0_SA_COO~P, on PRD v0.19 rulings 10-12 and 1.0.0_SA_CTO 102519)
+
+The FWD-3 thread's next hop on ~P: the adapter reads the holdings gold (~E round 1 built hop 1 for account
+0010498003). One chain, one worker; the page and PDF hops follow the served move.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-201` | FWD-3 thread hop 2: `holdings_gold` reader with f49_engine's contract (YTD/QTD/1Y/SI) | WORLD (path floor; code and tests) | ~E r1 gold | A |
+| `IB-pr-202` | FWD-3: `retained.py` switches 49F to the gold (ruling 12, no fallback) and never reopens an engine-era report | WORLD (path floor; code and tests) | `IB-pr-201` | A |
+
+**Served-move precondition (the NEW-01 lesson, both readers):** the switch serves only once the gold covers EVERY 49F
+account (today: the thread account only). Otherwise every other 49F account would refuse. The widening is ~E's; it is
+asked of 1.0.0_SA_CTO to place.
+
+fanout: 1 of 1 chains, cap 8.
