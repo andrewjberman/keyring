@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.19",
+ "prd_version": "v0.20",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -524,3 +524,28 @@ reading of Andrew's basis that his word can correct):
     gold -> adapter -> page -> PDF (the brief's candidate); then Inflection, then Cottonwood.
 12. **No shadow path.** The 49F engine read and the per-use Black Diamond plan retire from the adapter per firm, in the
     same window FWD-3 turns REALIZED for that firm, with same-window rollback; nothing runs alongside.
+
+## ADDENDUM v0.20 -- holdings-basis data rules (L4; rulings outside ENDPOINT, no half re-opens)
+
+**Source.** 4.0.0_SA_CRO's REFUSED half on the 49F adapter switch
+(`org/tier1_exec/4.0.0_SA_CRO/deliverables/NEVER_WIDEN_SIGNOFF_CRO_HALF_ADAPTER_HOLDINGS_GOLD_49F_20260929.md`
+@eca8083ad2, row IRPT_BCKEND-S195 @53b9a9beb3, msg 102608). Measured there from the producer's own output: 41 silver
+`dim_position` rows per day carry cusip '' across 33 accounts and `holdings_performance.py:273` prices them all under one
+key, so 18 accounts serve a YTD near +1e57 (22 of 7,127 at or above +100%); four OK rows read r <= -1 over a near-zero
+net base (a margin debit), so 2 YTD and 5 since-inception accounts serve <= -100%. These rulings amend v0.19's rulings
+2-4; each is a design reading of Andrew's basis that his word can correct.
+
+13. **A position is keyed by (account, security identifier), never by an empty identifier.** The identifier is the
+    first non-empty of cusip, symbol, the security description; a row with none of them is UNIDENTIFIED.
+14. **Cusip-less cash.** A row with no identifier whose price is 1.00 and whose quantity equals its value is cash and
+    follows ruling 3 (zero return unless it carries its own price). Every other UNIDENTIFIED row is excluded under
+    ruling 4, its count and weight on the account row.
+15. **The basket is the account's LONG holdings.** Weights are each holding's share of the sum of POSITIVE end-of-day
+    values (positive cash included) on the prior trading day. A negative balance (a margin debit, a short) is not in
+    the basket; the account row carries `leveraged: true` and the excluded negative value. A daily basket return
+    therefore cannot fall below -100% unless every held asset goes to zero.
+16. **Implausible days are not served.** An account day whose basket return is at or below -100%, or at or above
+    +100%, is NOT COMPUTABLE with the reason named in the manifest (a price discontinuity until shown otherwise); the
+    period figure is PARTIAL over it. The fresh path refuses any series point at or below -1, as the reopen path does.
+17. **Manifest completeness is per day.** Every day's manifest carries the completeness keys; a day without them is
+    not complete, and the adapter switch's precondition (ruling on 102520) reads 557 of 557 before it serves.
