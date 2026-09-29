@@ -1224,3 +1224,19 @@ IB-pr-221 goes to worker slot 74 (S197: 1 + max(author lines 72, issued_to 72, b
 0.4.0_DS_ClientPlatform~E (rule 13).
 
 fanout: 2 of 2 chains, cap 8.
+
+## 20. ROUND 23, WORKSTREAM ~P (2026-09-29 ~12:5xZ, issuer 2.0.0_SA_COO~P, on 2.0.0_SA_COO~M 102754/102775 and 1.0.0_SA_CTO SWEEP-2 ANALYSIS section 3)
+
+~M's round 22 (TO-IB-m22-221, AD-10) adds an optional `account_masks` to the Directory entry. Its docs copy is
+committed @4ecbaca410 (blob 27d9a8f7). The lambda-tree contract copy is ~P's shared packaging, and the directory
+runner's pre-flight validation stays red until that copy carries the property (row W75-S1). ~M drains IB-mr-221 once
+this cell's drain hash lands. The sweep-2 ~P enrichment (the 49F re-switch, then INF) is served acts of the issuer,
+with no build cell.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-231` | FWD-5: `_contracts/DirectoryEntry.schema.json` byte-equal to the docs blob 27d9a8f7 (additive `account_masks`) | WORLD (the L6 floor for an infra path; no served Lambda stages this copy) | none | P23a |
+
+One cell, one file; not a direct act, since an infra path's floor is WORLD. Slot 79 (S197: 1 + max(author lines 78, issued_to 78, branches 78)).
+
+fanout: 1 of 1 chains, cap 8.
