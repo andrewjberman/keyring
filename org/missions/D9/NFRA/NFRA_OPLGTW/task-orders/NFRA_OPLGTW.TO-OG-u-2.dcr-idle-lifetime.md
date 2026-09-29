@@ -109,7 +109,7 @@ literal AC1-AC2 output, the commits and the rows.
   (`identity_tool_allowlist.txt:19`) is among them.
 - `<risk>` WORLD is GATE (xii)'s floor (an `infra/` path); the cell deploys nothing.
 
-<status>staged</status>
+<status>complete</status>
 <round>3</round>
 <slot>~12</slot>
 <fabric>site-z</fabric>
