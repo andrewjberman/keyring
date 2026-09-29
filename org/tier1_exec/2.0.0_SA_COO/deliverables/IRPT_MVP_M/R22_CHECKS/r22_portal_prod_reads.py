@@ -39,7 +39,9 @@ def main():
                 queue.append(chunk)
     text = "\n".join(blob)
     masks = "account_masks" in text
-    cat = bool(re.search(r"""["']CATEGORY["']""", text))
+    # The wire union is a TypeScript type (erased at build); what survives minification is the NODE_KIND_FOR_WIRE map
+    # entry, an UNQUOTED object key: CATEGORY:"category". Match that, quoted or not.
+    cat = bool(re.search(r"""["']?CATEGORY["']?\s*:\s*["']category["']""", text))
     print("PROD-READS account_masks=%s CATEGORY=%s index=%s assets=%d"
           % ("y" if masks else "n", "y" if cat else "n", idx.get("ETag"), len(seen)))
     return 0 if (masks and cat) else 1
