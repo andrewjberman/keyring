@@ -2890,6 +2890,30 @@ carries none.
     "spec_asserts": "TO MX-t-10 A1: 'Andrew widened the catalog to platinum/etfs; the catalog version bump carries his verbatim ... through the emitter's header text', and item 5: 'Run AC1 and AC2, and commit'.",
     "world_is": "The widening Andrew gave cannot be written into the catalog under the naming limb as it stands: any commit that adds the first literal of an out-of-pattern legacy S3 key is refused, and the catalog exists to carry exactly such literals. The mdpf keys got in before the limb was enforced (they grade EXISTING and only warn). The candidate is complete and uncommitted: 5 modified files and 1 new one under infra/aws/ec2/opal-gateway and workflows/atom_decomposition, all in this worktree, and preserved verbatim as deliverables/0.9.0_WK_NFRA_MCPINDEX~15/MX-t-10.candidate.uncommitted.patch (a record file, so never graded, and not a substitute for the commit).",
     "notes": "Ways forward, all the issuer's or the CTO's: (a) an R20 register entry (or a registry row) that names platinum/etfs/positioning_data.json as a served legacy address, after which the same commit passes; (b) a ruling that the emitter's ALLOWED_PREFIXES and the generated catalog are exempt from S3Key grading; (c) the issuer lands the candidate through a route the limb admits. The worker used none of them and did not touch the limb, the enforce file or any registry."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S55",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T07:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W15-S2"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W15-S2 in source: app/data_entitlement.py INDEX_TOOLS now names mdpf_get_model_benchmarks (worker ~15 commit 5a450314de, drained 18517e64cc), so classify() no longer denies MX-t-9's tool to every principal. The served gateway carries neither the tool nor the entitlement until MX-r-5 releases both together, so the hazard never reached a caller.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/data_entitlement.py:115 on CLOUD @18517e64cc names mdpf_get_model_benchmarks (native Grep read).",
+        "Issuer re-grade on CLOUD @18517e64cc: t9.AC1 PASS, t9.AC2 PASS (round4/checks)."
+      ]
+    },
+    "spec_asserts": "Z-W15-S2 (ARMED): the new portal_index tool is absent from INDEX_TOOLS, so the entitlement layer denies it.",
+    "world_is": "Fixed on CLOUD, not yet served. MX-r-5 ships the tool and its entitlement in one release (no ETF tool, per 1.0.0_SA_CTO~O msg 26487); r5.J1 grades the live call.",
+    "notes": "The MX-t-10 ETF patch stays uncommitted and byte-frozen pending the LGIC ruling on Z-W15-S5."
   }
 ]
 ```
