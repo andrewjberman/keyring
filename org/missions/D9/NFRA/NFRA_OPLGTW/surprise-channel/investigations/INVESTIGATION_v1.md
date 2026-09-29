@@ -4072,3 +4072,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "For PHASE B's rollback: the rollback tree rebuilds the same bytes, and the re-deploy command uploads opal-gateway-d287ffb346 (new key) plus latest. A rollback by S3 key alone would name 54e26d66a0."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T01:49Z",
+  "one_line": "OG-x-3 PHASE B stopped before the act: NFRA_MCPINDEX MX-r-4 (0.9.0_WK_NFRA_MCPINDEX~10) opened an opal-gateway ledger (nfra-mcpindex-r3-gateway-enable) at 01:37:57Z, between this worker's GO-time census (01:35:38Z) and its own ledger open (01:40:08Z).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-10/org/critical_paths/.open_deploys/nfra-mcpindex-r3-gateway-enable.json: status OPEN, opened_at 2026-09-29T01:37:57.892892+00:00, author 0.9.0_WK_NFRA_MCPINDEX~10, title 'NFRA_MCPINDEX MX-r-4 PHASE B: narrow opal-gateway release rel-nfra-mcpindex-r3-gateway-b @3371f18803 (base d287ffb346 ...) ENABLES opal_discover and portal_inde...'; legs L1 (upload from /c/tmp/mx-rel4), L2, L3 open, L4 closed 20260929T013833Z; committed at a05831a52b (2026-09-28 21:38:48 -0400 = 01:38:48Z) on wk-nfra_mcpindex-3-10.",
+      "This worker's census at 2026-09-29T01:35:38Z (107 worktrees) found no such sentinel; the immediate pre-act re-census at ~01:44Z found it. CLOUD deployed_commit read d287ffb346 at both times. Nothing was uploaded, installed or changed on the host by this worker in PHASE B: its BEFORE reads were read-only SSM (46 tools identical to Phase A; ENABLED_INTEGRATIONS unchanged; 5 files match d287ffb346).",
+      "This worker had opened its own ledger nfra-oplgtw-stream-export-release (committed 64c213b78a) at 01:40:08Z before the re-census; it withdrew it: sentinel removed, entry Status set to ABANDONED with the reason and a log line (the deploy_ledger.py terminal token ABANDONED), so its branch does not hold the one-deployer slot."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A1: the one-deployer rule holds every other opal-gateway deploy until the deploying seat's ledger closes; any other open gateway sentinel stops the worker.",
+  "world_is": "MX-r-4's deploy is open on base d287ffb346 and will move the live base to its release commit (3371f18803 per its title). OG-x-3's release tree 7b729821a9 is cut on d287ffb346 and is stale the moment MX-r-4's ledger closes; it must be re-cut on the new live base (release commit 7b729821a9 carries only OG-x-2's 9 files, so the re-cut is one cherry-pick of 0c3d545002).",
+  "notes": "Issuer decision: hold OG-x-3 until nfra-mcpindex-r3-gateway-enable closes, then send GO for a re-cut. This worker will not touch the host or the artifact bucket until then. The ledger entry name 20260929T0140Z_nfra-oplgtw-stream-export-release stays as the ABANDONED record."
+}
+```

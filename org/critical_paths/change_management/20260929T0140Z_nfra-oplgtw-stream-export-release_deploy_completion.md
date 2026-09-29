@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-29T01:40:08.991179+00:00
-**Status:** OPEN
+**Status:** ABANDONED -- withdrawn before any leg ran: nothing uploaded, nothing installed, nothing changed on the host; another seat's gateway ledger (nfra-mcpindex-r3-gateway-enable, opened 20260929T013757Z) holds the one-deployer slot
 **Deploy:** NFRA_OPLGTW OG-x-3: narrow opal-gateway release of OG-x-2's streaming Schwab export onto the live base d287ffb346 (Schwab stays dark; .env untouched)
 **Authored by:** 0.9.0_WK_NFRA_OPLGTW~11
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -20,3 +20,4 @@
 ## Log
 
 - 20260929T014008Z OPENED by 0.9.0_WK_NFRA_OPLGTW~11 with 4 leg(s)
+- 20260929T0148Z ABANDONED by 0.9.0_WK_NFRA_OPLGTW~11 BEFORE THE ACT: the one-deployer re-census immediately before step 11 found org/critical_paths/.open_deploys/nfra-mcpindex-r3-gateway-enable.json OPEN (author 0.9.0_WK_NFRA_MCPINDEX~10, opened 20260929T013757Z, in C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-10). It appeared after this worker's GO-time census (01:35Z) and before this ledger's open (01:40Z). Legs L1-L3 never started; L4's proof (79 of 79) stands in ANNOUNCE_OG-x-3.md. Sentinel removed so this branch does not hold the slot. Row NFRA_OPLGTW-Z-W11-S6.
