@@ -1914,6 +1914,32 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "A drain merges the worker's branch into CLOUD, so every file the order's worker changed reaches CLOUD (spine L7 drain; .tools/safe-merge.sh).",
     "world_is": "Both drains produced a merge commit whose tree is CLOUD's side for every branch file. Git then counts the worker commits as merged, so no later merge of the branch can carry them. On CLOUD, OA-e-3 reads <status>pending</status> and the Analyst seed lacks opal_asker_query, while the live gateway (093fc247c6) serves it. A gateway release cut from CLOUD's tree would remove the tool silently, and the round's close reads OA-e-3 as open.",
     "notes": "Disarm: re-land the 10 files through a drain (a branch off CLOUD that cherry-picks the worker's original commits, which keeps their authorship, merged with .tools/safe-merge.sh), not EC2_MANIFEST.json. The lane gate refused a direct 1.0.0_SA_CTO~O commit (infra/aws is CLOUD_OPS_OR_ETL; deliverables/<serial>/ admits only that serial). The safe-merge defect that makes the tree equal CLOUD's side is for the safe-merge owner, beside S44."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S46",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-29T19:07Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed by its disarm_owner. The re-drain merge 300e372902 lands all 10 dropped files on CLOUD at the branch-parent blobs. No hazard is left for S45 to stand on. 3.0.0_SA_CVO~O validates the drain, per 1.0.0_SA_CTO~O msg 26659.",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-S45"
+    ],
+    "one_line": "DISARMS Z-S45. Branch redrain-nfra-opalai-s45 was cut off CLOUD dc7b4d6b3c. It cherry-picks (-x, worker authorship kept) the six OA-e-3 worker commits c06a3a4379 823f031953 685fabc691 491a97b34a 7404bacfda a01c3bd4d1 and OA-f-3's fd4103a5fe. It omits a9e1a5ce26 (EC2_MANIFEST.json, which later deploys moved on). safe-merge.sh merged it as 300e372902. The branch changes exactly the 10 named paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Acceptance, per path: git rev-parse CLOUD:<path> == <branch-parent>:<path> (82b68d5ce2 for OA-e-3, 096935eb36 for OA-f-3): 10 of 10 after merge 300e372902.",
+        "safe-merge.sh --verify-merge 300e372902: branch needed 10 file(s), dropped 0, foreign 0.",
+        "Before the merge, the shared-tree residue at the same 10 paths hashed equal to the branch blobs (git hash-object, 10 of 10). It was backed up to the seat's scratchpad and cleared so the merge could write. Nothing unique was discarded.",
+        "The OA-e-3 task order on CLOUD now reads <status>complete</status> (1 occurrence)."
+      ]
+    },
+    "spec_asserts": "Z-S45 disarm: re-land the 10 files through a drain that keeps the workers' authorship, EC2_MANIFEST.json excluded.",
+    "world_is": "All 10 files are on CLOUD at the branch-parent blobs, and the worker commits are reachable with their authors. The safe-merge defect that produced the drop (S44 class) is not touched here; it stays with the safe-merge owner."
   }
 ]
 ```
