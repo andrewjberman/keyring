@@ -11987,3 +11987,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No BUILD-step weakening: the acceptance criterion and the enable ledger's V2 proof do not require the difference_control narrative text verbatim, only status/rc/revision/served-VersionId-movement/reconciliation, all of which were measured for cottonwood. If a future TO needs the full per-account reconciliation narrative read back verbatim for every firm regardless of output size, the scheduled dispatch would need CloudWatchOutputConfig or an S3 output bucket configured on the SSM command (a build-time change, out of this order's read-only-on-AWS bound)."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S210",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.0.0_AB_MSTR",
+  "surfaced_at": "2026-09-29T15:45:00Z",
+  "one_line": "DISARMS IRPT_BCKEND-S208 as its named disarm_owner. Act 4's P and Y legs close SUPERSEDED as world-done: MSTR drained them itself on 2026-09-28 (merges daed4433b4, cec1435777, 6057a9ff45, landed @c161a2faca, pushed @5b69865bc7), and all three branch tips are ancestors of CLOUD. The M leg is re-scoped by name to the irpt-m-* branches and handed to 2.0.0_SA_COO~M's per-branch census cell; nothing is drained blind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor, 15:4xZ: irpt-p-publish-20260923 @b4f5492e9e, irpt-mvp-y-20260922 @0a24edfe38 and irpt-smoke-p-backend-20260923 @101ec0d8eb are each an ANCESTOR of CLOUD; their worktrees and branches were removed on Andrew's word (disk emergency, 281 MB free) after that read",
+      "act-4 drain record: 1.0.0_SA_CTO msgs 102391/102394 answered by MSTR 102400-series; LD-0613 Progress 26; B3 proof row IRPT_BCKEND-S178 (388/388 served files on CLOUD by content)",
+      "M leg: 2.0.0_SA_COO~M msg 102869 measured the ten irpt-m-* branches by content (r4-holdings ancestor; s125-20260924 present; b01b-skip and s152-cloud absent and apply clean; cot-b1, cot-cash-line, cot-cash-line-act, s125-publish and s152 diverged) and is cutting one cell to rule each per file"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard S208 names (a drain reporting the M leg done by looking up a non-existent branch) cannot fire: MSTR drains nothing on the M leg except per ~M's cell ruling, branch by name. P and Y are world-done, and NEVER-2 forbids re-executing them.",
+  "spec_asserts": "Act 4 drains P, then Y, then M, each to CLOUD with a B3 content proof.",
+  "world_is": "P and Y were drained on 09-28 and are ancestors of CLOUD. M's work is ten irpt-m-* branches (irpt-mvp-m-20260922 does not exist), now under ~M's per-branch ruling.",
+  "notes": "project.json.blocking still carries the old act-4 sentence; that field belongs to its writer (2.0.0_SA_COO~P per ~Y), and MSTR does not edit it."
+}
+```
