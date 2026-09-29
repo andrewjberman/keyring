@@ -1914,6 +1914,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "HVST-a-2 preflight: the role already reads opal-data-harvest gold, so mount (HVST-a-1) + package with pyarrow (Z-S35) makes both timeline routes answer with real data.",
       "world_is": "The role has no gold read on the live or the desired plane. After HVST-a-1 + HVST-a-2 as written, the loaders reach S3 and are refused; a third change (a gold read grant in scoped-amgt-api.tf, safe-applied) is needed before either route can serve data.",
       "notes": "Disarm is the issuer's (the order is 2.0.0_SA_COO~H's): amend HVST-a-2 to carry the grant, or cut it. This seat does not edit the order or the TF. Not verified: whether the RESAPP chatter routes read gold through some other principal -- the premise cites them; this row says only that THIS role holds no such grant."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W36-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~36",
+      "surfaced_at": "2026-09-28T23:48Z",
+      "one_line": "The ruled plurality rule moves ONE of the two Boeing leads over the landed data (2026-09-08), not both: BA_US_Equity 2026-08-26 is two tier-A articles in two unrelated stories, a 1-1 tie, and the ruling's own tie clause (earliest story) keeps the FAA headline as lead.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED read-only over the landed newest article_security_mention snapshot (263 rows) and 120 silver headlines: deliverables/0.9.0_WK_AMGT_HARVST~36/ac1_output.txt, BA_US_Equity 2026-08-26 block: story 1 tier-A=1 (bbg 'FAA Orders Inspections of Some Boeing Dreamliners for Gaps'), story 2 tier-A=1 (sa 'Boeing Wisk breaks ground on California vertiport for air-taxi tests'), lead unchanged, moved False. Moved events: 1 of 8 (BA 2026-09-08 only).",
+          "The round-11 L9 finding read that day as 'wrong' (two unrelated stories, one lead); the ruling's rule is a plurality with a tie to the earliest, which cannot pick a side when the stories are 1-1. Events are not split (ruling: do not split), so the day still carries one lead over two stories."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Order HVST-a-3 s.1: the finding that the old rule is 'wrong on both Boeing days'; AC1(c) pins only 2026-09-08 as moved.",
+      "world_is": "Under the CTO's ruled rule only 2026-09-08 moves; 2026-08-26 cannot move under it. Whether a 1-1 unrelated-story day should be a split event, or lead differently, is the un-ruled question the order names as not this cell's."
     }
   ]
 ```
