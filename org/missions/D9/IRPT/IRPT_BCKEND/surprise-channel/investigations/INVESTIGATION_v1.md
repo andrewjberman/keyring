@@ -11158,3 +11158,62 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The derived form also removed a latent defect the first shape carried: a typed firm token in the declaration would have had to be kept in step with the registry by hand, and nothing checked it. The test test_the_declaration_is_data_and_carries_its_basis now asserts the derivation (no `firm` field present, lookup(master) resolves, and the entry key contains both custodian and master) rather than any string."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W64-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~64",
+  "surfaced_at": "2026-09-29T00:10:00Z",
+  "one_line": "IB-pr-201/202 (round 20 ~P): holdings_gold.calculate must set lineage.provider = OPAL_HOLDINGS (PRD ADDENDUM v0.19 rulings 10, 12) and self-validates via normalize.validate_report, exactly f49_engine.calculate's own contract shape -- but PerformanceReport.schema.json's lineage.provider enum (GENERATED from the PRD CONTRACTS table @62301f71e0, a pin that predates ADDENDUM v0.19) is closed to [SMARTX, BLACK_DIAMOND, ORION, OPAL_ENGINE, UNKNOWN] and refuses OPAL_HOLDINGS with a jsonschema ValidationError. All three acceptance criteria (P20-1-AC1, P20-1-AC2, P20-2-AC1) FAIL on this one cause; the arithmetic, window rules, account mapping and retained-layer provider switch are each independently confirmed correct (see grounding). Regenerating the contract is an L4 PRD/ CONTRACTS-table act (1.0.0_SA_CTO only, CLAUDE.md rule 27); both schema copies sit outside this order's <paths> grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (L4 PRD/CONTRACTS-table owner, rule 27: add OPAL_HOLDINGS to PerformanceReport.schema.json's lineage.provider enum via the PRD CONTRACTS table and its generator, then regenerate both docs/contracts and infra/_contracts copies -- COT and INF's later same-basis switches, ruling 12, will hit the identical wall until this lands)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/PerformanceReport.schema.json and docs/contracts/investor-reporting/v1/PerformanceReport.schema.json, properties.lineage.properties.provider.enum == ['SMARTX', 'BLACK_DIAMOND', 'ORION', 'OPAL_ENGINE', 'UNKNOWN'] at 8340a8fef2 (this worktree's HEAD); the schema's own description states it is GENERATED from org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @62301f71e0.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md lines 484-527 @8340a8fef2, ADDENDUM v0.19, rulings 10 and 12: requires lineage.provider = OPAL_HOLDINGS and retires the engine read 'in the same act'; no ruling names a CONTRACTS-table or schema-enum update.",
+      "python -c holdings_gold.calculate(scope, '2026-01-01', '2026-01-07', <in-memory gold source>) raised: jsonschema.exceptions.ValidationError: \"'OPAL_HOLDINGS' is not one of ['SMARTX', 'BLACK_DIAMOND', 'ORION', 'OPAL_ENGINE', 'UNKNOWN']\" -- Failed validating 'enum' in schema['properties']['lineage']['properties']['provider'], raised inside infra/aws/lambda/investor-reporting/performance/holdings_gold.py:240 (normalize.validate_report(report)).",
+      "P20-1-AC1 real run (timeout 120 python p20_1_ac1_gold_fixture.py .), rc=1: 'FAIL A: ValidationError' / 'FAIL B: SI refused as ValidationError' / 'PASS C1 unknown account: refused as HoldingsGoldRefused' / 'PASS C2 3-year window: refused as HoldingsWindowNotRuled' / 'P20-1-AC1 FAIL' -- arms C1/C2 never reach validate_report and pass; A/B do and fail.",
+      "P20-1-AC2 real run against the LIVE gold (184 landed partitions, thread account 0010498003), rc=1: 'FAIL: holdings_gold could not answer (ValidationError); independent chain over 184 days 0.058285199226'.",
+      "P20-2-AC1 real run, rc=1: pytest FAILED on jsonschema.exceptions.ValidationError inside holdings_gold.calculate, reached via retained.py's FRESH path only -- the captured irpt_retained_phases log line shows path=fresh with no reopen entry against the pre-switch OPAL_ENGINE pointer, proving the accepted-key namespace switch in retained.py correctly never reopens the old-provider report; the ONLY failure downstream of that is the enum.",
+      "Manual confirmation the arithmetic itself is correct: with normalize.validate_report monkeypatched to a no-op for OBSERVATION ONLY (never committed, never used by any acceptance run), holdings_gold.calculate against the SAME live gold and window (2026-01-01..2026-09-25) returned value=0.058285199226329354, provider=OPAL_HOLDINGS -- matching AC2's independent 184-day chain oracle 0.058285199226 within 1e-12."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-201 cell text: 'calculate(scope, start, end, source) -- the SAME return contract and report shape as f49_engine.calculate (... lineage.provider = OPAL_HOLDINGS)'; f49_engine.calculate's own pattern (reused here) ends with normalize.validate_report(report), so the same contract shape implies the same self-validation before returning a report.",
+  "world_is": "normalize.validate_report reads PerformanceReport.schema.json, whose lineage.provider enum is closed to [SMARTX, BLACK_DIAMOND, ORION, OPAL_ENGINE, UNKNOWN] and does not admit OPAL_HOLDINGS -- so a correctly-computed holdings report always raises jsonschema.ValidationError there, and all three of this order's acceptance criteria FAIL on exactly this cause, never on the chain arithmetic, the window rules, the account mapping or the retained-layer provider switch (each independently confirmed correct).",
+  "notes": "NOT worked around: the schema was not hand-edited (outside this order's <paths> grant and, by its own docstring, GENERATED -- a hand edit would itself be 'a fabrication ... refused by the IB-s-18 battery'); the check scripts were not weakened; holdings_gold.py and retained.py implement the switch exactly as specified and are proven correct independently of this gap (tests/test_holdings_gold.py, tests/test_retained_performance.py, both green, plus the live-gold manual read above). Disarm requires an L4 PRD CONTRACTS-table edit adding OPAL_HOLDINGS to the provider enum and a regeneration of both schema copies -- 1.0.0_SA_CTO's act, not a worker's."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W64-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~64",
+  "surfaced_at": "2026-09-29T02:20:00Z",
+  "one_line": "IRPT_BCKEND-W64-S1's disarm act has landed: 1.0.0_SA_CTO's RULING 102544 lands the PerformanceReport.schema.json lineage.provider enum fix (both copies) at commit 78eeb223f8, adding OPAL_HOLDINGS additively alongside the existing enum members. Brought into this worktree read-only (git checkout 78eeb223f8 -- <3 files>; git reset -q -- <3 files>, never staged, never committed here) for a re-run: P20-1-AC1, P20-1-AC2 and P20-2-AC1 all now PASS, and the full performance/tests suite is 224 passed. This row does not disposition W64-S1 (a worker's row carries no `adjudicates` and no GRADUATED transfer -- that is 3.0.0_SA_CVO's L9 act); it records the disarm evidence for the CVO to read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 78eeb223f8: 'contract(2.0.0_SA_COO~P, irpt performance): PerformanceReport lineage.provider gains OPAL_HOLDINGS in both copies (CTO RULING 102544; disarms row IRPT_BCKEND-W64-S1)' -- touches docs/contracts/investor-reporting/v1/PerformanceReport.schema.json, infra/aws/lambda/investor-reporting/_contracts/PerformanceReport.schema.json and performance/tests/test_primary_policy.py; commit message cites PRD ADDENDUM v0.19 @82e1700237 rulings 10/12 and states the addition is additive, one axis, OPAL_ENGINE retained until ruling 12 retires it per firm.",
+      "This worktree: git checkout 78eeb223f8 -- docs/contracts/investor-reporting/v1/PerformanceReport.schema.json infra/aws/lambda/investor-reporting/_contracts/PerformanceReport.schema.json infra/aws/lambda/investor-reporting/performance/tests/test_primary_policy.py, then git reset -q -- <same 3 paths>; git status --porcelain=v1 shows all three as unstaged M, never committed on wk-IRPT_BCKEND-64.",
+      "python \"org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r20/p20_1_ac1_gold_fixture.py\" . -> rc=0: 'PASS A ... PASS B ... PASS C1 ... PASS C2 ... P20-1-AC1 PASS'.",
+      "python \"org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r20/p20_1_ac2_gold_live.py\" . -> rc=0, against the live gold, 184 partitions: 'gold days 184 | independent chain 0.058285199226 | holdings_gold 0.058285199226 | provider OPAL_HOLDINGS | P20-1-AC2 PASS'.",
+      "python \"org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r20/p20_2_ac1_retained_recompute.py\" . -> rc=0, 'P20-2-AC1 PASS'.",
+      "cd infra/aws/lambda/investor-reporting && python -m pytest -q performance/tests -> rc=0, '224 passed, 2 warnings' (the 2 warnings are the pre-existing pandas FutureWarning in f49_engine.py, unrelated)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W64-S1: disarm requires an L4 PRD/CONTRACTS-table act adding OPAL_HOLDINGS to the provider enum, reserved to 1.0.0_SA_CTO, and both schema copies sat outside this order's <paths> grant.",
+  "world_is": "1.0.0_SA_CTO ruled it (RULING 102544) and 2.0.0_SA_COO~P landed the additive enum fix on CLOUD at 78eeb223f8; brought into this worktree read-only per the issuer's continuation instruction, all three acceptance criteria now PASS against the real fixture, the real gold and the real retained-layer switch, and the full performance test suite (224 tests) is green. Nothing served moved; no AWS write; the fix files are not committed from this worktree -- the issuer's drain merges CLOUD, which already carries them.",
+  "notes": "Disarm owner discharged: 1.0.0_SA_CTO ruled and 2.0.0_SA_COO~P landed; hazard_standing is recorded INERT on this row. Formal disposition of W64-S1 (GRADUATED, via `adjudicates`) is 3.0.0_SA_CVO's L9 act, not a worker's -- this row supplies the evidence for that compile. W64-S1 itself is never edited in place."
+}
+```
