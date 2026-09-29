@@ -4863,3 +4863,34 @@ name the one known failure instead of silently inheriting it.
   "world_is": "Each defect is absent at HEAD and on the host, measured by OG-x-4's on-host run."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S17",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-29T10:25Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by the issuer, as disarm_owner. Z-W10-S3 (WALKTHROUGH_PROTOCOL.md named OG-v-3/OG-v-4 and a C:/tmp answer path): fixed at HEAD -- infra/aws/ec2/opal-gateway/tests/acceptance/WALKTHROUGH_PROTOCOL.md:38-39 name %LOCALAPPDATA%/opal/og-salt/actual_v2/ and OG-v-7, :111 '(graded by OG-v-7', :208 '(OG-v-6 computes and seals; A7 asks them)', :242 the %LOCALAPPDATA% path. Z-W12-S2 (two suites passed an email to resolve_tier and set MASTER_ADMIN_EMAILS): fixed at HEAD by 344cca64a1 -- tests/test_principal_cutover.py:395 passes context.get_current_principal(), :471 passes s.principal; tests/test_data_entitlement_guard.py:548 sets MASTER_ADMIN_PRINCIPALS to a tid/oid key, so the admin arm is a real master admin. Z-W11-S4 (the one-deployer census read OPEN gateway sentinels in 19 archived rb/rel worktrees): ISSUER RULING -- a sentinel copy in an archived rollback/release worktree whose ledger entry is CLOSED on CLOUD is not a deployer; the census stops only on a sentinel whose ledger is not closed on CLOUD, or on any sentinel in a live worker or release tree of the act in hand. OG-x-3 and OG-x-4 deployed under this reading, each with its own ledger opened and closed. Removing the stale trees is a recursive delete that needs a human's confirmation and has been surfaced; it is not a precondition.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W10-S3",
+    "NFRA_OPLGTW-Z-W12-S2",
+    "NFRA_OPLGTW-Z-W11-S4"
+  ],
+  "one_line": "The issuer disarms Z-W10-S3 and Z-W12-S2 (both fixed at HEAD) and rules Z-W11-S4: a sentinel copy in an archived rb/rel tree with its ledger closed on CLOUD is not a deployer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/acceptance/WALKTHROUGH_PROTOCOL.md:38,39,111,208,242 at CLOUD 6a6b39ed14",
+      "infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py:395,471 and test_data_entitlement_guard.py:548 at CLOUD 6a6b39ed14 (last touched 344cca64a1)",
+      "org/critical_paths/change_management/20260929T0514Z_nfra-oplgtw-stream-export-release_deploy_completion.md (OG-x-3; the 0140Z entry is its ABANDONED first attempt) and 20260929T0835Z_nfra-oplgtw-export-flat-release_deploy_completion.md (OG-x-4)"
+    ]
+  },
+  "spec_asserts": "Each adjudicated row was ARMED with the issuer as disarm owner.",
+  "world_is": "Two defects are absent at HEAD; the third was a census-scope question, now ruled.",
+  "notes": "Still ARMED with the issuer, and why. W3-S9 and S61: the principal re-key is BUILT at HEAD (app/tier.py:84 keys MASTER_ADMIN on the tid/oid principal, no email fallback, all 4 production call sites pass the principal) but NOT SERVED -- tier.py at the live release 63264dfb22 is blob 63306f02d6, HEAD is 56e6429c78; they disarm when OG-t-2 serves it (held on Andrew's switchover sitting). W2-S8 and Z-W13-S5 (CRLF on 7 extensions; the naming limb refuses DATA_CATALOG.yaml's line-ending renormalization) and W2-S10/S49 (AC6's 5xx bar) and S43 (out-of-repo evidence paths) go on the L10 slug as the repair-batch candidates."
+}
+```
