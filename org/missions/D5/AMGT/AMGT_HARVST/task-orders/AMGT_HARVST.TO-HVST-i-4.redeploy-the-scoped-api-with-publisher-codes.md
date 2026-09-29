@@ -106,7 +106,8 @@ with `to_id` `AMGT_HARVST.TO-HVST-i-4.redeploy-the-scoped-api-with-publisher-cod
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~H`, 2026-09-29 ~22:1xZ):** LANDED by `0.7.0_AE_CloudOps~A` (msg 26740; entry `amgt-harvst-i4-scoped-api-publisher-codes-20260929` opened `3fc45f7c44`, CLOSED 3 of 3 at 22:01:54Z; seat work on trunk @`84548218ef`). Closure diff EXACTLY the 3 named files, 344 entries both sides; unzipped 253,470,431 of 262,144,000; plan 0/1/0, the function's code only. **Re-measured by the issuer on the served plane BEFORE the actor's report (21:58Z):** `i-4.AC1` PASS and `i-4.AC2` PASS (CodeSha256 `uv0oTSMa...`, new artifact `kABTI4Gu...` latest, rollback `61Fb7L90...` standing, RESAPP /thesis /overlay /peers 200). Instance VALID rc=0 by the issuer's own check. ONE REAL RUN `deliverables/2.0.0_SA_COO_H/round19/close_run_round19.py`: CLOSE RUN OK.
+<status>complete</status>
 <round>19</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
