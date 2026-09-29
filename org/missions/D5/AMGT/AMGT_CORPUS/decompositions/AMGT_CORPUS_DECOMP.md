@@ -1,70 +1,62 @@
-# AMGT_CORPUS -- L5 decomposition v12.0 -- ROUND 12 (one cell, ruled ahead of the round-11 analysis)
+# AMGT_CORPUS -- L5 decomposition v13.0 -- ROUND 13 (one cell: the nineteen-outcome evidence pass at HEAD)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-09-29 ~10:0xZ. **Source:** `1.0.0_SA_CTO~Z`'s ruling msg 26555 (READ-acked), verdict
-@`e1e4ae43d4` (AMGT_RESAPP vv-4 `Z-S298`): *"AMGT_CORPUS round 12 cuts one cell. The dossier store writes to the builder's
-canonical prefix, lib/opal_naming.py address() output (amgt/harvest/gold/research_dossier/). read_dossier reads it there, the old
-research-dossier objects stay undeleted, and the served move goes under a pair."* Round 11's decomposition is kept as
-`AMGT_CORPUS_DECOMP.round11.md`. Round 11's packet is at L8 with `3.0.0_SA_CVO~Z`; this round's write surface (the dossier table)
-is the one round 11 just rewrote, so its served move follows round 11's L9 read of `m-2` AC5 only in time, not in dependency --
-the move carries the same content to the new prefix.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-09-29 ~11:4xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-12 analysis
+`ledger/ROUND_ANALYSIS.round12.md` @`1b4a75ba26` (msg 26583, READ-acked), s.4 ENRICHMENT LIST, one item: *"The nineteen-outcome
+evidence pass at HEAD ... each FWD graded met / unmet / unmeasurable on an EXERCISE at HEAD, with its denominator. For every outcome
+not met, the pass names (a) the ACT that would exercise it, driven deliberately and never waited for (spine L2), and (b) its OWNER."*
+Round 12's decomposition is kept as `AMGT_CORPUS_DECOMP.round12.md`.
 
 ## 0. What this round IS
 
 | item | disposition |
 |---|---|
-| the dossier store to the builder's canonical prefix (R19 migration of one store) | cell `CRPS-n-1` (`~1`) |
+| the nineteen-outcome evidence pass at HEAD, with act + owner per outcome not met | cell `CRPS-o-1` (`~1`) |
 
-**NOT cells** (the ruling): the other five `research-*` stores (their own R19 migrations, later); deleting the legacy objects.
+**NOT cells:** the exercising acts themselves (the round-13 analysis cuts them); render halves (their owners' rounds).
 
 ## 1. The rectangle
 
 | cell | slot | serves | `<risk>` | class | write set | the build |
 |---|---|---|---|---|---|---|
-| `CRPS-n-1` | `~1` | FWD-12 (the served cases reach AMGT_RESAPP's reader) | SERVED (the drain's rewrite to the new prefix) | worker-light | `lib/research/corpus/dossier.py`, `lib/research/corpus/tests/test_dossier_canonical_address.py` (new), `lib/research/corpus/tests/test_backlog.py` | `TABLE` becomes the builder's `research_dossier`; no hyphen literal left in `dossier.py`; reads and writes at the builder's prefix |
+| `CRPS-o-1` | `~1` | FWD-1..FWD-19 (the evidence the round-13 analysis grades) | LOCAL (read-only; no served write) | worker | `deliverables/0.9.0_WK_AMGT_CORPUS~1/FWD_EVIDENCE_ROUND13.{json,md}` | one row per outcome, measured at HEAD, with its denominator; act + owner for each outcome not met |
 
 ## 1a. Re-groundings at L5
 
-- `gold.table_prefix(table)` derives the key prefix from `naming.key(SOURCE, SCOPE, TIER, table, ...)`; only the table NAME is a
-  literal. Measured: `opal_naming.address("amgt", <harvest scope>, "gold", "research_dossier", "security_key=X")` ->
-  `s3://opal-data-harvest/amgt/harvest/gold/research_dossier/security_key=X` (the builder accepts the name). Today
-  `dossier.TABLE = "research-dossier"`: prefix `amgt/harvest/gold/research-dossier/`, 846 objects (round 11).
-- The hyphen literal is carried by `dossier.py` (5) and `tests/test_backlog.py` (5) under `lib/`; the issuer's round-6 check names
-  it in a docstring only.
-- **Sequencing hazard:** once `TABLE` changes, `read_dossier` finds no object at the new prefix until the rewrite writes one;
-  every reader of the merged code sees `LookupError` in between. A fallback to the legacy prefix would re-introduce the literal
-  the naming gate refused. **Ruled:** no fallback; the merge and the rewrite run in one issuer-controlled window (drain act,
-  s.5), and the pair names the window.
-- `write_one` at the new prefix: `read_dossier` raises `LookupError` -> stored inputs `None` -> every name writes (95 puts), no
-  method bump needed (nothing is stored at the new prefix).
+- The last pass is round 7's (`deliverables/0.9.0_WK_AMGT_CORPUS~5/FWD_EVIDENCE_ROUND7.json`, PRD @`9e326e11c1`): 12 met, 1 unmet
+  (FWD-9), 6 unmeasurable (FWD-4, 10, 11, 15, 17, 18). Rounds 8-12 moved the cases, units, currency, positional read and the store's
+  prefix (now `amgt/harvest/gold/research_dossier/`, 95 objects). The worker reuses round 7's instruments as a starting list and
+  carries NO grade from it.
+- The checker (`checks/round13/o1_check.py`) extends round 5's: a `denominator` on every row; `exercising_act` (the word "wait"
+  refuses it) and `owner` in {AMGT_CORPUS, AMGT_RESAPP, DSGN_AMGTV1} on every row not met. Controls at the cut: the round-7 file
+  reads `rows_valid 0 ... INVALID` (no denominators, acts or owners); a completed copy reads `VALID`; the same copy with one act
+  saying "wait for the next report" reads `rows_valid 18 ... acted 6 ... INVALID`.
+- The deployed AMGT_RESAPP Lambda still reads the legacy prefix until its vv-4 re-land (AMGT_RESAPP round 48 cell 1); an outcome
+  whose served half runs through that Lambda is measured at HEAD code and its render half owned by AMGT_RESAPP.
 
 ## 5. The round -- one issuance, fan-out as data
 
-- `fanout: 1 of 1 chains, cap 8, reason: one cell on the dossier write surface.`
-- **Drain, in ONE window:** re-grade the worker's tip -> pair signed (COO + CTO) -> change entry opened -> merge -> IMMEDIATELY
-  `dossier --write --workers 10` (95 puts at the new prefix) -> verify (census at the new prefix: objects 95, serves the last write
-  95 of 95; case census equal to round 11's; legacy prefix still 846) -> close. The one real run: `read_dossier` on three names
-  from the new prefix.
+- `fanout: 1 of 1 chains, cap 8, reason: one read-only cell.`
+- **Drain:** re-grade the tip (AC1-AC3 at the tip) -> merge -> the one real run: this seat re-runs three rows' instruments at HEAD
+  (one met, one unmet, one unmeasurable) and compares -> packet to `3.0.0_SA_CVO~Z`. No served write, no pair.
 - Surprise rows from `Z-S58`; workers `AMGT_CORPUS-Z-W<n>-S<k>`, `disarm_owner 2.0.0_SA_COO~X`.
 
 ## 6. `<preflight>`
 
 ```
-checks as files, dry-run at the base (checks/round12/):
-  n1_AC1 FAIL (no tests ran)
-  n1_AC2 FAIL ('n1 table research-dossier prefix amgt/harvest/gold/research-dossier/ equals_builder False hyphen_literal 5')
-  n1_AC3 PASS (dossier import loads no PDF library)
+checks as files, dry-run at the base (checks/round13/):
+  o1_AC1 FAIL (MISSING FWD_EVIDENCE_ROUND13.json)
+  o1_AC2 FAIL (MISSING FWD_EVIDENCE_ROUND13.json)
+  o1_AC3 PASS (paths_outside_grant 0)
 ```
 
 ## 8. Rulings this decomposition makes
 
-- No legacy fallback in the reader; the window does the job (s.1a).
-- The legacy objects are never deleted by this round (the CTO's ruling); the old prefix simply stops being written or read.
-- REFUSED to assume: that no other module reads the dossier by the literal prefix (the worker greps `lib/` and names any carrier).
+- `state` is the worker's measurement of the fence clause as written, on an exercise at HEAD; the grade is the CVO's and the CTO's.
+- An outcome whose exercising act is a producer event (a new report landing) names the act that DRIVES that event on demand,
+  never the organic arrival (spine L2: no FWD is a wait).
 
 ## 9. Holds
 
-| hold | on | owner | what lifts it |
-|---|---|---|---|
-| merging `CRPS-n-1` | this seat | `2.0.0_SA_COO~X` | the pair signed; merged only in the rewrite's window |
+None.
 
 -- `2.0.0_SA_COO~X`
