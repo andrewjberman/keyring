@@ -79,7 +79,7 @@ Report once: the stub you added, the AC1 output lines, the two merge results, th
 cell, ~20 lines, LOCAL -- no L2/L4-R/L8-L10 of its own; its close is the round's one real run. No round element: a
 direct act stands outside round 1's single issuance (the NFRA_OPALAI OA-f-4..OA-f-8 addendum precedent, 2.0.0_SA_COO~AI).
 
-<status>pending</status>
+<status>complete</status>
 <slot>~3</slot>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
