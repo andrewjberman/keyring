@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-29T09:31:55.136937+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / the trigger Lambda's own Lever A cookie-freshness gate: cot-bd-session-trigger SKIPS the OIDC-login mint while the session cookie is POSITIVE-live (age <= 7d). Measured in its 2026-09-29T11:30:15Z log: 'Lever A: cot cookie POSITIVE-live (probe positive (captured_at=2026-09-27T18:42:27.162Z, age 1.7d <= 7d)) -> SKIP OIDC-login mint, direct bronze-run'. So the 11:30Z trigger ran bronze/silver/gold and never invoked opal-cot-bd-session-fetch. V2 needs the login to EXECUTE; it releases early on a negative probe, or on Andrew's explicit per-use word for ONE ad-hoc sign-in through the document (held since 2026-09-29T11:37:14.708158+00:00)
 **Deploy:** TO-IB-m21-212 Part 2: the cot login box gets the in-run retry, the F2 persist-binding and the registry-clean naming (rows S165, S199). Two artifacts, ONE act: bd_49f_auto_login.js (md5 7d37465ba68e8ddf44a66c008179d080) + secret-ids.env, deployed together; rollback restores BOTH (js 28dd27a054b826cc3a87f6b4498d3b5a from the running-capture, env 9b55e03c9575d4f6b58d1d239c8409fb as captured on the box)
 **Authored by:** 0.6.2_AE_PartnerETL~S
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -23,3 +23,4 @@
 - 20260929T094044Z LEG A1 closed: BLOB bytes uploaded (git show CLOUD:<path>), both files, 0 CR verified BEFORE upload. head-object read-back: bd_49f_auto
 - 20260929T094759Z LEG A2 closed: SSM deeb49bb-189f-49b2-bb64-7062b4dbcd28 on i-0643a5bee8a8feabf, Status Success, ResponseCode 0, stderr empty: both file
 - 20260929T094759Z LEG V1 closed: SSM 9d73a0f7-0ea9-4df9-ac6f-ca90221b890e -- a SEPARATE read-only command, so this is an independent read and not the dep
+- 20260929T113714Z HELD-SOVEREIGN-GATED gate=external/the trigger Lambda's own Lever A cookie-freshness gate: cot-bd-session-trigger S
