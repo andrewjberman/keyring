@@ -131,6 +131,28 @@
     "spec_asserts": "PRD v0.3 FWD-1 DONE WHEN: one live walk ending in Valero's Recommendation card open, where the PM can say whose view it is; THE THREAD hop 6 makes the dossier route (the team's position) round 2's first enrichment input.",
     "world_is": "The team's position is now served as model.team_cases (AMGT_RESAPP vv-2), and Valero's are all ABSENT in the research dossier; the round-2 cell AV-e-2 renders the team's case where served and a plain ABSENT sentence where not.",
     "notes": "Filed by the issuer at the round-2 cut (decomposition v2). Not a DSGN cell: the page renders both states correctly."
+  },
+  {
+    "id": "DSGN_AMGTV1-Z-W4-S1",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~4",
+    "surfaced_at": "2026-09-29T09:10Z",
+    "one_line": "AV-e-4 words the Model tab's refusal lines and case formula, so the page no longer matches the export's own lines that portal exportCompare.harness.cjs (not in the E4 bound) grades it against.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- decide whether the export (lib/research/print/render_pack.py, an AMGT_RESAPP surface) follows the page's wording in a later cell, or exportCompare.harness.cjs is re-scoped to compare on the served reason and formula in the data attributes the page now carries (data-model-line-refusal, data-model-case-formula); until then a run of exportCompare against a fresh export reads the two surfaces as different.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs pageCases() reads each <p data-model-case> text and pageAbsences() reads /REFUSED\\s*--\\s*([^<\\n]+)/, both compared with the export's lines; lib/research/print/tests/test_model_cases_markdown.py pins _model_case_line to '<Name> case: SERVED -- 537.70 (f)' (the served formula, mnemonics included)",
+        "AV-e-4 AC1 (raw.cjs model) demands 0 mnemonics and 0 NOT-YET-BUILT in visible text; Valero's served formula reads 'Bloomberg consensus EPS (FY1, BEST_EPS) x adjusted trailing-median P/E (PX_LAST / IS_COMP_EPS_ADJUSTED)' and the served check-face reason reads 'REVENUE_PER_SH: unit/sign convention is NOT-YET-BUILT, not MEASURED', so the page text can no longer be those bytes",
+        "node exportCompare.harness.cjs with no arguments prints its usage line (it needs an --pack export path), so the harness was not run against a pack here; the divergence is read from its regexes and the export's pinned line, not from a run"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AV-e-4 Bounds 2: every other page, component, tab and harness is unchanged; AC1 0 raw-code hits on the Model tab; FWD-30 (page and export read the same lines) is the standing parity the exportCompare harness grades.",
+    "world_is": "The page's visible case line is now '<label>: SERVED -- <value> <currency> (<formula with vendor mnemonics removed>)' with the whole served formula in data-model-case-formula, and a refused line reads 'REFUSED -- <one plain sentence>' with the served reason in data-model-line-refusal; the export still prints the served formula and reason verbatim. The bound harnesses (modelPattern 12 of 12, tabs 20 of 20) read green; exportCompare is outside the bound and was not runnable without a pack."
   }
 ]
 ```
