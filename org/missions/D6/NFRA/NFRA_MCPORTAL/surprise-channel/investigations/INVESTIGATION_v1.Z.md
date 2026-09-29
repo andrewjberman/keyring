@@ -706,6 +706,28 @@
     "spec_asserts": "Every seated serial can pass its own halt gate.",
     "world_is": "Three seated ~O COO lanes cannot safe-apply or safe-ec2-deploy as themselves. For THIS project it is routed around by the gate's own worker path (:71-73: an issuer-provisioned serial file inside the worker's worktree), so no act waits on the fix.",
     "notes": "The gate is 1.0.0_SA_CTO's (last authored 72897184fd). Remedy is a one-line class widening ([A-Z] -> [A-Z] or [A-Z][A-Z]) plus a test arm; it is the gate owner's, not this seat's."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W1-S6",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~1",
+    "surfaced_at": "2026-09-29T04:20Z",
+    "one_line": "MP-a-2's apply is BLOCKED before terraform runs: safe-apply's halt gate resolves the worker's shell to the issuer serial 2.0.0_SA_COO~MP (session serial file) and fails closed rc=3 because the ~MP lane suffix is not a single uppercase letter and no worker serial file is provisioned in the worktree.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "HALT_ACK=1 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply ... printed 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', 'Resolved serial: 2.0.0_SA_COO~MP', from org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial; terraform was never invoked.",
+        ".tools/halt-gate-check.sh:71-86 reads <worktree>/org/mcp/sessions/<sid>.serial first (an issuer may provision a worker's serial there); OPAL_AGENT_SERIAL is not consulted. That path is outside this order's <paths> and writing my own identity file would self-provision past the gate, so I did not.",
+        "Everything before the act is done and lands nothing live: gateway line re-read (keys=email,exp,family_name,given_name,iss,name,picture,sub -> branch sub), layer built (PyJWT 2.13.0, cryptography 49.0.0, cffi 2.1.0, pycparser 3.0), staged package built, targeted plan read 7 add / 0 change / 0 destroy, ledger nfra-mcportal-r3-writer-apply opened and committed dd5ab90782 with L1 and L2 closed; L3 and L4 unrun."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker holding a non-terminal task order under the project can run safe-apply from its worktree (halt gate: 'a spine-v3 worker is admitted only while a NON-TERMINAL task order under <CODE> is issued_to it').",
+    "world_is": "The halt gate takes the session's serial (the issuer's, 2.0.0_SA_COO~MP, two-letter lane) rather than the worker's, and refuses it; no worker serial file exists in C:/tmp/mp3-1/org/mcp/sessions.",
+    "notes": "Unblock: the issuer provisions <worktree>/org/mcp/sessions/<sid>.serial for 0.9.0_WK_NFRA_MCPORTAL~1, or applies itself. Nothing is half-landed: no AWS resource was created. The owner key was never written to any file (the plan file I made with -out was deleted at once; the retained plan-free apply log is masked)."
   }
 ]
 ```
