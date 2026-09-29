@@ -12318,3 +12318,63 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "NOT a replay request; nothing was retried and the window's cap is spent. This is ARMED because it is not window-local: every future Analysis window produces zero reports until the session path is repaired, so it blocks the four carried report arms (Multi-Comp, Target Weight, the first certified 49financial, Inflection) indefinitely rather than for one cap. Two reads would locate it, neither inside a walk window and neither ~Y's to make: (1) why the resident holds no usable vendor session at job start on inrij6hL -- whether the 15:00Z build, the r3 apply, or the session store is responsible; (2) whether one admitted refresh per request is the right allowance when the first act already needs one. If the answer to (2) is no, the fix is a contract change in resident_worker.refresh_session and belongs to 1.0.0_SA_CTO, not to a walk."
 }
 ```
+
+
+## IRPT_BCKEND-W86-S1 -- The inf raw files (bronze/{positions,transactions,performance}/<date>.jsonl.gz) are writte
+
+```json
+{
+  "id": "IRPT_BCKEND-W86-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~86",
+  "surfaced_at": "2026-09-29T22:58:00Z",
+  "one_line": "The inf raw files (bronze/{positions,transactions,performance}/<date>.jsonl.gz) are written by the GOLD chain on inf-gold-layer-runner, not by inf-bronze-runner; since 2026-09-28 that chain dies at step 3 INF_API_SILVER_REPS with ModuleNotFoundError: No module named lib.silver_ids because lib/silver_ids.py was never deployed to any code/ prefix.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (cut a deploy order for lib/silver_ids.py to the prefix/path the gold runner imports as lib.silver_ids, or revert the inline coerce_silver_ids; the daily chain fails identically every day until then -- 09-28 and 09-29 both failed at the same step)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/diagnostic/chain_logs/chain_full_20260928_113305.log: 'ModuleNotFoundError: No module named lib.silver_ids' (from _orion_api_silver_lib.py line 284), 'CHAIN chain:full FAILED at INF_API_SILVER_REPS (exit=1)' 2026-09-28T11:34:43Z; same at chain_full_20260929_113302.log lines 201/206",
+      "s3://opal-data-inf/diagnostic/chain_logs/chain_full_20260927_113304.log: SILVER_REPS done, PULL_TXN/PERF/POSITIONS_DAILY done and wrote bronze/{transactions,performance,positions}/2026-09-27.jsonl.gz (11:42-11:51Z)",
+      "HeadObject code/silver/_orion_api_silver_lib.py LastModified 2026-09-28T07:17:53Z (byte-equal to repo); HeadObject code/gold/lib/silver_ids.py, code/lib/silver_ids.py, code/silver/lib/silver_ids.py all 404; repo lib/silver_ids.py at git 8cd218cd05",
+      "data/inf/scripts/gold/orion-gold-dispatch.sh:348 (CHAIN_PULL order), :545 (synced prefixes), :996 (chain aborts at first failed step); data/inf/scripts/silver/_orion_api_silver_lib.py:284 (the import)",
+      "deliverable org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~86/ON_INSTANCE_DIAGNOSIS.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IRPT_BCKEND.TO-IB-pr-243 (and rows S216 / WK~81): inf-bronze-runner i-083ad9ae297f88e9f writes the raw Orion jsonl.gz files and, though recovered to running by inf-ec2-retry-launch at 2026-09-28T11:15:55Z, wrote none.",
+  "world_is": "The bronze runner did run on 09-28 (sentinel bronze/orion-api/2026-09-28/_BRONZE_COMPLETE.json completed 11:17:59Z, overall success). The raw jsonl.gz files belong to the gold chain, which aborted at its 3rd step on a half-landed deploy (dependent file deployed 09-28T07:17:53Z without its new lib/silver_ids.py). The chain fails daily, so no raw file exists for 09-28 or 09-29 and rate_limit_state_{transactions,performance}.json stay stamped 09-27.",
+  "notes": "The launch failure and retry-launch recovery are a red herring: 09-27 shows the identical Server.InternalError-then-recover pattern on both runners and all raw files landed. Read-only work; nothing was deployed or replayed. Not established: where the runner's own 'lib' package lives on disk."
+}
+```
+
+
+## IRPT_BCKEND-W86-S2 -- On 2026-09-29 inf-bronze-runner stopped 4 seconds after launch with an EMPTY stop reason, 
+
+```json
+{
+  "id": "IRPT_BCKEND-W86-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~86",
+  "surfaced_at": "2026-09-29T22:58:30Z",
+  "one_line": "On 2026-09-29 inf-bronze-runner stopped 4 seconds after launch with an EMPTY stop reason, inf-ec2-launch-monitor treated it as a normal shutdown (Suppressed normal shutdown) so inf-ec2-retry-launch was never invoked for it, and the bronze run for 09-29 never happened (no _BRONZE_COMPLETE.json, mode marker left in place).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the launch-monitor/retry chain classifies only a non-empty Server.InternalError reason as a launch failure; an empty reason on a start that never reached the fetch script needs an owner)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/inf-ec2-launch-monitor 2026-09-29T11:15:22.173Z: 'Instance i-083ad9ae297f88e9f (inf-bronze-runner) stopped; reason=' then 'Suppressed normal shutdown'; /aws/lambda/inf-ec2-retry-launch 2026-09-29 window shows only the gold runner i-0ed5afded2ebd4ed4 as a retry target",
+      "EC2 describe-instances i-083ad9ae297f88e9f: State stopped, StateTransitionReason Server.InternalError, LaunchTime 2026-09-29T11:15:18Z",
+      "s3://opal-data-inf/orion/bronze-trigger-mode.json LastModified 2026-09-29T11:15:18Z still present (infra/aws/ec2/inf-bronze-runner/inf-bronze-fetch.sh:62 deletes it only when the fetch script runs); s3://opal-data-inf/bronze/orion-api/2026-09-29/ has no _BRONZE_COMPLETE.json and no _markers/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "inf-ec2-launch-monitor hands every Server.InternalError launch failure of an inf runner to inf-ec2-retry-launch, which recovers it (as on 09-27 and 09-28).",
+  "world_is": "For 09-29 the stop event carried an empty reason in the monitor's log, the monitor suppressed it as a normal shutdown, and the instance remains stopped with the 09-29 bronze run not executed. The gold chain's failure (row W86-S1) is independent of this.",
+  "notes": "Found off-task while reading the 09-28 window; not the 09-28 cause. Nothing was started or retried by this worker (read-only bound)."
+}
+```
