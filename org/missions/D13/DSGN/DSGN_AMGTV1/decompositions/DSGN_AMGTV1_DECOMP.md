@@ -182,3 +182,40 @@ at this round's) -- the cut's omission, not the worker's. One DIRECT-ACT cell, o
 | `AV-e-7` | DIRECT-ACT: `shell.harness.cjs`'s `card_window_carries_provenance` re-anchored onto the money form the page now prints (the market cap as its served currency code then the amount, e.g. `>USD 162B<`, or the amount and "currency not stated" when the fixture's figure carries no currency); its claim (the price window carries the mnemonic in an attribute and the value formatted for reading) kept; nothing else moves | FWD-4 (the round's bound) | `SA/__harness__/shell.harness.cjs` | `SA/components/HeaderCards.tsx`, `SA/components/StatTile.tsx` | LOCAL |
 
 Base (DEV 1a1e8162): SHELL bound 2 of 3 (shell 9 of 10, RED).
+
+---
+
+## v3 -- ROUND 3 (issuer, 2026-09-29 ~10:0xZ), over PRD v0.3 @abfad1355c (ADMITTED)
+
+**Rectangle:** the ENRICHMENT LIST of `1.0.0_SA_CTO~Z`'s round-2 analysis `ledger/ROUND_ANALYSIS.round2.md` @172d3d9600 (msg 26551)
+section 4, items 1-5, one cell per item, with the CTO ruling @06d51bce50 (W4-S1 (a) is item 3). NOT cells: the served name and
+the export's wording from one source (AMGT_RESAPP round 48). **Portal base:** site-Z local DEV `670f29e4`. **Fixtures:**
+`deliverables/2.0.0_SA_COO~D/round3/fixtures/` (adapter at the cut; `team_cases` now served): Valero (base ABSENT, the dossier's
+reason "no BASE CASE section in class A missing or class B missing"), INTU (base SERVED; management ABSENT ZERO_OFFICERS),
+SAP GY (EUR listing, base SERVED, team unit "$" as written -- the walk's non-USD name), WMB, peer sets, the ranking.
+**Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | risk |
+|---|---|---|---|---|---|
+| `AV-r-1` | 1 | Every machine string the CVO named off the face -- "(S13)", "crosswalk/v1", "generation: none ...", the lead source line (generation id, state, blp_client 127.0.0.1:8194), "WMB_US_Equity", "claude-opus-5", "BLOOMBERG SESSION: NOT REPORTED" -- into words or behind a details affordance a PM opens on purpose; the Posture panel header white (one band) | FWD-11, FWD-2, FWD-10 | `SA/components/SecurityOverlay.tsx`, `HeaderBrief.tsx`, `GenerationCaption.tsx`, `LeadPanel.tsx`, `IdentityLine.tsx`, `SA/tabs/PostureTab.tsx`, `SA/postureCites.ts`, harnesses `tabs`, `shell`, `errorEmpty`, `leadPanelPattern`, `posture`, `posturePattern` | LOCAL |
+| `AV-r-2` | 2 | The team-case absence names the gap the page can see: field not carried -> "not served on this page yet"; served ABSENT -> "not in the pack" with the dossier's reason carried on the element; INTU renders the served case -- in the Recommendation window and the Model tab | FWD-6, FWD-1 hop 6 | `SA/components/ThesisCards.tsx`, `SA/tabs/ModelTab.tsx` (the team-case element only) | LOCAL |
+| `AV-r-3` | 3 | FWD-30's page/export parity harness keys on the data the page carries (`data-model-line-refusal`, `data-model-case-formula`, the line identity) and reads the cites inside the card windows; a real figure, cite or absence difference still fails it | FWD-30 parity (W4-S1 (a); closes AMGT_RESAPP Z-S297) | `SA/__harness__/exportCompare.harness.cjs` | LOCAL |
+| `AV-r-4` | 4 | Exec Management's absence reads as a sentence saying where the officer list was looked for; the codes ride attributes | FWD-7 | `SA/tabs/ExecManagementTab.tsx`, harness `execPattern` | LOCAL |
+| `AV-r-5` | 5 (batch, last) | The Model panel header white (one band); no page-side formatter prints a "$" it was not served (StatTile's legacy path); the Thesis chart caption names its line in words | FWD-11, FWD-4 | `SA/tabs/ModelTab.tsx` (the header), `SA/components/StatTile.tsx`, `SA/components/ThesisDriverChart.tsx`, harness `modelPattern` | LOCAL |
+
+**Edges and chains:** AV-r-5 re-touches `ModelTab.tsx` after AV-r-2 (a batch cell runs last): one chain, one worker queue (r-2
+then r-5). The rest are disjoint and consume nothing. M = 4 chains (r-2->r-5, r-1, r-3, r-4), N = 4, cap 8.
+
+**Checks (`round3/checks/`, dry-run at base 670f29e4):** named.cjs 14 hits over 4 surfaces (FAIL); band.cjs posture and model
+1 estate band header each (FAIL; thesis PASS, the control); team.cjs window 1 of 3, model 1 of 3 (FAIL); exec.cjs 2 of 3
+(FAIL); money.cjs 2 of 3 (FAIL); RESAPP's vv-5.AC1.sh "NO" (FAIL: ABSENCES page 7 vs export 17); parity-ctl.sh YES (control:
+deleting one counted export absence moves the export's count 17 -> 16 and the harness fails); bounds R1 6/6, R2 3/3, R4 2/2,
+R5 3/3 (PASS); floor control (execPattern floor 10) RED. `census.cjs` is the CVO's instrument (decision 2): it prints every
+visible non-prose token per surface for judgment and grades nothing; at base 40 tokens over six surfaces.
+
+**Battery:** comp-schedule, comp-iam DECLARED-NOT-APPLICABLE. comp-adversary: the checks above; blind spots -- static markup,
+estate chrome stubbed; no served fixture carries a Thesis chart, so AV-r-5's caption is graded by the walk only; the bound's
+harness pattern cannot read `execText`/`execFallback` (they exit 0 with non-standard output), so they bound no cell.
+
+**Rule 24:** (i) MECE over the analysis's five items, by subtraction: 5 placed. (ii) One cell per write set. (iii) One intent per
+cell except AV-r-5, the named batch. (iv) No cell moves a served value, a figure, a verdict, a cite or the click.
