@@ -69,3 +69,18 @@ Python. MSI removal records were independently read. The reported causal link
 between the 12:16 MSI reconfiguration and PATH restoration is an inference;
 MSTR has before/after observations but has not identified the triggering process
 or tested recurrence after the uninstall.
+
+## 7. MSTR's later reclamation authority and execution
+
+Message 26623 (2026-09-29T17:00:44Z) directs CRO to cite the EXECUTED section of
+MSTR's residue table instead of the original proposal. That section records
+Andrew-direct at 12:29 ET in the MSTR session:
+
+> go, just make sure not to touch any recent AMGT and NFRA worktrees that
+> might be in tmp
+
+MSTR reports applying a HEAD-age-under-24-hours exclusion to AMGT/NFRA checkouts
+in both tmp and Desktop, removing 33 other checkouts and skipping one. CRO records
+that scoped word as relayed by MSTR, independently checks the resulting manifest,
+paths and preserved refs, and updates the research package. No further deletion
+or expansion of the approved scope is inferred.

@@ -576,5 +576,52 @@
     },
     "machine_python314_entries": 0,
     "broker_listening": 1
+  },
+  "reclamation_execution_update": {
+    "source_message_id": 26623,
+    "verification_at": "2026-09-29T13:01:39.022034-04:00",
+    "authority": "MSTR-relayed Andrew 12:29 ET go with recent AMGT/NFRA exclusion; no CRO destructive action",
+    "summary": {
+      "candidates": 34,
+      "removed_recorded": 33,
+      "removed_now_absent": 33,
+      "removed_heads_reachable": 33,
+      "removed_logical_gib_sum": 44.67,
+      "detached_pins": 5,
+      "archive_dirs": 14,
+      "detached_pins_matching_head": 5,
+      "archive_dirs_present": 14,
+      "skipped_paths_present": 1
+    },
+    "volume": {
+      "measured": "2026-09-29T13:01:40.2317825-04:00",
+      "capacity_bytes": 508636950528,
+      "free_bytes": 54703968256
+    },
+    "reported_exclusions_not_independently_audited": 70,
+    "proposal_correction": "104 original candidates minus 2 subsequently LIVE =102; classification reads approximately12:18-12:28ET; final executed batch33",
+    "limits": "Head reachability, named pins, path absence and archive-directory presence verified; archived contents not compared byte-for-byte; net allocated reclamation not derived from rounded logical sizes.",
+    "source_fingerprints": [
+      {
+        "local_file": "MSTR_RESIDUE_TABLE.md",
+        "bytes": 3413,
+        "sha256": "b449d45e2570bf4822124fe49e003250e10062bc29dd0c175b0b7b016e864ab4"
+      },
+      {
+        "local_file": "mstr-reclaim-go.jsonl",
+        "bytes": 9308,
+        "sha256": "173dacc13441b27b860e478db7d57cc532798f32c83d0996c6aae712e8addfb0"
+      },
+      {
+        "local_file": "cro-reclamation-verification.json",
+        "bytes": 46395,
+        "sha256": "6d9b317916dd9126b18e062190ce14f47f2f488d23f08a03afd358ca4b76b7ac"
+      },
+      {
+        "local_file": "cro-post-reclamation-volume.json",
+        "bytes": 131,
+        "sha256": "926efc3c50300a0e55946de92b7540dd67bda2ccd49ffb7005a45b5562e07737"
+      }
+    ]
   }
 }

@@ -1009,3 +1009,20 @@ and census remain on this device in their original locations and ignored
 `.runtime/crash-investigation-20260929/`, not committed. SHA-256 fingerprints and
 selected findings are committed. CRO deleted no dump/worktree/branch, repaired no
 Python installation and stopped no unrelated process.
+
+
+### RCN-0019 downstream correction ? 2026-09-29 13:01 ET, CRO~Z
+
+MSTR message 26623 and its EXECUTED record supersede the original reclamation
+proposal. Under Andrew's relayed 12:29 go excluding recent AMGT/NFRA worktrees,
+MSTR removed 33 checkouts (44.67 GiB summed logical sizes), skipped one, and
+reports excluding 70 recent checkouts. CRO independently verified 33/33 removed
+paths absent, 33/33 HEADs reachable, 5/5 named detached pins correct and 14/14
+scratch archive directories present. Archived contents were not byte-compared.
+Fresh C: free space at 13:01:40 is 54,703,968,256 bytes (50.95 GiB).
+
+The count discrepancy was 104 original candidates minus 2 newly LIVE; the
+classification time was approximately 12:18-12:28, not the future12:30-12:45
+labels. Both are corrected in the package's execution addendum. The final
+33-checkout scope is distinct from either proposal. Remaining driver, damaged
+checkout, messaging and prevention findings stand. CRO executed no deletion.

@@ -4,6 +4,13 @@
 Commission and limits: [Andrew-direct record](../ANDREW_DIRECT_20260929_SITE_Z_CRASH_INVESTIGATION.md).
 Research and recommendations only. No remediation dispatched or destructive operation executed by CRO.
 
+**Update, 13:01 ET:** MSTR subsequently executed an Andrew-approved, narrower
+cleanup: 33 checkouts / 44.67 GiB logical contents. CRO verified their absence and
+all 33 HEADs' reachability; C: measured 50.95 GiB free. See the
+[execution addendum](RECLAMATION.md#4-execution-addendum--1301-et) for corrected
+proposal counts, authorization and preservation checks. The original census and
+proposal below remain historical measurements, not the current deletion scope.
+
 ## Finding
 
 **The device suffered both disk exhaustion and a kernel driver stall.** Writes were
@@ -131,9 +138,9 @@ that raw map. MSTR was notified before preparing the joint table.
 
 **Joint recommendation:** use reviewed development checkouts for substantial
 reclamation before sacrificing crash evidence. MSTR's proposed batch is roughly
-165–168 GiB of checkouts plus about 2.5 GiB scratch; its exact count and timestamp
-reconciliation is tracked in [reclamation review](RECLAMATION.md). This is a
-proposal, not a deletion authorization. Retaining branches alone does not preserve
+165–168 GiB of checkouts plus about 2.5 GiB scratch. This original proposal was
+superseded by the narrower executed batch; the corrected counts and timestamps
+are in [reclamation review](RECLAMATION.md). Retaining branches alone does not preserve
 untracked or ignored source, dirty submodule files, or an unpinned detached HEAD.
 
 The 32 GiB dedicated allocation was documented in the Desktop investigation's
