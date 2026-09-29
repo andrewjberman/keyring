@@ -76,6 +76,20 @@ served reads this gold today (the adapter is on the engine at `qfxZ0DzB`), so th
    when BOTH the local producer and this Lambda carry it. Worth a `comp-pipescript deployed`-style read at the next
    producer change, so the packaged bytes are compared to the drained commit before a fire, not after.
 
+## Addendum 1 (2026-09-29 15:3xZ) -- condition 2 MET on the rewritten day; condition 3 waits for Wednesday's fire
+
+- **Applied:** the Lambda reads CodeSha256 `gLRGHIyi` (LastModified 14:42:51Z); D1's invoke rewrote
+  `date=2026-09-28/data.parquet` at 14:45:04Z (version `q6nwcljY`) and both manifest surfaces at 14:45:04Z.
+- **This seat's after-read, 15:32Z:** `e3_ac4_49f_reemit_v020.py 2026-09-28` -> **PASS**: 558 days, 0 partitions absent,
+  **0 OK rows at |r| >= 1** (was 17), 3 at |r| > 0.5 (the three ordinary large days already counted at 09-25), `leveraged`
+  on 558 of 558, **manifests complete 558 of 558**. The rewritten day: 7,548 rows, 19 columns, schema 1.1; statuses OK
+  6,654 / NO-PRIOR-HOLDINGS 885 / NON-POSITIVE-BASE 6 / ALL-HOLDINGS-EXCLUDED 3 (the same census as the old shape,
+  because the fourteen rows moved inside OK from +13.685 to 0.00); OK max +3.74%, min -6.87%, 0 at |r| > 0.5. The
+  seventeen S205 accounts read 0.00% or ordinary moves (-0.5% to -1.9%); two of their second accounts read
+  NO-PRIOR-HOLDINGS by name. Manifest parquet and json: `complete` True, `computable_count` 6,344, equal.
+- **Condition 3 stands:** Wednesday 2026-09-30 11:30Z, the schedule's own fire, target day 2026-09-29, read from the
+  partition and the log (`source=schwab_08335338`, the 19-column shape); never a hand re-fire called the proof.
+
 ## What this half signs against
 
 - Packet blob `35c58b3f43`; commit 363dc1fda4; artifact `gLRGHIyi` (S3 `ifXqxmjU`) with its 14-member census against
