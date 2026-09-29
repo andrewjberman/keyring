@@ -42,7 +42,7 @@ build input, with no behaviour change.
 
 ### ACCEPTANCE
 
-<criterion id="IBM21-211-AC1" cell_refs="IB-mr-211"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R21_CHECKS/r21_s166_build_input.py</invocation><expect>BUILD-INPUT followed by the first 12 hex of the running md5</expect></criterion>
+<criterion id="IBM21-211-AC1" cell_refs="IB-mr-211"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R21_CHECKS/r21_s166_capture.py</invocation><expect>RUNNING-CAPTURE followed by the first 12 hex of the running md5</expect></criterion>
 `IBM21-211-AC1` -- the repo carries the running bytes, and an SSM read shows the box still runs them.
 
 <expected_criteria>IBM21-211-AC1</expected_criteria>
@@ -58,7 +58,7 @@ Dry-run at the base 2026-09-29 04:3xZ: NO-BUILD-INPUT: the repo .js absent (FAIL
 
 <paths>
 .gitattributes
-infra/aws/ec2/bd-cot-auto-login/bd_49f_auto_login.js
+infra/aws/ec2/bd-cot-auto-login/bd_49f_auto_login.js.running-capture.txt
 org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/IRPT_BCKEND_R21_S166_RUNNING_VS_REPO_20260929.json
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -99,3 +99,14 @@ md5s the working file) breaks. Grant widened by one path: `.gitattributes`. Add 
 `infra/aws/ec2/bd-cot-auto-login/*.js -text`, in the same commit as the .js, so git stores and checks out the bytes
 unchanged. Criteria unchanged. Graded by: no gate limb grades a modified order's paths (LIMB 6 fires on new orders
 only; GATE (viii) does not apply, `<placeholders>NONE`).
+
+## AMENDMENT 2 (2026-09-29 07:3xZ, issuer 2.0.0_SA_COO~M) -- CTO ruling on row IRPT_BCKEND-S198 (msg 102634)
+
+The naming limb (ENFORCE) refuses the byte-exact `.js`, and the CTO ruled no gate widening: the running script lands as
+non-graded EVIDENCE, not as a build input. Replace step 2's target: write the exact bytes (md5 28dd27a0..., 35,049 B,
+already read by SSM ea2016dd) to `infra/aws/ec2/bd-cot-auto-login/bd_49f_auto_login.js.running-capture.txt` (the
+naming limb grades .py .js .mjs .ts .tf .json .yaml .yml only). Do NOT commit `bd_49f_auto_login.js` in this order;
+delete the uncommitted copy from your worktree. The `.gitattributes` line becomes
+`infra/aws/ec2/bd-cot-auto-login/*.running-capture.txt -text` (keep the `*.js -text` line from amendment 1 too; TO-IB-m21-212
+commits the deployable .js). IBM21-211-AC1 now runs `R21_CHECKS/r21_s166_capture.py` (base: NO-CAPTURE, FAIL as
+expected). The read-back JSON is unchanged. Commit the capture, the JSON and `.gitattributes` together.

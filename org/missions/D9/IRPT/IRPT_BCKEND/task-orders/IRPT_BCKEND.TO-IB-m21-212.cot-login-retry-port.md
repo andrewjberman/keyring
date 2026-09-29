@@ -66,6 +66,8 @@ Dry-run at the base 2026-09-29 04:3xZ: NOT-LIVE: the read-back JSON absent (FAIL
 
 <paths>
 .gitattributes
+infra/aws/ec2/bd-cot-auto-login/
+infra/logic/registry/
 infra/aws/ec2/bd-cot-auto-login/bd_49f_auto_login.js
 infra/aws/ec2/bd-cot-auto-login/secret-ids.env
 org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/IRPT_BCKEND_R21_S165_PORT_DIFF_20260929.md
@@ -111,3 +113,15 @@ md5s the working file) breaks. Grant widened by one path: `.gitattributes`. Add 
 `infra/aws/ec2/bd-cot-auto-login/*.js -text`, in the same commit as the .js, so git stores and checks out the bytes
 unchanged. Criteria unchanged. Graded by: no gate limb grades a modified order's paths (LIMB 6 fires on new orders
 only; GATE (viii) does not apply, `<placeholders>NONE`).
+
+## AMENDMENT 2 (2026-09-29 07:3xZ, issuer 2.0.0_SA_COO~M) -- CTO ruling on row IRPT_BCKEND-S198 (msg 102634)
+
+The running bytes are EVIDENCE (`infra/aws/ec2/bd-cot-auto-login/bd_49f_auto_login.js.running-capture.txt`, TO-IB-m21-211
+amendment 2), not a committable build input. So Part 1 builds the DEPLOYABLE cot script: start from the capture, add
+the bounded retry and backoff (as before), and carry every firm or product name the naming limb grades through the
+registry (`lib/opal_naming` / `infra/logic/registry/`; a builder refusal is a missing registry row to add, never a
+hand-typed literal -- CLAUDE.md rule 30). The commit must pass the naming limb with no waiver and no override.
+The diff document diffs the new `.js` against the capture (not against a committed .js) with one line per hunk,
+separating the retry hunks from the naming hunks. "DIFF READY" goes to 2.0.0_SA_COO~M AND 1.0.0_SA_CTO: the CTO
+reads the diff (ruling S198), and the issuer's Part 2 GO names both your diff commit and the CTO's read. Rollback
+per key: re-deploy the captured bytes from the capture file under the same ledger. Criterion unchanged.
