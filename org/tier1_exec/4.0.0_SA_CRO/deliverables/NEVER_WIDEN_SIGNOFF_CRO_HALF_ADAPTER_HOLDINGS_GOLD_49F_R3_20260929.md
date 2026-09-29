@@ -123,6 +123,31 @@ point <= -1); rows B-F as read; the rollback branch measured live at 10:58-11:12
   here (three sweeps; 0.15 ms per key). It is the `map_ms` of the served `irpt_holdings_phases` line ~P reads at
   condition 2, inside the 48 s bound, paid once per press; a five-period press set pays it five times. Not a condition.
 
+## Addendum 2 (2026-09-29 17:3xZ) -- D1 CLOSED @d39ef96d92 (~P 102943): conditions 1 and 2 MET on live reads; A1 open for conditions 3 and 4
+
+- **Condition 1 -- MET.** Read here, not from the ledger alone: `irpt-performance-adapter` CodeSha256 `+h/AH/RY`,
+  LastModified 2026-09-29T16:40:25Z, State Active, LastUpdateStatus Successful; the artifact's S3 latest is still
+  `TBy0pL` (12:23:58Z, 424,586 bytes), so the function runs the version this half read. The ledger's D1 writes "S3
+  latest TBy0pL at apply", the two applies (performance 0/2/0 at 16:35:02Z, the role policy and the Lambda; shared-infra
+  bucket policy 0/1/0 at 16:40:29Z) and both re-plans No changes.
+- **Condition 2 -- MET.** The ledger reads 0 invocations between 16:40:25Z and 16:49:39Z, so ~D's P2 presses were the
+  first on the new bytes (Init 16:49:47Z / 16:49:51Z), and its log read to 17:03Z: 154 invocations, max Duration 17.2 s
+  (the bound is 48 s), 0 served UNEXPECTED, 0 Traceback, 0 AccessDenied, refusals named (UNSUPPORTED_OPERATION 36 --
+  the 3Y presses, as section 2 read -- and OBJECT_NOT_COVERED 12). This seat's own read of the served
+  `irpt_holdings_phases` lines, 16:49:49Z-17:10:36Z: 95 reads at 185-558 partitions; `map_ms` p50 82, max 259;
+  `frame_ms` p50 6,718, max 14,854 (the partition gets are the press); `list_ms` max 194; `link_ms` max 39. No
+  rollback trigger was reached.
+- **Correction to addendum 1's named item 4 (row IRPT_BCKEND-S214 corrects S212):** the mapping sweep costs the deployed
+  function 59-259 ms, not the ~2 s measured on this laptop; the shape (a linear sweep over every key of the day) is as
+  read, the magnitude was local. The 48 s bound is spent in the frame reads.
+- **What A1 still owes this half:** condition 3's per-account AFTER record from ~D's presses, paired against the figures
+  tabled in addendum 1 (the BEFORE on `qfxZ0DzB` is written: control ..5669 YTD -0.40% / 1Y -0.76%, SI a named
+  UNSUPPORTED; the larger ..2297 +143.18% / +133.12%; COT and INF read UNCHANGED after, ~D 102935); and condition 4,
+  Wednesday 2026-09-30's 11:30Z producer fire read from its partition. One item to read there: the ledger notes every
+  paired `irpt_internal` line carries `extra.classifier_code UNEXPECTED` ahead of the Entry's reasons table on a
+  refusal the public code names -- if the internal classifier says UNEXPECTED for every named refusal, the log's
+  own oracle for condition 2 is the public code alone, and that is worth a row from the lane that owns the log.
+
 ## What this half signs against
 
 - Packet blob `6b256e41e4`; commits 66469ce943 and 23126d4739; artifact `+h/AH/RY` (S3 `TBy0pL`) with its census against
