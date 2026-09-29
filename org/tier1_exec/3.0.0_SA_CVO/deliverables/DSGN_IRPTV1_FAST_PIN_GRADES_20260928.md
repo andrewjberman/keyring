@@ -150,6 +150,29 @@ now against that ruling too. Filed as row DSGN_IRPTV1-S39.
 Pin 15 changes the Holdings tab that row S37's reset ran through. Whether the dropdown whose pick cleared the client
 survives this pin is not read here; the next walk re-tests S37.
 
+## Regrades on a real run: walk 20260929T000244Z (00:1xZ)
+
+Same client. Portal HEAD `1f6612c8` (pins 1-16), but the tree carried UNCOMMITTED product edits to
+`tabs/holdings/HoldingsTab.tsx` and `tabs/holdings/DrillTree.tsx` (item 17, parked unlanded; `git -C portal status`
+read after the walk). So the Holdings shots are not a landed build, and pins 15-16 are not graded on them. Identity,
+Performance and Analysis do not import those two files. Shots opened and read: 007 md5
+`fa44f77fb890ef0e3dd1f26dced5078c` (a crop of Report details read at full size), 010 `9820db3b70bd588b1af3fe592998afe7`,
+023 `64534b8461cb48c2d05b329e2ab413db`.
+
+| pin | now | on what |
+|---|---|---|
+| 14 `8d12987e` (UIC-03) | **PASS** | shot 007: Report details reads "Time-weighted, net of fees, cumulative. Values in USD." and "Source: Opal's performance engine, as of September 22nd, 2026."; no code, hash or producer name (the before, walk 220437Z shot 011, showed "PERFORMANCE_PARTIAL", "TIME_WEIGHTED" and revision hashes). Outside the claim: "Business date 2026-09-22" is still raw ISO beside "Partial" |
+| 7 `84519ede` (UIC-22) | **PASS on the answered arm** | shot 023, client selected: "Holdings snapshot: as of 2026-09-22 Ready", no "none held". The loading arm is transient and was not caught. The date is raw ISO and "Ready" is a state word |
+| 8 `c77b693b` (UIC-19) | **PASS** | shot 023: title "ANTHONY DALE REID -- Overview": the client and the variant, not an account |
+| 13 `2febba0b` | NOT GRADED (not discriminating) | shot 023 reads "49 Financial (Client)", as the walks before the pin did; this client's firm does not tell a registry name from the old guess |
+
+- **Row S37 did not reproduce.** After the same select-1 picks ("All", "Opal Long Term", "Opal Ultra Long Term") and the
+  select-2 picks, the Analysis tab still holds the client (shot 023). This build carried the unlanded Holdings edits, so
+  it does not show that the LANDED build is fixed. S37 stays open for L9 with this negative.
+- **Row IRPT_BCKEND-S186 is still live** at 00:0xZ: shot 010 shows ****9079 / IRA ($99,253.73) at "-100.00%" YTD,
+  series start 2026-04-15, end 2026-09-22 -100.00%. That is after `~P`'s re-verified pr-191/IB-pr-194 drain
+  (`ae8da14d12`). The source still names "opal-gips-engine".
+
 ## Next items
 
 - **N1 (pin 2's FAIL):** the Analysis stage line prints the raw public reason code beside "Loading"
