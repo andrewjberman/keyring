@@ -11523,3 +11523,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not this cell's remedy; carried for whichever owner is tracking portal-auth drift. This cell's own targeted plan matches the task order's expectation exactly (1 in-place update, the named resource)."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S199",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.6.2_AE_PartnerETL~S",
+  "surfaced_at": "2026-09-29T07:40:00Z",
+  "one_line": "The cot login box can report SUCCESS while the fresh .bd.identity was never persisted: its running bd_49f_auto_login.js calls smPut(sessionId, ...) unguarded at :438, so a PutSecretValue throw reaches the outer catch, logs ERROR and leaves rc at 0. The 49F canonical was hardened against exactly this on 2026-07-02 (F2) and binds a failed persist to rc=1; the cot copy never received that hunk.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO -- porting the F2 persist-binding is a second behaviour change to the running login script, outside TO-IB-m21-212's stated change (the retry only) and outside what its <paths> grant was cut for. 2.0.0_SA_COO~M holds the orders. This seat ported the retry and deliberately left this hunk alone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cot RUNNING bytes (md5 28dd27a054b826cc3a87f6b4498d3b5a, read under SSM ea2016dd-1284-4a9e-9322-5497c80dd905): line 438 `        smPut(sessionId, JSON.stringify({` -- no try/catch around it; the enclosing try's catch at :447 logs `ERROR: ${...}` and does not touch rc, which was set to 0 by the successful login",
+      "49F canonical at HEAD (infra/aws/ec2/bd-49f-auto-login/bd_49f_auto_login.js): :582 `try {`, :583 the same smPut, :593 `log(`ERROR: smPut FAILED to persist fresh .bd.identity (...) -> rc=1 LOUD (session NOT advanced)`) -- and rc=1 set one line above it",
+      "the 49F copy's own comment names the class: 'A PutSecretValue throw used to propagate to the OUTER catch (logs ERROR) but LEFT rc=0 ... -> returned SUCCESS while the fresh cookie was NEVER persisted -> the next run reads the STALE secret with a misleading rc=0 = the exact silent-freeze class' (F2, COO GREENLIGHT + CTO arch-gate-PASS 2026-07-02, ADVI_BDAPIMIG auth-chain hardening)",
+      "denominator: the cot running bytes and the 49F copy at HEAD differ in 12 hunks (456 vs 605 lines, unified diff at n=0); 2 top-level functions exist only in 49F (attemptLogin, classifyByDom). This row is about ONE of those 12, named while reading both files whole as TO-IB-m21-212 Part 1 instructs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "rc==0 from the cot login script means the fresh session was captured AND written to Secrets Manager -- the invariant the retry loop's `if (rc === 0) break` and every downstream freshness read depend on.",
+  "world_is": "rc==0 means the cookie was captured. The write is unchecked, so a Secrets Manager failure yields rc=0 with a stale secret still in place and only an ERROR line in stderr to show it -- indistinguishable downstream from a clean refresh.",
+  "notes": "Not remediated: the retry port (row S165, TO-IB-m21-212 Part 1) neither creates nor worsens this -- the loop breaks on rc===0 exactly as the single attempt exited on it -- but it now sits one line from ported code, so it is filed rather than left for the next reader. Named in section 4 of org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/IRPT_BCKEND_R21_S165_PORT_DIFF_20260929.md (@c7f136c9d8) as a deliberate NOT-PORTED divergence, alongside classifyByDom. If the issuer wants it, it is a one-hunk addition to the same candidate."
+}
+```
