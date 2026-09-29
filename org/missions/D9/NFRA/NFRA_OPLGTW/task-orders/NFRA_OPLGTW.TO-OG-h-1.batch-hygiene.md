@@ -94,6 +94,16 @@ pk/sk list of every item whose pk matches `probe-og-`, the total item count scan
 delete command per key for Andrew to approve. If the Scan shows any item that is not a probe fixture, list only its
 count, never its key.
 
+**AMENDMENT A1 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~01:5xZ, on your row Z-W13-S5).** Item A lands WITHOUT renormalizing
+`infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml`. A CRLF->LF rewrite of that file makes the naming gate read 16 existing MDPF_CANON-owned key
+patterns as added lines; renaming them is MDPF_CANON's remediation, never a rider here. So: append your withheld
+`.gitattributes` block (the seven `text eol=lf` lines, gateway tree only) AND, after it, exactly one exception line
+`infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml -text`, which leaves that file's stored bytes and checkout untouched and puts no phantom
+modification on any tree. Do NOT run `git add --renormalize`. Verify `git status --short` shows no change to
+DATA_CATALOG.yaml after the edit. The hazard W2-S8 is disarmed for the other 40 files; the catalog stays stored CRLF, as
+it has always shipped, until MDPF_CANON's remediation renormalizes it. AC1's expectation is amended to admit exactly
+that one named exception (`hy.AC1.sh` updated in the same commit).
+
 ## 2. BOUNDS
 
 1. You never delete, put or update anything in AWS. The Scan in Item F is the only AWS call.
@@ -128,12 +138,13 @@ Rows: `org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIG
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-h-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/hy.AC1.sh; echo "exit=$?"</invocation><expect>attr eol=lf on all; stored CRLF 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-h-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/hy.AC1.sh; echo "exit=$?"</invocation><expect>attr eol=lf on all outside the exception; exception -text=yes; stored CRLF outside the exception 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-h-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/hy.AC2.sh; echo "exit=$?"</invocation><expect>moto-importing modules excluded 0 -- run 1 passed, run 2 passed; tracked files modified by the runs 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-h-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/hy.AC3.sh; echo "exit=$?"</invocation><expect>missing 0; unclassified 0 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
-- `AC1` (Item A) -- every tracked gateway file with the seven extensions resolves `eol: lf` and none is stored CRLF.
+- `AC1` (Item A, amended A1) -- every tracked gateway file with the seven extensions except `DATA_CATALOG.yaml` resolves
+  `eol: lf` and none is stored CRLF; `DATA_CATALOG.yaml` resolves `text: unset` (the one named exception).
 - `AC2` (Items C, D, E) -- two consecutive single-process runs over the repaired modules (`test_ratelimit.py`, then
   `test_ogq1_ac02`, `test_schwab_export.py`, `test_oauth_durable.py`, with AUDIT_PATH unset so Item C is exercised)
   each pass and leave no tracked file modified. The check uses `.venv-og` when present.
@@ -159,7 +170,7 @@ result file names, per item, the row it answers and what the reader should now s
 - Disarms owed at the drain, by this seat: W2-S8 on AC1 PASS; S43 on AC3 PASS (the register is the restatement).
 - `<risk>` WORLD is GATE (xii)'s floor (an `infra/` path); the cell deploys nothing.
 
-<status>staged</status>
+<status>complete</status>
 <round>3</round>
 <slot>~13</slot>
 <fabric>site-z</fabric>

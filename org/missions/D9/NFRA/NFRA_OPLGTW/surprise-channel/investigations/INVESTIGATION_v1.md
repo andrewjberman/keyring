@@ -4254,3 +4254,77 @@ name the one known failure instead of silently inheriting it.
   "notes": "INFERRED, not reproduced: one failure, no second sample. Reported so the drain does not read a single red ac04 as a regression of this cell."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-29T00:40Z",
+  "one_line": "OG-h-1 item C's premise is already met at the cut base: tests/conftest.py sets AUDIT_PATH to a per-session temp file before any app import (OG-d-1); the only gap was that it overwrote an AUDIT_PATH the environment already set, which is what the order asks to honour.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/conftest.py at HEAD 14d3ce32a8, lines 17-24 before this cell's edit: _AUDIT_DIR = tempfile.mkdtemp(...); os.environ['AUDIT_PATH'] = _AUDIT_FILE, with a session fixture patching the cached Config.",
+      "hy.AC2 (the four modules, AUDIT_PATH unset, twice): 'tracked files modified by the runs 0' with the edit in place; the edit changes only the env-honouring behaviour."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row W3-S2 and OG-h-1 item C say a suite run appends to the tracked audit.jsonl and that conftest.py must set AUDIT_PATH to a temp file.",
+  "world_is": "conftest.py already redirected AUDIT_PATH at the base; the row's measurement predates it or was taken in a run that did not load this conftest. The cell's edit is limited to honouring an environment-set AUDIT_PATH.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-29T00:40Z",
+  "one_line": "OG-h-1 bound 1 says the item F Scan is the only AWS call; this worker made one extra read-only call, dynamodb describe-table on gateway-access-state-table, to confirm the key schema (pk, sk) before the Scan.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "describe-table returned KeySchema pk HASH, sk RANGE, TableStatus ACTIVE and ItemCount 198; the Scan then read 203 items (ItemCount is refreshed about every six hours).",
+      "Both calls read-only under Andrew_Berman; nothing was written, deleted or updated in AWS by this cell."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-h-1 bound 1: the Scan in Item F is the only AWS call.",
+  "world_is": "Two read-only DynamoDB calls, not one. The key names were needed for the ProjectionExpression.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-29T01:10Z",
+  "one_line": "OG-h-1 item A cannot land: safe-commit.sh's naming limb (LGIC_ENFORCE DEC-6, ENFORCE) refused the line-ending renormalization of infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml with 16 NAMING REFUSE findings, so AC1 (stored CRLF 0) is unmet and W2-S8 stays ARMED.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh at wk-NFRA_OPLGTW-13 (base 14d3ce32a8): 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' 16 NAMING REFUSE lines, all DATA_CATALOG.yaml at 632, 637, 648, 661, 672, 684, 695, 707, 718, 730, 740, 752, 763, 775, 818, 1304; reason on each: 'EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it'.",
+      "git ls-files --eol at the base: 41 gateway files with the seven extensions, 40 i/lf and 1 i/crlf (DATA_CATALOG.yaml); git add --renormalize on it changed 1,404 lines, line endings only.",
+      "The .gitattributes rule alone leaves DATA_CATALOG.yaml ` M` in git status (attr text eol=lf against an index blob stored CRLF), reproduced in this worktree, so it was not landed either. Detail: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~13/ITEM_A_BLOCKED.md."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-h-1 item A: one .gitattributes block plus git add --renormalize on DATA_CATALOG.yaml, in one commit; a file the commit gates refuse is a BLOCKING row, never an override.",
+  "world_is": "The naming limb reads a whole-file line-ending rewrite as adding 16 out-of-pattern S3 keys owned by MDPF_CANON, so the renormalization cannot be committed by a worker. The eol rule and the renormalization must land together, and neither did.",
+  "notes": "Not overridden. The decision is the issuer's: clear the naming limb for this one line-ending-only diff, or have a seat the gate admits land it, then apply the block in ITEM_A_BLOCKED.md."
+}
+```
