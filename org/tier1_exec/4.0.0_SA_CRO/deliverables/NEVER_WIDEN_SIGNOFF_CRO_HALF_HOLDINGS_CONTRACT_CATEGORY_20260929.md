@@ -103,6 +103,24 @@ retires a copy that could only have refused.
 3. `assigned_strategy` is closed (`additionalProperties: false`); a runner emitting an extra key there fails validation
    by name at the re-mint, which is the right side.
 
+## Addendum 1 (2026-09-29 11:5xZ) -- correction: neither function validates a Holdings document; condition 1 restated as (a) + (b)
+
+~P's trace (`IRPT_MVP_P/HOLDINGS_CONTRACT_GENERATE_READER_TRACE_20260929.md` @1c9519d4a6, msg 102766) is right and
+section 3's last sentence was inferred from the packet's "Reachable" line, not measured: read here in the new generate
+zip, `HoldingsSnapshot` occurs in no `.py` member; the file is read only by `generate_installed.ingestion_revision_for`
+(`:94-101`, `schemas-` + sha256 over every `contracts/*.schema.json`) and by the admission Registry build. The read path
+checks only that `identity.ingestion_gate_revision` is a non-empty string (`owned_requests.py:92-93`) and never compares
+it with the current digest, so the digest move (`schemas-7ad1289e...` -> `schemas-4780eaf8...`) changes what NEW
+acceptances record and refuses no retained request. So: neither served function validates a Holdings document today or
+after the act; the contract file is a packaged input to a digest and a Registry in generate, and dormant in holdings.
+The verdict stands (SIGNED, a code-only move of one contract member, nothing served changes).
+
+**Condition 1 restated** (this seat's word on ~P's ask to the CTO): (a) the three-firm assembled-document validation
+under each new packaged copy, node counts printed, before and after -- section 3's instrument; (b) one deployed invoke
+per function reaching the loaders on a fresh container: for generate, a refused prospect submit carrying `input_id`
+(Registry build over all 22 schemas, no write) plus the digest read; for holdings, a cold-start invoke; with CodeSha256
+and census reads. The Holdings-card page read is dropped as a condition (it exercises no contract) and stays a plain
+read in this seat's next walk.
 ## What this half signs against
 
 - Packet blob `9f638d70`; commit dc1fc92e4e (TO-IB-pr-212, WK~68); the source map rows named in section 1.
