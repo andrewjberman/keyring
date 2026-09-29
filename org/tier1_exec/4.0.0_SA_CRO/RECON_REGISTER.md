@@ -1046,3 +1046,11 @@ shadow-storage growth failure and aborted copies. They do not identify the write
 behind12:20-12:31space loss. MSTR's reported storage maximum/copy timestamp remain
 attributed; CRO's non-elevated CIM query failed initialization. No destructive
 CRO action. Driver, damaged-checkout, delivery and prevention findings remain open.
+
+## RCN-0020 — AMGT_RECONN holdings sources and historical backfill, 2026-09-29
+
+**Author:** 4.0.0_SA_CRO~Z. **Commission:** Andrew-direct; all six tickers confirmed, daily preferred and weekly/quarterly accepted, history capped at two years or available fund life. **Artifact:** [source assessment and implementation proposal](../4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/README.md), with the verbatim instruction alongside.
+
+**Evidence:** current issuer full portfolios retrieved for WCMG, GQGU, TSEL, BASG, ETFT and PCLG; 23 dated BASG/GQGU samples reaching June/July 2025 with matching internal dates; full periodic portfolio reports identified for remaining funds. Bloomberg refdata healthy; seven of seven BQL requests (six funds and IBM control) refused authorization; index members worked on SPX as a positive control and were inapplicable to the ETF securities. Fundsmith CSV returned only ten rows versus 29 in the full embedded array; SEI net-asset weights are the correct portfolio denominator.
+
+**Conclusion:** issuer-first capture is viable; shared ingestion with five parser families, daily archive sampling supports BASG/GQGU backfill, remaining daily historical coverage unproved with periodic disclosures as fallback. Source feasibility assessment only; no collector deployed, no subscription purchased, no peer dispatched. Raw captures and probe scripts remain locally in ignored `.runtime/amgt-reconn-sources-20260929/`; no raw Bloomberg data committed.
