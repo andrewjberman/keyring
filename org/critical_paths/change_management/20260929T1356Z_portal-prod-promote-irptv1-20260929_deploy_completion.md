@@ -1,6 +1,11 @@
 # DEPLOY LEDGER -- portal DEV->PROD promote (DSGN_IRPTV1 + AD-10 account_masks reader)
 
-**Status:** OPEN -- opened 20260929T1356Z by `0.2.0_DT_PortfolioAnalytics~P`
+**Status:** CLOSED -- nothing stranded -- closed 20260929T142xZ by `0.2.0_DT_PortfolioAnalytics~P`
+
+Production serving `9a8f6c71` / `portal-v2.1.190`, `deploy.yml` run `36580348558` conclusion=success, served
+bundle read admitting `account_masks`. ONE non-terminal item, owned and named: the workspace pointer commit
+`06f4c5d7ce` is LOCAL (see `## Push state`), because GATE 5 keeps WORKSPACE branches integrator-only. That is
+out-of-lane, not half-landed: the portal act is complete and verified in the world.
 
 - **Owner:** `0.2.0_DT_PortfolioAnalytics~P`
 - **Authority:** Andrew-direct 2026-09-29 ~13:3xZ, verbatim answer: *"Yes, seat DT and promote (Recommended)"*
@@ -79,10 +84,49 @@ snapshot, so any DEV push inside the window rides in unverified. Released at Ste
 | 4c | `git merge --no-ff 18899c96...` (EXPLICIT sha, not the moving ref) -> merge commit `9a8f6c71efb2`, rc=0, no conflicts | APPLIED |
 | 4d | parity gate EMPTY vs BOTH `origin/DEV` and `18899c96`; positive control vs PROD base non-empty (183 files, +17379/-3021) so the empty is a true empty | APPLIED |
 | 5a | `git push origin PROD` -> `a0314f22..9a8f6c71`, rc=0. VALGATE D-1 PASS (no static partner adapters changed); paired-provenance scan OK; pre-push `tsc -b --noEmit` PASS | APPLIED |
-| 5b | `deploy.yml` verification by headSha + peeled tag | IN FLIGHT |
-| 6 | workspace submodule pointer commit on `CLOUD` | PENDING |
-| 7 | worktree teardown + prune; main tree confirmed on `DEV`; end at workspace root | PENDING |
-| 8 | RAVC report to COO, freeze released, session log | PENDING |
+| 5b | `deploy.yml` run `36580348558` conclusion=success, enumerated BY headSha `9a8f6c71` (n=1, the only workflow on that sha) | APPLIED |
+| 5c | tag `portal-v2.1.190` PEELED: object `b95ab8cecf21`, commit `9a8f6c71` == `origin/PROD`. The object sha differs from the commit -- the exact `ls-remote` misread trap | APPLIED |
+| 5d | SERVED-ARTIFACT verification (below), not CI self-report | APPLIED |
+| 6 | pointer commit `06f4c5d7ce` on `CLOUD`, author `0.2.0_DT_PortfolioAnalytics~P`, 1 file, via `safe-commit.sh -F`; msg-verify MATCH len=1235. **LOCAL -- push is integrator-only** | APPLIED (local) |
+| 7 | `worktree remove` FAILED "Filename too long" (documented Windows long-path class); `worktree prune` OK, 0 promote worktrees tracked; physical `.runtmp/portal-promote-20260929T135632Z` persists, gitignored and inert. Main tree on `DEV`, cwd at workspace root | APPLIED |
+| 8 | RAVC report to COO `~D`/`~M`, freeze released, CLOUD push handed to `0.0.0_AB_MSTR`, session log | APPLIED |
+
+## Served-artifact verification (CLAUDE.md: never trust a producer's rc=0)
+
+CI success is the producer's self-report. The downstream gate is whether PROD SERVES a reader admitting
+`account_masks`, so that was read from the served bytes:
+
+- Served entry `https://opalinvest.dev/assets/index-27CK7J5N.js`, `Last-Modified 2026-09-29T14:10:19 GMT`
+  (the new build; the push was ~14:07Z).
+- **First read was WRONG and is recorded as the instrument lesson:** `account_masks` = **0** occurrences in the
+  entry bundle. The app is CODE-SPLIT (51 chunk references), so the entry bundle is the WRONG DENOMINATOR --
+  an out-of-corpus zero, not an absence. The negative control also returned 0, which proves nothing; the
+  POSITIVE control (`DirectoryEntry` = 0 too, while `InvestorReporting` = 1) is what exposed it.
+- Correct sweep: all **51 of 51** referenced chunks fetched (denominator printed, zero fetch failures).
+  **1** chunk contains the token: `resolveBundle-BVyRHWDP.js`, `Last-Modified 14:10:19 GMT`, 210,700 bytes.
+- Served bytes, quoted from the chunk:
+  - `...,"revision","cohort"],["contract_version","account_masks"]),...` -- the key is in the OPTIONAL-keys array
+  - `...||!uI(e.account_masks)||...` -- the validator actually calls the mask check
+  - controls in that chunk: `masked_discriminator` = 1 (positive), `zzz_absent_token` = 0 (negative)
+
+**Therefore the AD-10 precondition is MET:** the served PROD reader admits `account_masks`, so it will not
+refuse the new key and client search will not fail. The investor-reporting bundle skip (msgs 102500 / 102812)
+has its stated release condition satisfied -- lifting it is `2.0.0_SA_COO~D`/`~M`'s act, not the DT's.
+
+## Push state (MEASURED at report time, `git ls-remote`)
+
+| Ref | State |
+|---|---|
+| `origin/PROD` (portal) | **`9a8f6c71`** -- ON ORIGIN, pushed by this seat, CI-verified |
+| `portal-v2.1.190` | ON ORIGIN (CI auto-tag), peeled to `9a8f6c71` |
+| workspace `CLOUD` | **LOCAL `06f4c5d7ce`**; `origin/CLOUD` = `15655f4a25` (ls-remote read) |
+
+`/prod-deploy` Step 6 prints `git push origin CLOUD`, but that line is **not executed by a DT**: Step 0's own
+GATE 5 clause admits a DT pushing `PROD`/`DEV` **in the portal repo only** -- *"Workspace branches and any
+`pull` stay integrator-only"* (also org/XXX.md SHARED-BRANCH LAW). The two lines of the skill disagree; the
+narrower one governs, so the pointer commit was left LOCAL and handed to `0.0.0_AB_MSTR`.
+**Owner of the remaining act: `0.0.0_AB_MSTR` -- carry `06f4c5d7ce` to `origin/CLOUD` at its next window.**
+Surfaced as a defect in the skill text, not worked around silently.
 
 ## Instrument notes (measured this session)
 
@@ -95,4 +139,12 @@ snapshot, so any DEV push inside the window rides in unverified. Released at Ste
 
 ## Close-out
 
-(pending)
+Closed 2026-09-29T142xZ -- **LANDED AND VERIFIED.** Production serves `9a8f6c71` / `portal-v2.1.190`;
+`deploy.yml` `36580348558` conclusion=success; the served chunk admits `account_masks`. 10 of 10 promote steps
+APPLIED. Portal main tree never left `DEV`. Nothing half-landed.
+
+One act remains and it is OUT-OF-LANE, not stranded: workspace pointer `06f4c5d7ce` is LOCAL, owner
+`0.0.0_AB_MSTR`. Should it never be carried, the consequence is bounded to a stale submodule pointer in the
+workspace record -- production is unaffected, and the rollback row above does not depend on it.
+
+Freeze released to `2.0.0_SA_COO~D` and `2.0.0_SA_COO~M` at Step 8.
