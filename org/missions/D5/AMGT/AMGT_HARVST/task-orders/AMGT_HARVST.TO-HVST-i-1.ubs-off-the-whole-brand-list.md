@@ -82,7 +82,7 @@ event-rule change, no vendor call, no deploy.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>19</round>
 <slot>~46</slot>
 <fabric>site-z</fabric>
