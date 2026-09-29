@@ -8,7 +8,7 @@
 </decomp_ref>
 <issued_to>0.9.0_WK_NFRA_OPLGTW~14</issued_to>
 <issued_by>2.0.0_SA_COO~O</issued_by>
-<placeholders>MCPORTAL_OWNER_KEY_CLAIM MCPORTAL_OWNER_KEY</placeholders>
+<placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- one Terraform apply; no cron, alarm, monitor or cadence.
 comp-iam: DECLARED-NOT-APPLICABLE -- no IAM change; the applier's own ec2:AllocateAddress / AssociateAddress.
@@ -46,12 +46,16 @@ never again. No stop/start is needed.
    - `mcportal_grant_writer.tf:53` hashes `infra/aws/lambda/layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip`,
      which does not exist on a fresh tree (gitignored build output);
    - the root requires `mcportal_owner_key_claim` and `mcportal_owner_key` (`:142-156`), which have no default.
-   Before anything else, confirm the zip exists at that path in your worktree (NFRA_MCPORTAL MP-a-1 builds it; copy it
-   from the tree where it was built, never download it) and export
-   `TF_VAR_mcportal_owner_key_claim=<MCPORTAL_OWNER_KEY_CLAIM>` / `TF_VAR_mcportal_owner_key=<MCPORTAL_OWNER_KEY>`.
-   If the zip is absent: STOP, a BLOCKING row. Never build the layer and never fetch it.
-3. **Plan, TARGETED.** The root also declares NFRA_MCPORTAL resources that are not applied yet (the grant-writer Lambda,
-   layer and tables are absent from state). An untargeted apply would create them as a rider. Run
+   Before anything else, confirm the zip exists at that path in your worktree (the issuer placed it there, copied from
+   `C:/tmp/mp3-1`, the tree NFRA_MCPORTAL MP-a-2 built it in; 5,016,850 bytes; never build or download it). Then set the
+   two variables in your shell, from worktree root, WITHOUT ever printing the key (it is the owner's private value; it
+   goes into no file, log, row, report or commit):
+   `export TF_VAR_mcportal_owner_key_claim=sub`
+   `export TF_VAR_mcportal_owner_key="$(.tools/aws lambda get-function-configuration --function-name mcportal-grant-writer-lambda --region us-east-1 --query Environment.Variables.MCPORTAL_OWNER_KEY --output text | tr -d '\r')"`
+   then `echo "key length=${#TF_VAR_mcportal_owner_key}"`, which must print 43.
+   If the zip is absent or the length is not 43: STOP, a BLOCKING row. Never build the layer and never fetch it.
+3. **Plan, TARGETED.** The root also declares the NFRA_MCPORTAL grant writer, which MP-a-2 applied on 2026-09-29, so an
+   untargeted plan may still show drift on those resources. This cell applies none of them. Run
    `terraform plan -target=aws_eip.gw -target=aws_eip_association.gw`. It must read exactly "2 to add, 0 to change,
    0 to destroy". Anything else: STOP, a BLOCKING row. Also run ONE untargeted plan and record its resource list in the
    announce, so the halves see what this cell does NOT apply.
@@ -93,7 +97,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INV
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-n-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/eip.AC1.sh; echo "exit=$?"</invocation><expect>addresses associated with i-07dccb1615503ac99=1 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-n-1"><invocation>TF_VAR_mcportal_owner_key_claim=<MCPORTAL_OWNER_KEY_CLAIM> TF_VAR_mcportal_owner_key=<MCPORTAL_OWNER_KEY> bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/eip.AC2.sh; echo "exit=$?"</invocation><expect>declared eip resources=2 of 2; targeted plan rc=0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-n-1"><invocation>TF_VAR_mcportal_owner_key_claim=sub TF_VAR_mcportal_owner_key="$(.tools/aws lambda get-function-configuration --function-name mcportal-grant-writer-lambda --region us-east-1 --query Environment.Variables.MCPORTAL_OWNER_KEY --output text | tr -d '\r')" bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/eip.AC2.sh; echo "exit=$?"</invocation><expect>declared eip resources=2 of 2; targeted plan rc=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-n-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/eip.AC3.sh; echo "exit=$?"</invocation><expect>sentinel at HEAD=no; listed OPEN/HELD=0; /mcp unauthenticated=401 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -118,7 +122,15 @@ plan line, the untargeted plan's resource list, the ledger commits, AC1-AC3 lite
 - The CTO files S45's disarm row citing this cell's close (R-2).
 - The declared class is WORLD: an AWS resource and an egress-address change.
 
+**AMENDMENT A1 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~19:3xZ, post-crash tick 1).** The spawn gate is met. MP-a-1 was
+re-cut as NFRA_MCPORTAL MP-a-2, which completed with its ledger CLOSED (20260929T0412Z); the layer zip exists in
+`C:/tmp/mp3-1` (5,016,850 B). The owner-key values were measured live on `mcportal-grant-writer-lambda` without printing
+the key: claim `sub`, key length 43, matching `ANDREW_DIRECT_20260929_04xxZ_G-SUB_GIVEN.md`. Both placeholders are filled
+by a read at run time, never by a typed value, under the CTO's privacy condition @384fd85543. Item 3's premise that the
+writer is unapplied is corrected. No criterion changes its expectation.
+
 <status>staged</status>
+<status>pending -- GO by 2.0.0_SA_COO~O 2026-09-29 ~19:3xZ, amendment A1 (gate met: MP-a-2 CLOSED, zip in C:/tmp/mp3-1, owner key measured live). Was: staged.</status>
 <round>3</round>
 <slot>~14</slot>
 <fabric>site-z</fabric>
