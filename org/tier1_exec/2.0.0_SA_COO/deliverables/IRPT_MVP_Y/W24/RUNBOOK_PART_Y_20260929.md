@@ -72,6 +72,33 @@ Each is: one `live_chain.py` run (one login, one K4, one K5, no retry), then `jo
 **Preflight, all six validated OFFLINE at 16:0xZ after the `live_submit.py` repair @4d676b93a9** (row
 `IRPT_BCKEND-S211`): 5 of 5 body shapes print `K5 body validates` (Y5 and Y6 share a shape).
 
+## Pre-window check at 16:4xZ -- the Multi-Comp keys, which have NEVER been sent successfully
+
+W22's Y2 died at normalization before its K5, so `opal_short_term` + `opal_intermediate_term` have never actually
+reached the vendor. A wrong key is a refused K5 and a burned submission, so it was worth reading rather than assuming.
+
+`infra/aws/lambda/investor-reporting/ycharts/generate/templates.json`, `comparison_catalog.entries`,
+**denominator 4 entries**:
+
+| key | label | security id | live_proven |
+|---|---|---|---|
+| `opal_long_term` | Opal Long-Term | `P:1728413` | true |
+| `opal_short_term` | Opal Short-Term | `P:1728415` | **true** |
+| `opal_intermediate_term` | Opal Intermediate-Term | `P:1728315` | **true** |
+| `opal_ultra_long_term` | Opal Ultra Long-Term | `P:1728420` | false |
+
+All three keys this window sends are **PRESENT and `live_proven`**. Negative control: `opal_nonexistent_term` is
+absent, so the membership test discriminates.
+
+**The catalogue did not move between generate builds.** Its CRLF-normalized sha256 is `54656584`, EQUAL to the
+`catalogue_sha` W22's `case_trace.py` validated Y1 against on build `wnt7hjAB` -- so `inrij6hL` carries the same
+catalogue, and the W22 result transfers.
+
+Two notes the catalogue itself carries: `variant_selection` states "THE VARIANT IS DERIVED FROM THE COMPARISON COUNT,
+never chosen by a caller", which is what `live_chain.k5_body` does (1 key -> comparison, 2+ -> multicomp); and a
+`_caveat` records that the narrative mentions Long-Term / Ultra Long-Term while the actual Multi-Comp HAR selects
+Short-Term / Intermediate -- **this window sends the HAR's pair**, which is the right one.
+
 ## Reading each body's terminal state (row S207)
 
 The resident journals NO line for a job ATTENTION -- over W22's 14:08-14:34Z span, 79 lines, all
