@@ -88,6 +88,27 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The task order: add ONE STUBS entry for HeroGraphic; 'No check is removed, re-anchored or loosened; the 20 claims stay exactly as they are'; AC1 expects TABS BOUND: 4 of 4 harnesses green (tabs 20 of 20).",
     "world_is": "The stub fixes the load only. The 20th claim, that every drafted sentence reaches the Thesis tab render, is false of the merged page as built and ruled by AV-t-3 (sentences live in windows), so 20 of 20 needs that one check re-anchored, which the order forbids. The worker did not re-anchor it; the stub is committed, W3-S1 is NOT dispositioned, and the order stays open."
+  },
+  {
+    "id": "DSGN_AMGTV1-Z-W3-S3",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~3",
+    "surfaced_at": "2026-09-29T06:50Z",
+    "one_line": "DISARMED: DSGN_AMGTV1-Z-W3-S1 and DSGN_AMGTV1-Z-W3-S2 -- under TO-AV-t-4 (AMENDMENT 1) portal commit 36485a07 (stub 30f69ad0 plus the re-anchor) tabs.harness.cjs loads the merged page and reads CHECKS-OK 20 of 20, and the bound reads TABS BOUND: 4 of 4 harnesses green.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node bound.cjs TABS tabs.harness.cjs:20 errorEmpty.harness.cjs:12 drafting.harness.cjs:8 thesisLadder.harness.cjs:10 -> tabs 20 of 20, errorEmpty 12 of 12, drafting 8 of 8, thesisLadder 10 of 10, 'TABS BOUND: 4 of 4 harnesses green', exit=0, in /c/tmp/wk-dsgn-amgtv1-3 at portal 36485a07",
+        "W3-S1 cause (un-stubbed HeroGraphic import) removed by the STUBS entry in 30f69ad0; W3-S2 cause (sentence markers off the face) removed by the amended thesis_sentences_and_one_chart in 36485a07"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AV-t-4 bound 4 and AMENDMENT 1: when AC1 passes, append a DISARMED disposition for W3-S1 and W3-S2 naming the order and the portal commit.",
+    "world_is": "AC1 passes. The gate refuses `adjudicates` on a worker-surfaced row (L9 carrier), so this is a new OBSERVATION row of standing INERT that names both items; the formal disposition of S1 and S2 is the issuer's / L9's to stamp.",
+    "notes": "Worker-authored record of the disarm, not an adjudication."
   }
 ]
 ```
