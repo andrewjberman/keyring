@@ -78,6 +78,14 @@ so GATE (viii) grades it as a modified order; the change is the act's shape (com
 First attempt REFUSED correctly at the closure diff (c524129644, row Z-S295); the order stays `pending` for the combined act.
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29 ~02:2xZ):** landed INSIDE the ONE combined scoped-API act with
+`AMGT_HARVST.TO-HVST-a-2` (lane close `0d54b880cf`; entry `20260929T0115Z_amgt-combined-uu4-a2-...` CLOSED 14 of 14 at HEAD, 0
+sentinels). AC1 RE-MEASURED by the issuer: `CodeSha256=CtIvirvMTG47vvgBGmouk3GrTNKPjPIPx/6ovB+EAOM= LastUpdateStatus=Successful
+LastModified=2026-09-29T01:58:24Z`, exit=0. Lane: AC2 95 of 95 OK, cases 285/285, missing 0; AC3 ADJUSTED AND BASIS-CARRYING 70 of
+70 (base 0 of 48) -- the M both halves predicted. Instance graded `proof-of-spec-check ... AC1,AC2,AC3 --governing-order <this
+order>`: VALID rc=0. The first attempt's refusal (c524129644, row Z-S295) is disarmed by AMENDMENTS 1-2 and the four re-signed
+halves; the row's disposition is the CVO's at L8.
+<status>complete</status>
 <round>46</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
