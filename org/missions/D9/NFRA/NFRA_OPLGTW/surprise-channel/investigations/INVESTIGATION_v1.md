@@ -4097,3 +4097,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Issuer decision: hold OG-x-3 until nfra-mcpindex-r3-gateway-enable closes, then send GO for a re-cut. This worker will not touch the host or the artifact bucket until then. The ledger entry name 20260929T0140Z_nfra-oplgtw-stream-export-release stays as the ABANDONED record."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T04:40Z",
+  "one_line": "OG-x-3 PHASE B stopped at the GO census, before any ledger or act: NFRA_MCPORTAL MP-a-2 (0.9.0_WK_NFRA_MCPORTAL~1) holds an OPEN sentinel nfra-mcportal-r3-writer-apply whose title and targets name the opal-gateway Terraform root and a 'gateway line'; the base, host files, tool count and ENABLED_INTEGRATIONS are all unchanged.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/mp3-1 (branch wk-NFRA_MCPORTAL-1, HEAD 35346c951c, 2026-09-29 00:22:38 -0400) org/critical_paths/.open_deploys/nfra-mcportal-r3-writer-apply.json: status OPEN, opened_at 2026-09-29T04:12:42Z, author 0.9.0_WK_NFRA_MCPORTAL~1; title 'NFRA_MCPORTAL MP-a-2: grant writer apply, branch=sub (gateway line keys=email,exp,family_name,...)... ROLLBACK (all 7 resources new): safe-apply-gated targeted destroy in infra/aws/terraform/opal-gateway of aws_lambda_function.mcportal_grant_writer, aws_lambda_layer_version..., aws_iam_role.mcport...'; legs L1 and L2 (verify) closed 20260929T0416Z, L3 (safe-apply targeted apply of mcportal_grant_writer.tf, 7 add 0 change 0 destroy) and L4 (live invoke) open.",
+      "Its act is a Terraform apply of 7 NEW resources (a Lambda, its layer, an IAM role) in the infra/aws/terraform/opal-gateway root; it does not name the EC2 instance, /opt/opal-gateway, the artifact bucket prefix ec2/opal-gateway/ or deploy-to-ec2.sh. My PHASE B act is safe-ec2-deploy.sh (S3 upload + SSM install + restart of opal-gateway.service) and touches no Terraform.",
+      "GO-time reads, all unchanged from PHASE A (SSM commands on i-07dccb1615503ac99 at 2026-09-29T04:2xZ): 76 of 76 host files = 7c7ebe14d3's gateway tree (manifest identical to the PHASE A manifest), ENABLED_INTEGRATIONS=ycharts opal_portal globgrph opal_discover portal_index, 27 .env keys, /health 200, 51 tools with the sorted diff against tools_before_phaseA_recut.txt empty. Census over 122 worktrees, HEAD scan of 52 distinct sentinel blobs and a working-directory scan of every tree: the nfra-mcportal sentinel (HEAD of C:/tmp/mp3-1 and its working copy) is the only gateway-naming OPEN sentinel besides the superseded og-r-1 slug."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A1 step 0: any OTHER open sentinel naming opal-gateway or gateway stops the worker; the issuer's GO message repeats it.",
+  "world_is": "On a literal reading the census stops here. On the measured act it is a different plane (Terraform, new resources, no shared file with the EC2 code deploy), so the two would not collide. This worker did not open a ledger and touched nothing on the host or the artifact bucket.",
+  "notes": "Issuer decision wanted: either (a) rule the MP-a-2 sentinel out of the one-deployer rule (Terraform apply of new Lambda resources, disjoint from the EC2 code path) and send GO again, or (b) hold until nfra-mcportal-r3-writer-apply closes. On GO the worker repeats the census and BEFORE reads, then runs steps 10-13 from /c/tmp/og-x3-rel2 (release 4248b70b39)."
+}
+```
