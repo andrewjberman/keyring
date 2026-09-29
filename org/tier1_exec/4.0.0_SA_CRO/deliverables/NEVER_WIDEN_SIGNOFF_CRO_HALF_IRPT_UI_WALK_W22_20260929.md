@@ -69,6 +69,25 @@ at five submissions.
 3. Y4 is the first certified 49financial Analysis report if it publishes; the 49F Performance figure it does not touch
    remains on the engine until the re-switch lands.
 
+## Addendum 1 (2026-09-29 15:1xZ) -- CLOSED: the three conditions read against the ledger and ~Y's evidence
+
+Ledger `irpt-ui-walk-principal-w22-20260929` CLOSED 14:50:29Z (opened 13:04:35Z); ~Y's `IRPT_MVP_Y/W22/PART_Y_EVIDENCE_20260929.md`
+@827cbc166f. Condition 1: C1 re-read the pins at create (generate `wnt7hjAB`, root `fe64236bbb-st4`, status, directory,
+queue 0/0, DLQ 1) and wrote them. Condition 2: credoff `1790687432` read back `ParameterNotFound` at 14:35:42.916Z; the K1
+delete read back no item at 14:35:48Z, 39 minutes inside the 15:10:37Z cap. Condition 3: five of five bodies terminal by
+name -- Y1 READY (`RPT-2e21b52e...`, the PDF prints the chosen model on 16 pages, `COMPARISON_NOT_PRINTED` did not fire:
+**S194 disarmed**); Y2, Y4, Y5 ATTENTION `RESOLVE_RETRY_EXHAUSTED` with the NEEDS_CORRECTION row read by consistent
+Query each time (**S193's bound read live**, 182-203 s, four RETRY lines then the ATTENTION line); Y3 ATTENTION
+`SESSION_REFRESH_ALREADY_USED` after the vendor upload and portfolio create succeeded (the designed one-refresh rule).
+The foreign-firm name check ran and passed on Y1's PDF; Y4 and Y5 never reached K5, so it had no 49financial or
+Inflection PDF to grade and nothing was re-run -- as the condition asks. DLQ 1 before and after.
+
+**Carried, named here for the next window:** Multi-Comp, the first certified 49financial and Inflection reports, and the
+Target Weight report stay unexercised. The bound this window proves is bounding something else: three of five uploads
+exhausted on `PROVIDER_READ_UNAVAILABLE` while another resolve was in flight (~Y's row `IRPT_BCKEND-S206`: the same bytes
+resolved in 1 s alone and not at all beside another), and `REPLACE_FILE` is the wrong remedy for that row; and a job
+ATTENTION writes no journal line (`IRPT_BCKEND-S207`). Those are the FWD-4 hazards after S193, and the CVO grades them.
+
 ## What this half signs against
 
 - Packet blob `1f3bf0914f`; W21's text (`84ec7f79`) with this seat's conditions as narrowed above; ~Y's arms

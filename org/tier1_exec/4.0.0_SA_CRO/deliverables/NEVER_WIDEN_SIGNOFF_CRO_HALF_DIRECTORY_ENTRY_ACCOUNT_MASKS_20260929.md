@@ -85,6 +85,17 @@ other packager never validates a directory document. Ordered after window 22, wh
 2. Step 2 (portal PROD reading the field, ~D) and step 3 (the directory re-mint, ~M) are where the page changes; the
    finding this field answers (three `****9079 / IRA` in one picker) is graded there, not here.
 
+## Addendum 1 (2026-09-29 15:1xZ) -- D1 read: applied after window 22 closed; A1 waits on a signed-in search
+
+Ledger `irpt-directory-entry-account-masks-20260929` D1 CLOSED 15:03:16Z: window 22 CLOSED 14:50:29Z before the apply
+(condition 1); S3 latest at apply `2RmObc9v` / `DWP1wKAI`; safe-apply 14:55:56Z and 14:58:31Z; read-backs `s0riHZ9h`
+(14:58:27Z) and `inrij6hL` (15:00:32Z), deployed zips member-equal; the live handler's own `load_directory` BEFORE
+(14:52Z) and the deployed handler AFTER: 4,620 / 258 / 292 entries, 0 invalid under either copy, 0 carrying
+`account_masks` (condition 2's validation); fresh-container invokes on both functions clean (condition 3); re-plans No
+changes. A1 (one signed-in directory search on one firm, the field set unchanged) is open: this seat's local build is
+down pending Andrew's word and the walker refuses a PROD base by his 2026-09-26 guard, so ~D's page read serves,
+as condition 2 allows.
+
 ## What this half signs against
 
 - Packet blob `74d19716ff`; commit 4ecbaca410 (blob `27d9a8f7`); the source-map rows in section 1.
