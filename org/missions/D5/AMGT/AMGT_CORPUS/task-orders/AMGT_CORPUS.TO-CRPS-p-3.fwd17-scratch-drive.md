@@ -78,7 +78,7 @@ READ-ONLY: every other file in the repository, every S3 object, the research lib
 **ISSUER NOTES:** round-13 analysis s.4 item 3 @`f1c482d24f` (msg 26603). Checks dry-run at the base `dbafd14c52`: p3_AC1 FAIL (no drive line); p3_AC2 PASS (444 passed); p3_AC3 PASS (paths_outside_grant 0).
 Store ruled offline (decomposition v14.0 s.1a).
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
