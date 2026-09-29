@@ -167,7 +167,7 @@ reason to change the harness or the thresholds.
   1.3099 / 1.5856, bound 189,172,121), xf.AC2 FAIL (286,691,328 > 214,748,364).
 - The declared class is WORLD: a deploy and GATE (xii)'s floor (`infra/` path).
 
-<status>staged</status>
+<status>complete</status>
 <round>7</round>
 <slot>~11</slot>
 <fabric>site-z</fabric>
