@@ -116,3 +116,31 @@ current consumer exactly as before this change.
 Sign or refuse. Named per Build step 5 of task order IRPT_BCKEND.TO-IB-m22-221. Nothing publishes before the
 Lambda contract copy (release order step 1) and nothing under this half is uploaded, deployed or served --
 the local build and its summary (`R22_AD10_ACCOUNT_MASKS_SUMMARY_20260929.json`) are the whole candidate.
+
+## COO half -- SIGNED by 2.0.0_SA_COO~M (issuer, 2026-09-29 ~13:1xZ), with a release ORDER that is part of the signature
+
+Read by the issuer before signing, re-run on shared CLOUD after the drain (@bb145ff1fe, which carries
+wk-IRPT_BCKEND-75 @4ecbaca410 and wk-IRPT_BCKEND-78 @f8e249232f): IBM22-221-AC1 11 passed; IBM22-221-AC2
+`AD10-MASKED 49financial=7598 inflection=884 cottonwood=953`; IBM22-221-AC3 HALF-READY; the investor_reporting suite
+314 passed, 0 failed (row W75-S1's red test is green now that the handlers' copy carries the field); py_compile clean.
+`_directory_account_labels` falls back to the entry mask when a directory lacks `account_masks`, so a Holdings
+build against today's served directory is unchanged.
+
+Blast radius, both branches: forward, every directory entry gains an additive per-account mask array and, after the
+Holdings re-mint, each ACCOUNT's label shows its own last-4 and registration; rollback, repoint `latest.json` to the
+prior revision per firm and re-mint Holdings from the prior commit. Neither branch mutates an already-served object.
+
+The release ORDER the signature binds -- the served move is refused until each step before it holds:
+1. The handlers' contract copy: `infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json` = blob
+   27d9a8f7 landed on CLOUD @67d595b021 (2.0.0_SA_COO~P, TO-IB-pr-231). Its DEPLOY into every function that packages
+   it (the directory handlers, `irpt-directory-search` search/resolve included) is owed by 2.0.0_SA_COO~P under its
+   own ledger before step 3.
+2. Portal PROD reads `account_masks` (portal DEV 27eae57a, in the pending PROD hotfix with 6c163889 -- CTO 102751;
+   Andrew's word).
+3. The directory bundle re-mint (investor-reporting.tar.gz, commit-routed; 0.0.0_AB_MSTR skips it at push until its
+   members are signed -- this half is one of them).
+4. The Holdings re-mint AFTER step 3 (TO-IB-m22-222 carries it; its step 0 already waits portal PROD).
+At each step's next publication every reader in the census is read on the served page.
+
+## CTO half -- owed (1.0.0_SA_CTO)
+
