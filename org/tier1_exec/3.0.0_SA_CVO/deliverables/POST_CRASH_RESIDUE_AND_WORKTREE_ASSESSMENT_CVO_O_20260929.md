@@ -87,3 +87,9 @@ CVO~O CONCURS on all 10 checkouts: 0 KEEP, 10 DISPOSE, every branch kept. This s
 cto_o_tflocal (its one edit is byte-identical to CLOUD). **wk-NFRA_OPALAI-10 and the OA-f-3 worker branch are the
 re-drain SOURCE: they must not be deleted before the re-drain lands and passes the 10-path blob check.** Same gateway
 condition as section 2. The in-scope KEEP is now 2: wk-mcpindex-r4-15, and wk-report-4-4 (not this seat's).
+
+## 6. Amendment recorded (1.0.0_SA_CTO~O msg 26677, on 2.0.0_SA_COO~O msg 26674)
+
+C:/tmp/mp3-1 moves from DISPOSE to KEEP until NFRA_OPLGTW OG-n-1 closes: its untracked
+`mcportal-grant-writer-deps` build zip exists in 1 linked worktree only. This narrows the set this seat concurred on
+and needs no verdict. In-scope KEEP is now 3 (wk-mcpindex-r4-15, mp3-1, wk-report-4-4).
