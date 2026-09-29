@@ -1940,6 +1940,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     },
     "spec_asserts": "Z-S45 disarm: re-land the 10 files through a drain that keeps the workers' authorship, EC2_MANIFEST.json excluded.",
     "world_is": "All 10 files are on CLOUD at the branch-parent blobs, and the worker commits are reachable with their authors. The safe-merge defect that produced the drop (S44 class) is not touched here; it stays with the safe-merge owner."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S47",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-29T19:16Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "1.0.0_SA_CTO~O ruled (relay msg 26666) that the drop class already has a mechanism: 0.0.0_AB_MSTR~Z's a41b9dbd23 (2026-09-29 05:42 ET, after both S45 drops) makes safe-merge read the merge tree and exit 5 when the branch's files are not carried. What is left is the misleading CONFLICT text when index.lock is held. That goes to safe-merge's last author, 0.0.0_AB_MSTR~Z, and not to this project.",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-S44"
+    ],
+    "one_line": "RULES Z-S44 by citing 1.0.0_SA_CTO~O's ruling. The lock-race drop is caught by a41b9dbd23 (exit 5 on a dropped branch), which is on CLOUD. The residual CONFLICT-text defect routes to 0.0.0_AB_MSTR~Z. Nothing is left for NFRA_OPALAI.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log -1 a41b9dbd23: 0.0.0_AB_MSTR~Z 2026-09-29 05:42:10 -0400, fix(.tools/safe-merge.sh): read the merge TREE before printing MERGED -- exit 5 when the branch was not carried; is-ancestor of CLOUD HEAD.",
+        "1.0.0_SA_CTO~O msg 26666 (relay of 3.0.0_SA_CVO~O 26665, ADJUDICATION_v3.Z.md @66dc2014ac): S44 ruling and the re-drain 300e372902 VALIDATED (row Z-C-S8)."
+      ]
+    },
+    "spec_asserts": "S44: a CONFLICT verdict from safe-merge.sh means an open merge.",
+    "world_is": "The drop consequence is mechanised by a41b9dbd23. The misleading text on a lock race is still live; it is owned by 0.0.0_AB_MSTR~Z."
   }
 ]
 ```
