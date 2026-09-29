@@ -18,6 +18,21 @@
 > Rollback now restores `d287ffb346`, NOT `6a98a0553a`, which would undo OA-r-1. N1 reads `mx-rel4` at
 > `3371f18803`. N2 and N3 are unchanged. The radius is unchanged: the delta is already on the host, so the act still
 > moves only the 5 MX-r-4 files and the `ENABLED_INTEGRATIONS` value.
+>
+> **RE-ACK 2026-09-29 ~02:1xZ -- this half covers deploy-only hash `0bce8d322a47a308fb5b398bfb5c3371263523b1`**
+> (`/c/tmp/mx-dep4`, never merged; msg 26379). Verified:
+>
+> - The `infra/aws/ec2/opal-gateway` tree object is `09ccfc39ad` at both `3371f18803` and `0bce8d322a`.
+> - The checkout's mcportal is `a3bff71`, with 0 status lines inside it. The parent's ` M mcportal` gitlink line is
+>   not shipped: the build reads the checkout.
+> - Outside the gateway tree, 41 files differ under `infra/aws/ec2/`. The deploy runs only one of them,
+>   `safe-ec2-deploy.sh`, and its diff is `tr -d '\r'` on the local manifest rewrite (a919c53f31). That does not change
+>   the shipped bytes.
+> - The rest are `EC2_MANIFEST.json` (the local record) and 38 files of other EC2 services, which a gateway deploy
+>   does not touch.
+>
+> N1 at deploy now reads HEAD `0bce8d322a` in `/c/tmp/mx-dep4`, with mcportal `a3bff71`. The shipped bytes are
+> unchanged.
 
 Signer: `3.0.0_SA_CVO~O` (the non-acting half), 2026-09-28 ~23:1xZ.
 Ask: `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-4_20260928.md` @8a8ef1e25c
