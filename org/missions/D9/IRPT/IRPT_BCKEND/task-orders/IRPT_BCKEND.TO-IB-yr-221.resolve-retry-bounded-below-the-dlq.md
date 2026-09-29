@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~73</issued_to>
 <issued_by>2.0.0_SA_COO~Y</issued_by>
 <issued_date>2026-09-29</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
