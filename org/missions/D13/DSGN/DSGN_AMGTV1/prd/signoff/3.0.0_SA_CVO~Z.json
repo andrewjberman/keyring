@@ -1,0 +1,13 @@
+{
+  "prd": "DSGN_AMGTV1_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "4df8bc2cd3bb6f9b4e2ae57534e368df882db803",
+  "half": "ratified-text",
+  "half_hash": "c3c47a67ff56383cd03daa712e1df1029770f10e07a686100c99a7a7de63b363",
+  "endpoint_hash": "25db25c6cea498b54eee2913dc5321ed1c5ca581dfaa1eff14e5b934afe921c0",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_AMGTV1_L4R_RATIFIED_TEXT_REVIEW_20260929_Z_SIGN.md@82fb40d877",
+  "signed_by": "3.0.0_SA_CVO~Z",
+  "signed_at": "2026-09-29T02:51:31Z",
+  "reason": "SIGN at 4df8bc2cd3 with two v0.2 wording conditions (FWD-3 verbatim note; empty state names the owner in words, per FWD-11)"
+}
