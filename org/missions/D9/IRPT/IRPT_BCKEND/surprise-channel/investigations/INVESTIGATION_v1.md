@@ -11440,3 +11440,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The rule should take max over BOTH author lines and every <issued_to> of a non-terminal order (plus existing wk-IRPT_BCKEND-n branches). ~Y's amendment (this commit) re-points yr-201 to ~71 before any spawn, so no worker held a union grant."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S198",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.6.2_AE_PartnerETL~S",
+  "surfaced_at": "2026-09-29T07:10:00Z",
+  "one_line": "The naming limb in ENFORCE mode refuses the byte-for-byte build-input capture TO-IB-m21-211 orders, so the cot login box's RUNNING script cannot be committed at all: 15 REFUSE verdicts, every one a hand-kept firm carrier the committed 49F sibling already carries verbatim at HEAD. The gate encodes the Rule 30 'already carried at HEAD mints nothing' escape for RAISE literals and not for hand-kept carriers.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO (the gate's ruling owner: LGIC_ENFORCE DEC-6 / the naming limb's context rule). 2.0.0_SA_COO~M holds the order and asked for this row (msg 102625: 'if no lawful escape exists, the order's refusal clause is the route and I rule on it'). This seat took no act on the gate, the bytes or the box.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' then 'NAMING-GATE: REFUSE 15 graded' -- twice, on infra/aws/ec2/bd-cot-auto-login/bd_49f_auto_login.js (md5 28dd27a054b826cc3a87f6b4498d3b5a, 35049 B)",
+      "the 8 REFUSE lines are all class 'NEW hand-kept carrier (context rule)': :220 '49f', :243 'bd49f', :262 + :434 'bd_DeviceRegistration', :281 + :428 '.bd.identity', :297 '/tmp/bd-step{x}.png', :302 'ec2/bd-{x}-auto-login/debug/{x}/step{x}_{x}.png'",
+      "every one of those literals already exists BYTE FOR BYTE at HEAD in the committed, graded, declaration-tree sibling infra/aws/ec2/bd-49f-auto-login/bd_49f_auto_login.js (git show HEAD:<path>, rc=0, 46296 B; \"'49f'\" True, 'bd49f' True, 'bd_DeviceRegistration' True, '.bd.identity' True, 'bd-step' True; negative control 'zzz_no_such_token' False in both files)",
+      ".tools/naming-gate.py judge():1296 -- `new = pre_text is None or not _in_pre(...)`, so a NEW FILE makes every literal NEW; the RAISE branch then calls _carried_at_head() and returns RAISE-EXISTING/WARN, citing CLAUDE.md Rule 30 ('Copying an existing pre-LGIC key into a new file mints nothing ... conformance through its own migration project, never through this diff'), while the `typ is None` hand-kept-carrier branch two lines above returns REFUSE with no such check",
+      "no escape is available to this seat: the LEGACY-READ waiver (org/standards/NAMING_LEGACY_READS.json) is consumed in exactly ONE place -- judge()'s EXISTING-under-live-remediation branch, structurally unreachable for a NEW literal -- and its entries are authored by 1.0.0_SA_CTO under Andrew's delegation; safe-commit's --force covers contamination only and never touches this limb; ENFORCE is a deliberate tracked flip (org/mcp/naming-gate.enforce @d181e0ac5a, 2.0.0_SA_COO~G 2026-09-17, 'Remove this file to return the naming limbs to WARN')",
+      "the `-text` attribute amendment 1 granted does NOT move this: the gate reads the post-image from the INDEX (--post-from-index), so it graded the same 15 literals with the attribute in force"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cot tree can carry the running login script as its build input, with no behaviour change (TO-IB-m21-211, CTO round-19 analysis section 3).",
+  "world_is": "It cannot, while the naming limb enforces. The read is done and the artifact is proven on disk (IBM21-211-AC1 -> 'BUILD-INPUT 28dd27a054b8' rc=0; planted one-byte mutant -> NO-BUILD-INPUT rc=1), but the commit the order requires is refused, so the repo still cannot reproduce the running .js and TO-IB-m21-212 -- which starts from the COMMITTED build input -- cannot start its .js edit either.",
+  "notes": "Not remediated and not worked around: the bytes are a verbatim capture, so editing them to satisfy the gate would break the order's own byte-for-byte criterion, and patching the gate to admit this seat's own commit is not this seat's act. CLAUDE.md Rule 30's non-application clause ('existing pipelines -- each reaches conformance through its own migration project (R19), never as a rider') is the doctrine this row asks to be read against the hand-kept-carrier branch. Sibling finding already RULED, no row needed: the missing .gitattributes eol rule for this path was granted as amendment 1 @f69b8509e7 (`infra/aws/ec2/bd-cot-auto-login/*.js -text`) before this row was written. The 49F sibling is frozen the same way -- any edit to it would draw the same refusals."
+}
+```
