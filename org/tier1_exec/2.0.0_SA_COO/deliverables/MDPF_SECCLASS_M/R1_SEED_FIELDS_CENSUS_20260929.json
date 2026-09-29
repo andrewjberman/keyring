@@ -1,0 +1,839 @@
+{
+  "class_changes": [],
+  "kinds": {
+    "2602335D": "single_security",
+    "AAPL": "single_security",
+    "ABBV": "single_security",
+    "ABT": "single_security",
+    "ACSG": "fund",
+    "ACWI": "fund",
+    "ADM": "single_security",
+    "AEP": "single_security",
+    "AGG": "fund",
+    "AIG": "single_security",
+    "AIZ": "single_security",
+    "AMAT": "single_security",
+    "AMD": "single_security",
+    "AMP": "single_security",
+    "AMX": "single_security",
+    "AMZN": "single_security",
+    "ANET": "single_security",
+    "ASML": "single_security",
+    "ATO": "single_security",
+    "AVGO": "single_security",
+    "AZN": "single_security",
+    "BA": "single_security",
+    "BAC": "single_security",
+    "BBSEY": "single_security",
+    "BBY": "single_security",
+    "BE": "single_security",
+    "BEN": "single_security",
+    "BIL": "fund",
+    "BILS": "fund",
+    "BIPC": "single_security",
+    "BIV": "fund",
+    "BKNG": "single_security",
+    "BKRKY": "single_security",
+    "BN": "single_security",
+    "BND": "fund",
+    "BNDX": "fund",
+    "BNPQY": "single_security",
+    "BNY": "single_security",
+    "BP": "single_security",
+    "BSCN": "fund",
+    "BSCQ": "fund",
+    "BSCR": "fund",
+    "BSJQ": "fund",
+    "BTI": "single_security",
+    "BX": "single_security",
+    "BZLFY": "single_security",
+    "C": "single_security",
+    "CICHY": "single_security",
+    "CIEN": "single_security",
+    "CINF": "single_security",
+    "CLIP": "fund",
+    "CME": "single_security",
+    "CMI": "single_security",
+    "CNC": "single_security",
+    "CNI": "single_security",
+    "COWZ": "fund",
+    "CPA": "single_security",
+    "CSCO": "single_security",
+    "CVX": "single_security",
+    "DAL": "single_security",
+    "DBC": "fund",
+    "DECK": "single_security",
+    "DELL": "single_security",
+    "DFAC": "fund",
+    "DFCF": "fund",
+    "DFSD": "fund",
+    "DG": "single_security",
+    "DGRO": "fund",
+    "DIVZ": "fund",
+    "DVY": "fund",
+    "EBAY": "single_security",
+    "ECHO": "single_security",
+    "ED": "single_security",
+    "EEM": "fund",
+    "EFA": "fund",
+    "EL": "single_security",
+    "EMB": "fund",
+    "ENB": "single_security",
+    "ENLAY": "single_security",
+    "ES": "single_security",
+    "ETR": "single_security",
+    "EVNT": "fund",
+    "EWJ": "fund",
+    "EXPD": "single_security",
+    "F": "single_security",
+    "FBND": "fund",
+    "FCX": "single_security",
+    "FDX": "single_security",
+    "FER": "single_security",
+    "FIX": "single_security",
+    "FLEX": "single_security",
+    "FLOT": "fund",
+    "FTNT": "single_security",
+    "FXFXX": "fund",
+    "GARP": "fund",
+    "GEV": "single_security",
+    "GL": "single_security",
+    "GLD": "fund",
+    "GLW": "single_security",
+    "GM": "single_security",
+    "GOOG": "single_security",
+    "GOOGL": "single_security",
+    "GOVT": "fund",
+    "GS": "single_security",
+    "GSG": "fund",
+    "GSK": "single_security",
+    "HESAY": "single_security",
+    "HSBC": "single_security",
+    "HWM": "single_security",
+    "HYG": "fund",
+    "IAGG": "fund",
+    "IAU": "fund",
+    "IBDRY": "single_security",
+    "IBIL": "fund",
+    "IBN": "single_security",
+    "IBND": "fund",
+    "IBTF": "fund",
+    "ICSH": "fund",
+    "ICT": "single_security",
+    "IDVZ": "fund",
+    "IDXX": "single_security",
+    "IEF": "fund",
+    "IEFA": "fund",
+    "IEMG": "fund",
+    "IJH": "fund",
+    "IJR": "fund",
+    "IMBBY": "single_security",
+    "INCY": "single_security",
+    "INDA": "fund",
+    "INTC": "single_security",
+    "IQLT": "fund",
+    "ISNPY": "single_security",
+    "ISRG": "single_security",
+    "IVV": "fund",
+    "IWM": "fund",
+    "IWR": "fund",
+    "IXJ": "fund",
+    "JAAA": "fund",
+    "JBHT": "single_security",
+    "JEPI": "fund",
+    "JMUB": "fund",
+    "JNJ": "single_security",
+    "JNK": "fund",
+    "JPEM": "fund",
+    "JPM": "single_security",
+    "JPMI": "fund",
+    "JPST": "fund",
+    "KCDMY": "single_security",
+    "KEYS": "single_security",
+    "KKPNY": "single_security",
+    "KO": "single_security",
+    "KOF": "single_security",
+    "LDUR": "fund",
+    "LITE": "single_security",
+    "LLY": "single_security",
+    "LMT": "single_security",
+    "LNVGY": "single_security",
+    "LONZ": "fund",
+    "LQD": "fund",
+    "LRCX": "single_security",
+    "LUV": "single_security",
+    "MA": "single_security",
+    "MAR": "single_security",
+    "MCHI": "fund",
+    "MDY": "fund",
+    "MELI": "single_security",
+    "META": "single_security",
+    "MINT": "fund",
+    "MNST": "single_security",
+    "MO": "single_security",
+    "MPLX": "single_security",
+    "MPWR": "single_security",
+    "MRK": "single_security",
+    "MRSIX": "fund",
+    "MRVL": "single_security",
+    "MSFT": "single_security",
+    "MU": "single_security",
+    "MUB": "fund",
+    "NEE": "single_security",
+    "NEM": "single_security",
+    "NOK": "single_security",
+    "NOW": "single_security",
+    "NSRGY": "single_security",
+    "NTRS": "single_security",
+    "NU": "single_security",
+    "NVDA": "single_security",
+    "OBIL": "fund",
+    "OMAB": "single_security",
+    "ORANY": "single_security",
+    "PBR": "single_security",
+    "PCG": "single_security",
+    "PCHI": "fund",
+    "PCY": "fund",
+    "PDBC": "fund",
+    "PFDE": "fund",
+    "PFOE": "fund",
+    "PHYS": "fund",
+    "PLTR": "single_security",
+    "PM": "single_security",
+    "PWR": "single_security",
+    "QBER": "fund",
+    "QCOM": "single_security",
+    "QQQ": "fund",
+    "QQQM": "fund",
+    "QUAL": "fund",
+    "QXO": "single_security",
+    "RBGLD": "single_security",
+    "REGN": "single_security",
+    "RHHBY": "single_security",
+    "RIO": "single_security",
+    "ROST": "single_security",
+    "RTX": "single_security",
+    "SALXX": "fund",
+    "SCHB": "fund",
+    "SCHD": "fund",
+    "SCHO": "fund",
+    "SCHP": "fund",
+    "SCHZ": "fund",
+    "SGOV": "fund",
+    "SHV": "fund",
+    "SHY": "fund",
+    "SJNK": "fund",
+    "SLV": "fund",
+    "SMDV": "fund",
+    "SNDK": "single_security",
+    "SNY": "single_security",
+    "SPDW": "fund",
+    "SPHY": "fund",
+    "SPLG": "fund",
+    "SPMO": "fund",
+    "SPOT": "single_security",
+    "SPSM": "fund",
+    "SPY": "fund",
+    "SPYM": "fund",
+    "STIP": "fund",
+    "STLD": "single_security",
+    "STT": "single_security",
+    "STX": "single_security",
+    "SYLD": "fund",
+    "T": "single_security",
+    "TBIL": "fund",
+    "TFLO": "fund",
+    "TIP": "fund",
+    "TJX": "single_security",
+    "TKOMY": "single_security",
+    "TLT": "fund",
+    "TRV": "single_security",
+    "TSLA": "single_security",
+    "TSM": "single_security",
+    "TTE": "single_security",
+    "TXN": "single_security",
+    "UAL": "single_security",
+    "UBER": "single_security",
+    "UL": "single_security",
+    "UNH": "single_security",
+    "UNP": "single_security",
+    "UNVGY": "single_security",
+    "UPS": "single_security",
+    "USO": "fund",
+    "UTEN": "fund",
+    "UTWO": "fund",
+    "UVXY": "fund",
+    "V": "single_security",
+    "VB": "fund",
+    "VCIT": "fund",
+    "VCLT": "fund",
+    "VCSH": "fund",
+    "VEA": "fund",
+    "VGIT": "fund",
+    "VGLT": "fund",
+    "VGSH": "fund",
+    "VGT": "fund",
+    "VIV": "single_security",
+    "VIXY": "fund",
+    "VLO": "single_security",
+    "VNLA": "fund",
+    "VNQ": "fund",
+    "VO": "fund",
+    "VOO": "fund",
+    "VSS": "fund",
+    "VTES": "fund",
+    "VTI": "fund",
+    "VTIP": "fund",
+    "VTV": "fund",
+    "VUG": "fund",
+    "VUSB": "fund",
+    "VWO": "fund",
+    "VWOB": "fund",
+    "VXUS": "fund",
+    "VXX": "fund",
+    "VZ": "single_security",
+    "WDAY": "single_security",
+    "WDC": "single_security",
+    "WM": "single_security",
+    "WMMVY": "single_security",
+    "WMT": "single_security",
+    "XBIL": "fund",
+    "XLE": "fund",
+    "XLF": "fund",
+    "XLK": "fund",
+    "XLU": "fund",
+    "XOM": "single_security"
+  },
+  "live_rows": 344,
+  "other_diffs": [
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "ACSG"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "ACSG",
+      "ticker": "ACSG"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": "Intermediate",
+      "seed": "International",
+      "ticker": "BNDX"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "BSCN"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "BSCN",
+      "ticker": "BSCN"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "CASH_USD"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "active",
+      "ticker": "DFAC"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "DFAC",
+      "ticker": "DFAC"
+    },
+    {
+      "field": "sector",
+      "live": null,
+      "seed": "US Small Cap",
+      "ticker": "DFAC"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "US Small Cap",
+      "ticker": "DFAC"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "active",
+      "ticker": "EVNT"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "EVNT",
+      "ticker": "EVNT"
+    },
+    {
+      "field": "sector",
+      "live": null,
+      "seed": "US Large Cap",
+      "ticker": "EVNT"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "US Large Cap",
+      "ticker": "EVNT"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "GARP"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "GARP",
+      "ticker": "GARP"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "IBND"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "IBND",
+      "ticker": "IBND"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "IXJ"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "IXJ",
+      "ticker": "IXJ"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "JMUB"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "JMUB",
+      "ticker": "JMUB"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "JPEM"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "JPEM",
+      "ticker": "JPEM"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "JPMI"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "JPMI",
+      "ticker": "JPMI"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "LDUR"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "LDUR",
+      "ticker": "LDUR"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "MDY"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "MDY",
+      "ticker": "MDY"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "active",
+      "ticker": "MRSIX"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "MRSIX",
+      "ticker": "MRSIX"
+    },
+    {
+      "field": "sector",
+      "live": null,
+      "seed": "International Developed",
+      "ticker": "MRSIX"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Developed",
+      "ticker": "MRSIX"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "passive",
+      "ticker": "PHYS"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Sprott Physical Gold Trust",
+      "ticker": "PHYS"
+    },
+    {
+      "field": "sector",
+      "live": null,
+      "seed": "Gold",
+      "ticker": "PHYS"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Metals",
+      "ticker": "PHYS"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "SCHB"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "SCHB",
+      "ticker": "SCHB"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "SHV"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "SHV",
+      "ticker": "SHV"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "SMDV"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "SMDV",
+      "ticker": "SMDV"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "SPLG"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "SPLG",
+      "ticker": "SPLG"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "STIP"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "STIP",
+      "ticker": "STIP"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "SYLD"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "SYLD",
+      "ticker": "SYLD"
+    },
+    {
+      "field": "sector",
+      "live": "",
+      "seed": null,
+      "ticker": "VTES"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "WMT"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "WMT",
+      "ticker": "WMT"
+    },
+    {
+      "field": "sector",
+      "live": null,
+      "seed": "US Large Cap",
+      "ticker": "WMT"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "US Large Cap",
+      "ticker": "WMT"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "XLU"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "BBY"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Best Buy Co Inc",
+      "ticker": "BBY"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Consumer Discretionary",
+      "ticker": "BBY"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "BE"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Bloom Energy Corp",
+      "ticker": "BE"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Industrials",
+      "ticker": "BE"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "BX"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Blackstone Inc",
+      "ticker": "BX"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Financials",
+      "ticker": "BX"
+    },
+    {
+      "field": "name",
+      "live": "Cash & Cash Equivalents",
+      "seed": "Cash & Other Assets",
+      "ticker": "CASH"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "CSCO"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Cisco Systems Inc/Delaware",
+      "ticker": "CSCO"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Information Technology",
+      "ticker": "CSCO"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "DG"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Dollar General Corp",
+      "ticker": "DG"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Consumer Staples",
+      "ticker": "DG"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "ED"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Consolidated Edison Inc",
+      "ticker": "ED"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Utilities",
+      "ticker": "ED"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "EXPD"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Expeditors International of Washington Inc",
+      "ticker": "EXPD"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Industrials",
+      "ticker": "EXPD"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "GEV"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "GE Vernova Inc",
+      "ticker": "GEV"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Industrials",
+      "ticker": "GEV"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "LNVGY"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Lenovo Group Ltd",
+      "ticker": "LNVGY"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Information Technology",
+      "ticker": "LNVGY"
+    },
+    {
+      "field": "management_style",
+      "live": null,
+      "seed": "unknown",
+      "ticker": "META"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Meta Platforms Inc",
+      "ticker": "META"
+    },
+    {
+      "field": "sub_asset_class",
+      "live": null,
+      "seed": "Communication Services",
+      "ticker": "META"
+    },
+    {
+      "field": "name",
+      "live": null,
+      "seed": "Quanta Services Inc",
+      "ticker": "PWR"
+    }
+  ],
+  "seed_rows": 302
+}
