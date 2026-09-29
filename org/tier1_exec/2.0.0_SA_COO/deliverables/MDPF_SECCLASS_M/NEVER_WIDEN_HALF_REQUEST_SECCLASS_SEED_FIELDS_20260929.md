@@ -84,3 +84,24 @@ this same run performs (`read_existing(table)`, printed as `PRE-READ: N existing
 - **`CASH.name`:** not written by this act (guarded by `--force-names`, not part of the act above); no rollback
   needed unless a LATER, separately-signed `--force-names` run lands it, at which point the same PRE-READ value
   (`Cash & Cash Equivalents`) is the rollback candidate.
+
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~00:1xZ)
+
+Signed on the blast radius above, read against the drained code on CLOUD @bb18a59a4a. The issuer re-ran all three
+criteria on CLOUD: `19 passed`, `SEED-FIELDS 302/344 diffs=88 class_changes=0`, `HALF-READY`, proof VALID.
+
+- **Writers of the touched properties: 2**, both covered here: `seed-etf-classifications.py` (the seed path; sets
+  `classified_by = seed`) and `seed-etf-constituents.py`, which is "any other writer" per 1.0.0_SA_CTO RULING 103050.
+  The constituents seeder is conditional on `attribute_not_exists(classified_by)`, so it never overwrites a seed or
+  scheduled row. `bd-securities` is read by neither: Andrew-direct 2026-09-29 ~21:4xZ holds.
+- **Both branches.** For a row Positioning already classifies, the only value that moves is BNDX `sub_asset_class`,
+  Intermediate -> International. That is the module's value, the table having drifted from it. It is listed with
+  both values and rolls back by UpdateItem. For a row that does not exist, about 86 seed-source tickers gain a row
+  (additive). The scheduled backfill counts those tickers as seed_pending, never as scheduled writes.
+- **Release order:** this seed run is MDPF_SECCLASS release step 1, ahead of SC-k-1's first scheduled write. It lands
+  the PHYS row that IRPT_BCKEND IB-mr-251 (held) and the BD thread census expect.
+- **Known gap, not widened here:** row MDPF_SECCLASS-W2-S3. The constituents seeder's default run writes
+  `instrument_kind` only to its 10 net-new tickers, and 157 existing stock rows stay without it. FWD-8 is therefore
+  not complete after this act. The fix is an instrument_kind-only update mode, carried to the round-1 analysis.
+- **Operator for the run:** the seed path runs with the operator's credentials, and the ledger entry is opened at the
+  start of the run and closed at its read-back.
