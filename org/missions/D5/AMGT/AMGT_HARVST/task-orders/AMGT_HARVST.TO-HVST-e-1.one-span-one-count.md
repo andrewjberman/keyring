@@ -77,7 +77,7 @@ file a BLOCKING row and stop -- do not tune the rule to keep it.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~42</slot>
 <fabric>site-z</fabric>
