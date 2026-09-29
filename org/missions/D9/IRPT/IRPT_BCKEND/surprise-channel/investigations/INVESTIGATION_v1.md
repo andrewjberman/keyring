@@ -11440,3 +11440,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The rule should take max over BOTH author lines and every <issued_to> of a non-terminal order (plus existing wk-IRPT_BCKEND-n branches). ~Y's amendment (this commit) re-points yr-201 to ~71 before any spawn, so no worker held a union grant."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W69-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~69",
+  "surfaced_at": "2026-09-29T06:47:00Z",
+  "one_line": "TO-IB-pr-213's build step named '.tools/terraform.exe plan' in the portal-auth root, but that path does not exist in this worker's worktree (git worktrees carry only tracked files; terraform.exe is an untracked 91MB binary present in the main worktree). Worked around with the system terraform binary on PATH (winget install) plus a plain 'terraform init -lock=false' (no .terraform/ state existed either); plan then ran clean. No apply issued.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (worktree provisioning: either vendor .tools/terraform.exe into every new worker worktree or repoint the task-order build step to the PATH binary; every later portal-auth worker on a fresh worktree hits the same absence)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-213.edge-role-public-keys-only.md 'Run terraform fmt on the file and .tools/terraform.exe plan in the portal-auth root'",
+      "C:/Users/AndrewBerman/Desktop/wk-irpt-p-69/.tools/terraform.exe: No such file or directory (this worktree, 2026-09-29)",
+      "C:/Users/AndrewBerman/Desktop/ajb_workspace/.tools/terraform.exe present, 91104424 bytes, untracked (main worktree only)",
+      "resolved terraform on PATH: /c/Users/AndrewBerman/AppData/Local/Microsoft/WinGet/Packages/Hashicorp.Terraform_Microsoft.Winget.Source_8wekyb3d8bbwe/terraform.exe; used for fmt/init/plan, no apply"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build step: 'Run terraform fmt on the file and .tools/terraform.exe plan in the portal-auth root.'",
+  "world_is": "'.tools/terraform.exe' is absent from this worker worktree (untracked binary, worktrees carry tracked files only); the PATH-resolved terraform binary was substituted for fmt/init/plan, never apply.",
+  "notes": "No functional difference observed between the vendored .tools/terraform.exe and the PATH binary for fmt/init/plan on this cell; flagged because a future worker following the same literal path will hit the identical absence until worktree provisioning vendors it or the order is written against PATH."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W69-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~69",
+  "surfaced_at": "2026-09-29T06:47:00Z",
+  "one_line": "An un-targeted 'terraform plan' in infra/aws/terraform/portal-auth (run only to double-check the targeted plan's 'ONE in-place update' expectation) shows a SECOND pending change unrelated to this cell: aws_wafv2_web_acl.opal_cloudfront_protection will be updated in-place (a visibility_config/rule drift on 'known-bad-inputs'). The cell's own targeted plan (-target=aws_iam_role_policy.lambda_edge_secrets_logs) is exactly the named 1-resource update; the WAF drift pre-exists this edit and is out of this cell's <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "targeted plan (this cell): 'Plan: 0 to add, 1 to change, 0 to destroy.' -- aws_iam_role_policy.lambda_edge_secrets_logs only",
+      "full plan (no -target), same root, same commit: 'Plan: 0 to add, 2 to change, 0 to destroy.' -- resources: aws_iam_role_policy.lambda_edge_secrets_logs, aws_wafv2_web_acl.opal_cloudfront_protection",
+      "infra/aws/terraform/portal-auth/*.tf: aws_wafv2_web_acl.opal_cloudfront_protection is not in this cell's <paths> (iam.tf only) and was not edited by this order"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "N/A -- off-task finding under CLAUDE.md section 2's surprise-channel rule ('found something odd off-task? append one row and keep working').",
+  "world_is": "The portal-auth root carries pre-existing WAF drift (config vs. live state) independent of this cell's edge-role change.",
+  "notes": "Not this cell's remedy; carried for whichever owner is tracking portal-auth drift. This cell's own targeted plan matches the task order's expectation exactly (1 in-place update, the named resource)."
+}
+```
