@@ -220,7 +220,7 @@ Report once per phase.
 - The live package predates `e2be5c2f42`'s `_trigger_identity` (never applied); this deploy ships it. Named in the ask.
 - Declared class WORLD: a Lambda code change and an IAM grant on the live 49F dispatch path.
 
-<status>staged</status>
+<status>complete</status>
 <round>4</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
