@@ -11217,3 +11217,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disarm owner discharged: 1.0.0_SA_CTO ruled and 2.0.0_SA_COO~P landed; hazard_standing is recorded INERT on this row. Formal disposition of W64-S1 (GRADUATED, via `adjudicates`) is 3.0.0_SA_CVO's L9 act, not a worker's -- this row supplies the evidence for that compile. W64-S1 itself is never edited in place."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W65-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~65",
+  "surfaced_at": "2026-09-29T03:00:00Z",
+  "one_line": "IB-er-203: opal-data-49financial's own bucket policy carries statement DenyForeignFirmPrincipals -- an explicit s3:* Deny on the whole bucket for any principal whose ARN does not match role/*-49f-* (or sit in a named exemption list). The task order's build note ('an execution role that reads the declared silver and writes ONLY the two gold prefixes') and the ~M holdings-snapshot precedent it names do not mention this fence. A first cut named the role irpt-holdings-performance-role (no firm token): it planned, applied and read back clean, then the ledger's own required real invoke failed the write with exactly that Deny -- an IAM Allow cannot override a resource-policy explicit Deny. Fixed same-turn: opal_name's existing `scope` argument (builder-derived, never typed) renamed the role/policy to irpt-49f-holdings-performance-role/-policy, matching the fence's own glob.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (issuer of record; disarmed same turn by the worker under this order: role renamed, re-applied 2 add/1 change/2 destroy on this same deploy's own not-yet-served resources, re-invoked rc=0, manifest read back landed, re-plan No changes, ledger irpt-holdings-performance-daily-w65-20260929 CLOSED all 4 legs)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-policy --bucket opal-data-49financial (live read, 2026-09-29T03:0xZ): Sid DenyForeignFirmPrincipals, Effect Deny, Principal *, Action s3:*, Resource [opal-data-49financial, opal-data-49financial/*], Condition ArnNotLike aws:PrincipalArn [role/*-49f-*, plus a named exemption list of specific roles/users -- irpt-holdings-performance-role was not among them]",
+      "aws lambda invoke irpt-holdings-performance-lambda {date:2026-09-25} against the FIRST role: errorType AccessDenied, 'PutObject ... is not authorized to perform: s3:PutObject on resource ... with an explicit deny in a resource-based policy' -- the read side (opal-data-assets) succeeded first (source=schwab_08335338 firm=49financial days=1 upload=True), isolating the failure to the write-side bucket's own policy, not this role's IAM document (which already granted PutObject on that exact key)",
+      "CLAUDE.md s.5 'NEVER reference another firm's data from a pipeline tree -- BUCKET or KEY-PREFIX ... per-firm buckets -> bucket-scoped Deny' -- the mechanism this fence implements; org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-er-203.holdings-performance-daily-schedule.md names no such fence for this cell",
+      "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf:127-142 (2.0.0_SA_COO~M, R4) -- the estate's own precedent for this exact fence: 'ONE HOLDINGS PRINCIPAL PER FIRM ... the host role does not carry [the scope token], and widening it is the cross-firm act CLAUDE.md forbids' -- the per-firm-principal architecture this cell's SINGLE-FIRM round did not need in full, resolving the fence instead by scoping the one execution role itself",
+      "lib/opal_naming.py name(system, scope, function, kind): passing scope='49financial' (a FIRM-class scopes.json row) yields 'irpt-49f-holdings-performance-role', which matches the fence's own role/*-49f-* glob -- still 100% builder output, no token typed by hand",
+      "Second invoke after the fix: rc=0, log 'EMIT: 1 day(s) landed, 7540 row(s)'; readback head-object irpt/49financial/gold/holdings_performance_daily/date=2026-09-25/data.parquet ContentLength=297155 and get-object .../holdings_performance_manifest/date=2026-09-25/manifest.json rows=7540 landed=true; terraform plan after the fix: 'No changes. Your infrastructure matches the configuration.'"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The gap between the task order's text and the live bucket fence was real, but it is resolved within this same cell's grant and this same turn by a builder-derived rename -- no override, no gate edit, no widened exemption list, and the criterion (E2-AC3) and the ledger's own real-invoke requirement both now pass against the corrected role. Nothing remains to investigate for this cell; a SECOND declared firm in a later round would need to revisit the single-role assumption (see grounding row 4's precedent) but none exists yet.",
+  "spec_asserts": "IB-er-203's build note: 'an execution role that reads the declared silver and writes ONLY the two gold prefixes' -- naming no per-firm-principal step and no bucket-fence check, on the same page that names the ~M holdings-snapshot cell as 'the estate's pattern to copy', a cell that DOES use a per-firm-principal for exactly this reason.",
+  "world_is": "opal-data-49financial denies every principal outside a named allow-list or the role/*-49f-* glob, full stop, regardless of what its own IAM policy grants -- an explicit resource-policy Deny is unconditional over an IAM Allow. A single-firm execution role satisfies the fence by carrying the token directly; a role meant to serve more than one firm cannot, which is exactly why the ~M precedent uses a separate mechanism (per-firm principals assumed by a firm-blind host role) instead.",
+  "notes": "Not a naming-gate defect and not a criterion weakening: E2-AC3's own check (schedule ENABLED, cron, target) never touches this bucket, so the schedule criterion would have graded PASS even with the broken role -- the failure was caught only because the task order's OWN deploy discipline (ledger leg V1, one real invoke with its manifest row written) is stricter than the acceptance criterion. That gap between 'the graded criterion' and 'the deploy discipline's own proof requirement' is what actually surfaced this row, not the criterion itself."
+}
+```
