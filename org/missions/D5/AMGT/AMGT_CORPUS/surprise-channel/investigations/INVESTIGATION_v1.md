@@ -2202,6 +2202,50 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "FWD_EVIDENCE_ROUND13 FWD-4 (12:50Z): the fence's population, one backlog name the universe carries UNRESOLVED, is empty (0 of 95), so the act can only print 'picked NONE'.",
     "world_is": "From 12:56Z the population holds one organic name, Hitachi 6501 JP. The act runs on it and refuses to pick it for want of a (Ticker: ...) line: the organic arm now exists and reads NO_EVIDENCE; the WILL-ADD and REFUSES-ambiguous limbs are still unobserved, so the planted-folder act the row names still stands.",
     "notes": "For the round-13 analysis, not a cell of this round. FWD-1, FWD-3 and FWD-19 denominators moved by one folder / one file after the run; FWD-1's fence scans the resolved folder list, so its 356 of 356 still reads. Ingesting or inducting Hitachi is the scheduled producer's and AMGT_RESAPP's (the induction act's executing seat), never this row's."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W5-S4",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+    "surfaced_at": "2026-09-29T19:00Z",
+    "one_line": "The order says continuation objects are keyed '<inputs_sha16>.json, which excludes METHOD_VERSION'; the code includes it, so the METHOD_VERSION bump to /3 moves ML_FP's key (b0b6466fe3e0738e -> d0a6bae5095e31fd) and a rebuilt ML_FP document does NOT collide with its stored /2 object.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/continuation.py _inputs_sha16 = sha256(canonical({'method_version': METHOD_VERSION, 'inputs': inputs}))[:16]; write_one names the object '<that>.json'.",
+        "Read-only S3 list of amgt/harvest/gold/research-continuation/security_key=ML_FP_Equity/: 66f02efbf864ae95.json (method /1, 2026-09-24), b0b6466fe3e0738e.json (method /2, 2026-09-26); both carry inputs equal to current_inputs; computed _inputs_sha16 under /2 = b0b6466fe3e0738e (matches the stored key), under /3 = d0a6bae5095e31fd (no stored object).",
+        "Consequence for the drain: writing the /3 document creates a THIRD object beside /1 and /2; read_latest prefers the current METHOD_VERSION (_select_stored) so the /3 object is served once written. Keying was not changed by CRPS-p-5."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO CRPS-p-5 item 5: continuation objects are keyed '<inputs_sha16>.json', which excludes METHOD_VERSION.",
+    "world_is": "The key hashes METHOD_VERSION together with the inputs; the bump alone gives ML_FP a fresh key, so the never-overwrite gold_put does not refuse the rebuilt document.",
+    "notes": "For the issuer's drain pair: the served move for ML_FP (and every name, since the bump moves every key) is a write of new objects, not an overwrite; disarm_owner 2.0.0_SA_COO~X."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W5-S5",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+    "surfaced_at": "2026-09-29T19:00Z",
+    "one_line": "ML_FP's source paragraph for 'Nearing turn in cycle' is EMPTY (the next line is the RISKS AND CONSDIERATIONS heading), so CRPS-p-5 serves thesis_pillars ABSENT; but the same INVESTMENT THESIS block carries five period-led pillars (e.g. 'Irreplaceable brand and pricing power.') the PDF pillar reader never sees.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Extract extract.v2.json of 362ec404b3d2eba8 (Michelin Research Pack Template 2026 05 28_v1.pdf): section_leads INVESTMENT THESIS line_index 674, RISKS AND CONSDIERATIONS 690; lines 675-688 are five bold-first period-led pillars ('Irreplaceable brand and pricing power.', 'Mix shift to premium.', 'FCF Generation.', 'Beyond tires.', 'EV-agnostic positioning.') each with body text; line 689 'Nearing turn in cycle:' is all-bold with lead_prefix 'Nearing turn in cycle:' and line 690 is the next heading.",
+        "_pdf_pillars_raw accepts a lead only when it ends in ':' (rules a/b/c), so lines 675-688 precede the first accepted lead and are dropped; before this order the served pillar list was the single empty 'Nearing turn in cycle'; after it the field is ABSENT with reason (AC2: 'ML_FP_Equity ABSENT reason every pillar lead ... empty paragraph in the source')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO CRPS-p-5: if the source paragraph is empty the pillar is served ABSENT with that reason; ML_FP's INVESTMENT THESIS block is read as its pillars.",
+    "world_is": "The order's branch (empty source -> ABSENT) is built and correct for the one colon-led lead, but the pack's real pillars are period-led and the PDF reader has no rule for them, so ML_FP serves no pillars while its source states five with paragraphs. Not fixed: widening the lead grammar is outside this order.",
+    "notes": "Candidate for the round-14 analysis: a period-led bold-first lead rule (bold_first true, lead_prefix ends '.') in _pdf_pillars_raw; would need a census of other PDF packs for false leads before landing."
   }
 ]
 ```
