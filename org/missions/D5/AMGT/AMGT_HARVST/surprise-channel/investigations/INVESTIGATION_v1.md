@@ -2163,6 +2163,49 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Only 25 of 89 securities carry a usable sa_symbol, so 25 jobs is the ceiling and the rest would be skipped for a missing symbol.",
       "world_is": "All 89 resolve at this HEAD. The cap (5 x 5 jobs) still bounds the capture; the missing-symbol bucket of AC1 reads 0 of N.",
       "notes": "No effect on this cell's outcome (the capture stopped on the 402, row Z-W37-S4). Filed so a later cut does not size a capture against 25."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W39-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~39",
+      "surfaced_at": "2026-09-29T04:05Z",
+      "one_line": "lib/research/harvest/timeline_api.py get_timeline_event (route 3) keys an event by first_day and recomputes event_id as publication_gold._event_id(security_key, first_day, last_day); once event_id carries the story (HVST-b-1) that recomputed id matches NO chatter_event.event_id, and two events on one first_day cannot both be served (the loop returns the first match). timeline_api.py is outside HVST-b-1's paths and was not changed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: lib/research/harvest/timeline_api.py:378 `event_id = publication_gold._event_id(security_key, match[\"first_day\"], match[\"last_day\"])` and the match loop at :368-370 (`if fd == day: match = erow; break`), at 8dbea345c9.",
+          "MEASURED: HVST-b-1 _event_id(security_key, first_day, last_day, story_key=None) keeps the three-argument form yielding the OLD day-only id, so nothing crashes and lib/research/harvest/tests (153 passed) stays green; the served body's event_id would differ from the stored chatter_event.event_id (the stored one hashes the lead article_key too). The route already reads the stored row (`match`), which carries event_id and lead_article_key."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "test_timeline_api.py:213 and timeline_api.py:378 assert the served event_id equals _event_id(security, first_day, last_day), one event per first_day.",
+      "world_is": "After HVST-b-2 serves story-carrying ids, route 3 would print an id no stored row has, and a day with two qualifying stories would show only the first. Nothing is wrong until HVST-b-2 serves the rebuilt table; a cell owning timeline_api.py should read event_id off the matched row and key the route by (first_day, event_id) or lead_article_key.",
+      "notes": "Filed, not fixed: the path is outside this order's write grant. On the round's 7 in-memory events no first_day carries two events (AC1), so the served day has no collision yet; the wrong id would still be served."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W39-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~39",
+      "surfaced_at": "2026-09-29T04:06Z",
+      "one_line": "A security's own name cannot be read off headline FREQUENCY alone: NVDA_US_Equity has 4 tier-A headlines in the landed data, 3 of them the 06-01 PC story, so 'pc' is carried by 3 of 4 (75%) and a frequency-only name detector dropped it as the company name, deleting the NVDA 06-01 event (AC1 read 6 events, NVDA gone). The shipped rule also requires a stem on >= 3 distinct days, under which NVDA's name ('nvidia', 2 days) is NOT dropped and NVDA is never split.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: the first in-memory build at this cell (name = stem in >= 3 of every 4 titled tier-A headlines, sample >= 4) returned 6 events, NVDA 06-01 absent; the build with the distinct-days floor (_STORY_NAME_MIN_DAYS = 3) returned 7 with NVDA 06-01 kept (ac1_output.txt). Per-security tier-A counts printed at the cell: NVDA A=4, BA A=24, 992_HK A=12, COST A=12, HD A=9.",
+          "This is the fit-to-cases hazard the issuer's note names: the distinct-days floor and the _STORY_CLASSES earnings table (needed for 992 02-12 and HD 08-18, whose pairs share no token beyond the company name) were both added after reading the 8 served events; the lower token floor (3 -> 2, for 'pc') likewise. All three are stated in publication_gold.py's block comment as failure modes (c)-(e)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-b-1 face section 1: NVDA 06-01's 'only shared token (nvidia) is dropped as ubiquitous, pc is below the 3-character floor'.",
+      "world_is": "With three same-day headlines out of four, 'pc' is as frequent as the name; the name is only separable by spread over days, and a security with a single burst has too few days to show it, so its headlines are linked on the name (never split). Thin securities (under 4 titled tier-A headlines) are likewise never split.",
+      "notes": "A single-burst security's unrelated same-day stories will not be separated by this rule; round-13's served rows are the first test on more than one such security."
     }
   ]
 ```
