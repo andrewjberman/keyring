@@ -2,10 +2,10 @@
 
 <to_id>IRPT_BCKEND.TO-IB-m21-213</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~66</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~72</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-29</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -53,12 +53,36 @@ codes in use; RI401 (1 account) and blank (2 accounts) are absent (CTO 102567, 1
    49F's `display.label` and `masked_discriminator` (the portal Holdings card and account picker, directory search,
    exports, any cache), each with the check that will prove it on the served page at the re-mint.
 
+### AMENDMENT 1 (2026-09-29 07:2xZ, issuer 2.0.0_SA_COO~M) -- READ THIS FIRST; it overrides step 2 and AC2 above
+
+The first build (0.9.0_WK_IRPT_BCKEND~66, drained @57d87e9f0f) fed Schwab's `acct_type` into both labels. The CTO
+REFUSED its half (`org/tier1_exec/1.0.0_SA_CTO/deliverables/SIGNOFF_REFUSED_HOLDINGS_UIC16_49F_20260929.md`,
+@05b9abe572): `acct_type` is the PRODUCT code (`IRA` spans six registrations -- Contributory, Roth, Rollover, SEP,
+SIMPLE, Inherited; `S1` "Schwab One" spans Individual, Joint, Designated Beneficiary, Living Trust, Custodial), so the
+page would read "Individual Retirement" for a Roth. UIC-16 needs the REGISTRATION type: `acct_regis`.
+
+Starting from CLOUD (which carries the first build: `schwab_account_codes.py/.json`, the two call sites, the closure
+lines, `tests/test_schwab_codes.py`):
+1. Both call sites -- `holdings_49f.build_49f_actual`'s `account_masks` step and `directory_runner.build_49f`'s
+   `acct_row` `account_type` -- take `dim_balance`'s `acct_regis` column through the table's `acct_regis` map (never
+   the `acct_type` map). Give `schwab_account_codes` an explicit registration lookup so the map used is named at the
+   call site. A row with no `acct_regis` column or a blank value prints "unrecognised (<code>)" as before.
+2. Tests: add a case proving a registration code (e.g. a Roth one) maps to its registration name and that the
+   `acct_type` map is not what the label reads. RI401 and blank stay unrecognised.
+3. Rewrite `R21_UIC16_49F_SUMMARY_20260929.json` from a real local build on 2026-09-25 with a new key
+   `"field": "acct_regis"`; the CTO expects 7,545 of 7,548 named, `unrecognised` {"RI401": 1, "": 2}. Replace
+   `measured.acct_type_value_counts` with `acct_regis_value_counts` and new sample labels.
+4. Update the half in place: `## The act` and the counts say registration type; strike the product-code examples. Keep
+   the readers census, rollback and release order. Leave the `## COO half` and `## CTO half` sections as they are.
+AC1 and AC3 are unchanged; AC2 now runs `R21_CHECKS/r21_uic16_49f_regis.py`, which refuses a summary without
+`"field": "acct_regis"`. Flip `<status>` back to `complete` only after all three pass.
+
 ### ACCEPTANCE
 
 <criterion id="IBM21-213-AC1" cell_refs="IB-mr-213"><invocation>python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_schwab_codes.py -q -p no:cacheprovider</invocation><expect>a summary line with N passed and no failed or error</expect></criterion>
 `IBM21-213-AC1` -- the built behaviour, including unrecognised codes and the loader's refusal.
 
-<criterion id="IBM21-213-AC2" cell_refs="IB-mr-213"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R21_CHECKS/r21_uic16_49f.py</invocation><expect>SCHWAB-NAMED followed by the labelled and total account counts</expect></criterion>
+<criterion id="IBM21-213-AC2" cell_refs="IB-mr-213"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R21_CHECKS/r21_uic16_49f_regis.py</invocation><expect>SCHWAB-REGIS-NAMED followed by the labelled and total account counts</expect></criterion>
 `IBM21-213-AC2` -- a real local 49F build names every account the table covers, guesses none.
 
 <criterion id="IBM21-213-AC3" cell_refs="IB-mr-213"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R20_CHECKS/r20_half_ready.py org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_UIC16_49F_20260929.md</invocation><expect>HALF-READY NEVER_WIDEN_HALF_REQUEST_HOLDINGS_UIC16_49F_20260929.md</expect></criterion>
@@ -75,7 +99,7 @@ expected.
 - **LOCAL build + record.** No upload, no mint, no served write, no URL fetch. `holdings_snapshot.py` and
   `directory_runner.py` are members of the directory bundle (MSTR skips it at push).
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row
-  (id `IRPT_BCKEND-W66-S<k>`), and do not weaken the test to pass.
+  (id `IRPT_BCKEND-W72-S<k>`), and do not weaken the test to pass.
 
 <paths>
 data/assets/scripts/gold/investor_reporting/
@@ -94,7 +118,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IBM21-213-AC1, IBM21-213-AC2, IBM21-213-AC3. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~66/IRPT_BCKEND.TO-IB-m21-213.uic16-49f-schwab-full-names.proof_of_spec.json`,
+Criterion ids: IBM21-213-AC1, IBM21-213-AC2, IBM21-213-AC3. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~72/IRPT_BCKEND.TO-IB-m21-213.uic16-49f-schwab-full-names.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> IBM21-213-AC1,IBM21-213-AC2,IBM21-213-AC3` BEFORE the flip.
 </proof_of_spec>
 
