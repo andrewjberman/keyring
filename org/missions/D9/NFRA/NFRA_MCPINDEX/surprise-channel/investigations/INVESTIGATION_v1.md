@@ -3121,6 +3121,112 @@ carries none.
     "spec_asserts": "A safe-merge drain that exits 0 with the branch as a parent carries the branch's content.",
     "world_is": "It carried a subset. Because the branch now reads as merged by ancestry, a re-merge carries nothing, so the bytes return only by a forward commit. The resolver now parses every row object with raw_decode, whatever the key order, and was checked equal to the JSON id list on HEAD (132) and ed61b070e4 (122). Worker ~14 recommits the carrier under MX-r-5 A2 (d4a68b0b24).",
     "notes": "After each channel drain, the issuer diffs branch ids against CLOUD ids (0 missing) and the branch's non-channel paths against the merge tree."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T07:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-d-4 makes opal_discover HEAD S3 objects, but the integration's own SPEC and docstrings still say it reads no S3 object and egresses nowhere (hosts no-egress.invalid): the release would ship a stale egress declaration for the CTO's G-A to read against.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "release 510bf69089, app/integrations/opal_discover/integration.py: SPEC.hosts = (\"no-egress.invalid\",), SPEC.description ends 'Reads no S3 object and egresses nowhere.', the module docstring's 'READS, NEVER FETCHES ... this family reads NO S3 object' block stands; _s3_head() (MX-d-4, commit 2984d17cc3) builds a boto3 s3 client and calls head_object on the catalog bucket opal-data-portal-v2 for each servable row.",
+        "Reach of the HEAD, measured on the release tree's catalog with the opal-internal principal: 24 servable rows, every HEAD key under json/ (21) or platinum/ (3), none outside the gateway role's read scope (json/* and platinum/*, per the MX-r-4 announcement's get-role-policy read). app/integrations/base.py treats `hosts` as documentation plus a non-empty check (lines 68 and 207); I found no run-time host check on a boto3 call."
+      ]
+    },
+    "spec_asserts": "MX-d-4 preflight: EGRESS CLASS NONE beyond Opal's own AWS (one S3 HEAD per servable row); the SPEC still declares no egress (G2 egress minimal, hosts).",
+    "world_is": "The declaration and the behaviour disagree. Behaviour is inside Opal's own AWS and the granted IAM scope; only the declared host list and the description text are stale. Correcting SPEC.hosts to the S3 host is a code change to a listed census file that is not in any of the cherry-picked commits, so the release does NOT carry it.",
+    "notes": "For the G-A read of MX-r-5: the delta is one new tool (mdpf_get_model_benchmarks) AND opal_discover's new S3 HEAD. Owner of the fix is the issuer's to place (an MX-d-4 amendment, then a re-cut of the pin)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T07:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "tests/test_entitlement_admin.py::test_ogz2_ac08 fails on any tree carrying MX-t-9 (its per-integration pin and its == 51 count name three portal_index tools, not four), on CLOUD and on the release; the live tree already fails 4 tests in the three files run, so the release adds exactly this one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release tree /c/tmp/mx-rel5 (510bf69089), tests test_opal_discover, test_portal_index, test_tool_classification_composition, test_entitlement_admin, test_data_entitlement_guard: 49 passed, 5 failed = test_portal_tools_catalog_refs_resolve, test_ogz2_ac06, test_ogz2_ac08, test_ogz1_ac05, test_ogz1_ac08. Rollback tree /c/tmp/mx-rb5 (4248b70b39, the live tree), test_portal_index, test_entitlement_admin, test_data_entitlement_guard: 24 passed, 4 failed = the same set minus test_ogz2_ac08.",
+        "test_ogz2_ac08 assertion: ('portal_index', ['mdpf_get_model_benchmarks'], []) is one more item in the pin diff; the file pins portal_index to 3 tools and `len(registered_tool_names) == 51`. `git show CLOUD:infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py` names mdpf_get_model_benchmarks 0 times. tests/ is not in the shipped artifact (app, deploy, requirements.txt, identity_tool_allowlist.txt, dashboard), so the deploy is unaffected."
+      ]
+    },
+    "spec_asserts": "MX-t-9 / 5a450314de: the fourth tool is entitled and registered; PHASE B reads the tool count gain exactly that tool.",
+    "world_is": "The pin file was not updated with the new tool (51 -> 52). The order's census names exactly the 7 gateway files and this test file is not among them, so the release does not carry a fix. The 4 other failures are already present on the live tree (a source-file glob outside the shipped tree; three data-entitlement assertions).",
+    "notes": "PHASE B's host read expects 52 tools (51 live + mdpf_get_model_benchmarks)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T07:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The order's premise for the live deployed commit is refuted by the host: it serves 4248b70b39 (NFRA_OPLGTW OG-x-3, 2026-09-29T05:22Z), not 0bce8d322a / gateway tree 3371f18803; the release is cut at 4248b70b39.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM AWS-RunShellScript on i-07dccb1615503ac99, sha256 of every file under app, deploy, dashboard, requirements.txt, identity_tool_allowlist.txt in /opt/opal-gateway: 79 files, compared per file with the artifact s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/opal-gateway-latest.tar.gz (406162 bytes, LastModified 2026-09-29T05:21:55Z, md5 a59f391592ae00f6725f4bbe2df2a6f8, identical to the opal-gateway-4248b70b39 key): 79 of 79 identical, 0 only-host, 0 only-artifact.",
+        "A rebuild from a clean tree at 4248b70b39 (build-only mirror of deploy-to-ec2.sh:78-91, mcportal a3bff71ffa) equals that artifact 79 of 79 (67 of 67 .py). Artifact keys since round 3: 0bce8d322a (02:45Z), 7c7ebe14d3 (03:24Z), 4248b70b39 (05:21Z); CLOUD's EC2_MANIFEST.json services.opal-gateway.deployed_commit already reads 4248b70b39."
+      ]
+    },
+    "spec_asserts": "Order step 1 and the round-3 notes: the live deployed commit is 0bce8d322a / gateway tree 3371f18803.",
+    "world_is": "Two NFRA_OPLGTW releases landed after that pin. The 5 commits this release carries are applied on 4248b70b39, whose tree already holds the other projects' released gateway work.",
+    "notes": "Confirmed by content on the host, not by the manifest."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T07:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Both release-branch commits (510bf69089 rel, b9e5c64437 dep) were made under the audited GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~14 on the MX-r-4 A1/A2 precedent; the MX-r-5 order restates the path grant and the pattern but not the override itself.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh in /c/tmp/mx-rel5, first attempt with no override: refused, 'WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path' for the 7 gateway files (the release tree has no order at HEAD). With the override the commit landed: 510bf69089 (rel) and, in /c/tmp/mx-dep5, b9e5c64437 (dep-only). The override is logged in org/git-author-override-audit.log.",
+        "MX-r-4 A1/A2 (the order's named precedent) authorize the audited override 'for exactly the release-branch commit(s)' and for the one deploy-only commit, naming each use; this order's issuer notes grant opal-gateway/** 'ONLY on the never-merged dep- and rel- branches (the MX-r-4 A2 pattern)'."
+      ]
+    },
+    "spec_asserts": "MX-r-5 issuer notes: opal-gateway/** granted on the rel- and dep- branches, the MX-r-4 A2 pattern.",
+    "world_is": "Two uses, one per branch, each carrying only the gateway directory; neither branch is merged or pushed. The issuer confirms or refuses the reading before PHASE B.",
+    "notes": "Uses: 2 of 2 needed; none on the worker branch."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T08:40Z",
+    "one_line": "MX-r-5 A2 step 6 asks that the census 'is still 7 files', but A2 step 3 puts test_entitlement_admin.py on the rel- and dep- branches, so the git census over infra/aws/ec2/opal-gateway is now 8 files; the shipped artifact still differs from live in exactly 4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git diff --stat 4248b70b39 0001c9bb53 -- infra/aws/ec2/opal-gateway`: 8 files, 551 insertions, 49 deletions; the 7 of the first pin plus tests/test_entitlement_admin.py (+3 -2). The dep tree (ca48cd5482) has the same gateway tree object d2debddbd3e3977b0ed1ef0db00a4afd457be394.",
+        "Artifacts rebuilt without upload from the release tree and from live: 75 of 79 files identical, the same 4 differ (data_entitlement.py, opal_discover/integration.py, portal_index/integration.py, DATA_CATALOG.yaml); tests/ is not in the artifact."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2 step 6: re-prove that the census is still 7 files.",
+    "world_is": "Both A2 edits were carried as ruled; one of them is a test file that was not in the first census. The count of files in the git census is 8, and the count of shipped files that differ is 4 (unchanged). The reading of 'census' as the git diff is the worker's; the issuer states which count the CTO's G-A reads.",
+    "notes": "Filed as a form-level departure from the order's letter, not a defect in the release."
   }
 ]
 ```
