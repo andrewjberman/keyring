@@ -121,6 +121,17 @@ per function reaching the loaders on a fresh container: for generate, a refused 
 (Registry build over all 22 schemas, no write) plus the digest read; for holdings, a cold-start invoke; with CodeSha256
 and census reads. The Holdings-card page read is dropped as a condition (it exercises no contract) and stays a plain
 read in this seat's next walk.
+## Addendum 2 (2026-09-29 12:3xZ) -- CLOSED on the D1 reads
+
+~P's `HOLDINGS_CONTRACT_CATEGORY_APPLY_READS_20260929.md` @6bec26c0a7 and closure @a951227bc7 (ledger CLOSED 12:28:15Z):
+S3 latest equalled `vN9Fiykn` / `GP__8T1n` at each apply (condition 2); the three-firm assembled validation with node
+counts is VALID before (under both new artifacts) and after (under both deployed zips), 201,774 nodes (condition 1a);
+fresh-container invokes reached the loaders on both functions (1b); the ingestion revision moved
+`schemas-7ad1289e...` -> `schemas-4780eaf8...` for new acceptances only. This seat's signed-in Holdings-card read at
+12:22-12:24Z on U4/P5Bh3 + wnt7hjAB (a 49F client and an Inflection client, cards rendered, 0 UNEXPECTED) is the page
+read. Both functions live on the signed artifacts since 12:09Z; ~M's step 2 (the L0 re-mint) is the next act and has
+its own halves.
+
 ## What this half signs against
 
 - Packet blob `9f638d70`; commit dc1fc92e4e (TO-IB-pr-212, WK~68); the source map rows named in section 1.

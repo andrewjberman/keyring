@@ -69,6 +69,14 @@ byte reads. The census the act rests on was re-run here from the served artifact
 2. Private-key readers (the human-token signer and the render signer) run under other roles and are outside this
    act; their policies were not read here and this act does not move them.
 
+## Addendum 1 (2026-09-29 12:3xZ) -- CLOSED: the human-token read was this seat's 12:20Z session
+
+Ledger `irpt-edge-role-public-keys-s132-20260929` CLOSED 12:28:15Z (~P 102794): D1 records the simulator BEFORE per
+secret (09:52:51Z, all five `allowed`), the targeted apply, the policy read-back and the AFTER per secret; A1 closed on
+this seat's signed-in walk `20260929T122007Z` -- `POST /auth/login` 200 at 12:20Z through the front door under the
+narrowed role (read here at 12:20:05Z: the two public-key ARNs only), Holdings reads on two firms, 0 edge denials, the
+validator's log read by ~P. Both conditions of this half are met by those records.
+
 ## What this half signs against
 
 - Packet blob `12db1763`; commit e408bbe9df (iam.tf at HEAD equal); the targeted plan 0/1/0 in the ledger's P1 leg.
