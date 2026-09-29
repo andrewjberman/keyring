@@ -12,9 +12,9 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| M1 | s3-prefix | safe-deploy --mint-bundle irpt_holdings_49f | BUNDLE MINTED line + head-object members-sha256 + member-count |  | OPEN |
-| M2 | s3-prefix | safe-deploy --mint-bundle irpt_holdings_inf | BUNDLE MINTED line + head-object members-sha256 + member-count |  | OPEN |
-| M3 | s3-prefix | safe-deploy --mint-bundle irpt_holdings_cot | BUNDLE MINTED line + head-object members-sha256 + member-count |  | OPEN |
+| M1 | s3-prefix | safe-deploy --mint-bundle irpt_holdings_49f | BUNDLE MINTED line + head-object members-sha256 + member-count | BUNDLE MINTED [standalone] irpt_holdings_49f -> s3://opal-data-49financial/irpt/49financial/code/gold/investor-reporting-holdings.tar.gz (md5=8b122a961fb1fb54e4a0a5fe6cadcc05); head-object members-sha256=c695465758ea424b332dc639a0e0eadef3d4286053206ed96ce90b1fa0a06e3b member-count=43 | CLOSED 20260929T162316Z |
+| M2 | s3-prefix | safe-deploy --mint-bundle irpt_holdings_inf | BUNDLE MINTED line + head-object members-sha256 + member-count | BUNDLE MINTED [standalone] irpt_holdings_inf -> s3://opal-data-inflection/irpt/inflection/code/gold/investor-reporting-holdings.tar.gz (md5=8b122a961fb1fb54e4a0a5fe6cadcc05); head-object members-sha256=c695465758ea424b332dc639a0e0eadef3d4286053206ed96ce90b1fa0a06e3b member-count=43 | CLOSED 20260929T162342Z |
+| M3 | s3-prefix | safe-deploy --mint-bundle irpt_holdings_cot | BUNDLE MINTED line + head-object members-sha256 + member-count | BUNDLE MINTED [standalone] irpt_holdings_cot -> s3://opal-data-cottonwood/irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz (md5=8b122a961fb1fb54e4a0a5fe6cadcc05); head-object members-sha256=c695465758ea424b332dc639a0e0eadef3d4286053206ed96ce90b1fa0a06e3b member-count=43 | CLOSED 20260929T162342Z |
 | Q1 | verify | irpt-holdings-refresh-lambda QA fire {"qa": true} publishes to holdings_qa | 3 of 3 Success + per-firm holdings_qa read: CATEGORY names, source_vendor_keys, COT assigned_strategy, 49F registration labels |  | OPEN |
 | V1 | verify | 49financial SERVED Holdings object read at next scheduled irpt-holdings-snapshot publication | key+VersionId equal before/after the QA fire |  | OPEN |
 | V2 | verify | inflection SERVED Holdings object read at next scheduled irpt-holdings-snapshot publication | key+VersionId equal before/after the QA fire |  | OPEN |
@@ -23,3 +23,6 @@
 ## Log
 
 - 20260929T161855Z OPENED by 0.9.0_WK_IRPT_BCKEND~76 with 7 leg(s)
+- 20260929T162316Z LEG M1 closed: BUNDLE MINTED [standalone] irpt_holdings_49f -> s3://opal-data-49financial/irpt/49financial/code/gold/investor-reporting
+- 20260929T162342Z LEG M2 closed: BUNDLE MINTED [standalone] irpt_holdings_inf -> s3://opal-data-inflection/irpt/inflection/code/gold/investor-reporting-h
+- 20260929T162342Z LEG M3 closed: BUNDLE MINTED [standalone] irpt_holdings_cot -> s3://opal-data-cottonwood/irpt/cottonwood/code/gold/investor-reporting-h
