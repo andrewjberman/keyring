@@ -83,7 +83,7 @@ a failure it finds is the next round's cell, shipped under a pair.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~40</slot>
 <fabric>site-z</fabric>
