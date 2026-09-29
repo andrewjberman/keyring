@@ -16,6 +16,8 @@ An isolated, invisible Excel COM instance was created with `DispatchEx('Excel.Ap
 
 The successful probe explicitly opened the installed `C:/blp/API/Office Tools/BloombergUI.xla`, registered `blpxladdin.xll` and `brtdwrap.xll` in that Excel instance, inserted formulas into a new workbook, pumped COM messages and recalculated. BDP and BDS controls, Excel BQL and BQL.Query all completed. Separate subsequent Excel instances reproduced the result. Each created Excel instance was closed after saving its own research workbook. No pre-existing user workbook was open or modified, and no registry/add-in installation settings were edited.
 
+Process-lifecycle qualification: `Quit()` returned but five probe-owned, hidden Excel processes remained. They were subsequently identified from the recorded per-probe PIDs and explicitly stopped after confirming their Excel process names and empty window titles. Production automation needs reliable cleanup of its own Excel instance as well as data freshness/error checks; a successful COM query is not operational readiness.
+
 Current full payload:
 
 ```excel
