@@ -237,6 +237,27 @@
     "spec_asserts": "The round's one real run reads the Security Analysis page on served data; the walker's API check lists every non-READY answer on the page's own steps.",
     "world_is": "One non-Security-Analysis read answered 500 during the INTU selection step; no Security Analysis route failed (the walk's other API answers were READY).",
     "notes": "Filed by the issuer at the round-2 close; off-task observation, routed through the channel, not a broker message."
+  },
+  {
+    "id": "DSGN_AMGTV1-Z-W11-S1",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~11",
+    "surfaced_at": "2026-09-29T11:10Z",
+    "one_line": "AV-r-3 names the Model tab's data attributes as the ABSENCES keys, but the page's other absence gap (missing 2 of 7) is the Posture tab, which also words its absent state in plain sentences; keyed the harness on the Posture tab's own data-posture-reason as well, and the AC1 fixture (1299_HK_Equity) carries no thesis cites, so its CITES line reads 0=0 on both sides.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/tabs/PostureTab.tsx:452-454 (portal DEV 670f29e4): data-posture-status=\"ABSENT\" data-posture-reason=<served reason> on the block whose text reads 'Posture: ABSENT -- no posture has been drafted for this name yet; ...' -- the plain sentence replaces the served reason in the visible text; the export prints the raw reason twice (rich.md lines 259-260)",
+        "exportCompare.harness.cjs on served_fixture.1299_HK_Equity.json before the change: ABSENCES page=7 rich=17 same=5 missing=2 extra=12; after keying the refused lines on data-model-line-refusal (inside data-model-row) and the posture absent state on data-posture-reason: page=17 rich=17 same=17 missing=0 extra=0; the export side and its 17 are unchanged",
+        "vv-5.AC1.sh CITES page=0 rich=0 on 1299_HK_Equity because that fixture's thesis carries no evidence; the window read was exercised on the tabsFixture set instead (CITES page=43 BA, 28 COST, 30 BABA, 33 HD, 36 SAP) with an empty export, so the rendered cite windows are read"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AV-r-3 section 1: the ABSENCES gap is the Model tab's refused lines and case formula, keyed on data-model-line-refusal / data-model-case-formula / data-model-row; CITES page 0 is the harness not rendering the card windows.",
+    "world_is": "Two of the ABSENCES gaps were the Model tab's refused lines (11 of them, one page-side entry each once keyed on data) and the Posture tab's absent state; the second is outside the TO's named attributes, so data-posture-reason was used, an attribute the Posture tab already serves. No compared set dropped anything: the export's 17 stay 17."
   }
 ]
 ```
