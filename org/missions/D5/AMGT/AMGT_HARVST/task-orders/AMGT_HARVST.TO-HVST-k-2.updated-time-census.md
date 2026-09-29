@@ -71,7 +71,7 @@ No code change, no gold write, no fetch from any vendor, no deploy. It records N
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~50</slot>
 <fabric>site-z</fabric>
