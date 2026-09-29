@@ -1876,3 +1876,62 @@ parent-brand refusal list in `whole_brand_aliases.json`, starting with `Walmart`
 `g-2` AC1 is a post-act read, with the act and its dry pre-check as standing clauses (round 16 `Z-W42-S1`/`S2`).
 **Fan-out: 1 of 1 chain (g-1 -> g-2, one worker), N = 1, cap 8.** NOT cells: a brand-to-parent source, the event route
 (`Z-W39-S1`), the portal push (Andrew's hold), new held-out reads (the Seeking Alpha 402).
+
+## 31. ROUND 19 -- L5 DECOMPOSITION v2.8, over the round-18 analysis (`ledger/ROUND_ANALYSIS.round18.md` @d11fd4d089)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~20:3xZ. Round 18 CLOSED: 2 of 2; the alias rule is served; the CVO read the rule
+179 of 179 correct; ASML's DENIED->PARTIAL was ruled correct. Series **`i`** (spent: h, r, s, t, u, v, w, x, y, z, a, b, c,
+d, e, f, g over 50 orders; census from `ls task-orders/`). Slot MAX+1 over 45 is **`~46`**; the deploy is a SEAT.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 2 the whole-brand list agrees with its refusal limb (`UBS` off; test: no entry refused by limb (a)) | `HVST-i-1` | LOCAL | `~46` |
+| 1 a PARTIAL day names its publisher -- the rule and both routes, proved in memory | `HVST-i-2` | LOCAL | `~46` (continued) |
+| 1 -- the served `chatter_daily` rebuild carrying the codes, under a never-widen pair | `HVST-i-3` | SERVED | `~46` (continued) |
+| 1 -- the scoped-API redeploy so both routes serve the codes, under a pair + NEVER-2 entry | `HVST-i-4` | WORLD | `0.7.0_AE_CloudOps~A` |
+
+**Item 1 is three orders, by the round-12 pattern (s.24.1), and each split is a measurement:**
+1. **`i-2` before `i-3`:** NEVER-1 reads the expected outcome from the producer's own rule at signing, and that rule
+   does not exist until `i-2` merges.
+2. **`i-4` is a seat order:** `timeline_api.py` is packaged into `opal-amgt-scoped-api`. The deployed function at the cut
+   (`lg6NJ2JL...`, RESAPP ww-1, 19:18:58Z) serves neither `publishers_covered` nor any codes. That was measured:
+   `round19/checks/i-4.AC1.base.txt` records 272 of 272 ASML_NA days lacking both fields. The analysis's "the served
+   `/timeline` and `timeline_day` carry both" is reached only by a deploy.
+
+The analysis orders `UBS` first ("cell 1 depends on cell 2"), so the securities file `i-3` builds from carries the
+list fix.
+
+**Widened inside the decomposition (issuer's ruling):**
+- `i-1`'s in-memory proof covers daily and event as well as mention, because row `Z-W45-S2` measured that `aliases`
+  reach `data_status`.
+- `i-3`'s dry step re-reads the scoped API's CodeSha256 beside the ETags (row `Z-S41`).
+
+**Fan-out: 1 of 1 chain (`i-1 -> i-2 -> i-3 -> i-4`); N = 1 worker slot + 1 seat; cap 8 not pressed.** Edges:
+- `i-1 -> i-2`: one worker, and `i-2`'s build uses `i-1`'s securities file.
+- `i-2 -> i-3`: the rebuild runs the merged rule.
+- `i-3 -> i-4`: AC1 of `i-4` compares the served codes to the LANDED column, which exists only after `i-3`.
+
+Write sets are disjoint:
+- `i-1` owns `whole_brand_aliases.json` and the tests.
+- `i-2` owns `publication_gold.py`, `timeline_api.py` and the tests.
+- `i-3` writes only its deliverables and the channel.
+- `i-4` owns the tf dir and the change-management ledger.
+
+**Pairs owed:**
+- `i-3`: COO half `deliverables/2.0.0_SA_COO_H/round19/NEVER_WIDEN_HALF_COO_I3.md`, written after `i-2` merges; CTO half
+  by `1.0.0_SA_CTO~Z`.
+- `i-4`: COO half `.../round19/NEVER_WIDEN_HALF_COO_I4.md`, written after `i-3` lands, from a `--build-only` closure
+  diff carded by project; CTO half by `1.0.0_SA_CTO~Z`.
+
+**Checks dry-run at the base (report 2 C4):**
+- `i-4.AC1`: FAIL as expected (6).
+- `i-4.AC2`: FAIL as expected on its 2 build arms; the rollback target and 3 RESAPP controls PASS.
+- `i-1`, `i-2` and `i-3` scripts are worker-written, as in every prior round of this project, and each criterion states
+  its base expectation.
+
+**NOT cells** (analysis s.4):
+- the tier rule for passing mentions;
+- a brand-to-parent source;
+- the event route (`Z-W39-S1`);
+- the portal push (Andrew's hold);
+- new held-out reads (the Seeking Alpha 402).
