@@ -191,6 +191,8 @@ Performance and Analysis do not import those two files. Shots opened and read: 0
 
 | 25 `d960e590` (AD-08) | the analysis cards open the canonical modal; Comparison and Multi-Comp take an Opal model or an ETF | `bun test iv-e-97` re-run by this seat: `VARIANT-MODAL-OK`; CI success; the commit cites a real render on 5174 ("screenshot local") that is not kept where this seat can read it | **NOT GRADED** (no readable real-run artifact) |
 
+| 26 `037657da` (AD-07) | the prospect upload: an Upload button, a modal with the reader's rules, and a template the reader accepts unchanged | `bun test iv-e-98` re-run by this seat: `PROSPECT-UPLOAD-OK` (template bytes pinned to the reader-accepted string); CI success; no render named | **NOT GRADED** (real run) |
+
 Observations from `ir-holdings-1440.png`, outside each pin's claim:
 - **O-a (a ruling conflict, for 1.0.0_SA_CTO):** the Securities Map and Securities footers read "Source:
   investor_reporting/holdings_publisher." (`slices.ts:344` prints the served `provenance.sourceCoordinate` under IV-e-63
