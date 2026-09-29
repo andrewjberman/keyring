@@ -112,7 +112,10 @@ Eight mechanical criteria: this is a grading cell carrying round 1's OG-v-4 crit
   No value is printed.
 - `OGV7-AC6`: for each master (`08242234`, `08335338`), the latest qualified date that the record shows A7's no-date
   request returned equals the newest `schwab/<master>/meta/complete/date=*.json` marker in `opal-data-assets` that has
-  `closure.status` `qualified` and a LastModified earlier than the recorded ask time. Read-only; denominator 2 printed.
+  `closure.status` `qualified`, a LastModified earlier than the recorded ask time, AND a date inside the controlled
+  principal's grant (its `fixed_dates`, read from the G-C record). AMENDED A1 (issuer, row Z-S11): a fixed-dates
+  grant correctly bounds the latest date it can report, so a newer marker outside the grant is not a defect of the
+  system under test. Read-only; denominator 2 printed.
 - `OGV7-AC7`: for each master, the available-dates list that the record shows A7's no-date request returned contains
   both of `OG-v-6`'s fixed dates (`D_PREV`, `D_NEW`, read from `SEALED_EXPECTED_V2.json`). Denominator 2 printed.
 - `OGV7-AC8` applies AFTER AC5 has been graded. It is round 1's `OGV4-AC9`, carried. The salt and the expected-answer

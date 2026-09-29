@@ -149,6 +149,15 @@ Run every invocation from your worktree root, after your commit.
   `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO~O` at L9 -- a `PASS` or `FAIL` on it is
   INVALID. Flip `complete` only when every MECHANICAL criterion PASSES by output.
 
+**AMENDMENT A1 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~05:5xZ, on row NFRA_OPLGTW-Z-S10).** `GCG1-AC3` and `GCG1-AC6` cannot
+both hold as written: a runnable grant candidate names raw account identifiers, AC3 asked for the printed scope diff
+VERBATIM in the evidence file, and AC6 forbids a raw account identifier in anything committed. RULED: the verbatim
+`prepare` scope diff is stored OFF-REPO as one SSM SecureString, `/opal/nfra_oplgtw/ogg1/scope_diff` (write it, read it
+back with decryption, compare sha256); the evidence file carries its sha256, its byte length and the diff with every
+account identifier replaced by its account reference. AC3's probe re-runs `prepare` against the off-repo candidate and
+compares the fresh diff's sha256 to the recorded one. AC6 is unchanged. The one added AWS write is that SSM parameter
+(PutParameter/GetParameter under `/opal/nfra_oplgtw/ogg1/` only); nothing else in AWS changes.
+
 ## BOUNDS
 
 - **Grant.** Your write surface is the `<paths>` block below and this order's own file (for the `<status>` flip).
