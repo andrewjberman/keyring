@@ -11184,3 +11184,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "One additional failure exists beyond that pre-existing class: a LIVE check (test_rearm_trigger_live) shows the production schedule already ENABLED (a sibling round-20 cell, IB-mr-201) against a served Lambda bundle that is missing 7 source files, including two this cell edits. The suite invocation the task order asked for surfaced a live-AWS hazard outside this cell's grant, not a defect in the L0-category change."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W44-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~44",
+  "surfaced_at": "2026-09-29T05:00:00Z",
+  "one_line": "TO-IB-m20-203 AMENDMENT 1 R2 (row IRPT_BCKEND-W44-S1's resolution): S1's guard was watching the wrong bundle -- test_holdings_rearm_trigger.py re-pointed from the `investor_reporting` directory bundle (never run by the enabled schedule) to the three `irpt_holdings_{49f,inf,cot}` standalone bundles the schedule's own dispatch actually fetches; all three now read PASS live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py:104 reads IRPT_HOLDINGS_BUNDLE_MAP (infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf local.irpt_holdings_bundle_map, from HOLDINGS_FIRM_PRINCIPAL_GRANTS_20260925.json code_object) -- one SSM command per firm fetching that firm's OWN irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz, never the `investor_reporting` directory bundle S1's guard checked.",
+      "OLD target (S1, pre-amendment): `find_bundle('investor_reporting')` -> served bundle with 10 members (S3 metadata source-repo-paths), 7 short of the 12 the runner opens -- live rc=1 'S71 ARMED ... missing 7' (test at CLOUD@724f505977).",
+      "NEW target (this row): `[n for n, b in safe_deploy_core.STANDALONE_BUNDLES.items() if RUNNER in b['members']]` -> irpt_holdings_49f/inf/cot, each a manifest-stamped bundle (SHA256SUMS read from the object body, not S3 metadata) with 41 members apiece -- live run: 'REARM-TRIGGER LIVE: schedule irpt-holdings-snapshot = ENABLED; ... served {...41...41...41...}; runner opens 12; missing {} -> PASS' (python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_holdings_rearm_trigger.py -q -s rc=0, 3 passed).",
+      "The mutant arm (schedule ENABLED, one file removed from one target bundle's real member list) still FAILS as it must, and the same list DISABLED still PASSES -- the retargeted guard is not vacuously green."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 R2: 're-point the guard at those three ... keep its verdict ... and its SKIP-is-not-a-pass rule. Run it live: it must PASS now. Record the old and new targets in row W44-S1's resolution.'",
+  "world_is": "Recorded here rather than as an edit to S1 (append-only channel, existing rows never edited): the retarget is DONE and the live guard now PASSES against the bundles the schedule actually dispatches. This is evidence for 2.0.0_SA_COO~M (S1's named disarm_owner) to weigh in disarming/graduating S1 -- this worker's row states the form (old target FAILED against the wrong bundle; new target PASSES against the right one) and does not itself disarm S1 or adjudicate its disposition (adjudicates/GRADUATED are the CVO's L9 fields, refused on a worker's row by .tools/surprise-row-gate.py A-1)."
+}
+```
