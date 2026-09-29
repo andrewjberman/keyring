@@ -1,0 +1,47 @@
+{
+  "_what": "MDPF_SECCLASS data contract: the two enumerations the PRD closes as data (PRD CONTRACTS C-FIELD and C-WRITER). The canonical table is DynamoDB etf-classifications; its existing columns (ticker, asset_class, sub_asset_class, sector, name, management_style) are POSN_ASTTAX's and are not restated here.",
+  "contract_version": "0.1.0",
+  "project": "MDPF_SECCLASS",
+  "prd": "org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md",
+  "fields": {
+    "instrument_kind": {
+      "serves": "FWD-8",
+      "type": "string",
+      "values": ["fund", "single_security"],
+      "domain": "every row of etf-classifications, one row per ticker",
+      "definitions": {
+        "fund": "a pooled or exchange-traded product classified by the ETF classes: an ETF, an ETN (e.g. VXX), a mutual fund, or a closed-end fund",
+        "single_security": "one issuer's own instrument: a company's common or preferred stock, or a single bond"
+      },
+      "absent": "a row without instrument_kind is not defaulted to either value; a reader shows the instrument's kind as unknown by name (brief Part III, 'Nothing silently folds')",
+      "ordering_use": "a holdings table places every single_security row after the last fund class; the key is produced and served by the backend, never re-derived in the portal (Andrew-direct 2026-09-29 ~19:5xZ, server side)",
+      "rule24_record": {
+        "domain_declared": "the rows of etf-classifications (tickers), the population FWD-8's ACCEPT reads",
+        "mece_by_subtraction": "every row is either pooled/exchange-traded under the ETF classes (fund) or one issuer's instrument (single_security); the remainder after subtracting both is cash and cash-equivalent lines, which are not rows of this table (cash rows are classified by the holdings producers' cash rule, PRD v0.20 rulings of IRPT_BCKEND) -- an unforeseen member reads as absent, never forced",
+        "same_grain": "one value per ticker",
+        "intent_coherence": "one axis: what kind of instrument the ticker is; no ordering, class or vendor meaning is carried in it",
+        "state_coherence": "setting instrument_kind moves no asset_class or sub_asset_class value; the ordering of a table moves only through the served key",
+        "token_census": "word-boundary census of instrument_kind, 2026-09-29 ~20:1xZ, native Grep: infra/aws/lambda/v2_portal 0 hits, data/**/*.py 0 hits, portal/src 0 hits -- no collision"
+      }
+    },
+    "classified_by": {
+      "serves": "FWD-3, FWD-7",
+      "type": "string",
+      "values": ["seed", "scheduled"],
+      "domain": "every row of etf-classifications",
+      "definitions": {
+        "seed": "written by the seed path from infra/aws/lambda/v2_portal/_shared/etf_classification.py (the one place a person adds or corrects a row)",
+        "scheduled": "written by the scheduled classification of FWD-7 for a ticker that had NO row; the write is conditional on the row's absence, so it never overwrites a seed row"
+      },
+      "precedence": "a seed row always wins: a correction to a scheduled row is made by adding the ticker to the seed source, and the next seed run replaces the row with classified_by = seed",
+      "estate_note": "the estate's per-firm classifiers already write a free-text classified_by into their own tables (bd-securities: seed_from_yang, gpt-5.4-mini, gpt-4o-mini, auto-detected); those tables and their writers retire under FWD-5/FWD-4; on etf-classifications the field takes only the two values above",
+      "rule24_record": {
+        "domain_declared": "the writers of etf-classifications rows",
+        "mece_by_subtraction": "a row is written by the seed path or by the scheduled classification; any other writer is a copy that FWD-4's census reports",
+        "same_grain": "one writer per row write",
+        "intent_coherence": "one axis: which of the two sanctioned paths wrote the row",
+        "state_coherence": "classified_by moves no class value; a seed run over a scheduled row changes both classified_by and, where they differ, the class values"
+      }
+    }
+  }
+}

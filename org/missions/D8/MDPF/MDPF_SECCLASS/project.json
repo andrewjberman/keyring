@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "mdpf",
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "PRD",
   "created": "2026-09-29",
   "registered_under_tree": "2026-09-29",
   "placement": "LAPTOP",
@@ -38,7 +38,7 @@
     "MDPF_CANON"
   ],
   "fabric_ruling": "laptop: D8 is LAPTOP by placement; Andrew named 2.0.0_SA_COO~M (laptop) for the FWD-7/8 backend. D4 (Positioning, the table's first consumer and POSN_ASTTAX's home) is SITEZ by placement, and placement attaches to a directive, never a member, so the project cannot sit under D4 on this fabric.",
-  "blocking": "L4-R: both PRD halves owed at registration (the brief was written by 4.0.0_SA_CRO, so the brief half is admitted without a signature; the CVO's ratified-text half is owed).",
+  "blocking": "L4-R: the ratified-text half (ENDPOINT + CONTRACTS) is owed by 3.0.0_SA_CVO; the brief half is admitted without a signature (brief authored by 4.0.0_SA_CRO). The COO delivery waits on ADMITTED.",
   "thread_counter": 0,
   "threads": []
 }
