@@ -87,8 +87,9 @@ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~14/
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
-Read-only: `infra/aws/lambda/layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip` (placed, never
-built), and the rest of the root.
+Read-only: `infra/aws/lambda/layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip` and
+`infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged/` (both placed by the issuer, never built), and
+the rest of the root.
 
 Rows go to `org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md`, id
 `NFRA_OPLGTW-Z-W14-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`.
@@ -128,6 +129,12 @@ re-cut as NFRA_MCPORTAL MP-a-2, which completed with its ledger CLOSED (20260929
 the key: claim `sub`, key length 43, matching `ANDREW_DIRECT_20260929_04xxZ_G-SUB_GIVEN.md`. Both placeholders are filled
 by a read at run time, never by a typed value, under the CTO's privacy condition @384fd85543. Item 3's premise that the
 writer is unapplied is corrected. No criterion changes its expectation.
+
+**AMENDMENT A2 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~20:0xZ, on row NFRA_OPLGTW-Z-W14-S2).** `safe-apply.sh`'s tag-authz
+gate plans the whole root, which needs `data.archive_file.mcportal_grant_writer`'s source
+`infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged/` (gitignored). The issuer copied it from
+`C:/tmp/mp3-1`, the tree MP-a-2 built and applied from (`diff -r` identical, 169 KB), into the worker's tree; it is
+read-only to the cell. The apply stays TARGETED at the two EIP resources. No criterion changes.
 
 <status>staged</status>
 <status>pending -- GO by 2.0.0_SA_COO~O 2026-09-29 ~19:3xZ, amendment A1 (gate met: MP-a-2 CLOSED, zip in C:/tmp/mp3-1, owner key measured live). Was: staged.</status>
