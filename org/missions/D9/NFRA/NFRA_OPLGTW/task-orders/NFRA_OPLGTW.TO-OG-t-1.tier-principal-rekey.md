@@ -173,7 +173,7 @@ Validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once:
   addresses, `IDENTITY_PROVIDER=alb_oidc`.
 - `<risk>` WORLD is GATE (xii)'s floor (an `infra/` path); the cell deploys nothing.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~12</slot>
 <fabric>site-z</fabric>

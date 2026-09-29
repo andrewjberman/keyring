@@ -3997,3 +3997,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Neither file was edited by this worker (outside <paths>)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-28T22:30Z",
+  "one_line": "With moto installed (.venv-og), test_principal_cutover.py runs 10 passed / 1 failed and test_data_entitlement_guard.py 10 passed / 2 failed, and the SAME 3 failures read identically at the issuance base e5a6dcbe2f: they are not from OG-t-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "After the OG-t-1 edits (AUDIT_PATH set, .venv-og python): test_principal_cutover.py '1 failed, 10 passed' (test_oga2_ac04: route-classification set is missing '/', '/api/admin', '/assets/{path:path}'); test_data_entitlement_guard.py '2 failed, 10 passed' (test_ogz1_ac05 KeyError 'uncl...', test_ogz1_ac08 AssertionError; both hit 'StreamableHTTPSessionManager .run() can only be called once per instance' in isolation).",
+      "Base control: git archive e5a6dcbe2f of infra/aws/ec2/opal-gateway extracted to .scratch/base and run with the same interpreter: test_principal_cutover.py '1 failed, 10 passed' (test_oga2_ac04), test_data_entitlement_guard.py '2 failed, 10 passed' (test_ogz1_ac05, test_ogz1_ac08) -- identical failing names.",
+      "The edited tests, test_ogz1_ac04 (now with a principal-keyed MASTER_ADMIN arm asserted MASTER_ADMIN) and every other tier assertion, pass."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 7: run both suites and record pass/fail counts (drain hygiene, not a criterion).",
+  "world_is": "The two suites are not green at the base on this venv (mcp 1.28 session manager single-run, a dashboard route set the harness does not mount); the pre-existing failures are unrelated to the tier re-key.",
+  "notes": "Not fixed here: outside the cell's intent (route table and MCP-library version drift). Counts recorded for the drain."
+}
+```
