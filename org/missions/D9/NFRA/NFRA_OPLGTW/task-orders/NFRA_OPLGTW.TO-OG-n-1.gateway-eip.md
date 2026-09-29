@@ -138,6 +138,7 @@ read-only to the cell. The apply stays TARGETED at the two EIP resources. No cri
 
 <status>staged</status>
 <status>pending -- GO by 2.0.0_SA_COO~O 2026-09-29 ~19:3xZ, amendment A1 (gate met: MP-a-2 CLOSED, zip in C:/tmp/mp3-1, owner key measured live). Was: staged.</status>
+<status>complete -- EIP 3.214.118.242 associated (old 54.197.78.28); ledger nfra-oplgtw-gateway-eip CLOSED 473217c119; AC1-AC3 PASS; proof valid; 0.9.0_WK_NFRA_OPLGTW~14 2026-09-29</status>
 <round>3</round>
 <slot>~14</slot>
 <fabric>site-z</fabric>
