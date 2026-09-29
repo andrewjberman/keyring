@@ -35,7 +35,10 @@ with no fold, no guesses, and unknown for a ticker the table lacks. Build on you
    A BD super class never overrides a canonical row. An asset with no row is unclassified by name, and the dimension
    carries a `class_source` column (`etf-classifications`, or `unclassified`) so a reader can tell which applies. Keep
    the dimension's existing columns and add only what this needs.
-2. The stale print that names a bd-securities scan goes.
+2. The stale print that names a bd-securities scan goes. **Amendment 1 (row MDPF_SECCLASS-W3-S2):** `apply_blend`
+   (~:156) reads the library's private `_ticker_map` / `_name_map`, which SC-t-1 removed. Read classes only through
+   the library's public API (`classify`, `get_sub_asset_class`), so the dimension's next real run cannot break on a
+   private attribute.
 3. **Tests** in `data/black_diamond/scripts/silver/tests/test_assets_dim_canonical.py`, on a stubbed library:
    - a canonical row overrides a BD super class;
    - an unknown ticker is unclassified with `class_source = unclassified`;

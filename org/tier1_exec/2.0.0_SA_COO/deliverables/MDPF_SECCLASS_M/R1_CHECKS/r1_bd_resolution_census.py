@@ -6,6 +6,10 @@ client). Requires: after, zero bd-securities reads and zero guessed classes (a h
 by name); GLD, PHYS and VXX, where held, land commodities/Metals, commodities/Metals, structured/Hedge; every moved
 holding listed with before and after; every reader of the library named.
 
+Amendment 1 (issuer, row MDPF_SECCLASS-W3-S1): PHYS has no etf-classifications row until SC-k-2's seed write
+(release step 1), so before that write PHYS may read unclassified (empty after), never a guessed class. GLD and
+VXX hold rows today and must land as placed.
+
 Run from the repo (or worktree) root. Prints BD-CENSUS holdings=n moved=m unclassified=u or NOT-CENSUSED: <reason>.
 """
 import json
@@ -14,6 +18,7 @@ import sys
 
 PATH = "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_BD_RESOLUTION_CENSUS_20260929.json"
 PLACED = {"GLD": ("commodities", "Metals"), "PHYS": ("commodities", "Metals"), "VXX": ("structured", "Hedge")}
+SEED_PENDING = {"PHYS"}  # amendment 1: its row lands with SC-k-2's seed write
 
 
 def main():
@@ -35,7 +40,11 @@ def main():
         print("NOT-CENSUSED: moved %s but lists %d" % (d["moved"], len(d["moves"])))
         return 1
     for m in d["moves"]:
-        want = PLACED.get(str(m.get("ticker", "")).upper())
+        tick = str(m.get("ticker", "")).upper()
+        want = PLACED.get(tick)
+        after = m.get("after", {}) or {}
+        if tick in SEED_PENDING and not after.get("asset_class") and not after.get("sub_asset"):
+            continue
         if want and (m.get("after", {}).get("asset_class"), m.get("after", {}).get("sub_asset")) != want:
             print("NOT-CENSUSED: %s lands %s, placed %s" % (m.get("ticker"), m.get("after"), want))
             return 1

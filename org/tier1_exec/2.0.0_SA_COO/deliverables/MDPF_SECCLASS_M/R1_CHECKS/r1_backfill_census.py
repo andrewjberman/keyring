@@ -7,6 +7,9 @@ bd-securities); zero outside-model calls (PRD C-VENDOR); every would-write row l
 input it came from, every bd-securities-sourced row listed; unresolved tickers listed by name. GLD, PHYS and VXX already
 have rows, so none of them may appear as a would-write.
 
+Amendment 1 (issuer, row MDPF_SECCLASS-W3-S1): a held ticker the SEED SOURCE already carries (e.g. PHYS, whose row
+lands with SC-k-2's seed write) is the seed path's, never a scheduled write: the census counts it as seed_pending.
+
 Run from the repo (or worktree) root. Prints BACKFILL-CENSUS <firm=would_write/held ...> or NOT-CENSUSED: <reason>.
 """
 import json
@@ -42,9 +45,10 @@ def main():
         if f["overwrites"] or f["vendor_calls"]:
             print("NOT-CENSUSED: %s overwrites %s vendor_calls %s" % (name, f["overwrites"], f["vendor_calls"]))
             return 1
-        if f["held_tickers"] != f["already_present"] + f["would_write"] + len(f["unresolved"]):
-            print("NOT-CENSUSED: %s held %s != present %s + would_write %s + unresolved %s" % (
-                name, f["held_tickers"], f["already_present"], f["would_write"], len(f["unresolved"])))
+        seed_pending = int(f.get("seed_pending") or 0)
+        if f["held_tickers"] != f["already_present"] + seed_pending + f["would_write"] + len(f["unresolved"]):
+            print("NOT-CENSUSED: %s held %s != present %s + seed_pending %s + would_write %s + unresolved %s" % (
+                name, f["held_tickers"], f["already_present"], seed_pending, f["would_write"], len(f["unresolved"])))
             return 1
         if len(f["rows"]) != f["would_write"]:
             print("NOT-CENSUSED: %s would_write %s but lists %d rows" % (name, f["would_write"], len(f["rows"])))
