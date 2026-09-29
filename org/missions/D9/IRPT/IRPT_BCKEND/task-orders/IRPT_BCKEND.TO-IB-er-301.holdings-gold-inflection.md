@@ -24,6 +24,29 @@ rulings 1-6, 9, 11 | **Decomp cell:** `IB-er-301` (decomposition section 17) | *
 
 ### THE CELL
 
+**AMENDMENT 1 (2026-09-29 ~05:4xZ, issuer, on 1.0.0_SA_CTO RULING 102611 = PRD ADDENDUM v0.20 @613bfc6ecf
+rulings 13-17, and 4.0.0_SA_CRO's refused half @eca8083ad2, row IRPT_BCKEND-S195): DO STEP 0 FIRST.**
+
+**Step 0 -- fix the producer for v0.20 and re-emit the 49F gold.** Measured by the CRO:
+- `holdings_performance.py:273` keys the day-t price by cusip alone. 41 `dim_position` rows per day carry cusip '' across
+  33 accounts, all priced under one key, so 18 accounts read about +1e57 YTD.
+- Four OK rows read r <= -1 over a near-zero net base (a margin debit).
+- Base census (E3-AC4 at the cut): 2,846 OK rows at |r| >= 1 and 4,061 at |r| > 0.5 across 557 days; no `leveraged` column.
+
+The v0.20 rules, verbatim in substance:
+- (13) a position is keyed by (account, identifier), where the identifier is the first non-empty of cusip, symbol and
+  description; a row with none is UNIDENTIFIED.
+- (14) an UNIDENTIFIED row priced 1.00 with quantity == value is cash (ruling 3); every other UNIDENTIFIED row is
+  excluded (ruling 4), its count and weight on the row.
+- (15) the basket is the LONG holdings: weights over the sum of POSITIVE prior-day values (positive cash included); a
+  negative balance is outside the basket; the row carries `leveraged` (true/false) and the excluded negative value.
+- (16) an account day at or below -100% or at or above +100% is NOT COMPUTABLE with its reason named in the manifest.
+- (17) every day's manifest carries the four completeness keys.
+
+Re-emit all 557 49F partitions and manifests. Add unit tests: two cusip-less positions at different prices; a
+cusip-less cash row; a margin-debit account; and a +/-100% day. Print the |r| > 0.5 census before and after in your
+proof. The same rules then govern the Inflection slice below.
+
 `IB-er-301` -- your producer `data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py` writes the
 49F gold from `sources.json` (round 2: every 49F account, 2024-07-09..2026-09-25, manifest complete). This round adds
 INFLECTION as a second declared source, with the same method, rules and manifest, through the declaration and never
@@ -73,7 +96,11 @@ reads complete with matching counts. Base: FAIL (960 accounts, 0 rows, manifest 
 `E3-AC2` -- a non-empty gold partition exists for every computable trading day 2020-04-27..2026-09-25 (the check
 prints the 4 non-computable days it excludes). Base: FAIL (1,609 of 1,609 missing).
 
-<expected_criteria>E3-AC1,E3-AC2</expected_criteria>
+<criterion id="E3-AC4" cell_refs="IB-er-301"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r3e/e3_ac4_49f_reemit_v020.py"</invocation><expect>E3-AC4 PASS</expect></criterion>
+`E3-AC4` (amendment 1) -- over all 557 49F days: 0 OK rows at |daily_return| >= 1, a `leveraged` column on every day,
+and every manifest complete. Base: FAIL (2,846 OK rows at |r| >= 1; `leveraged` absent on 557 days).
+
+<expected_criteria>E3-AC1,E3-AC2,E3-AC4</expected_criteria>
 
 ## BOUNDS
 
@@ -96,8 +123,8 @@ org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: E3-AC1, E3-AC2. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~E/IRPT_BCKEND.TO-IB-er-301.holdings-gold-inflection.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> E3-AC1,E3-AC2` BEFORE the flip.
+Criterion ids: E3-AC1, E3-AC2, E3-AC4. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~E/IRPT_BCKEND.TO-IB-er-301.holdings-gold-inflection.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> E3-AC1,E3-AC2,E3-AC4` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** one message to `2.0.0_SA_COO~P` with the two check lines, the ledger slug and the commit hash; surprise rows
@@ -113,6 +140,6 @@ comp-iam: RUN -- the ad-hoc run writes the new INF gold prefixes under the DS se
 comp-blast: DECLARED-NOT-APPLICABLE -- new objects under new prefixes only.
 comp-routes: DECLARED-NOT-APPLICABLE -- no route change.
 comp-cache: DECLARED-NOT-APPLICABLE -- no reader switched.
-comp-adversary: RUN -- both checks dry-run at the base: E3-AC1 FAIL (960 silver accounts, 0 gold rows, manifest absent); E3-AC2 FAIL (1,609 of 1,609 computable days missing, 4 non-computable).
+comp-adversary: RUN -- amendment 1: E3-AC4 dry-run at the base FAIL (2,846 OK rows |r|>=1, 4,061 |r|>0.5, `leveraged` absent 557 days, manifests 557/557). Original checks dry-run at the base: E3-AC1 FAIL (960 silver accounts, 0 gold rows, manifest absent); E3-AC2 FAIL (1,609 of 1,609 computable days missing, 4 non-computable).
 lane: 0.4.0_DS_ClientPlatform~E is enumerated in .owned-paths.yaml POD4 for data/*/scripts/gold; the <paths> block is the grant.
 </preflight>
