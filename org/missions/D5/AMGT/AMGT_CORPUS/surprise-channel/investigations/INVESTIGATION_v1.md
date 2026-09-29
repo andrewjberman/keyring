@@ -1983,6 +1983,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Met on the served table. 6 of 34 tables stay ABSENT with the 3k-count reason (Z-W1-S12); the model-block re-derive's follow-on will write one more dossier object per name under the k-2 pair.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Owner's lift, evidence-cited; not a REMEDIATION row."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S55",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-29T02:40:00Z",
+    "one_line": "model_block_pull cases-report given the underscore key form (AMD_US_Equity) does not refuse: it prints 'base ABSENT ... no consensus EPS on the landed block' for every name (0 of 97 served); the Bloomberg form (AMD US Equity) reads 69 of 97 served. A wrong-shape key returns a real-looking verdict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m integrations.bloomberg.research.model_block_pull cases-report --securities AMD_US_Equity -> 'cases AMD_US_Equity base ABSENT ratio none cause none reason no consensus EPS on the landed block' / 'cases_report served 0 refused 1'.",
+        "Same command with --securities \"AMD US Equity\" -> 'base SERVED ratio 0.659087854343919' / 'cases_report served 1 refused 0'.",
+        "Batched over the 97 keys of checks/round8/model_block_keys_97.txt (underscore form, as the file carries them): served 0; with underscores replaced by spaces: served 69, line-for-line equal to evidence/r9_k2_expected_cases_report_20260929T021453Z.log."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "cases-report reads each key's landed block and reports the rule's verdict; a key it cannot resolve is refused, not graded.",
+    "world_is": "An unresolvable key form is graded ABSENT with a data reason, indistinguishable from a real 'no consensus EPS' verdict.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Found by the CTO while re-measuring the k-2 expected outcome for its never-widen half; filed, not investigated. The remedy is a refusal on a key that resolves to no landed stamp, or normalising the key form at the parse."
   }
 ]
 ```
