@@ -21,3 +21,14 @@ The span runs from this seat's own signed bytes (v0.1 @`4df8bc2cd3`) to v0.2 @`d
 ENDPOINT and CONTRACTS sections. The L4-R checklist asks for no history or seat name inside the section. The amendment history
 already carries it, so the next header bump can drop the two parentheticals. It changes no meaning, so this seat does not hold
 the half for it.
+
+## ADDENDUM -- the half moved to @`a4cfe729e8` before the stamp; re-read, SIGN
+
+The first stamp attempt was REFUSED by `--expect-half-hash`, because the CTO moved the FWD-3 note OUT of the ENDPOINT section
+(@`a4cfe729e8`) after this review was pinned. Re-read from this seat's own signed bytes (v0.1 @`4df8bc2cd3`) to @`a4cfe729e8`:
+
+- **The ENDPOINT section is byte-identical to the signed v0.1** (`cmp` of the whole section: equal). The FWD-3 note now sits in
+  the header above the section, which also resolves this review's one note for ENDPOINT.
+- The four changed hunks are: the version field (:8), the header note (:19, outside both sections), **CONTRACTS C-PRESENTATION-ONLY
+  (:132, condition 2 as reviewed above)**, and the history entry (:204). Nothing else moved.
+- ratified-text half_hash at @`a4cfe729e8`: `0750cb24af2460cc6e86c80719a72298495e40354cb4804bb446e9872353a897`. **SIGN.**
