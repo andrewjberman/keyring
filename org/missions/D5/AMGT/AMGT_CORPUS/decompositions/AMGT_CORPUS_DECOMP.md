@@ -1,101 +1,88 @@
-# AMGT_CORPUS -- L5 decomposition v10.0 -- ROUND 10 (the enrichment round after the round-9 analysis)
+# AMGT_CORPUS -- L5 decomposition v11.0 -- ROUND 11 (the enrichment round after the round-10 analysis)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-09-29 ~03:5xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-9 analysis
-`ledger/ROUND_ANALYSIS.round9.md` @`abfad1355c` section 4, four cells (msg 26429, READ-acked), answering `3.0.0_SA_CVO~Z`'s
-slug on `ADJUDICATION_v12`. Round 9's decomposition is kept as `AMGT_CORPUS_DECOMP.round9.md`. PRD v0.6 @`9e326e11c1`, ADMITTED.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-09-29 ~07:3xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-10 analysis
+`ledger/ROUND_ANALYSIS.round10.md` @`8b54c2b4fd` section 4, two cells (msg 26489, READ-acked), answering `3.0.0_SA_CVO~Z`'s
+slug on `ADJUDICATION_v13`. Round 10's decomposition is kept as `AMGT_CORPUS_DECOMP.round10.md`. PRD v0.6 @`9e326e11c1`, ADMITTED.
 
-## 0. What this round IS, by subtraction from the analysis's list
+## 0. What this round IS
 
 | item (analysis s.4) | disposition |
 |---|---|
-| 1 case unit carries its claim (ruling 1), rewrite under a pair | cell `CRPS-l-1` (`~1`, second in its queue) |
-| 2 team-vs-rule Base census (ruling 2), read-only | cell `CRPS-l-2` (`~2`) |
-| 3 the 6 unreadable tables (ruling 3) | cell `CRPS-l-3` (`~1`, first in its queue) |
-| 4 `cases-report` refuses an unresolvable key (`Z-S55`) | cell `CRPS-l-4` (`~3`) |
+| 1 a currency where the pack's symbol and the listing agree on exactly one (ruling 2) | cell `CRPS-m-1` (`~1`, first) |
+| 2 a positional read of the six blank Base cells (ruling 3) | cell `CRPS-m-2` (`~1`, second) |
 
-## 1. The rectangle
+**NOT cells** (the analysis): the Base anchor (ruled @`1621a80b0c`); `Z-W2-S12` (closed by ruling 4); worktree removal (Andrew).
+
+## 1. The rectangle -- one chain (both cells write `lib/research/corpus/dossier.py`), one pair, one served rewrite
 
 | cell | slot | serves | `<risk>` | class | write set | the build |
 |---|---|---|---|---|---|---|
-| `CRPS-l-3` | `~1` (first) | FWD-12 limb 3 data half (six names) | SERVED (the shared rewrite) | worker | `lib/research/corpus/dossier.py`, `tests/test_dossier_case_layouts.py` (new), `tests/test_dossier_case_table.py` | each of the six tables is read, or served ABSENT with a reason naming its own layout defect |
-| `CRPS-l-1` | `~1` (second) | FWD-12 (the unit's claim) | SERVED (the shared rewrite) | worker | `lib/research/corpus/dossier.py`, `tests/test_dossier_case_unit.py` (new) | `unit_as_written` + `currency` / `currency_basis`; census columns |
-| `CRPS-l-2` | `~2` | FWD-12 guard (the rule's pairing, `Z-S51`) | LOCAL | worker | `lib/research/corpus/base_census.py` (new), `tests/test_base_census.py` (new) | read-only team-Base / rule-Base census over every name carrying both |
-| `CRPS-l-4` | `~3` | `Z-S55` | LOCAL | worker-light | `integrations/bloomberg/research/model_block_pull.py`, `integrations/bloomberg/research/tests/test_cases_report_refuses_unresolved.py` (new) | `cases-report` refuses a key that resolves to no landed stamp |
-
-l-3 and l-1 share `dossier.py`: ONE chain, one worker, l-3 first (its layouts decide which names have a unit to claim).
+| `CRPS-m-1` | `~1` (first) | FWD-12 (the unit's claim) | SERVED (the shared rewrite) | worker | `dossier.py`, `tests/test_dossier_case_currency_intersection.py` (new), `tests/test_dossier_case_unit.py` | `_case_currency`: a currency when the symbol's ISO set INTERSECTED with the listing is exactly one code |
+| `CRPS-m-2` | `~1` (second) | FWD-12 limb 3 (six names) | SERVED (the shared rewrite) | worker | `dossier.py`, `tests/test_dossier_case_positional.py` (new), `tests/test_dossier_case_layouts.py` | a short table row is placed by the pdf page's x-coordinates when, and only when, the position puts the blank in exactly one column; `--case-positional-census`; `METHOD_VERSION` /4 |
 
 ## 1a. Re-groundings at L5
 
-- **l-3.** `checks/round10/l3_six.py` at the base: `l3 names 6 body_names 0 absent_specific 0 absent_generic 6 sum 6`; every
-  one of the six reads `... row 'EPS' carries 14 values, expected 3 x 5` (round 9's worker: one Base EPS value missing).
-- **l-1.** Round 9's census: `unit_carried 10` (AZN U+00A3 on a GBp listing; ML U+20AC; `$` on BP, CPA, ORA, SAP, SHOP, SPOT,
-  TTE, UNVGY). The CVO measured `$` on three EUR listings and one CAD listing (ADJUDICATION_v12). The listing currency is on
-  the name's stored model block (`currencies`), which `build()` already reads (`_model_block_read`).
-- **l-2.** A stored block's `cases.base` carries `status`, `ratio_to_px_last`, `px_last.value`, `inputs.consensus_eps`,
-  `inputs.trailing_median_pe`, `band`, `band_basis`; `value` only when SERVED. ADBE's newest block (`20260929T024507Z`) is
-  ABSENT (outside the band) with `ratio_to_px_last 3.319...` on `px_last 238.93` -- the rule's figure exists though the band
-  refused it. The team's Base is the served dossier's `cases.base.value.Price` by year.
-- **l-4.** At the base: `cases-report --securities AMD_US_Equity` prints `base ABSENT ... no consensus EPS on the landed block`,
-  `cases_report served 0 refused 1`, rc 0; `"AMD US Equity"` prints `base SERVED ratio 0.659...`.
+- **m-1.** `_case_currency` (dossier.py, @`bc50ea89cf`) returns a currency only when the symbol alone maps to ONE ISO code AND
+  it equals the listing; `$` maps to (USD, CAD, AUD), so it never sets. The ruling's criterion is the INTERSECTION of the
+  symbol's set with the listing. Measured symbol-bearing names (l-1's report): AZN U+00A3/GBp, BP/ `$`/GBp, CPA `$`/USD,
+  ML U+20AC/EUR, ORA `$`/EUR, SAP `$`/EUR, SHOP `$`/CAD, SPOT `$`/USD, TTE `$`/EUR, UNVGY `$`/USD. **Under the ruled rule:**
+  CPA, SPOT, UNVGY -> USD; ML stays EUR; **SHOP_CN -> CAD** (`$`'s set contains CAD, the listing is CAD); every other stays
+  null. **The analysis expects "CPA, SPOT, UNVGY -> USD, and no other name moves" -- its own rule also moves SHOP.** This
+  file does not choose: m-1 builds the rule as ruled, the census prints every set name, and the never-widen pair (which
+  names each moving name, CTO-signed) decides SHOP before anything is served.
+- **m-2.** The six (8035_JP, BZLFY_US, HEI_US, SNPS_US, TSM_US, V_US) serve ABSENT: "row 'EPS' has 14 of 15 cells; the empty
+  cell's position is not recoverable from line order (no x-coordinates)". The stored extraction lines carry no
+  x-coordinates; the bronze pdf is reachable by the picked row's `bronze_key` (read-only). Importing `dossier` must still load
+  no PDF library (round 10 amendment 1): any fitz/pymupdf use is inside the function that needs it.
+- **The rewrite writes only with a method bump:** m-1 and m-2 change what a case serves but move no dossier `inputs`;
+  `write_one` writes nothing when the stored method AND inputs are unchanged. m-2 bumps to `amgt-corpus-dossier/4`.
 
-## 2. Rule 24 record, for what this file ADDS
+## 2. Rule 24 record
 
-`currency` is `null` unless the symbol maps to exactly one ISO code AND that code is the listing's; `currency_basis` names
-why when null. The six-table checker partitions the six into `body_names` / `absent_specific` / `absent_generic`, summing to 6.
-The Base census partitions names into `both` / `team_only` / `rule_only` / `neither`, summing to the resolved names.
+m-1 changes one predicate: `currency` = the single element of (symbol's ISO set) intersect {listing}, else null with the existing
+basis values (plus `symbol's currency differs from the listing` when the intersection is empty). m-2's positional census
+partitions the six into `placed` / `ambiguous` / `no_positions`, summing to 6; a name is `placed` only if every value of every
+short row falls in exactly one column band and exactly one column per row is empty.
 
-## 3. Placement and holds on others' surfaces
+## 3. Placement
 
-l-4 on the Bloomberg lane's puller (read-only stage, `<paths>` grant for this order only); it does not touch `derive` or
-`case_rule.py`. l-1/l-3/l-2 on this project's corpus package.
+Both cells on this project's corpus package; m-2 reads bronze pdf bytes from S3 (read-only). No other project's file.
 
 ## 4. Dependency edges
 
-- Chain A: l-3 -> l-1 -> drain -> ONE never-widen pair for the dossier rewrite covering both -> change entry -> `dossier
-  --write --workers 10` -> verify -> the CVO grades.
-- l-2 and l-4 independent. l-2 reads the served dossier and blocks as they stand; it is re-run by this seat after chain A's
-  rewrite as the one real run.
+Chain: m-1 -> m-2 -> drain -> ONE never-widen pair naming (a) each name whose currency moves (CPA, SPOT, UNVGY, SHOP as
+measured) and (b) each of the six names' two branches (placed / stays ABSENT) -> change entry -> `dossier --write --workers
+10` -> verify -> the CVO grades.
 
 ## 5. The round -- one issuance, fan-out as data
 
-- `fanout: 3 of 3 chains, cap 8, reason: l-3 and l-1 share dossier.py and run as one queue on ~1 (l-3 first); l-2 (~2) and
-  l-4 (~3) are independent.`
-- Drain duties: at each merge the touched suites, `py_compile`, ruff; each worker re-graded at its tip; chain A's rewrite
-  under its pair; the one real run: `read_dossier` on AZN (U+00A3 on GBp), ML (U+20AC on EUR) and one `$` name; `base_census`
-  after the rewrite; `l3_six.py`.
-- Surprise channel rows from `Z-S56`; workers `AMGT_CORPUS-Z-W<n>-S<k>`, `disarm_owner 2.0.0_SA_COO~X`.
+- `fanout: 1 of 1 chains, cap 8, reason: both cells write dossier.py; one queue on ~1 (m-1 first), one pair, one rewrite.`
+- Drain duties: the corpus suite, `py_compile`, ruff; the worker re-graded at its tip; the pair; the rewrite; the one real run:
+  `read_dossier` on CPA (USD), SHOP (as the pair rules) and one placed name if any.
+- Surprise channel rows from `Z-S57`; workers `AMGT_CORPUS-Z-W<n>-S<k>`, `disarm_owner 2.0.0_SA_COO~X`.
 
 ## 6. `<preflight>` -- what this decomposition actually ran
 
 ```
 prd-signoff.py status AMGT_CORPUS        v0.6 @9e326e11c1 EXECUTING -> ADMITTED
-task-order census (last <status>)         CRPS-k-1 complete -> 0 open on this project
-checks as files, dry-run at the base      checks/round10/: l3_AC1 l1_AC1 l2_AC1 l4_AC1 FAIL (no tests ran); l3_AC2 FAIL
-                                          (absent_generic 6); l1_AC2 FAIL (no currency columns); l2_AC2 FAIL (No module
-                                          named lib.research.corpus.base_census); l4_AC2 FAIL (planted underscore key rc 0);
-                                          l4_AC3 PASS (AMD US Equity base SERVED)
+task-order census (last <status>)         CRPS-l-1..l-4 complete -> 0 open on this project
+checks as files, dry-run at the base      checks/round11/: m1_AC1 m2_AC1 FAIL (no tests ran); m1_AC2 FAIL
+                                          ('m1 names 95 currency_set 1 ML_FP_Equity=EUR'); m2_AC2 FAIL (argparse refuses
+                                          --case-positional-census); m2_AC3 PASS (l3 absent_generic 0 sum 6);
+                                          m2_AC4 PASS (dossier import loads no PDF library)
 ```
 
-## 7. comp-adversary declaration
+## 7. Rulings this decomposition makes, and what it REFUSES to assume
 
-This file specifies; it produces no artifact. The adversary lens applies at chain A's served rewrite, under its pair.
+- m-1 implements the ruling's criterion literally (intersection); it does not special-case SHOP either way -- the pair does.
+- m-2 serves a value only where position alone places it; arithmetic (Price = EPS x Multiple) is never a placement rule.
+- m-2 bumps `METHOD_VERSION` to /4 (round 8's lesson: no bump, no write).
+- REFUSED to assume: that the positions will place all six (m-2 reports each branch).
 
-## 8. Rulings this decomposition makes, and what it REFUSES to assume
-
-- l-1 converts nothing and infers nothing from the listing; the listing is used only to REFUSE a currency the symbol does not
-  uniquely name (analysis s.2 ruling 1).
-- Chain A bumps the dossier's `METHOD_VERSION` to `/3` (in l-1): it changes what a case serves but moves no `inputs`, and
-  `write_one` writes nothing when the stored method and inputs are both unchanged -- without the bump the rewrite is a no-op
-  (round 8's lesson on this table). Rollback is the revert to `/2` through `read_dossier`'s method preference.
-- l-2 grades nothing; it prints a distribution with its denominator and names every name it could not pair, with the reason.
-- l-4 refuses at the CLI; it changes no rule and no derive.
-- REFUSED to assume: that the six tables share one defect (l-3 reads each); that the team's Base year equals the rule's (l-2
-  states the year it paired on, per name).
-
-## 9. Holds
+## 8. Holds
 
 | hold | on | owner | what lifts it |
 |---|---|---|---|
-| every `dossier --write` | this seat | `2.0.0_SA_COO~X` | chain A VALID; the pair signed |
+| every `dossier --write` | this seat | `2.0.0_SA_COO~X` | the chain VALID; the pair signed, SHOP ruled in it |
 
 -- `2.0.0_SA_COO~X`
