@@ -4833,3 +4833,33 @@ name the one known failure instead of silently inheriting it.
   "world_is": "Each has a measured resolution: a closed ledger, an amendment, or a release graded SUFFICIENT. One residual (S11's overshoot) is carried to the L10 slug."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S16",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-29T10:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by the issuer, as disarm_owner, on OG-x-4's measured outcome and the code at HEAD. Z-W11-S1 (a 250,000-row wide export still peaked the child above the 256 MiB cap after OG-x-2): remedied by OG-x-4, release 63264dfb22 live since 08:43:42Z; CAPACITY_X4.json export at 11 columns peaks 161,800,192 / 177,328,128 / ~176 MB at 25k/125k/250k, every job cap_respected, verdict SUFFICIENT; R-4 closed @3794197dbb. Z-W11-S2 (onhost_bench.py called run_export with the pre-OG-x-2 signature): the harness was repaired in OG-r-3 (1efe069571, 877833be87) and OG-x-4 (d1ba79742c), and OG-x-4 ran it on the host to completion (onhost_run_x4_full.json). S48 (the harness graded a LIMIT_EXCEEDED job as cap-respected): repaired at 1efe069571 -- infra/aws/ec2/opal-gateway/tests/acceptance/onhost_bench.py:206 _cap_respected reads the measured peak child RSS on every terminal path and grades an unmeasured job not respected; OG-x-4's AC2 graded on it (maximal 151,691,264).",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W11-S1",
+    "NFRA_OPLGTW-Z-W11-S2",
+    "NFRA_OPLGTW-S48"
+  ],
+  "one_line": "The issuer disarms Z-W11-S1, Z-W11-S2 and S48: OG-x-4 flattened the child at full width and ran the repaired bench on the host, and the cap grader at HEAD reads the measured peak on every path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_NFRA_OPLGTW~11/CAPACITY_X4.json: ac2.all_cap_respected true; verdict SUFFICIENT",
+      "infra/aws/ec2/opal-gateway/tests/acceptance/onhost_bench.py:206-216 at CLOUD 3a73687901",
+      "deliverables/1.0.0_SA_CTO~O/RULING_R-4_REMEDY_SUFFICIENT_20260929.md @3794197dbb"
+    ]
+  },
+  "spec_asserts": "Each adjudicated row was ARMED with the issuer as disarm owner.",
+  "world_is": "Each defect is absent at HEAD and on the host, measured by OG-x-4's on-host run."
+}
+```
