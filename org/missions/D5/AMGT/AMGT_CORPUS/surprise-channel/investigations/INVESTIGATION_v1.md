@@ -1825,6 +1825,51 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The producer's own capture carries numbers under K43 (2028, 2108.7834, 1.378...); the example contradicts the row's producer. The row's grade (i-3 AC4 workbook half NOT MET, CVO ADJUDICATION_v10) is unaffected.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Owner's correction, appended (the original row stands, append-only). Not a cell (round-7 analysis s.5 'NOT cells')."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S9",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T00:43:49Z",
+    "one_line": "CRPS-j-1 premise fails on the stored extractions: the 34 names with a case lead carry Upside/Base/Downside Case as three consecutive ROW LABELS of a scenario table (pdf class A, page 0), never a prose case; with the ruled block end the served rewrite gives Downside the whole numeric table and Upside/Base ABSENT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read-only survey of all 95 resolved names via dossier._picked_reports (scratch .scratch/j1/survey.py, survey2.py, HEAD 5cf660114f): 102 case leads = 34 names x 3, ALL pdf class A; docx 31 picks and pdf class B 35 picks carry 0 case leads and 0 'upside/base/downside case' phrases in their text (1 class-B pdf, UBER_US_Equity line 596, mentions 'base' in an unrelated sentence).",
+        "ADBE_US_Equity pdf lines 350-352 = 'Upside Case','Base Case','Downside Case' (bold, page 0), then 353-367 '2026E'...'2030E' x3 (column headers), then 368+ 'EPS' 24.16 27.86 ... 'Multiple' 16.0x ... : the three cases are table row labels; the same pattern appears at a second table (8035_JP lines 863-865). The block ended after one line because the next line is the sibling case lead.",
+        "After the ruled change (body = text after the heading up to the next section lead of any name): dossier --case-census reads 'case_census names 95 slots 285 body 34 heading_only 68 absent 183 sum 285'; all 34 body slots are DOWNSIDE, each a 794-1485 character run of table cells ('2026E 2027E ... EPS 24.16 27.86 ...') covering all three cases' numbers up to the RECOMMENDATION lead; upside and base of those 34 names are heading_only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-j-1: the team writes its case under the Upside/Base/Downside heading; the value should be the team's text beneath its own heading, up to the next case or section lead.",
+    "world_is": "In the stored extractions no name carries prose under a case heading: the heading is a scenario-table row label. The ruled block end is implemented as written and satisfies AC1 and AC2 (body 34), but the one served body per name (Downside) is the entire scenario table's cells, not the team's Downside case, and Upside/Base are absent. Served as-is after the issuer's rewrite this would render a numeric dump as the team's Downside case.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Not disarmed by the worker: a table-aware case block (or a body that requires prose) is a new ruling, not a rider. AC3 (JUDGMENT, 3.0.0_SA_CVO~Z) is the place this reads; the issuer may hold the served rewrite until a ruling. The measured place the model-figure cases live is the stored Model block (AMGT_RESAPP cases rule), not the report text."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S10",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T00:43:49Z",
+    "one_line": "CRPS-j-1 rule 4 read literally ('write nothing only when method_version EQUALS METHOD_VERSION') would break test_dossier_newest.py::test_write_one_unchanged_against_the_last_write_not_the_greatest_hash, whose seeded documents carry no method_version; write_one treats an ABSENT method_version as inputs-only, a PRESENT different one as changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First run of the corpus tests after the literal edit: 1 failed, 31 passed (test_dossier_newest.py::test_write_one_unchanged_against_the_last_write_not_the_greatest_hash: AttributeError put_object, i.e. write_one tried to write). The test file is unmodified; with the absent-method carve-out 371 passed in tests/.",
+        "lib/research/corpus/dossier.py build() stamps method_version on every document it writes, so a real stored object always carries one and the carve-out never fires on served data."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-j-1 rule 4 and bound 4: the no-op compares the method too; existing dossier tests keep passing unmodified.",
+    "world_is": "The two statements conflict for one existing test whose fixture omits method_version; I kept the test unmodified and let an absent method_version stay inputs-only, so a stored object with no method_version is never treated as a different method.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Behaviour differs from the literal rule only for an object with no method_version, none of which exist in the served table."
   }
 ]
 ```
