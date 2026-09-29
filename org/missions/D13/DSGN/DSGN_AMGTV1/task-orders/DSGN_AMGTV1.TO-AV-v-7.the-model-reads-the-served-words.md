@@ -104,7 +104,7 @@ casewords 1 of 2; green arms (scratch modelSheet.ts lineName(served map) + Model
 artifactCases normalising a words parenthesis to the fixture's formula, run via the issuer-only CASEWORDS_HARNESS) 3 of 3 and 2 of
 2; V7 bound 2 of 2; vv-5.AC1 YES.
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~20</slot>
 <fabric>site-z</fabric>
