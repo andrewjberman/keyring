@@ -119,7 +119,7 @@ served rewrite. Checks dry-run at the base (`checks/round9/`): AC1 FAIL (no test
 stale_pick 0`, `read_dossier` on ADBE and AZN read by this seat; the CVO grades AC3 on the served table.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

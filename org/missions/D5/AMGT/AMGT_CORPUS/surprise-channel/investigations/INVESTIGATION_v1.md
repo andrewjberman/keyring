@@ -1916,6 +1916,50 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Chain A is VALID and merged; the rewrite it enables would serve a numeric dump as the Downside case. Held. The team's case numbers are present and positionally readable by case; a table-aware rule is the round-8 packet's lead enrichment candidate.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's). Lifts when a case rule reads the table by case and its census shows each case's own values."
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T01:20:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "id": "AMGT_CORPUS-Z-W1-S11",
+    "one_line": "CRPS-k-1: two shapes of the real scenario tables are not in the order's text -- a lone currency-symbol line after each value (AZN, BP, ML and 7 more), and a date + page-number footer line pair after the last row (8 names) -- and each is read as the table's own, not as a row.",
+    "spec_asserts": "Order s.1 rule 1: each metric row is a non-numeric label line followed by exactly 3k value lines; the table ends at the first line that is neither, or at the next section lead. Rule 3: the unit is the symbol the row values carry.",
+    "world_is": "In the stored extractions the currency symbol (U+00A3, $, U+20AC) is its OWN line after each EPS/Price value (30 lines per table), which a literal count would read as 6k lines. And 8 names (AZN, BP, CPA, ML, ORA, SAP, SHOP, TTE) have no assumptions paragraph after the Return row: the next lines are a date ('2026-03-09') then a page number ('2'), i.e. a non-numeric label with 1 value, which the literal rule reads as a row with the wrong count and makes the table unreadable. Built: a lone symbol line is the preceding value's unit and is not counted; a date-shaped line (d-d-d with - / or _) ends the table like any line that is not a row. No other rule was changed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Survey of the 34 names' extractions, scratch .scratch/k1/dump.py + probe.py at wk-crps9-1: AZN_LN_Equity lines after 'EPS' = '9.08','U+00A3','10.24','U+00A3',...; date footers '2026-03-09' (8 names) and '7_13_2026' (ADBE, after the assumptions text).",
+        "Without the footer stop dossier --case-census would read 14 of the 34 names as unreadable; with it 6 (see Z-W1-S12), each a genuine 14-value EPS row."
+      ]
+    },
+    "notes": "Two small departures from the literal reading, both needed for the 34 real tables to be readable; the issuer may re-rule the footer shape."
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T01:20:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "id": "AMGT_CORPUS-Z-W1-S12",
+    "one_line": "CRPS-k-1: 6 of the 34 scenario tables are unreadable on the ruled 3 x k count -- the EPS row carries 14 values (the Base group has 4, not 5) -- so those names serve all three cases ABSENT with the reason.",
+    "spec_asserts": "Order s.1 rule 4: a row whose value count is not 3k makes the whole table unreadable for that name; each case is served ABSENT with the reason.",
+    "world_is": "Names: 8035_JP_Equity, BZLFY_US_Equity, HEI_US_Equity, SNPS_US_Equity, TSM_US_Equity, V_US_Equity. In each, the extraction's EPS row has 14 value lines (one Base-group value is missing from the pdf text layer, e.g. HEI Base EPS 6.03 6.80 7.73 8.99), so the served case is ABSENT with 'row EPS carries 14 values, expected 3 x 5'. The census counts these 18 slots as absent (state 'absent'), so heading_only stays 0. Also: the census reads ORA_FP_Equity's unit as $ because its EBITDA/Price values carry $ as the team wrote them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "dossier --case-census at wk-crps9-1: 'case_census names 95 slots 285 body 84 heading_only 0 absent 201 sum 285 ordering_held 28 ordering_violated 0 ordering_na 67 unit_carried 10'; 34 names carry a table, 28 read, 6 unreadable; 84 = 28 x 3.",
+        "Scratch .scratch/k1/probe.py: the six read ('EPS', 14) and no rows."
+      ]
+    },
+    "notes": "Not fixable by the worker: the missing value is absent from the extraction, not misparsed; recovering them is an extraction change (a different cell)."
   }
 ]
 ```
