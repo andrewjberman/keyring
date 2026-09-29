@@ -2581,6 +2581,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "TO section 1 clause 5: the pre-put dry step records the BEFORE state to a g2_* file, written once before the first put; post-act verification is a separate read-only script.",
       "world_is": "After the three puts this worker ran `g2_pre_put_dry.py --help` as a syntax probe; the script has no argument parser, so it re-ran and rewrote g2_before_state.json with the AFTER state (its stdout went to /dev/null; the dry-step verdict would have printed STOP). The worker rebuilt the JSON from g2_pre_put_dry_output.txt, which is the verbatim pre-put output and was not touched. The restored file carries the original recorded_utc (2026-09-29T19:24:42.232530+00:00, taken from the AC1 output). It is a reconstruction, not the original bytes; the .txt is the primary record.",
       "notes": "INERT. Read-only against S3 both times: no put, no delete. Reader of the BEFORE record should take g2_pre_put_dry_output.txt as the primary evidence."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S41",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-29T19:50Z",
+      "one_line": "The g-2 never-widen pair named reader 1 at CodeSha256 CtIvirvM... (both halves, read ~19:0xZ and ~19:1xZ), but opal-amgt-scoped-api was redeployed to lg6NJ2JL... at 19:18:58Z by AMGT_RESAPP ww-1 (0.7.0_AE_CloudOps~A), eight minutes before g-2's puts (19:26-19:27Z): two projects moved one served surface (/timeline) in the same window, and the pair's reader measurement was stale when the act ran.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round18/NEVER_WIDEN_HALF_COO_G2.md section 2 and ledger/NEVER_WIDEN_ROUND18_G2_CTO_HALF.md section 1: CodeSha256 CtIvirvMTG47vvgBGmouk3GrTNKPjPIPx/6ovB+EAOM=, LastModified 2026-09-29T09:56:25Z",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round18/close_run_round18.out.txt line 1: deployed CodeSha256=lg6NJ2JLYbTc9ZtlDaA9nckuNSOaZZmsYKzDjRPbB3s= LastModified=2026-09-29T19:18:58Z",
+          "CLOUD 79d4c7abeb (0.7.0_AE_CloudOps~A): AMGT_RESAPP round 48 AMGT-ww-1 redeploy LANDED; NEVER-2 entry opened f298c2313c (18:54Z)",
+          "close_run_round18.out.txt: under the NEW code, 4 of 4 securities (ASML_NA, DELL, BA, FDX) serve HTTP 200 with series == newest landed chatter_daily on 272 of 272 days each (0 field mismatches) and events == newest landed chatter_event"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "COO half section 2 / CTO half section 1: reader 1 is the scoped API at CodeSha256 CtIvirvM..., which serves the newest daily part as series and the newest event part as events; the blast radius was signed against that reader.",
+      "world_is": "Reader 1 changed code under the signed pair (RESAPP ww-1's own signed act, a different project's pair). The HARVST half did not name a condition on reader 1 staying fixed, and the ww-1 pair presumably did not name the HARVST gold puts. Measured after both acts: the new code still serves the newest landed parts, equal field by field on the four securities read, so the user-visible outcome is the one the HARVST pair signed.",
+      "notes": "INERT: the close run is the exercised read of the combined state. Lesson for the next SERVED pair on this surface: read the reader's CodeSha256 again in the pre-put dry step and STOP on a change, the same way the ETags are re-read."
     }
   ]
 ```
