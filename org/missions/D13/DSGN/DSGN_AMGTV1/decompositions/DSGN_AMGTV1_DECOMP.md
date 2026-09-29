@@ -263,3 +263,58 @@ the same boundary as hop 3).
 (ii) One cell per write set, the one shared harness resolved by a queue. (iii) One intent per cell. (iv) No cell moves a served
 value, a figure, a verdict, a cite or the click; AV-w-6 changes how many of the producer's already-ordered head rows the chart
 requests (5 -> 12), never which or in what order.
+
+
+## v5 -- ROUND 5 (issuer, 2026-09-29 ~20:xZ), over PRD v0.3 @abfad1355c (ADMITTED)
+
+**Rectangle:** the ENRICHMENT LIST of `1.0.0_SA_CTO~Z`'s round-4 analysis `ledger/ROUND_ANALYSIS.round4.md` @177c576c80 (msg 26684)
+section 4, items 1-6, one cell per item, with rulings 1 (the divergence tile's name) and 2 (whose Base case) folded into item 4's
+cell; PLUS one issuer cell, `AV-v-7`: AMGT_RESAPP r48's ask (msg 26588 from `2.0.0_SA_COO~Z`: read the served `model.line_names` /
+`formula_words`; let FWD-30's parity harness admit the export's case line in words), placed by v4 "for the first round after ww-1
+lands" -- ww-1's NEVER-2 entry CLOSED 19:56:55Z (COO~Z msg 26689), so its dependency is met at this cut. **NOT cells:** "$1,234" in
+INTU's drafted prose and every date inside served prose (C-PRESENTATION-ONLY); the two producer asks of ruling 5 (a served company
+`name` on the rank-history series; officers from a second source) -- AMGT_RESAPP's round-49 list. **Walk condition:** the round's
+one real run waits on ww-1's V1 leg -- CLOSED at 19:56:55Z, so the condition holds at the cut. **Portal base:** site-Z local DEV
+`09bd04b1`. **Fixtures:** `deliverables/2.0.0_SA_COO~D/round5/fixtures/` = the round-4 set plus `thesisBundle.AMD_US_Equity.json`
+(the `payload` of AMGT_RESAPP round48/captures/thesis_AMD_US_Equity_20260929T200344Z.json @8f50bcb837, extracted verbatim: the
+served /thesis after ww-1, carrying `model.line_names` 25 entries and `formula_words`). **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-v-1` | 1 | Posture cites read as words: no passage id, preset code or status word in a cite line; a carried passage names its document + section from its served `source`, an uncarried one says so in words; every cite still rendered | FWD-10, FWD-11 | `SA/postureCites.ts`, `SA/tabs/PostureTab.tsx`, harnesses `posture`, `posturePattern` | ~18 | LOCAL |
+| `AV-v-2` | 2 | The history view: 12 strokes at min CIE76 dE >= 25 (66 pairs), >= 24 px right of the last tick, and a walker step that presses one legend button ("-Chart-picked") | FWD-3 | `SA/components/RankedChart.tsx` (palette, margin), harness `chart`, `.claude/skills/ui-walk/walk.mjs`, `SKILL.md` | ~19 (1st) | LOCAL |
+| `AV-v-3` | 3 | The generations line as one plain sentence (no status word, no generation id); the Lead Panel's `PanelFooter` (the second #0A1733 band, measured) gone, its caption moved into the body | FWD-11 | `SA/components/RankedChart.tsx` (`GenerationsLine`), `SA/components/LeadPanel.tsx`, harnesses `leadPanelPattern`, `errorEmpty`, `shell`, `tabs` | ~19 (2nd) | LOCAL |
+| `AV-v-4` | 4 + rulings 1, 2 | The Model face says whose Base case each is (an unlabelled rule case reads "Opal's rule-based Base case"; a served label prints as served); the divergence tile reads "Divergence from consensus forecast" | FWD-6, FWD-11 | `SA/tabs/ModelTab.tsx`, harnesses `modelPattern`, `exportCompare` | ~20 (1st) | LOCAL |
+| `AV-v-7` | issuer (RESAPP r48 ask) | The Model reads the served `line_names` / `formula_words` (local copies = fallback only); FWD-30's parity admits the export's case line in words | FWD-9, FWD-11 | `SA/tabs/ModelTab.tsx`, `SA/modelSheet.ts`, `SA/types.ts`, harnesses `exportCompare`, `modelPattern` | ~20 (2nd) | LOCAL |
+| `AV-v-6` | 6 | The page's own dates in one form (the Thesis / Model panel headers' "Sep 29, 2026" -> ISO); the timeline legend's words on the band-scoped tokens (fills unchanged) | FWD-11 | `SA/tabs/ThesisTab.tsx`, `SA/tabs/ModelTab.tsx` (header date only), `SA/components/TimelinePanel.tsx`, harnesses `thesisLadder`, `timelineFourStates` | ~20 (3rd) | LOCAL |
+| `AV-v-5` | 5 | Exec "Read detail" and the Bloomberg-fallback line without the served machine reason (it rides a data attribute) | FWD-7, FWD-11 | `SA/tabs/ExecManagementTab.tsx`, harnesses `execPattern`, `execText`, `execFallback` | ~21 | LOCAL |
+
+**Edges and chains:** no data edge. Two write-set collisions resolved by queues (CUT BY WRITE SET): `RankedChart.tsx` (v-2, v-3) ->
+slot ~19, v-2 then v-3; `ModelTab.tsx` (v-4, v-7, v-6) and `exportCompare.harness.cjs` / `modelPattern.harness.cjs` (v-4, v-7) ->
+slot ~20, v-4 then v-7 then v-6 (item 6, the batch-ish cell, last on its colliding slot). M = 4 chains (v-1; v-2->v-3;
+v-4->v-7->v-6; v-5), N = 4, cap 8. Every other surface is written by exactly one cell; `tabs.harness.cjs` is v-3's to re-anchor
+(its PanelFooter stub reads the "Source:" text) and a read-only bound for v-4, v-5, v-6 and v-7; the surprise channel is shared
+append-only.
+
+**Checks (`round5/checks/`, dry-run at base 09bd04b1; `_load.cjs`, `bound.cjs` and `census.cjs` copied forward from round 4):**
+posturecite.cjs 0 of 3; pick.cjs 1 of 3 (min dE 18.1 #f59e0b/#fb923c; 8 px); pickstep.cjs 1 of 3; gens.cjs 0 of 3; modelwords.cjs
+1 of 3; servedwords.cjs 1 of 3; casewords.cjs 1 of 2; datecontrast.cjs 1 of 3; execdetail.cjs 2 of 3 -- every build check FAILS as
+expected (each passing arm is a floor or control). Green arms fed (scratch overrides, never on a face): posturecite 3/3, pick 3/3
+(scratch palette min dE 40.2), pickstep 3/3, gens 3/3, modelwords 3/3, servedwords 3/3, casewords 2/2, datecontrast 3/3, execdetail
+3/3. Bounds at base PASS: V1 2/2, V2 3/3, V3 4/4, V4 2/2, V5 4/4, V6 4/4, V7 2/2; RESAPP vv-5.AC1 YES; walkvoid.sh YES (5174
+serving, CTO~Z's walk build). `_load.cjs` also reads timelineFourStates' `"failures": []` verdict as green. `census.cjs` gains a
+passage-id class and a preset-code class (both over the full visible text, drawers included) and two surfaces (`chart`, the
+generations line; `posture-sap`): 34 tokens over 8 surfaces at base -- the CVO's instrument, graded by judgment.
+
+**Battery:** comp-schedule, comp-iam DECLARED-NOT-APPLICABLE. comp-adversary: the checks above; blind spots -- static markup with the
+estate chrome stubbed; recharts replaced by a prop-recording stub (colour and edge are graded by props; pixels are the walk's);
+pickstep.cjs reads walk.mjs statically (the issuer's walk is its live run); gens.cjs's band arm counts the component tree, the
+walk's design:bands check reads pixels; datecontrast.cjs grades the legend by token class. MEASURED at the cut: the served rule case
+carries the label "Historical-multiple reference" on every fixture and on the current AMD capture, so v-4's ruling-2 head is the
+unlabelled fallback (the round-4 walk's 19:15Z shape); 6 of the 7 SAP GY passage ids name passages the bundle does not carry, so
+v-1 names document + section only where `source` is served.
+
+**Rule 24:** (i) MECE over the analysis's six items plus the placed ask, by subtraction: 7 placed; the NOT-cells named with their
+reason. (ii) One cell per intent; three shared files resolved by two queues. (iii) One intent per cell. (iv) No cell moves a served
+value, a figure, a verdict, a cite, a pick or a count; v-2 changes colours and room, v-3 the words of a count it keeps, v-7 which
+of two identical word sources the page reads.
