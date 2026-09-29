@@ -11386,3 +11386,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT today only because the adapter is pinned at qfxZ0DzB (window 21) and this seat's half is REFUSED; the row ARMS the moment qosuSxAf serves. The producer fix belongs to workstream ~E (0.4.0_DS_ClientPlatform~E, TO-IB-er-201/202): a cusip-less position is never priced by key (excluded under ruling 4, or carried as cash for the price-1.00 quantity-equals-value rows -- the CTO's ruling), re-emit 557 partitions and manifests, one unit test with two cusip-less positions at different prices. The near-zero-base rows need a rule (a base floor or a fifth status with its four-postulate record). The adapter's fresh path should refuse what its reopen path refuses (any series point <= -1). Named beside, not a ground: every comparable retained account chains below the engine (0.8-9.5 points), consistent with a price-only return."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S196",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-29T05:15:00Z",
+  "one_line": "S194's cause, by source diff: the resident sends security_ids = [the client portfolio] only (resident_worker.py:210) to both validate and generate, while the research builder whose Comparison PDFs printed 'Opal Long-Term' sends [primary] + every comparison (recipe_contract.py:216, 292). The comparison travels only in secondarySecurity, and the vendor reports on the ids it is given.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (the fix is cut as a ~Y round-20 order; S194 stays ARMED until it is served)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:210 at CLOUD (= served st3 by the @abc3c89675 member shas): security_ids = ['P:' + str(portfolio['model_portfolio_id'])], passed to recipe.step_validate (:211) and recipe.generation_body (:212)",
+      "docs/research/investor_reporting_ycharts_variants_20260911/recipe_contract.py:216 ids = [primary['securityId']] + [c['securityId'] for c in comparisons]; :292 'security_ids': ids; :211 template num_required_securities must equal min_comparisons + 1",
+      "input_evidence.json variants[1] (research Comparison): comparison_security_ids ['P:1728413'], the same model as W21 Y1; that PDF printed the label (case_trace label link, research Comparison = MATCH)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A Comparison / Multi-Comp generation names every compared security to the vendor, as the recorded working body does.",
+  "world_is": "The served resident names only the client portfolio, so a Comparison prints alone and still certifies (S194).",
+  "notes": "Inference class: SOURCE DIFF against a working recorded body, not yet a live A/B. Remedy: security_ids = [primary] + comparison vendor_ids, for validate and generate, with the template's required count checked; plus certification refusing a Comparison whose PDF prints none of the chosen models. Both are cut in ~Y round 20."
+}
+```
