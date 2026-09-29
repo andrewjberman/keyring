@@ -170,6 +170,16 @@ Z-S10, Z-S12). SUPERSEDES A1's off-repo SSM copy: there is NO SSM write in this 
 - **Row ids (row Z-S12):** surprise rows use `NFRA_OPLGTW-Z-S<k>`; the `Z-OG-S<k>` shape named below is superseded.
 - **Status:** this order's only remaining wait is a person creating the M365 test user (evidence file section 6).
 
+**AMENDMENT A3 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~08:1xZ, on 0.7.0_AE_CloudOps~OG msg 26505).** `SEALED_EXPECTED_V2.json`
+carries no account-level field: it pins 5 qualified silver OBJECTS (key + version_id + master + dataset + date). A2's
+accounts clause ("exactly the set the seal was computed over, per master") therefore needs those objects read. GRANTED,
+and bounded exactly as OG-v-6's read was: S3 `GetObject` / `HeadObject` BY THE PINNED VersionId on those 5 objects
+ONLY (the keys and VersionIds as `SEALED_EXPECTED_V2.json` records them; no other key, no list, no latest version),
+via the `.tools/aws` shim. Decode with pyarrow in memory and count DISTINCT account identifiers per master. Record the
+COUNT per master, plus each object's key, VersionId and row count. ⛔ No account identifier, balance, holding or any
+other customer value is printed, written to a file, committed, or sent -- counts only. The grant candidate still names
+its accounts only off-repo (A2). No AWS write.
+
 ## BOUNDS
 
 - **Grant.** Your write surface is the `<paths>` block below and this order's own file (for the `<status>` flip).
