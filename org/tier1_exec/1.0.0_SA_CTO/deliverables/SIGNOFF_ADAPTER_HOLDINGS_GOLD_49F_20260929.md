@@ -30,3 +30,17 @@ Ordered by PRD v0.19 rulings 10 and 12; weights per Andrew-direct `a9b5489af6`.
 2. **Latency:** the after-invoke's real Since-inception answer (557 partitions) prints its wall time; at or over 80% of
    the 60 s timeout it is a rollback, not a pass.
 3. The CRO's BEFORE and AFTER reads as section 3 names them; D1 closes only on both.
+
+## RE-CUT under PRD v0.20 (2026-09-29 ~07:5xZ) -- SIGNED ON ONE PRECONDITION
+
+Packet blob `a4679360c97a...` @`ac4ad83de7` (2.0.0_SA_COO~P msg 102645); artifact `hD7G6YT1` (S3 version 3donK_gT).
+Read: the CRO's section-6 items answered (rulings 13-16 in the producer, gold re-emitted 557/557, E3-AC4 PASS; the
+fresh-path guard IB-pr-214); the census after: 0 accounts at or below -100% in any window; at or above +100%: YTD 2,
+1Y 4, SI 7 (max +197.9% YTD), named, no day beyond +/-100%. This half's conditions 1-3 above carry.
+
+**Precondition (a new artifact, then a re-read of that delta only):** a window with ZERO OK days answers a named
+refusal (HoldingsGoldRefused -> OBJECT_NOT_COVERED, or a named insufficient-history reason), never a figure. Read at
+signing: ..0273 would serve "YTD 0.00%, since inception 0.00%" with 281 days NOT COMPUTABLE, and two of the three
+..4581 keys serve 0.00% -- a 0.00% built from no computable day is a wrong figure, not a PARTIAL one. A window with at
+least one OK day keeps PARTIAL with the computable-day count on the answer. The after-read adds ..0273 (refusal) and one
+of the 2 YTD accounts at or above +100% (a reading of whether the tripling is real).
