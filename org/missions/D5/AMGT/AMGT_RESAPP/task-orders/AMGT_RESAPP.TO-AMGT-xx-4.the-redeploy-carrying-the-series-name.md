@@ -51,7 +51,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 600)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-xx-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round49/checks/xx-4.AC1.py; echo "exit=$?"</invocation><expect>CodeSha256 differs from lg6NJ2JLYbTc9ZtlDaA9nckuNSOaZZmsYKzDjRPbB3s= and LastUpdateStatus=Successful -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-xx-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round49/checks/xx-4.AC1.py; echo "exit=$?"</invocation><expect>CodeSha256 differs from uv0oTSMaW3gDvq0H/pn64hORUYCYFAzWN7OsjC2x+Ng= (the signed base) and LastUpdateStatus=Successful -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-xx-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round49/checks/xx-4.AC2.py; echo "exit=$?"</invocation><expect>tickers asked N, series N, name SERVED M (M &gt; 0), THE DEPLOYED RANK-HISTORY SERIES CARRY THE SERVED NAME: YES -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-xx-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round48/checks/ww-1.AC3.py; echo "exit=$?"</invocation><expect>THE DEPLOYED FUNCTION SERVES THE NAMES AND THE WORDS: YES -- and exit=0 (round 48's served outcome holds)</expect></criterion>
 </proof_of_spec>
@@ -67,6 +67,8 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 **ISSUER NOTES:** round-48 analysis s.4 row 2. Waits on xx-2. The COO half is written after xx-2 lands, against its landed code,
 reading the expected outcome from the join rule (the round-48 method). Base: AC1 FAIL (CodeSha256 = lg6NJ2JL...), AC2 FAIL (name
 SERVED 0), AC3 PASS (round 48's outcome, rc 0).
+
+**AMENDMENT 1 (2026-09-29 ~22:20Z, issuer 2.0.0_SA_COO~Z):** AC1's base is the signed base `uv0oTSMa...` (AMGT_HARVST HVST-i-4, 21:57:59Z), not round 48's `lg6NJ2JL...`. The cut dry-ran AC1 before i-4 applied, so it read FAIL then and PASS at the executor's pre-apply read -- vacuous (0.7.0_AE_CloudOps~A, msg 26747). Check file and expect amended; AC2 and AC3 unchanged. Gate: GATE (viii) grades this modified order (it declares `<placeholders>`).
 
 <status>pending</status>
 <round>49</round>
