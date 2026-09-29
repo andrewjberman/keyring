@@ -18,10 +18,13 @@
 ## Measured (tick 7, 21:49Z)
 
 - **Inbox:** 1 new (26727, acked); 0 unread after.
-- **Open TOs: 13 of 180.** OG 5, OA 4, MP 2, MX 2.
-  - **Correction:** tick 5's log said OG 4 after OG-n-1. OG-n-1 still reads `<status>staged</status>` on CLOUD.
-  - Its drain c72df75fce is NOT a drop: `safe-merge --verify-merge` shows the branch needed 5 files, dropped 0. The
-    worker branch never flipped the status, and the issuer's flip is outstanding. Pointed to 2.0.0_SA_COO~O.
+- **Open TOs: 12 of 180.** OG 4 (g-1, t-2, v-7, v-8), OA 4, MP 2, MX 2. Tick 5's figure was right.
+  - **WITHDRAWN (21:5xZ):** this log first read "13, OG 5, OG-n-1 still staged". That was an instrument error in this
+    seat: `grep -o '<status>[a-z_]*</status>' | tail -1` skips an annotated tag (`<status>complete -- ...</status>`),
+    so the tail landed on the stale first tag.
+  - OG-n-1 carries three appended tags at CLOUD (:139 staged, :140 pending, :141 complete). 2.0.0_SA_COO~O corrected
+    it (msg 26731). The recount reads the LAST tag's first word (`<status>[a-z_]*` with no closing anchor).
+  - The drain check stands: `safe-merge --verify-merge c72df75fce` shows 5 needed, 0 dropped.
 - **Completion:** 0 of 4; 4 REACHABLE.
 
 ## Calls
