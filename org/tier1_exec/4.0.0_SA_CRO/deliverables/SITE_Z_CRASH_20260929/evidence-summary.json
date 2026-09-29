@@ -1,0 +1,580 @@
+{
+  "generated_at": "2026-09-29T12:34:51.522035-04:00",
+  "seat": "4.0.0_SA_CRO~Z",
+  "units": "bytes unless explicitly named KiB or GiB; GiB = 1073741824 bytes",
+  "volume": {
+    "measured_at": "2026-09-29T12:02:47.7827762-04:00",
+    "DeviceID": "C:",
+    "Size": 508636950528,
+    "FreeSpace": 11163373568
+  },
+  "census": {
+    "started": "2026-09-29T12:04:04.786154-04:00",
+    "finished": "2026-09-29T12:17:53.687881-04:00",
+    "files": 7113597,
+    "directories": 961186,
+    "access_errors": 703,
+    "skipped_reparse_points": 1368,
+    "limitations": "Logical path census, not a disjoint allocation ledger. Hardlinks may repeat; reparse points skipped; live files can change. Allocated bytes queried only for >=100MiB files.",
+    "correction": "Depth-2/3/5 aggregate map repeats shallow file keys. Root file totals divided by three here; large_files used for exact dump sizes. Directory totals unaffected.",
+    "disjoint_top_level_paths": [
+      {
+        "path": "C:\\tmp",
+        "logical_bytes": 192645740203,
+        "files": 4573337
+      },
+      {
+        "path": "C:\\Users",
+        "logical_bytes": 122509463625,
+        "files": 1912622
+      },
+      {
+        "path": "C:\\Windows",
+        "logical_bytes": 59291781775,
+        "files": 178761
+      },
+      {
+        "path": "C:\\dedicateddump.sys",
+        "logical_bytes": 34359738368,
+        "files": 1
+      },
+      {
+        "path": "C:\\Anaconda",
+        "logical_bytes": 14808428689,
+        "files": 387258
+      },
+      {
+        "path": "C:\\ProgramData",
+        "logical_bytes": 14519528245,
+        "files": 2592
+      },
+      {
+        "path": "C:\\Program Files",
+        "logical_bytes": 10899611532,
+        "files": 42414
+      },
+      {
+        "path": "C:\\blp",
+        "logical_bytes": 7414246194,
+        "files": 7618
+      },
+      {
+        "path": "C:\\Program Files (x86)",
+        "logical_bytes": 6756505003,
+        "files": 6739
+      },
+      {
+        "path": "C:\\Drivers",
+        "logical_bytes": 4719491385,
+        "files": 1397
+      },
+      {
+        "path": "C:\\pagefile.sys",
+        "logical_bytes": 4294967296,
+        "files": 1
+      },
+      {
+        "path": "C:\\dell",
+        "logical_bytes": 675688368,
+        "files": 233
+      },
+      {
+        "path": "C:\\LDT",
+        "logical_bytes": 188860473,
+        "files": 9
+      },
+      {
+        "path": "C:\\opal-elev",
+        "logical_bytes": 42846243,
+        "files": 27
+      },
+      {
+        "path": "C:\\c",
+        "logical_bytes": 39742203,
+        "files": 6
+      },
+      {
+        "path": "C:\\swapfile.sys",
+        "logical_bytes": 16777216,
+        "files": 1
+      },
+      {
+        "path": "C:\\$93DE81AA44F445028A073F7DDE8EDCE0",
+        "logical_bytes": 10711875,
+        "files": 450
+      },
+      {
+        "path": "C:\\cygdrive",
+        "logical_bytes": 1634135,
+        "files": 17
+      },
+      {
+        "path": "C:\\opal_runtime",
+        "logical_bytes": 479569,
+        "files": 108
+      },
+      {
+        "path": "C:\\e-logo",
+        "logical_bytes": 127649,
+        "files": 1
+      },
+      {
+        "path": "C:\\dell.sdr",
+        "logical_bytes": 31447,
+        "files": 1
+      },
+      {
+        "path": "C:\\DumpStack.log",
+        "logical_bytes": 12288,
+        "files": 1
+      },
+      {
+        "path": "C:\\DumpStack.log.tmp",
+        "logical_bytes": 12288,
+        "files": 1
+      },
+      {
+        "path": "C:\\$Recycle.Bin",
+        "logical_bytes": 129,
+        "files": 1
+      },
+      {
+        "path": "C:\\OneDriveTemp",
+        "logical_bytes": 0,
+        "files": 1
+      }
+    ],
+    "registered_worktrees": 185,
+    "worktrees_measured": 180,
+    "worktree_logical_bytes": 253141452641,
+    "overlapping_categories": {
+      "temp_or_tmp": [
+        197707200395,
+        4624315
+      ],
+      "cache": [
+        5992552255,
+        68701
+      ],
+      "terraform": [
+        14718956486,
+        16028
+      ],
+      "claude": [
+        1461173069,
+        24300
+      ],
+      "node_modules": [
+        9972688021,
+        784616
+      ],
+      "git_metadata": [
+        2360389374,
+        7156
+      ],
+      "codex": [
+        530129308,
+        5705
+      ]
+    },
+    "selected_files": [
+      {
+        "path": "C:\\dedicateddump.sys",
+        "bytes": 34359738368,
+        "mtime": "2026-09-29T11:40:05.331323-04:00",
+        "ctime": "2026-08-06T14:08:02.408780-04:00",
+        "links": 0,
+        "allocated_bytes": null
+      },
+      {
+        "path": "C:\\Windows\\MEMORY.DMP",
+        "bytes": 18686448893,
+        "mtime": "2026-09-29T11:39:56.414797-04:00",
+        "ctime": "2026-08-06T14:08:02.408780-04:00",
+        "links": 0,
+        "allocated_bytes": 18686448893
+      },
+      {
+        "path": "C:\\ProgramData\\Sentinel\\CrashDumps\\af142cfc-4bb5-41be-a882-bce2839e6941.dmp",
+        "bytes": 6871313492,
+        "mtime": "2026-09-29T08:32:00.311795-04:00",
+        "ctime": "2026-09-29T08:28:53.319331-04:00",
+        "links": 0,
+        "allocated_bytes": 5026684928
+      },
+      {
+        "path": "C:\\pagefile.sys",
+        "bytes": 4294967296,
+        "mtime": "2026-09-29T11:40:03.262826-04:00",
+        "ctime": "2026-07-23T11:37:42.599196-04:00",
+        "links": 0,
+        "allocated_bytes": null
+      }
+    ]
+  },
+  "dump_hashes": [
+    {
+      "Path": "C:\\Windows\\MEMORY.DMP",
+      "Hash": "86F17020DD3623EDFCE54E5597CB2AB3028580B9733516EBC19B780A5AD5C5B2"
+    },
+    {
+      "Path": "C:\\ProgramData\\Sentinel\\CrashDumps\\af142cfc-4bb5-41be-a882-bce2839e6941.dmp",
+      "Hash": "609E36A69925BB87AFC5B81A8836F35BD75BB6EBBCB1296675CC6C466CC1650F"
+    },
+    {
+      "Path": "C:\\Windows\\Minidump\\092926-11750-01.dmp",
+      "Hash": "F42E571801AA2AE2F684491C6153335E467F23ADFF5F0E69464291C3C1D82610"
+    }
+  ],
+  "dump_threads": {
+    "processed": 6850,
+    "sentinel_matching": 1070,
+    "shared_acquire_path": 1069,
+    "exclusive_acquire_path": 1,
+    "capture_et": "2026-09-29T11:34:55.363-04:00",
+    "earliest_sampled_wait_seconds": 2852.078,
+    "earliest_sampled_wait_start_et": "2026-09-29T10:47:23.285-04:00",
+    "causal_limit": "Reentrant-lock deadlock strongly supported; disk exhaustion as trigger not proved."
+  },
+  "integrity": {
+    "measured_at": "2026-09-29T12:07:46.212080-04:00",
+    "main_tracked_paths": 47051,
+    "main_zero_paths": 356,
+    "main_zero_paths_nonempty_at_HEAD": 0,
+    "main_stat_errors": [],
+    "broker_integrity": [
+      [
+        "ok"
+      ]
+    ],
+    "workspace_fsck_exit": 0,
+    "portal_fsck_exit": 0,
+    "damaged_checkout": "C:/tmp/wk-crps14-5",
+    "missing_tracked_files": 145,
+    "zeroed_tracked_files": 35,
+    "kuzu_readonly_counts": {
+      "nodes": 27134,
+      "edges": 58432,
+      "full_integrity_audit": false
+    },
+    "today_inbox_files_examined": 388,
+    "zero_messages": [
+      {
+        "path": "org\\mcp\\inbox\\0.0.0_AB_MSTR\\~Z\\read\\20260929T144501Z_2.0.0_SA_COO_X__STUCK__site_Z_drive_C_at_0_GB_free__14_.md",
+        "bytes": 0,
+        "mtime": "2026-09-29T10:45:01.026986-04:00"
+      }
+    ]
+  },
+  "selected_event_references": [
+    {
+      "time": "2026-09-29T03:25:53.0016451-04:00",
+      "log": "System",
+      "record": 565285,
+      "event_id": 36,
+      "provider": "Volsnap"
+    },
+    {
+      "time": "2026-09-29T08:06:00.8868248-04:00",
+      "log": "Application",
+      "record": 430946,
+      "event_id": 2012,
+      "provider": "Microsoft-Windows-PerfOS"
+    },
+    {
+      "time": "2026-09-29T08:06:01.9013465-04:00",
+      "log": "Application",
+      "record": 430947,
+      "event_id": 8192,
+      "provider": "Microsoft-Windows-PerfProc"
+    },
+    {
+      "time": "2026-09-29T08:06:04.9432730-04:00",
+      "log": "Application",
+      "record": 430948,
+      "event_id": 2012,
+      "provider": "Microsoft-Windows-PerfOS"
+    },
+    {
+      "time": "2026-09-29T08:06:06.1069150-04:00",
+      "log": "System",
+      "record": 565373,
+      "event_id": 6,
+      "provider": "Volsnap"
+    },
+    {
+      "time": "2026-09-29T08:06:06.4513316-04:00",
+      "log": "System",
+      "record": 565374,
+      "event_id": 15,
+      "provider": "Volsnap"
+    },
+    {
+      "time": "2026-09-29T08:32:01.0410083-04:00",
+      "log": "System",
+      "record": 565387,
+      "event_id": 7031,
+      "provider": "Service Control Manager"
+    },
+    {
+      "time": "2026-09-29T10:46:51.1927085-04:00",
+      "log": "Application",
+      "record": 431020,
+      "event_id": 1000,
+      "provider": ".NET Runtime"
+    },
+    {
+      "time": "2026-09-29T11:39:55.0238240-04:00",
+      "log": "System",
+      "record": 565461,
+      "event_id": 12,
+      "provider": "Microsoft-Windows-Kernel-General"
+    },
+    {
+      "time": "2026-09-29T11:39:56.4168005-04:00",
+      "log": "System",
+      "record": 565494,
+      "event_id": 46,
+      "provider": "volmgr"
+    },
+    {
+      "time": "2026-09-29T11:39:56.4168005-04:00",
+      "log": "System",
+      "record": 565493,
+      "event_id": 164,
+      "provider": "volmgr"
+    },
+    {
+      "time": "2026-09-29T11:39:56.4168005-04:00",
+      "log": "System",
+      "record": 565492,
+      "event_id": 46,
+      "provider": "volmgr"
+    },
+    {
+      "time": "2026-09-29T11:39:56.4168005-04:00",
+      "log": "System",
+      "record": 565491,
+      "event_id": 164,
+      "provider": "volmgr"
+    },
+    {
+      "time": "2026-09-29T11:40:05.3966502-04:00",
+      "log": "System",
+      "record": 565551,
+      "event_id": 162,
+      "provider": "volmgr"
+    },
+    {
+      "time": "2026-09-29T11:40:12.3638919-04:00",
+      "log": "Application",
+      "record": 431177,
+      "event_id": 1000,
+      "provider": ".NET Runtime"
+    }
+  ],
+  "postnoon_python_events": [
+    {
+      "time": "2026-09-29T12:24:50.9574167-04:00",
+      "id": 1034,
+      "record": 431338,
+      "message": "Windows Installer removed the product. Product Name: Python 3.14.7 Add to Path (64-bit). Product Version: 3.14.7150.0. Product Language: 1033. Manufacturer: Python Software Foundation. Removal success or error status: 0."
+    },
+    {
+      "time": "2026-09-29T12:24:50.9570617-04:00",
+      "id": 11724,
+      "record": 431337,
+      "message": "Product: Python 3.14.7 Add to Path (64-bit) -- Removal completed successfully."
+    },
+    {
+      "time": "2026-09-29T12:16:41.4285451-04:00",
+      "id": 1035,
+      "record": 431323,
+      "message": "Windows Installer reconfigured the product. Product Name: Python 3.14.7 Core Interpreter (64-bit). Product Version: 3.14.7150.0. Product Language: 1033. Manufacturer: Python Software Foundation. Reconfiguration success or error status: 0."
+    },
+    {
+      "time": "2026-09-29T12:16:41.1124730-04:00",
+      "id": 1035,
+      "record": 431321,
+      "message": "Windows Installer reconfigured the product. Product Name: Python 3.14.7 Executables (64-bit). Product Version: 3.14.7150.0. Product Language: 1033. Manufacturer: Python Software Foundation. Reconfiguration success or error status: 0."
+    },
+    {
+      "time": "2026-09-29T12:16:36.3766079-04:00",
+      "id": 1035,
+      "record": 431300,
+      "message": "Windows Installer reconfigured the product. Product Name: Python 3.14.7 Add to Path (64-bit). Product Version: 3.14.7150.0. Product Language: 1033. Manufacturer: Python Software Foundation. Reconfiguration success or error status: 0."
+    },
+    {
+      "time": "2026-09-29T12:16:35.4022813-04:00",
+      "id": 1035,
+      "record": 431295,
+      "message": "Windows Installer reconfigured the product. Product Name: Python Launcher. Product Version: 3.14.7150.0. Product Language: 1033. Manufacturer: Python Software Foundation. Reconfiguration success or error status: 0."
+    },
+    {
+      "time": "2026-09-29T12:16:29.1777134-04:00",
+      "id": 1035,
+      "record": 431271,
+      "message": "Windows Installer reconfigured the product. Product Name: Python 3.14.7 Core Interpreter (64-bit). Product Version: 3.14.7150.0. Product Language: 1033. Manufacturer: Python Software Foundation. Reconfiguration success or error status: 0."
+    },
+    {
+      "time": "2026-09-29T12:16:28.4287179-04:00",
+      "id": 1035,
+      "record": 431269,
+      "message": "Windows Installer reconfigured the product. Product Name: Python 3.14.7 Executables (64-bit). Product Version: 3.14.7150.0. Product Language: 1033. Manufacturer: Python Software Foundation. Reconfiguration success or error status: 0."
+    },
+    {
+      "time": "2026-09-29T12:16:21.1589539-04:00",
+      "id": 1035,
+      "record": 431248,
+      "message": "Windows Installer reconfigured the product. Product Name: Python 3.14.7 Add to Path (64-bit). Product Version: 3.14.7150.0. Product Language: 1033. Manufacturer: Python Software Foundation. Reconfiguration success or error status: 0."
+    },
+    {
+      "time": "2026-09-29T12:16:19.4162147-04:00",
+      "id": 1035,
+      "record": 431243,
+      "message": "Windows Installer reconfigured the product. Product Name: Python Launcher. Product Version: 3.14.7150.0. Product Language: 1033. Manufacturer: Python Software Foundation. Reconfiguration success or error status: 0."
+    }
+  ],
+  "mstr_proposal_snapshot": {
+    "attribution": "MSTR classifications, conditional proposals; not deletion authority or CRO liveness certification",
+    "classes": {
+      "CHECK-submodule-checkout": {
+        "items": 39,
+        "rounded_logical_GiB_sum": 74.89
+      },
+      "SAFE-clean": {
+        "items": 65,
+        "rounded_logical_GiB_sum": 93.49
+      },
+      "REVIEW-uncommitted-edits": {
+        "items": 6,
+        "rounded_logical_GiB_sum": 9.95
+      },
+      "KEEP-LIVE": {
+        "items": 18,
+        "rounded_logical_GiB_sum": 31.88
+      }
+    }
+  },
+  "local_evidence_directory": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\.runtime\\crash-investigation-20260929",
+  "local_evidence_fingerprints": [
+    {
+      "local_file": "disk-census.json",
+      "bytes": 38635293,
+      "sha256": "7ef9a9156d45cbe62bb838c016c8a323c120509618ca5cda9a10da4741acbafc"
+    },
+    {
+      "local_file": "machine.json",
+      "bytes": 14052,
+      "sha256": "9bec6631d78cc62409e24e707c14a74df757289ee7a2a37f4079fde7e6d52d77"
+    },
+    {
+      "local_file": "events.json",
+      "bytes": 2780469,
+      "sha256": "21e1454b3679536b3c08e36e862751173e5f4dbbe9d63ef6bcb87d07a56620c5"
+    },
+    {
+      "local_file": "msi-postnoon.json",
+      "bytes": 39719,
+      "sha256": "4a1f2032fc8af06a0e695e479b6eaa3ce3f29c1468ec8a9f582104f13573aacc"
+    },
+    {
+      "local_file": "integrity.json",
+      "bytes": 68257,
+      "sha256": "e7b5947234072acfbb0c4f8d90c0f331c74b8e873f181e2c06e35edb6e58174f"
+    },
+    {
+      "local_file": "collateral.json",
+      "bytes": 2211,
+      "sha256": "1fa1aa59ee97f55c71c11840d5373f0714e2a571d3ba0fea9bf6af42c576a925"
+    },
+    {
+      "local_file": "sessions.json",
+      "bytes": 218771,
+      "sha256": "cd2eb18e853ea6f858d87715328aec7d0077d628e00fa22f1544e734410ac8ec"
+    },
+    {
+      "local_file": "crps14-damage.json",
+      "bytes": 7617,
+      "sha256": "155fa92662c382e42489b72a4b9d4489cef81e089ecffe3539853827a5a68971"
+    },
+    {
+      "local_file": "dump-analysis-elevated-v2.txt",
+      "bytes": 437598,
+      "sha256": "089515136d0e6376483eaba36c622f2291021e954d220b8a2b436788e2fda5ee"
+    },
+    {
+      "local_file": "dump-followup.txt",
+      "bytes": 1407868,
+      "sha256": "740299b3d6e89f3bdab5c04639b0968a586a83a022fb9dab9c1c1a581d146631"
+    },
+    {
+      "local_file": "dump-driver.txt",
+      "bytes": 2777042,
+      "sha256": "6f58d845ff32aee50dfcb6d83990a335546c595bf768be6aa79fab9ca2d28c0a"
+    },
+    {
+      "local_file": "dump-lock.txt",
+      "bytes": 30180,
+      "sha256": "2804f0491913785d800c8fb8f3c83ff032a421421ad8b248a93fdc5c10e9d84c"
+    },
+    {
+      "local_file": "dump-reentry.txt",
+      "bytes": 40976,
+      "sha256": "207ac14ebf274d06829cc5bc6e223c9fe2c7b5722c91d01dfeba50834e80a930"
+    },
+    {
+      "local_file": "sentinel-user.txt",
+      "bytes": 48582,
+      "sha256": "ad987481850c6daee0494f281d4c137e5641abae28d176f5cb2228f88dc910d4"
+    },
+    {
+      "local_file": "git-fsck.txt",
+      "bytes": 377122,
+      "sha256": "a25155b891a40b06fc527e6d2e9dcb1bcd6a6ec59826fb4755bd21c9057423f2"
+    },
+    {
+      "local_file": "portal-fsck.txt",
+      "bytes": 2602,
+      "sha256": "5ad856972be7ed4a5d47e15af8466ac7fb730ee11fc70db948fa7992fd562fc0"
+    },
+    {
+      "local_file": "kuzu-readonly.txt",
+      "bytes": 254,
+      "sha256": "de674d9367a6902b35a9208ec8d543131e87e1cde0eee2380270d8880fc6482f"
+    },
+    {
+      "local_file": "MSTR_RESIDUE_TABLE.md",
+      "bytes": 1856,
+      "sha256": "f89f3032c06e873cc22f50dac853d6aa14794e2a981a36a77d4d3c5f4537f7bb"
+    },
+    {
+      "local_file": "mstr-worktree-classes.json",
+      "bytes": 25900,
+      "sha256": "453edf46e585aab34bc51ba27356fba9d5b9f6b806d34f2d60ebf9f4a91dc8cf"
+    },
+    {
+      "local_file": "mstr-worktree-tiers.json",
+      "bytes": 35010,
+      "sha256": "53dffbf9e248d36d9c0544911bd3c1311067164876d49db72e67c3551082d1ba"
+    },
+    {
+      "local_file": "final-state.json",
+      "bytes": 379,
+      "sha256": "78b3f12d1d13b355d957a175e7a42ae36bf93167fc0c3962053217ead9267c19"
+    }
+  ],
+  "raw_material_policy": "Raw dumps, transcripts, event exports and directory census remain local and are not committed.",
+  "final_state": {
+    "measured": "2026-09-29T12:38:09.6610977-04:00",
+    "disk_bytes": 508636950528,
+    "free_bytes": 18106683392,
+    "pagefile": {
+      "Name": "C:\\pagefile.sys",
+      "AllocatedBaseSize": 4096,
+      "CurrentUsage": 402
+    },
+    "machine_python314_entries": 0,
+    "broker_listening": 1
+  }
+}

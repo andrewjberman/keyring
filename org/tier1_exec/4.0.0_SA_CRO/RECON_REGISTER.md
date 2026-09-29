@@ -19,6 +19,7 @@ directory an engagement's artifacts live in.
 
 | Recon ID | Date | Target | Artifacts | Evidence basis | Produced under | Status |
 |---|---|---|---|---|---|---|
+| **RCN-0019** | 2026-09-29 | **Site Z disk exhaustion and forced crash** — chronology, SentinelMonitor lock stall, collateral and joint reclamation recommendations | Incident brief, debugger findings, reclamation review, sanitized evidence summary, Andrew-direct record | Local Windows events, kernel/service dumps with approved Microsoft symbols, full-volume metadata census, retained transcripts, git/SQLite/Kuzu reads | `4.0.0_SA_CRO~Z` | **DELIVERED research; remediation proposed only.** Raw dumps/captures retained locally; no destructive CRO operation |
 | **RCN-0001** | 2026-07-21 | **Black Diamond** (SS&C/Advent) — Cottonwood Capital Advisors tenant | 3 (teardown, roadmap, build spec) | 8 HAR captures + 4 CSV exports | `0.4.0_DS_ClientPlatform~Z` | **DELIVERED** — downstream build HELD at CTO registration |
 | **RCN-0002** | 2026-07-22 | **Orion Advisor Solutions** — Opal-accessible tenant | 2 (teardown, BD×Orion structural comparison) | 2 HARs (1 truncated) + public API docs + Eclipse OpenAPI | `4.0.0_SA_CRO` | **DELIVERED** |
 | **RCN-0003** | 2026-07-23 | **arxiv.org** — CS paper harvest surface (NFRA_AKPIPE) | 1 (teardown + build spec) | 3 HARs (2 md5-identical) + 1 sample paper; HTML bodies [BODY-NOT-CAPTURED] | `4.0.0_SA_CRO` | **DELIVERED** — build HELD at CTO program registration |
@@ -973,3 +974,38 @@ which limbs engage, four waves of gate fixes and deletions, byte budgets on auto
 efficiency number. RAVC: keep its three evidence rules, delete the rest.
 **Status: DELIVERED -- proposals only; nothing dispatched; no law, gate, skill or memory edited. Repo, git, read-only
 broker and audit-log reads only; no AWS, no vendor.**
+
+
+## RCN-0019 ? Site Z crash and disk investigation, 2026-09-29
+
+**Produced under:** `4.0.0_SA_CRO~Z`, Codex. **Commission:** Andrew-direct through
+MSTR~Z and this terminal; authority record
+`deliverables/ANDREW_DIRECT_20260929_SITE_Z_CRASH_INVESTIGATION.md`.
+**Package:** [incident brief](deliverables/SITE_Z_CRASH_20260929/README.md),
+debugger findings, joint reclamation review and sanitized evidence summary.
+
+**Finding:** disk writes failed by 10:30:59 ET during worktree creation. The dump
+strongly supports a SentinelMonitor 26.1.2.177 reentrant-lock deadlock from about
+10:47:23, with 1,070 matching blocked thread stacks and propagation through a
+Bloomberg-held GUI resource. Andrew forced E2 capture at 11:34:55; reboot at
+11:39:54. Disk exhaustion as the driver trigger remains unproved. An earlier
+08:28 Sentinel Agent crash is separately preserved. Python stdlib removal and
+PATH instability predate the crash; the September 28 successful PATH repair was
+followed by recurrence, including a measured/reported September 29 MSI repair
+interval. Subsequent MSTR intervention is attributed explicitly.
+
+**Measured substrate:** 473.705 GiB volume, 235.756 GiB logical registered-worktree
+contents; census has access/reparse/hardlink limitations and a corrected shallow
+file aggregation caveat. Damaged CRPS14-5 checkout: 145 missing / 35 zeroed files.
+Main workspace/portal git fsck passed, broker SQLite integrity passed, Kuzu opened
+read-only with known counts; these are bounded checks, not universal integrity.
+MSTR contributes candidate checkout reclamation; exact proposal discrepancies
+and execution-time preservation conditions are exposed in the package.
+
+**Status:** delivered research and recommended owners; no new project registered,
+no task orders or remediation dispatched. Microsoft symbol downloads were
+explicitly approved; no dump upload. Raw dumps, event exports, transcript excerpts
+and census remain on this device in their original locations and ignored
+`.runtime/crash-investigation-20260929/`, not committed. SHA-256 fingerprints and
+selected findings are committed. CRO deleted no dump/worktree/branch, repaired no
+Python installation and stopped no unrelated process.
