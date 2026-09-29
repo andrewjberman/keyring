@@ -97,7 +97,7 @@ dark gradient hero -- the estate HeroDialog fixture (C-ESTATE-FIXTURES), dropped
 order (ModelTab.tsx). Base 09bd04b1: datecontrast 1 of 3; green arm (ISO headers + legend words on --warning/--danger) 3 of 3;
 V6 bound 4 of 4 (round5 `_load.cjs` reads timelineFourStates' `"failures": []` verdict).
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~20</slot>
 <fabric>site-z</fabric>

@@ -98,7 +98,7 @@ cut: every captured fixture's rule case carries the served label "Historical-mul
 capture @8f50bcb837 included; the round-4 walk's bare "Base case: 159.61 EUR" was read at 19:15Z, before ww-1's redeploy. So on
 today's served payloads the contradiction is already absent; the cell builds the unlabelled fallback the ruling names.
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~20</slot>
 <fabric>site-z</fabric>
