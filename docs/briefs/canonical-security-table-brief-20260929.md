@@ -72,7 +72,27 @@ gold reads Schwab as security master), that departure is written down with an ow
 row" from "declared departure". A fold like the classifier's `hedge -> alternatives` or a lambda's `VXX = equity` is not a
 departure; it is a copy, and it goes.
 
-Expect these six; O1 is the thread and O2-O6 are what the enrichment rounds serve. Decomposition into cells is L5's, not this
+### O7 -- A security that appears in a day's holdings gets its canonical row without a person noticing it first
+
+When a new ticker lands in any firm's holdings (a day-over-day draw), the canonical table gains its row -- asset class and
+sub-asset -- on a scheduled path, so no surface shows "Other" or "unclassified" for longer than the schedule's own gap; a
+one-off backfill of today's "Other" rows is the QA run that proves the path, and the scheduled run is the acceptance. Andrew,
+walk 2 of 2026-09-29 (transcript `tmp/ui-guidance/20260929/IRPT WALK 2_2309.txt` l.94-96, [564-609 s]): "we will need to add a
+new row in that canonical table and draw from that canonical table ... not only run an ad hoc run, but also likely structure a
+continuous pipeline as new securities become apparent in day-over-day draws so that the table ... can have representations that
+are accurate for the sub-asset classes for the incoming securities." Where that classification calls a vendor model, the call is
+Andrew's per-use word at the PRD, never a default of the pipeline.
+
+### O8 -- A reader can tell an ETF from a single security from the canonical row itself, and a table orders them accordingly
+
+The canonical row carries whether the instrument is an ETF (or fund) or a single security, so a holdings table can keep one
+sub-asset gradient for ETFs and place single securities after the last ETF class without a second rule in the portal. Andrew,
+same walk (l.102-105, [648-677 s]): "individual securities should be marked as such. That likely should be a field in that
+DynamoDB table. If it is an ETF or an individual security, individual securities are always secondary ... And that is then we can
+reuse the same gradient logic with regard to the sub-asset taxonomy." The ORDER is the portal half's (placement (d)); the FIELD
+is this project's.
+
+Expect these eight; O1 is the thread and O2-O8 are what the enrichment rounds serve. Decomposition into cells is L5's, not this
 brief's.
 
 ---
