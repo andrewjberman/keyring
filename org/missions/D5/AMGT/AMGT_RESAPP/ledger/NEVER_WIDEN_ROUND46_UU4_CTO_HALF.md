@@ -89,3 +89,5 @@ Re-signed: `1.0.0_SA_CTO~Z`, 2026-09-29.
 ROLLS BACK AS ONE: a failure on either project's criteria re-points the function to `0XDw5hJWOYgx3P8CSA42oAlkLuTlupkS` and
 reverts HARVST's route and grant edits in the same `safe-apply` (the a-2 CTO half, this commit).
 
+**Re-signed on AMENDMENTS 1 AND 2 together** (COO half @`658475977c` + @`e21c04c433`, 2026-09-29 ~01:0xZ): AMENDMENT 2's limb 3
+list is the same set of `scoped_amgt.py` hunks this half measured above. All four halves of the combined act now agree.
