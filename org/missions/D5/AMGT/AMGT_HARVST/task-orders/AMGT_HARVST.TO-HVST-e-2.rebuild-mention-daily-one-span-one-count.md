@@ -87,7 +87,7 @@ No delete, no event put, no code change, no vendor call, no portal work. It does
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~42</slot>
 <fabric>site-z</fabric>
