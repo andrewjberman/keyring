@@ -88,7 +88,7 @@ no portal work, no vendor call.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>20</round>
 <slot>~47</slot>
 <fabric>site-z</fabric>
