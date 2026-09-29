@@ -30,23 +30,36 @@ own poll: `C:/Users/AndrewBerman/Desktop/ajb_workspace/infra/aws/lambda/investor
 `_answer` re-dispatches a RESOLVING row whose `dispatched_at` is older than `REDRIVE_SECONDS` (960 s). So the bound
 is: stop re-offering one message before SQS dead-letters it, and leave the row for that redrive.
 
+**AMENDMENT 1 (2026-09-29 ~09:4xZ, CTO ruling 102688 on CRO 102684).** Giving up on the MESSAGE while leaving the row
+RESOLVING is still unbounded: the client's 960 s redrive re-sends it for as long as a page is open. The bound must END
+the job. Your branch `wk-IRPT_BCKEND-73` already holds steps 1-2 and the GAVE_UP delete (@c125c68396); merge CLOUD into
+it first (`git merge --no-edit CLOUD`), then change step 3 as below. Re-run all three criteria and re-write the proof.
+
 **Build (in `resident_worker.py` only):**
-1. Add a module constant `RESOLVE_MAX_RECEIVES = 4`, with a comment naming the live maxReceiveCount of 5.
+1. Add a module constant `RESOLVE_MAX_RECEIVES = 4`, with a comment naming the live maxReceiveCount of 5. (done @c125c68396)
 2. In `poll_once`, ask SQS for the receive count on every receive: `receive_message(..., AttributeNames=["ApproximateReceiveCount"])`
-   (keep MaxNumberOfMessages, WaitTimeSeconds and VisibilityTimeout exactly as they are).
-3. For a `resolve_upload` whose result state is `RETRY`: read `int(envelope.get("Attributes", {}).get("ApproximateReceiveCount", "1"))`.
-   If it is >= `RESOLVE_MAX_RECEIVES`, DELETE the message, print exactly
-   `IRPT_RESIDENT_RESOLVE state=GAVE_UP code=RESOLVE_RETRY_EXHAUSTED` (flush=True) INSTEAD of the RETRY line, and
-   do NOT change visibility. Otherwise keep today's IB-yr-211 behaviour: the RETRY line and the 60 s re-offer.
-4. Do NOT write the NORMALIZATION row: it stays RESOLVING for the client poll's redrive. Generation messages are
-   unchanged.
+   (keep MaxNumberOfMessages, WaitTimeSeconds and VisibilityTimeout exactly as they are). (done @c125c68396)
+3. For a `resolve_upload` whose result state is `RETRY` and whose `ApproximateReceiveCount` is >= `RESOLVE_MAX_RECEIVES`:
+   END THE JOB. Move the NORMALIZATION row from RESOLVING to its EXISTING terminal state `NEEDS_CORRECTION` with
+   `reason="RESOLVE_RETRY_EXHAUSTED"`, `findings=[finding("RESOLVE_RETRY_EXHAUSTED")]` (`template_reader.finding`,
+   default actions), `findings_total=1`, `resolved_at=int(clock())`, written through
+   `upload_resolution.NormalizationStates(index.table).replace(...)` (conditional on the row still being RESOLVING; a
+   False return means another writer won, which is fine). Read the row the way `ResidentAssembly.resolve_upload` does
+   (`read_resolution_message`, `normalization_key`, `self.requests.artifacts.index.get`), and only touch a row that is
+   still RESOLVING. Then print exactly `IRPT_RESIDENT_RESOLVE state=ATTENTION code=RESOLVE_RETRY_EXHAUSTED`
+   (flush=True) instead of the RETRY line, and DELETE the message. Remove the GAVE_UP line. Below the bound, keep
+   today's IB-yr-211 behaviour: the RETRY line and the 60 s re-offer.
+4. Add NO new row state: RESOLVING / NORMALIZED / NEEDS_CORRECTION is the contract the portal reads, and
+   `intake/uploads.py` `_answer` already serves NEEDS_CORRECTION with its reason and findings. Generation messages are
+   unchanged. `intake/uploads.py`, `intake/upload_resolution.py` and `intake/template_reader.py` are READ-ONLY.
 5. Do not change existing tests; you may add tests to `.../ycharts/generate/tests/test_resolve_upload.py`.
 
 ### ACCEPTANCE (run from your worktree root)
 
-<criterion id="Y22-1-AC1" cell_refs="IB-yr-221"><invocation>python -m pytest -q -p no:cacheprovider org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/R22_CHECKS/test_r22_y1_resolve_bounded.py::test_gives_up_by_name_before_the_dlq</invocation><expect>1 passed</expect></criterion>
-`Y22-1-AC1` -- at receive count `RESOLVE_MAX_RECEIVES` a RETRY deletes the message, prints the GAVE_UP line, and the
-row reads RESOLVING. Base: `RESOLVE_MAX_RECEIVES` absent.
+<criterion id="Y22-1-AC1" cell_refs="IB-yr-221"><invocation>python -m pytest -q -p no:cacheprovider org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/R22_CHECKS/test_r22_y1_resolve_bounded.py::test_fourth_retry_ends_attention_by_name</invocation><expect>1 passed</expect></criterion>
+`Y22-1-AC1` (amended) -- at receive count `RESOLVE_MAX_RECEIVES` a RETRY deletes the message, prints
+`state=ATTENTION code=RESOLVE_RETRY_EXHAUSTED`, and the row reads NEEDS_CORRECTION with reason and one finding
+`RESOLVE_RETRY_EXHAUSTED`. Base @c125c68396: FAIL (prints GAVE_UP, row RESOLVING).
 
 <criterion id="Y22-1-AC2" cell_refs="IB-yr-221"><invocation>python -m pytest -q -p no:cacheprovider org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/R22_CHECKS/test_r22_y1_resolve_bounded.py::test_asks_sqs_for_the_receive_count</invocation><expect>1 passed</expect></criterion>
 `Y22-1-AC2` -- `poll_once` asks SQS for `ApproximateReceiveCount` on every receive. Base: no AttributeNames.
@@ -93,8 +106,8 @@ BEFORE the flip.
 comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule, trigger or scheduled producer is touched; one source file.
 comp-blast: DECLARED-NOT-APPLICABLE -- one resident source file; nothing served moves in this cell (~P rebuilds st4).
 comp-iam: DECLARED-NOT-APPLICABLE -- receive_message AttributeNames and delete_message are calls the resident role already makes on the same queue.
-comp-adversary: RUN -- the risk is losing an upload: giving up deletes the MESSAGE only; the ROW stays RESOLVING and the client poll's REDRIVE_SECONDS path re-dispatches it (intake/uploads.py _answer), so nothing is dropped and nothing sits in the DLQ. Scanned 2 files (resident_worker.py poll_once, intake/uploads.py _answer) plus the live RedrivePolicy (maxReceiveCount 5); blind to the live SQS count under a resident restart mid-lease, which the check's fake does not model.
+comp-adversary: RUN -- amendment 1: the risk is a transient outage becoming a permanent refusal. It does not: upload_id is minted from the client's per-upload token (intake/uploads.py create), so a new upload of the same file gets a fresh row; the ended row names RESOLVE_RETRY_EXHAUSTED, never a file defect code. Scanned 4 files (resident_worker.py poll_once + resolve_upload; intake/uploads.py create, _answer, resolve_deferred; upload_resolution.py NormalizationStates; template_reader.py finding) plus the live RedrivePolicy (maxReceiveCount 5); blind to the live SQS count under a resident restart mid-lease, which the check's fake does not model.
 lane: the <paths> block IS the grant; no open order holds these files.
 </preflight>
 
-Source: CTO condition 102655 (signoff @1576687ade), ~P 102659, decomposition R22_Y.
+Source: CTO condition 102655 (signoff @1576687ade), ~P 102659, decomposition R22_Y; amendment 1: CTO ruling 102688 (CRO 102684).
