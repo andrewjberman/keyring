@@ -14,7 +14,12 @@ import urllib.request
 
 API = "https://d2n2nzpeqf34ge.cloudfront.net"  # production's same-origin path: CloudFront routes /auth/* and /api/scoped/*
 EMAIL = os.environ["WALK_EMAIL"]  # the new window's principal, from P's create receipt
-TENANT = "cottonwood"
+_REGISTRY = os.path.join(os.path.dirname(os.path.abspath(__file__)), *[".."] * 6, "infra", "logic", "registry",
+                         "reporting_policies.json")
+_FIRMS = {f for p in json.load(open(_REGISTRY, encoding="utf-8"))["policies"] for f in p.get("firms", [])}
+TENANT = os.environ["WALK_TENANT"]  # the firm this body runs as (window 21: one principal, several firms); no firm typed here
+if TENANT not in _FIRMS:
+    raise SystemExit("ERROR: WALK_TENANT is not a registry reporting firm (reporting_policies.json); nothing posted")
 CSV = r"C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier1_exec\2.0.0_SA_COO\deliverables\IRPT_MVP_Y\aapl-vnq-12.03.csv"
 OUT = sys.argv[1]
 DEADLINE = datetime.datetime.fromisoformat(os.environ["WALK_DEADLINE"])  # e.g. 2026-09-26T14:40:00+00:00, before P's delete
