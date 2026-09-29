@@ -4,6 +4,8 @@ Author: 4.0.0_SA_CRO~Z. Measured September 29, 2026, approximately 15:53-16:03 E
 
 ## Decision-changing result
 
+**Subsequent same-day complete date census:** see `DAILY_COVERAGE_CENSUS.md` for first available dates and fresh-versus-carried counts. This document's early dates and frequency statements are samples, superseded on coverage by that census. TSEL/PCLG have material reporting gaps; BASG's issuer archive has more complete coverage than Bloomberg.
+
 The installed Bloomberg Excel add-in successfully serves full-sized current and historical holdings datasets for WCMG, TSEL, BASG, ETFT and PCLG under existing access. GQGU resolves to the correct name and ISIN, but its holdings queries fail. This supersedes the earlier assumption that the local raw BQL service refusal prevented using BQL at all. No purchase, permission change or credential submission was needed for Excel.
 
 The same machine's raw `//blp/bqlsvc` request was retested after Excel succeeded and STILL returned `User not authorized to use BQL`. These are different access surfaces in the observed behavior. The experiment does not establish the internal cause or a way to enable direct BLPAPI BQL. Excel's BDS remains ordinary reference data; the working alternative is Excel's BQL implementation.

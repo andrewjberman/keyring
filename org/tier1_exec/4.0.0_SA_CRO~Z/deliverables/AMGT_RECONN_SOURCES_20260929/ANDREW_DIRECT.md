@@ -37,3 +37,11 @@ Recorded September 29, 2026, approximately 16:03 ET; direct Codex user channel, 
 > Go on option 1 to start.
 
 The selected next-calls option was to check remaining Terminal/Excel and portfolio-ID possibilities in one bounded research session, ending with a demonstrated full-holdings route or a precise support question. `BBG_EXCEL_ACCESS_VERIFIED.md` records the successful Excel route and remaining limitations. No support message, build dispatch, purchase or production schedule change was authorized or performed.
+
+## Historical granularity question, verbatim
+
+Recorded September 29, 2026, approximately 16:48 ET; direct Codex user channel, receipt timestamp not exposed.
+
+> Just went through this, my question is, what granularity of dates do we have for these? Can it be retrieved daily every single day back to the start date or what?
+
+`DAILY_COVERAGE_CENSUS.md` answers from a complete trading-date scan of the established sources, distinguishing dated source reports from Bloomberg's carried-forward responses. No production collector was installed.
