@@ -1269,3 +1269,18 @@ the restart is the next cell, under both halves.
 Slot 81 (S197: 1 + max(author lines 80, issued_to 80, branches 80)).
 
 fanout: 1 of 1 chains, cap 8.
+
+## 23. ROUND 25, WORKSTREAM ~P (2026-09-29 ~20:4xZ, issuer 2.0.0_SA_COO~P, on TO-IB-pr-241's diagnosis @0b5cdb06f9)
+
+pr-241 named the raw writer: EC2 inf-bronze-runner i-083ad9ae297f88e9f, started by inf-bronze-trigger. Two independent
+fixes follow. The restart and the 09-28/09-29 raw backfill are the issuer's served act under both halves, once both
+land.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-242` | FWD-3 (INF): inf-ec2-launch-monitor never suppresses an EMPTY StateTransitionReason (drop '' from NORMAL_PATTERNS) + a unit test | WORLD (Lambda source; no deploy) | none | P24b |
+| `IB-pr-243` | FWD-3 (INF): why the recovered runner wrote no raw on 09-28 -- deployed-vs-repo shas + the code path, or the named journal read | WORLD (read-only diagnosis) | none | P24c |
+
+Slots 85 and 86 (S197: 1 + max(author lines 83, issued_to 84, branches 84)).
+
+fanout: 2 of 2 chains, cap 8.
