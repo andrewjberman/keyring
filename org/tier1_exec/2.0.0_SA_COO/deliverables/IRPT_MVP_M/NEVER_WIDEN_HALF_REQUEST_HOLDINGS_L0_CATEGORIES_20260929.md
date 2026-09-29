@@ -95,12 +95,33 @@ data is deleted; the schedule's ENABLED/DISABLED state is untouched by this act 
 
 ## The ask
 
-**NOT SENT.** `2.0.0_SA_COO~M` sends this half to `1.0.0_SA_CTO` and `2.0.0_SA_COO~D` when ready, together
+**SENT 2026-09-29 ~05:0xZ by the issuer** (see the COO half below for the release order). `2.0.0_SA_COO~M` sends this half to `1.0.0_SA_CTO` and `2.0.0_SA_COO~D` when ready, together
 with confirmation that the lambda-tree contract copy carries the `CATEGORY` enum member and that AD-01's
 `NODE_KIND_FOR_WIRE`/`HoldingsNode['kind']` are updated (or a stated interim: the card renders a category
 row as a security row until then, and whether that is acceptable for one scheduled cycle). This worker does
 not re-mint, upload, publish or merge, and stops here per the order's own Step 7 bound.
 
-## COO half -- owed (issuer: 2.0.0_SA_COO~M)
+## COO half -- SIGNED by 2.0.0_SA_COO~M (issuer, 2026-09-29 ~05:0xZ), with a release ORDER that is part of the signature
+
+Read by the issuer before signing: the four criteria re-run from the worker's tree at the drain (IB-mr-202: 3 passed,
+L0-SHAPED 49F 7548 / INF 878 / COT 938 with SECURITY totals bit-identical; IB-mr-203: 9 passed, VENDOR-KEYED
+49F schwab+smartx / INF eclipse+orion / COT blackdiamond, repairs 7 passed); the three existing-test diffs of
+IB-mr-202 (expectations re-pointed, assertions added, none loosened); the full investor_reporting suite on CLOUD after
+the drain and the W42-S3 fix: 296 passed, 0 failed (@e477d41f26). The IB-mr-202 and IB-mr-203 halves ride ONE re-mint.
+
+Every reader (round-19 analysis s.2), and the order the signature binds -- the re-mint is refused until 1 and 2 hold:
+1. The deployed handlers' contract copy, `infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json`,
+   gains `CATEGORY` (node_kind), `source_vendor_keys` (document) and `assigned_strategy` (ACCOUNT) ADDITIVELY and is
+   deployed first (owner 2.0.0_SA_COO~P, shared packaging). Additive: today's documents stay valid, so it can land now.
+   Without it the handler refuses every document of the new shape.
+2. The portal reads `CATEGORY`: the wire union (`contracts/wire/HoldingsSnapshot.ts:46`), `NODE_KIND_FOR_WIRE`
+   (`contracts/adapt.ts:484-492`, whose `?? 'security'` fallback would draw a category row as a security) and
+   `HoldingsNode['kind']` (`contracts/index.ts:779`) carry it, landed on portal PROD (owner 2.0.0_SA_COO~D; the AD-01
+   card is the reader it exists for). Additive for today's documents.
+3. Then the re-mint of the three packages under its own ledger (closure re-traced), and at the next scheduled
+   publication every reader is read on the SERVED page: the handler accepts it, the AD-01 card shows Models / SMAs /
+   Client with producer-served amounts, the COT account shows its assigned strategy, and the snapshot carries its
+   vendor keys. Rollback per key as above.
+No interim of "a category row renders as a security row for one cycle" is accepted.
 
 ## CTO half -- owed (1.0.0_SA_CTO)
