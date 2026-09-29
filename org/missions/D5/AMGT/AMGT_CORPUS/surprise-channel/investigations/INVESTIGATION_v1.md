@@ -2467,6 +2467,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The dossier and the corpus write the slash-safe partition; the model-block producer writes the raw '/' key. Readers of the model block work today because they read the same raw form.",
     "notes": "Not this project's writer (integrations/bloomberg/research/, AMGT_RESAPP's model-block producer). Carried to the round-17 analysis for routing; no served read is broken today.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S65",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T23:40:00Z",
+    "one_line": "Hitachi's model-block derive (build_unit_map additive merge) changed SHARED field-level entries in integrations/bloomberg/research/field_map.json beyond adding Hitachi: 4 fields' unit_status/sign_status flip MEASURED -> 'UNRESOLVED-ON-6501 JP Equity: sampled magnitude 11962163.4 does not discriminate absolute vs millions', and 1 field's unit/sign changes SHAPE from a scalar ('MILLIONS'/'POSITIVE') to a per-security dict; the pair's condition 3 (only 6501 keys added, 0 changed) fails, so the delta is WITHHELD uncommitted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-crps17-1 after derive 20260929T232834Z: element-wise diff vs HEAD -- securities 98 -> 99 (+6501 only); fields 66: 37 measured_on lists gain Hitachi, 5 'finding' strings recomputed, 4 unit_status + 4 sign_status MEASURED -> UNRESOLVED-ON-6501, 1 unit + 1 sign scalar -> dict (evidence/r17_after.txt, evidence/r17_field_map_withheld.diff, 2445 lines).",
+        "Runtime readers of field_map.json: lib/research/provenance/render_print.py, lib/research/provenance/validate.py, lib/research/checkface/run_checks.py (+ the producer and its tests)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Pair NEVER_WIDEN_ROUND17_HITACHI_MODEL_BLOCK COO half + CTO half c58e96e867 condition 3: 'the field_map.json diff against CLOUD HEAD adds only 6501 keys (0 changed, 0 removed)'; build_unit_map docstring: additive merge, never overwrite a MEASURED entry.",
+    "world_is": "The merge preserves every per-security MEASURED entry but recomputes field-level aggregates (status, finding, scalar-vs-dict unit), so one new name with an ambiguous magnitude degrades 4 shared fields' status for all 98 names.",
+    "notes": "Served state now: Hitachi's model block is served (census 96/96); field_map.json on CLOUD is unchanged. Entry amgt-corpus-r17-hitachi-model-block leg F is OPEN pending the CTO's ruling: commit the delta as the producer wrote it, commit only Hitachi's per-security entries (leaving aggregates), or leave Hitachi's units out of the map. The shared tree's field_map.json also carries a peer's uncommitted edit (CTO condition 2).",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
