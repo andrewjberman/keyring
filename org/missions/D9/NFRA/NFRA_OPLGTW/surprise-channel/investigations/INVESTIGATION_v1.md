@@ -4797,3 +4797,39 @@ name the one known failure instead of silently inheriting it.
   "notes": "INERT: nothing is blocked and the ruling stands -- this records WHY it is right and what it costs, so OG-v-7's grader does not look for an account-scoped refusal that cannot exist. It also corrects the order's 'accounts and columns stay a bounded subset' clause, which holds for columns only."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S15",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-29T09:40Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by the issuer, as disarm_owner, each on a measured artifact. Z-W11-S7 (MP-a-2 sentinel stopped OG-x-3 PHASE B): ruled HOLD at 04:5xZ; ~MP's ledger nfra-mcportal-r3-writer-apply closed DONE 05:01:33Z, sentinel absent at C:/tmp/mp3-1 HEAD 0cff25a236 and its working dir, then re-GO; OG-x-3 deployed and is complete (b29dde3e05). Z-W11-S8 and Z-W11-S9 (xr.AC3 probed unshipped tests and a stale ENABLED_INTEGRATIONS; AC1/AC2 expect patterns unmatchable): the criteria were the defect; amendment A3 @8c000d12ad re-cut them without weakening any, and OG-x-3 flipped complete on them. Z-W11-S10 (capacity INSUFFICIENT at full width): remedied by OG-x-4, release 63264dfb22 live 08:43:42Z; CAPACITY_X4.json verdict SUFFICIENT, 11-column export 161.8/177.3/176.0 MB at 25k/125k/250k, maximal 151.7 MB; 1.0.0_SA_CTO~O closed R-4 with no PRD revision @3794197dbb; drained 873155d6f7. Z-W11-S11 (admission reserve excludes the poll overshoot): the overshoot occurs only when a child reaches the 256 MiB cap; after OG-x-4 no measured job does (maximal 151.7 MB), and CAPACITY_X4.json's from_measured_child_peak reserve equals the formula reserve (375,753,728). The residual (one poll interval over the cap, for a job that hits it) was measured affordable on this host (1.94e9 >= 9.49e8 for 2 jobs). No remedy this round; it goes on the L10 slug as an enrichment candidate (kill threshold below the cap). Z-S14 (sealed accounts = every account): accepted as correct; OG-g-1 amendment A4 (this commit) restricts the bounded-subset clause to columns and dates.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W11-S7",
+    "NFRA_OPLGTW-Z-W11-S8",
+    "NFRA_OPLGTW-Z-W11-S9",
+    "NFRA_OPLGTW-Z-W11-S10",
+    "NFRA_OPLGTW-Z-W11-S11",
+    "NFRA_OPLGTW-Z-S14"
+  ],
+  "one_line": "The issuer disarms 0.9.0_WK_NFRA_OPLGTW~11's rows W11-S7..S11 on OG-x-3/OG-x-4's measured outcomes and accepts Z-S14 by OG-g-1 amendment A4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/drive_ticks/2.0.0_SA_COO~O.md lines 328-330 (W11-S7 hold, MP-a-2 close 05:01:33Z, re-GO)",
+      "task-orders/NFRA_OPLGTW.TO-OG-x-3.* amendment A3 @8c000d12ad; complete @b29dde3e05",
+      "deliverables/0.9.0_WK_NFRA_OPLGTW~11/CAPACITY_X4.json verdict SUFFICIENT; admission.from_measured_child_peak.admission_reserve_bytes 375753728",
+      "deliverables/1.0.0_SA_CTO~O/RULING_R-4_REMEDY_SUFFICIENT_20260929.md @3794197dbb",
+      "issuer re-run 2026-09-29 ~09:0xZ in C:/tmp/wk-oplgtw-11: xf.AC1/AC2/AC3 RESULT: PASS; proof VALID rc=0; host engine.py md5 42445b37 = 63264dfb22 = CLOUD",
+      "task-orders/NFRA_OPLGTW.TO-OG-g-1.controlled-identity-and-grant.md amendment A4 (this commit)"
+    ]
+  },
+  "spec_asserts": "Each adjudicated row was open or ARMED with the issuer as disarm owner.",
+  "world_is": "Each has a measured resolution: a closed ledger, an amendment, or a release graded SUFFICIENT. One residual (S11's overshoot) is carried to the L10 slug."
+}
+```
