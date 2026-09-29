@@ -198,6 +198,24 @@ SI 7 (+ ..2191, ..4060, ..4172). Their read-back by name on the page waits on a 
 once (YTD, 1Y) beside since-inception, and the after-read presses each period per account (the walker's
 `--periods-per-account`, added today for this read).
 
+## Addendum 3 (2026-09-29 11:1xZ) -- ROLLBACK read: live equals BEFORE
+
+~P rolled back 10:58-11:00Z (msg 102745; ledger `irpt-adapter-holdings-gold-49f-r2-20260929` CLOSED @9e0bde13e3): S3
+version `5bmwADQs` latest again, the engine role statements and the twr_daily/twr_periods fence restored, re-plan No
+changes. Read here: CodeSha256 `qfxZ0DzB` (LastModified 10:58:18Z, Active) at 11:08:13Z; walk `20260929T110814Z`
+(11:08-11:12Z, per-account period presets on the NEW-01 relationship; disarmed with the login REFUSED): the control
+reads **YTD 5.93%** (`opal-gips-engine`, answered January 2nd to September 22nd, 2026 -- the BEFORE figure); NEW-01 reads
+the **named refusal** on YTD and 1Y (DEPENDENCY_UNAVAILABLE, "temporarily unavailable", as at 00:12Z and 08:2xZ);
+31 performance answers: 12 PARTIAL served, 14 UNSUPPORTED_OPERATION (3Y and since inception, which the engine never
+ruled -- as before), 5 DEPENDENCY_UNAVAILABLE (NEW-01), **0 UNEXPECTED**. The rollback is complete on the page; row
+`IRPT_BCKEND-S204`'s hazard is off the served path by its disarm owner's act.
+
+**Carried into the re-ask** (the fix rides the INF-switch artifact, CTO 102736): (1) the read-back requests each ruled
+window once (YTD and 1Y) beside since inception, on a real deployed invoke; (2) the after-read presses each period per
+account (`--periods-per-account`) on the read set of section 4 plus the seven accounts named at or above +100%; (3) the
+census through the adapter's own code is re-run on the artifact's bytes with the runners directory absent from the
+harness path, so a packaged-layout regression of this class fails the census before the apply.
+
 ## What this half signs against
 
 - Packet blob `a4679360`; the first packet's carried sections (`189aaef2`); artifact `hD7G6YT1` (S3 `3donK_gT`) with
