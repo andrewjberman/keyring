@@ -80,7 +80,7 @@ READ-ONLY: every other file in the repository, every S3 object, the research lib
 **ISSUER NOTES:** round-13 analysis s.4 item 1 @`f1c482d24f` (msg 26603). Checks dry-run at the base `dbafd14c52`: p1_AC1 FAIL (no tests ran); p1_AC2 FAIL (bound_absent, not run); p1_AC3 FAIL (temp_new_entries 1).
 The check refuses to run the 308 MB arm until negative_control() carries mkdtemp.
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
