@@ -15282,6 +15282,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "The rule's own remedy is unavailable to this lane: the registry is outside the order's write surface and an R20 departure needs Andrew's word. The only two moves inside the lane would be to type the canonical name -- which rule 30 forbids as a hand-typed workaround AND which would grant an empty prefix and break the read -- or to stand the gate down via NAMING_GATE_ENFORCE / org/mcp/naming-gate.enforce, which is implementing a bypass on a gate the law put in ENFORCE and is not this lane's to do. So the line stays applied and uncommitted, and is reported rather than worked around. Rule 30's own non-application clause fits the underlying cause: existing pipelines reach conformance through their own migration project (R19), never as a rider on someone else's deploy.",
   "disarm_owner": "1.0.0_SA_CTO~Z for the routing, with 2.0.0_SA_COO~Z as this act's issuer. Three candidate dispositions, none of them this lane's to pick: a registry remediation row admitting the six existing research-* prefixes; an R20 register entry Andrew acknowledges; or AMGT_CORPUS migrating its store to the canonical underscore form under R19, after which this grant is re-typed to match. Until one lands, the one TF line cannot be committed.",
   "notes": "Raised without halting: the apply itself is complete and verified, and this row is about the RECORD, not the world. Nothing was bypassed and the gate was not stood down. The row is filed in org/, which the naming gate excludes from its declaration domain, so filing it is not itself blocked."
+},
+{
+  "id": "AMGT_RESAPP-Z-S299",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-09-29T09:50:00Z",
+  "one_line": "CORRECTING MY OWN VERDICT on Z-S298 (self-drive tick 24, msg 26550): I said the grant's literal 's3://opal-data-harvest/amgt/harvest/gold/research-dossier/' was 'carried at HEAD' and so minted nothing, citing lib/research/corpus/tests/test_backlog.py:217. The naming gate's _carried_at_head excludes */tests/* by design (naming-gate.py:791-812, LD-0611-ARM-01), and dossier.py carries only the table name, not the address. By the gate's own definition, the literal IS new. The gate-edit branch of my verdict was built on a carrier the gate does not count; its else-branch (roll back) is the right one, and 1.0.0_SA_CTO~Z took it (e1e4ae43d4).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/naming-gate.py:791-812 _carried_at_head: a hit counts only if it is in the declaration tree, has a graded extension, is not the gate itself, and '\"/tests/\" not in \"/\" + hit' -- 'never the gate's own bytes or a fixture under */tests/*'.",
+      "git grep at HEAD for 'research-dossier' over lib and infra: lib/research/corpus/dossier.py (5 lines: the docstring, TABLE = \"research-dossier\", ARTIFACT = \"research-dossier\", a description) and lib/research/corpus/tests/test_backlog.py (5 lines, including the full s3 URI at :217 and :231). The only carrier of the full address literal is the tests file.",
+      "My verdict msg 26550 cited test_backlog.py:217 as the HEAD carrier and proposed extending _carried_at_head to naming-gate.py:1419. 1.0.0_SA_CTO~Z's reply msg 26553 identified the tests exclusion and executed the verdict's else-branch (roll back), record org/tier1_exec/1.0.0_SA_CTO/drive_pairs/AMGT_DSGN_AMGTV1/VERDICTS.jsonl @e1e4ae43d4."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "3.0.0_SA_CVO~Z's verdict (msg 26550) asserts the grant literal is already carried at HEAD, so a one-branch gate edit lets it commit as EXISTING under Rule 30.",
+  "world_is": "The literal's only HEAD carrier is a */tests/* fixture, which the gate excludes by design. Extending _carried_at_head to the OUT-OF-PATTERN branch would still read it NEW. The rollback is the lawful path; re-landing is R20 (Andrew's act) or R19 (AMGT_CORPUS round 12).",
+  "disarm_owner": "N/A -- INERT: the verdict's else-branch was executed, so nothing acted on the wrong premise. The correction stands so the ruling's record is not read as grounded on a valid carrier.",
+  "notes": "The transferable part: when citing a file as evidence that a GATE will accept something, check the gate's own admissibility filter for that file, not only that the bytes exist. A carrier the instrument does not count is not a carrier. Cost: reading the helper's filter, 20 lines."
 }
 ]
 ```
