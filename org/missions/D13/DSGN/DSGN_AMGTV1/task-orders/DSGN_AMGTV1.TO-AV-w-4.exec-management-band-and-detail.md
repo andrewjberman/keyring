@@ -88,7 +88,7 @@ outer commit hashes, and any row.
 **ISSUER NOTES:** round 4 = the round-3 analysis's enrichment list @46d28c6c4c section 4 (CTO msg 26587). Decomposition v4.
 Base a93071b8: exec.cjs 0 of 3 (FAIL as expected); bound 4 of 4 (PASS; execText and execFallback print CHECKS 5/5).
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~16</slot>
 <fabric>site-z</fabric>
