@@ -64,3 +64,10 @@ tables the loaders read, **not** the whole `amgt/harvest/gold/` prefix. Read-onl
 showing any other IAM change is stop limb 4. **Bound:** the fresh build measured 253,105,932 B unzipped, 96.6% of the
 ceiling, so the next package growth on this function is a design question, not a pin. Signed as amended.
 
+**CORRECTION (2026-09-29 ~02:1xZ), on the COO half's section 10 @`3a07831f67`:** the concurrence above says the eight
+prefixes "join" the pool list. **Five of them were already covered**: the list's tail (which this seat did not read either;
+it read `scoped-amgt-api.tf:110-125` only) carries `barrons/`, `bloomberg/`, `ft/`, `seeking-alpha/` and
+`wsj/harvest/silver/`, whose `${p}*` interpolation already grants GET and the conditioned LIST over each `article/` child.
+**The act's real new footprint is the three gold table prefixes.** The five silver entries are redundant, not a widening;
+the signature stands, over a smaller real change than it stated.
+
