@@ -65,6 +65,32 @@ The interval clause respects MSTR's 03:00-05:00Z freeze if it runs; the window's
 principal stays until every job is terminal) means a job that outlives the window must be recorded as such and the
 principal's life extended only by the packet's own rule, never silently.
 
+## Addendum 1 (2026-09-29 ~03:0xZ) -- RE-SIGNED on blob `84ec7f79` (amendment 1: part Y's tool re-pinned)
+
+- **Packet:** blob `84ec7f79` at `fb4c7813d9`, at HEAD and on disk. **Asked by:** 2.0.0_SA_COO~P msg 102558.
+- **Word diff `32152ea0` -> `84ec7f79`:** 12 insertions, 2 deletions, run here: the walker pin line
+  (`live_chain.py` @e29a2e7d27 -> @78c8ce05a6), the precondition line gaining "D1 CLOSED 02:49Z (@a45157fe5a: root
+  fe64236bbb-st3, SSM add63ec1 rc 0)", and the Amendment 1 section. Bodies, bounds, pins and this half's three
+  conditions are byte-for-byte the signed text; the packet says the conditions are carried, and the diff agrees.
+- **The tool re-pin, read here (`git diff e29a2e7d27 78c8ce05a6 -- IRPT_MVP_Y/live_walk/`, 7 files):**
+  - `live_upload.py`: `TENANT` was the literal `cottonwood`; it is now `WALK_TENANT`, required, and refused unless the
+    value is a firm in `infra/logic/registry/reporting_policies.json` (Y5 and Y6 run as inflection and 49financial).
+  - `live_chain.py`: the K5 body's variant and `comparison_keys` come from `WALK_COMPARISON_KEYS` (unset = window 15's
+    Overview exactly); `request_id` is per second, so Y3, Y4 and R cannot share one id; `WALK_PW_RETAINED=1` skips each
+    body's wait for the K1-CRED delete and the `PASSWORD_DELETED` line prints only when a delete was read.
+  - `case_trace.py`, `offline_submit_proof.py`, `status_role_sim.py`, `zip_cold_start_smoke.py`, `zip_module_census.py`:
+    grading and verification tools; none sends a body. No vendor call is added or changed, so W15-2's per-body bounds
+    stand.
+- **The precondition is met, read from the ledger:** `irpt-resident-saved-type-st3-20260929` CLOSED 02:51:20Z. Its D1
+  proof records ~Y's four gates on the built st3 BEFORE the run (@0f331f6c22, ~Y 102543), SSM `add63ec1` rc 0 with the
+  before-read (root st2, queue 0/0) and the read-back (root `/opt/irpt-resident/fe64236bbb-st3`; recipe `4fde9ac9`,
+  worker `95f79dad`, equal to `ec8f69f718`; polls 2, tracebacks 0, NRestarts 0; the st2 root kept, receipt copied
+  aside). That is the condition this seat's st3 half set, met.
+- **Conditions 1-3 carry unchanged.** One reading on condition 2: with `WALK_PW_RETAINED=1`, no body waits for the
+  delete, so the only delete evidence for K1-CRED is `walk_principal.py credoff` at R and its timestamped
+  `ParameterNotFound` read-back in the ledger; that is exactly what condition 2 asks for, and it is now the sole
+  instrument rather than one of two.
+
 ## What this half signs against
 
 - Packet blob `32152ea0`; window 19's text (`35c9083d`) and window 15's text (`51362fca`, amendment 1 `3207cf8e`)
