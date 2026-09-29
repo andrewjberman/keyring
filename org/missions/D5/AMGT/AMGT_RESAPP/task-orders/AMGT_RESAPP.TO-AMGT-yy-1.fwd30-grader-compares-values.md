@@ -74,7 +74,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 plant reads OK), AC3 FAIL (grade line carries no values count). The full 96-folder value sweep is the issuer's real run at the
 drain (expected: 95 of 95 identified value-equal, or the value gaps named).
 
-<status>pending</status>
+<status>complete</status>
 <round>50</round>
 <slot>~176</slot>
 <fabric>site-z</fabric>
