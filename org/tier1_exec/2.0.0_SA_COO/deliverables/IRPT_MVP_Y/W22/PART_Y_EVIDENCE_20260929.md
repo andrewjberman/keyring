@@ -156,3 +156,39 @@ window; no code, IAM or schedule change; every write is one the principal owns.*
 
 **Rows filed, both class OBSERVATION / `hazard_standing` INERT:** `IRPT_BCKEND-S206` (@befabb9a7b) and
 `IRPT_BCKEND-S207`.
+
+
+## ADDENDUM 2026-09-29 ~17:5xZ -- the `screen` link is now EVALUATED, and it FAILED
+
+W22's trace left two links NOT_EVALUATED and named their owners. One of them has since been run: under W24,
+`2.0.0_SA_COO~D` performed the K10 render of this report (~D 102935, record
+`org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/w24-part-p-20260929.md` @62db1e7f77; relayed by ~P
+102939).
+
+**Result: NOT MET.** `GET analysis/RPT-2e21b52edcb222205399100e026c2768/sections` answered **200** with
+`status UNAVAILABLE`, `public_reason_code UNEXPECTED`, **"bundle was not rendered"** -- on first load AND after one
+reload.
+
+So this report is certified in the store and unreadable on the screen. The trace's tally moves from
+**20 MATCH / 0 MISMATCH / 2 NOT_EVALUATED** to **20 MATCH / 0 MISMATCH / 1 NOT_EVALUATED / 1 NOT MET**, the remaining
+NOT_EVALUATED being the same-revision export (window 16).
+
+### The cause is NOT the deleted walk principal
+
+~P's relay noted "the owner principal (W22) is deleted", and that reading is worth closing off explicitly, because a
+remediation aimed at credoff would miss:
+
+1. **It is not an authorization refusal.** `_authz/served.py _handle_owner_read` sets
+   `code = "NOT_AUTHORIZED" if isinstance(exc, ProspectOwnershipRefused) else self.public_reason_for(exc)`. An
+   ownership failure would have served `NOT_AUTHORIZED`, not `UNEXPECTED`.
+2. **A deleted owner cannot gate this read.** `_scope/interactive_access.py authorize_current` returns `True`
+   whenever the current principal's class is `OPAL_GLOBAL`, regardless of the stored `principal_id` -- its own
+   comment reads *"A view filter never narrows verified Opal authority."* It requires only that the retained
+   `firm_id` be a concrete registered data firm (cottonwood) and `principal_id` a non-empty string. This was measured
+   at 14:4xZ, before the K10 ran, for exactly this question.
+3. **The report JSON exists.** W22's own trace read it at `opal-data-irpt`,
+   `irpt/cottonwood/platinum/analysis_reports/RPT-2e21b52e.../a607f9db...json`, and re-hashed 72/72 scalar sections
+   out of the retained PDF.
+
+What is missing is the **rendered bundle**, a different artifact from the certified report. `2.0.0_SA_COO~P` owns the
+row for it.
