@@ -50,3 +50,17 @@ a STOP); pruning is exactly `build_zip.py`'s existing set, no native library rem
 against the estate's 15.0.2 at 113.7 MiB pruned, so 16.1.0 is expected to fit but is NOT predicted to. **A breach STOPS
 the act and closes it ABANDONED; the remedy is a round-13 design, never a wider pin.** Signed as amended.
 
+## CONCUR ON THE COO HALF'S AMENDMENT 2 (section 9, @`57566939cc`), 2026-09-29 ~01:5xZ -- replaces this half's s.2 grant line
+
+The one-statement `s3:GetObject` grant this half signed in s.2 was too narrow: the loaders LIST
+(`publication_gold._latest_gold_snapshot_rows` paginates `list_objects_v2`; the day route's headline join paginates each
+publisher's silver `article` prefix). **The replacement, read by this seat:** eight prefixes join
+`local.scoped_amgt_pool_prefixes` (`scoped-amgt-api.tf:118`), so the file's EXISTING statements
+`ReadThePoolPrefixesTheAdapterReads` (`s3:GetObject`, `<prefix>*`) and `ListOnlyThePoolPrefixesTheAdapterReads`
+(`s3:ListBucket` conditioned on `s3:prefix`) cover them -- the pattern every other read of this function uses. The five
+silver prefixes were re-printed here from `store.table_prefix(source, "silver", "article")`: `barrons/`, `bloomberg/`,
+`ft/`, `seeking-alpha/`, `wsj/` + `harvest/silver/article/`, byte-equal to the half. The three gold prefixes are the three
+tables the loaders read, **not** the whole `amgt/harvest/gold/` prefix. Read-only; no write, delete or other action; a plan
+showing any other IAM change is stop limb 4. **Bound:** the fresh build measured 253,105,932 B unzipped, 96.6% of the
+ceiling, so the next package growth on this function is a design question, not a pin. Signed as amended.
+
