@@ -131,6 +131,27 @@
     "spec_asserts": "PRD v0.3 FWD-1 DONE WHEN: one live walk ending in Valero's Recommendation card open, where the PM can say whose view it is; THE THREAD hop 6 makes the dossier route (the team's position) round 2's first enrichment input.",
     "world_is": "The team's position is now served as model.team_cases (AMGT_RESAPP vv-2), and Valero's are all ABSENT in the research dossier; the round-2 cell AV-e-2 renders the team's case where served and a plain ABSENT sentence where not.",
     "notes": "Filed by the issuer at the round-2 cut (decomposition v2). Not a DSGN cell: the page renders both states correctly."
+  },
+  {
+    "id": "DSGN_AMGTV1-Z-W5-S1",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~5",
+    "surfaced_at": "2026-09-29T08:00Z",
+    "one_line": "tabs.harness.cjs (a bound harness, outside AV-e-1's <paths>) anchors held_uncited_basis_not_a_zero on the raw visible text 'held_uncited_basis ABSENT_ON_OBJECT'; the cell removes that text, and the harness cannot be edited here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs:329-330 (heldOk: html.includes('held_uncited_basis ABSENT_ON_OBJECT') && !html.includes('0 claims held uncited')) at f1a90a9b",
+        "bound.cjs E1 drafting:8 thesisLadder:10 tabs:20 errorEmpty:12 after the edit: 4 of 4 green, tabs CHECKS-OK 20 of 20, using the data attribute below"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AV-e-1 section 1: a bound check anchored on removed raw text is re-anchored onto the same fact (words or a data attribute), its claim kept; <paths> names drafting.harness.cjs and thesisLadder.harness.cjs, not tabs.harness.cjs.",
+    "world_is": "tabs.harness.cjs cannot be re-anchored under this order's write grant. The fact is kept instead on the page: the held-uncited line carries data-held-uncited-basis=\"held_uncited_basis ABSENT_ON_OBJECT\" (an attribute, free under the raw-code rule), so the untouched harness still finds the substring and stays green at 20 of 20. The visible line is a plain sentence. A later cell that edits tabs.harness.cjs may re-anchor it on the attribute name and drop the value-shaped string.",
+    "notes": "Worker-authored; not an adjudication."
   }
 ]
 ```
