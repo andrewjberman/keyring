@@ -90,6 +90,11 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v2.6",
       "note": "L5 recut + L6 issuance, 2026-09-29, 2.0.0_SA_COO~H. Round 17 over ROUND_ANALYSIS.round16.md @f424435829: f-1, the ticker and brand census (LOCAL, read-only); f-2, a security's first burst survives name detection, Z-W40-S1 (LOCAL); two independent chains; section 29."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v2.7",
+      "note": "L5 recut + L6 issuance, 2026-09-29, 2.0.0_SA_COO~H. Round 18 over ROUND_ANALYSIS.round17.md @c296f4ba12: g-1, the alias rule (case-sensitive tickers 2+ chars with a refusal list, the whole-brand list, the two-limb parent-brand refusal) proved in memory (LOCAL); g-2, the served rebuild of mention + daily + event under a never-widen pair (SERVED); section 30."
     }
   ],
   "leads": [

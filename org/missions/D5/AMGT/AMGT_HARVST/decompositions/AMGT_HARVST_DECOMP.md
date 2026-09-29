@@ -1856,3 +1856,23 @@ equals `event_rows` over the served mention part (`e-2` AC2). `f-2` points at `m
 on every mention row) as a non-inferred name source; the worker chooses the mechanism. A moved served event stops `f-2` at
 BLOCKING (a pair and its own cell follow). **Fan-out: 2 of 2 chains, independent, N = 2, cap 8.** NOT cells: the event
 route (`Z-W39-S1`), the portal push (Andrew's hold), new held-out reads (the Seeking Alpha 402).
+
+## 30. ROUND 18 -- L5 DECOMPOSITION v2.7, over the round-17 analysis (`ledger/ROUND_ANALYSIS.round17.md` @c296f4ba12)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~14:1xZ. Round 17 CLOSED (2 of 2; `Z-W40-S1` graduated; the census read hit by hit,
+tickers 172/240, short names 61/291). Series **`g`** (spent: h, r, s, t, u, v, w, x, y, z, a, b, c, d, e, f over 48 orders).
+Slot MAX+1 over 44: **`~45`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the alias rule: case-sensitive tickers 2+ chars with a refusal list; the whole-brand list; the parent-brand refusal in code | `HVST-g-1` | LOCAL | `~45` |
+| 2 the served rebuild on the new rule (mention, daily, event) under a never-widen pair | `HVST-g-2` | SERVED | `~45` (continued) |
+
+**Measured at the cut (CLOUD `f1c482d24f`):** served parts 5 / 6 / 7 (mention 275, daily 51,952, event 8). `KO_US_Equity`
+carries the alias `Coca-Cola`, so the ruled listed-brand check refuses `KOF`. **Walmart Inc. is in neither the 191 nor
+the pool's 250 names**, so that check cannot refuse the planted `WALMEX*` -> `Walmart` entry the same ruling requires.
+**Issuer's ruling:** the refusal is TWO limbs in code: (a) any other pool name's alias or company name; (b) an explicit
+parent-brand refusal list in `whole_brand_aliases.json`, starting with `Walmart` and citing the census. Carded to the CTO.
+`g-2` AC1 is a post-act read, with the act and its dry pre-check as standing clauses (round 16 `Z-W42-S1`/`S2`).
+**Fan-out: 1 of 1 chain (g-1 -> g-2, one worker), N = 1, cap 8.** NOT cells: a brand-to-parent source, the event route
+(`Z-W39-S1`), the portal push (Andrew's hold), new held-out reads (the Seeking Alpha 402).
