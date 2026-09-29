@@ -170,7 +170,7 @@ result file names, per item, the row it answers and what the reader should now s
 - Disarms owed at the drain, by this seat: W2-S8 on AC1 PASS; S43 on AC3 PASS (the register is the restatement).
 - `<risk>` WORLD is GATE (xii)'s floor (an `infra/` path); the cell deploys nothing.
 
-<status>staged</status>
+<status>complete</status>
 <round>3</round>
 <slot>~13</slot>
 <fabric>site-z</fabric>
