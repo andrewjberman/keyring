@@ -4,7 +4,7 @@
 
 **Date:** 2026-09-29
 **Task Order:** AMGT_RESAPP.TO-AMGT-ww-1 (round 48) — the redeploy on the canonical prefix
-**Status:** BLOCKED
+**Status:** COMPLETE
 
 ---
 
@@ -144,9 +144,8 @@ this lane commits, `0.0.0_AB_MSTR~Z` pushes.
 
 ## Blockers
 
-- BLOCKED on `2.0.0_SA_COO~Z`: `org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ww-1.the-redeploy-on-the-canonical-prefix.md`
-  — waiting for a ruling on AC2, whose `failed 0` clause turns on a population the act does not control.
-  Asked at 19:43:56Z (delivered, 1045 bytes). The `<status>` flip is the issuer's regardless.
+**None.** The AC2 block cleared in-session: asked at 19:43:56Z, ruled at 19:52:20Z (msg 26685, acked).
+Nothing is owed by this seat. The `<status>` flip is the issuer's.
 
 ---
 
@@ -158,17 +157,45 @@ VersionId `61Fb7L90ggUdpjcXaX4T8CcMgquyzn0U`; rollback target `4S1U4Cs1LVyTkN0w5
 `arn:aws:dynamodb:us-east-1:313476888478:table/etf-classifications`; `terraform plan` in
 `infra/aws/terraform/harvest` reads 0-diff. AC1 and AC3 PASS; limbs 5 and 6 hold with no rollback
 trigger; AC2 exits 1 solely because 1 of 96 research-library names has no `security_key`. NEVER-2 entry
-`amgt-resapp-ww1-redeploy-research-dossier-restart-20260929` is OPEN at leg V1 on purpose, in-window at
-0.9h of 6.0h, so it will go RED if nobody rules.
+`amgt-resapp-ww1-redeploy-research-dossier-restart-20260929` is **CLOSED** -- "nothing stranded -- closed
+20260929T195655Z", 4 of 4 legs with proof, 0 open, sentinel removed, and absent from both the open and the
+drift partitions of `deploy_ledger.py list`.
 
 ---
 
 ## Next Steps
 
-1. **[`2.0.0_SA_COO~Z`] Rule AC2** — either accept it against the identified population (95 of 96, the
-   other four conjuncts at full strength) or re-cut the criterion. Until then V1 cannot close and the
-   entry is heading for its 6.0h RED.
+1. ~~**[`2.0.0_SA_COO~Z`] Rule AC2**~~ — **DONE 19:52:20Z.** Ruled MET under AMENDMENT 1
+   `@d2c6b4d354`, which rewrote AC2's expect to admit `exit=1` when every failure is a never-invoked
+   `no_identity` carried by a surprise row. The issuer reproduced my read independently at 19:45:56Z on
+   the same CodeSha256. No rollback. V1 and the entry closed `@4a5eeb4458`.
 2. **[AMGT_CORPUS / identity owner] Register `Hitachi 6501 JP`** — a research-library folder exists
    (created 12:54:45Z) with no identity registration. Row `AMGT_RESAPP-Z-S303`. Not this lane's surface.
 3. **[`0.0.0_AB_MSTR~Z`] Push** — everything from this seat is LOCAL at `79d4c7abeb`.
 4. **[this seat] Close V1 and the entry** the same session the ruling lands.
+
+---
+
+## Closeout addendum (19:52-20:00Z)
+
+AC2 was **ruled MET** by the issuer under AMENDMENT 1 `@d2c6b4d354` (msg 26685, acked), which rewrote the
+criterion's expect after the apply: `exit=1` is met when every failure prints
+`READ-FAILED None {'no_identity': ...}` — a library folder with no resolved `security_key`, never invoked —
+and each is carried by a surprise row. The issuer re-ran the check independently at 19:45:56Z on the same
+CodeSha256 and reproduced my numbers exactly.
+
+I graded AC2 **FAIL against the pre-amendment expect** and said so before any amendment existed. That
+ordering is preserved in the V1 leg proof and in the instance's `amendment` field, so the record cannot be
+read as a criterion that always passed.
+
+Both cited commits were verified **by printing their bytes**, not by grepping for the quoted text:
+`d2c6b4d354` amends this order's AC2 expect (1 file, +3 −1); `95a081df7b` amends the COO half's limb 6 for
+the g-2 attribution (+17 lines). Against the amended expect: U=1; the single failure matches the required
+form character-for-character with exactly one such line; row `Z-S303` carries it; no other failure, so the
+"any other failure is a ROLLBACK" clause does not fire.
+
+Entry closed with 4 of 4 legs proven and **no** `DRIFT-DANGEROUS` warning — worth noting because five
+other estate entries currently read terminal over an unproven leg.
+
+**Commits:** `f298c2313c`, `26113dbc97`, `754252a73c`, `79d4c7abeb`, `a198039e43`, `4a5eeb4458`.
+Push state: **LOCAL @`4a5eeb4458`** (origin/CLOUD `0c955d5493`, `git ls-remote` read at 19:59Z).
