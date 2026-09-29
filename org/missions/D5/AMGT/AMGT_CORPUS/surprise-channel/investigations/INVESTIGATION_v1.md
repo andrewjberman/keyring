@@ -2268,6 +2268,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "TO CRPS-p-5: if the source paragraph is empty the pillar is served ABSENT with that reason; ML_FP's INVESTMENT THESIS block is read as its pillars.",
     "world_is": "The order's branch (empty source -> ABSENT) is built and correct for the one colon-led lead, but the pack's real pillars are period-led and the PDF reader has no rule for them, so ML_FP serves no pillars while its source states five with paragraphs. Not fixed: widening the lead grammar is outside this order.",
     "notes": "Candidate for the round-14 analysis: a period-led bold-first lead rule (bold_first true, lead_prefix ends '.') in _pdf_pillars_raw; would need a census of other PDF packs for false leads before landing."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W5-S6",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+    "surfaced_at": "2026-09-29T19:45Z",
+    "one_line": "Amendment 1 lists the ML_FP period leads WITH the trailing period ('Mix shift to premium.'); the served pillar lead drops the period, as the colon-led leads drop the colon, so the served strings are 'Mix shift to premium' etc.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/continuation.py _pdf_pillars_raw rule (d): lead_txt = lead_prefix.rstrip('.').strip(); rule (a)/(b)/(c) lead_txt never carries the ':' either.",
+        "Read-only census over 95 resolved names (before = CLOUD 294e28bcbe code, after = this branch): thesis_pillars byte-identical for 94, differs for ML_FP_Equity only; its five leads as built: 'Irreplaceable brand and pricing power', 'Mix shift to premium', 'FCF Generation', 'Beyond tires', 'EV-agnostic positioning'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 1 section 7 item 1: the period-led leads are accepted 'exactly as it accepts one ending in :'; the leads are named with their period in the amendment text.",
+    "world_is": "The served `pillar` string has the period stripped (the colon precedent); the citation passage still contains the period-bearing text because the probe is a substring of the page.",
+    "notes": "If the issuer wants the period kept in the served lead, it is a one-line change (lead_txt = lead_prefix.strip()) plus a METHOD_VERSION-free test edit; nothing downstream reads the lead's punctuation."
   }
 ]
 ```
