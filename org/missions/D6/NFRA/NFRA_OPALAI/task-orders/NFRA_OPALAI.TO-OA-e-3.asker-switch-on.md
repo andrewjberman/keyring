@@ -170,7 +170,7 @@ an asker grant with no portal_channels, msg 26343), so the switch-on never goes 
 `<paths>` gain those files. The deploy tree follows OA-r-1 amendment 5 (CLOUD-based, gateway-tree-hash proven). The spawn
 waits on OA-f-7's drain and ~MI's MX-r-4 close. No criterion moves. Gate limb: none (GATE (viii) placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~10</slot>
 <fabric>site-z</fabric>
