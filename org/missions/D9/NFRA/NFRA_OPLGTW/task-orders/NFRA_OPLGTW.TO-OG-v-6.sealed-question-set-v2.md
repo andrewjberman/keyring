@@ -198,7 +198,7 @@ anything you would ask becomes a surprise row.
   one, comes with a CVO re-sign.
 - `<risk>` WORLD is GATE (xii)'s floor (an `infra/` path); the cell also writes SSM parameters.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~10</slot>
 <fabric>site-z</fabric>
