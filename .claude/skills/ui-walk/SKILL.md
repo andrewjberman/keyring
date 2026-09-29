@@ -63,6 +63,8 @@ about 12-15 minutes per client.
 
 The lead-panel walk also presses one legend button (`[data-series-ticker]`) per Chart view and screenshots the picked line as `lead-<movement>-<subject>-Chart-picked`.
 
+`--thread "<company name>"` (with `--route /security-analysis`) picks that company out of the Trending x Price list BY THE NAME the row prints (never by ticker) and walks five steps `thread-1-list` .. `thread-5-recommendation-window` (a name no row prints records `thread:name-not-found`); every List view's rows are written to `lead-lists.json` beside `findings.json`; each `--security` also presses its newest timeline day (`<sec>-timeline-day`) and opens the first event span (`<sec>-timeline-event`), else records `timeline:no-event-element`.
+
 The skill runs:
 
 ```

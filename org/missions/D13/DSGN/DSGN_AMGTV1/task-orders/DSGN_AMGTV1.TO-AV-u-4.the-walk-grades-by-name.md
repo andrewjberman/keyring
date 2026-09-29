@@ -115,7 +115,7 @@ outer commit hashes, and any row.
 
 **ISSUER NOTES:** round 6 = round-5 analysis s.4 item 4 + CTO~Z msg 26751 (AMGT_HARVST ROUND_ANALYSIS.round19.md ruling 5 @a251f02116: HARVST FWD-5 / FWD-6 graded on this walk). Base walk.mjs @CLOUD: walkthread 0 of 3; green (scratch walkThread + readLeadList + walkTimeline) 3 of 3; walkvoid YES.
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~25</slot>
 <fabric>site-z</fabric>
