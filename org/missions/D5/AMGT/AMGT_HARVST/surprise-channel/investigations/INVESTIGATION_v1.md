@@ -2652,6 +2652,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Row Z-S37: the --continue foreign-path guard whitelists whatever the INDEX holds when the merge conflicts, so a peer staging in that window is committed under the draining seat's name.",
       "world_is": "Fixed at the tool: the state snapshot is now the merge's own candidate set, so a peer's staged path is refused rather than whitelisted. The residual the fixer names (a peer path that ALSO differs between the two merge sides) stays inside the merge's candidate set by construction and is not closed by this fix.",
       "notes": "Z-S37 is DISARMED by this row; its remaining residual is the tool owner's (0.0.0_AB_MSTR~Z), not this project's. Not exercised on this project's own drain yet: the next conflicted drain of this project is the first live run of the fixed path."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W47-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~47",
+      "surfaced_at": "2026-09-29T23:10:00Z",
+      "one_line": "lib/research/api/scoped_amgt.py:4101 still describes the unwired event route as `.../timeline/event/<first_day>`; HVST-j-1 keyed the route by the stored event_id, and that file is outside the cell's paths.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/api/scoped_amgt.py:4101 (comp-find at 58fbe48402) reads `THE EVENT ROUTE (`.../timeline/event/<first_day>`, `get_timeline_event`) IS NOT WIRED HERE`",
+          "lib/research/harvest/timeline_api.py get_timeline_event(security_key, event_id, ...) after HVST-j-1; test_timeline_route_post_and_event_route_are_not_wired passes unchanged (221 passed)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-j-1 item 1: update the route comment's path to .../timeline/event/{event_id}; write surface is timeline_api.py, harvest tests, deliverables folder, and this channel.",
+      "world_is": "timeline_api.py's own route comment is updated, but the wiring-section comment in scoped_amgt.py (outside <paths>) still names <first_day>. Comment only; no behaviour depends on it and the route stays unwired and unmounted.",
+      "notes": "Left as is; any later mount cell that touches scoped_amgt.py should correct the comment and TIMELINE_ROUTES together."
     }
   ]
 ```
