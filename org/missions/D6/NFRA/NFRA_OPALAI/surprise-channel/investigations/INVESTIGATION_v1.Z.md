@@ -1988,6 +1988,44 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     },
     "spec_asserts": "OA-e-11 bound 2: the issuer installs at the drain, so the installed wrapper carries the new resolution afterwards.",
     "world_is": "It does: the installed wrapper equals the E11 template. The installer's 'already wired' no-op remains true of any OTHER device or clone with an old wrapper; that is the installer owner's concern, not an armed hazard here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S49",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-29T20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Each target is a round-2 BLOCKING row that the issuer already answered in-round: by an order amendment, a tooling fix, or an addendum cell. Its order then completed through the fix with no override. The evidence lists each target's resolving pointer. This row only makes the dispositions terminal so round 2's close does not read them as open.",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-S37",
+      "NFRA_OPALAI-Z-W13-S1",
+      "NFRA_OPALAI-Z-W13-S2",
+      "NFRA_OPALAI-Z-W11-S1",
+      "NFRA_OPALAI-Z-W16-S4",
+      "NFRA_OPALAI-Z-W15-S1",
+      "NFRA_OPALAI-Z-W15-S2",
+      "NFRA_OPALAI-Z-W10-S4",
+      "NFRA_OPALAI-Z-W10-S5",
+      "NFRA_OPALAI-Z-W10-S6"
+    ],
+    "one_line": "The issuer makes 10 open BLOCKING, INERT round-2 items terminal. S37 was fixed by addendum OA-f-3. W13-S1/S2, W11-S1 and W15-S2 were the nested-commit lane-gate refusal, fixed by fd0aa6ba57/fa2762fc8b. W16-S4 was the separator matcher, amended at 3ebf12c48f. W15-S1 is OA-e-7 amendment 1. W10-S4/S5/S6 are OA-r-1 amendments 3 and 5. Every order is now complete.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S37: addendum OA-f-3 (CTO ruling msg 26231) cut the Description literal to <=48 chars; nested opal_ai 9de1e93; OA-f-3 complete (proof re-landed by the S45 re-drain 300e372902). G-ACCT has since run past act 1: project.json blocking names only step 5 (Andrew's setup-token) open. The fix reaches opal_ai PROD in the cutover G-PUSH, which the round already tracks.",
+        "Z-W13-S1, Z-W13-S2: OA-e-4 proof -- 'rows S1/S2 cleared at fa2762fc8b (validator fix cherry-picked); nested commit 7c5d51eb0d; AC1-AC3 PASS'; OA-e-4 complete.",
+        "Z-W11-S1: OA-e-2 proof -- 'hook census inherited the nested GIT_DIR; fixed by the issuer @fd0aa6ba57; the nested commit then landed with no override' (nested 7c6473c, answer parent d750cba8c4); OA-e-2 complete.",
+        "Z-W16-S4: OA-e-10 proof -- issuer matcher amendment 3ebf12c48f accepts tests\\ or tests/; AC2 re-run PASS (named passed=1); OA-e-10 complete.",
+        "Z-W15-S1, Z-W15-S2: OA-e-7 AMENDMENT 1 -- <paths> gains opal_ai/opal/agent/teams_watch/teams-watch.py; the nested refusal was the fd0aa6ba57 validator census, cherry-picked; OA-e-7 complete.",
+        "Z-W10-S4: OA-r-1 AMENDMENT 3 deselects the two operator-half tests that read the contract outside the gateway. Z-W10-S5 and Z-W10-S6: AMENDMENT 5 (supersedes 4) deploys from -v2 trees on CLOUD (rel2 54e26d66a0, rb2 71ef0f4bec). OA-r-1 complete, J1 PASS (msg 26343).",
+        "Measured this tick: fd0aa6ba57, fa2762fc8b, 3ebf12c48f and d750cba8c4 are ancestors of CLOUD HEAD. opal_ai holds 7c5d51eb0d, 7c6473c and 9de1e93. The last <status> of OA-e-2/e-4/e-7/e-10/r-1/f-3 reads complete (6 of 6)."
+      ]
+    },
+    "spec_asserts": "Spine L10: every BLOCKING or ARMED row is dispositioned before the round's slug.",
+    "world_is": "All 10 were answered in-round and their orders completed. After this row, comp-surprise should read 0 open BLOCKING rows for NFRA_OPALAI."
   }
 ]
 ```
