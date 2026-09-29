@@ -80,6 +80,10 @@ The Lambda's grant for `amgt/harvest/gold/research-dossier/` is NOT in the pool-
 pair names it. SERVED: reaches the Lambda at vv-4.
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29):** drained @a8965c9904. AC1 (2 of 2) and AC2 (YES, fitz/pymupdf unimportable) re-run by
+the issuer; instance VALID rc=0. 27 of 95 live names carry SERVED team cases at the drain (28 at the cut). The dossier case now
+carries `unit_as_written`, `currency`, `currency_basis` (CORPUS l-1); all are copied as written. Payload only: reaches the Lambda at vv-4.
+<status>complete</status>
 <round>47</round>
 <slot>~170</slot>
 <fabric>site-z</fabric>
