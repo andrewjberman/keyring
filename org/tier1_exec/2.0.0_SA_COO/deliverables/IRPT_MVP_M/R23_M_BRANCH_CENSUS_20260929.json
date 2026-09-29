@@ -1,0 +1,327 @@
+{
+  "measured_at": "2026-09-29T16:38:00Z",
+  "cloud_head": "75b5cdcba20f66eb83aa7e83117f7705c86f4016",
+  "branches": [
+    {
+      "branch": "irpt-m-b01b-skip",
+      "tip": "89280b9d452bec624f0c313fb28c3a022178abcc",
+      "ahead": 1,
+      "disposition": "DRAIN",
+      "evidence": "1 commit ahead of merge-base 773186b34f9997c76dde9fe1d56395974a3462a5. CLOUD carries 0 commits touching either file since the merge-base -- both apply clean. Branch commit 89280b9d45 (S141 un-parked): 'NOT merged to CLOUD ... the deploy stays its own act'. The prior hold condition (disarm ledger cot-b01b-disarm-m-20260926, commit 268f1a453f: 'No B_01b commit lands on CLOUD before the CTO's half for the COT-new write is signed') is now satisfied: the CTO signed the COT-new write at ab4a2e41bb, and it was written (aaef2843a8, d341041ae8). No reversal of S141/the skip-list rule found in history (git log --all --grep S141). Both files still wanted and still missing: CARRY.",
+      "files": [
+        {
+          "path": "data/cot/scripts/gold/B_01b.classify_new_securities.py",
+          "disposition": "CARRY",
+          "evidence": "CLOUD identical to merge-base (0 commits since mb touch this file; diff branch-tip vs CLOUD is non-empty, i.e. genuinely missing). Row S141's landing condition (CTO sign-off on the COT-new write, ab4a2e41bb) is now met; no ruling reverses the skip-list rule."
+        },
+        {
+          "path": "data/cot/scripts/gold/tests/test_other_admission.py",
+          "disposition": "CARRY",
+          "evidence": "Same as B_01b.classify_new_securities.py -- its companion test, 0 CLOUD commits since mb, missing, still wanted."
+        }
+      ]
+    },
+    {
+      "branch": "irpt-m-comparison-consumer",
+      "tip": "dbe20f8022dd668b2225ac3433b4c339b2de4ed9",
+      "ahead": 2,
+      "disposition": "WORLD-DONE",
+      "evidence": "NOT named in the issuer's 15:3xZ read at all (a 10th irpt-m-* branch the preamble omits; filed as a surprise row). Both files in its net diff are byte-identical to CLOUD's current content (git diff <branch> CLOUD -- <file> is empty for both), landed under different commit hashes (CLOUD's 65957b8afc/15b9f85eb3 vs this branch's 93e8320203/dbe20f8022) -- same content, independently committed to CLOUD. Every file PRESENT.",
+      "files": [
+        {
+          "path": "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+          "disposition": "PRESENT",
+          "evidence": "git diff irpt-m-comparison-consumer CLOUD -- <file> is 0 lines. CLOUD landed the identical content via 65957b8afc + 15b9f85eb3 (same subject lines: 'comparison policy consumer admits catalogue v2' / 're-pinned on ~Y')."
+        },
+        {
+          "path": "infra/aws/lambda/investor-reporting/_scope/tests/test_maintained_sources.py",
+          "disposition": "PRESENT",
+          "evidence": "git diff irpt-m-comparison-consumer CLOUD -- <file> is 0 lines. Same CLOUD commits as above."
+        }
+      ]
+    },
+    {
+      "branch": "irpt-m-cot-b1",
+      "tip": "0da4449e1f45688606187a1870ea3db2c05c16c6",
+      "ahead": 5,
+      "disposition": "DRAIN",
+      "evidence": "Tip IDENTICAL to irpt-m-cot-cash-line (same hash 0da4449e1f) -- these are the same branch under two names, not two independent lines of work. The Holdings half of this branch's cash-line fix was already cherry-picked onto CLOUD (a82a01a8ed, whose message names this content directly: 'the holdings_snapshot.py and test hunks of 8a52e2c352 + f28c0d89f2 (branch irpt-m-cot-cash-line-act), applied on CLOUD'), merged via bcf7a6adde ('R4 Holdings code into CLOUD ... no COT gold path (held, CTO 102293/102323)'). The COT-gold half (C_06/D_03/D_04/test_other_admission.py: structured/commodities admission CTO 101578, D_03 positive-rows CTO 101616 ruling(a)) is explicitly HELD pending S173's canonical-table re-point (bcf7a6adde, and CTO ruling S188 7ba9384e7d: 'cot-cash-admission ... stays OPEN (no rollback), gated on the S173 re-point'). No reversal found for 101578/101616. 4 files CARRY, 2 PRESENT.",
+      "files": [
+        {
+          "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+          "disposition": "PRESENT",
+          "evidence": "CLOUD's a82a01a8ed carries this exact hunk (classify_security cash-line guard, CTO 101547) -- diffed byte-for-byte identical against the branch's own mb..tip hunk for this function; a82a01a8ed's own message cites this branch by name as the source content. The file differs overall from the branch tip (394 diff lines) only because CLOUD's R4 Holdings build (UIC-16, AD-10, L0 CATEGORY, etc.) evolved the file further afterward -- unrelated to this branch's change."
+        },
+        {
+          "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py",
+          "disposition": "PRESENT",
+          "evidence": "a82a01a8ed's message: 'the test file's conflict with CLOUD's test_the_etf_classifier_tags_are_admitted_classes kept both' -- the branch's test hunk was merged in with a resolved conflict, not dropped."
+        },
+        {
+          "path": "data/cot/scripts/gold/C_06.client_mix_timeseries.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb touch this file. CLOUD's live content still reads MIX_ASSET_CLASSES = ['equity','fixed_income','alternatives','cash','other'] (no structured/commodities, no is_bd_cash_line); the branch adds both (CTO 101578 ETF half B1). bcf7a6adde/a82a01a8ed record this COT-gold half as HELD, not dropped, pending S173."
+        },
+        {
+          "path": "data/cot/scripts/gold/D_03.composition_artifacts.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb; CLOUD has no 'structured'/'commodities' strings in this file (grep confirms), branch adds the display-label map and the positive-rows rule (CTO 101616 ruling (a), addendum f559a4cdb1). Held with the rest of the COT-gold half, not reversed."
+        },
+        {
+          "path": "data/cot/scripts/gold/D_04.client_portal_summary.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb; CLOUD has no 'structured'/'commodities' strings in this file. Same CTO 101578 hold as C_06/D_03."
+        },
+        {
+          "path": "data/cot/scripts/gold/tests/test_other_admission.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb; branch adds test_b1_structured_and_commodities_are_admitted_not_dropped (CTO 101578) and the classify_series cash-line assertions (CRO refusal 785f7dc430) -- absent from CLOUD's version, still wanted per the same held ruling."
+        }
+      ]
+    },
+    {
+      "branch": "irpt-m-cot-cash-line",
+      "tip": "0da4449e1f45688606187a1870ea3db2c05c16c6",
+      "ahead": 5,
+      "disposition": "DRAIN",
+      "evidence": "DUPLICATE of irpt-m-cot-b1 -- identical tip hash 0da4449e1f, identical net diff, identical per-file dispositions. Draining one drains both; the other becomes a no-op ref to delete, not a second drain.",
+      "files": [
+        {
+          "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+          "disposition": "PRESENT",
+          "evidence": "Same as irpt-m-cot-b1 -- cherry-picked into CLOUD via a82a01a8ed (message names this branch)."
+        },
+        {
+          "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py",
+          "disposition": "PRESENT",
+          "evidence": "Same as irpt-m-cot-b1 -- conflict-resolved merge into CLOUD via a82a01a8ed."
+        },
+        {
+          "path": "data/cot/scripts/gold/C_06.client_mix_timeseries.py",
+          "disposition": "CARRY",
+          "evidence": "Same as irpt-m-cot-b1 -- COT-gold half HELD (CTO 102293/102323, S173), 0 CLOUD commits since mb, content confirmed absent from CLOUD."
+        },
+        {
+          "path": "data/cot/scripts/gold/D_03.composition_artifacts.py",
+          "disposition": "CARRY",
+          "evidence": "Same as irpt-m-cot-b1."
+        },
+        {
+          "path": "data/cot/scripts/gold/D_04.client_portal_summary.py",
+          "disposition": "CARRY",
+          "evidence": "Same as irpt-m-cot-b1."
+        },
+        {
+          "path": "data/cot/scripts/gold/tests/test_other_admission.py",
+          "disposition": "CARRY",
+          "evidence": "Same as irpt-m-cot-b1."
+        }
+      ]
+    },
+    {
+      "branch": "irpt-m-cot-cash-line-act",
+      "tip": "596453d1843ead3d3ad5fbe4e94c3451eac012f3",
+      "ahead": 4,
+      "disposition": "DRAIN",
+      "evidence": "Strict ancestor/subset of irpt-m-cot-b1 (same merge-base bd1202f127, tip 596453d184 is one commit short of cot-b1's 0da4449e1f -- missing only the later structured/commodities commit). This IS the branch a82a01a8ed's own message names as the source of the Holdings cherry-pick ('branch irpt-m-cot-cash-line-act'). Same COT-gold hold (CTO 102293/102323, S173) applies to its narrower (cash-line-only, no structured/commodities) C_06/D_03/D_04/test changes.",
+      "files": [
+        {
+          "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+          "disposition": "PRESENT",
+          "evidence": "This is the literal source branch a82a01a8ed cites by name for the Holdings cash-line cherry-pick onto CLOUD."
+        },
+        {
+          "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py",
+          "disposition": "PRESENT",
+          "evidence": "Same cherry-pick, conflict-resolved (a82a01a8ed message), test hunk kept."
+        },
+        {
+          "path": "data/cot/scripts/gold/C_06.client_mix_timeseries.py",
+          "disposition": "CARRY",
+          "evidence": "COT-gold cash-line-only guard move (785f7dc430: classify_series, not classify_holding) -- 0 CLOUD commits since mb, absent from CLOUD, HELD not dropped (bcf7a6adde, S173)."
+        },
+        {
+          "path": "data/cot/scripts/gold/D_03.composition_artifacts.py",
+          "disposition": "CARRY",
+          "evidence": "Cash-line-only portion of D_03 (785f7dc430/5600373203 lineage) -- absent from CLOUD, held with the rest of the COT-gold half."
+        },
+        {
+          "path": "data/cot/scripts/gold/D_04.client_portal_summary.py",
+          "disposition": "CARRY",
+          "evidence": "Cash-line-only portion of D_04 -- absent from CLOUD, held with the rest of the COT-gold half."
+        },
+        {
+          "path": "data/cot/scripts/gold/tests/test_other_admission.py",
+          "disposition": "CARRY",
+          "evidence": "Cash-line-only test assertions (CASH/CASH -> cash, CASH/Pathward -> equity, CRO refusal 785f7dc430) -- absent from CLOUD, held with the rest."
+        }
+      ]
+    },
+    {
+      "branch": "irpt-m-s125-20260924",
+      "tip": "a7e5c5904252db7449682887e30e5167c8be26e5",
+      "ahead": 1,
+      "disposition": "WORLD-DONE",
+      "evidence": "Both files byte-identical to CLOUD (git diff <branch> CLOUD is empty for each). Landed via CLOUD commit fecbf0dc43: 'land the DEPLOYED refresh.py on CLOUD -- CLOUD carried neither S125 fix, so the next build from CLOUD would have rolled irpt-directory-refresh back to the 09-17 freeze'.",
+      "files": [
+        {
+          "path": "infra/aws/lambda/investor-reporting/directory/refresh.py",
+          "disposition": "PRESENT",
+          "evidence": "git diff irpt-m-s125-20260924 CLOUD -- <file> is 0 lines; landed via fecbf0dc43."
+        },
+        {
+          "path": "infra/aws/lambda/investor-reporting/directory/tests/test_refresh_previous_state.py",
+          "disposition": "PRESENT",
+          "evidence": "git diff irpt-m-s125-20260924 CLOUD -- <file> is 0 lines; landed via fecbf0dc43."
+        }
+      ]
+    },
+    {
+      "branch": "irpt-m-s125-publish",
+      "tip": "2e4c33738e172b3bf5b4601386c3d54273a1e2ba",
+      "ahead": 8,
+      "disposition": "DRAIN",
+      "evidence": "Code (refresh.py+test) and the change-management record already landed on CLOUD (fecbf0dc43, 3a906e2672 which explicitly says the record 'lived only on branch irpt-m-s125-publish' before being landed). The CI-generated lambda-source-map.json snapshot is superseded by dozens of later independent 'ci: record deploy' commits (P-lineage and Sept-29 packets) that have moved every function's pointer past this branch's 2026-09-24 snapshot -- carrying it forward would revert unrelated functions. The terraform CHANGELOG.json append-only ledger is missing this branch's own deploy-history entry (deployed_commit 34494696c1, branch irpt-m-s125-publish) -- CLOUD's 21 current entries are all from the unrelated irpt-p-publish-20260923 / irpt-smoke-p-backend-20260923 lineage -- so that one entry is a genuine, harmless (append-only) gap: CARRY.",
+      "files": [
+        {
+          "path": "infra/aws/lambda/ci/lambda-source-map.json",
+          "disposition": "SUPERSEDED",
+          "evidence": "CLOUD's functions.irpt-directory-refresh entry now differs from the branch's (this branch pins last_deployed_commit=a7e5c59042/artifact DXuzx9jp dated 2026-09-24T21:02Z; CLOUD independently evolved via many later commits e.g. 0b9212733f, 46ca5fc444, 23126d4739, 70b36eec24, ac4ad83de7, dated up to 2026-09-29). This whole-registry file is continuously regenerated by CI for every function; the branch's single-date snapshot is stale for the other ~20 functions it also carries pins for."
+        },
+        {
+          "path": "infra/aws/lambda/investor-reporting/directory/refresh.py",
+          "disposition": "PRESENT",
+          "evidence": "Same file/content as irpt-m-s125-20260924 -- landed via fecbf0dc43."
+        },
+        {
+          "path": "infra/aws/lambda/investor-reporting/directory/tests/test_refresh_previous_state.py",
+          "disposition": "PRESENT",
+          "evidence": "Same as above -- landed via fecbf0dc43."
+        },
+        {
+          "path": "infra/aws/terraform/investor-reporting/CHANGELOG.json",
+          "disposition": "CARRY",
+          "evidence": "Append-only deploy ledger. CLOUD's current 21 entries (checked by deployed_commit_short) are exclusively from branch irpt-p-publish-20260923 / irpt-smoke-p-backend-20260923; this branch's own entry (version untagged-34494696, deployed_commit 34494696c1, branch irpt-m-s125-publish, commits 568cee428e/a7e5c59042/c9af24bdda) is present nowhere in CLOUD's history. A real S125-fix deploy happened (per the CLOSED ledger 2e4c33738e) but its terraform CHANGELOG record never landed -- genuine gap, append-only so it does not conflict; still wanted for audit completeness."
+        },
+        {
+          "path": "org/critical_paths/change_management/20260924T2038Z_irpt-directory-refresh-s125-m-20260924_deploy_completion.md",
+          "disposition": "PRESENT",
+          "evidence": "Landed via CLOUD commit 3a906e2672: 'land the CLOSED record of irpt-directory-refresh-s125-m-20260924 on CLOUD -- it lived only on branch irpt-m-s125-publish (@2e4c33738e), found while answering MSTR's /cleanup'. git diff branch..CLOUD for this file is 0 lines."
+        }
+      ]
+    },
+    {
+      "branch": "irpt-m-s152",
+      "tip": "1c70dce6d4aebb4caad21e95b38e88e3b2f2659a",
+      "ahead": 6,
+      "disposition": "DRAIN",
+      "evidence": "This is 0.4.0_DS_ClientPlatform~X's work order @8b45af0917 output (structured/commodities/other admission across 49F/BD/COT), applied atop by ~M's own comp-constants patch commit (1c70dce6d4). Its surprise-channel row was renumbered by the CTO (101771) from S152 to S155 after colliding with ~M's own S150-S153 -- 'S152->S155 (COT mix_views, ARMED on ~M)' (bbac642fc7); S155 is still ARMED / open (no disarm commit found for it), so most of the branch's substance is CARRY pending that disposition. ONE file (COT lib/mix_views.py) is ruled SUPERSEDED: the CTO/CRO signed a narrower, DIFFERENT re-cut of the same file ALONE (c1862baf18/b5bb9430e7: 'S152 re-cut ALONE ff63895521 stands ... CLOUD's list plus cash and other') -- that ruling favors ~M's own irpt-m-s152-cloud fix over this branch's wider structured+commodities+cash+other version for this specific file. The branch's surprise-channel rows (S150-S153 as originally numbered) already landed on CLOUD under the renumbered ids S153-S156 (bbac642fc7/edc9d47808) -- PRESENT.",
+      "files": [
+        {
+          "path": "comp-constants.config.yaml",
+          "disposition": "CARRY",
+          "evidence": "CLOUD's MIX_ASSET_CLASSES (bd lane) is still the narrow 3-class list ['equity','fixed_income','alternatives'] (verified by direct read); this is an auto-generated registry entry that must be regenerated (not hand-applied) once/if the underlying BD C_06/mix_views.py land the widen. Tied to ARMED row S155."
+        },
+        {
+          "path": "data/assets/scripts/gold/runners_49f/a07_dim_asset_classification.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb touch this file; work-order item (184ea7371b, CTO 101573/101578); tied to ARMED row S155, not reversed."
+        },
+        {
+          "path": "data/assets/scripts/gold/runners_49f/d06_firm_mix_summary.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb; same work-order item, tied to ARMED S155."
+        },
+        {
+          "path": "data/assets/scripts/gold/runners_49f/tests/test_b1_class_admission_49f.py",
+          "disposition": "CARRY",
+          "evidence": "File does not exist on CLOUD at all (git cat-file -e fails); companion test for a07/d06, tied to ARMED S155."
+        },
+        {
+          "path": "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py",
+          "disposition": "CARRY",
+          "evidence": "CLOUD's only intervening commit (283ca55eb4) is a lint/ruff-only sweep, not a content supersession; CLOUD content still lacks the structured/commodities widen. Tied to ARMED S155."
+        },
+        {
+          "path": "data/black_diamond/scripts/gold/D_03.composition_artifacts.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb; tied to ARMED S155."
+        },
+        {
+          "path": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb; tied to ARMED S155."
+        },
+        {
+          "path": "data/black_diamond/scripts/gold/lib/mix_views.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb; the BD twin of the COT mix_views file (which IS ruled SUPERSEDED below) -- no equivalent CTO ruling found naming the BD file specifically, so it stays tied to ARMED S155 rather than the 'ALONE' ruling (which named the COT re-cut ff63895521 only)."
+        },
+        {
+          "path": "data/black_diamond/scripts/gold/tests/test_b1_class_admission_bd.py",
+          "disposition": "CARRY",
+          "evidence": "Does not exist on CLOUD; tied to ARMED S155."
+        },
+        {
+          "path": "data/cot/scripts/gold/lib/mix_views.py",
+          "disposition": "SUPERSEDED",
+          "evidence": "CTO signoff c1862baf18 + CRO signoff b5bb9430e7 (COT cash line addendum 5): 'S152 re-cut ALONE ff63895521 stands (list + test + future import)' -- ff63895521 is byte-identical to irpt-m-s152-cloud's tip a94749d9d1 for this file (diff empty) and adds ONLY cash/other, not structured/commodities. This branch's version of the same file adds structured+commodities+cash+other; the CTO/CRO ruling names the narrower version as the one that stands ALONE, superseding this branch's wider cut for this file."
+        },
+        {
+          "path": "data/cot/scripts/gold/runners_cot/d08_cot_mix_summary.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb; tied to ARMED S155, no ruling against it found."
+        },
+        {
+          "path": "data/cot/scripts/gold/tests/test_b1_class_admission_cot.py",
+          "disposition": "CARRY",
+          "evidence": "Does not exist on CLOUD; tied to ARMED S155."
+        },
+        {
+          "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/B1_AND_CASH_LINE_CRITERIA_20260926.md",
+          "disposition": "CARRY",
+          "evidence": "0.4.0_DS_ClientPlatform~X's own deliverable record of completed measurement work under work order @8b45af0917 -- does not exist on CLOUD; still valid evidence regardless of the code's landing status, and the row it documents (S155) is still open, not dropped."
+        },
+        {
+          "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/D08_D06_CASH_LINE_DELTA_20260926.json",
+          "disposition": "CARRY",
+          "evidence": "Same deliverable set as above -- measurement data, absent from CLOUD, not reversed."
+        },
+        {
+          "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/comp-constants-MIX_ASSET_CLASSES-widen.patch",
+          "disposition": "CARRY",
+          "evidence": "The saved patch artifact X produced because 'its lane refused the file' (per commit 1c70dce6d4, which applies this same patch on ~M's behalf); absent from CLOUD as a deliverable, still the record of what was asked for."
+        },
+        {
+          "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/d08_d06_cash_line_delta.py",
+          "disposition": "CARRY",
+          "evidence": "Same deliverable set -- measurement script, absent from CLOUD, not reversed."
+        },
+        {
+          "path": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md",
+          "disposition": "PRESENT",
+          "evidence": "Append-only shared channel. This branch adds 4 rows originally numbered S150-S153 (colliding with ~M's own S150-S153); CTO 101771 renumbered them to S153-S156 and they were landed on CLOUD under those ids (bbac642fc7, edc9d47808) -- verified present by direct grep of ids IRPT_BCKEND-S153..S156 in CLOUD's current file (each found exactly once)."
+        }
+      ]
+    },
+    {
+      "branch": "irpt-m-s152-cloud",
+      "tip": "a94749d9d178d0a09da443b7af3203c3d9bec917",
+      "ahead": 1,
+      "disposition": "DRAIN",
+      "evidence": "This is ~M's OWN signed re-cut of row S152 (CTO 101688, CRO 101686; tolerance ruled at CTO 101700; final CTO signoff c1862baf18 + CRO signoff b5bb9430e7: 'S152 re-cut ALONE ff63895521 stands' -- ff63895521 and this branch's tip a94749d9d1 are byte-identical for mix_views.py, same commit message, different hash from a re-commit). Despite being fully SIGNED and ruled to stand ALONE, neither ff63895521 nor a94749d9d1 is an ancestor of CLOUD -- CLOUD's live mix_views.py still reads MIX_ASSET_CLASSES=['equity','fixed_income','alternatives'] (no cash/other). Both files genuinely missing and clearly still wanted (signed, not superseded by anything else -- it IS the standard the other branch's file was measured against): CARRY.",
+      "files": [
+        {
+          "path": "data/cot/scripts/gold/lib/mix_views.py",
+          "disposition": "CARRY",
+          "evidence": "0 CLOUD commits since mb touch this file; CLOUD's live MIX_ASSET_CLASSES lacks 'cash'/'other'. This is the SIGNED, ruled-ALONE version (CTO c1862baf18, CRO b5bb9430e7) -- the authoritative fix that irpt-m-s152's wider cut was ruled superseded by, yet it is itself still unmerged to CLOUD."
+        },
+        {
+          "path": "data/cot/scripts/gold/tests/test_s152_mix_views_cash_other.py",
+          "disposition": "CARRY",
+          "evidence": "File does not exist on CLOUD (git cat-file -e fails). Covered by the same CTO/CRO signoff ('list + test + future import') as the mix_views.py change."
+        }
+      ]
+    }
+  ]
+}

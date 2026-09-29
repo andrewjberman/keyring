@@ -12078,3 +12078,59 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Corroboration only, cited by the r3 half's addendum 1 as named item 4. Not a rollback trigger and not a condition of any half. Memoization lives in this seat's local harness and is not proposed for the artifact."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W81-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~81",
+  "surfaced_at": "2026-09-29T16:40:00Z",
+  "one_line": "Cell IB-mr-231's 15:3xZ preamble says 'ten local branches named irpt-m-*' and names nine (irpt-m-r4-holdings ANCESTOR; irpt-m-s125-20260924 PRESENT; irpt-m-b01b-skip + irpt-m-s152-cloud ABSENT; irpt-m-cot-b1, irpt-m-cot-cash-line, irpt-m-cot-cash-line-act, irpt-m-s125-publish, irpt-m-s152 DIVERGED). Live `git branch --list 'irpt-m-*'` returns NINE branches, and they are not the same nine: irpt-m-r4-holdings does not exist anywhere (local or remote-tracking; empty result on `git branch -a | grep -i r4-holdings`), and irpt-m-comparison-consumer exists live but is named nowhere in the preamble. The cell's own build step ('list them yourself') anticipated exactly this and is followed for the census; carried as a row because the preamble's branch count and membership are themselves wrong, not just its per-branch verdicts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (already inert same turn: this worker's cell instructed live enumeration, not the preamble's, and R23_M_BRANCH_CENSUS_20260929.json/.md census irpt-m-comparison-consumer (WORLD-DONE, both files PRESENT, byte-identical to CLOUD) and omit the nonexistent irpt-m-r4-holdings; no further act owed unless the issuing seat wants its own preamble corrected)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`git branch --list 'irpt-m-*'` (worktree C:/Users/AndrewBerman/Desktop/wk_irpt_bckend_81, 2026-09-29T16:34Z): 9 lines -- irpt-m-b01b-skip, irpt-m-comparison-consumer, irpt-m-cot-b1, irpt-m-cot-cash-line, irpt-m-cot-cash-line-act, irpt-m-s125-20260924, irpt-m-s125-publish, irpt-m-s152, irpt-m-s152-cloud",
+      "`git branch --list '*r4-holdings*' -a` and `git branch -a | grep -i r4-holdings`: 0 hits (rc 0, empty output) -- the branch the preamble calls ANCESTOR of CLOUD does not exist on this worktree's refs",
+      "irpt-m-comparison-consumer: tip dbe20f8022, 2 commits ahead of merge-base f17b53e25e, both files (infra/aws/lambda/investor-reporting/_scope/maintained_sources.py + its test) byte-identical to CLOUD (git diff <branch> CLOUD empty for each) -- a real, already-resolved branch the preamble's nine names never mention",
+      "cell IB-mr-231 text: 'For EVERY local branch matching irpt-m-* (list them yourself: git branch --list 'irpt-m-*')' -- the build step itself does not trust the preamble's enumeration"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell IB-mr-231 preamble: '2.0.0_SA_COO~M's pre-relaunch work sits on ten local branches named irpt-m-*' followed by nine named branches and their claimed dispositions.",
+  "world_is": "Nine irpt-m-* branches exist live, not ten, and the membership differs from the nine named: irpt-m-r4-holdings is absent from every ref plane checked, and irpt-m-comparison-consumer (already WORLD-DONE) is present but unnamed in the preamble.",
+  "notes": "No production code, schema or path was touched by this finding; it is a discrepancy in the issuing seat's own pre-relaunch read, most plausibly because a branch was deleted/renamed or the preamble was drafted from a stale `git branch` snapshot. The full per-branch, per-file census (including irpt-m-comparison-consumer, WORLD-DONE) is in org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R23_M_BRANCH_CENSUS_20260929.json."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W81-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~81",
+  "surfaced_at": "2026-09-29T17:05:00Z",
+  "one_line": "Cell IB-mr-231's acceptance criterion IBM23-231-AC1 carries <expect>CENSUS-COMPLETE followed by the branch and file counts</expect>. The PROOF_OF_SPEC schema states 'expect' is 'the PATTERN (Python regex, searched with DOTALL) the deciding output must match' and 'carried from the task order's <expect>'. Carried VERBATIM, that text is descriptive English, not a regex the real output can satisfy: the checker's own script prints 'CENSUS-COMPLETE 9 branches 48 files' (exactly the format the cell specifies and the checker's own docstring documents), and .tools/proof-of-spec-check.py refuses the instance as structurally INVALID because the literal substring 'followed by the branch and file counts' is absent from that output -- a true, correct, deterministic result is unconditionally unable to pass proof-of-spec-check.py for this criterion as the TO currently words <expect>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (issuer amends its own task-order criteria without a CTO ruling per CLAUDE.md s.1 rule 27 L5/L6: re-word IBM23-231-AC1's <expect> to an actual matching pattern, e.g. 'CENSUS-COMPLETE \\\\d+ branches \\\\d+ files', so a correct instance can validate)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-m23-231.irpt-m-branch-census.md cell IB-mr-231: '<expect>CENSUS-COMPLETE followed by the branch and file counts</expect>' (verbatim)",
+      "org/standards/PROOF_OF_SPEC.schema.json 'acceptance.items.expect': 'the PATTERN (Python regex, searched with DOTALL) the deciding output must match; the checker grades a mechanical criterion by this match, not by the worker'",
+      "timeout 120 python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R23_CHECKS/r23_branch_census.py (run against the committed, checker-verified-complete census at commit f21d66ccaa): stdout 'CENSUS-COMPLETE 9 branches 48 files', rc=0 -- deterministic across two consecutive runs",
+      "python .tools/proof-of-spec-check.py org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~81/IRPT_BCKEND.TO-IB-m23-231.irpt-m-branch-census.proof_of_spec.json IBM23-231-AC1, with the instance's expect field carrying the TO's <expect> text verbatim: 'VIOLATION: acceptance[IBM23-231-AC1]: status=PASS but output_evidence does NOT match expect ... INVALID (rc=1)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json: the acceptance row's `expect` field IS the task order's own `<expect>` text, used as a regex, and a PASS row whose output does not match it invalidates the whole deliverable.",
+  "world_is": "The task order's own <expect> text for IBM23-231-AC1 is written as a descriptive sentence, not a regex the checker script's real, correct, documented output format can ever satisfy -- so proof-of-spec-check.py returns INVALID/rc=1 for this criterion regardless of how correct the underlying census is, and no instance carrying this <expect> verbatim can ever pass structurally.",
+  "notes": "Not weakened to force a pass: this worker's proof_of_spec.json instance carries the TO's <expect> verbatim (per the schema's own instruction) rather than substituting a matching substring, so the resulting INVALID is the honest, reproducible reading of the TO as issued. The underlying acceptance test itself is genuinely satisfied (CENSUS-COMPLETE 9 branches 48 files, matching the checker's own documented success format and this cell's plain-English bar); the gap is entirely in the <expect> tag's wording, which is the issuer's to amend (rule 27 L5/L6) since the TO file is outside this worker's <paths> grant."
+}
+```
