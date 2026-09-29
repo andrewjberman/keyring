@@ -126,7 +126,7 @@ Report once, in your final message.
 - Slot ~13, queue position 2 (after `OG-o-3`). No edge to another round-2 cell. Risk SERVED: every criterion re-reads the
   live AWS plane.
 
-<status>staged</status>
+<status>complete</status>
 <round>3</round>
 <slot>~13</slot>
 <fabric>site-z</fabric>
