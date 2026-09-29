@@ -34,8 +34,11 @@
 #         bash .tools/safe-merge.sh --abort                     # give up, restore the tree
 #         bash .tools/safe-merge.sh --self-test
 #
+#         bash .tools/safe-merge.sh --verify-merge <commit>      # read-only tree check of a landed merge
+#
 # EXIT CODES: 0 merged | 1 refused, merge aborted | 2 usage/precondition, nothing done
 #             4 CONFLICT, THE MERGE IS OPEN AND YOURS TO RESOLVE (nothing landed)
+#             5 COMMITTED BUT THE BRANCH WAS NOT CARRIED (tree check, see _verify_merge_tree)
 #
 # Owner 2.0.0_SA_COO (the drain is the COO's limb). Lane .tools/ (ANY).
 set -uo pipefail
@@ -94,6 +97,11 @@ if [ "${1:-}" = "--self-test" ]; then
       "grep -q 'merge aborted; tree restored and conflict state cleared' '$0'"
   chk "the state file is resolved via --git-path (a linked worktree keeps its own)" \
       "grep -q 'git rev-parse --git-path safe-merge-conflict' '$0'"
+  # REGRESSION ARM (1.0.0_SA_CTO~Z 2026-09-29): "MERGED" was printed on merges whose tree equals ^1.
+  chk "the commit path reads the TREE before reporting MERGED (exit 5 when the branch was not carried)" \
+      "grep -q '_verify_merge_tree HEAD' '$0' && grep -q 'COMMITTED BUT THE BRANCH WAS NOT CARRIED' '$0'"
+  chk "--verify-merge refuses a non-merge commit" \
+      "! bash '$0' --verify-merge \"\$(git rev-list --no-merges -n 1 HEAD)\" >/dev/null 2>&1"
   echo "DENOMINATOR: $((n-fails)) of $n arm(s) passed"
   echo "  STOP: BLIND SPOT, STATED: every arm above is a REFUSAL or a structural check. This"
   echo "     self-test has NO GREEN MERGE ARM -- a version of this script that refused"
@@ -118,6 +126,55 @@ STATE="$(git rev-parse --git-path safe-merge-conflict 2>/dev/null || echo '')"
 [ -n "$STATE" ] || { echo "safe-merge: cannot resolve the git dir" >&2; exit 2; }
 
 _merge_open() { [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null || echo /nonexistent)" ]; }
+
+# ---------------------------------------------------------------- post-commit TREE check
+# ⛔ 1.0.0_SA_CTO~Z 2026-09-29 (DSGN_AMGTV1 round-2 DRAIN_END_READ s.3 @e724da66a2): under shared-tree
+# lock contention this script printed "MERGED and committed" on 0e98284fa2 and 8e0a9b6400, whose TREE
+# equals their first parent -- the worker's two files were never carried -- and ef21ed3f77 swept another
+# seat's staged deploy-ledger files. A peer's act reset or re-staged the SHARED index while the grade and
+# the commit hooks ran. Every parent-based read is green on such a merge, and the branch now reads as an
+# ancestor: a re-run is a no-op and /cleanup would delete its worktree as "merged". ONLY THE TREE TELLS.
+# NEED    = files the branch changed (merge-base..^2) that the first parent did not already carry.
+# DROPPED = NEED files the merge commit did not change. All of NEED dropped -> rc 5 (not carried).
+#           Some dropped -> WARN only: a PICK-ours conflict resolution is legitimate.
+# FOREIGN = files the merge commit changed that the branch never touched -> WARN only: a drain may
+#           legitimately carry task-order status closes in the merge commit (/dispatch Step 5).
+_verify_merge_tree() {
+  local m="$1" mb bfiles need landed dropped foreign nn nd
+  git rev-parse -q --verify "$m^2" >/dev/null 2>&1 || { echo "safe-merge: $m is not a merge commit -- nothing to verify" >&2; return 2; }
+  mb="$(git merge-base "$m^1" "$m^2" 2>/dev/null)" || { echo "safe-merge: no merge-base for $m -- tree check could not run" >&2; return 2; }
+  bfiles="$(git diff --name-only "$mb" "$m^2" | LC_ALL=C sort)"
+  need="$(LC_ALL=C comm -12 <(printf '%s\n' "$bfiles" | sed '/^$/d') <(git diff --name-only "$m^1" "$m^2" | LC_ALL=C sort))"
+  landed="$(git diff --name-only "$m^1" "$m" | LC_ALL=C sort)"
+  dropped="$(LC_ALL=C comm -23 <(printf '%s\n' "$need" | sed '/^$/d') <(printf '%s\n' "$landed" | sed '/^$/d'))"
+  foreign="$(LC_ALL=C comm -23 <(printf '%s\n' "$landed" | sed '/^$/d') <(printf '%s\n' "$bfiles" | sed '/^$/d'))"
+  nn="$(printf '%s\n' "$need" | sed '/^$/d' | wc -l | tr -d ' ')"
+  nd="$(printf '%s\n' "$dropped" | sed '/^$/d' | wc -l | tr -d ' ')"
+  echo "safe-merge: tree check $(git rev-parse --short "$m"): branch needed ${nn} file(s), dropped ${nd}, foreign $(printf '%s\n' "$foreign" | sed '/^$/d' | wc -l | tr -d ' ')"
+  if [ -n "$foreign" ]; then
+    echo "safe-merge: WARN -- the merge commit carries file(s) the branch never touched (a status close is expected; anything else is another seat's staged work riding this commit):" >&2
+    printf '%s\n' "$foreign" | sed '/^$/d; s/^/              /' >&2
+  fi
+  if [ "$nn" -gt 0 ] && [ "$nd" -eq "$nn" ]; then
+    echo "safe-merge: *** COMMITTED BUT THE BRANCH WAS NOT CARRIED -- the tree check found none of its ${nn} needed file(s) in the merge. ***" >&2
+    echo "            The branch now reads as MERGED (an ancestor), so re-running safe-merge is a no-op." >&2
+    echo "            Land its content from the branch tip, then commit it under your serial:" >&2
+    printf '%s\n' "$dropped" | sed '/^$/d; s/^/              /' >&2
+    echo "                git checkout $(git rev-parse --short "$m^2") -- <the files above>" >&2
+    return 5
+  fi
+  if [ "$nd" -gt 0 ]; then
+    echo "safe-merge: WARN -- ${nd} of ${nn} needed file(s) kept the first parent's version (fine for a PICK-ours resolution; otherwise it is lost work):" >&2
+    printf '%s\n' "$dropped" | sed '/^$/d; s/^/              /' >&2
+  fi
+  return 0
+}
+
+if [ "${1:-}" = "--verify-merge" ]; then
+  [ -n "${2:-}" ] || { echo "safe-merge: usage: safe-merge.sh --verify-merge <commit>" >&2; exit 2; }
+  _vrc=0; _verify_merge_tree "$2" || _vrc=$?
+  exit "$_vrc"
+fi
 
 # ---------------------------------------------------------------- --abort
 if [ "${1:-}" = "--abort" ]; then
@@ -341,5 +398,12 @@ if ! git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then
   exit 1
 fi
 rm -f "$STATE" "$STATE.branch" 2>/dev/null || true
+# The commit's hooks are the longest window a peer has to reset the shared index under this merge.
+# Read the TREE now, before reporting anything (see _verify_merge_tree).
+_vrc=0; _verify_merge_tree HEAD || _vrc=$?
+if [ "$_vrc" -eq 5 ]; then
+  echo "safe-merge: NOT MERGED -- commit $(git rev-parse --short HEAD) landed WITHOUT the branch's content (exit 5)." >&2
+  exit 5
+fi
 echo "safe-merge: MERGED and committed -- $(git rev-parse --short HEAD)"
 echo "safe-merge: remember the drain's remaining steps -- remove the worktree and its branch explicitly."
