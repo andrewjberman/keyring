@@ -11158,3 +11158,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The derived form also removed a latent defect the first shape carried: a typed firm token in the declaration would have had to be kept in step with the registry by hand, and nothing checked it. The test test_the_declaration_is_data_and_carries_its_basis now asserts the derivation (no `firm` field present, lookup(master) resolves, and the entry key contains both custodian and master) rather than any string."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W64-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~64",
+  "surfaced_at": "2026-09-29T00:10:00Z",
+  "one_line": "IB-pr-201/202 (round 20 ~P): holdings_gold.calculate must set lineage.provider = OPAL_HOLDINGS (PRD ADDENDUM v0.19 rulings 10, 12) and self-validates via normalize.validate_report, exactly f49_engine.calculate's own contract shape -- but PerformanceReport.schema.json's lineage.provider enum (GENERATED from the PRD CONTRACTS table @62301f71e0, a pin that predates ADDENDUM v0.19) is closed to [SMARTX, BLACK_DIAMOND, ORION, OPAL_ENGINE, UNKNOWN] and refuses OPAL_HOLDINGS with a jsonschema ValidationError. All three acceptance criteria (P20-1-AC1, P20-1-AC2, P20-2-AC1) FAIL on this one cause; the arithmetic, window rules, account mapping and retained-layer provider switch are each independently confirmed correct (see grounding). Regenerating the contract is an L4 PRD/ CONTRACTS-table act (1.0.0_SA_CTO only, CLAUDE.md rule 27); both schema copies sit outside this order's <paths> grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (L4 PRD/CONTRACTS-table owner, rule 27: add OPAL_HOLDINGS to PerformanceReport.schema.json's lineage.provider enum via the PRD CONTRACTS table and its generator, then regenerate both docs/contracts and infra/_contracts copies -- COT and INF's later same-basis switches, ruling 12, will hit the identical wall until this lands)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/PerformanceReport.schema.json and docs/contracts/investor-reporting/v1/PerformanceReport.schema.json, properties.lineage.properties.provider.enum == ['SMARTX', 'BLACK_DIAMOND', 'ORION', 'OPAL_ENGINE', 'UNKNOWN'] at 8340a8fef2 (this worktree's HEAD); the schema's own description states it is GENERATED from org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md @62301f71e0.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md lines 484-527 @8340a8fef2, ADDENDUM v0.19, rulings 10 and 12: requires lineage.provider = OPAL_HOLDINGS and retires the engine read 'in the same act'; no ruling names a CONTRACTS-table or schema-enum update.",
+      "python -c holdings_gold.calculate(scope, '2026-01-01', '2026-01-07', <in-memory gold source>) raised: jsonschema.exceptions.ValidationError: \"'OPAL_HOLDINGS' is not one of ['SMARTX', 'BLACK_DIAMOND', 'ORION', 'OPAL_ENGINE', 'UNKNOWN']\" -- Failed validating 'enum' in schema['properties']['lineage']['properties']['provider'], raised inside infra/aws/lambda/investor-reporting/performance/holdings_gold.py:240 (normalize.validate_report(report)).",
+      "P20-1-AC1 real run (timeout 120 python p20_1_ac1_gold_fixture.py .), rc=1: 'FAIL A: ValidationError' / 'FAIL B: SI refused as ValidationError' / 'PASS C1 unknown account: refused as HoldingsGoldRefused' / 'PASS C2 3-year window: refused as HoldingsWindowNotRuled' / 'P20-1-AC1 FAIL' -- arms C1/C2 never reach validate_report and pass; A/B do and fail.",
+      "P20-1-AC2 real run against the LIVE gold (184 landed partitions, thread account 0010498003), rc=1: 'FAIL: holdings_gold could not answer (ValidationError); independent chain over 184 days 0.058285199226'.",
+      "P20-2-AC1 real run, rc=1: pytest FAILED on jsonschema.exceptions.ValidationError inside holdings_gold.calculate, reached via retained.py's FRESH path only -- the captured irpt_retained_phases log line shows path=fresh with no reopen entry against the pre-switch OPAL_ENGINE pointer, proving the accepted-key namespace switch in retained.py correctly never reopens the old-provider report; the ONLY failure downstream of that is the enum.",
+      "Manual confirmation the arithmetic itself is correct: with normalize.validate_report monkeypatched to a no-op for OBSERVATION ONLY (never committed, never used by any acceptance run), holdings_gold.calculate against the SAME live gold and window (2026-01-01..2026-09-25) returned value=0.058285199226329354, provider=OPAL_HOLDINGS -- matching AC2's independent 184-day chain oracle 0.058285199226 within 1e-12."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-201 cell text: 'calculate(scope, start, end, source) -- the SAME return contract and report shape as f49_engine.calculate (... lineage.provider = OPAL_HOLDINGS)'; f49_engine.calculate's own pattern (reused here) ends with normalize.validate_report(report), so the same contract shape implies the same self-validation before returning a report.",
+  "world_is": "normalize.validate_report reads PerformanceReport.schema.json, whose lineage.provider enum is closed to [SMARTX, BLACK_DIAMOND, ORION, OPAL_ENGINE, UNKNOWN] and does not admit OPAL_HOLDINGS -- so a correctly-computed holdings report always raises jsonschema.ValidationError there, and all three of this order's acceptance criteria FAIL on exactly this cause, never on the chain arithmetic, the window rules, the account mapping or the retained-layer provider switch (each independently confirmed correct).",
+  "notes": "NOT worked around: the schema was not hand-edited (outside this order's <paths> grant and, by its own docstring, GENERATED -- a hand edit would itself be 'a fabrication ... refused by the IB-s-18 battery'); the check scripts were not weakened; holdings_gold.py and retained.py implement the switch exactly as specified and are proven correct independently of this gap (tests/test_holdings_gold.py, tests/test_retained_performance.py, both green, plus the live-gold manual read above). Disarm requires an L4 PRD CONTRACTS-table edit adding OPAL_HOLDINGS to the provider enum and a regeneration of both schema copies -- 1.0.0_SA_CTO's act, not a worker's."
+}
+```
