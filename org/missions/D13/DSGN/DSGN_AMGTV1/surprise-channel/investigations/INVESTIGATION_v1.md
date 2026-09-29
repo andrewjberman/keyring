@@ -309,6 +309,20 @@
  "spec_asserts": "A walk's step line and SUMMARY describe the page the step looked at; a step that cannot reach the page fails loudly.",
  "world_is": "Twelve steps on the sign-in page each printed '0 finding(s)'; only the walker:control-missing findings and the screenshots show the walk was void. Walk A's disarm also printed no 'REFUSED' proof line (walk B's did).",
  "notes": "Filed by the issuer at the round-3 close; the close walk record uses walk A for VLO only and walk B for INTU and SAP GY. The 500 on the select step is likely the Z-S2 class (Advisor Intelligence clients-tab), unconfirmed: walk A's api_issues list was not read per URL."
+},
+{
+    "id": "DSGN_AMGTV1-Z-W13-S1",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~13",
+    "surfaced_at": "2026-09-29T14:45Z",
+    "one_line": "Git Bash rewrites the walker's --route /security-analysis to C:/Program Files/Git/security-analysis, so walkvoid.sh reached page.goto with an invalid URL until walk.mjs undid the rewrite.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {"status": "GROUNDED", "evidence": ["node -e console.log(process.argv) -- --route /security-analysis under Git Bash prints C:/Program Files/Git/security-analysis", "walk.mjs --no-login --route /security-analysis before the fix: ERROR page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL, walk void: no, rc=0"]},
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AV-w-1 AC1 runs walk.mjs --route /security-analysis from bash and expects WALK VOID and a non-zero exit.",
+    "world_is": "Under MSYS the route arrives mangled; walk.mjs now strips a leading drive-and-Git prefix from --route values (in the cell's paths), after which walkvoid.sh reads YES exit=0. A walk started from Git Bash without that strip would have failed on the goto, not on the sign-in page."
 }
 ]
 ```
