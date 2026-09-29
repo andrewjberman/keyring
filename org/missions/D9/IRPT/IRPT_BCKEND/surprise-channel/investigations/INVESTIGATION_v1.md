@@ -11016,3 +11016,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not blocking this cell -- disarmed in-session by writing both filenames. Left for the gate/L4 convention owner: either check_complete_flip() should also try a to_id-derived filename (parsed from the TO's own <to_id> tag), or L4/L6 should keep every TO's filename slug and its to_id identical going forward so the ambiguity cannot recur."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S188",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-29T00:25:00Z",
+  "one_line": "RULING that DISARMS rows IRPT_BCKEND-W41-S1 and IRPT_BCKEND-W41-S2 (disarm owner 1.0.0_SA_CTO): both R1 read-back failures are dispositioned by S173's canonical-classifier re-point, not by rollback; W41-S2's BD half is re-read at the first partition computed after the write, because a historical partition is never reprocessed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-W41-S1: the served 09-28 COT run classifies FCASH and the all-cash z09308511 as fixed_income because S173's empty-map fallback (ETFClassifier Layer 3 name pattern) routes CASH/SWEEP/MONEY MARKET names to fixed_income -- the same served value as before the act, so the act moved nothing served",
+      "row IRPT_BCKEND-W41-S2: C_06's incremental watermark never reprocesses a computed historical date, so the 2026-09-23 partition named as the half's reader cannot show the write; BD ran 2026-09-26T05:14Z and 2026-09-27T05:16Z after the write (03:21:35Z)",
+      "STATUS~M.md runbook rule (IRPT_BCKEND @e589729e6a): 'A fail is dispositioned by the rollback in its own entry or by S173's re-point, never by a merge'"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Neither act made the served output worse: the cash and NEOS/CSHI classes are wrong before and after for the S173 reason, which is the one act that fixes them; W41-S2's BD reader was mis-named and is re-pointed to the first post-write partition.",
+  "spec_asserts": "Each half's named reader shows the move after the act (R1 read-back).",
+  "world_is": "The COT moves wait on S173 (etf-classifications as the canonical table, Andrew-direct 871b7458ec); the BD move is readable only on partitions computed after the write.",
+  "notes": "Acts: (1) ledgers cot-cash-admission-m-20260925 and bd-securities-cot-new-p1-m-20260926 stay OPEN, no rollback, each closing on S173's re-point read-back; (2) 2.0.0_SA_COO~M re-reads the BD half at the first mix_daily_summary partition dated after 2026-09-26T03:21:35Z and records it in the ledger; (3) S173 remains ONE act with halves, gated on the POSN owner's etf-classifications fill on site Z (coverage @9ab15461ca: COT 39.7%, BD 68.1%)."
+}
+```
