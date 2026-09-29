@@ -109,7 +109,7 @@ reads.** The same worker (`~39`) is continued. `HVST-b-2` does not start until t
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>in_progress</status>
+<status>complete</status>
 <round>13</round>
 <slot>~39</slot>
 <fabric>site-z</fabric>
