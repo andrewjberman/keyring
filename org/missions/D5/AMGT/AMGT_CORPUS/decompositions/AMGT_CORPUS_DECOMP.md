@@ -1,45 +1,46 @@
-# AMGT_CORPUS -- L5 decomposition v16.0 -- ROUND 16 (one cell: the daily trigger for induction_run)
+# AMGT_CORPUS -- L5 decomposition v17.0 -- ROUND 17 (two cells: a model-block census; the r-1 re-sign, sequenced)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-09-29 ~22:2xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-15 analysis
-`ledger/ROUND_ANALYSIS.round15.md` @`c265fbb6ff` (msg 26742, READ-acked), s.2 ruling and s.4 ENRICHMENT LIST, one item.
-Round 15's decomposition is kept as `AMGT_CORPUS_DECOMP.round15.md`. Base of the cut: CLOUD `8f7237f20f`.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-09-29 ~23:1xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-16 analysis
+`ledger/ROUND_ANALYSIS.round16.md` @`61ed59c609` (msg 26772, READ-acked), s.4 ENRICHMENT LIST (two items) and s.2 rulings 1-4.
+Round 16's decomposition is kept as `AMGT_CORPUS_DECOMP.round16.md`. Base of the cut: CLOUD `c467c34342`.
 
 ## 0. What this round IS
 
-| # | item (analysis s.4) | cell | slot |
+| # | item (analysis s.4) | cell | class |
 |---|---|---|---|
-| 1 | schedule the existing `induction_run` (pinned commit, builder-named, first fire under a pair + NEVER-2 entry) | `CRPS-r-1` | `~1` |
+| 1 | a newly registered name gets its model block (`Z-W173-S5`, Hitachi) -- census first | `CRPS-s-1` | worker, LOCAL, read-only |
+| 2 | re-sign `r-1` once AMGT_RESAPP r50 cell 5 (the pool-union invariant) drains | `CRPS-s-2` | the issuer's WORLD act under a pair + NEVER-2 entry; no order |
 
-**NOT cells** (the analysis): the six render outcomes (AMGT_RESAPP round 50); `Z-S59`; the two Disabled `OpalResearch-*`
-tasks.
+**NOT cells** (the analysis): the crosswalk invariant (AMGT_RESAPP r50 cell 5); widening the evidence rule (ruling 2: name-only
+folders stay a manual act).
 
 ## 1. The rectangle
 
-| cell | serves | `<risk>` | class | write set | the build |
-|---|---|---|---|---|---|
-| `CRPS-r-1` | FWD-4, FWD-19 | WORLD (the drain's registration and first fire) | worker | `lib/research/corpus/induction_scheduled.py` (new), `lib/research/corpus/schedule_induction.ps1` (new), `lib/research/corpus/tests/test_induction_schedule.py` (new) | the trigger only: an entry that computes today's UTC `as_of` and calls `induction_run.main`; a registration script whose `-Plan` names the builder's task name, a detached checkout of a pinned commit, and the action; an offline test of the scheduled path on planted folders |
+| cell | serves | `<risk>` | write set | the act |
+|---|---|---|---|---|
+| `CRPS-s-1` | the served read of a newly registered name | LOCAL | `deliverables/0.9.0_WK_AMGT_CORPUS~1/MODEL_BLOCK_CENSUS_ROUND17.{json,md}` | the census over the 96 live folders (present/absent, latest stamp), plus the producer chain and whether it admits new registrations |
+| `CRPS-s-2` | FWD-4, FWD-19 (the scheduled induction) | WORLD | the Scheduled Task and a pinned checkout (round 16's act, unchanged) | `schedule_induction.ps1 -Register -Commit <invariant commit>` under a re-signed pair; ad-hoc QA run; first 13:00Z fire the acceptance |
 
 ## 1a. Re-groundings at L5
 
-- **The producer exists and is complete.** `induction_run.py` makes ONE `add_security --batch` call per run, and NO call when
-  the population is empty. It REFUSES ambiguous and folder-token-disagreeing rows. `--fire` is gated on `OPAL_INDUCTION_FIRE=1`
-  plus today's `as_of`, and is refused under pytest. The cell does not edit it.
-- **The name is builder output** (Rule 30), measured at the cut: `opal_naming.name('amgt', None, 'induction', 'daily')` ->
-  `amgt-induction-daily`. No registry row is needed.
-- **Pinned, never the shared tree.** Site-Z Scheduled Tasks run the tree they point at. The action's `WorkingDirectory` is a
-  detached checkout of the merged commit, at a path derived from the repository root.
-- **The producer's population rule has a limit (row `Z-S61`, filed with this issuance).** A folder whose ONLY identity evidence
-  is its name, like Hitachi 6501 JP, is NO_EVIDENCE to `induction_run`, so the schedule would not have registered it. The
-  analysis's contract ("every folder with no crosswalk row is registered") is therefore wider than the producer. The cell
-  schedules the producer as ruled; whether to widen the rule is the CTO's call.
-- **Drain (WORLD, the issuer's):**
-  - `schedule_induction.ps1 -Register -Commit <merged sha>` under a never-widen pair and a NEVER-2 entry.
-  - The first scheduled fire is the acceptance. Expected, by the producer's rule: population 0 of 96, so no call and no put.
-  - Positive arm: AC1's planted folder on a scratch library.
+- **s-1:** `model_block_pull.py` requires `--securities` (at most 3, no population default), so admission is decided by its
+  CALLERS. The census names them. The pull itself (a vendor call plus a served write) is not this cell's act; if admission is
+  missing, the fix is the next cell and Hitachi's pull is a served write under its own pair.
+- **s-2: dependency as data.** `s-2` fires when AMGT_RESAPP round-50 cell 5 (`write_pool` / `build_crosswalk` never drops a
+  record present in the latest served pool) is merged on CLOUD.
+  - At the cut that cell is not issued: RESAPP's round-50 list holds it.
+  - Re-pin `r-1` to a CLOUD commit carrying both `bb2f3dbb18` and the invariant.
+  - Re-sign with the COO half re-measured, and the CTO half grading branch 2 again. The act, the 13:00Z cadence and the builder
+    name stand (ruling 3).
+  - Until then, nothing is registered. The CVO measured 0 matching tasks and no pinned checkout.
 
 ## 5. The round -- one issuance, fan-out as data
 
-- `fanout: 1 of 1 chains, cap 8, reason: one cell (the analysis's enrichment list has one item).`
-- **Drain:** re-grade at the tip; merge; the pair; `-Register`; the first scheduled fire read from its log and the pool listing.
-  Then the L8 packet goes to `3.0.0_SA_CVO~Z`.
-- Surprise rows from `Z-S62`. Worker rows are `AMGT_CORPUS-Z-W1-S<k>`, with `disarm_owner 2.0.0_SA_COO~X`.
+- `fanout: 1 of 2 chains, cap 8, reason: s-1 is issued now; s-2 is the issuer's act sequenced behind AMGT_RESAPP r50 cell 5,
+  no order.`
+- **Close:**
+  - s-1: re-grade at the tip, merge, and the one real run (this seat re-lists Hitachi's model-block prefix).
+  - s-2: registration, ad-hoc QA run and first fire under the pair.
+  - Then the L8 packet goes to `3.0.0_SA_CVO~Z`. If s-2 is still blocked on RESAPP when s-1 drains, the packet states that
+    and the block.
+- Surprise rows from `Z-S64`. Worker rows are `AMGT_CORPUS-Z-W1-S<k>`, with `disarm_owner 2.0.0_SA_COO~X`.
