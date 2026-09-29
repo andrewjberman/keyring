@@ -6,6 +6,11 @@
 # ruling 3a @123071c5cd): exercise it in the SAME CONTINUOUS ACT, in THIS tree (not a scratch
 # copy), scored on OUTPUT. If you cannot finish the exercise inside the window, REVERT FIRST.
 # ============================================================================================
+# WHOSE FILE THIS IS: the OPERATOR's. It reads the operator's own Claude credential store, is imported by the D7
+# ticket-intake runner integrations/ticketing/intake/runner.py, and is the engine of the operator's /teams-assist
+# catch-up. It is NOT the Opal Analyst's: the Analyst has its OWN watch at
+# opal_ai/opal/agent/teams_watch/teams-watch.py.
+
 #!/usr/bin/env python3
 """teams-watch.py -- the /teams-assist monitor ENGINE (like org/mcp/inbox-watch.sh, but for Teams).
 

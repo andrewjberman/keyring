@@ -92,13 +92,13 @@ projects:
     why: "SECOND for a seat on Andrew-direct 2026-09-17 ~23:3xZ, VERBATIM: 'I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX.' That SUPERSEDES his ~19:0xZ ordering of these two and nothing else -- IRPT_BCKEND is first in both. Its lane 2.0.0_SA_COO~T is named on its tree row, so the word returns a lane rather than choosing one. His 2026-09-16 hold ('No we'll wait for now before getting into TAXSMA; we are moving fast and I don't want to clog up system') is LIFTED by that word. Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_233xZ_THREE_COO_DRIVE_LOOPS_30M_AND_SEAT_ORDER_TAXSMA_THEN_MCPINDEX.md"
 
   NFRA_MCPINDEX:
-    fabric: laptop
+    fabric: site-z
     stage: 0
     waits_on: []
     why: "THIRD for a seat, on the same ~23:3xZ word, which moved it behind MDPF_TAXSMA and left IRPT_BCKEND first. The Opal MCP tool index, registered under D9 on his 2026-09-17 word; its ten outcomes are confirmed. Whoever seats 2.0.0_SA_COO~M reads the compiled block first: L5 cannot start against a PRD both halves have not admitted, and that is a compiled fact, not a handwritten one."
 
   NFRA_OPLGTW:
-    fabric: laptop
+    fabric: site-z
     stage: 0
     waits_on: []
     why: "Second in Andrew's seat order, the same word."
@@ -214,35 +214,41 @@ change_log:
     by: "1.0.0_SA_CTO"
     change: "ORDER CHANGED -- MDPF_CANON takes the NEXT COO slot. Moved stage 2 -> 0 and placed FIRST in the file, because the reader queues by stage then file order and printed NEXT COO SLOT: MDPF_TAXSMA -> NFRA_MCPINDEX -> ADVI_FIRMBKTS -> MDPF_CANON immediately before this edit -- his pick was LAST of four, so the file contradicted his word. It REVERSES this seat's own rec (/open-calls card 1 recommended ADVI_FIRMBKTS). Nothing else moves: ADVI_FIRMBKTS keeps its stage-2 place, MDPF_CANON's hold travels with the row unchanged, and the ~23:3xZ ordering of IRPT_BCKEND / MDPF_TAXSMA / NFRA_MCPINDEX is undisturbed beneath it. Capacity read AT CAP 3/3 at the edit, so this SEATS NOTHING today -- it sets the order; seating stays 0.0.0_AB_MSTR's. Precedent for a stage move on a seat word: the ~19:0xZ IRPT_BCKEND move, stage 3 -> 0."
     word: "'1.) No MDPF CANON first as test run. 2 and onward yes to all approved' (Andrew-direct ~22:3xZ 2026-09-18 at the 1.0.0_SA_CTO terminal, answering /open-calls card 1; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_223xZ_FIVE_CARDS_MDPF_CANON_FIRST_AS_TEST_RUN.md @8a44134dab)"
+  - at: "2026-09-28"
+    by: "1.0.0_SA_CTO~Z"
+    change: "ATTRIBUTE FIX, NO ORDER MOVED -- NFRA_MCPINDEX and NFRA_OPLGTW fabric laptop -> site-z, matching their register rows (project.json fabric site-z; COO~MI and COO~O seated on site Z). sequence-check read DRIFT on both. Corrected without his word under the header rule: it changes no order."
+    word: "none required (an attribute correction); raised by 1.0.0_SA_CTO~O msg 26250 from its /self-drive tick 1 (@7612f001c4)"
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-09-18T22:55:43Z",
-    "head": "94b0c19f27",
-    "sequence_file_last_commit": "3ce018566e 2026-09-17T21:34:10-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-09-28T22:20:39Z",
+    "head": "a0186c364b",
+    "sequence_file_last_commit": "55903c6259 2026-09-18T18:57:07-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
-      "box_fabric": "laptop",
-      "cap": 3,
+      "box_fabric": "sitez",
+      "cap": null,
       "live_coo_lanes": [
-        "2.0.0_SA_COO~B",
-        "2.0.0_SA_COO~G",
-        "2.0.0_SA_COO~O"
+        "2.0.0_SA_COO~AI",
+        "2.0.0_SA_COO~H",
+        "2.0.0_SA_COO~MI",
+        "2.0.0_SA_COO~MP",
+        "2.0.0_SA_COO~O",
+        "2.0.0_SA_COO~X",
+        "2.0.0_SA_COO~Z"
       ],
-      "free": 0,
+      "free": null,
       "next_slot_order": [
         "MDPF_CANON",
-        "MDPF_TAXSMA",
-        "NFRA_MCPINDEX",
         "ADVI_FIRMBKTS"
       ]
     },
     "flags": {
       "denominator": 10,
       "counts": {
-        "NEEDS-SLOT": 3,
-        "LANE-DARK": 1
+        "NEEDS-SLOT": 2,
+        "READY-IDLE": 5
       }
     },
     "stages": [
@@ -256,10 +262,12 @@ compiled:
             "prd": "v2.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
             "last_activity": "881c16d426 2026-09-16T15:20:10-04:00",
             "flags": [
-              "NEEDS-SLOT"
+              "NEEDS-SLOT",
+              "READY-IDLE"
             ],
             "notes": [
-              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row",
+              "every gate met; no commit under its home for 12 days"
             ],
             "gates": [
               {
@@ -275,49 +283,41 @@ compiled:
           "IRPT_BCKEND": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.14 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "589610f663 2026-09-18T18:11:53-04:00",
+            "prd": "v0.18 WITHHELD (brief STALE, ratified-text SIGNED)",
+            "last_activity": "89f619e28b 2026-09-28T14:47:41-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
-            "coo_lane": "2.0.0_SA_COO~B",
+            "coo_lane": "2.0.0_SA_COO~P",
             "phase": null
           },
           "MDPF_TAXSMA": {
             "dep_stage": "EXECUTING",
-            "status": "scoping",
+            "status": "active",
             "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "3dcb249826 2026-09-15T20:01:05-04:00",
-            "flags": [
-              "LANE-DARK"
-            ],
-            "notes": [
-              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~T is not live on this box, so its round waits for a COO seat"
-            ],
+            "last_activity": "c79d558edd 2026-09-24T20:59:06-04:00",
+            "flags": [],
+            "notes": [],
             "gates": [],
             "coo_lane": "2.0.0_SA_COO~T",
             "phase": null
           },
           "NFRA_MCPINDEX": {
-            "dep_stage": "PRD",
+            "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "3ce018566e 2026-09-17T21:34:10-04:00",
-            "flags": [
-              "NEEDS-SLOT"
-            ],
-            "notes": [
-              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
-            ],
+            "last_activity": "067dc14967 2026-09-28T18:17:42-04:00",
+            "flags": [],
+            "notes": [],
             "gates": [],
-            "coo_lane": null,
+            "coo_lane": "2.0.0_SA_COO~O",
             "phase": null
           },
           "NFRA_OPLGTW": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.9 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "6acc95cba2 2026-09-18T18:46:54-04:00",
+            "prd": "v1.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "fa66d9e9f2 2026-09-28T17:26:10-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -334,7 +334,7 @@ compiled:
             "dep_stage": "CLOSED",
             "status": "complete",
             "prd": "v1.10 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "40773deb8b 2026-09-16T12:48:30-04:00",
+            "last_activity": "78983b5bde 2026-09-20T18:39:37-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -345,9 +345,13 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "1cbc91d66a 2026-09-18T17:09:05-04:00",
-            "flags": [],
-            "notes": [],
+            "last_activity": "4125630e8a 2026-09-21T16:08:08-04:00",
+            "flags": [
+              "READY-IDLE"
+            ],
+            "notes": [
+              "every gate met; no commit under its home for 7 days"
+            ],
             "gates": [
               {
                 "kind": "waits_on",
@@ -362,9 +366,13 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "1c05ea5d95 2026-09-18T13:29:23-04:00",
-            "flags": [],
-            "notes": [],
+            "last_activity": "07ec2c9eb9 2026-09-21T12:44:37-04:00",
+            "flags": [
+              "READY-IDLE"
+            ],
+            "notes": [
+              "every gate met; no commit under its home for 7 days"
+            ],
             "gates": [],
             "coo_lane": "2.0.0_SA_COO~G",
             "phase": null
@@ -373,9 +381,13 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "94f5d0b4b5 2026-09-18T18:06:04-04:00",
-            "flags": [],
-            "notes": [],
+            "last_activity": "c35c6e7811 2026-09-20T20:49:58-04:00",
+            "flags": [
+              "READY-IDLE"
+            ],
+            "notes": [
+              "every gate met; no commit under its home for 7 days"
+            ],
             "gates": [
               {
                 "kind": "waits_on",
@@ -405,13 +417,15 @@ compiled:
           "ADVI_FIRMBKTS": {
             "dep_stage": "PRD",
             "status": "active",
-            "prd": "v1.2 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "fb93bfac56 2026-09-17T20:39:42-04:00",
+            "prd": "v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "f5ccff15d0 2026-09-19T17:24:14-04:00",
             "flags": [
-              "NEEDS-SLOT"
+              "NEEDS-SLOT",
+              "READY-IDLE"
             ],
             "notes": [
-              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row",
+              "every gate met; no commit under its home for 9 days"
             ],
             "gates": [
               {

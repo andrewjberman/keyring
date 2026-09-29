@@ -15017,6 +15017,145 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "The harness transpiles page sources itself and resolves no '@/' alias, so any new header mount that imports through '@/' breaks it for every name. It fails LOUD (CAPTURE_FAILED, sweep rc=1), never as a false OK. Round 45's close-run was therefore read at the published gitlink c3dd9ca9 in an isolated worktree. Once 92a25762 publishes, the published page itself carries the mount and FWD-30 cannot be measured until the harness resolves '@/' (or stubs TimelinePanel with the timeline's exclusion from the three sets stated).",
   "disarm_owner": "2.0.0_SA_COO~Z -- the issuer cuts the harness fix as a round-46 cell ahead of the full FWD-1..FWD-31 pass; the HARVST push stays as authorised.",
   "notes": "Filed without halting; the close-run proceeded on the published tree. No gate is placed on 92a25762's push: Andrew's word stands verbatim."
+},
+{
+  "id": "AMGT_RESAPP-Z-S293",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-28T21:55:00Z",
+  "one_line": "The team's 'served-and-cited' cases are the SECTION HEADINGS: over all 95 live-library dossiers, 34 of 34 non-absent base/upside/downside values read exactly 'Base Case' / 'Upside Case' / 'Downside Case' at locator 0, and 0 carry content -- so FWD-12 limb 3's data half is NOT met and round-46 cell 5 (render the team's cited cases) has nothing to render.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Census 2026-09-28 ~21:5xZ, lib.research.corpus.dossier.read_dossier over the 95 folders of the LIVE research library (library.list_folders), keys via crosswalk.harvester_key + scoped_amgt.resolve_identity: base absent 61 / heading_only 34 / content 0; upside 61 / 34 / 0; downside 61 / 34 / 0; read failures 0. heading_only = value matching ^\\s*<name>\\s+case\\s*:?\\s*$ (case-insensitive).",
+      "AZN_LN_Equity (s3://opal-data-harvest/amgt/harvest/gold/research-dossier/security_key=AZN_LN_Equity/as_of=2026-09-28.4a041c4ddec87ed7.json): fields.cases.base = {value: 'Base Case', citation: {locator: 0, passage: 'Base Case', report_key: ...ASTRAZENECA Research Pack 2026 06 17_v1.pdf}}.",
+      "Producer: lib/research/corpus/dossier.py:701-704 fills fields.cases from _resolve_section_field(case_name.upper() + ' CASE', ...), whose value is the resolved section's text; the measured value is the heading line itself.",
+      "The claim it corrects: 1.0.0_SA_CTO~Z @bfc179c2ea ('cases.base / cases.upside / cases.downside each read SERVED-AND-CITED 34 ... FWD-12 LIMB 3's DATA HALF IS MET'), carried into ROUND_ANALYSIS.round45.md s.4 item 5. That census counted non-null values; it did not read them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "34 of 95 dossiers serve the team's own base/upside/downside cases, cited, so what remains of FWD-12 limb 3 is the page render (FWD-24), a round-46 cell.",
+  "world_is": "The 34 carry only the heading string of the section, cited to locator 0; no dossier carries a team case's content. A render cell would print 'Base Case' as the team's base case. The defect is in AMGT_CORPUS's section extraction, not in AMGT_RESAPP's served path.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- round-46 cell 5 is NOT cut on this measurement (decomposition s.54) and the routing of the extraction fix goes to 1.0.0_SA_CTO~Z; AMGT_CORPUS's issuer owns the extraction surface.",
+  "notes": "Filed at the round-46 cut; I did not halt the other cells."
+},
+{
+  "id": "AMGT_RESAPP-Z-S294",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-28T21:30:00Z",
+  "one_line": "round45/checks/tt-1.AC2.sh (the planted control 'THE VERDICT COUNTS A DROPPED ABSENCE') passes on ANY harness rc=1, so on a tree where the harness crashes (Z-S292) it reads 'YES on 2 of 2' with empty ABSENCES/EXPORT-COMPARE fields -- a control that passes on a blind instrument.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Shared tree (portal DEV @92a25762), 2026-09-28 ~20:0xZ: 'RKT_LN_Equity: harness rc=1;  ; ' and 'AMD_US_Equity: harness rc=1;  ; ' then 'THE VERDICT COUNTS A DROPPED ABSENCE: YES on 2 of 2', exit=0.",
+      "Published tree C:/tmp/r45pub/portal @c3dd9ca9, same two pinned exports: 'ABSENCES page=33 rich=32 same=32 missing=1 extra=0 ; EXPORT-COMPARE NOT OK' (RKT) and 'page=31 rich=30 same=30 missing=1 ... NOT OK' (AMD) -- the control's claim holds, for the right reason, only there.",
+      "The issuer cited the shared-tree run in round45/close-run/PROVENANCE.md @2b3f58e826 and corrected that line in place."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The planted control distinguishes a verdict that counts a dropped absence from one that does not.",
+  "world_is": "It distinguishes rc=1 from rc=0 only; a crash reads as the control firing. The round-46 control (uu-2 AC2) requires the tokens 'missing=1' and 'EXPORT-COMPARE NOT OK' on both exports.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- the issuer; round 46's uu-2 AC2 is the tightened control.",
+  "notes": "The round-45 close-run result stands on the published-tree run; nothing graded in round 45 rested on the crash except the issuer's own first citation."
+},
+{
+  "id": "AMGT_RESAPP-Z-S295",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-29T00:19:00Z",
+  "one_line": "uu-4's closure diff HITS stop limbs 1 and 3 and the redeploy was REFUSED before the upload: both never-widen halves measured their delta from scoped_amgt.py @78f11f5a02, but the DEPLOYED artifact is OLDER than that commit (its scoped_amgt.py is f3de463222), so the apply would also have shipped AMGT_HARVST's timeline mount -- 2 files and 9 scoped_amgt constructs neither half names.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BASELINE BY CONTENT, 2026-09-29T00:0xZ: the object at artifact VersionId 0XDw5hJWOYgx3P8CSA42oAlkLuTlupkS is 857637 B and its sha256(b64) vBSCqd71wGn1GNOpaWGKr+KdI6t+zo3QVovzEd9Mrew= equals BOTH its own content-sha256 metadata AND the live Lambda CodeSha256, and its length equals the live CodeSize -- so those are the bytes that are running. A bogus VersionId was refused as the negative control.",
+      "CLOSURE DIFF, denominator on both sides: deployed 203 members, fresh --build-only 205 (build rc=0, 50 of 50 required modules, missing [], 3 of 3 isolated-runtime arms OK). added 2, removed 0, CHANGED 3, same 200. ADDED lib/research/api/case_rule.py (licensed) and lib/research/harvest/timeline_api.py (NOT NAMED). CHANGED lib/research/api/scoped_amgt.py + lib/research/print/render_pack.py (licensed) and lib/research/harvest/publication_gold.py (NOT NAMED).",
+      "LIMB 1 HIT: 2 of the 5 moved files lie beyond the three the halves name. LIMB 3 HIT: in scoped_amgt.py, 9 constructs moved beyond _model_cases -- `handler` plus 8 ADDED functions _serve_timeline, _timeline_article_loader, _timeline_daily_loader, _timeline_event_loader, _timeline_response, _timeline_silver_articles, _timeline_snapshot_rows, _timeline_split (101 functions deployed -> 109 fresh).",
+      "LIMBS 2 and 4 CLEAR on planted-mutation-controlled extractors that FIRED: build_pack byte-identical f64c8ba3ec9dc6a4 on both artifacts; render_pack.py 32 functions both sides with exactly _model_case_line changed and its module-level statements identical (28 = 28).",
+      "PROVENANCE, by content not by filename: the deployed scoped_amgt.py member sha256[:16] 6ae14c3e128ec065 EQUALS git f3de463222 (AMGT_RESAPP round-40 drain-join). 78f11f5a02 ('feat(AMGT_HARVST HVST-z-0, 0.9.0_WK_AMGT_HARVST~31): wire the two timeline routes into scoped_amgt.handler') is fa3681de4c22912c, a DIFFERENT and LATER state; HEAD/b56fef3032 (uu-3) is d4e638a513060f4f, which equals the fresh member. So 78f11f5a02 lies STRICTLY BETWEEN the deployed artifact and HEAD.",
+      "timeline_api.py was introduced by bc360c2b7b (AMGT_HARVST HVST-w-3, 'the timeline's three routes -- range, day, event'); publication_gold.py was last moved by 12bbaa0e27 (AMGT_HARVST HVST-y-1, publisher count over TIER-A only). Both were already present at the uu-3 drain 65461f9916 and at the CTO half's own pin 4b8c8e402c.",
+      "NEITHER HALF NAMES ANY OF IT: over both half documents the token counts are timeline 0, timeline_api 0, publication_gold 0, _serve_timeline 0, handler 0. Positive control on the same instrument: case_rule reads 1 hit in the CTO half, so the grep discriminates.",
+      "WORLD MEASURED UNTOUCHED after the refusal: 37 versions of research/opal-amgt-scoped-api.zip exist and the newest is still 0XDw5hJWOYgx3P8CSA42oAlkLuTlupkS dated 2026-09-26T23:13:40Z (round-45 tt-2's, not this session's); live CodeSha256 still vBSCqd71wGn1GNOpaWGKr+KdI6t+zo3QVovzEd9Mrew= at LastModified 2026-09-26T23:35:04Z. No S3 write, no terraform plan, no apply."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Both uu-4 never-widen halves assert the act's blast radius is the CASES property alone: limb 1 admits exactly lib/research/api/case_rule.py (added), lib/research/api/scoped_amgt.py and lib/research/print/render_pack.py, and limb 3 admits in scoped_amgt.py only _model_cases and the new import. The CTO half measures the expected served move by running the landed adapter against the 'pre-uu-3 adapter (scoped_amgt.py @78f11f5a02)'.",
+  "world_is": "78f11f5a02 is not the deployed coordinate -- it is newer than the running artifact, whose scoped_amgt.py is f3de463222. The halves therefore bound the delta uu-3 INTRODUCED, not the delta the APPLY SHIPS. The apply's true delta is f3de463222 -> HEAD, which additionally carries AMGT_HARVST's timeline mount: a new packaged module (timeline_api.py), a changed publication_gold.py, 8 new _timeline_* functions and a changed `handler` -- i.e. new live routes on /api/scoped/amgt/*. The CASES expectation (48 SERVED->SERVED, 22 ABSENT->SERVED, 0 SERVED->ABSENT, M=70) is NOT disturbed by this row: it was measured on the rule, and the rule is unchanged. What is unbounded is everything ELSE the same artifact carries. Note also AMGT_HARVST row Z-S36 (f9acd618b1) reports opal-amgt-scoped-api-role holds no amgt/harvest/gold/ read, so the timeline routes may answer AccessDenied rather than data once mounted -- untested through this artifact either way.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- the issuer. Either both halves are re-signed naming AMGT_HARVST's timeline mount in the blast radius (with 1.0.0_SA_CTO~Z re-reading limbs 1 and 3 against the DEPLOYED baseline f3de463222, not 78f11f5a02), or uu-4 is re-cut on an artifact whose closure excludes it. This lane does not adjudicate which.",
+  "notes": "Filed without halting other work; the refusal is the order's own BOUNDS item 2 ('a closure diff that hits a stop limb is a REFUSAL: print it, stop, report'), so no upload and no safe-apply were run. The NEVER-2 entry amgt-resapp-uu4-scoped-amgt-adjusted-base-20260928 was opened and committed before the build as the order requires, and is CLOSED with every leg carrying an explicit NOT-EXECUTED proof rather than left OPEN to blare, because the deploy is zero-landed and measured so. SECOND, SEPARABLE FINDING: deploy_ledger.py `open` STAGES its two carriers into the SHARED git index, so a concurrent seat's commit absorbs them -- mine landed inside 2751f0be77, a 2.0.0_SA_COO~H AMGT_HARVST drain, and my own safe-commit then read 'no changes added to commit'. The entry is intact and byte-identical at HEAD, but its provenance is another seat's commit and safe-commit's contamination guard cannot see it, because the guard only governs what the CALLER stages."
+},
+{
+  "id": "AMGT_RESAPP-Z-W167-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~167",
+  "surfaced_at": "2026-09-29T03:16:11Z",
+  "one_line": "shell.harness.cjs and posture.harness.cjs cannot load the page at portal 8fa7abde: TimelinePanel.tsx:39 requires '@/api/api-client' and neither harness stubs it (only exportCompare got the stub in uu-2); shell.harness.cjs also has a second, older break.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 2026-09-29 ~02:34Z in the nested portal worktree at 8fa7abde, each under timeout 120: `node src/pages/SecurityAnalysis/__harness__/shell.harness.cjs` rc=1 and `.../posture.harness.cjs` rc=1, both 'Error: Cannot find module @/api/api-client' with the require stack ending at src/pages/SecurityAnalysis/components/TimelinePanel.tsx:39 (shell.harness.cjs:202, posture.harness.cjs:281).",
+      "Same run, controls: tabs.harness.cjs rc=0 CHECKS-OK 20 of 20; drafting 8 of 8; errorEmpty 12 of 12; posturePattern 13 of 13; exportCompare.harness.cjs loads the page with --fixture (uu-2's TimelinePanel SOURCE_STUB, portal 9125df0b) and read OK on 95 of 95 served captures.",
+      "Scratch copies outside the repository, same source with a TimelinePanel stub added: posture.harness.cjs then reads CHECKS-OK 32 of 32; shell.harness.cjs then fails on a second defect, 'Cannot find module @/components/HelperTip' from tabs/PeersTab.tsx:7, and after that stub on 'Element type is invalid ... got: undefined' (a stale component stub) -- so shell.harness.cjs is broken beyond the TimelinePanel mount."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The uu-2 fix (Z-S292) makes 'the export-compare harness load a header that mounts HARVST's TimelinePanel'; the PRD fences for FWD-21, FWD-22 and FWD-29 name the shell/tabs/posture harnesses as instruments ('the drafting, tabs and posture harnesses green').",
+  "world_is": "Only exportCompare.harness.cjs carries the TimelinePanel stub. shell.harness.cjs and posture.harness.cjs, as shipped at portal 8fa7abde, throw at module load, so the shell harness (the only static instrument for the Security-mode header/Refresh limb of FWD-27 and the identity-header band count of FWD-21) returns no reading. FWD-21/FWD-27/FWD-29 are recorded unmeasurable in FWD_EVIDENCE_ROUND46.json regardless (they need a browser); this row records that the static instrument that would have answered their partial limbs is also down.",
+  "notes": "Filed without halting. Not a worker-lane fix: the harness files are outside this order's paths. The owner of the harness set decides whether to stub TimelinePanel in each harness or add an '@/' resolver to the shared loader."
+},
+{
+  "id": "AMGT_RESAPP-Z-W167-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~167",
+  "surfaced_at": "2026-09-29T03:16:11Z",
+  "one_line": "leadPanelPattern.harness.cjs reads CHECKS-WRONG-WAY on 3 of 15 checks at portal 8fa7abde (source_caption_wraps, disclosure_own_line, caption_facts_unchanged), with captionSlice null -- the harness predates the rm-5 change to the Source caption.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 2026-09-29 ~02:34Z in the nested portal worktree at 8fa7abde: `node src/pages/SecurityAnalysis/__harness__/leadPanelPattern.harness.cjs` rc=1; 12 of 15 checks true; 'CHECKS-WRONG-WAY source_caption_wraps,disclosure_own_line,caption_facts_unchanged'; the JSON carries captionSlice null and generationLine '' while sourceFooterOccurrences is 1 and source_footer is true.",
+      "git log on components/GenerationCaption.tsx and LeadPanel.tsx: da76356a 'rm-5 ... the provenance disclosure, two limbs -- dated typed where it rides, the Source caption never clipped' is newer than the harness's own cell (bf1b6149 rl-8, drained ae760a39). The three failing checks are all read off `sourceCaptionSlice`, which finds no `data-source-caption` block, so they fail together."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-27 ('the generation and resolution lines sit in a Source: footer') and FWD-29 name the Lead Panel's own harness as an instrument; rl-8's harness was left green at its drain.",
+  "world_is": "The harness no longer matches the component's caption markup: 3 of its 15 checks fail as one cause. The Source-footer check itself (source_footer) still reads true, so the limb 'lines sit in a Source: footer' is answered by the harness while the three caption-structure checks are not.",
+  "notes": "Filed without halting; outside this order's paths. Recorded in the FWD-27 row of FWD_EVIDENCE_ROUND46.json."
+},
+{
+  "id": "AMGT_RESAPP-Z-W167-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~167",
+  "surfaced_at": "2026-09-29T03:16:11Z",
+  "one_line": "The order names 'FWD-12 limb 3 / FWD-24' as the team's cited cases (known heading-only, Z-S293), but in the AMGT_RESAPP PRD FWD-12 carries no limb 3 and FWD-24 is the Model-sheet fence: the cases obligation is the sibling project AMGT_CORPUS's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "prd/AMGT_RESAPP_PRD.md ENDPOINT fence: FWD-12 DONE WHEN = 'EXERCISED -- one input has actually been re-run by itself while the others stayed where they were' (no limb enumeration); FWD-24 DONE WHEN = 'the fiscal table renders as a white heatmap panel with tabular numerals; a REFUSED row renders one status icon and one navy sentence spanning the row; ABSENT rows fold into a single footnote naming them'. Read at 496b42d725 (last PRD change; HEAD 5151500c41).",
+      "Row AMGT_RESAPP-Z-S293 (INVESTIGATION_v1.md:15022): the census it reports is over the dossier store (lib.research.corpus.dossier.read_dossier, 34 of 34 non-absent case values are section headings) and its own text says 'FWD-12 limb 3' -- ROUND_ANALYSIS.round45.md s.3 carries the same pairing ('FWD-24 stays the open half of FWD-12 limb 3'). Those are AMGT_CORPUS outcome numbers."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says: 'FWD-12 limb 3 / FWD-24: the team's cited cases are known heading-only (row Z-S293) -- measure and say so, do not re-derive it.'",
+  "world_is": "RESAPP FWD-12 and FWD-24 are different fences from the ones the sentence names, so the sentence cannot be applied to them as written. I measured RESAPP's FWD-12 and FWD-24 as their fences read, and recorded the Z-S293 fact (team cases are headings, nothing renders them) by citation in both rows, not re-derived. The RESAPP page renders the model block's own Base/Upside/Downside case lines (70 Base SERVED of 95); nothing on the page renders the dossier's team cases.",
+  "notes": "Filed without halting. The numbering collision (two projects' FWD-12 and FWD-24 read as one) is the issuer's to resolve at the round-46 analysis; this lane adjudicates nothing."
 }
 ]
 ```

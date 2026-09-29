@@ -3945,3 +3945,592 @@ name the one known failure instead of silently inheriting it.
   "notes": "Found by the round-2 E5 draft (2.0.0_SA_COO~O fork) and verified by this seat at the bytes. The E5 cell must wire export end to end through the real run_export and remove both aliases from the export tests, so the tests exercise the branch production takes. R-4's memory reasoning still holds for the streaming remedy; only S57's account of the current path needs correcting."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-28T22:00Z",
+  "one_line": "OG-t-1 AC2's check script tk.AC2.sh cannot pass as written: line 9 carries a literal backslash-n between two test names, so bash passes a stray 9th argument 'n' and the script reads 'named tests passed 8 of 9' although all 8 named tests PASS.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/tk.AC2.sh:8-9 at HEAD b5a585cf2f: '... test_unverified_provider_floors_every_principal \n  test_machine_paths_never_reach_resolve_tier; ok=$?' -- od -c shows the two characters backslash and n on ONE line, not a newline; unquoted, bash turns '\n' into the word 'n'.",
+      "Run from the worktree root after commit b5a585cf2f: 'pytest rc=0; named tests passed 8 of 9; failed/error lines 0' then 'RESULT: FAIL', exit=1. The same pytest run, -v, shows all 8 named tests PASSED (tests/test_tier_principal.py, 8 passed).",
+      "The script is the issuer's file under deliverables/2.0.0_SA_COO~O/, outside the worker's <paths>; the order says never repair or widen a criterion."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "AC2 expects 'named tests passed 8 of 8; failed/error lines 0 -- RESULT: PASS -- exit=0'.",
+  "world_is": "The check cannot produce its expected line whatever the code does: it counts a phantom 9th name. AC2 is recorded FAIL as written and the order stays open; the fix is one character (replace the literal backslash-n with a line continuation or a space) in the issuer's file, then a re-run reads 8 of 8.",
+  "notes": "Worker did not edit the script. The 8 named tests are PASSED by name in the pytest -v output."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-28T22:00Z",
+  "one_line": "Two moto-dependent suites outside OG-t-1's paths still call resolve_tier with an EMAIL or set the email roster for a person; once moto is present test_principal_cutover.py fails (AttributeError on a str) and test_data_entitlement_guard.py test_ogz1_ac04's 'master_admin with no profile' arm silently stops being a master admin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py:395 'tier.resolve_tier(context.get_current_email(), _CFG)' and :471 'token_broker._scopes_for_tier(tier.resolve_tier(s.principal.email, _CFG))' at HEAD b5a585cf2f: an email string reaches resolve_tier(principal, cfg), which reads principal.key.",
+      "infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py:546 'monkeypatch.setattr(_CFG, \"MASTER_ADMIN_EMAILS\", (\"boss@opalinvest.com\",))' makes the admin arm of test_ogz1_ac04 a master admin at the base; after OG-t-1 resolve_tier reads no email roster, so that arm is a READ_ONLY user and the assertion 'a tier does not grant data' passes without exercising a master admin.",
+      "Both modules import moto (test_principal_cutover.py:35, test_data_entitlement_guard.py:30), which is not installed on site Z, so neither runs in the round's checks; neither is in OG-t-1's <paths> and neither is in AC3's suite list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-t-1: update test_min_tier_gate.py and test_attachment_tools.py only where they set the email rosters for a PERSON; nothing names these two suites.",
+  "world_is": "A round with moto installed will see test_principal_cutover.py fail on a stale email argument and test_data_entitlement_guard.py::test_ogz1_ac04 pass with its master-admin arm hollowed out. Fix (a later cell's paths): key both on the principal (resolve_tier(context.get_current_principal(), cfg); the ac04 arm sets MASTER_ADMIN_PRINCIPALS to the admin's tid/oid).",
+  "notes": "Neither file was edited by this worker (outside <paths>)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-28T22:30Z",
+  "one_line": "With moto installed (.venv-og), test_principal_cutover.py runs 10 passed / 1 failed and test_data_entitlement_guard.py 10 passed / 2 failed, and the SAME 3 failures read identically at the issuance base e5a6dcbe2f: they are not from OG-t-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "After the OG-t-1 edits (AUDIT_PATH set, .venv-og python): test_principal_cutover.py '1 failed, 10 passed' (test_oga2_ac04: route-classification set is missing '/', '/api/admin', '/assets/{path:path}'); test_data_entitlement_guard.py '2 failed, 10 passed' (test_ogz1_ac05 KeyError 'uncl...', test_ogz1_ac08 AssertionError; both hit 'StreamableHTTPSessionManager .run() can only be called once per instance' in isolation).",
+      "Base control: git archive e5a6dcbe2f of infra/aws/ec2/opal-gateway extracted to .scratch/base and run with the same interpreter: test_principal_cutover.py '1 failed, 10 passed' (test_oga2_ac04), test_data_entitlement_guard.py '2 failed, 10 passed' (test_ogz1_ac05, test_ogz1_ac08) -- identical failing names.",
+      "The edited tests, test_ogz1_ac04 (now with a principal-keyed MASTER_ADMIN arm asserted MASTER_ADMIN) and every other tier assertion, pass."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 7: run both suites and record pass/fail counts (drain hygiene, not a criterion).",
+  "world_is": "The two suites are not green at the base on this venv (mcp 1.28 session manager single-run, a dashboard route set the harness does not mount); the pre-existing failures are unrelated to the tier re-key.",
+  "notes": "Not fixed here: outside the cell's intent (route table and MCP-library version drift). Counts recorded for the drain."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S1",
+  "one_line": "dim_position and dim_asset COLLIDE under the declared grain on all 8 of their snapshots (2 masters x 2 dates), so the order's units question (quantity against value for one (cusip, l_s) group, sign on a short group) can only be sealed as the C3 refusal; no value answer to it exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GRAIN_DECLARATION.json (0.9.0_WK_NFRA_OPLGTW~10 deliverables): dim_position colliding keys = 10 and extra rows = 13 on each of 4 snapshots; dim_asset colliding keys = 1 with 22 or 24 extra rows on each of 4; dim_balance HOLDS on 4 of 4. Each snapshot was re-read by VersionId and re-derived by probes/og_v6.py AC1 (12 of 12).",
+      "BlackDiamond (08335338) dim_position on both dates holds short groups (l_s short: 1300 rows on each date), so a sign question exists in the data; SmartX holds none. Both are refused under the C3 rule the order states.",
+      "Sealed accordingly: RQ2-1 (units, dim_position) and RQ2-7 (paged read, dim_position) carry expected_class C3_REFUSAL in SEALED_EXPECTED_V2.json; the units question answerable with values is RQ2-2 (dim_balance value fields mkt_value_long and mkt_value_short: sign, sums, scale)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 step 3: one units question whose correct answer distinguishes a QUANTITY field from a VALUE field for the same (cusip, l_s) group and states the sign each carries on a short group; and any question whose rows touch a colliding grain has the C3 refusal as its expected answer.",
+  "world_is": "Both statements cannot hold at once on real data: the only dataset carrying a quantity field beside a value field (dim_position) collides on every measured snapshot, so the C3 rule wins and the quantity-against-value answer is a refusal. Value-field units (sign and scale) are exercised on dim_balance instead, as an addition, not a substitute.",
+  "notes": "Quantity against value stays unexercised with values until the position grain is corrected or a different grain is adopted (a spec decision for 1.0.0_SA_CTO~O, see W10-S2). The scale asked in RQ2-1 is the decimal scale of the Parquet type (5 and 4); the unit label itself (shares, dollars) is not measurable from the source and is not sealed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S2",
+  "one_line": "The collisions are structured: 5 of 10 colliding dim_position keys and the only colliding dim_asset key carry a blank component, and adding one contract column makes each colliding snapshot unique (CANDIDATE only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GRAIN_DECLARATION.json: colliding_keys_with_blank_component = 5 of 10 (dim_position, all 4 snapshots) and 1 of 1 (dim_asset, all 4); rows_in_colliding_keys = 23 (dim_position) and 23 or 25 (dim_asset).",
+      "candidate_unique_superset (label CANDIDATE): dim_position = (account_ref, cusip, l_s, quantity_settled_unsettled) with 3 alternatives at that size; dim_asset = (cusip, security_description_line_1) with 1 alternative; the search over contract columns (up to 4 extra) found a superset at 1 extra column on 8 of 8 colliding snapshots. account_ref is assumed to be the contract name of source account_id.",
+      "Counts and column names only; no key value is printed or committed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 step 2: record, for a COLLIDES snapshot, the smallest superset of contract columns that is unique on it, or NONE_FOUND, labelled a CANDIDATE.",
+  "world_is": "Recorded as ordered. Adopting a different grain, or treating blank-key rows as a source defect, is a spec decision for 1.0.0_SA_CTO~O; this cell adopts nothing.",
+  "notes": "A blank cusip on 23 to 25 dim_asset rows suggests non-security or unmapped rows entering a dataset the Gateway keys on cusip alone; that reading is inferred from the blank-component count, not measured further."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S3",
+  "one_line": "WALKTHROUGH_PROTOCOL.md still names OG-v-3 and the old C:/tmp answer path in places the order did not authorise changing: the section 4 heading (:208), the preamble (:38-39), the A7 clause 'graded by OG-v-4' (:111) and the G-D record template (:242).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WALKTHROUGH_PROTOCOL.md at the OG-v-6 commit: line 208 '## 4. Real-data questions (OG-v-3 computes and seals; A7 asks them)'; lines 38-39 'operator OUTSIDE the repository at C:/tmp/nfra-oplgtw-sealed/actual/ ... OG-v-4 hashes them there'; line 111 '(graded by OG-v-4)'; line 242 'written to C:/tmp/nfra-oplgtw-sealed/actual/'. Found by a token census of OG-v-3, OG-v-4 and nfra-oplgtw-sealed over the file.",
+      "The order changed exactly three places: A7 step 2 (:107), the :111 seal name and date, and the section 4 paragraph and table; 'Change no other row of the protocol.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 step 3: change A7 step 2 and :111 (seal and D_NEW), replace the section 4 table and its paragraph, and change no other row of the protocol.",
+  "world_is": "The remaining lines still send the operator to write actual answers under C:/tmp (the location row S42 records losing a salt from) while A7 step 2 says %LOCALAPPDATA%/opal/og-salt/actual_v2/, and still name OG-v-3 as the computing cell in the heading and OG-v-4 as the grader. ARMED because an operator following the preamble writes answers where OG-v-7 does not read.",
+  "notes": "Left untouched under the frozen-spec rule; the fix is a few-line edit by whoever owns the protocol after this cell."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S4",
+  "one_line": "Step 1 needs the list of marker dates but the grant names only GetObject and HeadObject; the run used one s3 version-listing read on schwab/<master>/meta/complete/, and each date's marker has 10 versions, so 'each marker's VersionId' is the IsLatest version at the run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measure_grain.py latest_markers(): 'aws s3api list-object-versions --prefix schwab/<master>/meta/complete/ --query Versions[?IsLatest]' (read-only; 2 calls in the script plus 4 exploratory calls before it); nothing written or deleted in S3.",
+      "GRAIN_DECLARATION.json markers: D_NEW 2026-09-25 SmartX VersionId gUxeZ71rYjY0B.QKrRKumyv4KmQ_FUy9 (LastModified 2026-09-26T22:16:14+00:00); the listing showed 10 versions of the 2026-09-25 marker in SmartX and 10 in BlackDiamond, one of them IsLatest.",
+      "Each snapshot's VersionId is the one the marker's closure.tables[<dataset>].object names, checked against the GetObject response VersionId."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 bounds: 'You may run GetObject and HeadObject by VersionId on ... meta/complete/'; step 1: 'read the closure markers s3://opal-data-assets/schwab/<master>/meta/complete/date=*.json, read-only'.",
+  "world_is": "A wildcard read of date=*.json cannot be done with GetObject alone; a read-only version listing is the only way to enumerate the dates and marker VersionIds. A marker is rewritten by each producer completion, so its VersionId is a moment's value.",
+  "notes": "Read strictly, the listing was a step beyond the named grant; it wrote nothing. The recorded marker VersionIds let OG-v-7 re-read the exact bytes."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-28T23:59Z",
+  "one_line": "Row W4-S12's mechanism is not 'the dispatcher classifies by the FIRST line': the dispatcher scans every line, but the SSM output it reads is capped at 24000 characters and the CHAIN OK terminal line is past the cap, so 0 of 104 in-window dispatches were ever classified CHAIN OK, including all 13 scheduled floor runs (UNKNOWN).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda_function.py:90-101 (_classify) loops over every line of StandardOutputContent for a line starting CHAIN OK / CHAIN REFUSED / CHAIN ABORT and only then falls back to the first line in the UNKNOWN label.",
+      "ssm get-command-invocation, instance i-01003b035d2988dfb, commands 8e7e7614-e014-4342-ae4a-47b8bb7ac0d1, e40f7c6b-0f23-4460-9c15-7cee06f2073d, d2809052-0bc4-4375-b667-6c92ddb21d7f, 502de082-94bb-46d9-9a1f-5e307922f65a: Status Success, StandardOutputContent exactly 24000 bytes each, carrying CHAIN START and no terminal line; their chain logs under s3://opal-data-49financial/gold/advi/_logs/ end 'CHAIN OK date=... wall=...' (4 of 4).",
+      "Dispatcher log window 2026-09-15T23:45Z..2026-09-28T23:45Z: 104 invocations, by outcome REFUSED 48, ABORT 33, UNKNOWN 15, running-past-poll-budget 8, CHAIN OK 0; the 13 floor invocations are 13 of 13 UNKNOWN. Record: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~13/MARKER_STORM_READ.md section 4 and .json unknown_reads."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row W4-S12 (and this cell's background) said the dispatcher classifies the SSM output by its first line.",
+  "world_is": "The classifier scans every line, but its input is cut at 24000 characters (measured 4 of 4 at exactly 24000; the cap is SSM's documented limit, inferred), so a chain longer than that never shows its terminal line and reads UNKNOWN. The dispatcher log cannot serve as the run record on the production floor path; the chain log and the SSM status are the record.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "INERT: nothing branches on the dispatcher's verdict; the chain lock and the floor bound the effect. Owner of advi-49f-gold-dispatch decides."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-28T23:59Z",
+  "one_line": "On 2026-09-23 09:46:32Z a burst dispatch's chain aborted at stage a00_dim_account (rc 1, 0.7 s) because /tmp/advi_49f_code/chain_49f_entrypoint.py did not exist on the host; the dispatcher logged it as UNKNOWN, not ABORT, because that command's stdout has no CHAIN line at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm get-command-invocation b127a4df-5c19-4041-b6de-096fce9bf64e on i-01003b035d2988dfb: Status Failed, ResponseCode 2, 294 bytes stdout in 3 lines, first line starts \"python3: can't open file '/tmp/advi_49f_code/chain_49f_entrypoint.py'\"; no line starting CHAIN.",
+      "s3://opal-data-49financial/gold/advi/_logs/chain_20260923T094632Z.log, 3 lines: first 'CHAIN START date=2026-09-22 mode=production ...', last 'CHAIN ABORT stage=a00_dim_account rc=1 wall=0.7s -- nothing after this stage ran'.",
+      "Dispatcher log: that invocation (09:46:20Z, source aws:s3, started_by_dispatcher false) is one of 10 dispatches for date=2026-09-22 between 09:46:09Z and 09:46:49Z; six more chain logs stamped 09:46:36..09:46:49 are 155 bytes each."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A dispatch that starts a chain either runs it, is refused by the lock, or aborts on a named stage (silver.tf:744-746 treats the accelerator as harmless beside the floor).",
+  "world_is": "One of the ten concurrent burst dispatches found the chain's code directory absent on the shared host, so its chain never ran a stage. Whether a concurrent chain's cleanup removed /tmp/advi_49f_code was not measured (no host read was in scope).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "INERT for this order: the same day's floor run succeeded (chain log ends CHAIN OK) and the lock bounds the burst. Owner is the 49F ADVI chain's owners; a remedy cell should read the host's bootstrap and cleanup order before touching the trigger."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T00:30Z",
+  "one_line": "OG-x-2 makes the export's parent memory flat and its child memory nearly flat, but a 250,000-row export of wide rows still peaks the child above the 256 MiB job cap on the test host: the source table and DuckDB's sorted result are resident in the child.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED (Windows working set, poll 3 ms, engine._plan_job called directly in a fresh python 3.11 / pyarrow 18.1.0 / duckdb 1.2.2 process; scratch scripts prof8/prof9 under the worktree .scratch, not committed): 250,000 rows x 2 columns peak 223.9 MiB; x 4 columns peak 260.5 MiB at a 128 MiB DuckDB limit (258.3 at 64); x 11 columns peak 333.8 MiB at 128, and at 64 MiB DuckDB raises OutOfMemoryException (58.8 of 61.0 MiB used) which _child_entry maps to LIMIT_EXCEEDED/memory.",
+      "MEASURED test_ogx2_ac01 (tests/test_schwab_export_stream.py, 5 passing runs after the final change): child peak ratio 100k/10k rows = 1.134, 1.140, 1.134, 1.176, 1.150 for a 2-column export; the same test with a 4-column export measured 1.204 to 1.270 across 6 runs (FAIL: 6 of 6 above 1.2), so the criterion is met on a 2-column export and not on a 4-column one.",
+      "engine.py _plan_job: _read_source keeps the projected source table whole (bounded by the 12-object / 64 MiB compressed source caps) and _write_export_batches streams DuckDB's ORDER BY result, which DuckDB materialises before the first batch; the contract's tie-break sort (query.DATASET_GRAINS) makes every rows-mode export sort. EXPORT_DUCKDB_MEMORY_BYTES = 64 MiB was chosen because DuckDB's sort spills at that limit (100,000-row sort delta 14.3 MiB vs 24.0 MiB at 128 MiB, prof5) but it also lowers the width at which DuckDB itself refuses.",
+      "The figures are Windows working set on site Z. The pilot host's Linux RSS is NOT measured here, so these numbers show the scaling and the order of magnitude, not the pilot host's values."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OGX2-AC1 and R-4: memory stops being a function of the export's size and a 250,000-row export fits the 256 MiB job cap.",
+  "world_is": "The parent (the Gateway process) is flat: tracemalloc peak 0.9x to 1.0x across 10,000 and 100,000 rows. The child is not: it adds tens of MiB per 100,000 rows on top of a ~150 MiB import baseline (about 25 MiB at 100,000 rows x 3 sort keys, prof5), so the largest allowed export is refused LIMIT_EXCEEDED/memory once its rows are wide enough. It is refused loudly, never truncated (PRD C5), but FWD-4's 250,000-row ceiling is not reachable for wide datasets.",
+  "notes": "REC to the issuer: OG-x-3's on-host proof should measure a 250,000-row export at the widest catalog_id projection (dim_position, all granted columns) on the pilot host before it is called realised. Levers not taken here (each changes SQL or DuckDB use beyond this cell): sort keys-only and gather payload in Arrow, or a smaller EXPORT_DUCKDB_MEMORY_BYTES with a spill-friendly result path."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T00:31Z",
+  "one_line": "tests/acceptance/onhost_bench.py, outside this cell's <paths>, calls engine.run_export(principal, plan, sources) and reads job.value['csv']; after OG-x-2 run_export requires row_cap and export_dir keywords and returns an export_path, so the next on-host bench run raises TypeError on its export leg.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/acceptance/onhost_bench.py:206 `return await engine.run_export(principal, plan, sources)` and :199 `len((job.value or {}).get('csv', b''))` at 9e4074c33a; the new signature is engine.py ExecutionEngine.run_export(self, principal, plan, sources, *, row_cap, export_dir) on branch wk-NFRA_OPLGTW-11.",
+      "The bench is not among the five suites this cell must keep green, and its path is not in the cell's <paths>, so it was left as it is."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order lists the tests to correct (test_schwab_engine.py, test_schwab_export.py, test_schwab_query.py, acceptance/conftest.py) and nothing else that calls run_export.",
+  "world_is": "A second caller of run_export exists in the acceptance tree. It fails loudly (TypeError), not silently, the first time the bench's export leg runs after OG-x-2 merges.",
+  "notes": "Fix belongs in whichever cell next runs the bench (the capacity cells): pass row_cap=250000 and an export_dir, then read the file's row count with engine.read_export_batches instead of csv bytes. Also stale after OG-x-2: the bench's comment at :366-371 about the missing 'rows'."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T00:32Z",
+  "one_line": "test_schwab_engine.py::test_ogq1_ac04 failed once in three whole-suite runs on site Z with `assert not eng.pid_alive(killed.child_pid)` after a deadline kill, and every engine test prints 'Windows fatal exception: access violation' from popen_spawn_win32.py while still passing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "First combined run (test_schwab_engine + test_schwab_wiring + acceptance in one pytest process): 1 failed (test_ogq1_ac04, pid_alive True 3.03 s after the kill), 15 passed; the same module alone then passed 13 of 13 twice (.scratch/suite_eng.log, .scratch/final_test_schwab_engine.log, not committed).",
+      "The deadline branch of ExecutionEngine.submit (engine.py, `_kill(proc)` then return, reaped in `finally`) is unchanged by OG-x-2; the failing assertion runs before the reap completes on a slow spawn. The access-violation lines are faulthandler output in the parent during multiprocessing spawn (Python 3.11.9 on Windows) and appear in the passing runs too."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Schwab engine suite is green at the cell's close (order section 2).",
+  "world_is": "On site Z the suite is green when each module runs alone and can fail one timing assertion when modules share a process; the cell's final counts are from per-module runs.",
+  "notes": "INFERRED, not reproduced: one failure, no second sample. Reported so the drain does not read a single red ac04 as a regression of this cell."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-29T00:40Z",
+  "one_line": "OG-h-1 item C's premise is already met at the cut base: tests/conftest.py sets AUDIT_PATH to a per-session temp file before any app import (OG-d-1); the only gap was that it overwrote an AUDIT_PATH the environment already set, which is what the order asks to honour.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/conftest.py at HEAD 14d3ce32a8, lines 17-24 before this cell's edit: _AUDIT_DIR = tempfile.mkdtemp(...); os.environ['AUDIT_PATH'] = _AUDIT_FILE, with a session fixture patching the cached Config.",
+      "hy.AC2 (the four modules, AUDIT_PATH unset, twice): 'tracked files modified by the runs 0' with the edit in place; the edit changes only the env-honouring behaviour."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row W3-S2 and OG-h-1 item C say a suite run appends to the tracked audit.jsonl and that conftest.py must set AUDIT_PATH to a temp file.",
+  "world_is": "conftest.py already redirected AUDIT_PATH at the base; the row's measurement predates it or was taken in a run that did not load this conftest. The cell's edit is limited to honouring an environment-set AUDIT_PATH.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-29T00:40Z",
+  "one_line": "OG-h-1 bound 1 says the item F Scan is the only AWS call; this worker made one extra read-only call, dynamodb describe-table on gateway-access-state-table, to confirm the key schema (pk, sk) before the Scan.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "describe-table returned KeySchema pk HASH, sk RANGE, TableStatus ACTIVE and ItemCount 198; the Scan then read 203 items (ItemCount is refreshed about every six hours).",
+      "Both calls read-only under Andrew_Berman; nothing was written, deleted or updated in AWS by this cell."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-h-1 bound 1: the Scan in Item F is the only AWS call.",
+  "world_is": "Two read-only DynamoDB calls, not one. The key names were needed for the ProjectionExpression.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-29T01:10Z",
+  "one_line": "OG-h-1 item A cannot land: safe-commit.sh's naming limb (LGIC_ENFORCE DEC-6, ENFORCE) refused the line-ending renormalization of infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml with 16 NAMING REFUSE findings, so AC1 (stored CRLF 0) is unmet and W2-S8 stays ARMED.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh at wk-NFRA_OPLGTW-13 (base 14d3ce32a8): 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' 16 NAMING REFUSE lines, all DATA_CATALOG.yaml at 632, 637, 648, 661, 672, 684, 695, 707, 718, 730, 740, 752, 763, 775, 818, 1304; reason on each: 'EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it'.",
+      "git ls-files --eol at the base: 41 gateway files with the seven extensions, 40 i/lf and 1 i/crlf (DATA_CATALOG.yaml); git add --renormalize on it changed 1,404 lines, line endings only.",
+      "The .gitattributes rule alone leaves DATA_CATALOG.yaml ` M` in git status (attr text eol=lf against an index blob stored CRLF), reproduced in this worktree, so it was not landed either. Detail: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~13/ITEM_A_BLOCKED.md."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-h-1 item A: one .gitattributes block plus git add --renormalize on DATA_CATALOG.yaml, in one commit; a file the commit gates refuse is a BLOCKING row, never an override.",
+  "world_is": "The naming limb reads a whole-file line-ending rewrite as adding 16 out-of-pattern S3 keys owned by MDPF_CANON, so the renormalization cannot be committed by a worker. The eol rule and the renormalization must land together, and neither did.",
+  "notes": "Not overridden. The decision is the issuer's: clear the naming limb for this one line-ending-only diff, or have a seat the gate admits land it, then apply the block in ITEM_A_BLOCKED.md."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T01:00Z",
+  "one_line": "The order grants only s3:GetObject on the marker prefix but has the dispatcher read the marker at the event's versionId; S3 requires s3:GetObjectVersion for a GetObject that names a VersionId, so as specified every accelerator marker read returns AccessDenied and the gate skips every fire, qualified ones included.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "Order OG-m-2 item 2 (GetObject at the event's versionId, never the latest) and item 4 (`s3:GetObject` on arn:aws:s3:::opal-data-assets/schwab/08335338/meta/complete/*, no other action) at 14d3ce32a8; dr.AC2.sh fails any s3 action other than exactly ['s3:getobject'].",
+      "AWS S3 API reference for GetObject: returning a specific version needs the s3:GetObjectVersion permission; s3:GetObject alone covers only the current version. Not exercised against live S3 in PHASE A (no AWS write, no vendor call); the unit tests stub s3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "One statement pair, s3:GetObject only, lets the dispatcher read the exact marker version that fired (never the latest) and gate on closure.status.",
+  "world_is": "The code and .tf are built as ordered. Deployed unchanged, the marker read fails closed (SKIP ... closure.status=error:ClientError): 0 accelerator dispatches per date instead of 1; the floor is unaffected. It is inert until PHASE B ships.",
+  "notes": "Issuer decision before GO: either widen the never-widen ask to add s3:GetObjectVersion on the marker prefix (and amend dr.AC2.sh, which grades GetObject alone), or drop VersionId (reads the latest, contradicting the CTO's exact-PUT reading). The worker did neither; the order's own text is built."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T01:10Z",
+  "one_line": "The naming gate (LGIC_ENFORCE DEC-6, ENFORCE) refuses the PHASE A commit: the ordered chain-log S3 key prefix gold/advi/_logs/chain_ (lambda_function.py:67) and its IAM ARN (advi_49f_floor.tf:161) are 'NEW and OUT-OF-PATTERN as S3Key' against advi/{scope}/gold/_logs/chain_; the address is dictated by the existing SSM document, which uploads there.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at 14d3ce32a8 base: `NAMING REFUSE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:67 gold/advi/_logs/chain_ -> advi/{scope}/gold/_logs/chain_` and `NAMING REFUSE infra/aws/terraform/opal-assets/advi_49f_floor.tf:161 arn:aws:s3:::opal-data-49financial/gold/advi/_logs/chain_*`; 4 paths graded, 3 seen; the bucket and 49f-label lines were WARN only.",
+      "The key is the SSM document's own upload target (advi_49f_floor.tf:272-290 at 14d3ce32a8), so it cannot be moved by this cell."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's code, tests and .tf commit through safe-commit.sh and its gates.",
+  "world_is": "The commit is refused and unstaged; no override used. The code, tests and .tf diff are in the worktree uncommitted, and saved as a patch beside the ANNOUNCE. The deploy build gate needs committed source, so PHASE B cannot start from this branch until the issuer rules the naming refusal (an R20 register entry, or a registry row).",
+  "notes": "Per bound 8 this is one BLOCKING row, no override. The unit tests pass 6 of 6 on the uncommitted tree."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T02:00Z",
+  "one_line": "A2 route (iii): route (i) cannot emit the key and, after route (ii)'s refactor, the naming gate still refuses the ONE Terraform local line advi_49f_floor.tf:56 (gold/advi/_logs/chain_) as EXISTING and OUT-OF-PATTERN in a surface assigned to the live remediation ADVI_FIRMBKTS; the commit is not made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Route (i): lib/opal_naming.py address('advi','49financial','gold','_logs','chain_') returns s3://opal-data-49financial/advi/49financial/gold/_logs/chain_, a different layout from the existing gold/advi/_logs/chain_ the SSM document writes; address('gold',...) raises `source 'gold' is not a systems.json key`.",
+      "Route (ii) built: local.advi_49f_chain_log_prefix read by the SSM upload, the IAM ARN and env CHAIN_LOG_PREFIX (+ CHAIN_LOG_BUCKET); no Python literal left. Command `python .tools/naming-gate.py --enforce --diff <the infra diff>` at HEAD e534f3d938 + worktree edits, EXACT refusal text: `NAMING REFUSE infra/aws/terraform/opal-assets/advi_49f_floor.tf:56 gold/advi/_logs/chain_ -> advi/{scope}/gold/_logs/chain_` / `why: EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation ADVI_FIRMBKTS: REFUSE unless the diff removes it` / `NAMING-GATE: REFUSE 2 graded`. The diff does remove the same literal from the SSM cp line (one occurrence out, one in), and the gate still refuses.",
+      "Only other line: lambda_function.py:69 advi.49f.silver-accelerator, WARN (EXISTING hand-kept carrier), not a refusal.",
+      "Guard on (ii) read: targeted plan (-lock=false) `Plan: 0 to add, 2 to change, 0 to destroy.` -- aws_iam_role_policy.advi_49f_gold_dispatch and module.advi_49f_gold_dispatch.aws_lambda_function.this (env CHAIN_LOG_BUCKET, CHAIN_LOG_PREFIX added); aws_ssm_document not listed, so unchanged."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A2: route (i) or (ii) passes the naming gate, else (iii) files the exact refusal.",
+  "world_is": "The naming refusal stands on the one local line; no override used. The worktree carries the uncommitted code, tests and .tf; the saved patch and test copy are refreshed beside ANNOUNCE. The issuer routes the row (a registry/remediation decision on ADVI_FIRMBKTS's surface).",
+  "notes": "6 of 6 tests pass on the uncommitted tree. Everything else in the A1/A2 rulings is applied: marker ARN carries GetObject + GetObjectVersion, chain-log ARN GetObject alone."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T02:10Z",
+  "one_line": "The order's ledger open command uses leg kind 'tf' and its safe-apply command has no -auto-approve; deploy_ledger.py accepts only activation/ec2-baked-asset/git/s3-prefix/tf-lambda/verify and the apply stopped at the approval prompt with EOF (nothing applied).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/deploy_ledger.py open ... --leg 'iam|tf|aws_iam_role_policy.advi_49f_gold_dispatch|get-role-policy read' -> `ERROR: leg kind 'tf' not in ['activation', 'ec2-baked-asset', 'git', 's3-prefix', 'tf-lambda', 'verify']`; reopened with kind verify (ledger entry 20260929T0153Z_nfra-oplgtw-dispatch-classifier-remedy at 03e6d5611c).",
+      "HALT_ACK=1 .tools/safe-apply.sh -chdir=... apply -target=... (no -auto-approve) printed the plan `0 to add, 2 to change, 0 to destroy` (the exact signed shape) then `Error asking for approval: EOF`, rc=1, no change; re-run with -auto-approve applied it, 0 added 2 changed 0 destroyed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's literal open and apply commands run as written.",
+  "world_is": "Both were corrected in the smallest way (kind verify; -auto-approve after reading the plan in the first run's output). The signed write set was not exceeded.",
+  "notes": "Fix in the issuer's next order template."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "TO-OG-g-1's GCG1-AC3 names the invocation `schwab_entitlement_admin.py prepare`, but the command's CLI has no `prepare` subcommand -- argparse admits only activate, revoke and deny-backfill, so the named invocation exits 2 on an invalid choice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CLI: infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py:416-448 _build_arg_parser adds exactly three subparsers -- 'activate', 'revoke', 'deny-backfill' -- on `sub = p.add_subparsers(dest='command', required=True)`; main():456-495 dispatches on those three and nothing else.",
+      "FUNCTION: `prepare` exists at :313-339 as a module function that `activate` calls internally, and it is what prints the scope diff (`print(format_diff(diff), ...)` at :330), so the diff AC3 wants is produced on the activate path.",
+      "ORDER TEXT: the AC3 clause reads '(`schwab_entitlement_admin.py prepare`)' and its second sentence already says 'The probe re-runs the validation against the recorded candidate rather than trusting the transcript', which is the programmatic path."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A `prepare` subcommand exists on the operator command's CLI and can be invoked to validate a candidate and print its scope diff.",
+  "world_is": "`prepare` is an internal function, not a subcommand. The criterion's SUBSTANCE is met by calling the command's own validate_candidate/prepare -- the same code `activate` runs -- which is what probes/og_g1.py AC3 does; the scope diff reaches an operator on the `activate` path. Only the CLI token in the order's text is wrong.",
+  "notes": "INERT: nothing is blocked by this alone and no workaround was invented -- the probe calls the committed module's own validator. Fix in the issuer's next order template."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "GCG1-AC3 and GCG1-AC6 cannot both hold for any Schwab grant: a runnable candidate structurally names raw account identifiers, AC3 requires the evidence file to carry the printed scope diff VERBATIM, and AC6 forbids a raw account identifier in any artifact this order commits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PARSER: infra/aws/ec2/opal-gateway/app/data_entitlement.py:261-264 -- `if not isinstance(accounts_raw, dict) or set(accounts_raw) != masters: raise Malformed('scope.accounts must name the accounts of every granted master and no other')`, then `_strings(v, ...)` per master.",
+      "NON-EMPTY: :204-206 `_strings` raises Malformed('%s must be a non-empty list of strings') on an empty list, so every granted master must name at least one real account id; the id shape is `_ACCOUNT = re.compile(r'^[0-9A-Za-z._-]{1,64}$')` at :127.",
+      "DIFF: the scope diff AC3 wants verbatim is scope_diff()/format_diff() at :208-241, which diffs every dimension including `accounts`.",
+      "AC6 TEXT: 'the probe scans the evidence file, the probe itself and the result file for a token, cookie, client secret, complete URL with a query string, raw account identifier or customer amount' and 'The identity's tid/oid and the grant's scope ARE recordable; a balance, a holding, an account title or a credential is not.' -- the accounts DIMENSION of the scope is the collision.",
+      "MEASURED: probes/og_g1.py AC3 run 2026-09-29 -- the scope half PARSES (masters=2 datasets=3 dates=fixed_dates(2) columns=15 operations=4) only with a substituted account list; the committed scope carries `<<REDACTED-AC6-OPERATOR-SUBSTITUTES>>` per master."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The evidence file can carry the operator command's scope diff verbatim AND contain no raw account identifier.",
+  "world_is": "For a Schwab grant those are mutually exclusive, so GCG1-AC3 cannot pass as written even once a controlled identity exists. Nothing was widened or worked around here: the committed scope redacts the accounts dimension and names what the operator substitutes. Two dispositions are available to the owner -- commit the diff with only the accounts dimension redacted and keep the verbatim copy outside the repository (the route WALKTHROUGH_PROTOCOL.md section 2 already uses for answers, %LOCALAPPDATA%/opal/og-salt/), or amend AC6 to exempt the grant's own accounts dimension.",
+  "notes": "ARMED because it blocks a mechanical criterion from ever passing as written, independently of the identity block; the seat cannot disposition its own order's criteria."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "A fixed_dates grant bounds the latest qualified date it can report, so once a closure marker later than 2026-09-25 lands, A7 step 4's expected observation ('a latest qualified date equal to the newest qualified closure marker for that master at ask time') will not hold for a reason that is the grant's date mode, not the system under test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED NOW: s3api list-objects-v2 on opal-data-assets 2026-09-29 -- schwab/08242234/meta/complete/ and schwab/08335338/meta/complete/ each hold 19 markers, newest `date=2026-09-25.json` in BOTH masters (LastModified 2026-09-26T22:16:14Z and 2026-09-26T09:46:52Z). So the expectation holds at this moment.",
+      "PRODUCER CADENCE: the markers land daily at ~10:16Z (08242234) and ~09:46Z (08335338); the newest landed 2026-09-26 for business date 2026-09-25, and today is 2026-09-29, so a marker for a later business date is due.",
+      "GRANT SEMANTICS: app/data_entitlement.py:472-477 `_allowed_dates` returns None for fixed_dates (the grant enumerates its dates); check_scope:482 documents 'an omitted optional dimension means the granted set', and its date limb runs only `if dates is not None`, so a no-date ask is IN SCOPE but resolves against the granted set.",
+      "PROTOCOL: WALKTHROUGH_PROTOCOL.md section 3 A7 step 4 expected observation -- 'each master's no-date ask returns a latest qualified date equal to the newest qualified closure marker for that master at ask time, and its returned available dates include 2026-09-25.'",
+      "SEAL: ruling R-OG-12 fixed D_NEW/D_PREV as literal dates 'so a newer qualified closure at ask time does not change what was sealed', which is why the grant's dates are fixed rather than rolling."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The grant's date mode and A7 step 4's expected observation are independent.",
+  "world_is": "They interact. fixed_dates {2026-09-24, 2026-09-25} is the narrowest mode that serves the 7 sealed questions and is the only one that preserves the date-dimension refusal (a real qualified marker exists for 2026-09-23), so it is what this order recorded; the cost is that A7 step 4's 'newest marker at ask time' half drifts as soon as a later marker lands. rolling_complete_window would track the newest marker but grants ~30 dates and destroys the date refusal.",
+  "notes": "ARMED so it is dispositioned BEFORE the controlled walkthrough runs, not discovered during OG-v-7's grading. Two routes for the owner: run the walkthrough before a later marker lands, or have OG-v-7 read A7 step 4's expectation as 'the latest qualified date within the grant'. GCG1-AC5 is unaffected and passes 7 of 7 -- the no-date ask is inside the grant either way."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S12",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "TO-OG-g-1 mandates surprise row ids of the form `NFRA_OPLGTW-Z-OG-S<k>`, but that shape is rejected by BOTH gates' id patterns -- the row gate would refuse the row at commit and the proof-of-spec checker cannot see it -- so the ids the order asks for are unfileable; these rows use the admitted seat-row shape `NFRA_OPLGTW-Z-S<k>` instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROW GATE: .tools/surprise-row-gate.py:104 -- ID_RE = re.compile(r'^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$'), anchored at both ends, so the only segments admitted between the project and S<k> are 'Z-', 'W<n>-' and 'C-'. :2146 refuses any row whose id does not match.",
+      "PROOF-OF-SPEC: .tools/proof-of-spec-check.py:1127 -- SURPRISE_ID_RE = re.compile(r'^\\s*([A-Z0-9_]+-(?:Z-)?(?:W[0-9]+-|C-)?S[0-9]+)\\b'), the same admitted set; :1237-1239 emits 'surprises[n] carries NO row id' on a miss.",
+      "EXERCISED: matching 'NFRA_OPLGTW-Z-OG-S1' against SURPRISE_ID_RE returns NO MATCH, while 'NFRA_OPLGTW-Z-S1', 'NFRA_OPLGTW-Z-W15-S4', 'NFRA_OPLGTW-S1' and 'NFRA_OPLGTW-Z-C-S1' all MATCH. Measured 2026-09-29 before the rows were renumbered; the first proof-of-spec validation run reported all three entries as carrying no row id.",
+      "CENSUS: at CLOUD the channel holds 191 rows across 16 id shapes -- NFRA_OPLGTW-S<k> 63, W3 26, W5 20, W1 14, W4 12, W6 11, W2 10, Z-S<k> 8, plus eight Z-W<n>-S<k> shapes. ZERO rows carry a '-OG-' segment, so no precedent exists for the shape the order names.",
+      "CHOICE: NFRA_OPLGTW-Z-S9..S12, continuing the existing site-z seat-row series (Z-S1..Z-S8 present). The channel header's own rule is that a worker row carries its slot coordinate and 'a seat's row carries none', which is what Z-S<k> is."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rows filed as `NFRA_OPLGTW-Z-OG-S<k>` are valid and will pass the row gate and be seen by the proof-of-spec surprises limb.",
+  "world_is": "Both gates reject that shape. Had the order's literal ids been used, the commit would have been refused by surprise-row-gate.py and the three rows would have been invisible to the proof-of-spec checker -- i.e. the findings would have read as unfiled. The rows carry the admitted seat-row shape instead, and nothing else about them changed.",
+  "notes": "INERT: the correction is mechanical and is recorded here so the renumbering is not read later as a seat inventing its own ids. The issuer may prefer a '-OG-' segment to be admitted by both patterns; that is a gate edit, not a row edit, and is not this seat's write surface."
+}
+```

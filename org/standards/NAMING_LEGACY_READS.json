@@ -25,6 +25,25 @@
         },
         "occurrences": 1
       }
+    },
+    {
+      "id": "OPLGTW-LEGACY-READ-01",
+      "file": "infra/aws/terraform/opal-assets/advi_49f_floor.tf",
+      "literal": "gold/advi/_logs/chain_",
+      "remediation": "ADVI_FIRMBKTS",
+      "purpose": "The 49F gold dispatcher (NFRA_OPLGTW OG-m-2b) grades the chain log's terminal line at the key the SSM document advi-49f-chain-dispatch already writes. The literal lives once as local advi_49f_chain_log_prefix, referenced by that existing write, the dispatcher's read-only IAM statement and its CHAIN_LOG_PREFIX env var. Moving the key is ADVI_FIRMBKTS's own work; a fourth reference (a new writer) is refused by count.",
+      "authority": {
+        "record": "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/1.0.0_SA_CTO~O/LEGACY_READ_AUTHORITY_OG-m-2b_20260929.md",
+        "pin": "a5aa8e92c85d94c89802073aaa8c18f2834e8367"
+      },
+      "as_of_cutoff": "2026-10-06",
+      "owner": "1.0.0_SA_CTO~O",
+      "read_context": {
+        "kind": "tf_local",
+        "local_name": "advi_49f_chain_log_prefix",
+        "occurrences": 1,
+        "reference_count": 3
+      }
     }
   ]
 }

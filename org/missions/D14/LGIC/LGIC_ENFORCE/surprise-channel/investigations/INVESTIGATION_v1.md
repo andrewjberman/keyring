@@ -6021,3 +6021,26 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "notes": "INERT: the refusal is loud and nothing is served from CHANGELOG.json. The cost is that every inf-pipeline deploy leaves its CHANGELOG unrecorded, or a seat reaches for an override. Two remedies, not this seat's to pick: have the record tool write only the functions in --function (the sweep is also a mis-attribution, since it records other seats' changes under the recording seat's version), or have the naming gate grade a regenerated block of pre-existing names as EXISTING. Owners: the naming gate's (LGIC_ENFORCE) and record-terraform-deploy.sh's."
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-Z-W9-S1",
+  "project": "LGIC_ENFORCE",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~9",
+  "surfaced_at": "2026-09-28T22:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CARRIER_CENSUS.md lines 3408 and 3412 carried a live credential value; redacted in the working tree under NFRA_MCPINDEX MX-s-13 amendment A1.",
+  "spec_asserts": "A census file records carriers and their locations, not credential values.",
+  "world_is": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/CARRIER_CENSUS.md lines 3408 and 3412 each held the value; both are now the Secrets Manager pointer placeholder, no other line changed. History is not rewritten (Andrew's ruling), so earlier commits still carry it; rotation is Andrew's. Ruling: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/RULING_Z-W13-S3_Z-W9-S1_20260928.md @8ed938b2d7. No content quoted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Count-only measurement of the value in that file: 2 occurrences on lines 3408 and 3412 before the edit, 0 after; line count unchanged."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

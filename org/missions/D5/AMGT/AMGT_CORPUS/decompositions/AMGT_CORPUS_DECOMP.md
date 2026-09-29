@@ -1,123 +1,101 @@
-# AMGT_CORPUS -- L5 decomposition v7.0 -- ROUND 7 (the enrichment round after the round-6 analysis)
+# AMGT_CORPUS -- L5 decomposition v10.0 -- ROUND 10 (the enrichment round after the round-9 analysis)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-09-26 ~18:xxZ. **Source:** `1.0.0_SA_CTO~Z`'s round-6 analysis
-`ledger/ROUND_ANALYSIS.round6.md` @`1e53f322f3` (glyph fix @`ffcadcbc0b`) section 6, six items, cut from `3.0.0_SA_CVO~Z`'s
-`ADJUDICATION_v9` @`37a8542a71`. Round 6's decomposition is kept as `AMGT_CORPUS_DECOMP.round6.md`. PRD v0.6 @`9e326e11c1`,
-both halves SIGNED current (ADMITTED). Delivered by file while the MCP send path is down fabric-wide.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-09-29 ~03:5xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-9 analysis
+`ledger/ROUND_ANALYSIS.round9.md` @`abfad1355c` section 4, four cells (msg 26429, READ-acked), answering `3.0.0_SA_CVO~Z`'s
+slug on `ADJUDICATION_v12`. Round 9's decomposition is kept as `AMGT_CORPUS_DECOMP.round9.md`. PRD v0.6 @`9e326e11c1`, ADMITTED.
 
-## 0. What this round IS, by subtraction from the analysis's six items
+## 0. What this round IS, by subtraction from the analysis's list
 
-| item | disposition |
+| item (analysis s.4) | disposition |
 |---|---|
-| 1 `Z-S45`'s reader build, BLOCKING | cell `CRPS-i-1`: the continuation readers select on `method_version` |
-| 2 the 0.33 floor -- earn it or state it UNCALIBRATED | cell `CRPS-i-2`: the served Base case carries its band WITH ITS CLAIM (ceiling measured, floor uncalibrated). Earning it is not possible from this population: no name sits within 0.2 of 0.33 on either side (h-2 @`6d18367755`) |
-| 3 AC4's workbook half | cell `CRPS-i-3`: h-2's producer captures the value BESIDE the label (196 of 200 Base-labelled cells had an empty `right` list) and SELECTS the team's written Base-case cell by a stated rule, cited by coordinate |
-| 4 `Z-W2-S10`'s three pre-`g-1` blocks | inside `CRPS-i-2`'s drain: the re-derive that serves the band claim re-mints every block key, these three with it |
-| 5 `Z-S39`'s `*` case | cell `CRPS-i-4`: a standing census that no glob/fnmatch pattern is built from a security key, with a positive control |
-| 6 a fresh 19-outcome pass | cell `CRPS-i-5`, spawned AFTER the drains of i-1 and i-2 (a pass that reads before the fixes land repeats g-4's vintage hole) |
+| 1 case unit carries its claim (ruling 1), rewrite under a pair | cell `CRPS-l-1` (`~1`, second in its queue) |
+| 2 team-vs-rule Base census (ruling 2), read-only | cell `CRPS-l-2` (`~2`) |
+| 3 the 6 unreadable tables (ruling 3) | cell `CRPS-l-3` (`~1`, first in its queue) |
+| 4 `cases-report` refuses an unresolvable key (`Z-S55`) | cell `CRPS-l-4` (`~3`) |
 
-**NOT cells:** FWD-12 limb 3's render and FWD-11's render (AMGT_RESAPP's; FWD-11 owned there by FWD-31 @`c2c6c507d6`), and
-FWD-10/FWD-15's render halves (same seam). No machine formula for any case is cut.
+## 1. The rectangle
 
-## 1. The rectangle -- five cells `CRPS-i-<n>`, cut by WRITE SET (no two cells write one file)
-
-| cell | slot | serves | `<risk>` | class | write set (`<paths>`, plus the channel) | the build |
+| cell | slot | serves | `<risk>` | class | write set | the build |
 |---|---|---|---|---|---|---|
-| `CRPS-i-1` | `~1` | FWD-18 (Z-S45) | SERVED (the drain's continuation + dossier rewrite) | worker | `lib/research/corpus/continuation.py`, `lib/research/corpus/substrate.py`, `lib/research/corpus/tests/test_continuation_reader_method.py` (new) | both input-matching readers prefer the object whose `method_version` is the producer's current one; among equals, the last write |
-| `CRPS-i-2` | `~3` | FWD-12 guard (floor), Z-W2-S10 | SERVED (the drain's re-derive of every block key) | worker-light | `integrations/bloomberg/research/model_block_pull.py`, `integrations/bloomberg/research/tests/test_band_basis.py` (new) | SERVED and `outside_band` Base cases carry an additive `band_basis` naming each bound's value and calibration claim; `cases-report` prints it |
-| `CRPS-i-3` | `~2` | FWD-12 AC4 workbook half | LOCAL | worker | `deliverables/0.9.0_WK_AMGT_CORPUS~2/case_evidence.py`, `CASE_EVIDENCE_ROUND7.json`, `CASE_EVIDENCE_ROUND7.md` | right-hand neighbours captured; one selected Base-case cell per workbook by a stated rule, cited by coordinate, beside the served Base case |
-| `CRPS-i-4` | `~4` | Z-S39 | LOCAL | worker-light | `lib/research/corpus/key_glob_census.py` (new), `lib/research/corpus/tests/test_key_glob_census.py` (new) | a read-only census of glob/fnmatch/rglob/iglob call sites under `lib/research`, flagging a pattern built from a security key, with a planted positive control |
-| `CRPS-i-5` | `~5` | FWD-1..FWD-19 | LOCAL | worker | `deliverables/0.9.0_WK_AMGT_CORPUS~5/FWD_EVIDENCE_ROUND7.json`, `.md` | one evidence row per outcome against served state AFTER the i-1 and i-2 drains; no grade |
+| `CRPS-l-3` | `~1` (first) | FWD-12 limb 3 data half (six names) | SERVED (the shared rewrite) | worker | `lib/research/corpus/dossier.py`, `tests/test_dossier_case_layouts.py` (new), `tests/test_dossier_case_table.py` | each of the six tables is read, or served ABSENT with a reason naming its own layout defect |
+| `CRPS-l-1` | `~1` (second) | FWD-12 (the unit's claim) | SERVED (the shared rewrite) | worker | `lib/research/corpus/dossier.py`, `tests/test_dossier_case_unit.py` (new) | `unit_as_written` + `currency` / `currency_basis`; census columns |
+| `CRPS-l-2` | `~2` | FWD-12 guard (the rule's pairing, `Z-S51`) | LOCAL | worker | `lib/research/corpus/base_census.py` (new), `tests/test_base_census.py` (new) | read-only team-Base / rule-Base census over every name carrying both |
+| `CRPS-l-4` | `~3` | `Z-S55` | LOCAL | worker-light | `integrations/bloomberg/research/model_block_pull.py`, `integrations/bloomberg/research/tests/test_cases_report_refuses_unresolved.py` (new) | `cases-report` refuses a key that resolves to no landed stamp |
+
+l-3 and l-1 share `dossier.py`: ONE chain, one worker, l-3 first (its layouts decide which names have a unit to claim).
 
 ## 1a. Re-groundings at L5
 
-- **i-1:** `continuation.read_latest` and `substrate._pick_stored` both return the FIRST sorted key whose `inputs` equal
-  current inputs; `inputs` carries no method version; object names are `sha16({method_version, inputs})`. Census
-  @`070cf35da9`: a /2 rewrite would be served on 49 of 95 and not on 46. `_pick_stored` serves four tables (continuation,
-  sector template, fund form, typecast); each carries `method_version` on its documents.
-- **i-2:** `CASE_BAND_LOW = 0.33`, `CASE_BAND_HIGH = 3.0` (`model_block_pull.py:1076-1077`); a SERVED base today carries
-  `ratio_to_px_last` and `band: [0.33, 3.0]` with no claim. h-2 @`6d18367755`: 2 names inside 2.5-3.0 and NFLX 0.043
-  outside (the ceiling discriminates); the 0.33-0.5 bin EMPTY, nearest accept RWE_GR 0.537, the only sub-floor name BA_US
-  refused for a different cause (the floor has never refused anything).
-- **i-3:** `case_evidence.py` reads `ws.max_column` in openpyxl `read_only` mode, where the sheet's stored dimension is
-  commonly stale; 196 of 200 Base-labelled cells came back with `right == []` (ADJUDICATION_v9 s.2(A)). The CTO's adjudication
-  @`bfc179c2ea` rules that quoting a number the team wrote, with its locator, is extraction, not generation.
-- **i-4:** Z-S39: three of 89 keys carry a metacharacter (`BP/_LN_Equity`, `NG/_LN_Equity`, `WALMEX*_MM_Equity`); the `/`
-  is escaped as `-SLASH-` on the paths measured, the `*` is not; zero key-interpolating glob sites existed when filed.
-- **i-5:** 19 outcomes FWD-1..FWD-19 in the PRD header; the round-5 pass @`95b6f068ed` read 10 REALIZED (after correction A2).
+- **l-3.** `checks/round10/l3_six.py` at the base: `l3 names 6 body_names 0 absent_specific 0 absent_generic 6 sum 6`; every
+  one of the six reads `... row 'EPS' carries 14 values, expected 3 x 5` (round 9's worker: one Base EPS value missing).
+- **l-1.** Round 9's census: `unit_carried 10` (AZN U+00A3 on a GBp listing; ML U+20AC; `$` on BP, CPA, ORA, SAP, SHOP, SPOT,
+  TTE, UNVGY). The CVO measured `$` on three EUR listings and one CAD listing (ADJUDICATION_v12). The listing currency is on
+  the name's stored model block (`currencies`), which `build()` already reads (`_model_block_read`).
+- **l-2.** A stored block's `cases.base` carries `status`, `ratio_to_px_last`, `px_last.value`, `inputs.consensus_eps`,
+  `inputs.trailing_median_pe`, `band`, `band_basis`; `value` only when SERVED. ADBE's newest block (`20260929T024507Z`) is
+  ABSENT (outside the band) with `ratio_to_px_last 3.319...` on `px_last 238.93` -- the rule's figure exists though the band
+  refused it. The team's Base is the served dossier's `cases.base.value.Price` by year.
+- **l-4.** At the base: `cases-report --securities AMD_US_Equity` prints `base ABSENT ... no consensus EPS on the landed block`,
+  `cases_report served 0 refused 1`, rc 0; `"AMD US Equity"` prints `base SERVED ratio 0.659...`.
 
 ## 2. Rule 24 record, for what this file ADDS
 
-i-1's pick is a total order over input-matching objects: current method first, then last write, then key name. i-2's
-`band_basis` carries two claims over one closed pair of values (`measured` / `uncalibrated`), each with its basis; it moves no
-served number and no disposition. i-3's selection rule is printed on every selected row and the neighbourhood stays beside it.
-i-4 flags; it changes no key. i-5's `state` enum is the round-5 one (`met` / `unmet` / `unmeasurable`).
+`currency` is `null` unless the symbol maps to exactly one ISO code AND that code is the listing's; `currency_basis` names
+why when null. The six-table checker partitions the six into `body_names` / `absent_specific` / `absent_generic`, summing to 6.
+The Base census partitions names into `both` / `team_only` / `rule_only` / `neither`, summing to the resolved names.
 
 ## 3. Placement and holds on others' surfaces
 
-i-2 on the Bloomberg lane's puller, granted by `<paths>` for this order only (as e-2, f-2 and g-1 were). i-1 and i-4 on this
-project's corpus package; i-3 and i-5 in their workers' deliverables. `Z-S46` holds every `continuation --write` at this seat
-until i-1 drains.
+l-4 on the Bloomberg lane's puller (read-only stage, `<paths>` grant for this order only); it does not touch `derive` or
+`case_rule.py`. l-1/l-3/l-2 on this project's corpus package.
 
-## 4. Dependency edges, keyed to OBSERVED completion
+## 4. Dependency edges
 
-- i-1, i-2, i-3, i-4 are independent at build time; i-5 is ISSUED with them and SPAWNED after the i-1 and i-2 drains land.
-- i-1 -> the census `stale_pick 0` -> the continuation rewrite (95 names, METHOD_VERSION /2) under a never-widen pair -> the
-  dossier rewrite for the names whose continuation moved -> `Z-S46` lifts.
-- i-2 -> the re-derive of every block key from landed raw (no vendor call) under a derive-pair addendum -> verify: every
-  SERVED base carries `band_basis`, no served value and no disposition moved, and the three `Z-W2-S10` keys carry band and
-  currency fields.
-- i-3 -> laid out for the CVO at L8 (AC4, judgment).
+- Chain A: l-3 -> l-1 -> drain -> ONE never-widen pair for the dossier rewrite covering both -> change entry -> `dossier
+  --write --workers 10` -> verify -> the CVO grades.
+- l-2 and l-4 independent. l-2 reads the served dossier and blocks as they stand; it is re-run by this seat after chain A's
+  rewrite as the one real run.
 
 ## 5. The round -- one issuance, fan-out as data
 
-- **ONE issuance covers all 5 cells.** `fanout: 5 of 5 chains, cap 8, reason: five cells by write set; i-5 waits on two
-  drains by edge, not by a second issuance.`
-- **Drain duties owed by this seat, in order, every verify leg reading CONTENT (R-5):**
-  1. At every merge: the suites, `py_compile`, ruff, beside `safe-merge.sh`'s row gate; each worker re-graded at its tip.
-  2. i-2 VALID: `cases-report` over every block key (read-only) -> the expected outcome for the addendum; re-derive under a
-     change entry; verify on the served reader: values and dispositions unchanged by key, `band_basis` present on every served
-     base, Z-W2-S10's three carrying band and currencies.
-  3. i-1 VALID: the census; a never-widen pair for the continuation rewrite and the dossier rewrite, expected outcome read
-     from the producers' rules; verify `stale_pick 0` with `current_method_available 95`, and every served pillar carrying
-     `terms`.
-  4. Spawn i-5 on the post-drain state; i-4's census last.
-  5. The COO's one real run of each outcome; the packet prints `graded this round / graded ever / endpoint denominator` (R-4).
-- Surprise channel: `org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md` (seat rows to
-  `Z-S46`; workers mint `AMGT_CORPUS-Z-W<n>-S<k>`, `disarm_owner 2.0.0_SA_COO~X`).
+- `fanout: 3 of 3 chains, cap 8, reason: l-3 and l-1 share dossier.py and run as one queue on ~1 (l-3 first); l-2 (~2) and
+  l-4 (~3) are independent.`
+- Drain duties: at each merge the touched suites, `py_compile`, ruff; each worker re-graded at its tip; chain A's rewrite
+  under its pair; the one real run: `read_dossier` on AZN (U+00A3 on GBp), ML (U+20AC on EUR) and one `$` name; `base_census`
+  after the rewrite; `l3_six.py`.
+- Surprise channel rows from `Z-S56`; workers `AMGT_CORPUS-Z-W<n>-S<k>`, `disarm_owner 2.0.0_SA_COO~X`.
 
 ## 6. `<preflight>` -- what this decomposition actually ran
 
 ```
-prd-signoff.py status AMGT_CORPUS        v0.6 @9e326e11c1; both halves SIGNED current; ADMITTED
-task-order status census (last <status>)  34 of 34 complete on this project -> 0 open
-cases-report (SAN FP, CAT US)             'cases SAN_FP_Equity base SERVED ratio 2.566...', 'cases_report served 2 refused 0'
-continuation pick census                  @070cf35da9: /2 would be served 49, /1 46 (Z-S45)
-checks as files                           org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round7/*, each run once at the base
+prd-signoff.py status AMGT_CORPUS        v0.6 @9e326e11c1 EXECUTING -> ADMITTED
+task-order census (last <status>)         CRPS-k-1 complete -> 0 open on this project
+checks as files, dry-run at the base      checks/round10/: l3_AC1 l1_AC1 l2_AC1 l4_AC1 FAIL (no tests ran); l3_AC2 FAIL
+                                          (absent_generic 6); l1_AC2 FAIL (no currency columns); l2_AC2 FAIL (No module
+                                          named lib.research.corpus.base_census); l4_AC2 FAIL (planted underscore key rc 0);
+                                          l4_AC3 PASS (AMD US Equity base SERVED)
 ```
 
 ## 7. comp-adversary declaration
 
-This file specifies; it produces no artifact. The adversary lens applies at the drain's served acts (the re-derive, the
-continuation and dossier rewrites), each under its pair in section 5.
+This file specifies; it produces no artifact. The adversary lens applies at chain A's served rewrite, under its pair.
 
 ## 8. Rulings this decomposition makes, and what it REFUSES to assume
 
-- i-1 selects on method version in the READER; it does not add `method_version` to `inputs` (that would move every dossier's
-  inputs a second time).
-- i-2 moves no bound and no served number; the claim is a disclosure, and "earn the floor" stays open for a population that
-  has names near it.
-- i-3's selection is extraction of a number the team wrote, never a computed case; the CVO grades whether it reads as the
-  team's Base case.
-- REFUSED to assume: that the empty `right` lists are a sheet layout rather than a reader defect (i-3 measures it); that the
-  `*` key is exploited anywhere (i-4 counts).
+- l-1 converts nothing and infers nothing from the listing; the listing is used only to REFUSE a currency the symbol does not
+  uniquely name (analysis s.2 ruling 1).
+- Chain A bumps the dossier's `METHOD_VERSION` to `/3` (in l-1): it changes what a case serves but moves no `inputs`, and
+  `write_one` writes nothing when the stored method and inputs are both unchanged -- without the bump the rewrite is a no-op
+  (round 8's lesson on this table). Rollback is the revert to `/2` through `read_dossier`'s method preference.
+- l-2 grades nothing; it prints a distribution with its denominator and names every name it could not pair, with the reason.
+- l-4 refuses at the CLI; it changes no rule and no derive.
+- REFUSED to assume: that the six tables share one defect (l-3 reads each); that the team's Base year equals the rule's (l-2
+  states the year it paired on, per name).
 
 ## 9. Holds
 
 | hold | on | owner | what lifts it |
 |---|---|---|---|
-| every `continuation --write` (`Z-S46`) | this seat | `2.0.0_SA_COO~X` | i-1 VALID and its census |
-| the continuation + dossier rewrite | this lane's drain | `2.0.0_SA_COO~X` + `1.0.0_SA_CTO~Z` (pair) | i-1 drained; `stale_pick 0` |
-| the block re-derive | this lane's drain | `2.0.0_SA_COO~X` + `1.0.0_SA_CTO~Z` (addendum) | i-2 VALID; the addendum signed |
+| every `dossier --write` | this seat | `2.0.0_SA_COO~X` | chain A VALID; the pair signed |
 
 -- `2.0.0_SA_COO~X`

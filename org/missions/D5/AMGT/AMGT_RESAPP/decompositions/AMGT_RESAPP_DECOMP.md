@@ -6466,3 +6466,176 @@ fanout:
   Not on s.6's list; carried to the CTO's round-45 analysis.
 - Raw float repr in served values (e.g. "537.6961078500001 USD"), recorded by the CVO at round 44, not held against the grade.
 - The portal promote; FWD-7's route coverage; the span write; the wiring class; ACCEPT (carded); Z-S287 (resolver).
+
+
+## 54. ROUND 46 -- THE HARNESS THAT LOADS THE TIMELINE MOUNT, THE BASE CASE ON THE ADJUSTED BASIS, ITS REDEPLOY, AND THE FIRST FULL OUTCOME PASS. Four orders over the round-45 analysis's five items
+
+**Cut by `2.0.0_SA_COO~Z`** (post-reboot, post-S19 rewrite; every hash here is post-rewrite) on `1.0.0_SA_CTO~Z`'s **ROUND 45
+ANALYSIS** (`ledger/ROUND_ANALYSIS.round45.md` @`2356891712`, s.4 five items; round 45 CLOSED), with s.2 item 2 answered by
+Andrew (~21:3xZ, record @`c027b4726f`, CTO msg 26218: the Base case is ADJUSTED EPS x ADJUSTED P/E, rebuilt from served data, no
+vendor pull) and item 5 struck by the CTO on measurement (msg 26234, row Z-S293). The ratified-text half reads ADMITTED at v0.28;
+no outcome is added, so no half re-opens.
+
+### 54a. THE FIVE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 the full FWD-1..FWD-31 outcome pass, carrying the judgment criterion with each Base-case input's basis beside its ratio | `AMGT-uu-1` |
+| 2 the export-compare harness loads a header that mounts HARVST's `TimelinePanel` (Z-S292) | `AMGT-uu-2` |
+| 3 `consensus_eps` carries `basis` | `AMGT-uu-3` (one cell with item 4 and Andrew's ruling: one write surface, one sign-off) + `AMGT-uu-4` (served) |
+| 4 served values print as values, not raw float repr | `AMGT-uu-3` |
+| 5 FWD-24 cited cases + the stale reason | **NOT CUT.** The 34 "cited" cases are section headings, 34 of 34, 0 content (row Z-S293 @`c21e3f4fbc`); the extraction is AMGT_CORPUS's and enters at its round-7 analysis (CTO msg 26234). The upside/downside reason stays: both sites serve upside/downside only, which Andrew's ruling did not settle, and PRD `:1271` quotes it. |
+
+### 54b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The harness crash.** On the shared tree (portal DEV @`92a25762`, HARVST's LOCAL-only timeline commit) `exportCompare.harness.cjs`
+   fails `Cannot find module '@/api/api-client'` for every name (38 of 38 before the issuer stopped the close run); on the published
+   gitlink `c3dd9ca9` the same fixture reads 4 of 4 sets clean. `load()` (`:144-152`) has no `@/` mapping.
+2. **The planted control was blind to that crash** (row Z-S294): `tt-1.AC2.sh` accepts any rc=1. uu-2 AC2 requires the tokens.
+3. **The adjusted P/E is computable from every stored block.** AMD's block carries 10 fiscal-year `PX_LAST` and 10
+   `IS_COMP_EPS_ADJUSTED` rows (and 8 `PE_RATIO`); `BEST_EPS` forecast figures carry their own `basis` object. Median over the
+   closed years of (PX_LAST_y / f) / IS_COMP_EPS_ADJUSTED_y: AMD 55.63 (the CVO's adjusted-implied 55.6), GOOGL 27.01, RKT 17.63
+   once the GBp minor unit (f = 100) is divided out -- without it RKT reads 1762.6. Adjusted Base: AMD 415.64 USD (~0.66 of
+   price, the CVO's proxy), GOOGL 511.61 USD, RKT 5941.78 GBp.
+4. **Served today:** 48 of 95 live names serve a SERVED base; 0 of 48 carry either basis (uu-4 AC3 base read).
+5. **The Base case is served AS LANDED** (`scoped_amgt._model_cases`, `:2971-2998`) from stored blocks
+   (`derived/model_block/<key>/<stamp>/model_block.json`). Issuer's choice: the adapter computes at serve time from the stored
+   figures by ONE function the producer also calls -- one Lambda redeploy, no S3 write over ~95 keys.
+
+### 54c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-uu-2` | THE EXPORT-COMPARE HARNESS LOADS A HEADER THAT MOUNTS THE TIMELINE PANEL | `~166` | worker | LOCAL | `portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs` |
+| `AMGT-uu-3` | THE BASE CASE ON THE ADJUSTED BASIS, EACH INPUT CARRYING ITS BASIS, THE VALUE PRINTED AS A VALUE | `~166` | worker | SERVED | `integrations/bloomberg/research/model_block_pull.py` (+tests), `lib/research/api/*.py` (+tests), `lib/research/print/render_pack.py` (+tests), `portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx` |
+| `AMGT-uu-4` | THE REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (apply only), its deliverables, the ledger |
+| `AMGT-uu-1` | THE FULL FWD-1..FWD-31 OUTCOME PASS + THE BASE-CASE BASIS TABLE | `~167` | worker | LOCAL | its deliverables only |
+
+### 54d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's five items; four land in exactly one cell each (3 and 4 share uu-3 by write surface), item 5 is struck
+  by measurement with the CTO's approval (54a). Nothing in s.4 is left unplaced.
+- **(ii) Same grain.** One instrument repair, one build, one deploy, one measurement.
+- **(iii) Intent.** One axis: the served page states its numbers on a stated basis, and the instrument that says so can see.
+- **(iv) What a cell does NOT move.** uu-2 moves no page file; uu-3 moves no S3 object, no pdf path, no posture path, and not the
+  upside/downside objects; uu-4 moves exactly its sign-off pair's radius; uu-1 writes only its deliverables.
+
+### 54e. EDGES AND FAN-OUT
+
+```
+uu-2 -> uu-3   (uu-3's AC2 runs the harness uu-2 repairs; both touch the portal on one slot)
+uu-3 -> uu-4   (the code the deploy serves; never-widen halves written after uu-3 lands)
+uu-4 -> uu-1   (the pass measures the served state after the redeploy)
+fanout:
+  cap: 2                               # site Z contention, as round 45
+  orders_total: 4
+  chains_total: 1
+  wave_0: [uu-2, uu-3]                 # ONE worker, slot ~166, queued in that order (continued, never respawned)
+  wave_1: [uu-4]                       # a seat order: after uu-3 merges and both never-widen halves are committed
+  wave_2: [uu-1]                       # slot ~167, worktree cut after uu-4's verification
+  portal_ref: DEV                      # local portal DEV at the cut: 92a25762 (carries the mount uu-2 must load)
+  no_vite_per_worker: true             # port 5174 is Andrew's walk build (record @c027b4726f)
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: uu-4's build pip-downloads its pinned wheels (declared); uu-1 reads Opal's own deployed function (GET routes)
+  route_change: none
+  no_promote: true
+```
+
+### 54f. CARRIED
+
+- FWD-30 is MET on the served export (round 45) but not REALIZED: the page side is portal DEV only (rounds 40-46 unpromoted) and
+  tt-2's limb-7 branches 1 and 2 were UNEXERCISED. uu-1 grades it with the rest.
+- GOOGL's FY1 `BEST_EPS` (1.75x its last adjusted year) stays ungraded by name (the analysis's s.2; no vendor ask).
+- The portal PROD promote (gated on Andrew's word); Z-S290's template change is applied in this round's faces (no order tells a
+  worker to commit the gitlink).
+
+
+## 55. ROUND 47 -- THE FORMULA THAT CLAIMS ONLY WHAT ITS INPUTS CARRY, THE TEAM'S CASES IN THE PAYLOAD, THE FOUR HARNESSES, AND THE REDEPLOY. Five orders: the round-46 analysis's three items plus one thread-breaking cell found at the cut
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 46 ANALYSIS** (`ledger/ROUND_ANALYSIS.round46.md` @`0e405cc330`, s.4
+three items; round 46 CLOSED). The Base-case ANCHOR (ruling 2) is not a cell: `4.0.0_SA_CRO~Z` is researching it and the CTO rules on
+the tick it lands -- it LANDED during the cut (CTO_RULING_RESAPP_BASE_CASE_ANCHOR_20260929.md): ruling 2 (relabel) joins vv-1; ruling 1
+(the team's Base leads on the page) is DSGN_AMGTV1's. No outcome is added, so no L4-R half re-opens.
+
+### 55a. THE THREE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 the formula string names each input's own basis (ruling 1) | `AMGT-vv-1` (build; widened at the cut by the CTO's anchor ruling 2 -- the rule's value relabelled "Historical-multiple reference", msg 20260929T050711Z) + `AMGT-vv-4` (served) |
+| 2 the scoped API carries the team's cases (ruling 3) | `AMGT-vv-2` (build; an external dependency on AMGT_CORPUS) + `AMGT-vv-4` (served, with ONE read grant) |
+| 3 the harness breaks (Z-W167-S1, -S2) | `AMGT-vv-3` (widened at the cut to the fourth harness measured the same way) |
+| -- found AT the cut: FWD-30's instrument blind to DSGN_AMGTV1's redesigned page | `AMGT-vv-5` (thread-breaking, FIRST) |
+
+### 55b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The formula** lives in one constant, `case_rule.BASE_FORMULA` (`:70`, used `:245`); the page and the export print the served
+   text. Pinned served values before the change: AMD 415.64057358490567, GOOGL 511.6099296044653, RKT 5941.776539489737.
+2. **The dossier cases now carry content:** 28 of 95 live names (base/upside/downside each), 67 absent, 0 read failures; case keys
+   `{value, unit, citation, absent}`; `value` is the pack's case table as written (e.g. ASML: EPS/Multiple/Price/Return by year),
+   `unit` null on the example. AMGT_CORPUS's open `CRPS-l-1` ("the case unit carries its claim") changes the unit fields.
+3. **The Lambda cannot import `read_dossier` today:** `dossier.py` imports `extract` at module level and `extract.py:56` imports
+   `fitz`; the package carries pyarrow (a-2) but not PyMuPDF. Re-implementing the dossier's pick rule is refused (one rule);
+   the import deferral is AMGT_CORPUS's surface (asked, msg 20260929T045710Z).
+4. **The grant:** `local.scoped_amgt_pool_prefixes` holds 29 entries; `amgt/harvest/gold/research-dossier/` is not one.
+5. **FWD-30's instrument at portal DEV 5fac7a37 (DSGN_AMGTV1 merged `abcec1b2`..`5fac7a37` after round 46):** `exportCompare`
+   fails to load (`ThesisCards.tsx:29` imports `@/ui/components/graphic/HeroGraphic`); stubbed in a scratch worktree only, the served
+   fixture reads FIGURES 176/182, extra = header|PX_LAST, CUR_MKT_CAP, NET_DEBT, CURR_ENTP_VAL, VOLUME_AVG_30D, EQY_BETA --
+   which `HeaderCards.tsx` SHOWS under `data-card-figure-mnemonic`, while `pageFigures()` reads `data-stat-tile` only. An
+   instrument gap: EXPORT-COMPARE NOT OK at DEV until the harness reads the cards.
+6. **The harnesses at portal DEV 8fa7abde:** `shell`, `posture` -> `Cannot find module '@/api/api-client'`; `tabs` ->
+   `'@/ui/components/graphic/HeroGraphic'`; `leadPanelPattern` loads, 15 checks, 4 wrong-way (rows_rendered, source_caption_wraps,
+   disclosure_own_line, caption_facts_unchanged).
+
+### 55c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-vv-1` | THE RULE'S VALUE IS A "HISTORICAL-MULTIPLE REFERENCE" WHOSE FORMULA NAMES EACH INPUT AS ITS BASIS OBJECT DOES | `~168` | worker | SERVED | `case_rule.py`, `scoped_amgt.py` (the no-cases branch's label), `render_pack.py`, `ModelTab.tsx`, `exportCompare.harness.cjs` + tests |
+| `AMGT-vv-2` | THE SCOPED API CARRIES THE TEAM'S CASES, CITED, BESIDE THE RULE'S BASE | `~170` | worker | SERVED | `lib/research/api/scoped_amgt.py`, `lib/research/api/*.py` + tests |
+| `AMGT-vv-3` | THE FOUR PAGE HARNESSES RUN AGAIN, NONE BLINDED | `~169` | worker | LOCAL | four `portal/.../__harness__/*.harness.cjs` |
+| `AMGT-vv-5` | FWD-30'S HARNESS READS THE REDESIGNED PAGE | `~168` (first) | worker | LOCAL | `exportCompare.harness.cjs` |
+| `AMGT-vv-4` | THE REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (one pool-prefix entry + apply), its deliverables, the ledger |
+
+vv-1 and vv-2 BOTH write `scoped_amgt.py` (vv-1: the label on `_model_cases`'s no-cases branch; vv-2: `_team_cases`), so vv-2 is
+spawned only after vv-1 drains -- a file edge, not a data edge, stated so the spawn order is never parallel.
+
+### 55d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's three items; each lands in exactly one build cell; items 1 and 2 share the one served act (vv-4).
+  The anchor is excluded by the analysis itself.
+- **(ii) Same grain.** One text change, one payload, one instrument repair, one deploy.
+- **(iii) Intent.** One axis: the served page claims exactly what its sources carry, and the instruments that say so can see.
+- **(iv) What a cell does NOT move.** vv-1 moves no number; vv-2 moves no page/export text and not the rule's Base; vv-3 moves no page
+  file; vv-4 moves exactly its pair's radius (the code + ONE read prefix).
+
+### 55e. EDGES AND FAN-OUT
+
+```
+vv-5 -> vv-1   (same worker, same file: exportCompare.harness.cjs; thread-breaking first)
+vv-5 -> vv-4   (vv-4's AC2 runs FWD-30 through this harness)
+vv-1 -> vv-4   (the served text)
+vv-2 -> vv-4   (the served payload + the grant)
+EXTERNAL: AMGT_CORPUS CRPS-l-1 + dossier.py import deferral -> vv-2 (spawned only then)
+fanout:
+  cap: 3
+  orders_total: 5
+  chains_total: 2                      # {vv-5 -> vv-1 -> vv-2 -> vv-4} (vv-2 by file edge), {vv-3}
+  wave_0: [vv-5, vv-3]                 # slots ~168, ~169, now; ~168 continues with vv-1
+  wave_1: [vv-2]                       # slot ~170, when the external dependency lands
+  wave_2: [vv-4]                       # a seat order: after vv-1 and vv-2 merge and both never-widen halves are committed
+  portal_ref: DEV                      # local portal DEV 5fac7a37 at the cut (DSGN_AMGTV1's merges on top of 8fa7abde)
+  no_vite_per_worker: true             # 5174 is Andrew's walk build
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: vv-4's build pip-downloads its pinned wheels (declared); checks read Opal's own S3 and deployed function (read-only)
+  route_change: none
+  no_promote: true
+```
+
+### 55f. CARRIED
+
+- The Base-case ANCHOR: ruled during the cut (the team's Base leads; the rule is a labelled reference); the relabel is in vv-1, the
+  page order is DSGN_AMGTV1's; a forward-P/E-history anchor is recorded as an option needing a Bloomberg pull no word has named.
+- FWD-30 held from REALIZED by the page half (DEV only; Andrew's hold on pushes and merges).
+- The team-case RENDER is DSGN_AMGTV1's (fork F5), under CTO msg 26430's unit rule.

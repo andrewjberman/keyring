@@ -81,8 +81,9 @@ fi
 # hooks dir (--submodule), owned-paths-check.sh itself is NOT present at that repo's
 # own toplevel -- it lives only under the PARENT's .tools/git-hooks/. Resolve the
 # superproject the same way owned-paths-check.sh resolves it for the LANE FILE (direct
-# `--show-superproject-working-tree`, else ask the repo'"'"'s main worktree, which always
-# sorts first in `git worktree list`), and fall back to this repo'"'"'s own toplevel (the
+# `--show-superproject-working-tree`, else the common gitdir'"'"'s core.worktree -- OA-e-11:
+# never the first `git worktree list` entry, which for a submodule is its gitdir; a
+# submodule with no resolvable superproject is REFUSED, never skipped), and fall back to this repo'"'"'s own toplevel (the
 # parent-repo install, unchanged).
 WRAPPER='#!/usr/bin/env bash
 # owned-paths hook wrapper -- delegates to .tools/git-hooks/owned-paths-check.sh
@@ -91,10 +92,25 @@ WRAPPER='#!/usr/bin/env bash
 # ADHC_OWNPTH.003; nested-repo resolution OA-w-2 (2026-09-24)
 _TOP="$(git rev-parse --show-toplevel 2>/dev/null)"
 _SUPER="$(git rev-parse --show-superproject-working-tree 2>/dev/null)"
+_IS_SUB=""
 if [ -z "$_SUPER" ]; then
-    _MAIN_WT="$(git worktree list --porcelain 2>/dev/null | awk "/^worktree /{print \$2; exit}")"
-    if [ -n "$_MAIN_WT" ]; then
-        _SUPER="$(git -C "$_MAIN_WT" rev-parse --show-superproject-working-tree 2>/dev/null)"
+    # OA-e-11: resolve from the COMMON GITDIR of the committing worktree, never from the first
+    # `git worktree list` entry (for a submodule that entry is its gitdir, which has no superproject).
+    _GCD_RAW="$(git rev-parse --git-common-dir 2>/dev/null)"
+    _GCD="$(cd "$_GCD_RAW" 2>/dev/null && pwd)"
+    case "$_GCD" in
+        */.git/modules/*|*/.git/worktrees/*/modules/*)
+            _IS_SUB=1
+            _CW="$(git config --file "$_GCD/config" core.worktree 2>/dev/null)"
+            if [ -n "$_CW" ]; then
+                _CWA="$(cd "$_GCD" 2>/dev/null && cd "$_CW" 2>/dev/null && pwd)"
+                [ -n "$_CWA" ] && _SUPER="$(env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_COMMON_DIR git -C "$_CWA" rev-parse --show-superproject-working-tree 2>/dev/null)"
+            fi
+            ;;
+    esac
+    if [ -n "$_IS_SUB" ] && [ -z "$_SUPER" ]; then
+        echo "ERROR: owned-paths: this repo is a submodule (common gitdir $_GCD) but its superproject could not be resolved -- refusing the commit (fail closed; the lane check is never skipped)." >&2
+        exit 1
     fi
 fi
 HOOK="${_SUPER:-$_TOP}/.tools/git-hooks/owned-paths-check.sh"

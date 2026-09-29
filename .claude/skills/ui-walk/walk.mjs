@@ -15,7 +15,8 @@ import { mkdirSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
-const ROOT = fileURLToPath(new URL('../../../', import.meta.url))
+// UI_WALK_ROOT lets a copy of this file in a linked worktree drive the shared tree's portal/node_modules and tmp/.
+const ROOT = process.env.UI_WALK_ROOT || fileURLToPath(new URL('../../../', import.meta.url))
 const require = createRequire(path.join(ROOT, 'portal', 'package.json'))
 const { chromium } = require('playwright-core')
 const ACCOUNT = path.join(ROOT, '.claude', 'skills', 'ui-walk', 'ui_walker_account.py')
@@ -23,12 +24,13 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
   else if (a === '--route') opt.routes.push(argv[++i])
   else if (a === '--client') opt.clients.push(argv[++i])
+  else if (a === '--security') opt.securities.push(argv[++i])
   else if (a === '--max-minutes') opt.maxMinutes = Number(argv[++i])
   else if (a === '--no-arm') opt.arm = false
   else if (a === '--keep-armed') opt.keepArmed = true
@@ -209,6 +211,68 @@ async function exploreScope(page, scopeSel, label) {
     await checks(page, `${label}-open-${txt.slice(0, 24) || i}`)
     await page.keyboard.press('Escape').catch(() => {})
     await page.waitForTimeout(300)
+  }
+}
+
+// ---- AMGT Security Analysis: every Lead Panel combination, then each --security with its overlay and five tabs -----
+// Movement x Subject x View = 8 lead-panel states (constants.ts MOVEMENT_OPTIONS / SUBJECT_OPTIONS; LeadPanel.tsx view
+// toggle). A --security is picked by clicking its row text in the lead panel, else typed into "Search any ticker".
+// Starring is a write and stays blocked by the network guard.
+const AMGT_TABS = ['Thesis', 'Exec Management', 'Peers', 'Model', 'Posture']
+async function clickLabel(page, name) {
+  for (const role of ['tab', 'radio', 'button']) {
+    const l = page.getByRole(role, { name, exact: true }).first()
+    if (await l.count().catch(() => 0)) return l.click({ timeout: 4000 }).then(() => true).catch(() => false)
+  }
+  const t = page.getByText(name, { exact: true }).first()
+  if (await t.count().catch(() => 0)) return t.click({ timeout: 4000 }).then(() => true).catch(() => false)
+  return false
+}
+async function amgtLeadState(page, movement, subject, view) {
+  const okM = await clickLabel(page, movement)
+  const okS = await clickLabel(page, subject)
+  const v = page.locator(`[aria-label="${view}"]`).first()
+  const okV = (await v.count().catch(() => 0)) ? await v.click({ timeout: 4000 }).then(() => true).catch(() => false) : false
+  const missing = [!okM && movement, !okS && subject, !okV && view].filter(Boolean)
+  if (missing.length) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: `control not found or not clickable: ${missing.join(', ')}` })
+  await settle(page, 1500)
+}
+async function walkSecurityAnalysis(page, route) {
+  for (const movement of ['Trending', 'Breakout']) {
+    for (const subject of ['Chatter', 'Price']) {
+      for (const view of ['List view', 'Chart view']) {
+        if (!timeLeft()) return
+        step = `amgt lead ${movement}-${subject}-${view}`
+        await amgtLeadState(page, movement, subject, view)
+        await checks(page, `lead-${movement}-${subject}-${view.split(' ')[0]}`)
+      }
+    }
+  }
+  for (const sec of opt.securities) {
+    if (!timeLeft()) return
+    step = `amgt select ${sec}`
+    await page.goto(opt.base + route, { waitUntil: 'domcontentloaded', timeout: 30000 })
+    await settle(page, 2500)
+    await amgtLeadState(page, 'Trending', 'Price', 'List view')
+    let picked = false
+    const row = page.getByText(sec, { exact: true }).first()
+    if (await row.count().catch(() => 0)) picked = await row.click({ timeout: 4000 }).then(() => true).catch(() => false)
+    if (!picked) {
+      const box = page.getByPlaceholder('Search any ticker')
+      await box.fill(sec).catch(() => {})
+      await box.press('Enter').catch(() => {})
+    }
+    await settle(page, 3000)
+    await checks(page, `${sec}-overlay`)
+    for (const tab of AMGT_TABS) {
+      if (!timeLeft()) return
+      step = `amgt ${sec} tab ${tab}`
+      if (!(await clickLabel(page, tab))) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: `tab not found: ${tab}` })
+      await settle(page, 2500)
+      await checks(page, `${sec}-${tab}`)
+      await exploreScope(page, 'body', `${sec}-${tab}`)
+      if (opt.deep) await pressAll(page, 'body', `${sec}-${tab}`, 10)
+    }
   }
 }
 
@@ -407,6 +471,8 @@ try {
         }
         if (!opt.clients.length) log('NOTE: no --client given; only the page load and the empty search were walked')
       }
+    } else if (route.startsWith('/security-analysis')) {
+      await walkSecurityAnalysis(page, route)
     } else {
       await exploreScope(page, 'body', route)
     }

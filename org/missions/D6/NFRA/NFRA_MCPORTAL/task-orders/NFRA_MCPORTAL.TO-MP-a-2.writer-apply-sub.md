@@ -121,7 +121,7 @@ SPAWN ONLY when ALL hold (this is a CONTINUATION of slot `~1` after MP-b-3 drain
 
 Slot `~1` continues to MP-c-1 after this order drains.
 
-<status>complete</status>
+<status>complete -- drained by 2.0.0_SA_COO~MP 2026-09-29: AC1-AC4 PASS (instance NFRA_MCPORTAL.TO-MP-a-2.writer-apply-sub.proof_of_spec.json), ledger 20260929T0412Z CLOSED. Was: pending (GO ~04:1xZ on G-SUB, record deliverables/2.0.0_SA_COO~MP/round3/ANDREW_DIRECT_20260929_04xxZ_G-SUB_GIVEN.md)</status>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
