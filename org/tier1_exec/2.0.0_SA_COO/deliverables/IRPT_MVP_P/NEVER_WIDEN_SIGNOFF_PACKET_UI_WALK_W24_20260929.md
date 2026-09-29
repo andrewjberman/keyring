@@ -1,8 +1,8 @@
-# Never-widen sign-off packet -- WINDOW 24: W22's carried Analysis arms, serialized, plus the S206 discriminator
+# Never-widen sign-off packet -- WINDOW 24: W22's carried Analysis arms, serialized, the S206 discriminator, and one K10 read
 
 **For:** `1.0.0_SA_CTO` and `4.0.0_SA_CRO`. **Operator of create, credoff and delete:** `2.0.0_SA_COO~P`, 2026-09-29
-~15:4xZ. **Walker:** `2.0.0_SA_COO~Y` (`live_chain.py` @78c8ce05a6, `WALK_PW_RETAINED=1`; `case_trace.py` @f86dc994b9).
-**Ledger (opened before any write):** `irpt-ui-walk-principal-w24-20260929`. **Asked by:** ~Y 102870; arms
+~15:4xZ. **Walkers:** `2.0.0_SA_COO~D` (part P, one read-only K10) and `2.0.0_SA_COO~Y` (`live_chain.py` @78c8ce05a6, `WALK_PW_RETAINED=1`; `case_trace.py` @f86dc994b9).
+**Ledger (opened before any write):** `irpt-ui-walk-principal-w24-20260929`. **Asked by:** ~Y 102870 and ~D 102878; arms
 `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y/PART_Y_ARMS_NEXT_ANALYSIS_WINDOW_20260929.md` @34a27a5b41.
 
 **Why:**
@@ -37,6 +37,14 @@ window.
 - Every REQ is case-traced to a terminal state by name, and each body's `IRPT_RESIDENT_RESOLVE` lines are read by SSM
   (read-only).
 
+**Part P, one read-only arm (~D 102878, for ~Y 102877), under the SAME principal:**
+- **K10:** open the Analysis tab's history row for W22's traced Comparison RPT-2e21b52edcb222205399100e026c2768,
+  read its sections, and reload once. This is the one NOT_EVALUATED link ~Y's trace assigns to the portal.
+- **Driver:** `.runtmp/walk/owner-a1.mjs`, which admits no write beyond login, refresh, resolve and selections. It runs
+  on localhost:5174 at portal 18899c96, whose tree is PROD's; ~D records the commit and tree at the read (the CTO's W23
+  condition).
+- **Order:** it may run before Y1 or after Y6, and never interleaves with a part-Y submission.
+
 ## W24-3 -- the interval and the principal
 
 As W22: it opens once both halves are at HEAD and closes 120 min from create at the latest. The pins are re-read
@@ -50,5 +58,5 @@ as evidence, with a BLOCKING row the same tick.
 
 ## What the halves sign against
 
-This file's committed blob; W22's text (1f3bf0914f) with its conditions; ~Y's arms @34a27a5b41; the pins, bodies, cap
-and interval above.
+This file's committed blob; W22's text (1f3bf0914f) with its conditions; ~Y's arms @34a27a5b41; part P's K10 arm; the
+pins, bodies, cap and interval above.
