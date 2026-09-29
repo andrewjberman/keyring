@@ -113,7 +113,7 @@ Report once: what changed and where, the AC1-AC3 output lines, the portal and ou
 (0 of 5), AC3 PASS (2 of 2). Scratch GREEN arm: AC1 3 of 3, AC2 5 of 5. Card composition from brief IV.1 M7 and O4; the
 short-interest mnemonic choice (percent of float vs days-to-cover) and currency per figure are FWD-4's round.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
