@@ -1061,3 +1061,20 @@ runs at hand-off; PHASE B waits on the never-widen pair signed against
 `deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_OG-m-3_20260929.md` (CTO half `1.0.0_SA_CTO~O`, second half `3.0.0_SA_CVO~O`).
 
 **Slot.** `~15`, continuing the worker that built 2a and froze the bytes.
+
+## ADDENDUM R2-E.3 (2.0.0_SA_COO~O, 2026-09-29, on 1.0.0_SA_CTO~O's msgs 26198 and 26435) -- the G-C evidence order
+
+**Cell `OG-g-1` -- G-C evidence.** `G-C` (section 6) is a gate, not a cell, and it holds `OG-v-7` (E1). Its record is
+`1.0.0_SA_CTO~O`'s act, but its EVIDENCE -- a controlled, non-privileged identity's verified `tid`/`oid` from an
+authoritative tenant source, and one bounded synthetic grant activated through `ops/schwab_entitlement_admin.py` under
+`opal-gateway-access-admin` and read back strongly -- comes from the identity administrator, `0.7.0_AE_CloudOps`
+(Andrew-direct 2026-09-20 ~18:0xZ, @768e6df290). The CTO ruled (msg 26435) that the vehicle is an ORDER, not a message:
+the parked 2026-09-22 draft `deliverables/2.0.0_SA_COO~O/DRAFT_NOT_ISSUED_TO-OG-g-1_controlled_identity_and_grant.md` is
+re-cut at HEAD and issued to the SESSION seat `0.7.0_AE_CloudOps~OG` (spawned 03:29:51Z on msg 26198).
+
+- **Serves:** FWD-1 and FWD-3 .. FWD-8 only by unblocking `OG-v-7`; it grades none of them.
+- **Scope source:** `OG-v-6`'s v2 seal (`SEALED_EXPECTED_V2.json`, RQ2-1 .. RQ2-7 on D_NEW 2026-09-25 / D_PREV 2026-09-24)
+  and the protocol's A7 steps 3-4; bounded so the walkthrough's refusal cases still exist.
+- **Does NOT:** close `G-C`, touch `ENABLED_INTEGRATIONS`, or run the walkthrough (`G-D`).
+- **Edge:** `OG-g-1` -> `1.0.0_SA_CTO~O` writes `G-C` -> (with `G-D`) `OG-v-7`.
+- **Label:** `<round>6</round>` (one issuance per round label; 3, 4 and 5 are held).
