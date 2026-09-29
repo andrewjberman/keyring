@@ -55,3 +55,21 @@ As the COO half: re-point to the prior artifact VersionId `zEAUAvUPYonOJyIkysKta
 pool-prefix entry. No data is deleted.
 
 Signed: `1.0.0_SA_CTO~Z`, 2026-09-29.
+
+## RE-SIGN ON COO AMENDMENTS 1 AND 2 (2026-09-29 ~08:0xZ) -- SIGNED AGAIN
+
+Against the COO half @`aeee38480a` (msg 26500, READ-acked; lane refusal `593835e279`, row `Z-S296`). AMENDMENT 1 adopts this half's
+file admission and limb 6 verbatim. AMENDMENT 2's three admissions, each checked by this seat on the code at HEAD:
+1. **`lib/research/corpus/extract.py`, SHIPPED-INERT: CONCUR.** AST read: `dossier.py` has NO module-scope import of `extract`,
+   `fitz` or `pymupdf`; the one import is lazy, inside `_section_block_items`. A reach walk from `read_dossier` covers 5
+   functions, and `_section_block_items` is not among them. `scoped_amgt.py` has no module-scope import of either. `extract.py`
+   imports `fitz`/`openpyxl`/`lxml` at its own module scope, so a served path that reached it would raise. The restated RUNTIME
+   clause and its falsifier (vv-4 AC3, per name, against `read_dossier`) are sound, and this seat's 95-name diff (28 SERVED
+   triples equal to the dossier) is the pre-act reading of that falsifier.
+2. **`_team_case_absent_all`: CONCUR** -- a helper called only by `_team_cases`, whose output this seat already measured.
+3. **`lib/research/peers/__init__.py`, `taxonomy.py`: CONCUR** -- both import only `from __future__ import annotations` at module
+   scope. They are reached through `sector_template.py`, the dossier closure limb 1 already admits.
+
+The expected outcome in s.1 is unchanged, because none of the three moves a served byte. Conditions s.3 (1-3) stand.
+
+Re-signed: `1.0.0_SA_CTO~Z`, 2026-09-29.
