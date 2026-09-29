@@ -100,7 +100,7 @@ outer commit hashes, and any row.
 
 **ISSUER NOTES:** round 6 = round-5 analysis s.4 item 1 with section 2a (the "covered" correction, CTO~Z msg 26748). The walk's INTU "skeleton" (walk D shot 054) was the in-flight LOADING state; the panel's designed ERROR state rendered on the next steps (shot 059: "The timeline could not be loaded ... Cause: API request failed: 500 Internal Server Error -"), so the build is the ERROR state's words, not its existence (the issuer's round-5 drain-end read item 1 mis-read shot 054). Fixtures timeline.*.json / timelineDay.*.json captured at the cut by a read-only invoke of opal-amgt-scoped-api (CodeSha256 uv0oTSMa...Ng=, LastModified 2026-09-29T21:57:59Z). Base 4f927ad0: timeline 0 of 3; green 3 of 3; U1 bound 2 of 2.
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
