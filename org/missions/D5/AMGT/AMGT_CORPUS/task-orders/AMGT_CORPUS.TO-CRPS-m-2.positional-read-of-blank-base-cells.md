@@ -97,7 +97,7 @@ ran); AC2 FAIL (argparse refuses `--case-positional-census`); AC3 PASS (`absent_
 The fourth mechanical criterion carries its reason on the face.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
