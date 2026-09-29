@@ -1510,6 +1510,31 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-r-1 step 5: ACT from the release worktree with its scripts, halt gate pre-acknowledged with HALT_ACK=1 when it reads 0 STOP.",
     "world_is": "HALT_ACK covers a routine unread inbox (exit 1), not an unadmitted serial (exit 3), and HALT_OVERRIDE covers a STOP (exit 2). Nothing in the wrapper admits a worker whose release tree predates its orders. Routes that would pass, none taken: (a) commit the OA-r-1 task order into the release branch (breaks the five-file census), (b) run the wrapper from /c/tmp/oa-10 (a HEAD deploy, forbidden), (c) edit .tools/halt-gate-check.sh or the wrapper (read-only for this order). The issuer decides which, or provides another.",
     "notes": "Not ARMED: nothing is deployed and no ledger entry is open. Done before the stop, all proven: step 2 (release d287ffb346, census 5 of 5, 34 passed 2 deselected, transcript saved); step 3 (rollback artifact opal-gateway-6a98a0553a.tar.gz 398873 bytes from /c/tmp/oa-10-rb, 79 of 79 files identical to the live host, not uploaded); step 4(i) the .env render, 27 keys, all 9 markers on their own keys, no misalignment."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S6",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-29T00:10Z",
+    "one_line": "Amendment 4's route (a) cannot be executed as ruled: safe-commit's TO issuance gate (.tools/to-pipeline-gate.py) REFUSES the record-only commit of the OA-r-1 task order on the release branch, 3 violations, and GIT_COMMIT_AUTHOR_OVERRIDE does not cover it. The commit aborted, files unstaged; HEAD of both trees is unchanged.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd /c/tmp/oa-10-rel && GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPALAI~10 bash .tools/safe-commit.sh --author ... -F msg -- org/missions/D6/NFRA/NFRA_OPALAI/task-orders/NFRA_OPALAI.TO-OA-r-1.asker-binding-release.md -> 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' The file was byte-identical to CLOUD 2751f0be77 (md5 0b42025c6aae273930a119345cd51b79). The rollback tree was not attempted: it carries the same gate.",
+        "Violation 1: 'a NEW tree task order committed under 0.9.0_WK_NFRA_OPALAI~10. COO is the only agent that does task orders (LD-0521 A3): a new file under org/missions/*/*/*/task-orders/ commits only under 2.0.0_SA_COO or a ~lane of it.'",
+        "Violation 2: 'NO project row at org/missions/D6/NFRA/NFRA_OPALAI/project.json' (the release tree predates the project; project.json is absent).",
+        "Violation 3: 'this commit adds NEW tree task order(s) but project.json reads dep_stage=None after it' (dep_stage EXECUTING must ride the issuance commit).",
+        "The gate's own remedy is a '# pipeline-override: <reason>' line INSIDE the task order (.tools/to-pipeline-gate.py:63, audited to org/to-pipeline-override-audit.log), which would make the file differ from CLOUD's copy; the ruling requires byte identity.",
+        "Both trees restored: rel HEAD d287ffb346 gateway tree e6cd9d235cd8a996f4e91b9813282172135a9bd1; rb HEAD 6a98a0553a gateway tree cd33c1e8d69f4e70ee03611f443d5c118f1825cf; no tracked change; my two file copies removed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment 4: the halt gate admits the worker once the OA-r-1 task order, byte-identical to CLOUD, is committed as one record-only commit under the audited author override.",
+    "world_is": "The override that safe-commit honours for a lane refusal does not reach the TO issuance gate, which refuses a worker adding a task order, an unregistered project and a missing dep_stage. Passing it needs one of: a '# pipeline-override:' line in the file (not byte-identical, and an audit-log write in the release tree), project.json plus dep_stage=EXECUTING beside it (more files in the release branch), or a committer that is 2.0.0_SA_COO or a ~lane of it (the issuer commits it). The worker took none of them: each changes the ruled bytes or the ruled identity. Also unresolved: the halt gate reads only ls-files + HEAD of the calling worktree, so any admitted route still needs the file in HEAD of both trees.",
+    "notes": "Not ARMED: nothing is deployed, no ledger entry open. Everything before the act is proven and waiting: release d287ffb346, transcript, rollback 79 of 79, .env render."
   }
 ]
 ```
