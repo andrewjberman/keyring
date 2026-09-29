@@ -12191,3 +12191,37 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Correction of this seat's own row. No ask of any seat; the r3 half's addendum 2 and this row are the record. 2.0.0_SA_COO~P was told 'about 2 s of every press' in this seat's 16:52:09Z message (inbox file 20260929T165209Z_4.0.0_SA_CRO_r3_half_addendum_1__c82b28bd58_--_all-ac.md) and is told the correction in a follow-up."
 }
 ```
+
+
+## ~Y row -- S206 CONFIRMED on the current build by an unintended concurrent pair (row IRPT_BCKEND-S215)
+
+```json
+{
+  "id": "IRPT_BCKEND-S215",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-29T17:45:00Z",
+  "one_line": "S206 is CONFIRMED on the CURRENT generate build, by a concurrent pair that ran unintentionally. W24 dropped the S206 discriminator by name (~P 102921) because the cap could not hold it, but a defect in my own runner overlapped arms 1 and 2 and produced the designed experiment anyway: same principal, same window, same build inrij6hL, two bodies one second apart. Arm 1 (Multi-Comp, nothing in flight) NORMALIZED in 2 s and its job proceeded; arm 2 (Target Weight, dispatched into arm 1's live generation) died NEEDS_CORRECTION RESOLVE_RETRY_EXHAUSTED. That is the third independent reproduction and the FIRST on a build other than wnt7hjAB, which was the one gap S206's evidence carried. PROVENANCE IS A DEFECT OF MINE, stated plainly so the result is weighed correctly: it was not a designed run, no control was pre-registered, and the pair was not randomised.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (INERT: nothing deployed, no served artifact moved, and the runner defect was fixed and verified in both directions before any further arm ran)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w24_run_arms.sh run 17:26:11Z: arm 1 Multi-Comp K4 200 upload UP-5faf2874, resolved NORMALIZED 17:26:23Z, K5 200 QUEUED REQ-3971fc2d5421c12412367e0b 17:26:28Z; arm 2 Target Weight started 17:26:29Z, one second later, K4 POST 200 upload UP-2fe40e29 at 17:26:35Z",
+      "irpt-requests consistent Query 17:34:13Z: NORMALIZATION#UP-5faf2874 state NORMALIZED, reason none; NORMALIZATION#UP-2fe40e29 state NEEDS_CORRECTION, reason RESOLVE_RETRY_EXHAUSTED, no input_id",
+      "irpt-jobs at the same read: REQ-3971fc2d state SUBMITTING with job_detail operation session_refresh, so arm 1's GENERATION was live across arm 2's entire resolve window -- exactly the condition 1.0.0_SA_CTO named when it moved the serialization point from the NORMALIZATION row to the irpt-jobs row",
+      "the build: irpt-ycharts-generate CodeSha256 inrij6hLQiz/ZtOL3Wnzu3aA3xekxlRxYSEajtYqVZw=, LastModified 2026-09-29T15:00:32Z, re-read 16:2xZ and EQUAL to the W24 packet W24-1 pin. W22's three exhaustions were all on wnt7hjAB",
+      "the defect: w24_run_arms.sh parsed the REQ with the out path embedded in a python -c SOURCE BODY. MSYS converts a unix path in ARGV but never one inside source text, so Windows Python read /c/Users/... as C:\\c\\Users\\... and the open raised FileNotFoundError; the except returned an empty REQ, the script logged 'no REQ ... nothing to wait on; next arm', and the jobs-terminal wait was skipped",
+      "both directions exercised after the fix, against arm 1's own retained file: the argv form extracts REQ-3971fc2d5421c12412367e0b, while the old embedded form raises FileNotFoundError on the same path",
+      "the run was STOPPED before arms 3 and 4 could compound the overlap; only arms 1 and 2 were submitted",
+      "arm 1's own terminal state, read 17:41:39Z: ATTENTION, job_detail code SESSION_REFRESH_ALREADY_USED -- the same designed refusal W22's Y3 hit, so Multi-Comp produced no report either and that arm still carries"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S206 asserted that PROVIDER_READ_UNAVAILABLE tracks whether other work is in flight rather than the uploaded file, over a denominator of 5 bodies on ONE generate build; W24 was to settle it with a deliberate simultaneous pair before ~P dropped that arm for the cap (102921).",
+  "world_is": "The correlation holds on a second build and under the CTO's sharper condition, where the competing work was a GENERATION in flight rather than another normalization. Arm 2's upload is the same Target Weight XLSX that normalized in under a second when run solo as W22's Y3, so the file is exonerated again and REPLACE_FILE remains the wrong remedy for this code.",
+  "notes": "Weigh this as a natural experiment, not a designed one: it was caused by my defect, nothing was pre-registered and the pair was not randomised. What it closes is the single gap S206 carried, that every prior exhaustion sat on one generate build. A deliberate discriminator is still worth a window that has the cap for it, but its value is now mainly to time the recovery rather than to establish the effect. The remedy question is unchanged and is not ~Y's to rule: whether the resident's provider read is single-flight per host, and whether a receive that never reached the provider should count against the four-receive bound."
+}
+```
