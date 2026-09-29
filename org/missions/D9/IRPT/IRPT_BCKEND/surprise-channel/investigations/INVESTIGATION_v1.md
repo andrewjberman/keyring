@@ -11775,3 +11775,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No remedy needed unless a future order wants the Orion scaffolding actually removed -- that would first require editing or retiring test_inf_packaging.py's structural assertions, which is outside IB-pr-221's <paths> grant."
 }
 ```
+
+## ~P issuer row -- the scheduled producer runs pre-v0.20 code (row IRPT_BCKEND-S205)
+
+```json
+{
+  "id": "IRPT_BCKEND-S205",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-29T14:00:00Z",
+  "one_line": "The SCHEDULED 49F holdings producer (irpt-holdings-performance-lambda, CodeSha a1ZUOSw5) packages holdings_performance.py at 23004aaf98 -- the round-1 thread version, before PRD v0.20 rulings 13-17 (f302ab14cd) and v0.21 ruling 18 (bf1683f172). Its 11:30Z fire wrote date=2026-09-28 under the old rules: 14 accounts carry an OK daily_return of +13.62..+13.685 (+1,368%), which ruling 16 makes NOT COMPUTABLE. The v0.20/v0.21 re-emits were local runs and never reached the Lambda.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda get-function irpt-holdings-performance-lambda (13:58Z): CodeSha256 a1ZUOSw5.., LastModified 2026-09-29T03:02:58Z; packaged data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py git blob 4a71bd169c == 23004aaf98's blob; HEAD's blob is 3669b6ecf4 (after f302ab14cd v0.20, bf1683f172 v0.21, e79dd684bf COT rules)",
+      "s3 opal-data-49financial irpt/49financial/gold/holdings_performance_daily/: every partition rewritten 09:05-09:25Z by DS~E's local ruling-18 re-emit EXCEPT date=2026-09-28, written 11:30:21Z by the scheduled fire",
+      "date=2026-09-28/data.parquet: 14 rows status OK with daily_return 13.6220..13.6850 (accounts ..7646 ..6750 ..1873 ..6593 ..7511 ..1824 ..4990 ..6010 ..1178 ..4770 ..4733 ..5468 ..6187 ..2196), account_value 0.53M..5.38M; no other row with |r| > 0.2 in 2026-07-01..2026-09-28 for these accounts",
+      "checks/r20/adapter_cold_census.py on the r3 artifact TBy0pL (end 2026-09-28): QTD >= +100% 17 accounts, 14 of them at +1,362%..+1,369% -- the r3 switch as built would SERVE these figures (0 UNEXPECTED, so no refusal hides them)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD IRPT_BCKEND v0.20 ruling 16 + v0.21 ruling 18 (the gold every served 49F figure reads is emitted under them) and TO-IB-er-203 (the daily schedule runs THE producer, so each fire extends the ruled gold).",
+  "world_is": "The daily fire extends the gold with the pre-v0.20 producer: every scheduled day since 03:02Z is emitted without rulings 13-18, and 2026-09-28 already carries 14 implausible OK days. Each further fire adds another such day until the Lambda is redeployed.",
+  "notes": "DISARM: (1) the 49F re-switch r3 (ledger irpt-adapter-holdings-gold-49f-r3-20260929) does NOT apply while this row is ARMED; (2) redeploy irpt-holdings-performance-lambda with the v0.21 producer under its own ledger + both halves; (3) re-emit date=2026-09-28 through the redeployed Lambda (ad-hoc QA run) and re-read: 0 OK rows at |r| >= 1; (4) re-run the r3 census."
+}
+```
