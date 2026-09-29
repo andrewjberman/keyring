@@ -216,6 +216,27 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO-AV-e-4 Bounds 2: every other page, component, tab and harness is unchanged; AC1 0 raw-code hits on the Model tab; FWD-30 (page and export read the same lines) is the standing parity the exportCompare harness grades.",
     "world_is": "The page's visible case line is now '<label>: SERVED -- <value> <currency> (<formula with vendor mnemonics removed>)' with the whole served formula in data-model-case-formula, and a refused line reads 'REFUSED -- <one plain sentence>' with the served reason in data-model-line-refusal; the export still prints the served formula and reason verbatim. The bound harnesses (modelPattern 12 of 12, tabs 20 of 20) read green; exportCompare is outside the bound and was not runnable without a pack."
+  },
+  {
+    "id": "DSGN_AMGTV1-Z-S2",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-29T08:29Z",
+    "one_line": "On the round-2 signed-in walk (localhost:5174, DEV 1a1e8162), selecting INTU US fired GET /api/scoped/advisor-intelligence/clients-tab and it answered HTTP 500 ([INFFIN#10] getClientsTab failed); the call is an Advisor Intelligence read, not a Security Analysis route, and the Security Analysis page rendered normally.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "the Advisor Intelligence clients-tab route's owner (not this project) -- who fires this read on a Security Analysis selection, and why it answers 500; nothing on the Security Analysis page depends on it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tmp/ui-walk/20260929T082619Z/findings.json api_issues: step 'amgt select INTU US', GET /api/scoped/advisor-intelligence/clients-tab, http 500; console_errors: '[INFFIN#10] getClientsTab failed: Error: API request failed: 500 Internal Server Error' at src/api/endpoints/advisor-intelligence.ts"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The round's one real run reads the Security Analysis page on served data; the walker's API check lists every non-READY answer on the page's own steps.",
+    "world_is": "One non-Security-Analysis read answered 500 during the INTU selection step; no Security Analysis route failed (the walk's other API answers were READY).",
+    "notes": "Filed by the issuer at the round-2 close; off-task observation, routed through the channel, not a broker message."
   }
 ]
 ```
