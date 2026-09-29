@@ -85,6 +85,11 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v2.5",
       "note": "L5 recut + L6 issuance, 2026-09-29, 2.0.0_SA_COO~H. Round 16 over ROUND_ANALYSIS.round15.md @ce26d1244b: e-1, one text span one count, the matcher change proved in memory (LOCAL); e-2, the served rebuild of mention + daily under a never-widen pair, events measured (SERVED); section 28."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v2.6",
+      "note": "L5 recut + L6 issuance, 2026-09-29, 2.0.0_SA_COO~H. Round 17 over ROUND_ANALYSIS.round16.md @f424435829: f-1, the ticker and brand census (LOCAL, read-only); f-2, a security's first burst survives name detection, Z-W40-S1 (LOCAL); two independent chains; section 29."
     }
   ],
   "leads": [

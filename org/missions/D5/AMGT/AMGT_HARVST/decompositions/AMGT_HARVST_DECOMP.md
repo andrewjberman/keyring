@@ -1839,3 +1839,20 @@ of 275 rows across 6 securities (AMZN 8, UPS 2, GOOGL, GOOG, DAL, FDX 1 each); *
 ruling's premise ("does not touch tier") is corrected here for C/D and carded to the CTO;** the ruling is unchanged.
 **Fan-out: 1 of 1 chain (e-1 -> e-2, one worker), N = 1.** NOT cells: held-out reads (no new data), the event route
 (`Z-W39-S1`), the portal push (Andrew's hold), `Z-W40-S1` (not in this analysis's list).
+
+## 29. ROUND 17 -- L5 DECOMPOSITION v2.6, over the round-16 analysis (`ledger/ROUND_ANALYSIS.round16.md` @f424435829)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~12:1xZ. Round 16 CLOSED (2 of 2; the double count is gone, 8 = 8 = 8 on the
+crash report; `Z-W41-S2` graduates). Series **`f`** (spent: h, r, s, t, u, v, w, x, y, z, a, b, c, d, e over 46 orders).
+Slots MAX+1 over 42: **`~43`, `~44`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 ticker and brand census: added mentions per form, a printed sample for the text read at L9 | `HVST-f-1` | LOCAL | `~43` |
+| 2 a security's first burst survives name detection (`Z-W40-S1`); fixture mechanism test + served events unmoved | `HVST-f-2` | LOCAL | `~44` |
+
+**Measured at the cut (CLOUD `9ebf76b6da`):** 191 securities, 120 silver articles, 8 served events; the served event part
+equals `event_rows` over the served mention part (`e-2` AC2). `f-2` points at `match_forms` (the aliases that hit, carried
+on every mention row) as a non-inferred name source; the worker chooses the mechanism. A moved served event stops `f-2` at
+BLOCKING (a pair and its own cell follow). **Fan-out: 2 of 2 chains, independent, N = 2, cap 8.** NOT cells: the event
+route (`Z-W39-S1`), the portal push (Andrew's hold), new held-out reads (the Seeking Alpha 402).
