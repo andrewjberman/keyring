@@ -1821,3 +1821,21 @@ join off) -- not from the `~4` 6-security file -- so both cells pin that input; 
 to the CTO:** `chatter_daily` joins the radius because `build_daily` reads the newest mention part and `/timeline` serves it.
 **Fan-out: 1 of 1 chain (d-1 -> d-2, one worker), N = 1.** NOT cells: the event route (`Z-W39-S1`), the portal push
 (Andrew's hold), the Seeking Alpha 402 (the account holder), `Z-S37` (the tool's authoring lane).
+
+## 28. ROUND 16 -- L5 DECOMPOSITION v2.5, over the round-15 analysis (`ledger/ROUND_ANALYSIS.round15.md` @ce26d1244b)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~10:3xZ. Round 15 CLOSED (2 of 2; the CVO read 12 of 12 new matches as the company
+and the AMZN 09-07 event as one own-company story, a sample of one). Series **`e`** (spent: h, r, s, t, u, v, w, x, y, z,
+a, b, c, d over 44 orders). Slot MAX+1 over 41: **`~42`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1a one text span, one count: the matcher change, proved in memory | `HVST-e-1` | LOCAL | `~42` |
+| 1b rebuild mention + daily under a never-widen pair, events measured; one-count-per-mention judgment at L9 | `HVST-e-2` | SERVED | `~42` (continued) |
+
+**Measured at the cut (CLOUD `c13ec03ca8`), a prototype span count over 120 silver articles:** `mention_count` moves on 14
+of 275 rows across 6 securities (AMZN 8, UPS 2, GOOGL, GOOG, DAL, FDX 1 each); **8 rows move tier C -> D** (tier C is
+`mention_count >= 2`); title, lead and blocks_hit move on 0 rows, so A/B and events are expected not to move. **The
+ruling's premise ("does not touch tier") is corrected here for C/D and carded to the CTO;** the ruling is unchanged.
+**Fan-out: 1 of 1 chain (e-1 -> e-2, one worker), N = 1.** NOT cells: held-out reads (no new data), the event route
+(`Z-W39-S1`), the portal push (Andrew's hold), `Z-W40-S1` (not in this analysis's list).
