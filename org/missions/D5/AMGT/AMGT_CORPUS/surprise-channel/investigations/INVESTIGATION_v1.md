@@ -1825,6 +1825,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The producer's own capture carries numbers under K43 (2028, 2108.7834, 1.378...); the example contradicts the row's producer. The row's grade (i-3 AC4 workbook half NOT MET, CVO ADJUDICATION_v10) is unaffected.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Owner's correction, appended (the original row stands, append-only). Not a cell (round-7 analysis s.5 'NOT cells')."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S6",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-29T00:20:00Z",
+    "one_line": "CRPS-j-3's premise fails on the real landed raw: over every refdata+histdata stamp of the six ABSENT keys (6861_JP, BZLFY_US, CAT_US, CSL_AU, PBR_US, TSM_US; 18 stamps) NO stamp carries a single IS_COMP_EPS_ADJUSTED fiscal_year_line_item figure, so the built stamp-census reads newest_carries 0 older_carries 0 none_carries 6 sum 6 and the new selection moves nothing (AC3 newly_served 0).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m integrations.bloomberg.research.model_block_pull stamp-census --securities <the six> (j3_AC2.sh, HEAD of wk-crps8-3): 'stamp_census keys 6 newest_carries 0 older_carries 0 none_carries 6 sum 6'; every per-key line 'newest_carries no carrying none'.",
+        "Read-only per-stamp diagnostic (.scratch/j3/diag.py, _cases_report_figures over each stamp of _stamps_with_raw_pair): adjusted-EPS fiscal years [] on all 18 stamps; PX_LAST fiscal years present on the newest stamp of every key (10 years each) but empty on the middle stamp of BZLFY_US, PBR_US; BEST_EPS absent on the oldest stamp of 6861_JP, CAT_US, CSL_AU, BZLFY_US, PBR_US, TSM_US.",
+        "j3_AC3.sh: 'newly_served 0' and 'j3 keys_read 97 of 97 unserved_vs_base 0 of 69 ratio_moved_vs_base 0'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-j-3 / Z-S47 / Z-S51: an older landed stamp may carry, for 6861_JP and CSL_AU at least, the history the current rule needs; selecting it would move keys ABSENT -> SERVED.",
+    "world_is": "Under the adjusted-EPS rule (case_rule.py) the landed raw of all six keys carries no IS_COMP_EPS_ADJUSTED at any stamp, so the six stay ABSENT whatever stamp is read. The older stamps Z-S47 found carried PE_RATIO-era history, not adjusted EPS. The fix for these six is not stamp selection; it is a new pull of the adjusted-EPS field (vendor, not this cell) or a rule change. The selection is built, tested (8 offline tests) and inert on the real population.",
+    "notes": "Owner's read: raised at the round-8 packet. Not armed: the selection changes nothing today (AC3 bound 0/0). Divergence noted, not a defect: cases-report and the selection's carry test read BEST_EPS from the landed bestdata only (no Seeking Alpha fallback), so derive on a key whose EPS the SA fallback fills would test the newest stamp as lacking EPS and could select an older stamp that carries a landed BEST_EPS; none of the six or 97 keys moved (AC3)."
   }
 ]
 ```

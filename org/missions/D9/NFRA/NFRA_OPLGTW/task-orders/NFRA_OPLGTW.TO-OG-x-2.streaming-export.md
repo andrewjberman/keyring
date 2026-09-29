@@ -165,7 +165,7 @@ corrected test named. Flip `complete` only when every criterion PASSES by output
   and is therefore handed only after this order drains.
 - `<risk>` WORLD is GATE (xii)'s floor (an `infra/` path); the cell deploys nothing.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~11</slot>
 <fabric>site-z</fabric>

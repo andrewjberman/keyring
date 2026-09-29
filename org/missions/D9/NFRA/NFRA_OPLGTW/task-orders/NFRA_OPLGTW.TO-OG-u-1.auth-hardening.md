@@ -102,7 +102,7 @@ AC1-AC2 output, that `GW/audit.jsonl` is clean, the commits and the rows.
   release. `hd.AC2` runs `test_ratelimit.py` alone with the tier suites (no asyncio-clock pairing, so W3-S6 does not bite).
 - `<risk>` WORLD is GATE (xii)'s floor (an `infra/` path); the cell deploys nothing.
 
-<status>staged</status>
+<status>complete</status>
 <round>3</round>
 <slot>~12</slot>
 <fabric>site-z</fabric>

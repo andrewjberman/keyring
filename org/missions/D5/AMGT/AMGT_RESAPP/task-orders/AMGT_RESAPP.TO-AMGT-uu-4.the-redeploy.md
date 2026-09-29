@@ -30,10 +30,19 @@ the halves. AC2 and AC3 read the LIVE research library on the served plane, fres
 reported, held and routed to the issuer, never counted as a failure. AC2's harness runs from your worktree's `portal/`, which
 must be cut from local portal `DEV` at the issuer's GO (it carries uu-2's harness and uu-3's page change).
 
+**AMENDMENT 1 (issuer, 2026-09-29, on `1.0.0_SA_CTO~Z`'s decision msg 26319): this act is now ONE COMBINED scoped-API deploy
+with `AMGT_HARVST.TO-HVST-a-2`** -- one HEAD build, one upload, one `safe-apply`, ONE NEVER-2 entry naming BOTH orders, one
+CloudOps seat -- under BOTH never-widen pairs: this order's (the COO half as amended, AMENDMENT 1, and the CTO's re-sign on it) and
+a-2's (`2.0.0_SA_COO~H`'s and the CTO's). **Begin only when all FOUR halves are committed**; the closure diff runs from the
+DEPLOYED artifact by content (the first attempt measured from a newer commit, row Z-S295). The stop limbs are the union the two
+pairs name; a closure file or a plan change that NEITHER pair names is a REFUSAL. Your three criteria below are RESAPP's and are
+graded at RESAPP's L9; a-2's are graded at HARVST's.
+
 ## 2. BOUNDS
 
-1. The two acts and nothing else, under ONE NEVER-2 entry committed before the build and closed in the same session.
-2. A plan that moves a second resource, or a closure diff that hits a stop limb, is a REFUSAL: print it, stop, report.
+1. The combined act and nothing else, under ONE NEVER-2 entry committed before the build and closed in the same session.
+2. A plan that moves a resource neither pair names, or a closure diff that hits a stop limb of either pair, is a REFUSAL: print
+   it, stop, report.
 3. Standing: no S3 delete, no vendor call, no key hunting, no push of shared branches, no portal promote.
 
 ## 3. SURFACES
@@ -64,6 +73,9 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 the no-regression arm: the page and the export must still agree after BOTH move), AC3 FAIL (0 of 48 served SERVED bases on the
 adjusted basis). The COO never-widen half is written AFTER uu-3 merges, against its landed rule (round 45's lesson: a half written
 before the producer lands is a prediction). `0.7.0_AE_CloudOps~A` is not live at the cut; the issuer seats it at the GO.
+AMENDMENT 1 (2026-09-29): graded by no gate limb at commit -- the order is non-terminal and declares `<placeholders>NONE</placeholders>`,
+so GATE (viii) grades it as a modified order; the change is the act's shape (combined with HVST-a-2, CTO msg 26319), not a criterion.
+First attempt REFUSED correctly at the closure diff (c524129644, row Z-S295); the order stays `pending` for the combined act.
 
 <status>pending</status>
 <round>46</round>
