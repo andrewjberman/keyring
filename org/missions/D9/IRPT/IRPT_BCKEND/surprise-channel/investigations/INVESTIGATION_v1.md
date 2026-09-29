@@ -11837,3 +11837,36 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "NOT a replay request and no retry was made. Two reads would settle it, neither inside a walk window: (1) the resident's provider-read path -- is the vendor read single-flight or rate-limited per host, and does PROVIDER_READ_UNAVAILABLE distinguish 429/503 from a lock it holds itself; (2) whether the 4-receive bound should count receives that never reached the provider. If confirmed, the remedy on a PROVIDER_READ_UNAVAILABLE exhaustion is not REPLACE_FILE. Consequence for W22: Multi-Comp (Y2), the first certified 49financial report (Y4) and the certified Inflection report (Y5) stay UNEXERCISED and carry forward as open arms."
 }
 ```
+
+
+## ~Y walker row -- one W22 job was evicted from its vendor session TWICE, and no journal line says so (row IRPT_BCKEND-S207)
+
+```json
+{
+  "id": "IRPT_BCKEND-S207",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-29T14:38:00Z",
+  "one_line": "W22 body Y3 (Target Weight, notional 1000, XLSX, cottonwood) ended ATTENTION with job_detail code SESSION_REFRESH_ALREADY_USED. The refusal is CORRECT and designed -- resident_worker.refresh_session allows ONE causally admitted refresh per request and raises WorkerAttention on a second, so a mutation is never replayed (test_resident_worker.py:264 covers exactly this second_eviction path). Two things are worth the record anyway. (1) The vendor evicted this job's session TWICE inside one request, 15 min apart, on a 2-row portfolio that had already uploaded and created cleanly -- the same window in which three of five normalizations died PROVIDER_READ_UNAVAILABLE (row IRPT_BCKEND-S206). (2) The resident journals NOTHING for a job ATTENTION: over the span 14:08-14:34Z the journal carries 79 lines, every one IRPT_RESIDENT_POLL handled=0/1, with no line naming SESSION_REFRESH_ALREADY_USED, no session-refresh line and no traceback. The code exists only in the irpt-jobs row, so an operator reading the journal for this window sees a job that simply stopped.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (INERT: the refusal is the designed behaviour, the job is terminal by name, nothing was deployed in the window and no served artifact moved)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-jobs consistent Query, tenant cottonwood job REQ-51f1413b9d84d26a66aaa71c, read 14:31:19Z: state ATTENTION, outbox_state SENT, job_detail {\"code\":\"SESSION_REFRESH_ALREADY_USED\"}, fence_token 3, composition_sha256 c036698bc226fe57",
+      "the same row's intent records, which date each claim: intent_holdings_upload claimed_at 1790690392 fence 1 (13:59:52Z); intent_portfolio_create claimed_at 1790690394 fence 1 (13:59:54Z); intent_session_refresh claimed_at 1790691317 fence 2 (14:15:17Z) -- the refresh was claimed 15.4 min after the portfolio was created, and the row's fence reached 3",
+      "the vendor work itself succeeded before the eviction: checkpoint_upload ok=true, status 200, rows_sent 2, rows_echoed 2, reconciled=true, upload_record_id 780748, weight_unit_echoed Dollars, rows AAPL 600.0 / VNQ 400.0 (the notional-1000 Target Weight applied); checkpoint_portfolio model_portfolio_id 2367113 name 'IRPT REQ-51f1413b9d84d26a66aaa71c r1 5f40e4cbc24f'",
+      "job_watch.py cottonwood REQ-51f1413b9d84d26a66aaa71c: state SUBMITTING / outbox SENT continuously from 14:10:45Z through a 900 s TIMEOUT at 14:25:45Z; direct consistent reads every 25 s then read SUBMITTING at 14:27:43Z and ATTENTION at 14:31:19Z -- 31.5 min from the K5 POST (13:59:48Z), against 16.3 min for Y1's Comparison in the same window",
+      "the designed refusal: infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:126-129 refresh_session -- 'One durable, causally admitted refresh; never replay a mutation' -- raise WorkerAttention('SESSION_REFRESH_ALREADY_USED') when claim_intent(request_id, 'session_refresh') returns false; tests/test_resident_worker.py:264 asserts result['detail']['code'] == 'SESSION_REFRESH_ALREADY_USED' and 'not r.downloads' on second_eviction",
+      "resident journal by SSM read-only (i-0167fd745ad906a66, irpt-analysis-resident.service, --since 2026-09-29 14:08:00 UTC, service active): 79 lines total; the grep alternation 'IRPT_|ERROR|WARN|refresh|51f1413b' matched only IRPT_RESIDENT_POLL lines, handled=0 on every tick but handled=1 at 14:30:19Z (the tick that moved the row to ATTENTION); a separate read with 'SESSION|session_refresh|REQ-51f1413b|ATTENTION|Traceback' matched 0 of 77 lines in the span",
+      "no replay and no resubmission was made: W22's cap of 5 submissions was already spent, and the packet forbids replaying a challenged vendor mutation"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W22 packet blob 1f3bf0914f W22-2: every REQ is case-traced to a terminal state, and a named terminal state is a pass of the window. The resident's own contract (resident_worker.refresh_session) asserts ONE admitted session refresh per request, so a second eviction is an ATTENTION by construction.",
+  "world_is": "Y3 is terminal by name and the window passes on it: SESSION_REFRESH_ALREADY_USED is the designed stop, not a bug, and it correctly declined to replay the mutation. What the window measured beyond that is (a) a double session eviction on one small request, concurrent with three PROVIDER_READ_UNAVAILABLE exhaustions, and (b) that a job ATTENTION leaves no journal trace at all -- the resident logs only its poll counter, so the code is recoverable only from irpt-jobs.",
+  "notes": "No remedy claimed and no replay requested. Two reads would settle whether (a) and S206 share one cause, neither inside a walk window: (1) why the vendor session was evicted twice in 31 min -- is eviction driven by concurrent sessions on the host, and does the resident open one session per job or share one; (2) whether the resident should emit an IRPT_RESIDENT_ATTENTION line carrying job_detail.code, so a window's stop is readable from the journal beside its IRPT_RESIDENT_RESOLVE lines. Consequence for W22: Target Weight at notional 1000 is PROVEN through the vendor upload and portfolio create (600/400 Dollars echoed) but produced no report, so the Target Weight report arm carries forward with Multi-Comp, 49financial and Inflection."
+}
+```
