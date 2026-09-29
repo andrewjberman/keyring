@@ -2180,6 +2180,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "FWD-10 (PRD ADDENDUM): the pack's pillars exist in the served substrate as lead phrase + paragraph + citation, each openable to the passage it came from.",
     "world_is": "158 of 159 pillars carry lead, paragraph, citation and terms; ML_FP_Equity's single pillar carries the lead and citation with an empty paragraph, and its citation passage begins mid-sentence and reaches the RISKS heading (a PDF pack where the pillar's body was not separated from the next section).",
     "notes": "Filed, not fixed; the writer (dossier.py pillar reader) is outside this order's paths. It grades no fence by itself: the field is cited and reason-bearing under FWD-13 (its text is empty, not absent)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S58",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T13:02:00Z",
+    "one_line": "A new library folder, 'Hitachi 6501 JP' (one file, Hitachi_Investment_Memo_2026_09_28_1.docx, synced 12:56:19Z), arrived six minutes after CRPS-o-1's run: the library reads 96 folders / 357 files, and FWD-4's population is no longer empty -- induction_request.run() reads unresolved_in_universe 1 of 96 and picks NONE ('no report states a ticker in the (Ticker: ...) form').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "13:00Z at CLOUD 2a693d47b3: PYTHONPATH=. python .scratch/r13real/p_ind.py (induction_request.run() with DELIVERABLES_DIR redirected to scratch) printed 'backlog_folders 96 / unresolved_in_universe 1 of 96 / candidate Hitachi 6501 JP | NO_EVIDENCE / picked NONE Hitachi 6501 JP: no report states a ticker in the (Ticker: ...) form / vendor_calls 0 / s3_writes 0 / poison_positive_control raised 4 of 4'.",
+        "python -m lib.research.corpus.library --census: placeholders 0 of 357; os.listdir of the OneDrive library root shows the folder with one 42194-byte .docx, mtime 12:56:16Z, ctime 12:56:19Z.",
+        "FWD_EVIDENCE_ROUND13.json run_at 2026-09-29T12:50:00Z, FWD-4 denominator '0 of 95 backlog folders are UNRESOLVED'; ingest --verify at 12:59:43Z still reads 'objects 356 files 356 match 356 mismatch 0' (the unresolved folder is outside the resolved folder list FWD-1 scans)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD_EVIDENCE_ROUND13 FWD-4 (12:50Z): the fence's population, one backlog name the universe carries UNRESOLVED, is empty (0 of 95), so the act can only print 'picked NONE'.",
+    "world_is": "From 12:56Z the population holds one organic name, Hitachi 6501 JP. The act runs on it and refuses to pick it for want of a (Ticker: ...) line: the organic arm now exists and reads NO_EVIDENCE; the WILL-ADD and REFUSES-ambiguous limbs are still unobserved, so the planted-folder act the row names still stands.",
+    "notes": "For the round-13 analysis, not a cell of this round. FWD-1, FWD-3 and FWD-19 denominators moved by one folder / one file after the run; FWD-1's fence scans the resolved folder list, so its 356 of 356 still reads. Ingesting or inducting Hitachi is the scheduled producer's and AMGT_RESAPP's (the induction act's executing seat), never this row's."
   }
 ]
 ```
