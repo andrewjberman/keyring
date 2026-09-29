@@ -81,7 +81,7 @@ outer commit hashes, and any row.
 
 **ISSUER NOTES:** round 6 = round-5 analysis s.4 item 3, ruling 6. The label half needs no page change (seriesLabel already reads series.name); it is realised when AMGT_RESAPP deploys xx-2 (merged @209a6cce2f, not deployed at the cut). Base 4f927ad0: dots 2 of 3; green (dot opacities) 3 of 3; U3 bound 3 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~24</slot>
 <fabric>site-z</fabric>
