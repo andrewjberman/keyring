@@ -1,0 +1,13 @@
+{
+ "project_code": "MDPF_SECCLASS",
+ "home": "org/missions/D8/MDPF/MDPF_SECCLASS",
+ "directive": "D8",
+ "macro_code": "MDPF",
+ "fabric": "laptop",
+ "dep_stage": "REGISTERED",
+ "status": "active",
+ "name": "One canonical per-security classification table for every holdings surface",
+ "generated_from": "org/missions/D8/MDPF/MDPF_SECCLASS/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-29T20:15:57Z"
+}
