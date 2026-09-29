@@ -1934,6 +1934,51 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "spec_asserts": "Order HVST-a-3 s.1: the finding that the old rule is 'wrong on both Boeing days'; AC1(c) pins only 2026-09-08 as moved.",
       "world_is": "Under the CTO's ruled rule only 2026-09-08 moves; 2026-08-26 cannot move under it. Whether a 1-1 unrelated-story day should be a split event, or lead differently, is the un-ruled question the order names as not this cell's."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W35-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~35",
+      "surfaced_at": "2026-09-28T23:10Z",
+      "one_line": "Mounting the two timeline routes (16->18) turns two tests OUTSIDE HVST-a-1's <paths> red: test_slash_safe_security_route.py::test_route_table_still_has_sixteen_entries and test_generation_and_pool_routes.py::test_19_the_route_set_did_not_move_and_the_retired_table_is_not_named both pin len(scoped_amgt_route_table()) == 16; AC2 reads 2 failed, 254 passed of 256 collected.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED in worktree wk-hvst-r12-35 (branch wk-AMGT_HARVST-35): base run of `python -m pytest lib/research/api/tests/ -rA --tb=line` before any edit = 256 passed, 0 failed (256 collected; the order states 255). After the four in-scope edits the same command = 2 failed, 254 passed, 256 collected; AC1 = PASS (0 failure(s)) at 18/18/==18.",
+          "FAILED lib/research/api/tests/test_slash_safe_security_route.py::test_route_table_still_has_sixteen_entries -- AssertionError: 18 of 16 routes in scoped_amgt_route_table() (assert len(routes) == 16 at :153).",
+          "FAILED lib/research/api/tests/test_generation_and_pool_routes.py::test_19_the_route_set_did_not_move_and_the_retired_table_is_not_named -- assert len(routes) == 16 at :663.",
+          "Neither file is in HVST-a-1's <paths> (which name test_scoped_amgt_mount.py and test_timeline_routes.py only); the worker did not edit them. test_scoped_amgt_mount.py's own two literal-16 asserts (:128,:129) ARE in scope and were moved to 18 with the terraform count."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-a-1 s.1 step 4 and AC2: 'Change no other assertion' and 'the api suite passes ... a pre-existing failure elsewhere is reported ... never repaired'; the cut assumed the only tests pinning the table size were test_scoped_amgt_mount.py and test_timeline_routes.py.",
+      "world_is": "Two further tests pin the table length at 16 and fail once the table returns 18; they are not pre-existing failures but a direct consequence of the mount, and outside the write grant. Left as is, the api suite is red on CLOUD after this branch drains. Remedy for the issuer: amend HVST-a-1's <paths> to add the two test files and move each len == 16 to 18 (test_19 also enumerates the AMGT-rk-6 leaves; the two timeline leaves need no new leaf count), or accept the red suite until a-2.",
+      "notes": "Worker leaves the TO status open: AC2 FAIL is the recorded output. No terraform, AWS, deploy or push was run."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W35-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~35",
+      "surfaced_at": "2026-09-29T00:10Z",
+      "one_line": "RESOLUTION of AMGT_HARVST-Z-W35-S1: the issuer's AMENDMENT 1 to HVST-a-1 (CLOUD @15caf6ed3b) added the two out-of-scope tests to <paths>; their pinned table length moved 16->18 and the api suite reads 256 passed of 256 collected.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED in worktree wk-hvst-r12-35 after merging CLOUD: `python -m pytest lib/research/api/tests/ -rA --tb=line` = 256 passed, 256 collected, rc 0; test_route_table_still_has_sixteen_entries and test_19_the_route_set_did_not_move_and_the_retired_table_is_not_named both PASSED.",
+          "Edits: test_slash_safe_security_route.py assert, its message and the section comment 16->18; test_generation_and_pool_routes.py assert at :663 16->18; nothing else in either file. Instance: deliverables/0.9.0_WK_AMGT_HARVST~35/AMGT_HARVST.TO-HVST-a-1.mount-the-two-timeline-routes.proof_of_spec.json."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Z-W35-S1 world_is: two tests pin the table length at 16 and fail once the table returns 18; remedy is an issuer amendment of <paths> (issuer ruling relayed to the worker, AMENDMENT 1 @15caf6ed3b).",
+      "world_is": "The remedy landed and was applied as bound 4 allows; Z-W35-S1's ARMED standing is spent by this. The row Z-W35-S1 itself is left as filed (append-only); the issuer's disposition row carries its close.",
+      "notes": "Filed as a NEW row because the gate refuses an in-place edit of Z-W35-S1 (content hash mutation); the issuer asked for a resolution note on the row and this is that note in the only form the channel admits."
     }
   ]
 ```
