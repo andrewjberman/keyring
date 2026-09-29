@@ -102,7 +102,7 @@ outer commit hashes, and any row.
 **ISSUER NOTES:** round 4 = the round-3 analysis's enrichment list @46d28c6c4c section 4 (CTO msg 26587). Decomposition v4.
 Base a93071b8: history.cjs 0 of 5 (FAIL as expected; a scratch green arm reached 4 of 5, arm 1 reading the real constants file); bound 4 of 4 (PASS).
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~14</slot>
 <fabric>site-z</fabric>
