@@ -1,6 +1,6 @@
 set -uo pipefail
 # Ledger irpt-resident-st4-yr201-yr211-20260929 leg D1: fe64236bbb-st3 -> fe64236bbb-st4 (st3 plus ycharts/generate/recipe.py and
-# ycharts/generate/resident_worker.py @14c961af32: IB-yr-201 (S194, a Comparison sends its models and refuses a PDF printing none) and
+# ycharts/generate/resident_worker.py @0357fc7e08 (rebuilt on IB-yr-221 amendment 1, CTO 102687/102724): IB-yr-201 (S194, a Comparison sends its models and refuses a PDF printing none) and
 # IB-yr-211 (S193, a resolve RETRY is logged and re-offered in 60 s)). The st3 root stays for rollback. Factory pre-check on resident_main.py's sys.path.
 NEW=fe64236bbb-st4
 OLD=fe64236bbb-st3
@@ -9,9 +9,9 @@ ROOT=$R/$NEW
 UNIT=irpt-analysis-resident.service
 Q=https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation
 KEY=ec2/investor-reporting-ycharts/resident/irpt-resident-fe64-st4.tar.gz
-WANT_TAR=7d10152cd8fbb169979e8ead0c34819467b178961cce2ba3231875f7a2dcbd92
+WANT_TAR=63a5e26a3caa3a00f03f4361dc2a8f2d1a21bc31797af665d45224b745dfd054
 WANT_RECIPE=b2fbd720eefcd76751a16ae662a76d81e6ffbf99c98273771a26ed894d4f611f
-WANT_WORKER=0b67be2a3505c189c8b8a253bbaaad228d91486b393b258e0eb955fcc73eb596
+WANT_WORKER=5288ff5abc7aacd994ee578f190e641c6ec0639d2760673b05acf552c2426c87
 WANT_EXTRACT=719369d54841ca918adf2f698583c9862007f755ac01fc6644e6679968568b20
 WANT_TEMPLATES=54656584f476b616622368d60c227b1519a70f3e9aced14edb88c776f9823866
 WANT_PUBLICATION=6aa82b3ad2d30ea47dc74bb97dd0abfd04f95f7974432f386a95e871f5912184
@@ -28,8 +28,8 @@ aws s3 cp "s3://opal-313476888478-lambda-artifacts/$KEY" /tmp/irpt-resident-$NEW
 tar -xzf /tmp/irpt-resident-$NEW.tar.gz -C "$ROOT" || exit 12
 cd "$ROOT" || exit 13
 sha256sum -c SHA256SUMS --quiet && echo "package SHA256SUMS OK ($(wc -l < SHA256SUMS) members)" || exit 14
-[ "$(sha256sum ycharts/generate/recipe.py | cut -d' ' -f1)" = "$WANT_RECIPE" ] || { echo "ERROR: recipe.py is not 14c961af32"; exit 17; }
-[ "$(sha256sum ycharts/generate/resident_worker.py | cut -d' ' -f1)" = "$WANT_WORKER" ] || { echo "ERROR: resident_worker.py is not 14c961af32"; exit 17; }
+[ "$(sha256sum ycharts/generate/recipe.py | cut -d' ' -f1)" = "$WANT_RECIPE" ] || { echo "ERROR: recipe.py is not 0357fc7e08"; exit 17; }
+[ "$(sha256sum ycharts/generate/resident_worker.py | cut -d' ' -f1)" = "$WANT_WORKER" ] || { echo "ERROR: resident_worker.py is not 0357fc7e08"; exit 17; }
 [ "$(sha256sum ycharts/extract/extract.py | cut -d' ' -f1)" = "$WANT_EXTRACT" ] || { echo "ERROR: extract.py is not 12a67ed5ee"; exit 17; }
 [ "$(sha256sum ycharts/generate/templates.json | cut -d' ' -f1)" = "$WANT_TEMPLATES" ] || { echo "ERROR: templates.json is not 6096ee740b"; exit 17; }
 [ "$(sha256sum ycharts/extract/publication.py | cut -d' ' -f1)" = "$WANT_PUBLICATION" ] || { echo "ERROR: publication.py is not c1fd6c5e52"; exit 17; }
