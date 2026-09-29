@@ -2006,6 +2006,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "An unresolvable key form is graded ABSENT with a data reason, indistinguishable from a real 'no consensus EPS' verdict.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Found by the CTO while re-measuring the k-2 expected outcome for its never-widen half; filed, not investigated. The remedy is a refusal on a key that resolves to no landed stamp, or normalising the key form at the parse."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-29T05:00:00Z",
+    "one_line": "CRPS-l-4 premise differs: the underscore key does not fail to resolve a stamp; security_key() maps both forms to the same sec_key so the stamp resolves, and the failure is that the landed refdata/histdata are keyed by the Bloomberg string, so the underscore string indexes an empty block.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/research/model_block_pull.py security_key = security.replace(' ','_') (identity on the underscore form); _cases_report_figures reads ref.get(security, {}) / hist.get(security, []) / best['1FY'].get(security) by the raw input string -> empty figures for AMD_US_Equity.",
+        "Refusal built on the observed condition (no stamp, or an empty figure set) at branch wk-crps10-3; the REFUSE text says 'no landed raw stamp' as ruled although the measured cause is 'string is no key in the landed raw'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order says the underscore form resolves to no (or the wrong) landed raw stamp.",
+    "world_is": "The stamp resolves; the landed block holds no entry under the underscore string, so figures are empty. Refusal keys on that.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
