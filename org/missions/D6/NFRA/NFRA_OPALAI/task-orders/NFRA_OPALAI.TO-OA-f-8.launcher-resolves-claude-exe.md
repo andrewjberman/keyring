@@ -87,7 +87,7 @@ Dry-run at base (opal_ai dcececf53c):
 - f8.AC1 base: FAIL as expected (`resolve-claude.ps1 absent`).
 - f8.AC2 base: FAIL as expected (`launcher calls resolve-claude=0; bare 'claude.exe' in Start-Process=1; example names claude_exe=0`).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~23</slot>
 <fabric>site-z</fabric>
