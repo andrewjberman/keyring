@@ -12048,3 +12048,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Repaired before the window opened, so no remedy is owed and nothing is armed. Reported to 2.0.0_SA_COO~P as operator and 1.0.0_SA_CTO because it touches an already-SIGNED half: the pinned file is unchanged, the repair is to an unpinned import. Two things worth carrying: (1) a walk packet that pins a tool should pin its import closure or name the entry point only; (2) the offline preflight earned its place -- it converted a six-submission window loss into a two-line edit, and it is cheap enough to run before every window. ID NOTE: first written as S209 and renumbered before landing -- 2.0.0_SA_COO~P allocated S209 concurrently in 6d45eaeba1 (S205's disarm) while this row was being drafted against the same append-only shared channel. The collision is the race CLAUDE.md 14b names for a shared append-only file; nothing of ~P's row was touched."
 }
 ```
+
+## 4.0.0_SA_CRO census row -- every holdings-basis read pays an O(accounts) opaque-id sweep before its first partition read (row IRPT_BCKEND-S212)
+
+```json
+{
+  "id": "IRPT_BCKEND-S212",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-09-29T16:45:00Z",
+  "one_line": "Every holdings-basis read maps the canonical account id to the gold's raw key by f49_engine.map_account (reused by holdings_gold.map_account), which recomputes ids.opaque_account over EVERY key on the window's last day to find the one match: 7,548 keys on 2026-09-28 at 0.15 ms each, 1.8-2.5 s per read measured on the r3 bytes (TBy0pL) before the first partition is read. The served irpt_holdings_phases line carries it as map_ms. The mapping is exact and the cost sits inside the r3 packet's 48 s SI bound; it is a per-press cost that scales with the firm's account count, not the window, and a five-period press set on one account pays it five times.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "none -- nothing armed; the r3 rollback trigger stays the packet's own (SI at or over 48 s, read by 2.0.0_SA_COO~P at its step 5)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "f49_engine.py:145-153 in the TBy0pL artifact (data/assets/scripts/gold/runners_49f/): matches = [k for k in source.account_keys(day) if opaque_account(firm, k) == canonical_account_id]; a linear sweep with one keyed hash per key",
+      "holdings_gold.py:147-155 reuses it ('one grammar, reused not restated') and :183 calls it with days[-1] before the frame read at :185; the S3 source's account_keys(day) at :132-134 re-reads that day's partition on every call (_read(day, None)), so the served cost is one partition get plus the sweep",
+      "measured 2026-09-29 16:3xZ, this seat's map_probe.py over the cached 2026-09-28 partition (VersionId per gold_v021/MANIFEST.json): 7548 keys, three sweeps 1762 / 2288 / 2456 ms; one opaque_account call 0.150 ms",
+      "this seat's all-accounts census through the same bytes ran at about 2 s per read (three 590 s budgets timed out below 1,000 accounts each); with ids.opaque_account memoized in the harness -- a pure (firm, raw) -> id function -- the same 7,548 reads took 132 s (YTD), 162 s (1Y) and 227 s (SI), and every figure agrees with 2.0.0_SA_COO~P's section-2 census and the cold-period probe (r3 half addendum 1)",
+      "the r3 half section 2 wall times (SI 12.8-16.6 s, 1Y up to 24.9 s on a cold read, 250-558 partitions) include this sweep once per read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The adapter maps the canonical account id to the gold's raw key by the engine lane's one normalizer (holdings_gold.py:22-24, 'ACCOUNT MAPPING is f49_engine.map_account's rule, called directly'), and the r3 packet bounds the served read at SI under 48 s with irpt_holdings_phases read per press (list_ms, map_ms, frame_ms, link_ms).",
+  "world_is": "The one normalizer is a sweep, so about 2 s of every press at 7,548 keys is spent before the first partition is read, and the number grows with the firm. A reverse index (canonical id -> raw key) built once per key set, or the gold carrying the canonical id beside the raw key, would make the same rule a lookup; the owner is the adapter's lane (2.0.0_SA_COO~P), and this seat names the cost, not the remedy.",
+  "notes": "Corroboration only, cited by the r3 half's addendum 1 as named item 4. Not a rollback trigger and not a condition of any half. Memoization lives in this seat's local harness and is not proposed for the artifact."
+}
+```
