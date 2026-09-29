@@ -1935,3 +1935,43 @@ Write sets are disjoint:
 - the event route (`Z-W39-S1`);
 - the portal push (Andrew's hold);
 - new held-out reads (the Seeking Alpha 402).
+
+## 32. ROUND 20 -- L5 DECOMPOSITION v2.9, over the round-19 analysis (`ledger/ROUND_ANALYSIS.round19.md` @a251f02116)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~22:4xZ. Round 19 CLOSED: 4 of 4. Publisher codes are served end to end, the
+"covered" wording is ruled in DSGN, and `Z-W45-S1`/`S2` graduated. Series **`j`**; slots MAX+1 over 46 are **`~47`**
+and **`~48`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the event route serves the stored event by its stored id (`Z-W39-S1`) -- THE CODE | `HVST-j-1` | LOCAL | `~47` |
+| 1 -- wiring + mount + redeploy so the route answers users | NOT CUT: HELD for the CTO (row `Z-S42`) | -- | -- |
+| 2 the story-span census (`Z-W41-S1`), measurement only | `HVST-j-2` | LOCAL | `~48` |
+
+**Why item 1's served half is held, not cut (row `Z-S42`, measured at the cut):**
+- The event route answers no user: the deployed function returns `404 no /api/scoped/amgt route`.
+- The gateway's 108 routes carry only `/timeline` and `/timeline/day`.
+- The adapter states the route "IS NOT WIRED", and a test asserts it.
+- The page builds only the two mounted URLs.
+
+So the analysis's AC ("all 8 served events answer 200 by their stored ids" after a redeploy) cannot be met by a
+redeploy. It needs an adapter wiring plus a terraform mount: a NEW served surface that no page calls. That is the
+CTO's call, carded with a REC (mount only when DSGN_AMGTV1's page needs an event window by id).
+
+The code defect is real (8 of 8 stored ids differ from the recomputed id) and the fix is right under either answer, so
+`j-1` is cut now, unwired.
+
+**Fan-out: 2 of 2 chains (`j-1`; `j-2`), independent; N = 2 worker slots; cap 8 not pressed.** Write sets are
+disjoint: `j-1` owns `timeline_api.py` and its tests; `j-2` writes only its deliverables and the channel.
+
+**Checks at the base:**
+- `j-1` AC1: the named tests FAIL by construction. AC2 (b) FAILS (the old route is `first_day`-keyed and its id is
+  recomputed; issuer read 8 of 8 differ).
+- `j-2` AC1 (a) must reproduce the served event part (8 events, ETag `c146a325...`).
+- The scripts are worker-written, as in every prior round.
+
+**NOT cells** (analysis s.4 plus this cut):
+- the page wording (DSGN_AMGTV1);
+- `Z-S37` (the tool's owner, PARKED on MSTR~Z);
+- a field rename;
+- the event route's wiring, mount and deploy (HELD, `Z-S42`).

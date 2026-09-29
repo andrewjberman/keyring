@@ -100,6 +100,11 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v2.8",
       "note": "L5 recut + L6 issuance, 2026-09-29, 2.0.0_SA_COO~H. Round 19 over ROUND_ANALYSIS.round18.md @d11fd4d089: i-1, UBS off the whole-brand list with a limb-agreement test (LOCAL); i-2, a PARTIAL day names its publisher -- the rule keeps publishers_covered_codes and both timeline routes serve it (LOCAL); i-3, the served chatter_daily rebuild under a never-widen pair (SERVED); i-4, the scoped-API redeploy by 0.7.0_AE_CloudOps~A under a pair and a NEVER-2 entry (WORLD); one chain; section 31."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v2.9",
+      "note": "L5 recut + L6 issuance, 2026-09-29, 2.0.0_SA_COO~H. Round 20 over ROUND_ANALYSIS.round19.md @a251f02116: j-1, the event route serves the stored event by its stored id, code only and unwired (LOCAL); j-2, the story-span census, measurement only (LOCAL); item 1's wiring+mount+redeploy HELD for the CTO (row Z-S42: the route answers no user); two independent chains; section 32."
     }
   ],
   "leads": [

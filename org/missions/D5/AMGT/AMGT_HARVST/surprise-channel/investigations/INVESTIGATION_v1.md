@@ -2605,6 +2605,53 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "COO half section 2 / CTO half section 1: reader 1 is the scoped API at CodeSha256 CtIvirvM..., which serves the newest daily part as series and the newest event part as events; the blast radius was signed against that reader.",
       "world_is": "Reader 1 changed code under the signed pair (RESAPP ww-1's own signed act, a different project's pair). The HARVST half did not name a condition on reader 1 staying fixed, and the ww-1 pair presumably did not name the HARVST gold puts. Measured after both acts: the new code still serves the newest landed parts, equal field by field on the four securities read, so the user-visible outcome is the one the HARVST pair signed.",
       "notes": "INERT: the close run is the exercised read of the combined state. Lesson for the next SERVED pair on this surface: read the reader's CodeSha256 again in the pre-put dry step and STOP on a change, the same way the ETags are re-read."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S42",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-29T22:40:00Z",
+      "one_line": "ROUND_ANALYSIS.round19.md s.2 ruling 2 and s.4 item 1 treat Z-W39-S1 as a SERVED defect ('the page's event window reads through this route') and cut a redeploy with 'all 8 served events answer 200 by their stored ids'; measured at the round-20 cut, the event route answers NO user: unwired in the adapter, unmounted at the gateway, and never called by the page.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deployed opal-amgt-scoped-api (CodeSha256 uv0oTSMa...) invoked with GET /api/scoped/amgt/security/BA_US_Equity/timeline/event/2026-09-08 -> 404 {refused: true, reason: 'no /api/scoped/amgt route for GET .../timeline/event/2026-09-08'}",
+          "apigatewayv2 get-routes 7k3ed8px20, every page: 108 routes; timeline routes = GET .../{security_key}/timeline and GET .../{security_key}/timeline/day/{date}; no event route",
+          "lib/research/api/scoped_amgt.py:4101 'THE EVENT ROUTE (.../timeline/event/<first_day>, get_timeline_event) IS NOT WIRED HERE'; lib/research/api/tests/test_timeline_routes.py::test_timeline_route_post_and_event_route_are_not_wired",
+          "portal/src/pages/SecurityAnalysis/components/TimelinePanel.tsx:127,130 build only the /timeline and /timeline/day URLs",
+          "issuer read at the cut: 8 of 8 served chatter_event rows carry a stored event_id != publication_gold._event_id(security_key, first_day, last_day) -- the code defect is real"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "ROUND_ANALYSIS.round19.md s.2 ruling 2: 'This is a served correctness defect, and the page's event window reads through this route'; s.4 item 1: deployed under a never-widen pair (a redeploy), AC 'all 8 served events answer 200 by their stored ids ... every other route is byte-equal'.",
+      "world_is": "The defect sits in unreached code. A redeploy alone cannot make the 8 events answer 200: the adapter would have to WIRE the route (scoped_amgt.py route table, which test_scoped_amgt_mount.py diffs against the tf) and the gateway would have to MOUNT it (scoped-amgt-api.tf, a terraform act) -- a NEW served surface no page calls. The issuer cut the code fix LOCAL (HVST-j-1, correct under either reading) and HELD the served half pending the CTO's ruling on whether the route is to be mounted at all.",
+      "notes": "INERT: nothing served is wrong today because nothing serves the route. Carded to 1.0.0_SA_CTO~Z at the round-20 issuance with a REC: mount only when DSGN_AMGTV1's page needs an event window by id; until then the fix stays unwired."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S43",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-29T22:45:00Z",
+      "one_line": "DISARM of AMGT_HARVST-Z-S37 (ARMED, disarm_owner 2.0.0_SA_COO~H): the resolving commit is ccf2a27c6b by 0.0.0_AB_MSTR~Z -- safe-merge.sh's conflict state now records only the paths the MERGE could stage (HEAD..MERGE_HEAD plus unmerged paths); any other staged path is WARNed, left out of the state, and refused on --continue.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git merge-base --is-ancestor ccf2a27c6b HEAD = true at CLOUD (issuer read, 22:4xZ); ccf2a27c6b touches .tools/safe-merge.sh only (20 lines), subject 'the conflict state is what the MERGE could stage, not what the shared index holds -- disarms AMGT_HARVST-Z-S37 / AMGT_CORPUS-Z-S59'",
+          "0.0.0_AB_MSTR~Z msg 26755 and 1.0.0_SA_CTO~Z msg 26757 (both acked): scratch-repo test with a negative control in the commit body; one named residual (a peer path that also differs between the two sides)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Row Z-S37: the --continue foreign-path guard whitelists whatever the INDEX holds when the merge conflicts, so a peer staging in that window is committed under the draining seat's name.",
+      "world_is": "Fixed at the tool: the state snapshot is now the merge's own candidate set, so a peer's staged path is refused rather than whitelisted. The residual the fixer names (a peer path that ALSO differs between the two merge sides) stays inside the merge's candidate set by construction and is not closed by this fix.",
+      "notes": "Z-S37 is DISARMED by this row; its remaining residual is the tool owner's (0.0.0_AB_MSTR~Z), not this project's. Not exercised on this project's own drain yet: the next conflicted drain of this project is the first live run of the fixed path."
     }
   ]
 ```
