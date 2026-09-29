@@ -86,7 +86,7 @@ records the grant here; on a REFUSAL the issuer amends this order to a no-networ
 
 **AMENDMENT 1 (2026-09-29 ~21:55Z, issuer 2.0.0_SA_COO~Z): SPAWN UN-HELD.** 1.0.0_SA_CTO~Z msg 26728, ruling `ledger/ROUND_ANALYSIS.round48.md` s.4a-bis @8578f73789: Andrew-direct R-21 (`AMGT_COMPLETION_20260923/RULINGS.md` @b390c36444, read by the issuer at that commit) grants vendor egress for AMGT, BROAD ON AUTHORITY and NARROW ON MECHANISM -- verbatim "you have all the egress you want for vendors ... the pull should be deterministic/scripted in nature". EDGAR is inside it through fetch.py. Condition carried onto the face (bound 2): every EDGAR call through fetch.py or this order's committed module, never an agent-side HTTP call. Gate: GATE (viii) grades a MODIFIED order that declares `<placeholders>` (this one does); no other limb.
 
-<status>pending</status>
+<status>complete</status>
 <round>49</round>
 <slot>~175</slot>
 <fabric>site-z</fabric>
