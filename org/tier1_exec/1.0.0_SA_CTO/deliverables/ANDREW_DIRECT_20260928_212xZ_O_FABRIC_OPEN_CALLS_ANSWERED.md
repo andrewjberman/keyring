@@ -58,3 +58,18 @@ revoked record is a tombstone, so the loss would be permanent. Nothing was writt
 wrong, and Andrew's "go with your recommendation" is applied as the corrected recommendation, option (b): Alyssa
 (ACTIVE portal-only) posts Q1-Q3 in a chat with Andrew, and Andrew's unprofiled Claude answers them through
 `opal_asker_query`, scoped to her. No grant write. The owner-profile gap is filed as a row on NFRA_OPALAI.
+
+## Addendum -- Andrew-direct 2026-09-29 ~04:5xZ, same terminal (the two catalog-widening calls)
+
+> self-drive says adjudicate all open calls. Go with your recs.
+
+Open calls at Andrew at that moment: the two RESERVED catalog-widening cards (`DATA_CATALOG.yaml:32`, "WIDENING IS
+ANDREW-ONLY ... Version bumps carry his verbatim"; raised by `2.0.0_SA_COO~MI` for NFRA_MCPINDEX round-4 items 3b and
+3c). The recommendations his word adopts:
+1. **platinum/etfs: YES.** Widen the catalog to the ETF positioning surface (read-only, already portal-served, per-firm
+   visibility unchanged). Item 3b is released. The catalog version bump carries this verbatim.
+2. **platinum/advi: NOT YET.** `portal-page-advisor-intelligence` stays in `refused_units` until its W4b certification
+   window closes. Item 3c stays HELD on that. This is a hold, not a refusal: revisit when W4b closes.
+
+Everything else open at Andrew is an ACT, not a call, and is untouched by this word: G-ACCT steps 5-6, MCPORTAL G-2ND
+and G-CLOSE, Alyssa's Q1-Q3 post, and the BD rotation ("later").
