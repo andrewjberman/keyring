@@ -2224,6 +2224,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Order CRPS-p-3 section 1: drive the real stage functions with one StubS3Client through to dossier.write_one; freeze or inject the clock only through a seam the code already has.",
     "world_is": "extract, ingest, backlog, continuation and dossier run as written against StubS3Client; typed._run_write does not (its KeyError on head['LastModified']), so the test lands the same row with typed.record and store.silver_append (the pattern substrate._add_synthetic_report uses). The only clock seam dossier offers is its module-level datetime attribute; the test replaces it under monkeypatch. Both are stated in the test's docstring.",
     "notes": "Filed, not fixed; nothing under lib/ is edited by this order. typed --write itself (the CLI limb) is therefore not exercised by this drive. sector_template, fund_form and typecast were not driven (no workbook or fund token in the scratch reports); the dossier reads them absent."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S17",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T19:10:00Z",
+    "one_line": "CRPS-p-1's AC2/AC3 measure temp_new_entries against the SHARED system temp dir, and a writer outside this worktree left amgt_corpus_census_* entries there during three of four AC2 runs (1, 2 and 1 new entries) before the fourth read 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "At 2026-09-29 14:48:50, 14:51:57, 14:55:21 and 14:58:48 (-0400) new directories amgt_corpus_census_u8i1jbur, _985osidp, _18s97wci, _2el8x1ku appeared in the system temp dir, about 3.3 minutes apart; none came from this worktree, whose readonly_proof.py removes its census scratch (pytest test_readonly_proof_bound.py: 4 passed; p1_AC3.sh: 'p1 code_census rc 0 library_write_calls 0 temp_new_entries 0').",
+        "Sibling worktrees /c/tmp/wk-crps14-2, -3, -5 and -5r hold readonly_proof.py without the fix (grep -c scratch_removed: 0 each), and test_readonly_proof_tristate.py:81 runs readonly_proof.main(['--code-census']), which under the old code leaves its plant directory. No entry appeared in the 100 s idle poll from 15:03:13; the AC2 run at 15:05-15:08 then read 'p1 negative_control rc 0 ingest_rc 0 put_performed 0 temp_new_entries 0'.",
+        "The system temp dir also holds 93 pre-existing amgt_corpus* entries (censuses and 308 MB copies from earlier rounds); outside this order's paths, so not removed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-p-1 AC2/AC3: 'temp_new_entries 0' means the arm under test left nothing in the system temp dir.",
+    "world_is": "The counter is global to the temp dir, so it also counts entries written concurrently by other processes running the un-fixed code from sibling worktrees; the attribution to those worktrees is inferred from cadence and code state, not from a process trace. The final AC2 run read 0 only in a quiet window.",
+    "notes": "Filed, not fixed. Fix path is the drain: once this branch merges, every worktree's readonly_proof census arm removes its scratch. A re-run of AC2 or AC3 that reads a non-zero temp_new_entries while sibling workers are live should be read against this row before it is read against the arm.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
