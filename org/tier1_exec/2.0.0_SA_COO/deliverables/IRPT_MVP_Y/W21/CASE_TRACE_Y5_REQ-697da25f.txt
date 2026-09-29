@@ -1,0 +1,19 @@
+MATCH     request        the composition's bytes hash to the request's composition_ref | {"sha256": "a96d620557b1f7d2", "request_id": "REQ-697da25f70f24d8517fe9c4e", "variant": "overview"}
+MATCH     request        the composition binds the browser's input_id to that input's own artifact | {"input_id": "portfolio_4e1071897662ef88"}
+MATCH     request        the variant is the recipe's for the comparison count, and every recipe source names one template | {"keys": [], "variant": "OVERVIEW", "template_id": ["14141822"]}
+MATCH     request        each chosen key's frozen identity is the maintained catalogue's (security id, label, model portfolio) | {"frozen": {}, "catalogue_sha": "54656584"}
+MATCH     input          the normalized artifact hashes to its content-addressed input id | {"sha256": "4e1071897662ef88"}
+MATCH     upload         the retained original upload hashes to its recorded content_sha256, and the input cites it | {"filename": "aapl-vnq-12.03.csv", "lane": "TEMPLATE_UPLOAD", "sha256": "bb079cbf53aaa2be"}
+MATCH     normalize      every uploaded row reaches the normalized holdings at the same dollars, and the total reconciles | {"upload": {"AAPL": "10.01", "VNQ": "2.02"}, "total": "12.03"}
+MATCH     normalize      the upload's normalization row reads NORMALIZED and names this input | {"rows": 1, "state": "NORMALIZED"}
+MATCH     vendor         the vendor's upload echo equals the normalized holdings (rows sent = rows echoed) | {"echoed": {"AAPL": "10.01", "VNQ": "2.02"}, "upload_record_id": 780627, "weight_unit": "Dollars"}
+MATCH     vendor         the saved portfolio's settings read back: every row matches or is a tolerated, recorded row | {"matched": "7/7", "tolerated": ["level_as_of_type=custom_date"], "portfolio": 2366791}
+MISMATCH  job            the job is READY for this request revision | {"state": "ATTENTION"}
+Traceback (most recent call last):
+  File "C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier1_exec\2.0.0_SA_COO\deliverables\IRPT_MVP_Y\live_walk\case_trace.py", line 293, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier1_exec\2.0.0_SA_COO\deliverables\IRPT_MVP_Y\live_walk\case_trace.py", line 221, in main
+    pdf_ref = cp["pdf"]["pdf_ref"]
+              ~~^^^^^^^
+KeyError: 'pdf'
