@@ -1,0 +1,215 @@
+# DSGN_AMGTV1 -- Security Analysis page redesign: the AMGT Security Analysis page rebuilt from the estate's own cards, modals and charts
+
+```json
+{
+ "project": "DSGN_AMGTV1",
+ "directive": "D13",
+ "fabric": "site-z",
+ "prd_version": "v0.1",
+ "step": 4,
+ "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
+ "status": "DRAFT"
+}
+```
+
+**Author:** `1.0.0_SA_CTO~Z` (L4), 2026-09-29. **Brief:** `4.0.0_SA_CRO~Z`, from Andrew's walk memo, his 12 snapshots and a
+signed-in `/ui-walk` (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260928_223xZ_DSGN_AMGTV1_WALK_MEMO_UIWALK_FIXTURE_PORT_BRIEF.md`).
+**Registered** @`2f8568fd32` (D13, fabric site-z, the named per-member exception). **COO:** `2.0.0_SA_COO~D` on site Z.
+**CVO:** `3.0.0_SA_CVO~Z`. **Endpoint** confirmed by Andrew's word of 2026-09-29 ~02:2xZ (record
+`ANDREW_DIRECT_20260929_022xZ_NOTHING_WAITS_ON_ANDREW_SELF_DRIVE_RESOLVES_CALLS.md`, call 2); forks F1-F5 ruled @`ac5433b35b`.
+
+## ENDPOINT (step 2, /endpoint --forward)
+
+Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPOINT_FORWARD_20260928.md` @`3d7fc6695e`.
+
+```
+  FWD-1  A portfolio manager opens Security Analysis, finds Valero in today's
+         Trending x Price list by its name, opens it, and reads it as cards --
+         end to end on the live product
+         DONE WHEN  EXERCISED -- one live walk, signed in with a real account,
+                    on real data, ending in Valero's Recommendation card open
+         ACCEPT     The PM picks Valero out of the list by its company name, reads
+                    its header as four cards and opens the Financials one, opens the
+                    Thesis and reads it as three cards under the main chart, then
+                    opens the Recommendation and can say whose view it is and which
+                    document each citation comes from. Any step fed by sample data
+                    instead of the real thing fails the outcome.
+         SOURCE     brief O1 (:54-62); memo M6, M7, M9, M14
+
+  FWD-2  A PM can tell who every ranked name is, how it is classified and how
+         far it moved
+         DONE WHEN  EXERCISED -- all four lead-panel lists walked and read
+         ACCEPT     In all four lists every row shows the company's name, its ticker,
+                    Opal's own asset class, sub-asset class and sector, the period
+                    figure and how many places it moved since the last run -- laid
+                    out like the Positioning page's holdings breakdown. No row names
+                    a company by a code the PM would have to look up.
+         SOURCE     brief O2 (:64-69); M2, M4, M6, M14
+
+  FWD-3  A PM can read how names moved over time without untangling a knot of
+         lines
+         DONE WHEN  EXERCISED -- the history view walked with ten or more names
+         ACCEPT     With ten or more names, the dates do not overlap, each line is
+                    labelled by company name, there is one legend, and the PM can pick
+                    out one name and follow it.
+         SOURCE     brief O3 (:71-75); M2, M3, M5, M14
+
+  FWD-4  A PM reads a security's headline figures as four cards, each opening
+         to the detail
+         DONE WHEN  EXERCISED -- walked on names in more than one currency
+         ACCEPT     The header holds no more than four cards -- Price, Financials,
+                    Market features, Trading technicals -- each leading with one
+                    figure and opening a window with the rest, and every money figure
+                    is shown in the company's own currency.
+         SOURCE     brief O4 (:77-82); M7
+
+  FWD-5  A PM reads a covered company's story along a timeline
+         DONE WHEN  EXERCISED -- walked on a covered name with harvested coverage
+         ACCEPT     For a company we cover, a dated line shows its articles, events
+                    and headlines, with a word cloud from its own coverage; the
+                    firm's own harvested publications come first. A company that has
+                    coverage never reads "none".
+         SOURCE     brief O5 (:84-88); M8, M15
+
+  FWD-6  A PM reads the Thesis as three cards and can trust where each line
+         came from
+         DONE WHEN  EXERCISED -- walked on a name whose thesis is drafted
+         ACCEPT     Investment thesis, Risks and Recommendation sit as three cards
+                    under the main chart; each opens a window with its sentences and
+                    their evidence; every citation names its document in words; and
+                    the Recommendation says whose view it is -- the team's stated
+                    position, never a line lifted from a filing and passed off as one.
+         SOURCE     brief O6 (:90-95); M9
+
+  FWD-7  A PM sees who runs the company, for every covered name
+         DONE WHEN  EXERCISED -- walked on a name whose filing lists no officers
+         ACCEPT     The management tab shows the company's officers and says where
+                    the list came from, even when the company's filing has no
+                    officer section.
+         SOURCE     brief O7 (:97-100); M10
+
+  FWD-8  A PM reads the comparable companies as a clean table
+         DONE WHEN  EXERCISED -- walked on three names
+         ACCEPT     The peers table keeps what Andrew liked, shows readable tickers,
+                    explains missing columns once and neatly, and shows no internal
+                    system text.
+         SOURCE     brief O8 (:102-106); M11
+
+  FWD-9  A PM reads the Model sheet in plain line names and knows why a line is
+         missing
+         DONE WHEN  EXERCISED -- walked on a name with missing lines
+         ACCEPT     Every line is named in words, not a data vendor's code, and every
+                    missing line says in one sentence whether the data is missing or
+                    the page cannot yet show it.
+         SOURCE     brief O9 (:108-112); M12
+
+  FWD-10 A PM reads Posture as a verdict with its reasons, or as an honest empty
+         state
+         DONE WHEN  EXERCISED -- walked on one name with a call and one without
+         ACCEPT     A call reads as a verdict card with numbered reasons that each
+                    open to more; no call reads as a designed empty state with its
+                    date -- never a paragraph of machine reasoning.
+         SOURCE     brief O10 (:114-117); M13
+
+  FWD-11 A reviewer cannot tell this page from the firm's other finished pages
+         DONE WHEN  EXERCISED -- a side-by-side read against Market, Positioning
+                    and Philosophy
+         ACCEPT     Put beside the Market, Positioning and Philosophy pages, the cards,
+                    windows, charts, empty states and footers are the same pieces;
+                    every footer reads as a time and a source; and no raw code, id or
+                    storage path shows anywhere on the page.
+         SOURCE     brief O11 (:119-124); M4, M13, M14
+```
+
+## CONTRACTS
+
+**C-PRESENTATION-ONLY.** This project owns the PRESENTATION of `portal/src/pages/SecurityAnalysis/**`. Every figure,
+name, classification, rank change, currency, citation and verdict on the page is a field of a served payload
+(`lib/research/api/scoped_amgt.py`, the scoped AMGT API). **A field the page needs and the payload lacks is an ASK to its
+owning project, never a page-side computation** (F5; brief Part II): the page does not rank, classify, convert a currency,
+derive a rank change or choose whose recommendation a sentence is. A value the payload does not carry renders as a
+designed empty state naming what is missing and whose it is to fill.
+
+**C-ESTATE-FIXTURES.** Cards, modals, charts, empty states and footers are the estate's own pieces (brief IV.3, IV.5):
+`HeroDialog` + `DialogStamp`, `Panel` / `PanelHeader` / `PanelFooter` / `SmartPanelFooter`, `ChartLegend`, `DataTooltip`,
+`Segmented`, `TopicCloud`, `ModelTiltTimeSeriesView`, the palette in `lib/chartColors.ts`. **A needed piece that lives
+inline in another page is EXTRACTED into a shared module, and that page renders byte-identically before and after**
+(a before/after render is the extraction's criterion). Nothing is forked. `portal/DESIGN.md` C1-C14 and the colour law
+govern.
+
+**C-FORKS (ruled @`ac5433b35b`).** F1 both a per-row rank/price sparkline and a highlight chart (the ported
+`ModelTiltTimeSeriesView` with legend toggles); F2 classification from `etf-classifications` only; F3 the officer
+fallback order filing -> dossier -> Bloomberg -> Lusha -> search, every vendor leg on Andrew's per-use word, the page
+naming each roster's source; F4 Opal Data Harvest only on the timeline in round 1; F5 this project owns presentation,
+AMGT_RESAPP keeps the payloads.
+
+**C-ASKS (owned elsewhere; this project renders them when served):**
+
+| ask | owner | state at writing |
+|---|---|---|
+| rows carry the company name and `classification {asset_class, sub_asset_class, sector}` from `etf-classifications`, joined server-side | AMGT_RESAPP (API join) + POSN's writer (the AMGT rows, a served move under a never-widen pair) | open |
+| rows carry `rank_change` against the previous complete generation | AMGT_RESAPP | open |
+| every money figure carries its currency | AMGT_RESAPP | open |
+| the timeline routes answer with data | AMGT_HARVST | **met** 2026-09-29 (combined deploy, a-2 AC1 PASS for 992_HK_Equity) |
+| the dossier's team recommendation, management passage and description are served | AMGT_CORPUS | open |
+| exec roster re-run with its fallback chain; posture re-run; peers dedupe and identity | AMGT_RESAPP | open |
+| white-ground `PanelHeader` / `PanelFooter` variants | DSGN_REBRND (laptop) | open, cross-fabric: WAITED ON, never driven here |
+
+## THE THREAD (FWD-1) -- round 1 builds it end to end
+
+One person: a portfolio manager on the asset management team. One journey, coarse grain, live, default window. A hop
+fed by a fixture fails FWD-1; the live trace is the COO's drain act, signed in with a real account on the portal build
+(local 5174 or DEV).
+
+1. Real login -> the portal session.
+2. `/security-analysis` -> the Trending x Price list from the served lead panel.
+3. The row reads **Valero** by company name (hop 3 renders the name the payload carries; where it does not, the row reads
+   the served identity and the trace records the name ask open -- FWD-1 does not pass on a ticker).
+4. Open Valero -> the header as **four cards** (C-ESTATE-FIXTURES), the Financials card opening its modal.
+5. The Thesis tab -> **three cards** under the principal chart.
+6. The Recommendation card -> whose view it is and the document each citation names. **If the dossier route (AMGT_CORPUS)
+   is not served by the drain, the card renders the live state with its reason, FWD-1 stays NOT_REALIZED, and that route
+   is round 2's first enrichment input** -- never a fixture.
+
+Chains: lead panel (2-3), header (4), thesis (5-6). A build cell carries at most THREE mechanical criteria; repo-wide
+hygiene runs at the drain. The round-1 analysis ends in the enrichment list.
+
+## ENRICHMENT BACKLOG (off the thread, in the brief's order)
+
+FWD-2 (classified rows, rank change, the Holdings Breakdown pattern), FWD-3 (sparklines + highlight chart), FWD-4 (all
+four cards and their modals, currency per figure), FWD-5 (the timeline spine and per-security word cloud), FWD-6 (Thesis
+modals with evidence), FWD-7 (exec roster with source), FWD-8 (peers table), FWD-9 (plain line names, missing-line
+reasons), FWD-10 (posture verdict card / empty state), FWD-11 (the side-by-side review). The register
+`docs/briefs/dsgn-amgtv1-findings-20260928.json` (42 findings, AMV-01..42) is the decomposition's input; each finding is
+graded against its own acceptance line.
+
+## PATHS (the write surface)
+
+**Owned:** `portal/src/pages/SecurityAnalysis/**` and its tests. **Extended by a cell naming every other reader:** new
+shared modules extracted from `pages/Positioning/tabs/HoldingsTab.tsx` (`ClassifiedSecurityTable`), the Philosophy card
+row (`pages/CapitalMarketAssumptions/components/PhilosophyPillars.tsx`), and chart pieces under `components/` and
+`ui/components/`. **Read and copied from, never edited except by an extraction cell:** `/positioning`, `/philosophy`,
+`/market`. **Never:** the scoped API, any producer, any gold table, any vendor call, `portal/src/api/**` beyond adding a
+client call for a route that is already served.
+
+## FIXTURES AND EVIDENCE
+
+Each candidate is walked with `/ui-walk --route /security-analysis --security <names>` and its screenshots are read by a
+person; register findings are graded against their acceptance lines; `design:bands`, `raw-code` and `format:*` read zero
+hits on the touched surfaces; every extraction ships before/after renders of its source page. The CVO grades JUDGMENT
+criteria at L9 on the PNGs, citing the contract clause.
+
+## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.1 (2026-09-29, `1.0.0_SA_CTO~Z`): ENDPOINT landed from @`3d7fc6695e`, confirmed by Andrew's ~02:2xZ word; CONTRACTS from
+  the brief's Parts II, IV and VII and the F1-F5 ruling @`ac5433b35b`.
+
+## SURFACE MANIFEST
+
+WRITES: `portal/src/pages/SecurityAnalysis/**` (render + tests); new shared modules extracted from `HoldingsTab.tsx`,
+`PhilosophyPillars.tsx` and the market-performance chart modals, each with a before/after render of its source page.
+EXTENDS (by a cell naming every other consumer): `portal/src/components/**`, `portal/src/ui/components/**`,
+`portal/src/lib/chartColors.ts`. READS: the scoped AMGT API payloads (`/thesis`, `/overlay`, `/peers`, the lead panel, the
+two timeline routes), `portal/DESIGN.md`, the reference pages `/market`, `/positioning`, `/philosophy`. NEVER: the scoped
+API or any producer, gold, the classifier table, any vendor call.
