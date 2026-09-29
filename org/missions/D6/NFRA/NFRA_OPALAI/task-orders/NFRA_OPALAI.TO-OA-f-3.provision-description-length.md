@@ -78,7 +78,7 @@ Dry-run at base (opal_ai fd8ab8a57f):
 - f3.AC1 base: FAIL as expected (`desc_len=86; numstat added/removed vs fd8ab8a57f=[0 0]; other files changed=0`).
 - f3.AC2 base: PASS as expected (`parse errors=0; -Plan rc=0 PLAN lines=8`: the bound control).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~18</slot>
 <fabric>site-z</fabric>

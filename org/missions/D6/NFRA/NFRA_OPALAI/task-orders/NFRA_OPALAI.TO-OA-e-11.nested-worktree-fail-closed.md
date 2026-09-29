@@ -112,7 +112,7 @@ Dry-run at base (main tree, CLOUD `c8df03c408`; the fixture builds from HEAD's c
 - e11.AC2 base: FAIL as expected (`test at HEAD=absent`).
 - e11.AC3 base: PASS as expected (bound: `parent out-of-lane: refused rc=1; parent in-lane: landed`).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~17</slot>
 <fabric>site-z</fabric>

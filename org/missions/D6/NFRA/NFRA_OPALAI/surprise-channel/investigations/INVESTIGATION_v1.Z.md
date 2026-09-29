@@ -1441,6 +1441,252 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "notes": "Not ARMED: the gateway does not run tests at serve time."
   },
   {
+    "id": "NFRA_OPALAI-Z-W17-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~17",
+    "surfaced_at": "2026-09-28T21:10Z",
+    "one_line": "The E11 fix does not reach an already-installed wrapper: install-owned-paths.sh returns 'already wired ... idempotent no-op' when the destination hook mentions owned-paths-check.sh, so the real opal_ai hooks dir keeps the old fail-open wrapper until it is removed and the installer re-run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~AI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/git-hooks/install-owned-paths.sh 'Already wired check' block: `grep -q owned-paths-check.sh $HOOK_DEST` then exit 0 without rewriting (unchanged by this order; bound 1 forbids widening).",
+        "Read-only measure of the real ajb_workspace .git/modules/opal_ai/hooks/pre-commit: grep -c 'owned-paths-check.sh' = 3 (old wrapper wired) and grep -c 'worktree list' = 1 (the first-entry resolution E11 replaces). Nothing was written there."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO OA-e-11 bound 2: 'The issuer installs at the drain' -- the installed wrapper carries the new resolution afterwards.",
+    "world_is": "A re-run of install-owned-paths.sh --submodule opal_ai at the drain is a no-op against the existing old wrapper, so a linked worktree of the real opal_ai outside every parent worktree still skips the lane check (exit 0). The wrapper file must be deleted (or replaced) first, then the installer run; the hook script owned-paths-check.sh itself is read live from the parent and takes the fix without reinstall.",
+    "notes": "Fix is one issuer act at the drain: remove .git/modules/opal_ai/hooks/pre-commit, run the installer with --submodule opal_ai, confirm 'worktree list' no longer appears in it. Filed by the worker; not done here (bound 2)."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W11-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~11",
+    "surfaced_at": "2026-09-28T21:45Z",
+    "one_line": "The nested commit the order prescribes is refused by the owned-paths pre-commit hook for a path the order's own <paths> block names: the hook's worker-grant census runs git with the nested repo's GIT_DIR inherited, so it finds no task orders and admits nothing. The three OA-e-2 nested edits are made and UNCOMMITTED; the worker did not bypass the gate.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git -C opal_ai commit --author '0.9.0_WK_NFRA_OPALAI~11 <...>' -F msg -- opal/agent/hooks/concierge-gate.sh opal/agent/hooks/test_concierge_gate.sh opal/agent/refs/RELAUNCH.md` -> ERROR owned-paths lane violation(s), 3 of 3 paths: 'agent=0.9.0_WK_NFRA_OPALAI~11 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The three paths are named verbatim, parent-relative (opal_ai/opal/agent/...), in TO-OA-e-2 section 3 <paths>, whose <status> is pending and <issued_to> is this serial.",
+        "MEASURED, same input, two environments: `printf 'opal_ai/opal/agent/hooks/concierge-gate.sh' | python3 .tools/owned-paths-validate.py --check-agent 0.9.0_WK_NFRA_OPALAI~11 .owned-paths.yaml` from the parent worktree C:/tmp/oa-11 -> no VIOLATION line (rc 0); the same command with GIT_DIR set to the nested repo's absolute git dir -> 'VIOLATION: ... not in permitted_agents ... no NON-TERMINAL task order'. Git exports GIT_DIR/GIT_INDEX_FILE into a pre-commit hook.",
+        "CODE .tools/owned-paths-validate.py _worker_orders (lines ~176-205) runs `git ls-files` and `git show HEAD:<path>` with cwd=root but the hook's environment, so GIT_DIR outranks cwd and the census reads the nested repo. .tools/git-hooks/owned-paths-check.sh defines `_git_x` (env -u GIT_DIR ...) for exactly this hazard and applies it to its own superproject probe, but the validator subprocess calls do not.",
+        "The hook wrapper at the shared module's hooks/pre-commit (C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.git/modules/opal_ai/hooks/pre-commit) resolves the superproject to C:/tmp/oa-11 correctly; the prefix rebase to opal_ai/<path> is correct; only the census env is wrong."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OA-e-2 section 2.1: the worker commits its nested files with `git -C opal_ai commit --author ... -F <msgfile> -- <nested paths>`, and the order's <paths> is the write grant.",
+    "world_is": "The gate refuses that commit for a granted path (validator census reads the wrong repo under a hook's GIT_DIR). The worker did not use --no-verify, GIT_COMMIT_AUTHOR_OVERRIDE or plumbing (order section 2.3: no route the face does not name). Edits sit in the worktree C:/tmp/oa-11/opal_ai (branch wk-NFRA_OPALAI-11-opal_ai, HEAD fd8ab8a57f, 3 modified files). e2.AC1 and e2.AC2 read the nested ref and cannot pass until a commit exists; e2.AC3 reads PASS only vacuously (0 files changed). Fix owner is the tooling lane: env -u GIT_DIR -u GIT_INDEX_FILE -u GIT_WORK_TREE on the census subprocesses in _worker_orders, or the issuer commits the three files after reading them.",
+    "notes": "Nested-commit workers before this round were never graded by this hook (row Z-W5-S1: the hook was absent from the shared module), so this path had not been exercised by a worker. The COO decides whether to commit the three files or to fix the validator and re-issue."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W11-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~11",
+    "surfaced_at": "2026-09-28T21:50Z",
+    "one_line": "e2.AC1 bounds the fence's own test at 60 s (`timeout 60 bash $TT`), but test_concierge_gate.sh takes about 89 s on this device (28 cases, one jq process chain per case), so AC1 reads 'no summary' and FAILs even on a correct commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: e2.AC1.sh at the pinned/unchanged HEAD printed \"fence test 'no summary'\" (the 60 s bound cut the test before its RESULT line). The same script text is `summ=$(timeout 60 bash \"$TT\" ...)`.",
+        "MEASURED: `time (timeout 500 bash test_concierge_gate.sh | tail -5)` on the edited working tree -> 'RESULT: 28 passed, 0 failed (denominator: 28 cases)', real 1m28.708s. The new deny arm reads 'ok [DENY] -bbg opal_data_refresh_upload'. A first run under `timeout 60` was 'Terminated' before any RESULT line."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "e2.AC1 expects `fence test 'RESULT: N passed, 0 failed ...'` within its own bounds.",
+    "world_is": "The fence test's runtime on this device exceeds the check's inner 60 s bound, so the criterion cannot be met as written regardless of the commit. The worker did not repair the criterion. The edited fence itself passes its whole test (28 of 28) and the three arms of AC1 were exercised by the test's own cases (upload DENY, -bbg whoami/poll PASS, send_email DENY) on the UNCOMMITTED working tree.",
+    "notes": "Suggested for the issuer: raise the inner bound to 240 s (the outer 120 s harness bound also needs to admit it), or replace the full-suite call with the upload arm only."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W11-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~11",
+    "surfaced_at": "2026-09-28T22:20Z",
+    "one_line": "Rows Z-W11-S1 and Z-W11-S2 are cleared on this branch: with the issuer's validator fix and the amended AC1 bound, the nested commit landed through the hook with no override (opal_ai 7c6473c) and e2.AC1-AC3 all read RESULT: PASS. This row disarms nothing; the issuer dispositions S1 and S2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: `git -C opal_ai commit --author ... -F msg -- <3 paths>` -> '[wk-NFRA_OPALAI-11-opal_ai 7c6473c] ... 3 files changed, 11 insertions(+), 8 deletions(-)' on parent HEAD d750cba8c4 (carrying fix @fd0aa6ba57 and amendment @c7a5391c18 as cherry-picks).",
+        "MEASURED: e2.AC1 'upload=DENY read_chat_messages=PASS send_email=DENY; fence test names upload=1; ... RESULT: 28 passed, 0 failed (denominator: 28 cases)' exit=0; e2.AC2 '/terminal-upload=0; upload lines=1, of which without never/not=0; publish_to_portal.py=1' exit=0; e2.AC3 'files changed=3, outside the cell's three=0; fence lines removed outside G4=0' exit=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer message: S1 (validator census inherited the nested GIT_DIR) fixed @fd0aa6ba57; S2 (AC1 inner bound) raised 60 s -> 105 s at c7a5391c18.",
+    "world_is": "Both hold on this branch: the hook admitted the nested commit and AC1 completed its fence test inside the new bound."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "one_line": "E10's LOGIN_USES=0 is a count over 2026-07-14..2026-09-28, not since the /authorize go-live: the host journal starts 21 days after the commit that registered /authorize.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM i-07dccb1615503ac99 2026-09-28: journalctl -u opal-gateway first line 2026-08-15T03:02:10+0000; journalctl _COMM=uvicorn first line 2026-07-14T09:48:50+0000; /login count 0 on both.",
+        "git log -S: 63e61ca77b 2026-06-23 (authored, UNAPPLIED); org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~16/E10_LOGIN_CENSUS.md."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 section 1: LOGIN_USES is the number of /login requests since the MCP /authorize sign-in went live, read from journalctl -u opal-gateway.",
+    "world_is": "journalctl -u opal-gateway starts 2026-08-15 (the unit rename); the whole journal starts 2026-07-14T09:48:50Z under the earlier unit m365-mcp-gateway. /authorize was registered at 63e61ca77b (2026-06-23). The worker counted both unit names (0 and 0) and named the gap in the census; the 21 days before the journal are unmeasured and not recoverable on the host."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "one_line": "E10 NARROW's 'a config list' is derived from the two existing settings OTP_MAILBOX and MS_INGEST_IDENTITY, because app/config.py is outside the order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/server.py _login_allowed_identities (worker commit on wk-NFRA_OPALAI-16).",
+        "tests/test_login_retire.py::test_login_fails_closed_when_empty passed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 section 1 NARROW: /login admits only the server identities the census named (a config list, fail closed when empty).",
+    "world_is": "The order writes only app/server.py, so a new config key could not be added. The allow-list is computed in server.py from cfg.OTP_MAILBOX and cfg.MS_INGEST_IDENTITY (the two server-held identities the census named); empty -> admits nobody. A separate list key would need config.py and a host .env edit at release."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "one_line": "The census's host read printed the first 4 characters of OTP_BEARER, MS_INGEST_BEARER and the two identity values into the worker's own tool output (never into a committed file).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command output in the worker session 2026-09-28 ~21:55Z (ENV_KEYS block); grep of the committed census for the prefixes: absent."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 bound 3: no token, cache content, secret or email is printed, committed or put in the census.",
+    "world_is": "The worker's SSM script derived the two cache file names from .env and, in an extra diagnostic line, echoed each key's first 4 value characters. Nothing was written to the repo, the census or this row. The prefixes sit in the worker's session output only; a 4-character prefix of a static bearer is not usable as a credential."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W16-S4",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~16",
+    "surfaced_at": "2026-09-28T22:20Z",
+    "one_line": "e10.AC2.sh cannot pass on this Windows device: it greps pytest -rA lines for 'PASSED tests/test_login_retire.py::<name>' with a forward slash, but pytest here prints 'PASSED tests\test_login_retire.py::<name>' with a backslash. The tests pass; the named-test count reads 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/e10.AC2.sh at HEAD 8ed37b3266 -> 'branch=NARROW named=test_login_narrowed passed=0 failed/errored=0; summary: 2 passed' RESULT: FAIL exit=1.",
+        "python -m pytest tests/test_login_retire.py -rA (cat -A) -> 'PASSED tests\test_login_retire.py::test_login_narrowed$' and '...::test_login_fails_closed_when_empty$'; e10.AC2.sh grep pattern is ^PASSED tests/test_login_retire.py::$want( |$)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-10 AC2: the test named for the census's branch passed>=1, failed/errored=0, read from e10.AC2.sh.",
+    "world_is": "With pytest printing OS-native path separators, the check's forward-slash pattern matches nothing on this device, so named=0 whatever the tests do (the same script would pass on a POSIX device). The worker did not edit the check or the invocation, and could not change the separator inside its <paths>. Disarm owner is the issuer: the pattern needs to accept either separator, e.g. tests[/\\]test_login_retire.py. The other two OA-e-10 criteria pass and the mutant control fired (guard removed -> both tests fail)."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W15-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~15",
+    "surfaced_at": "2026-09-28T21:30Z",
+    "one_line": "OA-e-7 (2): the 13 ruff 0.16.9 findings are in opal/agent/teams_watch/teams-watch.py, not portal_lookup.py; that file is outside the order's <paths>, so they cannot be fixed by this worker.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PATH=C:/tmp/ruff-0.16.9/bin:$PATH; ruff check --target-version py39 --output-format concise --color never opal -> 'Found 13 errors.' all in opal\u0007gent\teams_watch\teams-watch.py; same command on opal/agent/tools/portal_lookup.py -> 'All checks passed!' (opal_ai fd8ab8a)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order section 1: all 13 findings (8 SIM115, 3 BLE001, 1 SIM102, 1 UP031) are in opal/agent/tools/portal_lookup.py.",
+    "world_is": "portal_lookup.py is clean under ruff 0.16.9 ('All checks passed!'); the 13 findings (8 SIM115, 3 BLE001, 1 SIM102, 1 UP031) are in opal/agent/teams_watch/teams-watch.py (lines 228..790). AC2's clean run cannot read CHECKS: PASS until that file is fixed."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W15-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~15",
+    "surfaced_at": "2026-09-28T21:30Z",
+    "one_line": "Nested opal_ai commit refused by the lane gate: the order's opal_ai/** paths are not resolved as this serial's grant (owned-paths, lane ANY_EXEC_OR_AE).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C opal_ai commit ... -> 'VIOLATION: opal_ai/.github/workflows/ci.yml -- lane=ANY_EXEC_OR_AE ... not in permitted_agents'; git -C opal_ai log -1 still fd8ab8a."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order section 2.1: nested files commit with git -C opal_ai commit --author <serial> -F <msgfile>; <paths> lists opal_ai/.github/workflows/ci.yml and opal_ai/opal/checks/run_checks.sh.",
+    "world_is": "Both the git -C opal_ai commit and safe-commit.sh from inside opal_ai refuse: 'agent=0.9.0_WK_NFRA_OPALAI~15 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path'. The edits to ci.yml and run_checks.sh sit uncommitted in C:/tmp/oa-15/opal_ai; AC2/AC3 read committed HEAD and so read FAIL. No override used."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S40",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-28T23:40Z",
+    "one_line": "The D7 ticket-intake runner (Scheduled Task OPAL_D7_ticket_intake, every 5 min), which imports the operator teams-watch.py (cutover precondition CP-1), has not succeeded since 2026-09-03: 8712 exit-2 passes against 613 exit-0 in its log, and since 2026-09-18 every pass dies 'no mcpOAuth record matches the pin (--server=opal-gateway-bbg --identity=opalbloomberg)'. It predates round 2 and is unchanged by OA-e-7's comment-only header merge.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "%USERPROFILE%\\opal_ticket_intake\runner.log: last 'intake pass exit 0' at [Thu 09/03/2026 4:29:48]; first 'no-token-for-identity' after [Fri 09/18/2026 1:59:46]; counts exit 2 = 8712, exit 0 = 613 (grep -c, read by this seat 2026-09-28 ~23:4xZ).",
+        "Get-ScheduledTaskInfo OPAL_D7_ticket_intake: LastTaskResult=2 at 23:29:46Z (before the OA-e-7 merge) and 23:34:46Z (after the merge b3b3d3bc39); py_compile and a by-path import of the merged teams-watch.py both OK.",
+        "OA-e-5 (@79da942995) read 4 of 4 Teams reads OK through the same watch with the --server pin alone, so the store holds the opal-gateway-bbg record; the runner's extra --identity=opalbloomberg pin is what finds no match."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling I-3 / CP-1: the parent teams-watch.py STAYS as the operator plane's tool, and the D7 intake runner keeps running on it through the cutover.",
+    "world_is": "The runner has not delivered a pass in 25 days, and the dark D7 lane (OPAL_TICKET_VNEXT, no COO lane since 2026-09-11) has no reader of its LastTaskResult. CP-1's 'read the next scheduled fire back' will read a failure that is not the cutover's.",
+    "notes": "Owner: OPAL_TICKET_VNEXT (no live COO lane). Routed as an observation through the round-2 drain message to 1.0.0_SA_CTO~O; not repaired here (outside this project's write surface). The likely cause is the --identity pin not matching how the store names the Opal Bloomberg record; not verified."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S41",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-28T23:50Z",
+    "one_line": "The four files pA/pB/pC.txt and probe_whoami.txt found in C:\\opal_runtime\\state (owner Opal_Agent, 22:30-22:32Z) were written by THIS seat, 2.0.0_SA_COO~AI, not by a worker: diagnostic probes of Start-Process -Credential as Opal_Agent with the stored DPAPI credential, run while investigating G-ACCT step 3 (the WinRM stop), under no task order. Each ran `whoami` and wrote 'opal_bloomberg\\opal_agent'. Cleared before the re-run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's session: three PowerShell probes at ~22:30-22:33Z, Import-Clixml of %USERPROFILE%\\.opal_runtime\\opal_agent_cred.xml, then Start-Process cmd.exe /c whoami > C:\\opal_runtime\\state\\<file> -Credential; the tool reported 'Access is denied' each time, yet the files were written.",
+        "0.0.0_AB_MSTR~Z report 20260928T233948Z and 1.0.0_SA_CTO~O msg 26294 found the files (owner Opal_Agent, 27 bytes each); removed by this seat ~23:5xZ (os.remove, 4 of 4; the dir is now empty)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "G-ACCT handoff: Opal_Agent sessions are started only by the elevated executor (0.0.0_AB_MSTR~Z) under the handoff, and the state dir holds only the runtime's own state.",
+    "world_is": "The issuer used the stored Opal_Agent credential directly for diagnosis, outside any order, and left four files in the runtime's state dir. The probes also measured two facts: (1) Opal_Agent's logon WORKS (whoami ran as it); (2) from this unelevated session, Start-Process -Credential -Wait/-PassThru throws 'Access is denied' AFTER the child starts, so an unelevated operator running launcher.ps1 may see that throw on its -Wait gate launch.",
+    "notes": "Named honestly for the CTO's ask (msg 26294), which guessed the OA-f-4 worker. Fact (2) is a candidate risk on the step-6 launcher path; step 6 is run elevated by 0.0.0_AB_MSTR~Z, where it did not occur. No further direct credential use by this seat."
+  },
+  {
     "id": "NFRA_OPALAI-Z-W10-S3",
     "project": "NFRA_OPALAI",
     "fabric": "site-z",

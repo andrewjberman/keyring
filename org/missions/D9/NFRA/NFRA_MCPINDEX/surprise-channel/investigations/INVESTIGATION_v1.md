@@ -2381,6 +2381,221 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~MI",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The gap is reusable knowledge for the issuer: a worker whose order includes a safe-apply needs the worktree serial file provisioned at spawn. Z-W8-S1 is not edited; this row records its disarm in prose. The structured `adjudicates` field is refused to a worker (surprise-row-gate A-1: it is 3.0.0_SA_CVO's field), so the CVO is asked to disposition NFRA_MCPINDEX-Z-W8-S1 by naming it in an adjudicating row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S48",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:09Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S42"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S42. The BD asset dimension is now current by its SCHEDULED producer, not by ad-hoc pulls: MX-s-12 made the ported REST document v4 the served version, and the first scheduled weekday fire (22:10Z) ran it and rewrote the dim with DELTA=0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-s-12 (drained 2033d10e73): the SSM document opal-bd-asset-dim-download is v4 as both DefaultVersion and LatestVersion (worker describe-document); s10.AC1 PASS -- the served document has rest-pull 4, builder 4, playwright 0, BD_PASSWORD 0 (issuer re-run 2026-09-28 ~22:4xZ).",
+        "The scheduled fire: rule bd-asset-dim-pipeline-trigger 22:10:00Z -> bd-asset-dim-trigger -> ssm 16d855de-b971-4d4c-bf8c-bc9f8503c6d3, requested 22:11:06Z, Status Success; s10.AC3 PASS (runs at/after slot 1, success 1, dim rewritten after = yes), issuer re-run.",
+        "Served dim silver/bd_assets_dim.parquet VersionId qcSdLjLW0d1QbDZ1w9lg6SRPjwF7ou92 (22:11:33Z): issuer-measured against the G1 version kittUyy.WHGfmKRaAag.p4TqGFycZ3eA -- 12,141 = 12,141 unique ids, id-set sha256 prefix b38a8b0a5dd07053 equal, 0 added, 0 removed, non-null cusip 10,957 = 10,957, 0 cusip changes of any kind."
+      ]
+    },
+    "spec_asserts": "Z-S42 (ARMED): the dim is current only through one-off REST pulls; the scheduled run still executes the Playwright download that BD's MFA broke. CLAUDE.md: production pipelines MUST be scheduled.",
+    "world_is": "The scheduled chain EventBridge -> Lambda -> SSM runs the REST pull + union rebuild. Tonight's acceptance fire succeeded and the served dim is byte-set-identical on ids and cusips to the G1 baseline (only built_at moved). The judgment half (s10.J1) is open for 3.0.0_SA_CVO~O at L9.",
+    "notes": "Disarm owner of Z-S42 was 2.0.0_SA_COO~O, the issuer at the time; the issuer is now 2.0.0_SA_COO~MI (placement @094c84f299). The trigger runs the document at $LATEST, not DEFAULT: tonight both are v4 (worker ~8 recorded it in the proof instance), so a future update-document that creates a $LATEST without setting DEFAULT would change what the schedule runs."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S49",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:09Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S47"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S47. The BD fees Playwright leg that failed 69 of 121 runs while SSM read Success no longer runs: MX-s-12 destroyed its schedule through Terraform (bd-fees-pipeline-trigger rule, target, Lambda permission, bd-fees-trigger Lambda and its log group -- 5 destroys, 0 add, 0 change).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker ~8 safe-apply ~21:14Z: 'Apply complete! Resources: 0 added, 0 changed, 5 destroyed.'; post-apply terraform plan -detailed-exitcode: no differences, rc 0 (commit 03527b9e7a, drained 2033d10e73).",
+        "Live reads after the apply (worker): bd-fees-pipeline-trigger does not exist; bd-49f-fees-session-daily still ENABLED cron(20 22 ? * MON-FRI *); bd-49f-fees-runner still Active -- bronze/fees stays current through the REST runner."
+      ]
+    },
+    "spec_asserts": "Z-S47 (ARMED): opal-bd-fees-download has no exit on its failure branch, so SSM reports Success on every failed run (69 of 121).",
+    "world_is": "The leg that ran that document is gone; nothing triggers opal-bd-fees-download (it stays registered, inert, not Terraform-managed). Whether the OTHER BD SSM documents share the defect is MX-m-1 (a), in flight.",
+    "notes": "Disarm owner of Z-S47 was 2.0.0_SA_COO~O; the issuer is now 2.0.0_SA_COO~MI."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W11-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~11",
+    "surfaced_at": "2026-09-28T22:53Z",
+    "one_line": "A bare `aws ssm get-document --name <doc>` returns the DEFAULT version, not the $LATEST that every run executes: 2 of the 7 BD documents differ in logic (allocation v3 vs v4, transaction v1 vs v2), and the default versions are the ones WITHOUT an exit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-09-28 by list-document-versions and get-document run twice per document, once bare and once with --document-version $LATEST, over the 7 BD documents (denominator 7). Content differs on 3 of 7: allocation (default v3, $LATEST v4), transaction (default v1, $LATEST v2), and fees (both v1, bytes differ only in non-ASCII comment characters -- not a logic difference). The other 4 read equal.",
+        "THE DIFFERENCE IS THE PROPERTY UNDER MEASURE. Default allocation v3 and default transaction v1 end their download and merge steps in `|| true` / `|| echo WARNING` and contain no exit statement; $LATEST v4 and v2 capture DOWNLOAD_RC and MERGE_RC and end `exit 1`. Runs use DocumentVersion $LATEST (list-commands, field DocumentVersion). All 21 allocation runs and all 21 transaction runs in the retention window read SSM Status Failed with a log that records failure, which matches $LATEST and contradicts what the default version would predict.",
+        "A census of exit honesty that reads the documents with the bare verb would have graded allocation and transaction as silent-failure documents like fees, and would have been wrong on the population it names."
+      ]
+    },
+    "spec_asserts": "MX-m-1 (a): 'read its content (aws ssm get-document). Name the failure branch and whether it ends in a non-zero exit.' The verb as written returns the default version.",
+    "world_is": "The default version and the executed version differ on allocation and transaction, and the executed one is the honest one. This measure used --document-version $LATEST and recorded the version numbers beside each finding.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT FIXED. Nothing is changed: the fix, if any, is either a note in the census recipe (always pass --document-version) or promoting v4/v2 to default so the two views agree. Neither is this cell's. Item 5's census should name the version it read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W11-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~11",
+    "surfaced_at": "2026-09-28T22:53Z",
+    "one_line": "The daily BD transaction merge does NOT join bd_assets_dim on the EC2 run path: in 10 of 10 runs (of 21 in the SSM retention window) that processed a new file, the log says '[enrich] bd_assets_dim unavailable; skipping cusip join', and all 10 wrote a 0-row partition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: 21 transaction-download logs (S3 versions pinned by VersionId, one per SSM run, dates 2026-08-31 to 2026-09-28 UTC). 11 logs say 'No new files to process'; 10 say 'Found 1 new files' and each of those 10 carries the same '[enrich] bd_assets_dim unavailable; skipping cusip join' line and 'OK: TRANSACTIONS_DAILY_<date>.xlsx -> silver/transactions/<date>.parquet (0 rows)'. 10 of 10; 0 of 10 carry an '[enrich] cusip: N/M non-null' line.",
+        "THE ONLY OBJECT WRITTEN TO silver/transactions/ AFTER the MX-s-6 dim version (pdoQY5Waj63_, 2026-09-28T06:22:06Z) is silver/transactions/2026-09-28.parquet, VersionId fgzzqFZOaFvMw0_B7vCk3ZdnQ1Wx3Kkz, 2026-09-28T21:54:42Z, 34,882 bytes, 0 rows, 73 columns, no cusip column (pyarrow metadata num_rows=0). 1 object of 2,405 versions under the prefix.",
+        "THE DEPLOYED SCRIPT (s3://opal-data-bd/scripts/merge-daily-incremental.py, latest version MF9tYCkR4uu_S0xMVcE4yu1ZPYUNonRm, 2026-06-29, 43,492 bytes) is NOT the repo file (59,077 bytes). Its load_bd_assets_dim prints 'load failed: <err>' on an exception and returns None SILENTLY only when `boto3 is None` (deployed lines 97-98), or the dim is empty. No 'load failed' line appears in any of the 10 logs, so a silent path is the one taken. That boto3 is not importable on the host is INFERRED, not measured: no command was run on the instance.",
+        "THE dim CONTENT ITSELF IS NOT THE PROBLEM: the cusip mapping is identical across the 4 dim versions that carry the 12,141-asset universe (pdoQ, bSQW, kitt, qcSd: 0 changed of 12,141 common asset_ids on each pair compared), and the 42 deltas versus the predecessor (4dfwF, 10,937 asset_ids) are all value-to-other-value changes, with 1,204 asset_ids added."
+      ]
+    },
+    "spec_asserts": "MX-m-1 (b) states that merge-daily-incremental.py:57 joins silver/bd_assets_dim.parquet for cusip enrichment on every daily run.",
+    "world_is": "On the run path the SSM document uses, the join is skipped on every run that processes a file. The repo's :57 constant is a real join, in a file the EC2 documents do not run. No silver transaction row written after the dim rewrite carries any dim-derived cusip, because none was written with rows at all.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "WHY ARMED: the day the forwardfill file carries rows, the enrichment stays off on this path and cusip lands null (or whatever the file carried) with a WARN-shaped log line and rc 0. The answer to the MX-m-1 (b) count is 0 of 0 and it is a zero with a named cause, not evidence the 42 deltas propagate. NOT FIXED: no cell covers the deploy of the repo script or the host's Python environment."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W11-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~11",
+    "surfaced_at": "2026-09-28T22:53Z",
+    "one_line": "The portal submodule is an empty directory in this worktree, so the served-page arm of the (d) reader census could only be measured over infra/aws/lambda and the repo's gold scripts, not over portal source.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`ls portal` in the worktree prints nothing and `comp-find ... -- portal/src` returns 'pathspec(s) do not exist'. The first-party reader census therefore covers every file in the worktree corpus (43,870 files scanned in corpus=all) including the Lambda sources under infra/aws/lambda/v2_portal, and excludes the portal repository.",
+        "Within that population the only code that names gold/canonical/lots_unrealized or lots_realized is B_02 (producer), B_03 and C_05 (readers), lib/s3_layout.py (key builders), and gold_freshness_config.yaml (a declared artifact)."
+      ]
+    },
+    "spec_asserts": "MX-m-1 (d): 'Find every reader in the repo with comp-find, and print the denominator. Name the LIVE ones: a scheduled job, a Lambda or a served page.'",
+    "world_is": "The repo is not fully present in a worker worktree: the portal gitlink is not checked out. A served page that reads these keys directly from portal code would not appear.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: served pages in this estate read through the v2_portal Lambdas, which were searched. The exclusion is stated in the (d) record rather than hidden."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S50",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W11-S1"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W11-S1 as an instrument trap, not a live hazard: every BD trigger runs its SSM document at $LATEST, so a read of the DEFAULT version (a bare get-document) is the wrong object. Standing issuer rule for this project's cells: read and grade BD SSM documents at --document-version $LATEST, and record DefaultVersion and LatestVersion beside the finding.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W11-S1 (worker ~11): allocation default v3 vs $LATEST v4 and transaction default v1 vs $LATEST v2 differ in logic; the executed $LATEST versions carry the honest exit, the defaults do not (org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (a)).",
+        "MX-s-12's acceptance run ssm 16d855de reads DocumentVersion $LATEST (worker ~8 proof); asset-dim is v4 as both DefaultVersion and LatestVersion, so the one document this project deploys is not split."
+      ]
+    },
+    "spec_asserts": "Z-W11-S1 (ARMED): a reader grading a BD document by `get-document` without a version reads a version the schedule never runs.",
+    "world_is": "No run executes a default version; what runs is honest on the four daily Playwright documents (SSM Failed on failure). The hazard is a mis-read by a seat, which this rule and the round-3 battery's practice close. Aligning DEFAULT to $LATEST on allocation/transaction is carried to the round-3 L10 enrichment list, not acted on here (those documents are the dead Playwright legs, see Z-S51).",
+    "notes": "No other seat's cell in flight reads those two documents."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S51",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W11-S2"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W11-S2 by placement, not repair: the daily BD transaction merge skips the bd_assets_dim cusip join on the EC2 path and wrote 0-row partitions on 10 of 10 file-processing runs. That is a PRE-EXISTING state of the transaction feed (its Playwright download fails 21 of 21), not one this round created or can worsen; the repair is a DS-lane silver cell routed to the round-3 L10 analysis with the measurement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W11-S2 (worker ~11): '[enrich] bd_assets_dim unavailable; skipping cusip join' in 10 of 10 runs of 21 in SSM retention that processed a file; all 10 wrote a 0-row partition (org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (b)).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (a): opal-bd-transaction-download (and allocation, realized, unrealized) SSM Failed on 21 of 21 runs -- the Playwright portal leg BD's MFA broke, the same class Z-S42 had for asset-dim."
+      ]
+    },
+    "spec_asserts": "Z-W11-S2 (ARMED): the dim MX-s-6/MX-s-12 keep current is joined into silver transactions daily (merge-daily-incremental.py:57), so dim cusip changes reach silver.",
+    "world_is": "The join is skipped on the path that runs, and the transaction feed itself produces no rows while its download fails. The dim's currency does not reach silver transactions today. The question the analysis must place: is BD transaction data flowing by any other producer (a REST runner, as fees has), and if not, the transaction leg needs the MX-s-10/MX-s-12 port. Both are DS/AE-lane cells, not this round's cut.",
+    "notes": "Routed as a candidate enrichment item, with Z-W11-S1's DEFAULT/$LATEST alignment, to 1.0.0_SA_CTO~O through the round-3 slug. No served output moves by this row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T23:28Z",
+    "one_line": "MX-i-4 census: 4 LIVE readers of opal/bd/credentials remain on bd-exporter-ec2-role (the allocation, realized, transaction and unrealized SSM documents), so the grant cannot be removed; each reads the secret daily and then fails at the portal login.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live grant side: 16 policies on bd-exporter-ec2-role scanned (15 inline + 1 attached); the ONLY grant of opal/bd/credentials-* is inline AdditionalPermissions stmt 0 (5 Resource elements). The role is held by instance profile bd-exporter-profile on bd-allocations i-0800437d1dbb0b5cc, bd-transactions i-00c7568bc510f7423, bd-assets and bd-fees (both stopped).",
+        "Live readers, each with an ENABLED trigger and a run in the last 24h: opal-bd-allocation-download (bd-allocation-pipeline-trigger cron(0 22), 21 of 21 Failed, latest 22:00:04Z), opal-bd-realized-download (bd-realized-pipeline-trigger cron(45 21), 21 of 21 Failed), opal-bd-transaction-download (bd-transaction-pipeline-trigger cron(53 21), 21 of 21 Failed), opal-bd-unrealized-download (bd-unrealized-pipeline-trigger cron(38 21), 21 of 21 Failed). Each document line 22 runs 'aws secretsmanager get-secret-value --secret-id opal/bd/credentials'.",
+        "The read succeeds: the latest run output of all 4 contains 'Fetching credentials from Secrets Manager...' with no AccessDenied, then 'Phase 1: Login' and a Playwright TimeoutError waiting on bd3.bdreporting.com. Failed status is downstream of the read. Removing the Resource element would move the failure point to the read step.",
+        "Not readers: opal-bd-asset-dim-download v4 (REST), advi-49f-chain-dispatch, opal-bd-49f-session-fetch, opal-cot-bd-session-fetch. DEAD: opal-bd-fees-download (its trigger was deleted by the MX-s-12 apply; last run 2026-09-25), force-alloc-download and force-txn-download (not registered live, get-document rc 254). Full census: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~8/CENSUS_MX-i-4.md.",
+        "AC1 (i4.AC1.sh) reads 'statements read 4; resources naming opal/bd/credentials: 1 -- RESULT: FAIL -- exit=1'; AC2 reads PASS. Nothing was changed, no ledger opened, no plan or apply run (order step 3)."
+      ]
+    },
+    "spec_asserts": "TO MX-i-4 preflight and cell text: the Playwright portal legs that read opal/bd/credentials are the ones MX-s-12 retires or ports, so a census after MX-s-12's acceptance would read 0 live readers.",
+    "world_is": "MX-s-12 retired only the fees schedule leg and ported only asset-dim. The allocation, realized, transaction and unrealized documents (MX-m-1 measured 21 of 21 Failed each) still run on daily schedules, read the portal login secret every run and then time out at the portal login. The condition for removing the grant is not met.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because the four schedules fire again tonight and every weekday: a daily automated login attempt against the Black Diamond portal with the live password, failing on the MFA timeout, for as long as the four triggers stand. Disarm is a decision on those four documents (retire the four trigger rules or port off the portal login), which is not this order's. Once the four triggers are gone, MX-i-4 can be re-run: the census is repeatable from the CENSUS file's method, and the one-element removal is the one change the plan should show (0 add, 1 change, 0 destroy). The secret is untouched."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S52",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:36Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W8-S3"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W8-S3 by placement: the four BD Playwright daily legs (allocation, realized, transaction, unrealized) still read opal/bd/credentials and log in to the BD portal every weekday, failing 21 of 21 at the MFA-broken login -- a standing state since 2026-06-23, which this round neither created nor can worsen. MX-i-4 is superseded (the grant stays while live readers exist) and the retire-or-port of those four legs is carried to the round-3 L10 analysis as the one cell that unblocks both MX-i-4 and the transaction feed (Z-S51).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~8/CENSUS_MX-i-4.md: 16 policies read on bd-exporter-ec2-role; only inline AdditionalPermissions grants the secret; 4 LIVE readers (each document's line 22 fetches it; triggers ENABLED at 21:38/21:45/21:53/22:00Z weekdays; 21 of 21 Failed each, the latest runs reaching 'Phase 1: Login' then a Playwright TimeoutError, no AccessDenied).",
+        "MX-s-10/MX-s-12 is the precedent for the port: the asset-dim leg moved off the portal login to the REST pull on the 49F session and passed its scheduled acceptance DELTA=0 at 22:11Z today."
+      ]
+    },
+    "spec_asserts": "Z-W8-S3 (BLOCKING, ARMED): MX-i-4's removal cannot proceed while 4 live documents read the secret; each weekday they make an automated portal login with the live password that fails.",
+    "world_is": "Refusing AC1 was correct (order step 3). Nothing about the grant or the logins changed this round. Whether 5 failed logins per weekday risk an account lockout on the BD portal is UNMEASURED and is named here for the analysis, not assumed either way.",
+    "notes": "Routed to 1.0.0_SA_CTO~O with the round-3 slug: one candidate cell per leg or one batched port on the MX-s-12 pattern, after which MX-i-4 re-runs unchanged."
   }
 ]
 ```

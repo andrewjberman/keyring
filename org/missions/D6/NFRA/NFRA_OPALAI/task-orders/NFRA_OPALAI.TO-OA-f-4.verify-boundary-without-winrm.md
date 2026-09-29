@@ -44,6 +44,31 @@ Rewrite ONLY the two arms' execution, and keep the semantics:
    Nothing else in the script's interface changes. It is the test seam AC2 uses.
 Change no other file.
 
+**AMENDMENT 1 (CTO ruling msg 26294, after 0.0.0_AB_MSTR~Z's real run at 23:39Z read `BOUNDARY: ERROR` exit 3):** both
+children STARTED as Opal_Agent, so the logon works, but each printed its own script text. The ArgumentList element
+`"`"$probeCmd`""` wraps the script in literal double quotes, so `-Command` evaluated a quoted STRING. Fix:
+5. pass each arm's script with `-EncodedCommand <base64 of the UTF-16LE bytes>`
+   (`[Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($cmd))`), which has no quoting layer. No `-Command`
+   remains in the file;
+6. add ONE optional switch, `-SelfTestAsCurrentUser`: the arms go through the SAME Start-Process + `-EncodedCommand`
+   path but WITHOUT `-Credential`, as the current user. It is the test seam AC3 uses to prove each arm RUNS and writes
+   its verdict file. The default (no switch) always runs as Opal_Agent. The ERROR-never-DENIED-OK semantics are
+   unchanged.
+
+**AMENDMENT 2 (CTO ruling msg 26297, after 0.0.0_AB_MSTR~Z's second real run at 00:04Z):** the `-EncodedCommand` line
+is ~1150 characters, and `Start-Process -Credential` (CreateProcessWithLogonW) caps the command line at 1024, so no
+child started (`The parameter is incorrect`). Replace items 5 and 6's arm plumbing:
+7. the two arms become FILES beside the script: `opal_ai/opal/runtime/provision/boundary-arm-probe.ps1` and
+   `boundary-arm-control.ps1`, each taking its inputs as parameters (the probe path; the state dir) and writing its own
+   verdict file into the state dir. They live in the checkout (Opal_Agent: read + execute), NEVER in state_dir, where
+   Opal_Agent could modify a script it then runs. verify-boundary.ps1 resolves them beside itself (`$PSScriptRoot`) and
+   runs each with `-File <arm.ps1> -ProbePath ... -StateDir ...`. No `-EncodedCommand` and no `-Command` remain, and
+   nothing is created or deleted except the verdict files;
+8. verify-boundary.ps1 prints ONE diagnostic line `ARGLEN: probe=<n> control=<m>`: the length of the argument string
+   it hands Start-Process for each arm, built exactly as on the credential path. Both must be under 1024.
+   `-SelfTestAsCurrentUser` stays (same path minus `-Credential`). It proves the arm FILES run, but it is not a control
+   for the logon limit: that acceptance is MSTR~Z's real step 3.
+
 ## 2. BOUNDS
 
 1. **`opal_ai` is a nested repository** at `<worktree>/opal_ai`, on its own branch off `opal_ai` `fd8ab8a57f`. Commit
@@ -59,6 +84,8 @@ Change no other file.
 
 <paths>
 opal_ai/opal/runtime/provision/verify-boundary.ps1
+opal_ai/opal/runtime/provision/boundary-arm-probe.ps1
+opal_ai/opal/runtime/provision/boundary-arm-control.ps1
 org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~19/**
 org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigations/**
 </paths>
@@ -69,8 +96,9 @@ Rows: `org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigations/INVESTIG
 ## 4. PROOF OF SPEC (literal; run from your worktree root, after the nested commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OA-f-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f4.AC1.sh; echo "exit=$?"</invocation><expect>Invoke-Command/ComputerName=0; Start-Process with -Credential -Wait -WorkingDirectory>=2; parse errors=0; other files changed vs fd8ab8a57f=0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OA-f-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f4.AC1.sh; echo "exit=$?"</invocation><expect>Invoke-Command/ComputerName=0; Start-Process with -Credential -Wait -WorkingDirectory>=2; parse errors=0; other files changed vs fd8ab8a57f (outside the script and its two arm files)=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OA-f-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f4.AC2.sh; echo "exit=$?"</invocation><expect>rc=3 line='BOUNDARY: ERROR probe=... control=...' -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OA-f-4"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f4.AC3.sh; echo "exit=$?"</invocation><expect>arm files=2; -EncodedCommand refs=0 -Command refs=0 -File refs>=2; rc=1 line='BOUNDARY: BREACH probe=ALLOWED control=OK'; verdict files>=2; ARGLEN: probe<1024 control<1024 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -97,7 +125,14 @@ Dry-run at base (opal_ai fd8ab8a57f):
 - f4.AC1 base: FAIL as expected (`Invoke-Command/ComputerName=2; Start-Process with -Credential -Wait -WorkingDirectory=0`).
 - f4.AC2 base: FAIL as expected (`rc=1 line='none'`: no `-CredPath` parameter, so no BOUNDARY line).
 
-<status>pending</status>
+f4.AC3 (amendment 1) base: FAIL as expected at fd8ab8a57f and at the defective 6b13ff892f (`-EncodedCommand refs=0`,
+no BOUNDARY line, 0 verdict files). Gate limb: to-pipeline-gate grades a MODIFIED order only on GATE (viii)
+placeholders (NONE), so no limb graded this amendment.
+
+f4.AC3 (amendment 2) base: FAIL as expected at fd8ab8a57f and at 56c6228 (arm files=0, ARGLEN none). f4.AC1's bound
+now admits the two arm files (other files changed outside the three = 0). Gate limb: none (GATE (viii) NONE).
+
+<status>in_progress -- REOPENED a 2nd time by the issuer 2026-09-29 ~00:1xZ (amendment 2, CTO ruling msg 26297): the -EncodedCommand line exceeds the 1024-char logon limit; arms ship as .ps1 files run via -File, with an ARGLEN assert. Same slot ~19. Was: complete (@400fbd65d8).</status>
 <direct_act>true</direct_act>
 <slot>~19</slot>
 <fabric>site-z</fabric>
