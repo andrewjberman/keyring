@@ -61,6 +61,8 @@ warns when the account has been armed for more than 60 minutes.
 dialog never blocks the next tab. File pickers are `<input type=file>` and are never pressed. A deep walk takes
 about 12-15 minutes per client.
 
+The lead-panel walk also presses one legend button (`[data-series-ticker]`) per Chart view and screenshots the picked line as `lead-<movement>-<subject>-Chart-picked`.
+
 The skill runs:
 
 ```

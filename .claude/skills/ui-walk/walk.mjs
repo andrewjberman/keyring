@@ -265,6 +265,17 @@ async function walkSecurityAnalysis(page, route) {
         step = `amgt lead ${movement}-${subject}-${view}`
         await amgtLeadState(page, movement, subject, view)
         await checks(page, `lead-${movement}-${subject}-${view.split(' ')[0]}`)
+        if (view === 'Chart view') {
+          // press the first legend button (one name picked), then grade the picked line
+          const legend = page.locator('[data-series-ticker]').first()
+          if (await legend.count().catch(() => 0)) {
+            const pressed = await legend.click({ timeout: 4000 }).then(() => true).catch(() => false)
+            if (pressed) {
+              await settle(page, 1000)
+              await checks(page, `lead-${movement}-${subject}-Chart-picked`)
+            }
+          }
+        }
       }
     }
   }

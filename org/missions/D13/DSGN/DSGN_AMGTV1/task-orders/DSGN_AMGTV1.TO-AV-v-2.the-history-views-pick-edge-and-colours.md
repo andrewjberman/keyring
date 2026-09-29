@@ -94,7 +94,7 @@ pickstep.cjs 1 of 3; green arms 3 of 3 (scratch palette #0ea5e9 #ea580c #a3e635 
 #99f6e4 #ddd6fe #f43f5e, min dE 40.2, margin.right 28; scratch walk.mjs with the picked step) and 3 of 3; V2 bound 3 of 3. The
 analysis names "45 pairs" (the walk's 10 names); the check grades all 66 pairs of the 12 strokes (stricter, covers any 10).
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~19</slot>
 <fabric>site-z</fabric>
