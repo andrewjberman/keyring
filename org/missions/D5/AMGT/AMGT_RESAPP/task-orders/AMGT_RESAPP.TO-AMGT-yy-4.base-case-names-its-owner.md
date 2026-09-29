@@ -59,7 +59,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 **ISSUER NOTES:** round-48 s.4b carried item / round-49 s.4 row 4. Base: AC1 FAIL (ADBE base label 'Historical-multiple reference'),
 AC2 PASS. SERVED at yy-5. yy-1's grader takes the label from the served payload, so this rename does not move FWD-30.
 
-<status>pending</status>
+<status>complete</status>
 <round>50</round>
 <slot>~178</slot>
 <fabric>site-z</fabric>
