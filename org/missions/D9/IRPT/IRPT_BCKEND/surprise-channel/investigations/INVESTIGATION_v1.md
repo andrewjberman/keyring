@@ -11931,3 +11931,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Per the task order's own bound this stops here: the INF schedule below (schedule.tf) reuses 49F's cron (07:30 America/New_York, MON-FRI) rather than inventing a same-day-optimized cadence, because that time trivially satisfies 'fire after the worst case with margin' for whichever day the UNEDITED handler computes (T-1, already landed a full day earlier) -- it is a safe, not an optimized, choice. The 09-28/09-29 landing gap is carried here as a measured fact only; it is a live pipeline-currency question outside this cell's <paths> and is not this row's hazard."
 }
 ```
+
+## ~81 worker row -- the issuer's irpt-m-* preamble undercounts and misnames the live branch set (row IRPT_BCKEND-W81-S1)
+
+```json
+{
+  "id": "IRPT_BCKEND-W81-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~81",
+  "surfaced_at": "2026-09-29T16:40:00Z",
+  "one_line": "Cell IB-mr-231's 15:3xZ preamble says 'ten local branches named irpt-m-*' and names nine (irpt-m-r4-holdings ANCESTOR; irpt-m-s125-20260924 PRESENT; irpt-m-b01b-skip + irpt-m-s152-cloud ABSENT; irpt-m-cot-b1, irpt-m-cot-cash-line, irpt-m-cot-cash-line-act, irpt-m-s125-publish, irpt-m-s152 DIVERGED). Live `git branch --list 'irpt-m-*'` returns NINE branches, and they are not the same nine: irpt-m-r4-holdings does not exist anywhere (local or remote-tracking; empty result on `git branch -a | grep -i r4-holdings`), and irpt-m-comparison-consumer exists live but is named nowhere in the preamble. The cell's own build step ('list them yourself') anticipated exactly this and is followed for the census; carried as a row because the preamble's branch count and membership are themselves wrong, not just its per-branch verdicts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (already inert same turn: this worker's cell instructed live enumeration, not the preamble's, and R23_M_BRANCH_CENSUS_20260929.json/.md census irpt-m-comparison-consumer (WORLD-DONE, both files PRESENT, byte-identical to CLOUD) and omit the nonexistent irpt-m-r4-holdings; no further act owed unless the issuing seat wants its own preamble corrected)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`git branch --list 'irpt-m-*'` (worktree C:/Users/AndrewBerman/Desktop/wk_irpt_bckend_81, 2026-09-29T16:34Z): 9 lines -- irpt-m-b01b-skip, irpt-m-comparison-consumer, irpt-m-cot-b1, irpt-m-cot-cash-line, irpt-m-cot-cash-line-act, irpt-m-s125-20260924, irpt-m-s125-publish, irpt-m-s152, irpt-m-s152-cloud",
+      "`git branch --list '*r4-holdings*' -a` and `git branch -a | grep -i r4-holdings`: 0 hits (rc 0, empty output) -- the branch the preamble calls ANCESTOR of CLOUD does not exist on this worktree's refs",
+      "irpt-m-comparison-consumer: tip dbe20f8022, 2 commits ahead of merge-base f17b53e25e, both files (infra/aws/lambda/investor-reporting/_scope/maintained_sources.py + its test) byte-identical to CLOUD (git diff <branch> CLOUD empty for each) -- a real, already-resolved branch the preamble's nine names never mention",
+      "cell IB-mr-231 text: 'For EVERY local branch matching irpt-m-* (list them yourself: git branch --list 'irpt-m-*')' -- the build step itself does not trust the preamble's enumeration"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell IB-mr-231 preamble: '2.0.0_SA_COO~M's pre-relaunch work sits on ten local branches named irpt-m-*' followed by nine named branches and their claimed dispositions.",
+  "world_is": "Nine irpt-m-* branches exist live, not ten, and the membership differs from the nine named: irpt-m-r4-holdings is absent from every ref plane checked, and irpt-m-comparison-consumer (already WORLD-DONE) is present but unnamed in the preamble.",
+  "notes": "No production code, schema or path was touched by this finding; it is a discrepancy in the issuing seat's own pre-relaunch read, most plausibly because a branch was deleted/renamed or the preamble was drafted from a stale `git branch` snapshot. The full per-branch, per-file census (including irpt-m-comparison-consumer, WORLD-DONE) is in org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R23_M_BRANCH_CENSUS_20260929.json."
+}
+```
