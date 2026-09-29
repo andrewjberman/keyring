@@ -1,13 +1,32 @@
-# IRPT_BCKEND~Y (Analysis) -- status (HAND-BACK FREEZE)
+# IRPT_BCKEND~Y (Analysis) -- status
 
-Seat `2.0.0_SA_COO~Y` (CLAUDE). As of 2026-09-28T18:0xZ. This file is the brief section 3 A2 freeze
-(`org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_CLOSER_TO_CANONICAL_RETURN_BRIEF_20260924.md`), owed under act 3 of
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20260928_174xZ_RELAUNCH_CANONICAL_DRIVE_PMY_CLOSER_D.md` (CTO 102387).
-Lease IRPT_BCKEND~Y: FULL (CTO act 1, 17:47Z). The goal loop row is struck, and the goal record
-`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_230xZ_COO_Y_GOAL_ANALYSIS_E2E_LOOP_20M.md` is the done-criteria.
-Its open criteria are the next-list below, which becomes round 19's cells.
-The prior closer-era narrative (windows 3-15, hops 1-10, rulings) is in git at `33addf0c02`, the last version of this file before
-the freeze, and in `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/STATUS.md`.
+Seat `2.0.0_SA_COO~Y` (CLAUDE), `/canonical-drive 10m` standard form (cron 8b04fff7, lease FULL; Andrew-direct record
+@79764ce520). As of 2026-09-29T01:2xZ. The hand-back freeze text of @37cb971b4a is kept below it for the pins and the
+served-artifact map; section 0 supersedes its next-list.
+
+## 0. Round 19 ~Y CLOSED (2 of 2 orders drained); round 20 list
+
+Decomposition `decompositions/IRPT_BCKEND_DECOMP_R19_Y.md` (@89f619e28b, amendments 1 @ecbb08548f and 2 @81cb041780).
+Close record `deliverables/2.0.0_SA_COO~Y/R19_Y_DRAIN_CLOSE_20260928.md` @89966f267c.
+
+| item | where it stands |
+|---|---|
+| 6 saved-type refusal before generation | TO-IB-yr-1 DRAINED @ec8f69f718; rides ~P's next resident + generate build (~P 102430), and ~Y runs the four gates on the built artifact when asked |
+| 8 lookup test without env var | TO-IB-yr-2 DRAINED @7b99390ae3 |
+| 1-4 Comparison window, W15 screen/export, Y2 arms, first 49F + INF reports | ride ~P's ONE window packet (~P 102407, 102410); in STATUS~P's next-list @522946a513 |
+| 5 recovery and revocation | unit-, real-entry- and live-organic-covered; the deliberate live revocation arm rides the same ~P packet (~P 102423) |
+| 7 branded Analysis export | ~P's by CONTRACT.md:23 (amendment 2); on ~P's next-list after K8 (~P 102471); ~Y supplies the AnalysisReport schema and owner shape on ask |
+
+Round 20 ~Y rectangle (issuer acts, no cells uncovered):
+1. The four gates (zip_module_census `--expect`, zip_cold_start_smoke `--owner-refusal`, status_role_sim, offline_submit_proof
+   `--live-env`) on ~P's built resident + generate artifact carrying @ec8f69f718.
+2. At ~P's window drain: `case_trace.py <firm> <REQ>` on every ~Y body (Comparison, Y2 XLSX, Y2 Target Weight, the
+   INF and 49F Overviews) and the revocation arm (plus the resident journal). Commit each trace under
+   `deliverables/2.0.0_SA_COO~Y/`.
+3. On ~P's cut of the branded export: supply the AnalysisReport schema and the request-owned retained shape.
+
+Rows: W63-S1 (INERT, the issuer's proof-path stem; the same class as S167/W42-S4), S187 (INERT, worker-slot reuse; owner
+1.0.0_SA_CTO), DSGN_IRPTV1-S35 (~D portal surface). 0 ARMED rows without a seated owner.
 
 ## 1. Pins
 
