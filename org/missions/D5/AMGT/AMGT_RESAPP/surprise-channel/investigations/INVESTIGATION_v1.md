@@ -15395,6 +15395,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "AC2 runs api-suite.sh in the worker's worktree and reports N passed, 0 failed (308 at the cut); the issuer ruled S1's cause resolved by widening the cone to infra/logic.",
   "world_is": "S1's cause (infra/logic/registry) is resolved by that widening and the commit gate now reads the registry. The suite also reads infra/aws/terraform/harvest and portal/.../__harness__ fixtures, which the cone still omits, so AC2 stays FAIL as an instrument absence. The channel schema has no RESOLVED disposition; S1 stays UNDER_INVESTIGATION for the CVO to grade.",
   "disarm_owner": "2.0.0_SA_COO~Z (issuer): run api-suite.sh at the drain in a tree carrying infra/aws/terraform/harvest and portal/src/pages/SecurityAnalysis/__harness__, or add those two paths to the cone for slot ~171 and have the worker re-run AC2."
+},
+{
+  "id": "AMGT_RESAPP-Z-S302",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-29T13:30:00Z",
+  "one_line": "etf-classifications is keyed on the BARE ticker, so a key means one company per table even where two exchanges share the token. The manual one-time script data/black_diamond/scripts/classification/seed_bd_securities.py:51 scans the whole table and copies it into bd-securities with an overwriting put. If it is re-run after ww-3's write, 24 of the 59 new keys already exist in bd-securities and would be overwritten, and 6 of those mean a different company there: AI (C3.ai), ML (MoneyLion), ORA (Ormat), RKT (Rocket Cos), SAN (Banco Santander ADR), ST (Sensata).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read-only census 2026-09-29 ~13:2xZ (a subagent of 2.0.0_SA_COO~Z): 9 code readers of etf-classifications; seed_bd_securities.py:51 full scan + overwriting put_item into bd-securities; manual, described as one-time; no scheduler found.",
+      "bd-securities live read: 24 of the 59 keys present; 6 are a different company from the AMGT library name.",
+      "No scheduled production reader's served output moves: yang positioning 0/62, holdings attribution 0/56, positioning publisher 1/167 (PWR, same company, name still the issuer's), satellites 0/25 and 0/25."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ww-3's never-widen COO half: the write moves only the 59 created keys of etf-classifications.",
+  "world_is": "The write moves only those keys, and no scheduled reader changes. The hazard is a latent SECOND-ORDER copy: a manual re-run of seed_bd_securities.py would carry six foreign-company rows into bd-securities over the names BD holds there.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): named in the ww-3 COO half and put to 1.0.0_SA_CTO~Z with the pair; the script's own guard (skip a row whose updated_by marks the amgt-library universe, or refuse an overwrite) is the BD script owner's change, asked through that owner's round if the CTO routes it.",
+  "notes": "INERT because nothing schedules the script and this act does not run it. The underlying design fact (bare-ticker keys across exchanges) predates this round."
 }
 ]
 ```
