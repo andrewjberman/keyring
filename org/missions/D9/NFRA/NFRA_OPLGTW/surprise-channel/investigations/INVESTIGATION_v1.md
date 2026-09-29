@@ -4254,3 +4254,51 @@ name the one known failure instead of silently inheriting it.
   "notes": "INFERRED, not reproduced: one failure, no second sample. Reported so the drain does not read a single red ac04 as a regression of this cell."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T01:00Z",
+  "one_line": "The order grants only s3:GetObject on the marker prefix but has the dispatcher read the marker at the event's versionId; S3 requires s3:GetObjectVersion for a GetObject that names a VersionId, so as specified every accelerator marker read returns AccessDenied and the gate skips every fire, qualified ones included.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "Order OG-m-2 item 2 (GetObject at the event's versionId, never the latest) and item 4 (`s3:GetObject` on arn:aws:s3:::opal-data-assets/schwab/08335338/meta/complete/*, no other action) at 14d3ce32a8; dr.AC2.sh fails any s3 action other than exactly ['s3:getobject'].",
+      "AWS S3 API reference for GetObject: returning a specific version needs the s3:GetObjectVersion permission; s3:GetObject alone covers only the current version. Not exercised against live S3 in PHASE A (no AWS write, no vendor call); the unit tests stub s3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "One statement pair, s3:GetObject only, lets the dispatcher read the exact marker version that fired (never the latest) and gate on closure.status.",
+  "world_is": "The code and .tf are built as ordered. Deployed unchanged, the marker read fails closed (SKIP ... closure.status=error:ClientError): 0 accelerator dispatches per date instead of 1; the floor is unaffected. It is inert until PHASE B ships.",
+  "notes": "Issuer decision before GO: either widen the never-widen ask to add s3:GetObjectVersion on the marker prefix (and amend dr.AC2.sh, which grades GetObject alone), or drop VersionId (reads the latest, contradicting the CTO's exact-PUT reading). The worker did neither; the order's own text is built."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T01:10Z",
+  "one_line": "The naming gate (LGIC_ENFORCE DEC-6, ENFORCE) refuses the PHASE A commit: the ordered chain-log S3 key prefix gold/advi/_logs/chain_ (lambda_function.py:67) and its IAM ARN (advi_49f_floor.tf:161) are 'NEW and OUT-OF-PATTERN as S3Key' against advi/{scope}/gold/_logs/chain_; the address is dictated by the existing SSM document, which uploads there.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at 14d3ce32a8 base: `NAMING REFUSE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:67 gold/advi/_logs/chain_ -> advi/{scope}/gold/_logs/chain_` and `NAMING REFUSE infra/aws/terraform/opal-assets/advi_49f_floor.tf:161 arn:aws:s3:::opal-data-49financial/gold/advi/_logs/chain_*`; 4 paths graded, 3 seen; the bucket and 49f-label lines were WARN only.",
+      "The key is the SSM document's own upload target (advi_49f_floor.tf:272-290 at 14d3ce32a8), so it cannot be moved by this cell."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's code, tests and .tf commit through safe-commit.sh and its gates.",
+  "world_is": "The commit is refused and unstaged; no override used. The code, tests and .tf diff are in the worktree uncommitted, and saved as a patch beside the ANNOUNCE. The deploy build gate needs committed source, so PHASE B cannot start from this branch until the issuer rules the naming refusal (an R20 register entry, or a registry row).",
+  "notes": "Per bound 8 this is one BLOCKING row, no override. The unit tests pass 6 of 6 on the uncommitted tree."
+}
+```
