@@ -1240,3 +1240,17 @@ with no build cell.
 One cell, one file; not a direct act, since an infra path's floor is WORLD. Slot 79 (S197: 1 + max(author lines 78, issued_to 78, branches 78)).
 
 fanout: 1 of 1 chains, cap 8.
+
+## 21. ROUND 5, WORKSTREAM ~E (2026-09-29 ~14:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO 102832 and row S205)
+
+Row S205 showed that the scheduled producer is the gold's real author. A local re-emit is not. 1.0.0_SA_CTO 102832
+carries this to the INF switch (pr-221): its packet must name the SCHEDULED Inflection producer and a fire of it. Today
+the one schedule is 49F's (source schwab_08335338). Cottonwood follows as its own cell once INF's shape is read.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-501` | FWD-3 (INF): the holdings-performance root schedules `orion` under its own function, role and schedule (firm isolation), grants derived from the registry; plan only | WORLD (schedule + IAM + Lambda, plan only) | none | E5a |
+
+Slot 80 (S197: 1 + max(author lines 79, issued_to 79, branches 79)).
+
+fanout: 1 of 1 chains, cap 8.
