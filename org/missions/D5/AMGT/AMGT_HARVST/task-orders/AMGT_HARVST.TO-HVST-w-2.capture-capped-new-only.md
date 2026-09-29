@@ -68,6 +68,13 @@ an absent field as zero.
   <criterion id="AC2" cell_refs="HVST-w-2"><invocation>python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~37/scripts/ac2_upload_and_delta.py</invocation><expect>ONE `upload-harvest --max-objects 40 --runtime-root "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest"` recorded verbatim, with the BEFORE and AFTER counts of sa silver listing_hit and article rows on the SAME instrument and the signed deltas; a zero delta is reported as a zero with its cause named</expect></criterion>
 
   <criterion id="AC4" cell_refs="HVST-w-2" judgment="true"/>
+
+  <criterion id="AC5" cell_refs="HVST-w-2"><invocation>python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~37/scripts/ac5_incident_spend_bound.py</invocation><expect>GUARD (c), RUN FIRST, BEFORE ANY CAPTURE: the 00:21Z incident's Kimi spend ledgered as a bounded estimate from LOCAL evidence only -- the run.log's vision-classified steps (expected 3: steps 0, 1, 2; steps 3-4 cache hits), model kimi-k3, max_tokens 4000 each plus the image input per call, priced from the kimi-k3 rate card with the card's date and URL -- and the entry appended to the ledger as `## INCIDENT 1 SPEND -- ESTIMATE-UPPER-BOUND`, with the provider-read figure recorded as NOT MEASURED (an account-holder item). Print the entry as written. NO call to api.moonshot.ai or any Moonshot console or usage endpoint</expect></criterion>
+
+  <criterion id="AC6" cell_refs="HVST-w-2"><invocation>python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~37/scripts/ac6_planted_reauth_is_refused.py</invocation><expect>GUARD (a), RUN SECOND: a PLANTED test that WOULD fire the producer's real re-authentication -- it calls `SessionManager.refresh('sa')` and `SessionManager.get` with no saved envelope, and `repair_verification` -- is run INSIDE the capture runner's own process -- the runner script invoked from the command line exactly as AC1
+invokes it, with the planted calls in place of the producer run -- and each is REFUSED by the guard before any browser, network or credential read (print, per entry point, the refusal and "browser_started: False", "credential_read: False"). ALSO print, from inside that process, the identity of the guard object each entry point resolves to, proving the guard is loaded in the process that runs the producer (the 00:21Z incident was a guard that never loaded). The unguarded variant is NEVER run</expect></criterion>
+
+  <criterion id="AC7" cell_refs="HVST-w-2"><invocation>python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~37/scripts/ac7_no_vision_call_and_stop_on_bot_wall.py</invocation><expect>GUARD (b), read from the CAPTURE run's own record after AC1: calls to api.moonshot.ai (and any other vision-model endpoint) = 0, verification repairs = 0, re-authentications = 0, browsers started = 0; and IF any job met a bot wall or VerificationRequired, the run STOPPED there (the stop reason printed with its job). A bot wall is an accepted stop, never a repair</expect></criterion>
 </proof_of_spec>
 
 **AC4 -- JUDGMENT, PRESENTED AND NOT GRADED** (status `UNVERIFIABLE-BY-INSTRUMENT`, `status_reason` naming
@@ -92,6 +99,24 @@ No bbg/ft/wsj/barrons capture, no gold rebuild, no producer change, no re-authen
 3. **Same worker as `w-5` (`~37`), after it**, per the analysis's order (w-5, w-4, w-2 under one runner); `w-4`
    was cut vendor-free and runs on its own slot. The ledger file is shared by the two vendor cells on purpose.
 4. **The judgment is `s.20.6`'s, carried unchanged since round 8.**
+
+**AMENDMENT 1 (issuer, 2026-09-29 ~02:3xZ) -- RESUME BEHIND THREE GUARDS (row `AMGT_HARVST-Z-W37-S3`).** At 00:21Z a
+guard test in this cell misfired and ran the producer's real Seeking Alpha re-authentication (headed Chrome, stored
+credential submitted, bot wall, 3 Kimi vision calls); no capture, no session saved, no S3 write. The order was HALTED.
+`1.0.0_SA_CTO~Z` ruled the resume under Andrew-direct ~02:2xZ (record @`74e1eea534`, "none of this should be waiting on
+me") on his existing 18:05Z word, behind three guards, each now a criterion: **AC5 = guard (c)**, run FIRST and before
+any capture; **AC6 = guard (a)**, run SECOND; **AC7 = guard (b)**, read from the capture run. Guard (c)'s method is the
+CTO's ruling msg 26396: a ledgered UPPER BOUND from local evidence, no Moonshot call of any kind. **The rate card:** no
+kimi-k3 rate exists in the repo (0 relevant hits over 78,657 files, measured by the issuer at the cut); the worker may make
+ONE unauthenticated read of Moonshot's PUBLIC pricing page (no key, no account, no API) and records its URL and read date
+in the entry; if that page cannot be read, the entry carries the call/token bound with the rate marked UNMEASURED and
+AC5 still passes. **The guards' mechanism:** this order grants no `lib/` path, so the guards live in the worker's
+runner, which neutralises `SessionManager.refresh` (`auth.py:54`), `SessionManager.get`'s no-envelope fallback
+(`auth.py:22`), `repair_verification` (`worker.py:282`) and the Moonshot call (`verification_locator.py:19`) BEFORE
+calling the producer's own CLI entry point in the SAME process -- never through `PYTHONPATH`/`sitecustomize` in a child
+that may not load it. **Criteria count 5 mechanical + 1 judgment, above the diet's three, and the reason is one line:
+each added criterion is a guard the CTO's ruling makes a condition of the resume.** The gate limb that grades this
+modification: GATE (viii) (the order declares `<placeholders>`).
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
