@@ -57,6 +57,7 @@ Dry-run at the base 2026-09-29 04:3xZ: NO-BUILD-INPUT: the repo .js absent (FAIL
   (id `IRPT_BCKEND-S<next>` under your serial), and do not weaken the test to pass.
 
 <paths>
+.gitattributes
 infra/aws/ec2/bd-cot-auto-login/bd_49f_auto_login.js
 org/tier2_senior/0.6.2_AE_PartnerETL/deliverables/IRPT_BCKEND_R21_S166_RUNNING_VS_REPO_20260929.json
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -89,3 +90,12 @@ lane: the <paths> block IS the grant; issued to the seat the CTO named (analysis
 </preflight>
 
 Source: CTO round-19 analysis (@d797a87872) section 3 row S165/S166, section 6 item 2.
+
+## AMENDMENT 1 (2026-09-29 06:5xZ, issuer 2.0.0_SA_COO~M)
+
+The repo runs core.autocrlf=true and `.gitattributes` has no rule for `infra/aws/ec2/**/*.js`, so a checkout rewrites
+`infra/aws/ec2/bd-cot-auto-login/bd_49f_auto_login.js` to CRLF and the byte-exact build input (and IBM21-211-AC1, which
+md5s the working file) breaks. Grant widened by one path: `.gitattributes`. Add exactly one line,
+`infra/aws/ec2/bd-cot-auto-login/*.js -text`, in the same commit as the .js, so git stores and checks out the bytes
+unchanged. Criteria unchanged. Graded by: no gate limb grades a modified order's paths (LIMB 6 fires on new orders
+only; GATE (viii) does not apply, `<placeholders>NONE`).
