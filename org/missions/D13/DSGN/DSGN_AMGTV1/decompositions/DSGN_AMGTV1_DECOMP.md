@@ -170,3 +170,15 @@ value, the click, row order, the verdict face, or any figure's number.
 
 **Finding at the cut (row DSGN_AMGTV1-Z-S1):** Valero's team cases are all ABSENT (as are PBR, BA, HD, NU; INTU's are
 SERVED), so FWD-1's hop 6 cannot show the team's position on the thread's own name even after `vv-4` lands.
+
+**v2 ADDENDUM 2 (issuer, 2026-09-29 ~08:3xZ) -- a harness anchor AV-e-3 staled; the issuer's cut defect.** At the round's
+close census (DEV 1a1e8162) `shell.harness.cjs` (10 of 10 at the round base f1a90a9b) reads 9 of 10:
+`card_window_carries_provenance` is anchored on the literal `>$162B<`, and AV-e-3 correctly prints every money figure as
+its served currency code then the amount. AV-e-3's bound did not name the shell harness (red at round 1's base, green again
+at this round's) -- the cut's omission, not the worker's. One DIRECT-ACT cell, on slot ~6's continued worker:
+
+| cell | what it builds | serves | writes | reads | risk |
+|---|---|---|---|---|---|
+| `AV-e-7` | DIRECT-ACT: `shell.harness.cjs`'s `card_window_carries_provenance` re-anchored onto the money form the page now prints (the market cap as its served currency code then the amount, e.g. `>USD 162B<`, or the amount and "currency not stated" when the fixture's figure carries no currency); its claim (the price window carries the mnemonic in an attribute and the value formatted for reading) kept; nothing else moves | FWD-4 (the round's bound) | `SA/__harness__/shell.harness.cjs` | `SA/components/HeaderCards.tsx`, `SA/components/StatTile.tsx` | LOCAL |
+
+Base (DEV 1a1e8162): SHELL bound 2 of 3 (shell 9 of 10, RED).
