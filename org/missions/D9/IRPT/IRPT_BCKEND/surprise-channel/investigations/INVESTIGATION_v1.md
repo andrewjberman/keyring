@@ -11694,3 +11694,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disarm: rollback to S3 version 5bmwADQs (qfxZ0DzB) per the packet, or a rebuild with the runners directory inserted in _holdings_source (or a module-level import path in f49_engine) plus a cold-start invoke that requests a RULED period (YTD), then the CRO's walk again. Lesson for the read-back rule: a smoke that exercises one branch of a period switch is not a read of the switch; the after-read must request each ruled window once."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W75-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~75",
+  "surfaced_at": "2026-09-29T11:20:00Z",
+  "one_line": "Building AD-10's additive `account_masks` onto every DirectoryEntry (IB-mr-221) makes the pre-existing test_inf_entries_validate_against_the_contract go red and would make dr.main()'s own built-in validation report a schema ERROR on every entry, because both validate against the DEPLOYED Lambda contract copy (out of this order's lane to edit), which is additionalProperties:false and has not gained the field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P -- owns infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json (shared packaging); disarms when that copy gains account_masks, the FIRST step of the release order in org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_DIRECTORY_AD10_20260929.md",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_directory_runner.py -q (this session, after the AD-10 build): 1 failed, 19 passed -- test_inf_entries_validate_against_the_contract: \"entry[0] $: Additional properties are not allowed ('account_masks' was unexpected)\", 4 more items behind it (all 4 built entries)",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:126-127 CONTRACT_PATH = infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json (the deployed handler's packaged copy, NOT docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json this cell edited)",
+      "diff docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json (this session, before this cell's edit): identical property sets aside from a cosmetic $id difference -- so the two copies agreed until this build",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:927,976-980 (validate_entries called from run_firm/main; a non-empty validation_errors list sets rc_out=1 and prints an ERROR line per entry) -- so any real `python directory_runner.py` run before the Lambda copy is updated returns rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build step 1: \"Today's masked_discriminator stays exactly as it is (the head row) so current readers keep working.\" Build step 5 treats the Lambda contract copy as NOT this cell's to edit and names updating it as the FIRST step of a release order, implying the additive build itself is safe to land ahead of that release step.",
+  "world_is": "The runner validates its own output against the Lambda's packaged contract copy (CONTRACT_PATH), which this order's BOUNDS explicitly forbid editing. The moment `_entry()` emits `account_masks` on every entry (required by this cell's build step 2), that copy's additionalProperties:false rejects every entry: the pre-existing test_inf_entries_validate_against_the_contract goes from green to red on this branch, and `main()` would exit 1 with a schema ERROR line per entry on any real run -- not just a served-document risk, a LOCAL validation regression, until the release order's first step lands.",
+  "notes": "Not remediated here: the Lambda contract copy is out of this order's <paths> grant by explicit BOUNDS instruction, and widening my own grant to fix it would itself be the widening the order forbids. AC1 scopes only to the new test_directory_account_masks.py file (which validates against the edited docs/contracts copy, not CONTRACT_PATH), so this does not block that criterion; recorded here because it is a real, measured regression left on the branch and the release order in the NEVER_WIDEN half is the disarm path. Full-suite evidence: python -m pytest data/assets/scripts/gold/investor_reporting/tests -q -> 1 failed, 311 passed (only this one test)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W78-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~78",
+  "surfaced_at": "2026-09-29T11:50:00Z",
+  "one_line": "The pre-existing (pre-amendment-3) worktree copy of data/assets/scripts/gold/investor_reporting/holdings_snapshot.py carried a stale GENERATED-block pin (registry@c5c36b1e34fdeee5) against the live infra/logic/registry (registry@c7c38cec0d5d872e), unrelated to amendment 3's own edit; the commit-time naming gate (LGIC_ENFORCE DEC-6) refused the commit until the file was regenerated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Disarmed same-turn by 0.9.0_WK_IRPT_BCKEND~78 running the naming gate's own named remedy (no standing owner needed; a worker is terminal at its drain per R-18, so no disarm_owner is carried -- the item is already INERT, not ARMED).",
+      "bash .tools/safe-commit.sh ... (this session, first attempt, before any regeneration): 'NAMING REFUSE data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:178 <generated-file-edit> -> python lib/opal_naming.py generate --out <dir> --target data/assets/scripts/gold/investor_reporting/holdings_snapshot.py; why: a hand edit to a GENERATED file: its bytes differ from the generator's output from line 178'",
+      "diff --strip-trailing-cr against a fresh `python lib/opal_naming.py generate --out .scratch/gen_check --target .../holdings_snapshot.py` (this session): the ONLY difference in the whole 2,890-line file was line 178, the GENERATED marker comment itself (registry@c5c36b1e34fdeee5 vs the live registry@c7c38cec0d5d872e); the firm_bucket_map VALUES (opal-data-bd/inf/cot/demo) were already identical -- so the drift was the PIN going stale, not a value change, and predates this slot's edit at line ~714-744",
+      "python lib/opal_naming.py generate --out . --target data/assets/scripts/gold/investor_reporting/holdings_snapshot.py (this session, in place): rewrote the pin to registry@c7c38cec0d5d872e; git diff after: 1 file changed, 16 insertions(+), 7 deletions(-) -- the pin line plus this slot's own _directory_account_labels edit, nothing else moved; test_directory_account_masks.py re-ran 11 passed after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "n/a -- no spec asserted this file's generated pin was current; the task order named no edit to the GENERATED firm_bucket_map block at all.",
+  "world_is": "A file this order's grant covers (data/assets/scripts/gold/investor_reporting/) can sit with a stale registry pin in its GENERATED block for an unmeasured span before any worker touches it again, because the naming gate only grades a file that is IN THE DIFF -- so drift between two touches of the same generated file is silent until the next hand edit lands beside it and the whole file is graded. Not this cell's regression to own (the pin predates amendment 3); disarmed by running the named remedy command, which touched only the marker line.",
+  "notes": "No content change beyond the pin comment: firm_bucket_map's returned dict is byte-identical before and after regeneration (opal-data-bd/opal-data-inf/opal-data-cot/opal-data-bd/opal-data-demo, unchanged). Filed as OBSERVATION/INERT because the fix was mechanical, named by the gate itself, and landed same-turn; recorded so a later census of generated-file drift does not read this file as never-drifted."
+}
+```
