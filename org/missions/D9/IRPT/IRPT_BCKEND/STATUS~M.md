@@ -85,6 +85,11 @@ today: `platinum/firm/mix_summary.json` LastModified 2026-09-28 11:36:20Z (measu
    re-run or a ruling. Owner of BD gold via 1.0.0_SA_CTO.
 8. COT cash-line act; COT-new Part 2; B1 drain; ETF B2; COT B_01b deploy; 6 stale D_03 files -- unchanged gates as in
    the round-19 list (S173, ~X B1, ~D C34, COT's chain adds B_01b, Andrew's confirmation).
+10. **UIC-16 at 49F** (CTO 102567): load the Schwab acct_type (9) and acct_regis (34 of 35) code table from Andrew's
+    source https://docs.bridgeft.com/docs/source-account-and-registration-types (read by the CTO 2026-09-29 ~04:1xZ) as
+    DATA with its URL and read date on the file; 49F labels carry the full names; RI401 (1 account) and blank (2) print
+    as unrecognised, never guessed. Same file family as IB-mr-202/203 (holdings_snapshot.py / directory_runner.py):
+    cut after round 20 drains.
 9. Standing: answer 0.4.0_DS_ClientPlatform~E's source-read questions (PRD v0.19, CTO 102487).
 
 ## Andrew acts in flight
