@@ -28,6 +28,49 @@ Round 20 ~Y rectangle (issuer acts, no cells uncovered):
 Rows: W63-S1 (INERT, the issuer's proof-path stem; the same class as S167/W42-S4), S187 (INERT, worker-slot reuse; owner
 1.0.0_SA_CTO), DSGN_IRPTV1-S35 (~D portal surface). 0 ARMED rows without a seated owner.
 
+## 0a. Window 22 WALKED -- round 20 item 2, partly discharged (2026-09-29T14:4xZ, after the 13:4xZ respawn)
+
+Proof and per-body route record: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/W22/PART_Y_EVIDENCE_20260929.md`
+@`827cbc166f` (LOCAL; `ls-remote` origin/CLOUD `15655f4a25`). Authority: ~P's packet blob `1f3bf0914f` (@6550c62cdf),
+halves CTO `3b209c072c` / CRO `af1940e31d`, ledger `irpt-ui-walk-principal-w22-20260929`. Cap 5 submissions, all 5 used,
+one login / one K4 / at most one K5 each, no retry, no replay. All five terminal by name 39 min inside the 15:10:37Z cap.
+
+| body | firm | terminal state | trace |
+|---|---|---|---|
+| Y1 Comparison `opal_long_term` CSV | cottonwood | job **READY**, report `RPT-2e21b52e..` | `case_trace.py` 22 links, **20 MATCH / 0 MISMATCH / 2 NOT_EVALUATED** |
+| Y2 Multi-Comp CSV | cottonwood | **NEEDS_CORRECTION** `RESOLVE_RETRY_EXHAUSTED` (203 s) | no REQ -- K5 not made (packet branch) |
+| Y3 Target Weight n=1000 **XLSX** | cottonwood | **ATTENTION** `SESSION_REFRESH_ALREADY_USED` | no `checkpoint_pdf`, so no trace |
+| Y4 Overview CSV | 49financial | **NEEDS_CORRECTION** `RESOLVE_RETRY_EXHAUSTED` (183 s) | no REQ -- K5 not made |
+| Y5 Overview CSV | inflection | **NEEDS_CORRECTION** `RESOLVE_RETRY_EXHAUSTED` (182 s) | no REQ -- K5 not made |
+
+**What the window settles.** **S194 READ AND DISARMED** on Y1: `variant COMPARISON` for the key count
+(`template_id 14141824`), and of the catalogue's portfolios the retained PDF prints exactly `Opal Long-Term`, on 16
+pages; `COMPARISON_NOT_PRINTED` did not fire; 72/72 scalar sections re-read at their own page and coordinates, 0 misses;
+the served foreign-firm name check passes. **S193 READ LIVE three times** (Y2, Y4, Y5), from the NEEDS_CORRECTION rows
+themselves per the CTO's condition 1, each carrying `reason RESOLVE_RETRY_EXHAUSTED` and one ERROR finding with
+`actions: [REPLACE_FILE]`. The three orders those arms belong to -- `TO-IB-yr-201`, `TO-IB-yr-211`, `TO-IB-yr-221`, all
+`<risk>WORLD</risk>`, all `complete` -- now have their ONE REAL RUN. DLQ `irpt-generation-dlq` 1/0, unchanged from
+create: no growth, no BLOCKING row.
+
+**Round 20 item 2 is PARTLY discharged.** Traced: the Comparison. Not traceable, and carried: Multi-Comp, the Y2
+Target Weight report, the first certified 49financial report, a certified Inflection report -- three of the five bodies
+never reached K5 and the fourth produced no PDF, so there is no REQ or PDF for the later hops to read. The revocation
+arm did not run (W22 carries no arm R). Target Weight IS proven through the vendor short of a report
+(`rows_echoed 2`, `AAPL 600.0` / `VNQ 400.0` Dollars, `upload_record_id 780748`, `model_portfolio_id 2367113`).
+
+**Rows filed, both OBSERVATION / `hazard_standing` INERT, owner `2.0.0_SA_COO~Y`:**
+- `IRPT_BCKEND-S206` @`befabb9a7b` -- `PROVIDER_READ_UNAVAILABLE` tracks CONCURRENCY, not the file. Y1 and Y2 carry the
+  same upload bytes 14 s apart and resolved 1 s vs 203 s; both READY resolves are the first after an idle gap; Y4 and Y5
+  were dispatched 16 s apart. `REPLACE_FILE` is unactionable for those three rows.
+- `IRPT_BCKEND-S207` @`827cbc166f` -- Y3's vendor session was evicted TWICE inside one 31.5-min request. The refusal is
+  the designed one (`resident_worker.py:126-129`, tested at `test_resident_worker.py:264`), so it is not a defect; what
+  the row carries is the double eviction and the fact that the resident journals NO line for a job ATTENTION (79 lines
+  over 14:08-14:34Z, all `IRPT_RESIDENT_POLL`), so the code is recoverable only from `irpt-jobs`.
+
+**Next at this lane, unblocked:** nothing. Every ~Y-issued order is terminal (5 of 5; denominator 137 order files
+scanned). The four carried report arms each need ONE more window packet from `2.0.0_SA_COO~P`, and no code is owed by
+~Y for any of them. Leg D1 credoff was handed to ~P at 14:32:50Z.
+
 ## 1. Pins
 
 | What | Value |
