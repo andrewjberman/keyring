@@ -102,7 +102,7 @@ outer commit hashes, and any row.
 **ISSUER NOTES:** round 3 = the round-2 analysis's enrichment list @172d3d9600 section 4 (CTO msg 26551) + ruling @06d51bce50. Decomposition v3.
 Base 670f29e4: AC1 14 hits, AC2 1 estate band header (FAIL as expected); AC3 6 of 6 (PASS).
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~9</slot>
 <fabric>site-z</fabric>
