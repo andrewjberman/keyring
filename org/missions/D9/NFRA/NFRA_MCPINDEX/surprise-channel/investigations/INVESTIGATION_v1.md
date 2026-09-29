@@ -2334,6 +2334,29 @@ carries none.
     "spec_asserts": "Order step 6: 'Run AC1-AC3. Commit under your serial.' and bound 3: REFUSE a criterion you cannot meet, reporting it with its measurement. Step 1: s3_key is the exact key the entry describes.",
     "world_is": "AC1, AC2 and AC3 all PASS (proof instance VALID, rc 0), but the change cannot be committed by a worker: the naming limb refuses the one new field the order asks for, because its value is a live-remediation key (MDPF_CANON) the platform has not migrated. The change is complete and unstaged in worktree C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-13 on branch wk-nfra_mcpindex-3-13 (8 files). The proof instance and its deliverables folder are also uncommitted, so its PENDING-THIS-COMMIT rows are unresolved. Nothing was bypassed, hand-encoded or reworded to slip the gate. The way through is the gate's owner or the issuer's: an R20 register entry or a ruling on MDPF_CANON that lets this field carry the key, or the issuer committing the staged set under an approved path; that is not this worker's call.",
     "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+      "id": "NFRA_MCPINDEX-Z-W10-S2",
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~10",
+      "surfaced_at": "2026-09-29T01:50Z",
+      "one_line": "MX-r-4 PHASE B step 8 cannot start from the pin's release tree: safe-ec2-deploy.sh's HALT-GATE admits a worker only while a non-terminal task order issued_to it is at HEAD of the calling tree, and mx-rel4 (HEAD 3371f18803, cut at d287ffb346) carries none; exit 3, before any upload.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~MI",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "safe-ec2-deploy.sh run from /c/tmp/mx-rel4 at 2026-09-29 ~01:4xZ, twice: 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', DEPLOY-EXIT=3, both times after 'OK: Pre-deployment checks passed' and before any S3 upload or SSM call. First run resolved serial 2.0.0_SA_COO~MI (the shared root's session serial file); after provisioning the worker's own serial file (gitignored org/mcp/sessions/<session-id>.serial, the mechanism halt-gate-check.sh's own comment names) it resolved 0.9.0_WK_NFRA_MCPINDEX~10 and was refused for the reason quoted: a spine-v3 worker is admitted only while a NON-TERMINAL task order under <CODE> is issued_to it at HEAD of the calling tree.",
+              "Precedent for the workaround: commit 54e26d66a0 (NFRA_OPALAI OA-r-1) is a DEPLOY-ONLY commit, CLOUD tree with infra/aws/ec2/opal-gateway replaced by the release commit's, never merged, 'so the halt gate finds the worker's task order at HEAD'. That route changes the deployed commit hash, and both never-widen halves and G-A were signed on hash 3371f18803.",
+              "State at the block: nothing uploaded (latest artifact still 402043 B, LastModified 2026-09-29T00:44:48Z), no SSM deploy command, host .env still 'ycharts opal_portal globgrph'. Ledger nfra-mcpindex-r3-gateway-enable is OPEN (entry+sentinel committed a05831a52b, L4 closed, L1-L3 open, 4 h window)."
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO MX-r-4 step 8 and the signed GO: deploy from the RELEASE worktree /c/tmp/mx-rel4 with ITS scripts, `bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`, on pin 3371f18803; the issuer measured N1 (HEAD 3371f18803, mcportal a3bff71, 0 status lines) as the guard.",
+      "world_is": "The wrapper's halt gate refuses the pin's own tree for a worker, so the act as written cannot run. The two ways forward are the issuer's and the signers' to choose, not the worker's: (a) a DEPLOY-ONLY commit on top of 3371f18803 that adds the task order (as OA-r-1 did), whose gateway directory equals the pin's, at the cost of a new deployed hash and a delta re-sign; (b) the issuer runs the deploy from a tree where the gate admits it. HALT_GATE_REPO_ROOT is set unconditionally at safe-ec2-deploy.sh:57 and the gate was not overridden.",
+      "notes": "MX-r-3 and OG-s-1 ran this wrapper from their release trees; what admitted them is not recorded in this file set (not measured here). Nothing was deployed, so nothing is half-landed."
   }
 ]
 ```
