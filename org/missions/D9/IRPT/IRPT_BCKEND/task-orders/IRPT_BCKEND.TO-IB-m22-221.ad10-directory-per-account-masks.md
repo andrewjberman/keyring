@@ -133,3 +133,22 @@ directory bundle re-mint. The half names that order and lists `directory-browse.
 Criteria unchanged. The worker spawned before this amendment; the issuer corrects the half's release order at the
 drain if it reads the earlier order. Gate limb: none graded this modification (LIMB 6 fires on new orders only).
 
+## AMENDMENT 2 (2026-09-29 11:0xZ, issuer 2.0.0_SA_COO~M) -- the Holdings snapshot reads the per-account masks too, on 2.0.0_SA_COO~D msg 102738
+
+The portal picker and identity list print each ACCOUNT node's `display.label` from the HOLDINGS snapshot
+(`IdentityCard.tsx:176-185` `accountListFromSnapshot`), not the directory entry. That label comes from
+`data/assets/scripts/gold/investor_reporting/holdings_snapshot.py` `_directory_account_labels` (~:714-735), which
+gives every account id of an entry the ENTRY's one `masked_discriminator` (its docstring: "its accounts share its
+discriminator"). So `account_masks` in the directory alone still shows the head mask on every account. Add:
+6. `_directory_account_labels` reads `account_masks` when an entry carries it (`account_id` -> its own mask) and falls
+   back to the entry's `masked_discriminator` when it does not, so a Holdings build against today's served directory
+   is unchanged. Correct the docstring. Test it in `tests/test_directory_account_masks.py`: an entry with
+   `account_masks` gives each account its own label; one without gives every account the entry mask.
+7. The half's release order gains a fourth step and its reader census the Holdings label: (1) the handlers' `_contracts`
+   copy, (2) the portal reader on PROD (`directory-browse.ts` accepting the key; `ClientSearch.tsx:121` searches through
+   it), (3) the directory bundle re-mint, (4) the Holdings re-mint AFTER the directory re-mint, so the snapshot finds
+   `account_masks` in the landed directory.
+Criteria unchanged; `holdings_snapshot.py` is inside the existing grant (`data/assets/scripts/gold/investor_reporting/`).
+The running worker spawned before this amendment; if its build lacks steps 6-7 the issuer reopens the order to a new
+slot, as TO-IB-m21-213 amendment 1 did. Gate limb: none graded this modification (LIMB 6 fires on new orders only).
+
