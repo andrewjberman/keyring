@@ -2022,6 +2022,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "The stored 535-byte 403 bodies exist to compare against and the live body's structure can be set beside them.",
       "world_is": "Only the length (14 of 14 non-200 www.bloomberg.com responses, 13 stored + live) is comparable; structural identity is NOT MEASURABLE. AC2 reports the length match and the appId match, and no more.",
       "notes": "Filed, not chased. Now that the live body is retained in ac1_capture.json (a refusal page, no credential), the NEXT producer 403 can be compared to it -- the worker's transport does not persist 403 bodies, so that would need the producer to keep them; that is a proposal only, not implemented here."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W37-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~37",
+      "surfaced_at": "2026-09-29T00:27Z",
+      "one_line": "STOP RULE HIT DURING RUNNER DEVELOPMENT, NOT DURING A CAPTURE: a test of a re-authentication guard called the real SessionManager.refresh('sa'), the guard was not loaded, and the producer's credentialed login ran -- headed Chrome, the stored seeking-alpha credential submitted, two press-and-hold attempts, three metered Kimi vision calls, exit 1, no session saved. No w-2 capture invocation has been made; HVST-w-2 is stopped and stays pending.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: .scratch/auth/20260929T002023Z-sa-33f4b866/run.log in worktree wk-hvst-r12-37 (untracked): '[sa-harvest 20:20:29] cred=seeking-alpha ... headless=False ... kimi=kimi-k3'; 'clicked header sign-in button'; 'login submitted; waiting 8s'; step 2 state=BOT_WALL; two 'adaptive press-and-hold ... releasing anyway' lines; steps 0-2 '(kimi)', steps 3-4 'cache hit ... no Kimi call'; traceback ends in a Playwright TimeoutError on the disabled Sign in button; auth-evidence.json exit_code 1, bundle_present false, network_auth_corroborated false.",
+          "MEASURED that nothing in the shared runtime moved: secrets/sa.dpapi mtime 2026-09-25 22:18 EDT, progress.sqlite3 and events.jsonl mtime 2026-09-27 19:03 EDT, all older than the incident (2026-09-28 20:20-20:22 EDT); no .scratch/secrets directory exists.",
+          "CAUSE, two links: (1) my guard was a sitecustomize.py in deliverables/.../scripts/guard, meant to replace SessionManager.refresh/repair_verification inside the producer subprocess via PYTHONPATH; I passed PYTHONPATH from Git Bash as a POSIX-style path joined by ';', which Windows Python did not resolve, so the guard never installed (the check printed the unpatched name 'refresh'). (2) The same one-line command then called SessionManager(...).refresh('sa') unconditionally as the probe, so the failure of the guard WAS the forbidden act. Check and act were one call.",
+          "Ledger: org/missions/D5/AMGT/AMGT_HARVST/ledger/VENDOR_CALLS_0.9.0_WK_AMGT_HARVST_37.md '## INCIDENT 1' (same commit)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-w-2 clause 3: 'YOU DO NOT RE-AUTHENTICATE. EVER.' A guard test would exercise the guard against a stub and never reach the producer's real recovery path.",
+      "world_is": "The test reached the real recovery path: a credentialed sign-in submission and two press-and-hold interactions against seekingalpha.com from this IP, and three metered Kimi vision calls (spend not measured here). No capture, no upload and no S3 write happened, and the MAIN tree's session vault and outbox are untouched. The effect on the vendor account (a flagged or locked login) is unobservable from this seat.",
+      "notes": "BLOCKING for HVST-w-2 only: this seat stopped, made no producer invocation, wrote no proof instance and left the order pending. THE QUESTION FOR 2.0.0_SA_COO~H (and Andrew, whose word the breach touches): may the capped capture proceed, and if so on what guard? A SAFE guard design for a continuation: install it by an ABSOLUTE Windows-form PYTHONPATH, verify installation by reading the patched attribute in the CHILD interpreter and refuse to invoke the producer unless it reads patched, and test the refusal only against a stub class, never against the real SessionManager. ALSO NOT DONE and unmeasured: the Kimi spend and any account-side signal. COST OF THE LESSON: never put the forbidden act inside the probe of the thing that is supposed to prevent it; and never chain the check and the act in one command. NON-APPLICATION: a guard whose target is a stub. Also filed in this commit: nothing else; the 25-of-89 premise mismatch (config now resolves sa_symbol for 89 of 89) was found by reading and is NOT filed as its own row here."
     }
   ]
 ```
