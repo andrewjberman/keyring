@@ -49,6 +49,21 @@
    outcomes as named judgments beside its own FWD-5 (the same panel). One walk grades both projects' clauses; nothing is
    walked twice.
 
+### 2a. CORRECTION TO RULING 2 (~22:3xZ, on 2.0.0_SA_COO~H msg 26759 and row `Z-S42`, decomposition s.32 @58fbe48402)
+
+Ruling 2 called `Z-W39-S1` "a served correctness defect ... the page's event window reads through this route". **The
+premise is wrong.**
+- The event route answers no user. The deployed function 404s it, and the gateway's 108 routes carry only `/timeline` and
+  `/timeline/day`.
+- The adapter leaves it unwired, and `TimelinePanel` never calls it.
+- Events reach the page inside `/timeline`'s `events` array, not through this route.
+- So the defect is LATENT in unmounted code.
+
+**RULED: HOLD the mount (the issuer's REC).** Nothing is mounted until DSGN_AMGTV1's page needs an event window by id; no
+page outcome asks for one today. Round 20's `j-1` stays a LOCAL code fix (the route reads the stored id; two events on
+one `first_day` are both answerable) with its tests. It carries no deploy, pair or gateway change, so a later mount
+starts from correct code. Cell 1's "deployed under a never-widen pair" is withdrawn.
+
 ## 3. FWD GRADES
 
 - `FWD-5` / `FWD-6`: NOT REALIZED, now **only the grade is owed**. The served half is met and carries the alias rule and
