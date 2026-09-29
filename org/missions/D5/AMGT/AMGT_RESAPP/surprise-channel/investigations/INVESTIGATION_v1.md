@@ -15492,6 +15492,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "62 of 96 OK. Attribution by construction and by line content points at the PAGE side (DSGN_AMGTV1 rounds 3-4 wording changes the export-compare harness still keys on), not at the ww-1 deploy; this is the round-47 hazard 'two projects write FWD-30's instruments' (packet s.5 item 2) recurring. Not proven by a controlled run: a re-run with portal at a pre-round-3 commit would settle it and was not run here.",
   "disarm_owner": "2.0.0_SA_COO~Z (issuer): carried in the round-48 drain-end packet to 3.0.0_SA_CVO~Z and to 1.0.0_SA_CTO~Z's round-48 analysis; the fix (which side's absence wording FWD-30 keys on, and one writer for the harness) is a CTO WHAT across AMGT_RESAPP and DSGN_AMGTV1; the page/harness write surface is 2.0.0_SA_COO~D's.",
   "notes": "No served output regressed that a reader sees: the page and the export each still state every absence; they state three of them differently. The CAPTURE_FAILED row is the Z-S303 folder."
+},
+{
+  "id": "AMGT_RESAPP-Z-W175-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~175",
+  "surfaced_at": "2026-09-29T21:30:00Z",
+  "one_line": "AMGT-xx-3: the walked INTU officer section points to Item 1 of its OWN 10-K, not the proxy, and the proxy names only NAMED executive officers (5), so the proxy gain is the NEO list; the pointer population is 2 of 96.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "INTU 10-K 0000896878-26-000037 officer_section.text (silver filing_source): 'Certain information required by this Item 10 regarding executive officers is set forth in Item 1 of Part I of this report under the heading Information about our Executive Officers.' -- the directors and the Item 408(b) policy are the proxy references; the officers pointer is to Part I Item 1, which the persisted object does not hold.",
+      "python -m lib.research.management.proxy_officers --security-key INTU_US_Equity --show: SERVED, DEF 14A 000089687825000057, 5 officers under the proxy heading 'Named Executive Officers' (Goodarzi, Aujla, Balazs, Notarainni, Tessel); HAL DEF 14A 000004501226000033 likewise 5 under 'Our 2025 Named Executive Officers'. source.section_heading carries the heading on each result.",
+      "python -m lib.research.management.proxy_officers --census: identified 96; officer section points elsewhere 2 (HAL, INTU); gained 2 of 2. CAT is RESOLVED from its own 10-K (table-paren) and is not a pointer name today."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-xx-3 cell text: when the officer section points elsewhere ('incorporated by reference' to the proxy), the company's latest DEF 14A holds the executive-officer section; INTU's 10-K lists no officers.",
+  "world_is": "The proxy read serves the proxy's NAMED executive officers, which for a company whose 10-K Item 1 lists more executive officers than the NEOs is a subset of the executive-officer roster, not the roster. The result is labelled by source.section_heading so a consumer can reject it; the module does not claim the list is complete.",
+  "notes": "INERT: nothing is served or persisted by this order. The serving round should decide whether a NEO-headed list may be shown as 'executive officers' on Exec Management or must carry the NEO label."
 }
 ]
 ```
