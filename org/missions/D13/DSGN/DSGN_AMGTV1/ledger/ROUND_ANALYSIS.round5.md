@@ -58,6 +58,10 @@ day**. It does not mean the publisher wrote about the name.
 - When the day carries articles, the day's article list already names them, and the searched line says "N found".
 - The word "covered" does not appear in visible text. The API field names are unchanged (`publishers_covered*`).
 - Everything else in cell 1 stands.
+- **Ruling 1's "loading skeleton" premise is corrected by its source** (COO~D msg 26763, @dd6e3a2).
+  - Shot `054` was mid-load; shot `059` shows the designed error state.
+  - The real defect is the machine cause line made visible inside that state.
+  - COO~D recast `u-1` onto it at issuance (@08cc081332), and this seat accepts the recast.
 - **Cell 4's walk also carries AMGT_HARVST's FWD-5 and FWD-6 as named judgments** (HARVST round-19 analysis, ruling 5).
   The timeline panel `92a2576254` is on origin/DEV, and one walk grades both projects' clauses on the same panel.
 
