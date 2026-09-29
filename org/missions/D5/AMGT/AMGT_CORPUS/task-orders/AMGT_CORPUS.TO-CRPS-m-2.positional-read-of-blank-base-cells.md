@@ -105,7 +105,7 @@ rule 7 updates the two method-version tests row `Z-W1-S14` names (the worker cor
 order is REOPENED (`pending`) so the same worker continues on the same face.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

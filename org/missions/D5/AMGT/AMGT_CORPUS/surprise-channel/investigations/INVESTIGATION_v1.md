@@ -2093,6 +2093,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The issuer granted the paths and ruled the update; the suite is green on the merged trunk.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Owner's disarm, evidence-cited; the worker's refusal to edit outside its grant was correct."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S14",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T08:00:00Z",
+    "one_line": "CRPS-m-2's ruled METHOD_VERSION bump to /4 breaks 2 tests in files outside its <paths>: test_dossier_case_unit.py::test_method_version_is_3 and test_dossier_case_body.py::test_method_version_is_bumped_to_2 (each pins /3). Not edited: the write grant excludes them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PYTHONPATH=. python -m pytest lib/research/corpus/tests -q at wk-crps11-1 -> '2 failed, 436 passed'; the two failures are lib/research/corpus/tests/test_dossier_case_unit.py:110 and lib/research/corpus/tests/test_dossier_case_body.py:159, each asserting METHOD_VERSION == 'amgt-corpus-dossier/3'.",
+        "Order CRPS-m-2 <paths> lists test_dossier_case_layouts.py among existing tests (which does not pin the version); bound 5 of the cell rules the bump to /4."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-m-2 ruling 5: bump METHOD_VERSION to amgt-corpus-dossier/4; test_dossier_case_layouts.py may change only where it pins an ABSENT reason on a name now placed or the old METHOD_VERSION.",
+    "world_is": "The two tests that pin the version literal sit in test_dossier_case_unit.py and test_dossier_case_body.py, neither in this order's <paths>; the corpus suite reads red on them until the issuer widens the paths or updates them. test_dossier_case_layouts.py needed no change: it pins neither the version nor a reason on a placed name when no word reader is passed.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Filed, not fixed. Same class as Z-W1-S13 (disarmed by Z-S56 through a path amendment)."
   }
 ]
 ```
