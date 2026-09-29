@@ -4023,3 +4023,158 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not fixed here: outside the cell's intent (route table and MCP-library version drift). Counts recorded for the drain."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S1",
+  "one_line": "dim_position and dim_asset COLLIDE under the declared grain on all 8 of their snapshots (2 masters x 2 dates), so the order's units question (quantity against value for one (cusip, l_s) group, sign on a short group) can only be sealed as the C3 refusal; no value answer to it exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GRAIN_DECLARATION.json (0.9.0_WK_NFRA_OPLGTW~10 deliverables): dim_position colliding keys = 10 and extra rows = 13 on each of 4 snapshots; dim_asset colliding keys = 1 with 22 or 24 extra rows on each of 4; dim_balance HOLDS on 4 of 4. Each snapshot was re-read by VersionId and re-derived by probes/og_v6.py AC1 (12 of 12).",
+      "BlackDiamond (08335338) dim_position on both dates holds short groups (l_s short: 1300 rows on each date), so a sign question exists in the data; SmartX holds none. Both are refused under the C3 rule the order states.",
+      "Sealed accordingly: RQ2-1 (units, dim_position) and RQ2-7 (paged read, dim_position) carry expected_class C3_REFUSAL in SEALED_EXPECTED_V2.json; the units question answerable with values is RQ2-2 (dim_balance value fields mkt_value_long and mkt_value_short: sign, sums, scale)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 step 3: one units question whose correct answer distinguishes a QUANTITY field from a VALUE field for the same (cusip, l_s) group and states the sign each carries on a short group; and any question whose rows touch a colliding grain has the C3 refusal as its expected answer.",
+  "world_is": "Both statements cannot hold at once on real data: the only dataset carrying a quantity field beside a value field (dim_position) collides on every measured snapshot, so the C3 rule wins and the quantity-against-value answer is a refusal. Value-field units (sign and scale) are exercised on dim_balance instead, as an addition, not a substitute.",
+  "notes": "Quantity against value stays unexercised with values until the position grain is corrected or a different grain is adopted (a spec decision for 1.0.0_SA_CTO~O, see W10-S2). The scale asked in RQ2-1 is the decimal scale of the Parquet type (5 and 4); the unit label itself (shares, dollars) is not measurable from the source and is not sealed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S2",
+  "one_line": "The collisions are structured: 5 of 10 colliding dim_position keys and the only colliding dim_asset key carry a blank component, and adding one contract column makes each colliding snapshot unique (CANDIDATE only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GRAIN_DECLARATION.json: colliding_keys_with_blank_component = 5 of 10 (dim_position, all 4 snapshots) and 1 of 1 (dim_asset, all 4); rows_in_colliding_keys = 23 (dim_position) and 23 or 25 (dim_asset).",
+      "candidate_unique_superset (label CANDIDATE): dim_position = (account_ref, cusip, l_s, quantity_settled_unsettled) with 3 alternatives at that size; dim_asset = (cusip, security_description_line_1) with 1 alternative; the search over contract columns (up to 4 extra) found a superset at 1 extra column on 8 of 8 colliding snapshots. account_ref is assumed to be the contract name of source account_id.",
+      "Counts and column names only; no key value is printed or committed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 step 2: record, for a COLLIDES snapshot, the smallest superset of contract columns that is unique on it, or NONE_FOUND, labelled a CANDIDATE.",
+  "world_is": "Recorded as ordered. Adopting a different grain, or treating blank-key rows as a source defect, is a spec decision for 1.0.0_SA_CTO~O; this cell adopts nothing.",
+  "notes": "A blank cusip on 23 to 25 dim_asset rows suggests non-security or unmapped rows entering a dataset the Gateway keys on cusip alone; that reading is inferred from the blank-component count, not measured further."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S3",
+  "one_line": "WALKTHROUGH_PROTOCOL.md still names OG-v-3 and the old C:/tmp answer path in places the order did not authorise changing: the section 4 heading (:208), the preamble (:38-39), the A7 clause 'graded by OG-v-4' (:111) and the G-D record template (:242).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "WALKTHROUGH_PROTOCOL.md at the OG-v-6 commit: line 208 '## 4. Real-data questions (OG-v-3 computes and seals; A7 asks them)'; lines 38-39 'operator OUTSIDE the repository at C:/tmp/nfra-oplgtw-sealed/actual/ ... OG-v-4 hashes them there'; line 111 '(graded by OG-v-4)'; line 242 'written to C:/tmp/nfra-oplgtw-sealed/actual/'. Found by a token census of OG-v-3, OG-v-4 and nfra-oplgtw-sealed over the file.",
+      "The order changed exactly three places: A7 step 2 (:107), the :111 seal name and date, and the section 4 paragraph and table; 'Change no other row of the protocol.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 step 3: change A7 step 2 and :111 (seal and D_NEW), replace the section 4 table and its paragraph, and change no other row of the protocol.",
+  "world_is": "The remaining lines still send the operator to write actual answers under C:/tmp (the location row S42 records losing a salt from) while A7 step 2 says %LOCALAPPDATA%/opal/og-salt/actual_v2/, and still name OG-v-3 as the computing cell in the heading and OG-v-4 as the grader. ARMED because an operator following the preamble writes answers where OG-v-7 does not read.",
+  "notes": "Left untouched under the frozen-spec rule; the fix is a few-line edit by whoever owns the protocol after this cell."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~10",
+  "surfaced_at": "2026-09-28T23:55Z",
+  "id": "NFRA_OPLGTW-Z-W10-S4",
+  "one_line": "Step 1 needs the list of marker dates but the grant names only GetObject and HeadObject; the run used one s3 version-listing read on schwab/<master>/meta/complete/, and each date's marker has 10 versions, so 'each marker's VersionId' is the IsLatest version at the run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measure_grain.py latest_markers(): 'aws s3api list-object-versions --prefix schwab/<master>/meta/complete/ --query Versions[?IsLatest]' (read-only; 2 calls in the script plus 4 exploratory calls before it); nothing written or deleted in S3.",
+      "GRAIN_DECLARATION.json markers: D_NEW 2026-09-25 SmartX VersionId gUxeZ71rYjY0B.QKrRKumyv4KmQ_FUy9 (LastModified 2026-09-26T22:16:14+00:00); the listing showed 10 versions of the 2026-09-25 marker in SmartX and 10 in BlackDiamond, one of them IsLatest.",
+      "Each snapshot's VersionId is the one the marker's closure.tables[<dataset>].object names, checked against the GetObject response VersionId."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-v-6 bounds: 'You may run GetObject and HeadObject by VersionId on ... meta/complete/'; step 1: 'read the closure markers s3://opal-data-assets/schwab/<master>/meta/complete/date=*.json, read-only'.",
+  "world_is": "A wildcard read of date=*.json cannot be done with GetObject alone; a read-only version listing is the only way to enumerate the dates and marker VersionIds. A marker is rewritten by each producer completion, so its VersionId is a moment's value.",
+  "notes": "Read strictly, the listing was a step beyond the named grant; it wrote nothing. The recorded marker VersionIds let OG-v-7 re-read the exact bytes."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-28T23:59Z",
+  "one_line": "Row W4-S12's mechanism is not 'the dispatcher classifies by the FIRST line': the dispatcher scans every line, but the SSM output it reads is capped at 24000 characters and the CHAIN OK terminal line is past the cap, so 0 of 104 in-window dispatches were ever classified CHAIN OK, including all 13 scheduled floor runs (UNKNOWN).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda_function.py:90-101 (_classify) loops over every line of StandardOutputContent for a line starting CHAIN OK / CHAIN REFUSED / CHAIN ABORT and only then falls back to the first line in the UNKNOWN label.",
+      "ssm get-command-invocation, instance i-01003b035d2988dfb, commands 8e7e7614-e014-4342-ae4a-47b8bb7ac0d1, e40f7c6b-0f23-4460-9c15-7cee06f2073d, d2809052-0bc4-4375-b667-6c92ddb21d7f, 502de082-94bb-46d9-9a1f-5e307922f65a: Status Success, StandardOutputContent exactly 24000 bytes each, carrying CHAIN START and no terminal line; their chain logs under s3://opal-data-49financial/gold/advi/_logs/ end 'CHAIN OK date=... wall=...' (4 of 4).",
+      "Dispatcher log window 2026-09-15T23:45Z..2026-09-28T23:45Z: 104 invocations, by outcome REFUSED 48, ABORT 33, UNKNOWN 15, running-past-poll-budget 8, CHAIN OK 0; the 13 floor invocations are 13 of 13 UNKNOWN. Record: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~13/MARKER_STORM_READ.md section 4 and .json unknown_reads."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row W4-S12 (and this cell's background) said the dispatcher classifies the SSM output by its first line.",
+  "world_is": "The classifier scans every line, but its input is cut at 24000 characters (measured 4 of 4 at exactly 24000; the cap is SSM's documented limit, inferred), so a chain longer than that never shows its terminal line and reads UNKNOWN. The dispatcher log cannot serve as the run record on the production floor path; the chain log and the SSM status are the record.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "INERT: nothing branches on the dispatcher's verdict; the chain lock and the floor bound the effect. Owner of advi-49f-gold-dispatch decides."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-28T23:59Z",
+  "one_line": "On 2026-09-23 09:46:32Z a burst dispatch's chain aborted at stage a00_dim_account (rc 1, 0.7 s) because /tmp/advi_49f_code/chain_49f_entrypoint.py did not exist on the host; the dispatcher logged it as UNKNOWN, not ABORT, because that command's stdout has no CHAIN line at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm get-command-invocation b127a4df-5c19-4041-b6de-096fce9bf64e on i-01003b035d2988dfb: Status Failed, ResponseCode 2, 294 bytes stdout in 3 lines, first line starts \"python3: can't open file '/tmp/advi_49f_code/chain_49f_entrypoint.py'\"; no line starting CHAIN.",
+      "s3://opal-data-49financial/gold/advi/_logs/chain_20260923T094632Z.log, 3 lines: first 'CHAIN START date=2026-09-22 mode=production ...', last 'CHAIN ABORT stage=a00_dim_account rc=1 wall=0.7s -- nothing after this stage ran'.",
+      "Dispatcher log: that invocation (09:46:20Z, source aws:s3, started_by_dispatcher false) is one of 10 dispatches for date=2026-09-22 between 09:46:09Z and 09:46:49Z; six more chain logs stamped 09:46:36..09:46:49 are 155 bytes each."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A dispatch that starts a chain either runs it, is refused by the lock, or aborts on a named stage (silver.tf:744-746 treats the accelerator as harmless beside the floor).",
+  "world_is": "One of the ten concurrent burst dispatches found the chain's code directory absent on the shared host, so its chain never ran a stage. Whether a concurrent chain's cleanup removed /tmp/advi_49f_code was not measured (no host read was in scope).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "INERT for this order: the same day's floor run succeeded (chain log ends CHAIN OK) and the lock bounds the burst. Owner is the 49F ADVI chain's owners; a remedy cell should read the host's bootstrap and cleanup order before touching the trigger."
+}
+```

@@ -1,123 +1,123 @@
-# AMGT_CORPUS -- L5 decomposition v7.0 -- ROUND 7 (the enrichment round after the round-6 analysis)
+# AMGT_CORPUS -- L5 decomposition v8.0 -- ROUND 8 (the enrichment round after the round-7 analysis)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-09-26 ~18:xxZ. **Source:** `1.0.0_SA_CTO~Z`'s round-6 analysis
-`ledger/ROUND_ANALYSIS.round6.md` @`1e53f322f3` (glyph fix @`ffcadcbc0b`) section 6, six items, cut from `3.0.0_SA_CVO~Z`'s
-`ADJUDICATION_v9` @`37a8542a71`. Round 6's decomposition is kept as `AMGT_CORPUS_DECOMP.round6.md`. PRD v0.6 @`9e326e11c1`,
-both halves SIGNED current (ADMITTED). Delivered by file while the MCP send path is down fabric-wide.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-09-28 ~23:5xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-7 analysis
+`ledger/ROUND_ANALYSIS.round7.md` @`03327ebbf9` section 5, four cells, answering `3.0.0_SA_CVO~Z`'s slug on
+`ADJUDICATION_v10`. Round 7's decomposition is kept as `AMGT_CORPUS_DECOMP.round7.md`. PRD v0.6 @`9e326e11c1`, ADMITTED
+(ratified-text SIGNED current; brief auto-admitted).
 
-## 0. What this round IS, by subtraction from the analysis's six items
+## 0. What this round IS, by subtraction from the analysis's list
 
-| item | disposition |
+| item (analysis s.5) | disposition |
 |---|---|
-| 1 `Z-S45`'s reader build, BLOCKING | cell `CRPS-i-1`: the continuation readers select on `method_version` |
-| 2 the 0.33 floor -- earn it or state it UNCALIBRATED | cell `CRPS-i-2`: the served Base case carries its band WITH ITS CLAIM (ceiling measured, floor uncalibrated). Earning it is not possible from this population: no name sits within 0.2 of 0.33 on either side (h-2 @`6d18367755`) |
-| 3 AC4's workbook half | cell `CRPS-i-3`: h-2's producer captures the value BESIDE the label (196 of 200 Base-labelled cells had an empty `right` list) and SELECTS the team's written Base-case cell by a stated rule, cited by coordinate |
-| 4 `Z-W2-S10`'s three pre-`g-1` blocks | inside `CRPS-i-2`'s drain: the re-derive that serves the band claim re-mints every block key, these three with it |
-| 5 `Z-S39`'s `*` case | cell `CRPS-i-4`: a standing census that no glob/fnmatch pattern is built from a security key, with a positive control |
-| 6 a fresh 19-outcome pass | cell `CRPS-i-5`, spawned AFTER the drains of i-1 and i-2 (a pass that reads before the fixes land repeats g-4's vintage hole) |
+| 1 case BODY extraction + the rewrite under a pair, carrying the round's JUDGMENT | cell `CRPS-j-1` |
+| 2 FWD-9's five sites | cell `CRPS-j-2` |
+| 3 the derive's stamp selection (`Z-S47`) | cell `CRPS-j-3`, **RE-GROUNDED** at L5 (s.1a): the rule it serves changed under it |
+| 4 `read_dossier` prefers the current method version | cell `CRPS-j-4` |
 
-**NOT cells:** FWD-12 limb 3's render and FWD-11's render (AMGT_RESAPP's; FWD-11 owned there by FWD-31 @`c2c6c507d6`), and
-FWD-10/FWD-15's render halves (same seam). No machine formula for any case is cut.
+**NOT cells** (the analysis's own list): the workbook reader (s.2 ruling 2); the `Z-W2-S11` correction row (this seat's,
+filed with this issuance); the temp-dir removal (Andrew's word).
 
-## 1. The rectangle -- five cells `CRPS-i-<n>`, cut by WRITE SET (no two cells write one file)
+## 1. The rectangle -- four cells `CRPS-j-<n>`, cut by WRITE SET
 
 | cell | slot | serves | `<risk>` | class | write set (`<paths>`, plus the channel) | the build |
 |---|---|---|---|---|---|---|
-| `CRPS-i-1` | `~1` | FWD-18 (Z-S45) | SERVED (the drain's continuation + dossier rewrite) | worker | `lib/research/corpus/continuation.py`, `lib/research/corpus/substrate.py`, `lib/research/corpus/tests/test_continuation_reader_method.py` (new) | both input-matching readers prefer the object whose `method_version` is the producer's current one; among equals, the last write |
-| `CRPS-i-2` | `~3` | FWD-12 guard (floor), Z-W2-S10 | SERVED (the drain's re-derive of every block key) | worker-light | `integrations/bloomberg/research/model_block_pull.py`, `integrations/bloomberg/research/tests/test_band_basis.py` (new) | SERVED and `outside_band` Base cases carry an additive `band_basis` naming each bound's value and calibration claim; `cases-report` prints it |
-| `CRPS-i-3` | `~2` | FWD-12 AC4 workbook half | LOCAL | worker | `deliverables/0.9.0_WK_AMGT_CORPUS~2/case_evidence.py`, `CASE_EVIDENCE_ROUND7.json`, `CASE_EVIDENCE_ROUND7.md` | right-hand neighbours captured; one selected Base-case cell per workbook by a stated rule, cited by coordinate, beside the served Base case |
-| `CRPS-i-4` | `~4` | Z-S39 | LOCAL | worker-light | `lib/research/corpus/key_glob_census.py` (new), `lib/research/corpus/tests/test_key_glob_census.py` (new) | a read-only census of glob/fnmatch/rglob/iglob call sites under `lib/research`, flagging a pattern built from a security key, with a planted positive control |
-| `CRPS-i-5` | `~5` | FWD-1..FWD-19 | LOCAL | worker | `deliverables/0.9.0_WK_AMGT_CORPUS~5/FWD_EVIDENCE_ROUND7.json`, `.md` | one evidence row per outcome against served state AFTER the i-1 and i-2 drains; no grade |
+| `CRPS-j-4` | `~1` (first) | FWD-17 (b), FWD-12 (the served pick) | LOCAL | worker | `lib/research/corpus/dossier.py` (the reader + a read-only `--pick-census`), `lib/research/corpus/tests/test_dossier_reader_method.py` (new) | `read_dossier` prefers the object whose `method_version` is the producer's current one, else the pre-existing pick |
+| `CRPS-j-1` | `~1` (second) | FWD-12 limb 3 data half, FWD-16 cases | SERVED (the drain's rewrite) | worker | `lib/research/corpus/dossier.py` (the case resolver, the method-aware no-op, `METHOD_VERSION` /2, `--case-census`, `--write --workers N`), `lib/research/corpus/tests/test_dossier_case_body.py` (new) | each case carries the text UNDER its heading, cited; the census prints body / heading-only / absent per case over 95 |
+| `CRPS-j-2` | `~2` | FWD-9 | LOCAL | worker-light | `lib/research/corpus/key_glob_census.py`, `lib/research/corpus/induction_run.py`, their tests | the code census reads `unresolved 0` with rc 0; the plant still flags |
+| `CRPS-j-3` | `~3` | FWD-12 guard (served Base cases), `Z-S47`, `Z-W2-S10` | LOCAL (no re-mint this round, s.8) | worker | `integrations/bloomberg/research/model_block_pull.py` (stamp selection + a read-only `stamp-census` stage), `integrations/bloomberg/research/tests/test_stamp_inputs_selection.py` (new) | the derive reads the newest landed raw stamp that carries the current rule's inputs; the census says per key which stamp does, or that none does |
+
+j-4 and j-1 share `dossier.py`, so they are ONE chain on ONE worker (j-4 first: j-1's method bump needs j-4's pick).
 
 ## 1a. Re-groundings at L5
 
-- **i-1:** `continuation.read_latest` and `substrate._pick_stored` both return the FIRST sorted key whose `inputs` equal
-  current inputs; `inputs` carries no method version; object names are `sha16({method_version, inputs})`. Census
-  @`070cf35da9`: a /2 rewrite would be served on 49 of 95 and not on 46. `_pick_stored` serves four tables (continuation,
-  sector template, fund form, typecast); each carries `method_version` on its documents.
-- **i-2:** `CASE_BAND_LOW = 0.33`, `CASE_BAND_HIGH = 3.0` (`model_block_pull.py:1076-1077`); a SERVED base today carries
-  `ratio_to_px_last` and `band: [0.33, 3.0]` with no claim. h-2 @`6d18367755`: 2 names inside 2.5-3.0 and NFLX 0.043
-  outside (the ceiling discriminates); the 0.33-0.5 bin EMPTY, nearest accept RWE_GR 0.537, the only sub-floor name BA_US
-  refused for a different cause (the floor has never refused anything).
-- **i-3:** `case_evidence.py` reads `ws.max_column` in openpyxl `read_only` mode, where the sheet's stored dimension is
-  commonly stale; 196 of 200 Base-labelled cells came back with `right == []` (ADJUDICATION_v9 s.2(A)). The CTO's adjudication
-  @`bfc179c2ea` rules that quoting a number the team wrote, with its locator, is extraction, not generation.
-- **i-4:** Z-S39: three of 89 keys carry a metacharacter (`BP/_LN_Equity`, `NG/_LN_Equity`, `WALMEX*_MM_Equity`); the `/`
-  is escaped as `-SLASH-` on the paths measured, the `*` is not; zero key-interpolating glob sites existed when filed.
-- **i-5:** 19 outcomes FWD-1..FWD-19 in the PRD header; the round-5 pass @`95b6f068ed` read 10 REALIZED (after correction A2).
+- **j-1 (measured @`e3fd90cb63`).** `_resolve_section_block_from_picks` joins the lead line and every item up to the next
+  section lead OR the next short bold line (docx) / standalone heading that is not lead-only (pdf). The served value for all
+  102 of 102 case slots is the heading alone (row `Z-W5-S3`; the CVO's direct read of AZN_LN_Equity:
+  `cases.base = {"value": "Base Case", "citation": {"passage": "Base Case", "locator": 0}}`), so the block ends at the line
+  after the heading. **A second defect the rewrite would hit:** `write_one` skips a name when the stored `inputs` equal
+  fresh `inputs`, and `inputs` carries no method version; a case fix alone (even with a `METHOD_VERSION` bump) would write 0
+  on every name. The no-op must compare method version too -- the same class as round 7's `Z-S45`, on the dossier's own table.
+- **j-4.** `read_dossier` picks newest `as_of` date, then greatest `LastModified`; it never reads `method_version`. After a
+  /2 rewrite, last-write-wins serves /2, but any later /1 write (a rollback, a stale writer) would be served over it.
+- **j-2 (the census's own mechanism, `readonly_proof.py` `_origin`).** `key_glob_census.py:199` writes into
+  `tempfile.TemporaryDirectory(...)`, which `_origin` does not classify (it knows `tempfile.mkdtemp` and
+  `tempfile.gettempdir` as SAFE), so the binding reads `unknown`. The four `induction_run.py` sites (:462 :464 :688 :690)
+  write under `deliverables_dir = deliverables_dir or DELIVERABLES_DIR`: a caller-supplied parameter, statically unknown.
+- **j-3 -- THE PREMISE MOVED (row `Z-S51`, filed with this issuance).** `Z-S47` diagnosed stamp selection losing PE_RATIO
+  history under the round-7 rule. At 18:36Z today `0.9.0_WK_AMGT_RESAPP~166` @`b56fef3032` moved the Base case to ONE rule,
+  `lib/research/api/case_rule.py` (adjusted P/E = median of (PX_LAST/f)/IS_COMP_EPS_ADJUSTED over closed years), and
+  `model_block_pull._compute_cases` now delegates to it. Measured over the 97 block keys by `cases-report` (read-only,
+  `evidence/r8_base_cases_report_all_20260928T234706Z.log`): SERVED 69 (round 7: 49); 21 ABSENT -> SERVED, 1 SERVED ->
+  ABSENT (CAT_US, act A's re-mint); 48 of 48 served-in-both carry a different ratio. Six keys read "no adjusted P/E history
+  on the landed block": 6861_JP, BZLFY_US, CAT_US, CSL_AU, PBR_US, TSM_US. The cell's intent -- a derive that reaches the
+  landed raw carrying the rule's inputs -- is unchanged; its population is those six under the CURRENT rule.
 
 ## 2. Rule 24 record, for what this file ADDS
 
-i-1's pick is a total order over input-matching objects: current method first, then last write, then key name. i-2's
-`band_basis` carries two claims over one closed pair of values (`measured` / `uncalibrated`), each with its basis; it moves no
-served number and no disposition. i-3's selection rule is printed on every selected row and the neighbourhood stays beside it.
-i-4 flags; it changes no key. i-5's `state` enum is the round-5 one (`met` / `unmet` / `unmeasurable`).
+j-4's pick: current method first (newest date, then last write, then key), else the pre-existing pick; a total order.
+j-1's case census partitions every case slot of every resolved name into exactly one of `body` / `heading_only` / `absent`,
+and the three sum to `names x 3`. j-3's stamp census partitions each key into `newest_carries` / `older_carries` /
+`none_carries`, summing to the keys read.
 
 ## 3. Placement and holds on others' surfaces
 
-i-2 on the Bloomberg lane's puller, granted by `<paths>` for this order only (as e-2, f-2 and g-1 were). i-1 and i-4 on this
-project's corpus package; i-3 and i-5 in their workers' deliverables. `Z-S46` holds every `continuation --write` at this seat
-until i-1 drains.
+j-3 is on the Bloomberg lane's puller, granted by `<paths>` for this order only (as i-2 was); it reads landed raw only, never
+the vendor, and does not touch `lib/research/api/case_rule.py` (AMGT_RESAPP's rule). j-1, j-2, j-4 on this project's corpus
+package.
 
 ## 4. Dependency edges, keyed to OBSERVED completion
 
-- i-1, i-2, i-3, i-4 are independent at build time; i-5 is ISSUED with them and SPAWNED after the i-1 and i-2 drains land.
-- i-1 -> the census `stale_pick 0` -> the continuation rewrite (95 names, METHOD_VERSION /2) under a never-widen pair -> the
-  dossier rewrite for the names whose continuation moved -> `Z-S46` lifts.
-- i-2 -> the re-derive of every block key from landed raw (no vendor call) under a derive-pair addendum -> verify: every
-  SERVED base carries `band_basis`, no served value and no disposition moved, and the three `Z-W2-S10` keys carry band and
-  currency fields.
-- i-3 -> laid out for the CVO at L8 (AC4, judgment).
+- Chain A: j-4 -> j-1 (same file; j-1's `METHOD_VERSION` bump is served only through j-4's preference) -> the drain's
+  dossier rewrite (`--write --workers N`, 95 names) under a never-widen pair -> the CVO grades the judgment on the served table.
+- Chain B: j-2 alone. Chain C: j-3 alone (its re-mint is not this round's act, s.8).
 
 ## 5. The round -- one issuance, fan-out as data
 
-- **ONE issuance covers all 5 cells.** `fanout: 5 of 5 chains, cap 8, reason: five cells by write set; i-5 waits on two
-  drains by edge, not by a second issuance.`
-- **Drain duties owed by this seat, in order, every verify leg reading CONTENT (R-5):**
-  1. At every merge: the suites, `py_compile`, ruff, beside `safe-merge.sh`'s row gate; each worker re-graded at its tip.
-  2. i-2 VALID: `cases-report` over every block key (read-only) -> the expected outcome for the addendum; re-derive under a
-     change entry; verify on the served reader: values and dispositions unchanged by key, `band_basis` present on every served
-     base, Z-W2-S10's three carrying band and currencies.
-  3. i-1 VALID: the census; a never-widen pair for the continuation rewrite and the dossier rewrite, expected outcome read
-     from the producers' rules; verify `stale_pick 0` with `current_method_available 95`, and every served pillar carrying
-     `terms`.
-  4. Spawn i-5 on the post-drain state; i-4's census last.
-  5. The COO's one real run of each outcome; the packet prints `graded this round / graded ever / endpoint denominator` (R-4).
-- Surprise channel: `org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md` (seat rows to
-  `Z-S46`; workers mint `AMGT_CORPUS-Z-W<n>-S<k>`, `disarm_owner 2.0.0_SA_COO~X`).
+- **ONE issuance covers all 4 cells.** `fanout: 3 of 3 chains, cap 8, reason: j-4 and j-1 share dossier.py and run as one
+  queue; j-2 and j-3 are independent.`
+- **Drain duties owed by this seat:** at every merge the touched suites, `py_compile`, ruff, beside `safe-merge.sh`'s row gate;
+  each worker re-graded at its tip. Chain A VALID -> the pair (COO half: expected outcome read from `write_one`'s own rule,
+  both branches; CTO half) -> change entry -> `dossier --write --workers N` -> verify `--case-census heading_only 0`, one new
+  object per name, `read_dossier` serves it 95 of 95, `--pick-census stale_pick 0`. The one real run: `read_dossier` on a
+  docx name and a PDF-only name, case text read by this seat.
+- Surprise channel: `surprise-channel/investigations/INVESTIGATION_v1.md` (seat rows to `Z-S52`; workers mint
+  `AMGT_CORPUS-Z-W<n>-S<k>`, `disarm_owner 2.0.0_SA_COO~X`).
 
 ## 6. `<preflight>` -- what this decomposition actually ran
 
 ```
-prd-signoff.py status AMGT_CORPUS        v0.6 @9e326e11c1; both halves SIGNED current; ADMITTED
-task-order status census (last <status>)  34 of 34 complete on this project -> 0 open
-cases-report (SAN FP, CAT US)             'cases SAN_FP_Equity base SERVED ratio 2.566...', 'cases_report served 2 refused 0'
-continuation pick census                  @070cf35da9: /2 would be served 49, /1 46 (Z-S45)
-checks as files                           org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round7/*, each run once at the base
+prd-signoff.py status AMGT_CORPUS        v0.6 @9e326e11c1 EXECUTING -> ADMITTED; ratified-text SIGNED current
+task-order census (last <status>)         CRPS-i-1..i-5 complete -> 0 open on this project
+cases-report over 97 keys (read-only)     served 69 refused 28 under case_rule.py @b56fef3032 (s.1a)
+checks as files, dry-run at the base      checks/round8/*: j1_AC1 j1_AC2 j4_AC1 j4_AC2 j2_AC1 j3_AC1 j3_AC2 FAIL as expected;
+                                          j2_AC2 (plant_flagged 1), j2_AC3 (152 passed), j3_AC3 (unserved_vs_base 0 of 69) PASS
 ```
 
 ## 7. comp-adversary declaration
 
-This file specifies; it produces no artifact. The adversary lens applies at the drain's served acts (the re-derive, the
-continuation and dossier rewrites), each under its pair in section 5.
+This file specifies; it produces no artifact. The adversary lens applies at the drain's served act (the dossier rewrite),
+under its pair.
 
 ## 8. Rulings this decomposition makes, and what it REFUSES to assume
 
-- i-1 selects on method version in the READER; it does not add `method_version` to `inputs` (that would move every dossier's
-  inputs a second time).
-- i-2 moves no bound and no served number; the claim is a disclosure, and "earn the floor" stays open for a population that
-  has names near it.
-- i-3's selection is extraction of a number the team wrote, never a computed case; the CVO grades whether it reads as the
-  team's Base case.
-- REFUSED to assume: that the empty `right` lists are a sheet layout rather than a reader defect (i-3 measures it); that the
-  `*` key is exploited anywhere (i-4 counts).
+- j-1 fixes the case block's END, not its start: the lead stays the case's own heading; the value is the text under it. A case
+  whose block has no text under the heading reads `heading_only` in the census and is served as ABSENT with a reason, never as
+  its heading.
+- j-1 makes the no-op compare `(method_version, inputs)`, keeping FWD-17 (b): a rebuild with unchanged inputs AND method
+  writes nothing.
+- j-2 resolves the sites in the CODE (a SAFE temp root; a statically resolved deliverables root), never by changing the
+  census's classification (the analysis: "needs no census schema change").
+- j-3 changes stamp SELECTION only; it moves no rule. **No block re-mint runs this round:** under the new rule a re-derive
+  would move 48 served ratios and 22 dispositions (`Z-S51`); that is a served change on AMGT_RESAPP's rule, raised at the
+  round-8 packet, not taken as a rider.
+- REFUSED to assume: that the case text sits in the next paragraph (j-1 measures where it sits, docx and PDF); that an older
+  landed stamp carries the adjusted inputs (j-3 counts).
 
 ## 9. Holds
 
 | hold | on | owner | what lifts it |
 |---|---|---|---|
-| every `continuation --write` (`Z-S46`) | this seat | `2.0.0_SA_COO~X` | i-1 VALID and its census |
-| the continuation + dossier rewrite | this lane's drain | `2.0.0_SA_COO~X` + `1.0.0_SA_CTO~Z` (pair) | i-1 drained; `stale_pick 0` |
-| the block re-derive | this lane's drain | `2.0.0_SA_COO~X` + `1.0.0_SA_CTO~Z` (addendum) | i-2 VALID; the addendum signed |
+| the dossier rewrite | this lane's drain | `2.0.0_SA_COO~X` + `1.0.0_SA_CTO~Z` (pair) | chain A VALID; the pair signed |
+| any model-block re-derive | this lane | `2.0.0_SA_COO~X` | a round-8 ruling on `Z-S51` |
 
 -- `2.0.0_SA_COO~X`

@@ -1780,6 +1780,51 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "On a project whose orders append status flips, the read overstates open work 13 to 1; a driver or a COO taking it at face value would re-drive completed orders.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Found by the /self-drive tick 1 scope read, off-task for CORPUS; filed and not investigated further. The tool is shared, so the fix is not CORPUS's code; the COO's own census reads the last tag."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S51",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-28T23:50:00Z",
+    "one_line": "The Base-case rule this project's model-block derive computes moved under it: AMGT_RESAPP's worker @b56fef3032 (18:36Z today) made lib/research/api/case_rule.py the ONE rule (adjusted P/E) and model_block_pull._compute_cases delegates to it. Over the 97 block keys, cases-report now reads SERVED 69 vs round 7's 49 (21 ABSENT->SERVED, 1 SERVED->ABSENT: CAT_US, act A's re-mint) and 48 of 48 served-in-both at a different ratio. The stored blocks still carry the round-7 values; any derive now would move them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~X/evidence/r8_base_cases_report_all_20260928T234706Z.log (read-only cases-report, 97 of 97 keys, HEAD e3fd90cb63): served 69; against deliverables/2.0.0_SA_COO~X/evidence/r7_cases_report_all_20260926T184758Z.log: transitions ABSENT->ABSENT 27, SERVED->SERVED 48, ABSENT->SERVED 21, SERVED->ABSENT 1 (CAT_US_Equity, reason 'no adjusted P/E history on the landed block').",
+        "git show --stat b56fef3032 (0.9.0_WK_AMGT_RESAPP~166): model_block_pull.py 263 lines changed, lib/research/api/case_rule.py new (256), scoped_amgt._model_cases computes from the stored block's figures by the same function.",
+        "Six keys now read 'no adjusted P/E history': 6861_JP, BZLFY_US, CAT_US, CSL_AU, PBR_US, TSM_US."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S47 / round-7 analysis s.5 item 3: the derive's stamp selection loses PE_RATIO history for 6861_JP and CSL_AU; fixing selection unblocks their re-mint.",
+    "world_is": "The rule no longer reads PE_RATIO; its inputs are adjusted EPS and PX_LAST per closed year. The population missing history is six keys under the new rule, and a re-mint of ANY key moves its served ratio (48 of 48 would move).",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's observation. Not armed: this seat runs every CORPUS derive, and decomposition v8.0 s.8 holds any derive this round. Cell CRPS-j-3 re-grounded on the new rule (stamp selection for the six). Whether the served blocks should be re-derived under AMGT_RESAPP's rule is a served change on another project's rule; raised at the round-8 packet, not taken as a rider."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S52",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-28T23:51:00Z",
+    "one_line": "CORRECTION of AMGT_CORPUS-Z-W2-S11's worked example (asked by 1.0.0_SA_CTO~Z, round-7 analysis s.3): the row says 8306_JP_Equity's 'Model NEW VERSION' column K 'is genuinely empty of numbers' below the K43 'Base Case' title; its own producer's rows read below K43 = [2028, 2108.7834, 1.3782161070420165]. The column is not empty; the row's conclusion (0 of 42 plausible selections) does not rest on this example.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_AMGT_CORPUS~2/CASE_EVIDENCE_ROUND7.json workbook.rows, security_key 8306_JP_Equity, sheet 'Model NEW VERSION', cell K43 label 'Base Case': below [2028, 2108.7834, 1.3782161070420165], right [].",
+        "Z-W2-S11 grounding evidence item 2 (the direct read): 'column K below K43 is genuinely empty of numbers'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W2-S11: 8306_JP's K column is empty below the Base Case title.",
+    "world_is": "The producer's own capture carries numbers under K43 (2028, 2108.7834, 1.378...); the example contradicts the row's producer. The row's grade (i-3 AC4 workbook half NOT MET, CVO ADJUDICATION_v10) is unaffected.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's correction, appended (the original row stands, append-only). Not a cell (round-7 analysis s.5 'NOT cells')."
   }
 ]
 ```
