@@ -4,7 +4,8 @@
 signal only"; my bodies follow ~D's BEFORE reads, the r3 apply, ~D's P2 and ~D's K10).
 
 **Window:** OPEN 16:18:34Z, **cap 18:18:34Z**. Ledger `irpt-ui-walk-principal-w24-20260929` (C1 closed).
-**Packet:** blob `49148a2d2a` @91b587480d. **CTO half** SIGNED @1f8d659554, two conditions. **Order ruled by ~P**
+**Packet:** the halves signed the AMENDED blob **`3089695cc6` @cbbe9ed0db**, not `49148a2d2a` @91b587480d, which this runbook first cited -- a citation ages separately from the text it quotes, so the bytes were re-read at 16:3xZ. **CTO** 102899 @895964dda7 (conditions 1-2, plus 3: a COT/INF BEFORE read on the same account, period and principal before the r3 apply); **CRO** 102904 @bf61fecc94 (conditions 1-4).
+**Amendment 1 is entirely PART P** (~D's 49F r3 AFTER presses, CRO 102895 condition 3, on this same principal). Diffed `49148a2d2a` against `3089695cc6`: the only change is the new amendment-1 section and its line in *What the halves sign against*. **No part-Y body, cap, order or condition moved**, so everything below stands as written -- but the running order is now P2, then K10, then my bodies, so MORE part-P work sits ahead of Y1 than when the cap arithmetic was ruled. **Order ruled by ~P**
 (102890): K10 first, then Multi-Comp, Target Weight, 49financial, Inflection, discriminator **droppable by name**;
 the cap truncates from the bottom of that order.
 
@@ -38,6 +39,23 @@ WALK_AUTHORITY="W24 packet 49148a2d2a (@91b587480d); CTO half 1f8d659554; ledger
 ```
 `WALK_DEADLINE` is set PER BODY, bounded and always inside 18:18:34Z. Output goes to
 `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/W24/`.
+
+## Cap budget, computed at 16:3xZ so no arithmetic happens at signal time
+
+Cap **18:18:34Z**. W22's measured job times: 16.4 min (Y1, K5 to READY) and 31.5 min (Y3, K5 to ATTENTION).
+Serialized on the jobs terminal + a 20 s floor, each body costs **about 17-32 min**.
+
+| if Y1 starts at | budget to cap | bodies that fit at 17 min | at 32 min |
+|---|---|---|---|
+| 16:45Z | 93 min | 5 | 2 |
+| 17:00Z | 78 min | 4 | 2 |
+| 17:15Z | 63 min | 3 | 1 |
+| 17:30Z | 48 min | 2 | 1 |
+| 17:45Z | 33 min | 1 | 1 |
+
+`WALK_DEADLINE` per body = the earlier of (now + 35 min) and 18:18:34Z, never later than the cap. ~P's ruled order
+truncates from the BOTTOM, so the discriminator (Y5/Y6) is dropped by name first, then Inflection, then 49financial.
+A body already in flight at the cap is a fail of that body, not a reason to extend.
 
 ## The bodies, in ~P's ruled order
 
