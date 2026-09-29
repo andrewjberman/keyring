@@ -56,7 +56,25 @@ and the DLQ count. Credoff and delete happen when every body is terminal, and at
 As W22. Every arm is a read or a write the principal owns. There is no code, IAM or schedule change. A failed body stays
 as evidence, with a BLOCKING row the same tick.
 
+
+## Amendment 1 (2026-09-29 ~16:1xZ) -- part P gains the 49F r3 AFTER presses (CRO 102895 condition 3), same principal
+
+The 49F re-switch r3 (packet blob 6b256e41e4, CTO 102879/102891, CRO 102895) names ~D's page presses as its AFTER
+read, because the CRO's local build is down. This window's principal serves them; there is no second principal.
+
+- **P2, r3 presses (GET-only):** the Performance page, YTD, QTD, 1Y, 3Y and SI per account over r2 section 4's set
+  (NEW-01, the control, ..0273, ..0695, one ..4581) plus the six SI accounts at or above +100% (..2297, ..2191,
+  ..4180, ..7477, ..8562, ..4060). One press per period per account, and no retry.
+  - Each answer is recorded as its figure or its named refusal.
+  - COT and INF each get one Performance read, unchanged.
+- **Order:** the r3 apply lands immediately before P2. P2's first presses are the fresh container (CRO condition 2);
+  ~P reads the adapter's log for that span, and any UNEXPECTED or an SI at or over 48 s triggers the r3 rollback.
+- The sequence is P2, then K10, then the part-Y bodies in the ruled order. P2 never interleaves with a part-Y
+  submission.
+- Performance presses write the viewer's accepted-report pointers. That write is the principal's own, and the r3
+  packet's section 4 already names it.
+
 ## What the halves sign against
 
-This file's committed blob; W22's text (1f3bf0914f) with its conditions; ~Y's arms @34a27a5b41; part P's K10 arm; the
-pins, bodies, cap and interval above.
+This file's committed blob; W22's text (1f3bf0914f) with its conditions; ~Y's arms @34a27a5b41; part P's K10 arm and
+amendment 1's P2 presses; the pins, bodies, cap and interval above.
