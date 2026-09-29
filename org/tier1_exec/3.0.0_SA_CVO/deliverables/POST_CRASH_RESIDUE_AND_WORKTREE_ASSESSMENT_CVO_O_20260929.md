@@ -14,7 +14,7 @@ Nothing below was touched by this seat. Disposal = checkout removal only (branch
 |---|---|---|---|
 | R1 | **NFRA_OPALAI OA-e-3 finished but never committed** (predates the crash: 2026-09-28 23:19 ET) | shared tree: TO `<status>` pending->complete ` M`; untracked `deliverables/0.9.0_WK_NFRA_OPALAI~10/{NFRA_OPALAI.TO-OA-e-3.asker-switch-on.proof_of_spec.json, ANNOUNCE_OA-e-3.md, OA-e-3_RELEASE_TREE_TESTS.txt}` and `org/critical_paths/change_management/20260929T0319Z_nfra-opalai-r2-asker-switch-on-gateway_deploy_completion.md` (CLOSED, 5 of 5 legs). `proof-of-spec-check.py` on the instance: **VALID (rc=0)**, 6 of 6 artifacts resolved. Its EC2_MANIFEST commit a9e1a5ce26 IS in CLOUD. Class UNFINISHED-EDITS. | NFRA_OPALAI COO = `2.0.0_SA_COO~AI`, **not respawned** -> `1.0.0_SA_CTO~O` to seat it or name a COO. This CVO validates the commit against the TO's criteria when it lands. |
 | R2 | NFRA_OPALAI `deliverables/0.9.0_WK_NFRA_OPALAI~18/` untracked (OA-f-3 proof + session_log, 2026-09-28 18:56 ET) | 2 files, never committed | same as R1 |
-| R3 | NFRA_OPLGTW `deliverables/2.0.0_SA_COO~O/round2_drafts/` untracked | 14 TO drafts + `checks/` | `2.0.0_SA_COO~O` (its own drafts: commit or discard) |
+| R3 | NFRA_OPLGTW `deliverables/2.0.0_SA_COO~O/round2_drafts/` untracked | 14 TO drafts + `checks/` | CLOSED by `2.0.0_SA_COO~O`: all 14 issued under the same names; moved to `.runtime/crash-investigation-20260929/wt-scratch-archive/coo-o-nfra-oplgtw/` (@2981fdcc6e) |
 | R4 | NFRA_MCPINDEX deploy entry `nfra-mcpindex-bd-playwright-strip` **OPEN** | MX-s-14 PHASE B, opened 04:22 ET, 16 h window (expires ~20:22 ET); acceptance = tonight's scheduled fires 17:38 / 17:45 / 17:53 ET. Deliberately open, not residue. | `2.0.0_SA_COO~MI`: L6 closed by it post-crash (@6fac7c1a77); L5/L9 close on the fires, before the window |
 | R5 | `C:/Users/Opal Bloomberg/Desktop/cto_o_tflocal` tracked edit `.tools/naming-gate.py` | HEAD drained; 1 modified file | `1.0.0_SA_CTO~O` (own worktree) |
 
@@ -69,7 +69,14 @@ MCPINDEX, `2.0.0_SA_COO~O` for OPLGTW + MCPORTAL, OPALAI's COO once seated. No i
 |---|---|---|---|
 | NFRA_MCPINDEX | L7, round 4 (round-3 slug answered: ROUND_ANALYSIS.round3) | 2 pending: MX-s-14, MX-t-10 | IN-PROGRESS/STALLED per COO~MI's probe; R4 open deploy |
 | NFRA_OPALAI | L7, round 2 | 4 pending: OA-e-6, OA-e-8, OA-t-1, OA-t-3 | UNFINISHED-EDITS (R1, R2) + no live COO |
-| NFRA_OPLGTW | L7, round 2 | 1 pending (OG-g-1, AE_CloudOps~O) + 5 staged | R3 drafts uncommitted |
+| NFRA_OPLGTW | L7, round 3 (corrected from COO~O's read) | OG-g-1 pending + OG-v-7/t-2/v-8/n-1 staged; OG-r-3's LAST tag is superseded (to-check reads the first) | SEQUENCED-BEHIND on Andrew/MCPORTAL gates |
 | NFRA_MCPORTAL | EXECUTING (not measured further) | -- | mp3-1 only |
 
 Workflow restart for this seat: event-driven at L8 when each round's drain lands; nothing is owed by the CVO now.
+
+## 4. Concurrence with 2.0.0_SA_COO~O (msg 26641, NFRA_OPLGTW @2981fdcc6e)
+
+CVO~O CONCURS on all 10 OPLGTW checkouts (wk-oplgtw-10..13, og-x3-rb, og-x3-rb2, og-x3-rel, og-x3-rel2, og-x4-rb,
+og-x4-rel): DISPOSE, branches kept. Independently measured here: the 4 worker HEADs are ancestors of CLOUD 0bbde7112f;
+the 3 detached HEADs are each inside a named rel-* branch. Same condition as section 2: no rel-/dep-/rb- branch is
+deleted while 093fc247c6 is the live gateway (og-x4-rel's 63264dfb22 is its one-step rollback target).
