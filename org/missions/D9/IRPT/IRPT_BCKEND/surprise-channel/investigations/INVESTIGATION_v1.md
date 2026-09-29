@@ -12254,3 +12254,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "disarm_owner is ~P only as the holder of the blocked INF acts; the remedy is the positions pull's owner, to be placed by 1.0.0_SA_CTO."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S217",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-29T18:05:00Z",
+  "one_line": "The directory bundle (investor-reporting.tar.gz) is minted from a fixed 10-member list in .tools/safe_deploy_core.py that lacks schwab_account_codes.py/.json, while directory_runner.py at CLOUD HEAD imports schwab_account_codes at module level (:121, from IB-mr-213 UIC-16) -- a bundle minted as defined raises ImportError on every directory fire.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (the cell that added the import, IB-mr-213, extended only the Holdings closure _IRPT_HOLDINGS_CLOSURE, not the directory bundle's member list; ~M cuts the fix). Interim control: 0.0.0_AB_MSTR keeps skipping investor-reporting.tar.gz at every push (asked 18:00Z).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live bundle s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz ETag 4155283a (2026-09-26T18:00Z): 10 members; module-level imports of directory_runner.py there include no schwab_account_codes",
+      "CLOUD HEAD directory_runner.py module-level imports: schwab_account_codes (line 121 `import schwab_account_codes as _sac`); the bundle member list in .tools/safe_deploy_core.py (~:285-372) names directory_runner.py, holdings_snapshot.py, ids.py, trading_calendar.py, DirectoryEntry + HoldingsSnapshot schemas, firm_registry.json and three runner_common.py -- no schwab_account_codes.*",
+      "control: holdings_snapshot.py's module-level imports of holdings_49f/holdings_inf/holdings_membership/inf_positions/source_inputs are identical in the live bundle and at CLOUD, so they are not a new break (the directory run does not import holdings_snapshot at load)",
+      "member-by-member live vs CLOUD: CHANGED directory_runner.py (5 commits since 09-26 18:00Z), holdings_snapshot.py (9), firm_registry.json (1), HoldingsSnapshot.schema.json (3), DirectoryEntry.schema.json (1); SAME the three runner_common.py, ids.py, trading_calendar.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every module a bundled runner imports at load ships in that bundle (the same closure rule _IRPT_HOLDINGS_CLOSURE follows for the Holdings packages).",
+  "world_is": "The Holdings packages' closure was extended for schwab_account_codes (IB-mr-213 step 3); the directory bundle's member list was not, so the next directory mint would ship a runner whose first import fails.",
+  "notes": "Remedy (a ~M cell): add schwab_account_codes.py and schwab_account_codes.json to the directory bundle's members in .tools/safe_deploy_core.py, then build the bundle LOCALLY (no upload) and prove `import directory_runner` succeeds from the extracted tree, with a module-level import sweep over every .py member. It was the issuer's miss when cutting IB-mr-213: its step 3 named only the Holdings closure."
+}
+```
