@@ -3073,6 +3073,32 @@ carries none.
     "spec_asserts": "A2: apply the transaction edit to the allocation, realized and unrealized documents; the granted paths are the order's <paths> (the lane gate admits exactly those).",
     "world_is": "The gate reads the order at the branch's HEAD, which lacks the A2 grant, so the three repo files cannot be committed by this worker. Not worked around: no override, no order edit. Carrier so the edit is not lost: the byte-identical copies in the deliverables folder (a granted path), committed. Unblock, the issuer's choice: bring the A2 order text onto this branch (a CLOUD merge by the issuer) and this worker recommits the three files, or copy the three files from edited_documents/ at the drain.",
     "notes": "The A2 tests ran from the edited command lists (built from the working-tree files) and are recorded in ANNOUNCE_MX-s-14.md."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S56",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T07:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W17-S5",
+      "NFRA_MCPINDEX-Z-W17-S7"
+    ],
+    "one_line": "RULES NFRA_MCPINDEX-Z-W17-S5: the allocation document KEEPS its bd-price-update invoke. The strip restores a served state measured before 2026-06-21 (2 invocations a day) rather than creating a new one, and the MX-s-14 never-widen ask names the invoke as an effect of the allocation write, so the halves cover it. It also DISARMS Z-W17-S7: CLOUD was merged into wk-nfra_mcpindex-4-17 at 61a12e0af2, so the A2 paths are at the worker's HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch AWS/Lambda Invocations for bd-price-update, weekly sums from 2026-05-31: 10, 10, 10, then 1 in the week of 2026-06-21, and 5-6 a week since (17 weekly datapoints).",
+        "Hourly: 2026-06-10 and 06-11 read 2 invocations each in the 22:00Z hour, the allocation document's 21:45Z fire plus one other caller; 2026-09-24 and 09-25 read 1 each, in the 00:00Z hour.",
+        "infra/aws/ssm/opal-bd-allocation-download.json runCommand lines 44-54 invoke bd-price-update only when both the download and the merge succeed. Download dead since 2026-06-22 (DEAD_PROOF_MX-i-5.md), so the invoke went dark then."
+      ]
+    },
+    "spec_asserts": "Z-W17-S5 (ARMED): the strip reactivates a dormant bd-price-update invoke whose effect after a 3-month gap is unmeasured.",
+    "world_is": "The invoke is the second of the two daily calls that ran until 2026-06-21. Keeping it restores that cadence, and the other caller still fires daily. The PHASE B never-widen ask names bd-price-update as a covered effect; rollback is the same document re-publish (allocation v4 content).",
+    "notes": "The Lambda was last modified 2026-04-06 and is unchanged across the gap. Its idempotence on a second same-day call was served behaviour before 2026-06-21; it is not re-measured here."
   }
 ]
 ```
