@@ -4302,3 +4302,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Per bound 8 this is one BLOCKING row, no override. The unit tests pass 6 of 6 on the uncommitted tree."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T02:00Z",
+  "one_line": "A2 route (iii): route (i) cannot emit the key and, after route (ii)'s refactor, the naming gate still refuses the ONE Terraform local line advi_49f_floor.tf:56 (gold/advi/_logs/chain_) as EXISTING and OUT-OF-PATTERN in a surface assigned to the live remediation ADVI_FIRMBKTS; the commit is not made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Route (i): lib/opal_naming.py address('advi','49financial','gold','_logs','chain_') returns s3://opal-data-49financial/advi/49financial/gold/_logs/chain_, a different layout from the existing gold/advi/_logs/chain_ the SSM document writes; address('gold',...) raises `source 'gold' is not a systems.json key`.",
+      "Route (ii) built: local.advi_49f_chain_log_prefix read by the SSM upload, the IAM ARN and env CHAIN_LOG_PREFIX (+ CHAIN_LOG_BUCKET); no Python literal left. Command `python .tools/naming-gate.py --enforce --diff <the infra diff>` at HEAD e534f3d938 + worktree edits, EXACT refusal text: `NAMING REFUSE infra/aws/terraform/opal-assets/advi_49f_floor.tf:56 gold/advi/_logs/chain_ -> advi/{scope}/gold/_logs/chain_` / `why: EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation ADVI_FIRMBKTS: REFUSE unless the diff removes it` / `NAMING-GATE: REFUSE 2 graded`. The diff does remove the same literal from the SSM cp line (one occurrence out, one in), and the gate still refuses.",
+      "Only other line: lambda_function.py:69 advi.49f.silver-accelerator, WARN (EXISTING hand-kept carrier), not a refusal.",
+      "Guard on (ii) read: targeted plan (-lock=false) `Plan: 0 to add, 2 to change, 0 to destroy.` -- aws_iam_role_policy.advi_49f_gold_dispatch and module.advi_49f_gold_dispatch.aws_lambda_function.this (env CHAIN_LOG_BUCKET, CHAIN_LOG_PREFIX added); aws_ssm_document not listed, so unchanged."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A2: route (i) or (ii) passes the naming gate, else (iii) files the exact refusal.",
+  "world_is": "The naming refusal stands on the one local line; no override used. The worktree carries the uncommitted code, tests and .tf; the saved patch and test copy are refreshed beside ANNOUNCE. The issuer routes the row (a registry/remediation decision on ADVI_FIRMBKTS's surface).",
+  "notes": "6 of 6 tests pass on the uncommitted tree. Everything else in the A1/A2 rulings is applied: marker ARN carries GetObject + GetObjectVersion, chain-log ARN GetObject alone."
+}
+```
