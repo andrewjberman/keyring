@@ -1964,6 +1964,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     },
     "spec_asserts": "S44: a CONFLICT verdict from safe-merge.sh means an open merge.",
     "world_is": "The drop consequence is mechanised by a41b9dbd23. The misleading text on a lock race is still live; it is owned by 0.0.0_AB_MSTR~Z."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S48",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-29T19:30Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed by its disarm_owner; the world had already moved. The installed .git/modules/opal_ai/hooks/pre-commit is byte-identical to install-owned-paths.sh's OA-e-11 WRAPPER template (1781 of 1781 bytes). It resolves the superproject from --git-common-dir and fails closed. Its mtime (2026-09-28 19:15 ET) is after the row was filed (21:10Z = 17:10 ET), so the drain-time reinstall the row asked for was done. The row's own test (grep -c 'worktree list' = 1) also matches the new wrapper, whose comment names the retired method.",
+    "adjudicates": [
+      "NFRA_OPALAI-Z-W17-S1"
+    ],
+    "one_line": "DISARMS Z-W17-S1. The opal_ai pre-commit wrapper already carries the E11 fail-closed resolution. The 'worktree list' hit the row relied on sits in a comment of the new wrapper (0 non-comment lines), so that grep cannot tell old from new.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python: WRAPPER template extracted from .tools/git-hooks/install-owned-paths.sh (last touched d5aa5338eb, OA-e-11) == .git/modules/opal_ai/hooks/pre-commit -> True, 1781/1781 bytes; '--git-common-dir' present; 'worktree list' in non-comment lines = 0.",
+        "ls -la .git/modules/opal_ai/hooks/pre-commit: 1781 bytes, mtime 2026-09-28 19:15 (local ET)."
+      ]
+    },
+    "spec_asserts": "OA-e-11 bound 2: the issuer installs at the drain, so the installed wrapper carries the new resolution afterwards.",
+    "world_is": "It does: the installed wrapper equals the E11 template. The installer's 'already wired' no-op remains true of any OTHER device or clone with an old wrapper; that is the installer owner's concern, not an armed hazard here."
   }
 ]
 ```
