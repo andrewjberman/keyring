@@ -1824,6 +1824,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-r-1 / OA-e-3 release guards: /health 200 and the tool list unchanged mean the release is clean for colleagues.",
     "world_is": "Both guards passed, but the restart itself trips the per-identity rate limiter for clients that reconnect in the same minute, and a client can drop and need a manual reconnect. No release guard reads it. It is a property of every opal-gateway restart, not of either release's code.",
     "notes": "INERT: transient, cleared within the minute, and no data or grant was affected. A candidate for the gateway owner (the limiter, or a reconnect grace after restart) and for the release guards (count 429s in the restart minute). Not repaired here."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S43",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-29T03:50Z",
+    "one_line": "The OA-e-3 drain merge (safe-merge, d45ab2cf53) committed infra/aws/ec2/EC2_MANIFEST.json at the OLD value (0bce8d322a) although the merge's three sides were base 0bce / CLOUD 0bce / branch f791522306, and left the correct merged content as an UNSTAGED working-tree modification in the shared tree. The file is lane SHARED_CLOUD_OPS; the COO's own direct commit of it was refused by that lane, and it landed only under the audited override (9353136df3).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log -1 --format=%p d45ab2cf53 -> 4dd214bfc1 82b68d5ce2; merge-base 3158a81810; opal-gateway.deployed_commit at 3158a81810 = 0bce8d322a, at d45ab2cf53^1 = 0bce8d322a, at 82b68d5ce2 = f791522306, at d45ab2cf53 = 0bce8d322a.",
+        "Right after the drain, git status: ' M infra/aws/ec2/EC2_MANIFEST.json', with the working-tree block = f791522306 (prev 0bce8d322a), 5 lines vs HEAD.",
+        "/c/tmp/merge10e.log: 'missions-tree-check -- 4 tree/register path(s) staged'; no line names the manifest. safe-commit of the file as 2.0.0_SA_COO~AI: 'VIOLATION: infra/aws/ec2/EC2_MANIFEST.json -- lane=SHARED_CLOUD_OPS'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "/dispatch Step 5 + safe-merge.sh: the drain merge lands the worker's branch as merged, graded on the merged index, or refuses loud.",
+    "world_is": "A lane-owned path the branch changed was dropped from the merge commit without a refusal. The correct content sat uncommitted in the shared tree, where another seat's commit or checkout could have lost it, and CLOUD's manifest named a release the host no longer served. The mechanism (index manipulation by safe-merge or a hook, versus a concurrent seat) is NOT measured here.",
+    "notes": "Repaired by this seat at 9353136df3 (the worker's own record carried under the audited SHARED_CLOUD_OPS override; no new content). For the safe-merge owner: a drain should fail loud when a path the branch changed is absent from the merge commit. OA-r-1's drain (9f520b8bb3) carried its manifest change correctly, so this is intermittent or state-dependent."
   }
 ]
 ```
