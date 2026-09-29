@@ -89,6 +89,25 @@ their logs by exactly this rule: the key's `TS` equals the invocation's `Executi
    - `test_floor_event_reads_no_marker`: a `{"source": "advi.49f.scheduled-floor"}` event makes no marker `GetObject`
      and dispatches once.
 
+6. **AMENDMENT A2 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~01:3xZ, on your row Z-W15-S2; ruling 1.0.0_SA_CTO~O msg 26358).**
+   The naming gate refused the new literal chain-log prefix. `exemptions.json` is the WRONG carrier (it holds the
+   cross-firm fence's principal exemptions), and `NAMING_LEGACY_READS` admits no `.tf` line. Take this route, in order,
+   running `python .tools/naming-gate.py` on each candidate BEFORE `safe-commit.sh`, and report which step passed:
+   - **(i)** If `lib/opal_naming.py` `address()` can emit the chain-log key, use its output (rule 30's first route).
+   - **(ii)** Otherwise add NO new literal. The existing prefix the SSM document already writes
+     (`infra/aws/terraform/opal-assets/advi_49f_floor.tf:272-290`) becomes ONE Terraform `local`. The SSM document's
+     upload target, the IAM `Resource` ARN (item 4) and a NEW `environment_variables` entry on
+     `module "advi_49f_gold_dispatch"` (`advi_49f_floor.tf:196`) all read that local. `lambda_function.py` reads the
+     env var (fail closed if it is unset: the classifier then reads UNKNOWN(chain_log=unconfigured) and says so), so
+     no Python literal of the prefix remains. The tests set the env var.
+   - **(iii)** If the gate still refuses that ONE local line, it is a missing registry row: STOP, file its EXACT
+     refusal text as a BLOCKING row, and take no override. The issuer routes the row.
+   **Guard on (ii):** the targeted plan must show the SSM document UNCHANGED (its rendered content equals today's, the
+   refactor is source-only); the only changes allowed are the inline policy (item 4) and the function (new code +
+   the one env var). A plan that changes `aws_ssm_document` or any other resource: STOP, a BLOCKING row. The
+   never-widen halves (CTO @c7510ec012 + @a64d56a357, CVO @5dd05929f5) remain the authority; guard M3's diff bound
+   now also admits the env-var read. Criteria unchanged.
+
 ## 2. BOUNDS
 
 1. **Two phases.** PHASE A builds, tests, commits and PLANS, and changes nothing in AWS. PHASE B acts only after the
