@@ -6721,3 +6721,88 @@ fanout:
 - The 59 withheld names (`Z-S300`): a mixed-case source is an enrichment item for the round-48 analysis.
 - The page reading the served line names and formula words: asked of DSGN_AMGTV1 through its round at ww-4's drain.
 - FWD-30 held from REALIZED by the page half until DSGN_AMGTV1's harness cell (`Z-S297`) lands.
+
+## 57. ROUND 49 -- FWD-30'S ONE GRADER KEYED ON DATA ATTRIBUTES, THE SERVED NAME ON THE RANK-HISTORY SERIES, AND OFFICERS FROM THE PROXY. Three cells, four orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 48 ANALYSIS** (`ledger/ROUND_ANALYSIS.round48.md` @`1dfd5c0970`, s.4 three
+items; round 48 CLOSED; msg 26707). Rulings carried: FWD-30 has ONE grader, `round45/checks/sweep.py`, AMGT_RESAPP's, keyed on the
+page's data attributes and never its wording (ruling 1); the `reason` field names CASES (ruling 2); where an absence has no attribute,
+RESAPP asks DSGN_AMGTV1 through DSGN's round, never by a page edit; `exportCompare.harness.cjs` is DSGN's page-side check, not the
+grade. No outcome is added, so no L4-R half re-opens.
+
+### 57a. THE THREE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 FWD-30's grader keys on data attributes and names CASES | `AMGT-xx-1` (LOCAL, worker; the full 96-folder served sweep is the issuer's real run at the drain) |
+| 2 the served company name on the rank-history series (DSGN FWD-3 labels) | `AMGT-xx-2` (the join, worker) + `AMGT-xx-4` (the redeploy, seat order, under a never-widen pair written after xx-2 lands) |
+| 3 officers from the proxy when the 10-K's officer section is absent (DSGN FWD-7), LOCAL first cut | `AMGT-xx-3` (worker; SPAWN HELD on the egress call, 57b.4) |
+
+### 57b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The grader today.** `sweep.py --served` compares the DEPLOYED rich body captured beside the page (`print?format=rich`)
+   against `exportCompare.harness.cjs` rendering the captured fixture, and matches absence lines by their WORDS. Round 48 close:
+   62 of 96 OK, every NOT_OK ABSENCES only (row Z-S305). CORRECTION to Z-S305's second evidence line: with `--served` the
+   export side IS the deployed body, not a local rebuild; the CVO's controlled run (v58) is what proves the page side.
+   `--only KEY,...` exists; a worker's invocation is bounded at 120 s, so AC1 grades three named names (17 s at the base).
+2. **The page's attributes on DEV** (CTO read): `data-model-row`, `data-model-cell`, `data-model-refused`,
+   `data-model-case-status`, `data-model-case-reason`, `data-cite-resolved`, `data-posture-*`, `data-exec-officer`.
+   Portal DEV at the cut `ea248519` (DSGN_AMGTV1 round 5 merging).
+3. **The rank-history route.** `GET /api/scoped/amgt/lead-panel/timeseries/<movement>/<subject>?tickers=` ->
+   `scoped_amgt.read_rank_series` (`:885`); its `series` carry `ticker` and `points`, no name. `RankedChart.tsx` already labels a
+   line with `series.name` when served (`seriesLabel`, `:112`). ww-2's `_classification_for_ticker` (`:588`) is the join, and its
+   `dynamodb:GetItem` on `etf-classifications` is GRANTED since ww-1 -- so xx-4 moves code only, no IAM.
+4. **Officers.** `roster.py` marks an officer section that points elsewhere (INTU, HAL, CAT named in its header) UNRESOLVED-SOURCE
+   with `section_refers_to` = the filing's pointer sentence. The walked no-officer name is `INTU_US_Equity` (10-K
+   0000896878-26-000037; DSGN round 4 close walk). The filings path `lib/research/filings/fetch.py` reads EDGAR live
+   (`data.sec.gov`, `www.sec.gov`); its own egress cite is Andrew-direct 2026-09-15 ~05:42Z "The whole sitez fabric has free
+   egress this session". EDGAR is egress off Opal infrastructure, which CLAUDE.md Agent Autonomy excludes; the session grant is not
+   today's. **xx-3 is cut for coverage and its SPAWN IS HELD** until the call is ruled (put to 1.0.0_SA_CTO~Z, whose arm pitches a
+   reserved call to 3.0.0_SA_CVO~Z).
+
+### 57c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-xx-1` | FWD-30'S ONE GRADER KEYS ON THE PAGE'S DATA ATTRIBUTES AND NAMES CASES | `~173` | worker | LOCAL | `deliverables/2.0.0_SA_COO~Z/round45/checks/**` (sweep.py + a page-facts reader beside it) |
+| `AMGT-xx-2` | THE RANK-HISTORY SERIES CARRY THE SERVED COMPANY NAME | `~174` | worker | SERVED | `lib/research/api/scoped_amgt.py` + `lib/research/api/tests/**` |
+| `AMGT-xx-3` | OFFICERS FROM THE PROXY WHEN THE ANNUAL REPORT'S OFFICER SECTION POINTS ELSEWHERE | `~175` (HELD) | worker | LOCAL | `lib/research/management/proxy_officers.py` + `lib/research/management/tests/**` |
+| `AMGT-xx-4` | THE REDEPLOY CARRYING THE SERIES NAME | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the artifact, ONE safe-apply (code only), its deliverables, the ledger |
+
+Write sets are disjoint: xx-1 writes no product file; xx-2 writes the adapter; xx-3 writes a new module; xx-4 writes no source.
+
+### 57d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's three items; each lands in one build cell; the one served act (xx-4) serves item 2 only.
+- **(ii) Same grain.** One grader, one join, one reader, one deploy.
+- **(iii) Intent.** One axis: what the page and the export say is graded and served from the served data, not from wording.
+- **(iv) What a cell does NOT move.** xx-1 moves no product file and no page file; xx-2 moves no ranked value, rank, point or date
+  (the series gain three keys); xx-3 moves nothing served (serving is round 50's, under a pair); xx-4 moves exactly its pair's radius.
+
+### 57e. EDGES AND FAN-OUT
+
+```
+xx-2 -> xx-4   (the served join)
+xx-1 -> (none) (LOCAL; its full-population real run is the issuer's at the drain)
+xx-3 -> (none) (LOCAL first cut; spawn HELD on the egress call)
+fanout:
+  cap: 3
+  orders_total: 4
+  chains_total: 3                      # {xx-2 -> xx-4}, {xx-1}, {xx-3}
+  wave_0: [xx-1 ~173, xx-2 ~174]       # now
+  wave_0_held: [xx-3 ~175]             # spawns on the egress ruling
+  wave_1: [xx-4]                       # a seat order: after xx-2 merges and both never-widen halves are committed
+  portal_ref: ea248519                 # portal DEV HEAD at the cut, for xx-1's page render and the api suite's harness reads
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: xx-3 reads EDGAR (HELD); xx-4's build pip-downloads its pinned wheels (declared); checks read Opal's own S3, DynamoDB and deployed function
+  route_change: none (payload fields only)
+  no_promote: true
+```
+
+### 57f. CARRIED
+
+- Hitachi 6501 JP's crosswalk row: AMGT_CORPUS round 15 (ruling 3). FWD-30's denominator is 95 identified names beside 96 folders.
+- An absence with no data attribute: asked of DSGN_AMGTV1 through its round when xx-1 names one.
+- Serving xx-3's officers: round 50, under a pair.
