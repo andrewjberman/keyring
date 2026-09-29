@@ -4021,3 +4021,54 @@ name the one known failure instead of silently inheriting it.
   "notes": "INFERRED, not reproduced: one failure, no second sample. Reported so the drain does not read a single red ac04 as a regression of this cell."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T01:40Z",
+  "one_line": "The OG-x-3 step-0 one-deployer census reads a gateway sentinel with status OPEN in 19 old rollback/release worktrees (nfra-oplgtw-og-r-1-first-release.json, opened 2026-09-18) although CLOUD carries the entry CLOSED and no sentinel; no live gateway deploy is open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Census 2026-09-29T01:2xZ: git worktree list --porcelain = 103 trees; per-tree count of git ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/ printed for each (range 3 to 15 entries; the main tree 14; this worktree 14). A content scan of the 51 distinct sentinel blobs for the string 'gateway' found ONE gateway-deploy sentinel at a tree HEAD: nfra-oplgtw-og-r-1-first-release.json in C:/tmp/mp-2-rb (status OPEN, author 0.9.0_WK_NFRA_OPLGTW~2, opened 2026-09-18T05:07Z). The working directories of 18 more rb/rel trees (mp-2-rel, mp-2-rel2, mx-rb, mx-rb3, mx-rb4, mx-rel, mx-rel3, mx-rel4, oa-10-rb, oa-10-rel, oa-8-rb, oa-8-rel, oa-9-rb, oa-9-rel, og-rb, og-rel, og-s1-rb, og-s1-rel) hold an uncommitted copy of the same file.",
+      "CLOUD (c180d84b36): org/critical_paths/change_management/20260918T0507Z_nfra-oplgtw-og-r-1-first-release_deploy_completion.md reads 'Status: CLOSED -- nothing stranded -- closed 20260918T070646Z'; git ls-tree CLOUD org/critical_paths/.open_deploys/nfra-oplgtw-og-r-1-first-release.json = 0 entries (removed by 45d1e43657).",
+      "No sentinel naming opal-gateway exists at CLOUD, at any live worker or slot worktree (oa-*, mx-*, wk-*), or in any working directory except those 19 rb/rel copies; the OA-r-1 release is closed (EC2_MANIFEST at CLOUD records d287ffb346 at 2026-09-29T00:45:15Z) and no MX-r-4 sentinel exists yet."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A1 step 0: any sentinel naming opal-gateway or gateway that is not the worker's own means STOP.",
+  "world_is": "Read literally, the census stops on a closed 09-18 deploy whose sentinel file survives in dead rollback/release trees, so it can never read clean while those trees exist. Read by intent, no other seat is deploying the gateway at 2026-09-29T01:2xZ. This worker finished PHASE A, which is read-only and creates only local worktrees, and reports the census here; it is repeated at PHASE B.",
+  "notes": "Issuer ruling wanted before PHASE B: either the census counts only trees whose branch is not an archived rb/rel tree, or those 19 stale copies are removed by their owner. The literal STOP was NOT filed as BLOCKING because the sentinel's ledger is closed on CLOUD; if the issuer reads the rule literally, this row is the BLOCKING record."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T01:41Z",
+  "one_line": "The live S3 artifact is opal-gateway-54e26d66a0.tar.gz, not opal-gateway-d287ffb346.tar.gz: OA-r-1 deployed from a never-merged deploy-only tree whose HEAD short is 54e26d66a0 while EC2_MANIFEST records d287ffb346.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/ (27 objects): opal-gateway-54e26d66a0.tar.gz 402043 bytes LastModified 2026-09-29T00:44:45Z and opal-gateway-latest.tar.gz 402043 bytes 00:44:48Z; head-object on opal-gateway-d287ffb346.tar.gz = 404.",
+      "git log -1 54e26d66a0: 'deploy-only(NFRA_OPALAI OA-r-1) ... CLOUD tree with infra/aws/ec2/opal-gateway replaced by the release commit d287ffb346's ... NEVER merged'; git diff --stat 54e26d66a0 d287ffb346 -- infra/aws/ec2/opal-gateway = 0 files, so the gateway directory is identical.",
+      "Rollback build from a clean tree at d287ffb346 with mcportal a3bff71ffa: 79 files; the live artifact opal-gateway-54e26d66a0 extracted: 79 files; diff -rq empty (79 of 79 identical)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-x-3 step 6: the live artifact is s3://.../opal-gateway-<live short>.tar.gz.",
+  "world_is": "The live artifact's key names the deploy-only tree's HEAD, not the manifest's deployed_commit. The comparison was made against the key that exists; the file sets match.",
+  "notes": "For PHASE B's rollback: the rollback tree rebuilds the same bytes, and the re-deploy command uploads opal-gateway-d287ffb346 (new key) plus latest. A rollback by S3 key alone would name 54e26d66a0."
+}
+```
