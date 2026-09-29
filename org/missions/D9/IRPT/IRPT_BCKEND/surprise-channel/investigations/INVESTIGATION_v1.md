@@ -11804,3 +11804,36 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "DISARM: (1) the 49F re-switch r3 (ledger irpt-adapter-holdings-gold-49f-r3-20260929) does NOT apply while this row is ARMED; (2) redeploy irpt-holdings-performance-lambda with the v0.21 producer under its own ledger + both halves; (3) re-emit date=2026-09-28 through the redeployed Lambda (ad-hoc QA run) and re-read: 0 OK rows at |r| >= 1; (4) re-run the r3 census."
 }
 ```
+
+
+## ~Y walker row -- PROVIDER_READ_UNAVAILABLE tracks CONCURRENCY, not the file (row IRPT_BCKEND-S206)
+
+```json
+{
+  "id": "IRPT_BCKEND-S206",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-29T14:12:00Z",
+  "one_line": "Window 22 ran five Analysis bodies on one principal. Three of the five normalizations died ATTENTION RESOLVE_RETRY_EXHAUSTED after four RETRY receives coded PROVIDER_READ_UNAVAILABLE -- and the discriminator is not the file, the firm or the file type: it is whether another resolve was already in flight. Y1 (cottonwood, aapl-vnq-12.03.csv) resolved READY in 1 s; Y2, the SAME CSV dispatched 14 s later, exhausted over 203 s. Y3 (cottonwood, target-weight XLSX), dispatched 45 min later with nothing else in flight, resolved READY in under 1 s; Y4 (49financial) and Y5 (inflection), dispatched 100 s and 116 s after Y3 and 16 s apart from each other, both exhausted over 183 s and 182 s. The S193 bound therefore fired LIVE and correctly (four receives, then NEEDS_CORRECTION) -- but what it is bounding looks like a single-flight vendor read, not a bad upload, and its only remedy action is REPLACE_FILE, which cannot fix a file that already resolved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (INERT: every affected body is terminal by name, nothing is deployed in the window, and no served artifact moved)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-requests consistent Query, NORMALIZATION# rows, read 14:05-14:08Z: cottonwood UP-bf609d33 (Y1) state NORMALIZED dispatched 1790687684 resolved 1790687685 (1 s, 0 findings); cottonwood UP-299bf8b1 (Y2) state NEEDS_CORRECTION reason RESOLVE_RETRY_EXHAUSTED dispatched 1790687698 resolved 1790687901 (203 s); cottonwood UP-25f68c51 (Y3) state NORMALIZED dispatched 1790690382 resolved 1790690382 (<1 s); 49financial UP-10273a2b (Y4) state NEEDS_CORRECTION reason RESOLVE_RETRY_EXHAUSTED dispatched 1790690482 resolved 1790690665 (183 s); inflection UP-d43552d8 (Y5) state NEEDS_CORRECTION reason RESOLVE_RETRY_EXHAUSTED dispatched 1790690498 resolved 1790690680 (182 s)",
+      "Y1 and Y2 carry the SAME upload bytes: upload_sha256 bb079cbf53aaa2be7ce3fb6beb44e55eaeb0695cd168661d5fb78488a0960ddc on both (W22/Y1_comparison_cottonwood.json, W22/Y2_multicomp_cottonwood.json); Y4 and Y5 upload that same CSV again under two other firms",
+      "resident journal by SSM read-only (i-0167fd745ad906a66, irpt-analysis-resident.service, --since 2026-09-29 13:10:00 UTC, 169 lines total, service active): IRPT_RESIDENT_RESOLVE state=READY code=- at 13:14:46; state=RETRY code=PROVIDER_READ_UNAVAILABLE at 13:15:20, 13:16:20, 13:17:21; state=ATTENTION code=RESOLVE_RETRY_EXHAUSTED at 13:18:21; state=READY code=- at 13:59:43; state=RETRY code=PROVIDER_READ_UNAVAILABLE at 14:01:23, 14:01:39, 14:02:24, 14:02:39",
+      "every RETRY line in the window span carries code=PROVIDER_READ_UNAVAILABLE; no other retry code and no Traceback appears in the span (the grep alternation included Traceback and matched none)",
+      "the two READY lines (13:14:46, 13:59:43) are each the FIRST resolve after an idle gap; every exhausted body was dispatched while, or seconds after, another resolve was in flight",
+      "the findings array on all three exhausted rows is a single ERROR finding, code RESOLVE_RETRY_EXHAUSTED, row/column/sheet/value all NULL, actions [REPLACE_FILE]",
+      "no replay was made: the packet forbids it and the CTO confirmed it at 102694; each of the five bodies made exactly one login, one K4 and at most one K5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W22 packet blob 1f3bf0914f W22-2 and the CRO's st4 condition 3 read S193 as a LATENCY bound: a resolve RETRY is bounded and the 4th receive moves the row to NEEDS_CORRECTION RESOLVE_RETRY_EXHAUSTED. The finding it writes asserts the remedy is REPLACE_FILE -- i.e. that the upload is at fault.",
+  "world_is": "The bound fires exactly as specified, so S193 is read LIVE and passes. But across a denominator of 5 bodies the code correlates with a concurrent or closely-following resolve (3 of 3 exhausted bodies had one in flight; 2 of 2 READY bodies did not), not with the upload: the identical CSV both resolved in 1 s and exhausted in 203 s within the same 14 seconds. REPLACE_FILE is therefore an unactionable remedy for these three rows, and a user hitting it would be told to fix a file that is not broken.",
+  "notes": "NOT a replay request and no retry was made. Two reads would settle it, neither inside a walk window: (1) the resident's provider-read path -- is the vendor read single-flight or rate-limited per host, and does PROVIDER_READ_UNAVAILABLE distinguish 429/503 from a lock it holds itself; (2) whether the 4-receive bound should count receives that never reached the provider. If confirmed, the remedy on a PROVIDER_READ_UNAVAILABLE exhaustion is not REPLACE_FILE. Consequence for W22: Multi-Comp (Y2), the first certified 49financial report (Y4) and the certified Inflection report (Y5) stay UNEXERCISED and carry forward as open arms."
+}
+```
