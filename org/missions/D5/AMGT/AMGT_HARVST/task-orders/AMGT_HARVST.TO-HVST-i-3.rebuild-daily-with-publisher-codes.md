@@ -82,7 +82,7 @@ No delete, no mention or event put, no code change, no deploy, no vendor call, n
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>19</round>
 <slot>~46</slot>
 <fabric>site-z</fabric>
