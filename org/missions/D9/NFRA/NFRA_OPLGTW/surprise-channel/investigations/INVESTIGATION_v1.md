@@ -4122,3 +4122,53 @@ name the one known failure instead of silently inheriting it.
   "notes": "Issuer decision wanted: either (a) rule the MP-a-2 sentinel out of the one-deployer rule (Terraform apply of new Lambda resources, disjoint from the EC2 code path) and send GO again, or (b) hold until nfra-mcportal-r3-writer-apply closes. On GO the worker repeats the census and BEFORE reads, then runs steps 10-13 from /c/tmp/og-x3-rel2 (release 4248b70b39)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T05:45Z",
+  "one_line": "xr.AC3 of OG-x-3 cannot pass as written: it looks for tests/test_schwab_export_stream.py on the host, which no gateway artifact ships, and expects ENABLED_INTEGRATIONS=ycharts opal_portal globgrph, the value before MX-r-4; the host's value is the five ids, unchanged by this deploy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC3.sh run at HEAD 1f15da8f48 (SSM commands 564c50e6-58d8-4169-be5c-b0958ee92c84 and bb8aef48-d382-4b12-bd4e-3e2d55f6d791, both Status=Success): 'health=200; streaming export on host 0; schwab files equal deployed_commit 4 of 4; ENABLED_INTEGRATIONS unchanged=no' -> RESULT: FAIL, exit=1.",
+      "deploy-to-ec2.sh's tar step packs app, deploy, requirements.txt, identity_tool_allowlist.txt and the dashboard bundle with --exclude infra ...; a rebuilt 79-file artifact and the live opal-gateway-7c7ebe14d3.tar.gz both contain no tests/ directory (diff -rq empty, 79 of 79), so /opt/opal-gateway/tests/ cannot exist on any release.",
+      "Host .env ENABLED_INTEGRATIONS read over SSM before (05:1xZ) and after (05:23Z) the deploy: 'ycharts opal_portal globgrph opal_discover portal_index' both times (MX-r-4 added the last two; amendment A2 of the order names the same value). The check compares against the 3-id string, so 'unchanged=no' although this act changed nothing.",
+      "What the host does show: engine.py b06a27f7317b1f664f75c66d757e8491, integration.py f436630c352d0cedfd1dbaedc67b43d3, export.py c9943e7840e2e1ea2cb97df75feccf90, envelope.py 651359f19abc63a2b77811df1f3fbf29 = 4248b70b39's bytes, 4 of 4; 76 of 76 files of the shipped tree; /health 200; 51 tools."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-x-3 AC3: the host carries OG-x-2's test module and ENABLED_INTEGRATIONS reads 'ycharts opal_portal globgrph'.",
+  "world_is": "The deploy is verified by content on every other axis, but the criterion as cut reads FAIL for two reasons that are properties of the check, not of the deploy. Recorded FAIL, the order is left open, and no criterion was edited by this worker.",
+  "notes": "Issuer to amend xr.AC3.sh (test-module probe -> the host's schwab/integration.py contains the streaming reader, e.g. a grep for read_export_batches in engine.py; ENABLED_INTEGRATIONS literal -> the host's value at the cut) and re-run, or rule the two readings; then the flip is a re-run of AC3 plus the proof instance's AC3 row."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T05:52Z",
+  "one_line": "The <expect> patterns of OG-x-3's AC1 and AC2 ('sentinel at HEAD=no; listed OPEN/HELD=0 -- RESULT: PASS -- exit=0', 'descends=yes -- RESULT: PASS -- exit=0') cannot match the verbatim output of their xr scripts, so proof-of-spec-check refuses a PASS row for either although both scripts print RESULT: PASS and exit 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "xr.AC1.sh output at HEAD 1f15da8f48: 'entry files at HEAD=2; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR: 13 of 13 sentinel(s) scanned' newline 'RESULT: PASS' newline 'exit=0'. xr.AC2.sh: 'deployed_commit=4248b70b39... previous=f791522306... descends=yes; gateway files shipped 9, outside OG-x-2's set 0; streaming export carried 1' newline 'RESULT: PASS' newline 'exit=0'.",
+      "python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 with those outputs as output_evidence and status PASS: 'VIOLATION: acceptance[AC1]: status=PASS but output_evidence does NOT match expect ...' and the same for AC2, INVALID rc=1 (checker code: re.search(expect, output_evidence, DOTALL|MULTILINE)). The ' -- ' between the fragments is a literal in that search."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's <expect> clauses decide AC1 and AC2 mechanically.",
+  "world_is": "The two rows are recorded UNVERIFIABLE-BY-INSTRUMENT with the script's RESULT line as the substitute oracle, rather than fitted by re-flowing the output to match the pattern.",
+  "notes": "Issuer may amend the two <expect> patterns to regexes that the scripts' output satisfies, e.g. (?s)sentinel at HEAD=no; listed OPEN/HELD=0.*RESULT: PASS.*exit=0 and (?s)descends=yes.*RESULT: PASS.*exit=0, and re-run the checker on the same instance."
+}
+```
