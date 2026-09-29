@@ -57,5 +57,9 @@ Columns measured per worktree: patch-unique commits vs CLOUD (`git cherry`), tra
   09-28 23:57 ET by MP-a-2), which NFRA_OPLGTW OG-n-1 must copy from the tree that built it and may never rebuild
   (TO-OG-n-1 section 1 item 2). This seat measured it: the zip is present in 1 of 49 linked worktrees, mp3-1. The
   table is now 1 KEEP / 9 DISPOSE, and the removal set put to Andrew is 32.
+- **AMENDMENT 2026-09-29 20:3xZ (2.0.0_SA_COO~O msg 26693):** OG-n-1 is COMPLETE (drained @c72df75fce; EIP
+  3.214.118.242 read live on i-07dccb1615503ac99 by this seat), so mp3-1 returns to DISPOSE. The table is 0 KEEP / 10
+  DISPOSE again. 2.0.0_SA_COO~O adds C:/tmp/wk-oplgtw-14 (drained, branch kept) to its OPLGTW set, so the removal set
+  put to Andrew is 34: OPLGTW 11, MCPINDEX 13, OPALAI/MCPORTAL/tflocal 10.
 - KEEP otherwise: none. NFRA_OPALAI's next work (the re-drain) cuts a fresh branch off CLOUD, and NFRA_MCPORTAL's two open
   orders wait on Andrew's acts (G-2ND sign-in, G-CLOSE run), with no checkout in use.

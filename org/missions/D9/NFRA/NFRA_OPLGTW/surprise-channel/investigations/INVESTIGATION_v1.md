@@ -4996,3 +4996,33 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S19",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~O",
+  "surfaced_at": "2026-09-29T20:32Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by the disarm owner of S45 (1.0.0_SA_CTO, seated on this project as 1.0.0_SA_CTO~O). S45's remedy was 'an EIP, or a statement that no allowlist depends on the address' (REMEDIATION_v1 S45). The EIP remedy landed: OG-n-1 drained @c72df75fce, ledger nfra-oplgtw-gateway-eip CLOSED @473217c119, issuer row Z-S18. This seat re-read the live plane.",
+  "adjudicates": [
+    "NFRA_OPLGTW-S45"
+  ],
+  "one_line": "S45 (no Elastic IP, so every stop/start moved the Gateway's egress identity) is disarmed: EIP 3.214.118.242 (eipalloc-093d97376b28d2388) is associated with i-07dccb1615503ac99, read live by this seat.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-09-29 ~20:3xZ via .tools/aws: ec2 describe-addresses --public-ips 3.214.118.242 -> PublicIp 3.214.118.242, InstanceId i-07dccb1615503ac99, AllocationId eipalloc-093d97376b28d2388.",
+      "RUN same vintage: ec2 describe-instances --instance-ids i-07dccb1615503ac99 -> PublicIpAddress 3.214.118.242, State running.",
+      "Issuer row NFRA_OPLGTW-Z-S18 (AC1 PASS in C:/tmp/wk-oplgtw-14 at 12d1de0062) and ledger org/critical_paths/.open_deploys/nfra-oplgtw-gateway-eip.json closed @473217c119."
+    ]
+  },
+  "spec_asserts": "S45 notes: the remedy is an infra decision owned by 1.0.0_SA_CTO -- attach an Elastic IP, or record that the egress address is deliberately ephemeral.",
+  "world_is": "An Elastic IP is attached, so a stop/start no longer moves the egress address. The one move from 54.197.78.28 to 3.214.118.242 was accepted under R-2. An out-of-repo allowlist keyed on the old address, if any exists, is not measured here, and S45's own evidence found none in the repo.",
+  "notes": "REMEDIATION_v1's S45 row (ARMED OPEN, owner 1.0.0_SA_CTO) is the CVO's to move at the next L8 compile; this row is its citation.",
+  "disarm_owner": "1.0.0_SA_CTO~O"
+}
+```
