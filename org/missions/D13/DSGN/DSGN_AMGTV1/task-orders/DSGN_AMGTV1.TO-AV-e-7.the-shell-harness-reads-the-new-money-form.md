@@ -71,7 +71,7 @@ Report once: the re-anchor (old -> new), the AC1 output lines, the two merge res
 AV-t-4 / NFRA_OPALAI OA-f-* precedent: a direct act stands outside the round's single issuance). Base (DEV 1a1e8162): AC1
 2 of 3 (FAIL as expected).
 
-<status>pending</status>
+<status>complete</status>
 <slot>~6</slot>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
