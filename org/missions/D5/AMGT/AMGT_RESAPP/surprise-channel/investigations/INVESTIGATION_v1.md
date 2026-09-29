@@ -15351,6 +15351,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "git refuses a merge that would overwrite an uncommitted change, so no work is lost; the drain stops on this file until the edit is committed by its author or the drain is resolved by the issuer.",
   "disarm_owner": "2.0.0_SA_COO~Z (issuer, at the ww-3 drain): read the working-tree diff again; if it still stands, ask 0.0.0_AB_MSTR~Z to name its owner before merging. Never stash or discard it.",
   "notes": "The worker's order carries the empty-string rule as a requirement of its own write, so ww-3 does not depend on the uncommitted edit."
+},
+{
+  "id": "AMGT_RESAPP-Z-W171-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~171",
+  "surfaced_at": "2026-09-29T12:10:00Z",
+  "one_line": "AC2 (api-suite.sh) cannot run in the sparse-cone worktree: 268 of the suite's tests error at collection/setup with FileNotFoundError on infra/logic/registry/systems.json, a path outside the cone (lib, integrations, .tools, org, docs, rcg), so the criterion's '308 passed' is unreachable here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "In C:/tmp/r48-171 (branch wk-AMGT_RESAPP-171 @9ebf76b6da): api-suite.sh -> '2 errors during collection' exit=2 (test_team_cases.py via lib/research/corpus/gold.py:20 naming.lookup, test_timeline_routes.py via lib/research/harvest/store.py:34), both FileNotFoundError 'C:\tmp\r48-171\\infra\\logic\registry\\systems.json' (lib/opal_naming.py:145).",
+      "With those two files ignored: '24 passed, 268 errors' over lib/research/api/tests + lib/research/print/tests, every error the same FileNotFoundError; git ls-tree -d HEAD infra/logic/registry shows the tree exists at HEAD, git sparse-checkout list = .tools docs integrations lib org rcg.",
+      "AC1 (ww-2.AC1.py) is unaffected and passes: 'ranking rows read: 2 ... LIST ROWS CARRY THE SERVED NAME AND CLASSIFICATION: YES' exit=0. The new test file lib/research/api/tests/test_list_rows_classification.py (7 tests) is among the 24 passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 runs api-suite.sh in the worker's worktree and reports N passed, 0 failed (308 at the cut).",
+  "world_is": "The sparse cone omits infra/logic/registry, which lib/opal_naming.py reads at import/setup; the suite can only be run in a tree carrying infra/logic (the shared tree, or a worktree whose cone adds it). The worker did not disable sparse-checkout, per its order.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): run api-suite.sh at the drain in a tree carrying infra/logic/registry, or widen the cone to include infra/logic for the api-suite cells."
+},
+{
+  "id": "AMGT_RESAPP-Z-W171-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~171",
+  "surfaced_at": "2026-09-29T12:40:00Z",
+  "one_line": "Follow-up to AMGT_RESAPP-Z-W171-S1: the issuer widened the cone to infra/logic (ruling by 2.0.0_SA_COO~Z, this session), which removes S1's cause (registry now present; the commit gate's naming limb can read it). AC2 still cannot pass in this cone: 'exit=1, 5 failed, 287 passed, 23 errors', every failure a FileNotFoundError on a path outside the cone (infra/aws/terraform/harvest/scoped-amgt-api.tf x5; portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json x23).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "api-suite.sh re-run in C:/tmp/r48-171 after infra/logic/registry/systems.json appeared (test -f -> present): 5 failed, 287 passed, 23 errors, exit=1 (was 2 collection errors + 268 errors).",
+      "The 5 failures are all in lib/research/api/tests/test_scoped_amgt_mount.py (reads infra/aws/terraform/harvest/scoped-amgt-api.tf); the 23 errors are the print tests' fixture read of portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json. git ls-tree HEAD shows infra/aws/terraform/harvest exists at HEAD; the worker's order says infra/ and portal/ are absent by design.",
+      "None of the 28 touches code this cell changed: the 7 new tests pass and AC1 passes (ranking rows read: 2 ... YES, exit=0)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 runs api-suite.sh in the worker's worktree and reports N passed, 0 failed (308 at the cut); the issuer ruled S1's cause resolved by widening the cone to infra/logic.",
+  "world_is": "S1's cause (infra/logic/registry) is resolved by that widening and the commit gate now reads the registry. The suite also reads infra/aws/terraform/harvest and portal/.../__harness__ fixtures, which the cone still omits, so AC2 stays FAIL as an instrument absence. The channel schema has no RESOLVED disposition; S1 stays UNDER_INVESTIGATION for the CVO to grade.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): run api-suite.sh at the drain in a tree carrying infra/aws/terraform/harvest and portal/src/pages/SecurityAnalysis/__harness__, or add those two paths to the cone for slot ~171 and have the worker re-run AC2."
 }
 ]
 ```
