@@ -64,7 +64,10 @@ Cells 2-4 are served moves on the same function. They ride ONE build, ONE never-
 | 3 | **Officers from the proxy, served and labelled** (ruling 3) | SERVED. The payload carries source, accession and the NEO label; the census over the names is printed with its denominator. |
 | 4 | **The Historical-multiple reference names its owner** (carried s.4b; DSGN r5 ruling 4) | SERVED. The served label reads "Opal's historical-multiple reference". |
 
-**Fan-out:** 4. Cells 2-4 share one deploy cell at the end: a build-and-apply order after all three drain.
+| 5 | **The crosswalk never drops a served record** (added ~23:0xZ, before issuance: AMGT_CORPUS round-16 analysis ruling 1; row CORPUS `Z-S63`) | LOCAL code in `lib/research/identity/crosswalk.py`, which AMGT_RESAPP owns (one writer per artifact). `write_pool` / `build_crosswalk` unions the latest served pool's records with the build, and a record leaves only by an explicit retirement input. **AC:** (a) a planted pool record absent from the build's inputs survives the next `write_pool`; (b) a planted retirement removes it (the negative control); (c) today's pool round-trips digest-equal, 237 in and 237 out; (d) **the exact fork:** a pinned-side append followed by one CLOUD-side `write_pool` keeps the appended record. No served move beyond (c)'s digest-equal no-op. |
+
+**Fan-out:** 5. Cells 2-4 share one deploy cell at the end: a build-and-apply order after all three drain. Cell 5 is
+independent, and it unblocks AMGT_CORPUS's scheduled registration.
 
 **NOT cells:**
 - Hitachi's model block (AMGT_CORPUS);
