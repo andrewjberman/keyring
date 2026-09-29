@@ -77,6 +77,10 @@ the six header mnemonics above; ABSENCES 17/17 and CASES 3/3 unaffected; EXPORT-
 the old rc-only control would pass).
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29):** drained @a6c17f4bcf (portal ed109ced). AC1 re-run by the issuer: "FWD-30 HARNESS READS THE
+REDESIGNED PAGE: YES", 4 of 4 sets exact, FIGURES 182/182; instance VALID rc=0. BOUND for L9: the six header figures sit in each card's
+click-open window (`HeaderCardDetail`), which the harness now renders per card; the static first view shows only each card's lead.
+<status>complete</status>
 <round>47</round>
 <slot>~168</slot>
 <fabric>site-z</fabric>

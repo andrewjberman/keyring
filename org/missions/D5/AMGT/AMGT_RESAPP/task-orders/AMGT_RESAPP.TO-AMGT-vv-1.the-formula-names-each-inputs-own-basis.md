@@ -87,6 +87,9 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 this order drains.
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29):** drained @a6c17f4bcf (portal 2e267aa6). AC1 re-run by the issuer: 4 of 4; instance VALID
+rc=0; tsc rc=0 on the merged portal branch. The label sits in `scoped_amgt._model_cases` (not the producer), so stored blocks do not move.
+<status>complete</status>
 <round>47</round>
 <slot>~168</slot>
 <fabric>site-z</fabric>
