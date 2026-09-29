@@ -1,0 +1,1161 @@
+{
+  "schema_version": "1.0",
+  "register": "irpt-manual-walk-v2-20260929",
+  "status": "DRAFT -- for Andrew's review; not issued. Relay to 1.0.0_SA_CTO and 2.0.0_SA_COO~D on Andrew's word only.",
+  "sources": {
+    "andrew_manual_walk_2": {
+      "audio": "C:\\Users\\AndrewBerman\\Downloads\\IRPT WALK 2_2309.m4a (740 s)",
+      "transcript": "tmp/ui-guidance/20260929/IRPT WALK 2_2309.txt (+ .tsv/.srt/.json with timestamps)",
+      "transcription": "openai-whisper large-v3-turbo, CPU, local, no network; 2026-09-29 18:20-18:53Z",
+      "screenshots_dir": "C:\\Users\\AndrewBerman\\Pictures\\Screenshots\\irpt_manual_walk_v2",
+      "screenshots": 17,
+      "note": "Transcript and screenshots name a client and carry dollar figures; both stay local (tmp/ is gitignored, the Pictures folder is outside the repo). This register quotes findings in words and cites screenshots by file name only."
+    },
+    "cro_walk_2": {
+      "instrument": "/ui-walk --deep --periods-per-account on the same client, localhost:5174 (dev-live, portal working copy 3e2233de92), 2026-09-29 19:02Z",
+      "output": "tmp/ui-walk/20260929T190228Z/ (gitignored)",
+      "status": "DONE 19:02:34-19:06:03Z; 3.6 min; 54 screenshots; 21 unique findings from 122 observations; 0 guard aborts; 24 API answers not READY (all DEPENDENCY_UNAVAILABLE on performance); 3 console errors (two login 401 probes, one hydration whitespace warning on Holdings); account DISARMED and a login with the walk password REFUSED (401)"
+    },
+    "prior_registers": [
+      "docs/briefs/irpt-master-guidance-findings-20260928.json (AD-01..AD-15)",
+      "docs/briefs/irpt-ui-remaining-findings-20260928.json (35 carried walk findings)"
+    ],
+    "placed_elsewhere_today": {
+      "canonical_security_table": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20260929_182xZ_ONE_CANONICAL_SECURITY_TABLE.md @c3c3f414dc -- (a)+(b) IRPT_BCKEND ~M cell, (c) new project (L1 brief docs/briefs/canonical-security-table-brief-20260929.md), (d) portal half ~D"
+    }
+  },
+  "items": [
+    {
+      "id": "W2-01",
+      "tab": "Performance",
+      "priority": "P0",
+      "title": "COT performance still answers a dependency refusal; the account picker is fixed",
+      "directive": "Name the upstream the COT performance answer depends on and make it answer; until then the refusal stays a named one. The picker's per-account tails are right now.",
+      "quotes": [
+        {
+          "text": "So as we can see from the initial drop down, we fixed the account recognition issue. That's great. However, there's still an unavailable dependency on the drop down ... we need to assess whether the back end agent is working on the port or the adapter, if that is a data breakage or if it's a front end adapter issue.",
+          "ref": "transcript l.2-5 [11-40 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "performance_1.png",
+          "read": "CONFIRMED",
+          "words": "The picker lists each of the client's two accounts with its own tail and type and a value; both options still end in 'YTD pending' (UIC-05). Below the presets, a refusal panel reads 'Performance for this account is temporarily unavailable right now. It becomes available again once the upstream data source Opal Capital relies on for this account answers', with the raw code DEPENDENCY_UNAVAILABLE under Details."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "The refusal is the adapter's own named answer for COT: ~D's BEFORE read for the r3 window (ledger org/critical_paths/change_management/20260929T1223Z_irpt-adapter-holdings-gold-49f-r3-20260929_deploy_completion.md, D1) reads a COT account as DEPENDENCY_UNAVAILABLE with business date 2026-09-22, and the same after the r3 apply (UNCHANGED). The page renders that refusal as designed; nothing in the front end adapter is broken on this path."
+        },
+        {
+          "claim": "inferred",
+          "text": "The upstream is the COT performance source the adapter reads today, whose latest business day is 2026-09-22 (five trading days behind Monday's T-1). The CTO's placement of 2026-09-29 orders the COT holdings-basis re-point (row S173) after the canonical-table cells (a)+(b); until it lands, COT performance has no answering source."
+        }
+      ],
+      "reuse": [
+        "The 49F holdings-basis adapter path (r3, live since 16:40Z today) is the pattern the COT re-point follows."
+      ],
+      "absorbs": [
+        "UIC-05",
+        "AD-14"
+      ],
+      "supersedes": [],
+      "owners": [
+        "IRPT_BCKEND (2.0.0_SA_COO~M for the COT re-point, S173)",
+        "2.0.0_SA_COO~D (the picker's 'pending' word, UIC-05)"
+      ],
+      "acceptance": "A COT account answers a YTD figure on the Performance tab from the holdings basis, or its refusal names the upstream day that is missing; the picker option carries no 'pending' after the figure renders.",
+      "decision_for_cto": "None new: S173's order is placed. Confirm that AD-14 ('a working performance report, and the dependency named') closes on S173 for COT."
+    },
+    {
+      "id": "W2-02",
+      "tab": "Analysis",
+      "priority": "P1",
+      "title": "Portfolio step: give the Client / Prospect choice the hero-card fixture the estate already has",
+      "directive": "The two cards are plain rectangles. Use the shared hero-card fixture (the VARIANT cards of the analysis-type step; the Philosophy page's cards) so the first step reads like the second.",
+      "quotes": [
+        {
+          "text": "the initial bifurcation between client and prospect cards. This is fine, but we can jazz this up a little bit because we're lacking ... a lot of the fixture design that we brought in with the philosophy UI, the philosophy UI cards. So this is an opportunity to bring in some of those shared fixtures and preexisting components.",
+          "ref": "transcript l.7-10 [48-70 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "analysis_1.png",
+          "read": "CONFIRMED",
+          "words": "'Select the portfolio' over two white boxes: 'Client -- Choose a client in the search above to analyze their portfolio' greyed, and 'Prospect -- Upload a prospect's holdings to analyze a portfolio not yet at Opal'. No band, no icon, no selected state."
+        },
+        {
+          "file": "analysis_4.png",
+          "read": "CONFIRMED",
+          "words": "The analysis-type step already uses the hero-card fixture: three VARIANT cards with a navy band, an icon and a SELECTED state."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "GenerateComposer.tsx:315-319 renders the type step through VariantCards; the portfolio step (page 1 of the AD-06 flow) is a different component without the fixture."
+        }
+      ],
+      "reuse": [
+        "VariantCards (GenerateComposer.tsx:316) -- the same fixture, two cards",
+        "portal/src/ui/components/graphic/HeroGraphic.tsx (the canonical card)"
+      ],
+      "absorbs": [
+        "AD-06 (page 1 of the three-page flow)",
+        "AD-08 (cards show which one is selected)"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "The Client and Prospect choices are two hero cards of the same fixture as the analysis-type step, with a selected state; the disabled Client card says in words why it is disabled.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-03",
+      "tab": "Analysis",
+      "priority": "P1",
+      "title": "Prospect upload modal: the template is a button, and the file choice ends in a proceed / decline pair",
+      "directive": "'Download the template' becomes an indigo button from the button library; the native 'Choose File / No file chosen' becomes a chooser with two footer actions, proceed (blue) bottom-right and decline (red) bottom-left, once a file is chosen.",
+      "quotes": [
+        {
+          "text": "the underscored download template should be a expanded UI components, probably Indigo. There's a lot of existing button component architecture that we can source for this segment ... If these are intended to be hyperlinks in the bottom left, then we need to review a more cogent structure for that. I would suggest something on the bottom left and bottom right, probably blue or red. If there's going to be proceeding or declining on the basis of that file.",
+          "ref": "transcript l.16-21 [96-133 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "analysis_3.png",
+          "read": "CONFIRMED",
+          "words": "The modal 'Upload a prospect's holdings' has the band, the rules as five bullets, an underlined 'Download the template (holdings-template.csv)' link, then 'Choose the holdings file' over a native 'Choose File  No file chosen' control. No footer, no primary action, no cancel."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "AD-07's modal exists (progress on the 09-28 brief); its actions are a text link and a native file input."
+        }
+      ],
+      "reuse": [
+        "The button library (one #5F3BE3 primary per view, C8) and the panel footer slot (PanelFooter) already on the Holdings panels."
+      ],
+      "absorbs": [
+        "AD-07"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "The template is a button; after a file is chosen the modal footer shows a primary 'Use this file' bottom-right and a 'Cancel' bottom-left; no native file-input text is on the face.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-04",
+      "tab": "Analysis",
+      "priority": "P0",
+      "title": "Comparison entries are never resolved or named: the list reads 'Comparison 1', 'Comparison 2'",
+      "directive": "Resolve what the advisor typed BEFORE it is added -- an Opal model against the catalog, an ETF against the estate's security master -- and show the resolved name in the list; refuse an unresolved entry in words.",
+      "quotes": [
+        {
+          "text": "when a comparison is selected, there's no recognition of whether a ticker, whether an Opal model or a third party ETF or symbol is actually matched successfully. That needs to be clarified and not only visually displayed, but on the engineering side confirmed prior to being able to add it. I recommend some kind of ticker lookup system.",
+          "ref": "transcript l.23-29 [136-181 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "analysis_4.png",
+          "read": "CONFIRMED",
+          "words": "'Compare with an Opal model (2 of 5)' over '1. Comparison 1 remove / 2. Comparison 2 remove', then the input 'Opal model or ETF symbol' and Add. Neither entry says what it is."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "GenerateComposer.tsx:321-339 prints 'Comparison {index + 1}' by design ('the opaque catalog key is carried as data ... never printed as text'); composer.ts:187-204 addComparison refuses only the cap of five and a duplicate -- no existence check; composer.ts:31-35: 'the vendor's typed security ids are resolved SERVER-SIDE'. A mistyped symbol therefore reaches submission and fails at the producer."
+        }
+      ],
+      "reuse": [
+        "The Opal model catalog the page already resolves against server-side",
+        "DynamoDB etf-classifications (the canonical security table: ticker -> name, class, sub-asset) for ETFs and single securities -- no external lookup needed for anything the estate already holds"
+      ],
+      "absorbs": [
+        "UIC-21 (the cut placeholder goes with the input)"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D (the resolve-before-add and the named row)",
+        "IRPT_BCKEND (a resolve endpoint if the catalog read is not already served to the page)"
+      ],
+      "acceptance": "After Add, the list row reads the resolved name (an Opal model's name, or an ETF's name with its ticker); an entry that resolves to nothing is refused at Add with words and never reaches Generate.",
+      "decision_for_cto": "Andrew's 'ticker lookups without authentication' is an external call. The estate's own canonical security table already carries the name per ticker; place the lookup on it, and only an instrument it lacks would need egress (Andrew's per-use word)."
+    },
+    {
+      "id": "W2-05",
+      "tab": "Analysis",
+      "priority": "P1",
+      "title": "One flow for comparisons: the card opens the picker, and the loose input box goes",
+      "directive": "Choosing Comparison or Multi-Comp takes the advisor straight into picking Opal models (a clear dropdown of presets) or entering an ETF, as the modal's second page; the card pick and the comparison count are one input, not two that can disagree.",
+      "quotes": [
+        {
+          "text": "There shouldn't be a need to select one of these cards and then on top of that have to add symbols ... There should be one smooth flow, not kind of a card sequence, and then this input box. Really, if you select comparison, it should immediately drop you into picking out an Opal model with a clear dropdown. I would recommend a second page to the modal.",
+          "ref": "transcript l.37-42 [227-272 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "analysis_5.png",
+          "read": "CONFIRMED",
+          "words": "Multi-Comp card marked SELECTED while the page reads 'Variant Overview (0 comparisons)' and the refusal 'Add at least two Opal models to compare against.' The card and the count disagree on the same screen."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "composer.ts:71-90: the variant is DERIVED from the comparison count (0 Overview, 1 Comparison, 2-5 Multi-Comp); the card pick is a second input (variantChoice) that the count can contradict, which is the UIC-18 shape the words now explain but do not remove."
+        }
+      ],
+      "reuse": [
+        "The canonical HeroDialog modal (HeroGraphic.tsx) for the second page",
+        "The Opal model catalog for the preset dropdown"
+      ],
+      "absorbs": [
+        "UIC-18"
+      ],
+      "supersedes": [
+        "The separate 'Opal model or ETF symbol' input + Add under the cards"
+      ],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "Picking Comparison opens a picker for one Opal model or ETF; picking Multi-Comp opens the same picker for two to five; the variant label can never contradict the card; there is no input box outside the picker.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-06",
+      "tab": "Analysis",
+      "priority": "P1",
+      "title": "Your analysis requests: 'Open' lands below a long list and a needs-attention request says only its code",
+      "directive": "Opening a request shows it in the canonical modal (or scrolls to it), newest first in the list; a needs-attention request says in words what to change and offers the one action. The id stays behind Technical details.",
+      "quotes": [
+        {
+          "text": "there's a lot of inexplicable request IDs and strings. If you try to proceed through any of these hyperlinks, particularly the unavailable ones or needs attention, there is no modal popup. These request execution IDs go nowhere as far as I can tell ... assess whether this is a backend data gap or if it is a frontend adapter gap.",
+          "ref": "transcript l.44-48 [276-305 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "analysis_6.png",
+          "read": "CONFIRMED",
+          "words": "Thirteen rows '<client> requested <date> Open <status>' in no date order (27th, 29th, 26th, 28th ...); statuses 'Unavailable -- needs attention. Open it to see what to change.', 'Loading -- Running -- in progress', 'Ready'. Below: 'Job status: Unavailable', Technical details 'Request REQ-2119def...' and 'ANALYSIS_REQUIRES_ATTENTION', a 'Check status' button, and 'Report sections are not available. Reopen this request to check again.' Nothing says what to change."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "OwnedRequestHistory.tsx:279-283: Open sets the selected id and renders ProspectJobStatus plus the sections INLINE at :292-302, below the whole list -- no modal, no scroll; the row's promise 'Open it to see what to change' is composed at :110 for every non-READY/LOADING state. Reason words are one mapping, ANALYSIS_REQUIRES_ATTENTION -> 'needs attention' (:84-86). The request id prints only inside Technical details (AD-09 met there)."
+        },
+        {
+          "claim": "inferred",
+          "text": "The correction itself is not on the wire the page reads: the producer marks a job NEEDS_CORRECTION with a job_detail code (this seat's W22/W24 halves: RESOLVE_RETRY_EXHAUSTED under the S206 concurrency cause), and the page's status read carries the public code only. Half front end (where Open lands, the order, the verb), half backend (the words to show)."
+        }
+      ],
+      "reuse": [
+        "HeroDialog for the opened request",
+        "ProspectJobStatus (already renders the status words)"
+      ],
+      "absorbs": [
+        "AD-09 (residue)",
+        "UIC-23 (landed: rows in words)"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D (open-in-modal or scroll, newest-first order)",
+        "IRPT_BCKEND (~P/~Y: the correction words on the status wire)"
+      ],
+      "acceptance": "Rows are newest first; Open shows the request where the advisor is looking; a needs-attention request reads what to change in a sentence and the one action (re-submit, replace the file, or wait), with the id and code behind Technical details.",
+      "decision_for_cto": "Which seat owns the correction words on the wire: the resident's job_detail already carries a code; the CTO names whether the words are minted by the producer (IRPT_BCKEND) or mapped by the page (DSGN_IRPTV1)."
+    },
+    {
+      "id": "W2-07",
+      "tab": "Analysis",
+      "priority": "P1",
+      "title": "Generate submits, but the page shows only a one-line state beside the button and the list needs a manual refresh",
+      "directive": "After Generate, take the advisor to the request's own status (progress in words, then the report); the request list updates itself.",
+      "quotes": [
+        {
+          "text": "The generate function here currently does not do anything. So we need to assess if that is on COO tilde D task order list, if that has been preceded, or if it is scoped, or if that is just a missing hole there.",
+          "ref": "transcript l.50-52 [308-325 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "analysis_7.png",
+          "read": "CONFIRMED",
+          "words": "Output step filled (a test title, prepared for an internal test recipient); to the right of Generate a small grey line 'Needs attention -- areq-f7048d4e' -- a job submitted from this browser, already in the needs-attention state."
+        },
+        {
+          "file": "analysis_2.png",
+          "read": "CONFIRMED",
+          "words": "Before any press the same slot reads 'No job submitted from this browser yet.'"
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "GenerateComposer.tsx:286-298 onGenerate -> submitComposition -> setJob; :555-562 the only feedback is the job-state line (label, reason code, request id) beside the button. The history list (OwnedRequestHistory.tsx:264-265) refreshes on 'Refresh request list' or page load only. So the press did submit (areq-f7048d4e exists); what is missing is a visible journey: no navigation, no progress surface, no automatic list update. Not on the 09-28 brief: AD-09 covers what a result says, not what happens after the press."
+        },
+        {
+          "claim": "measured",
+          "text": "The submitted job went to needs-attention -- the same producer state W2-06 opens; its cause is the backend's (W2-06 inferred claim)."
+        }
+      ],
+      "reuse": [
+        "ProspectJobStatus (the prospect flow already polls one request's status in words)"
+      ],
+      "absorbs": [],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D (the post-press journey)",
+        "IRPT_BCKEND (why this job needs attention)"
+      ],
+      "acceptance": "Pressing Generate opens the request's status view with progress in words, and the report when READY; 'Your analysis requests' shows the new row without a manual refresh.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-08",
+      "tab": "Holdings",
+      "priority": "P1",
+      "title": "The card's accounts pie is grey on grey: use an ordinal brand-hex scale",
+      "directive": "Colour the L-1 (accounts) slices by an ordinal scale anchored to Opal brand hexes -- starting light (a light blue) and scaling through blue variants, not indigo -- one canonical ramp reused wherever N unnamed-class slices are drawn.",
+      "quotes": [
+        {
+          "text": "the pie chart that displays on the left of the card. We need a standard ordinal method for how we display these colors. Gray is not going to be enough. I recommend using opal brand guidelines, canonical hexes, potentially starting with some of the lighter colors, perhaps like a light blue ... Probably stay away from indigo, maybe make these blue scaling variants.",
+          "ref": "transcript l.54-60 [331-366 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "holdings_1.png",
+          "read": "CONFIRMED",
+          "words": "The canonical All Categories card now holds Total Assets, a two-slice pie in two greys, and two account tiles with values and shares. The tiles read 'Rebalancer strategy: <client> ****9238 / ****9237' -- the L-1 level is the accounts (AD-01 progress), still labelled as a strategy (AD-02 not met; W2-20)."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "Progress on AD-01: the accounts sit inside the card as L-1. The slice fills were not read in code by this seat; the screenshot shows two greys."
+        }
+      ],
+      "reuse": [
+        "portal/src/lib/chartColors.ts (PALETTE, the brand blues) -- one ordinal ramp exported once"
+      ],
+      "absorbs": [
+        "UIC-11 (narrow grey ramp)",
+        "UIC-10 (labels: an ordinal ramp with a legend replaces slice labels)"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "With 2, 4 and 11 accounts the slices are distinguishable and legend-labelled from one exported ramp; no slice is grey unless it is the 'Various' remainder.",
+      "decision_for_cto": "The ramp's length: COT clients reach eleven accounts. Name the rule for N above the ramp (group the tail as 'Various', or extend the ramp), so the same ramp serves the map's legend and the drill bars."
+    },
+    {
+      "id": "W2-09",
+      "tab": "Holdings",
+      "priority": "P1",
+      "title": "The drill modal's top bar is one sliver per security; aggregate it to the asset classes",
+      "directive": "The allocation bar at the top of the account / model drill is a few-segment horizontal bar by asset class (Cash, Fixed Income, Equity, Alternatives -- Positioning's order and colours), not one divider per security or sleeve.",
+      "quotes": [
+        {
+          "text": "the initial bar that displays the asset allocation breakdowns by color is very staggered. This needs to be aggregated into those classes ... not have all of these vertical dividers for the various underlying securities or sleeves. This should be a clean several unit horizontal bar.",
+          "ref": "transcript l.62-66 [376-411 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "holdings_2.png",
+          "read": "CONFIRMED",
+          "words": "The 'Rebalancer strategy' drill: a thin bar of roughly forty green / blue / orange slivers with white dividers, then 'Opal Conservative Growth' and its sixteen constituents with coloured dots and amounts."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "inferred",
+          "text": "The bar is drawn per constituent in the drill's own component (DrillTree.tsx's dialog); not read line-by-line by this seat."
+        }
+      ],
+      "reuse": [
+        "Positioning's asset-class bar and colours (lib/chartColors ASSET_CLASS); the MDPF HeroDialog's colour bar (mdpf_3 in the 09-28 brief)"
+      ],
+      "absorbs": [],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "The drill's bar has one segment per asset class present, in canonical order and colour, with a legend; no per-security dividers.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-10",
+      "tab": "Holdings",
+      "priority": "P1",
+      "title": "Securities map: say the smaller-holdings rule, keep it one rule, and call the group 'Various'",
+      "directive": "State the grouping rule on the face and in the tooltip; the group's label and its tooltip 'asset class' read 'Various', never 'Smaller holdings' as a class.",
+      "quotes": [
+        {
+          "text": "What is the basis for delineating to smaller holdings? Is it an absolute count? Is it a prorated rate? ... there should be a consistent rule across all sleeves in the securities map component. And with that in mind, for the asset class listing in the tooltip, smaller holdings should be changed to various.",
+          "ref": "transcript l.76-81 [453-499 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "holdings_4.png",
+          "read": "CONFIRMED",
+          "words": "Map filtered to one model; a purple tooltip 'Smaller holdings - Smaller holdings (3 securities) / Weight 1.41% / Asset Class Smaller holdings' over a grey tile."
+        },
+        {
+          "file": "holdings_3.png",
+          "read": "CONFIRMED",
+          "words": "All securities: a grey 'Smaller holdings 15.2%' tile at the right; legend 'Fixed Income, Equity, Alternatives, Smaller holdings'."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "HoldingsTreemap.tsx:174-176 SMALL_TILE_SHARE_THRESHOLD = 0.02 -- a leaf below 2% of the DISPLAYED set's own total weight is grouped. It is a prorated rate relative to the current chip, so the rule already holds across sleeves; :171 OTHER_TILE_LABEL = 'Smaller holdings', :173 fill slate400, and the group's internal bucket is assetClass 'Other' (:76), which is why the tooltip prints it as an asset class."
+        }
+      ],
+      "reuse": [
+        "The existing threshold; only the words and the tooltip's class line move"
+      ],
+      "absorbs": [],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "The grouped tile reads 'Various (n securities under 2% each)'; the tooltip's asset class reads 'Various'; the legend entry reads 'Various'; a footnote states the 2% rule; the same rule applies under every chip.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-11",
+      "tab": "Holdings",
+      "priority": "P0",
+      "title": "Aggregate securities table: one row per security with the prorated collective weight, not one row per account and sleeve",
+      "directive": "With Account All and Sleeve All, a ticker appears once; its weight is the sum of its instances' shares of the client total and its value the sum of their values. Rows are monotonic, never additive duplicates. Choosing one account or sleeve shows that scope's own rows.",
+      "quotes": [
+        {
+          "text": "As you can see, there are five rows of cash holdings. There is no need for there to be five in an aggregate view. Those should be aggregated to one row with the collective weight as a function of the percentage that occupies on a prorated basis of that given sleeve and account combination. This also applies to all other asset classes anywhere where a keyed asset rows identified. Those should be monotonic. They should not be additive rows.",
+          "ref": "transcript l.85-90 [516-548 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "holdings_5.png",
+          "read": "CONFIRMED",
+          "words": "Sleeve All / Account All: five Cash rows (CASH x4, FCASH), then CLIP three times and JPST three times among the Ultra Short Duration rows, each with its own weight and value."
+        },
+        {
+          "file": "holdings_6.png",
+          "read": "CONFIRMED",
+          "words": "JAAA four times, USHY twice, DIVZ / PFDE / SPYM repeated under Equity Large."
+        },
+        {
+          "file": "holdings_7.png",
+          "read": "CONFIRMED",
+          "words": "IDVZ, VEA, IEMG, VUG each twice."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "The securities table lists the snapshot's security nodes, one per sleeve instance (SecurityList.tsx; the map already sums instances per model chip via nodeRefs, HoldingsTreemap.tsx:60-69 and splitCount :161-163), so the map aggregates and the table does not."
+        }
+      ],
+      "reuse": [
+        "HoldingsTreemap.tsx's per-identity aggregation (accountGroupsFrom / splitCount) -- the same fold for the table"
+      ],
+      "absorbs": [
+        "UIW-0928-05 (dozens of constituents at 0.00%)",
+        "UIC-15 (the ticker repeated in the name column)"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "Under Account All and Sleeve All each ticker has one row whose weight equals the sum of its instances' weights (to the displayed precision) and whose value equals the sum; the name column does not repeat the ticker; under one account or sleeve the rows are that scope's.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-12",
+      "tab": "Holdings",
+      "priority": "P0",
+      "title": "Sub-asset 'Other' rows come from the canonical table, and new securities get rows continuously",
+      "directive": "Every 'Other' sub-asset on the tab is a missing canonical row, not a display choice. Add the rows in the canonical table (an ad hoc classification run as the QA run) and keep them current with a scheduled path that classifies securities as they appear day over day.",
+      "quotes": [
+        {
+          "text": "Any rows that, as you can see, list with other in the sub-asset class, we will need to add a new row in that canonical table and draw from that canonical table. So if that requires a rerun of any open AI classification logic ... we will need to not only run an ad hoc run, but also likely structure a continuous pipeline as new securities become apparent in day-over-day draws.",
+          "ref": "transcript l.94-96 [564-609 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "holdings_6.png",
+          "read": "CONFIRMED",
+          "words": "Fixed Income rows with sub-asset 'Other' (USHY) drawn as near-black cells beside the green class cells."
+        },
+        {
+          "file": "holdings_7.png",
+          "read": "CONFIRMED",
+          "words": "Equity 'Other' for VUG and for every single stock (PM, VZ, UNH, MPLX, JNJ, CVX, MSFT ...)."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "Placed today: the CTO's cell (a) moves Investor Reporting's producer from bd-securities to etf-classifications; this seat's L1 brief (docs/briefs/canonical-security-table-brief-20260929.md) carries the continuous path as O7 and the ad hoc backfill as its QA run."
+        }
+      ],
+      "reuse": [
+        "etf-classifications, its seed source and client (see the L1 brief)"
+      ],
+      "absorbs": [],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~M (cell (a))",
+        "the new canonical-table project (O7)"
+      ],
+      "acceptance": "No ETF row on the Holdings tab reads 'Other' where the canonical table holds a sub-asset; a ticker new to a day's holdings has its row after the scheduled run, and the QA backfill is not the acceptance evidence.",
+      "decision_for_cto": "Whether the classification of a new ticker calls a vendor model (Andrew's 'open AI classification logic') -- per-use word at the PRD, never a pipeline default."
+    },
+    {
+      "id": "W2-13",
+      "tab": "Holdings",
+      "priority": "P0",
+      "title": "Single securities: sector and industry from the canonical table, marked as single securities, ordered after the ETFs",
+      "directive": "A single stock reads its sector and industry (the canonical table has them), carries an instrument-type mark (ETF or single security) from the canonical row, and sits after the last ETF class in the table so the sub-asset colour gradient is reused, not re-invented.",
+      "quotes": [
+        {
+          "text": "The other category, which is being used liberally here for the individual securities, we have already tracked the sub-asset class and even industry class for those securities. This is also contained within that positioning table ... individual securities should be marked as such. That likely should be a field in that DynamoDB table ... individual securities are always secondary ... And that is then we can reuse the same gradient logic with regard to the sub-asset taxonomy.",
+          "ref": "transcript l.99-105 [620-687 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "holdings_7.png",
+          "read": "CONFIRMED",
+          "words": "Fourteen single stocks as Equity / Other."
+        },
+        {
+          "file": "ref_1.png",
+          "read": "CONFIRMED",
+          "words": "Positioning's Holdings Breakdown: Equity rows read Consumer Discretionary, Information Technology, Financials with industry sub-lines, coloured by sub-asset."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "~D's record @099316efdd: SecurityList.tsx:149 calls getSubAssetClass(ticker, undefined), discarding the served sub-asset, so GLD / PHYS / VXX and the single stocks fall to 'Other'. The CTO placed the order ('single stocks after the last ETF class') as the portal half (d); the instrument-type FIELD is O8 of this seat's L1 brief."
+        }
+      ],
+      "reuse": [
+        "portal/src/components/holdings/HoldingsBreakdownTable.tsx (Positioning's table, sub-asset gradient)",
+        "etf-classifications (sector, sub-asset per ticker)"
+      ],
+      "absorbs": [
+        "AD-04 (partly)"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D (placement (d))",
+        "the new canonical-table project (O8)"
+      ],
+      "acceptance": "A single stock row reads its sector and industry from the canonical row; single stocks are listed after the last ETF class; their colours follow the sub-asset gradient; no row reads 'Other' for a ticker whose canonical row has a sub-asset.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-14",
+      "tab": "Holdings",
+      "priority": "P1",
+      "title": "Alternatives and the map's classes come from the canonical table; no new suite",
+      "directive": "GLD and PHYS are Commodities / Metals, VXX is Structured / Hedge, on the map and in the table, read from the canonical table Positioning reads. Nothing new is built for it.",
+      "quotes": [
+        {
+          "text": "we do need to make sure that the canonical positioning table that holds all of our labeled securities, that should be a shared utility for this function. This should not be a duplicative effort. There should be no new resources created ... So we already have it in positioning.",
+          "ref": "transcript l.69-74 [425-449 s]"
+        },
+        {
+          "text": "The alternatives here, I already covered this with group D. This needs to be running through that same table for the purpose of maintaining a unified taxonomy.",
+          "ref": "transcript l.107-108 [690-704 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "holdings_3.png",
+          "read": "CONFIRMED",
+          "words": "All-securities map: PHYS in orange (Alternatives); legend Fixed Income / Equity / Alternatives / Smaller holdings."
+        },
+        {
+          "file": "holdings_8.png",
+          "read": "CONFIRMED",
+          "words": "Alternatives / Other: PHYS twice, GLD twice, VXX twice; the footer reads 'Source: holdings_snapshot.build_cot.' (UIC-14 still not met)."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "Placed today as cells (a)+(b) under halves (served figures move) before the COT re-point S173; the portal half (d) stops discarding the served sub-asset."
+        }
+      ],
+      "reuse": [
+        "etf-classifications and its client; Positioning's ASSET_CLASS colours (commodities gold, structured its own hue)"
+      ],
+      "absorbs": [
+        "AD-05 (superseded by the placement)",
+        "UIC-14 (the source line -- still owed)"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~M (cells (a)+(b))",
+        "2.0.0_SA_COO~D (portal half (d); the source line)"
+      ],
+      "acceptance": "After cell (a) and the portal half, GLD and PHYS read Commodities / Metals and VXX Structured / Hedge on the map, the table and the drill, in Positioning's colours; the footer names no producer function.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-15",
+      "tab": "Holdings",
+      "priority": "P1",
+      "title": "Port Positioning's Holdings Breakdown to every Investor Reporting holdings view",
+      "directive": "The securities table on Investor Reporting is Positioning's Holdings Breakdown (asset class, sub-asset with industry sub-line, ticker, name, weight, class total rows), used as-is.",
+      "quotes": [
+        {
+          "text": "This is a reference for the purpose of visually depicting that taxonomy. As you can see in the holdings breakdown, we've already covered the not only sub-asset class but industry. So clearly, it should be a very short hop to link this function for all investor reporting application views.",
+          "ref": "transcript l.110-112 [714-738 s]"
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "ref_1.png",
+          "read": "CONFIRMED",
+          "words": "Positioning's HOLDINGS BREAKDOWN: dark header, BASIC INFO group, ASSET CLASS / SUB ASSET / TICKER / NAME / WEIGHT, class-coloured cells with lighter sub-asset tints, a FIXED INCOME TOTAL row."
+        },
+        {
+          "file": "holdings_5.png",
+          "read": "CONFIRMED",
+          "words": "Investor Reporting's SECURITIES table has the same columns plus VALUE and the Sleeve / Account filters, but no class total rows, no industry sub-line, and the duplicates of W2-11."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "The component exists: portal/src/components/holdings/HoldingsBreakdownTable.tsx (named in ~D's census as carrying its own ticker map at :69,129 -- that map is a copy the canonical-table project retires)."
+        }
+      ],
+      "reuse": [
+        "HoldingsBreakdownTable.tsx"
+      ],
+      "absorbs": [
+        "AD-04"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "Investor Reporting's securities table is the Positioning component with the class total rows and industry sub-lines, fed by the canonical classes; the Sleeve / Account filters and the VALUE column are its only additions.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-16",
+      "tab": "Analysis",
+      "priority": "P2 (PARTIAL: viewport-dependent)",
+      "title": "CRO observation: the 'Next' button is clipped at the right edge of the analysis-type step",
+      "directive": "The step's footer must fit the panel; no control is cut by the viewport.",
+      "quotes": [],
+      "screenshots": [
+        {
+          "file": "analysis_4.png",
+          "read": "CONFIRMED",
+          "words": "Bottom-right 'Nex' with the button's right edge outside the capture; 'Back' bottom-left is whole."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "Not reproduced at the walk's 1440 px viewport (shot 052: Back and Next whole); clipped in Andrew's narrower capture. A responsive-layout check for the step footer, not a fixed defect."
+        }
+      ],
+      "reuse": [],
+      "absorbs": [],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "Back and Next are whole at the walk's viewport and the page does not scroll sideways.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-17",
+      "tab": "Analysis",
+      "priority": "P2",
+      "title": "CRO observation: Output step wording -- 'Client: the client selected above', a title input narrower than its own placeholder",
+      "directive": "Name the client on the Output step; size the title input to its placeholder; do not repeat the title under the input.",
+      "quotes": [],
+      "screenshots": [
+        {
+          "file": "analysis_2.png",
+          "read": "CONFIRMED",
+          "words": "'Client: the client selected above'; the title input shows '<client> -- Multi-C' cut, and the same title in full as a helper line beneath. (UIC-19 improved: the title names the client, not one account.)"
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "GenerateComposer.tsx:500-511: the placeholder is the derived title and a helper paragraph prints it again; the client label falls back to 'the selected client' when the header row is absent (:270)."
+        }
+      ],
+      "reuse": [],
+      "absorbs": [
+        "UIC-19 (residue)"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "The Output step names the client; the title input shows the whole derived title; the helper line is dropped or says only that the title can be overridden.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-18",
+      "tab": "Analysis",
+      "priority": "P2",
+      "title": "CRO observation: request rows in no date order; 'Loading — Running -- in progress' mixes two dashes in one phrase",
+      "directive": "Newest first; one dash convention on the row; a LOADING row reads 'Running' once.",
+      "quotes": [],
+      "screenshots": [
+        {
+          "file": "analysis_6.png",
+          "read": "CONFIRMED",
+          "words": "Dates run 27th 10:14a, 29th 1:26p, 26th 8:12p, 28th 11:32p ...; two rows read 'Loading — Running -- in progress'."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "OwnedRequestHistory.tsx:105-110 composes label + ' — ' + note, and the producer's note for LOADING is 'Running -- in progress', so the row carries both an em dash and a double hyphen; the page renders the served order."
+        }
+      ],
+      "reuse": [],
+      "absorbs": [
+        "W2-06 (ordering)"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "Rows newest first; a LOADING row reads 'Running' and nothing twice; one dash convention.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-19",
+      "tab": "Holdings",
+      "priority": "P2",
+      "title": "CRO observation: the securities footer names a producer function",
+      "directive": "The source line names the data source in words, never a module or function name.",
+      "quotes": [],
+      "screenshots": [
+        {
+          "file": "holdings_8.png",
+          "read": "CONFIRMED",
+          "words": "'September 28th, 2026, 5:00p ET | Source: holdings_snapshot.build_cot.'"
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "UIC-14 carried NOT MET from the 09-28 register; the map's footer above reads 'Source: Opal Capital Analysis.' so the two footers on one tab disagree."
+        }
+      ],
+      "reuse": [],
+      "absorbs": [
+        "UIC-14"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "Every footer on the tab reads the same source words; no module or function name on the face.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-20",
+      "tab": "Holdings",
+      "priority": "P1",
+      "title": "CRO observation: the card's L-1 tiles are the accounts but read 'Rebalancer strategy: <client> ****9238'",
+      "directive": "An account tile reads the account's own tail and type ('****9238 / Trust'); 'Rebalancer strategy' is not a level of the taxonomy (AD-02).",
+      "quotes": [],
+      "screenshots": [
+        {
+          "file": "holdings_1.png",
+          "read": "CONFIRMED",
+          "words": "Two tiles 'Rebalancer strategy: <client> ****9238' and '****9237' with values and '57% / 43% of total'."
+        },
+        {
+          "file": "holdings_3.png",
+          "read": "CONFIRMED",
+          "words": "The map's chips repeat it: 'Model: Rebalancer strategy: <client> *9238' beside real models."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "AD-02 carried NOT MET; the 09-28 brief's measured state (DrillTree.tsx feeding one card per top-level category the snapshot names) still holds for the label."
+        }
+      ],
+      "reuse": [
+        "slices.ts#maskedLabelFor (the one masked-label rule)"
+      ],
+      "absorbs": [
+        "AD-02"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D",
+        "IRPT_BCKEND (if the snapshot names the category)"
+      ],
+      "acceptance": "L-1 tiles and map chips read the account's tail and type; L0 reads Models / SMAs / Client; the words 'Rebalancer strategy' appear nowhere on the tab.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-21",
+      "tab": "Holdings",
+      "priority": "P1",
+      "title": "Walk finding: at one-account scope the card is a one-slice pie and a single '100% of total' tile",
+      "directive": "When the page picker holds one account, the canonical card opens at L0 (Models / SMAs / Client) for that account; a level with one member is not drawn.",
+      "quotes": [],
+      "screenshots": [
+        {
+          "file": "tmp/ui-walk/20260929T190228Z/shots/030-...-holdings-Account-9237-Brokerage.png",
+          "read": "CONFIRMED",
+          "words": "One grey disc with a single divider line, one tile '100% of total'."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "Walk check chart:single-slice (UIW-20260929T190228Z-010) on shots 029 and 030; the same shape UIR-34 recorded for the INF drill in the 09-28 register (a level with one child drawn as a one-slice pie)."
+        }
+      ],
+      "reuse": [
+        "CategoryViewTree (the MDPF fixture) already renders L0 directly"
+      ],
+      "absorbs": [
+        "UIR-34"
+      ],
+      "supersedes": [],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "With one account selected the card shows Models / SMAs / Client tiles for that account and no accounts pie; a level with one member is skipped at every depth.",
+      "decision_for_cto": null
+    },
+    {
+      "id": "W2-22",
+      "tab": "Holdings",
+      "priority": "P1",
+      "title": "Walk finding: three scope controls on one tab (page picker, map chips, table selects) that do not follow each other",
+      "directive": "One selection drives the tab: the card's current selection (AD-01) scopes the map and the table; the table's own Sleeve / Account selects and the map's chip rows collapse into that one selection or read it back.",
+      "quotes": [],
+      "screenshots": [
+        {
+          "file": "tmp/ui-walk/20260929T190228Z/shots/042-...-holdings-press-Model-DIVZ-SMA.png",
+          "read": "CONFIRMED",
+          "words": "Page picker: one account. Map chip: 'Model: DIVZ SMA' (its single stocks). Table Sleeve: 'Opal Ultra Short-Term Income'. Three scopes on one screen."
+        }
+      ],
+      "measured": [
+        {
+          "claim": "measured",
+          "text": "HoldingsTab.tsx composes AccountFilter, HoldingsTreemap (its own chips: HoldingsTreemap.tsx accountGroupsFrom / modelOptionsFrom) and SecurityList (its own selects) as siblings (09-28 brief, AD-01 measured state); nothing binds the three."
+        }
+      ],
+      "reuse": [
+        "The card's selection state (AD-01's component 1) as the single source"
+      ],
+      "absorbs": [
+        "AD-01 (the 'updates from whatever is selected' clause)"
+      ],
+      "supersedes": [
+        "The table's separate Sleeve / Account selects",
+        "The map's per-account chip rows"
+      ],
+      "owners": [
+        "2.0.0_SA_COO~D"
+      ],
+      "acceptance": "Choosing a tile, a model or an account in the card re-scopes the map and the table in one step; no second selector on the tab can show a different scope than the card.",
+      "decision_for_cto": null
+    }
+  ],
+  "walk_delta": {
+    "status": "READ -- every check hit below was confirmed or dropped on its screenshot",
+    "walk_stamp": "20260929T190228Z",
+    "coverage": "Investor Reporting for the walked client: search, identity expand, Performance (both accounts x YTD/1Y/3Y/Since inception via --periods-per-account, then the deep presses incl. Refresh), Holdings (page picker All/each account; the securities table's Sleeve and Account selects; every map chip pressed; the card tile opened), Analysis (Client card, the three VARIANT cards, Add, Back, Refresh request list). Generate, Export and the file chooser are never pressed (write guard).",
+    "findings": [
+      {
+        "id": "WD-01",
+        "maps_to": "W2-01",
+        "walk_ids": [
+          "UIW-20260929T190228Z-003",
+          "UIW-20260929T190228Z-004"
+        ],
+        "read": "CONFIRMED",
+        "words": "Every performance read on the page answered DEPENDENCY_UNAVAILABLE: 24 of 24 API answers, both accounts, all four presets and the deep presses (shots 009-026). The refusal panel and the raw code under Details are on every one. No COT figure exists on the page at any period.",
+        "new": false
+      },
+      {
+        "id": "WD-02",
+        "maps_to": "W2-08",
+        "walk_ids": [
+          "UIW-20260929T190228Z-007"
+        ],
+        "read": "CONFIRMED",
+        "words": "The card's pie draws two slices in one colour (#94a3b8 twice) at All accounts (shot 027).",
+        "new": false
+      },
+      {
+        "id": "WD-03",
+        "maps_to": "W2-21",
+        "walk_ids": [
+          "UIW-20260929T190228Z-010"
+        ],
+        "read": "CONFIRMED",
+        "words": "With one account chosen in the page picker, the card draws a ONE-slice pie and one tile reading '100% of total' (shot 030, shot 029 likewise). At account scope the L-1 level has one member and adds a layer; the card should open at L0 (Models / SMAs / Client) for that account.",
+        "new": true
+      },
+      {
+        "id": "WD-04",
+        "maps_to": "W2-22",
+        "walk_ids": [],
+        "read": "CONFIRMED (this seat's read, not a check hit)",
+        "words": "Three scope controls on one tab do not follow each other: the page's Account picker, the map's chips (one row per account, one chip per model), and the securities table's own Sleeve and Account selects. Shot 042: the page picker reads one account, the map chip reads 'Model: DIVZ SMA', the table's Sleeve reads 'Opal Ultra Short-Term Income' -- three scopes on one screen. AD-01 says the map and the table follow the card's selection.",
+        "new": true
+      },
+      {
+        "id": "WD-05",
+        "maps_to": "W2-19",
+        "walk_ids": [],
+        "read": "CONFIRMED",
+        "words": "Two source footers disagree on one tab: the card's reads 'Source: Opal Capital Analysis.' and the map's and table's read 'Source: holdings_snapshot.build_cot.' (shots 027, 030, 042).",
+        "new": false
+      },
+      {
+        "id": "WD-06",
+        "maps_to": "W2-10",
+        "walk_ids": [],
+        "read": "CONFIRMED",
+        "words": "The map's tile labels are the share of the CLIENT total (0.2%-0.4% per single stock under the DIVZ SMA chip, shot 042) while the grouping rule is the share of the DISPLAYED set (none of those tiles is grouped although each is under 2% of the client). Two bases on one map; the stated rule must say which.",
+        "new": false
+      },
+      {
+        "id": "WD-07",
+        "maps_to": "W2-09",
+        "walk_ids": [
+          "UIW-20260929T190228Z-017"
+        ],
+        "read": "CONFIRMED",
+        "words": "The opened tile's dialog (shot 039) carries the sliver bar Andrew flagged, over the SMA's single stocks listed with blue dots; the dialog's text is what the contrast check flags (24 elements) on the band gradient.",
+        "new": false
+      },
+      {
+        "id": "WD-08",
+        "maps_to": "W2-16",
+        "walk_ids": [],
+        "read": "NOT REPRODUCED at 1440 px",
+        "words": "Back and Next are whole at the walk's viewport (shot 052); Andrew's capture (analysis_4) clips Next at a narrower window. Viewport-dependent: a responsive check, not a fixed defect. W2-16 is downgraded to PARTIAL.",
+        "new": false
+      },
+      {
+        "id": "WD-09",
+        "maps_to": "W2-05",
+        "walk_ids": [],
+        "read": "CONFIRMED (progress)",
+        "words": "Pressing a VARIANT card opens the canonical HeroDialog -- 'Multi-Comp: WHAT IT IS / WHAT IT NEEDS: Two to 5 comparisons ... each an Opal model, or an external ETF by its symbol' with a 'Select this analysis' action (shot 051). AD-08 is landing; the comparisons picker Andrew asks for is this modal's second page.",
+        "new": false
+      },
+      {
+        "id": "WD-10",
+        "maps_to": "W2-06",
+        "walk_ids": [
+          "UIW-20260929T190228Z-021"
+        ],
+        "read": "CONFIRMED",
+        "words": "Eleven of thirteen request rows still read 'Checking status...' after the page's settle (shot 052): the list's per-row status reads are in flight one by one. Two rows read 'Unavailable -- needs attention. Open it to see what to change.' (the check's unconnected-field hit) and one 'Loading -- Running -- in progress'.",
+        "new": false
+      },
+      {
+        "id": "WD-11",
+        "maps_to": "AD-13",
+        "walk_ids": [],
+        "read": "CONFIRMED (progress)",
+        "words": "Identity shows WHO / HOW MUCH / AS OF / OVER WHAT and nothing else; 'About this scope' is gone (shot 005). AD-13 is met on this client; AD-10 is met on it too (each account's own tail on Identity, the pickers and Analysis).",
+        "new": false
+      },
+      {
+        "id": "WD-12",
+        "maps_to": "carried",
+        "walk_ids": [
+          "UIW-20260929T190228Z-001",
+          "UIW-20260929T190228Z-002",
+          "UIW-20260929T190228Z-005",
+          "UIW-20260929T190228Z-006",
+          "UIW-20260929T190228Z-008",
+          "UIW-20260929T190228Z-009",
+          "UIW-20260929T190228Z-011",
+          "UIW-20260929T190228Z-012",
+          "UIW-20260929T190228Z-013",
+          "UIW-20260929T190228Z-014",
+          "UIW-20260929T190228Z-015",
+          "UIW-20260929T190228Z-016",
+          "UIW-20260929T190228Z-018",
+          "UIW-20260929T190228Z-019",
+          "UIW-20260929T190228Z-020"
+        ],
+        "read": "CARRIED",
+        "words": "Known classes, not re-litigated: the empty page's 'Illustrative sample' block (3 bands on the empty page, 5 on Holdings -- UIR-40, C3); the contrast heuristic on tile text over the band gradient and on the dialog (7 hits); ellipsized names in the securities table and the map (6 truncated-label hits -- W2-15's port removes the ticker-in-name that causes most of them).",
+        "new": false
+      }
+    ]
+  },
+  "crosswalk_to_prior": {
+    "AD-01": "progress (accounts inside the card as L-1: holdings_1); W2-08, W2-20",
+    "AD-02": "NOT MET; W2-20",
+    "AD-04": "W2-15, W2-13",
+    "AD-05": "superseded by the CTO placement of 2026-09-29 (one canonical table); W2-14",
+    "AD-06": "W2-02, W2-05",
+    "AD-07": "progress (the modal exists); W2-03",
+    "AD-08": "W2-02, W2-05",
+    "AD-09": "W2-06 (residue)",
+    "AD-10": "MET on the two-account COT client (performance_1); the 49F / INF re-check is the walk's",
+    "AD-14": "W2-01",
+    "UIC-05": "W2-01",
+    "UIC-10": "W2-08",
+    "UIC-11": "W2-08",
+    "UIC-14": "W2-19",
+    "UIC-15": "W2-11",
+    "UIC-18": "W2-05",
+    "UIC-19": "improved; W2-17",
+    "UIC-21": "W2-04",
+    "UIC-23": "landed; W2-06",
+    "UIW-0928-05": "W2-11",
+    "UIR-34": "W2-21",
+    "UIR-40": "carried (walk: 3 bands empty page, 5 on Holdings)",
+    "AD-13": "MET on the walked client (shot 005)"
+  },
+  "findings": [
+    {
+      "id": "W2-01"
+    },
+    {
+      "id": "W2-02"
+    },
+    {
+      "id": "W2-03"
+    },
+    {
+      "id": "W2-04"
+    },
+    {
+      "id": "W2-05"
+    },
+    {
+      "id": "W2-06"
+    },
+    {
+      "id": "W2-07"
+    },
+    {
+      "id": "W2-08"
+    },
+    {
+      "id": "W2-09"
+    },
+    {
+      "id": "W2-10"
+    },
+    {
+      "id": "W2-11"
+    },
+    {
+      "id": "W2-12"
+    },
+    {
+      "id": "W2-13"
+    },
+    {
+      "id": "W2-14"
+    },
+    {
+      "id": "W2-15"
+    },
+    {
+      "id": "W2-16"
+    },
+    {
+      "id": "W2-17"
+    },
+    {
+      "id": "W2-18"
+    },
+    {
+      "id": "W2-19"
+    },
+    {
+      "id": "W2-20"
+    },
+    {
+      "id": "W2-21"
+    },
+    {
+      "id": "W2-22"
+    },
+    {
+      "id": "WD-01"
+    },
+    {
+      "id": "WD-02"
+    },
+    {
+      "id": "WD-03"
+    },
+    {
+      "id": "WD-04"
+    },
+    {
+      "id": "WD-05"
+    },
+    {
+      "id": "WD-06"
+    },
+    {
+      "id": "WD-07"
+    },
+    {
+      "id": "WD-08"
+    },
+    {
+      "id": "WD-09"
+    },
+    {
+      "id": "WD-10"
+    },
+    {
+      "id": "WD-11"
+    },
+    {
+      "id": "WD-12"
+    }
+  ]
+}
