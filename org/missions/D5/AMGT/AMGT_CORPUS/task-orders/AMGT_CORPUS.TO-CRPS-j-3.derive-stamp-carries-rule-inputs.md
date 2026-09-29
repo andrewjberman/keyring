@@ -96,7 +96,7 @@ AC2 FAIL (argparse refuses `stamp-census`), AC3 PASS (`j3 keys_read 97 of 97 uns
 105 s).
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

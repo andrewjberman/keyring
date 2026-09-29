@@ -505,3 +505,12 @@ fd8ab8a is OA-f-3 plus OA-f-4 only.
 
 Chain: alone, slot `~20`, direct act. It is on G-ACCT step 6's path (Part B). `0.0.0_AB_MSTR~Z` runs step 6 from the
 scratch copy (OA-f-3 + OA-f-4 + OA-f-5), placed where Opal_Agent can read it.
+
+## ADDENDUM R2-A4 -- the runtime folders inherit Authenticated Users:Modify (`1.0.0_SA_CTO~O` ruling msg 26306)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-6` | `provision-account.ps1` breaks inheritance and sets explicit ACEs on the runtime root, runtime.config.json, checkout_dir (Opal_Agent RX) and state_dir (Opal_Agent M); no Authenticated Users. `verify-boundary.ps1` gains two negative arms (a checkout write; a config write-open), each of which must be DENIED | LOCAL |
+
+Chain: alone, slot `~21`, direct act, nested base = the local round-2 DEV `nfra-opalai-r2-dev` @e63eb06 (the cutover's
+step 1, merged early by the issuer). `0.0.0_AB_MSTR~Z` re-runs G-ACCT steps 1-3, then 4-6.

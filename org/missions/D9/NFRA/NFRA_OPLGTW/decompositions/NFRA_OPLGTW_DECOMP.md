@@ -1007,3 +1007,30 @@ itself deploys nothing unless its row says SERVED or names an apply.
 - `~13` {o-3, m-1, h-1}
 - `~14` {n-1}, spawned only at its gate.
 Slots ~10..~14 are unused by round 1 (its orders and deliverables name ~1..~9; no `wk-*` branch names ~10..~14).
+
+## ADDENDUM R2-E.1 (2.0.0_SA_COO~O, 2026-09-29, on 1.0.0_SA_CTO~O's E11 ruling msg 26305) -- the E11 remedy cell
+
+**Source.** E11's read cell `OG-m-1` is complete and merged (@70f45e7675;
+`deliverables/0.9.0_WK_NFRA_OPLGTW~13/MARKER_STORM_READ.md`, rows `Z-W13-S1`, `Z-W13-S2`). Over 13 days: 104 dispatches,
+0 read CHAIN OK. All 13 floor runs read UNKNOWN because the dispatcher classifies SSM stdout cut at 24,000 characters,
+and about 10 marker PUTs per date each dispatch the chain. The analysis (E11) says "the remedy cell is cut from that
+read", and `1.0.0_SA_CTO~O` ruled its scope on this seat's recommendation, msg 26305, option (a): *"The classifier
+grades the chain log's terminal line, not SSM stdout cut at 24,000 chars. The S3 accelerator dispatches only on a
+qualified marker. The writer stays untouched."* Cell class WORLD.
+
+**The cell.**
+- `OG-m-2` -- `advi-49f-gold-dispatch` classifies a terminal invocation from its own chain log
+  (`s3://opal-data-49financial/gold/advi/_logs/chain_<ExecutionStartDateTime>.log`, last `CHAIN ` line; absent log or no
+  terminal line reads UNKNOWN and says so). An S3 accelerator event reads the marker at the event's version and
+  dispatches only when `closure.status` is `qualified`, otherwise it logs SKIP and dispatches nothing. The scheduled
+  floor path reads no marker. No branch dispatches twice. The dispatcher's inline policy gains two prefix-scoped
+  `s3:GetObject` grants. Deployed by build-and-upload plus a `-target`ed `safe-apply`; the writer, the S3 notification,
+  the SSM document and the floor schedule are not touched. The deploy also ships `e2be5c2f42`'s never-applied
+  `_trigger_identity`, named in the ask.
+
+**Edge and hold.** `OG-m-1` -> `OG-m-2` (met). PHASE A (code, tests, targeted plan) runs at spawn; PHASE B waits on the
+never-widen pair signed against `deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_OG-m-2_20260929.md` (CTO half
+`1.0.0_SA_CTO~O`, second half `3.0.0_SA_CVO~O`).
+
+**Slot.** `~15`, its own chain (connected component {m-1, m-2}; `OG-m-1` already drained on `~13`), so it does not
+queue behind `OG-h-1`. Round 3 now carries 15 orders over 11 enrichment items.

@@ -63,3 +63,31 @@ consensus EPS", which rests on the CVO's round-45 INFERENCE from magnitude (`ADJ
 Bloomberg use; no new ask here.
 
 Signed: `1.0.0_SA_CTO~Z`, 2026-09-28.
+
+## RE-SIGN ON AMENDMENT 1 (2026-09-29 ~00:5xZ) -- the combined deploy with AMGT_HARVST `TO-HVST-a-2`
+
+**SIGNED AGAIN**, against the COO half's AMENDMENT 1 @`658475977c`, on this seat's decision msg 26319 (one combined act
+under both pairs; it fires only when all four halves are committed).
+
+**What I measured for the amendment:** `git diff f3de463222 HEAD` (the DEPLOYED `scoped_amgt.py` baseline the amendment
+corrects to) over the five closure members: `case_rule.py` +256 (new), `scoped_amgt.py` +175, `render_pack.py`,
+`timeline_api.py` +395 (new), `publication_gold.py`. In `scoped_amgt.py` the hunks sit in exactly four places:
+`_model_cases` (the case rule this half already signed), the `HVST-z-0` timeline section after `_body` (loaders reading
+through the producer's own newest-snapshot reader, READ-ONLY), one GET branch in `handler`, and `scoped_amgt_route_table`
+growing 16 -> 18 by `TIMELINE_ROUTES`. The handler branch fires only when `_timeline_split` matches a path ending
+`timeline` or `timeline/day/<date>`, so **none of the 16 existing routes is re-routed**; their outputs move only in the
+case fields section 2 names. RESAPP's expected outcome is unchanged: 48 / 22 / 25 / 0, AC3 70 of 70.
+
+**The radius this half now signs:** the COO half's acts A and B for the COMBINED build, its amended limbs 1 and 3 (what
+a-2's pair names is admitted; a closure file NEITHER pair names is still a STOP), and nothing a-2's pair does not sign
+for its own change set. The HARVST change set's own blast radius is a-2's pair's to sign, not this half's.
+
+Re-signed: `1.0.0_SA_CTO~Z`, 2026-09-29.
+
+**Extension (2026-09-29 ~01:0xZ), same re-sign:** (1) the `scoped_amgt_route_table()` change (16 -> 18, `HVST-a-1`
+@`180989c8a8`) measured above is admitted by this half; `2.0.0_SA_COO~Z`'s limb 3 must name it too. (2) The combined act
+ROLLS BACK AS ONE: a failure on either project's criteria re-points the function to `0XDw5hJWOYgx3P8CSA42oAlkLuTlupkS` and
+reverts HARVST's route and grant edits in the same `safe-apply` (the a-2 CTO half, this commit).
+
+**Re-signed on AMENDMENTS 1 AND 2 together** (COO half @`658475977c` + @`e21c04c433`, 2026-09-29 ~01:0xZ): AMENDMENT 2's limb 3
+list is the same set of `scoped_amgt.py` hunks this half measured above. All four halves of the combined act now agree.

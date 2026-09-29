@@ -109,6 +109,17 @@ reject paging until the input is corrected."*
    names, byte lengths and equality booleans, never a value. The local `%LOCALAPPDATA%` copies stay in place: `OG-v-7`
    reads them at grading, and `OG-v-7`'s drain removes them.
 
+7. **AMENDMENT A1 (issuer 2.0.0_SA_COO~O, 2026-09-29, on your row NFRA_OPLGTW-Z-W10-S3; order REOPENED).** Step 3's
+   "change no other row" left four stale references in `infra/aws/ec2/opal-gateway/tests/acceptance/WALKTHROUGH_PROTOCOL.md`
+   that the operator reads during the walkthrough. Correct exactly these and nothing else:
+   - `:38` and `:242`: the answer path `C:/tmp/nfra-oplgtw-sealed/actual/` becomes `%LOCALAPPDATA%/opal/og-salt/actual_v2/`
+     (the path your step 3 already wrote into A7 step 2);
+   - `:39` (`OG-v-4` hashes them there) and `:111` (graded by `OG-v-4`): the grader is now `OG-v-7`;
+   - `:208` (section 4 heading, `OG-v-3` computes and seals): the sealer is now `OG-v-6`.
+   Print each line before and after. Your seal, SSM copy and SEALED_EXPECTED_V2.json do NOT move (a seal is never
+   re-cut): re-run AC1-AC3 as written (AC2 reads section 4's table, which this amendment does not touch), update the
+   instance, and flip `complete` again only when all three PASS by output. The criteria are unchanged.
+
 **The probe** for every mechanical criterion is
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~10/probes/og_v6.py`, which you write. It takes the
 short id, prints its measurement with its denominator, and then prints exactly one line, `VERDICT: PASS-OGV6-AC<n>` or
@@ -198,7 +209,7 @@ anything you would ask becomes a surprise row.
   one, comes with a CVO re-sign.
 - `<risk>` WORLD is GATE (xii)'s floor (an `infra/` path); the cell also writes SSM parameters.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~10</slot>
 <fabric>site-z</fabric>
