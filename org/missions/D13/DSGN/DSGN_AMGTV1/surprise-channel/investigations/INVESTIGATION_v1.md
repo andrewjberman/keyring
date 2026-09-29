@@ -109,6 +109,28 @@
     "spec_asserts": "TO-AV-t-4 bound 4 and AMENDMENT 1: when AC1 passes, append a DISARMED disposition for W3-S1 and W3-S2 naming the order and the portal commit.",
     "world_is": "AC1 passes. The gate refuses `adjudicates` on a worker-surfaced row (L9 carrier), so this is a new OBSERVATION row of standing INERT that names both items; the formal disposition of S1 and S2 is the issuer's / L9's to stamp.",
     "notes": "Worker-authored record of the disarm, not an adjudication."
+  },
+  {
+    "id": "DSGN_AMGTV1-Z-S1",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-09-29T07:15Z",
+    "one_line": "FWD-1's thread name cannot carry hop 6: Valero's model.team_cases are ABSENT for base, upside and downside (so are PBR, BA, HD and NU; INTU's are SERVED), so even after AMGT_RESAPP vv-4 serves team cases, the Recommendation window on Valero can only say the research team's position is not in the pack.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z -- an ENDPOINT-side decision: move FWD-1's thread to a name the team covers (INTU carries all three cases), or route Valero's dossier coverage to AMGT_CORPUS; until then FWD-1 cannot be graded REALIZED on hop 6 whatever the page renders.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PYTHONPATH=. python: scoped_amgt._team_cases(k) for VLO, PBR, BA, HD, NU -> base/upside/downside all ABSENT; INTU -> all SERVED (EPS/Multiple/Price/Return tables), 2026-09-29 ~07:1xZ",
+        "the same read captured at model.team_cases in deliverables/2.0.0_SA_COO~D/round2/fixtures/thesisBundle.{VLO,INTU}_US_Equity.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.3 FWD-1 DONE WHEN: one live walk ending in Valero's Recommendation card open, where the PM can say whose view it is; THE THREAD hop 6 makes the dossier route (the team's position) round 2's first enrichment input.",
+    "world_is": "The team's position is now served as model.team_cases (AMGT_RESAPP vv-2), and Valero's are all ABSENT in the research dossier; the round-2 cell AV-e-2 renders the team's case where served and a plain ABSENT sentence where not.",
+    "notes": "Filed by the issuer at the round-2 cut (decomposition v2). Not a DSGN cell: the page renders both states correctly."
   }
 ]
 ```

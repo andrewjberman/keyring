@@ -124,3 +124,49 @@ Chain: one cell, slot ~3, after AV-t-3 drains. Base (merged DEV 5fac7a37): AC1's
   reads "open" for "every money figure carries its currency". Measured on VLO only; FWD-4's round reads the census.
 - Rows carry no company name and no classification (32 of 32 on the 2026-09-25 generation); the overlay carries `NAME` in
   vendor all-caps. The page does not join one into the other (C-PRESENTATION-ONLY).
+
+---
+
+## v2 -- ROUND 2 (issuer, 2026-09-29 ~07:4xZ), over PRD v0.3 @abfad1355c (ADMITTED)
+
+**Rectangle:** the ENRICHMENT LIST of `1.0.0_SA_CTO~Z`'s round-1 analysis `ledger/ROUND_ANALYSIS.round1.md` @80dc63c5d2
+(msg 26481) section 5, items 1-6, one cell per item. Item 2's Model half comes from the CTO's Base-case anchor decision to
+this seat ("(1) is the Model tab's and Recommendation's order"; `CTO_RULING_RESAPP_BASE_CASE_ANCHOR_20260929.md`): the
+Recommendation half is `AV-e-2`, the Model half rides `AV-e-4` (same write set as the Model line names). NOT cells: hop 3's
+served name (AMGT_RESAPP round 48); the white-ground panel variants (DSGN_REBRND). **Portal base:** site-Z local DEV
+`f1a90a9b` (carries AMGT_RESAPP vv-1/vv-3/vv-5 on this page). **Fixtures:** `deliverables/2.0.0_SA_COO~D/round2/fixtures/`,
+captured from the adapter at the cut (read-only): Valero and INTU /thesis (INTU's `model.team_cases` all SERVED, currency null
+"not stated in the pack"; Valero's all ABSENT), Valero /overlay, the 2026-09-25 Trending x Price payload, the two peer sets
+and WMB's /thesis (Valero's posture comparable). **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | reads | risk |
+|---|---|---|---|---|---|---|
+| `AV-e-1` | 1 | No raw code on the Thesis panel or the header: the chart card's absent reason, the held-uncited line and the Thesis header read as plain sentences; the header description's source line reads in words; the Thesis panel stops spending a second band | FWD-11 | `SA/tabs/ThesisTab.tsx`, `SA/components/ThesisDriverChart.tsx`, `SA/components/HeaderBrief.tsx`, `SA/__harness__/drafting.harness.cjs`, `SA/__harness__/thesisLadder.harness.cjs` | `SA/components/ThesisCards.tsx` | LOCAL |
+| `AV-e-2` | 2 | The Recommendation window leads with the research team's case where served (`model.team_cases`): the team's table as written, its pack citation in words, "as written in the team's pack", labelled the team's; where not served, one sentence saying so; the machine draft follows. `types.ts` gains the team-case types | FWD-1 hop 6, FWD-6 | `SA/components/ThesisCards.tsx`, `SA/types.ts` | -- | LOCAL |
+| `AV-e-3` | 3 | Every money figure in the header cards and windows prints one way: its own served currency code, then the amount; no currency served -> "currency not stated" | FWD-4 | `SA/components/HeaderCards.tsx`, `SA/components/StatTile.tsx` | `SA/constants.ts` | LOCAL |
+| `AV-e-4` | 4 (+ item 2's Model half) | Model lines named in words (no vendor mnemonic on the face); each refused line says in one sentence whether the data is missing or the page cannot yet show it; the team's Base leads the cases where served | FWD-9, FWD-6 | `SA/tabs/ModelTab.tsx`, `SA/modelSheet.ts` | `SA/types.ts` (AV-e-2's team-case types) | LOCAL |
+| `AV-e-5` | 5 | The lead panel's captions, resolution note and empty states read in words (no partition name); a Bloomberg ticker's literal slash never reaches the face (`BP/ LN` -> `BP LN`); `ResolutionNote` exported | FWD-2 | `SA/components/LeadPanel.tsx`, `SA/components/RankedList.tsx`, `SA/components/GenerationCaption.tsx` | -- | LOCAL |
+| `AV-e-6` | 6 | The Posture tab's storage paths, read-failure codes and project codes read as words | FWD-10 | `SA/tabs/PostureTab.tsx`, `SA/postureCites.ts` | -- | LOCAL |
+
+**Edges and chains:** one real data dependency -- `AV-e-4` consumes `AV-e-2`'s team-case types in `types.ts`, so they are one
+chain on one worker's queue (e-2 then e-4). Every other write set is disjoint and consumes nothing. M = 5 chains
+(e-2->e-4, e-1, e-3, e-5, e-6), N = 5, cap 8. No shared-file hookup: every new export is imported by its own cell's file.
+
+**Checks (files under `round2/checks/`, dry-run at base f1a90a9b):** `raw.cjs <surface>` thesis 5 / header 1 / model 64 /
+posture 20 hits (FAIL as expected; its pattern controls: positive TRENDING_PRICE, CIE_DES, a .json path and an s3 key hit,
+plain prose reads 0); e-2.AC1 1 of 3, e-2.AC2 1 of 3, e-3.AC1 0 of 3, e-4.AC2 1 of 3, e-5.AC1 3 hits + ResolutionNote not
+exported, e-5.AC2 1 of 3 (all FAIL as expected); bounds E1-E6 PASS (floor control posture 33 RED). No scratch green arm
+was fed this round (round 1's were); a check that cannot pass surfaces as a worker row.
+
+**Battery:** comp-schedule, comp-iam: DECLARED-NOT-APPLICABLE (no cadence; no AWS call; fixtures read by the issuer).
+comp-adversary: the checks above; blind spots -- static markup with estate chrome stubbed (bands, contrast and layout are the
+walk's); the raw-code census reads visible text only; `exportCompare` (FWD-30's page/export parity) errors at the base
+(rc=2) and bounds no cell -- a Model line renamed on the page and not in the export is the walk's and the CVO's to see.
+
+**Rule 24:** (i) MECE over the declared domain, the analysis's six items, by subtraction: 6 placed, 0 unplaced; item 2 split
+by write set (Recommendation / Model) per the CTO decision. (ii) One cell per write set. (iii) One intent per cell, except
+`AV-e-4`, which carries two presentation intents on one file set (named). (iv) State coherence: no cell moves a served
+value, the click, row order, the verdict face, or any figure's number.
+
+**Finding at the cut (row DSGN_AMGTV1-Z-S1):** Valero's team cases are all ABSENT (as are PBR, BA, HD, NU; INTU's are
+SERVED), so FWD-1's hop 6 cannot show the team's position on the thread's own name even after `vv-4` lands.
