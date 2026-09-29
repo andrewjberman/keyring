@@ -2229,6 +2229,71 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "HVST-b-1 AC1 STOP limb: the six one-company events keep span and tier-A membership (6/6) -- PASS; nothing guarded the LEADS the round-12 L9 graded right.",
       "world_is": "A b-2 rebuild on the merged rule would ship a timeline whose BA 09-08 lead names the minority story, undoing round 12's graded fix on the served page. b-2 is HELD: the issuer will not sign its pair over a known served regression.",
       "notes": "DISARM (issuer, same turn): HVST-b-1 is REOPENED by AMENDMENT 1 with a criterion that no lead the round-12 L9 graded as naming its burst regresses (7 kept events: rebuilt lead == served lead), and the same worker is continued to fix the over-merge by a mechanism it states; b-2's pair is written only after that lands. The criterion gap is the issuer's: the STOP limb covered membership, not the outcome the previous round graded."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~40",
+      "surfaced_at": "2026-09-29T09:00:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W40-S1",
+      "one_line": "Planted-fixture mechanism test (HVST-c-1 AC2): a 6-article, 3-day, 4-publisher one-story burst that is a security's ONLY coverage forms 0 events, because the rule's security-name step strips the story's own words (quantum, battery, plant) as the name and the paraphrased headlines then share no term.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~40/ac2_output.txt, section FIXTURE variant 1 (rc 0): event_rows on the fixture returns 0 events; _security_name_tokens over its 5 tier-A headlines on 3 days returns ['batter','plant','quantu','zorbex']; _security_stories splits it into 4 stories, [wsj-1, ft-5], [bbg-2], [wsj-3], [bbg-4]; no single-publisher story qualifies.",
+          "lib/research/harvest/publication_gold.py (CLOUD 278c53f472) _security_name_tokens and the HVST-b-1 comment block, failure mode (d)/(e): the name is inferred from a stem carried by 3 of 4 tier-A headlines on >= 3 days, a test a security whose only coverage is one multi-day story passes with the story's own words.",
+          "Variant 2 of the same fixture (the same six articles among six unrelated tier-A headlines on other days) strips only 'zorbex' and forms the story, so the loss is specific to a security with no other coverage. A FIXTURE, not a held-out grade; the harvest holds no such security in its newest snapshot (0 story-level bursts of >= 5 articles over >= 2 days)."
+        ]
+      },
+      "spec_asserts": "HVST-c-1 face section 1: 'A planted fixture of the larger shape (5+ articles over 2+ days) MAY be run as a MECHANISM test' -- read as the rule forming the fixture's story as one event.",
+      "world_is": "On the rule as landed, the larger shape is not formed for a security whose coverage is one burst (a newly covered name's first story), so the only mechanism test of that shape reads a recall failure. Whether real data reaches this case is unmeasured: the harvest has none today.",
+      "notes": "Not fixed here (cell writes no code). Enrichment candidate for the next round; the fixture script is ac2_burst_shape_census.py."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~40",
+      "surfaced_at": "2026-09-29T09:00:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W40-S2",
+      "one_line": "Planted-fixture mechanism test (HVST-c-1 AC2, variant 2): the rule groups the 6-article, 3-day story as one story but the event covers only the two qualifying days (4 articles, 09-10..09-11); the third day's tier-A ft article and tier-B sa article are left out because that day has one tier-A publisher.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~40/ac2_output.txt, FIXTURE variant 2: stories include the 6-article group [wsj-1, bbg-2, wsj-3, bbg-4, ft-5, sa-6]; event_rows returns 1 event 2026-09-10..2026-09-11 articles=4 (A=4 B=0) days=2, members wsj-1, bbg-2, wsj-3, bbg-4.",
+          "lib/research/harvest/publication_gold.py event_rows docstring: an event's span is the merged run of QUALIFYING days (>= 2 articles and >= 2 tier-A publishers that day); only articles inside [first_day, last_day] are members, so a story's tail day with one tier-A publisher is outside the span by construction."
+        ]
+      },
+      "spec_asserts": "HVST-c-1 face section 1(b): burst-shape verdict read as the rule's story becoming one event over the burst's whole span.",
+      "world_is": "The rule's event boundary follows qualifying days, not the story: a trailing day of one publisher is dropped from the event and its articles appear in no event. By design in the rule's text; recorded because a real burst's tail would read as a smaller event.",
+      "notes": "INERT: it is the ruled behaviour (section 1b), no defect claimed."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~40",
+      "surfaced_at": "2026-09-29T09:00:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W40-S3",
+      "one_line": "HVST-c-1 AC2 names 'merged run (the qualifying merge, gap <= 1 day)' without saying whether a run is of any tier-A/B day, of qualifying days, or of one story; the three readings give 12, 1 and 6 bursts exceeding 3 articles or 1 day, so the worker printed all three and took the STORY-level one for the verdict line.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~40/ac2_output.txt sections (I) A/B-day runs: 12 exceed (2 held-out, several unrelated stories chained), (II) story-blind qualifying-day runs: 1 exceeds, (III) story-level runs: 6 exceed (0 held-out); story-level larger shape (>= 5 articles over >= 2 days): 0, A/B-day larger shape: 3 (all in-sample).",
+          "The verdict line 'larger burst shape: UNEXERCISED' is read on (III), the rule's own unit (an event is one story); on (I) the same census would read EXERCISED (3 bursts, 0 held-out) -- either way 0 held-out."
+        ]
+      },
+      "spec_asserts": "HVST-c-1 AC2 expectation: 'the distribution of tier-A/B articles per (security, day) and per merged run (the qualifying merge, gap <= 1 day)'.",
+      "world_is": "The order did not fix the unit of a merged run; the verdict reads differently on the loosest unit (EXERCISED) and the rule's unit (UNEXERCISED). No reading yields a held-out burst. Also added beyond the order: AC1's tier-A-less same-security cluster supplement (6 clusters, all tier-B, none a story by the rule) and AC4's part 3 listing of all held-out tier-A/B rows.",
+      "notes": "Stated for the L9 read of AC4 and the round-14 analysis; no code or served state touched."
     }
   ]
 ```
