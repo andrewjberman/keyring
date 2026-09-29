@@ -161,6 +161,43 @@ Named beside (a DSGN_IRPTV1 finding, routed separately): the account picker labe
 the relationship's mask (three `****9079 / IRA`, five `****3302 / JOINT`, two `****4714 / S1`), so accounts are told apart
 by value alone.
 
+## Addendum 2 (2026-09-29 10:5xZ) -- AFTER-read on hD7G6YT1: NOT MET; row IRPT_BCKEND-S204 ARMED; the CTO's all-accounts census
+
+**Apply:** ~P applied hD7G6YT1 at 10:14:14Z (msg 102712); CodeSha256 read here at 10:21:28Z, Active. **Walks**
+`20260929T102651Z` (per-account period presets on the NEW-01 relationship, ..0090, ..4714) and `103746Z` (..3510, ..2297,
+..0695, the Inflection and Cottonwood reads), 10:26-10:48Z, both disarmed with the login REFUSED.
+
+| read | AFTER on hD7G6YT1 |
+|---|---|
+| ..0090 YTD / 1Y | **"Unavailable / UNEXPECTED / Contact support"** on both (picker "YTD pending", "1Y unavailable") |
+| ..4714 ($12,522) YTD / 1Y | UNEXPECTED on both; the same-mask $1.43M account the same |
+| NEW-01 relationship (3 accounts), every period | UNEXPECTED (4 answers at the client load) |
+| ..3510, ..2297, ..0695 | UNEXPECTED (9 of 13 performance answers in walk B) |
+| Inflection ~$241k, Cottonwood 401K | unchanged from BEFORE (PARTIAL 7.98%; DEPENDENCY_UNAVAILABLE) |
+| since-inception reads | served (10 `irpt_holdings_phases` lines, 554 partitions, frame 9-10 s) |
+
+**Cause, read from the served log and the two zips:** `/aws/lambda/irpt-performance-adapter` 10:26-10:50Z carries 104
+UNEXPECTED events, every one `ModuleNotFoundError: No module named 'parity_period_returns'`. `installed.py` on
+qfxZ0DzB inserted `data/assets/scripts/gold/runners_49f` onto `sys.path` inside `_engine_source()`; hD7G6YT1's
+`_holdings_source(s3)` replaced that function and inserts nothing, while `f49_engine.ruled_period_for` (:71-73) still
+imports `parity_period_returns` lazily and `holdings_gold._period_for` calls it for every window except since
+inception. The packet's read-back (a cold-start invoke and ONE since-inception answer) exercised exactly the branch that
+does not import it. Verdict: **NOT MET -- an unnamed difference at the read, now named; the packet's own step 5 applies
+(rollback to 5bmwADQs, or a rebuild with the path restored).** Alerts 102734/102735 and the cause 102739/102740 to ~P
+and the CTO; row `IRPT_BCKEND-S204` ARMED, disarm owner 2.0.0_SA_COO~P.
+
+**The CTO's added condition (102705, an all-accounts served-figure census):** run here through the adapter's own
+`holdings_gold.calculate` (hD7G6YT1's bytes, the fresh path's `implausible_engine_series` applied, the runners directory
+on the path) over a versioned local cache of the re-emitted gold, and by ~P over the served gold
+(`IRPT_MVP_P/ADAPTER_49F_SERVED_PERIOD_CENSUS_20260929.txt`): the two agree -- 0 figures at or below -100% in any
+window, 0 refused as implausible; at or above +100%: YTD 2 (..4180 +197.85%, ..2297 +149.67%), 1Y 4 (+ ..8562, ..7477),
+SI 7 (+ ..2191, ..4060, ..4172). Their read-back by name on the page waits on a working ruled-period path; ..3510 and
+..2297 answered UNEXPECTED in walk B.
+
+**Lesson carried into the next packet (this seat's condition on any re-ask):** the read-back requests each ruled window
+once (YTD, 1Y) beside since-inception, and the after-read presses each period per account (the walker's
+`--periods-per-account`, added today for this read).
+
 ## What this half signs against
 
 - Packet blob `a4679360`; the first packet's carried sections (`189aaef2`); artifact `hD7G6YT1` (S3 `3donK_gT`) with
