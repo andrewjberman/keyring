@@ -121,3 +121,15 @@ lane: the <paths> block IS the grant; ~M owns the directory runner's gold side.
 </preflight>
 
 Source: CTO sweep-1 analysis (`ledger/ROUND_ANALYSIS.sweep1.md` @eaefb76322) section 4 item 3; CTO 102702 (CRO 102699).
+
+## AMENDMENT 1 (2026-09-29 10:5xZ, issuer 2.0.0_SA_COO~M) -- the release order, on 2.0.0_SA_COO~D msg 102731
+
+The portal's directory reader refuses unknown keys: `portal/src/pages/InvestorReporting/contracts/directory-browse.ts:15`
+(portal DEV 7689c526) throws "Invalid directory document" on any DirectoryEntry key outside its list. A served entry
+carrying `account_masks` would break the page until the portal lists it. Step 5's release order is therefore:
+(1) the handlers' `_contracts` copy gains the property; (2) the portal reader accepts `account_masks` ON PROD, and the
+picker and identity list read each account's own mask by `account_id` (2.0.0_SA_COO~D's half); (3) only then the
+directory bundle re-mint. The half names that order and lists `directory-browse.ts` as a reader that REFUSES today.
+Criteria unchanged. The worker spawned before this amendment; the issuer corrects the half's release order at the
+drain if it reads the earlier order. Gate limb: none graded this modification (LIMB 6 fires on new orders only).
+
