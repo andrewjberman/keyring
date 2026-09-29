@@ -11580,3 +11580,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Two candidate producer rules, the CTO's to choose (v0.21): (a) the day after an IMPLAUSIBLE-RETURN day is NOT COMPUTABLE for that account with its reason named (one post-pass per account over the emitted days); (b) the keys whose price moved out of band on the voided day price against the last plausible price on the next day. Either re-emits 557 partitions (~25 minutes measured today). INERT while the adapter stays at qfxZ0DzB; arms when hD7G6YT1 serves without the ruling. Not a producer defect: the producer implements ruling 16 as written."
 }
 ```
+
+## Round 22, IB-pr-221 -- worker 0.9.0_WK_IRPT_BCKEND~74's row IRPT_BCKEND-W74-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-W74-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~74",
+  "surfaced_at": "2026-09-29T10:14:00Z",
+  "one_line": "The cell text says ruling 12 retires the Orion read for Inflection 'in the same act; nothing runs alongside', but the out-of-grant test tests/test_inf_packaging.py (not in this order's <paths>) asserts retained._provider(tenants._CANONICAL_INF).__name__ == 'orion_selected' and calls installed._inf_mapping_loader directly -- so the Orion-composing FUNCTIONS must stay importable and working, or that structural test breaks. Resolved by keeping _provider/_inf_mapping_loader/orion_selected intact but UNREACHABLE from retained.RetainedPerformance._compute's served path once tenants._CANONICAL_INF is a key in holdings_sources (installed.py now always supplies it when the registry resolves): 'nothing runs alongside' is satisfied at the SERVED level, not by deleting the structural scaffolding.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/tests/test_inf_packaging.py:43-45 (@HEAD, outside this order's <paths>): 'assert tenants._CANONICAL_INF not in retained.PROVIDER_MODULES' and 'assert retained._provider(tenants._CANONICAL_INF).__name__ == \"orion_selected\"' -- unedited by this order and still passing after the switch (228 passed, tests/ full run)",
+      "infra/aws/lambda/investor-reporting/performance/retained.py _compute (this order's edit): the composed-firm gate raises ProviderPathNotComposed for Inflection unless owner firm_id is a key in self.holdings_sources (via self._holdings_source_for); the else-branch that calls _provider(...) is reached only when NOT holdings_firm, which for Inflection only happens when installed.py's registry lookup failed -- i.e. Inflection stays uncomposed rather than falling to Orion",
+      "infra/aws/lambda/investor-reporting/performance/installed.py _holdings_sources(s3): resolves both 49financial and inflection addresses independently; a registry refusal for one never blocks the other (mirrors the pre-existing _holdings_source rule for 49F alone)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-221 cell text: 'Ruling 12 retires that read for INF in the same act; nothing runs alongside.'",
+  "world_is": "Nothing runs alongside on the SERVED path (Inflection is computed from holdings_gold, never Orion, once composed) -- but the Orion module and its two composing functions remain importable and structurally exercised, because an out-of-grant regression test requires exactly that and this order's <paths> does not include tests/test_inf_packaging.py.",
+  "notes": "No remedy needed unless a future order wants the Orion scaffolding actually removed -- that would first require editing or retiring test_inf_packaging.py's structural assertions, which is outside IB-pr-221's <paths> grant."
+}
+```
