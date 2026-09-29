@@ -68,7 +68,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-3 analysis s.5 item 7. The carried round-2 tooling items are closed: Z-S22 and Z-W7-S2 (MX-x-1), Z-W3-S4 (MX-x-2) and Z-W3-S12 (the issuer's battery). Z-W5-S1 and Z-S24 are routed to their owners, as ruled in round 2.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @d7ecc13acf by 2.0.0_SA_COO~MI, 2026-09-29 ~06:0xZ: x3.AC1 PASS (--offline: rc 0, 0 aws calls, schema pass 3 of 3), x3.AC2 PASS (the live SUMMARY rows 36, family_mismatch_or_error 1: mp.15.json-mdpf-legacy FAMILY-EMPTY, a DENY row on the retired json/mdpf/** tree, 0 keys), instance VALID. Row Z-W13-S2 is answered. Was: pending.</status>
 <round>4</round>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>

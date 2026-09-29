@@ -79,7 +79,7 @@ No delete, no `chatter_daily`, no code change, no vendor call, no portal work. I
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>13</round>
 <slot>~39</slot>
 <fabric>site-z</fabric>

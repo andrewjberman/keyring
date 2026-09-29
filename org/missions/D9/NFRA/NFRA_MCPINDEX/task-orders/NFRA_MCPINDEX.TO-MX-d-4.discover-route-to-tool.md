@@ -77,7 +77,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-3 analysis s.5 item 2 (build half; the release is MX-r-5). Dry-run at base: see the issuance commit. Chain: MX-d-4 -> MX-d-5 -> MX-r-5 on worker ~14.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @b3e2caeb5b by 2.0.0_SA_COO~MI, 2026-09-29 ~06:3xZ: d4.AC1 PASS (mp.01 next_tool=mdpf_get_aum_metrics {scope: global}), d4.AC2 PASS (9 of 9 servable rows carry served_written_at, measured live), d4.AC3 PASS (ROUTING 23 of 27), instance VALID. Rows Z-W14-S1 (the member-resolution rule) and Z-W14-S2 (discover now makes live HEADs, so the harness reaches S3 on the caller credentials) are INERT observations. Was: pending.</status>
 <round>4</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

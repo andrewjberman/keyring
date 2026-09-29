@@ -89,7 +89,7 @@ READ-ONLY: every other file, every S3 object. Scratch `.scratch/l3/`.
 AC1 FAIL (no tests ran); AC2 FAIL (`l3 names 6 body_names 0 absent_specific 0 absent_generic 6 sum 6`).
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

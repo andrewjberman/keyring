@@ -103,6 +103,21 @@ description, posture line, feed, timeline or axis footnote (HeaderBrief and Gene
 not move the Thesis tab's held-uncited line, subtitle or any named export other tabs import; `AV-t-1` does not move row
 order, the star toggle, the click (it still sends `security_key`) or any empty/refused state.
 
+## ADDENDUM 1 (issuer, 2026-09-29 ~05:0xZ) -- ruling on row DSGN_AMGTV1-Z-W3-S1 (ARMED, disarm owner this seat)
+
+The issuer rules inside its own decomposition (/canonical-drive obligation 7). Round 1's three cells merged into site-Z
+local portal DEV 5fac7a37; every build check passes there, and `tsc -b` reads 0 errors (a planted error reads 1). One
+bound regressed: `SA/__harness__/tabs.harness.cjs` (20 of 20 at the base) dies at load with MODULE_NOT_FOUND, because it
+stubs no `@/ui/components/graphic/HeroGraphic` and the page now reaches it through `ThesisCards.tsx` (AV-t-3) --
+`HeaderCards.tsx` (AV-t-2) avoided it only by loading the dialog lazily (row W2-S2). One DIRECT-ACT repair cell, on slot
+~3's continued worker (its context holds the harness shape):
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `AV-t-4` | DIRECT-ACT: `tabs.harness.cjs` stubs `@/ui/components/graphic/HeroGraphic` (a `HeroDialog` that renders its children only when `open`, a `DialogStamp` that renders nothing, the file's other exports as inert stubs) so the harness loads the merged page again and reads CHECKS-OK 20 of 20 with every check's claim unchanged | FWD-1 (the round's bound) | `SA/__harness__/tabs.harness.cjs` | `SA/components/ThesisCards.tsx`, `SA/components/HeaderCards.tsx`, `src/ui/components/graphic/HeroGraphic.tsx` | LOCAL |
+
+Chain: one cell, slot ~3, after AV-t-3 drains. Base (merged DEV 5fac7a37): AC1's bound reads 3 of 4 (tabs rc=1; errorEmpty, drafting, thesisLadder green).
+
 ## 7. FINDINGS AT THE CUT (for the drain-end read)
 
 - The overlay's header figures already carry `currency` per figure (e.g. PX_LAST `USD`), which the PRD's C-ASKS table

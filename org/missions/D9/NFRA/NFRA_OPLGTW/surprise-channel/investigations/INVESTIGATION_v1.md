@@ -4426,3 +4426,346 @@ name the one known failure instead of silently inheriting it.
   "notes": "Fix in the issuer's next order template."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "TO-OG-g-1's GCG1-AC3 names the invocation `schwab_entitlement_admin.py prepare`, but the command's CLI has no `prepare` subcommand -- argparse admits only activate, revoke and deny-backfill, so the named invocation exits 2 on an invalid choice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CLI: infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py:416-448 _build_arg_parser adds exactly three subparsers -- 'activate', 'revoke', 'deny-backfill' -- on `sub = p.add_subparsers(dest='command', required=True)`; main():456-495 dispatches on those three and nothing else.",
+      "FUNCTION: `prepare` exists at :313-339 as a module function that `activate` calls internally, and it is what prints the scope diff (`print(format_diff(diff), ...)` at :330), so the diff AC3 wants is produced on the activate path.",
+      "ORDER TEXT: the AC3 clause reads '(`schwab_entitlement_admin.py prepare`)' and its second sentence already says 'The probe re-runs the validation against the recorded candidate rather than trusting the transcript', which is the programmatic path."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A `prepare` subcommand exists on the operator command's CLI and can be invoked to validate a candidate and print its scope diff.",
+  "world_is": "`prepare` is an internal function, not a subcommand. The criterion's SUBSTANCE is met by calling the command's own validate_candidate/prepare -- the same code `activate` runs -- which is what probes/og_g1.py AC3 does; the scope diff reaches an operator on the `activate` path. Only the CLI token in the order's text is wrong.",
+  "notes": "INERT: nothing is blocked by this alone and no workaround was invented -- the probe calls the committed module's own validator. Fix in the issuer's next order template."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "GCG1-AC3 and GCG1-AC6 cannot both hold for any Schwab grant: a runnable candidate structurally names raw account identifiers, AC3 requires the evidence file to carry the printed scope diff VERBATIM, and AC6 forbids a raw account identifier in any artifact this order commits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PARSER: infra/aws/ec2/opal-gateway/app/data_entitlement.py:261-264 -- `if not isinstance(accounts_raw, dict) or set(accounts_raw) != masters: raise Malformed('scope.accounts must name the accounts of every granted master and no other')`, then `_strings(v, ...)` per master.",
+      "NON-EMPTY: :204-206 `_strings` raises Malformed('%s must be a non-empty list of strings') on an empty list, so every granted master must name at least one real account id; the id shape is `_ACCOUNT = re.compile(r'^[0-9A-Za-z._-]{1,64}$')` at :127.",
+      "DIFF: the scope diff AC3 wants verbatim is scope_diff()/format_diff() at :208-241, which diffs every dimension including `accounts`.",
+      "AC6 TEXT: 'the probe scans the evidence file, the probe itself and the result file for a token, cookie, client secret, complete URL with a query string, raw account identifier or customer amount' and 'The identity's tid/oid and the grant's scope ARE recordable; a balance, a holding, an account title or a credential is not.' -- the accounts DIMENSION of the scope is the collision.",
+      "MEASURED: probes/og_g1.py AC3 run 2026-09-29 -- the scope half PARSES (masters=2 datasets=3 dates=fixed_dates(2) columns=15 operations=4) only with a substituted account list; the committed scope carries `<<REDACTED-AC6-OPERATOR-SUBSTITUTES>>` per master."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The evidence file can carry the operator command's scope diff verbatim AND contain no raw account identifier.",
+  "world_is": "For a Schwab grant those are mutually exclusive, so GCG1-AC3 cannot pass as written even once a controlled identity exists. Nothing was widened or worked around here: the committed scope redacts the accounts dimension and names what the operator substitutes. Two dispositions are available to the owner -- commit the diff with only the accounts dimension redacted and keep the verbatim copy outside the repository (the route WALKTHROUGH_PROTOCOL.md section 2 already uses for answers, %LOCALAPPDATA%/opal/og-salt/), or amend AC6 to exempt the grant's own accounts dimension.",
+  "notes": "ARMED because it blocks a mechanical criterion from ever passing as written, independently of the identity block; the seat cannot disposition its own order's criteria."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "A fixed_dates grant bounds the latest qualified date it can report, so once a closure marker later than 2026-09-25 lands, A7 step 4's expected observation ('a latest qualified date equal to the newest qualified closure marker for that master at ask time') will not hold for a reason that is the grant's date mode, not the system under test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED NOW: s3api list-objects-v2 on opal-data-assets 2026-09-29 -- schwab/08242234/meta/complete/ and schwab/08335338/meta/complete/ each hold 19 markers, newest `date=2026-09-25.json` in BOTH masters (LastModified 2026-09-26T22:16:14Z and 2026-09-26T09:46:52Z). So the expectation holds at this moment.",
+      "PRODUCER CADENCE: the markers land daily at ~10:16Z (08242234) and ~09:46Z (08335338); the newest landed 2026-09-26 for business date 2026-09-25, and today is 2026-09-29, so a marker for a later business date is due.",
+      "GRANT SEMANTICS: app/data_entitlement.py:472-477 `_allowed_dates` returns None for fixed_dates (the grant enumerates its dates); check_scope:482 documents 'an omitted optional dimension means the granted set', and its date limb runs only `if dates is not None`, so a no-date ask is IN SCOPE but resolves against the granted set.",
+      "PROTOCOL: WALKTHROUGH_PROTOCOL.md section 3 A7 step 4 expected observation -- 'each master's no-date ask returns a latest qualified date equal to the newest qualified closure marker for that master at ask time, and its returned available dates include 2026-09-25.'",
+      "SEAL: ruling R-OG-12 fixed D_NEW/D_PREV as literal dates 'so a newer qualified closure at ask time does not change what was sealed', which is why the grant's dates are fixed rather than rolling."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The grant's date mode and A7 step 4's expected observation are independent.",
+  "world_is": "They interact. fixed_dates {2026-09-24, 2026-09-25} is the narrowest mode that serves the 7 sealed questions and is the only one that preserves the date-dimension refusal (a real qualified marker exists for 2026-09-23), so it is what this order recorded; the cost is that A7 step 4's 'newest marker at ask time' half drifts as soon as a later marker lands. rolling_complete_window would track the newest marker but grants ~30 dates and destroys the date refusal.",
+  "notes": "ARMED so it is dispositioned BEFORE the controlled walkthrough runs, not discovered during OG-v-7's grading. Two routes for the owner: run the walkthrough before a later marker lands, or have OG-v-7 read A7 step 4's expectation as 'the latest qualified date within the grant'. GCG1-AC5 is unaffected and passes 7 of 7 -- the no-date ask is inside the grant either way."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S12",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "TO-OG-g-1 mandates surprise row ids of the form `NFRA_OPLGTW-Z-OG-S<k>`, but that shape is rejected by BOTH gates' id patterns -- the row gate would refuse the row at commit and the proof-of-spec checker cannot see it -- so the ids the order asks for are unfileable; these rows use the admitted seat-row shape `NFRA_OPLGTW-Z-S<k>` instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROW GATE: .tools/surprise-row-gate.py:104 -- ID_RE = re.compile(r'^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$'), anchored at both ends, so the only segments admitted between the project and S<k> are 'Z-', 'W<n>-' and 'C-'. :2146 refuses any row whose id does not match.",
+      "PROOF-OF-SPEC: .tools/proof-of-spec-check.py:1127 -- SURPRISE_ID_RE = re.compile(r'^\\s*([A-Z0-9_]+-(?:Z-)?(?:W[0-9]+-|C-)?S[0-9]+)\\b'), the same admitted set; :1237-1239 emits 'surprises[n] carries NO row id' on a miss.",
+      "EXERCISED: matching 'NFRA_OPLGTW-Z-OG-S1' against SURPRISE_ID_RE returns NO MATCH, while 'NFRA_OPLGTW-Z-S1', 'NFRA_OPLGTW-Z-W15-S4', 'NFRA_OPLGTW-S1' and 'NFRA_OPLGTW-Z-C-S1' all MATCH. Measured 2026-09-29 before the rows were renumbered; the first proof-of-spec validation run reported all three entries as carrying no row id.",
+      "CENSUS: at CLOUD the channel holds 191 rows across 16 id shapes -- NFRA_OPLGTW-S<k> 63, W3 26, W5 20, W1 14, W4 12, W6 11, W2 10, Z-S<k> 8, plus eight Z-W<n>-S<k> shapes. ZERO rows carry a '-OG-' segment, so no precedent exists for the shape the order names.",
+      "CHOICE: NFRA_OPLGTW-Z-S9..S12, continuing the existing site-z seat-row series (Z-S1..Z-S8 present). The channel header's own rule is that a worker row carries its slot coordinate and 'a seat's row carries none', which is what Z-S<k> is."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rows filed as `NFRA_OPLGTW-Z-OG-S<k>` are valid and will pass the row gate and be seen by the proof-of-spec surprises limb.",
+  "world_is": "Both gates reject that shape. Had the order's literal ids been used, the commit would have been refused by surprise-row-gate.py and the three rows would have been invisible to the proof-of-spec checker -- i.e. the findings would have read as unfiled. The rows carry the admitted seat-row shape instead, and nothing else about them changed.",
+  "notes": "INERT: the correction is mechanical and is recorded here so the renumbering is not read later as a seat inventing its own ids. The issuer may prefer a '-OG-' segment to be admitted by both patterns; that is a gate edit, not a row edit, and is not this seat's write surface."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T01:40Z",
+  "one_line": "The OG-x-3 step-0 one-deployer census reads a gateway sentinel with status OPEN in 19 old rollback/release worktrees (nfra-oplgtw-og-r-1-first-release.json, opened 2026-09-18) although CLOUD carries the entry CLOSED and no sentinel; no live gateway deploy is open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Census 2026-09-29T01:2xZ: git worktree list --porcelain = 103 trees; per-tree count of git ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/ printed for each (range 3 to 15 entries; the main tree 14; this worktree 14). A content scan of the 51 distinct sentinel blobs for the string 'gateway' found ONE gateway-deploy sentinel at a tree HEAD: nfra-oplgtw-og-r-1-first-release.json in C:/tmp/mp-2-rb (status OPEN, author 0.9.0_WK_NFRA_OPLGTW~2, opened 2026-09-18T05:07Z). The working directories of 18 more rb/rel trees (mp-2-rel, mp-2-rel2, mx-rb, mx-rb3, mx-rb4, mx-rel, mx-rel3, mx-rel4, oa-10-rb, oa-10-rel, oa-8-rb, oa-8-rel, oa-9-rb, oa-9-rel, og-rb, og-rel, og-s1-rb, og-s1-rel) hold an uncommitted copy of the same file.",
+      "CLOUD (c180d84b36): org/critical_paths/change_management/20260918T0507Z_nfra-oplgtw-og-r-1-first-release_deploy_completion.md reads 'Status: CLOSED -- nothing stranded -- closed 20260918T070646Z'; git ls-tree CLOUD org/critical_paths/.open_deploys/nfra-oplgtw-og-r-1-first-release.json = 0 entries (removed by 45d1e43657).",
+      "No sentinel naming opal-gateway exists at CLOUD, at any live worker or slot worktree (oa-*, mx-*, wk-*), or in any working directory except those 19 rb/rel copies; the OA-r-1 release is closed (EC2_MANIFEST at CLOUD records d287ffb346 at 2026-09-29T00:45:15Z) and no MX-r-4 sentinel exists yet."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A1 step 0: any sentinel naming opal-gateway or gateway that is not the worker's own means STOP.",
+  "world_is": "Read literally, the census stops on a closed 09-18 deploy whose sentinel file survives in dead rollback/release trees, so it can never read clean while those trees exist. Read by intent, no other seat is deploying the gateway at 2026-09-29T01:2xZ. This worker finished PHASE A, which is read-only and creates only local worktrees, and reports the census here; it is repeated at PHASE B.",
+  "notes": "Issuer ruling wanted before PHASE B: either the census counts only trees whose branch is not an archived rb/rel tree, or those 19 stale copies are removed by their owner. The literal STOP was NOT filed as BLOCKING because the sentinel's ledger is closed on CLOUD; if the issuer reads the rule literally, this row is the BLOCKING record."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T01:41Z",
+  "one_line": "The live S3 artifact is opal-gateway-54e26d66a0.tar.gz, not opal-gateway-d287ffb346.tar.gz: OA-r-1 deployed from a never-merged deploy-only tree whose HEAD short is 54e26d66a0 while EC2_MANIFEST records d287ffb346.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/ (27 objects): opal-gateway-54e26d66a0.tar.gz 402043 bytes LastModified 2026-09-29T00:44:45Z and opal-gateway-latest.tar.gz 402043 bytes 00:44:48Z; head-object on opal-gateway-d287ffb346.tar.gz = 404.",
+      "git log -1 54e26d66a0: 'deploy-only(NFRA_OPALAI OA-r-1) ... CLOUD tree with infra/aws/ec2/opal-gateway replaced by the release commit d287ffb346's ... NEVER merged'; git diff --stat 54e26d66a0 d287ffb346 -- infra/aws/ec2/opal-gateway = 0 files, so the gateway directory is identical.",
+      "Rollback build from a clean tree at d287ffb346 with mcportal a3bff71ffa: 79 files; the live artifact opal-gateway-54e26d66a0 extracted: 79 files; diff -rq empty (79 of 79 identical)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-x-3 step 6: the live artifact is s3://.../opal-gateway-<live short>.tar.gz.",
+  "world_is": "The live artifact's key names the deploy-only tree's HEAD, not the manifest's deployed_commit. The comparison was made against the key that exists; the file sets match.",
+  "notes": "For PHASE B's rollback: the rollback tree rebuilds the same bytes, and the re-deploy command uploads opal-gateway-d287ffb346 (new key) plus latest. A rollback by S3 key alone would name 54e26d66a0."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T01:49Z",
+  "one_line": "OG-x-3 PHASE B stopped before the act: NFRA_MCPINDEX MX-r-4 (0.9.0_WK_NFRA_MCPINDEX~10) opened an opal-gateway ledger (nfra-mcpindex-r3-gateway-enable) at 01:37:57Z, between this worker's GO-time census (01:35:38Z) and its own ledger open (01:40:08Z).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-10/org/critical_paths/.open_deploys/nfra-mcpindex-r3-gateway-enable.json: status OPEN, opened_at 2026-09-29T01:37:57.892892+00:00, author 0.9.0_WK_NFRA_MCPINDEX~10, title 'NFRA_MCPINDEX MX-r-4 PHASE B: narrow opal-gateway release rel-nfra-mcpindex-r3-gateway-b @3371f18803 (base d287ffb346 ...) ENABLES opal_discover and portal_inde...'; legs L1 (upload from /c/tmp/mx-rel4), L2, L3 open, L4 closed 20260929T013833Z; committed at a05831a52b (2026-09-28 21:38:48 -0400 = 01:38:48Z) on wk-nfra_mcpindex-3-10.",
+      "This worker's census at 2026-09-29T01:35:38Z (107 worktrees) found no such sentinel; the immediate pre-act re-census at ~01:44Z found it. CLOUD deployed_commit read d287ffb346 at both times. Nothing was uploaded, installed or changed on the host by this worker in PHASE B: its BEFORE reads were read-only SSM (46 tools identical to Phase A; ENABLED_INTEGRATIONS unchanged; 5 files match d287ffb346).",
+      "This worker had opened its own ledger nfra-oplgtw-stream-export-release (committed 64c213b78a) at 01:40:08Z before the re-census; it withdrew it: sentinel removed, entry Status set to ABANDONED with the reason and a log line (the deploy_ledger.py terminal token ABANDONED), so its branch does not hold the one-deployer slot."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A1: the one-deployer rule holds every other opal-gateway deploy until the deploying seat's ledger closes; any other open gateway sentinel stops the worker.",
+  "world_is": "MX-r-4's deploy is open on base d287ffb346 and will move the live base to its release commit (3371f18803 per its title). OG-x-3's release tree 7b729821a9 is cut on d287ffb346 and is stale the moment MX-r-4's ledger closes; it must be re-cut on the new live base (release commit 7b729821a9 carries only OG-x-2's 9 files, so the re-cut is one cherry-pick of 0c3d545002).",
+  "notes": "Issuer decision: hold OG-x-3 until nfra-mcpindex-r3-gateway-enable closes, then send GO for a re-cut. This worker will not touch the host or the artifact bucket until then. The ledger entry name 20260929T0140Z_nfra-oplgtw-stream-export-release stays as the ABANDONED record."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T04:40Z",
+  "one_line": "OG-x-3 PHASE B stopped at the GO census, before any ledger or act: NFRA_MCPORTAL MP-a-2 (0.9.0_WK_NFRA_MCPORTAL~1) holds an OPEN sentinel nfra-mcportal-r3-writer-apply whose title and targets name the opal-gateway Terraform root and a 'gateway line'; the base, host files, tool count and ENABLED_INTEGRATIONS are all unchanged.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/mp3-1 (branch wk-NFRA_MCPORTAL-1, HEAD 35346c951c, 2026-09-29 00:22:38 -0400) org/critical_paths/.open_deploys/nfra-mcportal-r3-writer-apply.json: status OPEN, opened_at 2026-09-29T04:12:42Z, author 0.9.0_WK_NFRA_MCPORTAL~1; title 'NFRA_MCPORTAL MP-a-2: grant writer apply, branch=sub (gateway line keys=email,exp,family_name,...)... ROLLBACK (all 7 resources new): safe-apply-gated targeted destroy in infra/aws/terraform/opal-gateway of aws_lambda_function.mcportal_grant_writer, aws_lambda_layer_version..., aws_iam_role.mcport...'; legs L1 and L2 (verify) closed 20260929T0416Z, L3 (safe-apply targeted apply of mcportal_grant_writer.tf, 7 add 0 change 0 destroy) and L4 (live invoke) open.",
+      "Its act is a Terraform apply of 7 NEW resources (a Lambda, its layer, an IAM role) in the infra/aws/terraform/opal-gateway root; it does not name the EC2 instance, /opt/opal-gateway, the artifact bucket prefix ec2/opal-gateway/ or deploy-to-ec2.sh. My PHASE B act is safe-ec2-deploy.sh (S3 upload + SSM install + restart of opal-gateway.service) and touches no Terraform.",
+      "GO-time reads, all unchanged from PHASE A (SSM commands on i-07dccb1615503ac99 at 2026-09-29T04:2xZ): 76 of 76 host files = 7c7ebe14d3's gateway tree (manifest identical to the PHASE A manifest), ENABLED_INTEGRATIONS=ycharts opal_portal globgrph opal_discover portal_index, 27 .env keys, /health 200, 51 tools with the sorted diff against tools_before_phaseA_recut.txt empty. Census over 122 worktrees, HEAD scan of 52 distinct sentinel blobs and a working-directory scan of every tree: the nfra-mcportal sentinel (HEAD of C:/tmp/mp3-1 and its working copy) is the only gateway-naming OPEN sentinel besides the superseded og-r-1 slug."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A1 step 0: any OTHER open sentinel naming opal-gateway or gateway stops the worker; the issuer's GO message repeats it.",
+  "world_is": "On a literal reading the census stops here. On the measured act it is a different plane (Terraform, new resources, no shared file with the EC2 code deploy), so the two would not collide. This worker did not open a ledger and touched nothing on the host or the artifact bucket.",
+  "notes": "Issuer decision wanted: either (a) rule the MP-a-2 sentinel out of the one-deployer rule (Terraform apply of new Lambda resources, disjoint from the EC2 code path) and send GO again, or (b) hold until nfra-mcportal-r3-writer-apply closes. On GO the worker repeats the census and BEFORE reads, then runs steps 10-13 from /c/tmp/og-x3-rel2 (release 4248b70b39)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T05:45Z",
+  "one_line": "xr.AC3 of OG-x-3 cannot pass as written: it looks for tests/test_schwab_export_stream.py on the host, which no gateway artifact ships, and expects ENABLED_INTEGRATIONS=ycharts opal_portal globgrph, the value before MX-r-4; the host's value is the five ids, unchanged by this deploy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/xr.AC3.sh run at HEAD 1f15da8f48 (SSM commands 564c50e6-58d8-4169-be5c-b0958ee92c84 and bb8aef48-d382-4b12-bd4e-3e2d55f6d791, both Status=Success): 'health=200; streaming export on host 0; schwab files equal deployed_commit 4 of 4; ENABLED_INTEGRATIONS unchanged=no' -> RESULT: FAIL, exit=1.",
+      "deploy-to-ec2.sh's tar step packs app, deploy, requirements.txt, identity_tool_allowlist.txt and the dashboard bundle with --exclude infra ...; a rebuilt 79-file artifact and the live opal-gateway-7c7ebe14d3.tar.gz both contain no tests/ directory (diff -rq empty, 79 of 79), so /opt/opal-gateway/tests/ cannot exist on any release.",
+      "Host .env ENABLED_INTEGRATIONS read over SSM before (05:1xZ) and after (05:23Z) the deploy: 'ycharts opal_portal globgrph opal_discover portal_index' both times (MX-r-4 added the last two; amendment A2 of the order names the same value). The check compares against the 3-id string, so 'unchanged=no' although this act changed nothing.",
+      "What the host does show: engine.py b06a27f7317b1f664f75c66d757e8491, integration.py f436630c352d0cedfd1dbaedc67b43d3, export.py c9943e7840e2e1ea2cb97df75feccf90, envelope.py 651359f19abc63a2b77811df1f3fbf29 = 4248b70b39's bytes, 4 of 4; 76 of 76 files of the shipped tree; /health 200; 51 tools."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-x-3 AC3: the host carries OG-x-2's test module and ENABLED_INTEGRATIONS reads 'ycharts opal_portal globgrph'.",
+  "world_is": "The deploy is verified by content on every other axis, but the criterion as cut reads FAIL for two reasons that are properties of the check, not of the deploy. Recorded FAIL, the order is left open, and no criterion was edited by this worker.",
+  "notes": "Issuer to amend xr.AC3.sh (test-module probe -> the host's schwab/integration.py contains the streaming reader, e.g. a grep for read_export_batches in engine.py; ENABLED_INTEGRATIONS literal -> the host's value at the cut) and re-run, or rule the two readings; then the flip is a re-run of AC3 plus the proof instance's AC3 row."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T05:52Z",
+  "one_line": "The <expect> patterns of OG-x-3's AC1 and AC2 ('sentinel at HEAD=no; listed OPEN/HELD=0 -- RESULT: PASS -- exit=0', 'descends=yes -- RESULT: PASS -- exit=0') cannot match the verbatim output of their xr scripts, so proof-of-spec-check refuses a PASS row for either although both scripts print RESULT: PASS and exit 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "xr.AC1.sh output at HEAD 1f15da8f48: 'entry files at HEAD=2; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR: 13 of 13 sentinel(s) scanned' newline 'RESULT: PASS' newline 'exit=0'. xr.AC2.sh: 'deployed_commit=4248b70b39... previous=f791522306... descends=yes; gateway files shipped 9, outside OG-x-2's set 0; streaming export carried 1' newline 'RESULT: PASS' newline 'exit=0'.",
+      "python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 with those outputs as output_evidence and status PASS: 'VIOLATION: acceptance[AC1]: status=PASS but output_evidence does NOT match expect ...' and the same for AC2, INVALID rc=1 (checker code: re.search(expect, output_evidence, DOTALL|MULTILINE)). The ' -- ' between the fragments is a literal in that search."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's <expect> clauses decide AC1 and AC2 mechanically.",
+  "world_is": "The two rows are recorded UNVERIFIABLE-BY-INSTRUMENT with the script's RESULT line as the substitute oracle, rather than fitted by re-flowing the output to match the pattern.",
+  "notes": "Issuer may amend the two <expect> patterns to regexes that the scripts' output satisfies, e.g. (?s)sentinel at HEAD=no; listed OPEN/HELD=0.*RESULT: PASS.*exit=0 and (?s)descends=yes.*RESULT: PASS.*exit=0, and re-run the checker on the same instance."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S13",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-29T06:20Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by amendment, as disarm_owner. Z-S9 (no prepare subcommand): OG-g-1 A2 names validate_candidate() via import. Z-S10 (AC3 vs AC6): ruled by 1.0.0_SA_CTO~O @8bf2bf37c6 -- AC6 wins; redacted diff + SHA-256 of the unredacted diff, folded as OG-g-1 A2 (A1's SSM copy superseded). Z-S11 (fixed-dates grant vs A7's latest date): OG-v-7 OGV7-AC6 bounded to the grant's dates, amendment @ce520eb13e. Z-S12 (unfileable Z-OG-S ids): OG-g-1 A2 names the admitted NFRA_OPLGTW-Z-S<k> shape.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S9",
+    "NFRA_OPLGTW-Z-S10",
+    "NFRA_OPLGTW-Z-S11",
+    "NFRA_OPLGTW-Z-S12"
+  ],
+  "one_line": "The issuer disarms Z-S9..Z-S12 (0.7.0_AE_CloudOps~OG's rows on OG-g-1) by amendment: OG-g-1 A2 and OG-v-7's AC6 bound.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-g-1 A2 in task-orders/NFRA_OPLGTW.TO-OG-g-1.controlled-identity-and-grant.md (this commit)",
+      "OG-v-7 A1 @ce520eb13e (OGV7-AC6 bounded to the grant's fixed dates)",
+      "1.0.0_SA_CTO~O ruling deliverables/1.0.0_SA_CTO~O/RULING_G-C_ACCOUNTS_AND_Z-S10_20260929.md @8bf2bf37c6",
+      "ops/schwab_entitlement_admin.py:140 validate_candidate; :421 activate is the only validating subcommand"
+    ]
+  },
+  "spec_asserts": "OG-g-1's AC3 invocation, its AC3/AC6 pair, its row-id shape, and OG-v-7's AC6 were each executable as written.",
+  "world_is": "Each was not; each is now amended so it can pass on the evidence the order produces, with no criterion weakened."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T07:05Z",
+  "one_line": "On the host, at the served release 4248b70b39, the 250,000-row export of the widest exportable set (dim_position, 11 columns) is refused LIMIT_EXCEEDED/memory at 272,683,008 bytes of child RSS (cap 268,435,456), the maximal query peaks at 286,691,328, and the contract-scale export never completes: capacity is INSUFFICIENT at full width.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "onhost_bench.py --scale full on i-07dccb1615503ac99 (SSM e32bd390-4b24-4e5f-9e4d-49824f691a05; run 2026-09-29T06:47:12Z..06:47:34Z; JSON onhost_run_full.json): export:full 250000 rows x 11 columns ok=False LIMIT_EXCEEDED/memory elapsed 1.407 s peak_child_rss_bytes 272683008; export:tenth 25000 x 11 ok=True csv 3,748,900 bytes 2.921 s peak 171,974,656; probe 125000 x 11 ok=True csv 18,743,499 bytes 8.074 s peak 225,271,808; maximal query LIMIT_EXCEEDED peak 286,691,328; concurrent pair 205,750,272 and 205,463,552 (ok). Peak ratio full/tenth 1.5856 (the full run was cut off at the cap, so its true peak is higher).",
+      "A second full run (same host, same code, unrestarted service since 05:22:10Z) read: maximal 286,830,592; export full LIMIT_EXCEEDED 275,021,824; tenth 170,377,216; probe 125000 ok 225,247,232; ratio 1.6142.",
+      "Consistent with OG-x-2 row Z-W11-S1 (Windows working set: 260 MiB at 4 columns, 334 MiB at 11): the child holds the source table and DuckDB's sorted result in memory, so peak RSS scales with rows x columns; OG-x-2 flattened the PARENT and the result materialisation, not the source read and the sort. The largest 11-column export that completes here is between 125,000 and 250,000 rows (125,000 measured)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C5 / contract limits: 250,000 rows and 50 MiB per export within the 256 MiB job cap and 30 s deadline; R-OG-24: no job exceeds the cap.",
+  "world_is": "At full width the contract's export ceiling is not reachable on this host; the measurement is the input to a PRD revision (contract numbers do not move, R-4). CSV size is not the constraint: 11 columns cost about 150 bytes a row (37 MB at 250,000 rows, under 50 MiB).",
+  "notes": "Verdict INSUFFICIENT recorded in CAPACITY.json with for_prd_revision_if_insufficient. Levers named by OG-x-2 and not taken (each is code outside this cell): sort keys only and gather the payload in Arrow; read the source in row-group order and stream. dim_asset (three free-text columns, 9 columns) was not measured."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T07:06Z",
+  "one_line": "Admission arithmetic is priced against the 256 MiB cap, but the measured child peaks 4 to 18 MiB above it before the poll kills the job, so two admitted jobs can need 36,511,744 bytes more than the formula reserves (R-OG-24 point 5).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CAPACITY.json admission block (host run 06:47Z): formula reserve 375,753,728 bytes = ceil(193,228,800 x 1.25) + 134,217,728 (existing peak input: the engine's OG-p-1 floor, since the live gateway's measured VmHWM was 101,580,800 after the 05:22Z restart); required for 2 jobs 912,624,640. Priced against the measured child peak: max 286,691,328 (overshoot 18,255,872 over the cap): reserve 412,265,472, required for 2 jobs 949,136,384; gap 36,511,744 bytes. host_memory_bytes 1,936,322,560 admits both (host_can_admit_2_jobs_global_cap true).",
+      "engine.py submit(): the parent polls the child's RSS every 20 ms and kills it when RSS exceeds job_memory_bytes; the recorded peak is the last sample, so it is above the cap by the growth of one poll interval. Round 1 recorded 270,581,760 and 282,021,888; this run 272,683,008 / 275,021,824 (export) and 286,691,328 / 286,830,592 (maximal).",
+      "This cell does not change admission code (order, section 1); the gap is the finding the order asked for."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C5 capacity: admission reserves the existing peak x 1.25 + 128 MiB before starting a child; R-OG-24 point 5: priced against transient overshoot.",
+  "world_is": "On this 1.8 GB host the gap is affordable (host memory 1.94e9 >= 9.49e8 required), but the reserve as written does not include the overshoot the engine itself allows.",
+  "notes": "For the PRD revision or an engine cell: either add the measured overshoot to the reserve or lower the kill threshold below the cap so the recorded peak cannot exceed it."
+}
+```

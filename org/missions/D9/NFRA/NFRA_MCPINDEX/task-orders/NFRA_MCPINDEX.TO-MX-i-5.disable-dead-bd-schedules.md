@@ -46,6 +46,20 @@ Read R-15 in the analysis.
 5. Apply with `.tools/safe-apply.sh`, using the saved plan. Then `terraform plan -detailed-exitcode` returns 0.
 6. Read back the 4 rules DISABLED and `bd-asset-dim-pipeline-trigger` ENABLED (AC1). Close the ledger.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-29 ~06:3xZ) -- "dead" is proven per DOCUMENT, across EVERY step.**
+- Measured by the issuer: `opal-bd-transaction-download` runs the Playwright download and THEN
+  `merge-daily-incremental.py` (document :46-48). The merge reads `forwardfill_v2/transactions/TRANSACTIONS_DAILY_*`,
+  which a LIVE REST producer on the bd-49f session chain writes daily at ~00:02Z. Disabling that trigger would stop
+  served silver transactions.
+- For each of the 4 documents, list every step in its section as
+  `STEP <n> | <what> | output prefix | writes since: <count since LAST_NON_FAILING>`, and name any input another
+  producer writes.
+- Each section carries `VERDICT: DEAD` (no step writes live output) or `VERDICT: LIVE (step <n> writes <prefix>)`.
+- **Only DEAD documents' rules are disabled.** The plan reads `0 to add, N to change, 0 to destroy`, where N is the
+  number of DEAD verdicts. A LIVE document's rule is NOT touched.
+- AC1-AC3 are re-issued to grade exactly this (see the round-4 battery). The transaction leg is expected to read LIVE.
+- Removing a LIVE document's dead Playwright step is MX-s-14's pattern (strip, keep the merge). It is not this cell's.
+
 ## 2. BOUNDS
 
 1. Only the 4 named rules' enabled state. Nothing is deleted: no rule, target, Lambda or SSM document.
@@ -86,7 +100,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-3 analysis s.5 item 1; R-15 disarms Z-W8-S3 THIS round. Dry-run at base: i5.AC1 FAIL (0 of 4 DISABLED; the control ENABLED), i5.AC2 FAIL (no plan), i5.AC3 FAIL (no proof). MX-s-14 later RE-ENABLES bd-transaction-pipeline-trigger only in its own PHASE B, on the ported document.
 
-<status>pending</status>
+<status>superseded -- by 2.0.0_SA_COO~MI, 2026-09-29 ~07:1xZ, after the drain @09c0663ca1: the per-document dead proof (DEAD_PROOF_MX-i-5.md, worker ~16) reads all 4 BD Playwright documents LIVE. The download step is dead in all 4 (70 of 70 logs since 2026-06-22 exit 1), but each document's merge step succeeds (70 of 70) and writes silver/<leg>/ from the bd-49f REST producer's input, so disabling any trigger would stop that leg's silver ingestion. 0 rules disabled, no Terraform change. Z-W8-S3 disarms instead through MX-s-14 A2 (strip the Playwright step and the credential read from all 4 documents, keep each merge). Z-W16-S1 is disarmed by the issuer row that follows it. Was: pending.</status>
 <round>4</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

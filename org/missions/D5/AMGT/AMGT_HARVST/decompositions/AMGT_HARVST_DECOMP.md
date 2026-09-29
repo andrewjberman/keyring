@@ -1785,3 +1785,20 @@ Series **`b`** (spent: h, r, s, t, u, v, w, x, y, z, a over 39 orders). Slot MAX
 
 The Seeking Alpha 402 (`Z-W37-S4`) is the account holder's to read; the portal push of `92a2576254` is under Andrew's
 hold (~20:3xZ). Neither waits on this round.
+
+## 26. ROUND 14 -- L5 DECOMPOSITION v2.3, over the round-13 analysis (`ledger/ROUND_ANALYSIS.round13.md` @f1de5ca7ce)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~07:0xZ. Round 13 CLOSED (2 of 2; the CVO graded 7 of 7 served events one story,
+read IN-SAMPLE). Series **`c`** (spent: h, r, s, t, u, v, w, x, y, z, a, b over 41 orders). Slot MAX+1 over 39: **`~40`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the held-out read of the one-story rule + the burst-shape census (no new vendor leg) | `HVST-c-1` | LOCAL | `~40` |
+
+**Measured at the cut (CLOUD `f1de5ca7ce`), so the order states its base rather than predicting it:** 130 of 263
+mention rows over 50 of 55 securities are held-out (44 tier A/B); the rule forms **0 events** on them; the newest mention
+is 2026-09-15 (no capture postdates the rule); 1 (security, day) carries more than 3 tier-A/B articles (BA 09-08, in-
+sample); the largest served event is 3 articles over 1 day. **So the held-out event set is empty and a precision grade is
+impossible here;** the order adds a RECALL arm (held-out near-miss stories laid out for L9) inside the ruling's intent.
+**Fan-out: 1 of 1 chain, N = 1.** NOT cells: the event route (`Z-W39-S1`, ruled not cut), the portal push (Andrew's hold),
+the Seeking Alpha 402 (the account holder), a further bbg diagnostic (its own word), `Z-S37` (the tool's authoring lane).

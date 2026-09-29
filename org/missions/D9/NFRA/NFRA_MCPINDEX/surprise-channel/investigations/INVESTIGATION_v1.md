@@ -2645,6 +2645,277 @@ carries none.
     "notes": "Issuer disarm owed since the A1 grade; recorded at the round-3 close."
   },
   {
+    "id": "NFRA_MCPINDEX-Z-W14-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T05:58Z",
+    "one_line": "MX-d-4 leaves the order silent on WHICH member of a family row the opal-internal principal resolves: the worker chose `global` (the catalog's own member key), for both next_tool args and the served_written_at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Order item 1 names {scope: global} for mp.01 only as an example and item 2 says 'HEAD the member the principal resolves'; an opal-internal principal has no firm segment. app/integrations/opal_discover/integration.py _family_member(): the member is `global` when the catalog's rows_by_key holds that member key of the same row, else the family is unresolved (args_missing + served_written_at absent, error_class family_member_unresolved). A firm principal resolves its own firm segment from its already-substituted key.",
+        "Tests test_served_written_at_absent_with_error_class and test_next_tool_names_purpose_built_tool_else_http_route pin both branches on a synthetic catalog."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order names next_tool mdpf_get_aum_metrics {scope: global} for mp.01 and a HEAD of 'the member the principal resolves'.",
+    "world_is": "Read literally, `global` is the only member all three mp.* family rows share with an opal-internal principal; the worker generalised it to any family axis. A different opal-internal member choice (a firm) would change served_written_at's HEAD target, not its claim.",
+    "notes": "Filed as a form-level surprise (the order did not say); the choice follows the AC1 expectation."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T05:58Z",
+    "one_line": "R-14 makes discover() do live S3 HEADs by default, so every caller that does not inject `head` (the MX-v-6 routing harness's plain run, AC2, any in-process probe) now reaches S3 on the caller's own AWS credentials; the order's declared egress ('one S3 HEAD per servable row') covers it, but the harness is READ-ONLY and is unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "d4.AC3.sh plain run of tests/routing/run_routing.py: rc=0 ROUTING 23 of 27, with HEADs issued for each servable match; d4.AC2.sh: 9 of 9 servable rows carried served_written_at measured on this box (credentials present).",
+        "The HEAD client uses connect_timeout 3 s, read_timeout 5 s, max_attempts 1, so with no credentials or network the field reads absent with error_class and the answer is still returned (never an exception); that failure arm is pinned by test_served_written_at_absent_with_error_class with an injected raising head."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order item 3: 'The HEAD is injectable, so a test needs no network.' Preflight: EGRESS CLASS NONE beyond Opal's own AWS.",
+    "world_is": "The default (non-injected) path reaches S3. Nothing was deployed and no gateway integration is enabled here; the routing harness's 27 questions each issue up to a handful of HEADs on a run.",
+    "notes": "For the analysis: a harness that must stay offline needs an injected head, which is the harness owner's edit, not this cell's."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T04:00Z",
+    "one_line": "The emitter refused in the worker worktree because the portal submodule directory is empty; the portal api sources were read from the pinned gitlink commit into the empty directory, untracked, to emit the catalog.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python workflows/atom_decomposition/emit_catalog_v02.py in worktree wk-mcpindex-r4-15 at 120ff9b27f printed: EMIT REFUSED: accessor index is EMPTY -- portal/src/api not readable (the portal submodule must be present); `ls -la portal` was an empty directory.",
+        "Workaround, no git state touched: `git -C <main workspace>/portal archive c3dd9ca96a3718afcde829ea9b010041d925f883 src/api | tar -x -C portal` (c3dd9ca96a is this worktree's own gitlink, `git ls-tree HEAD portal`). Re-emit with NO new entry changed only the built_at_git_head vintage lines (58924e1530 to 120ff9b27f), 2 lines: the emitter reproduces the committed catalog at that pin.",
+        "The extracted files are untracked contents of the gitlink path and are not committed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "TO MX-t-9 item 2: the catalog is re-emitted through the emitter in the worker worktree.",
+    "world_is": "The emitter needs portal/src/api, and a worker worktree carries the portal gitlink as an empty directory, so any cell that re-emits the catalog needs the same read of the pinned commit. The pinned commit was resolvable from the main workspace's portal repository.",
+    "notes": "The built_at_git_head line of the committed catalog now names 120ff9b27f (the vintage is git HEAD by the emitter's own contract)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T04:00Z",
+    "one_line": "The new tool mdpf_get_model_benchmarks is not named in app/data_entitlement.py INDEX_TOOLS, so data_entitlement.classify returns None for it and it is denied to every principal once portal_index is enabled; the file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/data_entitlement.py:113-116 (INDEX_TOOLS) names the three mdpf tools and the two opal_discover tools; TOOL_CLASSES is built from that set and classify() returns None for any other name (its docstring: 'denied to everyone until it is').",
+        "Measured in the worker's test: data_entitlement.classify('mdpf_get_model_benchmarks') is None while classify of the three mdpf tools is 'legacy' (tests/test_portal_index.py test_portal_tools_register_dormant_with_class prints it under -rP; that test no longer asserts it for the fourth tool).",
+        "The tool itself is complete: 11 of 11 tests in tests/test_portal_index.py pass, the in-process read of the served object equals it (EQUALITY_MX-t-9.md)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-9: 'Classify it SAFE, like the others' (destructive_ops SAFE is done in the module) and the tool answers at r5.J1.",
+    "world_is": "There are two classifications: destructive_ops (SAFE, in the module) and data_entitlement (a name set in a separate file that MX-t-9 does not own). Left alone, the release at MX-r-5 enables portal_index and the fourth tool is refused for every caller, so r5.J1 cannot read it. The one-line fix is adding the name to INDEX_TOOLS, in a cell whose paths include app/data_entitlement.py (MX-t-8 item 10 did the same for the first three); the existing tests/test_data_entitlement_guard.py may pin the set and need the same edit.",
+    "notes": "Two tests in tests/test_data_entitlement_guard.py (ogz1_ac05 KeyError 'unclassified', ogz1_ac08 route set) fail in this worktree; both concern registry report keys and server routes, not this cell's names, and were not baselined here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T06:26Z",
+    "one_line": "The MX-d-5 weak-match rule ('one plain lower-case single-word keyword is not a link') costs recall on real asks the 27-question harness does not hold: any dataset ask whose only channel link is one such word, e.g. 'what are the rates', now answers NOT_CATALOGUED unless a row's entity slug is in the ask.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integration.py _channel_selected(): weak = exactly one distinct keyword hit and it fullmatches [a-z]+. Harness before/after: 23 of 27 -> 27 of 27, dataset asks routed first 3 of 3 (d5.AC3), so the harness sees no recall loss; it holds only 3 dataset asks (Q05 ST, Q07 INT, Q22 S&P), all matched by an upper-case or multi-word keyword.",
+        "channel keywords that are plain single lower-case words and so are weak alone (measured from the catalog): e.g. rates, yield, fed, macro, treasury, inflation, factor, tilt, value, growth, quality, size, regime, momentum, volatility, news, peer, valuation, holdings, positioning, exposure."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order item 2: answer NOT_CATALOGUED when the ask's only link to a channel is ONE common word, grade recall on the harness's positive asks (AC3).",
+    "world_is": "The rule is exactly as ruled and passes AC1-AC3, but 'common word' is operationalised as 'a plain lower-case single-word keyword', which also silences a lone 'rates' or 'inflation'. The harness cannot measure that: 3 dataset asks of 27.",
+    "notes": "For the analysis: a recall set of real single-word dataset asks, or a corroboration test (a second ask word found in a candidate row's own text), would grade it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T06:26Z",
+    "one_line": "Regenerating the catalog needed portal/src/api extracted read-only from the pinned gitlink (Z-W13-S1 again), and the emitter has NO authored home for channel keywords: v0.1 channel fragments are re-emitted from the catalog's own current content, so MX-d-5 added an authored EXTRA_CHANNEL_KEYWORDS map to emit_catalog_v02.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "emit_catalog_v02.py before the change: 'EMIT REFUSED: accessor index is EMPTY -- portal/src/api not readable'; worktree portal/ is an empty gitlink dir. Fixed as Z-W13-S1 did: git archive of c3dd9ca96a src/api from the main checkout's portal into portal/ (untracked inside the gitlink path, not committed).",
+        "A baseline emitter run with no edit changed only the two build-stamp lines; with EXTRA_CHANNEL_KEYWORDS the diff is those 2 lines plus 6 keywords on market_regime_trending (S&P, S&P 500, SPX, stock market, equity index, equity indices)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order item 1: add the keywords 'through the emitter's source, never a hand edit of DATA_CATALOG.yaml'.",
+    "world_is": "The emitter had no source to add to for a channel's keywords, so the authored map is new emitter code (in the order's <paths>). A later emitter run keeps the keywords because the map is authored, and also because they are now in the re-read catalog.",
+    "notes": "The keywords sit on channel market_regime_trending, whose 2 rows are mkt.01 and mkt.02; keywords are a channel field, there is no row-level keyword."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W16-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~16",
+    "surfaced_at": "2026-09-29T06:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-i-5 PHASE A: none of the 4 BD Playwright documents proves DEAD on the ruled predicate -- each one's merge step (step 4) still writes into silver/<leg>/ and its manifest after LAST_NON_FAILING 2026-06-22; only the download step is dead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DEAD_PROOF_MX-i-5.md in org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~16/ (per-step table; S3 list-object-versions of forwardfill_v2/<leg>/, silver/<leg>/ and the 4 silver/incremental_*manifest.json keys, read 2026-09-29 ~05:30-06:30Z; the silver objects were read BY VersionId for num_rows via pyarrow).",
+        "Download step: 21 of 21 retained SSM runs per document Failed at $LATEST; 70 of 70 log objects dated after 2026-06-22 record failure per leg, and in every one of them Download exit code = 1 and Merge exit code = 0 (70 of 70 x 4 legs).",
+        "Merge step, objects written INSIDE the leg's own window (rule minute to +45 min) after 2026-06-22: silver allocations 9 (last 2026-07-03T22:00Z), realized 35 (35 of 35 read have rows>0, last 2026-09-28T21:46Z, 11,298 rows), transactions 35 (11 of 35 rows>0, last rows>0 2026-07-17; the 24 since are 0-row 34,882 B, last 2026-09-28T21:54Z), unrealized 277 (2 of 106 read rows>0, last 2026-07-02T21:41Z; 104 are 0-row 8,016 B rewrites of six stale partitions 2026-07-03..07-09, daily to 2026-09-28T21:40Z). Manifest writes in own window: 4 / 31 / 31 / 50, last 2026-07-03 / 09-28 / 09-28 / 09-28.",
+        "Input consumed by the merge from ANOTHER producer: forwardfill_v2/<leg>/ objects written 00:00-01:30Z (bd-49f-session-daily chain), 0 written in any leg's own window since LAST_NON_FAILING (0 of 47 / 180 / 788 / 47)."
+      ]
+    },
+    "spec_asserts": "MX-i-5 step 1 and R-15: each of the 4 legs is proven dead at two grains, the leg's own output prefix shows 0 objects since LAST_NON_FAILING, so all 4 rules are disabled (AC2 4 to change, AC3 OUTPUT_SINCE 0 x4). Issuer ruling of 2026-09-29 ~06:2xZ: dead is proven per DOCUMENT across EVERY step.",
+    "world_is": "The download step is dead in all 4; every document also runs a merge step (step 4) that succeeds (Merge exit code 0 in 70 of 70 runs per leg) and writes silver/<leg>/ partitions and its manifest. The attribution to the leg is INFERRED from time of day (the bronze producer lands at 00:00-01:30Z, the leg fires 21:38-22:00Z), not from a principal: no S3 data-event trail was read. By the ruled predicate all 4 read LIVE. Row-bearing own-window silver writes: realized through 2026-09-28; transaction through 2026-07-17; allocation and unrealized through 2026-07-02 (allocation has no own-window write of any kind after 2026-07-03T22:00:50Z). Nothing was changed: no Terraform edit, no plan.",
+    "notes": "Which of the 4 the issuer treats as disarmable on the 0-row-only evidence (allocation, unrealized) is the issuer's ruling, not measured here. The daily failed login and secret read stay live until that ruling, which is why the row is ARMED."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S54",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T06:52Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W16-S1"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W16-S1 by ruling: no BD daily document is dead (each merge step writes silver), so none is disabled (MX-i-5 superseded, 0 rules changed). The daily failed portal logins that Z-W8-S3 names are removed by STRIPPING the Playwright step and the credential read from all 4 documents while keeping each merge (MX-s-14 A2), under one never-widen ask.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~16/DEAD_PROOF_MX-i-5.md (drained 09c0663ca1): the download step is dead in 4 of 4 (70 of 70 logs since 2026-06-22 exit 1); the merge step succeeds 70 of 70 and writes silver/<leg>/ (realized 35 of 35 row-bearing).",
+        "1.0.0_SA_CTO~O confirmed the per-document reading for the transaction leg (msg 26471); MX-s-14 A1's merge-only test run cdb144c8 Success, 0 vendor calls."
+      ]
+    },
+    "spec_asserts": "Z-W16-S1 (ARMED): the 4 legs cannot be disabled because each one's merge is live; the order's premise does not hold.",
+    "world_is": "Nothing was applied. The hazard, the daily failed logins and the secret read, stands until MX-s-14 PHASE B publishes the stripped documents under its never-widen halves. That act is sequenced this round.",
+    "notes": "MX-i-4 (least privilege on opal/bd/credentials) can re-run after MX-s-14 PHASE B removes the 4 readers."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T05:40Z",
+    "one_line": "The platinum/etfs catalog row has no certified rectangle behind it: it is an AUTHORED row (a channel block and one artifact row written in the emitter), so its semantics are worker-authored and not CVO-certified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/emit_catalog_v02.py builds every EMISSION_MAP row from resolved certified substrates; the ETF page is not among PROGRAM_UNITS' certified runs (only json/positioning is), so no view carries platinum/etfs. The emitter's own capital_markets channel is the precedent for an authored channel block.",
+        "The new AUTHORED_CHANNELS / AUTHORED_ARTIFACTS blocks cite each field to a live get-object read (VersionId yBqGKuVXd0Fc3LLZDBV8ojJ_ONfgTbUY) or to data/etfs/scripts/gold/etf_positioning_publisher.py and portal/src/api/portal-proxy.ts, and the row's semantics_provenance says WORKER-AUTHORED, NOT a CVO-certified rectangle.",
+        "Also edited: the pos.01 row's disambiguation (a mutual L-1 pair with the new row); nothing else in an existing row changed (git diff of the catalog: the header and version lines, the new channel, the new portal_datasets entry and that one disambiguation line)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 item 1: 'add the catalog row with its verdict, keywords and caveats, through the emitter's source'.",
+    "world_is": "The verdict (serve-with-caveat, ruled on Andrew's word @dc75ddbe32), the firm (opal-internal: the key carries no scope segment, so a firm principal cannot be scoped by key) and the caveats are the worker's reading of the object and the producer's own docstring, not a certified cell. If the CVO wants the ETF page certified like the others, that is a program-unit run, and the authored block would then be replaced by the lifted row.",
+    "notes": "The channel keywords are ETF, ETF holdings, ETF positioning, the four tickers and other multi-word or upper-case forms; ETFs (mixed case, one word) is also present and may be read by MX-d-5's weak-match rule as a plain single-word keyword. MX-d-5's rule is not in this worktree, so d5.AC2 was graded here only on the pre-rule matcher (first match is the ETF row)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T05:40Z",
+    "one_line": "Baseline: test_ogz1_ac05 and test_ogz1_ac08 fail on CLOUD a6c17f4bcf itself; test_portal_grant's two asker tests fail when run after other gateway test files, on the same baseline.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git archive a6c17f4bcf infra/aws/ec2/opal-gateway extracted to the worker scratch (no edit of mine in it): `python -m pytest tests/test_data_entitlement_guard.py` reads `2 failed, 10 passed`, FAILED test_ogz1_ac05 (KeyError 'unclassified') and test_ogz1_ac08 (route-set assertion, the extra routes '/', '/api/admin', '/assets/{path:path}').",
+        "The same command in the worker tree with this cell's edits reads the same two failures and no others in that file, so the cell did not cause them.",
+        "test_portal_grant.py::test_asker_portal_scope_admits_granted_channel and ::test_asker_portal_scope_refuses_other_channel fail in a combined run (test_opal_discover then test_portal_grant) on the pristine extraction AND on the worker tree, and pass 7 of 7 when the file runs alone in the worker tree: an order dependence at baseline. On the pristine extraction the file alone shows two admin tests failing, which is an artifact of the extraction (it carries no workflows/ directory)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 A2: 'baseline test_ogz1_ac05/ac08 on CLOUD and report whether they also fail there'.",
+    "world_is": "Both fail on CLOUD at a6c17f4bcf. They were not fixed (the order says not to unless the cell caused them). ac05 expects a registry report key 'unclassified' that the report does not carry; ac08 pins a route set that lacks three routes the server now has."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T06:10Z",
+    "one_line": "BLOCKING: the naming limb (LGIC_ENFORCE DEC-6, ENFORCE) refuses the MX-t-10 commit because the served key of the ETF object is a NEW out-of-pattern S3 literal in three files inside the order's paths; the finished work is uncommitted in the worktree and preserved as a patch.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... on the MX-t-10 paths printed: ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged. NAMING REFUSE infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:402 (the ETF object's key) -> etfs/{scope}/platinum/positioning_data.json, why: NEW and OUT-OF-PATTERN as S3Key: REFUSE; the same for workflows/atom_decomposition/emit_catalog_v02.py:54 (the prefix) and :70 (the key); and emit_catalog_v02.py:54 also flags the pre-existing mdpf prefix, 'EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it', because the widening edits that same line. NAMING-GATE: REFUSE 4 graded.",
+        ".tools/naming-gate.py header: 'NEW and OUT-OF-PATTERN -> REFUSE'; NOT graded are prose, comments, docstrings, */tests/* and the record trees org/ and docs/; a string is NEW when absent from the file's pre-image at HEAD. The catalog must name the served key (the gate indexes rows by it), so there is no conformant spelling of it: the canonical form the grader prints, etfs/{scope}/platinum/positioning_data.json, is not where the object is served.",
+        "CLAUDE.md rule 30: a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; a deliberate departure is an R20 register entry Andrew acknowledges. Both are outside this order's paths, and no assembled-string or comment-marker workaround was used.",
+        "Every criterion is met on the worktree: AC1 5 of 5 PASS exit=0 and AC2 16 passed, 0 failed PASS exit=0 (invocations run before the commit attempt); the proof instance checks VALID rc=0; the equality read holds (EQUALITY_MX-t-10.md)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 A1: 'Andrew widened the catalog to platinum/etfs; the catalog version bump carries his verbatim ... through the emitter's header text', and item 5: 'Run AC1 and AC2, and commit'.",
+    "world_is": "The widening Andrew gave cannot be written into the catalog under the naming limb as it stands: any commit that adds the first literal of an out-of-pattern legacy S3 key is refused, and the catalog exists to carry exactly such literals. The mdpf keys got in before the limb was enforced (they grade EXISTING and only warn). The candidate is complete and uncommitted: 5 modified files and 1 new one under infra/aws/ec2/opal-gateway and workflows/atom_decomposition, all in this worktree, and preserved verbatim as deliverables/0.9.0_WK_NFRA_MCPINDEX~15/MX-t-10.candidate.uncommitted.patch (a record file, so never graded, and not a substitute for the commit).",
+    "notes": "Ways forward, all the issuer's or the CTO's: (a) an R20 register entry (or a registry row) that names platinum/etfs/positioning_data.json as a served legacy address, after which the same commit passes; (b) a ruling that the emitter's ALLOWED_PREFIXES and the generated catalog are exempt from S3Key grading; (c) the issuer lands the candidate through a route the limb admits. The worker used none of them and did not touch the limb, the enforce file or any registry."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S55",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T07:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W15-S2"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W15-S2 in source: app/data_entitlement.py INDEX_TOOLS now names mdpf_get_model_benchmarks (worker ~15 commit 5a450314de, drained 18517e64cc), so classify() no longer denies MX-t-9's tool to every principal. The served gateway carries neither the tool nor the entitlement until MX-r-5 releases both together, so the hazard never reached a caller.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/data_entitlement.py:115 on CLOUD @18517e64cc names mdpf_get_model_benchmarks (native Grep read).",
+        "Issuer re-grade on CLOUD @18517e64cc: t9.AC1 PASS, t9.AC2 PASS (round4/checks)."
+      ]
+    },
+    "spec_asserts": "Z-W15-S2 (ARMED): the new portal_index tool is absent from INDEX_TOOLS, so the entitlement layer denies it.",
+    "world_is": "Fixed on CLOUD, not yet served. MX-r-5 ships the tool and its entitlement in one release (no ETF tool, per 1.0.0_SA_CTO~O msg 26487); r5.J1 grades the live call.",
+    "notes": "The MX-t-10 ETF patch stays uncommitted and byte-frozen pending the LGIC ruling on Z-W15-S5."
+  },
+  {
     "id": "NFRA_MCPINDEX-Z-W17-S1",
     "project": "NFRA_MCPINDEX",
     "fabric": "site-z",

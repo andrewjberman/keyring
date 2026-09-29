@@ -53,6 +53,53 @@ Also read the MX-s-9 REST module: `data/black_diamond/scripts/bronze/pull_bd_ass
 7. The acceptance is the next scheduled 21:53Z weekday fire (AC3), never ad hoc. Record its output's `OUTPUT_KEY` and
    the bronze object's row count. Close the ledger.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-29 ~06:3xZ) -- RE-SCOPED: strip the dead step and KEEP the merge. There is NO new
+REST module.**
+- Your row Z-W17-S3 was right to flag a second producer.
+  - The issuer measured `TRANSACTIONS_DAILY_*` landing daily at ~00:02Z. That matches `bd-49f-session-daily`
+    (cron(0 0 * * ? *)), the LIVE 49F REST session chain.
+  - `merge-daily-incremental.py` already lists `TRANSACTIONS_DAILY_*` (its own tests).
+  - A new REST pull writing `TXN_DAILY_` would be a SECOND writer for the same day. That is a shadow pipeline, which
+    CLAUDE.md forbids.
+- **Drop step 1 (the new module).** Do not publish it or commit it for use. Leave your built module on your branch
+  UNUSED, and name it superseded in the announcement. Rows Z-W17-S1 and Z-W17-S2 lapse with it.
+- **Step 2 becomes:** edit `infra/aws/ssm/opal-bd-transaction-download.json` to REMOVE the Playwright download step and
+  every portal-credential read. KEEP the merge step, the honest exit, the shutdown armed before the failure exit, and
+  the log upload.
+- **Step 3 becomes:** ONE ad-hoc run of the edited command list (the merge only: no vendor call), as the test. Record
+  the merge's input files and the silver partition it writes.
+- **PHASE B unchanged in shape:** publish, set DEFAULT == `$LATEST`, the rule stays ENABLED (MX-i-5 will NOT disable
+  a LIVE document), and the acceptance is the next scheduled 21:53Z fire.
+- AC1 and AC3 are re-issued to grade this: Playwright 0, BD_PASSWORD 0, the merge present, Default == Latest; and a
+  successful scheduled run under the honest exit. AC2 stands.
+- **Z-W11-S2 (the dim join the merge skips on this path) now sits on THIS document's merge.** It is not fixed here; it
+  stays a stated dependency.
+
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-09-29 ~07:1xZ) -- the strip covers ALL FOUR BD daily documents (disarms Z-W8-S3 THIS
+round).**
+- MX-i-5's per-document proof (`deliverables/0.9.0_WK_NFRA_MCPINDEX~16/DEAD_PROOF_MX-i-5.md`) reads all 4 LIVE: the
+  download step is dead, and the merge step writes silver.
+- So the remedy for the daily failed portal logins is to STRIP, not to disable. Apply A1's transaction edit identically
+  to `infra/aws/ssm/opal-bd-allocation-download.json`, `opal-bd-realized-download.json` and
+  `opal-bd-unrealized-download.json`:
+  - remove the Playwright download step, the credential fetch and the `scripts/src` sync;
+  - keep the merge step BYTE-UNCHANGED, the log upload, the shutdown armed before the failure exit, and the honest exit
+    on the merge's rc.
+- **PHASE A, per document:**
+  - ONE ad-hoc run of the edited list: merge only, no vendor call;
+  - record the merge input files, the silver partition written and its rows;
+  - the prior scheduled merge's row count as the baseline;
+  - the rollback. The triggers run `$LATEST`, so rollback is re-publishing the prior `$LATEST` content as the next
+    version.
+  - Extend `ANNOUNCE_MX-s-14.md` to all 4 documents.
+- **PHASE B:** ONE never-widen ask covers the 4 document writes, and ONE NEVER-2 ledger with a leg per document. The
+  acceptance is each leg's next scheduled weekday fire (21:38, 21:45, 21:53, 22:00Z).
+- **Criteria:** AC1-AC3 grade the transaction document as written. The same predicates on the other 3 documents are
+  recorded in the proof as per-document rows, and are graded at L9 (the CVO reads the proof).
+- **Paths granted in addition:** `infra/aws/ssm/opal-bd-allocation-download.json`,
+  `infra/aws/ssm/opal-bd-realized-download.json`, `infra/aws/ssm/opal-bd-unrealized-download.json`, and the ledger
+  sentinel `org/critical_paths/.open_deploys/nfra-mcpindex-bd-playwright-strip.json`.
+
 ## 2. BOUNDS
 
 1. One producer before and after: no second schedule, no parallel path, no comparator.
@@ -67,6 +114,10 @@ Also read the MX-s-9 REST module: `data/black_diamond/scripts/bronze/pull_bd_ass
 data/black_diamond/scripts/bronze/pull_bd_transaction_rest.py
 data/black_diamond/scripts/bronze/_transaction_rest_pin.py
 infra/aws/ssm/opal-bd-transaction-download.json
+infra/aws/ssm/opal-bd-allocation-download.json
+infra/aws/ssm/opal-bd-realized-download.json
+infra/aws/ssm/opal-bd-unrealized-download.json
+org/critical_paths/.open_deploys/nfra-mcpindex-bd-playwright-strip.json
 infra/aws/terraform/bd-pipeline/
 infra/aws/ec2/bd-exporter/src/stepwise/download-daily-transaction.ts
 org/critical_paths/change_management/
