@@ -4894,3 +4894,27 @@ name the one known failure instead of silently inheriting it.
   "notes": "Still ARMED with the issuer, and why. W3-S9 and S61: the principal re-key is BUILT at HEAD (app/tier.py:84 keys MASTER_ADMIN on the tid/oid principal, no email fallback, all 4 production call sites pass the principal) but NOT SERVED -- tier.py at the live release 63264dfb22 is blob 63306f02d6, HEAD is 56e6429c78; they disarm when OG-t-2 serves it (held on Andrew's switchover sitting). W2-S8 and Z-W13-S5 (CRLF on 7 extensions; the naming limb refuses DATA_CATALOG.yaml's line-ending renormalization) and W2-S10/S49 (AC6's 5xx bar) and S43 (out-of-repo evidence paths) go on the L10 slug as the repair-batch candidates."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W14-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~14",
+  "surfaced_at": "2026-09-29T16:00Z",
+  "one_line": "An untargeted plan of the opal-gateway root fails with an archive error in the worktree: the mcportal grant-writer lambda staging directory .build/staged is missing; the worktree also had no .terraform, so terraform init -reconfigure was run once.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:39 data archive_file.mcportal_grant_writer; error: could not archive missing directory ./../../lambda/mcportal/mcportal-grant-writer-lambda/.build/staged (gitignored build output, absent in this worktree; only the layer zip was placed).",
+      "Before the init, terraform plan said 'Backend initialization required'; terraform init -reconfigure -input=false was run in infra/aws/terraform/opal-gateway (writes the gitignored .terraform only)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-n-1 step 3: run ONE untargeted plan and record its resource list.",
+  "world_is": "The untargeted plan lists only the 2 EIP resources to add (0 change, 0 destroy) before the archive_file error; it errors instead of completing, so no full-root drift list exists. The targeted plan read '2 to add, 0 to change, 0 to destroy'. Nothing was built or fetched.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
