@@ -99,7 +99,7 @@ change lives outside `<paths>`, STOP and file a row naming it.
 (`j2 tristate_unresolved 5 library 0 rc 1`), AC2 PASS (`plant_flagged 1`), AC3 PASS (152 passed).
 
 <risk>LOCAL</risk>
-<status>complete</status>
+<status>pending</status>
 <round>8</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
