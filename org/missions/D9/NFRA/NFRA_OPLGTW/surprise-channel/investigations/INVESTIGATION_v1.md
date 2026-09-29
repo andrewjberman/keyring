@@ -4918,3 +4918,28 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W14-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~14",
+  "surfaced_at": "2026-09-29T16:20Z",
+  "one_line": "BLOCKING OG-n-1 step 5: safe-apply fails closed because its tag-authz gate plans the WHOLE root, and data.archive_file.mcportal_grant_writer needs the gitignored lambda/mcportal/mcportal-grant-writer-lambda/.build/staged directory, absent in this worktree; nothing was applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-apply output: 'could not produce a plan JSON to run the tag-authz gate on ... Refusing to apply. (Fail closed.)' cause: could not archive missing directory ./../../lambda/mcportal/mcportal-grant-writer-lambda/.build/staged (mcportal_grant_writer.tf:39).",
+      "The staged directory exists at C:/tmp/mp3-1/infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged; this worktree has only the layer zip the issuer placed. Copying it is outside the order's <paths> and the order says never build or fetch, so it was not copied; TAGAUTHZ_OVERRIDE was not used.",
+      "ARMED because ledger nfra-oplgtw-gateway-eip is committed OPEN (062e036d54) with nothing applied; it needs closing or holding by the issuer if the order is not resumed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-n-1 step 2/5: with the layer zip in place, safe-apply apply -target=... of the two EIP resources can run.",
+  "world_is": "The targeted plan passes (2 to add) but safe-apply's gate plans untargeted and needs the grant-writer's .build/staged directory too. Fix: the issuer places (copies from C:/tmp/mp3-1) that directory in C:/tmp/wk-oplgtw-14, then the apply is re-run."
+}
+```
