@@ -18,6 +18,22 @@ EGRESS CLASS, declared: NONE beyond Opal's own AWS (S3, Lambda, IAM via Terrafor
 
 ## 1. THE CELL -- `OG-m-2` (decomposition addendum R2-E.1, item E11 remedy)
 
+> **AMENDMENT A3 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~02:0xZ) -- THIS ORDER IS NOW OG-m-2a ONLY; it supersedes items 1 and 6
+> (A2) below and narrows items 4 and 5.** Ruling 1.0.0_SA_CTO~O msg 26360 on your row Z-W15-S3: the chain-log key sits on
+> ADVI_FIRMBKTS's live-remediation surface and no waiver is typed. SPLIT:
+> - **OG-m-2a, this order, now:** item 2 (the qualified-marker gate, S3 path only) and item 3 (never re-dispatch), with
+>   IAM on the MARKER ARN ONLY: `s3:GetObject` AND `s3:GetObjectVersion` on `arn:aws:s3:::opal-data-assets/schwab/08335338/meta/complete/*`. NO chain-log
+>   grant, NO chain-log literal, NO Terraform local, NO env var. The classifier stays exactly as deployed today
+>   (`_classify(stdout)`): REVERT every classifier and chain-log change in `lambda_function.py` and `advi_49f_floor.tf`
+>   (keep your patch in your deliverables for 2b). The e2be5c2f42 `_trigger_identity` rider stays (it yields the key).
+> - **OG-m-2b, HELD, BLOCKING on Z-W15-S3:** the chain-log classifier; not in this order.
+> - **Tests (item 5 narrowed):** exactly 3 of the 6 -- `test_incomplete_marker_does_not_dispatch`,
+>   `test_qualified_marker_dispatches_once`, `test_floor_event_reads_no_marker`. Remove the three classifier tests.
+> - **Plan guard:** the targeted plan changes the inline policy (+ the marker statement) and the function's code only; no
+>   env var, no `aws_ssm_document`, no other resource. Otherwise STOP, a BLOCKING row.
+> - **Authority:** both CTO signatures cover 2a as a strict SUBSET of the signed write set (msg 26360); the CVO's
+>   confirmation is the issuer's to read before PHASE B GO. `dr.AC1.sh` and `dr.AC2.sh` are amended in this commit.
+
 **What was measured** (OG-m-1, `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~13/MARKER_STORM_READ.md`
 and `.json`; rows `NFRA_OPLGTW-Z-W13-S1`, `-Z-W13-S2`), window 2026-09-15T23:45Z..2026-09-28T23:45Z:
 - 104 dispatcher invocations: 91 from `aws:s3` (the silver-complete accelerator), 13 from `advi.49f.scheduled-floor`.
@@ -176,8 +192,8 @@ Rows: `org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIG
 ## 4. PROOF OF SPEC (literal; run from your worktree root after the ledger close is committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-m-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/dr.AC1.sh; echo "exit=$?"</invocation><expect>named tests passed 6 of 6; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-m-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/dr.AC2.sh; echo "exit=$?"</invocation><expect>live sha = artifact sha: yes; moved off previous: yes; zip member = HEAD bytes: yes; GetObject resources exact 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-m-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/dr.AC1.sh; echo "exit=$?"</invocation><expect>named tests passed 3 of 3; failed/error lines 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-m-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/dr.AC2.sh; echo "exit=$?"</invocation><expect>live sha = artifact sha: yes; moved off previous: yes; zip member = HEAD bytes: yes; GetObject resources exact 1 of 1 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-m-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/round2/checks/dr.AC3.sh; echo "exit=$?"</invocation><expect>sentinel at HEAD=no; listed OPEN/HELD=0 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
