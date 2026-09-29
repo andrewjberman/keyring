@@ -211,14 +211,16 @@ cd "$WS"    # the value derived at Step 0/4 — quoted (the path may contain a s
 #    cd to the workspace root by hand first, then re-derive.
 # Main tree should still be on DEV — verify, do NOT checkout (it never left)
 git -C portal branch --show-current   # expect: DEV
-.tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" \
-  -m "bump portal pointer -> <DEV-HEAD>; live PROD=<merge-sha> (tag portal-vX.Y.Z), <description>; CI run <id> SUCCESS" \
-  -- portal
-git push origin CLOUD
+# Message file written by a NON-SHELL writer (Write tool / python) -- CLAUDE.md 14a: -F, never -m
+.tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" -F <msgfile> -- portal
+# ⛔ NO `git push origin CLOUD`. CLOUD is a workspace branch: pushes are integrator-only (Step 0
+#    GATE 5; org/XXX.md SHARED-BRANCH LAW). The pointer commit stays LOCAL for 0.0.0_AB_MSTR to carry.
+git ls-remote origin CLOUD            # measure push state for the report; never assume it
 ```
-(The pointer commit records which portal state the workspace pairs with; push goes through the
-pre-push safe-deploy/HALTGT net normally. Commit message should encode the PROD merge SHA + tag
-for traceability — see session logs for examples.)
+(The pointer commit records which portal state the workspace pairs with. Its message encodes the
+PROD merge SHA + tag + CI run for traceability: "bump portal pointer -> <DEV-HEAD>; live
+PROD=<merge-sha> (tag portal-vX.Y.Z), <description>; CI run <id> SUCCESS". The DT lane does not
+push it; the integrator does, through the pre-push safe-deploy/HALTGT net.)
 
 ## Step 7 — Teardown + flip back to DEV (the conclusion Andrew named)
 
@@ -248,7 +250,7 @@ RAVC report to COO (releases the DEV-push hold) + session log. The artifact tabl
 | PROD commit | `<hash>` |
 | Tag | `portal-vX.Y.Z` (peeled-verified) |
 | CI run | `<id>` + `conclusion: success` |
-| Workspace pointer | `<CLOUD hash>` (pushed) |
+| Workspace pointer | `<CLOUD hash>` + measured push state ("LOCAL @hash (ls-remote read)"; MSTR carries it) |
 | Main tree | back on DEV (verified) |
 
 ## Abort path
