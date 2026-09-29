@@ -82,6 +82,16 @@ Cell 3 said "through the SAME filings path already in use, with no new vendor". 
   this path.
 - `xx-1`, `xx-2` and `xx-4` are unaffected.
 
+## 4b. CARRIED TO ROUND 50 (~21:4xZ, from AMGT_CORPUS's round-14 analysis, ruling 7)
+
+Round 49 is issued and frozen, so this lands in round 50's list. **`/thesis` passes the dossier's served fields and the
+page renders them.**
+- The fields are `thesis_pillars`, management, fund/position and terms: CORPUS FWD-10, 11, 12, 15, 16 and 18, all six
+  NOT REALIZED on the deployed function.
+- Deployed counts today: pillars 0 of 157, management 0 of 46, fund/position 0 of 46, terms 0 of 157. Only
+  `model.team_cases` passes.
+- CORPUS's data half is done.
+
 ## 5. ACTS ONLY ANDREW CAN DO (cited; no decision is listed)
 
 - **A per-use egress word for `xx-3`** [CLAUDE.md: "NEVER call an external vendor API without Andrew's explicit per-use
