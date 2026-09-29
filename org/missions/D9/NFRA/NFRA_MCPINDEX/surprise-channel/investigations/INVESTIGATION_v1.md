@@ -2643,6 +2643,48 @@ carries none.
     "spec_asserts": "Z-W9-S1 (ARMED): the live value sits in a tracked file outside the 7-file set.",
     "world_is": "At HEAD the 8-file set carries 0 literals by shape; the CVO's fingerprint scan (MX-s-13 J1, L8) is the oracle. History is not scrubbed and the credential is not rotated -- both Andrew's (rotation LATER; no scrub), so Z-S29/Z-S31 stay open on rotation.",
     "notes": "Issuer disarm owed since the A1 grade; recorded at the round-3 close."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T05:58Z",
+    "one_line": "MX-d-4 leaves the order silent on WHICH member of a family row the opal-internal principal resolves: the worker chose `global` (the catalog's own member key), for both next_tool args and the served_written_at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Order item 1 names {scope: global} for mp.01 only as an example and item 2 says 'HEAD the member the principal resolves'; an opal-internal principal has no firm segment. app/integrations/opal_discover/integration.py _family_member(): the member is `global` when the catalog's rows_by_key holds that member key of the same row, else the family is unresolved (args_missing + served_written_at absent, error_class family_member_unresolved). A firm principal resolves its own firm segment from its already-substituted key.",
+        "Tests test_served_written_at_absent_with_error_class and test_next_tool_names_purpose_built_tool_else_http_route pin both branches on a synthetic catalog."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order names next_tool mdpf_get_aum_metrics {scope: global} for mp.01 and a HEAD of 'the member the principal resolves'.",
+    "world_is": "Read literally, `global` is the only member all three mp.* family rows share with an opal-internal principal; the worker generalised it to any family axis. A different opal-internal member choice (a firm) would change served_written_at's HEAD target, not its claim.",
+    "notes": "Filed as a form-level surprise (the order did not say); the choice follows the AC1 expectation."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T05:58Z",
+    "one_line": "R-14 makes discover() do live S3 HEADs by default, so every caller that does not inject `head` (the MX-v-6 routing harness's plain run, AC2, any in-process probe) now reaches S3 on the caller's own AWS credentials; the order's declared egress ('one S3 HEAD per servable row') covers it, but the harness is READ-ONLY and is unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "d4.AC3.sh plain run of tests/routing/run_routing.py: rc=0 ROUTING 23 of 27, with HEADs issued for each servable match; d4.AC2.sh: 9 of 9 servable rows carried served_written_at measured on this box (credentials present).",
+        "The HEAD client uses connect_timeout 3 s, read_timeout 5 s, max_attempts 1, so with no credentials or network the field reads absent with error_class and the answer is still returned (never an exception); that failure arm is pinned by test_served_written_at_absent_with_error_class with an injected raising head."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order item 3: 'The HEAD is injectable, so a test needs no network.' Preflight: EGRESS CLASS NONE beyond Opal's own AWS.",
+    "world_is": "The default (non-injected) path reaches S3. Nothing was deployed and no gateway integration is enabled here; the routing harness's 27 questions each issue up to a handful of HEADs on a run.",
+    "notes": "For the analysis: a harness that must stay offline needs an injected head, which is the harness owner's edit, not this cell's."
   }
 ]
 ```
