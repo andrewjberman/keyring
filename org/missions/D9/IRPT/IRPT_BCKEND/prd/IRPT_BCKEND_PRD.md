@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.20",
+ "prd_version": "v0.21",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -549,3 +549,18 @@ net base (a margin debit), so 2 YTD and 5 since-inception accounts serve <= -100
     period figure is PARTIAL over it. The fresh path refuses any series point at or below -1, as the reopen path does.
 17. **Manifest completeness is per day.** Every day's manifest carries the completeness keys; a day without them is
     not complete, and the adapter switch's precondition (ruling on 102520) reads 557 of 557 before it serves.
+
+## ADDENDUM v0.21 -- both edges of a price discontinuity (L4; outside ENDPOINT, no half re-opens)
+
+**Source.** 4.0.0_SA_CRO's R2 half (`NEVER_WIDEN_SIGNOFF_CRO_HALF_ADAPTER_HOLDINGS_GOLD_49F_R2_20260929.md` @c3298523cc
+section 3; row IRPT_BCKEND-S200 @131c55fcf1, msg 102666). Measured on the re-emitted gold: ruling 16 voids the day a
+custody price glitch crosses +/-100% (..0090: DLCFX 17.48 -> 546.00 -> 16.21 and DIEFX 16.12 -> 384.00 -> 14.61 on
+2025-12-17), but the reversion day prices against the glitched price, reads -92.3%, stays OK and chains: ..0090
+(~$1.9M, in the served directory) would serve 1Y -91.5%, since inception -91.4%; ..4714 1Y -69.8%.
+
+18. **A NOT COMPUTABLE day voids the next trading day for that account too.** When ruling 16 marks an account day NOT
+    COMPUTABLE, the account's following trading day is also NOT COMPUTABLE, with the reason "follows a price
+    discontinuity", so neither edge of the glitch enters the chain. The period stays PARTIAL with the computable-day
+    count. The option of re-pricing the reversion day against the last plausible price was not taken: it needs a
+    per-position plausibility model, and voiding one extra day is bounded and reads the same on every firm. Re-emit
+    the 49F gold before the adapter switch applies; the after-read adds ..0090 and ..4714.
