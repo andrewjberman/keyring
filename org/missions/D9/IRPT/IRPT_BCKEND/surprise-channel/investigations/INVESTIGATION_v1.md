@@ -11665,3 +11665,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "NOT REMEDIATED HERE and nothing was weakened to pass: E4-AC1 and E4-AC2 are NOT claimed. Everything that does not depend on the key IS built and committed -- the Cottonwood price rule (Market Value / Units, selected structurally by an entry declaring no price_column), the absent- and zero-Units exclusions, and the text cash flag ('true'/'false' as strings, where astype(bool) on 'false' is True and would have made every holding cash silently) -- with 4 new tests, 45 passing. The moment lookup('<key>') resolves to cottonwood, the entry is about six declared fields and the run is one command. RECOMMENDED REMEDY, in preference order: (a) 1.0.0_SA_CTO adds a registry row keyed `z09` with firm cottonwood, exactly parallel to 08335338 -> 49financial, which is measured, vendor-issued and gate-clean; (b) LGIC_ENFORCE admits the declaration's registry_key field as a permitted lookup context, which fixes the class rather than the instance. (a) unblocks this cell today; (b) is the one that stops this recurring at the next firm."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S204",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-09-29T11:00:00Z",
+  "one_line": "After the 49F holdings switch (adapter hD7G6YT1 applied 10:14:14Z) every 49F YTD/QTD/1Y Performance read answers UNEXPECTED: ModuleNotFoundError 'parity_period_returns' -- installed.py's _holdings_source() dropped the runners_49f sys.path insert that _engine_source() carried, while f49_engine.ruled_period_for still lazy-imports the module; since-inception short-circuits before the import, so the cold-start smoke and the SI answer passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "/aws/lambda/irpt-performance-adapter 10:26-10:50Z: 104 events with public_reason_code UNEXPECTED, each exception_type ModuleNotFoundError, exception_text \"No module named 'parity_period_returns'\" (corr-c59ddb5b0842, corr-709a60647944, ...); irpt_retained_phases path \"refused:ModuleNotFoundError\"; 10 irpt_holdings_phases lines (since-inception reads of 554 partitions, frame 9-10 s) served.",
+      "AFTER walks 20260929T102651Z and 103746Z on hD7G6YT1 (CodeSha256 read at 10:21:28Z): 42 of 57 and 9 of 13 performance answers UNAVAILABLE/UNEXPECTED -- ..0090 (~$1.89M) YTD and 1Y, ..4714, the NEW-01 relationship (3 accounts), ..3510; the page shows \"Unavailable / UNEXPECTED / Contact support\". BEFORE (walks 082535Z..093437Z on qfxZ0DzB): engine figures (..0090 YTD 8.41%).",
+      "installed.py diff qfxZ0DzB -> hD7G6YT1 (both zips read by S3 version): `_engine_source()` with `runners = root / \"data/assets/scripts/gold/runners_49f\"` and `sys.path.insert(0, str(runners))` REMOVED; `_holdings_source(s3)` ADDED with no path insert. The zip still packages data/assets/scripts/gold/runners_49f/parity_period_returns.py. f49_engine.py:71-73 `ruled_period_for` does `import parity_period_returns as ppr` inside the function; holdings_gold._period_for calls it for every window except SINCE_INCEPTION_START.",
+      "The adapter's own holdings_gold.calculate (hD7G6YT1 bytes) run in-process with the runners directory on sys.path over the versioned local cache of the re-emitted gold SERVES the same accounts: ..0090 YTD +0.0833 / 1Y +0.0999, ..4714 YTD -0.0512 / 1Y -0.6461, NEW-01 +0.0049 PARTIAL, the control +0.0516 -- the rule is sound; the runtime path is the defect.",
+      "Read in full: org/tier1_exec/4.0.0_SA_CRO/deliverables/NEVER_WIDEN_SIGNOFF_CRO_HALF_ADAPTER_HOLDINGS_GOLD_49F_R2_20260929.md (addendum 2 to follow); alerts 102734/102735 and the cause message to 2.0.0_SA_COO~P and 1.0.0_SA_CTO."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Packet a4679360 section 2 row A: after the switch a 49F YTD/QTD/1Y/SI request answers the holdings chain (OPAL_HOLDINGS) or a named refusal; section 4 step 4: a real cold-start invoke and one real 49F since-inception answer are the read-back; step 5: any unnamed difference is a same-turn rollback.",
+  "world_is": "Since-inception answers; every ruled period (YTD/QTD/1Y) answers UNEXPECTED for every 49F account because the module the period rule imports is no longer on the runtime path. The read-back exercised only the one window that does not import it.",
+  "notes": "Disarm: rollback to S3 version 5bmwADQs (qfxZ0DzB) per the packet, or a rebuild with the runners directory inserted in _holdings_source (or a module-level import path in f49_engine) plus a cold-start invoke that requests a RULED period (YTD), then the CRO's walk again. Lesson for the read-back rule: a smoke that exercises one branch of a period switch is not a read of the switch; the after-read must request each ruled window once."
+}
+```
