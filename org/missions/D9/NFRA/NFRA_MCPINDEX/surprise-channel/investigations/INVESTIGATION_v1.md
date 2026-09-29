@@ -3344,6 +3344,33 @@ carries none.
     "spec_asserts": "The GO named no HALT_ACK and said merge --ff-only.",
     "world_is": "Both departures are within the precedent and moved nothing shared. The release is live and verified.",
     "notes": "The close run (CLOSE_RUN_MX-r-5_ISSUER.md) reproduces Z-W14-S3 on the live host: 1 of 3 phrasings of the benchmark ask routes to mdpf_get_model_benchmarks. That is an L8 item for the round-4 analysis."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S60",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T14:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W15-S5",
+      "NFRA_MCPINDEX-Z-W17-S1",
+      "NFRA_MCPINDEX-Z-W17-S2"
+    ],
+    "one_line": "RULES three BLOCKING rows that had no issuer row: Z-W17-S1 and Z-W17-S2 LAPSE with the new REST module that MX-s-14 A1 dropped (task order :65, 'Rows Z-W17-S1 and Z-W17-S2 lapse with it'); Z-W15-S5 is ROUTED, not ruled here: the naming-limb refusal of the platinum/etfs key needs an LGIC registry row or an R20 entry, outside this decomposition, and is with the LGIC owner (1.0.0_SA_CTO~O msgs 26487/26493). MX-t-10 holds; its candidate stays byte-frozen in wk-mcpindex-r4-15.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/NFRA_MCPINDEX.TO-MX-s-14.bd-transaction-rest-port.md:56-65 (AMENDED A1): drop step 1, leave the module unused, rows Z-W17-S1/S2 lapse.",
+        "git log --since 2026-09-29T11:00Z -- infra/logic/registry/ .tools/naming-gate.py: 0 commits at 14:30Z, so the refusal still stands.",
+        "git -C wk-mcpindex-r4-15 status --porcelain: 5 modified gateway/catalog files plus 1 new catalog entry, uncommitted, at 13:5xZ."
+      ]
+    },
+    "spec_asserts": "Every BLOCKING row carries an issuer disposition before the round closes.",
+    "world_is": "Two of the three are moot under the amended order. The third is blocked on a registry act outside this lane; MX-t-10 is ruled at the round-4 close (complete or carried to round 5).",
+    "notes": "If the registry row lands before the 22:00Z close tick, continue a fresh ~15 on the frozen worktree and re-run t10.AC1/AC2 before committing."
   }
 ]
 ```
