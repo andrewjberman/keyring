@@ -286,6 +286,29 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Z-W12-S1: arm A clears when AV-r-1 lands IdentityLine.",
     "world_is": "Arm A hits=[] on the drained base; S1's cause is resolved by the re-grade."
-  }
+  },
+{
+ "id": "DSGN_AMGTV1-Z-S3",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-09-29T11:21Z",
+ "one_line": "On the round-3 close walk A (localhost:5174, walk build 80a0df1f), after VLO US the walker's session was lost: the INTU and SAP GY select steps logged HTTP 500 twice each and every later screenshot (041-052) is the sign-in page, while the step lines still read '0 finding(s)'; a fresh walk B two minutes later walked both names cleanly.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "the ui-walk skill's owner (.claude/skills/ui-walk/walk.mjs): a step that lands on the sign-in page reports 0 findings instead of failing the step, so a void walk reads clean in the log and the summary.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20260929T111119Z/findings.json console_errors: steps 'amgt select INTU US' and 'amgt select SAP GY' each 'Failed to load resource: the server responded with a status of 500'; walker:control-missing 'tab not found: Thesis' (and Exec Management, Peers, Model, Posture)",
+   "tmp/ui-walk/20260929T111119Z/shots/041-INTU-US-overlay.png and 047-SAP-GY-overlay.png: the 'Welcome back / Sign in' page",
+   "tmp/ui-walk/20260929T111809Z/ (walk B, INTU + SAP GY only): 0 API issues, console = 2 login 401s, disarm REFUSED line printed"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "A walk's step line and SUMMARY describe the page the step looked at; a step that cannot reach the page fails loudly.",
+ "world_is": "Twelve steps on the sign-in page each printed '0 finding(s)'; only the walker:control-missing findings and the screenshots show the walk was void. Walk A's disarm also printed no 'REFUSED' proof line (walk B's did).",
+ "notes": "Filed by the issuer at the round-3 close; the close walk record uses walk A for VLO only and walk B for INTU and SAP GY. The 500 on the select step is likely the Z-S2 class (Advisor Intelligence clients-tab), unconfirmed: walk A's api_issues list was not read per URL."
+}
 ]
 ```
