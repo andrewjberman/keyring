@@ -118,3 +118,24 @@ The conflict is settled by ONE call, not by reading: sign in to the gateway as A
 Research Team Meeting through the meetings API, and read the status. 200 means Route A works for attendees. 403
 `GraphAccessToTranscriptsDisabled` means the tenant switch is off. Any other 403 means Route B is required. That
 call needs the tool from section 8 item 1, or a one-off Graph request on Andrew's word.
+
+## 10. Measured through the gateway as Andrew, 2026-09-29 (whoami: Andrew@opalinvest.com)
+
+| Meeting (Teams subject) | Organizer | Newest transcript event | Andrew on invite |
+|---|---|---|---|
+| Morning Meeting | Austin Graff | 2026-09-28 12:57Z | yes (calendar, 2026-10-05 occurrence) |
+| OCIO IC | Austin Graff | 2026-09-08 13:58Z | yes (calendar, 2026-10-06 occurrence) |
+| Asset Management IC | Austin Graff | 2026-09-29 13:59Z | not read: no occurrence in the 8-day calendar window |
+| Research Team Meeting | Lauren Harmon | 2026-09-29 12:56Z | not read: no occurrence in the 8-day calendar window |
+
+- Transcription is ON in all four: each chat carries a transcript-started event beside its recording events. This
+  closes open fact 2. Denominator: the last 8 events of each of 4 chats.
+- Andrew organizes none of the four, so all four rest on the attendee-reach hypothesis.
+- OCIO IC's newest transcript event is three weeks old while the calendar shows it weekly. Later occurrences were
+  either not held or not transcribed; not determined.
+- "Asset Management IC" exists as 4 separate meeting chats. The one carrying today's call is registered; the other
+  three are listed in `research_transcripts/schema/series.json` and may hold older transcripts.
+- The Graph online-meeting id is derivable from the chat id and the organizer's object id, so the join URL is not
+  needed. Microsoft's documented example id decodes to exactly that shape. Derived ids are in `series.json`, marked
+  inferred. This makes spec tool 4.1 and the `list_calendar` change optional.
+- Identifiers: `research_transcripts/schema/series.json`.
