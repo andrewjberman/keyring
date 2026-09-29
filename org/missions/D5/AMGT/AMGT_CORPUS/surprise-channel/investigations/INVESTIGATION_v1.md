@@ -2027,6 +2027,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "The order says the underscore form resolves to no (or the wrong) landed raw stamp.",
     "world_is": "The stamp resolves; the landed block holds no entry under the underscore string, so figures are empty. Refusal keys on that.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S12",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-29T05:00:00Z",
+    "one_line": "CRPS-l-2 census: two of the 22 paired names carry a team unit symbol that disagrees with the listing currency (ORA_FP and SAP_GY: team_unit $, listing EUR), so the 0.94 / 0.90 ratios pair figures whose units the served data itself contradicts; units are printed, never converted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m lib.research.corpus.base_census (worktree wk-crps10-2, branch base f59d76dee8) -> 'base ORA_FP_Equity team 19.2400 rule 20.4867 ratio 0.9391 year 2026E rule_status SERVED team_unit $ listing EUR' and 'base SAP_GY_Equity team 144.2800 rule 159.6087 ratio 0.9040 year 2026E rule_status SERVED team_unit $ listing EUR'; ML_FP_Equity carries team_unit \u20ac listing EUR."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census pairs the team Base Price with the rule Base per name and prints each unit without converting.",
+    "world_is": "For ORA and SAP the team's own unit symbol is a dollar sign on a EUR-listed name; the pairing is arithmetically valid but the two figures may not be in one currency, which the census does not judge.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Filed, not investigated; whether the dollar sign is the team's currency (ADR-style estimate) or an extraction slip is outside this cell."
   }
 ]
 ```
