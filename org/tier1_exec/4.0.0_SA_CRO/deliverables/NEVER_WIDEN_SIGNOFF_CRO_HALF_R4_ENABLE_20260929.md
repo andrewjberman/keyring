@@ -85,6 +85,33 @@ firm per weekday, and the three code lines already on CLOUD. The rollback is per
    a missed day; the standing moratorium on alerts stands, and this is named so the FWD-7-style controlled-clock
    exercise can cover it later, not as a condition here.
 
+## Addendum 1 (2026-09-29 14:2xZ) -- the first scheduled fire, measured: MET per firm on the served indexes; the page half unread
+
+- **The fire, the schedule's own:** `/aws/lambda/irpt-holdings-refresh-lambda` 14:15:18Z INIT_START, 14:15:22Z
+  `"status": "DISPATCHED", "qa": false`, three SSM commands -- 49financial `9c903355...` (10:15:23 ET), cottonwood
+  `06569db1...` (10:15:25 ET), inflection `5770be64...` (10:15:26 ET) -- each `Success` on `list_command_invocations`
+  (comment `irpt holdings refresh <firm> 2026-09-29`); `previous: null` on every firm, so no earlier scheduled fire
+  had run. BEFORE was read at 06:59Z (`scratchpad/r4_before.json`) and again at 13:59Z: every index unchanged since
+  2026-09-24.
+- **AFTER, read at 14:23Z per firm** (`irpt/<firm>/platinum/holdings/current/manifest.json`):
+
+| firm | index VersionId before -> after | `latest_date` | `gold/holdings/date=2026-09-28/` |
+|---|---|---|---|
+| 49financial | `OqjgF6qs...` -> `AV66zNHk...` (MOVED) | 2026-09-22 -> **2026-09-28** | 0 -> 1 revision |
+| cottonwood | `ykQofbha...` -> `3JfvRUHR...` (MOVED) | 2026-09-22 -> **2026-09-28** | 0 -> 1 revision |
+| inflection | `ipomYxTG...` -> `.zfZoZlA...` (MOVED) | 2026-09-22 -> **2026-09-28** | 0 -> 1 revision |
+
+  That is the condition's "after, per firm": a NEW index VersionId, `latest_date` = the runner's pick for Monday
+  2026-09-28, one revision under the date partition, on the first scheduled fire and not a hand re-fire. **D1 and A1
+  are MET on the served indexes for 3 of 3 firms.**
+- **Unread here:** the page read (the Holdings tab's as-of as September 28th, 2026 for a client at each firm) needs the
+  local dev build, which the machine's memory reaper stopped at 12:4xZ; it restarts on Andrew's word and the walk
+  follows the same hour. `holdings_publication_diff_classes.py` on the first served revision against 2026-09-22 is
+  ~M's filing beside `R4_ENABLE_DIFF_20260928/`.
+- **Beside it, the same morning:** the sibling schedule `irpt-holdings-performance-daily` (07:30 ET, a different
+  Lambda, a different table) fired with a stale producer; that is row S205 and this seat's half
+  `NEVER_WIDEN_SIGNOFF_CRO_HALF_HOLDINGS_PRODUCER_V021_20260929.md`, not this act.
+
 ## What this half signs against
 
 - Request blob `342f04c1`; the CTO's R4 condition 4 (`SIGNOFF_HOLDINGS_PRINCIPALS_DISPATCH_20260925.md` @`6c5c27a666`).
