@@ -83,7 +83,7 @@ READ-ONLY: every other file in the repository, every S3 object, the research lib
 **ISSUER NOTES:** round-13 analysis s.4 item 5 @`f1c482d24f` (msg 26603). Checks dry-run at the base `dbafd14c52`: p5_AC1 FAIL (no tests ran); p5_AC2 FAIL ('ML_FP_Equity pillars 1 empty_text 1 | IMB_LN_Equity pillars 6 empty_text 0 | ADBE_US_Equity pillars 2 empty_text 0'); p5_AC3 PASS (444 passed).
 Merge HELD until the pair is signed; the continuation keying (inputs-only key; GoldImmutableError on a new body) is ruled at the pair with the CTO.
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
