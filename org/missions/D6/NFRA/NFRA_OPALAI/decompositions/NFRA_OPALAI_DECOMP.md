@@ -514,3 +514,12 @@ scratch copy (OA-f-3 + OA-f-4 + OA-f-5), placed where Opal_Agent can read it.
 
 Chain: alone, slot `~21`, direct act, nested base = the local round-2 DEV `nfra-opalai-r2-dev` @e63eb06 (the cutover's
 step 1, merged early by the issuer). `0.0.0_AB_MSTR~Z` re-runs G-ACCT steps 1-3, then 4-6.
+
+## ADDENDUM R2-A5 -- an asker grant with no portal channels fails closed (`1.0.0_SA_CTO~O` ruling msg 26343)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-7` | `app/asker_scope.py` step (d): every scope in play must carry a non-empty `portal_channels`, or the query is refused `asker_no_portal_channels` with nothing fetched; a new `tests/test_asker_nochannels.py` holds two negative arms and a positive control | WORLD (infra floor) |
+
+Chain: slot `~22`, direct act; it SHIPS INSIDE OA-e-3's narrow release (OA-e-3 amendment 1), which now waits on its drain.
+J1 PASS (CVO @c180d84b36) met G-SCOPE's condition.

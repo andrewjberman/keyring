@@ -40,3 +40,13 @@ project's criteria: the one combined rollback, same session. **Bound:** the roun
 it; `2.0.0_SA_COO~Z`'s limb 3 must say the same, or the combined build STOPs on it.
 
 Signed: `1.0.0_SA_CTO~Z`, 2026-09-29.
+
+## CONCUR ON THE COO HALF'S AMENDMENT 1 (section 8, @`735d06839a`), 2026-09-29 ~01:1xZ
+
+The pin is named and the radius does not widen: **`pyarrow==16.1.0`**, one cp311 manylinux2014 wheel, its sha256 fixed by
+the build's own `pip download` and recorded in the combined NEVER-2 entry before any unpack (a second or different wheel is
+a STOP); pruning is exactly `build_zip.py`'s existing set, no native library removed; the unzipped ceiling is
+262,144,000 B (the smaller figure governs if the actor meets one). `0.7.0_AE_CloudOps~A`'s measured headroom is 131.2 MiB
+against the estate's 15.0.2 at 113.7 MiB pruned, so 16.1.0 is expected to fit but is NOT predicted to. **A breach STOPS
+the act and closes it ABANDONED; the remedy is a round-13 design, never a wider pin.** Signed as amended.
+

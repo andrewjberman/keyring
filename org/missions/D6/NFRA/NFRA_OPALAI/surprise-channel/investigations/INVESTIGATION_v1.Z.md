@@ -1685,6 +1685,102 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "G-ACCT handoff: Opal_Agent sessions are started only by the elevated executor (0.0.0_AB_MSTR~Z) under the handoff, and the state dir holds only the runtime's own state.",
     "world_is": "The issuer used the stored Opal_Agent credential directly for diagnosis, outside any order, and left four files in the runtime's state dir. The probes also measured two facts: (1) Opal_Agent's logon WORKS (whoami ran as it); (2) from this unelevated session, Start-Process -Credential -Wait/-PassThru throws 'Access is denied' AFTER the child starts, so an unelevated operator running launcher.ps1 may see that throw on its -Wait gate launch.",
     "notes": "Named honestly for the CTO's ask (msg 26294), which guessed the OA-f-4 worker. Fact (2) is a candidate risk on the step-6 launcher path; step 6 is run elevated by 0.0.0_AB_MSTR~Z, where it did not occur. No further direct credential use by this seat."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-28T23:20Z",
+    "one_line": "OA-r-1 step 0's tie-break ('keep candidates whose .env template writes the live key set; if more than one survives, the base is the newest') picks the WRONG base here. Two candidates survive the four-file md5 and the .env key-set test: 6a98a0553a and rel-nfra-mcpindex-r3-gateway (2dedae93df, a descendant of 6a98a0553a). Their four named files and their 27-key .env sets are identical; they differ in 3 other files and in the VALUE of ENABLED_INTEGRATIONS. The live host's other files match 6a98a0553a and do not match 2dedae93df.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM (i-07dccb1615503ac99, status Success, 2026-09-28 ~23:1xZ) md5 of /opt/opal-gateway/app/{asker_scope,tools,identity_scope,data_entitlement}.py = f21b86141a7145fb70b5f77d37774d85, 6c888e51a3c652dfe89c74654fde39e3, 442c9755d14aa1ffbbccf5bf0fe73656, 964504343c24d412a266da74e7108e69. These four equal 6a98a0553a, fe94911257, rel-nfra-oplgtw-sprint-owner (6a98a0553a) and rel-nfra-mcpindex-r3-gateway (2dedae93df); 12 rel-* refs (local and origin) and 2 pinned commits were compared.",
+        "Live .env key names (27, values never read) equal the deploy-to-ec2.sh line-197 key set at 6a98a0553a, 2dedae93df and rel-nfra-oplgtw-sprint-owner; fe94911257 and rel-nfra-oplgtw-email-deny write 26 (no SPRINT_VIEW_ALLOWED_EMAILS) and are excluded. Read with .scratch/keys.py against git show <c>:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh.",
+        "git diff --stat 6a98a0553a rel-nfra-mcpindex-r3-gateway -- infra/aws/ec2/opal-gateway: 5 files, app/integrations/opal_discover/integration.py, app/integrations/portal_index/integration.py, app/refs/DATA_CATALOG.yaml, deploy-to-ec2.sh (ENABLED_INTEGRATIONS value only), tests/test_opal_discover.py.",
+        "SSM md5 of the three app files that differ: live 9f80030ee9085a3e17d9944aead2f4c8 (opal_discover/integration.py), 41c6b834fd60a7c4996012e63fd482b5 (portal_index/integration.py), a19baa4c4600614bfa49ad7df950d87d (DATA_CATALOG.yaml) = all three at 6a98a0553a; at 2dedae93df they are 33d6b06075f92fb97bdc3af1894cef06, a4c28bef2a6d18c97a3a13e9c2571d87, bfffd6254d290303023687c5cdc0c9ad.",
+        "infra/aws/ec2/EC2_MANIFEST.json at 90cbe69b07: services.opal-gateway.deployed_commit 6a98a0553a0a01c7e1acc6aea2b2ce5b82fc0f9b, deployed_at 2026-09-27T22:17:33Z."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-r-1 step 0 (AMENDED, row Z-S38): among candidates whose app files and .env key set match the host, 'the base is the newest, and you name every survivor'.",
+    "world_is": "Applying 'newest' literally gives 2dedae93df, a release the host is not running (three of its files are not on the host). Building the release on it would ship the MX-r-4 opal_discover/portal_index changes and an ENABLED_INTEGRATIONS value change beside OA-e-1. The worker resolved the base as 6a98a0553a on the content of three further files, an addition to the four the order names, and reports both survivors. The order's tie-break should say to break a tie of survivors by the files in which they differ.",
+    "notes": "Not ARMED for this order once the base is 6a98a0553a. The same tie-break in another cell's release order would pick the newest survivor whether or not the host runs it."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S4",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-28T23:40Z",
+    "one_line": "OA-r-1 step 2 STOPPED before any deploy: the release tree's pytest run (the order's four-file list) reads 2 failed, 34 passed, and the order says 'Any failure: STOP, no deploy'. Both failures are in tests/test_portal_grant.py's OPERATOR half (test_admin_accepts_portal_only_candidate: KeyError 'portal_grant'; test_admin_rejects_unknown_portal_channel: message 'scope.portal_channels is not admitted by this contract (no portal_grant)'). They fail identically at the pure base 6a98a0553a: the tests read org/standards/NFRA_OPLGTW_CONTRACT.json, which the release tree does not carry at v1.2 (base has 0 'portal_grant', CLOUD has 1). The four named arms PASSED.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release tree /c/tmp/oa-10-rel, branch rel-nfra-opalai-r2-asker-binding-gateway, HEAD d287ffb346 (base 6a98a0553a + 2254910889 + a2c96703b1 as one commit, GIT_COMMIT_AUTHOR_OVERRIDE used once). Census: git diff --name-only 6a98a0553a HEAD = the 5 expected gateway files, no other.",
+        "cd /c/tmp/oa-10-rel/infra/aws/ec2/opal-gateway && python -m pytest tests/test_asker_binding.py tests/test_asker_scope.py tests/test_portal_grant.py tests/test_identity_scope.py -rA -q -> '2 failed, 34 passed'; transcript at org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~10/OA-r-1_NEGATIVE_ARMS.txt; the four named arms PASSED.",
+        "Control at the pure base: git archive 6a98a0553a infra/aws/ec2/opal-gateway org/standards extracted to /c/tmp/oa-10-basechk; tests/test_portal_grant.py there (the base's own file, the base's own app) -> '2 failed, 5 passed': the same two admin tests.",
+        "git show 6a98a0553a:org/standards/NFRA_OPLGTW_CONTRACT.json | grep -c portal_grant = 0; the same at CLOUD 90cbe69b07 = 1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-r-1 step 2: the four-file pytest list runs in the release tree and any failure stops the deploy; the order expects the list to pass there.",
+    "world_is": "tests/test_portal_grant.py holds an operator half (ops/schwab_entitlement_admin.py) whose two tests read the contract file outside infra/aws/ec2/opal-gateway. The release tree is the base plus five gateway files, so it carries the base's contract (no portal_grant). Those two tests fail there before and after OA-e-1, and neither touches asker_scope.py or tools.py. The worker did not deploy, opened no ledger entry, and touched nothing on the instance beyond the read-only SSM of step 0. Options for the issuer: amend step 2's list to deselect those two tests (with the reason), or supply the v1.2 contract to the census. The worker will not choose.",
+    "notes": "Not ARMED: nothing is deployed. The release worktree /c/tmp/oa-10-rel and branch rel-nfra-opalai-r2-asker-binding-gateway (d287ffb346) exist and are unpushed. Scratch /c/tmp/oa-10-basechk holds the base control and can be removed."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S5",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-28T23:55Z",
+    "one_line": "OA-r-1 cannot start its act: safe-ec2-deploy.sh's halt gate refuses this worker from the release tree with exit 3 (SERIAL RESOLVES TO NO KNOWN AGENT). The gate admits a 0.9.0_WK_<CODE>~<n> worker only while a non-terminal task order under <CODE> is issued_to it AT HEAD OF THE CALLING WORKTREE (halt-gate-check.sh:166-185, git ls-files + git show HEAD:p). The release tree is HEAD 6a98a0553a + d287ffb346 and holds 0 task orders under NFRA_OPALAI (33 under NFRA_OPLGTW); the slot branch holds 31. The wrapper pins HALT_GATE_REPO_ROOT to the calling toplevel, so the release tree cannot be told otherwise.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd /c/tmp/oa-10-rel && ( . .tools/halt-gate-check.sh; halt_gate_check oa-r-1-preview ) -> 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', 'Resolved serial: 0.9.0_WK_NFRA_OPALAI~10', gate rc=3. Before the serial file existed in the release tree the session file resolved to the parent COO's serial 2.0.0_SA_COO~AI, also rc=3.",
+        "git -C /c/tmp/oa-10-rel ls-files -- 'org/missions/D*/*/NFRA_OPALAI/task-orders/*.md' | wc -l = 0; the same in /c/tmp/oa-10 = 31.",
+        ".tools/halt-gate-check.sh:185 reads git -C $HALT_GATE_REPO_ROOT ls-files; infra/aws/ec2/safe-ec2-deploy.sh assigns HALT_GATE_REPO_ROOT=$(git rev-parse --show-toplevel) of its own checkout unconditionally, so an env override does not survive.",
+        "Prior OPALAI releases passed because their release bases already held NFRA_OPALAI orders; the OPLGTW OG-s-1 base 6a98a0553a holds none.",
+        "I created org/mcp/sessions/<session>.serial (gitignored, my own serial) inside /c/tmp/oa-10-rel to test the gate; it changes no tracked file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-r-1 step 5: ACT from the release worktree with its scripts, halt gate pre-acknowledged with HALT_ACK=1 when it reads 0 STOP.",
+    "world_is": "HALT_ACK covers a routine unread inbox (exit 1), not an unadmitted serial (exit 3), and HALT_OVERRIDE covers a STOP (exit 2). Nothing in the wrapper admits a worker whose release tree predates its orders. Routes that would pass, none taken: (a) commit the OA-r-1 task order into the release branch (breaks the five-file census), (b) run the wrapper from /c/tmp/oa-10 (a HEAD deploy, forbidden), (c) edit .tools/halt-gate-check.sh or the wrapper (read-only for this order). The issuer decides which, or provides another.",
+    "notes": "Not ARMED: nothing is deployed and no ledger entry is open. Done before the stop, all proven: step 2 (release d287ffb346, census 5 of 5, 34 passed 2 deselected, transcript saved); step 3 (rollback artifact opal-gateway-6a98a0553a.tar.gz 398873 bytes from /c/tmp/oa-10-rb, 79 of 79 files identical to the live host, not uploaded); step 4(i) the .env render, 27 keys, all 9 markers on their own keys, no misalignment."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W10-S6",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~10",
+    "surfaced_at": "2026-09-29T00:10Z",
+    "one_line": "Amendment 4's route (a) cannot be executed as ruled: safe-commit's TO issuance gate (.tools/to-pipeline-gate.py) REFUSES the record-only commit of the OA-r-1 task order on the release branch, 3 violations, and GIT_COMMIT_AUTHOR_OVERRIDE does not cover it. The commit aborted, files unstaged; HEAD of both trees is unchanged.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd /c/tmp/oa-10-rel && GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPALAI~10 bash .tools/safe-commit.sh --author ... -F msg -- org/missions/D6/NFRA/NFRA_OPALAI/task-orders/NFRA_OPALAI.TO-OA-r-1.asker-binding-release.md -> 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). Commit aborted; files unstaged.' The file was byte-identical to CLOUD 2751f0be77 (md5 0b42025c6aae273930a119345cd51b79). The rollback tree was not attempted: it carries the same gate.",
+        "Violation 1: 'a NEW tree task order committed under 0.9.0_WK_NFRA_OPALAI~10. COO is the only agent that does task orders (LD-0521 A3): a new file under org/missions/*/*/*/task-orders/ commits only under 2.0.0_SA_COO or a ~lane of it.'",
+        "Violation 2: 'NO project row at org/missions/D6/NFRA/NFRA_OPALAI/project.json' (the release tree predates the project; project.json is absent).",
+        "Violation 3: 'this commit adds NEW tree task order(s) but project.json reads dep_stage=None after it' (dep_stage EXECUTING must ride the issuance commit).",
+        "The gate's own remedy is a '# pipeline-override: <reason>' line INSIDE the task order (.tools/to-pipeline-gate.py:63, audited to org/to-pipeline-override-audit.log), which would make the file differ from CLOUD's copy; the ruling requires byte identity.",
+        "Both trees restored: rel HEAD d287ffb346 gateway tree e6cd9d235cd8a996f4e91b9813282172135a9bd1; rb HEAD 6a98a0553a gateway tree cd33c1e8d69f4e70ee03611f443d5c118f1825cf; no tracked change; my two file copies removed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer amendment 4: the halt gate admits the worker once the OA-r-1 task order, byte-identical to CLOUD, is committed as one record-only commit under the audited author override.",
+    "world_is": "The override that safe-commit honours for a lane refusal does not reach the TO issuance gate, which refuses a worker adding a task order, an unregistered project and a missing dep_stage. Passing it needs one of: a '# pipeline-override:' line in the file (not byte-identical, and an audit-log write in the release tree), project.json plus dep_stage=EXECUTING beside it (more files in the release branch), or a committer that is 2.0.0_SA_COO or a ~lane of it (the issuer commits it). The worker took none of them: each changes the ruled bytes or the ruled identity. Also unresolved: the halt gate reads only ls-files + HEAD of the calling worktree, so any admitted route still needs the file in HEAD of both trees.",
+    "notes": "Not ARMED: nothing is deployed, no ledger entry open. Everything before the act is proven and waiting: release d287ffb346, transcript, rollback 79 of 79, .env render."
   }
 ]
 ```

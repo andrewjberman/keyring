@@ -71,8 +71,8 @@ their logs by exactly this rule: the key's `TS` equals the invocation's `Executi
 3. **Never re-dispatch.** No branch calls `send_command` more than once per invocation, and none retries on UNKNOWN,
    ABORT or REFUSED (the floor is tomorrow's retry; the module docstring's CHAIN-plane rule stands).
 4. **IAM, in `infra/aws/terraform/opal-assets/advi_49f_floor.tf` `aws_iam_role_policy.advi_49f_gold_dispatch` ONLY:** add
-   `s3:GetObject` on `arn:aws:s3:::opal-data-49financial/gold/advi/_logs/chain_*` and `s3:GetObject` on
-   `arn:aws:s3:::opal-data-assets/schwab/08335338/meta/complete/*`. No `ListBucket`, no other action or resource. (Without
+   `s3:GetObject` on `arn:aws:s3:::opal-data-49financial/gold/advi/_logs/chain_*` and `s3:GetObject` AND `s3:GetObjectVersion` on
+   `arn:aws:s3:::opal-data-assets/schwab/08335338/meta/complete/*` (AMENDMENT A1, row Z-W15-S1: a read at `versionId` needs `s3:GetObjectVersion`). No `ListBucket`, no other action or resource. (Without
    `ListBucket` an absent key reads `AccessDenied`, not `NoSuchKey`: treat both as absent.) Touch no other resource in
    that file or root.
 5. **Tests.** New `infra/aws/lambda/opal-assets/tests/test_advi_49f_gold_dispatch_remedy.py` (stdlib `unittest.mock`;
