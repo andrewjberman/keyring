@@ -939,6 +939,28 @@ def _self_test():
          lambda: '"--governing-order", rel' in inspect.getsource(check_complete_flip)),
         ("binding: a refused flip names the checker's VIOLATION lines, not only its verdict line",
          lambda: '"VIOLATION: "' in inspect.getsource(check_complete_flip)),
+        # W42-S4 -- the <proof_of_spec> block may name its instance, confined to the deliverables the stem search reads.
+        ("proof path W42-S4: a tag-named instance inside the project deliverables is the one candidate",
+         lambda: _proof_instance_candidates(
+             "R", "org/missions/D9/IRPT/X/task-orders/X.TO-IB-m19-2.long-name.md",
+             "<proof_of_spec>\nInstance at `org/missions/D9/IRPT/X/deliverables/W~42/X.TO-IB-mr-2.proof_of_spec.json`.\n"
+             "</proof_of_spec>\n")
+         == ([os.path.normpath(os.path.join("R", "org", "missions", "D9", "IRPT", "X", "deliverables", "W~42",
+                                            "X.TO-IB-mr-2.proof_of_spec.json"))], None)),
+        ("proof path W42-S4: no named path -> the stem search runs as before (flat seat, both names)",
+         lambda: _proof_instance_candidates("R", "org/tier2_senior/A/task_orders/X.TO-1.md",
+                                            "<proof_of_spec>\nno path here\n</proof_of_spec>\n")
+         == ([os.path.join("R", "org/tier2_senior/A/deliverables", "X.TO-1.proof_of_spec.json"),
+              os.path.join("R", "org/tier2_senior/A/deliverables", "X.TO-1_PROOF_OF_SPEC.json")], None)),
+        ("proof path W42-S4: a named path outside the deliverables -> refused, no candidate",
+         lambda: (lambda r: r[0] == [] and "outside" in (r[1] or ""))(_proof_instance_candidates(
+             "R", "org/missions/D9/IRPT/X/task-orders/X.TO-1.md",
+             "<proof_of_spec>\n`org/missions/D9/IRPT/Y/deliverables/W/X.TO-1.proof_of_spec.json`\n</proof_of_spec>\n"))),
+        ("proof path W42-S4: two distinct named paths -> refused as ambiguous",
+         lambda: (lambda r: r[0] == [] and "exactly one" in (r[1] or ""))(_proof_instance_candidates(
+             "R", "org/missions/D9/IRPT/X/task-orders/X.TO-1.md",
+             "<proof_of_spec>\n`org/missions/D9/IRPT/X/deliverables/W/a.proof_of_spec.json` and "
+             "`org/missions/D9/IRPT/X/deliverables/W/b.proof_of_spec.json`\n</proof_of_spec>\n"))),
         # GATE (x) WORKSTREAM KEY (row IRPT_BCKEND-S179): per-workstream rounds.
         ("round-issuer GREEN (S179): round 13 at HEAD under workstream ~P; a ~M order into round 13 -> admitted",
          lambda: _round_issuer_violations(tree, "<round>13</round>\n<workstream>~M</workstream>\n" + v3,
@@ -2864,6 +2886,38 @@ def _staged_blob(root, rel):
     return out.stdout.decode("utf-8", errors="replace")
 
 
+# The order's own <proof_of_spec> block may NAME its instance (row IRPT_BCKEND-W42-S4, 1.0.0_SA_CTO ruling): an
+# instance keyed off the to_id rather than the file stem is otherwise invisible to the stem search. The named path
+# must stay inside the deliverables dir the stem search already uses; exactly one distinct name, or none.
+PROOF_BLOCK_RE = re.compile(r"^[ \t]*<proof_of_spec>(.*?)</proof_of_spec>", re.M | re.S)
+PROOF_PATH_RE = re.compile(r"`([^`\s]+(?:\.proof_of_spec\.json|_PROOF_OF_SPEC\.json))`")
+
+
+def _proof_instance_candidates(root, rel, staged):
+    """(candidate paths, refusal or None) for the order `rel` whose staged text is `staged`. PURE apart from glob."""
+    stem = os.path.basename(rel).rsplit(".md", 1)[0]
+    names = (stem + ".proof_of_spec.json", stem + "_PROOF_OF_SPEC.json")
+    to_dir = os.path.dirname(rel).replace("\\", "/")
+    tree = to_dir.endswith("/task-orders")
+    deliv = (to_dir[:-len("/task-orders")] + "/deliverables") if tree else to_dir.replace("task_orders", "deliverables")
+    block = PROOF_BLOCK_RE.search(staged or "")
+    named = sorted(set(PROOF_PATH_RE.findall(block.group(1)))) if block else []
+    if len(named) > 1:
+        return [], ("%s: its <proof_of_spec> block names %d instance paths (%s); exactly one is admitted"
+                    % (rel, len(named), ", ".join(named)))
+    if named:
+        path = os.path.normpath(os.path.join(root, *named[0].split("/")))
+        base = os.path.normpath(os.path.join(root, *deliv.split("/")))
+        if os.path.normcase(os.path.commonpath([path, base])) != os.path.normcase(base):
+            return [], ("%s: its <proof_of_spec> block names %s, outside %s/ -- the instance must sit in the"
+                        " deliverables the stem search reads" % (rel, named[0], deliv))
+        return [path], None
+    if tree:
+        import glob as _glob
+        return [c for n in names for c in _glob.glob(os.path.join(root, deliv, "*", n))], None
+    return [os.path.join(root, deliv, n) for n in names], None
+
+
 def check_complete_flip(root, rel):
     """LAYER 1, half B -- 'No VALID instance -> no complete flip.'
 
@@ -2902,15 +2956,9 @@ def check_complete_flip(root, rel):
     # FLAT: <seat>/deliverables/<TO>.proof_of_spec.json beside <seat>/task_orders/. TREE (ruled
     # 2026-09-02, s.6 option ii): deliverables/<serial>/ sub-folders, the owner in the path -- so the
     # instance is searched one level down, under whichever serial the TO assigned.
-    stem = os.path.basename(rel).rsplit(".md", 1)[0]
-    names = (stem + ".proof_of_spec.json", stem + "_PROOF_OF_SPEC.json")
-    to_dir = os.path.dirname(rel).replace("\\", "/")
-    if to_dir.endswith("/task-orders"):
-        import glob as _glob
-        cands = [c for n in names
-                 for c in _glob.glob(os.path.join(root, to_dir[:-len("/task-orders")], "deliverables", "*", n))]
-    else:
-        cands = [os.path.join(root, to_dir.replace("task_orders", "deliverables"), n) for n in names]
+    cands, refused = _proof_instance_candidates(root, rel, staged)
+    if refused:
+        return [refused]
     inst = None
     for cand_path in cands:
         if os.path.isfile(cand_path):
