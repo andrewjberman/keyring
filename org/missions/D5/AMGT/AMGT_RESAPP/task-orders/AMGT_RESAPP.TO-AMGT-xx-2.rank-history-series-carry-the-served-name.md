@@ -74,6 +74,8 @@ never-widen pair written against xx-2's landed code; no IAM change (GetItem gran
 `ea248519` (the api suite reads portal harness files; round 48 rows Z-W171-S1/S2).
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29 ~22:1xZ):** drained @209a6cce2f (worker 1a794837f0; safe-merge tree check: 4 files, 0 dropped, 0 foreign). Instance graded in the worker's tree (`proof-of-spec-check ... AC1,AC2 --governing-order <this order>`): VALID rc=0. The issuer re-ran both criteria on the MERGED full tree: AC1 PASS (tickers asked 3, series 3, name SERVED 2; the live trending/chatter axis ranks 2 tickers, the third is ZZZNOTHELD US reading ABSENT), AC2 PASS (329 passed). The code calls `dynamodb:GetItem` on `etf-classifications` only (granted @26113dbc97). SERVED: reaches the Lambda at xx-4. Worktree C:/tmp/r49-174 kept pending Andrew's go on checkout removal (post-crash edict); branch merged.
+<status>complete</status>
 <round>49</round>
 <slot>~174</slot>
 <fabric>site-z</fabric>
