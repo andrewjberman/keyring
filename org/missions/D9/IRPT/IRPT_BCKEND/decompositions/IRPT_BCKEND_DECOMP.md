@@ -1189,3 +1189,22 @@ Both cells go to 0.4.0_DS_ClientPlatform~E (rule 13: gold scripts are the DS sea
 prefix; they share the producer's home, so the seat works them as one queue.
 
 fanout: 2 of 2 chains, cap 8.
+
+## 18. ROUND 21, WORKSTREAM ~P (2026-09-29 ~06:0xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND-19 ANALYSIS sections 3 and 6, PRD v0.20 rulings 13-17, window 21's K8, 2.0.0_SA_COO~M 102599)
+
+The adapter switch to the holdings gold (round 20, drained @a595a14264) was refused at its CRO half on the gold
+(S195). Its re-cut is ~E's producer fix (TO-IB-er-301 amendment 1) plus the adapter guard of ruling 16 below. The
+re-cut packet then carries IB-pr-211 and IB-pr-214 in the same artifact.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-211` | FWD-9: the release re-check passes the request, so a render names its grant (W21 K8, entry.py:61) | WORLD (Lambda source) | none | P21a |
+| `IB-pr-212` | FWD-5: HoldingsSnapshot contract CATEGORY revision a69fe8e33e staged in irpt-holdings + irpt-ycharts-generate + the lambda-tree copy (~M's step 1) | WORLD (served validator pin) | none | P21b |
+| `IB-pr-213` | PRD item 1: the edge role reads only the two public keys (S132), plan only | WORLD (IAM, shared auth) | none | P21c |
+| `IB-pr-214` | FWD-3: the fresh path refuses any series point <= -1 (ruling 16), matching the reopen path | WORLD (Lambda source) | none | P21d |
+
+Every served move stays the issuer's, under its own ledger and both halves. The workers build, prove and plan only.
+Slots: `1 + max(n)` over the WK~n author lines at HEAD is 67 (row S187's rule), so the round uses 67, 68, 69 and 70.
+IB-pr-211 and IB-pr-214 edit different files in one package; they drain separately and meet in the one rebuild.
+
+fanout: 4 of 4 chains, cap 8.
