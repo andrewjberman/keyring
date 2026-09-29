@@ -219,3 +219,47 @@ harness pattern cannot read `execText`/`execFallback` (they exit 0 with non-stan
 
 **Rule 24:** (i) MECE over the analysis's five items, by subtraction: 5 placed. (ii) One cell per write set. (iii) One intent per
 cell except AV-r-5, the named batch. (iv) No cell moves a served value, a figure, a verdict, a cite or the click.
+
+## v4 -- ROUND 4 (issuer, 2026-09-29 ~14:xZ), over PRD v0.3 @abfad1355c (ADMITTED)
+
+**Rectangle:** the ENRICHMENT LIST of `1.0.0_SA_CTO~Z`'s round-3 analysis `ledger/ROUND_ANALYSIS.round3.md` @46d28c6c4c (msg 26587)
+section 4, items 1-6, one cell per item; decisions 1 (`Z-S3`) and 2 (tickers as written, round-1 ruling 3 reversed) are cells 1
+and 2. **NOT cells:** "$1,234" in INTU's drafted prose and the chart caption (the analysis's own list); AMGT_RESAPP r48's ask
+(msg 26588 from `2.0.0_SA_COO~Z`: read `model.line_names` / `formula_words` from the payload, and let the export print words):
+its dependency is unmet at the cut -- `AMGT_RESAPP.TO-AMGT-ww-1` (the redeploy) reads `pending` and 0 of 4 captured /thesis
+payloads carry either field -- so it is placed for the first round after ww-1 lands, never a fixture. **Portal base:** site-Z
+local DEV `a93071b8`. **Fixtures:** `deliverables/2.0.0_SA_COO~D/round4/fixtures/` (adapter at the cut): the round-3 set plus
+`rankSeries.TRENDING_PRICE.12.json` (`read_rank_series` over the list's head 12 names, 5 landed dates, read complete 60 of 60
+keys). **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | risk |
+|---|---|---|---|---|---|
+| `AV-w-1` | 1 | The walk harness FAILS when any step lands on the sign-in page ("WALK VOID: step <label> landed on the sign-in page", non-zero exit); a `--no-login` run is the positive control; the detector is a pure exported function | the round's instrument (`Z-S3`) | `.claude/skills/ui-walk/walk.mjs`, `signin_detect.mjs` (new), `SKILL.md` | LOCAL |
+| `AV-w-2` | 2 | The lead list prints each ticker as Bloomberg writes it ("BP/ LN", "WALMEX* MM", "NG/ LN"); round 2's slash strip reverted | FWD-2 | `SA/components/RankedList.tsx`, harness `leadPanelPattern` | LOCAL |
+| `AV-w-3` | 3 | The Model face carries no status word ("REFUSED --" x18, "ABSENT --", "SERVED --", "not read", "Peers V" / "Divergence D"): plain sentences; every refusal stays on its element | FWD-11 | `SA/tabs/ModelTab.tsx`, harnesses `modelPattern`, `assembled`, `exportCompare` (re-anchor only) | LOCAL |
+| `AV-w-4` | 4 | Exec Management: the panel header white (the last second band); the "Read detail" drawer and the Bloomberg-fallback line read as words (no `roster_status`, `source_accession`, UNRESOLVED-SOURCE, upper-case ABSENT) | FWD-7, FWD-11 | `SA/tabs/ExecManagementTab.tsx`, harnesses `execPattern`, `execText`, `execFallback` | LOCAL |
+| `AV-w-5` | 5 | Posture evidence: the comparable's missing sources said once; figure cites read as words (no `OPER_MARGIN FY2025 ... PERCENT`) | FWD-10 | `SA/tabs/PostureTab.tsx`, `SA/postureCites.ts`, harnesses `posture`, `posturePattern` | LOCAL |
+| `AV-w-6` | 6 | The history view with ten or more names: the list's head 12 requested; one legend of per-name buttons; a picked name drawn full and the rest muted; 12 distinct strokes; dates thinned so they do not overlap; each line labelled by the served name when the series carries one, else the ticker as written | FWD-3 (first cut) | `SA/components/RankedChart.tsx`, `SA/constants.ts` (`RANK_SERIES_TOP_N`), harness `leadPanelPattern` | LOCAL |
+
+**Edges and chains:** no data edge. `AV-w-2` and `AV-w-6` both may re-anchor `leadPanelPattern.harness.cjs` (it loads the list and
+the chart): one worker queue, w-2 then w-6. M = 5 chains (w-1, w-2->w-6, w-3, w-4, w-5), N = 5, cap 8. `tabs.harness.cjs` is
+read-only for every cell (a bound only); a red there is a row, never an edit.
+
+**Checks (`round4/checks/`, dry-run at base a93071b8):** walkvoid.sh NO (the walker refuses the unknown `--no-login` and prints no
+WALK VOID line); detect.mjs 0 of 6 (module absent); ticker.cjs 2 of 5; status.cjs 1 of 3 (29 hits per surface); exec.cjs 0 of 3;
+posture.cjs 1 of 3; history.cjs 0 of 5 -- every build check FAILS as expected. Bounds at base PASS: leadPanelPattern 15, shell 10,
+modelPattern 12, tabs 20, execPattern 9, execText 5/5, execFallback 5/5, posture 32, posturePattern 13, errorEmpty 12,
+chart.harness rc 0; RESAPP vv-5.AC1 YES (4 of 4 sets exact). Green arms fed (scratch overrides, never on a face): ticker.cjs 5 of
+5; history.cjs 4 of 5 (arm 1 reads the real constants file). `census.cjs` gains a status-word class and admits a ticker's own
+"/" or "*": 35 tokens at base, 29 of them status words -- the CVO's instrument, graded by judgment.
+
+**Battery:** comp-schedule, comp-iam DECLARED-NOT-APPLICABLE. comp-adversary: the checks above; blind spots -- static markup with
+the estate chrome stubbed and recharts replaced by a prop-serialising stub (history.cjs reads props, not pixels: tick overlap is
+graded by the walk); walkvoid.sh needs the 5174 build serving and reads only the signed-out branch; no served series carries a
+company name today, so AV-w-6's name label is exercised on its ticker fallback only (the series name is an ask to AMGT_RESAPP,
+the same boundary as hop 3).
+
+**Rule 24:** (i) MECE over the analysis's six items, by subtraction: 6 placed; the three NOT-cells named with their reason.
+(ii) One cell per write set, the one shared harness resolved by a queue. (iii) One intent per cell. (iv) No cell moves a served
+value, a figure, a verdict, a cite or the click; AV-w-6 changes how many of the producer's already-ordered head rows the chart
+requests (5 -> 12), never which or in what order.
