@@ -92,7 +92,7 @@ not a fix here), no vendor call. It does not grade FWD-6.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~41</slot>
 <fabric>site-z</fabric>
