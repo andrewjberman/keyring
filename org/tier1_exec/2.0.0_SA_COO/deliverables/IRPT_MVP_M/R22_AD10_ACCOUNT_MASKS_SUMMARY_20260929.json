@@ -1,0 +1,114 @@
+{
+  "firms": [
+    {
+      "firm": "49financial",
+      "as_of": "2026-09-28",
+      "entries": 4642,
+      "accounts": 7598,
+      "accounts_with_own_mask": 7598,
+      "masks_with_more_than_4_digits": 0,
+      "multi_account_entries": 1945,
+      "multi_account_entries_with_distinct_tails": 1945,
+      "sample": [
+        [
+          "****0251 / Joint Tenant",
+          "****5762 / Rollover IRA"
+        ],
+        [
+          "****9795 / Joint Tenant",
+          "****5578 / Roth Contributory IRA",
+          "****6555 / Joint Tenant"
+        ],
+        [
+          "****6668 / Roth Contributory IRA",
+          "****4115 / Joint Tenant",
+          "****6065 / Rollover IRA"
+        ]
+      ]
+    },
+    {
+      "firm": "inflection",
+      "as_of": "2026-09-29",
+      "entries": 298,
+      "accounts": 884,
+      "accounts_with_own_mask": 884,
+      "masks_with_more_than_4_digits": 0,
+      "multi_account_entries": 205,
+      "multi_account_entries_with_distinct_tails": 205,
+      "sample": [
+        [
+          "****8416 / Joint",
+          "****7503 / Joint",
+          "****7511 / Individual Retirement Account",
+          "****8414 / Joint",
+          "****7508 / Roth",
+          "****7510 / Roth",
+          "****8415 / Joint"
+        ],
+        [
+          "****4623 / Transfer on Death",
+          "****9795 / Individual Retirement Account",
+          "****9796 / Individual Retirement Account"
+        ],
+        [
+          "****9951 / Individual Retirement Account",
+          "****9950 / Roth",
+          "****9954 / Individual Retirement Account",
+          "****9953 / Roth",
+          "****4787 / Beneficiary IRA"
+        ]
+      ]
+    },
+    {
+      "firm": "cottonwood",
+      "as_of": "2026-09-25",
+      "entries": 263,
+      "accounts": 953,
+      "accounts_with_own_mask": 953,
+      "masks_with_more_than_4_digits": 0,
+      "multi_account_entries": 180,
+      "multi_account_entries_with_distinct_tails": 179,
+      "sample": [
+        [
+          "****4607 / Joint",
+          "****4999 / Brokerage",
+          "****4998 / Brokerage",
+          "****9175 / RothIRA",
+          "****9176 / IRA",
+          "****9177 / RothIRA",
+          "****9180 / UTMA",
+          "****9178 / UTMA",
+          "****9179 / UTMA",
+          "****5184 / No Account Type Assigned",
+          "**** / No Account Type Assigned",
+          "**** / No Account Type Assigned"
+        ],
+        [
+          "****5285 / Brokerage",
+          "****8691 / Brokerage",
+          "****8694 / Brokerage",
+          "****8683 / Joint",
+          "****8688 / Brokerage",
+          "****8692 / Brokerage",
+          "****8682 / IRA",
+          "****8690 / Trust",
+          "****8685 / Trust",
+          "****8689 / Trust",
+          "****8686 / Trust",
+          "****8687 / Trust",
+          "****8693 / Trust",
+          "****8684 / Trust",
+          "**** / No Account Type Assigned",
+          "**** / No Account Type Assigned",
+          "****2008 / No Account Type Assigned",
+          "****0347 / UTMA",
+          "****1181 / Brokerage"
+        ],
+        [
+          "****9964 / Trust",
+          "****2536 / Joint"
+        ]
+      ]
+    }
+  ]
+}
