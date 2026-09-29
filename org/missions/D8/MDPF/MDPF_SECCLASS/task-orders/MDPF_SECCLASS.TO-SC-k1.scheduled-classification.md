@@ -48,6 +48,10 @@ anything in bd-securities."** So also PRD C-WRITER, per `org/standards/MDPF_SECC
    - (ii) Bloomberg GICS fields where the estate already holds them;
    - (iii) the Schwab security master where held.
    No outside model is called, and no guess is made: an unresolved ticker gets no row.
+   **Amendment 1 (row MDPF_SECCLASS-W3-S1):** a held ticker the SEED SOURCE (`_shared/etf_classification.py`)
+   already carries is the seed path's and is never planned as a scheduled row, even if the live table lacks it
+   today. PHYS is one: its row lands with SC-k-2's seed write. The census counts such tickers per firm as
+   `"seed_pending"` (the check reads held = present + seed_pending + would_write + unresolved).
    Each planned row also carries `instrument_kind` (`fund` / `single_security`, with the contract's definitions) and
    `industry`: the GICS industry-group name through the one client's `resolve()`, Bloomberg as input (CTO 103036).
    Where kind or industry is unknown, the attribute is absent, never defaulted. Name `updated_by` after the job.

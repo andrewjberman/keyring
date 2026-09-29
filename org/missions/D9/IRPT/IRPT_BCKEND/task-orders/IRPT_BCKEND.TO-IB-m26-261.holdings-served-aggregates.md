@@ -33,6 +33,13 @@ This order runs AFTER IRPT_BCKEND.TO-IB-m25-251 in the same worktree. The aggreg
 (etf-classifications), so build on 251's `holdings_snapshot.py`, never on the pre-251 classifier.
 
 **Build (LOCAL build + record -- no upload, no mint, no deploy):**
+0. **Repair first (amendment 1, row IRPT_BCKEND-W84-S2).** 251's refuse-on-unknown classifier breaks 37 existing test
+   functions in four other files under `data/assets/scripts/gold/investor_reporting/tests/`, because they use the
+   synthetic ticker `'AAA'`, which etf-classifications does not hold. Give those tests a stubbed etf-classifications
+   table (a fixture that holds their synthetic tickers), the way `test_holdings_etf_classifications.py` stubs it. The
+   refusal stays exactly as 251 built it; no test is deleted, skipped or loosened. Afterwards
+   `python -m pytest data/assets/scripts/gold/investor_reporting/tests -q -p no:cacheprovider` passes whole: report
+   that line.
 1. **Contract.** Add two OPTIONAL top-level properties to the HoldingsSnapshot schema, identically in all three tracked
    copies (listed in `<paths>`; the schema is `additionalProperties: false`, so an unlisted field fails validation):
    - `security_aggregates`: an array, one item per security identity in the snapshot's scope. Each item carries the

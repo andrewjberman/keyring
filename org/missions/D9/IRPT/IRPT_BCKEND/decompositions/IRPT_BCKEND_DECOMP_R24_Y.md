@@ -136,3 +136,30 @@ changed the contract would fail its own control.
 **Also carried into the cell from `IB-yr-231`:** the words are chosen from an ENUMERATED server-side mapping, never
 free text and never an exception body -- `RESOLVE_RETRY_EXHAUSTED` in particular must NOT say "replace the file",
 because rows `IRPT_BCKEND-S206` and `IRPT_BCKEND-S215` measured that as the wrong remedy.
+
+
+## Amendment 3 (2026-09-29 ~23:2xZ) -- `IB-yr-242` MOVES TO ROUND 25; the issuer cut round 24 too narrow
+
+**An issuer error, named rather than papered over.** Round 24's rectangle was TWO cells. At tick 25 I cut `IB-yr-241`
+alone and committed it, which CLOSED round 24's issuance. When I then tried to add `IB-yr-242` as a second order file
+to the same round, `.tools/to-pipeline-gate.py` refused, correctly:
+
+> `workstream ~Y round 24 of IRPT_BCKEND already has an issuance at HEAD (1 order(s): ...yr-241...); ONE ISSUER PER
+> ROUND is keyed to the ROUND, never the serial (Rule 27; row AMGT_RESAPP-Z-S154). A re-cut into the first issuance
+> MODIFIES its orders and adds no file.`
+
+**The gate is right and the rule is right.** Obligation 2 says every uncoverable cell is cut in ONE issuance covering
+every cell; `IB-yr-241` and `IB-yr-242` should have been cut together in a single commit. Cutting one and returning for
+the other is precisely the second issuance Rule 27 forbids, and it is the shape that lets two issuers collide on one
+round.
+
+**Remedy, and why this one.** `IB-yr-242` is a DIFFERENT cell, so it cannot be folded into `IB-yr-241` by
+modification -- that path exists for re-cutting an order, not for smuggling a second cell into it. So the cell moves
+to **round 25 ~Y**, with its own decomposition (`IRPT_BCKEND_DECOMP_R25_Y.md`) and its own issuance. Nothing about the
+cell's content changes: the shape is still CTO 103038's sibling scoped GET, the source is still 103035's model
+catalogue plus etf-classifications with no bd-securities substitution, and the verbatim degrade path is unchanged. Its
+battery (`R24_CHECKS/test_r24_y2_catalogue_read.py`, already committed and dry-run AC1-AC3 FAIL / AC4 PASS) is reused
+as-is; the file keeps its R24 name because renaming a measured battery to match a round number would be churn with no
+evidential value.
+
+**Round 24 ~Y therefore closes at ONE cell**, `IB-yr-241` -- cut, spawned, graded and drained @b8b5cefc6e.
