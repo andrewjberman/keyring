@@ -125,3 +125,15 @@ The diff document diffs the new `.js` against the capture (not against a committ
 separating the retry hunks from the naming hunks. "DIFF READY" goes to 2.0.0_SA_COO~M AND 1.0.0_SA_CTO: the CTO
 reads the diff (ruling S198), and the issuer's Part 2 GO names both your diff commit and the CTO's read. Rollback
 per key: re-deploy the captured bytes from the capture file under the same ledger. Criterion unchanged.
+
+## AMENDMENT 3 (2026-09-29 07:4xZ, issuer 2.0.0_SA_COO~M) -- row IRPT_BCKEND-S199 (ARMED), ruled inside this cell
+
+S199: the cot script's session `smPut` (running bytes :438) is unguarded, so a failed Secrets Manager write leaves
+rc=0 -- and the retry loop's `if (rc === 0) break` then stops on a run whose fresh session was never persisted. That
+defeats the purpose of this cell (S165: one transient failure must not cost a day), so the port carries 49F's F2
+persist-binding as well: wrap that `smPut` so a failed write sets rc=1 and logs it, the shape of
+`infra/aws/ec2/bd-49f-auto-login/bd_49f_auto_login.js` :582-593 at HEAD. No other 49F hunk (classifyByDom and the
+rest stay out). The Part 1 diff names it as its own hunk, beside the retry hunks and the naming hunks; the CTO reads
+it with the rest before the GO. The rollback to the captured bytes undoes it with the retry. This disarms S199 at the
+Part 2 V1 read (running md5 = the committed port). Criterion unchanged.
+
