@@ -105,7 +105,7 @@ only if ~P invokes it; its gold reads YTD 0.00% over 79 OK days, SI 0.00% over 1
    ..4714. Any figure at or under -100% on either reader, or any unnamed difference, is the packet's own rollback.
 2. **The two-edge case is ruled before the apply, in the CTO's half:** either the producer re-emits under a v0.21
    rule for the day after an `IMPLAUSIBLE-RETURN` day first, or the interim is accepted by name (..0090 1Y -91.5% /
-   SI -91.4%; ..4714 1Y -69.8%) with row `IRPT_BCKEND-S196` as its carrier. This seat signs either branch; it does not
+   SI -91.4%; ..4714 1Y -69.8%) with row `IRPT_BCKEND-S200` as its carrier. This seat signs either branch; it does not
    sign the figure served with the choice unrecorded.
 3. **The after-read includes ..0090's 1Y and ..4714's 1Y as served**, recorded in the ledger beside the packet's
    reads; a served figure there that differs from section 4's prediction is a row the same turn.
