@@ -1071,6 +1071,18 @@ as one supplementary issuance with a stated reason. They touch nothing on the he
 | `MX-x-1` | round-2 analysis item 6 (rows Z-S22 + Z-W7-S2, one cause) | the deploy recorder derives bun/node with `command -v` and runs its JavaScript CHANGELOG writer only under a JS runtime; worker `0.9.0_WK_NFRA_MCPINDEX~12` | WORLD (infra-path floor) |
 | `MX-x-2` | round-2 analysis item 6 (row Z-W3-S4) | the emitter writes `portal_*` rows to their own `portal_datasets:` section, each with its exact `s3_key`; `portal_index` reads it; the catalog is regenerated, never hand-edited; worker `0.9.0_WK_NFRA_MCPINDEX~13` | WORLD (infra-path floor) |
 
+| `MX-i-5` | round-3 analysis item 1; R-15 (row Z-W8-S3) | disarm: the 4 dead BD Playwright schedules (allocation, realized, transaction, unrealized) DISABLED through Terraform, never deleted, each first proven dead at two grains; asset-dim is the negative control; never-widen halves before the apply; worker `0.9.0_WK_NFRA_MCPINDEX~16` | WORLD |
+| `MX-d-4` | round-3 analysis item 2; R-13 + R-14 (Z-C-S28, Z-C-S29) | opal_discover names the purpose-built tool as `next_tool` (query_v0 only where none exists, labelled an HTTP route) and carries a measured `served_written_at` per servable row; chain head of MX-d-5 -> MX-r-5; worker `0.9.0_WK_NFRA_MCPINDEX~14` | WORLD (infra-path floor) |
+| `MX-d-5` | round-3 analysis item 4 (Z-W10-S1 + Z-W2-S8) | routing precision: Q22 vocabulary on the existing mkt.01 row, a NOT_CATALOGUED rule for one-common-word matches graded on recall, the ETF ask not mis-routed (NOT_CATALOGUED while no platinum/etfs row exists); worker ~14 after MX-d-4 | WORLD (infra-path floor) |
+| `MX-t-9` | round-3 analysis item 3a | a read-only purpose-built tool for the json/* model-benchmark table (mp.05, already approved) on the mdpf pattern, with the model-design caveat; worker `0.9.0_WK_NFRA_MCPINDEX~15` | WORLD (infra-path floor) |
+| `MX-t-10` | round-3 analysis item 3b | a catalog row and a read-only tool for platinum/etfs -- HELD (G-W: widening is Andrew-only, DATA_CATALOG.yaml:32) | WORLD, HELD |
+| `MX-t-11` | round-3 analysis item 3c | a catalog row and a read-only tool for platinum/advi (in refused_units) -- HELD (G-W) | WORLD, HELD |
+| `MX-r-5` | round-3 analysis items 2+3a release and item 5 | a NARROW gateway release of MX-d-4, MX-d-5 and MX-t-9 (the MX-r-4 A1/A2 pattern: release tree at the live commit, rollback proof, deploy-only tree), G-A delta and never-widen halves; then the thread re-run over the 4 A2 surfaces with judgment `r5.J1`; worker ~14 after MX-d-5 | WORLD |
+| `MX-s-14` | round-3 analysis item 6; R-15 | port the BD transaction leg to the REST pull on the 49F session (the MX-s-10/s-12 pattern); DEFAULT == $LATEST; re-enable its trigger only in PHASE B; acceptance the next scheduled 21:53Z fire; unblocks Z-W11-S2; worker `0.9.0_WK_NFRA_MCPINDEX~17` | WORLD |
+| `MX-x-3` | round-3 analysis item 7 (row Z-W13-S2) | validate_catalog_v02.py `--offline` with zero AWS calls, the report dir created, and the live run's non-OK row identified; worker `0.9.0_WK_NFRA_MCPINDEX~18` | LOCAL |
+
+**G-W (gate, round 4):** Andrew's word to widen the runtime catalog to a new served surface (`platinum/etfs`, `platinum/advi`), named verbatim at DATA_CATALOG.yaml:32 "WIDENING IS ANDREW-ONLY, unchanged. Version bumps carry his verbatim." Holds `MX-t-10`, `MX-t-11`. Card carried by `1.0.0_SA_CTO~O` (sent ~04:36Z; MSTR~Z not live).
+
 Round 3's item 6 row Z-W3-S12 (the round-2 battery's `pytest_named` helper) is not a cell: the issuer fixed it in the
 round-3 battery's own `_root.sh` (`deliverables/2.0.0_SA_COO~MI/round3/checks/`), which reads verdicts from pytest's
 `-rA` summary.
