@@ -15623,6 +15623,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "AMGT-xx-3 cell text: when the officer section points elsewhere ('incorporated by reference' to the proxy), the company's latest DEF 14A holds the executive-officer section; INTU's 10-K lists no officers.",
   "world_is": "The proxy read serves the proxy's NAMED executive officers, which for a company whose 10-K Item 1 lists more executive officers than the NEOs is a subset of the executive-officer roster, not the roster. The result is labelled by source.section_heading so a consumer can reject it; the module does not claim the list is complete.",
   "notes": "INERT: nothing is served or persisted by this order. The serving round should decide whether a NEO-headed list may be shown as 'executive officers' on Exec Management or must carry the NEO label."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T22:10:00Z",
+  "one_line": "AMGT-yy-2: the cut's '15 pillars over 4 names' counts AMD_US's ABSENT pillars field ({absent, value:None}, 2 keys) as 2 pillars; the real count is 13, and yy_thesis.py --what fields cannot read 15 of 15 on any payload.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read_dossier(key)['document']['fields']['thesis_pillars'] measured live: AZN_LN list of 5, IMB_LN list of 6, ADBE_US list of 2, AMD_US dict {'absent': 'no class A report for this security', 'value': None}. Real pillars 5+6+0+2 = 13.",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round50/checks/yy_thesis.py:57,64: want_p = fields.get('thesis_pillars') or [] takes the AMD dict as a truthy value of len 2 (held 15); the served pillars are 13, so AC1 prints 'pillars 13 of 15', 'BAD AMD_US_Equity: pillars 0 of 2' and 'PASSES ...: NO', exit=1. Serving the dict verbatim as thesis_pillars would instead crash the checker at line 68 (str has no .get).",
+      "The same checker with only want_p made list-only (copy in the worker's .scratch, not committed) reads on the built payload: 'plane local: pillars 13 of 13 over 4 names', '/THESIS PASSES THE DOSSIER'S FIELDS: YES', exit=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order AMGT-yy-2 s.1: 'On the four names the dossier holds 15 pillars; /thesis serves 0', and AC1 expects 'pillars 15 of 15 over 4 names'; thesis_pillars is 'every dossier pillar, in order, as the dossier holds it'.",
+  "world_is": "The dossier holds 13 pillars on those four names. For AMD_US it holds an absent-field object where a list would be. The built adapter serves thesis_pillars [] plus dossier_fields.thesis_pillars_absent {status ABSENT, reason: the dossier's own text} so an empty list is never read as 'the report had none'; that sibling key is an addition the order did not name.",
+  "notes": "The issuer decides whether to amend AC1's checker/expectation (13, list-only want_p) or to rule the absent-pillars shape. The build itself is complete and AC2 passes (337 passed, 0 failed)."
 }
 ]
 ```
