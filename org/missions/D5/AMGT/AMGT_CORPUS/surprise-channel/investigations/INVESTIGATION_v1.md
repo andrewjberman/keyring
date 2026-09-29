@@ -2379,6 +2379,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Task order CRPS-p-4 asks for the population each fence names with its denominator; the dossier store holds 95 names.",
     "world_is": "93 of 95 partitions were measurable with the key taken from the partition name; the 2 slash-safe names need their slash form (BP/_LN_Equity, NG/_LN_Equity) and were not re-read. Neither is one of the four named names and the served-plane counts are 0 for every measured name, so no state moves.",
     "notes": "Not re-run in the slash form: the read is by the slash-form key through resolve_identity, outside this cell's four named names."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S61",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T22:20:00Z",
+    "one_line": "The round-15 analysis's standing contract ('every folder with no crosswalk row is registered through add_security') is wider than the producer it schedules: induction_run registers only EFFECTIVELY-EVIDENCED folders (a report's '(Ticker: ...)' line), so a folder whose only identity evidence is its own name -- Hitachi 6501 JP, registered by hand in round 15 -- reads NO_EVIDENCE and would not be registered by the daily trigger.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/induction_run.py module docstring: run() 'collects every EFFECTIVELY-EVIDENCED row ... NO call when empty'; Z-S58 (13:00Z): induction_request.run() on the live library read 'candidate Hitachi 6501 JP | NO_EVIDENCE / picked NONE ... no report states a ticker in the (Ticker: ...) form'.",
+        "Round 15 q-2 needed add_security --folder 'Hitachi 6501 JP' --bloomberg '6501 JP' (the id from the folder name, then MEASURED by the call; CTO half 411236c2b7 AGREED the identity) because --folder alone found no ONE PAGER workbook (dry-run 21:43:19Z, UNRESOLVED, 0 calls)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS.round15.md s.2: 'A daily trigger runs induction_run over the live library: every folder with no crosswalk row is registered through add_security's scripted path (R-21), and ambiguous names are REFUSED, not picked.'",
+    "world_is": "The scheduled producer registers the EVIDENCED subset only; a name-token-only folder stays UNRESOLVED until a manual act or a rule change.",
+    "notes": "Round 16's cell CRPS-r-1 schedules the producer as ruled and tells the worker not to widen it. Widening the population rule to a folder-name token confirmed by the call (the round-15 q-2 shape) is an identity-rule change for 1.0.0_SA_CTO~Z (and CVO~Z's calls-not-picks ruling), not the issuer's.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

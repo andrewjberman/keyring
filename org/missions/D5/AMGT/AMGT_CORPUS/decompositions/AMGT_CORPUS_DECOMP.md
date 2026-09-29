@@ -1,55 +1,45 @@
-# AMGT_CORPUS -- L5 decomposition v15.0 -- ROUND 15 (two cells: one resolved at L5 by evidence, one issuer served act)
+# AMGT_CORPUS -- L5 decomposition v16.0 -- ROUND 16 (one cell: the daily trigger for induction_run)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-09-29 ~21:5xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-14 analysis
-`ledger/ROUND_ANALYSIS.round14.md` @`c2e8fc74f6`, s.4 ENRICHMENT LIST (two items) and s.2 rulings 3-4.
-Round 14's decomposition is kept as `AMGT_CORPUS_DECOMP.round14.md`. Base of the cut: CLOUD `3cccb8db91`.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-09-29 ~22:2xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-15 analysis
+`ledger/ROUND_ANALYSIS.round15.md` @`c265fbb6ff` (msg 26742, READ-acked), s.2 ruling and s.4 ENRICHMENT LIST, one item.
+Round 15's decomposition is kept as `AMGT_CORPUS_DECOMP.round15.md`. Base of the cut: CLOUD `8f7237f20f`.
 
 ## 0. What this round IS
 
-| # | item (analysis s.4) | cell | class |
+| # | item (analysis s.4) | cell | slot |
 |---|---|---|---|
-| 1 | a dossier reads by its own name when the ticker holds `/` (`Z-W4-S5`) | `CRPS-q-1` | RESOLVED AT L5 by the issuer's measurement; no order |
-| 2 | crosswalk rows for library folders newer than the crosswalk (`Z-S58`, RESAPP `Z-S303`) | `CRPS-q-2` | issuer SERVED act under a never-widen pair; no build, no order |
+| 1 | schedule the existing `induction_run` (pinned commit, builder-named, first fire under a pair + NEVER-2 entry) | `CRPS-r-1` | `~1` |
 
-**NOT cells** (the analysis): the six render outcomes (AMGT_RESAPP round 50); `Z-S59` (the tool's owner); the temp cleanup
-(operator).
+**NOT cells** (the analysis): the six render outcomes (AMGT_RESAPP round 50); `Z-S59`; the two Disabled `OpalResearch-*`
+tasks.
 
 ## 1. The rectangle
 
-| cell | serves | `<risk>` | write set | the act |
-|---|---|---|---|---|
-| `CRPS-q-1` | the served read of 2 covered names (`BP/ LN`, `NG/ LN`) | LOCAL | none | measurement only (1a) |
-| `CRPS-q-2` | FWD-4's organic arm; identity for every folder newer than the crosswalk | SERVED | `crosswalk/v1/<today>.json` (pool), one bronze identity object, `lib/research/identity/registrations.json` (+1 row) | `add_security --folder "Hitachi 6501 JP" --bloomberg "6501 JP" --write-pool`, under the pair |
+| cell | serves | `<risk>` | class | write set | the build |
+|---|---|---|---|---|---|
+| `CRPS-r-1` | FWD-4, FWD-19 | WORLD (the drain's registration and first fire) | worker | `lib/research/corpus/induction_scheduled.py` (new), `lib/research/corpus/schedule_induction.ps1` (new), `lib/research/corpus/tests/test_induction_schedule.py` (new) | the trigger only: an entry that computes today's UTC `as_of` and calls `induction_run.main`; a registration script whose `-Plan` names the builder's task name, a detached checkout of a pinned commit, and the action; an offline test of the scheduled path on planted folders |
 
 ## 1a. Re-groundings at L5
 
-- **q-1 -- the gap the row named is in the SWEEP, not the read path.** Measured 21:42:14Z at HEAD
-  (`deliverables/2.0.0_SA_COO~X/evidence/r15_q1_slash_read.txt`):
-  - `read_dossier("BP/_LN_Equity")` and `read_dossier("NG/_LN_Equity")` return their served objects under
-    `security_key=BP-SLASH-_LN_Equity` / `NG-SLASH-_LN_Equity`, the writer's own encoding (`crosswalk.slash_safe_key`).
-  - All 95 dossier partitions decoded through `crosswalk.security_key_from_slash_safe` read: `read_ok 95 fail 0 slash_keys 2`.
-  - Negative control: the partition form passed as a key raises `SlashSafeKeyError`, which is correct, because it is not a key.
-    `Z-W4-S5`'s sweep (`.scratch/p4/sweep.py`) took the partition name as the key and never decoded it.
-  - `continuation._resolved_security_keys()` carries both names in the `/` form (95 of 95).
-  - **Ruled:** no build is owed. A dedicated round-trip test would be a cell cut for coverage alone. The route-level `/` test
-    already exists (`lib/research/api/tests/test_slash_safe_security_route.py`), as does the key-form test
-    (`lib/research/identity/tests/test_slash_safe_key.py`).
-- **q-2 -- nothing to build; the gap is an input never registered.**
-  - `add_security --folder "Hitachi 6501 JP"` alone reads the id from a `*ONE PAGER*.xlsx`. The folder has none, so the
-    dry-run at 21:43:19Z returned UNRESOLVED with 0 calls.
-  - With `--bloomberg "6501 JP"`, taken from the folder's `<Name> <ROOT> <CC>` name, the dry-run at 21:44:16Z made one
-    scripted call and returned `MEASURED 6501_JP_Equity 'HITACHI LTD' ... AGREES`.
-  - The write lands the served crosswalk key, so it is the issuer's act under a never-widen pair
-    (`deliverables/2.0.0_SA_COO~X/NEVER_WIDEN_ROUND15_HITACHI_CROSSWALK.md`). The identity choice is named in the pair for the
-    CTO half to grade.
-  - Vendor authority: Andrew R-21 `b390c36444`, through the script.
-  - Verify: `checks/round15/q2_census.py`. At base it reads `folders 96 resolved 95 unresolved 1 ambiguous 0 hitachi
-    UNRESOLVED` and `added 0 removed 0 changed 0` against `crosswalk/v1/2026-09-25.json`.
+- **The producer exists and is complete.** `induction_run.py` makes ONE `add_security --batch` call per run, and NO call when
+  the population is empty. It REFUSES ambiguous and folder-token-disagreeing rows. `--fire` is gated on `OPAL_INDUCTION_FIRE=1`
+  plus today's `as_of`, and is refused under pytest. The cell does not edit it.
+- **The name is builder output** (Rule 30), measured at the cut: `opal_naming.name('amgt', None, 'induction', 'daily')` ->
+  `amgt-induction-daily`. No registry row is needed.
+- **Pinned, never the shared tree.** Site-Z Scheduled Tasks run the tree they point at. The action's `WorkingDirectory` is a
+  detached checkout of the merged commit, at a path derived from the repository root.
+- **The producer's population rule has a limit (row `Z-S61`, filed with this issuance).** A folder whose ONLY identity evidence
+  is its name, like Hitachi 6501 JP, is NO_EVIDENCE to `induction_run`, so the schedule would not have registered it. The
+  analysis's contract ("every folder with no crosswalk row is registered") is therefore wider than the producer. The cell
+  schedules the producer as ruled; whether to widen the rule is the CTO's call.
+- **Drain (WORLD, the issuer's):**
+  - `schedule_induction.ps1 -Register -Commit <merged sha>` under a never-widen pair and a NEVER-2 entry.
+  - The first scheduled fire is the acceptance. Expected, by the producer's rule: population 0 of 96, so no call and no put.
+  - Positive arm: AC1's planted folder on a scratch library.
 
 ## 5. The round -- one issuance, fan-out as data
 
-- `fanout: 0 of 2 chains, cap 8, reason: q-1 resolved at L5 by measurement (no build owed); q-2 is the issuer's served act
-  under a pair (a registration run, no code).`
-- **Close:** q-2's change entry closes on the pair's after-state reads. The one real run is `q2_census.py` against the pool,
-  plus `induction_request.run()` for FWD-4's organic arm. Then the L8 packet goes to `3.0.0_SA_CVO~Z`.
-- Surprise rows continue from `Z-S61`.
+- `fanout: 1 of 1 chains, cap 8, reason: one cell (the analysis's enrichment list has one item).`
+- **Drain:** re-grade at the tip; merge; the pair; `-Register`; the first scheduled fire read from its log and the pool listing.
+  Then the L8 packet goes to `3.0.0_SA_CVO~Z`.
+- Surprise rows from `Z-S62`. Worker rows are `AMGT_CORPUS-Z-W1-S<k>`, with `disarm_owner 2.0.0_SA_COO~X`.
