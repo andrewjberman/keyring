@@ -2401,6 +2401,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The scheduled producer registers the EVIDENCED subset only; a name-token-only folder stays UNRESOLVED until a manual act or a rule change.",
     "notes": "Round 16's cell CRPS-r-1 schedules the producer as ruled and tells the worker not to widen it. Widening the population rule to a folder-name token confirmed by the call (the round-15 q-2 shape) is an identity-rule change for 1.0.0_SA_CTO~Z (and CVO~Z's calls-not-picks ruling), not the issuer's.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S62",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T22:40:00Z",
+    "one_line": "DISARM of AMGT_CORPUS-Z-S59 by its owner: .tools/safe-merge.sh fixed at ccf2a27c6b (0.0.0_AB_MSTR~Z) -- a conflicted merge now records only HEAD..MERGE_HEAD plus unmerged paths; any other staged path is WARNed and refused on --continue.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Commit ccf2a27c6b (0.0.0_AB_MSTR~Z), relayed by msg 26756 (MSTR~Z) and msg 26758 (1.0.0_SA_CTO~Z: 'cite it as the resolving commit ... for AMGT_CORPUS Z-S59'); its body carries a scratch-repo test with a negative control and names one residual (a peer path that also differs between the sides).",
+        "Z-S59's case: merge 34bbf74213 carried 6 concurrently-staged 4.0.0_SA_CRO~Z paths through --continue; content was intact, authorship mixed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-S59: safe-merge --continue named 6 foreign staged paths and still committed them.",
+    "world_is": "At ccf2a27c6b the --continue path refuses a staged path the merge did not record; the fix is LOCAL on CLOUD (push held on Andrew).",
+    "notes": "The residual named in ccf2a27c6b's body (a peer path that also differs between the two sides) stays with the tool's owner.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
