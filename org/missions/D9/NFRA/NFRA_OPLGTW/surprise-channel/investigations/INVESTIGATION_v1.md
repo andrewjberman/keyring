@@ -4172,3 +4172,55 @@ name the one known failure instead of silently inheriting it.
   "notes": "Issuer may amend the two <expect> patterns to regexes that the scripts' output satisfies, e.g. (?s)sentinel at HEAD=no; listed OPEN/HELD=0.*RESULT: PASS.*exit=0 and (?s)descends=yes.*RESULT: PASS.*exit=0, and re-run the checker on the same instance."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T07:05Z",
+  "one_line": "On the host, at the served release 4248b70b39, the 250,000-row export of the widest exportable set (dim_position, 11 columns) is refused LIMIT_EXCEEDED/memory at 272,683,008 bytes of child RSS (cap 268,435,456), the maximal query peaks at 286,691,328, and the contract-scale export never completes: capacity is INSUFFICIENT at full width.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "onhost_bench.py --scale full on i-07dccb1615503ac99 (SSM e32bd390-4b24-4e5f-9e4d-49824f691a05; run 2026-09-29T06:47:12Z..06:47:34Z; JSON onhost_run_full.json): export:full 250000 rows x 11 columns ok=False LIMIT_EXCEEDED/memory elapsed 1.407 s peak_child_rss_bytes 272683008; export:tenth 25000 x 11 ok=True csv 3,748,900 bytes 2.921 s peak 171,974,656; probe 125000 x 11 ok=True csv 18,743,499 bytes 8.074 s peak 225,271,808; maximal query LIMIT_EXCEEDED peak 286,691,328; concurrent pair 205,750,272 and 205,463,552 (ok). Peak ratio full/tenth 1.5856 (the full run was cut off at the cap, so its true peak is higher).",
+      "A second full run (same host, same code, unrestarted service since 05:22:10Z) read: maximal 286,830,592; export full LIMIT_EXCEEDED 275,021,824; tenth 170,377,216; probe 125000 ok 225,247,232; ratio 1.6142.",
+      "Consistent with OG-x-2 row Z-W11-S1 (Windows working set: 260 MiB at 4 columns, 334 MiB at 11): the child holds the source table and DuckDB's sorted result in memory, so peak RSS scales with rows x columns; OG-x-2 flattened the PARENT and the result materialisation, not the source read and the sort. The largest 11-column export that completes here is between 125,000 and 250,000 rows (125,000 measured)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C5 / contract limits: 250,000 rows and 50 MiB per export within the 256 MiB job cap and 30 s deadline; R-OG-24: no job exceeds the cap.",
+  "world_is": "At full width the contract's export ceiling is not reachable on this host; the measurement is the input to a PRD revision (contract numbers do not move, R-4). CSV size is not the constraint: 11 columns cost about 150 bytes a row (37 MB at 250,000 rows, under 50 MiB).",
+  "notes": "Verdict INSUFFICIENT recorded in CAPACITY.json with for_prd_revision_if_insufficient. Levers named by OG-x-2 and not taken (each is code outside this cell): sort keys only and gather the payload in Arrow; read the source in row-group order and stream. dim_asset (three free-text columns, 9 columns) was not measured."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T07:06Z",
+  "one_line": "Admission arithmetic is priced against the 256 MiB cap, but the measured child peaks 4 to 18 MiB above it before the poll kills the job, so two admitted jobs can need 36,511,744 bytes more than the formula reserves (R-OG-24 point 5).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CAPACITY.json admission block (host run 06:47Z): formula reserve 375,753,728 bytes = ceil(193,228,800 x 1.25) + 134,217,728 (existing peak input: the engine's OG-p-1 floor, since the live gateway's measured VmHWM was 101,580,800 after the 05:22Z restart); required for 2 jobs 912,624,640. Priced against the measured child peak: max 286,691,328 (overshoot 18,255,872 over the cap): reserve 412,265,472, required for 2 jobs 949,136,384; gap 36,511,744 bytes. host_memory_bytes 1,936,322,560 admits both (host_can_admit_2_jobs_global_cap true).",
+      "engine.py submit(): the parent polls the child's RSS every 20 ms and kills it when RSS exceeds job_memory_bytes; the recorded peak is the last sample, so it is above the cap by the growth of one poll interval. Round 1 recorded 270,581,760 and 282,021,888; this run 272,683,008 / 275,021,824 (export) and 286,691,328 / 286,830,592 (maximal).",
+      "This cell does not change admission code (order, section 1); the gap is the finding the order asked for."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C5 capacity: admission reserves the existing peak x 1.25 + 128 MiB before starting a child; R-OG-24 point 5: priced against transient overshoot.",
+  "world_is": "On this 1.8 GB host the gap is affordable (host memory 1.94e9 >= 9.49e8 required), but the reserve as written does not include the overshoot the engine itself allows.",
+  "notes": "For the PRD revision or an engine cell: either add the measured overshoot to the reserve or lower the kill threshold below the cap so the recorded peak cannot exceed it."
+}
+```
