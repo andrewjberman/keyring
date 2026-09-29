@@ -32,7 +32,9 @@ def main():
     if not d["rows"] or not d["artifacts"]:
         print("NOT-CENSUSED: no rows or no artifacts built")
         return 1
-    foreign = {s: n for s, n in d["class_sources"].items() if s != "etf-classifications" and n}
+    # Amendment 1 (issuer): the faces name two class_source values, etf-classifications and unclassified; only
+    # a third source (bd-securities, a guess, a BD super class) is foreign.
+    foreign = {s: n for s, n in d["class_sources"].items() if s not in ("etf-classifications", "unclassified") and n}
     if foreign:
         print("NOT-CENSUSED: classes from %s" % foreign)
         return 1
