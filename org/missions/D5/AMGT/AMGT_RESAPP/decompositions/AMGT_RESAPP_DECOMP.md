@@ -6806,3 +6806,86 @@ fanout:
 - Hitachi 6501 JP's crosswalk row: AMGT_CORPUS round 15 (ruling 3). FWD-30's denominator is 95 identified names beside 96 folders.
 - An absence with no data attribute: asked of DSGN_AMGTV1 through its round when xx-1 names one.
 - Serving xx-3's officers: round 50, under a pair.
+
+## 58. ROUND 50 -- FWD-30 COMPARES VALUES, /THESIS PASSES THE DOSSIER, THE PROXY'S OFFICERS SERVED AS NAMED EXECUTIVE OFFICERS, THE BASE CASE NAMES ITS OWNER, AND THE CROSSWALK NEVER DROPS A SERVED RECORD. Five cells, six orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 49 ANALYSIS** (`ledger/ROUND_ANALYSIS.round49.md` @`c95a9a16a4` + cell 5
+@`61ed59c609`, msgs 26767 / 26773; round 49 CLOSED). Rulings carried: FWD-30's grader compares VALUES, the attribute picking the fact
+(ruling 1); every served move on `opal-amgt-scoped-api` this round rides ONE build, ONE pair, ONE NEVER-2 entry, and every half names
+its base CodeSha256, re-read at the cut and before the build (ruling 2); the proxy's officers are served as NAMED EXECUTIVE OFFICERS,
+never as the whole roster (ruling 3); the crosswalk invariant is RESAPP's (`crosswalk.py`, one writer per artifact; CORPUS round-16
+ruling 1). No outcome is added, so no L4-R half re-opens.
+
+### 58a. THE FIVE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 FWD-30's grader compares values | `AMGT-yy-1` (LOCAL, worker) |
+| 2 /thesis passes the dossier's served fields (CORPUS FWD-10/11/12/15/16/18 render halves) | `AMGT-yy-2` (SERVED build) + `AMGT-yy-5` |
+| 3 the proxy's officers served and labelled | `AMGT-yy-3` (SERVED build: the scripted persist + the adapter pass-through) + `AMGT-yy-5` (the persist run + the deploy) |
+| 4 the Historical-multiple reference names its owner | `AMGT-yy-4` (SERVED build) + `AMGT-yy-5` |
+| 5 the crosswalk never drops a served record | `AMGT-yy-6` (LOCAL, worker) |
+
+### 58b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The value blindness, reproduced at the base** (AMD_US_Equity, the served capture): the page's `IS_EPS` row's first
+   `data-model-cell` reads `-0.6`; planting `999.99` there reads verdict OK; planting it on the export's `| IS_EPS |` line reads OK.
+2. **/thesis today** (in-process and deployed): `dossier_fields` absent; pillars 0 of 15 over the four p-4 names (AZN_LN, IMB_LN,
+   AMD_US, ADBE_US). The dossier (`read_dossier(key)["document"]["fields"]`) holds `thesis_pillars` (list, each with a citation
+   and `terms`), `management`, `fund_of_record`, `last_stated_position` (each `{value, citation}` or `{absent, value: None}`).
+3. **The base label** is `case_rule.BASE_LABEL = "Historical-multiple reference"` (`case_rule.py:76`), read at `scoped_amgt.py:3081`
+   and `:3095`.
+4. **Management** is served from the M-1 pool object `management/v1/{key}/{as_of}.json` (`read_management`, `scoped_amgt.py:2736`),
+   the Bloomberg-fallback precedent (`management/bloomberg_fallback.py`) already writes into it. The proxy officers ride the SAME
+   object (no new prefix, no IAM), labelled; EDGAR only through `fetch.py` from committed code (R-21 @`b390c36444`).
+5. **The crosswalk fork, measured:** the plain `build_crosswalk()` on CLOUD REFUSES ("ENRICH row names security_key
+   'BZLFY_US_Equity', which matches no coverage record"); the served pool (`crosswalk/v1/2026-09-29.json`, 237 records) HOLDS
+   `BZLFY_US_Equity`. A union-first build is the invariant.
+6. **The base for the deploy:** CodeSha256 `Um3BOJ+jcVc3B79VuFCn4RyD5VYu+IzCpe3BQOP/p7A=` (xx-4, 22:29:10Z); no AMGT sentinel open.
+
+### 58c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-yy-1` | FWD-30'S GRADER COMPARES VALUES | `~176` | worker | LOCAL | `deliverables/2.0.0_SA_COO~Z/round45/checks/**` |
+| `AMGT-yy-2` | /THESIS PASSES THE DOSSIER'S SERVED FIELDS | `~177` | worker | SERVED | `lib/research/api/scoped_amgt.py` + `lib/research/api/tests/**` |
+| `AMGT-yy-3` | THE PROXY'S OFFICERS SERVED AS NAMED EXECUTIVE OFFICERS | `~177` (after yy-2) | worker | SERVED | `lib/research/management/proxy_officers.py`, `lib/research/management/tests/**`, `lib/research/api/scoped_amgt.py` + api tests |
+| `AMGT-yy-4` | THE BASE CASE NAMES ITS OWNER | `~178` | worker | SERVED | `lib/research/api/case_rule.py`, `lib/research/print/render_pack.py`, their tests |
+| `AMGT-yy-6` | THE CROSSWALK NEVER DROPS A SERVED RECORD | `~179` | worker | LOCAL | `lib/research/identity/crosswalk.py` + `lib/research/identity/tests/**` |
+| `AMGT-yy-5` | THE ONE BUILD: DEPLOY + THE NEO PERSIST | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the artifact, ONE safe-apply (code only), TWO M-1 object writes (HAL, INTU), deliverables, the ledger |
+
+### 58d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's five items; each lands in one build cell; the one served act (yy-5) serves items 2-4 together.
+- **(ii) Same grain.** One grader, one pass-through, one labelled roster, one label, one invariant, one act.
+- **(iii) Intent.** One axis: what the page and export show is the served data, graded by value, never dropped.
+- **(iv) What a cell does NOT move.** yy-1 moves no product file; yy-2 moves no existing /thesis field (adds `dossier_fields`);
+  yy-3 moves no RESOLVED roster (only names whose section points elsewhere gain an NEO set); yy-4 moves the label's words only;
+  yy-6 moves no served crosswalk byte (the round trip is digest-equal); yy-5 moves exactly its pair's radius.
+
+### 58e. EDGES AND FAN-OUT
+
+```
+yy-2 -> yy-3   (same worker, same file: scoped_amgt.py -- a file edge)
+yy-2 -> yy-5, yy-3 -> yy-5, yy-4 -> yy-5   (the ONE build carries all three; ruling 2)
+yy-4 ~ yy-1    (no edge: yy-1's rich_facts must take the base line's label from the SERVED payload, never a literal, so yy-4's words
+                do not move the grade)
+yy-1, yy-6 -> (none)
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 3                      # {yy-2 -> yy-3, yy-4 -> yy-5}, {yy-1}, {yy-6}
+  wave_0: [yy-1 ~176, yy-2 ~177, yy-4 ~178, yy-6 ~179]
+  wave_1: [yy-3 ~177]                  # after yy-2 drains (file edge)
+  wave_2: [yy-5]                       # a seat order: after yy-2, yy-3, yy-4 merge and both never-widen halves are committed
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  egress: yy-3 and yy-5's persist read EDGAR through fetch.py (R-21, scripted); yy-5's build pip-downloads its pinned wheels
+  route_change: none (payload fields only)
+  no_promote: true
+```
+
+### 58f. CARRIED
+
+- Hitachi's model block: AMGT_CORPUS round 17 (ruling 4). The page's rendering of the dossier fields, NEOs and the label:
+  DSGN_AMGTV1. Values with no page attribute (Z-W173-S1..S4): DSGN asks, already sent 22:21Z.
