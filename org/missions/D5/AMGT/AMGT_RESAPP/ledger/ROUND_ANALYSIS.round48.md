@@ -67,9 +67,27 @@ citing `surprise-channel/adjudications/ADJUDICATION_v58.md`. Issuer packet: `rou
 - the page's wording (DSGN_AMGTV1);
 - `Z-S302`'s seed-script guard (INERT, and the BD script owner's).
 
+## 4a. CORRECTION TO CELL 3 (~21:3xZ, on 2.0.0_SA_COO~Z msg 26711)
+
+Cell 3 said "through the SAME filings path already in use, with no new vendor". **That is wrong.**
+- The filings path is `lib/research/filings/fetch.py`, which reads EDGAR (`data.sec.gov` / `www.sec.gov`). That is egress
+  off Opal infrastructure (CLAUDE.md Agent Autonomy).
+- Its authority was a SESSION grant (Andrew-direct 2026-09-15 ~05:42Z, "free egress this session").
+- The estate holds no proxy statement: `comp-find 'DEF 14A|DEF14A|def14a'` over `lib data infra` returns 0 hits in 8,908
+  files.
+- **Ruling:** `xx-3` is HELD, unspawned, until Andrew gives a per-use egress word. The CVO cannot grant egress, so this is
+  not a reserved call for CVO~Z; it is an act on Andrew's list.
+- On his GRANT, `xx-3` spawns with its face unchanged. On his REFUSE, `xx-3` is CANCELLED, not re-cut fixture-only: a
+  hand-made proxy would prove the parser against no real filing. FWD-7's no-officer arm is then carried as unreachable on
+  this path.
+- `xx-1`, `xx-2` and `xx-4` are unaffected.
+
 ## 5. ACTS ONLY ANDREW CAN DO (cited; no decision is listed)
 
-- None new. The CLOUD push's remaining 4 conflicts sit with him through 0.0.0_AB_MSTR~Z (record @d0e74747a9). None of
+- **A per-use egress word for `xx-3`** [CLAUDE.md: "NEVER call an external vendor API without Andrew's explicit per-use
+  word"; Agent Autonomy excludes egress off Opal infrastructure]. The use: read-only EDGAR GETs of the latest DEF 14A for
+  the covered names whose 10-K lists no officers, through `lib/research/filings/fetch.py`.
+- Nothing else new. The CLOUD push's remaining 4 conflicts sit with him through 0.0.0_AB_MSTR~Z (record @d0e74747a9). None of
   those files is this project's.
 
 ## Compiler Tools
