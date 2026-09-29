@@ -2312,6 +2312,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Amendment 1 section 7 item 1: the period-led leads are accepted 'exactly as it accepts one ending in :'; the leads are named with their period in the amendment text.",
     "world_is": "The served `pillar` string has the period stripped (the colon precedent); the citation passage still contains the period-bearing text because the probe is a substring of the page.",
     "notes": "If the issuer wants the period kept in the served lead, it is a one-line change (lead_txt = lead_prefix.strip()) plus a METHOD_VERSION-free test edit; nothing downstream reads the lead's punctuation."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S59",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T20:12:00Z",
+    "one_line": "The round-14 p-5 drain merge 34bbf74213 (safe-merge --continue after an append-only channel conflict) landed 6 files of 4.0.0_SA_CRO~Z (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/*) that CRO~Z had staged in the shared index during the resolve window; they are attributed to 2.0.0_SA_COO~X in that commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --name-only 34bbf74213^1 34bbf74213 lists 12 paths; git diff --name-only 34bbf74213^1...wk-crps14-5r lists 6 (the branch's). The other 6 are AMGT_RECONN_SOURCES_20260929/{ANDREW_DIRECT.md,BBG_EXCEL_ACCESS_VERIFIED.md,BBG_GUIDES_FOLLOWUP.md,README.md,scripts/bbg_excel_holdings_probe.py,scripts/bbg_excel_probe_queries.json}.",
+        "git log on that folder: 0b02df6e14 (CRO~Z 15:38:14 local), 34bbf74213 (this merge 16:04:26 local), f3222cd4cf (CRO~Z 16:05:54 local). The index read 0 staged paths after the merge; CRO~Z's content is whole at HEAD.",
+        "safe-merge --continue printed the 6 foreign paths in its output and still reported 'MERGED and committed'; --verify-merge 34bbf74213 prints the same 6."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-merge.sh header: '--continue ... adds the check the one-shot path gets free from its pre-merge index guard: a path staged that the MERGE did not stage is another seat's work riding the drain.'",
+    "world_is": "The check names the foreign paths but did not stop the commit in this run; a concurrent seat's staged files rode the merge commit under the merging seat's author.",
+    "notes": "Nothing lost and nothing reverted (history on CLOUD is not rewritten). The hazard is authorship and a mixed commit, not content. The owner of safe-merge.sh is not this seat; this row reports the observed behaviour. Mitigation for this seat: re-check the index immediately before --continue.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
