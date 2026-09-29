@@ -728,6 +728,26 @@
     "spec_asserts": "A worker holding a non-terminal task order under the project can run safe-apply from its worktree (halt gate: 'a spine-v3 worker is admitted only while a NON-TERMINAL task order under <CODE> is issued_to it').",
     "world_is": "The halt gate takes the session's serial (the issuer's, 2.0.0_SA_COO~MP, two-letter lane) rather than the worker's, and refuses it; no worker serial file exists in C:/tmp/mp3-1/org/mcp/sessions.",
     "notes": "Unblock: the issuer provisions <worktree>/org/mcp/sessions/<sid>.serial for 0.9.0_WK_NFRA_MCPORTAL~1, or applies itself. Nothing is half-landed: no AWS resource was created. The owner key was never written to any file (the plan file I made with -out was deleted at once; the retained plan-free apply log is masked)."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S16",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-29T05:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "CLOSES NFRA_MCPORTAL-Z-S15 against 1.0.0_SA_CTO~O's fix @64a3ef4b4e (msg 26464, ruled its own): halt_gate_validate_serial now admits a lane of 1-3 uppercase letters.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer read of the COMMITTED bytes (git show 64a3ef4b4e:.tools/halt-gate-check.sh): case \"$lane\" in [A-Z]|[A-Z][A-Z]|[A-Z][A-Z][A-Z]) : ;;",
+        "Function sourced from those bytes: 2.0.0_SA_COO~MP rc=0; negative control 2.0.0_SA_COO~M1 rc=1."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-S15: the halt gate refuses every two-letter lane.",
+    "world_is": "At 64a3ef4b4e the two-letter ~O COO lanes pass serial validation; a digit lane is still refused outside the worker limb."
   }
 ]
 ```
