@@ -101,7 +101,7 @@ become the document and section in words (from the served citation fields)": 6 o
 (no served citation field exists for them), so the order admits a words sentence for those and names document + section only
 where `source` is served (P0201) -- C-PRESENTATION-ONLY forbids the lookup.
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~18</slot>
 <fabric>site-z</fabric>
