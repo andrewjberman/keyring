@@ -92,3 +92,42 @@ route. Any scheduled puller: this spec delivers on-demand reads only.
 
 Teams showed these transcripts expiring at 120 days (2026-07-31 log). Occurrences before about 2026-06-01 may
 already be unreachable. Read oldest first once the tools exist.
+
+## 9. ADDENDUM 2026-09-29: the private home (Andrew-direct, layout approved, two readers)
+
+Order: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260929_19xxZ_TRANSCRIPTS_LAYOUT_APPROVED_PRIVATE_TWO_ACCOUNTS.md`.
+Layout: `docs/briefs/transcripts-sharepoint-layout-proposal-20260929.md`.
+Readers, exactly: andrew@opalinvest.com, opalbloomberg@opalinvest.com.
+
+### 9.1 What the gateway cannot do today (measured 2026-09-29 from source and by call)
+
+| Need | Gateway today |
+|---|---|
+| Write a file into the signed-in user's OneDrive | no tool; `upload_text_to_site` writes to a SharePoint SITE only |
+| Address the personal site as a site id | refused: Graph 400 "Url specified is invalid" |
+| Set sharing on a folder | no tool; 0 references to invite, permissions or createLink in `app/*.py` |
+| READ sharing on a folder | no tool |
+
+A folder on a team site inherits that site's membership, so it is not private and must not be used.
+
+### 9.2 Tools to add
+
+1. `upload_to_onedrive(folder_path, filename, content)`: `PUT /me/drive/root:/{folder}/{filename}:/content`,
+   conflictBehavior fail, bytes preserved. The home is `Transcripts/` in Andrew's OneDrive.
+2. `list_item_permissions(item_id)`: `GET /me/drive/items/{id}/permissions`. Read class.
+3. Sharing is NOT a gateway tool in this spec. Andrew shares the folder to the second reader by hand, once.
+   A grant tool is a write to access control and needs its own security review.
+
+### 9.3 Acceptance, added
+
+6. PRIVATE. `list_item_permissions` on `Transcripts/` returns exactly two principals, the two readers above, and
+   no link-type permission. Any third principal or any sharing link fails the step. This step runs BEFORE the
+   first committee transcript is written.
+
+### 9.4 Carried constraints
+
+- The three non-research archetypes never land in the git repository. `research_transcripts/bin/land_graph_transcript.py`
+  refuses them (`repo_store_allowed` in `schema/series.json`), exit 4.
+- opalbloomberg@opalinvest.com is a tool-scoped identity on the gateway (`app/identity_scope.py`). If it is to read
+  transcripts THROUGH the gateway, its allowlist needs the read tools; reading the shared folder in SharePoint
+  needs no gateway change.
