@@ -15468,6 +15468,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "The halves were each correct alone; neither named the other act in its window. CTO~Z ruled (msgs 26678/26679, ~19:36Z): an AMD/BA/GOOGL /timeline move is not a rollback by itself and is attributed against g-2's section (b); 1299_HK /timeline and all four /print stay byte-equal. The post-g2 capture bears that out.",
   "disarm_owner": "2.0.0_SA_COO~Z (issuer of ww-1): record the attribution in the entry's V1 leg and close it on the valid 19:21Z post-apply read plus the post-g2 attribution.",
   "notes": "Class lesson for later pairs: a sign-off reads the OTHER open NEVER-2 entries whose surface overlaps its writes. CTO~Z's p-5 half (@9e1da13005) sequences its merge after ww-1 V1 for this reason."
+},
+{
+  "id": "AMGT_RESAPP-Z-S305",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-29T20:30:00Z",
+  "one_line": "FWD-30's no-regression arm (round47/checks/vv-4.AC2.sh) read at round-48 close: EXPORT-COMPARE OK on 62 of 96 (NOT_OK 33, CAPTURE_FAILED 1), against 95 of 95 at round 45's close. Every NOT_OK is ABSENCES only (figures, cites and cases equal on all 95), and the differing lines sit on the posture/call, company-description and thesis-driver absences -- sections the page changed today in DSGN_AMGTV1 rounds 3-4, and none that round 47/48 changed on the export side.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer run 20:12:47Z, 96 folders: OK 62, NOT_OK 33, CAPTURE_FAILED 1 (the no_identity folder, TypeError on key None -- the Z-S303 name). Reasons: 'ABSENCES differ' 32, 'FIGURES+ABSENCES differ' 1. fig_extra/cit_missing/cit_extra 0 on all 95; cases page=285 rich=285 same=285.",
+      "The instrument never reads the deployed function's export: sweep.py rebuild() calls the LOCAL scoped_amgt.handler at HEAD with every reader stubbed from the capture, and compare() renders the page from portal HEAD (09bd04b1). The deployed bytes reach it only through the captured /thesis payload.",
+      "Differing lines, harness setDiff dumped (a temp copy, deleted): ASML page-missing 'ABSENT: no call was made: the research team's posture pack gives no reason for this call', rich-extra the comparable-null call reason and 'ABSENT: no served D-1 company_description sentence passing the describes-the-business test'; BABA rich-extra the description line and 'ABSENT: the thesis driver is ...'; BBSE3 the same posture/comparable pair.",
+      "Page side since round 45 (portal src/pages/SecurityAnalysis): DSGN_AMGTV1 AV-w-5 'posture evidence in words' a538d0b7, AV-e-1 'plain sentences on the Thesis panel and the header description' eea64485, AV-r-1 'machine strings off the face' cb25695b, AV-r-3 harness 'parity keys on data' 060afb45, AV-w-3 '... three bound harnesses re-anchored' 9912c1ac. Export side since round 45 (lib/research/print, scoped_amgt, peers): only uu-3, vv-1, vv-2, ww-2, ww-4 (case rule, words, team cases, rankings) and HARVST's timeline wiring -- none emits a posture, description or thesis-driver absence."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ww-1's ISSUER NOTES: FWD-30's served sweep (vv-4.AC2.sh) is read by the issuer at close as the no-regression arm; round 45 closed it at 95 of 95 OK, absences missing=0.",
+  "world_is": "62 of 96 OK. Attribution by construction and by line content points at the PAGE side (DSGN_AMGTV1 rounds 3-4 wording changes the export-compare harness still keys on), not at the ww-1 deploy; this is the round-47 hazard 'two projects write FWD-30's instruments' (packet s.5 item 2) recurring. Not proven by a controlled run: a re-run with portal at a pre-round-3 commit would settle it and was not run here.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): carried in the round-48 drain-end packet to 3.0.0_SA_CVO~Z and to 1.0.0_SA_CTO~Z's round-48 analysis; the fix (which side's absence wording FWD-30 keys on, and one writer for the harness) is a CTO WHAT across AMGT_RESAPP and DSGN_AMGTV1; the page/harness write surface is 2.0.0_SA_COO~D's.",
+  "notes": "No served output regressed that a reader sees: the page and the export each still state every absence; they state three of them differently. The CAPTURE_FAILED row is the Z-S303 folder."
 }
 ]
 ```
