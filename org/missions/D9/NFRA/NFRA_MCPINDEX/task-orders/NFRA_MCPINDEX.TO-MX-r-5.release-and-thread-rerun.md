@@ -51,6 +51,28 @@ directory replaced) that the halt gate admits.
   them.
 - If it is not, it rides the next release. The issuer states which at the GO.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-09-29 ~08:1xZ) -- rulings on PHASE A rows Z-W14-S5, S6 and S8; the PHASE A carrier
+is recommitted.**
+- **Lost bytes:** drain 789d4bb967 recorded wk-nfra_mcpindex-4-14 as merged but did not carry `ANNOUNCE_MX-r-5.md` or
+  rows Z-W14-S5..S8. The issuer's channel resolver keyed rows on `{"id":` as the first key, so a row with `id` placed
+  later was dropped. Recommit both, restored verbatim from ed61b070e4, on a new commit.
+- **Z-W14-S8 is CONFIRMED:** the audited `GIT_COMMIT_AUTHOR_OVERRIDE` is admitted on the never-merged rel- and dep-
+  branches only, per the MX-r-4 A1/A2 precedent.
+- **Z-W14-S5 is RULED (fix before G-A):**
+  - What ships must declare what it does. Correct `opal_discover`'s SPEC and description to state its one S3 HEAD per
+    servable row, under the existing `json/*` and `platinum/*` grant, with no body read and no egress off Opal's AWS.
+  - The change is text only: no behaviour change and no test expectation moved.
+- **Z-W14-S6 is RULED:** update `tests/test_entitlement_admin.py::test_ogz2_ac08`'s pin to the 4 portal_index tools
+  and 52.
+- **Where the two edits go:** commit them on wk-nfra_mcpindex-4-14 from CLOUD, then cherry-pick them onto the rel- and
+  dep- branches.
+  - Re-prove the dep tree's gateway tree object equal to the release's, and the rebuilt artifacts equal.
+  - Update the ANNOUNCE pin and census: `opal_discover/integration.py` is already in the census, and `tests/` does not
+    ship.
+- **Paths granted in addition on wk-nfra_mcpindex-4-14:**
+  - `infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py`, the SPEC and description text only;
+  - `infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py`.
+
 ## 2. BOUNDS
 
 1. Terraform, the ALB, the role and the secrets are untouched. `deploy-to-ec2.sh:197` is unchanged.

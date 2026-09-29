@@ -100,6 +100,29 @@ round).**
   `infra/aws/ssm/opal-bd-realized-download.json`, `infra/aws/ssm/opal-bd-unrealized-download.json`, and the ledger
   sentinel `org/critical_paths/.open_deploys/nfra-mcpindex-bd-playwright-strip.json`.
 
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-09-29 ~08:1xZ) -- PHASE B GO for 3 legs; the allocation leg is re-cut and
+re-asked.**
+- **Halves:** both are SIGNED for unrealized, realized and transaction, with allocation CARVED OUT:
+  - `deliverables/1.0.0_SA_CTO~O/NEVER_WIDEN_CTO_HALF_MX-s-14_20260929.md` @aac61a1046;
+  - the `3.0.0_SA_CVO~O` second half @5b0a12277e.
+- **GO guards, read by the issuer at 08:12Z:**
+  - `.open_deploys/` across 106 worktrees: 0 entries naming the 4 documents or their 2 instances;
+  - the time is outside 21:30-22:15Z.
+- **PHASE B now, 3 legs:**
+  - Open the NEVER-2 ledger `nfra-mcpindex-bd-playwright-strip`, with legs unrealized, realized and transaction.
+  - Per leg: publish the CLOUD file as the next version, set DEFAULT to it, and read it back (the content hash equals
+    the repo file, and Default == Latest).
+  - Acceptance is each leg's next scheduled weekday fire reading Success; the ledger closes then.
+  - Publish nothing for allocation.
+- **Allocation re-cut (CTO ruling):** keep the A2 strip, and make the `bd-price-update` invoke UNREACHABLE, as it has
+  been served since 2026-06-22.
+  - Remove the invoke block, and leave one log line saying that bd-price-update is not invoked (the MX-s-14 carve-out).
+  - The merge and the exit stay as in A2.
+  - Prove offline: `lambda invoke` 0, `bd-price-update` appears only in the log line, and the merge block is
+    byte-unchanged.
+  - Commit it and report its content hash. The issuer re-asks that leg alone as DELTA=0 for served gold.
+- **Paths:** no new grant. The ledger paths are already in `<paths>`.
+
 ## 2. BOUNDS
 
 1. One producer before and after: no second schedule, no parallel path, no comparator.
