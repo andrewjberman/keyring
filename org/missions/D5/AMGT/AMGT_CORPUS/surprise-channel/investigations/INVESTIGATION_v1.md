@@ -2138,6 +2138,48 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Granted and updated; the suite is green on the trunk.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Owner's disarm, evidence-cited; same class as Z-W1-S13 / Z-S56 in round 10. A METHOD_VERSION bump ruled at a cut should grant the tests that pin the old version in the same order (a cutting lesson)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S15",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T12:52:00Z",
+    "one_line": "CRPS-o-1 bounds the worker to read-only instruments with NO write anywhere, yet the FWD-9 negative-control arm's only instrument writes a 308 MB library copy to system temp, and the listed read-only mode --code-census itself wrote two positive-control files to system temp. The negative-control arm was not run; FWD-9 is recorded unmeasurable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m lib.research.corpus.readonly_proof --code-census printed 'positive_control_path C:/Users/OPALBL~1/AppData/Local/Temp/amgt_corpus_census_ovik1op9/positive_control.py left_for_operator_cleanup True' and the same for positive_control_test_file_path (rc 0).",
+        "Round 7's record of the --negative-control arm (FWD_EVIDENCE_ROUND7.json FWD-9) names an ACL-restored 308.6 MB copy under the system temp dir (amgt_corpus_ro_copy_<stamp>) left for operator cleanup; lib/research/corpus/readonly_proof.py:418-464 (copytree, copyfile, open for write) is that arm."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order CRPS-o-1 section 4: read-only instruments only, NO write anywhere but the two deliverable files; the section-1 list of read-only CLI modes includes --code-census and omits --negative-control.",
+    "world_is": "--code-census writes two files to system temp (outside the repo and the library) by design; --negative-control writes a 308.6 MB copy there. The census arm was run and read clear (0 of 51 write-like calls reach the library); the negative-control arm was not run.",
+    "notes": "Filed, not fixed. The two temp files from this run (amgt_corpus_census_ovik1op9) remain for operator cleanup; the library itself was not touched."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S16",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T12:53:00Z",
+    "one_line": "One of 159 served thesis pillars carries a lead with an empty paragraph: ML_FP_Equity's 'Nearing turn in cycle' has text '' and a citation passage that runs into the next 'RISKS AND CONSDIERATIONS' heading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PYTHONPATH=. python .scratch/o1/p_an.py over read_dossier() for 95 securities: F10 pillars {'absent': 49, 'list': 46} pillars 159 incomplete_citation 1 no_terms 0; the one is ML_FP_Equity, thesis_pillars length 1, {pillar 'Nearing turn in cycle', terms ['Nearing turn in cycle'], text '', citation locator 1 in 'Michelin Research Pack Template 2026 05 28_v1.pdf'}.",
+        "Dossier object s3://opal-data-harvest/amgt/harvest/gold/research_dossier/security_key=ML_FP_Equity/ (method amgt-corpus-dossier/4)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-10 (PRD ADDENDUM): the pack's pillars exist in the served substrate as lead phrase + paragraph + citation, each openable to the passage it came from.",
+    "world_is": "158 of 159 pillars carry lead, paragraph, citation and terms; ML_FP_Equity's single pillar carries the lead and citation with an empty paragraph, and its citation passage begins mid-sentence and reaches the RISKS heading (a PDF pack where the pillar's body was not separated from the next section).",
+    "notes": "Filed, not fixed; the writer (dossier.py pillar reader) is outside this order's paths. It grades no fence by itself: the field is cited and reason-bearing under FWD-13 (its text is empty, not absent)."
   }
 ]
 ```

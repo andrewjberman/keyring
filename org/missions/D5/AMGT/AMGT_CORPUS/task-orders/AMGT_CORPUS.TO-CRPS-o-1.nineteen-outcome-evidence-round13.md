@@ -87,7 +87,7 @@ PASS (paths_outside_grant 0). Checker controls: the round-7 file INVALID (rows_v
 INVALID (acted 6 of 7).
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>13</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
