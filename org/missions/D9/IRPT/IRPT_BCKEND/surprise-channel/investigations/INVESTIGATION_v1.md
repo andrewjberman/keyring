@@ -11837,3 +11837,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "NOT a replay request and no retry was made. Two reads would settle it, neither inside a walk window: (1) the resident's provider-read path -- is the vendor read single-flight or rate-limited per host, and does PROVIDER_READ_UNAVAILABLE distinguish 429/503 from a lock it holds itself; (2) whether the 4-receive bound should count receives that never reached the provider. If confirmed, the remedy on a PROVIDER_READ_UNAVAILABLE exhaustion is not REPLACE_FILE. Consequence for W22: Multi-Comp (Y2), the first certified 49financial report (Y4) and the certified Inflection report (Y5) stay UNEXERCISED and carry forward as open arms."
 }
 ```
+
+## R20 TO-IB-m20-204, worker 0.9.0_WK_IRPT_BCKEND~43's row IRPT_BCKEND-W43-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-W43-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~43",
+  "surfaced_at": "2026-09-29T15:05:00Z",
+  "one_line": "TO-IB-m20-204 step 3 asks for 'reconcile' as 'the command output's own reconciliation line (the difference control and custody total)' per firm. For cottonwood's scheduled-fire SSM command (06569db1-aeee-471e-a54e-91fe612838be), get_command_invocation's StandardOutputContent is capped at 24000 bytes and cottonwood's verbose per-account JSON dump consumed the cap before reaching the difference_control/holdouts_held block in the source JSON, so that block's exact text could not be read back; no StandardOutputUrl or CloudWatchOutputConfig was set on the command to retrieve a fuller copy. 49financial and inflection stayed under the cap and their difference_control.reading lines were read in full.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "n/a -- does not gate the criterion: reconcile_ok/reconcile_before/reconcile_after were readable for all three firms from the same (also truncated) cottonwood stdout, before==after (541745917.1) for cottonwood, so the halves' reconciliation condition is still measured, just not with the difference_control narrative text for this one firm",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 ssm.get_command_invocation(CommandId='06569db1-aeee-471e-a54e-91fe612838be', InstanceId='i-02448edb624a7a7cf') (2026-09-29T15:0xZ, this session): StandardOutputContent length == 24000 exactly (the SSM plugin-output cap); string search for '\"difference_control\"' and '\"holdouts_held\"' in the full returned string: NOT FOUND",
+      "same call: StandardOutputUrl='' and StandardErrorUrl='' and CloudWatchOutputConfig={'CloudWatchLogGroupName': '', 'CloudWatchOutputEnabled': False} -- no alternate full-output store configured for this command",
+      "same call: '\"business_date\"', '\"reconcile_ok\"', '\"reconcile_before\"', '\"reconcile_after\"' ARE present (reconcile_before==reconcile_after==541745917.1), and 'ResponseCode': 0, 'Status': 'Success' -- the fields the acceptance check (r20_m204_first_fire.py) actually reads are all present",
+      "49financial (9c903355-f989-47a3-864d-0caa80bfa526, StandardOutputContent length 11784) and inflection (5770be64-6df2-4c88-9bdd-eb130a7d93bc, length 11234) both stayed well under the 24000-byte cap and their difference_control.reading text was read in full"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-m20-204 BUILD step 3: 'reconcile is the command output's own reconciliation line (the difference control and custody total)' -- for every firm.",
+  "world_is": "For a firm whose scheduled-fire stdout exceeds the 24000-byte SSM inline cap (cottonwood, whose per-account JSON dump is verbose), the difference_control reading line is not retrievable from get_command_invocation and no S3/CloudWatch mirror exists to fall back on. The reconcile field for cottonwood in R20_R4_FIRST_FIRE_20260929.json is filled from what remained readable (reconcile_ok/before/after) with the gap stated inline, rather than fabricating or omitting the difference_control text.",
+  "notes": "No BUILD-step weakening: the acceptance criterion and the enable ledger's V2 proof do not require the difference_control narrative text verbatim, only status/rc/revision/served-VersionId-movement/reconciliation, all of which were measured for cottonwood. If a future TO needs the full per-account reconciliation narrative read back verbatim for every firm regardless of output size, the scheduled dispatch would need CloudWatchOutputConfig or an S3 output bucket configured on the SSM command (a build-time change, out of this order's read-only-on-AWS bound)."
+}
+```
