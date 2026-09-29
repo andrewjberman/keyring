@@ -11607,3 +11607,61 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT: no deploy of either sibling is in flight, and a deploy that uploads blob bytes is unaffected. Arms the moment a deploy uploads a CRLF working copy. Remedy: one .gitattributes cell, `infra/aws/ec2/**/*.env text eol=lf`, then renormalize; I did not take it inside TO-IB-m21-212, whose grant is the cot folder."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S202",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.6.2_AE_PartnerETL~S",
+  "surfaced_at": "2026-09-29T09:50:00Z",
+  "one_line": "The other two tracked .env files under infra/aws/ec2/ carry the same CRLF-into-a-Linux-box hazard the cot one just had: their blobs are LF, no .gitattributes rule covers them, and both working copies hold CRs (37 and 263), so any deploy that uploads a WORKING COPY puts a carriage return on the end of every sourced value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO -- filed at the CTO's own instruction (condition 3 of the TO-IB-m21-212 Part 1 read, org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_READ_COT_LOGIN_PORT_DIFF_20260929.md @76a44392fd: 'the sibling 49F and inf env files under infra/aws/ec2/ carry the same CRLF hazard; file it as a row with an owner (outside this order's grant)'). Both paths are outside TO-IB-m21-212's grant and this seat touched neither.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DENOMINATOR: 572 tracked files under infra/aws/ec2/, of which exactly 3 are *.env -- so this is 2 of 3, not a sample",
+      "infra/aws/ec2/bd-49f-auto-login/secret-ids.env: blob 2937 B CR=0, working copy CR=37, git check-attr text/eol -> unspecified/unspecified",
+      "infra/aws/ec2/smartx-exporter/config/production.env: blob 9883 B CR=0, working copy CR=263, git check-attr -> unspecified/unspecified",
+      "infra/aws/ec2/bd-cot-auto-login/secret-ids.env (the one just fixed, for contrast): blob 2525 B CR=0, working copy CR=0, check-attr -> set/lf after `infra/aws/ec2/bd-cot-auto-login/*.env text eol=lf` landed @626033ace0",
+      "the mechanism is measured, not theorised: core.autocrlf=true on this device, so an uncovered text file's blob is LF and every checkout materializes CRLF; the cot box's own V1 read-back after a BLOB-bytes upload shows CR_COUNT=0 (SSM 9d73a0f7), which is what the fix buys"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An env file committed to the EC2 tree can be deployed to a Linux box and sourced by bash with the values it declares.",
+  "world_is": "True only for the cot file, and only since @626033ace0. For the 49F and smartx files a deploy that uploads the working copy would source BD_FIRM_ID=<value><CR> and every other value the same way -- on the cot box that exact shape resolves every derived secret-id to a name that does not exist, and a cookie name that never matches.",
+  "notes": "Not remediated here: both paths are outside this order's grant, and a one-line .gitattributes rule per directory is the whole fix (the cot precedent is `infra/aws/ec2/bd-cot-auto-login/*.env text eol=lf`, plus normalizing the existing working copy, which the attribute alone does NOT do). Whether either file is actually deployed from a working copy today was NOT measured and is the first thing to check before acting -- an unexercised hazard is still a hazard, but the remedy's urgency depends on it."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S203",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~E",
+  "surfaced_at": "2026-09-29T10:05:00Z",
+  "one_line": "Cottonwood cannot be declared as a holdings-gold channel under the two laws at once: PRD v0.19 ruling 1 says a new firm channel is a sources.json ENTRY and never a code branch, while the LGIC_ENFORCE DEC-6 naming limb refuses every string in that entry that reaches the scope -- and Cottonwood, unlike 49F (a custody master number) and Inflection (a monolith carrying exactly one scope), has no registry key that is not a registered token.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO -- infra/logic/registry/ is outside this order's <paths> grant (data/assets/scripts/gold/irpt_holdings_performance/, org/critical_paths/change_management/, org/critical_paths/.open_deploys/, this file). TO-IB-er-401's refusal clause names 'a missing registry row' as a stop condition, and CLAUDE.md rule 30 says a builder refusal IS a missing registry row to add, never a hand-typed workaround.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DENOMINATOR: 4 candidate carriers were built and graded with `python .tools/naming-gate.py --diff` against a synthetic new-file diff; all 4 REFUSE. (1) entry key `blackdiamond_cottonwood` -> REFUSE 'hand-kept carrier of cottonwood'. (2) `registry_key: cottonwood` -> REFUSE, same reason. (3) `scope_bucket: opal-data-cottonwood`, the registry's OWN declared bucket for the firm -> REFUSE 'CONFORMANT as S3_BUCKET, but a NEW hand-kept carrier of cottonwood'. (4) `registry_key: F-COT`, the tenant code the registry publishes in the firm's own aliases and which lookup() resolves (lookup('F-COT') -> key=cottonwood, class=FIRM) -> REFUSE 'hand-kept carrier of F-COT'.",
+      "the gate's remediation text on every one of the four is 'read it through lookup(cottonwood)', and a lookup() call is a permitted context ONLY in the Python syntax tree -- that is, in code. PRD v0.19 ruling 1 forbids exactly that: 'A new firm channel is a new entry here, never a code branch.' The two rules have no common satisfying move for this firm.",
+      "WHY 49F AND INF ESCAPED AND COT CANNOT: 49financial is reachable by its custody master numbers ['08242234', '08335338'], neither of which is a registered token; inflection is reachable because its monolith `orion` carries exactly 1 registry scope, so firm_scope() derives it without naming it. Measured from the registry: monolith orion -> 1 scope, eclipse -> 1, blackdiamond -> 2 (49financial, cottonwood). Cottonwood carries `masters: null`, so neither route exists for it.",
+      "A CLEAN KEY EXISTS IN THE DATA AND THE GATE ACCEPTS IT: Black Diamond issues a firm-instance prefix on every account id. Measured at date=2026-09-24, 19784 of 19784 Cottonwood `AccountID` values (984 distinct accounts) carry the prefix `z09`, and 6202 of 6202 49 Financial `bd_account_id` values in dim_account_xref carry `z08` -- 100% on both sides, zero overlap. A trial entry declaring `registry_key: z09` grades NAMING-GATE PASS, 1 graded, 0 REFUSE. What is missing is only the registry row that makes lookup('z09') resolve; `lookup('z09')` raises KeyError today.",
+      "NOT the bucket fence: `opal-data-cottonwood` was probed with head_bucket and EXISTS and is reachable, so the write surface is fine. The registry's own alias note on that firm ('opal-data-cottonwood does not exist yet') is STALE and is a separate, smaller correction."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Any firm the estate holds can be added to the holdings-gold producer as a sources.json declaration entry, with no code branch and no hand-typed firm token, and the commit lands.",
+  "world_is": "True for a firm with a custody master (49F) and for a firm whose monolith carries exactly one scope (INF). False for Cottonwood, and false for every future firm that shares a monolith with another and has no master: the declaration cannot name the scope, the derivation cannot reach it, and the only route the gate offers is the code branch the PRD forbids.",
+  "notes": "NOT REMEDIATED HERE and nothing was weakened to pass: E4-AC1 and E4-AC2 are NOT claimed. Everything that does not depend on the key IS built and committed -- the Cottonwood price rule (Market Value / Units, selected structurally by an entry declaring no price_column), the absent- and zero-Units exclusions, and the text cash flag ('true'/'false' as strings, where astype(bool) on 'false' is True and would have made every holding cash silently) -- with 4 new tests, 45 passing. The moment lookup('<key>') resolves to cottonwood, the entry is about six declared fields and the run is one command. RECOMMENDED REMEDY, in preference order: (a) 1.0.0_SA_CTO adds a registry row keyed `z09` with firm cottonwood, exactly parallel to 08335338 -> 49financial, which is measured, vendor-issued and gate-clean; (b) LGIC_ENFORCE admits the declaration's registry_key field as a permitted lookup context, which fixes the class rather than the instance. (a) unblocks this cell today; (b) is the one that stops this recurring at the next firm."
+}
+```
