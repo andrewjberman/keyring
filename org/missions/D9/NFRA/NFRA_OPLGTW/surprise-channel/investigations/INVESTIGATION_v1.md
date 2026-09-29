@@ -3945,3 +3945,55 @@ name the one known failure instead of silently inheriting it.
   "notes": "Found by the round-2 E5 draft (2.0.0_SA_COO~O fork) and verified by this seat at the bytes. The E5 cell must wire export end to end through the real run_export and remove both aliases from the export tests, so the tests exercise the branch production takes. R-4's memory reasoning still holds for the streaming remedy; only S57's account of the current path needs correcting."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-28T23:59Z",
+  "one_line": "Row W4-S12's mechanism is not 'the dispatcher classifies by the FIRST line': the dispatcher scans every line, but the SSM output it reads is capped at 24000 characters and the CHAIN OK terminal line is past the cap, so 0 of 104 in-window dispatches were ever classified CHAIN OK, including all 13 scheduled floor runs (UNKNOWN).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda_function.py:90-101 (_classify) loops over every line of StandardOutputContent for a line starting CHAIN OK / CHAIN REFUSED / CHAIN ABORT and only then falls back to the first line in the UNKNOWN label.",
+      "ssm get-command-invocation, instance i-01003b035d2988dfb, commands 8e7e7614-e014-4342-ae4a-47b8bb7ac0d1, e40f7c6b-0f23-4460-9c15-7cee06f2073d, d2809052-0bc4-4375-b667-6c92ddb21d7f, 502de082-94bb-46d9-9a1f-5e307922f65a: Status Success, StandardOutputContent exactly 24000 bytes each, carrying CHAIN START and no terminal line; their chain logs under s3://opal-data-49financial/gold/advi/_logs/ end 'CHAIN OK date=... wall=...' (4 of 4).",
+      "Dispatcher log window 2026-09-15T23:45Z..2026-09-28T23:45Z: 104 invocations, by outcome REFUSED 48, ABORT 33, UNKNOWN 15, running-past-poll-budget 8, CHAIN OK 0; the 13 floor invocations are 13 of 13 UNKNOWN. Record: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~13/MARKER_STORM_READ.md section 4 and .json unknown_reads."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row W4-S12 (and this cell's background) said the dispatcher classifies the SSM output by its first line.",
+  "world_is": "The classifier scans every line, but its input is cut at 24000 characters (measured 4 of 4 at exactly 24000; the cap is SSM's documented limit, inferred), so a chain longer than that never shows its terminal line and reads UNKNOWN. The dispatcher log cannot serve as the run record on the production floor path; the chain log and the SSM status are the record.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "INERT: nothing branches on the dispatcher's verdict; the chain lock and the floor bound the effect. Owner of advi-49f-gold-dispatch decides."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W13-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~13",
+  "surfaced_at": "2026-09-28T23:59Z",
+  "one_line": "On 2026-09-23 09:46:32Z a burst dispatch's chain aborted at stage a00_dim_account (rc 1, 0.7 s) because /tmp/advi_49f_code/chain_49f_entrypoint.py did not exist on the host; the dispatcher logged it as UNKNOWN, not ABORT, because that command's stdout has no CHAIN line at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm get-command-invocation b127a4df-5c19-4041-b6de-096fce9bf64e on i-01003b035d2988dfb: Status Failed, ResponseCode 2, 294 bytes stdout in 3 lines, first line starts \"python3: can't open file '/tmp/advi_49f_code/chain_49f_entrypoint.py'\"; no line starting CHAIN.",
+      "s3://opal-data-49financial/gold/advi/_logs/chain_20260923T094632Z.log, 3 lines: first 'CHAIN START date=2026-09-22 mode=production ...', last 'CHAIN ABORT stage=a00_dim_account rc=1 wall=0.7s -- nothing after this stage ran'.",
+      "Dispatcher log: that invocation (09:46:20Z, source aws:s3, started_by_dispatcher false) is one of 10 dispatches for date=2026-09-22 between 09:46:09Z and 09:46:49Z; six more chain logs stamped 09:46:36..09:46:49 are 155 bytes each."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A dispatch that starts a chain either runs it, is refused by the lock, or aborts on a named stage (silver.tf:744-746 treats the accelerator as harmless beside the floor).",
+  "world_is": "One of the ten concurrent burst dispatches found the chain's code directory absent on the shared host, so its chain never ran a stage. Whether a concurrent chain's cleanup removed /tmp/advi_49f_code was not measured (no host read was in scope).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "INERT for this order: the same day's floor run succeeded (chain log ends CHAIN OK) and the lock bounds the burst. Owner is the 49F ADVI chain's owners; a remedy cell should read the host's bootstrap and cleanup order before touching the trigger."
+}
+```
