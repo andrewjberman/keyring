@@ -3099,6 +3099,28 @@ carries none.
     "spec_asserts": "Z-W17-S5 (ARMED): the strip reactivates a dormant bd-price-update invoke whose effect after a 3-month gap is unmeasured.",
     "world_is": "The invoke is the second of the two daily calls that ran until 2026-06-21. Keeping it restores that cadence, and the other caller still fires daily. The PHASE B never-widen ask names bd-price-update as a covered effect; rollback is the same document re-publish (allocation v4 content).",
     "notes": "The Lambda was last modified 2026-04-06 and is unchanged across the gap. Its idempotence on a second same-day call was served behaviour before 2026-06-21; it is not re-measured here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S57",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T08:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Drain 789d4bb967 recorded wk-nfra_mcpindex-4-14 (ed61b070e4) as merged while its tree carried neither ANNOUNCE_MX-r-5.md nor rows Z-W14-S5..S8, and safe-merge exited 0. Cause 1 (measured): the issuer's channel resolver found rows by a regex on '{\"id\":' as the first key; the worker wrote 'id' after other keys, so the resolver read 0 incoming rows. Cause 2 (inferred, not measured): the new ANNOUNCE file was staged by the no-commit merge and gone at --continue (1 staged path), with a peer commit 5ae4dea2ba landing inside the window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show ed61b070e4:<channel> holds 122 rows incl. Z-W14-S5..S8 (id key at line 2783, after surfaced_at and disposition); HEAD after the drain held 132 rows with W14-S1..S4 only.",
+        "safe-merge log: first phase 1 conflicted path; --continue 'grading the MERGED index -- 1 staged path(s)'; git ls-tree HEAD shows 0 ANNOUNCE_MX-r-5.md.",
+        "A census of all 21 NFRA_MCPINDEX branches: this is the only branch whose rows are missing on CLOUD (every other merged branch 0 missing)."
+      ]
+    },
+    "spec_asserts": "A safe-merge drain that exits 0 with the branch as a parent carries the branch's content.",
+    "world_is": "It carried a subset. Because the branch now reads as merged by ancestry, a re-merge carries nothing, so the bytes return only by a forward commit. The resolver now parses every row object with raw_decode, whatever the key order, and was checked equal to the JSON id list on HEAD (132) and ed61b070e4 (122). Worker ~14 recommits the carrier under MX-r-5 A2 (d4a68b0b24).",
+    "notes": "After each channel drain, the issuer diffs branch ids against CLOUD ids (0 missing) and the branch's non-channel paths against the merge tree."
   }
 ]
 ```
