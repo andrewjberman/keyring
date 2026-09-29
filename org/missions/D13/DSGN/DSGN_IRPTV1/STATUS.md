@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-29T01:3xZ.
+tick here. As of 2026-09-29T02:3xZ.
 
 ## Pins
 
@@ -11,9 +11,9 @@ tick here. As of 2026-09-29T01:3xZ.
 |---|---|
 | Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-29T02:46:35Z (re-armed by the CTO, ruling 102510; surface widened to Positioning HoldingsTab.tsx + portal/src/components/holdings) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal candidate pin | DEV `ee949234` (FAST item 19, shared tree map) on `5ff990dc` (FAST item 18, AD-04/05 in-surface half) on `84854311` (FAST item 17, AD-01 remainder) on `1f6612c8` (FAST item 16, AD-01/02 card) on `d516158f` (FAST item 15, AD-03) on `8d12987e` (FAST item 14, UIC-03) on `2febba0b` (FAST item 13, IV-e-76) on `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `ee949234` (pushed by this seat under the lease; ls-remote read 01:3xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success; 2febba0b run 36492054339 success; 8d12987e run 36495184912 success; d516158f run 36496901922 success; 1f6612c8 run 36498832251 success; 84854311 run 36502989377 success; 5ff990dc run 36504594401 success; ee949234 unread at this write |
-| Suite on ee949234 | IR scope 912 pass / 27 skip / 5 fail = the known 5, counted line by line; tsc -b 0; eslint 0 errors |
+| Portal candidate pin | DEV `d6f740cc` (FAST item 20b, IR table on the shared table) on `b9d49989` (FAST item 20a, shared table extracted) on `ee949234` (FAST item 19, shared tree map) on `5ff990dc` (FAST item 18, AD-04/05 in-surface half) on `84854311` (FAST item 17, AD-01 remainder) on `1f6612c8` (FAST item 16, AD-01/02 card) on `d516158f` (FAST item 15, AD-03) on `8d12987e` (FAST item 14, UIC-03) on `2febba0b` (FAST item 13, IV-e-76) on `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
+| Portal origin | origin DEV `d6f740cc` (pushed by this seat under the lease; ls-remote read 02:1xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success; 2febba0b run 36492054339 success; 8d12987e run 36495184912 success; d516158f run 36496901922 success; 1f6612c8 run 36498832251 success; 84854311 run 36502989377 success; 5ff990dc run 36504594401 success; ee949234 run 36507364121 success; b9d49989 unread at this write |
+| Suite on d6f740cc | the known 5 (plus 3 process tests cut at their caps under load, each green alone -- see the 20b commit); earlier: IR scope 912 pass / 27 skip / 5 fail = the known 5, counted line by line; tsc -b 0; eslint 0 errors |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
 
@@ -45,6 +45,8 @@ on 5174 @528acdcd working tree (tmp/ui-walk/20260928T190559Z, local only). S30 d
 | 17 | portal `84854311` | AD-01 remainder: the card is the drill, tree map + table at rest; W17-S1 + F39-AC6/AC7 re-homed onto the card (CTO 102488); negative / unsupplied rows named under the card (UIC-12/UIR-34) | iv-e-93 HOLDINGS-TWO-COMPONENTS-OK; 14 pins re-goldened, each named in the commit; no real run (walks paused) |
 | 18 | portal `5ff990dc` | AD-04/05 in-surface half: registry colours in Positioning's class order, Other grey; table by (class, weight); zero rows gone; tooltip names beside tickers | iv-e-94 POSITIONING-ORDER-OK; IVE27-AC2 + IVE43 UIR-25(c) re-goldened; no real run (walks paused) |
 | 19 | portal `ee949234` | AD-04 (CTO 102510): the tree map extracted to components/holdings, used by Positioning and IR; item 18's tooltip copy retired | Positioning before/after byte-identical PNG on 5174 with a discriminating control (deliverables/2.0.0_SA_COO~D/item19/README.md); IVE13/20/44/94 re-goldened; IR's live map not screenshot-proven |
+| 20a | portal `b9d49989` | AD-04 (CTO 102522): the breakdown table extracted to components/holdings, ground + totals as props | Positioning Characteristics and Performance before/after byte-identical PNGs (deliverables/2.0.0_SA_COO~D/item19/) |
+| 20b | portal `d6f740cc` | IR's Securities table = the shared table, light ground, no summed rows (F7-AC4), served value column | IV4-AC1/AC2 + IVE94 re-goldened; live render via the IVE20 census driver on 5174: deliverables/2.0.0_SA_COO~D/item19/ir-holdings-1440.png + -390.png, 0 scrollbar violations |
 
 Round 9 at the boundary (@f42e1b00fa): IV-e-68/69/70/73/74/78/79 terminal and drained; IV-e-71/72/75/76/77
 superseded by this lease, unbuilt, their rows carried into Next.
@@ -56,12 +58,12 @@ Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_OP
 the MDPF card renders navy as Andrew's screenshot (C3 departure recorded by the CTO); commodities-gold lands in the
 shared colour registry as a separate change the CTO reads first.
 
-1. **AD-04 remainder (item 20):** extract Positioning's holdings table into components/holdings (same proof: before /
-   after on 5174), then IR's table renders it. AD-05's commodities gold is the CTO's registry change; GLD's class is ~M's.
-2. **AD-06..AD-09:** the Analysis three-page flow, the canonical modals, readable results (~Y owns result content).
-3. **AD-10..AD-13:** account labels (with ~M), search only, clients that open (with ~P/~M), remove About this scope.
-4. **AD-14:** on ~P in parallel (name the COT dependency, then make each firm answer).
-5. Carried: UIC-21 (1440 px truncation) waits on a browser run.
+1. **AD-06..AD-09:** the Analysis three-page flow (Portfolio -> Analysis type -> Output), the canonical modals,
+   readable requests and results (~Y owns result content). AD-05's commodities gold stays the CTO's registry change;
+   GLD's class is ~M's; per-class served totals for IR's table come with ~M's L0 amounts (CTO 102522).
+2. **AD-10..AD-13:** account labels (with ~M), search only, clients that open (with ~P/~M), remove About this scope.
+3. **AD-14:** on ~P in parallel (name the COT dependency, then make each firm answer).
+4. Carried: UIC-21 (1440 px truncation) waits on a browser run.
 
 ## Write claims
 
@@ -69,8 +71,8 @@ shared colour registry as a separate change the CTO reads first.
 
 ## Next proof
 
-AD-04/05: Holdings' tree map and table are Positioning's own components, fed from the served snapshot. A render test on
-the Holdings tab naming the ported component slots.
+AD-06: Analysis opens on page 1 (Client | Prospect cards); Next to page 2 (the three analysis cards), page 3 (output text
+fields), Back without losing input; one Generate on page 3. A render test stepping the three pages.
 
 ## Dependencies
 
