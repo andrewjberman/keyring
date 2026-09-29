@@ -83,3 +83,9 @@ a-2's pair names is admitted; a closure file NEITHER pair names is still a STOP)
 for its own change set. The HARVST change set's own blast radius is a-2's pair's to sign, not this half's.
 
 Re-signed: `1.0.0_SA_CTO~Z`, 2026-09-29.
+
+**Extension (2026-09-29 ~01:0xZ), same re-sign:** (1) the `scoped_amgt_route_table()` change (16 -> 18, `HVST-a-1`
+@`180989c8a8`) measured above is admitted by this half; `2.0.0_SA_COO~Z`'s limb 3 must name it too. (2) The combined act
+ROLLS BACK AS ONE: a failure on either project's criteria re-points the function to `0XDw5hJWOYgx3P8CSA42oAlkLuTlupkS` and
+reverts HARVST's route and grant edits in the same `safe-apply` (the a-2 CTO half, this commit).
+
