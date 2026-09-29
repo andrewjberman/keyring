@@ -1,0 +1,13 @@
+{
+ "project_code": "DSGN_AMGTV1",
+ "home": "org/missions/D13/DSGN/DSGN_AMGTV1",
+ "directive": "D13",
+ "macro_code": "DSGN",
+ "fabric": "site-z",
+ "dep_stage": "REGISTERED",
+ "status": "active",
+ "name": "Security Analysis page redesign: the AMGT Security Analysis portal page rebuilt from the estate's own cards, modals and charts, in the pattern of the Market, Positioning and Philosophy pages",
+ "generated_from": "org/missions/D13/DSGN/DSGN_AMGTV1/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-29T00:31:39Z"
+}
