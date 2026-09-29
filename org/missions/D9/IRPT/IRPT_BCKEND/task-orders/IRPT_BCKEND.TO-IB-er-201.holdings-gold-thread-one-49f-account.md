@@ -5,7 +5,7 @@
 <issued_to>0.4.0_DS_ClientPlatform~E</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-28</issued_date>
-<status>pending</status>
+<status>complete -- E1-AC1 PASS against the amended check @5e273c614f (recompute 0.004612117916 == gold, excluded 0) and E1-AC2 PASS (184 of 184 trading days, 0 missing, chained YTD 0.058285), both exit 0 read unpiped; 184 partitions landed and listing-verified under the builder addresses (missing 0, extra 0 on both gold tables); planted mutant FIRED and restored; 9 unit tests pass; proof-of-spec VALID rc=0; naming gate PASS 3 graded 0 REFUSE. Row S191 (the check-vs-naming-limb contradiction) ruled by 2.0.0_SA_COO~P msg 102514 and dispositioned by row S192: the declaration is keyed by custody source and the firm scope is registry-derived, no override taken. Rows S189, S190 open for their owners. Ledger irpt-holdings-gold-thread-49f-20260928. No reader switched; c02_twr_engine.py and every served table untouched.</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>

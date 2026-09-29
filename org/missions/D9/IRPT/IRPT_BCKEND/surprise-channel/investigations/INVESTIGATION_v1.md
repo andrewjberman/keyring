@@ -11044,3 +11044,117 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Acts: (1) ledgers cot-cash-admission-m-20260925 and bd-securities-cot-new-p1-m-20260926 stay OPEN, no rollback, each closing on S173's re-point read-back; (2) 2.0.0_SA_COO~M re-reads the BD half at the first mix_daily_summary partition dated after 2026-09-26T03:21:35Z and records it in the ledger; (3) S173 remains ONE act with halves, gated on the POSN owner's etf-classifications fill on site Z (coverage @9ab15461ca: COT 39.7%, BD 68.1%)."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S189",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~E",
+  "surfaced_at": "2026-09-29T00:40:00Z",
+  "one_line": "The 49F Schwab silver disagrees with ITSELF on the position total: dim_balance.net_mv_positions differs from the summed dim_position market value for 420 of 92,407 account-rows (0.4545%) across 14 partitions, worst delta $4,926,000.00. Not consumed by the new holdings gold, which builds its base from dim_position plus the declared cash columns.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the seat the TO names as the answer for Schwab silver source-read questions; route to the dim_balance / dim_position silver owner)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured over 14 dim_balance + dim_position partitions (2026-01-02, 01-27, 02-19, 03-13, 04-07, 04-29, 05-21, 06-15, 07-09, 07-31, 08-24, 09-16 plus the controls 2024-07-08 and 2025-06-16), DENOMINATOR 92,407 account-rows: |net_mv_positions - sum(dim_position.market_value_settled_unsettled)| <= 0.02 holds for 91,987 rows (99.5455%), fails for 420.",
+      "Per-partition worst deltas: 2026-01-27 $4,926,000.00; 2026-02-19 $4,187,250.00; 2026-03-13 $2,500,000.00; 2026-01-02 $2,000,000.00; five partitions at exactly $1,000,000.00; the remainder $26,212.88 to $35,796.21. The round-million shape suggests a single unpriced or synthetic instrument class rather than float error.",
+      "The same 14-partition sweep shows the CASH identity is exact: money_mkt_funds + net_credit_debit == (net_mv_plus_cash - net_mv_positions) for 92,407 of 92,407 rows (100.0000%, zero misses). So the residual is internally consistent while the position leg is not."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "dim_balance's net_mv_positions is the account's position market value, the same quantity dim_position's market_value_settled_unsettled rows sum to.",
+  "world_is": "The two silver tables disagree for 0.45% of account-rows, by up to $4.93M on one account-day, with no field on either row marking which is authoritative.",
+  "notes": "NOT blocking cell IB-er-201 and NOT worked around: holdings_performance.py builds the return base from dim_position plus the declared cash columns and never reads net_mv_positions, so the disagreement cannot reach the gold this round. It matters to whoever reconciles the new gold against dim_balance or against a vendor's official figure at a pre-set period (PRD v0.19 ruling 3 verification), because the two legs will differ for those accounts. Corroboration, not a second measurement: the thread account 0010498003 is NOT among the exceptions -- its landed account_value 90,635.04 equals dim_balance.net_mv_plus_cash 90,635.04 exactly at 2026-09-24."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S190",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~E",
+  "surfaced_at": "2026-09-29T00:40:00Z",
+  "one_line": "date=2025-01-09 is NOT a trading day (NYSE closed, 2025 national day of mourning), which is the standing cause of half of row IRPT_BCKEND-W61-S2: the superseded engine emitted 4,808 rows of NO-PRIOR-TRADING-DAY there and so dropped its value columns. On the ratified trading-day axis the date is simply not a performance day, and the new gold skips it by construction.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.4.0_DS_ClientPlatform~E (named and disarmed in this same turn: the new producer's day axis excludes the date, so nothing in cell IB-er-201 depends on it)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py (calendar_source NYSE/pandas_market_calendars): the 49F Schwab dim_position prefix carries 559 partitions spanning 558 trading days; the ONE partition that is not a trading day is date=2025-01-09, and zero trading days lack a partition (measured by listing, DENOMINATOR 559).",
+      "Served canonical/twr_daily date=2025-01-09: 4,808 rows, status census {'NO-PRIOR-TRADING-DAY': 4808}, 11 columns -- bmv, emv, cf_net and cf_gross ABSENT, against 15 columns on its neighbours date=2025-01-08 and date=2025-01-10 (read via pyarrow read_schema).",
+      "The partition's own manifest reads bmv_source 'ABSENT-NO-PRIOR-TRADING-DAY -- dim_calendar has no prior trading day for date=2025-01-09'.",
+      "The SCHEMA half of W61-S2 is a separate mechanism from the calendar half and is NOT resolved by this row: c02_twr_engine.daily_returns builds its refusal rows from dicts that omit bmv/emv/cf_net/cf_gross entirely, so ANY all-refusal partition loses those columns. date=2024-07-08 (4,074 rows, 100% REFUSED-NO-BMV, 11 columns) is the same mechanism with a different trigger -- it is the series' first partition, which has no prior day at all."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row W61-S2 reads the two partitions date=2024-07-08 and date=2025-01-09 as a data defect that refuses every full-history (Since-inception) read of twr_daily.",
+  "world_is": "One of the two is not a defect in the data at all -- 2025-01-09 is a market holiday and a performance series correctly has no row for it. The actual defect they share is in the PRODUCER's emission shape: an all-refusal partition drops its value columns, so a schema-guarded reader refuses the whole history over a column absence rather than over a missing value.",
+  "notes": "Filed as the measured cause, not as a remediation (REMEDIATION rows are 3.0.0_SA_CVO's). Two consequences for the consolidated gold: (1) the new producer takes its day axis from lib/trading_calendar and so never emits a 2025-01-09 row -- verified, the YTD run emitted 184 rows over exactly the 184 trading days with 0 skipped; (2) it emits a fixed 15-column arrow schema on EVERY row including refusals, so the all-refusal-drops-columns mechanism cannot recur in the new table. The superseded engine keeps the defect until it retires under ruling 12."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S191",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~E",
+  "surfaced_at": "2026-09-29T01:05:00Z",
+  "one_line": "The round-1 acceptance check and the commit-time naming gate contradict each other on ONE line: E1-AC1 reads the source declaration as json[...]['49financial'], so the firm-scope token MUST be a bare key in an authored JSON, and the naming gate (LGIC_ENFORCE DEC-6, ENFORCE) refuses a bare registered firm token in a NEW authored JSON as a hand-kept carrier. Cell IB-er-201's S3 work is COMPLETE and verified; only the commit of two files is blocked.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO (the naming limb's owner, which landed an analogous amendment at 85febf3bd1 for a nested-portal generated file) or the LGIC builders' owner for lib/opal_naming.py's generate() target set. NOT this seat: both candidate fixes are outside cell IB-er-201's <paths> grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh refusal: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' with 'NAMING REFUSE data/assets/scripts/gold/irpt_holdings_performance/sources.json:5 49financial -> lookup(49financial)' and 'why: NEW hand-kept carrier (context rule)'.",
+      "The refusal is now ONE line, not six. The first run refused 3 literals; two were redundancies removed on their own merits (the declaration's firm_scope field duplicated its own key; the producer's --firm default is now derived from the declaration, so no firm token is typed in code at all). Re-graded: 'NAMING REFUSE sources.json:5' plus 3 CONFORMANT rows, 4 graded.",
+      "E1-AC1 (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r1e/e1_ac1_thread_day_recompute.py:52) reads: src = json.loads(DECL.read_text(encoding='utf-8'))['49financial'] -- the bare token is the access path, so the key cannot be renamed without changing the check, which the TO's refusal clause forbids.",
+      "naming-gate.py:22 context rule: a firm token is permitted only in infra/logic/registry/*.json, in a generated block or file, inside a key()/address()/name()/lookup() argument, or in an opal_name Terraform module argument. A JSON key has no call context; naming-gate.py:26 exempts prose (a string containing whitespace), which is why the same token inside the declaration's comment fields is NOT refused.",
+      "The generated-file route is closed to this seat: naming-gate.py:1415-1419 REFUSES a file carrying the GENERATED mark unless it is already a registered target of lib/opal_naming.py generate(), so making sources.json generated requires editing lib/opal_naming.py -- outside the cell's <paths> grant (data/assets/scripts/gold/irpt_holdings_performance/, org/critical_paths/change_management/, org/critical_paths/.open_deploys/, this investigation file)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The TO's step 1 names the declaration at data/assets/scripts/gold/irpt_holdings_performance/sources.json with a 49financial entry, and its preflight declares the lane's <paths> block the whole grant -- neither anticipates the naming limb refusing the entry's own key.",
+  "world_is": "Both mechanisms are correct on their own terms and jointly unsatisfiable for this one line under the cell's grant. Three resolutions exist and all three are owned above this seat: (i) the naming limb admits a registered firm token as a KEY in an authored declaration (the narrowest, and the class of amendment already landed once tonight); (ii) lib/opal_naming.py adds sources.json as a generate() target, making the key registry-derived; (iii) an R20 deliberate-departure register entry Andrew acknowledges, per CLAUDE.md rule 30.",
+  "notes": "NOT worked around and NOT forced: no override was taken, no gate was edited, no enforce switch was touched, and the check was not weakened -- the TO's refusal clause is followed literally. WHAT IS ALREADY TRUE IN THE WORLD, independent of the commit: 184 of 184 YTD partitions are landed and listing-verified under the builder addresses (missing 0, extra 0, on both holdings_performance_daily and holdings_performance_manifest); E1-AC1 PASS (recompute 0.004612117916 == gold, excluded 0) and E1-AC2 PASS (184 days, 0 missing, chained YTD 0.058285), each read unpiped at exit 0; a planted mutant of +1e-6 FIRED E1-AC1 to FAIL and the restore returned it to PASS; 9 unit tests pass; the proof-of-spec instance validates VALID rc=0. Deploy ledger irpt-holdings-gold-thread-49f-20260928 stays OPEN with leg L1 (the commit) unclosed, which is the honest state. The two uncommitted files are sources.json and holdings_performance.py; the TO status flip, proof-of-spec, ledger files and these rows are held with them rather than landed alone, because a complete flip citing an uncommitted producer would be rot."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S192",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~E",
+  "surfaced_at": "2026-09-29T01:20:00Z",
+  "one_line": "DISPOSITIONS row IRPT_BCKEND-S191: 2.0.0_SA_COO~P ruled it inside the ~E decomposition (msg 102514) -- E1-AC1 amended @5e273c614f to select its declaration entry by positions_prefix, the entry re-keyed by custody source (schwab_08335338) carrying only its master, and the firm scope derived from the registry. Naming gate now PASS with 0 refusals; both criteria re-run green against a full re-land. No override was needed or taken.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.4.0_DS_ClientPlatform~E (disarmed in this turn: the re-key is landed, graded and committed with this row)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~P msg 102514: 'E1-AC1 now selects the declaration entry whose positions_prefix is schwab/08335338/silver/dim_position/ and never reads a firm key (@5e273c614f). Under this order: re-key the entry in sources.json by its custody source (e.g. schwab_08335338), with no bare firm token. The producer derives the firm from the registry (the Schwab master's owner) for address(). ... No override is needed.'",
+      "e1_ac1_thread_day_recompute.py @5e273c614f lines 55-60 now filter the declaration for the entry whose positions_prefix is the 49F Schwab dim_position source and REFUSE unless exactly one matches.",
+      "The firm is derived, not typed: opal_naming.lookup('08335338') returns class MASTER with firm 49financial and vendor schwab (infra/logic/registry/scopes.json), and address('irpt', <that firm>, 'gold', ...) resolves to s3://opal-data-49financial/irpt/49financial/gold/holdings_performance_daily/. Measured: the string 49financial does not appear anywhere in holdings_performance.py.",
+      "naming-gate.py re-graded on both new files: 'NAMING-GATE: PASS 3 graded' -- one S3_BUCKET and two S3Key rows CONFORMANT, zero REFUSE (it was 'REFUSE 6 graded' at the first attempt and 'REFUSE 4 graded' after the two redundancies came out).",
+      "Re-landed 184 of 184 YTD partitions with the rewired producer; E1-AC1 PASS (recompute 0.004612117916 == gold, excluded 0) and E1-AC2 PASS (184 days, 0 missing, chained YTD 0.058285), both exit 0 read unpiped; 9 unit tests pass; proof-of-spec VALID rc=0."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The contradiction was real but is resolved by the issuer's amendment rather than by any waiver: the check no longer needs a firm key and the declaration no longer carries one. Both mechanisms now pass unmodified, so nothing remains to investigate.",
+  "spec_asserts": "Row S191: the acceptance check and the naming limb are jointly unsatisfiable for the declaration's firm key under this cell's grant.",
+  "world_is": "They were, until the check was amended to stop reading a firm key at all. The declaration is now keyed by the thing it is actually about -- a custodian and its master account -- and the firm is the registry's answer, which is strictly better than the original shape: it cannot drift from infra/logic/registry/ and it extends to a second custody channel of the same firm without a second firm token.",
+  "notes": "The derived form also removed a latent defect the first shape carried: a typed firm token in the declaration would have had to be kept in step with the registry by hand, and nothing checked it. The test test_the_declaration_is_data_and_carries_its_basis now asserts the derivation (no `firm` field present, lookup(master) resolves, and the entry key contains both custodian and master) rather than any string."
+}
+```
