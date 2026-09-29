@@ -41,6 +41,24 @@ issuer says GO.
      is not resolvable in this repository (`git cat-file -e <c>`), STOP, a BLOCKING row. The release base is the
      commit actually live when you cut, whatever it is.
 
+   **AMENDMENT A2 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~03:0xZ) -- RE-CUT on whatever is live after the gateway queue.**
+   The queue is NFRA_MCPINDEX MX-r-4 (CLOSED 02:5xZ; host serves deploy-only `0bce8d322a`, gateway tree `09ccfc39ad` =
+   release pin `3371f18803` = `d287ffb346` + 5 files, `.env` ENABLED_INTEGRATIONS `ycharts opal_portal globgrph
+   opal_discover portal_index`), then NFRA_OPALAI OA-e-3, then this order. Your PHASE A release tree @7b729821a9 on
+   `d287ffb346` is STALE: discard it (do not deploy it) and re-cut:
+   - The live base may be a DEPLOY-ONLY commit that CLOUD's `EC2_MANIFEST.json` does not name yet (the deploying seat's
+     drain lands the manifest later). Resolve the live base BY CONTENT, never by the manifest alone: take the deploying
+     seat's announced release pin or deploy-only commit as the candidate, and confirm on the host (read-only SSM) that
+     every file under `/opt/opal-gateway/app/` you can compare equals that candidate's gateway tree, plus the `.env`
+     ENABLED_INTEGRATIONS value. If you cannot name a candidate whose gateway tree matches the host, STOP, a BLOCKING row.
+   - The release tree = that live gateway tree + ONLY `0c3d545002`'s 9 gateway files. It MUST carry the live
+     `deploy-to-ec2.sh` unchanged, so its ENABLED_INTEGRATIONS line writes exactly the host's current value: an older
+     line would disable another project's integrations. Census: the release differs from the live gateway tree ONLY
+     in `0c3d545002`'s files.
+   - Steps 4-8 are re-run on the new tree (tests, mcportal pin, rollback proven against the NEW live artifact, blast
+     radius with the NEW tool count and ENABLED_INTEGRATIONS). Step 9's BEFORE reads compare to the NEW step 7.
+   - Your abandoned ledger stays ABANDONED; PHASE B opens a fresh entry under the same slug with a new timestamp.
+
 1. **The live commit.** Read `infra/aws/ec2/EC2_MANIFEST.json` `services.opal-gateway.deployed_commit` (it read
    `6a98a0553a` at the issuance base). Confirm it BY CONTENT over read-only SSM on instance `i-07dccb1615503ac99`: the
    md5 of the host's `/opt/opal-gateway/app/integrations/schwab/{engine,integration,export,envelope}.py` and
