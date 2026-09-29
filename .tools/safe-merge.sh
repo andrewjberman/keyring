@@ -302,7 +302,25 @@ if ! git merge --no-commit --no-ff "$BRANCH"; then
   # and row gate unreachable on the ONLY path a concurrent drain actually takes. Keep the
   # merge OPEN, record what the merge staged so --continue can tell it from a foreign seat's
   # work, and hand the conflict back.
-  git diff --cached --name-only > "$STATE" 2>/dev/null || true
+  # ⛔ THE STATE IS WHAT THE MERGE COULD STAGE, NOT WHAT THE INDEX HOLDS (AMGT_HARVST-Z-S37,
+  # AMGT_CORPUS-Z-S59). The index is shared: a peer that stages between the clean-index check
+  # above and this snapshot used to be recorded as the merge's own, and --continue then committed
+  # its files under the draining seat's name (2751f0be77 carried 0.7.0_AE_CloudOps~A's NEVER-2
+  # entry). A merge can only stage a path whose two sides differ, so bound the snapshot by
+  # `HEAD..MERGE_HEAD` and name anything outside it now, while nothing has landed.
+  _MINE="$(git diff --name-only HEAD MERGE_HEAD 2>/dev/null | LC_ALL=C sort -u)"
+  : > "$STATE"
+  _PEER=0
+  while IFS= read -r _p; do
+    [ -n "$_p" ] || continue
+    if printf '%s\n' "$_MINE" | grep -Fxq "$_p"; then
+      echo "$_p" >> "$STATE"
+    else
+      [ "$_PEER" -eq 0 ] && echo "safe-merge: WARN -- path(s) staged in the shared index that THIS MERGE could not have staged (another seat's; left OUT of the conflict state, so --continue will refuse them until unstaged):" >&2
+      echo "              $_p" >&2
+      _PEER=$((_PEER+1))
+    fi
+  done < <(git diff --cached --name-only 2>/dev/null)
   git diff --name-only --diff-filter=U >> "$STATE" 2>/dev/null || true
   echo "$BRANCH" > "$STATE.branch" 2>/dev/null || true
   echo "safe-merge: *** CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED. ***" >&2
