@@ -25,7 +25,7 @@
     "cvo": "3.0.0_SA_CVO",
     "cro": "4.0.0_SA_CRO"
   },
-  "coo_lane": null,
+  "coo_lane": "2.0.0_SA_COO~M",
   "workstream_owners": {
     "FWD-7 and FWD-8 backend cells": "2.0.0_SA_COO~M -- Andrew-direct 2026-09-29 ~19:5xZ: 'Some of the backend jobs should probably be assigned to COO~M as it pertains to item 7 and likely item 8, as we'd prefer to do a lot of that work server side.' Seating fit against .tools/to-decomp-ref-lint.py (one project per Tier-2 seat instance; ~M is seated on IRPT_BCKEND) is carried to 3.0.0_SA_CVO if the lint refuses; this row does not narrow the word."
   },
