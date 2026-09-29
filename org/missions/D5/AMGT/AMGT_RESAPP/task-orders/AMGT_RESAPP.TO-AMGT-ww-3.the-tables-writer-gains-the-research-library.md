@@ -84,6 +84,11 @@ AC2 PASS (36 of 36 unchanged), AC3 FAIL (no tests dir). At the drain the issuer 
 (its dry-run over every live name), gets the CTO half, runs the real write, then `ww-3.AC3.py` (95 of 95 held; FAIL at the cut,
 36) and AC2 again. Rows Z-S300 (59 names withheld) and Z-S301 (the uncommitted edit on the shared tree).
 
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29 ~14:0xZ):** drained @b197eca459; issuer re-run AC1 PASS (59 of 59), AC2 PASS (36 of 36),
+AC3 PASS (8). THE WRITE ran under COO half @cb76e56d0d + CTO half @b2691b853d (limb 2 admits the one SKIP, Hitachi 6501 JP,
+identity unresolved), NEVER-2 entry `amgt-resapp-r48-ww3-etfc-write` opened @b0676b9d48 and CLOSED: writer bytes == b197eca459,
+PLAN 59 / 0 / 36, 0 named / 59 withheld, WROTE 59; after it `ww-3.AC2.py` 36 of 36 unchanged and `ww-3.AC3.py` held 95 of 95,
+defects 0; table 285 -> 344. The CTO holds the PARKED writer edit until this entry closed; it is closed.
 <status>complete</status>
 <round>48</round>
 <slot>~172</slot>
