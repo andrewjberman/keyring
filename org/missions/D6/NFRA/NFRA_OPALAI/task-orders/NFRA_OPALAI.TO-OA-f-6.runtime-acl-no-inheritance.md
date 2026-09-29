@@ -103,7 +103,7 @@ Dry-run at base (opal_ai e63eb06):
 - f6.AC1 base: FAIL as expected (`PLAN lines=8 INHERITANCE-OFF=0`).
 - f6.AC2 base: FAIL as expected (`arm files=2; line='BOUNDARY: BREACH probe=ALLOWED control=OK'`).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~21</slot>
 <fabric>site-z</fabric>
