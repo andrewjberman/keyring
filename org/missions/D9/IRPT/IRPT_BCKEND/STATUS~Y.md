@@ -76,7 +76,7 @@ scanned). The four carried report arms each need ONE more window packet from `2.
 | What | Value |
 |---|---|
 | Work in progress | NONE. The Y worktree `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` is clean (0 lines of `git status --short`); the main tree holds 0 uncommitted Y-owned paths. |
-| Y branch | `irpt-mvp-y-20260922` @`0a24edfe38`, 25 commits not on CLOUD. It is LOCAL (not on origin); the drain is MSTR's act 4, after P's branch. |
+| Y branch | `irpt-mvp-y-20260922` @`0a24edfe38` -- **DRAINED**. Measured 2026-09-29T15:0xZ: `git rev-list --count CLOUD..irpt-mvp-y-20260922` = **0** and `git merge-base --is-ancestor` says **ANCESTOR**, so every commit on it is already in CLOUD history. The earlier pin here ("25 commits not on CLOUD ... the drain is MSTR's act 4") was STALE. Positive control in the same sweep: `irpt-m-cot-b1` ahead=5 NOT-ANCESTOR. `project.json.blocking` still names the Y leg as owed -- not ~Y's field to edit; surfaced as row `IRPT_BCKEND-S208` and to `0.0.0_AB_MSTR` the same turn. Per CLAUDE.md NEVER-2 the leg closes SUPERSEDED, never re-executed. |
 | Y records on CLOUD | log `b0adb91aac`; handoff `465692aa2b`; case_trace Comparison `33addf0c02`; resident SSM read `add7a41cfd`; rebuild 3 gates 3+4 `3f40796915`; GRANT release arms `46b975e6aa`. These are the POST-S19 hashes; any older pin resolves through `org/tier0_exec/0.0.0_AB_MSTR/deliverables/S19_PURGE_COMMIT_MAP_20260928.txt`. |
 | Tools | `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/` (live_chain, case_trace, offline_submit_proof, zip_module_census, zip_cold_start_smoke, status_role_sim, served_drift_census) |
 

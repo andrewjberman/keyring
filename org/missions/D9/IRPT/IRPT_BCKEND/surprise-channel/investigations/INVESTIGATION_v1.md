@@ -11870,3 +11870,35 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No remedy claimed and no replay requested. Two reads would settle whether (a) and S206 share one cause, neither inside a walk window: (1) why the vendor session was evicted twice in 31 min -- is eviction driven by concurrent sessions on the host, and does the resident open one session per job or share one; (2) whether the resident should emit an IRPT_RESIDENT_ATTENTION line carrying job_detail.code, so a window's stop is readable from the journal beside its IRPT_RESIDENT_RESOLVE lines. Consequence for W22: Target Weight at notional 1000 is PROVEN through the vendor upload and portfolio create (600/400 Dollars echoed) but produced no report, so the Target Weight report arm carries forward with Multi-Comp, 49financial and Inflection."
 }
 ```
+
+
+## ~Y drive-tick row (15:20Z) -- act 4 is world-done for P and Y, and its M leg names a branch that does not exist (row IRPT_BCKEND-S208)
+
+```json
+{
+  "id": "IRPT_BCKEND-S208",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-29T15:20:00Z",
+  "one_line": "project.json.blocking still reads 'Act 4 at 0.0.0_AB_MSTR: drain the seat branches to CLOUD (P, then Y, then M) with the B3 content proof; a cell cut before that names the seat branch as base.' Measured at this tick against 57 local branches, that is false in both directions. The P and Y legs are WORLD-DONE: irpt-p-publish-20260923 @b4f5492e9e and irpt-mvp-y-20260922 @0a24edfe38 are each ahead=0 and an ANCESTOR of CLOUD, so every commit on them is already in CLOUD history. The M leg is worse than open: there is NO branch named irpt-mvp-m-20260922. M's work lives across TEN irpt-m-* branches, of which ONE is drained (irpt-m-r4-holdings, ahead=0 ANCESTOR) and NINE are still ahead of CLOUD by 1 to 8 commits each, 33 commits in total. A drain that goes looking for the single named M branch finds nothing and can report the leg done while nine branches are still undrained.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR (act 4's owner, LIVE at this write and messaged the same turn; disarms when the P and Y legs are closed SUPERSEDED and the M leg is re-scoped to the nine branches by name)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-list --count CLOUD..<branch> and git merge-base --is-ancestor <branch> CLOUD, run over every local branch matching irpt/mvp at 15:0xZ, denominator 57 local branches: irpt-p-publish-20260923 @b4f5492e9e ahead=0 ANCESTOR; irpt-mvp-y-20260922 @0a24edfe38 ahead=0 ANCESTOR; irpt-mvp-m-20260922 ABSENT (git rev-parse --verify fails)",
+      "POSITIVE CONTROL that the instrument discriminates: in the same sweep irpt-m-cot-b1 ahead=5 NOT-ANCESTOR, irpt-m-s125-publish ahead=8 NOT-ANCESTOR, cvo-irpt-r19-adjudication ahead=1 NOT-ANCESTOR -- is-ancestor is not answering ANCESTOR for everything",
+      "the ten irpt-m-* branches and their ahead counts: b01b-skip 1, comparison-consumer 2, cot-b1 5, cot-cash-line 5, cot-cash-line-act 4, r4-holdings 0, s125-20260924 1, s125-publish 8, s152 6, s152-cloud 1 -- nine ahead, 33 commits, one drained",
+      "org/missions/D9/IRPT/IRPT_BCKEND/project.json blocking field, last_updated 2026-09-28T18:10:00Z, carries the act-4 sentence unchanged",
+      "org/missions/D9/IRPT/IRPT_BCKEND/STATUS~Y.md section 1 pin carried the same staleness from the ~Y side -- 'Y branch irpt-mvp-y-20260922 @0a24edfe38, 25 commits not on CLOUD. It is LOCAL (not on origin); the drain is MSTR is act 4, after P is branch' -- corrected by ~Y in this tick's commit",
+      "git worktree list --porcelain at the same read: 17 live worktrees, five of them on undrained irpt-m-* branches (cashline, cmp, r4, s152c) plus irpt-p-r19-issue (ahead=0 ANCESTOR)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "project.json.blocking asserts three undrained seat branches (P, Y, M) gating act 4 at 0.0.0_AB_MSTR, and conditions how cells are cut on it: 'a cell cut before that names the seat branch as base'.",
+  "world_is": "Two of the three named legs are already world-done and the third names a branch that does not exist. The cell-cutting condition therefore binds ~P and ~Y cells to a base that is now simply CLOUD history (harmless but pointless), while the real undrained surface -- nine irpt-m-* branches carrying 33 commits -- is named by nothing.",
+  "notes": "Per CLAUDE.md NEVER-2, world-done closes SUPERSEDED and is never re-executed: the P and Y legs are measured done here, so act 4 should not re-run them. NOT ~Y's to edit -- project.json is the project record and 2.0.0_SA_COO~P is the coo_lane; the act-4 leg itself is 0.0.0_AB_MSTR. ~Y corrected only its own STATUS~Y pin and surfaced this to both the same turn. Remedy: (1) MSTR closes the P and Y legs SUPERSEDED with the ahead=0/ANCESTOR read as the proof; (2) the M leg is re-scoped to the nine branches BY NAME before any drain, because a lookup of irpt-mvp-m-20260922 returns nothing and an absence read identically to done; (3) ~P or the CTO edits the blocking field, and the cell-cutting condition is dropped for ~P and ~Y."
+}
+```
