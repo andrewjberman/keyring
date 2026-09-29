@@ -4,26 +4,39 @@ Cell IB-mr-213, task IRPT_BCKEND.TO-IB-m21-213, worker 0.9.0_WK_IRPT_BCKEND~66, 
 `wk-IRPT_BCKEND-66`, based on CLOUD @1ef167e0ba. This is the CANDIDATE for the re-mint that carries this
 change into a served page; it is not itself an upload, mint or served write (task BOUNDS).
 
+**AMENDMENT 1 (2026-09-29, worker 0.9.0_WK_IRPT_BCKEND~72, worktree branch `wk-IRPT_BCKEND-72`, based on
+CLOUD @dc1fc92e4e):** the CTO refused the half below on the original bytes
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/SIGNOFF_REFUSED_HOLDINGS_UIC16_49F_20260929.md`, @05b9abe572):
+`acct_type` is the PRODUCT code, not the registration -- `IRA` spans six registrations (Contributory, Roth,
+Rollover, SEP, SIMPLE, Inherited) and `S1` ("Schwab One") spans five (Individual, Joint, Designated
+Beneficiary, Living Trust, Custodial), so the page would read "Individual Retirement" for a Roth. `## The
+act` and its measured counts below are REWRITTEN to the REGISTRATION field (`acct_regis`), and the local
+candidate diff is REPLACED with the current one. `## COO half` and `## CTO half` below are left exactly as
+they were written against the refused bytes (history, not re-signed by this amendment).
+
 ## The act
 
 At 49F's next real Holdings/Directory build, `account_mask`'s `display.label` (an ACCOUNT node, via
 `holdings_49f.build_49f_actual`) and the directory's `masked_discriminator` (`directory_runner.build_49f`'s
-`acct_row`) stop showing Schwab's bare `acct_type` code (e.g. `IRA`, `BRO`, `S1`) and start showing that
-code's FULL NAME from the CTO's committed BridgeFT table
+`acct_row`) stop showing Schwab's bare `acct_regis` (registration) code and start showing that code's FULL
+NAME from the CTO's committed BridgeFT table
 (`org/tier1_exec/1.0.0_SA_CTO/deliverables/SCHWAB_ACCOUNT_CODES_BRIDGEFT_READ_20260929.json`, copied
 byte-for-byte into `data/assets/scripts/gold/investor_reporting/schwab_account_codes.json`), e.g.
-`****4304 / IRA` becomes `****4304 / INDIVIDUAL RETIREMENT`. A code the table lacks -- including a blank
-`acct_type` (2 of 7,548 accounts in the 2026-09-25 dim_balance partition) -- prints
-`unrecognised (<code>)` (sanitized by the shared masking rule to `unrecognised <code>` once parens are
-stripped, e.g. `****6566 / unrecognised`), never guessed and never the bare code alone. `account_mask` and
-`masked_discriminator` themselves are UNCHANGED (both stay generic formatters over whatever string they are
-handed, pinned by their own existing tests with raw codes); the translation is the ONE new step,
-`schwab_account_codes.full_name()`, inserted at the two 49F build call sites only. INF is unaffected (its
-source already ships the full type in words, bcf7a6adde).
+`****7532 / RH` becomes `****7532 / Roth Contributory IRA`. The lookup reads the table's `acct_regis`
+section ONLY, through the new `schwab_account_codes.registration_name()` -- it never falls through to the
+`acct_type` (product) section, so a code that is a valid PRODUCT code but not a registration code (e.g.
+`IRA`, `S1`) is NOT resolved by it. A code the `acct_regis` section lacks -- including a blank `acct_regis`
+(2 of 7,548 accounts) and the one `acct_regis` value the table does not name, `RI401` (1 of 7,548, CTO
+102567/102582) -- prints `unrecognised (<code>)` (sanitized by the shared masking rule to
+`unrecognised <code>` once parens are stripped), never guessed and never the bare code alone. `account_mask`
+and `masked_discriminator` themselves are UNCHANGED (both stay generic formatters over whatever string they
+are handed, pinned by their own existing tests with raw codes); the translation is the ONE new step,
+`schwab_account_codes.registration_name()`, inserted at the two 49F build call sites only. INF is unaffected
+(its source already ships the full registration type in words, bcf7a6adde).
 
-Measured against the real 2026-09-25 `schwab/08335338/silver/dim_balance` partition (7,548 accounts): 7,546
-accounts gain a full name (all 9 non-blank `acct_type` codes in use are named by the table), 2 blank-code
-accounts print `unrecognised ()`. Zero guessed. Full detail:
+Measured against the real 2026-09-25 `schwab/08335338/silver/dim_balance` partition (7,548 accounts): 7,545
+accounts gain a full registration name (every non-`RI401` `acct_regis` code in use is named by the table),
+1 account (`RI401`) and 2 blank-code accounts print `unrecognised (<code>)`. Zero guessed. Full detail:
 `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R21_UIC16_49F_SUMMARY_20260929.json`.
 
 ## Blast radius
@@ -63,7 +76,7 @@ index 582a506ece..b891d3c22a 100644
      "data/assets/scripts/silver/rebalancer_schemas.py",
      "data/black_diamond/scripts/gold/lib/etf_classifier.py",
 diff --git a/data/assets/scripts/gold/investor_reporting/directory_runner.py b/data/assets/scripts/gold/investor_reporting/directory_runner.py
-index b4d5125c26..c9bd1e6cca 100644
+index b4d5125c26..(amendment 1) 100644
 --- a/data/assets/scripts/gold/investor_reporting/directory_runner.py
 +++ b/data/assets/scripts/gold/investor_reporting/directory_runner.py
 @@ -114,6 +114,12 @@ if str(_IDS_DIR) not in sys.path:
@@ -83,17 +96,18 @@ index b4d5125c26..c9bd1e6cca 100644
              r = acc_ix.loc[aid]
              if isinstance(r, pd.DataFrame):
                  r = r.iloc[0]
-+            # UIC-16 (IB-mr-213): the raw Schwab code turned into its full name from the committed
-+            # table; a code the table lacks -- including blank -- prints "unrecognised (<code>)",
-+            # never the bare code alone.
++            # UIC-16 (IB-mr-213), amendment 1 (CTO refusal @05b9abe572): the REGISTRATION type
++            # (acct_regis) through registration_name -- NEVER acct_type (the product code) --
++            # turned into its full name from the committed table; a code the acct_regis section
++            # lacks -- including blank -- prints "unrecognised (<code>)", never the bare code alone.
              return {"raw_key": aid, "account_number": aid,
 -                    "account_type": _s(r.get("acct_type")),
-+                    "account_type": _sac.full_name(_s(r.get("acct_type"))),
++                    "account_type": _sac.registration_name(_s(r.get("acct_regis"))),
                      "is_open": _s(r.get("account_is_open")),
                      "closed_date": r.get("closed_date"),
                      "name": _s(r.get("account_name"))}
 diff --git a/data/assets/scripts/gold/investor_reporting/holdings_49f.py b/data/assets/scripts/gold/investor_reporting/holdings_49f.py
-index f79b6606ee..48b3cabbdc 100644
+index f79b6606ee..(amendment 1) 100644
 --- a/data/assets/scripts/gold/investor_reporting/holdings_49f.py
 +++ b/data/assets/scripts/gold/investor_reporting/holdings_49f.py
 @@ -90,6 +90,11 @@ def _hs():
@@ -108,21 +122,30 @@ index f79b6606ee..48b3cabbdc 100644
  def _num(value):
      if value is None or isinstance(value, bool):
          raise FortyNineRefused("REFUSED: 49F unknown numeric value is not zero")
-@@ -275,8 +280,12 @@ def build_49f_actual(s3, as_of: str, *, tax_membership_path=None) -> "tuple[list
+@@ -275,8 +280,13 @@ def build_49f_actual(s3, as_of: str, *, tax_membership_path=None) -> "tuple[list
          raise FortyNineRefused("REFUSED: 49F duplicate custody account in dim_balance")
      balance = balance.set_index(balance["account_id"].map(_text))
-     # CTO 101302: each ACCOUNT node's own mask, from the custody row that mints it (dim_balance acct_type).
-+    # UIC-16 (IB-mr-213): the raw Schwab code is turned into its full name from the committed table before
-+    # it reaches account_mask; a code the table lacks -- including blank -- prints "unrecognised (<code>)",
-+    # never the bare code alone.
+-    # CTO 101302: each ACCOUNT node's own mask, from the custody row that mints it (dim_balance acct_type).
++    # CTO 101302: each ACCOUNT node's own mask, from the custody row that mints it. UIC-16
++    # (IB-mr-213), amendment 1 (CTO refusal @05b9abe572): the label is the REGISTRATION type
++    # (dim_balance acct_regis) through registration_name -- NEVER acct_type (the product code:
++    # `IRA` spans six registrations, `S1` spans five) -- turned into its full name from the
++    # committed table before it reaches account_mask; a code the acct_regis section lacks --
++    # including blank -- prints "unrecognised (<code>)", never the bare code alone.
 +    sac = _sac()
      account_masks = hs.own_account_masks(firm_id, (
 -        (raw, raw, _text(t)) for raw, t in zip(balance.index,
-+        (raw, raw, sac.full_name(_text(t))) for raw, t in zip(balance.index,
-                                              balance["acct_type"] if "acct_type" in balance.columns else [""] * len(balance))))
+-                                             balance["acct_type"] if "acct_type" in balance.columns else [""] * len(balance))))
++        (raw, raw, sac.registration_name(_text(t))) for raw, t in zip(balance.index,
++                                             balance["acct_regis"] if "acct_regis" in balance.columns else [""] * len(balance))))
      positions = positions.copy()
      positions["account_id"] = positions["account_id"].map(_text)
 ```
+
+Amendment 1 also adds `schwab_account_codes.registration_name()` beside the existing `full_name()` in
+`schwab_account_codes.py` (reads the `acct_regis` section only, never falling through to `acct_type`) and a
+new test case in `tests/test_schwab_codes.py` proving a registration-only code (`RH`, absent from
+`acct_type`) resolves correctly and a product-only code (`IRA`, absent from `acct_regis`) does not.
 
 New files added by this candidate (pure additions, not shown as a diff hunk): `schwab_account_codes.json`
 (byte-for-byte copy, md5 `1950f864bb1cabf61aab5abc15864485`, identical to the CTO's committed table),
