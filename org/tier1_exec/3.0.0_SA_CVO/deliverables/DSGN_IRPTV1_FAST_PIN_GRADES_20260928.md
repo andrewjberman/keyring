@@ -187,6 +187,8 @@ Performance and Analysis do not import those two files. Shots opened and read: 0
 
 | `e5e96606` (W21 part P K8) | the export receipt poll keeps going through a data-less RUNNING read instead of throwing and going idle | `bun test iv-e-95` re-run by this seat: `RECEIPT-RUNNING-DATALESS-OK` (3 reads, only READY reported; control RUNNING-only ends null at the bound, no throw), over the SERVED W21 receipt body (`exr_f3a8ba9c...`, record `w21-part-p-walk-20260929.md`); the commit reports the same test crashing on the old `submit.ts`; CI success | **PASS** (claim class SERVED-BODY REPLAY; the live page not re-walked) |
 
+| 24 `6c163889` (AD-01; ~M 102600) | the served L0 CATEGORY node reaches the page as its own kind (was drawn as a security); source_vendor_keys carried | `bun test iv-e-96` re-run by this seat: `CATEGORY-NODES-OK` through the real adapter over the Cottonwood smoke wire (per the commit: table and map list only the two securities, the card reads Models 120000 / Client 80000 from served amounts, vendor keys served-or-null); CI success; no render | **NOT GRADED** (real run). Unit evidence holds; claim class FIXTURE WIRE |
+
 Observations from `ir-holdings-1440.png`, outside each pin's claim:
 - **O-a (a ruling conflict, for 1.0.0_SA_CTO):** the Securities Map and Securities footers read "Source:
   investor_reporting/holdings_publisher." (`slices.ts:344` prints the served `provenance.sourceCoordinate` under IV-e-63
