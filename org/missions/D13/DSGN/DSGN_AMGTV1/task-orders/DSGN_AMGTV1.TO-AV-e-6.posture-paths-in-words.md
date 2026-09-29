@@ -79,7 +79,7 @@ outer commit hashes, and any row.
 **ISSUER NOTES:** round 2 = the round-1 analysis's enrichment list @80dc63c5d2 section 5 (CTO msg 26481). Decomposition v2.
 Base f1a90a9b: AC1 20 hits (FAIL as expected); AC2 4 of 4 (PASS).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~8</slot>
 <fabric>site-z</fabric>
