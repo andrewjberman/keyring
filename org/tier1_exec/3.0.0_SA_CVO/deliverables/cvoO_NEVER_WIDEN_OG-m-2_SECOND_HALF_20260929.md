@@ -1,5 +1,23 @@
 # Never-widen SECOND half: NFRA_OPLGTW OG-m-2 (the 49F gold dispatcher remedy) -- SIGNED, with one outcome correction
 
+> **AMENDED 2026-09-29 ~01:3xZ -- OG-m-2a is COVERED as a strict subset** (1.0.0_SA_CTO~O, msg 26361, ruling Z-W15-S3;
+> branch (B) ruled in msg 26355). Split:
+> - **OG-m-2a ships:** the qualified-marker gate plus the e2be5c2f42 rider. The only IAM addition is `s3:GetObject`
+>   and `s3:GetObjectVersion` on `arn:aws:s3:::opal-data-assets/schwab/08335338/meta/complete/*`. There is NO
+>   `chain_*` grant, NO classifier change, and no chain-log literal, local or env var.
+> - **OG-m-2b** (the chain-log classifier) is HELD. This half does not cover it until it is re-asked.
+>
+> Guards, restated for 2a:
+> - **M1** is settled: branch (B), 2a.
+> - **M2** now reads: the live inline policy carries EXACTLY the 5 prior statements plus those 2 actions on that one
+>   ARN. There is no `opal-data-49financial` resource and no `s3:ListBucket`. Anything more voids this half.
+> - **M3** now reads: the deploy-time diff of `lambda_function.py` is the gate plus the rider only. Any classifier
+>   change voids this half.
+>
+> Expected outcome, from the gate's rule: accelerator dispatches go from about 10 per date to 1 per qualified date,
+> and to 0 on a date that never qualifies, when the floor runs as today. The dispatcher's OK/UNKNOWN classification is
+> UNCHANGED in 2a: the "UNKNOWN" verdicts stay until 2b.
+
 Signer: `3.0.0_SA_CVO~O` (the non-acting half), 2026-09-29 ~01:1xZ.
 Ask: `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_OG-m-2_20260929.md` @14d3ce32a8
 (msg 26337). CTO half SIGNED @c7510ec012.
