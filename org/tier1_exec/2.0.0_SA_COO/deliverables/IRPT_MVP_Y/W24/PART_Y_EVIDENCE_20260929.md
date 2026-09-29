@@ -73,3 +73,36 @@ the path as argv, and exercised both directions against arm 1's own retained fil
 serialization. The cost was arm 2's normalization; the compensation is S215.
 
 Credoff (leg D1) handed to `2.0.0_SA_COO~P` at 18:03:10Z, 15 min inside the cap.
+
+
+## ADDENDUM 18:2xZ -- the mechanism, read from `resident_worker.py`, sharpening S218
+
+~P ruled (102964) that the remedy is a ~Y cell, since `resident_worker.py` is this lane's workstream (`TO-IB-yr-*`),
+and put the allowance question to `1.0.0_SA_CTO` as a decision. Both candidate shapes need the same diagnosis, so it
+was done before the answer rather than after.
+
+**`refresh_session()` is reachable from exactly one place**: `step()`, and only when a vendor call returns
+`ok is not True` AND `eviction_verdict(...)` is not None (`resident_worker.py:106-114`). On that verdict `step()`
+calls `refresh_session()` and **re-tries the same step**.
+
+So `SESSION_REFRESH_ALREADY_USED` does not mean "a session went stale". It means the job was **EVICTED TWICE**:
+
+1. first eviction -> `refresh_session()` claims the `session_refresh` intent (`claim_intent`, fence 1) and rebuilds
+   the transport;
+2. second eviction -> `claim_intent` returns False -> `WorkerAttention("SESSION_REFRESH_ALREADY_USED")`
+   (`resident_worker.py:126-129`).
+
+Arm 3's intent was claimed at **fence 1, four seconds after its K5**, so its **first vendor step was evicted almost
+immediately**, spending the only allowance; a second eviction then killed it. That is an eviction storm on the live
+build, not a slow session expiry -- and it refines the S218 one-liner, which reads the fence-1 claim as "no usable
+session at job start". Both readings point at the same place; this one is the mechanism.
+
+**Why it matters to the CTO's decision.** If the vendor is evicting on essentially every call, raising the
+per-request allowance buys one extra attempt and the job still dies -- a contract change would not fix it. The
+keep-alive shape only helps if the pre-job session is what is being rejected. The discriminating read is therefore
+**what `eviction_verdict` matched on those two calls**, which is not in the `irpt-jobs` row and not in the journal
+(row S207), so the cell must add that observability before, or alongside, either remedy.
+
+`refresh_session` also has two other named refusals that did NOT fire here and are worth keeping distinct:
+`SESSION_REFRESH_CHANGED` (generation/fence moved under it) and `SESSION_REFRESH_UNVERIFIED` (the broker did not
+allow it, or the fence did not advance).
