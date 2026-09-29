@@ -252,5 +252,19 @@
     "spec_asserts": "TO-AV-r-4 AC1 expects EXEC ABSENCE IN WORDS 3 of 3; the order says the exec check excludes nothing and the string is AV-r-1's.",
     "world_is": "Arm A reads hits=[crosswalk/v1] only; it clears when AV-r-1 lands IdentityLine, not by any change in this cell's paths."
   }
+  ,{
+    "id": "DSGN_AMGTV1-Z-W12-S2",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~12",
+    "surfaced_at": "2026-09-29T11:10Z",
+    "one_line": "Resolves DSGN_AMGTV1-Z-W12-S1: after AV-r-1 drained (DEV f0fbac5b, cb25695b) exec.cjs reads 3 of 3 arms, exit=0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {"status": "GROUNDED", "evidence": ["node round3/checks/exec.cjs on portal branch wk-DSGN_AMGTV1-12-portal merged with DEV: EXEC ABSENCE IN WORDS: 3 of 3 arms, exit=0; issuer ruling to 0.9.0_WK_DSGN_AMGTV1~12"]},
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W12-S1: arm A clears when AV-r-1 lands IdentityLine.",
+    "world_is": "Arm A hits=[] on the drained base; S1's cause is resolved by the re-grade."
+  }
 ]
 ```
