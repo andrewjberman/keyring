@@ -131,6 +131,48 @@
     "spec_asserts": "PRD v0.3 FWD-1 DONE WHEN: one live walk ending in Valero's Recommendation card open, where the PM can say whose view it is; THE THREAD hop 6 makes the dossier route (the team's position) round 2's first enrichment input.",
     "world_is": "The team's position is now served as model.team_cases (AMGT_RESAPP vv-2), and Valero's are all ABSENT in the research dossier; the round-2 cell AV-e-2 renders the team's case where served and a plain ABSENT sentence where not.",
     "notes": "Filed by the issuer at the round-2 cut (decomposition v2). Not a DSGN cell: the page renders both states correctly."
+  },
+  {
+    "id": "DSGN_AMGTV1-Z-W8-S1",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~8",
+    "surfaced_at": "2026-09-29T08:10Z",
+    "one_line": "AV-e-6: two posture.harness.cjs checks (coverage_line_per_side, comparable_incomplete_line) read the raw absent-source string with side.includes(esc(src)); after the build they still pass, but only because the raw string now sits in a data attribute, so no harness edit was made.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/posture.harness.cjs:476 (pack.absent.every(src => side.includes(esc(src)))) and :480-485 (missing.every(src => incompleteRegion.includes(esc(src)))) at f1a90a9b",
+        "bound.cjs E6 posture.harness.cjs:32 ... exit=0, posture.harness.cjs CHECKS-OK 32 of 32 on portal 9625bd28 on wk-DSGN_AMGTV1-8-portal; the raw strings are now emitted in data-posture-absent-source and data-posture-missing-sources"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AV-e-6 section 1: if a bound harness check is anchored on the raw text this cell removes, re-anchor that ONE check onto the same fact as the page now states it and record old anchor -> new.",
+    "world_is": "Two checks are anchored on the raw text; the harness file is outside this order's <paths> (a worker may not edit it) and needed no edit, since an HTML-escaped attribute value contains the same escaped string. Old anchor = the raw source string in the visible list item and in the incomplete line's text; new (effective) anchor = the same string in data-posture-absent-source / data-posture-missing-sources. The checks no longer assert the plain-words sentence; a later cell owning the harness may re-anchor them onto the words.",
+    "notes": "Worker-authored record; form only, no significance judged."
+  },
+  {
+    "id": "DSGN_AMGTV1-Z-W8-S2",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~8",
+    "surfaced_at": "2026-09-29T08:12Z",
+    "one_line": "AV-e-6: the Posture face can still print a vendor mnemonic (resolved F: cites read 'figure <MNEMONIC> FY..'), a fit preset code and the 'UNRESOLVED: <key>' comparable fallback; the raw census does not see them on Valero's fixture (0 figures, presets DIVZ/PFOE).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/postureCites.ts figure branch (hit('figure ${mnemonic}...')) and portal/src/pages/SecurityAnalysis/tabs/PostureTab.tsx comparableText() fallback, at portal 9625bd28 on wk-DSGN_AMGTV1-8-portal",
+        "raw.cjs posture -> mnemonic=0; machine_word=0; storage_path=0 on the Valero + WMB fixtures: no fixture cite resolves an F: element, so the branch is unexercised by AC1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AV-e-6 section 1 and C-PRESENTATION-ONLY: a code or path may sit in a data attribute or in code, never in visible text; the page looks up no name.",
+    "world_is": "The payload carries a figure's mnemonic but no plain label, so words for it would need a lookup the page may not make; left unchanged. A name whose model block is served would print its mnemonic in an F: cite.",
+    "notes": "Worker-authored record; not fixed here (a label needs the payload to carry one)."
   }
 ]
 ```
