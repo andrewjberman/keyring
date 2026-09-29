@@ -82,7 +82,7 @@ change to how `is_roundup` is produced, no vendor call.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~49</slot>
 <fabric>site-z</fabric>
