@@ -88,7 +88,7 @@ READ-ONLY: the whole repository and every S3 object.
 uu-4's served verification (decomposition s.54e), its worktree cut from CLOUD at that moment. Base: AC1/AC2 FAIL (MISSING file),
 AC3 PASS (bound). No dev server: port 5174 is Andrew's walk build (record @c027b4726f); the issuer's real run at close is on it.
 
-<status>pending</status>
+<status>complete</status>
 <round>46</round>
 <slot>~167</slot>
 <fabric>site-z</fabric>
