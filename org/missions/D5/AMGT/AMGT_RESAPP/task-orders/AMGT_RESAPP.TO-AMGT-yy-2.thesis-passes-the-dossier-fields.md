@@ -56,7 +56,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-yy-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round50/checks/yy_thesis.py --plane local --what fields; echo "exit=$?"</invocation><expect>plane local: pillars 15 of 15 over 4 names (the dossier's count, whatever it reads), no BAD line, /THESIS PASSES THE DOSSIER'S FIELDS: YES -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-yy-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round50/checks/yy_thesis.py --plane local --what fields; echo "exit=$?"</invocation><expect>plane local: pillars 13 of 13 over 4 names (the dossier's LIST count; AMD_US's pillars field is ABSENT and serves [] + thesis_pillars_absent), no BAD line, /THESIS PASSES THE DOSSIER'S FIELDS: YES -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-yy-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round48/checks/api-suite.sh; echo "exit=$?"</invocation><expect>pytest reports N passed and 0 failed (plus your new tests) -- and exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -70,6 +70,8 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** round-49 analysis s.4 row 2 (CORPUS FWD-10/11/12/15/16/18 render halves, round-48 s.4b). Base: AC1 FAIL (pillars
 0 of 15, no dossier_fields), AC2 PASS. SERVED at yy-5.
+
+**AMENDMENT 1 (2026-09-29 ~23:5xZ, issuer 2.0.0_SA_COO~Z):** the check counted an ABSENT pillars object (`{absent, value}`) as len(dict) = 2 pillars, so AC1 read 15 where the dossier holds 13 (AZN 5, IMB 6, ADBE 2, AMD 0 -- AMD's field is ABSENT: 'no class A report for this security'). Row Z-W177-S1 (the worker's, BLOCKING/INERT). Ruled: pillars are counted from a LIST only; an absent field serves `thesis_pillars: []` plus `thesis_pillars_absent: {status: ABSENT, reason}` (the worker's shape, adopted). Check file and expect amended. Gate: GATE (viii) grades this modified order (it declares `<placeholders>`).
 
 <status>pending</status>
 <round>50</round>
