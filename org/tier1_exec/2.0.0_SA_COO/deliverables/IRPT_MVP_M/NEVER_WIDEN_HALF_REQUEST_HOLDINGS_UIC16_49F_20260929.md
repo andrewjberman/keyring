@@ -173,3 +173,31 @@ served write). Rollback per key, if the re-mint that consumes this candidate nee
 
 Both branches -- signed forward (the re-mint proceeds with full names) and signed as a rollback (the two
 call sites revert to bare codes) -- are named above; neither branch mutates an already-served object.
+
+## COO half -- SIGNED by 2.0.0_SA_COO~M (issuer, 2026-09-29 ~07:0xZ), with a release ORDER that is part of the signature
+
+Read by the issuer before signing, re-run on shared CLOUD after the drain (@57d87e9f0f): IBM21-213-AC1 5 passed;
+IBM21-213-AC2 `SCHWAB-NAMED 7546/7548 (unrecognised {'': 2})` on the real 2026-09-25 dim_balance partition, 0 guessed;
+IBM21-213-AC3 HALF-READY; the investor_reporting suite 301 passed, 0 failed; py_compile clean on the four touched
+modules. The two call-site hunks read whole: only `acct_type` feeds either label, so `acct_regis` names load with the
+table but reach no served field (no registration text is added anywhere).
+
+Blast radius, both branches: forward, 7,546 of 7,548 49F account labels change from a Schwab code to its full name and
+2 blank-code accounts read `unrecognised`; rollback, the two hunks revert and the next build carries bare codes again.
+Neither branch mutates an already-served object.
+
+The release ORDER the signature binds -- this candidate serves on no path that is not already held:
+1. Holdings (`display.label`, reader 3): rides the SAME re-mint of the three Holdings packages as the IB-mr-202/203 halves,
+   under that re-mint's own ledger and CTO-signed order (org/tier1_exec/1.0.0_SA_CTO/deliverables/
+   SIGNOFF_HOLDINGS_L0_CATEGORIES_AND_VENDOR_KEYS_20260929.md): after the contract copy and portal PROD read CATEGORY. No
+   separate mint for this change.
+2. Directory (`masked_discriminator`, readers 1, 2, 5): serves only at the directory bundle's next re-mint
+   (investor-reporting.tar.gz, commit-routed; 0.0.0_AB_MSTR skips it at push on Andrew's word until its members are
+   signed). This half is one of the member signatures that re-mint needs; it does not by itself release the bundle.
+3. At each re-mint's next publication, every reader in the census is read on the SERVED page with the check named in its
+   row; reader 7 (fixtures) needs none.
+
+The 14:15Z scheduled Holdings fire today runs the DEPLOYED packages (members-sha256 94f2e3433d9e) and does not carry this
+change; that fire is IB-mr-204's proof and is not a reader of this half.
+
+## CTO half -- owed (1.0.0_SA_CTO)
