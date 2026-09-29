@@ -92,7 +92,7 @@ ran); AC2 FAIL (base line ends at `unit_carried 10`). The drain: ONE pair for ch
 the cut: the chain moves no input, so without the bump `write_one`'s no-op would write 0 on every name) -> every name writes.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
