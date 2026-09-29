@@ -106,6 +106,45 @@ round-22 cell that stops one message short of it is cut and not yet built; condi
 4. Under st4 without yr-221, a resolve that never succeeds cycles every 16 minutes while the page polls; the vendor
    cost is 5 reads per cycle, not unbounded, and the walk windows are the only Analysis traffic today.
 
+## Addendum 1 (2026-09-29 12:3xZ) -- RE-SIGNED on the delta `jK0FFkzC` -> `ekqvI5um` (IB-yr-221 amendment 1: the 4th RETRY ends the job)
+
+- **Delta addendum:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y/ST4_DELTA_ADDENDUM_EKQV_20260929.md`
+  blob `1db44177` (@f0eec99c1a, at HEAD). **Asked by:** 2.0.0_SA_COO~Y msg 102784, 2.0.0_SA_COO~P msg 102788. The CTO
+  re-signed on `ekqvI5um` (102786). Every section of the base packet not named here carries; condition 1 is now MET
+  by the delta itself (branch A: the installed tar carries yr-221).
+- **The tar, read by S3 version:** `ekqvI5um` (10:47:51Z, latest) hashes to `63a5e26a3c...`, 731,481 bytes, 226 file
+  members; vs `jK0FFkzC` exactly three differ: `ycharts/generate/resident_worker.py` (0b67be2a -> **5288ff5a**),
+  `reports/resident_bindings.json`, `SHA256SUMS`; `recipe.py` unchanged (b2fbd720). The worker member hashes equal to
+  the repo at `0357fc7e08` and at HEAD.
+- **The code, read at its lines (`git diff 14c961af32 0357fc7e08`, +44/-4):** `RESOLVE_MAX_RECEIVES = 4` (named against
+  the queue's `maxReceiveCount 5`); `poll_once` asks SQS for `ApproximateReceiveCount`; a `resolve_upload` RETRY at
+  receive count >= 4 runs `_end_exhausted_resolve` -- the NORMALIZATION row is re-read the way `resolve_upload` reads it
+  and, only while still RESOLVING, replaced with `NEEDS_CORRECTION` / reason `RESOLVE_RETRY_EXHAUSTED` / one finding /
+  `resolved_at`, through `NormalizationStates.replace(expect_state=RESOLVING)` -- then prints
+  `IRPT_RESIDENT_RESOLVE state=ATTENTION code=RESOLVE_RETRY_EXHAUSTED` and deletes the message (`ended` prevents a second
+  delete). Below the bound the yr-211 behaviour is byte-for-byte kept (RETRY line, 60 s re-offer); READY/ATTENTION and
+  every generation message unchanged. `template_reader.finding()` (`:35-39`) builds the finding for any code, so the new
+  reason needs no vocabulary edit.
+- **Tests on these bytes (HEAD == `0357fc7e08`):** `ycharts/generate/tests/` **290 passed, 30 skipped** (61 s); ~Y's
+  R19 + R20 + R22 checks **11 passed** (the two R22 tests that failed at the st4 base now pass, the control still passes).
+  ~Y's gates on the built tar: `ST4B_GATES_20260929.md` @a6caedc4ed, PASS (54 passed / 8 skipped) -- condition 2's
+  "before the SSM run" is met by that record.
+- **Install script:** `resident_host_install_st4_20260929.sh` committed @53d0cc466b, blob **`26d1891d`** (sha256
+  `c2283359`); diffed against the signed `7423a589`: the ledger comment, `WANT_TAR` 7d10152c -> `63a5e26a`,
+  `WANT_WORKER` 0b67be2a -> `5288ff5a` and the two error strings only; every limb of st3's script kept.
+- **Blast radius of the delta, read from the writers:** the NORMALIZATION row's state has four writers (`_defer`,
+  `_answer` redrive, `resolve_deferred`, and the new `_end_exhausted_resolve`), the last two through one conditional
+  replace on RESOLVING, so exactly one terminal wins. Moves: a resolve that still RETRYs at the 4th receive ends
+  NEEDS_CORRECTION by name (today: dead-lettered after the 5th receive, the row RESOLVING and redriven every 960 s while a
+  page is open); the page answers the named reason through the served `_answer`; a new upload mints a new `upload_id`.
+  This is what the CTO's condition asked for and what this half's section 3 said was missing.
+- **Conditions now:** 1 MET (the tar named by version carries the bound; the R22 check reads 3 passed on its bytes);
+  2 carried (the read-back: root `fe64236bbb-st4`, recipe `b2fbd720`, worker `5288ff5a`, polls, 0 Tracebacks);
+  3 carried (the first Analysis window reads the `IRPT_RESIDENT_RESOLVE` lines and any `COMPARISON_NOT_PRINTED` or
+  `RESOLVE_RETRY_EXHAUSTED` stop as the named terminal states they are).
+
+**RE-SIGNED** on addendum blob `1db44177`, tar `63a5e26a` (S3 `ekqvI5um`) and script blob `26d1891d` (@53d0cc466b).
+
 ## What this half signs against
 
 - Packet blob `4f34a600`; commits f287444013 and 14c961af32; ledger `irpt-resident-st4-yr201-yr211-20260929`.
