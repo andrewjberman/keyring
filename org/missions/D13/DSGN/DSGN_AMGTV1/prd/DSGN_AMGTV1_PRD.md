@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -147,6 +147,12 @@ govern.
 fallback order filing -> dossier -> Bloomberg -> Lusha -> search, every vendor leg on Andrew's per-use word, the page
 naming each roster's source; F4 Opal Data Harvest only on the timeline in round 1; F5 this project owns presentation,
 AMGT_RESAPP keeps the payloads.
+
+**C-CASE-UNIT (v0.3, AMGT_CORPUS round-9 analysis ruling 1).** A team case figure carries `unit_as_written` (the symbol the
+team typed) and a `currency` that may be null. The page prints the team's figure with the team's symbol and "as written in
+the team's pack", and never beside the Price tile as if in the listing's currency (on 5 of 8 names read, the symbol is not
+the listing currency). FWD-4's "every money figure in the company's own currency" binds served figures, not a pack's typed
+symbol.
 
 **C-ASKS (owned elsewhere; this project renders them when served):**
 
