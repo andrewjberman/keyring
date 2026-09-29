@@ -72,6 +72,39 @@ Each is: one `live_chain.py` run (one login, one K4, one K5, no retry), then `jo
 **Preflight, all six validated OFFLINE at 16:0xZ after the `live_submit.py` repair @4d676b93a9** (row
 `IRPT_BCKEND-S211`): 5 of 5 body shapes print `K5 body validates` (Y5 and Y6 share a shape).
 
+## START GATE -- computed 16:58Z, 80 min to the cap
+
+Latest moment Y1 can start for N arms to finish, from W22's measured 16.4 min (fast) and 31.5 min (slow) per job
+plus the 20 s floor:
+
+| arms wanted | Y1 must start by, if all fast | if all slow |
+|---|---|---|
+| 1 (Multi-Comp) | 18:02Z | 17:47Z |
+| 2 (+ Target Weight) | 17:45Z | 17:15Z |
+| 3 (+ 49financial) | 17:28Z | **16:43Z -- PASSED** |
+| 4 (+ Inflection) | 17:11Z | **16:11Z -- PASSED** |
+| 5 (+ discriminator) | **16:55Z -- PASSED** | **15:39Z -- PASSED** |
+
+**The discriminator is DROPPED BY NAME.** ~P ruled it at 102921 on this measured budget -- its latest start of
+16:55Z had passed. **Arms 1-4 only** (Multi-Comp, Target Weight, 49financial, Inflection), in order, each
+serialized on the jobs terminal + 20 s. ~P's rule, adopted verbatim: **do not start an arm whose SLOW-CASE
+finish passes 18:18:34Z; name it CAP-TRUNCATED instead.** That is stricter than my 5-32 min band below, and it
+governs: an arm is started only when `now + 31.5 min <= 18:18:34Z`, i.e. **Y1 by 17:47Z for one arm, and each
+subsequent arm by its own row in the table above.** S206 stays an open row, its discriminator carried to a
+later window.
+
+**The gate, per body, and it is not binary.** A body has two products: the NORMALIZATION verdict (seconds to ~3 min,
+which is the S193 / S206 evidence) and the REPORT (16-32 min). So before starting body N, read the clock:
+
+- **remaining >= 32 min** -- start it; a report is plausible.
+- **5-32 min remaining** -- starting still yields a normalization verdict and a K5 acceptance, but probably no report.
+  Start only if that arm's value is the resolve evidence. **For Y2, Y3 and Y4 the value IS the report**, so a late
+  start does NOT close those arms -- it spends a submission and leaves the arm carried anyway.
+- **< 5 min remaining** -- do not start. An arm never started carries forward clean; an arm started and caught by the
+  cap records a fail against it for a reason that is the clock, not the system.
+
+`WALK_DEADLINE` is always the cap itself, never `now + 35 min`, so nothing can run past it.
+
 ## Pre-window check at 16:4xZ -- the Multi-Comp keys, which have NEVER been sent successfully
 
 W22's Y2 died at normalization before its K5, so `opal_short_term` + `opal_intermediate_term` have never actually
