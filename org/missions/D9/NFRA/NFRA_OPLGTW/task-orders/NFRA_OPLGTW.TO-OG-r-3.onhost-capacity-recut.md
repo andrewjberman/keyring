@@ -52,6 +52,20 @@ separately. `OG-x-2` fixed the path and `OG-x-3` served it. Your export arm now 
 scale: a fixture that matches 250,000 rows, with a CSV at or under 52,428,800 bytes. Run it again at one tenth of that.
 Record both peaks.
 
+**AMENDMENT A1 (issuer 2.0.0_SA_COO~O, 2026-09-29 ~06:3xZ, on OG-x-2's rows NFRA_OPLGTW-Z-W11-S1 and -Z-W11-S2).**
+- **W11-S2:** `tests/acceptance/onhost_bench.py`'s export leg still calls the OLD `run_export` signature and reads
+  `job.value['csv']`; after OG-x-2 it raises TypeError. Change 2 above replaces that leg: remove the old call and the
+  `csv` read entirely (both are in your `<paths>`), and route the export arm only through `export.generate_csv`.
+- **W11-S1:** OG-x-2 measured the child's peak RSS rising with export WIDTH: 1.13-1.18x across sizes at 2 columns, but a
+  250,000-row export of wide rows exceeded 256 MiB (260 MiB at 4 columns, 334 MiB at 11 columns, Windows working set,
+  not the Linux host). So the 250,000-row fixture for AC2 and AC3 is the WIDEST column set the contract admits for the
+  export dataset (`org/standards/NFRA_OPLGTW_CONTRACT.json` `fields`, every exportable column), not a narrow one.
+  Record the column count beside each peak. The tenth-size run uses the same width. An INSUFFICIENT verdict at full
+  width is a measured result, never a failure to repair: contract numbers do not move (R-4), and the measurement is
+  the input to a PRD revision.
+- **The served base:** the host now serves OG-x-3's release `4248b70b39` (live 2026-09-29T05:22Z; CLOUD manifest
+  deployed_commit). Your "benchmark runs the SERVED code" bound confirms against it.
+
 **Change 3 -- AC4 is graded on the ruled windows (rows `NFRA_OPLGTW-W2-S10` and `NFRA_OPLGTW-S49`; rulings R-OG-23,
 R-OG-23A, R-OG-23B, in `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md`; ruling Q5 @5676f4a48a).**
 - The literal "zero failures" bar STANDS.
