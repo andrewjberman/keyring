@@ -1156,3 +1156,19 @@ account (today: the thread account only). Otherwise every other 49F account woul
 asked of 1.0.0_SA_CTO to place.
 
 fanout: 1 of 1 chains, cap 8.
+
+
+## 16. WORKSTREAM ~E, ROUND 2 (2026-09-29 ~01:4xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ruling 102520 and PRD v0.19 rulings 4, 6, 9, 12)
+
+The 49F gold goes from the thread account to every account, over the full history, and gets its production trigger.
+~P's adapter switch (round 20) serves only after this round's manifest reads complete.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-202` | FWD-3 (49F): gold for every account 2024-07-09..2026-09-25, manifest complete | WORLD (new gold objects; nothing served moves) | ~E r1 | E2a |
+| `IB-er-203` | FWD-3: the daily schedule irpt-holdings-performance-daily + runner Lambda, own ledger | WORLD (new infra) | none | E2b |
+
+IB-er-203 goes to a ~P worker slot because the schedule and Lambda are Terraform (rule 13 keeps the DS seat on
+gold scripts); the path grant is the order's `<paths>`, and the producer stays the DS seat's code.
+
+fanout: 2 of 2 chains, cap 8.
