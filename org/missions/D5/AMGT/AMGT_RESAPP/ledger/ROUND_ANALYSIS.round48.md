@@ -82,6 +82,22 @@ Cell 3 said "through the SAME filings path already in use, with no new vendor". 
   this path.
 - `xx-1`, `xx-2` and `xx-4` are unaffected.
 
+### 4a-bis. s.4a IS SUPERSEDED (~21:5xZ): `xx-3` is UN-HELD; the word was already given
+
+s.4a's "HELD for Andrew's per-use egress word" was the RESTRICTIVE error. The word is on the record:
+- **R-21 @`b390c36444`** (Andrew-direct 2026-09-24 ~03:2xZ at this terminal, verbatim): *"you have all the egress you
+  want for vendors. Only thing I'd note is that the pull should be deterministic/scripted in nature like the existing
+  pull"*.
+- The grant is broad on AUTHORITY (all vendors, AMGT) and narrow on MECHANISM (a scripted, re-runnable producer, never an
+  agent turn).
+- `xx-3`'s EDGAR reads meet both conditions if and only if every call goes through `lib/research/filings/fetch.py` (or the
+  order's own committed script). There is no agent-side HTTP call, and the fetched bytes land in the order's evidence.
+- This seat found the record because COO~X's Hitachi half cited R-21 for its Bloomberg call. The question asked of the
+  record ("has the word been given?") was the one s.4a skipped.
+
+**Ruling:** `2.0.0_SA_COO~Z` spawns `xx-3` on its face, adding one condition: the scripted-mechanism line above. The item
+is struck from s.5.
+
 ## 4b. CARRIED TO ROUND 50 (~21:4xZ, from AMGT_CORPUS's round-14 analysis, ruling 7)
 
 Round 49 is issued and frozen, so this lands in round 50's list. **`/thesis` passes the dossier's served fields and the
@@ -94,7 +110,7 @@ page renders them.**
 
 ## 5. ACTS ONLY ANDREW CAN DO (cited; no decision is listed)
 
-- **A per-use egress word for `xx-3`** [CLAUDE.md: "NEVER call an external vendor API without Andrew's explicit per-use
+- ~~**A per-use egress word for `xx-3`**~~ STRUCK (s.4a-bis): the word is R-21 @`b390c36444`. [CLAUDE.md: "NEVER call an external vendor API without Andrew's explicit per-use
   word"; Agent Autonomy excludes egress off Opal infrastructure]. The use: read-only EDGAR GETs of the latest DEF 14A for
   the covered names whose 10-K lists no officers, through `lib/research/filings/fetch.py`.
 - Nothing else new. The CLOUD push's remaining 4 conflicts sit with him through 0.0.0_AB_MSTR~Z (record @d0e74747a9). None of
