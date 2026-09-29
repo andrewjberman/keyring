@@ -4894,3 +4894,75 @@ name the one known failure instead of silently inheriting it.
   "notes": "Still ARMED with the issuer, and why. W3-S9 and S61: the principal re-key is BUILT at HEAD (app/tier.py:84 keys MASTER_ADMIN on the tid/oid principal, no email fallback, all 4 production call sites pass the principal) but NOT SERVED -- tier.py at the live release 63264dfb22 is blob 63306f02d6, HEAD is 56e6429c78; they disarm when OG-t-2 serves it (held on Andrew's switchover sitting). W2-S8 and Z-W13-S5 (CRLF on 7 extensions; the naming limb refuses DATA_CATALOG.yaml's line-ending renormalization) and W2-S10/S49 (AC6's 5xx bar) and S43 (out-of-repo evidence paths) go on the L10 slug as the repair-batch candidates."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W14-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~14",
+  "surfaced_at": "2026-09-29T16:00Z",
+  "one_line": "An untargeted plan of the opal-gateway root fails with an archive error in the worktree: the mcportal grant-writer lambda staging directory .build/staged is missing; the worktree also had no .terraform, so terraform init -reconfigure was run once.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:39 data archive_file.mcportal_grant_writer; error: could not archive missing directory ./../../lambda/mcportal/mcportal-grant-writer-lambda/.build/staged (gitignored build output, absent in this worktree; only the layer zip was placed).",
+      "Before the init, terraform plan said 'Backend initialization required'; terraform init -reconfigure -input=false was run in infra/aws/terraform/opal-gateway (writes the gitignored .terraform only)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-n-1 step 3: run ONE untargeted plan and record its resource list.",
+  "world_is": "The untargeted plan lists only the 2 EIP resources to add (0 change, 0 destroy) before the archive_file error; it errors instead of completing, so no full-root drift list exists. The targeted plan read '2 to add, 0 to change, 0 to destroy'. Nothing was built or fetched.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W14-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~14",
+  "surfaced_at": "2026-09-29T16:20Z",
+  "one_line": "BLOCKING OG-n-1 step 5: safe-apply fails closed because its tag-authz gate plans the WHOLE root, and data.archive_file.mcportal_grant_writer needs the gitignored lambda/mcportal/mcportal-grant-writer-lambda/.build/staged directory, absent in this worktree; nothing was applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-apply output: 'could not produce a plan JSON to run the tag-authz gate on ... Refusing to apply. (Fail closed.)' cause: could not archive missing directory ./../../lambda/mcportal/mcportal-grant-writer-lambda/.build/staged (mcportal_grant_writer.tf:39).",
+      "The staged directory exists at C:/tmp/mp3-1/infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged; this worktree has only the layer zip the issuer placed. Copying it is outside the order's <paths> and the order says never build or fetch, so it was not copied; TAGAUTHZ_OVERRIDE was not used.",
+      "ARMED because ledger nfra-oplgtw-gateway-eip is committed OPEN (062e036d54) with nothing applied; it needs closing or holding by the issuer if the order is not resumed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-n-1 step 2/5: with the layer zip in place, safe-apply apply -target=... of the two EIP resources can run.",
+  "world_is": "The targeted plan passes (2 to add) but safe-apply's gate plans untargeted and needs the grant-writer's .build/staged directory too. Fix: the issuer places (copies from C:/tmp/mp3-1) that directory in C:/tmp/wk-oplgtw-14, then the apply is re-run."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W14-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~14",
+  "surfaced_at": "2026-09-29T20:05Z",
+  "one_line": "OG-n-1 step 5's literal safe-apply command stops at terraform's approval prompt (error asking for approval: EOF, rc=1, nothing applied); the apply was re-run with the terraform argument -auto-approve, no safe-apply override.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First run: safe-apply passed its gates, terraform printed 'Plan: 2 to add, 0 to change, 0 to destroy.' then 'Error: error asking for approval: EOF' (no TTY). Second run: bash .tools/safe-apply.sh apply -auto-approve -target=aws_eip.gw -target=aws_eip_association.gw rc=0; the plan was the same 2 to add; the untargeted plan after the staged dir was placed also read 2 to add, 0 to change, 0 to destroy (aws_eip.gw, aws_eip_association.gw only), so no NFRA_MCPORTAL drift."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-n-1 step 5: bash .tools/safe-apply.sh apply -target=aws_eip.gw -target=aws_eip_association.gw.",
+  "world_is": "The command needs -auto-approve in a non-interactive worker; TAGAUTHZ_OVERRIDE and every safe-apply override stayed unset.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
