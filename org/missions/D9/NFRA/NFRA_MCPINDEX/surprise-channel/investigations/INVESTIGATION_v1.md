@@ -2773,6 +2773,30 @@ carries none.
     "spec_asserts": "Order item 1: add the keywords 'through the emitter's source, never a hand edit of DATA_CATALOG.yaml'.",
     "world_is": "The emitter had no source to add to for a channel's keywords, so the authored map is new emitter code (in the order's <paths>). A later emitter run keeps the keywords because the map is authored, and also because they are now in the re-read catalog.",
     "notes": "The keywords sit on channel market_regime_trending, whose 2 rows are mkt.01 and mkt.02; keywords are a channel field, there is no row-level keyword."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W16-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~16",
+    "surfaced_at": "2026-09-29T06:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-i-5 PHASE A: none of the 4 BD Playwright documents proves DEAD on the ruled predicate -- each one's merge step (step 4) still writes into silver/<leg>/ and its manifest after LAST_NON_FAILING 2026-06-22; only the download step is dead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DEAD_PROOF_MX-i-5.md in org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~16/ (per-step table; S3 list-object-versions of forwardfill_v2/<leg>/, silver/<leg>/ and the 4 silver/incremental_*manifest.json keys, read 2026-09-29 ~05:30-06:30Z; the silver objects were read BY VersionId for num_rows via pyarrow).",
+        "Download step: 21 of 21 retained SSM runs per document Failed at $LATEST; 70 of 70 log objects dated after 2026-06-22 record failure per leg, and in every one of them Download exit code = 1 and Merge exit code = 0 (70 of 70 x 4 legs).",
+        "Merge step, objects written INSIDE the leg's own window (rule minute to +45 min) after 2026-06-22: silver allocations 9 (last 2026-07-03T22:00Z), realized 35 (35 of 35 read have rows>0, last 2026-09-28T21:46Z, 11,298 rows), transactions 35 (11 of 35 rows>0, last rows>0 2026-07-17; the 24 since are 0-row 34,882 B, last 2026-09-28T21:54Z), unrealized 277 (2 of 106 read rows>0, last 2026-07-02T21:41Z; 104 are 0-row 8,016 B rewrites of six stale partitions 2026-07-03..07-09, daily to 2026-09-28T21:40Z). Manifest writes in own window: 4 / 31 / 31 / 50, last 2026-07-03 / 09-28 / 09-28 / 09-28.",
+        "Input consumed by the merge from ANOTHER producer: forwardfill_v2/<leg>/ objects written 00:00-01:30Z (bd-49f-session-daily chain), 0 written in any leg's own window since LAST_NON_FAILING (0 of 47 / 180 / 788 / 47)."
+      ]
+    },
+    "spec_asserts": "MX-i-5 step 1 and R-15: each of the 4 legs is proven dead at two grains, the leg's own output prefix shows 0 objects since LAST_NON_FAILING, so all 4 rules are disabled (AC2 4 to change, AC3 OUTPUT_SINCE 0 x4). Issuer ruling of 2026-09-29 ~06:2xZ: dead is proven per DOCUMENT across EVERY step.",
+    "world_is": "The download step is dead in all 4; every document also runs a merge step (step 4) that succeeds (Merge exit code 0 in 70 of 70 runs per leg) and writes silver/<leg>/ partitions and its manifest. The attribution to the leg is INFERRED from time of day (the bronze producer lands at 00:00-01:30Z, the leg fires 21:38-22:00Z), not from a principal: no S3 data-event trail was read. By the ruled predicate all 4 read LIVE. Row-bearing own-window silver writes: realized through 2026-09-28; transaction through 2026-07-17; allocation and unrealized through 2026-07-02 (allocation has no own-window write of any kind after 2026-07-03T22:00:50Z). Nothing was changed: no Terraform edit, no plan.",
+    "notes": "Which of the 4 the issuer treats as disarmable on the 0-row-only evidence (allocation, unrealized) is the issuer's ruling, not measured here. The daily failed login and secret read stay live until that ruling, which is why the row is ARMED."
   }
 ]
 ```
