@@ -1254,3 +1254,18 @@ the one schedule is 49F's (source schwab_08335338). Cottonwood follows as its ow
 Slot 80 (S197: 1 + max(author lines 79, issued_to 79, branches 79)).
 
 fanout: 1 of 1 chains, cap 8.
+
+## 22. ROUND 24, WORKSTREAM ~P (2026-09-29 ~18:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO 102951/102969 and row S216)
+
+Inflection's RAW Orion files stopped after 2026-09-27. Only the parquet copy of positions lands, and it comes from
+inf-api-positions, so the ingest mirror refuses it (Ruling 16). The INF holdings producer and the INF adapter switch are
+blocked. The CTO ruled the July hold lifted and asked for a diagnosis before any restart. This round names the writer;
+the restart is the next cell, under both halves.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-241` | FWD-3 (INF): the raw writer and its stop cause named from logs (read-only); the ingest mirror's stale DOOR 5 comment corrected | WORLD (infra path; no deploy, no AWS write) | none | P24a |
+
+Slot 81 (S197: 1 + max(author lines 80, issued_to 80, branches 80)).
+
+fanout: 1 of 1 chains, cap 8.
