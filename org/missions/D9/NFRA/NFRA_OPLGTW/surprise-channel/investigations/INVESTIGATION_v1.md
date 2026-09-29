@@ -4328,3 +4328,27 @@ name the one known failure instead of silently inheriting it.
   "notes": "6 of 6 tests pass on the uncommitted tree. Everything else in the A1/A2 rulings is applied: marker ARN carries GetObject + GetObjectVersion, chain-log ARN GetObject alone."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T02:10Z",
+  "one_line": "The order's ledger open command uses leg kind 'tf' and its safe-apply command has no -auto-approve; deploy_ledger.py accepts only activation/ec2-baked-asset/git/s3-prefix/tf-lambda/verify and the apply stopped at the approval prompt with EOF (nothing applied).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/deploy_ledger.py open ... --leg 'iam|tf|aws_iam_role_policy.advi_49f_gold_dispatch|get-role-policy read' -> `ERROR: leg kind 'tf' not in ['activation', 'ec2-baked-asset', 'git', 's3-prefix', 'tf-lambda', 'verify']`; reopened with kind verify (ledger entry 20260929T0153Z_nfra-oplgtw-dispatch-classifier-remedy at 03e6d5611c).",
+      "HALT_ACK=1 .tools/safe-apply.sh -chdir=... apply -target=... (no -auto-approve) printed the plan `0 to add, 2 to change, 0 to destroy` (the exact signed shape) then `Error asking for approval: EOF`, rc=1, no change; re-run with -auto-approve applied it, 0 added 2 changed 0 destroyed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's literal open and apply commands run as written.",
+  "world_is": "Both were corrected in the smallest way (kind verify; -auto-approve after reading the plan in the first run's output). The signed write set was not exceeded.",
+  "notes": "Fix in the issuer's next order template."
+}
+```
