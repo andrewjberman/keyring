@@ -2643,6 +2643,52 @@ carries none.
     "spec_asserts": "Z-W9-S1 (ARMED): the live value sits in a tracked file outside the 7-file set.",
     "world_is": "At HEAD the 8-file set carries 0 literals by shape; the CVO's fingerprint scan (MX-s-13 J1, L8) is the oracle. History is not scrubbed and the credential is not rotated -- both Andrew's (rotation LATER; no scrub), so Z-S29/Z-S31 stay open on rotation.",
     "notes": "Issuer disarm owed since the A1 grade; recorded at the round-3 close."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T04:00Z",
+    "one_line": "The emitter refused in the worker worktree because the portal submodule directory is empty; the portal api sources were read from the pinned gitlink commit into the empty directory, untracked, to emit the catalog.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python workflows/atom_decomposition/emit_catalog_v02.py in worktree wk-mcpindex-r4-15 at 120ff9b27f printed: EMIT REFUSED: accessor index is EMPTY -- portal/src/api not readable (the portal submodule must be present); `ls -la portal` was an empty directory.",
+        "Workaround, no git state touched: `git -C <main workspace>/portal archive c3dd9ca96a3718afcde829ea9b010041d925f883 src/api | tar -x -C portal` (c3dd9ca96a is this worktree's own gitlink, `git ls-tree HEAD portal`). Re-emit with NO new entry changed only the built_at_git_head vintage lines (58924e1530 to 120ff9b27f), 2 lines: the emitter reproduces the committed catalog at that pin.",
+        "The extracted files are untracked contents of the gitlink path and are not committed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "TO MX-t-9 item 2: the catalog is re-emitted through the emitter in the worker worktree.",
+    "world_is": "The emitter needs portal/src/api, and a worker worktree carries the portal gitlink as an empty directory, so any cell that re-emits the catalog needs the same read of the pinned commit. The pinned commit was resolvable from the main workspace's portal repository.",
+    "notes": "The built_at_git_head line of the committed catalog now names 120ff9b27f (the vintage is git HEAD by the emitter's own contract)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T04:00Z",
+    "one_line": "The new tool mdpf_get_model_benchmarks is not named in app/data_entitlement.py INDEX_TOOLS, so data_entitlement.classify returns None for it and it is denied to every principal once portal_index is enabled; the file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/data_entitlement.py:113-116 (INDEX_TOOLS) names the three mdpf tools and the two opal_discover tools; TOOL_CLASSES is built from that set and classify() returns None for any other name (its docstring: 'denied to everyone until it is').",
+        "Measured in the worker's test: data_entitlement.classify('mdpf_get_model_benchmarks') is None while classify of the three mdpf tools is 'legacy' (tests/test_portal_index.py test_portal_tools_register_dormant_with_class prints it under -rP; that test no longer asserts it for the fourth tool).",
+        "The tool itself is complete: 11 of 11 tests in tests/test_portal_index.py pass, the in-process read of the served object equals it (EQUALITY_MX-t-9.md)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-9: 'Classify it SAFE, like the others' (destructive_ops SAFE is done in the module) and the tool answers at r5.J1.",
+    "world_is": "There are two classifications: destructive_ops (SAFE, in the module) and data_entitlement (a name set in a separate file that MX-t-9 does not own). Left alone, the release at MX-r-5 enables portal_index and the fourth tool is refused for every caller, so r5.J1 cannot read it. The one-line fix is adding the name to INDEX_TOOLS, in a cell whose paths include app/data_entitlement.py (MX-t-8 item 10 did the same for the first three); the existing tests/test_data_entitlement_guard.py may pin the set and need the same edit.",
+    "notes": "Two tests in tests/test_data_entitlement_guard.py (ogz1_ac05 KeyError 'unclassified', ogz1_ac08 route set) fail in this worktree; both concern registry report keys and server routes, not this cell's names, and were not baselined here."
   }
 ]
 ```
