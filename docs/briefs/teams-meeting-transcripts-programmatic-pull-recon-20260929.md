@@ -100,3 +100,21 @@ needed if a meeting in scope does not have Andrew on the invite.
 2. Add `CallTranscripts.Read.All` only if ad hoc calls are in scope; that is a consent change and must stay in
    step with the four pinned scope lists named in `IT_REQUEST.md`.
 3. A landing home for the stored transcripts, addressed by the naming builder per rule 30.
+
+## 9. Prior work found after the first cut (2026-07-31, `4.0.0_SA_CRO`)
+
+Source: `org/tier1_exec/4.0.0_SA_CRO/logs/2026-07-31/altresearch_standup_and_transcript_access.md`.
+
+| Fact from that session | Effect here |
+|---|---|
+| The Research Team Meeting is organized by a colleague; Andrew is an attendee | answers part of open fact 1 for that one series |
+| Every FILE path to the transcript (OneDrive share, shared-with-me) returned 403 for Andrew | file routes stay dead; this brief uses the meetings API, not files |
+| That session stated the delegated permission is organizer-scoped and closed to an attendee | CONFLICTS with section 3 item 3. Microsoft's page (dated 2025-12-02) says the API is "also available to users who are part of the meeting calendar invite". Neither claim was exercised: the gateway has never had a tool that calls the endpoint. |
+| Teams showed the transcripts expiring in 120 days | meetings from before about 2026-06-01 may already be gone; backfill oldest-first |
+| Andrew elected to obtain the application permission himself | state of that grant is UNREAD |
+| A transcript store and a VTT parser exist: `research_transcripts/bin/ingest_vtt.py` | the landing side is built; section 8 item 3 reduces to feeding it |
+
+The conflict is settled by ONE call, not by reading: sign in to the gateway as Andrew, list the transcripts of the
+Research Team Meeting through the meetings API, and read the status. 200 means Route A works for attendees. 403
+`GraphAccessToTranscriptsDisabled` means the tenant switch is off. Any other 403 means Route B is required. That
+call needs the tool from section 8 item 1, or a one-off Graph request on Andrew's word.
