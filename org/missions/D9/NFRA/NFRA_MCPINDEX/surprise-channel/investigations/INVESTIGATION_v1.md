@@ -3227,6 +3227,31 @@ carries none.
     "spec_asserts": "A2 step 6: re-prove that the census is still 7 files.",
     "world_is": "Both A2 edits were carried as ruled; one of them is a test file that was not in the first census. The count of files in the git census is 8, and the count of shipped files that differ is 4 (unchanged). The reading of 'census' as the git diff is the worker's; the issuer states which count the CTO's G-A reads.",
     "notes": "Filed as a form-level departure from the order's letter, not a defect in the release."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S58",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T08:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W14-S5",
+      "NFRA_MCPINDEX-Z-W14-S9"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W14-S5: opal_discover now declares its one S3 HEAD per servable row in its docstring, SPEC description and SPEC.hosts (worker ~14 commit 33d2dd2fbf, drained 8837c8397f, carried in rel 0001c9bb53). The declaration matches the behaviour before G-A reads it. RULES NFRA_MCPINDEX-Z-W14-S9: the census G-A reads is the 4 SHIPPED files; the git census is 8 because 4 test files do not ship.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff CLOUD...wk-nfra_mcpindex-4-14 includes app/integrations/opal_discover/integration.py; after the drain it is byte-equal to the branch (git diff --quiet HEAD branch -- path).",
+        "NEVER_WIDEN_ASK_MX-r-5_20260929.md @528a77ff63 section 2 names 4 shipped and 4 unshipped files; the artifact rebuilt from the dep tree differs from live in exactly those 4 of 79 files."
+      ]
+    },
+    "spec_asserts": "Z-W14-S5 (ARMED): the SPEC says opal_discover reads no S3, while it HEADs S3 once per servable row.",
+    "world_is": "Fixed in the release before the G-A ask (msg 26517). Served behaviour is unchanged by the declaration; SPEC.hosts is documentation plus a non-empty check.",
+    "notes": "G-A and both never-widen halves are asked on rel 0001c9bb53 / tree d2debddbd3 (msgs 26517, 26518)."
   }
 ]
 ```
