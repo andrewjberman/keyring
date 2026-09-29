@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~44</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-29</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -46,6 +46,23 @@ the registry file you used. Never type a vendor key or a firm id (the naming gat
    and `Rollback per key`). It may reference IB-mr-202's half; the two ride one re-mint when both are signed.
 5. Do NOT re-mint, upload, publish or merge.
 
+### AMENDMENT 1 (2026-09-29 ~03:0xZ, issuer 2.0.0_SA_COO~M, on IB-mr-202's drain read and row W44-S1)
+
+Two repairs ride this cell, batched (same file family, same worktree):
+- **R1 -- keep the COT strategy assignment.** IB-mr-202 removed the MODEL_WRAPPER node and with it the only place the
+  account's assigned Rebalancer strategy lived (`model_id` {namespace COT_REBALANCER_MODEL, value}, and its name); the
+  old assertion on it in `tests/test_holdings_membership.py` went with the node. Put the assignment back as a FIELD on
+  the COT ACCOUNT node (never a node): `assigned_strategy: {model_id: {...}, name: ...}` when membership assigns one,
+  absent otherwise; extend the contract schema only if it rejects the field; assert it in `test_holdings_membership.py`
+  (z091 carries m-lt, z092 carries none).
+- **R2 -- re-point the S71 re-arm trigger (row W44-S1).** `tests/test_holdings_rearm_trigger.py` guards the directory
+  bundle `investor_reporting` (`investor-reporting.tar.gz`), but the enabled schedule runs the three standalone packages
+  the dispatch names in `IRPT_HOLDINGS_BUNDLE_MAP` (read live 03:0xZ: `s3://opal-data-<firm>/irpt/<firm>/code/gold/
+  investor-reporting-holdings.tar.gz`, members-sha256 94f2e3433d9e, 41 members, the bundles `irpt_holdings_{49f,inf,cot}`
+  in `.tools/safe_deploy_core.py`). Re-point the guard at those three (read the key from the guard's declaration, never
+  typed); keep its verdict (FAIL when the schedule is ENABLED while a served package lacks a file the runner opens) and
+  its SKIP-is-not-a-pass rule. Run it live: it must PASS now. Record the old and new targets in row W44-S1's resolution.
+
 ### ACCEPTANCE
 
 <criterion id="IBM20-203-AC1" cell_refs="IB-mr-203"><invocation>python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_vendor_keys.py -q -p no:cacheprovider</invocation><expect>a summary line with N passed and no failed or error</expect></criterion>
@@ -57,7 +74,11 @@ the registry file you used. Never type a vendor key or a firm id (the naming gat
 <criterion id="IBM20-203-AC3" cell_refs="IB-mr-203"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R20_CHECKS/r20_half_ready.py org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_VENDOR_KEYS_20260929.md</invocation><expect>HALF-READY NEVER_WIDEN_HALF_REQUEST_HOLDINGS_VENDOR_KEYS_20260929.md</expect></criterion>
 `IBM20-203-AC3` -- the half request is written for the issuer to sign and send.
 
-<expected_criteria>IBM20-203-AC1,IBM20-203-AC2,IBM20-203-AC3</expected_criteria>
+<criterion id="IBM20-203-AC4" cell_refs="IB-mr-203"><invocation>python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_holdings_rearm_trigger.py data/assets/scripts/gold/investor_reporting/tests/test_holdings_membership.py -q -p no:cacheprovider</invocation><expect>a summary line with N passed and no failed, error or skipped</expect></criterion>
+`IBM20-203-AC4` -- the batched repairs R1 and R2 (a fourth criterion: the round's repairs ride this one cell, per the
+spine's "repairs batched into ONE cell").
+
+<expected_criteria>IBM20-203-AC1,IBM20-203-AC2,IBM20-203-AC3,IBM20-203-AC4</expected_criteria>
 
 Dry-run at the base 2026-09-29 01:0xZ: AC1 "no tests ran", AC2 NOT-KEYED, AC3 NOT-READY -- FAIL as expected.
 
@@ -85,8 +106,8 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IBM20-203-AC1, IBM20-203-AC2, IBM20-203-AC3. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~44/IRPT_BCKEND.TO-IB-m20-203.holdings-source-vendor-keys.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> IBM20-203-AC1,IBM20-203-AC2,IBM20-203-AC3` BEFORE the flip.
+Criterion ids: IBM20-203-AC1, IBM20-203-AC2, IBM20-203-AC3, IBM20-203-AC4. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~44/IRPT_BCKEND.TO-IB-m20-203.holdings-source-vendor-keys.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> IBM20-203-AC1,IBM20-203-AC2,IBM20-203-AC3,IBM20-203-AC4` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT (your final message):** the field and its JSON path, the registry file, each firm's keys, the pytest lines,

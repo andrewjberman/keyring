@@ -90,6 +90,15 @@ today: `platinum/firm/mix_summary.json` LastModified 2026-09-28 11:36:20Z (measu
     DATA with its URL and read date on the file; 49F labels carry the full names; RI401 (1 account) and blank (2) print
     as unrecognised, never guessed. Same file family as IB-mr-202/203 (holdings_snapshot.py / directory_runner.py):
     cut after round 20 drains.
+11. **S165 / S166** (CTO round-19 analysis @d797a87872 s.3): issue two orders to 0.6.2_AE_PartnerETL~S -- (a) commit the
+    RUNNING cot login script (28dd27a0, 35,049 B) under infra/aws/ec2/bd-cot-auto-login/ as the build input, no
+    behaviour change; (b) port the retry-capable script (BD_MAX_LOGIN_ATTEMPTS / BD_LOGIN_BACKOFF_MS) under a deploy
+    ledger, the diff read by this seat before it lands. Round 21 (GATE (x): round 20 ~M is issued).
+12. **W42-S3** (same analysis): the lib.silver_ids sys.path collision (a test inserting .tools/ ahead of the repo
+    root) -- fixed by the issuer at the chain-B drain of round 20.
+    RULE from round 20 (analysis s.2): an order that changes a served figure names EVERY reader of that figure in its
+    criteria, each with its own check, and proves on the served page. S187: worker slot n = 1 + max(n) over every
+    0.9.0_WK_IRPT_BCKEND~n author line at HEAD, printed in the issuance commit.
 9. Standing: answer 0.4.0_DS_ClientPlatform~E's source-read questions (PRD v0.19, CTO 102487).
 
 ## Andrew acts in flight

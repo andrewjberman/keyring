@@ -1,0 +1,24 @@
+MATCH     request        the composition's bytes hash to the request's composition_ref | {"sha256": "ae1f1da5900f38ad", "request_id": "REQ-e4b7f5aba7fb218c37f28002", "variant": "comparison"}
+MATCH     request        the composition binds the browser's input_id to that input's own artifact | {"input_id": "portfolio_34e2bc37a126314d"}
+MATCH     request        the variant is the recipe's for the comparison count, and every recipe source names one template | {"keys": ["opal_long_term"], "variant": "COMPARISON", "template_id": ["14141824"]}
+MATCH     request        each chosen key's frozen identity is the maintained catalogue's (security id, label, model portfolio) | {"frozen": {"opal_long_term": ["P:1728413", "Opal Long-Term"]}, "catalogue_sha": "54656584"}
+MATCH     input          the normalized artifact hashes to its content-addressed input id | {"sha256": "34e2bc37a126314d"}
+MATCH     upload         the retained original upload hashes to its recorded content_sha256, and the input cites it | {"filename": "aapl-vnq-12.03.csv", "lane": "TEMPLATE_UPLOAD", "sha256": "bb079cbf53aaa2be"}
+MATCH     normalize      every uploaded row reaches the normalized holdings at the same dollars, and the total reconciles | {"upload": {"AAPL": "10.01", "VNQ": "2.02"}, "total": "12.03"}
+MATCH     normalize      the upload's normalization row reads NORMALIZED and names this input | {"rows": 1, "state": "NORMALIZED"}
+MATCH     vendor         the vendor's upload echo equals the normalized holdings (rows sent = rows echoed) | {"echoed": {"AAPL": "10.01", "VNQ": "2.02"}, "upload_record_id": 780618, "weight_unit": "Dollars"}
+MATCH     vendor         the saved portfolio's settings read back: every row matches or is a tolerated, recorded row | {"matched": "7/7", "tolerated": ["level_as_of_type=custom_date"], "portfolio": 2366779}
+MATCH     job            the job is READY for this request revision | {"state": "READY"}
+MATCH     pdf            the retained PDF hashes to its checkpoint, and the checkpoint binds this request | {"sha256": "8b51dfe92c127948", "bytes": 625829, "retrieved_at": "2026-09-29T04:07:07Z"}
+MATCH     pdf            the PDF's settings table prints a row for THIS job's portfolio name (the vendor document is ours) | {"name": "IRPT REQ-e4b7f5aba7fb218c37f28002 r1 3f4a32561f5c", "printed": {"type": "Static", "as_of": "Custom"}}
+MATCH     pdf            the effective settings the report records are the read-back's actual values | {"effective": {"benchmark": "^SPXTR", "level_as_of_type": "custom_date", "management_fee": 0.003, "rebalance_frequency": "quarterly", "reinvest_dividends": false, "start_of_series": "oldest", "tax_status": "non_qualified
+MISMATCH  pdf            of the catalogue's portfolios, the PDF prints exactly the chosen comparisons (the vendor compared what was asked) | {"printed": {}}
+MATCH     pdf            the served foreign-firm name check passes the PDF for its own firm | {"foreign": []}
+MATCH     extract        the extraction evidence hashes to the certification sha the publication recorded | {"sha256": "eda862d36de824eb"}
+MATCH     report         the report hashes to its REPORT# ref, and binds this request, PDF, composition and evidence | {"report_id": "RPT-1f49504f501a6633b1f9cccc5f37ecf6", "sha256": "11b73374327920c5"}
+MATCH     report         the report's owner cites the original upload | {"prospect_input_id": "UP-8e8e8c19f81f81a0f"}
+MATCH     sections       every scalar section's value is printed at its own page and coordinates in the retained PDF | {"reread": "51/51", "sections": 56, "charts": 5, "misses": [], "as_of_dates": {"2026-09-29": 16, "2026-09-25": 4, "2026-08-31": 36}}
+NOT_EVAL  screen         the portal renders these sections for this report revision, and a reload keeps them | 2.0.0_SA_COO~D's K10 walk on RPT-1f49504f501a6633b1f9cccc5f37ecf6
+NOT_EVAL  export         the same-revision export carries these sections | window 16 (K7 + K8 export), 2.0.0_SA_COO~P
+
+RESULT: {"tenant": "cottonwood", "request_id": "REQ-e4b7f5aba7fb218c37f28002", "revision": 1, "report_id": "RPT-1f49504f501a6633b1f9cccc5f37ecf6", "links": 22, "match": 19, "mismatch": 1, "not_evaluated": 2}
