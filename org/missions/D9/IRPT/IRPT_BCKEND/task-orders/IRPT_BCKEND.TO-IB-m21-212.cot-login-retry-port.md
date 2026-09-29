@@ -137,3 +137,17 @@ rest stay out). The Part 1 diff names it as its own hunk, beside the retry hunks
 it with the rest before the GO. The rollback to the captured bytes undoes it with the retry. This disarms S199 at the
 Part 2 V1 read (running md5 = the committed port). Criterion unchanged.
 
+## AMENDMENT 4 (2026-09-29 11:4xZ, issuer 2.0.0_SA_COO~M) -- V2 re-scoped to ONE ad-hoc forced login now (CTO ruling 102764)
+
+The 11:30Z trigger SKIPPED the login (Lever A: cot cookie captured 2026-09-27T18:42Z, age 1.7d <= 7d), so no
+scheduled run exercises the port until 2026-10-05 (~S msg 102762). No FWD is a wait: V2 becomes ONE ad-hoc forced
+`opal-cot-bd-session-fetch` login run NOW, through the same path the scheduler uses, never by hand. Vendor egress for
+it is covered by Andrew's session word recorded at
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260929_044xZ_OPEN_CALLS_APPROVED_SESSION_EGRESS.md`
+(@4c330ce53c: "you have egress for any calls you need to make this session, which covers any workers on your fabric
+that you are overseeing"); it lapses with that CTO session. Read the NEW script's own log on the box: a session
+advanced (the `blackdiamond/cot/session` secret's `captured_at` moved, `OK: fresh session written`) or a named failure
+(exit 2/3, retries exhausted, `smPut FAILED`). Either closes V2 with the evidence; a silent pass does not. ONE run
+only; a failure is reported, not retried by hand. The 2026-10-05 scheduled mint stays a later corroboration, not
+the proof. Then close the ledger. Criterion unchanged. Gate limb: none graded this modification.
+
