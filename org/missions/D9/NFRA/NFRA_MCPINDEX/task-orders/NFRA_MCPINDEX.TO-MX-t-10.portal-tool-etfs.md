@@ -50,6 +50,16 @@ mdpf tools first):
 - Once this row lands, MX-d-5's AC2 grades the ETF ask as ROUTED to a platinum/etfs row first. The check already
   covers both states.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-09-29 ~06:4xZ), on row Z-W15-S2 (ARMED, issuer-owned) -- the new tools must be ENTITLED.**
+- `infra/aws/ec2/opal-gateway/app/data_entitlement.py` `INDEX_TOOLS` names only the 3 original mdpf tools, so
+  `classify` returns None for any new portal_index tool, and it is DENIED to every principal once enabled.
+- **Granted:** add `mdpf_get_model_benchmarks` (MX-t-9's) and this cell's ETF tool to `INDEX_TOOLS`, exactly those two
+  names and no other change.
+- Prove it: a test in `tests/test_portal_index.py` (or the entitlement test) asserts both new names classify like the
+  existing three, and the 4th tool's relaxed assertion from MX-t-9 is restored to the strict form.
+- The pre-existing failures `test_ogz1_ac05` and `test_ogz1_ac08` (test_data_entitlement_guard.py): baseline them on
+  CLOUD and report whether they also fail there. Do not fix them unless your change caused them.
+
 ## 2. BOUNDS
 
 1. Nothing is deployed; the release is MX-r-5 or a later round.
@@ -60,6 +70,7 @@ mdpf tools first):
 
 <paths>
 infra/aws/ec2/opal-gateway/app/integrations/portal_index/
+infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/tests/test_portal_index.py
 infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml
 workflows/atom_decomposition/emit_catalog_v02.py

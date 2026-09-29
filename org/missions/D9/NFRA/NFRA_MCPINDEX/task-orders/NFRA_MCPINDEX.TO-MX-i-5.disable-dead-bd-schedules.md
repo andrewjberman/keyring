@@ -46,6 +46,20 @@ Read R-15 in the analysis.
 5. Apply with `.tools/safe-apply.sh`, using the saved plan. Then `terraform plan -detailed-exitcode` returns 0.
 6. Read back the 4 rules DISABLED and `bd-asset-dim-pipeline-trigger` ENABLED (AC1). Close the ledger.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-29 ~06:3xZ) -- "dead" is proven per DOCUMENT, across EVERY step.**
+- Measured by the issuer: `opal-bd-transaction-download` runs the Playwright download and THEN
+  `merge-daily-incremental.py` (document :46-48). The merge reads `forwardfill_v2/transactions/TRANSACTIONS_DAILY_*`,
+  which a LIVE REST producer on the bd-49f session chain writes daily at ~00:02Z. Disabling that trigger would stop
+  served silver transactions.
+- For each of the 4 documents, list every step in its section as
+  `STEP <n> | <what> | output prefix | writes since: <count since LAST_NON_FAILING>`, and name any input another
+  producer writes.
+- Each section carries `VERDICT: DEAD` (no step writes live output) or `VERDICT: LIVE (step <n> writes <prefix>)`.
+- **Only DEAD documents' rules are disabled.** The plan reads `0 to add, N to change, 0 to destroy`, where N is the
+  number of DEAD verdicts. A LIVE document's rule is NOT touched.
+- AC1-AC3 are re-issued to grade exactly this (see the round-4 battery). The transaction leg is expected to read LIVE.
+- Removing a LIVE document's dead Playwright step is MX-s-14's pattern (strip, keep the merge). It is not this cell's.
+
 ## 2. BOUNDS
 
 1. Only the 4 named rules' enabled state. Nothing is deleted: no rule, target, Lambda or SSM document.
