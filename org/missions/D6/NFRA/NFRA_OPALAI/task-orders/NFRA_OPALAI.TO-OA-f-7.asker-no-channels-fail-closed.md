@@ -92,7 +92,7 @@ Dry-run at base (CLOUD, ~01:1xZ):
 - f7.AC1 base: FAIL as expected (`tests/test_asker_nochannels.py absent`).
 - e1.AC3 (AC2) base: PASS as expected (control: 10 passed, failed set exactly test_ogz1_ac05 + test_ogz1_ac08).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~22</slot>
 <fabric>site-z</fabric>
