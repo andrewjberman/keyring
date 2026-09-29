@@ -107,6 +107,10 @@ page renders them.**
 - Deployed counts today: pillars 0 of 157, management 0 of 46, fund/position 0 of 46, terms 0 of 157. Only
   `model.team_cases` passes.
 - CORPUS's data half is done.
+- **Also carried to round 50** (DSGN_AMGTV1 round-5 analysis, ruling 4): the Historical-multiple reference's served label
+  names its owner ("Opal's historical-multiple reference"), so it reads apart from the research team's Base case.
+- **Deploy owed:** `xx-2` (the served name on the rank-history series) is merged @209a6cce2f and NOT deployed. The deployed
+  artifact is `kABTI4Gu`, i-4's three files only. DSGN_AMGTV1 FWD-3's labels wait on it.
 
 ## 5. ACTS ONLY ANDREW CAN DO (cited; no decision is listed)
 
