@@ -81,7 +81,7 @@ READ-ONLY: every other file in the repository, every S3 object, the research lib
 **ISSUER NOTES:** round-13 analysis s.4 item 4 @`f1c482d24f` (msg 26603). Checks dry-run at the base `dbafd14c52`: p4_AC1 FAIL (MISSING); p4_AC2 FAIL (MISSING); p4_AC3 PASS (paths_outside_grant 0).
 SPAWNED on an event: ww-1's entry closes, or p-1/p-2/p-3/p-5 drain (decomposition v14.0 s.1a, s.9).
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

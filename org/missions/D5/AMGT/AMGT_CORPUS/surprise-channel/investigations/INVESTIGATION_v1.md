@@ -2358,6 +2358,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "ML_FP's served dossier carries the five source pillars; 'Nearing turn in cycle' (no body) is dropped by the empty-text rule.",
     "notes": "Z-W5-S6 (the served lead drops the trailing period, as colon leads drop the colon) stands INERT; no change ruled.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S5",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-29T21:00Z",
+    "one_line": "CRPS-p-4's population sweep enumerated 95 research_dossier partitions but read_dossier accepts 93: BP-SLASH-_LN_Equity and NG-SLASH-_LN_Equity raise SlashSafeKeyError when the partition name is passed as a key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S3 list of s3://opal-data-harvest/amgt/harvest/gold/research_dossier/ CommonPrefixes 20:56Z = 95 security_key= partitions; python lib.research.corpus.dossier.read_dossier('BP-SLASH-_LN_Equity') -> SlashSafeKeyError, same for NG-SLASH-_LN_Equity (sweep output .scratch/p4/sweep.json rows dossier_read FAIL).",
+        "The real keys carry a slash (BP/_LN_Equity, NG/_LN_Equity per capture_lib._filename_slug's note); the two names were measured 0 times in the FWD-10/11/12/15/16/18 population counts, so those denominators read 93 of 95."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order CRPS-p-4 asks for the population each fence names with its denominator; the dossier store holds 95 names.",
+    "world_is": "93 of 95 partitions were measurable with the key taken from the partition name; the 2 slash-safe names need their slash form (BP/_LN_Equity, NG/_LN_Equity) and were not re-read. Neither is one of the four named names and the served-plane counts are 0 for every measured name, so no state moves.",
+    "notes": "Not re-run in the slash form: the read is by the slash-form key through resolve_identity, outside this cell's four named names."
   }
 ]
 ```
