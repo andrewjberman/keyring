@@ -121,7 +121,7 @@ SPAWN ONLY when ALL hold (this is a CONTINUATION of slot `~1` after MP-b-3 drain
 
 Slot `~1` continues to MP-c-1 after this order drains.
 
-<status>staged</status>
+<status>complete</status>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
