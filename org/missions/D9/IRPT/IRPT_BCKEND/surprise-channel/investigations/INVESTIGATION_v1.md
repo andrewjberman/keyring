@@ -10958,3 +10958,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Found by 3.0.0_SA_CVO reading a DSGN_IRPTV1 walk; not a DSGN pin's claim. pr-191 is REOPENED as IB-pr-194 (b6e0525927). 3.0.0_SA_CVO dispositions it at round 19's L9."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W42-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~42",
+  "surfaced_at": "2026-09-29T00:00:00Z",
+  "one_line": "The TO's own <proof_of_spec> tag names one instance path (.../IRPT_BCKEND.TO-IB-mr-2.proof_of_spec.json, keyed off the to_id), but .tools/to-pipeline-gate.py's check_complete_flip() looks for an instance named off the TASK-ORDER FILE'S OWN STEM (.../IRPT_BCKEND.TO-IB-m19-2.r4-holdings-remint-qa-fire-enable-half.proof_of_spec.json) -- when to_id != filename stem (as here), the tag-named path alone refuses the complete flip with 'NO proof-of-spec instance was found beside it', even though a VALID instance exists at the tag's own path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (route to whoever owns to-pipeline-gate.py's check_complete_flip stem-matching, or the L4/L6 convention that names a TO file differently from its to_id)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First attempt this session: `bash .tools/safe-commit.sh ... -- .../deliverables/0.9.0_WK_IRPT_BCKEND~42/IRPT_BCKEND.TO-IB-mr-2.proof_of_spec.json .../task-orders/IRPT_BCKEND.TO-IB-m19-2.r4-holdings-remint-qa-fire-enable-half.md` (status flip to complete) -> 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). ... flips to complete on PIPELINE-REGISTERED project IRPT_BCKEND, and NO proof-of-spec instance was found beside it.' -- even though `python .tools/proof-of-spec-check.py <that exact instance> IBM19-2-AC1,IBM19-2-AC2,IBM19-2-AC3` returned VALID (rc=0) moments earlier",
+      ".tools/to-pipeline-gate.py check_complete_flip(): `stem = os.path.basename(rel).rsplit('.md', 1)[0]` (the TASK-ORDER FILE's own basename, e.g. 'IRPT_BCKEND.TO-IB-m19-2.r4-holdings-remint-qa-fire-enable-half'), then globs deliverables/*/ for `stem + '.proof_of_spec.json'` -- never reads the TO's own <proof_of_spec> tag text to learn the instance path the order itself names",
+      "the order's own <proof_of_spec> block (line 237) reads: 'Instance at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~42/IRPT_BCKEND.TO-IB-mr-2.proof_of_spec.json' -- to_id-keyed, not filename-keyed; the TO's own filename carries the fuller slug 'TO-IB-m19-2.r4-holdings-remint-qa-fire-enable-half', which differs from its to_id 'TO-IB-mr-2'",
+      "resolved this session by ALSO writing a second, identical-content instance at the gate's expected stem-based path (org/.../deliverables/0.9.0_WK_IRPT_BCKEND~42/IRPT_BCKEND.TO-IB-m19-2.r4-holdings-remint-qa-fire-enable-half.proof_of_spec.json); both validate VALID rc=0 individually, and the commit with both plus the status flip passed the gate (commit 2b56299d02)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order's <proof_of_spec> tag: 'Instance at <path keyed off to_id>, validated with proof-of-spec-check.py ... BEFORE the flip.'",
+  "world_is": "The mechanical gate that actually stops an invalid complete flip resolves the expected instance path from the TASK-ORDER FILE'S OWN NAME, not from the order's <proof_of_spec> tag text -- so whenever a TO's filename slug differs from its to_id (as issued here), following the tag literally produces an instance the gate cannot find, and the gate's own error message ('NO proof-of-spec instance was found beside it') does not name the filename-vs-to_id mismatch as the cause.",
+  "notes": "Not blocking this cell -- disarmed in-session by writing both filenames. Left for the gate/L4 convention owner: either check_complete_flip() should also try a to_id-derived filename (parsed from the TO's own <to_id> tag), or L4/L6 should keep every TO's filename slug and its to_id identical going forward so the ambiguity cannot recur."
+}
+```
