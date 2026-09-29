@@ -64,6 +64,16 @@ both land, against the landed code, by running the landed rule over every live n
 CtIvirvM...), AC2 PASS (95 of 95 at round 46's close -- the no-regression arm), AC3 FAIL (formula as ruled 0; no team_cases).
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29 ~10:1xZ): WITHDRAWN -- applied, then ROLLED BACK under its halves.** The re-issued act
+APPLIED (b155a29035): AC1 PASS (CodeSha256 0SpJvook...), AC3 PASS (formula as ruled 70 of 70; team_cases 95 of 95, 84 SERVED), limbs
+2-6 CLEAR (timeline 0 of 8,119 paths differing); AC2 read 84 of 95 and was ruled exonerated for the act (Z-S297: page-side, DSGN_AMGTV1's
+thesis-card cites the harness does not render). But the ONE pool-prefix entry `amgt/harvest/gold/research-dossier/` could not be
+COMMITTED (Z-S298: the naming gate, ENFORCE, refuses it; its only literal carrier is a test file the gate excludes by design), so
+DESIRED and APPLIED disagreed. `1.0.0_SA_CTO~Z` ruled ROLL BACK (@e1e4ae43d4, msg 26552). The lane rolled back (1c410c5936): artifact
+re-pointed by copy to zEAUAvUP..., one safe-apply from HEAD removing the entry; the issuer re-read CodeSha256 CtIvirvM...EAOM= (Successful),
+the entry CLOSED at HEAD with 0 sentinels, the repo's prefix list 29. vv-1 and vv-2's code is merged but NOT served. Re-land: by R20 (an
+Andrew-acknowledged departure) or R19 (AMGT_CORPUS's own migration of the dossier prefix, its round 12), then a fresh redeploy order.
+<status>withdrawn</status>
 <round>47</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
