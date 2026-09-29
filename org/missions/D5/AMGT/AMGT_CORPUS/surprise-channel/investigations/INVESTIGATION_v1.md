@@ -2070,6 +2070,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Three further tests pin those same values in two files the order does not grant; the corpus suite is red on them until the issuer (or a later order) updates them: body.py line 158 -> /3, body.py line 130-131 -> the line with 'currency_set 0 currency_null 2'-style tail, layouts.py line 125 -> base['unit_as_written'].",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Filed, not fixed. A drain that runs the whole lib/research/corpus/tests directory reads 3 failures until these are updated."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S56",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T06:50:00Z",
+    "one_line": "DISARM of AMGT_CORPUS-Z-W1-S13 by its owner: the three tests that pinned what CRPS-l-1 changed on purpose were updated under the issuer's AMENDMENT 2 (the order's <paths> widened by the issuer), and the corpus suite reads green; the red suite never reached CLOUD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment commit b40840e09a (order CRPS-l-1: <paths> gains tests/test_dossier_case_body.py and tests/test_dossier_case_layouts.py; rule 8).",
+        "Worker commit 6eaa7545ea updated test_method_version_is_bumped_to_2 (to /3), test_case_census_prints_per_name_states_and_the_exact_summary_line and test_a_round_9_k5_table_is_unchanged; issuer re-grade at 75dd5905ad: lib/research/corpus/tests 409 passed.",
+        "Chain A merged at 5b0b728ab1 with the suite green."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W1-S13: three tests outside CRPS-l-1's grant fail on its intended change; the suite is red until the issuer acts.",
+    "world_is": "The issuer granted the paths and ruled the update; the suite is green on the merged trunk.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's disarm, evidence-cited; the worker's refusal to edit outside its grant was correct."
   }
 ]
 ```
