@@ -1172,3 +1172,20 @@ IB-er-203 goes to a ~P worker slot because the schedule and Lambda are Terraform
 gold scripts); the path grant is the order's `<paths>`, and the producer stays the DS seat's code.
 
 fanout: 2 of 2 chains, cap 8.
+
+## 17. WORKSTREAM ~E, ROUND 3 (2026-09-29 ~05:0xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND-19 ANALYSIS section 6 items 1 and 4, PRD v0.19 rulings 1-9, 11)
+
+Inflection joins the holdings gold (ruling 11's order: 49F, then Inflection, then Cottonwood), and 49F gets its FWD-13
+comparison points from the Black Diamond files already landed. The daily runner stays scoped to 49F this round: its
+role is firm-scoped (row W65-S1), and widening it to INF is a later cell once IB-er-301's declaration lands.
+Cottonwood follows Inflection, and its comparison needs one Black Diamond pull per point (Andrew-direct 2026-09-29, card 3).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-301` | FWD-3 (INF): gold for every INF account 2020-04-27..2026-09-25, manifest complete | WORLD (new gold objects; nothing served moves) | ~E r2 | E3a |
+| `IB-er-302` | FWD-13 (49F): one comparison row per landed Black Diamond file, both bases stated | WORLD (new gold objects; nothing served moves) | ~E r2 | E3b |
+
+Both cells go to 0.4.0_DS_ClientPlatform~E (rule 13: gold scripts are the DS seat's). The two chains share no output
+prefix; they share the producer's home, so the seat works them as one queue.
+
+fanout: 2 of 2 chains, cap 8.
