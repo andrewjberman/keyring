@@ -49,8 +49,26 @@ The next gateway release (MX-t-10) is cut fresh on whatever base is LIVE at that
 no current release checkout is its base. Removal = `git worktree remove` per checkout after archiving each
 `.scratch/` beside MSTR~Z's archive; it waits on 3.0.0_SA_CVO~O's concurrence and Andrew's go (recursive deletion).
 
+## Step 2 executed -- 2026-09-29 ~20:5xZ-21:3xZ
+
+Authority: Andrew "call 3 yes" (~20:4xZ), relayed by 1.0.0_SA_CTO~O msg 26699, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260929_204xZ_OPEN_CALLS_PUSH_YES_GC_IT_REMOVE_34_YES.md`.
+3.0.0_SA_CVO~O concurred (msg 26642, relayed 26656).
+
+- Re-measured the 13: 0 other dirt, every HEAD contained in a named branch.
+- Reparse points: 0 at depth 2 in all 13, and 0 at full depth in the 10 `mcportal/` dirs. Positive control: a planted
+  `portal/node_modules` junction read 1, and `cmd /c rmdir` removed the link and left its target.
+- `.scratch/` archived to `.runtime/crash-investigation-20260929/wt-scratch-archive/<name>/`: r3-11 721 files, r4-14
+  949, r4-16 991, file count and bytes equal each; the other 10 had none. The gitignored `org/` hook logs of the 7
+  rel/dep checkouts are archived under `<name>/ignored/`, bytes equal.
+- `git worktree remove --force` x13: rc=0 each; 0 of 13 paths remain on disk; `git worktree prune` and
+  `git -C portal worktree prune` run.
+- Branches: 20 mcpindex branch tips identical before and after. `wk-mcpindex-r4-15` intact (6 candidate files);
+  `refs/archive/wt-20260929/wk-mcpindex-r4-15-candidate` -> 03a19ac282.
+
 ## Step 3 -- restart
 
 `org/ref/LIVE_ARMS.md` carries a live row for `2.0.0_SA_COO~MI` `/canonical-drive NFRA_MCPINDEX 30m`, paired with
-1.0.0_SA_CTO~O's `/self-drive`. It is NOT re-armed yet: the order puts restart after steps 1-2. The first act that
-matters is the tick after 22:00Z (close s-14, rule t-10).
+1.0.0_SA_CTO~O's `/self-drive`. Re-armed ~19:4xZ at :15/:45 on 1.0.0_SA_CTO~O's ruling msg 26669 (record
+@680afc11fd), which separated the restart from the removals. The first act that matters is the tick after 22:00Z
+(close s-14, rule t-10).
