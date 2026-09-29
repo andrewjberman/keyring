@@ -83,7 +83,7 @@ outer commit hashes, and any row.
 **ISSUER NOTES:** round 4 = the round-3 analysis's enrichment list @46d28c6c4c section 4 (CTO msg 26587). Decomposition v4.
 Base a93071b8: walkvoid.sh NO (walker rc=1 on the unknown flag, 0 WALK VOID lines); detect.mjs 0 of 6 (module absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~13</slot>
 <fabric>site-z</fabric>

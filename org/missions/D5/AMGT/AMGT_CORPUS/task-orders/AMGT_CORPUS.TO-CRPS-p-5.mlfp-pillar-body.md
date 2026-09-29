@@ -66,7 +66,7 @@ READ-ONLY: every other file in the repository, every S3 object, the research lib
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-p-5"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round14/p5_AC1.sh</invocation><expect>(?m)^\d+ passed(, \d+ \w+)* in </expect></criterion>
-  <criterion id="AC2" cell_refs="CRPS-p-5"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round14/p5_AC2.sh</invocation><expect>(?m)^p5 ML_FP_Equity (pillars [1-9]\d* empty_text 0|ABSENT reason \S.*) \| IMB_LN_Equity pillars 6 empty_text 0 \| ADBE_US_Equity pillars 2 empty_text 0$</expect></criterion>
+  <criterion id="AC2" cell_refs="CRPS-p-5"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round14/p5_AC2.sh</invocation><expect>(?m)^p5 ML_FP_Equity pillars 5 empty_text 0 \| IMB_LN_Equity pillars 6 empty_text 0 \| ADBE_US_Equity pillars 2 empty_text 0$</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-p-5"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round14/p5_AC3.sh</invocation><expect>(?m)^\d+ passed(, \d+ \w+)* in </expect></criterion>
 </proof_of_spec>
 
@@ -78,12 +78,34 @@ READ-ONLY: every other file in the repository, every S3 object, the research lib
 3. Flip `<status>` to `complete` only if every criterion passes; commit the files you changed plus the instance.
 4. Report ONCE: each AC line, the source lines you read, which branch you built, and whether a rebuilt ML_FP document collides with its stored key.
 
+## 7. AMENDMENT 1 (issuer, 2026-09-29 ~19:2xZ, on row `AMGT_CORPUS-Z-W5-S5`) -- this supersedes RULED item 2's branch choice
+
+Your first pass (708242756c) read the source correctly: `Nearing turn in cycle:` (line 689) has no body. But the same
+INVESTMENT THESIS block (lines 675-688 of extract `362ec404b3d2eba8`) carries FIVE pillars with body text whose leads are
+bold_first and end in a PERIOD (`Irreplaceable brand and pricing power.`, `Mix shift to premium.`, `FCF Generation.`,
+`Beyond tires.`, `EV-agnostic positioning.`). The CTO's ruling was "if the source paragraph has text, the reader drops it,
+and the reader is repaired", so the branch is the REPAIR, not ABSENT:
+1. The PDF thesis-pillar reader accepts, inside the thesis block bounds only, a line with `bold_first` True whose
+   `lead_prefix` ends in `.` as a pillar lead, exactly as it accepts one ending in `:`. The body runs to the next lead or
+   the block end; the citation stops at the block's closing heading (keep your clip).
+2. Keep your empty-text drop: `Nearing turn in cycle` has no body and is not served. ABSENT is served only when no pillar
+   in the block has text.
+3. AC2's expectation is now `ML_FP_Equity pillars 5 empty_text 0`, the two controls unchanged. Your new test file gains the
+   period-led shape (five period leads with bodies then an empty colon lead then the heading yields five pillars).
+4. REPORT (not a criterion): the pillar count per PDF-sourced name BEFORE (CLOUD HEAD code) and AFTER (your code), read-only
+   over every name `continuation` builds, with the denominator, and every name whose count changed.
+5. Keying: your row Z-W5-S4 stands -- the METHOD_VERSION bump moves every name's key; the order's "excludes METHOD_VERSION"
+   was wrong. Keep the keying as it is; the served move is the issuer's drain act under a pair.
+Merge CLOUD into your branch first (`git merge CLOUD`, no rebase); this file's last status tag reads pending until you
+append a new status tag reading complete at the end of the file. Re-run AC1-AC3 and proof-of-spec-check, re-write the instance, commit.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-13 analysis s.4 item 5 @`f1c482d24f` (msg 26603). Checks dry-run at the base `dbafd14c52`: p5_AC1 FAIL (no tests ran); p5_AC2 FAIL ('ML_FP_Equity pillars 1 empty_text 1 | IMB_LN_Equity pillars 6 empty_text 0 | ADBE_US_Equity pillars 2 empty_text 0'); p5_AC3 PASS (444 passed).
 Merge HELD until the pair is signed; the continuation keying (inputs-only key; GoldImmutableError on a new body) is ruled at the pair with the CTO.
 <risk>SERVED</risk>
-<status>complete</status>
+<status>pending</status>
 <round>14</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
+<status>pending</status>

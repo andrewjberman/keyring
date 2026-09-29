@@ -1889,6 +1889,31 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-e-9 step 3: the population is git rev-list --no-merges <BASE>..<HEAD> -- infra/aws/ec2/opal-gateway; its count is the DENOMINATOR.",
     "world_is": "The default command undercounts CLOUD's gateway commits here (by the simplification named above). It hid two commits here, both released. A later census that reads the same command can hide an UNRELEASED commit the same way. The worker followed the face and reported the two separately.",
     "notes": "Not ARMED for this order. The E9 move should cut its population with --full-history, or from the tree diff BASE..HEAD, so a hidden commit cannot go unmoved."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S45",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-29T18:45Z",
+    "one_line": "Two 2.0.0_SA_COO~AI drain merges kept CLOUD's side for every file their worker branch changed: d45ab2cf53 (OA-e-3, 9 of 9 files) and 33076ebc84 (OA-f-3, 3 of 3). Ten files are still missing from CLOUD: OA-e-3's identity_scope.py seed row for opal_asker_query, its two test files, the TO flip to complete, the proof, ANNOUNCE, the release-tree tests and the deploy completion record, plus OA-f-3's proof and session_log. This traces the merge that W10-S7 left untraced.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~AI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "For each file the branch changed (git diff --name-only $(git merge-base M^1 M^2) M^2), the merge blob equals the M^1 blob and differs from the M^2 blob, while M^1 never touched the file: 9 of 9 for d45ab2cf53, 3 of 3 for 33076ebc84.",
+        "At CLOUD HEAD (after 680afc11fd), existence-aware check: 8 OA-e-3 files and 2 OA-f-3 files still hold the merge-result state (4 modified files at the old blob, 6 added files ABSENT). EC2_MANIFEST.json moved on legitimately (deployed_commit 093fc247c6); the OA-f-3 TO flip was restored later.",
+        "Scan of 167 first-parent CLOUD merges since 2026-09-26: 5 merges carry such drops (d45ab2cf53, 33076ebc84; 0e98284fa2 and 8e0a9b6400 by 2.0.0_SA_COO~D, since restored; 789d4bb967 by 2.0.0_SA_COO~MI, since superseded).",
+        "The shared tree holds all 10 files at exactly the branch-parent blobs (git hash-object == git rev-parse <M^2>:<path>, 10 of 10). Their mtimes equal the drain times (18:56:09 and 01:42:34 ET), consistent with S44 (safe-merge ran while index.lock was held and the stash failed).",
+        "On the CLOUD tree with the files restored: pytest tests/test_asker_scope.py tests/test_identity_scope.py = 14 passed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A drain merges the worker's branch into CLOUD, so every file the order's worker changed reaches CLOUD (spine L7 drain; .tools/safe-merge.sh).",
+    "world_is": "Both drains produced a merge commit whose tree is CLOUD's side for every branch file. Git then counts the worker commits as merged, so no later merge of the branch can carry them. On CLOUD, OA-e-3 reads <status>pending</status> and the Analyst seed lacks opal_asker_query, while the live gateway (093fc247c6) serves it. A gateway release cut from CLOUD's tree would remove the tool silently, and the round's close reads OA-e-3 as open.",
+    "notes": "Disarm: re-land the 10 files through a drain (a branch off CLOUD that cherry-picks the worker's original commits, which keeps their authorship, merged with .tools/safe-merge.sh), not EC2_MANIFEST.json. The lane gate refused a direct 1.0.0_SA_CTO~O commit (infra/aws is CLOUD_OPS_OR_ETL; deliverables/<serial>/ admits only that serial). The safe-merge defect that makes the tree equal CLOUD's side is for the safe-merge owner, beside S44."
   }
 ]
 ```

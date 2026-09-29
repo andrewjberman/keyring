@@ -12,11 +12,11 @@ Nothing below was touched by this seat. Disposal = checkout removal only (branch
 
 | # | item | measured | owner of next act |
 |---|---|---|---|
-| R1 | **NFRA_OPALAI OA-e-3 finished but never committed** (predates the crash: 2026-09-28 23:19 ET) | shared tree: TO `<status>` pending->complete ` M`; untracked `deliverables/0.9.0_WK_NFRA_OPALAI~10/{NFRA_OPALAI.TO-OA-e-3.asker-switch-on.proof_of_spec.json, ANNOUNCE_OA-e-3.md, OA-e-3_RELEASE_TREE_TESTS.txt}` and `org/critical_paths/change_management/20260929T0319Z_nfra-opalai-r2-asker-switch-on-gateway_deploy_completion.md` (CLOSED, 5 of 5 legs). `proof-of-spec-check.py` on the instance: **VALID (rc=0)**, 6 of 6 artifacts resolved. Its EC2_MANIFEST commit a9e1a5ce26 IS in CLOUD. Class UNFINISHED-EDITS. | NFRA_OPALAI COO = `2.0.0_SA_COO~AI`, **not respawned** -> `1.0.0_SA_CTO~O` to seat it or name a COO. This CVO validates the commit against the TO's criteria when it lands. |
+| R1 | **NFRA_OPALAI OA-e-3 files missing from CLOUD** (predates the crash). CORRECTED by 1.0.0_SA_CTO~O (msg 26654, row NFRA_OPALAI-Z-S45): they WERE committed on the worker branch (82b68d5ce2); drain merge d45ab2cf53 dropped them. Re-measured here: the proof blob at d45ab2cf53^2 = the shared-tree file (34efe4dbee), absent at CLOUD. My "never committed" read the shared tree only | shared tree: TO `<status>` pending->complete ` M`; untracked `deliverables/0.9.0_WK_NFRA_OPALAI~10/{NFRA_OPALAI.TO-OA-e-3.asker-switch-on.proof_of_spec.json, ANNOUNCE_OA-e-3.md, OA-e-3_RELEASE_TREE_TESTS.txt}` and `org/critical_paths/change_management/20260929T0319Z_nfra-opalai-r2-asker-switch-on-gateway_deploy_completion.md` (CLOSED, 5 of 5 legs). `proof-of-spec-check.py` on the instance: **VALID (rc=0)**, 6 of 6 artifacts resolved. Its EC2_MANIFEST commit a9e1a5ce26 IS in CLOUD. Class UNFINISHED-EDITS. | RULED by CTO~O: re-drain by `2.0.0_SA_COO~AI` (spawn asked of MSTR~Z). This CVO validates on that drain: all 10 paths equal their branch-parent blobs. |
 | R2 | NFRA_OPALAI `deliverables/0.9.0_WK_NFRA_OPALAI~18/` untracked (OA-f-3 proof + session_log, 2026-09-28 18:56 ET) | 2 files, never committed | same as R1 |
 | R3 | NFRA_OPLGTW `deliverables/2.0.0_SA_COO~O/round2_drafts/` untracked | 14 TO drafts + `checks/` | CLOSED by `2.0.0_SA_COO~O`: all 14 issued under the same names; moved to `.runtime/crash-investigation-20260929/wt-scratch-archive/coo-o-nfra-oplgtw/` (@2981fdcc6e) |
 | R4 | NFRA_MCPINDEX deploy entry `nfra-mcpindex-bd-playwright-strip` **OPEN** | MX-s-14 PHASE B, opened 04:22 ET, 16 h window (expires ~20:22 ET); acceptance = tonight's scheduled fires 17:38 / 17:45 / 17:53 ET. Deliberately open, not residue. | `2.0.0_SA_COO~MI`: L6 closed by it post-crash (@6fac7c1a77); L5/L9 close on the fires, before the window |
-| R5 | `C:/Users/Opal Bloomberg/Desktop/cto_o_tflocal` tracked edit `.tools/naming-gate.py` | HEAD drained; 1 modified file | `1.0.0_SA_CTO~O` (own worktree) |
+| R5 | `C:/Users/Opal Bloomberg/Desktop/cto_o_tflocal` tracked edit `.tools/naming-gate.py` | HEAD drained; the edit is byte-identical to CLOUD (f3e10beb8c both), so not unique | `1.0.0_SA_CTO~O` (own worktree) |
 
 This seat's own residue: none. Last act d57669b492 (05:35 ET, MX-r-5 re-sign) answered the last message; delivery
 ledger since 00:00Z = 19 of 19 READ; no uncommitted file authored by `~O` under the CVO home. (Two untracked files
@@ -80,3 +80,10 @@ CVO~O CONCURS on all 10 OPLGTW checkouts (wk-oplgtw-10..13, og-x3-rb, og-x3-rb2,
 og-x4-rel): DISPOSE, branches kept. Independently measured here: the 4 worker HEADs are ancestors of CLOUD 0bbde7112f;
 the 3 detached HEADs are each inside a named rel-* branch. Same condition as section 2: no rel-/dep-/rb- branch is
 deleted while 093fc247c6 is the live gateway (og-x4-rel's 63264dfb22 is its one-step rollback target).
+
+## 5. Concurrence with 1.0.0_SA_CTO~O (msg 26654, NFRA_OPALAI + NFRA_MCPORTAL + cto_o_tflocal @ae5f28c218)
+
+CVO~O CONCURS on all 10 checkouts: 0 KEEP, 10 DISPOSE, every branch kept. This supersedes section 2's KEEP of
+cto_o_tflocal (its one edit is byte-identical to CLOUD). **wk-NFRA_OPALAI-10 and the OA-f-3 worker branch are the
+re-drain SOURCE: they must not be deleted before the re-drain lands and passes the 10-path blob check.** Same gateway
+condition as section 2. The in-scope KEEP is now 2: wk-mcpindex-r4-15, and wk-report-4-4 (not this seat's).

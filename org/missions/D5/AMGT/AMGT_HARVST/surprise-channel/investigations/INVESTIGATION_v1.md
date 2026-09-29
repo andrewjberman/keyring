@@ -2489,6 +2489,75 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "TO HVST-f-1 clause 2: match with the SERVED matcher, publication_gold._match_counts (one span, one count, word-bounded).",
       "world_is": "publication_gold._span_pattern compiles with re.I and (?<!\\w)...(?!\\w) bounds, and an apostrophe is a non-word character, so the t after the apostrophe in don't is a word-bounded match of 'T'. The census reports it as the served matcher would count it; AC2 prints the samples. The same holds for 'V' ('V-8'), 'F', 'C', 'NOW' and 'COST'. This cell measured with the served matcher as ordered and did not build a case-sensitive variant.",
       "notes": "INERT. Fact for the round-17 analysis; it recommends no rule."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W45-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~45",
+      "surfaced_at": "2026-09-29T14:40:00Z",
+      "one_line": "HVST-g-1: limb (a) over the pool's 250 names refuses the ruling's own whole-brand entry UBS, because a keyless coverage row named 'UBS' is another of the 250 names.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/scripts/ac3_rebuildable_and_file.py output: 'whole-brand entry REFUSED in code: {\"brand\": \"UBS\", \"reason\": \"limb_a_other_security_brand:#name240\", \"security_key\": \"UBS_US_Equity\"}'",
+          "lib/research/harvest/universe_securities.py brand_refusal() and securities_from_universe() forms_by_key (indexes all 250 names, keyed or not)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/ac2_output.txt: per FORM 'ticker UBS spans=7 pairs=5' and no whole_brand UBS row"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO section 1 (issuer's reading): limb (a) refuses a brand that is an alias or company name of ANY OTHER of the pool's 250 names; ruling 2 (ROUND_ANALYSIS.round17.md @c296f4ba12) lists UBS among the whole-brand names to admit.",
+      "world_is": "Names row 240 of universe/v1/2026-09-16.json is {security_key: None, ticker: None, name: 'UBS', source: 'coverage', resolution: 'UNRESOLVED'}, so its company name is 'UBS'. Applied as written, limb (a) refuses UBS_US_Equity -> 'UBS' (reason limb_a_other_security_brand:#name240), so 6 of the 7 ruled brands are admitted (7 of the file's 8 entries; ASML is listed for both its listings). The loss is small: UBS_US_Equity's exact-case ticker form UBS is still admitted (T1), and all 7 added UBS spans in AC2 are that upper-case form. Only a lower-case or mixed-case 'Ubs' would have been added. The one-line alternative is to index only names that carry a security_key in universe_securities.securities_from_universe (forms_by_key), which would admit UBS; the worker did not choose it because the issuer's text says 250.",
+      "notes": "INERT. For 2.0.0_SA_COO~H: decide before HVST-g-2 whether limb (a) reads all 250 names (as built) or the 191 keyed ones. HVST-g-2 builds from securities.universe.json, so a change here means regenerating that file with the module's own CLI."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W45-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~45",
+      "surfaced_at": "2026-09-29T14:40:00Z",
+      "one_line": "HVST-g-1: the whole-brand alias ASML also enters the listing_hit query identifiers, so 148 chatter_daily cells (74 each for ASML_NA and ASML_US) move data_status/publishers_covered, a movement no mention row explains.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/ac2_output.txt (b): ASML_NA_Equity and ASML_US_Equity cells=216 with columns data_status and publishers_covered; columns moved data_status=148 publishers_covered=148",
+          "lib/research/harvest/publication_gold.py _listing_hit_query_identifiers (aliases only, plus sa_symbol for an sa row) and _listing_hit_security_match",
+          "scratch check at this cell: publisher_coverage(all 60 listing_hit rows) old vs new securities differs for ASML_NA_Equity and ASML_US_Equity only"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO section 2 AC2(b): chatter_daily -- per security the cells that move; section 3: no tier or event-rule change. The order names an alias-rule change, not a coverage change.",
+      "world_is": "publication_gold._listing_hit_query_identifiers builds its identifier set from _security_aliases(security), i.e. from `aliases`, so any whole-brand alias joins the publisher-coverage match. The sa listing_hit rows carry search_query 'ASML' (a symbol), which no ASML alias matched before; with 'ASML' now an alias, publisher_coverage(60 listing rows) gives ASML_NA_Equity and ASML_US_Equity {'sa': (2026-07-15, 2026-09-26)} where the old aliases gave {} for both. That moves data_status DENIED -> PARTIAL and publishers_covered for those days. The exact-case ticker_aliases are NOT in that identifier set, so tickers cause no such move. No other security's coverage changed (publisher_coverage old vs new differs for these two keys only).",
+      "notes": "INERT. It is the alias rule working through a second reader of `aliases`. For 2.0.0_SA_COO~H: HVST-g-2's never-widen pair should name these 148 daily cells, since they move for a reason other than a mention."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W45-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~45",
+      "surfaced_at": "2026-09-29T14:40:00Z",
+      "one_line": "HVST-g-1: exact-case tickers are a new securities-file field, `ticker_aliases`; a producer running code from before this cell ignores it silently and builds the old mention set with no error.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py _span_pattern(aliases, exact=()) and _security_exact_aliases",
+          "lib/research/harvest/tests/test_alias_rule_round18.py::test_the_matcher_is_byte_identical_to_the_old_one_without_exact_forms",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/securities.universe.json: ticker_aliases present on 191 of 191 securities, 182 non-empty"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO section 1 ruling 1: a ticker needs its own case rule because the served matcher is case-insensitive; clause 3: write the securities file with universe_securities' own CLI.",
+      "world_is": "The matcher takes ONE alias list, all case-insensitive, so a case-sensitive ticker cannot ride in `aliases`. The cell carries them in a separate field `ticker_aliases` (list, may be empty) that publication_gold._span_pattern reads. A securities file with the field, read by a matcher without it, drops every ticker form and every rule-admitted count without any failure; the reverse (old file, new code) reads no field and matches exactly as before (the pattern is byte-identical when there are no exact forms; test_the_matcher_is_byte_identical_to_the_old_one_without_exact_forms). Whole-brand names ride in `aliases` and survive either way.",
+      "notes": "INERT. HVST-g-2's rebuild must run the worktree code at the drain's HEAD, not a copy from before this cell."
     }
   ]
 ```
