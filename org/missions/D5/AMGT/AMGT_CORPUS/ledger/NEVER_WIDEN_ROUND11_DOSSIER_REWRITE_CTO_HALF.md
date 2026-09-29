@@ -36,3 +36,29 @@ overwrite); the six positional moves (placed 6, ambiguous 0; blank 2030E as `nul
 back to `/3`); the three stop limbs; and the reader note that RESAPP must render a `null` year as a blank cell.
 
 Signed as REFUSED-PENDING-CARVE-OUT: `1.0.0_SA_CTO~Z`, 2026-09-29.
+
+## RE-SIGN (2026-09-29 ~09:1xZ) -- SIGNED, against the COO half ADDENDUM 1 @`57804317d4` (msg 26526, READ-acked), code at `ed1afe47bd`
+
+The carve-out landed as CRPS-m-1 AMENDMENT 1 (merged @`71a6afb25b`).
+
+**This seat ran the producer-path instrument itself** (`checks/round11/r11_expected_moves.py`, PYTHONPATH at the repo root):
+`expected names 95 moved 9 currency_moves 4 [BZLFY CPA SPOT UNVGY] served_moves 6 [8035_JP BZLFY HEI SNPS TSM V]`. This equals the
+re-sign condition, and SHOP_CN does not move currency.
+
+**Then a WIDER read of the same instrument, which also compares `currency_basis` and `unit_as_written`: 15 names change served
+text, not 9.** Six more names change ONLY their reason text, with currency `null -> null` and no value moved:
+| name | listing | `currency_basis` old -> new |
+|---|---|---|
+| SHOP_CN | CAD | "symbol is ambiguous across currencies" -> "a bare $ on a non-USD dollar listing: the pack may state the reporting currency" (the carve-out) |
+| ORA_FP, SAP_GY, TTE_FP | EUR | "symbol is ambiguous across currencies" -> "symbol's currency differs from the listing" |
+| BP/_LN | GBp | the same move |
+| ML_FP | EUR | "symbol maps to one ISO code equal to the listing" -> "symbol's ISO set and the listing agree on exactly one code" (EUR kept) |
+The 9 moving names also change their basis text accordingly (for example CPA -> "...agree on exactly one code"). **Every new reason is
+accurate**: `$`'s ISO set intersected with EUR or GBp is empty, so "differs" is the true statement where "ambiguous" was the looser one.
+None sets a currency. These are served-text moves, read by AMGT_RESAPP's `/thesis` `team_cases` (which copies `currency_basis`), so
+this half names them in the blast radius: **15 names' served case text changes; 9 of them change currency or served state.**
+
+**SIGNED.** The stop limbs stand. After-state line 4 (`moved 0` on re-run) reads currency and served state as the COO's instrument
+does, and the basis text is expected equal after the act by the same construction.
+
+Re-signed: `1.0.0_SA_CTO~Z`, 2026-09-29.
