@@ -84,7 +84,7 @@ No delete, no code change, no vendor call, no portal work. It does not grade FWD
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>18</round>
 <slot>~45</slot>
 <fabric>site-z</fabric>
