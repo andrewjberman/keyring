@@ -12134,3 +12134,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not weakened to force a pass: this worker's proof_of_spec.json instance carries the TO's <expect> verbatim (per the schema's own instruction) rather than substituting a matching substring, so the resulting INVALID is the honest, reproducible reading of the TO as issued. The underlying acceptance test itself is genuinely satisfied (CENSUS-COMPLETE 9 branches 48 files, matching the checker's own documented success format and this cell's plain-English bar); the gap is entirely in the <expect> tag's wording, which is the issuer's to amend (rule 27 L5/L6) since the TO file is outside this worker's <paths> grant."
 }
 ```
+
+## ~P issuer row -- W24 K10: a READY report's sections served UNEXPECTED (absent bundle)
+
+```json
+{
+  "id": "IRPT_BCKEND-S213",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-29T17:28:00Z",
+  "one_line": "A READY Analysis report's sections route SERVES public_reason_code UNEXPECTED: window 24's K10 read GET analysis/RPT-2e21b52edcb222205399100e026c2768/sections -> 200, status UNAVAILABLE, public_reason_code UNEXPECTED, and the page shows 'This bundle was not rendered ... is absent' on load and after one reload. The report JSON exists; the rendered bundle does not. An absent artifact the page asks for should answer a named refusal, never UNEXPECTED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~D 102935, record org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/w24-part-p-20260929.md @62db1e7f77, HAR w24-20260929.har: K10 at 17:16Z, the print route by report id; status UNAVAILABLE, public_reason_code UNEXPECTED, no data, on load and after one reload",
+      "~Y 102940: NOT an authorization refusal -- served.py _handle_owner_read maps ProspectOwnershipRefused to NOT_AUTHORIZED, and _scope/interactive_access.py authorize_current admits OPAL_GLOBAL regardless of the stored principal_id (measured 14:4xZ); the deleted W22 owner cannot gate it",
+      "~Y 102940: the report JSON exists at opal-data-irpt irpt/cottonwood/platinum/analysis_reports/RPT-2e21b52e.../a607f9db...json (W22's trace read it); the missing artifact is the rendered bundle"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every served route answers a figure, a named refusal or a named state -- never UNEXPECTED (the boundary's reasons law); W21/W22 K10 expects a READY report to render on the page.",
+  "world_is": "A READY cottonwood Comparison report (W22 Y1, RPT-2e21b52e) has its JSON but no rendered bundle, and its sections route answers UNEXPECTED for it. The ~P side (the 49F adapter) is not on this path.",
+  "notes": "Filed by the W24 operator; the report/sections path is ~Y's (IRPT_BCKEND~Y). Disarm = the bundle rendered for READY reports, or the absent-bundle case mapped to a named refusal, read back on RPT-2e21b52e."
+}
+```
