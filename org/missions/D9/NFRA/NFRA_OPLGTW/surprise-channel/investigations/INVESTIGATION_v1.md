@@ -4966,3 +4966,33 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S18",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-29T20:21Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by the issuer, as disarm_owner. Z-W14-S2 (safe-apply's tag-authz full-root plan needed the gitignored grant-writer .build/staged): ruled by amendment A2 @81af5f02c0 (issuer placed the staged dir, copied from C:/tmp/mp3-1, diff -r identical); the resumed apply passed every safe-apply gate with no override and OG-n-1 closed (ledger nfra-oplgtw-gateway-eip CLOSED 473217c119; drain c72df75fce). Z-W14-S3 (terraform's approval prompt needs -auto-approve under a non-interactive safe-apply) is accepted as INERT: -auto-approve is a terraform flag, not a gate override; every gate ran.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W14-S2",
+    "NFRA_OPLGTW-Z-W14-S3"
+  ],
+  "one_line": "The issuer disarms Z-W14-S2 (ruled by A2, apply landed) and accepts Z-W14-S3 (-auto-approve is not an override).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer re-run in C:/tmp/wk-oplgtw-14 at 12d1de0062: AC1 'addresses associated with i-07dccb1615503ac99=1; eip=3.214.118.242; instance public ip=3.214.118.242 RESULT: PASS'; AC2 'declared eip resources=2 of 2; targeted plan rc=0 (No changes.)'; AC3 'sentinel at HEAD=no; listed OPEN/HELD=0; /mcp unauthenticated=401 RESULT: PASS'; proof-of-spec-check VALID rc=0",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-gateway-eip.json closed at 473217c119"
+    ]
+  },
+  "spec_asserts": "Z-W14-S2 was ARMED with the issuer as disarm owner; the order's step 5 names safe-apply with no override.",
+  "world_is": "The EIP is applied and verified through safe-apply with every gate run; the gateway egress is 3.214.118.242 (was auto-assigned 54.197.78.28).",
+  "notes": "Out-of-repo allowlists of 54.197.78.28 (if any) now see 3.214.118.242; R-2 accepted that one move. Row S45's disarm row is the CTO's, citing this close.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
