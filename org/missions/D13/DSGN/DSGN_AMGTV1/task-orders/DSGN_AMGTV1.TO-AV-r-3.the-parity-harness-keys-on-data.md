@@ -85,7 +85,7 @@ outer commit hashes, and any row.
 **ISSUER NOTES:** round 3 = the round-2 analysis's enrichment list @172d3d9600 section 4 (CTO msg 26551) + ruling @06d51bce50. Decomposition v3.
 Base 670f29e4: AC1 NO (FAIL as expected: ABSENCES page 7 vs export 17, CITES page 0); AC2 YES (PASS: the control, deleting one counted export absence moves the export 17 -> 16 and the harness fails).
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~11</slot>
 <fabric>site-z</fabric>
