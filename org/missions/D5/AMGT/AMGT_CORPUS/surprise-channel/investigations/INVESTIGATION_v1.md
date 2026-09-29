@@ -2202,6 +2202,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "FWD_EVIDENCE_ROUND13 FWD-4 (12:50Z): the fence's population, one backlog name the universe carries UNRESOLVED, is empty (0 of 95), so the act can only print 'picked NONE'.",
     "world_is": "From 12:56Z the population holds one organic name, Hitachi 6501 JP. The act runs on it and refuses to pick it for want of a (Ticker: ...) line: the organic arm now exists and reads NO_EVIDENCE; the WILL-ADD and REFUSES-ambiguous limbs are still unobserved, so the planted-folder act the row names still stands.",
     "notes": "For the round-13 analysis, not a cell of this round. FWD-1, FWD-3 and FWD-19 denominators moved by one folder / one file after the run; FWD-1's fence scans the resolved folder list, so its 356 of 356 still reads. Ingesting or inducting Hitachi is the scheduled producer's and AMGT_RESAPP's (the induction act's executing seat), never this row's."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-29T19:30:00Z",
+    "one_line": "CRPS-p-3's scratch drive could not run typed._run_write on the package's StubS3Client (head_object returns no LastModified, which _run_write reads at typed.py:639), so the typed stage was driven through its own typed.record + store.silver_append; and dossier.build has no clock parameter, so the as_of dates were set by replacing dossier.datetime.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/typed.py:639 fetched_at = head['LastModified']; lib/research/corpus/substrate.py StubS3Client.head_object returns {'Metadata','ContentLength'} only.",
+        "lib/research/corpus/dossier.py:1202 as_of = datetime.datetime.now(datetime.timezone.utc).date().isoformat() -- no injection parameter; lib/research/corpus/tests/test_fwd17_scratch_drive.py names both seams in its module docstring.",
+        "PYTHONPATH=. python -m pytest -q -s lib/research/corpus/tests/test_fwd17_scratch_drive.py printed the fwd17 line all True / 0 and '1 passed'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order CRPS-p-3 section 1: drive the real stage functions with one StubS3Client through to dossier.write_one; freeze or inject the clock only through a seam the code already has.",
+    "world_is": "extract, ingest, backlog, continuation and dossier run as written against StubS3Client; typed._run_write does not (its KeyError on head['LastModified']), so the test lands the same row with typed.record and store.silver_append (the pattern substrate._add_synthetic_report uses). The only clock seam dossier offers is its module-level datetime attribute; the test replaces it under monkeypatch. Both are stated in the test's docstring.",
+    "notes": "Filed, not fixed; nothing under lib/ is edited by this order. typed --write itself (the CLI limb) is therefore not exercised by this drive. sector_template, fund_form and typecast were not driven (no workbook or fund token in the scratch reports); the dossier reads them absent."
   }
 ]
 ```
