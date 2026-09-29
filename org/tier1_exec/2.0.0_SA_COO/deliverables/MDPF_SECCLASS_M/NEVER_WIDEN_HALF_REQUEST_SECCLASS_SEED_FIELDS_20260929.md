@@ -85,7 +85,7 @@ this same run performs (`read_existing(table)`, printed as `PRE-READ: N existing
   needed unless a LATER, separately-signed `--force-names` run lands it, at which point the same PRE-READ value
   (`Cash & Cash Equivalents`) is the rollback candidate.
 
-## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~00:1xZ)
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-29 ~23:5xZ)
 
 Signed on the blast radius above, read against the drained code on CLOUD @bb18a59a4a. The issuer re-ran all three
 criteria on CLOUD: `19 passed`, `SEED-FIELDS 302/344 diffs=88 class_changes=0`, `HALF-READY`, proof VALID.
@@ -105,3 +105,12 @@ criteria on CLOUD: `19 passed`, `SEED-FIELDS 302/344 diffs=88 class_changes=0`, 
   not complete after this act. The fix is an instrument_kind-only update mode, carried to the round-1 analysis.
 - **Operator for the run:** the seed path runs with the operator's credentials, and the ledger entry is opened at the
   start of the run and closed at its read-back.
+
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-09-30 ~00:0xZ)
+
+Signed on the blast radius above. Writers of the touched properties counted: 2 (seed-etf-classifications.py; seed-etf-constituents.py, conditional on
+attribute_not_exists(classified_by), RULING 103050), 2 rules read. Both branches covered: existing-row value change is BNDX sub_asset_class only
+(Intermediate -> International, rolls back by UpdateItem); absent-row branch is about 86 additive rows (DeleteItem per key). Zero asset_class changes.
+Conditions of the signature: (1) the run prints and SAVES the PRE-READ snapshot beside the ledger entry before the first write; (2) the change ledger is
+opened at start and closed at read-back; (3) CASH.name and --force-names are NOT part of this act; (4) bd-securities is not read or written.
+Gap W2-S3 (157 stock rows without instrument_kind) is taken to the round-1 analysis as an instrument_kind-only update mode.
