@@ -50,7 +50,7 @@ index): `irpt-m-r4-holdings` ANCESTOR of CLOUD; `irpt-m-s125-20260924` PRESENT; 
 
 ### ACCEPTANCE
 
-<criterion id="IBM23-231-AC1" cell_refs="IB-mr-231"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R23_CHECKS/r23_branch_census.py</invocation><expect>CENSUS-COMPLETE followed by the branch and file counts</expect></criterion>
+<criterion id="IBM23-231-AC1" cell_refs="IB-mr-231"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R23_CHECKS/r23_branch_census.py</invocation><expect>CENSUS-COMPLETE</expect></criterion>
 `IBM23-231-AC1` -- every irpt-m-* branch, and every file in its net diff, carries a disposition with evidence.
 
 <expected_criteria>IBM23-231-AC1</expected_criteria>
@@ -97,3 +97,12 @@ lane: the <paths> block IS the grant; the branches are ~M's own.
 </preflight>
 
 Source: row IRPT_BCKEND-S208 (@ebd80df827, 2.0.0_SA_COO~Y); CLAUDE.md NEVER-2.
+
+## AMENDMENT 1 (2026-09-29 17:2xZ, issuer 2.0.0_SA_COO~M) -- row IRPT_BCKEND-W81-S2
+
+IBM23-231-AC1's `<expect>` was prose ("CENSUS-COMPLETE followed by the branch and file counts"). proof-of-spec-check
+matches output_evidence against `expect` mechanically, so no correct output could satisfy it. That was an issuer
+authoring defect. The expect is now the literal token `CENSUS-COMPLETE`, which the check prints first on success. The
+invocation is unchanged and the output `CENSUS-COMPLETE 9 branches 48 files` satisfies it. The instance's copy of
+`expect` is corrected at the drain. Gate limb: none graded this modification (LIMB 6 fires on new orders only).
+
