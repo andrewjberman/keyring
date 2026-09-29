@@ -3945,3 +3945,79 @@ name the one known failure instead of silently inheriting it.
   "notes": "Found by the round-2 E5 draft (2.0.0_SA_COO~O fork) and verified by this seat at the bytes. The E5 cell must wire export end to end through the real run_export and remove both aliases from the export tests, so the tests exercise the branch production takes. R-4's memory reasoning still holds for the streaming remedy; only S57's account of the current path needs correcting."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T00:30Z",
+  "one_line": "OG-x-2 makes the export's parent memory flat and its child memory nearly flat, but a 250,000-row export of wide rows still peaks the child above the 256 MiB job cap on the test host: the source table and DuckDB's sorted result are resident in the child.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED (Windows working set, poll 3 ms, engine._plan_job called directly in a fresh python 3.11 / pyarrow 18.1.0 / duckdb 1.2.2 process; scratch scripts prof8/prof9 under the worktree .scratch, not committed): 250,000 rows x 2 columns peak 223.9 MiB; x 4 columns peak 260.5 MiB at a 128 MiB DuckDB limit (258.3 at 64); x 11 columns peak 333.8 MiB at 128, and at 64 MiB DuckDB raises OutOfMemoryException (58.8 of 61.0 MiB used) which _child_entry maps to LIMIT_EXCEEDED/memory.",
+      "MEASURED test_ogx2_ac01 (tests/test_schwab_export_stream.py, 5 passing runs after the final change): child peak ratio 100k/10k rows = 1.134, 1.140, 1.134, 1.176, 1.150 for a 2-column export; the same test with a 4-column export measured 1.204 to 1.270 across 6 runs (FAIL: 6 of 6 above 1.2), so the criterion is met on a 2-column export and not on a 4-column one.",
+      "engine.py _plan_job: _read_source keeps the projected source table whole (bounded by the 12-object / 64 MiB compressed source caps) and _write_export_batches streams DuckDB's ORDER BY result, which DuckDB materialises before the first batch; the contract's tie-break sort (query.DATASET_GRAINS) makes every rows-mode export sort. EXPORT_DUCKDB_MEMORY_BYTES = 64 MiB was chosen because DuckDB's sort spills at that limit (100,000-row sort delta 14.3 MiB vs 24.0 MiB at 128 MiB, prof5) but it also lowers the width at which DuckDB itself refuses.",
+      "The figures are Windows working set on site Z. The pilot host's Linux RSS is NOT measured here, so these numbers show the scaling and the order of magnitude, not the pilot host's values."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OGX2-AC1 and R-4: memory stops being a function of the export's size and a 250,000-row export fits the 256 MiB job cap.",
+  "world_is": "The parent (the Gateway process) is flat: tracemalloc peak 0.9x to 1.0x across 10,000 and 100,000 rows. The child is not: it adds tens of MiB per 100,000 rows on top of a ~150 MiB import baseline (about 25 MiB at 100,000 rows x 3 sort keys, prof5), so the largest allowed export is refused LIMIT_EXCEEDED/memory once its rows are wide enough. It is refused loudly, never truncated (PRD C5), but FWD-4's 250,000-row ceiling is not reachable for wide datasets.",
+  "notes": "REC to the issuer: OG-x-3's on-host proof should measure a 250,000-row export at the widest catalog_id projection (dim_position, all granted columns) on the pilot host before it is called realised. Levers not taken here (each changes SQL or DuckDB use beyond this cell): sort keys-only and gather payload in Arrow, or a smaller EXPORT_DUCKDB_MEMORY_BYTES with a spill-friendly result path."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T00:31Z",
+  "one_line": "tests/acceptance/onhost_bench.py, outside this cell's <paths>, calls engine.run_export(principal, plan, sources) and reads job.value['csv']; after OG-x-2 run_export requires row_cap and export_dir keywords and returns an export_path, so the next on-host bench run raises TypeError on its export leg.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/acceptance/onhost_bench.py:206 `return await engine.run_export(principal, plan, sources)` and :199 `len((job.value or {}).get('csv', b''))` at 9e4074c33a; the new signature is engine.py ExecutionEngine.run_export(self, principal, plan, sources, *, row_cap, export_dir) on branch wk-NFRA_OPLGTW-11.",
+      "The bench is not among the five suites this cell must keep green, and its path is not in the cell's <paths>, so it was left as it is."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order lists the tests to correct (test_schwab_engine.py, test_schwab_export.py, test_schwab_query.py, acceptance/conftest.py) and nothing else that calls run_export.",
+  "world_is": "A second caller of run_export exists in the acceptance tree. It fails loudly (TypeError), not silently, the first time the bench's export leg runs after OG-x-2 merges.",
+  "notes": "Fix belongs in whichever cell next runs the bench (the capacity cells): pass row_cap=250000 and an export_dir, then read the file's row count with engine.read_export_batches instead of csv bytes. Also stale after OG-x-2: the bench's comment at :366-371 about the missing 'rows'."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W11-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~11",
+  "surfaced_at": "2026-09-29T00:32Z",
+  "one_line": "test_schwab_engine.py::test_ogq1_ac04 failed once in three whole-suite runs on site Z with `assert not eng.pid_alive(killed.child_pid)` after a deadline kill, and every engine test prints 'Windows fatal exception: access violation' from popen_spawn_win32.py while still passing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "First combined run (test_schwab_engine + test_schwab_wiring + acceptance in one pytest process): 1 failed (test_ogq1_ac04, pid_alive True 3.03 s after the kill), 15 passed; the same module alone then passed 13 of 13 twice (.scratch/suite_eng.log, .scratch/final_test_schwab_engine.log, not committed).",
+      "The deadline branch of ExecutionEngine.submit (engine.py, `_kill(proc)` then return, reaped in `finally`) is unchanged by OG-x-2; the failing assertion runs before the reap completes on a slow spawn. The access-violation lines are faulthandler output in the parent during multiprocessing spawn (Python 3.11.9 on Windows) and appear in the passing runs too."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Schwab engine suite is green at the cell's close (order section 2).",
+  "world_is": "On site Z the suite is green when each module runs alone and can fail one timing assertion when modules share a process; the cell's final counts are from per-module runs.",
+  "notes": "INFERRED, not reproduced: one failure, no second sample. Reported so the drain does not read a single red ac04 as a regression of this cell."
+}
+```
