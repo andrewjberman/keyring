@@ -96,7 +96,7 @@ No gold write, no brand-to-parent source, no tier or event-rule change, no vendo
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>18</round>
 <slot>~45</slot>
 <fabric>site-z</fabric>
