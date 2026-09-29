@@ -97,7 +97,7 @@ It writes no gold, changes no threshold, and does not grade FWD-6.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>13</round>
 <slot>~39</slot>
 <fabric>site-z</fabric>

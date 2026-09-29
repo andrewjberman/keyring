@@ -198,8 +198,10 @@ halt_gate_validate_serial() {
   esac
   if [ "$serial" != "$base" ]; then
     lane="${serial#*~}"
+    # A lane is 1-3 UPPERCASE letters: ~O, and also the placed multi-letter lanes ~MI/~MP/~AI (placement
+    # @094c84f299) and ~ZI/~ZZ/~ZZZ. A single-letter class refused them all with exit 3 (row NFRA_MCPORTAL-Z-S15).
     case "$lane" in
-      [A-Z]) : ;;
+      [A-Z]|[A-Z][A-Z]|[A-Z][A-Z][A-Z]) : ;;
       *) return 1 ;;
     esac
   fi
