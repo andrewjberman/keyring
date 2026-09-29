@@ -2784,6 +2784,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "HVST-k-1 AC1: the harvest suite passes with new tests named; the cell does not say existing tests may change.",
       "world_is": "Two existing assertions were the superseded rule's own consequences (a non-qualifying last day cut off the event; fragments never met the per-day bar). Changing them is the ruling applied: the story test, the thresholds and the link window are untouched.",
       "notes": "The second test's arm (no alias evidence) now yields a thin event rather than none; the name-stripping behaviour it protects is unchanged (its names assertions still hold)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:50:00Z",
+      "one_line": "OBSERVATION: AMENDMENT 1 (guard threshold 4, RULED by 1.0.0_SA_CTO~Z msg 26783, ROUND_ANALYSIS.round20.md s.2a @168acda05e; amendment c4f2fedc94) landed at 85fe787f17 with EVENT_GUARD_CO_MENTIONS = 4; the literal AC2 re-run is PASS (KEPT 5, CHANGED 3, MERGED 0, GONE 0 of 8; (b) 5/5, (c) 2/2, (d) 1/1, (e) 8/8), which is the disarm test for rows Z-W49-S1 (NVDA all-guarded) and Z-W49-S2 (AMZN lead and span). S1 and S2 are not edited.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py@85fe787f17: EVENT_GUARD_CO_MENTIONS = 4 (git show 85fe787f17:lib/research/harvest/publication_gold.py)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/k1_ac2_output.txt@85fe787f17: 'COUNTS of 8 served: KEPT=5 CHANGED=3 MERGED=0 GONE=0'; '(b) 5 of 5 ... HOLDS'; AMZN new-rule db2286aabb9f span 2026-09-06..2026-09-07 members=5 lead bbg 'Amazon Cargo Plane Overshoots Runway in Miami, Killing Five'; HD ends 2026-08-18 with '6 Big Takeaways' GUARDED(co_mention=4); 'AC2 RESULT: PASS'; a second run byte-identical",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/k1_ac1_after.txt@85fe787f17: collected 212, 212 passed; guard test asserts co 4 guarded and co 3 NOT guarded",
+          "the issuer's own read-only measurement at 4 (KEPT 5, CHANGED 3, GONE 0) matches the worker's run"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Rows Z-W49-S1 and Z-W49-S2 (BLOCKING, INERT) stood open at the ruled threshold 3; AMENDMENT 1 says they disarm on the constant landing at 4 with the re-run as the test.",
+      "world_is": "The constant is 4 at 85fe787f17 and the re-run passes AC2 (b)-(e) and AC1, so the condition AMENDMENT 1 names for the disarm is met on this branch (LOCAL, unmerged).",
+      "notes": "The disarm is the CTO's ruling; this row records its test result. Served chatter_event is untouched (round 22).",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
