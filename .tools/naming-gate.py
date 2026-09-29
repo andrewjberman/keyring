@@ -104,6 +104,12 @@ LEGACY_READS_FILE = os.path.join(REPO, *LEGACY_READS_REL.split("/"))
 LEGACY_READ_FIELDS = ("id", "file", "literal", "remediation", "purpose", "authority",
                       "as_of_cutoff", "owner", "read_context")
 SITE_FIELDS = ("helper", "helper_body_sha256", "arg_index", "enclosing_function", "bucket_arg", "occurrences")
+# The second read_context kind (laptop 1.0.0_SA_CTO msg 102531, landed by 1.0.0_SA_CTO~O): a .tf file may carry an
+# EXISTING out-of-pattern literal ONLY as the value of one `locals` entry, referenced exactly N times. A Python site
+# keeps the kind-less SITE_FIELDS shape above; a .tf site MUST say kind tf_local.
+TF_LOCAL_KIND = "tf_local"
+TF_LOCAL_FIELDS = ("kind", "local_name", "occurrences", "reference_count")
+TF_LOCAL_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_-]*$")
 NAMING_MODULE_NAMES = {"opal_naming"}
 # A call whose string argument is a numeric spelling, never a name: float("inf") is not the firm inf.
 EXEMPT_CALLS = {"float"}
@@ -1088,6 +1094,26 @@ def load_legacy_reads():
                         % (raw.get("id"), missing or "-", extra or "-")))
             continue
         rc = raw.get("read_context")
+        if isinstance(rc, dict) and "kind" in rc:
+            # tf_local is the ONLY named kind; any other kind value refuses the entry.
+            if rc.get("kind") != TF_LOCAL_KIND or sorted(rc) != sorted(TF_LOCAL_FIELDS):
+                bad.append((raw, "entry %r read_context kind %r is not exactly %s"
+                            % (raw.get("id"), rc.get("kind"), list(TF_LOCAL_FIELDS))))
+                continue
+            occ, refs = rc.get("occurrences"), rc.get("reference_count")
+            if (not isinstance(rc.get("local_name"), str) or not TF_LOCAL_NAME_RE.match(rc.get("local_name"))
+                    or not isinstance(occ, int) or isinstance(occ, bool) or occ != 1
+                    or not isinstance(refs, int) or isinstance(refs, bool) or refs < 1):
+                bad.append((raw, "entry %r tf_local read_context is malformed (local_name an identifier,"
+                                 " occurrences exactly 1, reference_count an int >= 1)" % raw.get("id")))
+                continue
+            ok_auth, why_auth = authority_ok(raw.get("authority"), raw.get("id"))
+            if not ok_auth:
+                bad.append((raw, "entry %r authority refused: %s" % (raw.get("id"), why_auth)))
+                continue
+            keys.setdefault((raw["file"], raw["literal"]), []).append(raw)
+            good.append(raw)
+            continue
         if not isinstance(rc, dict) or sorted(rc) != sorted(SITE_FIELDS):
             bad.append((raw, "entry %r read_context is not exactly %s" % (raw.get("id"), list(SITE_FIELDS))))
             continue
@@ -1257,8 +1283,65 @@ def legacy_read_ok(entry, post_text):
                   % (idx, helper, bname, encl))
 
 
+def tf_local_ok(entry, post_text):
+    """(True, note) only when a .tf file carries the literal as the value of ONE `locals` entry, referenced N times.
+
+    NOTE: THE tf_local KIND (laptop 1.0.0_SA_CTO msg 102531). Four conditions, every one must hold, each refusal
+    naming which: (a) the literal occurs in the file text exactly `occurrences` (== 1) times; (b) that occurrence is
+    the value of exactly one line `<local_name> = "<literal>"` inside a top-level `locals {` block; (c) the local
+    is assigned nowhere else in the file; (d) `local.<local_name>` is referenced exactly `reference_count` times.
+    Any structure the brace scan cannot follow refuses: could-not-parse is never a pass.
+    """
+    rc = entry["read_context"]
+    want, name = entry["literal"], rc["local_name"]
+    occ, nrefs = rc["occurrences"], rc["reference_count"]
+    total = post_text.count(want)
+    if total != occ:
+        return False, ("tf_local: the literal occurs %d time(s) in the file text, approved %d: a duplicated or"
+                       " inlined occurrence is not authorized" % (total, occ))
+    assign_re = re.compile(r'^\s*%s\s*=\s*"%s"\s*(?:#.*|//.*)?$' % (re.escape(name), re.escape(want)))
+    any_assign_re = re.compile(r'^\s*%s\s*=' % re.escape(name))
+    lines = post_text.splitlines()
+    depth, block, assign_lines, other_assigns = 0, None, [], []
+    for no, line in enumerate(lines, 1):
+        code = re.sub(r'"(?:[^"\\]|\\.)*"', '""', line)  # braces inside strings never move the depth
+        code = re.split(r"#|//", code, maxsplit=1)[0]
+        if depth == 0:
+            head = code.strip()
+            block = "locals" if re.match(r"^locals\s*\{", head) else ("other" if "{" in head else None)
+        if assign_re.match(line):
+            assign_lines.append((no, depth, block))
+        elif any_assign_re.match(line):
+            other_assigns.append(no)
+        depth += code.count("{") - code.count("}")
+        if depth < 0:
+            return False, "tf_local: the brace scan went negative at line %d: unparseable, refused" % no
+    if depth != 0:
+        return False, "tf_local: the brace scan ends at depth %d: unparseable, refused" % depth
+    if len(assign_lines) != 1:
+        return False, ("tf_local: %d line(s) assign %s = the literal, approved exactly one"
+                       % (len(assign_lines), name))
+    ano, adepth, ablock = assign_lines[0]
+    if ablock != "locals" or adepth != 1:
+        return False, ("tf_local: the assignment at line %d is not a direct entry of a top-level locals block"
+                       % ano)
+    if other_assigns:
+        return False, ("tf_local: %s is assigned again at line(s) %s: exactly one assignment is authorized"
+                       % (name, ", ".join(str(n) for n in other_assigns)))
+    refs = len(re.findall(r"(?<![0-9A-Za-z_.-])local\.%s(?![0-9A-Za-z_-])" % re.escape(name), post_text))
+    if refs != nrefs:
+        return False, ("tf_local: local.%s is referenced %d time(s), approved %d" % (name, refs, nrefs))
+    return True, ("the single occurrence is the value of locals.%s (line %d), referenced %d time(s) as reviewed"
+                  % (name, ano, refs))
+
+
 def waivers_for(path, post_text, now=None):
-    """{literal: (entry, note)} for this file: the waivers that are IN FORCE and RECOGNIZED here."""
+    """{literal: (entry, note)} for this file: the waivers that are IN FORCE and RECOGNIZED here.
+
+    The checker is picked by the file's suffix: a .py site is graded by legacy_read_ok and must carry the
+    kind-less read_context; a .tf site is graded by tf_local_ok and must carry kind tf_local. A mismatch is
+    a DENIED waiver, with the reason.
+    """
     now = now or datetime.datetime.now(datetime.timezone.utc)
     good, bad = load_legacy_reads()
     out, denied = {}, {}
@@ -1271,7 +1354,17 @@ def waivers_for(path, post_text, now=None):
         if _expired(entry, now):
             denied[entry["literal"]] = "expired: cutoff %s inclusive UTC" % entry.get("as_of_cutoff")
             continue
-        ok, note = legacy_read_ok(entry, post_text)
+        is_tf_kind = entry["read_context"].get("kind") == TF_LOCAL_KIND
+        if path.endswith(".tf"):
+            if not is_tf_kind:
+                denied[entry["literal"]] = "a .tf site needs read_context kind tf_local; this entry is a Python call site"
+                continue
+            ok, note = tf_local_ok(entry, post_text)
+        else:
+            if is_tf_kind:
+                denied[entry["literal"]] = "a tf_local read_context authorizes a .tf file only, never %s" % path
+                continue
+            ok, note = legacy_read_ok(entry, post_text)
         if ok:
             out[entry["literal"]] = (entry, note)
         else:
@@ -1451,7 +1544,7 @@ def grade_file(nm, f, post_from_index):
                 lit.permitted = True  # the packaged name of a tracked source: a citation (R-11), not a mint
     else:
         lits = yaml_literals(added)
-    waivers = waivers_for(path, post_text) if path.endswith(".py") else {}
+    waivers = waivers_for(path, post_text) if path.endswith((".py", ".tf")) else {}
     seen = set()
     for lit in lits:
         if lit.permitted or any(lo <= lit.line <= hi for lo, hi in gen_ranges):
