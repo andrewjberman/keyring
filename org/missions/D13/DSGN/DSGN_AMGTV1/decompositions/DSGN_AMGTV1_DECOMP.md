@@ -318,3 +318,90 @@ v-1 names document + section only where `source` is served.
 reason. (ii) One cell per intent; three shared files resolved by two queues. (iii) One intent per cell. (iv) No cell moves a served
 value, a figure, a verdict, a cite, a pick or a count; v-2 changes colours and room, v-3 the words of a count it keeps, v-7 which
 of two identical word sources the page reads.
+
+## v6 -- ROUND 6 (issuer, 2026-09-29 ~22:xZ), over PRD v0.3 @abfad1355c (ADMITTED)
+
+**Rectangle:** the round-5 analysis's enrichment list, plus one issuer cell.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round5.md` @c918fa1fab (msg 26737) section 4, items 1-4, one cell per
+  item. Section 2a's correction (CTO~Z msg 26748) is folded into cell 1: a PARTIAL day reads "Searched: ...", and the word
+  "covered" is withdrawn.
+- **Cell 4 widened:** it also carries AMGT_HARVST's FWD-5 and FWD-6 as named judgments on the same walk (CTO~Z msg 26751;
+  AMGT_HARVST `ROUND_ANALYSIS.round19.md` ruling 5 @a251f02116).
+- **Issuer cell `AV-u-5`:** AMGT_RESAPP r49's ask (msg 26753 from `2.0.0_SA_COO~Z`; rows Z-W173-S1..S4) -- one data attribute
+  per fact FWD-30's grade reads, no visible change.
+- **NOT cells:**
+  - the team pack's unit (ruling 3);
+  - the Historical-multiple owner label (an AMGT_RESAPP ask, ruling 4);
+  - "$1,234" in drafted prose;
+  - the rank-series `name` (AMGT_RESAPP xx-2, merged, not deployed; the page's label path already reads it);
+  - officers from a second source (AMGT_RESAPP xx-3);
+  - an event-span layer on the timeline (not in any round-6 item; the walk records its absence for AMGT_HARVST FWD-6).
+- **A not-reached count is NOT served:** `/timeline` carries `publishers_covered` (the searched count) and its codes, with no
+  pool denominator, so cell 1 states only what is served.
+- **Portal base:** site-Z local DEV `4f927ad0`.
+- **Fixtures:** `deliverables/2.0.0_SA_COO~D/round6/fixtures/` is the round-5 set plus these:
+  - **SERVED, captured at the cut** by a read-only invoke of `opal-amgt-scoped-api` (CodeSha256 uv0oTSMa...Ng=, LastModified
+    2026-09-29T21:57:59Z):
+    - `timeline.992_HK_Equity.json`: 272 days, 1 PARTIAL, searched wsj, 0 articles, 3 events;
+    - `timeline.ASML_NA_Equity.json`: 74 PARTIAL, searched sa;
+    - `timelineDay.992_HK_Equity.2026-09-23.json` and `timelineDay.ASML_NA_Equity.2026-07-15.json`.
+  - **ISSUER VARIANT, labelled in the file:** `rankSeries.TRENDING_PRICE.12.named.VARIANT.json`, which adds a `name` per series
+    to exercise the label path only.
+  - **Snapshot:** `attrs.visible.base.json`, the base visible text of the six surfaces `AV-u-5` touches.
+- **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-u-1` | 1 + 2a | Timeline panel: a failed call's visible error in words (raw cause on a data attribute; the designed ERROR state already renders -- walk D shot 059); a PARTIAL day reads "Searched: <publishers in words> -- nothing found / N found" in the tooltip and the exported DayDissection (fixed display map, no "covered", no raw code, no field name, no not-reached count); legend words >= 4.5:1 on the body and tile rungs (fills unchanged) | FWD-5, FWD-11 | `SA/components/TimelinePanel.tsx`, harness `timelineFourStates` | ~22 | LOCAL |
+| `AV-u-2` | 2 | Posture's last machine phrasing: comparability measures via a fixed named display map, the footer's two counts in words; no "the object", "comparable selection", "rung", "log cap", "cite(s)", "bundles this page reads", "on this name's peer set", "validated N of N" | FWD-10 | `SA/postureCites.ts`, `SA/tabs/PostureTab.tsx` (cites, footer), harnesses `posture`, `posturePattern` | ~23 (1st) | LOCAL |
+| `AV-u-5` | issuer (RESAPP r49) | Seven data attributes carrying served values/reasons (figure value + year, served case value + currency, identity sector/country/currency, description-absence reason, driver-chart series, peers absent-column reason, posture no-call reason); no visible change | FWD-11, RESAPP FWD-30 | `SA/tabs/ModelTab.tsx`, `SA/components/SecurityOverlay.tsx`, `SA/components/HeaderBrief.tsx`, `SA/components/ThesisDriverChart.tsx`, `SA/tabs/PeersTab.tsx`, `SA/tabs/PostureTab.tsx` (verdict attribute) | ~23 (2nd, last) | LOCAL |
+| `AV-u-3` | 3 | History view: an unpicked line's dots mute with it (the picked line and the no-pick view full); the served-name label path kept (proven on the labelled variant) | FWD-3 | `SA/components/RankedChart.tsx`, harness `chart` | ~24 | LOCAL |
+| `AV-u-4` | 4 + HARVST r19 ruling 5 | The walker grades by name: `--thread "<company name>"` walks FWD-1's five hops, picking the row by `[data-row-lead]` name; the four List views written to `lead-lists.json`; per opened name a timeline day pressed and an event span opened, or `timeline:no-event-element` recorded | FWD-1, FWD-2, FWD-11; HARVST FWD-5, FWD-6 | `.claude/skills/ui-walk/walk.mjs`, `SKILL.md` | ~25 | LOCAL |
+
+**Edges and chains:**
+- No data edge.
+- One write-set collision is resolved by a queue: `PostureTab.tsx` is written by `AV-u-2` (cites and footer) and `AV-u-5` (the
+  verdict attribute), so slot ~23 runs u-2 then u-5. u-5 is last because its six files span surfaces no other round-6 cell
+  writes except that one.
+- M = 4 chains (u-1; u-2 -> u-5; u-3; u-4), N = 4, cap 8.
+- Every other surface is written by exactly one cell. `tabs.harness.cjs` is a read-only bound for u-1 and u-5. The surprise
+  channel is shared append-only.
+
+**Checks (`round6/checks/`, dry-run at base 4f927ad0):** `_load.cjs`, `bound.cjs`, `census.cjs` and `walkvoid.sh` were copied
+forward from round 5.
+
+| check | base | green arm (scratch overrides, never on a face) |
+|---|---|---|
+| timeline.cjs | 0 of 3 | 3 of 3 |
+| posturewords.cjs | 1 of 3 | 3 of 3 |
+| dots.cjs | 2 of 3 | 3 of 3 |
+| walkthread.cjs | 0 of 3 | 3 of 3 |
+| attrs.cjs | 0 of 3 | 3 of 3, visible text unchanged |
+
+- **Every build check FAILS at base, as expected.** Each arm that passes at base is a control.
+- **Bounds at base PASS:** U1 2/2, U2 2/2, U3 3/3, U5 7/7; RESAPP vv-5.AC1 YES; walkvoid.sh YES (5174 serving).
+- **`census.cjs`:** gains a machine-phrase class ("the object", "comparable selection", "rung", "log cap", "cite(s)", "bundles
+  this page reads", "on this name's peer set", "validated N of N", "covered", `mention_score`). It reads 30 tokens over 8
+  surfaces at base. It is the CVO's instrument, graded by judgment.
+- **AMGT_RESAPP's own FWD-30 grade:** `round45/checks/sweep.py` @525e045932 reads AWS (lambda invoke), so it is not an offline
+  criterion; the issuer runs it at the drain.
+
+**Battery:** comp-schedule and comp-iam are DECLARED-NOT-APPLICABLE. comp-adversary is the checks above. Blind spots:
+- The markup is static, with the estate chrome stubbed.
+- react-query and recharts are stubs. The timeline tooltip is rendered through recharts' `content` prop, and pixels are the walk's.
+- walkthread.cjs reads walk.mjs statically; the issuer's signed-in round-6 walk is its live run.
+- The legend contrast is computed from `index.css`'s layer tokens, not pixels; the walk's `design:contrast` is the pixel read.
+
+**Measured at the cut:**
+- The INTU "skeleton" on walk D shot 054 was the in-flight LOADING state; the designed ERROR state rendered on shot 059. The
+  issuer's round-5 drain-end read, item 1, mis-read it, and cell 1 is recast onto the error's words.
+- Every served PARTIAL day opened serves 0 articles.
+- No served fixture carries an ABSENT description or a no-call posture, so `AV-u-5` exercises both on labelled in-memory variants.
+
+**Rule 24:**
+- **(i) MECE:** over the analysis's four items plus the placed ask, by subtraction: 5 placed. The NOT-cells are named with their
+  reason.
+- **(ii) Write sets:** one cell per intent; the one shared file is resolved by a queue.
+- **(iii) Intent:** one intent per cell.
+- **(iv) What no cell moves:** a served value, a figure, a verdict, a cite, a count or a pick. u-1 changes the words around served
+  counts and codes. u-3 changes dot opacity. u-5 adds attributes whose values are the served values.
