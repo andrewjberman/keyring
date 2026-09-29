@@ -2821,6 +2821,75 @@ carries none.
     "spec_asserts": "Z-W16-S1 (ARMED): the 4 legs cannot be disabled because each one's merge is live; the order's premise does not hold.",
     "world_is": "Nothing was applied. The hazard, the daily failed logins and the secret read, stands until MX-s-14 PHASE B publishes the stripped documents under its never-widen halves. That act is sequenced this round.",
     "notes": "MX-i-4 (least privilege on opal/bd/credentials) can re-run after MX-s-14 PHASE B removes the 4 readers."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T05:40Z",
+    "one_line": "The platinum/etfs catalog row has no certified rectangle behind it: it is an AUTHORED row (a channel block and one artifact row written in the emitter), so its semantics are worker-authored and not CVO-certified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/emit_catalog_v02.py builds every EMISSION_MAP row from resolved certified substrates; the ETF page is not among PROGRAM_UNITS' certified runs (only json/positioning is), so no view carries platinum/etfs. The emitter's own capital_markets channel is the precedent for an authored channel block.",
+        "The new AUTHORED_CHANNELS / AUTHORED_ARTIFACTS blocks cite each field to a live get-object read (VersionId yBqGKuVXd0Fc3LLZDBV8ojJ_ONfgTbUY) or to data/etfs/scripts/gold/etf_positioning_publisher.py and portal/src/api/portal-proxy.ts, and the row's semantics_provenance says WORKER-AUTHORED, NOT a CVO-certified rectangle.",
+        "Also edited: the pos.01 row's disambiguation (a mutual L-1 pair with the new row); nothing else in an existing row changed (git diff of the catalog: the header and version lines, the new channel, the new portal_datasets entry and that one disambiguation line)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 item 1: 'add the catalog row with its verdict, keywords and caveats, through the emitter's source'.",
+    "world_is": "The verdict (serve-with-caveat, ruled on Andrew's word @dc75ddbe32), the firm (opal-internal: the key carries no scope segment, so a firm principal cannot be scoped by key) and the caveats are the worker's reading of the object and the producer's own docstring, not a certified cell. If the CVO wants the ETF page certified like the others, that is a program-unit run, and the authored block would then be replaced by the lifted row.",
+    "notes": "The channel keywords are ETF, ETF holdings, ETF positioning, the four tickers and other multi-word or upper-case forms; ETFs (mixed case, one word) is also present and may be read by MX-d-5's weak-match rule as a plain single-word keyword. MX-d-5's rule is not in this worktree, so d5.AC2 was graded here only on the pre-rule matcher (first match is the ETF row)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T05:40Z",
+    "one_line": "Baseline: test_ogz1_ac05 and test_ogz1_ac08 fail on CLOUD a6c17f4bcf itself; test_portal_grant's two asker tests fail when run after other gateway test files, on the same baseline.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git archive a6c17f4bcf infra/aws/ec2/opal-gateway extracted to the worker scratch (no edit of mine in it): `python -m pytest tests/test_data_entitlement_guard.py` reads `2 failed, 10 passed`, FAILED test_ogz1_ac05 (KeyError 'unclassified') and test_ogz1_ac08 (route-set assertion, the extra routes '/', '/api/admin', '/assets/{path:path}').",
+        "The same command in the worker tree with this cell's edits reads the same two failures and no others in that file, so the cell did not cause them.",
+        "test_portal_grant.py::test_asker_portal_scope_admits_granted_channel and ::test_asker_portal_scope_refuses_other_channel fail in a combined run (test_opal_discover then test_portal_grant) on the pristine extraction AND on the worker tree, and pass 7 of 7 when the file runs alone in the worker tree: an order dependence at baseline. On the pristine extraction the file alone shows two admin tests failing, which is an artifact of the extraction (it carries no workflows/ directory)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 A2: 'baseline test_ogz1_ac05/ac08 on CLOUD and report whether they also fail there'.",
+    "world_is": "Both fail on CLOUD at a6c17f4bcf. They were not fixed (the order says not to unless the cell caused them). ac05 expects a registry report key 'unclassified' that the report does not carry; ac08 pins a route set that lacks three routes the server now has."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T06:10Z",
+    "one_line": "BLOCKING: the naming limb (LGIC_ENFORCE DEC-6, ENFORCE) refuses the MX-t-10 commit because the served key of the ETF object is a NEW out-of-pattern S3 literal in three files inside the order's paths; the finished work is uncommitted in the worktree and preserved as a patch.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... on the MX-t-10 paths printed: ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged. NAMING REFUSE infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:402 (the ETF object's key) -> etfs/{scope}/platinum/positioning_data.json, why: NEW and OUT-OF-PATTERN as S3Key: REFUSE; the same for workflows/atom_decomposition/emit_catalog_v02.py:54 (the prefix) and :70 (the key); and emit_catalog_v02.py:54 also flags the pre-existing mdpf prefix, 'EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it', because the widening edits that same line. NAMING-GATE: REFUSE 4 graded.",
+        ".tools/naming-gate.py header: 'NEW and OUT-OF-PATTERN -> REFUSE'; NOT graded are prose, comments, docstrings, */tests/* and the record trees org/ and docs/; a string is NEW when absent from the file's pre-image at HEAD. The catalog must name the served key (the gate indexes rows by it), so there is no conformant spelling of it: the canonical form the grader prints, etfs/{scope}/platinum/positioning_data.json, is not where the object is served.",
+        "CLAUDE.md rule 30: a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; a deliberate departure is an R20 register entry Andrew acknowledges. Both are outside this order's paths, and no assembled-string or comment-marker workaround was used.",
+        "Every criterion is met on the worktree: AC1 5 of 5 PASS exit=0 and AC2 16 passed, 0 failed PASS exit=0 (invocations run before the commit attempt); the proof instance checks VALID rc=0; the equality read holds (EQUALITY_MX-t-10.md)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 A1: 'Andrew widened the catalog to platinum/etfs; the catalog version bump carries his verbatim ... through the emitter's header text', and item 5: 'Run AC1 and AC2, and commit'.",
+    "world_is": "The widening Andrew gave cannot be written into the catalog under the naming limb as it stands: any commit that adds the first literal of an out-of-pattern legacy S3 key is refused, and the catalog exists to carry exactly such literals. The mdpf keys got in before the limb was enforced (they grade EXISTING and only warn). The candidate is complete and uncommitted: 5 modified files and 1 new one under infra/aws/ec2/opal-gateway and workflows/atom_decomposition, all in this worktree, and preserved verbatim as deliverables/0.9.0_WK_NFRA_MCPINDEX~15/MX-t-10.candidate.uncommitted.patch (a record file, so never graded, and not a substitute for the commit).",
+    "notes": "Ways forward, all the issuer's or the CTO's: (a) an R20 register entry (or a registry row) that names platinum/etfs/positioning_data.json as a served legacy address, after which the same commit passes; (b) a ruling that the emitter's ALLOWED_PREFIXES and the generated catalog are exempt from S3Key grading; (c) the issuer lands the candidate through a route the limb admits. The worker used none of them and did not touch the limb, the enforce file or any registry."
   }
 ]
 ```
