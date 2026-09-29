@@ -45,3 +45,17 @@ Recorded September 29, 2026, approximately 16:48 ET; direct Codex user channel, 
 > Just went through this, my question is, what granularity of dates do we have for these? Can it be retrieved daily every single day back to the start date or what?
 
 `DAILY_COVERAGE_CENSUS.md` answers from a complete trading-date scan of the established sources, distinguishing dated source reports from Bloomberg's carried-forward responses. No production collector was installed.
+
+## L1 brief direction, verbatim
+
+Recorded September 29, 2026, during the approximately 17:32–17:46 ET research/brief session; direct Codex user channel, exact receipt timestamp not exposed.
+
+> Ok i think we have enough to $brief-create now. Here are the main points: 1.) We need bronze/silver/gold structure within opal-data-etfs set up, bronze raw csv or whatever we can get daily holdings with as much info as is available, silver is typed parquet, gold first foundational table being the "Canonical Shape", where we level everything out to one Opal-defined format for all tickers/channels. 2.) We need to create a BBG daily script that gets tagged onto the morning run and a lambda script that pulls daily from the issuer sites. This can actually be tested now because if the issuer sites post daily and we only need BBG for the backfill, then it is much preferable to not needlessly use quota on BBG; that should be explored and rec be featured in brief if feasible. 3.) We need to spec out some Gold Tables and AI analysis prompts for said tables. I think the "Canonical Shape" table should effectively be a denormalized base table with all info that we'd want. Every holding, every subasset class and GICS industry tag in fields, anything we can get, put it all in there. Then we make downstream gold tables maybe per ETF that cover top 10 performer bottom 10 performer weights and summary sector delta day over day, stuff like that so that we can then give a prompt to the AI to reverse engineer their trading behavior, tilts, etc. in order to ultimately derive summary outputs that cover where they were really right where they were wrong, what trends we're seeing in their trading in order to predict where they're going based off past trades/activity (projecting trends outward in their holdings), and so on.
+
+## LGIC naming constraint, verbatim
+
+Same active brief session, direct Codex user channel; exact receipt timestamp not exposed.
+
+> Yes also keep in mind that you should be following LGIC NAMING standards for all of this
+
+Carried into `docs/briefs/etf-holdings-research-20260929.md` and this folder's `GOLD_TABLES_AND_PROMPTS.md`. The brief uses the actual LGIC registry and grader, records the measured bronze/silver placement-builder mismatch with the explicit bucket direction, and does not treat existing legacy prefixes as the standard. This invocation authors the brief and supporting design; it does not dispatch or deploy production work.
