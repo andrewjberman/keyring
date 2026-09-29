@@ -2733,6 +2733,75 @@ carries none.
     "spec_asserts": "Rows Z-W17-S1 and Z-W17-S2 (both BLOCKING, INERT) asserted a pin target and a DS-lane publish were owed for the new REST module.",
     "world_is": "Neither is owed: no module is published or used. The pin target (S1) and the publish (S2) are not needed; the module named superseded in ANNOUNCE_MX-s-14.md. The step-3 test ran instead as the edited command list, merge only, with 0 vendor calls.",
     "notes": "S1 and S2 stay in the file (append-only); this row is their lapse record. Their disarm_owner stays 2.0.0_SA_COO~MI to disposition."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T07:10Z",
+    "one_line": "Stripping the dead download from opal-bd-allocation-download makes its success branch reachable for the first time since 2026-06-23: on a merge rc 0 the document invokes the bd-price-update Lambda (async), which has not been invoked by this document in 70 of 70 dated runs; the edited document keeps that invoke.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Served opal-bd-allocation-download $LATEST (version 4), read live 2026-09-29: after the merge it runs `if [ $DOWNLOAD_RC -ne 0 ] || [ $MERGE_RC -ne 0 ]; ... exit 1`, and only past that `aws lambda invoke --function-name bd-price-update --invocation-type Event`. logs/allocation-download-2026-09-28.log: `ERROR: Pipeline failed (download_rc=1 merge_rc=0) - skipping bd-price-update`.",
+        "DEAD_PROOF_MX-i-5.md (worker ~16): allocation download dead 70 of 70 dated logs since 2026-06-23, so the invoke has been skipped on every one of them.",
+        "infra/aws/lambda/bd-pipeline/bd-allocation-trigger/lambda_function.py docstring: 'SSM doc invokes bd-price-update Lambda after download completes'.",
+        "The PHASE A test of the edited list ran WITHOUT that invoke (removed from the test command list only), so no downstream Lambda was fired by this worker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2: apply the transaction strip identically to the allocation document, keeping the merge, the log upload, the shutdown-before-exit and the honest exit on the merge's rc.",
+    "world_is": "The allocation document has one step after the merge that the other three lack: the bd-price-update invoke, gated on both rcs. With the download gone the gate reads the merge rc alone, so the first PHASE B fire calls bd-price-update. What that Lambda does with a daily call after a 3-month gap is NOT measured here. The issuer decides before PHASE B: keep the invoke (as the edited file does) or strip it.",
+    "notes": "Whether bd-price-update is also invoked by another path (its own schedule or the bronze-complete rule) is not measured."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T07:11Z",
+    "one_line": "The A1 transaction test ran on i-0e6f6dc014fdcf1cd (bd-assets), but bd-transactions-trigger targets i-00c7568bc510f7423 (bd-transactions); the merge-only run was repeated on the right instance and both read rc 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration EC2_INSTANCE_ID, 2026-09-29: bd-transactions-trigger i-00c7568bc510f7423; bd-allocation-trigger, bd-realized-trigger and bd-unrealized-trigger all i-0800437d1dbb0b5cc. ec2 describe-instances: all three instances share bd-exporter-profile, t3.medium, Names bd-transactions / bd-allocations / bd-assets.",
+        "A1 test command cdb144c8-b4de-4ef1-b5d8-4c36509ca6fc ran on i-0e6f6dc014fdcf1cd (the asset-dim instance): Success rc 0, wrote silver/transactions/2026-09-29.parquet (0 rows). Repeat command e3047e12-0cce-4098-8e96-93e429c918d1 on i-00c7568bc510f7423: Success rc 0, `Previously processed: 195 files`, `No new files to process`.",
+        "The second run overwrote logs/transaction-download-2026-09-29.log (S3 versioning holds the first)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A1 step 3: one ad-hoc run of the edited command list, merge only, as the test.",
+    "world_is": "The instance for that run was chosen from the asset-dim precedent, not from the trigger. Both instances carry the same profile and the merge downloads its script from S3, so the result is the same; the repeat on the trigger's own instance is the one the announcement cites. No vendor call was made by either run.",
+    "notes": "The repeat is a second merge-only run for the transaction document (0 vendor calls, 0 new files)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T07:30Z",
+    "one_line": "safe-commit REFUSED the three A2 documents (opal-bd-allocation/realized/unrealized-download.json, lane CLOUD_OPS_OR_ETL): this branch's copy of the MX-s-14 order predates amendment A2 and its <paths> do not grant them; the edits are in the worktree, uncommitted, and copied under the deliverables folder.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit -- <the 3 documents + deliverables + channel>, 2026-09-29 ~07:2xZ: `ERROR: owned-paths lane violation(s) detected (block mode)`, one VIOLATION line per document, lane=CLOUD_OPS_OR_ETL; `safe-commit did NOT commit (rc=1)`; nothing was committed in that call.",
+        "The order at this branch's HEAD carries 0 references to opal-bd-allocation-download.json in its <paths>; the order at CLOUD @1d62ade62e carries 3 (git show CLOUD:<order> | grep -c => 3; the branch file => 0). A2 was committed on CLOUD after this branch was cut, and this worker may not merge CLOUD (issuer message: the branch cannot fast-forward, and workers never merge).",
+        "sha256 (first 16) of the three edited documents in the worktree: allocation 559048c8290150fc, realized 570538ea79ddfe59, unrealized b33bb4201627f2d8; copies under deliverables/0.9.0_WK_NFRA_MCPINDEX~17/edited_documents/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2: apply the transaction edit to the allocation, realized and unrealized documents; the granted paths are the order's <paths> (the lane gate admits exactly those).",
+    "world_is": "The gate reads the order at the branch's HEAD, which lacks the A2 grant, so the three repo files cannot be committed by this worker. Not worked around: no override, no order edit. Carrier so the edit is not lost: the byte-identical copies in the deliverables folder (a granted path), committed. Unblock, the issuer's choice: bring the A2 order text onto this branch (a CLOUD merge by the issuer) and this worker recommits the three files, or copy the three files from edited_documents/ at the drain.",
+    "notes": "The A2 tests ran from the edited command lists (built from the working-tree files) and are recorded in ANNOUNCE_MX-s-14.md."
   }
 ]
 ```
