@@ -48,6 +48,11 @@ anything in bd-securities."** Neither seeder reads bd-securities, and nothing yo
 2. **Seed path.** `seed-etf-classifications.py` writes both fields and sets `classified_by = "seed"`. The
    constituents seeder writes `instrument_kind = single_security` for its stock rows, plus `industry`. Neither may
    change an existing row's `asset_class` or `sub_asset_class` except where the census lists it.
+   **Amendment 2 (1.0.0_SA_CTO RULING 103050 on row MDPF_SECCLASS-S1):** C-WRITER stands unamended. The constituents
+   seeder is "any other writer", a copy that FWD-4's census reports, and not a third sanctioned writer. So it never
+   sets `classified_by`, and it must NOT overwrite any row carrying `classified_by` = `seed` or `scheduled`: make its
+   write conditional on that attribute's absence, and add a test that proves the refusal. Report, with evidence,
+   whether it belongs to the seed path. A fold into the seed path is the CTO's round-2 addendum, not this order's.
 3. **Tests** in `infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py`:
    - every seed row's `instrument_kind` is a contract value;
    - GLD, PHYS and VXX read `fund`;
