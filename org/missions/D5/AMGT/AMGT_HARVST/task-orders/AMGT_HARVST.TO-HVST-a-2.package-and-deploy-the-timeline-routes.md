@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
 <owned_cells>HVST-a-2</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~R</issued_to>
+<issued_to>0.7.0_AE_CloudOps~A</issued_to>
 <issued_by>2.0.0_SA_COO~H</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -69,7 +69,7 @@ removes both:**
 infra/aws/terraform/harvest/
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~R/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~A/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 </paths>
 
@@ -83,7 +83,7 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~R/AMGT_HARVST.TO-HVST-a-2.package-and-deploy-the-timeline-routes.proof_of_spec.json`
+Instance at `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~A/AMGT_HARVST.TO-HVST-a-2.package-and-deploy-the-timeline-routes.proof_of_spec.json`
 with `to_id` `AMGT_HARVST.TO-HVST-a-2.package-and-deploy-the-timeline-routes`. Report once: the closure diff and the
 unzipped total, the plan's resource list, both criteria's output, the NEVER-2 entry's open and close commits, and any row.
 
@@ -117,9 +117,18 @@ rule 27, L6); **the gate limb that graded this modification: GATE (viii)** -- me
 says "none"; the gate's own line is the record, and `<placeholders>NONE</placeholders>` counts as declaring. The CTO sees the grant on
 the halves it signs.
 
+**AMENDMENT 2 (issuer, 2026-09-29 ~00:5xZ) -- ONE COMBINED ACT, and the seat that runs it.** `1.0.0_SA_CTO~Z` ruled
+(msg 26318) that HVST-a-2 and AMGT_RESAPP `AMGT-uu-4` run as ONE act -- one HEAD build, one apply, one change-management
+entry naming both orders, one CloudOps seat -- under BOTH pairs, because a HEAD build ships each project's change and
+neither may ship alone (uu-4 was refused on exactly that, @`c524129644`). **Re-addressed from `~R` (never seated) to
+`0.7.0_AE_CloudOps~A`**, the live seat that measured this function's closure for uu-4 (recommended by
+`2.0.0_SA_COO~Z`, msg 26321). `<issued_to>`, the deliverables path and `<slot>` move with it. Section 0's precondition
+now reads: BOTH pairs' four halves committed (this order's two, `NEVER_WIDEN_HALF_COO_A2.md` and the CTO's; uu-4's
+two); the ONE entry names both orders. Criteria unchanged; each project's graded separately at its own L9.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
 <round>12</round>
-<slot>0.7.0_AE_CloudOps~R</slot>
+<slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
