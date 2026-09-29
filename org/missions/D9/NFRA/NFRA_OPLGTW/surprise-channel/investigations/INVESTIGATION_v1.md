@@ -4426,3 +4426,111 @@ name the one known failure instead of silently inheriting it.
   "notes": "Fix in the issuer's next order template."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "TO-OG-g-1's GCG1-AC3 names the invocation `schwab_entitlement_admin.py prepare`, but the command's CLI has no `prepare` subcommand -- argparse admits only activate, revoke and deny-backfill, so the named invocation exits 2 on an invalid choice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CLI: infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py:416-448 _build_arg_parser adds exactly three subparsers -- 'activate', 'revoke', 'deny-backfill' -- on `sub = p.add_subparsers(dest='command', required=True)`; main():456-495 dispatches on those three and nothing else.",
+      "FUNCTION: `prepare` exists at :313-339 as a module function that `activate` calls internally, and it is what prints the scope diff (`print(format_diff(diff), ...)` at :330), so the diff AC3 wants is produced on the activate path.",
+      "ORDER TEXT: the AC3 clause reads '(`schwab_entitlement_admin.py prepare`)' and its second sentence already says 'The probe re-runs the validation against the recorded candidate rather than trusting the transcript', which is the programmatic path."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A `prepare` subcommand exists on the operator command's CLI and can be invoked to validate a candidate and print its scope diff.",
+  "world_is": "`prepare` is an internal function, not a subcommand. The criterion's SUBSTANCE is met by calling the command's own validate_candidate/prepare -- the same code `activate` runs -- which is what probes/og_g1.py AC3 does; the scope diff reaches an operator on the `activate` path. Only the CLI token in the order's text is wrong.",
+  "notes": "INERT: nothing is blocked by this alone and no workaround was invented -- the probe calls the committed module's own validator. Fix in the issuer's next order template."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "GCG1-AC3 and GCG1-AC6 cannot both hold for any Schwab grant: a runnable candidate structurally names raw account identifiers, AC3 requires the evidence file to carry the printed scope diff VERBATIM, and AC6 forbids a raw account identifier in any artifact this order commits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PARSER: infra/aws/ec2/opal-gateway/app/data_entitlement.py:261-264 -- `if not isinstance(accounts_raw, dict) or set(accounts_raw) != masters: raise Malformed('scope.accounts must name the accounts of every granted master and no other')`, then `_strings(v, ...)` per master.",
+      "NON-EMPTY: :204-206 `_strings` raises Malformed('%s must be a non-empty list of strings') on an empty list, so every granted master must name at least one real account id; the id shape is `_ACCOUNT = re.compile(r'^[0-9A-Za-z._-]{1,64}$')` at :127.",
+      "DIFF: the scope diff AC3 wants verbatim is scope_diff()/format_diff() at :208-241, which diffs every dimension including `accounts`.",
+      "AC6 TEXT: 'the probe scans the evidence file, the probe itself and the result file for a token, cookie, client secret, complete URL with a query string, raw account identifier or customer amount' and 'The identity's tid/oid and the grant's scope ARE recordable; a balance, a holding, an account title or a credential is not.' -- the accounts DIMENSION of the scope is the collision.",
+      "MEASURED: probes/og_g1.py AC3 run 2026-09-29 -- the scope half PARSES (masters=2 datasets=3 dates=fixed_dates(2) columns=15 operations=4) only with a substituted account list; the committed scope carries `<<REDACTED-AC6-OPERATOR-SUBSTITUTES>>` per master."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The evidence file can carry the operator command's scope diff verbatim AND contain no raw account identifier.",
+  "world_is": "For a Schwab grant those are mutually exclusive, so GCG1-AC3 cannot pass as written even once a controlled identity exists. Nothing was widened or worked around here: the committed scope redacts the accounts dimension and names what the operator substitutes. Two dispositions are available to the owner -- commit the diff with only the accounts dimension redacted and keep the verbatim copy outside the repository (the route WALKTHROUGH_PROTOCOL.md section 2 already uses for answers, %LOCALAPPDATA%/opal/og-salt/), or amend AC6 to exempt the grant's own accounts dimension.",
+  "notes": "ARMED because it blocks a mechanical criterion from ever passing as written, independently of the identity block; the seat cannot disposition its own order's criteria."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "A fixed_dates grant bounds the latest qualified date it can report, so once a closure marker later than 2026-09-25 lands, A7 step 4's expected observation ('a latest qualified date equal to the newest qualified closure marker for that master at ask time') will not hold for a reason that is the grant's date mode, not the system under test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED NOW: s3api list-objects-v2 on opal-data-assets 2026-09-29 -- schwab/08242234/meta/complete/ and schwab/08335338/meta/complete/ each hold 19 markers, newest `date=2026-09-25.json` in BOTH masters (LastModified 2026-09-26T22:16:14Z and 2026-09-26T09:46:52Z). So the expectation holds at this moment.",
+      "PRODUCER CADENCE: the markers land daily at ~10:16Z (08242234) and ~09:46Z (08335338); the newest landed 2026-09-26 for business date 2026-09-25, and today is 2026-09-29, so a marker for a later business date is due.",
+      "GRANT SEMANTICS: app/data_entitlement.py:472-477 `_allowed_dates` returns None for fixed_dates (the grant enumerates its dates); check_scope:482 documents 'an omitted optional dimension means the granted set', and its date limb runs only `if dates is not None`, so a no-date ask is IN SCOPE but resolves against the granted set.",
+      "PROTOCOL: WALKTHROUGH_PROTOCOL.md section 3 A7 step 4 expected observation -- 'each master's no-date ask returns a latest qualified date equal to the newest qualified closure marker for that master at ask time, and its returned available dates include 2026-09-25.'",
+      "SEAL: ruling R-OG-12 fixed D_NEW/D_PREV as literal dates 'so a newer qualified closure at ask time does not change what was sealed', which is why the grant's dates are fixed rather than rolling."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The grant's date mode and A7 step 4's expected observation are independent.",
+  "world_is": "They interact. fixed_dates {2026-09-24, 2026-09-25} is the narrowest mode that serves the 7 sealed questions and is the only one that preserves the date-dimension refusal (a real qualified marker exists for 2026-09-23), so it is what this order recorded; the cost is that A7 step 4's 'newest marker at ask time' half drifts as soon as a later marker lands. rolling_complete_window would track the newest marker but grants ~30 dates and destroys the date refusal.",
+  "notes": "ARMED so it is dispositioned BEFORE the controlled walkthrough runs, not discovered during OG-v-7's grading. Two routes for the owner: run the walkthrough before a later marker lands, or have OG-v-7 read A7 step 4's expectation as 'the latest qualified date within the grant'. GCG1-AC5 is unaffected and passes 7 of 7 -- the no-date ask is inside the grant either way."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S12",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~OG",
+  "surfaced_at": "2026-09-29T04:35Z",
+  "one_line": "TO-OG-g-1 mandates surprise row ids of the form `NFRA_OPLGTW-Z-OG-S<k>`, but that shape is rejected by BOTH gates' id patterns -- the row gate would refuse the row at commit and the proof-of-spec checker cannot see it -- so the ids the order asks for are unfileable; these rows use the admitted seat-row shape `NFRA_OPLGTW-Z-S<k>` instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROW GATE: .tools/surprise-row-gate.py:104 -- ID_RE = re.compile(r'^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$'), anchored at both ends, so the only segments admitted between the project and S<k> are 'Z-', 'W<n>-' and 'C-'. :2146 refuses any row whose id does not match.",
+      "PROOF-OF-SPEC: .tools/proof-of-spec-check.py:1127 -- SURPRISE_ID_RE = re.compile(r'^\\s*([A-Z0-9_]+-(?:Z-)?(?:W[0-9]+-|C-)?S[0-9]+)\\b'), the same admitted set; :1237-1239 emits 'surprises[n] carries NO row id' on a miss.",
+      "EXERCISED: matching 'NFRA_OPLGTW-Z-OG-S1' against SURPRISE_ID_RE returns NO MATCH, while 'NFRA_OPLGTW-Z-S1', 'NFRA_OPLGTW-Z-W15-S4', 'NFRA_OPLGTW-S1' and 'NFRA_OPLGTW-Z-C-S1' all MATCH. Measured 2026-09-29 before the rows were renumbered; the first proof-of-spec validation run reported all three entries as carrying no row id.",
+      "CENSUS: at CLOUD the channel holds 191 rows across 16 id shapes -- NFRA_OPLGTW-S<k> 63, W3 26, W5 20, W1 14, W4 12, W6 11, W2 10, Z-S<k> 8, plus eight Z-W<n>-S<k> shapes. ZERO rows carry a '-OG-' segment, so no precedent exists for the shape the order names.",
+      "CHOICE: NFRA_OPLGTW-Z-S9..S12, continuing the existing site-z seat-row series (Z-S1..Z-S8 present). The channel header's own rule is that a worker row carries its slot coordinate and 'a seat's row carries none', which is what Z-S<k> is."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rows filed as `NFRA_OPLGTW-Z-OG-S<k>` are valid and will pass the row gate and be seen by the proof-of-spec surprises limb.",
+  "world_is": "Both gates reject that shape. Had the order's literal ids been used, the commit would have been refused by surprise-row-gate.py and the three rows would have been invisible to the proof-of-spec checker -- i.e. the findings would have read as unfiled. The rows carry the admitted seat-row shape instead, and nothing else about them changed.",
+  "notes": "INERT: the correction is mechanical and is recorded here so the renumbering is not read later as a seat inventing its own ids. The issuer may prefer a '-OG-' segment to be admitted by both patterns; that is a gate edit, not a row edit, and is not this seat's write surface."
+}
+```
