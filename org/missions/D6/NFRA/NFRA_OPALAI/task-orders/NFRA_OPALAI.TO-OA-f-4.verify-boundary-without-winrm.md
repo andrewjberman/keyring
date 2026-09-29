@@ -132,7 +132,7 @@ placeholders (NONE), so no limb graded this amendment.
 f4.AC3 (amendment 2) base: FAIL as expected at fd8ab8a57f and at 56c6228 (arm files=0, ARGLEN none). f4.AC1's bound
 now admits the two arm files (other files changed outside the three = 0). Gate limb: none (GATE (viii) NONE).
 
-<status>in_progress -- REOPENED a 2nd time by the issuer 2026-09-29 ~00:1xZ (amendment 2, CTO ruling msg 26297): the -EncodedCommand line exceeds the 1024-char logon limit; arms ship as .ps1 files run via -File, with an ARGLEN assert. Same slot ~19. Was: complete (@400fbd65d8).</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~19</slot>
 <fabric>site-z</fabric>
