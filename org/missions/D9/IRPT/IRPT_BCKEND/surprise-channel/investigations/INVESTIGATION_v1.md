@@ -12282,3 +12282,39 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy (a ~M cell): add schwab_account_codes.py and schwab_account_codes.json to the directory bundle's members in .tools/safe_deploy_core.py, then build the bundle LOCALLY (no upload) and prove `import directory_runner` succeeds from the extracted tree, with a module-level import sweep over every .py member. It was the issuer's miss when cutting IB-mr-213: its step 3 named only the Holdings closure."
 }
 ```
+
+
+## ~Y row -- W24 produced ZERO reports: both vendor-reaching jobs died at the session refresh (row IRPT_BCKEND-S218)
+
+```json
+{
+  "id": "IRPT_BCKEND-S218",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-29T18:05:00Z",
+  "one_line": "W24 produced ZERO reports, and the reason is not S206. Both jobs that actually reached the vendor died ATTENTION SESSION_REFRESH_ALREADY_USED -- arm 1 (Multi-Comp, cottonwood) at 17:41:39Z and arm 3 (Overview, 49financial) at 18:00:00Z -- on two different tenants, each run solo with nothing else in flight, on generate build inrij6hL. The sharpest detail is arm 3's intent record: it claimed session_refresh at FENCE 1 four seconds after its K5, so the refresh was the job's FIRST act, meaning the resident had no usable vendor session at job start rather than losing one mid-job. resident_worker.refresh_session admits exactly one refresh per request, so a job that must refresh immediately has already spent its only allowance and dies on the next eviction. On inrij6hL that is 2 of 2 jobs; on wnt7hjAB (W22) it was 1 of 2. The denominators are small and are stated as such.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (operator of the resident and generate builds; LIVE at this write and told at 18:03Z). Disarms when a job on the live build reaches READY without consuming its session_refresh allowance at fence 1, or when the session path is repaired under its own ledger.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-jobs consistent Query: cottonwood REQ-3971fc2d5421c12412367e0b state ATTENTION, job_detail {\"code\":\"SESSION_REFRESH_ALREADY_USED\"}, read 17:41:39Z; 49financial REQ-cf1d7894dd4b73a148b01a2d state ATTENTION, same code, read 18:01:22Z",
+      "arm 3's intent record at 17:58Z: intent_session_refresh claimed_at 1790703898 (17:44:58Z) FENCE 1, while its K5 POST was 17:44:54Z -- a 4-second gap, so the refresh was the job's first act and not a mid-job recovery",
+      "both arms ran SOLO under the restored serialization: arm 1 with nothing in flight, arm 3 started 17:44:37Z after arm 1 reached its terminal state at 17:41:39Z plus the 20 s floor",
+      "each normalized immediately when solo -- arm 1 NORMALIZED in 2 s at 17:26:23Z, arm 3 NORMALIZED in 2 s at 17:44:49Z -- so the upload path is healthy and the failure is downstream in the vendor session",
+      "resident journal by SSM, --since 2026-09-29 17:20:00 UTC, 124 lines, service active, no Traceback: IRPT_RESIDENT_RESOLVE READY at 17:26:25 and 17:44:50 (the two solo resolves), RETRY PROVIDER_READ_UNAVAILABLE at 17:26:54 / 17:27:54 / 17:28:55 and ATTENTION RESOLVE_RETRY_EXHAUSTED at 17:29:55 (arm 2's overlap, row S215)",
+      "NEITHER job ATTENTION appears anywhere in that journal span, which re-confirms row S207 on a second window: the code is recoverable only from irpt-jobs",
+      "the build: irpt-ycharts-generate CodeSha256 inrij6hLQiz/ZtOL3Wnzu3aA3xekxlRxYSEajtYqVZw=, LastModified 2026-09-29T15:00:32Z, EQUAL to the W24 packet W24-1 pin, re-read at 16:2xZ",
+      "W22's comparison point on build wnt7hjAB: Y1 reached READY and produced RPT-2e21b52e, while Y3 died SESSION_REFRESH_ALREADY_USED -- 1 of 2, against W24's 2 of 2",
+      "the refusal itself is correct and designed: resident_worker.py:126-129 raises WorkerAttention('SESSION_REFRESH_ALREADY_USED') when claim_intent returns false, covered by tests/test_resident_worker.py:264",
+      "DLQ irpt-generation-dlq read 1 after the window, EQUAL to the before-baseline, so no BLOCKING row is owed on DLQ growth"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The W24 packet (blob 3089695cc6) expects each arm to reach a named terminal state and the report arms to produce certified reports; PRD FWD-4's Analysis journey asserts a submitted request becomes a served report.",
+  "world_is": "No report can currently be produced at all. Two consecutive windows have now spent their submissions and returned one report between them, and W24 returned none. The upload and normalization path is healthy when serialized; the vendor session path is not. A job whose first act is a session refresh has consumed its only admitted refresh before doing any work, so any subsequent eviction is fatal by construction.",
+  "notes": "NOT a replay request; nothing was retried and the window's cap is spent. This is ARMED because it is not window-local: every future Analysis window produces zero reports until the session path is repaired, so it blocks the four carried report arms (Multi-Comp, Target Weight, the first certified 49financial, Inflection) indefinitely rather than for one cap. Two reads would locate it, neither inside a walk window and neither ~Y's to make: (1) why the resident holds no usable vendor session at job start on inrij6hL -- whether the 15:00Z build, the r3 apply, or the session store is responsible; (2) whether one admitted refresh per request is the right allowance when the first act already needs one. If the answer to (2) is no, the fix is a contract change in resident_worker.refresh_session and belongs to 1.0.0_SA_CTO, not to a walk."
+}
+```
