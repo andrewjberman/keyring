@@ -10960,3 +10960,59 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT now (both orders terminal, no time overlap). Cheap disarm options for the owner: a per-workstream slot band, or a gate limb refusing a newly-added order whose <issued_to> already holds a non-terminal order from another workstream. ~Y's own practice from here: take slots from a ~Y band (7x) until ruled."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W42-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~42",
+  "surfaced_at": "2026-09-28T22:25:00Z",
+  "one_line": "Amendment 3 Step 9's required `python -m pytest data/assets/scripts/gold/investor_reporting/tests -q` run (unrelated to this session's own code change) shows 7 failed, 270 passed, 7 errors -- all 14 in test_holdings_inf.py/test_inf_positions.py on ModuleNotFoundError: No module named 'lib.silver_ids', a pre-existing sys.path name collision, not caused by this session's edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (route to whichever seat owns .tools/ test isolation; not blocking this cell)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat this session touches only data/assets/scripts/gold/investor_reporting/holdings_snapshot.py (+ the unrelated portal submodule pointer); `python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_holdings_inf.py -q` run ALONE: 12 passed -- the failure only appears when the whole tests/ directory collects together",
+      "full traceback: data/assets/scripts/gold/investor_reporting/tests/test_holdings_inf.py -> holdings_inf.py:131 _eclipse_prefix() -> data/inf/scripts/silver/convert_eclipse_portfolios_to_silver.py:42 -> data/inf/scripts/silver/_orion_api_silver_lib.py:284 'from lib.silver_ids import ...' -> ModuleNotFoundError: No module named 'lib.silver_ids'",
+      "a pytest plugin hook (pytest_runtest_logstart) printed sys.modules['lib'].__file__ at the moment of every subsequent INF test: 'C:\\...\\wk_irpt_bckend_42\\.tools\\lib\\__init__.py' -- NOT the repo-root lib/ package that carries silver_ids.py",
+      "data/assets/scripts/gold/investor_reporting/tests/test_bundle_manifest_stamp.py:22-24 does `sys.path.insert(0, str(TOOLS))` (TOOLS = the repo's .tools/ dir) then `import safe_deploy_core as sdc`, and never pops .tools back off sys.path; .tools/lib/ is itself a real, unrelated package (.tools/lib/project_registry.py etc.) with the same top-level name `lib` as the repo-root data package -- whichever resolves a bare `import lib`/`from lib import X` first while .tools sits on sys.path wins the sys.modules['lib'] cache slot for the rest of the pytest process, and _orion_api_silver_lib.py's own `sys.path.insert(0, _REPO_ROOT)` (line ~281) cannot undo an already-cached package: Python resolves a submodule import against the cached package's __path__, never by re-walking sys.path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 3 Step 9: run the investor_reporting test suite and record its summary line -- implicitly, that the suite's result reflects this session's code, not an unrelated collection-order artifact.",
+  "world_is": "Two same-named top-level packages (repo-root lib/ and .tools/lib/) coexist in the tree; one test file's permanent sys.path mutation makes the INF chain's `from lib.silver_ids import ...` resolve to the wrong one whenever the full investor_reporting test directory runs together, independent of any change to holdings code. This session recorded the real (unweakened) summary line as required and did not touch test_bundle_manifest_stamp.py, .tools/, or lib/ (all outside this order's <paths>).",
+  "notes": "Fix sketch for whoever takes this: either scope test_bundle_manifest_stamp.py's sys.path.insert to a `finally`-popped context, or rename/alias one of the two `lib` packages so they cannot collide, or have _orion_api_silver_lib.py import repo-root lib/ by explicit file path (importlib.util.spec_from_file_location) instead of a bare package name. Not blocking IBM19-2-AC1/AC2/AC3 or this order's Step 9 (none of its checks read the pytest summary line's pass/fail count)."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-W42-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~42",
+  "surfaced_at": "2026-09-29T00:00:00Z",
+  "one_line": "The TO's own <proof_of_spec> tag names one instance path (.../IRPT_BCKEND.TO-IB-mr-2.proof_of_spec.json, keyed off the to_id), but .tools/to-pipeline-gate.py's check_complete_flip() looks for an instance named off the TASK-ORDER FILE'S OWN STEM (.../IRPT_BCKEND.TO-IB-m19-2.r4-holdings-remint-qa-fire-enable-half.proof_of_spec.json) -- when to_id != filename stem (as here), the tag-named path alone refuses the complete flip with 'NO proof-of-spec instance was found beside it', even though a VALID instance exists at the tag's own path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (route to whoever owns to-pipeline-gate.py's check_complete_flip stem-matching, or the L4/L6 convention that names a TO file differently from its to_id)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First attempt this session: `bash .tools/safe-commit.sh ... -- .../deliverables/0.9.0_WK_IRPT_BCKEND~42/IRPT_BCKEND.TO-IB-mr-2.proof_of_spec.json .../task-orders/IRPT_BCKEND.TO-IB-m19-2.r4-holdings-remint-qa-fire-enable-half.md` (status flip to complete) -> 'ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate). ... flips to complete on PIPELINE-REGISTERED project IRPT_BCKEND, and NO proof-of-spec instance was found beside it.' -- even though `python .tools/proof-of-spec-check.py <that exact instance> IBM19-2-AC1,IBM19-2-AC2,IBM19-2-AC3` returned VALID (rc=0) moments earlier",
+      ".tools/to-pipeline-gate.py check_complete_flip(): `stem = os.path.basename(rel).rsplit('.md', 1)[0]` (the TASK-ORDER FILE's own basename, e.g. 'IRPT_BCKEND.TO-IB-m19-2.r4-holdings-remint-qa-fire-enable-half'), then globs deliverables/*/ for `stem + '.proof_of_spec.json'` -- never reads the TO's own <proof_of_spec> tag text to learn the instance path the order itself names",
+      "the order's own <proof_of_spec> block (line 237) reads: 'Instance at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~42/IRPT_BCKEND.TO-IB-mr-2.proof_of_spec.json' -- to_id-keyed, not filename-keyed; the TO's own filename carries the fuller slug 'TO-IB-m19-2.r4-holdings-remint-qa-fire-enable-half', which differs from its to_id 'TO-IB-mr-2'",
+      "resolved this session by ALSO writing a second, identical-content instance at the gate's expected stem-based path (org/.../deliverables/0.9.0_WK_IRPT_BCKEND~42/IRPT_BCKEND.TO-IB-m19-2.r4-holdings-remint-qa-fire-enable-half.proof_of_spec.json); both validate VALID rc=0 individually, and the commit with both plus the status flip passed the gate (commit 2b56299d02)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order's <proof_of_spec> tag: 'Instance at <path keyed off to_id>, validated with proof-of-spec-check.py ... BEFORE the flip.'",
+  "world_is": "The mechanical gate that actually stops an invalid complete flip resolves the expected instance path from the TASK-ORDER FILE'S OWN NAME, not from the order's <proof_of_spec> tag text -- so whenever a TO's filename slug differs from its to_id (as issued here), following the tag literally produces an instance the gate cannot find, and the gate's own error message ('NO proof-of-spec instance was found beside it') does not name the filename-vs-to_id mismatch as the cause.",
+  "notes": "Not blocking this cell -- disarmed in-session by writing both filenames. Left for the gate/L4 convention owner: either check_complete_flip() should also try a to_id-derived filename (parsed from the TO's own <to_id> tag), or L4/L6 should keep every TO's filename slug and its to_id identical going forward so the ambiguity cannot recur."
+}
+```
