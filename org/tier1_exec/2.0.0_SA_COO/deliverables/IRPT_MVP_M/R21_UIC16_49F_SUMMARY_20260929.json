@@ -1,0 +1,23 @@
+{
+  "table_source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/SCHWAB_ACCOUNT_CODES_BRIDGEFT_READ_20260929.json",
+  "source_url": "https://docs.bridgeft.com/docs/source-account-and-registration-types",
+  "accounts": 7548,
+  "labelled_full_name": 7546,
+  "unrecognised": {
+    "": 2
+  },
+  "guessed": 0,
+  "measured": {
+    "method": "real local 49F build (no upload): holdings_49f.load_49f_sources(s3, '2026-09-25') read against the live schwab/08335338/silver/dim_balance partition (opal-data-assets), then schwab_account_codes.full_name() applied to every row's acct_type exactly as holdings_49f.build_49f_actual's account_masks step now does",
+    "as_of": "2026-09-25",
+    "source_object": "s3://opal-data-assets/schwab/08335338/silver/dim_balance/date=2026-09-25/data.parquet",
+    "acct_type_value_counts": {
+      "IRA": 4589, "S1": 2818, "CHGFT": 76, "PAASB": 24, "QKEPA": 23, "S3": 7, "BRO": 5, "SINTL": 3, "": 2, "FB": 1
+    },
+    "sample_labels": {
+      "IRA account example": "****0692 / INDIVIDUAL RETIREMENT",
+      "blank acct_type example": "****6566 / unrecognised"
+    },
+    "cross_check": "the full h49f.build_49f_actual(s3, '2026-09-25', tax_membership_path=None) ran end to end against live data (7,548 accounts, no refusals) and produced the same account_masks values"
+  }
+}
