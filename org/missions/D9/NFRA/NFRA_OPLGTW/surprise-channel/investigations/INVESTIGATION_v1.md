@@ -4328,3 +4328,101 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not overridden. The decision is the issuer's: clear the naming limb for this one line-ending-only diff, or have a seat the gate admits land it, then apply the block in ITEM_A_BLOCKED.md."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T01:00Z",
+  "one_line": "The order grants only s3:GetObject on the marker prefix but has the dispatcher read the marker at the event's versionId; S3 requires s3:GetObjectVersion for a GetObject that names a VersionId, so as specified every accelerator marker read returns AccessDenied and the gate skips every fire, qualified ones included.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "Order OG-m-2 item 2 (GetObject at the event's versionId, never the latest) and item 4 (`s3:GetObject` on arn:aws:s3:::opal-data-assets/schwab/08335338/meta/complete/*, no other action) at 14d3ce32a8; dr.AC2.sh fails any s3 action other than exactly ['s3:getobject'].",
+      "AWS S3 API reference for GetObject: returning a specific version needs the s3:GetObjectVersion permission; s3:GetObject alone covers only the current version. Not exercised against live S3 in PHASE A (no AWS write, no vendor call); the unit tests stub s3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "One statement pair, s3:GetObject only, lets the dispatcher read the exact marker version that fired (never the latest) and gate on closure.status.",
+  "world_is": "The code and .tf are built as ordered. Deployed unchanged, the marker read fails closed (SKIP ... closure.status=error:ClientError): 0 accelerator dispatches per date instead of 1; the floor is unaffected. It is inert until PHASE B ships.",
+  "notes": "Issuer decision before GO: either widen the never-widen ask to add s3:GetObjectVersion on the marker prefix (and amend dr.AC2.sh, which grades GetObject alone), or drop VersionId (reads the latest, contradicting the CTO's exact-PUT reading). The worker did neither; the order's own text is built."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T01:10Z",
+  "one_line": "The naming gate (LGIC_ENFORCE DEC-6, ENFORCE) refuses the PHASE A commit: the ordered chain-log S3 key prefix gold/advi/_logs/chain_ (lambda_function.py:67) and its IAM ARN (advi_49f_floor.tf:161) are 'NEW and OUT-OF-PATTERN as S3Key' against advi/{scope}/gold/_logs/chain_; the address is dictated by the existing SSM document, which uploads there.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at 14d3ce32a8 base: `NAMING REFUSE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:67 gold/advi/_logs/chain_ -> advi/{scope}/gold/_logs/chain_` and `NAMING REFUSE infra/aws/terraform/opal-assets/advi_49f_floor.tf:161 arn:aws:s3:::opal-data-49financial/gold/advi/_logs/chain_*`; 4 paths graded, 3 seen; the bucket and 49f-label lines were WARN only.",
+      "The key is the SSM document's own upload target (advi_49f_floor.tf:272-290 at 14d3ce32a8), so it cannot be moved by this cell."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's code, tests and .tf commit through safe-commit.sh and its gates.",
+  "world_is": "The commit is refused and unstaged; no override used. The code, tests and .tf diff are in the worktree uncommitted, and saved as a patch beside the ANNOUNCE. The deploy build gate needs committed source, so PHASE B cannot start from this branch until the issuer rules the naming refusal (an R20 register entry, or a registry row).",
+  "notes": "Per bound 8 this is one BLOCKING row, no override. The unit tests pass 6 of 6 on the uncommitted tree."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T02:00Z",
+  "one_line": "A2 route (iii): route (i) cannot emit the key and, after route (ii)'s refactor, the naming gate still refuses the ONE Terraform local line advi_49f_floor.tf:56 (gold/advi/_logs/chain_) as EXISTING and OUT-OF-PATTERN in a surface assigned to the live remediation ADVI_FIRMBKTS; the commit is not made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Route (i): lib/opal_naming.py address('advi','49financial','gold','_logs','chain_') returns s3://opal-data-49financial/advi/49financial/gold/_logs/chain_, a different layout from the existing gold/advi/_logs/chain_ the SSM document writes; address('gold',...) raises `source 'gold' is not a systems.json key`.",
+      "Route (ii) built: local.advi_49f_chain_log_prefix read by the SSM upload, the IAM ARN and env CHAIN_LOG_PREFIX (+ CHAIN_LOG_BUCKET); no Python literal left. Command `python .tools/naming-gate.py --enforce --diff <the infra diff>` at HEAD e534f3d938 + worktree edits, EXACT refusal text: `NAMING REFUSE infra/aws/terraform/opal-assets/advi_49f_floor.tf:56 gold/advi/_logs/chain_ -> advi/{scope}/gold/_logs/chain_` / `why: EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation ADVI_FIRMBKTS: REFUSE unless the diff removes it` / `NAMING-GATE: REFUSE 2 graded`. The diff does remove the same literal from the SSM cp line (one occurrence out, one in), and the gate still refuses.",
+      "Only other line: lambda_function.py:69 advi.49f.silver-accelerator, WARN (EXISTING hand-kept carrier), not a refusal.",
+      "Guard on (ii) read: targeted plan (-lock=false) `Plan: 0 to add, 2 to change, 0 to destroy.` -- aws_iam_role_policy.advi_49f_gold_dispatch and module.advi_49f_gold_dispatch.aws_lambda_function.this (env CHAIN_LOG_BUCKET, CHAIN_LOG_PREFIX added); aws_ssm_document not listed, so unchanged."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A2: route (i) or (ii) passes the naming gate, else (iii) files the exact refusal.",
+  "world_is": "The naming refusal stands on the one local line; no override used. The worktree carries the uncommitted code, tests and .tf; the saved patch and test copy are refreshed beside ANNOUNCE. The issuer routes the row (a registry/remediation decision on ADVI_FIRMBKTS's surface).",
+  "notes": "6 of 6 tests pass on the uncommitted tree. Everything else in the A1/A2 rulings is applied: marker ARN carries GetObject + GetObjectVersion, chain-log ARN GetObject alone."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-09-29T02:10Z",
+  "one_line": "The order's ledger open command uses leg kind 'tf' and its safe-apply command has no -auto-approve; deploy_ledger.py accepts only activation/ec2-baked-asset/git/s3-prefix/tf-lambda/verify and the apply stopped at the approval prompt with EOF (nothing applied).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/deploy_ledger.py open ... --leg 'iam|tf|aws_iam_role_policy.advi_49f_gold_dispatch|get-role-policy read' -> `ERROR: leg kind 'tf' not in ['activation', 'ec2-baked-asset', 'git', 's3-prefix', 'tf-lambda', 'verify']`; reopened with kind verify (ledger entry 20260929T0153Z_nfra-oplgtw-dispatch-classifier-remedy at 03e6d5611c).",
+      "HALT_ACK=1 .tools/safe-apply.sh -chdir=... apply -target=... (no -auto-approve) printed the plan `0 to add, 2 to change, 0 to destroy` (the exact signed shape) then `Error asking for approval: EOF`, rc=1, no change; re-run with -auto-approve applied it, 0 added 2 changed 0 destroyed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's literal open and apply commands run as written.",
+  "world_is": "Both were corrected in the smallest way (kind verify; -auto-approve after reading the plan in the first run's output). The signed write set was not exceeded.",
+  "notes": "Fix in the issuer's next order template."
+}
+```
