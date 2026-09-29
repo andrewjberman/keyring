@@ -19,3 +19,4 @@
 
 - 20260929T014208Z OPENED by 2.0.0_SA_COO~P with 2 leg(s)
 - 20260929T014626Z LEG U1 closed: build_resident_package.py --pin fe64236bbb with st2's 12 overrides, recipe.py + resident_worker.py re-pinned 12a67ed5ee 
+- 20260929T0250Z GATES before the SSM run (CRO half condition, 102551): ~Y's four gates on the built st3 (VersionId vDS2rcSq, sha 26769a37), ~Y 102543 @415701c935 deliverables/2.0.0_SA_COO~Y/ST3_GATES_20260929.md: gate 1 provenance PASS (recipe.py 4fde9ac9, resident_worker.py 95f79dad == CLOUD ec8f69f718); gate 2 import PASS on resident_main's own sys.path; gate 3 behaviour PASS (42 passed, 8 skipped); gate 4 status_role_sim N/A (no IAM or Lambda moves). Halves at HEAD naming blob 17661cbe: CTO @2b3fc1c1a3 (102535), CRO @a80bf5ac96 (102551).
