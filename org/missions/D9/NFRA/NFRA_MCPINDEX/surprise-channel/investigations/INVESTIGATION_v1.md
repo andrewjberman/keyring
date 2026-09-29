@@ -2619,6 +2619,30 @@ carries none.
       "spec_asserts": "TO MX-r-4 step 8 and the signed GO: deploy from the RELEASE worktree /c/tmp/mx-rel4 with ITS scripts, `bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`, on pin 3371f18803; the issuer measured N1 (HEAD 3371f18803, mcportal a3bff71, 0 status lines) as the guard.",
       "world_is": "The wrapper's halt gate refuses the pin's own tree for a worker, so the act as written cannot run. The two ways forward are the issuer's and the signers' to choose, not the worker's: (a) a DEPLOY-ONLY commit on top of 3371f18803 that adds the task order (as OA-r-1 did), whose gateway directory equals the pin's, at the cost of a new deployed hash and a delta re-sign; (b) the issuer runs the deploy from a tree where the gate admits it. HALT_GATE_REPO_ROOT is set unconditionally at safe-ec2-deploy.sh:57 and the gate was not overridden.",
       "notes": "MX-r-3 and OG-s-1 ran this wrapper from their release trees; what admitted them is not recorded in this file set (not measured here). Nothing was deployed, so nothing is half-landed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S53",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T03:03Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W9-S1"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W9-S1: the live BD value at org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/CARRIER_CENSUS.md :3408/:3412 is replaced by the Secrets Manager placeholder at HEAD, under the CTO ruling @8ed938b2d7 (the redaction set is 8 files) and MX-s-13 A1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker ~9 commit 8e59257146, drained 720eb2de32: 2 lines changed in that file, value count 2 -> 0 (worker count-only check); row LGIC_ENFORCE-Z-W9-S1 filed in LGIC_ENFORCE's channel.",
+        "Issuer shape scan on CLOUD: 0 literals in the file after the detector's escaped-quote fix, with positive control 1/1 on the pre-redaction bytes @3c9a7dce69 (5498ce662d)."
+      ]
+    },
+    "spec_asserts": "Z-W9-S1 (ARMED): the live value sits in a tracked file outside the 7-file set.",
+    "world_is": "At HEAD the 8-file set carries 0 literals by shape; the CVO's fingerprint scan (MX-s-13 J1, L8) is the oracle. History is not scrubbed and the credential is not rotated -- both Andrew's (rotation LATER; no scrub), so Z-S29/Z-S31 stay open on rotation.",
+    "notes": "Issuer disarm owed since the A1 grade; recorded at the round-3 close."
   }
 ]
 ```
