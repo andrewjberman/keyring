@@ -15623,6 +15623,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "AMGT-xx-3 cell text: when the officer section points elsewhere ('incorporated by reference' to the proxy), the company's latest DEF 14A holds the executive-officer section; INTU's 10-K lists no officers.",
   "world_is": "The proxy read serves the proxy's NAMED executive officers, which for a company whose 10-K Item 1 lists more executive officers than the NEOs is a subset of the executive-officer roster, not the roster. The result is labelled by source.section_heading so a consumer can reject it; the module does not claim the list is complete.",
   "notes": "INERT: nothing is served or persisted by this order. The serving round should decide whether a NEO-headed list may be shown as 'executive officers' on Exec Management or must carry the NEO label."
+},
+{
+  "id": "AMGT_RESAPP-Z-W176-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~176",
+  "surfaced_at": "2026-09-29T23:45:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMGT-yy-1: on 6 of 96 names the export states a header figure's unit as UNRESOLVED (\"does not discriminate absolute vs millions\") while the page prints a scaled magnitude (JPY 24.15T), so the value grade compares those figures' DIGITS but cannot compare their SCALE.",
+  "spec_asserts": "AMGT-yy-1 cell: a FIGURE fact's value is compared against the served figure the export states, normalised for unit and precision.",
+  "world_is": "For 6501_JP, 9433_JP, 8316_JP, 8035_JP, 8766_JP and TSM_US the export's Header row carries `<number> UNRESOLVED-ON-<name>: sampled magnitude <n> does not discriminate absolute vs millions` in place of a unit word (CURR_ENTP_VAL on five, NET_DEBT on 8316), so no unit scale exists to normalise the page's K/M/B/T against. Read as MILLIONS the export equals the page on all six; read as ABSOLUTE the page overstates by 10^6. sweep.py's values_agree therefore accepts the page's magnitude at any power-of-1000 scale for an UNRESOLVED unit and counts it (`digits compared, scale unchecked (export unit UNRESOLVED)=6` on the 96-name served run); a page that misstated only the SCALE of one of these six would read equal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served sweep over the live library, 96 folders, read_at 2026-09-29T23:37:00Z, worktree C:/tmp/r50-176: with the UNRESOLVED case read as a difference the grade was equal 79 of 96, the 17 being 11 GBp price prefixes (fixed in the number reader) and these 6 (--diff lines '(HEADER, CURR_ENTP_VAL) value differs: page=[JPY 24.15T] export=24154022.783025 UNRESOLVED-ON-6501 JP Equity ...').",
+      "After the reader change: 'FWD-30 GRADE: equal 96 of 96 identified names; values equal 96 of 96; ... digits compared, scale unchecked (export unit UNRESOLVED)=6' (.scratch/full2.log, not committed).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py values_agree carries the rule and names this row."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): either the export's owner resolves the unit for these six (the reader then compares scale too), or the grade's blind spot on their scale is accepted by the CTO at the round-50 analysis",
+  "notes": "ARMED only in the sense that the scale of six figures is not graded; nothing is served or written by this order."
 }
 ]
 ```
