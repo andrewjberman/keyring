@@ -71,6 +71,8 @@ SERVED 0), AC3 PASS (round 48's outcome, rc 0).
 **AMENDMENT 1 (2026-09-29 ~22:20Z, issuer 2.0.0_SA_COO~Z):** AC1's base is the signed base `uv0oTSMa...` (AMGT_HARVST HVST-i-4, 21:57:59Z), not round 48's `lg6NJ2JL...`. The cut dry-ran AC1 before i-4 applied, so it read FAIL then and PASS at the executor's pre-apply read -- vacuous (0.7.0_AE_CloudOps~A, msg 26747). Check file and expect amended; AC2 and AC3 unchanged. Gate: GATE (viii) grades this modified order (it declares `<placeholders>`).
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-29 ~22:4xZ):** landed; entry `amgt-resapp-xx4-series-name-redeploy-20260929` CLOSED 3 of 3 22:32:47Z (read by the issuer: status line + 0 sentinels). AC1 RE-MEASURED by the issuer under AMENDMENT 1: CodeSha256 `Um3BOJ+jcVc3B79VuFCn4RyD5VYu+IzCpe3BQOP/p7A=` LastUpdateStatus Successful LastModified 22:29:10Z (prior uv0oTSMa...), exit=0. AC2 re-run by the issuer on the served plane: series 3, name SERVED 2 (BA, HD), ZZZNOTHELD ABSENT, exit=0. AC3 PASS (lane). Closure ONE entry, scoped_amgt.py (registrations.json not packaged); plan 0/1/0, code only; limbs 4/5/6 hold (limb 6's only differing leaf /generated_at). Instance graded `proof-of-spec-check ... AC1,AC2,AC3 --governing-order <this order>`: VALID rc=0. Issuer real run: the served timeseries payload, round49/captures/.
+<status>complete</status>
 <round>49</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
