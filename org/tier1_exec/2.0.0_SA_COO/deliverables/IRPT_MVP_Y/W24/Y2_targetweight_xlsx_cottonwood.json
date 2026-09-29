@@ -1,0 +1,77 @@
+{
+ "principal": "irpt-uiwalk-1790698706@opal.test",
+ "tenant": "cottonwood",
+ "authority": "W24 packet 3089695cc6 (@cbbe9ed0db, amended); CTO 102899 @895964dda7; CRO 102904 @bf61fecc94; ledger irpt-ui-walk-principal-w24-20260929; ~P 102908/102921",
+ "upload_file": "aapl-vnq-target-weight.xlsx",
+ "upload_sha256": "ee8c34f3a25fbf442d9da3161abcd13756a5d4e6b79be8e9a852da3c08c58cc1",
+ "reference_notional": "1000",
+ "k4_status": 200,
+ "upload_id": "UP-2fe40e2970ce72e5f4a5207f6987427c0a2f2b7cc2ee9cebd776d7a440df48b9",
+ "calls": [
+  {
+   "at": "2026-09-29T17:26:31.780064Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/login",
+   "request_headers": {
+    "Content-Type": "application/json"
+   },
+   "request_body": {
+    "email": "irpt-uiwalk-1790698706@opal.test",
+    "password": "<redacted>"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EeMvriPPIAMEJSw=",
+    "set-cookie": "<redacted>"
+   },
+   "response_body": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "irpt-uiwalk-1790698706@opal.test",
+     "name": "IRPT UI walk principal (Andrew-direct 20260926)",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   }
+  },
+  {
+   "at": "2026-09-29T17:26:34.697394Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis/inputs?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "upload_token": "y-live-1203-20260929T172634",
+    "filename": "aapl-vnq-target-weight.xlsx",
+    "file_base64": "<4903 bytes base64>",
+    "file_type": "xlsx",
+    "declared_currency": "USD",
+    "reference_notional": "1000"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EeMwIg9xoAMET9g="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-input-upload",
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+    "data": {
+     "upload_id": "UP-2fe40e2970ce72e5f4a5207f6987427c0a2f2b7cc2ee9cebd776d7a440df48b9",
+     "input_id": null,
+     "state": "RESOLVING"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    }
+   }
+  }
+ ]
+}

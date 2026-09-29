@@ -1,0 +1,150 @@
+{
+ "principal": "irpt-uiwalk-1790698706@opal.test",
+ "tenant": "49financial",
+ "authority": "W24 packet 3089695cc6 (@cbbe9ed0db, amended); CTO 102899 @895964dda7; CRO 102904 @bf61fecc94; ledger irpt-ui-walk-principal-w24-20260929; ~P 102908/102921",
+ "upload_file": "aapl-vnq-12.03.csv",
+ "upload_sha256": "bb079cbf53aaa2be7ce3fb6beb44e55eaeb0695cd168661d5fb78488a0960ddc",
+ "reference_notional": null,
+ "k4_status": 200,
+ "upload_id": "UP-8bda365c59fd9a9c4d5d860d864c1decd83ef9ec88e10b822e76569819911861",
+ "k4_state": "NORMALIZED",
+ "input_id": "portfolio_6ecb9970ca94ed2a1ae03078aa65b7bc489f3083e2860336f5f910edc9e89c96",
+ "k5_variant": "overview",
+ "k5_comparison_keys": [],
+ "k5_status": 200,
+ "k5_state": "QUEUED",
+ "request_ref": "{\"tenant_firm_id\": \"49financial\", \"request_id\": \"REQ-cf1d7894dd4b73a148b01a2d\", \"revision\": 1, \"immutable\": true, \"ingestion_gate_revision\": \"schemas-cb6e1c3c3b759d6fbae1c92580b91005836a8254d99a182c2c873bd63ef0895f\", \"destination_policy_revision\": \"e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121",
+ "calls": [
+  {
+   "at": "2026-09-29T17:44:40.283390Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/login",
+   "request_headers": {
+    "Content-Type": "application/json"
+   },
+   "request_body": {
+    "email": "irpt-uiwalk-1790698706@opal.test",
+    "password": "<redacted>"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EePZwiKhoAMES9g=",
+    "set-cookie": "<redacted>"
+   },
+   "response_body": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "irpt-uiwalk-1790698706@opal.test",
+     "name": "IRPT UI walk principal (Andrew-direct 20260926)",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   }
+  },
+  {
+   "at": "2026-09-29T17:44:43.777720Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis/inputs?selected_tenant=49financial",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "upload_token": "y-live-1203-20260929T174443",
+    "filename": "aapl-vnq-12.03.csv",
+    "file_base64": "<35 bytes base64>",
+    "file_type": "csv",
+    "declared_currency": "USD"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EePaTgkJoAMEadw="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-input-upload",
+    "firm_id": "fir_c9fc04650e2134d6ea033da2",
+    "data": {
+     "upload_id": "UP-8bda365c59fd9a9c4d5d860d864c1decd83ef9ec88e10b822e76569819911861",
+     "input_id": null,
+     "state": "RESOLVING"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    }
+   }
+  },
+  {
+   "at": "2026-09-29T17:44:49.472759Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis?selected_tenant=49financial",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "request_id": "y-live-1203-overview-20260929T174449",
+    "client_id": null,
+    "account_ids": [],
+    "snapshot_id": null,
+    "variant": "overview",
+    "comparison_keys": [],
+    "report_title": null,
+    "prepared_for": "IRPT live walk 12.03",
+    "input_id": "portfolio_6ecb9970ca94ed2a1ae03078aa65b7bc489f3083e2860336f5f910edc9e89c96"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EePbMioToAMEcqQ="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-requests",
+    "firm_id": "fir_c9fc04650e2134d6ea033da2",
+    "data": {
+     "identity": {
+      "tenant_firm_id": "49financial",
+      "request_id": "REQ-cf1d7894dd4b73a148b01a2d",
+      "revision": 1,
+      "immutable": true,
+      "ingestion_gate_revision": "schemas-cb6e1c3c3b759d6fbae1c92580b91005836a8254d99a182c2c873bd63ef0895f",
+      "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85"
+     },
+     "stage": "RECEIVED"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    },
+    "status": {
+     "operation": {
+      "operation_id": "analysis-requests",
+      "operation_kind": "write",
+      "revision": "v1"
+     },
+     "state": "QUEUED",
+     "source_dates": {
+      "source_completion_date": null
+     },
+     "actions": [
+      {
+       "action": "WAIT",
+       "safe": true,
+       "description": "accepted work is queued for processing"
+      }
+     ],
+     "public_reason_code": "NOT_READY",
+     "internal_correlation_id": "corr-84e35d1ab99b"
+    }
+   }
+  }
+ ]
+}
