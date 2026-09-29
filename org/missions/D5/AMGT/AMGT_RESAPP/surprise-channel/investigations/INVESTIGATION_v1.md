@@ -15645,6 +15645,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "Task order AMGT-yy-2 s.1: 'On the four names the dossier holds 15 pillars; /thesis serves 0', and AC1 expects 'pillars 15 of 15 over 4 names'; thesis_pillars is 'every dossier pillar, in order, as the dossier holds it'.",
   "world_is": "The dossier holds 13 pillars on those four names. For AMD_US it holds an absent-field object where a list would be. The built adapter serves thesis_pillars [] plus dossier_fields.thesis_pillars_absent {status ABSENT, reason: the dossier's own text} so an empty list is never read as 'the report had none'; that sibling key is an addition the order did not name.",
   "notes": "The issuer decides whether to amend AC1's checker/expectation (13, list-only want_p) or to rule the absent-pillars shape. The build itself is complete and AC2 passes (337 passed, 0 failed)."
+},
+{
+  "id": "AMGT_RESAPP-Z-W179-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~179",
+  "surfaced_at": "2026-09-29T22:20:00Z",
+  "one_line": "AMGT-yy-6: 'counted as carried in denominators' and AC3's 'digest in == digest out' cannot both hold for a plain build; resolved by a plain-build NO-OP that returns the served document when the union records equal the served records.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python yy_crosswalk.py --arm roundtrip before the NO-OP: 'records in 237 out 256' then, after retiring the keyless UNRESOLVED twins on carried records, records equal but denominators/identity_universe/research_universe differ (the plain build has no universe input: 158 records carried, 'carried': 158 stamped, identity_universe and research_universe absent). After: 'records in 237 out 237; digest in 68a788347ec2 out 68a788347ec2'.",
+      "lib/research/identity/crosswalk.py build_crosswalk: the NO-OP fires only when identity_universe is None AND research_folders is None AND result records == served records; main --write-pool always supplies the universe, so the CLI write path never takes it and always stamps denominators['carried'] when it carries. Tests: lib/research/identity/tests/test_crosswalk_served_union.py (16 arms; suite 135 passed)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-yy-6 cell text: a carried record is counted in the document's denominators as carried; AC3: build at the served as_of with served = the served pool gives the same count and the same serialised digest.",
+  "world_is": "For a plain build (no universe/research input) the union always carries every universe-side record and would stamp 'carried' and drop identity_universe, so digest equality is only reachable by returning the served document. The plain-build NO-OP does that; consequence: AC1(a) and AC2 pass through the NO-OP in plain mode (the carry itself is exercised by the unit arms with research_folders supplied, and by AC1(b) where retire makes the records differ), and a plain build that only changes doc-level inputs (coverage_vintage) is not reflected.",
+  "notes": "INERT: no write_pool call, nothing served or persisted by this order. The issuer may prefer inheriting doc-level fields from served instead of the NO-OP; that is a cut-level choice."
 }
 ]
 ```

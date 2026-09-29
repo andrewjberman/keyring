@@ -68,7 +68,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 (build_crosswalk takes no served=/retire=). No served move: the round trip is a digest-equal no-op; CORPUS re-signs its r-1 on this
 cell's drain.
 
-<status>pending</status>
+<status>complete</status>
 <round>50</round>
 <slot>~179</slot>
 <fabric>site-z</fabric>
