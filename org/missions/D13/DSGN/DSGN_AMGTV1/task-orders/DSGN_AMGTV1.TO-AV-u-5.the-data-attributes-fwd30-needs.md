@@ -67,6 +67,7 @@ portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx
 portal/src/pages/SecurityAnalysis/components/ThesisDriverChart.tsx
 portal/src/pages/SecurityAnalysis/tabs/PeersTab.tsx
 portal/src/pages/SecurityAnalysis/tabs/PostureTab.tsx
+portal/src/pages/SecurityAnalysis/__harness__/modelPattern.harness.cjs
 org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~23/
 org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -93,6 +94,8 @@ Instance at `org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1
 grant admits it -- it is not outside your write surface).
 Report once: what changed and where, each re-anchor (old -> new) if any, the output line of every criterion, the portal (if any) and
 outer commit hashes, and any row.
+
+**ISSUER AMENDMENT 1 (2.0.0_SA_COO~D, round 6, on rows Z-W23-S1 / Z-W23-S2):** (S1) `modelPattern.harness.cjs` is GRANTED in `<paths>` above -- M1 necessarily moves its `negative_values_signed` anchor off `<td data-model-cell="true" class=`; re-anchor that ONE check onto the same fact (e.g. `/<td data-model-cell="[^"]*"(?: data-model-year="[^"]*")? class=/`), claim unchanged, floor 12 kept. (S2) the issuer re-took `round6/fixtures/attrs.visible.base.json` on this slot's true base (4f927ad0 + AV-u-2, i.e. u-5's six files at portal 938df6af); only the posture surface changed (AV-u-2's words), and the built u-5 now reads AC1 3 of 3.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
