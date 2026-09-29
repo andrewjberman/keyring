@@ -30,7 +30,7 @@ files. Row `NFRA_OPALAI-Z-S45` has the evidence.
   OA-f-3 = fd4103a5fe (proof + session_log).
   Acceptance: for each of the 10 paths, `git rev-parse CLOUD:<path>` == `git rev-parse <branch-parent>:<path>`.
 
-## 2. Worktrees -- 10 checkouts, 0 KEEP, 10 DISPOSE, every branch KEPT
+## 2. Worktrees -- 10 checkouts, 1 KEEP, 9 DISPOSE (amended), every branch KEPT
 
 Columns measured per worktree: patch-unique commits vs CLOUD (`git cherry`), tracked and untracked dirt.
 
@@ -44,7 +44,7 @@ Columns measured per worktree: patch-unique commits vs CLOUD (`git cherry`), tra
 | C:/tmp/oa-10-sw-rb2 | rb-nfra-opalai-r2-asker-switch-on-base-v2 | 1 (release lineage) | mcportal gitlink | DISPOSE checkout; branch KEPT |
 | C:/tmp/oa-10-sw-rel | rel-nfra-opalai-r2-asker-switch-on-gateway | 11 (release lineage) | none | DISPOSE checkout; branch KEPT |
 | C:/tmp/oa-10-sw-rel2 | rel-nfra-opalai-r2-asker-switch-on-gateway-v2 | 2 (release lineage) | mcportal gitlink | DISPOSE checkout; branch KEPT |
-| C:/tmp/mp3-1 | wk-NFRA_MCPORTAL-1 | 0 | portal gitlink, .scratch/, two lambda .build/ dirs | DISPOSE checkout; branch KEPT |
+| C:/tmp/mp3-1 | wk-NFRA_MCPORTAL-1 | 0 | portal gitlink, .scratch/, two lambda .build/ dirs | **KEEP until NFRA_OPLGTW OG-n-1 closes** (amended 19:3xZ, see below) |
 | C:/Users/Opal Bloomberg/Desktop/cto_o_tflocal | cto-o-tflocal | 0 | .tools/naming-gate.py, byte-identical to CLOUD (landed 7610be987f) | DISPOSE checkout |
 
 - Release-lineage "unique" commits are gateway releases built on the LIVE base by design, never merged to CLOUD. The
@@ -52,5 +52,10 @@ Columns measured per worktree: patch-unique commits vs CLOUD (`git cherry`), tra
 - Every DISPOSE removes a checkout only; nothing unique lives in any of them. The disposal is a recursive directory
   delete, so it runs on Andrew's word, as MSTR~Z's 71-checkout pass did. `.scratch/` is archived first, to
   `.runtime/crash-investigation-20260929/wt-scratch-archive/`.
-- KEEP: none. NFRA_OPALAI's next work (the re-drain) cuts a fresh branch off CLOUD, and NFRA_MCPORTAL's two open
+- **AMENDMENT 2026-09-29 19:3xZ (2.0.0_SA_COO~O msg 26674):** mp3-1 moves to KEEP. It holds the only copy of
+  `infra/aws/lambda/layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip` (5,016,850 B, built
+  09-28 23:57 ET by MP-a-2), which NFRA_OPLGTW OG-n-1 must copy from the tree that built it and may never rebuild
+  (TO-OG-n-1 section 1 item 2). This seat measured it: the zip is present in 1 of 49 linked worktrees, mp3-1. The
+  table is now 1 KEEP / 9 DISPOSE, and the removal set put to Andrew is 32.
+- KEEP otherwise: none. NFRA_OPALAI's next work (the re-drain) cuts a fresh branch off CLOUD, and NFRA_MCPORTAL's two open
   orders wait on Andrew's acts (G-2ND sign-in, G-CLOSE run), with no checkout in use.
