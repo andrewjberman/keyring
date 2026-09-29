@@ -2712,6 +2712,27 @@ carries none.
     "spec_asserts": "MX-s-14 step 1 and bound 1: the pull writes the SAME bronze key(s) the Playwright leg wrote, so the downstream merge is unchanged, and there is one producer before and after.",
     "world_is": "The Playwright key (TXN_DAILY_<date>) is what the module writes, as ordered. Whether the merge's transaction_id dedup makes a second same-day file harmless, and whether the TRANSACTIONS_DAILY_ producer is the cot ingest or another 49F path, are not measured here; the count of silver rows a TXN_DAILY_ landing would add on top of a TRANSACTIONS_DAILY_ file for the same date is the number the issuer needs before PHASE B.",
     "notes": "Nothing was written by this worker; the test run's --stage flag keeps the test object out of the merge's prefix."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T06:50Z",
+    "one_line": "Rows Z-W17-S1 (pin target needs lib/opal_naming.py) and Z-W17-S2 (DS-lane publish of the module) LAPSE: MX-s-14 amendment A1 drops the new REST module, and pull_bd_transaction_rest.py is removed from this branch in a git rm commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment A1 of TO MX-s-14 (2.0.0_SA_COO~MI, CLOUD @a56cbfd460, confirmed by 1.0.0_SA_CTO~O): 'Drop step 1 (the new module) ... Rows Z-W17-S1 and Z-W17-S2 lapse with it'; a new REST pull writing TXN_DAILY_ would be a second writer beside bd-49f-session-daily's TRANSACTIONS_DAILY_ (this worker's row Z-W17-S3).",
+        "Issuer message to this worker: remove pull_bd_transaction_rest.py from the branch in a commit so the drain carries no unused writer. Module lifetime on the branch: added 16d142659d, removed in this branch's next commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rows Z-W17-S1 and Z-W17-S2 (both BLOCKING, INERT) asserted a pin target and a DS-lane publish were owed for the new REST module.",
+    "world_is": "Neither is owed: no module is published or used. The pin target (S1) and the publish (S2) are not needed; the module named superseded in ANNOUNCE_MX-s-14.md. The step-3 test ran instead as the edited command list, merge only, with 0 vendor calls.",
+    "notes": "S1 and S2 stay in the file (append-only); this row is their lapse record. Their disarm_owner stays 2.0.0_SA_COO~MI to disposition."
   }
 ]
 ```
