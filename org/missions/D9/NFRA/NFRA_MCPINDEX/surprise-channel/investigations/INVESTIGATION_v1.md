@@ -3252,6 +3252,29 @@ carries none.
     "spec_asserts": "Z-W14-S5 (ARMED): the SPEC says opal_discover reads no S3, while it HEADs S3 once per servable row.",
     "world_is": "Fixed in the release before the G-A ask (msg 26517). Served behaviour is unchanged by the declaration; SPEC.hosts is documentation plus a non-empty check.",
     "notes": "G-A and both never-widen halves are asked on rel 0001c9bb53 / tree d2debddbd3 (msgs 26517, 26518)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T09:25Z",
+    "one_line": "Another seat released on the shared gateway host between MX-r-5's PHASE A read and the GO: NFRA_OPLGTW OG-x-4 deployed 63264dfb22 at 2026-09-29T08:43:49Z, so the live tree was no longer 4248b70b39; the PHASE B Step 0 (R1) content read caught it before any act, and the release was re-cut on 63264dfb22.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PHASE A read (this worker, before 07:53Z): host sha256 of 79 files equal to the opal-gateway-latest.tar.gz artifact (LastModified 2026-09-29T05:21:55Z, md5 a59f391592ae00f6725f4bbe2df2a6f8), which equals the 4248b70b39 key. PHASE B Step 0 (after the GO): -latest LastModified 2026-09-29T08:43:27Z, 407136 bytes, md5 6509913cec5963c8caf197c28e82e851; the host's 79 files equal it 79 of 79 and equal the 4248b70b39 artifact 78 of 79 (app/integrations/schwab/engine.py differs).",
+        "63264dfb22 = NFRA_OPLGTW OG-x-4 (0.9.0_WK_NFRA_OPLGTW~11), deployed_at 2026-09-29T08:43:49Z per CLOUD's EC2_MANIFEST.json: 4248b70b39 plus schwab/engine.py and 2 test files (git diff --stat 4248b70b39 63264dfb22 -- infra/aws/ec2/opal-gateway: 3 files, +196 -60). Deploying the first pin (dep ca48cd5482, base 4248b70b39) would have replaced that engine.py with the older one.",
+        "Nothing was done at the halt: no ledger, no upload, no deploy. The re-cut (Option 1, issuer ruling): rel-nfra-mcpindex-r4-gateway-b a7e15b2220 from 63264dfb22, dep-nfra-mcpindex-r4-gateway-b 093fc247c6, gateway tree object 2e839aeec903d6c7bc65cfba60017e4e5e925614 in both."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The CTO half of the never-widen ask: at GO re-read live = 4248b70b39, else re-cut; the pin, the rollback proof and the G-A were all cut against 4248b70b39.",
+    "world_is": "The shared host moved once between the PHASE A read and the GO (another project's narrow release, itself sanctioned). R1 held: the mismatch was read by content before any act. The signed hash (0001c9bb53 / tree d2debddbd3) is not the one that will deploy; the re-cut carries the same 8 files, blob-identical, on the new base.",
+    "notes": "For the record: the gap between a PHASE A pin and its GO is the window in which a second releaser can land; an R1 content read at GO is what closed it here."
   }
 ]
 ```
