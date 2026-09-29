@@ -2731,6 +2731,48 @@ carries none.
     "spec_asserts": "TO MX-t-9: 'Classify it SAFE, like the others' (destructive_ops SAFE is done in the module) and the tool answers at r5.J1.",
     "world_is": "There are two classifications: destructive_ops (SAFE, in the module) and data_entitlement (a name set in a separate file that MX-t-9 does not own). Left alone, the release at MX-r-5 enables portal_index and the fourth tool is refused for every caller, so r5.J1 cannot read it. The one-line fix is adding the name to INDEX_TOOLS, in a cell whose paths include app/data_entitlement.py (MX-t-8 item 10 did the same for the first three); the existing tests/test_data_entitlement_guard.py may pin the set and need the same edit.",
     "notes": "Two tests in tests/test_data_entitlement_guard.py (ogz1_ac05 KeyError 'unclassified', ogz1_ac08 route set) fail in this worktree; both concern registry report keys and server routes, not this cell's names, and were not baselined here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T06:26Z",
+    "one_line": "The MX-d-5 weak-match rule ('one plain lower-case single-word keyword is not a link') costs recall on real asks the 27-question harness does not hold: any dataset ask whose only channel link is one such word, e.g. 'what are the rates', now answers NOT_CATALOGUED unless a row's entity slug is in the ask.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integration.py _channel_selected(): weak = exactly one distinct keyword hit and it fullmatches [a-z]+. Harness before/after: 23 of 27 -> 27 of 27, dataset asks routed first 3 of 3 (d5.AC3), so the harness sees no recall loss; it holds only 3 dataset asks (Q05 ST, Q07 INT, Q22 S&P), all matched by an upper-case or multi-word keyword.",
+        "channel keywords that are plain single lower-case words and so are weak alone (measured from the catalog): e.g. rates, yield, fed, macro, treasury, inflation, factor, tilt, value, growth, quality, size, regime, momentum, volatility, news, peer, valuation, holdings, positioning, exposure."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order item 2: answer NOT_CATALOGUED when the ask's only link to a channel is ONE common word, grade recall on the harness's positive asks (AC3).",
+    "world_is": "The rule is exactly as ruled and passes AC1-AC3, but 'common word' is operationalised as 'a plain lower-case single-word keyword', which also silences a lone 'rates' or 'inflation'. The harness cannot measure that: 3 dataset asks of 27.",
+    "notes": "For the analysis: a recall set of real single-word dataset asks, or a corroboration test (a second ask word found in a candidate row's own text), would grade it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T06:26Z",
+    "one_line": "Regenerating the catalog needed portal/src/api extracted read-only from the pinned gitlink (Z-W13-S1 again), and the emitter has NO authored home for channel keywords: v0.1 channel fragments are re-emitted from the catalog's own current content, so MX-d-5 added an authored EXTRA_CHANNEL_KEYWORDS map to emit_catalog_v02.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "emit_catalog_v02.py before the change: 'EMIT REFUSED: accessor index is EMPTY -- portal/src/api not readable'; worktree portal/ is an empty gitlink dir. Fixed as Z-W13-S1 did: git archive of c3dd9ca96a src/api from the main checkout's portal into portal/ (untracked inside the gitlink path, not committed).",
+        "A baseline emitter run with no edit changed only the two build-stamp lines; with EXTRA_CHANNEL_KEYWORDS the diff is those 2 lines plus 6 keywords on market_regime_trending (S&P, S&P 500, SPX, stock market, equity index, equity indices)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order item 1: add the keywords 'through the emitter's source, never a hand edit of DATA_CATALOG.yaml'.",
+    "world_is": "The emitter had no source to add to for a channel's keywords, so the authored map is new emitter code (in the order's <paths>). A later emitter run keeps the keywords because the map is authored, and also because they are now in the re-read catalog.",
+    "notes": "The keywords sit on channel market_regime_trending, whose 2 rows are mkt.01 and mkt.02; keywords are a channel field, there is no row-level keyword."
   }
 ]
 ```
