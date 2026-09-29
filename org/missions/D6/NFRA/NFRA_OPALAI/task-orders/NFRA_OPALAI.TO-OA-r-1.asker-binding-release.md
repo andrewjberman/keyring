@@ -192,7 +192,7 @@ by the release's exact tree:
   gateway tree and would revert CLOUD's unreleased gateway work. The manifest record and ledger stay on the slot branch.
 No task-order file is added, so no L6 gate fires. Gate limb: none (GATE (viii) NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~10</slot>
 <fabric>site-z</fabric>
