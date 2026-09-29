@@ -1975,3 +1975,36 @@ disjoint: `j-1` owns `timeline_api.py` and its tests; `j-2` writes only its deli
 - `Z-S37` (the tool's owner, PARKED on MSTR~Z);
 - a field rename;
 - the event route's wiring, mount and deploy (HELD, `Z-S42`).
+
+## 33. ROUND 21 -- L5 DECOMPOSITION v3.0, over the round-20 analysis (`ledger/ROUND_ANALYSIS.round20.md` @4b8bd40242)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~23:1xZ. Round 20 CLOSED: 2 of 2; `Z-W39-S1` and `Z-S37` graduated. The span rule
+is ADOPTED with a roundup guard, the link window is unchanged, and the lead question waits on a census. Series **`k`**;
+slots MAX+1 over 48 are **`~49`** and **`~50`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the span rule plus the roundup guard, in code, dry-rebuilt (HD ends 08-18; 992 HK and AMZN equal `j-2`'s) | `HVST-k-1` | LOCAL | `~49` |
+| 2 the updated-time census over the 120 silver articles (plus the bronze they point to), HD's barrons lead by name | `HVST-k-2` | LOCAL | `~50` |
+
+**Fan-out: 2 of 2 chains, independent; N = 2 worker slots; cap 8 not pressed.** Write sets are disjoint: `k-1` owns
+`publication_gold.py` and its tests; `k-2` writes only its deliverables and the channel.
+
+**Widened inside the decomposition (issuer's ruling):**
+- `k-1` AC2 (b) requires the 5 events `j-2` KEPT to stay row-equal, so the rule change is bounded on the untouched
+  events as well as the three it moves.
+- `k-2` reads bronze through silver's own keys where silver lacks a time field. It is still Opal S3 only, with no fetch.
+
+**Round 22** is the SERVED `chatter_event` rebuild under a never-widen pair, cut after the CTO rules the lead question on
+`k-2`.
+
+**Checks at the base:**
+- `k-1` AC1: the named tests FAIL.
+- `k-1` AC2 (c) and (d): FAIL (the served rule is per-day).
+- `k-2` is a census with no FAIL arm.
+- The scripts are worker-written.
+
+**NOT cells:**
+- the link window (ruling 4);
+- the event route mount (HELD);
+- the roundup flag's producer.
