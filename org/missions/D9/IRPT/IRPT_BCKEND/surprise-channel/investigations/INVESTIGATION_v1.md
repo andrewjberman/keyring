@@ -11158,3 +11158,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The derived form also removed a latent defect the first shape carried: a typed firm token in the declaration would have had to be kept in step with the registry by hand, and nothing checked it. The test test_the_declaration_is_data_and_carries_its_basis now asserts the derivation (no `firm` field present, lookup(master) resolves, and the entry key contains both custodian and master) rather than any string."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W44-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~44",
+  "surfaced_at": "2026-09-29T02:00:00Z",
+  "one_line": "TO-IB-m20-202 step 4 (run the investor_reporting suite): test_holdings_rearm_trigger.py::test_rearm_trigger_live FAILS live -- the irpt-holdings-snapshot schedule is ENABLED (IB-mr-201) while the served Lambda bundle lacks 7 files this cell's own producer needs, including holdings_49f.py and holdings_inf.py -- a live schedule calling stale code, independent of this cell's local shape change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (issuer of round 20 workstream ~M, which owns IB-mr-201's schedule-enable and IB-mr-204's first-fire read-back)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest data/assets/scripts/gold/investor_reporting/tests/test_holdings_rearm_trigger.py -q -p no:cacheprovider rc=1: 'S71 ARMED: irpt-holdings-snapshot is ENABLED while the served bundle lacks ['data/assets/scripts/gold/investor_reporting/holdings_49f.py', 'data/assets/scripts/gold/investor_reporting/holdings_inf.py', 'data/assets/scripts/gold/investor_reporting/holdings_membership.py', 'data/assets/scripts/gold/investor_reporting/inf_positions.py', 'data/assets/scripts/gold/investor_reporting/source_inputs.py', 'infra/aws/lambda/investor-reporting/holdings/publication.py', 'infra/aws/lambda/investor-reporting/reports/currency_authority.py']'.",
+      "Captured stdout: 'REARM-TRIGGER LIVE: schedule irpt-holdings-snapshot = ENABLED; served bundle VersionId ceQmSBtiOg2BeE_f6XC_4uWbt2Jjx3wm ETag 4155283a1b77394259ff809611f28a8e, 10 member(s); runner opens 12; missing 7 -> FAIL'.",
+      "Reproduced on an unmodified investor_reporting tree (the file is untouched by this worker's diff; it fails identically run alone or inside the full suite), so this is independent of TO-IB-m20-202's node-shape change and not caused by it.",
+      "The 7 missing files include this very cell's edited producers (holdings_49f.py, holdings_inf.py): if the schedule fires before the bundle is re-minted, it runs the PRE-change shape regardless of what lands here -- IB-mr-202's own change is one more reason the bundle needs re-minting, tying this row to the never-widen half already required by this cell (NEVER_WIDEN_HALF_REQUEST_HOLDINGS_L0_CATEGORIES_20260929.md)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-m20-202 step 4: 'Run the investor_reporting suite ... report any other [failures beyond the pre-existing lib.silver_ids 7 failed/7 errors, row W42-S3]'.",
+  "world_is": "One additional failure exists beyond that pre-existing class: a LIVE check (test_rearm_trigger_live) shows the production schedule already ENABLED (a sibling round-20 cell, IB-mr-201) against a served Lambda bundle that is missing 7 source files, including two this cell edits. The suite invocation the task order asked for surfaced a live-AWS hazard outside this cell's grant, not a defect in the L0-category change."
+}
+```

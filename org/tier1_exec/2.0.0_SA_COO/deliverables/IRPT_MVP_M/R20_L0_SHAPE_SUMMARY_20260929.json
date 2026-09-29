@@ -1,0 +1,48 @@
+{
+ "firms": [
+  {
+   "firm": "49financial",
+   "accounts": 7548,
+   "accounts_with_non_category_child": 0,
+   "accounts_l0_sum_mismatch": 0,
+   "model_wrapper_nodes": 0,
+   "category_names": [
+    "Client",
+    "Models",
+    "SMAs"
+   ],
+   "security_amount_total_before": 1619882466.61,
+   "security_amount_total_after": 1619882466.61,
+   "candidate_sha256": "b703276e26f405fed32c0bca56cf39b1195791ba5af0afeeb268d923cb13e57a"
+  },
+  {
+   "firm": "inflection",
+   "accounts": 878,
+   "accounts_with_non_category_child": 0,
+   "accounts_l0_sum_mismatch": 0,
+   "model_wrapper_nodes": 0,
+   "category_names": [
+    "Client",
+    "Models"
+   ],
+   "security_amount_total_before": 166179198.52,
+   "security_amount_total_after": 166179198.52,
+   "candidate_sha256": "2c11acde9e7b304e1271eb55dd886d3fa9d9156524f69708ab5165f21c576a88"
+  },
+  {
+   "firm": "cottonwood",
+   "accounts": 938,
+   "accounts_with_non_category_child": 0,
+   "accounts_l0_sum_mismatch": 0,
+   "model_wrapper_nodes": 0,
+   "category_names": [
+    "Client",
+    "Models",
+    "SMAs"
+   ],
+   "security_amount_total_before": 553689995.59,
+   "security_amount_total_after": 553689995.59,
+   "candidate_sha256": "5dbd0ff8821599460a4d533f113ef49f6c0746d3b979407dac350f14c0e2fd61"
+  }
+ ]
+}
