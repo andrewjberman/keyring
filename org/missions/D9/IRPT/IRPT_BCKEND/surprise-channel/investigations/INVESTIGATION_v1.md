@@ -11722,3 +11722,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not remediated here: the Lambda contract copy is out of this order's <paths> grant by explicit BOUNDS instruction, and widening my own grant to fix it would itself be the widening the order forbids. AC1 scopes only to the new test_directory_account_masks.py file (which validates against the edited docs/contracts copy, not CONTRACT_PATH), so this does not block that criterion; recorded here because it is a real, measured regression left on the branch and the release order in the NEVER_WIDEN half is the disarm path. Full-suite evidence: python -m pytest data/assets/scripts/gold/investor_reporting/tests -q -> 1 failed, 311 passed (only this one test)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W78-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~78",
+  "surfaced_at": "2026-09-29T11:50:00Z",
+  "one_line": "The pre-existing (pre-amendment-3) worktree copy of data/assets/scripts/gold/investor_reporting/holdings_snapshot.py carried a stale GENERATED-block pin (registry@c5c36b1e34fdeee5) against the live infra/logic/registry (registry@c7c38cec0d5d872e), unrelated to amendment 3's own edit; the commit-time naming gate (LGIC_ENFORCE DEC-6) refused the commit until the file was regenerated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Disarmed same-turn by 0.9.0_WK_IRPT_BCKEND~78 running the naming gate's own named remedy (no standing owner needed; a worker is terminal at its drain per R-18, so no disarm_owner is carried -- the item is already INERT, not ARMED).",
+      "bash .tools/safe-commit.sh ... (this session, first attempt, before any regeneration): 'NAMING REFUSE data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:178 <generated-file-edit> -> python lib/opal_naming.py generate --out <dir> --target data/assets/scripts/gold/investor_reporting/holdings_snapshot.py; why: a hand edit to a GENERATED file: its bytes differ from the generator's output from line 178'",
+      "diff --strip-trailing-cr against a fresh `python lib/opal_naming.py generate --out .scratch/gen_check --target .../holdings_snapshot.py` (this session): the ONLY difference in the whole 2,890-line file was line 178, the GENERATED marker comment itself (registry@c5c36b1e34fdeee5 vs the live registry@c7c38cec0d5d872e); the firm_bucket_map VALUES (opal-data-bd/inf/cot/demo) were already identical -- so the drift was the PIN going stale, not a value change, and predates this slot's edit at line ~714-744",
+      "python lib/opal_naming.py generate --out . --target data/assets/scripts/gold/investor_reporting/holdings_snapshot.py (this session, in place): rewrote the pin to registry@c7c38cec0d5d872e; git diff after: 1 file changed, 16 insertions(+), 7 deletions(-) -- the pin line plus this slot's own _directory_account_labels edit, nothing else moved; test_directory_account_masks.py re-ran 11 passed after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "n/a -- no spec asserted this file's generated pin was current; the task order named no edit to the GENERATED firm_bucket_map block at all.",
+  "world_is": "A file this order's grant covers (data/assets/scripts/gold/investor_reporting/) can sit with a stale registry pin in its GENERATED block for an unmeasured span before any worker touches it again, because the naming gate only grades a file that is IN THE DIFF -- so drift between two touches of the same generated file is silent until the next hand edit lands beside it and the whole file is graded. Not this cell's regression to own (the pin predates amendment 3); disarmed by running the named remedy command, which touched only the marker line.",
+  "notes": "No content change beyond the pin comment: firm_bucket_map's returned dict is byte-identical before and after regeneration (opal-data-bd/opal-data-inf/opal-data-cot/opal-data-bd/opal-data-demo, unchanged). Filed as OBSERVATION/INERT because the fix was mechanical, named by the gate itself, and landed same-turn; recorded so a later census of generated-file drift does not read this file as never-drifted."
+}
+```

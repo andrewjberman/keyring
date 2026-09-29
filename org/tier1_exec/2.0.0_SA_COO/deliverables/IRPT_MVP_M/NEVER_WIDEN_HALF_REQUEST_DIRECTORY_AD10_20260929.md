@@ -66,28 +66,37 @@ no other pipeline's output.
 | `data/assets/scripts/gold/investor_reporting/directory_runner.py` (`validate_entries`/`main`) | producer's own pre-flight validator | validates against `CONTRACT_PATH` = the LAMBDA's packaged copy (`infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json`) | REJECTS every entry (`additionalProperties: false`, field undeclared there) -- `main()` returns rc=1 with a schema ERROR line per entry. Measured this session: real local build, 49F/INF/COT all show `valid=0 of <entry_count>`. | YES -- the Lambda contract copy (see release order) |
 | `infra/aws/lambda/investor-reporting/directory/entry.py` (`_document_fields`) | Lambda wire-field whitelist | reads the property set from `docs/contracts/.../v1/DirectoryEntry.schema.json` in a checkout, else `IRPT_CONTRACTS_DIR` (the shared layer's mounted copy) in the deployed runtime | a CHECKOUT run now whitelists `account_masks` (the docs copy just gained it); the DEPLOYED Lambda reads the shared layer's copy, which is packaged from the same source as `infra/aws/lambda/investor-reporting/_contracts/` and has NOT changed | YES if/when the layer is repackaged -- named so the repackage step does not silently widen the wire before the directory bundle carries the field |
 | `infra/aws/lambda/investor-reporting/directory/handler.py` (`irpt-directory-search`: `search`/`resolve`) | the served picker/identity backend | emits `masked_discriminator` per entry only (lines ~205, ~302) -- the exact defect the CRO measured | unchanged by this field alone; a document carrying `account_masks` passes through untouched until this handler is edited to read it | YES -- this is the edit `2.0.0_SA_COO~D` (or its issuer) points at `account_masks`; NOT done in this order |
-| `portal/src/pages/InvestorReporting/contracts/directory-browse.ts` (`object(value, required, optional)`) | portal wire-shape validator | its `object()` helper THROWS on any key not in its `required`/`optional` lists (line 15); `account_masks` is in neither | REJECTS a document carrying it: `Invalid directory page` | YES -- the portal validator's allowed-key list, before a document with the field reaches the portal |
-| `portal/src/pages/InvestorReporting/contracts/wire/{DirectoryEntry.ts,consumed.ts}`, `adapt.ts` | portal wire types + adapter | type `DirectoryEntry` and `consumed.ts`'s declared `reads`/`required` do not list `account_masks` | no runtime effect until a consumer reads the field; the account picker (`header/BrowseDrawer.tsx`), `header/ClientSearch.tsx`, `header/IdentityCard.tsx`, `tabs/reporting/AccountsTable.tsx`, `render/performance/AccountDetail.tsx` all read `maskedDiscriminator` today and are unaffected by an UNREAD additive field | YES -- these are the "account picker and identity list" the task names for `2.0.0_SA_COO~D` to point at `account_masks`; NOT done here |
+| `portal/src/pages/InvestorReporting/contracts/directory-browse.ts` (`object(value, required, optional)`) | portal wire-shape validator | its `object()` helper THROWS on any key not in its `required`/`optional` lists (line 15). On PROD today, `account_masks` is in neither -- REJECTS. On portal DEV (`27eae57a`) it is now accepted, carried in the pending PROD hotfix; PROD itself has not moved. | REJECTS a document carrying it on PROD until the hotfix lands; DEV already reads it | YES on PROD -- the hotfix carrying the allowed-key list must land before a served document reaches PROD |
+| `portal/src/pages/InvestorReporting/contracts/wire/{DirectoryEntry.ts,consumed.ts}`, `adapt.ts` | portal wire types + adapter | type `DirectoryEntry` and `consumed.ts`'s declared `reads`/`required` do not list `account_masks` on PROD | no runtime effect until a consumer reads the field; the account picker (`header/BrowseDrawer.tsx`), `header/ClientSearch.tsx`, `header/IdentityCard.tsx`, `tabs/reporting/AccountsTable.tsx`, `render/performance/AccountDetail.tsx` all read `maskedDiscriminator` today and are unaffected by an UNREAD additive field | YES -- these are the "account picker and identity list" `2.0.0_SA_COO~D` points at `account_masks`; NOT done here |
+| `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py` (`_directory_account_labels`) | HOLDINGS snapshot's ACCOUNT-node label builder -- what the portal picker/identity list actually print (`IdentityCard.tsx:176-185` `accountListFromSnapshot` reads `display.label` from the HOLDINGS snapshot, not the directory entry directly) | reads `account_masks` when the landed directory entry carries it (`account_id` -> its own mask), falling back to the entry's one `masked_discriminator` when it does not (amendment 2 step 6 / amendment 3 step 1, this cell) | landed here, this order | YES -- must run AFTER the directory bundle carries `account_masks` (its own re-mint), or it falls back to the entry mask exactly as before |
+| `portal/src/pages/InvestorReporting/.../IdentityCard.tsx:176-185` (`accountListFromSnapshot`) | portal picker/identity list's actual label source | prints each ACCOUNT node's `display.label` from the HOLDINGS snapshot, unaware of `account_masks` on the directory itself | reads whatever `_directory_account_labels` minted into `display.label` at the Holdings build that produced the snapshot it is fed | NO code change needed here -- already reads `display.label`; it inherits the per-account mask only once `holdings_snapshot.py` is re-minted against a directory carrying `account_masks` |
 | directory search cache (`handler.py:_CACHE`, per-container, keyed on `firm_bucket+key`) | in-process cache of the fetched directory doc | caches whatever `s3:GetObject` returns, whole document | carries `account_masks` through unread once the field is on a served document; no cache invalidation issue (a new revision is a new S3 key, so `latest.json`'s pointer change is what a container next reads) | NO -- the cache is transparent to an added field |
 | exports | none found | `comp-find "DirectoryEntry.schema.json"` and `comp-find "masked_discriminator"` (this session, corpus=all) surface no export/report producer reading `DirectoryEntry` outside the files above | n/a | n/a |
 
-## Release order (named per Build step 5)
+## Release order (named per Build step 5, amended by amendments 1-2 / amendment 3 step 2)
 
 1. **The handlers' contract copy first**: `infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json`
    (and whatever shared layer packages it for `IRPT_CONTRACTS_DIR`) gains `account_masks`, identically to the
-   edit already landed at `docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json` in this cell. This
-   is 2.0.0_SA_COO~P's shared packaging (named, not done here -- outside this order's `<paths>` grant).
-2. **The directory bundle re-mint**: `directory_runner.py --upload` runs against the updated contract copy so
-   `validate_entries`/`main` pass and a served revision carries `account_masks`.
-3. **The portal reads the new field**: `directory-browse.ts`'s allowed-key list admits `account_masks`,
-   `irpt-directory-search`'s `search`/`resolve` project it, and the account picker / identity list
-   (`BrowseDrawer.tsx`, `ClientSearch.tsx`, `IdentityCard.tsx`, `AccountsTable.tsx`, `AccountDetail.tsx`) read
-   it per-account instead of the entry-level `masked_discriminator` -- `2.0.0_SA_COO~D`'s cell.
+   edit already landed at `docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json` in this cell.
+   `2.0.0_SA_COO~P` is cutting it now (named, not done here -- outside this order's `<paths>` grant).
+2. **The portal reader on PROD**: `directory-browse.ts`'s allowed-key list admits `account_masks` (already
+   true on portal DEV `27eae57a`, carried in the pending PROD hotfix -- PROD does not accept it yet), and
+   `irpt-directory-search`'s `search`/`resolve` project it so a served document is not rejected at the portal
+   edge.
+3. **The directory bundle re-mint**: `directory_runner.py --upload` runs against the updated contract copy
+   (step 1) so `validate_entries`/`main` pass and a served revision carries `account_masks` per account.
+4. **The Holdings re-mint, AFTER the directory re-mint (step 3)**: `holdings_snapshot.py` builds against the
+   now-landed directory so `_directory_account_labels` finds `account_masks` and gives each ACCOUNT node its
+   own `display.label`; only then do the account picker and identity list
+   (`BrowseDrawer.tsx`, `ClientSearch.tsx`, `IdentityCard.tsx`, `AccountsTable.tsx`, `AccountDetail.tsx`) show
+   distinct tails per account -- `2.0.0_SA_COO~D`'s cell for the picker's own read of `account_masks`;
+   `IdentityCard.tsx`'s `accountListFromSnapshot` needs no further edit once fed a re-minted snapshot.
 
-Reversing this order (serving a document with `account_masks` before step 1) is exactly the regression
-measured above: `directory_runner.py`'s own pre-flight validation refuses every entry, so in practice step 2
-cannot upload successfully until step 1 lands -- the ordering is enforced by the producer's own gate, not
-only by convention.
+Reversing this order (serving a document with `account_masks` before step 1, or re-minting Holdings before
+step 3) is exactly the regression measured above: `directory_runner.py`'s own pre-flight validation refuses
+every entry until step 1 lands, and a Holdings build against a pre-account_masks directory falls back to the
+entry's one mask exactly as today -- the ordering is enforced by the producers' own gates and by
+`_directory_account_labels`'s stated fallback, not only by convention.
 
 ## The half's two branches
 
