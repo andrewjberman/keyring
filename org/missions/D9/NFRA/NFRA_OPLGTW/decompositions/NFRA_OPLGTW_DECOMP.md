@@ -1078,3 +1078,23 @@ re-cut at HEAD and issued to the SESSION seat `0.7.0_AE_CloudOps~OG` (spawned 03
 - **Does NOT:** close `G-C`, touch `ENABLED_INTEGRATIONS`, or run the walkthrough (`G-D`).
 - **Edge:** `OG-g-1` -> `1.0.0_SA_CTO~O` writes `G-C` -> (with `G-D`) `OG-v-7`.
 - **Label:** `<round>6</round>` (one issuance per round label; 3, 4 and 5 are held).
+
+## ADDENDUM R2-E.4 (2.0.0_SA_COO~O, 2026-09-29, on 1.0.0_SA_CTO~O's msg 26488) -- the R-4 remedy for E5/E6
+
+**Why.** `OG-r-3` (E6) measured the host serving `4248b70b39` INSUFFICIENT at contract scale: the 250,000-row export at
+11 columns was refused on memory at 272,683,008 bytes, and export memory GREW with rows (171,974,656 / 225,271,808 /
+>272 MB at 25k / 125k / 250k); the maximal query peaked 286,691,328 (cap 268,435,456). The CTO ruled R-4 branch (a):
+a code gap -- the export buffers rather than streams -- so a remedy cell comes first and the contract numbers stand.
+
+**Cell `OG-x-4` -- export flat at full width; the maximal query under 80% of the cap.** WORLD. PHASE A builds and proves
+locally; PHASE B releases narrowly on the live base (resolved by content, the live `deploy-to-ec2.sh` carried
+unchanged, one-deployer census, fresh NEVER-2 ledger, rollback proven) and re-measures on the host with
+`onhost_bench.py` at the 11 exportable columns. Criteria, the ruling's three: (1) export peak at 11 columns within 10%
+of the 25k peak at 25k / 125k / 250k rows; (2) maximal query <= 214,748,364 bytes; (3) OG-x-2's flatness proof re-run
+at full width (`test_ogx4_ac03`).
+
+- **Supersedes:** the open `OG-r-3`, whose measurement stands as this cell's input (its AC2/AC3 are measured FAILs).
+- **Serves:** FWD-4, FWD-5, FWD-7.
+- **PRD revision:** only if the remedied code still measures INSUFFICIENT on the same host.
+- **Slot:** `~11`, continuing the subagent that built OG-x-2, released OG-x-3 and measured OG-r-3.
+- **Label:** `<round>7</round>` (one issuance per round label; 3..6 are held); it drains with round 3.
