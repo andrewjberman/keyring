@@ -238,5 +238,19 @@
     "world_is": "One non-Security-Analysis read answered 500 during the INTU selection step; no Security Analysis route failed (the walk's other API answers were READY).",
     "notes": "Filed by the issuer at the round-2 close; off-task observation, routed through the channel, not a broker message."
   }
+  ,{
+    "id": "DSGN_AMGTV1-Z-W12-S1",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~12",
+    "surfaced_at": "2026-09-29T10:40Z",
+    "one_line": "AV-r-4 AC1 arm A cannot reach 3 of 3 from ExecManagementTab.tsx alone: the one remaining hit is crosswalk/v1 rendered by IdentityLine.tsx (AV-r-1) inside the tab.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {"status": "GROUNDED", "evidence": ["node round3/checks/exec.cjs after the Exec edit: ARM FAIL A hits=[crosswalk/v1]; arms B and C PASS; portal/src/pages/SecurityAnalysis/components/IdentityLine.tsx:73 renders identity.crosswalk_vintage"]},
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AV-r-4 AC1 expects EXEC ABSENCE IN WORDS 3 of 3; the order says the exec check excludes nothing and the string is AV-r-1's.",
+    "world_is": "Arm A reads hits=[crosswalk/v1] only; it clears when AV-r-1 lands IdentityLine, not by any change in this cell's paths."
+  }
 ]
 ```
