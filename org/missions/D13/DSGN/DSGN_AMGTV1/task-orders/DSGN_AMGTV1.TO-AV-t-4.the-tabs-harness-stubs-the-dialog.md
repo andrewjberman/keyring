@@ -29,6 +29,13 @@ Build: add ONE `STUBS` entry for `'@/ui/components/graphic/HeroGraphic'` -- `Her
 module (read `ThesisCards.tsx` and `HeaderCards.tsx` for the names) is an inert stub -- so the harness loads the merged page
 again. No check is removed, re-anchored or loosened; the 20 claims stay exactly as they are.
 
+**AMENDMENT 1 (issuer, on your row W3-S2):** ONE check is re-anchored, and only it: `thesis_sentences_and_one_chart`
+(`tabs.harness.cjs:314-319`) counted `data-drafted-sentence` markers on the Thesis tab's render, and AV-t-3 moved every
+sentence into the card windows. Re-anchor it to the Thesis face PLUS each card window body (`ThesisCardDetail` from
+`components/ThesisCards.tsx`, rendered statically for `investment_thesis`, `risks` and `recommendation`, as you did for the
+drafting harness): the marker count over face + windows must equal each fixture's own sentence count (38, 35, 38, 36, 38),
+and its `data-driver-chart` half stays exactly as it is. Its claim is unchanged; nothing else in the harness moves.
+
 **Your worktree first:** it was cut from the round's base. Before you edit, bring it to the merged round:
 `git -C /c/tmp/wk-dsgn-amgtv1-3 merge --no-edit CLOUD` (the outer repository; it carries this order) and
 `git -C /c/tmp/wk-dsgn-amgtv1-3/portal merge --no-edit DEV` (the portal: the merged round-1 DEV, 5fac7a37 or later). Both are
