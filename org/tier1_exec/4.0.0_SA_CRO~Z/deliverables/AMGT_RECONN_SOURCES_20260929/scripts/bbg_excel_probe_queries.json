@@ -1,0 +1,10 @@
+{
+  "WCMG_current": "get(id()) for(holdings('WCMG US Equity'))",
+  "GQGU_current": "get(id()) for(holdings('GQGU US Equity'))",
+  "TSEL_current": "get(id()) for(holdings('TSEL US Equity'))",
+  "BASG_current": "get(id()) for(holdings('BASG US Equity'))",
+  "ETFT_current": "get(id()) for(holdings('ETFT US Equity'))",
+  "PCLG_current": "get(id()) for(holdings('PCLG US Equity'))",
+  "WCMG_historical": "get(id()) for(holdings('WCMG US Equity',dates=2026-06-30))",
+  "IBM_control": "get(px_last) for(['IBM US Equity'])"
+}

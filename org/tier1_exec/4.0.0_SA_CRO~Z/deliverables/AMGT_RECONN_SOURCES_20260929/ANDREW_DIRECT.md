@@ -29,3 +29,11 @@ Recorded September 29, 2026, 15:36 ET, direct Codex user channel. Receipt timest
 > Check these out: "C:\Users\Opal Bloomberg\Downloads\BLPAPI-Core-User-Guide.pdf" "C:\Users\Opal Bloomberg\Downloads\BLPAPI-Core-Developer-Guide.pdf", they are docs on BBG API, maybe a clue in here
 
 The follow-up is recorded in `BBG_GUIDES_FOLLOWUP.md`; it covers document review and read-only live API tests, with no account configuration changes or external correspondence.
+
+## Option 1 selected, verbatim
+
+Recorded September 29, 2026, approximately 16:03 ET; direct Codex user channel, receipt timestamp not exposed.
+
+> Go on option 1 to start.
+
+The selected next-calls option was to check remaining Terminal/Excel and portfolio-ID possibilities in one bounded research session, ending with a demonstrated full-holdings route or a precise support question. `BBG_EXCEL_ACCESS_VERIFIED.md` records the successful Excel route and remaining limitations. No support message, build dispatch, purchase or production schedule change was authorized or performed.

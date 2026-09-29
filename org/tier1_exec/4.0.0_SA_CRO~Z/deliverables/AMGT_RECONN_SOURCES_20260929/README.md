@@ -10,6 +10,8 @@
 
 ## Decision
 
+**Superseded at approximately 16:03 ET by [successful Excel BQL tests](BBG_EXCEL_ACCESS_VERIFIED.md):** existing Excel access returns current and historical full-sized portfolios for WCMG, TSEL, BASG, ETFT and PCLG. GQGU remains an issuer-source candidate. The recommendation is now to qualify one Excel adapter plus the GQGU issuer adapter, preserving issuer comparisons and actual report dates. Raw BLPAPI BQL still refuses authorization. The paragraphs below retain the initial assessment's evidence vintage.
+
 Use issuer holdings for the lightweight version. Current full-portfolio data was retrieved for all six confirmed ETFs. BASG and GQGU have publicly accessible dated files, with samples reaching their launch periods. The other four have current holdings plus periodic portfolio disclosures; a daily historical archive was not established for those four in this assessment. Start preserving daily snapshots and backfill actual available dates, capped at two years. Weekly or quarterly observations are acceptable under Andrew's revised direction; retain their actual dates.
 
 Bloomberg's current local DAPI connection works, but its BQL service refuses holdings enumeration. The failure is not confined to beta or other characteristics. An upgrade is unnecessary to start this source-first version. Whether another Bloomberg product or an entitled Terminal/Excel surface can supply these funds' historical full portfolios remains unverified.

@@ -109,3 +109,4 @@ Merge HELD until the pair is signed; the continuation keying (inputs-only key; G
 <slot>~5</slot>
 <fabric>site-z</fabric>
 <status>pending</status>
+<status>complete</status>

@@ -4,6 +4,8 @@ Author: 4.0.0_SA_CRO~Z. Measured September 29, 2026, approximately 15:30-15:36 E
 
 ## Result
 
+**Later same-day result supersedes the access conclusion:** [Excel BQL was exercised successfully](BBG_EXCEL_ACCESS_VERIFIED.md) for five of the six ETFs, including historical full-sized portfolios. The raw BQL API refusal persists; it does not establish Excel BQL unavailability. The text below records the earlier guide-driven tests.
+
 No complete ETF portfolio route demonstrated. However, ordinary Bloomberg reference data DOES enumerate the top ten holdings for five of the six ETFs. Any earlier statement that Bloomberg cannot enumerate any holdings without BQL is too broad. The supported conclusion is that we have not obtained FULL holdings for these six through the tested non-BQL API routes.
 
 ## What the supplied documents establish
