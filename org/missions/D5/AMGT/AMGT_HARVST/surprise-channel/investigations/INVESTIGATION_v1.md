@@ -2405,6 +2405,69 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "TO HVST-e-2 AC1 (a): BEFORE expected as at the cut in section 2; if different, STOP before the first put. The criterion invocation is the one script.",
       "world_is": "After the act the S3 state no longer equals the cut, so the same invocation prints the STOP branch and rc 1. That is the designed behaviour of (a), not a defect. The instance therefore records the act's own output for AC1 and cites ac1_post_act_verify.py (read-only, re-runnable) for the AFTER, moved-rows and prior-parts checks.",
       "notes": "INERT. Grader note for L9: re-run ac1_post_act_verify.py, not the write-once script."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W43-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~43",
+      "surfaced_at": "2026-09-29T12:28:15Z",
+      "one_line": "HVST-f-1: no English dictionary is installed or in the estate, so AC1's 'every form that is an English dictionary word flagged' is met by a proxy, not a dictionary.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/scripts/_common.py: CURATED_WORDS, flags(), corpus_lowercase_counts()",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/ac1_output.txt: the English-dictionary flag line and the CURATED list line"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO HVST-f-1 AC1: every form of 3 characters or fewer and every form that is an English dictionary word flagged.",
+      "world_is": "Python 3.11.9 here has no nltk, wordfreq, english_words or spell-checker; /usr/share/dict is absent; no words file exists in the repo (a glob for *words*/*wordlist*/*english*/*dictionary*/*stopwords* found only proof files and two DS_MarketIntelligence stopword lists). The DICT-WORD flag is the union of sklearn ENGLISH_STOP_WORDS (318 function words), a 43-word curated list I authored (printed by AC1), and 'the form appears in ordinary lower case in the 120 articles'. A form without the flag is not certified a non-word.",
+      "notes": "INERT. The short (<=3 characters) flag is exact; only the dictionary flag is a proxy. The CVO text read (AC4) is the check on any form the proxy passed."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W43-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~43",
+      "surfaced_at": "2026-09-29T12:28:15Z",
+      "one_line": "HVST-f-1: class T2 (ticker root with the share-class suffix removed) generates 0 forms, because no ticker in the 191 carries a share-class suffix.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/ac1_output.txt: '== CLASS T2 ...' block, forms generated=0",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/scripts/_common.py: ticker_forms()"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO HVST-f-1 AC1: per form class, ticker root; ticker with exchange stripped; brand or short name.",
+      "world_is": "All 191 tickers are 'ROOT EXCHANGE' with no /X or .X class suffix (the two slash cases are trailing-slash tickers 'BP/' and 'NG/' on London lines, which T1 strips). T2 therefore equals T1 for every security and generates 0 forms; the class is printed with 0 of 191 and its reason rather than dropped.",
+      "notes": "INERT. The universe has no dual-class name such as BRK/B, so a ticker-root rule and an exchange-stripped rule are the same set here."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W43-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~43",
+      "surfaced_at": "2026-09-29T12:28:15Z",
+      "one_line": "HVST-f-1: the served matcher is case-insensitive, so a one-letter ticker counts lower-case words: form 'T' (AT&T) adds 131 spans, 128 of them the lower-case 't' of contractions such as don't.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py:_span_pattern (re.I) and :_alias_pattern",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/ac2_output.txt: form='T' sample, 128 lowercase hits in ac1_output.txt flags"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO HVST-f-1 clause 2: match with the SERVED matcher, publication_gold._match_counts (one span, one count, word-bounded).",
+      "world_is": "publication_gold._span_pattern compiles with re.I and (?<!\\w)...(?!\\w) bounds, and an apostrophe is a non-word character, so the t after the apostrophe in don't is a word-bounded match of 'T'. The census reports it as the served matcher would count it; AC2 prints the samples. The same holds for 'V' ('V-8'), 'F', 'C', 'NOW' and 'COST'. This cell measured with the served matcher as ordered and did not build a case-sensitive variant.",
+      "notes": "INERT. Fact for the round-17 analysis; it recommends no rule."
     }
   ]
 ```

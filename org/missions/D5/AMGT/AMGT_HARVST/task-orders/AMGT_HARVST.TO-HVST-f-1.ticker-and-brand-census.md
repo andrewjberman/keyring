@@ -75,7 +75,7 @@ No alias change, no code change, no gold write, no vendor call. It recommends no
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~43</slot>
 <fabric>site-z</fabric>
