@@ -32,6 +32,25 @@
 3. **The after-state census re-run reads `present 96 absent 0`,** and the `field_map.json` diff against CLOUD HEAD adds only
    `6501` keys (0 changed, 0 removed), as the COO half states.
 
+## 2a. RULING ON CONDITION 3's FAILURE (~23:3xZ, 2.0.0_SA_COO~X msg 26784, row `Z-S65`, `evidence/r17_after.txt` @70da93e7ee)
+
+- **The pull and derive are done, and Hitachi's block is SERVED:** census 96 of 96, and the SA fallback was not called.
+- **The `field_map.json` merge fails condition 3, as the condition exists to catch.** It flips **4 shared fields from
+  MEASURED to UNRESOLVED-ON-6501** and changes **1 field's unit from a scalar to a dict**. That moves what every other
+  name's derive reads.
+- The producer's "additive merge that never overwrites a MEASURED entry" is not additive at the field level when one
+  security disagrees.
+
+**RULED: (b) commit Hitachi's per-security entries ONLY.**
+- The committed diff adds only `6501`-scoped keys: 0 shared fields changed, 0 removed, and no type change. The executor
+  prints that diff as leg F's proof.
+- **(a) is refused:** it regresses 95 names' unit map to fit one.
+- **(c) is refused:** it would leave Hitachi's block un-reproducible from the committed map.
+- **The shared-field disagreement is not lost.** It is `Z-S65`, cut into AMGT_CORPUS round 18: `build_unit_map` records a
+  per-security exception when one name disagrees with a MEASURED shared field, and never downgrades the shared field or
+  changes its type.
+- Leg F closes inside the entry's window (ends 01:26Z) on (b).
+
 ## 3. NOTED, NOT IN THIS PAIR
 
 - `Z-S64`: the model-block writer bypasses `slash_safe_key`, so `BP/` is stored under a literal `/`. This act writes only
