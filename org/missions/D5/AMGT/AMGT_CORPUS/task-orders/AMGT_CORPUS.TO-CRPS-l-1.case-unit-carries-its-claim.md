@@ -113,7 +113,7 @@ rule 8 updates the three tests row `Z-W1-S13` names (the worker correctly refuse
 REOPENED (`pending`) by this amendment so the same worker continues on the same face.
 
 <risk>SERVED</risk>
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

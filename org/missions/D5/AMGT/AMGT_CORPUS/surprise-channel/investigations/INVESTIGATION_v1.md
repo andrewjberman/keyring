@@ -2048,6 +2048,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "For ORA and SAP the team's own unit symbol is a dollar sign on a EUR-listed name; the pairing is arithmetically valid but the two figures may not be in one currency, which the census does not judge.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Filed, not investigated; whether the dollar sign is the team's currency (ADR-style estimate) or an extraction slip is outside this cell."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S13",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T05:30:00Z",
+    "one_line": "CRPS-l-1 (unit_as_written + currency, METHOD_VERSION /3) breaks 3 tests in files outside its <paths>: test_dossier_case_body.py::test_method_version_is_bumped_to_2 (pins /2), test_dossier_case_body.py::test_case_census_prints_per_name_states_and_the_exact_summary_line (pins the census final line without the two new columns), and test_dossier_case_layouts.py::test_a_round_9_k5_table_is_unchanged (reads base['unit'], the key l-1 replaces). Not edited: the write grant excludes them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PYTHONPATH=. python -m pytest lib/research/corpus/tests/test_dossier_case_unit.py test_dossier_case_table.py test_dossier_case_body.py test_dossier_case_layouts.py -q -> '3 failed, 34 passed'; the three named above, each failing on a value l-1's ruling changes on purpose (METHOD_VERSION literal, census line, the retired `unit` key).",
+        "Order CRPS-l-1 <paths> lists test_dossier_case_table.py only among existing tests; the l-1 bound names the METHOD_VERSION bump and the census line."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-l-1 bounds: bump METHOD_VERSION to /3; the census keeps its line and appends two columns; unit is replaced by unit_as_written; test_dossier_case_table.py may change where it pins the old unit key or census line.",
+    "world_is": "Three further tests pin those same values in two files the order does not grant; the corpus suite is red on them until the issuer (or a later order) updates them: body.py line 158 -> /3, body.py line 130-131 -> the line with 'currency_set 0 currency_null 2'-style tail, layouts.py line 125 -> base['unit_as_written'].",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Filed, not fixed. A drain that runs the whole lib/research/corpus/tests directory reads 3 failures until these are updated."
   }
 ]
 ```
