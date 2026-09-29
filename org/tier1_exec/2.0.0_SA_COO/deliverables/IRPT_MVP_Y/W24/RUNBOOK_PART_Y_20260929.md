@@ -132,6 +132,30 @@ never chosen by a caller", which is what `live_chain.k5_body` does (1 key -> com
 `_caveat` records that the narrative mentions Long-Term / Ultra Long-Term while the actual Multi-Comp HAR selects
 Short-Term / Intermediate -- **this window sends the HAR's pair**, which is the right one.
 
+## Pre-check at 17:2xZ -- `case_trace.py` has NEVER run on a Multi-Comp case
+
+W21 Y2 and W22 Y2 both died before K5, so no Multi-Comp REQ has ever existed in this fabric and
+`case_trace.py`'s Multi-Comp path is **unexercised code**. With the cap leaving room for roughly one arm, arm 1's
+trace is the window's whole output, so the path was checked before it mattered.
+
+The risky line is `case_trace.py:186`, which compares the browser's variant to the recipe's:
+
+```
+comp["browser"]["variant"].upper().replace("MULTICOMP", "MULTI") == variant
+```
+
+Exercised against the REAL rule rather than read: `recipe.VARIANT_BY_COUNT` is
+`((0, 0, 'OVERVIEW'), (1, 1, 'COMPARISON'), (2, 5, 'MULTI'))`, and `variant_for_comparison_count()` returns
+`OVERVIEW` / `COMPARISON` / `MULTI` / `MULTI` / `MULTI` for counts 0-4.
+
+- browser `multicomp` -> `.upper().replace(...)` -> **`MULTI`**
+- recipe for 2 keys -> **`MULTI`**
+- **the link PASSES.** No false MISMATCH is waiting on the Multi-Comp arm.
+
+Two keys is also comfortably inside the declared cardinality `(2, 5)`, and `recipe_for` refuses a duplicate id
+(`COMPARISON_ALIAS_DUPLICATE`) -- `opal_short_term` (P:1728415) and `opal_intermediate_term` (P:1728315) are distinct,
+so that refusal cannot fire either.
+
 ## Reading each body's terminal state (row S207)
 
 The resident journals NO line for a job ATTENTION -- over W22's 14:08-14:34Z span, 79 lines, all
