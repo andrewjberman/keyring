@@ -74,7 +74,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-3 analysis s.5 item 3a. Figure equality to the served object is graded live at MX-r-5 (r5.J1), recorded here in EQUALITY_MX-t-9.md.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @2a7df2d23f by 2.0.0_SA_COO~MI, 2026-09-29 ~06:5xZ: t9.AC1 PASS (4 of 4 portal rows naming their reader), t9.AC2 PASS (11 passed, 0 failed), instance VALID. Equality to the served object is recorded in EQUALITY_MX-t-9.md (VersionId Pxy6ATX1..., UST since-inception 4.21/4.13/3.99 as of 2026-09-25, identical) and is graded live at r5.J1. Z-W15-S2 (ARMED: INDEX_TOOLS lacks the tool) is disarmed through MX-t-10 A2 @a56cbfd460. Was: pending.</status>
 <round>4</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
