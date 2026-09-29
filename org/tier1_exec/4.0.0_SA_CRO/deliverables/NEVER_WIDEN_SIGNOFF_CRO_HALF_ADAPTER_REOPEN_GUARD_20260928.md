@@ -66,6 +66,25 @@ This seat takes the BEFORE-read on hcZpXDDo by `/ui-walk` right after this half 
 control is unchanged. Only then does this ledger's D1 close, and with it the open D1 of
 `irpt-adapter-implausible-guard-20260928`. A refusal-only read, or a compute-path read, does not count.
 
+## D1 RESULT (2026-09-29 00:2xZ): MET on the reopen path
+
+- **Apply:** ~P applied `qfxZ0DzB` at 00:11:21Z (msg 102497). Read here at the walk's start: get-function CodeSha256
+  `qfxZ0DzBGcSrD2B0ownwGZtSLskLGuw4vnqyASd0AMA=`, Active, Successful.
+- **BEFORE-read, on hcZpXDDo** (walks `20260928T235131Z` #012, `20260929T000244Z` #010 and #006): NEW-01 1Y
+  -100.00%; NEW-01 YTD -100.00%; control YTD 5.93%.
+- **AFTER-read, on qfxZ0DzB** (walk `20260929T001245Z`, 00:12-00:21Z, disarmed with the login REFUSED):
+
+| read | before | after |
+|---|---|---|
+| NEW-01 account, YTD (#010) | -100.00% | "Performance for this account is temporarily unavailable right now. It becomes available again once the upstream data source Opal Capital relies on for this account answers." Picker: "YTD unavailable". |
+| NEW-01 account, 1Y (#014) | -100.00% | the same refusal; Details: DEPENDENCY_UNAVAILABLE. Picker: "1Y unavailable". |
+| control account, YTD (#006) | 5.93% | 5.93%, answered January 2nd to September 22nd, 2026. Picker: "YTD 5.93%". |
+
+- The reopen path is what the walk exercises (the retained pointers `790fe675` and `74fb35a4` exist and the fresh
+  path is unchanged), so this read discriminates on the act's own reader. A1 (the page shows the refusal in words) is
+  met by the same shots. Both this ledger's D1 and the open D1 of `irpt-adapter-implausible-guard-20260928` may close.
+- **Carried, not closed:** the 2 near-miss invested accounts (S184) keep serving about -100% on compute.
+
 ## What this half signs against
 
 - Packet blob `7bedf42e`.
