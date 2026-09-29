@@ -11902,3 +11902,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Per CLAUDE.md NEVER-2, world-done closes SUPERSEDED and is never re-executed: the P and Y legs are measured done here, so act 4 should not re-run them. NOT ~Y's to edit -- project.json is the project record and 2.0.0_SA_COO~P is the coo_lane; the act-4 leg itself is 0.0.0_AB_MSTR. ~Y corrected only its own STATUS~Y pin and surfaced this to both the same turn. Remedy: (1) MSTR closes the P and Y legs SUPERSEDED with the ahead=0/ANCESTOR read as the proof; (2) the M leg is re-scoped to the nine branches BY NAME before any drain, because a lookup of irpt-mvp-m-20260922 returns nothing and an absence read identically to done; (3) ~P or the CTO edits the blocking field, and the cell-cutting condition is dropped for ~P and ~Y."
 }
 ```
+
+## ~80 worker row -- Inflection's silver lands SAME-DAY, not next-morning (row IRPT_BCKEND-W80-S1)
+
+```json
+{
+  "id": "IRPT_BCKEND-W80-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~80",
+  "surfaced_at": "2026-09-29T14:52:00Z",
+  "one_line": "handler.py's shared day-selection (_target_day: prev_trading_day(expected_last_trading_day(now))) is built on the 49F custody silver's measured NEXT-CALENDAR-DAY ~09:46 UTC landing (module docstring). Measured live for Inflection's orion/inflection/silver/fact_positions/ over 2,343 partitions (spot-checked 2026-08-29..2026-09-27, worst case 13:05:37Z): every landed partition date=D lands the SAME calendar day D at ~13:05 UTC, not D+1 -- breaking the next-morning assumption the shared handler's day math relies on. Firing the INF schedule on trading day T still computes T-1 (the same offset as 49F), so the fire is SAFE (T-1's Orion silver landed a full day earlier) but the freshest available Orion day (T, already on the ground by the fire's ~11:30-12:30 UTC time) is never the one computed -- INF is unconditionally one trading day staler than it needs to be, indefinitely, and fixing it needs a source-aware edit to handler.py, which is out of this order's <paths> and its bound ('do not edit the handler').",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (a follow-on cell to make handler.py's _target_day source-aware, or to accept the day's-worth-more staleness as INF's designed lag; this order's <paths> excludes infra/aws/lambda/investor-reporting/holdings-performance/handler.py)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 ListObjectsV2 (via the aws CLI shim), bucket opal-data-assets, prefix orion/inflection/silver/fact_positions/ (2026-09-29T14:47Z, .scratch/orion_listing.json, 2,343 partitions total): date=2026-08-29 (Sat) -> 2026-08-29T13:05:32Z; date=2026-09-18 (Fri) -> 2026-09-18T13:05:32Z; date=2026-09-19 (Sat) -> 2026-09-19T13:05:31Z; date=2026-09-20 (Sun) -> 2026-09-20T13:05:31Z; date=2026-09-24 (Thu) -> 2026-09-24T13:05:33Z; date=2026-09-25 (Fri) -> 2026-09-25T13:05:33Z; date=2026-09-26 (Sat) -> 2026-09-26T13:05:32Z; date=2026-09-27 (Sun, latest landed) -> 2026-09-27T13:05:36Z -- every one of the last 30 partitions checked lands SAME calendar day, worst case 13:05:37Z, including weekends (the vendor writes 7 days/week, unlike 49F's MON-FRI silver)",
+      "handler.py:26-36 (docstring, this order's cited file, do-not-edit): 'the partition for trading day D lands the NEXT CALENDAR DAY at ~09:46 UTC ... prev_trading_day(expected_last_trading_day(now)) -- one trading day further back than the naive frontier, matching the measured one-calendar-day custodian lag' -- stated as the general rule the shared _target_day() applies to every --source, including orion",
+      "S3 HeadObject (via the aws CLI shim), bucket opal-data-assets, keys orion/inflection/silver/fact_positions/date=2026-09-28/data.parquet and date=2026-09-29/data.parquet (2026-09-29T14:52Z): both 404 Not Found -- the two most recent trading days (Mon 09-28, Tue 09-29) have NOT landed as of this measurement, itself more than 25h past the pattern's own ~13:05Z time for 09-28, a separate live-currency gap from the same-day-vs-next-morning shape being surfaced here",
+      "lib/trading_calendar.py expected_last_trading_day/prev_trading_day (run locally, now=2026-09-29T14:52Z): confirms the shared handler's day math is source-blind -- it returns the same offset (T-1 from today's frontier) regardless of --source"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-er-501 cell text: 'handler.py targets prev_trading_day(expected_last_trading_day(now)), which fits a next-morning landing. If Inflection's landing breaks that rule, file a surprise row with the measurement and stop on it; do not edit the handler.'",
+  "world_is": "Inflection's orion/inflection/silver/fact_positions/ lands the SAME calendar day, not next-morning, so the shared handler's day math is safe (no crash, no missing-partition read) but leaves INF one trading day staler than its own data supports on every fire, with no mechanism in this cell's grant to correct it.",
+  "notes": "Per the task order's own bound this stops here: the INF schedule below (schedule.tf) reuses 49F's cron (07:30 America/New_York, MON-FRI) rather than inventing a same-day-optimized cadence, because that time trivially satisfies 'fire after the worst case with margin' for whichever day the UNEDITED handler computes (T-1, already landed a full day earlier) -- it is a safe, not an optimized, choice. The 09-28/09-29 landing gap is carried here as a measured fact only; it is a live pipeline-currency question outside this cell's <paths> and is not this row's hazard."
+}
+```
