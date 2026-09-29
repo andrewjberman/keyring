@@ -259,5 +259,33 @@
     "spec_asserts": "TO-AV-r-3 section 1: the ABSENCES gap is the Model tab's refused lines and case formula, keyed on data-model-line-refusal / data-model-case-formula / data-model-row; CITES page 0 is the harness not rendering the card windows.",
     "world_is": "Two of the ABSENCES gaps were the Model tab's refused lines (11 of them, one page-side entry each once keyed on data) and the Posture tab's absent state; the second is outside the TO's named attributes, so data-posture-reason was used, an attribute the Posture tab already serves. No compared set dropped anything: the export's 17 stay 17."
   }
+  ,{
+    "id": "DSGN_AMGTV1-Z-W12-S1",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~12",
+    "surfaced_at": "2026-09-29T10:40Z",
+    "one_line": "AV-r-4 AC1 arm A cannot reach 3 of 3 from ExecManagementTab.tsx alone: the one remaining hit is crosswalk/v1 rendered by IdentityLine.tsx (AV-r-1) inside the tab.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {"status": "GROUNDED", "evidence": ["node round3/checks/exec.cjs after the Exec edit: ARM FAIL A hits=[crosswalk/v1]; arms B and C PASS; portal/src/pages/SecurityAnalysis/components/IdentityLine.tsx:73 renders identity.crosswalk_vintage"]},
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AV-r-4 AC1 expects EXEC ABSENCE IN WORDS 3 of 3; the order says the exec check excludes nothing and the string is AV-r-1's.",
+    "world_is": "Arm A reads hits=[crosswalk/v1] only; it clears when AV-r-1 lands IdentityLine, not by any change in this cell's paths."
+  }
+  ,{
+    "id": "DSGN_AMGTV1-Z-W12-S2",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~12",
+    "surfaced_at": "2026-09-29T11:10Z",
+    "one_line": "Resolves DSGN_AMGTV1-Z-W12-S1: after AV-r-1 drained (DEV f0fbac5b, cb25695b) exec.cjs reads 3 of 3 arms, exit=0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {"status": "GROUNDED", "evidence": ["node round3/checks/exec.cjs on portal branch wk-DSGN_AMGTV1-12-portal merged with DEV: EXEC ABSENCE IN WORDS: 3 of 3 arms, exit=0; issuer ruling to 0.9.0_WK_DSGN_AMGTV1~12"]},
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W12-S1: arm A clears when AV-r-1 lands IdentityLine.",
+    "world_is": "Arm A hits=[] on the drained base; S1's cause is resolved by the re-grade."
+  }
 ]
 ```
