@@ -120,3 +120,23 @@ Surprise row: `IRPT_BCKEND-S195` in `org/missions/D9/IRPT/IRPT_BCKEND/surprise-c
 - Not refused: the design (rulings 10 and 12), the code, the plans, the prefixes. Everything in section 1 carries to
   the re-ask unchanged; the before-read this seat owes (packet section 3 step 2) stands and is taken when the
   re-cut packet lands.
+
+## Addendum 1 (2026-09-29 ~07:0xZ) -- precision on section 2: the two manifest surfaces of 2026-09-25 disagree
+
+Section 2 read `manifest.json`. The manifest has TWO surfaces built from one dict (`holdings_performance.py:453-467`),
+and `~P`'s E3-AC4 check (`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r3e/e3_ac4_49f_reemit_v020.py`)
+reads the PARQUET surface, which is why its base run prints 557 of 557. Measured here, `holdings_performance_manifest/date=2026-09-25/`:
+- `data.parquet` (11,448 bytes, **01:48:56Z**): carries the four completeness keys; `complete=True`, computable 6,338,
+  not computable 3, accounts with prior holdings 6,341.
+- `manifest.json` (1,477 bytes, **03:04:26Z**): 16 keys, none of the four.
+- The daily partition `holdings_performance_daily/date=2026-09-25/data.parquet` was ALSO written at **03:04:26Z**
+  (version `mPmlDTUG`), 76 minutes after the manifest parquet. So the served 2026-09-25 rows come from a later run on
+  producer bytes that predate `manifest_counts` (e29adc9fa7 writes both surfaces and both keys), and the manifest
+  parquet describes an earlier write of the same day. 2026-09-24's three objects were written together (01:42:38-39Z)
+  and agree.
+
+So: "556 of 557" is true of the json surface and "557 of 557" of the parquet surface; the fact under ruling 17 is that
+one day's surfaces disagree and its rows and its manifest are from different runs. The re-emit ordered by TO-IB-er-301
+amendment 1 rewrites all 557 days and both surfaces, which retires this; the re-read of the re-cut packet checks BOTH
+surfaces agree on every day. Not a refusal ground then or now; recorded so the CTO's v0.20 source paragraph and
+E3-AC4's "557/557" are read against the same object.
