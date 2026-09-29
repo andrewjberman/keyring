@@ -12015,3 +12015,36 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "project.json.blocking still carries the old act-4 sentence; that field belongs to its writer (2.0.0_SA_COO~P per ~Y), and MSTR does not edit it."
 }
 ```
+
+
+## ~Y preflight row -- every W24 K5 would have raised FileNotFoundError AFTER its K4 POST (row IRPT_BCKEND-S211)
+
+```json
+{
+  "id": "IRPT_BCKEND-S211",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-29T16:04:00Z",
+  "one_line": "The W24 offline preflight caught a break that would have cost the entire window. live_submit.py pinned its AnalysisSubmissionRequest schema to an ABSOLUTE path inside the worktree C:/Users/AndrewBerman/Desktop/irpt-smoke-p-backend-20260923, which is no longer on disk. k5_body() validates against that schema on the LIVE path, not only under --dry, and it runs AFTER the K4 POST has already succeeded -- so every one of W24's six bodies would have uploaded, burned a submission against the cap of 6, then raised FileNotFoundError before its K5 was ever sent. Six submissions spent, zero reports, inside a 120-min cap. W22 passed only because that worktree still existed then. Repaired in this lane's own tooling by deriving the path from the module's location, the same way live_upload.py already derives _REGISTRY; all six W24 bodies then validate offline.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (repaired in the same commit as this row, before the window opened; the preflight re-run passes 6 of 6, so nothing is left armed)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live_submit.py:15-16 before the repair pinned SCHEMA to an absolute Windows path under the worktree irpt-smoke-p-backend-20260923, ending docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json",
+      "ls -d C:/Users/AndrewBerman/Desktop/irpt-smoke-p-backend-20260923 at 16:0xZ: 'No such file or directory'. The directory was still listed by git worktree list --porcelain at this session's 15:0xZ read (17 worktrees) and is absent from it now, so the registration was pruned between the two reads",
+      "the failure is on the LIVE path, not only --dry: live_chain.py:166 calls k5_body(input_id) after the K4 POST at :145 and after the normalization wait at :154-160; k5_body() at :75 does jsonschema...validate(body) with json.load(open(ls.SCHEMA)) -- the open raises before any K5 request is built",
+      "observed directly in the preflight at 15:59Z: 'OK: K4 body ... sha256 bb079cbf53aaa2be' printed, then FileNotFoundError [Errno 2] on that exact absolute path, traceback through live_chain.py:101 -> k5_body -> :75",
+      "the schema IS present in the workspace: docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json, 4350 bytes, git blob 624aff8d98 at HEAD",
+      "repair: SCHEMA = os.path.join(os.path.dirname(os.path.abspath(__file__)), *['..'] * 6, 'docs', 'contracts', 'investor-reporting', 'v1', 'AnalysisSubmissionRequest.schema.json') -- the same 6-level derivation live_upload.py:17-18 already uses for _REGISTRY",
+      "post-repair preflight, all six W24 bodies, offline and with no network call: Y1 multicomp 2 keys OK; Y2 overview + reference_notional on the 4903-byte XLSX OK; Y3 49financial overview OK; Y4 inflection overview OK; Y5/Y6 comparison opal_long_term OK -- 6 of 6 'K5 body validates'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The W24 packet (blob 49148a2d2a, CTO half SIGNED @1f8d659554) pins the walker's tooling as live_chain.py @78c8ce05a6 and case_trace.py @f86dc994b9, and caps the window at 6 submissions over 120 min.",
+  "world_is": "live_chain.py @78c8ce05a6 is itself unchanged and its pin holds, but its behaviour depends on live_submit.py, which the packet does not pin and which was broken at the time the half was signed. A tool pin that names one module does not bind the modules it imports -- the same shape as CLAUDE.md 22a's CODE trap, where deployed bytes must be diffed against the BUILD INPUT rather than a filename.",
+  "notes": "Repaired before the window opened, so no remedy is owed and nothing is armed. Reported to 2.0.0_SA_COO~P as operator and 1.0.0_SA_CTO because it touches an already-SIGNED half: the pinned file is unchanged, the repair is to an unpinned import. Two things worth carrying: (1) a walk packet that pins a tool should pin its import closure or name the entry point only; (2) the offline preflight earned its place -- it converted a six-submission window loss into a two-line edit, and it is cheap enough to run before every window. ID NOTE: first written as S209 and renumbered before landing -- 2.0.0_SA_COO~P allocated S209 concurrently in 6d45eaeba1 (S205's disarm) while this row was being drafted against the same append-only shared channel. The collision is the race CLAUDE.md 14b names for a shared append-only file; nothing of ~P's row was touched."
+}
+```

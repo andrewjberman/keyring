@@ -12,8 +12,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import live_upload as lu  # noqa: E402  (reuses the scrubbed call/log helpers)
 
 INPUT_ID = os.environ.get("WALK_INPUT_ID", "portfolio_99e76df8b63be3bccbaa0903586d46269dc13d7befd25a6b5983460d8444d68a")
-SCHEMA = (r"C:\Users\AndrewBerman\Desktop\irpt-smoke-p-backend-20260923\docs\contracts\investor-reporting\v1"
-          r"\AnalysisSubmissionRequest.schema.json")
+# DERIVED from this module's own location, never a hardcoded worktree (CLAUDE.md: derive, don't hardcode). The prior
+# pin was C:\Users\AndrewBerman\Desktop\irpt-smoke-p-backend-20260923\..., a worktree since removed from disk: every
+# K5 then raised FileNotFoundError AFTER its K4 had already POSTed, burning a submission per body. Found by the W24
+# preflight; row IRPT_BCKEND-S211. live_walk sits 6 levels below the workspace root, as live_upload._REGISTRY does.
+SCHEMA = os.path.join(os.path.dirname(os.path.abspath(__file__)), *[".."] * 6,
+                      "docs", "contracts", "investor-reporting", "v1", "AnalysisSubmissionRequest.schema.json")
 BODY = {"request_id": "y-live-1203-overview-20260926", "client_id": None, "account_ids": [], "snapshot_id": None,
         "variant": "overview", "comparison_keys": [], "report_title": None,
         "prepared_for": "IRPT live walk 12.03", "input_id": INPUT_ID}
