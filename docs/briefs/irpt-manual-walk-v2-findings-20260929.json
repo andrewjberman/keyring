@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "register": "irpt-manual-walk-v2-20260929",
-  "status": "DRAFT -- for Andrew's review; not issued. Relay to 1.0.0_SA_CTO and 2.0.0_SA_COO~D on Andrew's word only.",
+  "status": "RELAYED to 1.0.0_SA_CTO on Andrew's word (terminal, 2026-09-29 ~19:4xZ): the CTO assesses state with 2.0.0_SA_COO~D and threads it into their workflow.",
   "sources": {
     "andrew_manual_walk_2": {
       "audio": "C:\\Users\\AndrewBerman\\Downloads\\IRPT WALK 2_2309.m4a (740 s)",
