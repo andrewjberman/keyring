@@ -1803,6 +1803,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
       "spec_asserts": "OA-f-7 cell: an active profile whose grant has `portal_channels: []` is refused `asker_no_portal_channels`, and no fetch runs (tests built with fakes like test_asker_binding.py's fake store).",
       "world_is": "Through the real store and parser, `portal_channels: []` is refused earlier with asker_store_unavailable (still fail closed, nothing fetched), because data_entitlement.py (outside this order's paths, bound 1) rejects the empty list. The empty-set branch is reachable only when the key is absent. test_grant_with_empty_portal_channels_denied therefore asserts the store-borne [] is refused (code asker_store_unavailable or asker_no_portal_channels, no fetch) and reaches the handler's empty-set branch with a fake access layer (de.current_access wrapped to return the parsed grant with an empty portal_channels set). If the issuer wants the literal code for [], that is a data_entitlement.py change, not this order's.",
       "notes": "Not ARMED: both shapes fail closed with nothing fetched."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S42",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-09-29T03:40Z",
+    "one_line": "Each opal-gateway release restart produces a short burst of per-identity 429s as every MCP client reconnects at once: 11 x 429 on /mcp in the minute of OA-e-3's restart (03:25Z) and 3 in MX-r-4's (02:45Z), 14 in 24h, none since. One client (0.0.0_AB_MSTR~Z's opalgateway) dropped with {\"error\":\"rate_limited\",\"scope\":\"identity\"}.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM on i-07dccb1615503ac99, journalctl -u opal-gateway -o short-iso since 2026-09-29 00:00Z, ' 429 ' bucketed per minute: 3 @02:45, 11 @03:25; since 2026-09-28 03:00Z: 14 total. ActiveEnterTimestamp 03:25:06Z (OA-e-3's restart).",
+        "0.0.0_AB_MSTR~Z message 20260929T033653Z (the client-side drop); this seat's opalgateway whoami answered normally at ~03:38Z (the burst cleared)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-r-1 / OA-e-3 release guards: /health 200 and the tool list unchanged mean the release is clean for colleagues.",
+    "world_is": "Both guards passed, but the restart itself trips the per-identity rate limiter for clients that reconnect in the same minute, and a client can drop and need a manual reconnect. No release guard reads it. It is a property of every opal-gateway restart, not of either release's code.",
+    "notes": "INERT: transient, cleared within the minute, and no data or grant was affected. A candidate for the gateway owner (the limiter, or a reconnect grace after restart) and for the release guards (count 429s in the restart minute). Not repaired here."
   }
 ]
 ```
