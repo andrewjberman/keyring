@@ -3,7 +3,7 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-29T07:2xZ. **Lease read FULL at 07:18Z** (lapsed 07:11Z); re-arm or branch review asked of the CTO 07:26Z. AD-09's page half waits on branch `d-ad09-readable-20260929` @29b33ef1 (worktree portal-wt-d-ad09).
+tick here. As of 2026-09-29T07:2xZ. **Lease read FULL at 07:18Z** (lapsed 07:11Z); CTO 102636 approved 29b33ef1 as a candidate: fast-forwarded onto local DEV, LOCAL @29b33ef1 (the DEV push is the integrator's under FULL; the integration window moves it). **Round 10 issued** @c29f572a6c (canonical, per CTO 102636): TO-IV-e-80 (AD-13) and TO-IV-e-81 (AD-11), direct-act, slot ~42 at C:/tmp/wk-dsgn_irptv1-10-42; IV-e-80 executing.
 
 ## Pins
 
@@ -54,4 +54,4 @@ on 5174 @528acdcd working tree (tmp/ui-walk/20260928T190559Z, local only). S30 d
 | 24 | portal `6c163889` | ~M 102600: CATEGORY node kind end to end (wire regenerated from e705775791/1206612f63, adapter, view kind), sourceVendorKeys on the view | iv-e-96 CATEGORY-NODES-OK; IVE26 green again; FIELD_MAP 160/160; PROD promotion is the integrator's |
 | 25 | portal `d960e590` | AD-08: each analysis card opens the canonical modal (what it is, what it needs, Select); Comparison / Multi-Comp take an Opal model or an ETF, with composer.ts's counts | iv-e-97 VARIANT-MODAL-OK; real render on 5174 (modal white body, navy ink) |
 | 26 | portal `037657da` | AD-07: Upload button, rules modal from template_reader.py, template holdings-template.csv the reader accepts unchanged | iv-e-98 PROSPECT-UPLOAD-OK; reader run: basis USD, 3 rows, 0 findings; wrong-header control refused |
-| 27 | branch `d-ad09-readable-20260929` @29b33ef1 | AD-09 page half: row reasons in words (no codes), request id / reason code / per-field source dates and extraction diagnostics behind one Technical details control | iv-e-99 READABLE-REQUESTS-OK; IVE62/IVE74 re-goldened to AD-15; NOT on DEV (lease FULL) |
+| 27 | local DEV `29b33ef1` (CTO 102636 approved; push is the integrator's) | AD-09 page half: row reasons in words (no codes), request id / reason code / per-field source dates and extraction diagnostics behind one Technical details control | iv-e-99 READABLE-REQUESTS-OK; IVE62/IVE74 re-goldened to AD-15 |
