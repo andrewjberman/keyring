@@ -45,6 +45,9 @@ client)`. Arithmetic (Price = EPS x Multiple) suggests the blank is Base 2030E o
    EXACTLY: `positional names <N> placed <p> ambiguous <a> no_positions <n> sum <p+a+n>`.
 5. **Bump `METHOD_VERSION` to `"amgt-corpus-dossier/4"`** (this chain changes what a case serves but moves no dossier
    `inputs`; without the bump the issuer's rewrite writes 0 on every name).
+7. **AMENDMENT 1 (issuer, on row `Z-W1-S14`):** the ruled `/4` bump turns exactly two tests red that pin the old method
+   version -- `test_dossier_case_unit.py::test_method_version_is_3` and `test_dossier_case_body.py::test_method_version_is_bumped_to_2`.
+   Update both to `/4` and nothing else; the whole `lib/research/corpus/tests` suite must pass.
 6. `lib/research/corpus/tests/test_dossier_case_positional.py` (new), offline word-position fixtures: an unambiguous blank ->
    placed with `null` in its slot; a value between two bands -> ABSENT with today's reason; a round-9 full table -> unchanged;
    the import loads no PDF library.
@@ -55,6 +58,8 @@ client)`. Arithmetic (Price = EPS x Multiple) suggests the blank is Base 2030E o
 lib/research/corpus/dossier.py
 lib/research/corpus/tests/test_dossier_case_positional.py
 lib/research/corpus/tests/test_dossier_case_layouts.py
+lib/research/corpus/tests/test_dossier_case_unit.py
+lib/research/corpus/tests/test_dossier_case_body.py
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-m-2.positional-read-of-blank-base-cells.md
 </paths>
@@ -95,6 +100,9 @@ READ-ONLY: every other file, every S3 object (bronze pdfs included). Scratch `.s
 **ISSUER NOTES:** round-10 analysis s.2 ruling 3 + s.4 item 2 @`8b54c2b4fd`. Checks dry-run at the base: AC1 FAIL (no tests
 ran); AC2 FAIL (argparse refuses `--case-positional-census`); AC3 PASS (`absent_generic 0 sum 6`); AC4 PASS (import PDF-free).
 The fourth mechanical criterion carries its reason on the face.
+**AMENDMENT 1 (2026-09-29 ~08:3xZ, issuer):** `<paths>` gains `tests/test_dossier_case_unit.py` and `tests/test_dossier_case_body.py`;
+rule 7 updates the two method-version tests row `Z-W1-S14` names (the worker correctly refused to edit outside its grant). The
+order is REOPENED (`pending`) so the same worker continues on the same face.
 
 <risk>SERVED</risk>
 <status>pending</status>
