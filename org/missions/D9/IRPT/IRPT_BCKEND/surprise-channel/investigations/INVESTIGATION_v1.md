@@ -11413,3 +11413,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Inference class: SOURCE DIFF against a working recorded body, not yet a live A/B. Remedy: security_ids = [primary] + comparison vendor_ids, for validate and generate, with the template's required count checked; plus certification refusing a Comparison whose PDF prints none of the chosen models. Both are cut in ~Y round 20."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S197",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-29T05:50:00Z",
+  "one_line": "The S187 ruling's slot rule (1 + max over worker AUTHOR lines at HEAD) misses slots held by pending orders whose workers have not committed yet: ~M issued TO-IB-m21-213 to ~66 (pending, branch wk-IRPT_BCKEND-66 live), and ~Y's rule-following issuance c2fb7b03a5 issued TO-IB-yr-201 to ~66 as well. Caught before any ~Y spawn; ~Y re-pointed to ~71.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO (the S187 ruling's allocator)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log authors at 05:4xZ: max 0.9.0_WK_IRPT_BCKEND~65, so the rule yields ~66",
+      "task-orders <issued_to> ~66: IRPT_BCKEND.TO-IB-m21-213.* (issued_by 2.0.0_SA_COO~M, status pending) AND IRPT_BCKEND.TO-IB-yr-201.* (issued_by 2.0.0_SA_COO~Y @c2fb7b03a5)",
+      "wk-provision.sh provision IRPT_BCKEND 66 refused: branch wk-IRPT_BCKEND-66 exists (worktree C:/Users/AndrewBerman/Desktop/wk_irpt_bckend_66 @1ef167e0ba)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "One worker serial names one worker; its grant is one cell's write set (S187).",
+  "world_is": "The ruled allocator counts committed authors only, so two issuers within one drain gap pick the same slot.",
+  "notes": "The rule should take max over BOTH author lines and every <issued_to> of a non-terminal order (plus existing wk-IRPT_BCKEND-n branches). ~Y's amendment (this commit) re-points yr-201 to ~71 before any spawn, so no worker held a union grant."
+}
+```

@@ -2,7 +2,7 @@
 
 <to_id>IRPT_BCKEND.TO-IB-yr-201</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~66</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~71</issued_to>
 <issued_by>2.0.0_SA_COO~Y</issued_by>
 <issued_date>2026-09-29</issued_date>
 <status>pending</status>
@@ -88,7 +88,7 @@ org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
 Criterion ids: Y20-1-AC1, Y20-1-AC2, Y20-1-AC3. Instance at
-`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~66/IRPT_BCKEND.TO-IB-yr-201.comparison-names-its-models.proof_of_spec.json`
+`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~71/IRPT_BCKEND.TO-IB-yr-201.comparison-names-its-models.proof_of_spec.json`
 (the ORDER FILE's basename, which the gate's complete-flip search globs), validated with
 `python .tools/proof-of-spec-check.py <instance> Y20-1-AC1,Y20-1-AC2,Y20-1-AC3` BEFORE the flip.
 </proof_of_spec>
