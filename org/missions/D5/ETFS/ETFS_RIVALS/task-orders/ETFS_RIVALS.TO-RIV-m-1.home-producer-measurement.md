@@ -211,7 +211,8 @@ base before the cut (every one FAILS at the base, as a build or live check must)
 
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~4 @52c8423ec2 merged @5b837f5024; AC1/AC2 PASS re-run by the issuer. Verdict JOIN_BLOOMBERG for IDVZ and PFOE (history limb decisive; daily 22/27, 22/26).</completion_note>
 <round>2</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
