@@ -384,6 +384,28 @@
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "Rows DSGN_AMGTV1-Z-W23-S1 (harness outside <paths>) and DSGN_AMGTV1-Z-W23-S2 (stale base snapshot) blocked AC2 and AC1 of AV-u-5.",
  "world_is": "Both were cut defects, ruled and fixed by the issuer's AMENDMENT 1; with the grant the re-anchor is made and every AV-u-5 criterion passes. Resolves Z-W23-S1 and Z-W23-S2."
-}
+},
+  {
+    "id": "DSGN_AMGTV1-Z-W28-S1",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~28",
+    "surfaced_at": "2026-09-29T20:30:00Z",
+    "one_line": "The task order says the walker has a 'timeline walk' to extend; walk.mjs at HEAD has none -- AV-u-4's timeline/thread/lead-lists code was dropped by the 8b3f8e8833 merge resolution while SKILL.md still documents it. This worker built only the --day step, as a new function.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~D -- decide whether AV-u-4's walker code (--thread, lead-lists.json, <sec>-timeline-day / <sec>-timeline-event, timeline:no-event-element) is re-landed; until then SKILL.md documents flags walk.mjs rejects as 'unknown argument'",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --stat e26e817087 HEAD -- .claude/skills/ui-walk/: walk.mjs 141 lines changed (44 insertions, 103 deletions); grep -i 'thread|lead-lists|timeline' on HEAD walk.mjs before this worker's edit: 0 lines",
+        "8b3f8e8833 (merge, 0.0.0_AB_MSTR~Z) took walk.mjs 'per 1.0.0_SA_CTO~Z @c6ebc1a8c5', whose resolved file is 572 lines and lacks e26e817087's 91 added lines; SKILL.md line 72 still documents --thread and the timeline-day/-event steps",
+        "walkday.cjs arm 2 needs a function containing [data-day-bar=\"${date}\"]; none existed, so walkTimelineDays was added and called after each --security overlay step"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AV-s-3 item 4: 'In the timeline walk, for each named day of an opened --security' -- an existing timeline walk in walk.mjs is presumed.",
+    "world_is": "walk.mjs at base d3770fe501 has no timeline step (AV-u-4's was lost in the merge). The worker added --day, walkTimelineDays and the timeline-days.json write only; it did not restore AV-u-4's code (a neighbouring defect, outside this cell)."
+  }
 ]
 ```

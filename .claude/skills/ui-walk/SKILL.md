@@ -71,6 +71,8 @@ The lead-panel walk also presses one legend button (`[data-series-ticker]`) per 
 
 `--thread "<company name>"` (with `--route /security-analysis`) picks that company out of the Trending x Price list BY THE NAME the row prints (never by ticker) and walks five steps `thread-1-list` .. `thread-5-recommendation-window` (a name no row prints records `thread:name-not-found`); every List view's rows are written to `lead-lists.json` beside `findings.json`; each `--security` also presses its newest timeline day (`<sec>-timeline-day`) and opens the first event span (`<sec>-timeline-event`), else records `timeline:no-event-element`.
 
+`--day "<security>=<YYYY-MM-DD>"` (repeatable, with `--security <name>`) presses that name's timeline bar `[data-day-bar="<date>"]` (else records `timeline:day-not-found`), runs the checks step `<sec>-timeline-day-<date>`, and writes each day's article rows in the order the page lists them to `timeline-days.json` beside `findings.json`.
+
 The skill runs:
 
 ```

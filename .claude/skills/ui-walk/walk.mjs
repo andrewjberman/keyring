@@ -7,6 +7,7 @@
 // Usage (from any cwd):
 //   node .claude/skills/ui-walk/walk.mjs [--base http://localhost:5174] [--route /investor-reporting]
 //        [--client "Thiessen, Anna"]... [--max-minutes 40] [--no-arm] [--keep-armed] [--headed] [--no-login]
+//        [--day "<security>=<YYYY-MM-DD>"]...
 //
 // By default it ARMS the account, walks, and DISARMS in a finally block (always, even on failure).
 import { createRequire } from 'node:module'
@@ -25,7 +26,7 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, login: true, settleExtraMs: 0, periodsPerAccount: false }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, login: true, settleExtraMs: 0, periodsPerAccount: false, days: [] }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
@@ -45,6 +46,13 @@ for (let i = 0; i < argv.length; i++) {
   // reopen fires after the account switch, so a 1200 ms settle screenshots "Loading"). Default 0: unchanged.
   else if (a === '--settle-extra-ms') opt.settleExtraMs = Number(argv[++i])
   else if (a === '--periods-per-account') opt.periodsPerAccount = true
+  // --day "<security>=<YYYY-MM-DD>" (repeatable): open that name's timeline day by its date and record its article rows.
+  else if (a === '--day') {
+    const v = String(argv[++i] || '')
+    const at = v.lastIndexOf('=')
+    if (at < 1 || !/^\d{4}-\d{2}-\d{2}$/.test(v.slice(at + 1))) throw new Error('--day wants "<security>=<YYYY-MM-DD>", got ' + v)
+    opt.days.push({ security: v.slice(0, at), date: v.slice(at + 1) })
+  }
   else throw new Error('unknown argument ' + a)
 }
 if (!opt.routes.length) opt.routes.push('/investor-reporting')
@@ -261,6 +269,27 @@ async function amgtLeadState(page, movement, subject, view) {
   if (missing.length) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: `control not found or not clickable: ${missing.join(', ')}` })
   await settle(page, 1500)
 }
+// ---- timeline days named with --day: press the day's bar by its date, read the opened dissection's article rows in the order
+// the page lists them, and keep them for timeline-days.json (the CVO reads the order the page shows).
+const timelineDays = []
+async function walkTimelineDays(page, sec) {
+  for (const { date } of opt.days.filter((d) => d.security === sec)) {
+    if (!timeLeft()) return
+    step = `amgt ${sec} timeline day ${date}`
+    const bar = page.locator(`[data-day-bar="${date}"]`).first()
+    let pressed = false
+    if (await bar.count().catch(() => 0)) {
+      pressed = await bar.click({ timeout: 4000 }).then(() => true).catch(() => false)
+      if (!pressed) pressed = await bar.dispatchEvent('click').then(() => true).catch(() => false)
+    } else {
+      findings.push({ step, check: 'timeline:day-not-found', claim: 'measured', observed: `no timeline bar for ${date} on ${sec}` })
+    }
+    await settle(page, 1500)
+    await checks(page, `${sec}-timeline-day-${date}`)
+    const rows = pressed ? await page.locator('[data-timeline-selected-day] li').allInnerTexts().catch(() => []) : []
+    timelineDays.push({ security: sec, date, pressed, article_rows_in_page_order: rows })
+  }
+}
 async function walkSecurityAnalysis(page, route) {
   for (const movement of ['Trending', 'Breakout']) {
     for (const subject of ['Chatter', 'Price']) {
@@ -288,6 +317,7 @@ async function walkSecurityAnalysis(page, route) {
     }
     await settle(page, 3000)
     await checks(page, `${sec}-overlay`)
+    await walkTimelineDays(page, sec)
     for (const tab of AMGT_TABS) {
       if (!timeLeft()) return
       step = `amgt ${sec} tab ${tab}`
@@ -558,6 +588,7 @@ try {
   for (const f of unique) counts[f.check] = (counts[f.check] || 0) + 1
   const doc = { schema_version: '1.1', tool: 'ui-walk', stamp, base: opt.base, routes: opt.routes, clients: opt.clients, minutes: +((Date.now() - t0) / 60000).toFixed(1), screenshots: shotN, raw_finding_count: findings.length, finding_count: unique.length, counts, guard_aborts: guard.length, telemetry_stubbed: stubbed, api_issues: apiIssues, console_errors: consoleErrors, drill_paths: drillPaths, findings: unique }
   writeFileSync(path.join(OUT, 'findings.json'), JSON.stringify(doc, null, 1))
+  if (opt.days.length) writeFileSync(path.join(OUT, 'timeline-days.json'), JSON.stringify(timelineDays, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')
   writeFileSync(path.join(OUT, 'guard.tsv'), guard.join('\n') + '\n')
   const md = [`# ui-walk ${stamp}`, '', `base ${opt.base}; routes ${opt.routes.join(', ')}; clients ${opt.clients.join(' | ') || '(none)'}; ${doc.minutes} min; ${shotN} screenshots`, '',
