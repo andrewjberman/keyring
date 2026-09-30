@@ -16175,6 +16175,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "Z-S314: a regeneration that drops served sentences is a DEFECT to fix in the producer.",
   "world_is": "The producer is right and the stored D-1 serves non-verbatim sentences; the hazard is governed by the pair rule for any live rebuild (INERT under it). Round 54 censuses stored D-1 documents serving sentences without a verbatim span, per name, and a WORLD act under a pair removes them (CTO msg 27185 items 2-3).",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Supersedes Z-S314's ARMED standing (Z-S314 row text unchanged, append-only)."
-}
+},
+  {
+    "id": "AMGT_RESAPP-Z-W191-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~191",
+    "surfaced_at": "2026-09-30T13:40:00Z",
+    "one_line": "AMGT-ac-2's premise fails: the 8 ASML_NA_Equity sentences a rebuild drops (company_description 5, investment_thesis 1, risks 2) were served under the pre-HOLD vacuous rule with quoted_spans [] and no verbatim run in the excerpt, so they genuinely fail today's gate -- a ruling, not a build; nothing was changed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ac_2_keep.py at e1b5fd6d8c (S3 read-only): stored {company_description 6, investment_thesis 1, risks 2, ceo_bio 0, recommendation 1}; rebuilt {1, 0, 0, 0, 1}; exit=1. Same accession 000162828026011378, same document_sha256 and excerpt_sha256 in the analysis and the stored document; analyzer_version identical (opal-filings-analyze/1.0.0).",
+        "Rebuild denominators: sentences_drafted 13 = served_on_span 2 + held_no_span 8 + refused 3. The 2 served are stored sentences kept (company_description 'Board holdings: ...' span 'members of ASML's current Board of Management and Supervisory Board (8 persons)'; recommendation 'The updated Dutch Corporate Governance Code 2025 ...' span 'financial years starting on or after January 1, 2025,'). The 3 refused are not stored sentences (stored dropped was also 3).",
+        "The 8 lost sentences, each in the STORED document: quote_method none-found, quoted_spans [] (served vacuously by the pre-HOLD rule, pipeline.py docstring, 304111122c). Per sentence, whole-text-in-excerpt False and whole-text-in-cited-passages False for all 8; longest verbatim run at the production floor (8 tokens) None for all 8; at a 3-token floor: 'Authorized share capital...' none, 'Issued ordinary shares...' 4 tokens, 'Treasury shares...' none, 'Major holders...' 5 tokens (a company name), 'Reported diversity metrics...' (in company_description AND investment_thesis) none, risk 'US executive order 14173...' 4 tokens, risk 'The Supervisory Board must focus...' 3 tokens.",
+        "The sentences are the analyzer's own paraphrase or table summary, not the filing's words: e.g. evidence P0059 reads \"ASML's authorized share capital amounts to EUR126.0 million and is divided into:\" against the sentence 'Authorized share capital: total EUR126.0 million, split into 700,000,000 cumulative preference shares ...'; P0060 reads 'The issued and fully paid-up ordinary shares with a nominal value of EUR0.09 each were as follows:'; risks P0009 reads 'to our business activities; the financial reporting process;'.",
+        "verbatim.py and the producer's run search were read: no normalisation or run-search defect drops a sentence whose text is verbatim on span -- the 2 span-carrying stored sentences survive the rebuild unchanged. Scratch (uncommitted): C:/tmp/r53-191/.scratch/diag.py, diag2.py."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-ac-2 cell: a sentence the stored document serves verbatim-on-span is still served on rebuild; if the cause is that the stored sentences were served under an older, looser rule and genuinely fail today's gate, STOP and file a row -- that is a ruling, not a build.",
+    "world_is": "The stored sentences that were served verbatim-on-span (2 of 10) all survive a rebuild. The 8 that drop were never on-span: they were served with no span under the pre-HOLD vacuous rule and are HELD-NO-SPAN under C-VERBATIM-GATE = HOLD. Keeping them would require loosening the gate (serving a sentence with no verbatim text), which the cell forbids; no producer or pipeline change at the cause can make them verbatim. AC1 (ac_2_keep.py) compares ALL stored served sentences, so it cannot exit 0 under HOLD for this name; the ruling needed is either (a) accept the drop as HOLD working (the stored /thesis document is then regenerated smaller by design) and re-scope AC1 to span-carrying stored sentences, or (b) a CTO/Andrew ruling to change what HOLD serves. Disarm_owner 2.0.0_SA_COO~Z; the hazard is Z-S314's, unchanged: a live --rebuild-pool regresses these 8 served /thesis sentences until ruled. No file changed; AC1 stays exit=1; the order stays open.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Cites AMGT_RESAPP-Z-S313 and AMGT_RESAPP-Z-S314."
+  }
 ]
 ```
