@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.29",
+  "prd_version": "v0.30",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -837,7 +837,7 @@ disputable, by rule, and carry no technical language.*
   FWD-25 -> DSGN FWD-16 (beside DSGN FWD-8). NO LONGER PROMISED: nothing.
   FWD-26 -> DSGN FWD-17 (beside DSGN FWD-10). NO LONGER PROMISED: the verdict
          as a Stat tile (DSGN FWD-10's verdict card replaces it).
-  FWD-27 -> DSGN FWD-18 (beside DSGN FWD-11). NO LONGER PROMISED: nothing.
+  FWD-27 -> DSGN FWD-18 (no DSGN owner before v0.4). NO LONGER PROMISED: nothing.
   FWD-28 -> DSGN FWD-19 (beside DSGN FWD-11). NO LONGER PROMISED: nothing.
   FWD-29 -> DSGN FWD-20 (no DSGN owner before this addendum). NO LONGER
          PROMISED: nothing; the mechanical check becomes DSGN's instrument.
