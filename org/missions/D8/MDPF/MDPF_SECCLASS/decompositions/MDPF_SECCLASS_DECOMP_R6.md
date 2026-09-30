@@ -4,7 +4,8 @@
 analysis carries it verbatim when the CVO's slug lands"). Issuance (L6) follows the CTO's round-5 analysis, in ONE
 issuance, per GATE (x). Until then no task order is cut and no worker is spawned.
 
-**Cut on:**
+**Cut on:** (plus, added 19:1xZ: REMEDIATION_v3 `MDPF_SECCLASS-S4`, graduated by 3.0.0_SA_CVO at the rounds 4-5 L9, @0ae356c411)
+
 - 1.0.0_SA_CTO RULING 103369 (18:33Z): the BD_THREAD_R2 rollback is the signed half's own branch; the half is spent.
   Round 6 cell 1 ships the shared classifier client inside the gold code the runner syncs (the IRPT closure's
   pattern), covers E_18's identical hop, and proves the import on the runner's deployed flat layout by a real run.
@@ -34,7 +35,7 @@ issuance, per GATE (x). Until then no task order is cut and no worker is spawned
 | cell | item | serves | status | placement | risk | chain / slot |
 |---|---|---|---|---|---|---|
 | `SC-e-13` | THREAD-BREAKING FIRST. The BD thread imports the one shared client on the runner: (a) a declared deploy mapping in `.tools/safe_deploy_core.py` that ships the client's bytes (and, for E_18, `etf_classification_scheduled.py` plus anything either imports at load) into a sub-directory of `code/gold/` the runner syncs; (b) `lib/etf_classifier.py` and `E_18.detect_new_securities.py` resolve the client from their own deployed directory first and the repo path second, with the module-level `parents[N]` hop removed; (c) the silver builder's runner layout measured and covered; (d) the NEW half (BD_THREAD_R3) covering the redeploy, the ordinary run, the COO's FWD-1 page read for z08327149, and E_18's acceptance at its first scheduled run after the redeploy | FWD-1, FWD-7 (E_18), S5 disarm | NOT-EVALUATED | laptop | WORLD | A, `0.9.0_WK_MDPF_SECCLASS~10` |
-| `SC-e-14` | CUSIP_ROWS condition 5: the `find_by_asset_class` / `find_by_sub_asset_class` filter excluding `identifier_namespace == "CUSIP"` in the one client and its two byte-identical copies (`yang-generate-holdings-attribution/`, `yang-generate-positioning/`), and the seed scripts' PRE-READ count excluding `CUSIP:` rows (`seed-etf-classifications.py`, `seed-etf-constituents.py`) | FWD-4 (reader hygiene), CUSIP_ROWS c5 | NOT-EVALUATED | laptop | SERVED | B, `0.9.0_WK_MDPF_SECCLASS~11` |
+| `SC-e-14` | THE ROUND'S REPAIRS, BATCHED: (a) CUSIP_ROWS condition 5 -- the `find_by_asset_class` / `find_by_sub_asset_class` filter excluding `identifier_namespace == "CUSIP"` in the one client and its two byte-identical copies (`yang-generate-holdings-attribution/`, `yang-generate-positioning/`), and the seed scripts' PRE-READ count excluding `CUSIP:` rows (`seed-etf-classifications.py`, `seed-etf-constituents.py`); (b) REMEDIATION_v3 `MDPF_SECCLASS-S4` (owner this seat, round v6) -- add `attribute_exists(ticker)` to the ConditionExpressions of `yang_pipeline/label-legacy-classified-by.py:89` and `yang_pipeline/set-instrument-kind.py:96`, with a test that an update on an absent key is refused | FWD-4 (reader hygiene), CUSIP_ROWS c5, S4 remedy | NOT-EVALUATED | laptop | SERVED | B, `0.9.0_WK_MDPF_SECCLASS~11` |
 
 **By reference, not cut:** `SC-e-12` (W6-S2, shared-infra grant narrowing) stays PARKED on `0.7.0_AE_CloudOps` per CTO
 RULING 103327 and re-enters the open round when that seat is live.
@@ -59,6 +60,9 @@ not a worker criterion.
    until they retire).
 3. The two seed scripts' `--dry-run` against the live table print a PRE-READ count that excludes `CUSIP:` rows, with the
    excluded count printed beside it.
+4. (S4) the two update scripts' tests: an update on an absent key is refused by the condition, an update on a present key
+   with the attribute absent still lands. NOTE: four criteria exceed the three-per-build-TO cap (spine v3.18); at
+   issuance (b) folds into criterion 1 as one suite run over both test files, keeping three.
 Import-path note (CTO 103371): this cell changes no import, so the deployed-layout criterion does not apply; the two
 Lambda copies' bundles are unchanged in shape.
 
@@ -68,7 +72,8 @@ Lambda copies' bundles are unchanged in shape.
   `data/black_diamond/scripts/silver/build_bd_assets_dim.py` (only if step (c) finds the silver layout needs it),
   `.tools/safe_deploy_core.py`, the BD thread tests, an R6 check, the BD_THREAD_R3 half, the surprise channel.
 - `SC-e-14`: `infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py`, its two copies, the two seed scripts,
-  the client's tests, an R6 check, the surprise channel.
+  `yang_pipeline/label-legacy-classified-by.py`, `yang_pipeline/set-instrument-kind.py`, their tests, the client's
+  tests, an R6 check, the surprise channel.
 - Ordering: SC-e-14 edits the client's bytes that SC-e-13 ships. Both drain before the redeploy, so the shipped bytes
   are the filtered client. No ordering between the builds.
 
