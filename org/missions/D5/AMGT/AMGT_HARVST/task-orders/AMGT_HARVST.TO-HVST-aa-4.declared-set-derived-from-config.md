@@ -84,6 +84,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 - The worker in flight receives AMENDMENTS 1 and 2 together as a continuation of its order before its drain.
 - **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
+**AMENDMENT 3 (issuer, 2026-09-30 ~10:3xZ) -- PRD v0.8 (@`b56263c6a5`, msg 27087) and the issuer ruling on row `Z-W79-S1`.**
+- **Universe scope** = the UNION of a publisher's CONCLUDED jobs' targets across ALL of the window's run records. Each target
+  is the job's `gold_security_key`, falling back to `security_key`.
+- A batched backfill therefore qualifies once the union covers the universe. A single-name trial does not.
+- No `worker.py` change: `HVST-aa-1` owns it, and the run record already carries the per-job key.
+- **Plant (h) uses the batched shape:** two records that together, and not singly, cover the universe, so the publisher
+  ENTERS.
+- **A mutant** that requires coverage within ONE run fails on (h).
+- Row `Z-W79-S1` GRADUATES on this rule.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
