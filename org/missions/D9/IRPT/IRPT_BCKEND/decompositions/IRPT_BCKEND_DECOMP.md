@@ -1284,3 +1284,40 @@ land.
 Slots 85 and 86 (S197: 1 + max(author lines 83, issued_to 84, branches 84)).
 
 fanout: 2 of 2 chains, cap 8.
+
+## 24. ROUND 26, WORKSTREAM ~P (2026-09-30 ~14:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND-25 ~P ANALYSIS @dd4c69b696 section 4)
+
+The round-25 analysis found the cause behind S216 to be one file: `lib/silver_ids.py` was never shipped to the INF code prefix after
+the 09-28 refactor, so the gold chain that writes Inflection's raw files dies at its third step every day. Round 26 ships it, moves the
+already-drained launch-monitor fix to its served function, and answers S219's reader question.
+
+**The reader census the analysis asked for (S219), measured at the cut:** `comp-find 'twr_daily' data infra portal lib` reads 69 hits
+across 16,252 first-party files scanned (34,063 ephemeral-floor and 2,820 binary files excluded): DEF 2 (`runners_49f/c02_twr_engine.py`,
+the writer; `performance/f49_engine.py`, the adapter's engine reader), SURFACED 19 (the DEF pair plus `holdings_performance.py`,
+`runners_49f/{c04_validation_battery,chain_49f_entrypoint,parity_period_returns,perfrp_contract,perfrp_emit_core,perfrp_rollup}.py`,
+`runners_cot/c02_twr_engine.py`, `runners_inf/{c02_twr_engine,c04_validation_battery}.py`, `performance/{holdings_gold,retained}.py`,
+`performance/retained.tf`, `shared-infra/s3-49financial.tf`, `portal/scripts/perfrp-contract-exercise.mjs`,
+`portal/src/pages/AdvisorIntelligence/_shared/perfrp/{cards,contract}.ts`), CONFIG 3, TEST 3. Readers are one or more, so the four
+columns are filled by the DS lane (the analysis's second branch); S219 does not close with the retirement.
+
+**The issuer's reading behind IB-pr-261 (recorded so the CTO reads it at the round-26 analysis):** the gold runner syncs every `code/`
+prefix FLAT by basename into `/tmp/orion_gold_scripts` (`orion-gold-dispatch.sh:65`, `sync_scripts()` ~:545-620), every INF gold script
+imports its helpers flat (`from dtype_coerce import ...`, six scripts), and `_orion_api_silver_lib.py` is the only file under
+`data/inf/scripts` importing `from lib.` (1 hit across 174 files). So "ship to the INF code prefix" lands `silver_ids.py` flat beside its
+importer under `code/silver/`, and the importer keeps `from lib.silver_ids` first with a flat fallback second -- the accommodation every
+other INF script already carries, not the revert ruling 103057 refused. The worker prints both readings before the copy, per the ruling.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-261` | FWD-3 (INF): `lib/silver_ids.py` shipped to where the runner resolves it, after the two readings; ONE real full chain run reaches `INF_API_PULL_POSITIONS_DAILY`; ledger `inf-silver-ids-ship-20260930`; S216 disarms on the issuer's `fact_positions` frontier read at the drain, not on the copy's rc | WORLD (S3 code deploy + one production chain run) | none | P26a |
+| `IB-pr-262` | FWD-3 (INF): the pr-242 launch-monitor fix (drained @1431d66d9b, live CodeSha256 `RdBNvM6I...` of 2026-09-21 still carries `''` in NORMAL_PATTERNS) SERVED -- the issuer's own act: build-and-upload, a never-widen packet naming every function that pulls the artifact key `inf-pipeline/inf-ec2-launch-monitor.zip`, both halves at HEAD, safe-apply under a ledger. No worker face: a worker cannot sign or apply | WORLD (served Lambda move) | none | P26b (issuer) |
+| `IB-pr-263` | FWD-3 (49F): the two `twr_daily` partitions missing bmv/emv/cf_net/cf_gross filled by the producer's own path (DS lane, rule 13); neighbours byte-identical; ledger `twr-daily-two-partition-column-fill-20260930` | WORLD (two gold objects) | none | P26c |
+
+Carried, not cut: S132 (edge-role least privilege, round-19 analysis) and the INF adapter switch under the sweep-2 every-period rule,
+which cannot run until IB-pr-261 lands and the INF holdings producer fires on its schedule.
+
+IB-pr-261 goes to worker slot 97 (S197: 1 + max(author lines 92, issued_to 96, branches 93) = 97). IB-pr-263 goes to
+`0.4.0_DS_ClientPlatform~S` (rule 13; no other project on that instance), spawned by the issuer in the issuance turn. IB-pr-262 is the
+issuer's.
+
+fanout: 2 of 3 chains, cap 8 (the third chain is the issuer's own served move).
