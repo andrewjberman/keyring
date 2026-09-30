@@ -1,102 +1,61 @@
-# IRPT_BCKEND~P (Performance) -- status
+# IRPT_BCKEND~P (Performance, shared auth/routes/IaC/packaging) -- status
 
-Seat `2.0.0_SA_COO~P` (CLAUDE), `/canonical-drive 10m` (cron 34a39a73; LIVE_ARMS RELAUNCH row). Workstream scope:
-shared auth, routes, IaC and packaging, plus Performance/Reporting. Also issuer of workstream ~E (CTO ruling 102461).
-As of 2026-09-28T23:2xZ. The A2 freeze of this file is @025cef10fd; earlier forms are in git.
+Seat `2.0.0_SA_COO~P` (CLAUDE), `/canonical-drive 10m` (LIVE_ARMS RELAUNCH row, re-authorised by the 2026-09-30 13:0xZ post-crash
+word). Workstream scope: shared auth, routes, IaC and packaging, plus Performance/Reporting; issuer of workstream ~E (CTO 102461).
+Since 2026-09-30 14:0xZ this seat ALSO issues IRPT_DASHBD workstream B (Andrew's seating, PRD section 5) -- its state lives in
+`org/missions/D9/IRPT/IRPT_DASHBD/`. As of 2026-09-30 ~17:0xZ. Earlier forms of this file are in git (the A2 freeze @025cef10fd).
 
 ## Standing Andrew words that govern this workstream (read first)
 
-- **~22:2xZ call 3** (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_OPEN_CALLS_1_2_APPROVED_3_HOLDINGS_BASED_PERFORMANCE.md`):
-  performance is end-of-day holdings only -- the weight-pro-rated daily price return of the securities held, no
-  inflow/outflow logic.
-- **~22:4xZ** (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_HOLDINGS_BASED_PERFORMANCE_ALL_FIRMS_SILVER_TO_ONE_GOLD.md`):
-  every firm (49F, INF, COT) moves to that basis, in ONE consolidated gold shape the page reads, run daily, verified at
-  the vendors' official periods. Sequence: CRO L1 inventory brief -> CTO L4 addendum (an ENDPOINT change; CVO
-  re-signs) -> COO decomposition. Cottonwood per-use vendor plans are no longer the path.
+- **~22:2xZ call 3 (2026-09-28):** performance is end-of-day holdings only -- the weight-pro-rated daily price return of the securities
+  held, no inflow/outflow logic (`ANDREW_DIRECT_20260928_222xZ_OPEN_CALLS_1_2_APPROVED_3_HOLDINGS_BASED_PERFORMANCE.md`).
+- **~22:4xZ (2026-09-28):** every firm moves to that basis in ONE consolidated gold shape, run daily, verified at the vendors' periods
+  (`ANDREW_DIRECT_20260928_224xZ_HOLDINGS_BASED_PERFORMANCE_ALL_FIRMS_SILVER_TO_ONE_GOLD.md`).
+- **~05:2xZ (2026-09-30):** precomputed gzipped JSON reporting under 2 s in each firm's gold/reporting home, asset-level after the
+  architecture is proven; brief via the CRO (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260930_052xZ_PRECOMPUTED_GZIP_JSON_REPORTING_UNDER_2S_AND_PUSH_MANAGED.md`).
+  That word became IRPT_DASHBD (PRD v0.2 @84cff9014b); this project's total-return narrowing is IRPT_DASHBD's, and IRPT_BCKEND's
+  holdings gold is its guard rail (C-GUARD).
+- **~04:3xZ (2026-09-30):** "the owner of YCharts is COO~Y as it has always been" (@fe6326f6b0). This seat does no YCharts or resident work.
 
-## Served function -> deployed artifact -> source commit (live CodeSha256 read at each move)
+## Served function -> live artifact (read at each move)
 
 | Function | Live CodeSha256 | Applied (Z) | Source | Ledger |
 |---|---|---|---|---|
-| irpt-performance-adapter | `hcZpXDDofuUX2YImni0nsCDyLOxHl2Mxc1IvEBwG0+0=` (S3 wVW7wVQw) | 09-28 22:02:49 | entry.py + f49_engine.py @57a58117fb (NEW-01 guard); other 67 pins as F0bYtOfB | irpt-adapter-implausible-guard-20260928 (U1 closed; D1 OPEN) -- rollback G4UtfeeR |
-| irpt-export-render | `BORQ2shbblG4OIG387kkAKTxUUtbPhw6LoLVx0mqGM4=` | 09-28 12:51:49 | export/entry.py @5c0185fee2 | irpt-export-receipt-running-20260928 |
-| irpt-ycharts-generate | `AdE17rT6f3IZKuh/VWMLTB+HuCZql50ZJzZXUYs90e8=` | 09-28 13:11:54 | generate_installed @2e3d50caac, publication @c1fd6c5e52, maintained_sources @15b9f85eb3, templates @6096ee740b | irpt-generate-resident-grant-20260928 CLOSED |
-| Resident (i-0167fd745ad906a66) | root `/opt/irpt-resident/fe64236bbb-st2` | 09-28 13:17:56 | as generate | same, CLOSED |
-| irpt-status | `ZYr+IDMpN0vtwnpxz+kOXKDMcjNpLrbbHdRm4TZerkY=` | 09-28 14:04:55 | publish @6389be7a9b; IAM @75df934b23 | irpt-status-dates-rebuild3-20260928 |
-| irpt-directory-search | `o1TXq5PH1+/VVff+hf4U+b+H6Kf1VCJkUJJjAaN+y7Q=` | 09-26 22:54:06 | @49b935c213 | irpt-uir07-search-rank-20260926 CLOSED |
+| irpt-performance-adapter | `+h/AH/RY...` (S3 TBy0pL) | 09-29 16:40 | hD7G6YT1's source + installed.py @66469ce943 (49F reads the holdings gold; r3 re-switch) | irpt-adapter-holdings-gold-49f-r3-20260929 (D1 closed; A1 OPEN, waits on a SCHEDULED 49F producer fire that finds its silver -- row S235) |
+| inf-ec2-launch-monitor | `t1QrzaDeMtjGgnFL0oez1DGtL6vLVz7fgV0/BMVuIQo=` | 09-30 16:19:48 | lambda_function.py @1431d66d9b (pr-242: an EMPTY stop reason is never suppressed) | inf-launch-monitor-empty-reason-served-20260930 CLOSED; a1-observation entry HELD on the next stop event (CTO 0386ab930c condition 4) |
+| INF gold runner code | `code/silver/silver_ids.py` (byte copy of `lib/silver_ids.py`) + `code/silver/_orion_api_silver_lib.py` with the flat fallback import | 09-30 ~14:4xZ | @2e5173d3b6 on wk-IRPT_BCKEND-97 (pr-261) | inf-silver-ids-ship-20260930 CLOSED |
+| irpt-holdings-performance-lambda (49F, scheduled 11:30Z Mon-Fri) | unchanged | -- | IB-er-203 | the 09-30 fire refused ABSENT: Schwab silver for 09-29 had not landed (S235) |
 
-All source commits are on CLOUD (MSTR act-4 drain @c161a2faca; B3 row S178). Nothing here is pushed.
+## Round 26 (~P) -- terminal, drain-end record `deliverables/2.0.0_SA_COO~P/IRPT_BCKEND_ROUND26_P_DRAIN_END_20260930.md`
 
-## Open ledger entries (CLOUD `org/critical_paths/.open_deploys/`)
+| cell | state |
+|---|---|
+| IB-pr-261 (ship silver_ids, one real chain run) | COMPLETE @65144605a4 (WK~97; P26-1-AC1/AC2/AC3 PASS); the chain passes step 3 again, raw positions + transactions for 09-30 landed, then FAILS at step 33 INF_C_01 on the NNA coverage guard (row W97-S3, routed) |
+| IB-pr-262 (the pr-242 served move) | APPLIED 16:19:48Z under both halves (packet @e0a2f524e4 blob 1bc65b9b16; CTO @0386ab930c) |
+| IB-pr-263 (twr_daily two-partition fill) | SUPERSEDED @ed0be5b557 on row S236 (non-performance days by the producer's own rule) |
 
-| Entry | Open leg | What closes it |
-|---|---|---|
-| irpt-adapter-implausible-guard-20260928 | D1, A1 | CRO D1 NOT MET @5f82151a2e: the page reopens RETAINED reports, so NEW-01 1Y still reads -100%. Closes after IB-pr-194 (the reopen guard) is served and a walk shows the named refusal |
-| irpt-adapter-render-grant-kms-20260927 | A1 | the render's Performance read succeeds, READY %PDF |
-| irpt-adapter-render-selection-20260927 | A1 | the same read answers (no SelectionRefused) |
-| irpt-export-async-submit-20260927 | A1 | one POST QUEUED -> READY %PDF or a named FAILED |
-| irpt-export-receipt-running-20260928 | A1 | a pending receipt reads RUNNING and the page polls to READY |
-| irpt-export-reopen-rule-20260927 | A1 | a second in-scope principal exports READY; a principal missing one account is refused |
-| irpt-status-dates-rebuild3-20260928 | A1 | the page reads REQ-67e12718 READY PER_SECTION |
+## The INF thread, honestly
 
-## Round 19 (workstream ~P; decomposition section 13, 13.1)
+The Inflection raw chain died at step 3 from 09-28 (the half-landed silver_ids deploy) and is repaired. It now dies at step 33 (the NNA
+coverage guard needs a recorded excusal for accounts 866/769/1096; W97-S3). Independently, the ingest mirror and `opal-assets-silver-orion`
+have not moved `fact_positions` past 09-27 on today's raw (read 16:3xZ), so S216 stays ARMED and the INF holdings producer and INF
+adapter switch stay blocked. Round 27's cells: the API allowedFirmIds enforcement for service principals (CTO 103318, top), the
+mirror/silver-orion diagnosis, the NNA excusal record once ruled.
 
-| Order | Cell(s) | State |
-|---|---|---|
-| TO-IB-pr-191 | IB-pr-191 (NEW-01 guard on compute) + IB-pr-194 (the retained reopen guard) | REOPENED @b6e0525927 to slot ~63; 191 served as hcZpXDDo; 194 built @90c4b596f3, proof pending |
-| TO-IB-pr-192 | IB-pr-192 (Since inception from the first data point) | pending on slot ~61's branch; AC1 PASS, AC2 FAIL live (row W61-S2); now governed by the consolidated-gold sequence |
-| TO-IB-pr-193 | IB-pr-193 (async export log REFUSED) | complete, merged @b02d1e9097 |
-| TO-IB-s158 | IB-sr-1 (COT BD session auto-login) | complete |
-| TO-IB-er-191 (workstream ~E) | IB-er-191 (holdings-based 49F engine) | CANCELLED @06d66b5893 by Andrew-direct ~22:4xZ; 0.4.0_DS_ClientPlatform~E halted, nothing written (102466) |
+## Open rows this seat holds (disarm owner)
 
-## Acceptance (goal done criteria)
+S216 (ARMED; the mirror stage), W97-S3 (ARMED; routed to the CTO as a served-data decision), S237/S239 (ARMED; the retiring engine's
+skipped-day flow error -- computed correctly in IRPT_DASHBD DB-b-1's face; no IRPT_BCKEND cell since the engine is retired for 49F
+serving), W86-S2 (disarms on the held observation). S235 is placed with the CTO (the Schwab silver landing's owner is unnamed).
 
-| # | Criterion | State |
-|---|---|---|
-| 1 | Signed-in journey per firm | Performance: no firm has a complete report on the page (CRO walk 17:49Z; AD-14). 49F NEW-01 still -100% on retained reports (D1 open). Analysis READY once -- cottonwood, REQ-67e12718 (corrected by ~Y 102408; previously written here as 49F). Export reaches the render; READY needs the K8 window |
-| 2 | Every active account resolvable | MEASURED 09-28 AM: COT 843/843, INF 878/878, 49F 6698/7497 |
-| 3 | COT structurally sound, window disclosed | MET on RPT-12b885b8 (actual 07-21..09-21) |
+## Open ledger entries authored here (`org/critical_paths/.open_deploys/`)
 
-## Named dependencies (AD-14)
-
-- **COT** (row S185): every fresh Cottonwood window needs a server-approved one-use Black Diamond plan; none is armed,
-  so the adapter refuses VendorEgressRefused before any vendor call (154 refusals 13:30-22:30Z). Superseded as a fix
-  path by the ~22:4xZ Andrew-direct (holdings basis for all firms).
-- **INF**: InflectionMappingRefused, "account not individually addressable: its Orion household holds 4 accounts" (49).
-- **49F**: WindowNotRuled for 3Y / Since inception (36); NEW-01 on two retained reports.
-
-## Next-list, in priority order
-
-1. **IB-pr-194 served move:** drain slot ~63; packet (both readers of the served figure counted: compute AND reopen);
-   both halves; apply; CRO walk shows NEW-01 1Y and YTD as a named refusal. Closes ledger D1.
-2. **Consolidated holdings gold:** the ~P share of the COO decomposition once the CRO brief and CTO L4 addendum land;
-   ~E's 49F slice is re-cut then (DS~E's facts are with the CRO: 99.2% priceable, prices in canonical_positions,
-   W61-S2's cause is a calendar gap).
-3. **The live window packet** (one principal, both halves): K4 window 15 Dollars CSV; K5 one Comparison
-   (opal_long_term); K8 export (closes the five export/adapter A1 legs); K10 the page reads REQ-67 READY; ~Y's arms
-   (Y2 XLSX, Y2 Target Weight, one INF Overview, one 49F Overview, a deliberate mid-job credoff revocation).
-   Precondition: the next resident + generate build carries ~Y's recipe.py + resident_worker.py @ec8f69f718.
-4. **Branded Analysis export** (~Y R19_Y AMENDMENT 2; ~Y supplies the AnalysisReport schema and owner shape).
-5. **Hygiene:** W62-S1 (export suite red `test_the_marked_event_builds_and_the_handle_reaches_the_receipt`,
-   pre-existing); the tree-order template's short proof_of_spec name (W61-S1); build-and-upload deleting tracked
-   performance/*.py; the directory Terraform root predating ~M's holdings resources.
-
-## Andrew acts in flight
-
-None at this lane. No one-use plan is armed on the adapter.
-
-## Parked
-
-| Question | Owner | Un-parks when |
-|---|---|---|
-| Kept test inputs and reports from windows 1-6 in cottonwood, RPT-b683f188, spent claims PERFORMANCE_USE#63cf95e9 / #b20d69b2 | the release cutter | the route opens to firm users |
-| Row S175: MaintainedSourceRefused maps to UNEXPECTED | 2.0.0_SA_COO~M | the next maintained_sources.py change |
-| Row S184: 2 near-miss invested accounts (-0.9996, -0.99996) keep ~-100% | the consolidated-gold decomposition | the holdings basis replaces the flow engine |
+irpt-adapter-holdings-gold-49f-r3-20260929 (A1 OPEN, past window; S235), inf-launch-monitor-empty-reason-a1-observation-20260930 (HELD
+on the named event), and the six export/adapter A1 legs from 09-27/28 listed in the earlier form of this file (each closes on a live
+walk's read; unchanged this session).
 
 ## Gates in force
 
-- Every served zip: flat_zip_module_census + ~Y zip_module_census + a cold-start smoke (with /var/task mapped on this
-  host; the ~Y smoke is non-discriminating here) BEFORE apply.
-- A before/after read that DISCRIMINATES on the served surface, counting every reader of the served figure (compute
-  and retained reopen); a refusal-only read does not count.
-- Served moves need both never-widen halves at HEAD naming the packet blob.
+- Every served zip: flat_zip_module_census + ~Y zip_module_census + a cold-start smoke BEFORE apply.
+- A before/after read that DISCRIMINATES on the served surface, counting every reader of the served figure.
+- Served moves need both never-widen halves at HEAD naming the packet blob; the ledger opens before the first write.
