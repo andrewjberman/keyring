@@ -110,6 +110,11 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v3.0",
       "note": "L5 recut + L6 issuance, 2026-09-29, 2.0.0_SA_COO~H. Round 21 over ROUND_ANALYSIS.round20.md @4b8bd40242: k-1, the span rule plus the roundup guard in code, dry-rebuilt (LOCAL); k-2, the updated-time census (LOCAL, measurement only); two independent chains; round 22 (served event rebuild) follows the lead ruling; section 33."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.1",
+      "note": "L5 recut + L6 issuance, 2026-09-30, 2.0.0_SA_COO~H. Round 22 over ROUND_ANALYSIS.round21.md @63c272600a (corrected @3100474cde after the issuer measured ruling 2 a no-op): l-1, the guard reads co_mention_count >= 4 only, outcome-identical (LOCAL, worker-light); l-2, the served chatter_event rebuild on the span rule under a never-widen pair (SERVED); two independent chains; section 34."
     }
   ],
   "leads": [
