@@ -2317,9 +2317,28 @@ async def ack_messages(message_ids: str, ctx: Context = None) -> str:
     # that makes a seat structurally unable to touch the READ clock. Re-probe before refusing.
     if not _broker_available and not _ensure_broker():
         return "ack_messages: broker unavailable. Nothing acked (reported, not swallowed)."
-    res = _broker_fetch("/ack-messages", {"serial": _my_serial, "ids": ids})
+    # 15 s, not the 3 s default: this is a WRITE, and the broker commits before it replies. Under SQLite lock
+    # contention the commit can outlast 3 s, the client gave up, and it told the agent "Nothing acked" while the
+    # row WAS written (measured 2026-09-30: 1.0.0_SA_CTO~O id 27177, acked_at 14:33:55Z by that seat, client said
+    # FAILED). On any failure, READ BACK before reporting -- the reply can be lost after the write lands.
+    res = _broker_fetch("/ack-messages", {"serial": _my_serial, "ids": ids}, timeout=15.0)
     if res is None:
-        return "ack_messages: broker call FAILED. Nothing acked (reported, not swallowed)."
+        landed, open_ids, unknown = [], [], []
+        for i in ids[:25]:
+            st = _broker_fetch("/delivery-state", {"message_id": i}, timeout=10.0)
+            row = (st or {}).get("messages", [{}])[0] if isinstance(st, dict) and st.get("messages") else None
+            if row is None:
+                unknown.append(i)
+            elif row.get("acked_at") and row.get("acked_by") == _my_serial:
+                landed.append(i)
+            else:
+                open_ids.append(i)
+        if landed:
+            _purge_acked_from_queue(landed)
+            return (f"ack_messages: the broker reply was LOST, but a read-back shows READ by {_my_serial} for "
+                    f"{len(landed)} id(s): {landed}. Not READ by you: {open_ids or 'none'}. Unreadable: {unknown or 'none'}.")
+        return ("ack_messages: broker call FAILED and a read-back found none of these READ by you "
+                f"(open: {open_ids or 'none'}; unreadable: {unknown or 'none'}). Nothing acked (reported, not swallowed).")
     n = res.get("acked", 0)
     refused = int(res.get("refused", 0) or 0)          # absent on a pre-fix broker -> 0
     refused_ids = res.get("refused_ids", []) or []
