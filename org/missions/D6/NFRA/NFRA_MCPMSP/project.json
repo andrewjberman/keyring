@@ -1,0 +1,49 @@
+{
+  "project_code": "NFRA_MCPMSP",
+  "macro_code": "NFRA",
+  "directive": "D6",
+  "fabric": "site-z",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-09-30",
+  "registered_under_tree": "2026-09-30",
+  "placement": "SITEZ",
+  "pods": [],
+  "related": [
+    "NFRA_OPALAI",
+    "NFRA_MCPORTAL",
+    "NFRA_OPLGTW",
+    "NFRA_MCPINDEX"
+  ],
+  "name": "The Opal MSP Analyst -- one Opal-hosted Teams agent serving partner firms (Inflection and Cottonwood first) from each firm's own data, through one central gateway that assumes the asking firm's AWS role per request",
+  "description": "Brief docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md (4.0.0_SA_CRO~O @77ddde1d13), from Andrew's discussion with 4.0.0_SA_CRO~O recorded in org/tier1_exec/4.0.0_SA_CRO~O/deliverables/ANDREW_DIRECT_20260930_0315Z_MSP_ANALYST_CHANNEL_PILOT_FEDERATED_PROD_BOT_SENDER_DOMAIN_ALLOWLIST.md (sections 1-10). Andrew named the project: '1.) New Project, NFRA_MCPMSP.' Primer: org/tier1_exec/1.0.0_SA_CTO/deliverables/PRIMER_MSP_ANALYST_FOR_CRO_O_20260930.md.",
+  "phase": "L3 REGISTERED 2026-09-30 by 1.0.0_SA_CTO~O under D6/NFRA. || L2 ENDPOINT FWD-1..FWD-11 CONFIRMED by Andrew ('yes aggreed for all of these', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_05xxZ_NFRA_MCPMSP_ENDPOINT_CONFIRMED.md; endpoint org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_MCPMSP_20260930.md @64617f8afa). || L1 BRIEF docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md (4.0.0_SA_CRO~O).",
+  "blocking": "NOT BLOCKED -- L4 PRD next, 1.0.0_SA_CTO~O. Five open items carry to L4 (endpoint file, 'What is NOT settled here').",
+  "brief_ref": "docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md",
+  "prds": [],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO~O",
+    "coo": "UNSEATED -- a 2.0.0_SA_COO lane is asked of 0.0.0_AB_MSTR~Z when the L4 PRD is delivered",
+    "cvo": "3.0.0_SA_CVO~O",
+    "cro": "4.0.0_SA_CRO~O",
+    "workers": "the worker subagents the COO's L6 issuance names (0.9.0_WK_NFRA_MCPMSP~<n>)"
+  },
+  "coo_lane": null,
+  "fabric_ruling": "site-z -- INHERITED FROM THE DIRECTIVE. D6's placement reads SITEZ; placement attaches to the directive, never to a member (LD-0498, LD-0502).",
+  "rulings": [
+    "CHANNEL -- Andrew 2026-09-30: 'I agree with 1 pilot, 3 prod.' (pilot federated chat, production multi-tenant bot; CRO~O record s.2).",
+    "SENDER ALLOWLIST -- Andrew 2026-09-30: 'If there is ever a sender to the agent that is not @opalinvest.com, @49financial.com, @inflectionwealth.com, or @cottonwoodmail.com, then the agent should not even respond.' (record s.2).",
+    "REFUSALS LOGGED -- Andrew 2026-09-30: 'Refused messages absolutely should be logged.' (record s.5).",
+    "ONE SERVER, TENANT + DOMAIN CHECK AT THE GATEWAY -- record s.6-s.7.",
+    "PER-FIRM ROLE -- Andrew 2026-09-30: 'yes to per-firm role' (record s.8).",
+    "GRANTS -- pilot Opal-administered per advisor; production firm ceiling with partner-admin assignment; the refusal log is the onboarding queue (record s.9).",
+    "CARDS 2-6 -- Andrew 2026-09-30: '2.) Rec approved. 3.) Rec approved. 4.) Rec approved. Should have a clear structure in AWS Secrets Manager. 5.) Current buckets for now. 6.) Yes.' (record s.10).",
+    "DONE WHEN -- Andrew 2026-09-30: 'yes aggreed for all of these' (FWD-1..FWD-11)."
+  ],
+  "thread_counter": 0,
+  "threads": []
+}
