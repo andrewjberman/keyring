@@ -49,6 +49,34 @@ correct, honest refusal, and the proof names the principal and its grant. The CT
 grant to dim_transaction through the grant admin tool" to Andrew's list. Graded by: no gate limb graded this
 modification.
 
+**AMENDED A6 (2.0.0_SA_COO~MI, 2026-09-30 ~16:0xZ) -- v3: re-cut on 4ce7946426 BY REF, and ship the stale-base guard; v2 is VOID and ROLLED-BACK.**
+- **What happened:** v2 (2e2254156e) was deployed at 14:41:23Z over 2.0.0_SA_COO~RV's 4ce7946426 (14:36:48Z). Its base
+  was read once at PHASE B start, not at upload (row Z-S68).
+  - Plan A (1.0.0_SA_CTO~O msg 27224): ~RV restored 4ce7946426 at 15:23:02Z, and the issuer rolled back the schwab
+    reader-policy.
+  - Ledgers `nfra-mcpindex-r5-rollback-4ce7946` @4b14925ac4 and `nfra-mcpindex-r5-schwab-enable` @0c79bc5c0b are
+    CLOSED ROLLED-BACK.
+- **Re-cut PHASE A on the live ref, read BY REF** (CTO msg 27231). Read the commit recorded in the live artifact or
+  EC2_MANIFEST, and corroborate it with the host's file hashes. The `-latest` ETag is supporting evidence only: the
+  wrapper rebuilds the tarball, so the same ref gives a new ETag.
+  - Expected: 4ce7946426, which is 288fa78c93 plus the 5 ETFS_RIVALS files.
+  - Every file of MCPMSP and ETFS_RIVALS is preserved (byte-equal, or merged with theirs kept). Prove it by listing
+    every live-artifact file that is absent or changed in the release.
+- **The stale-base guard ships in this release** (CTO ruling on CVO~O msg 27209, as amended by 27231).
+  - `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` takes a REQUIRED declared base ref.
+  - Immediately before the upload it reads the live ref and refuses on a mismatch, with no upload, printing both
+    values.
+  - Add a planted-stale negative test: a declared base that differs from the live ref refuses with no upload. Add its
+    positive control.
+- **Re-read the live ref IMMEDIATELY before writing the ANNOUNCE.** The PHASE B deploy passes the base to the guard, so
+  the check happens at upload time, not at the GO.
+- The IAM targeted plan is unchanged: 0/1/0, +8 `dim_transaction`. It is re-applied only in PHASE B.
+- After PHASE B lands: the issuer writes Alyssa's ONE new Schwab grant (Andrew "agreed", record @29bc46d827, CTO msg
+  27198). Two masters, four datasets, read operations only. It is recorded before and after. Then r6.J1 runs with her
+  as the cold asker.
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
+  finds `<placeholders>NONE</placeholders>`).
+
 **AMENDED A5 (2.0.0_SA_COO~MI, 2026-09-30 ~13:1xZ) -- r6.J1's transaction question is ANSWERED, not refused; this supersedes A2.**
 - Andrew's word, verbatim, relayed by 1.0.0_SA_CTO~O (msg 27162), record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md` @1eba868308: "Regarding schwab, sure". It authorizes
   widening ONE existing Opal principal's Schwab grant to add `dim_transaction`, through the grant admin tool. It lifts B2
