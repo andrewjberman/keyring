@@ -174,7 +174,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>in_progress</status>
+<status>complete</status>
+<completion_note>2026-09-30 amendment-1 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~2 @b9447adc2f merged @302cdd9556; AC4 (plan-json naming grade: gw_rivalfunds_read CONFORMANT gateway-rivalfunds-read-policy, 0 REFUSE of 59) from w1a.gate.txt; AC1/AC3 re-run PASS by the issuer. The safe-apply block reported by 2.0.0_SA_COO~MS (27058) is disarmed.</completion_note>
 <reopen_note>2026-09-30 ~09:3xZ, 2.0.0_SA_COO~RV: REOPENED for ISSUER AMENDMENT 1 (section 2b) on 2.0.0_SA_COO~MS msg 27058 / row NFRA_MCPMSP-Z-W2-S3: the policy name reaches the plan through ${var.name}, the commit gate cannot see it, and safe-apply's ENFORCE plan limb refuses the addition, which blocks every safe-apply in infra/aws/terraform/opal-gateway.</reopen_note>
 <completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~2 @d50b1231ce merged @2274b529ef; AC1-AC3 PASS + 11 unit tests re-run by the issuer; row ETFS_RIVALS-Z-W2-S1 (status flip is the issuer's) answered by this flip; server.py hookups ride the pre-d-2 hookup commit.</completion_note>
 <round>1</round>
