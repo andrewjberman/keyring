@@ -80,7 +80,7 @@ This cell merges only after `HVST-q-1` drains (ruling 6).
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>27</round>
 <slot>~75</slot>
 <fabric>site-z</fabric>

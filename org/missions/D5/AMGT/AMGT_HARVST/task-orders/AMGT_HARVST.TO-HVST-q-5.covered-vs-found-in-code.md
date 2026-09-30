@@ -82,7 +82,7 @@ This cell merges only after `HVST-q-1` drains (ruling 6). The serving rebuild ri
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>27</round>
 <slot>~74</slot>
 <fabric>site-z</fabric>
