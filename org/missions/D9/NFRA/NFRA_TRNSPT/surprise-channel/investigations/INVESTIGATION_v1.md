@@ -633,6 +633,52 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "A worker commits its owned paths through safe-commit.sh and the naming limb grades the commit's own files.",
     "world_is": "With the registry fix landed on this branch, the q1 files commit unchanged; row W4-S11 is unedited and its block no longer stands.",
     "notes": "Append-only: W4-S11 and every other row untouched."
+  },
+  {
+    "id": "NFRA_TRNSPT-S9",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-30T19:15:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "FWD-7's round-1 real run broke at its first real input: list_email_attachments returns the Graph envelope {\"@odata.context\", \"value\": [...]}, but the decomposition's BRONZE CONTRACT (issuer text) told TR-b-1 it returns a bare list, so outlook/pull.py --replay crashes in criterion.classify ('str' object has no attribute 'get') on both real messages; nothing was landed.",
+    "disarm_owner": "2.0.0_SA_COO~T (issuer contract error; first item of the round-2 repair cell: unwrap value when present, and a fixture in the real envelope shape)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python data/transcripts/scripts/outlook/pull.py --replay C:/Users/AndrewBerman/Desktop/NFRA_TRNSPT_SAMPLE_LOCAL/r1 --dry-run at 0225e80b2f: AttributeError: 'str' object has no attribute 'get' in criterion.classify",
+        "the replay directory (outside the repo, client PII): 2 messages copied byte-identical from the harness-persisted raw read_email outputs idx_25_rawtool.json / idx_36_rawtool.json, and the 2 list_email_attachments results as the tool returned them (envelope with value)",
+        "decompositions/NFRA_TRNSPT_DECOMP.md BRONZE CONTRACT: 'list_email_attachments(id) returns {id, name, size, contentType, isInline} per attachment' -- read as a bare list by the worker; the fixture (outlook_replay/) is a bare list"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 1's real run lands the recorded sample to bronze through pull.py --replay --apply.",
+    "world_is": "The real tool envelope is not what the contract described; the lander raises before any write. Measured read-only with the envelope unwrapped: both real messages classify sender_ok=true, client_recipient=true, recipient_firm=49financial, ycharts_pdf=false, near_miss=true, ingest=false (their only non-inline attachments are application/octet-stream images of 6,866 and 197,768 bytes).",
+    "notes": "The defect is the issuer's face, not the worker's: the worker built exactly the shape it was given. This is the value of a real run over a fixture."
+  },
+  {
+    "id": "NFRA_TRNSPT-S10",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-30T19:15:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Chain C x chain D seam: outlook/criterion.py load_tables() reads data/transcripts/assets/authors.json only when client_domains.json ALSO exists; TR-a-1's ruled shape retired client_domains.json (the domains are registry tenant.email_domain), so the criterion always falls back to its inline default tables and never reads the ruled authors.json (addresses list + firm_domain_rule).",
+    "disarm_owner": "2.0.0_SA_COO~T (round-2 repair cell: load_tables reads authors.json alone and the registry domains, honours firm_domain_rule)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/outlook/criterion.py:48-54 load_tables: 'if os.path.isfile(ap) and os.path.isfile(dp): ... return ... \"inline-default\"'",
+        "data/transcripts/assets/ at 0225e80b2f carries authors.json and no client_domains.json (issuer ruling on W4-S3)",
+        "the read-only measurement above ran with load_tables() -> the inline-default tables"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The criterion reads the author and domain tables from the versioned assets when present.",
+    "world_is": "It reads them only as a pair; after the ruling the pair can never be complete, so the versioned authors table is dead data.",
+    "notes": "Built on two branches that could not see each other; found at the union."
   }
 ]
 ```
