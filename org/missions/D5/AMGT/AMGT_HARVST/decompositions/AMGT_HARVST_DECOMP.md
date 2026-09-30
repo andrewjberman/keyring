@@ -2137,3 +2137,35 @@ dry-run at the base before the dispatch. This is the one recorded departure from
 - The portal DEV promotion (Andrew's, through the integrator).
 - The other 190 names' backfill (next round, on the Lenovo run's actual pages).
 - The `CHATTER_AXIS_SOURCE` flip, which is re-cut when gold resolves a gradable pair.
+
+## 38. ROUND 26 -- L5 DECOMPOSITION v3.5, over the round-25 analysis (`ledger/ROUND_ANALYSIS.round25.md` @300ea99310)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~06:1xZ. Round 25 is CLOSED: the first SERVED writes since round 22, both pairs held on
+the output, 2 of 9 FWDs REALIZED. Series **`p`**; slots **`~66`..`~69`**.
+
+**Rulings applied:**
+- **Ruling 1:** every WORLD half names the command that reaches the put, the config defaults the argv leaves unset, and a
+  stub put-count dry run.
+- **Ruling 2:** every check base is pinned at cut.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 the mention rebuild (FWD-2; inputs to FWD-4/7; the ANDREW-DIRECT count) | `HVST-p-1` | WORLD, under a pair | `~66` | after its pair and issuer checks |
+| 2 FWD-3's two rows: the never-stored fetch, the wsj key split | `HVST-p-2` | LOCAL | `~67` | now |
+| 3 a span-bearing Lenovo bbg/wsj run, its upload, the `chatter_daily` coverage rebuild (FWD-7) | `HVST-p-3` | WORLD, under a pair plus R-21 scripted egress | `~68` | after `p-1` drains, then its pair and checks |
+| 4 why ft and barrons refuse (FWD-1/9) | `HVST-p-4` | LOCAL, no request sent | `~69` | now |
+
+**Fan-out: 4 of 4 chains.**
+- `p-2` and `p-4` are spawned now.
+- `p-1` is spawned when its pair is committed.
+- `p-3` follows `p-1`: its daily build reads the newest mention snapshot. N = 4 slots; cap 8.
+
+**Write sets:**
+- `p-2` owns `worker.py`, `publishers.py` and `storage.py` for its fix.
+- `p-3`'s act runs on the code pinned at its signing.
+- `p-1`, `p-3` and `p-4` write only their deliverables and the served objects their halves name.
+
+**NOT cells:**
+- the other 190 names (ruling 4: ft and barrons are read first);
+- the gold flip (waits on `p-3`'s evidence);
+- the schedule (Andrew's).
