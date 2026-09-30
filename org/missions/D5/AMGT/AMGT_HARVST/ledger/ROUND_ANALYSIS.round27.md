@@ -36,6 +36,12 @@ project is NOT closed.** The PRD moves to v0.5 in this commit (one clause of `C-
    - **AMENDED ~09:5xZ (CVO~Z msg 27076, PRD v0.6):** the exit rule reads "refused OR ran no job" in the window, and an EMPTY
      declared set HOLDs (`NO_DECLARED_PUBLISHER`). Without it, an enabled publisher that never ran would keep every name ineligible
      indefinitely. A publisher that ran even one per-name job stays in; the names it did not cover are ineligible.
+   - **AMENDED AGAIN ~10:1xZ (CVO~Z msg 27081, PRD v0.7):** "ran no job" becomes "ran no UNIVERSE-SCOPE job". The v0.6 line above let
+     sa's ASML trial hold 189 of 191 names ineligible on a publisher that never searched them. That was this seat's inconsistency with
+     its own v0.5 intent and with the CRO's partial-rank research. Today every publisher's jobs are per-name trials, so the set is
+     EMPTY and the rank HOLDs (`NO_DECLARED_PUBLISHER`). The first universe-scope backfill (round 29) brings its publisher in.
+     Round-28 cell 4's AC plants a trial-only publisher (it exits) and a universe-scope run (it enters). The census prints, per
+     excluded name, the declared publishers it lacks.
 2. **A key rejected for its body (`short_or_partial_body`) is HELD for the rest of that UTC day** and retried on a later day.
    - After 3 failed days it is recorded `rejected_final`, with its reason, and never re-fetched.
    - This replaces `p-2`'s "re-fetch rejected keys every run": that rule spent the job's only live request on a known-bad key and
