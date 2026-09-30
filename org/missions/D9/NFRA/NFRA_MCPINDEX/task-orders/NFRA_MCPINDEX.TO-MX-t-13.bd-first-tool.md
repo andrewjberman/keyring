@@ -50,6 +50,8 @@ tool the record's `Question to tool` section names, over exactly its `Read fence
 - Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
   finds `<placeholders>NONE</placeholders>`).
 
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-09-30 ~11:2xZ) -- HELD on R20, on 1.0.0_SA_CTO~O's ruling msg 27114.** The naming gate marks a literal NEW when it is absent from the file's HEAD pre-image (`.tools/naming-gate.py:1413`) and refuses a NEW OUT-OF-PATTERN/ALIAS literal before the LEGACY-READ lookup (:1444-1449, "a NEW or CHANGED literal can never reach it"). So no waiver entry can admit this cell's literals. The cell joins B3: both go to Andrew as ONE R20 acknowledgement (CLAUDE.md rule 30). The built cell stays UNCOMMITTED and frozen in `wk-mcpindex-r5-21` (branch wk-nfra_mcpindex-5-21 @4a9462b79a; AC1/AC2 PASS on the uncommitted tree; draft carrier LEGACY_READS_DRAFT_MX-t-13.json no longer needed). The A2 restructure stops. On Andrew's word the issuer continues ~21 to commit it as-is and MX-r-7 follows. Graded by: no gate limb graded this modification.
+
 **The act:**
 1. A new integration `blackdiamond` at `infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/`, registered in
    `app/integrations/registry.py` like the dormant schwab factory (:51-55). It stays DORMANT: it is not added to

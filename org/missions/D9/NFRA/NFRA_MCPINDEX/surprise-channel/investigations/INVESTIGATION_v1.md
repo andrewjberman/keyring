@@ -3665,6 +3665,32 @@ carries none.
     "spec_asserts": "Every BLOCKING row carries an issuer disposition; a builder refusal is never worked around by hand.",
     "world_is": "The cell is built and passes AC1/AC2 uncommitted; it cannot land until the waiver's authority exists. MX-r-7 waits on MX-t-13.",
     "notes": "If the CTO declines, MX-t-13 and MX-r-7 carry to the round-5 L10 slug as unserved FWD-4 work."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S65",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T11:25Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W21-S9",
+      "NFRA_MCPINDEX-Z-W21-S10"
+    ],
+    "one_line": "RULES Z-W21-S9 and Z-W21-S10 (BLOCKING): the LEGACY-READ waiver cannot admit a NEW literal (naming-gate.py:1413, :1444-1449), so MX-t-13's five literals go with B3 to Andrew as ONE R20 acknowledgement (1.0.0_SA_CTO~O msg 27114). MX-t-13 and MX-r-7 are HELD; the built cell stays uncommitted and frozen in wk-mcpindex-r5-21; no two-commit route, no gate edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py:1413 `new = pre_text is None or not _in_pre(lit, pre_text)`; :1444-1445 NEW OUT-OF-PATTERN/ALIAS -> REFUSE; :1447-1449 comment: 'a NEW or CHANGED literal can never reach it'.",
+        "worker ~21 report: gate dry run REFUSE on 5 literals with all 5 draft entries passing legacy_read_ok/tf_local_ok (wk-nfra_mcpindex-5-21 @4a9462b79a).",
+        "1.0.0_SA_CTO~O msg 27114 ruling."
+      ]
+    },
+    "spec_asserts": "A builder refusal is resolved by a registry row or an R20 entry Andrew acknowledges, never by a workaround.",
+    "world_is": "Nothing is committed or served; the hazard cannot reach the host before Andrew's word.",
+    "notes": "Superseded rows' draft carrier (LEGACY_READS_DRAFT_MX-t-13.json) is kept for the record only."
   }
 ]
 ```
