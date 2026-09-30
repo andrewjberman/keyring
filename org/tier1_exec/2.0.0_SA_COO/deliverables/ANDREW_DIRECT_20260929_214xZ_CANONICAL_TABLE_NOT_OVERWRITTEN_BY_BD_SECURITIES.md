@@ -25,3 +25,11 @@ Said at the 2.0.0_SA_COO~M terminal while ~M cut MDPF_SECCLASS round 1, verbatim
 
 ~M asked Andrew at the terminal whether he meant something stricter (no `bd-securities` value entering the table at all,
 even for an absent ticker). That reading is open until he answers, and the first write waits on it.
+
+## Andrew's answer, 2026-09-30 ~02:2xZ, verbatim
+
+> "yes, bd-securities values can seed new rows. THey just don't overwrite existing rows."
+
+The open reading is closed. A `bd-securities` value may seed a NEW `etf-classifications` row for a ticker the table
+lacks, and it never overwrites an existing row: the conditional put on absence, as built in TO-SC-k1. The backfill
+write (MDPF_SECCLASS release step 2) is no longer held on this question. It proceeds under its never-widen halves.

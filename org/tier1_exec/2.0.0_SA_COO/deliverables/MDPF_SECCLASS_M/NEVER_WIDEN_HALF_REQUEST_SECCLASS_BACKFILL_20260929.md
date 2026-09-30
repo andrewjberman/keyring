@@ -93,3 +93,36 @@ with `ConditionExpression=attribute_not_exists(ticker)`:
   `overwrite_refused_control: true`, `overwrite_refused_control_detail.gld_unchanged: true`).
 
 No other table write of any kind was performed in this build.
+
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~02:2xZ)
+
+Andrew's word closes the one open reading, verbatim 2026-09-30 ~02:2xZ at this terminal: "yes, bd-securities values can
+seed new rows. THey just don't overwrite existing rows." Record:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260929_214xZ_CANONICAL_TABLE_NOT_OVERWRITTEN_BY_BD_SECURITIES.md`.
+Signed on the blast radius above, against TO-SC-k1 drained @d0e5b687f3. The issuer re-ran the criteria on CLOUD:
+9 passed, BACKFILL-CENSUS, HALF-READY, proof VALID.
+
+**The act, exactly (the issuer runs it):**
+- **Write set.** The census's reviewed `rows[]`, deduplicated by ticker (about 1,943), written by
+  `etf_classification_scheduled.write()`: one conditional put per row, on `attribute_not_exists(ticker)`, with
+  `classified_by = scheduled`. No other row is written. The CLI's real-write path stays blocked, and no plan is
+  re-derived at write time.
+- **Freshness.** The census predates release step 1 (ledger CLOSED @ad921b0c47, 344 -> 375 rows). Any census ticker
+  that now has a row is dropped before the write. The write is refused anyway, and the count is printed with its
+  denominator.
+- **Firms.** bd, 49financial and inflection. Cottonwood has no ticker-keyed source (row MDPF_SECCLASS-S2), so it gets
+  no rows here.
+- **Writers of the property: 1**, the scheduled path. The seed path does not run in this act. No bd-securities value
+  overwrites anything: `overwrites 0` in the census, and the live GLD control was refused.
+- **Both branches.**
+  - A ticker with no row gains one. Readers that showed it as unclassified by name now show its class.
+  - A ticker with a row is untouched.
+  - Downstream, the held IRPT_BCKEND Holdings chain (IB-mr-251..272) reads these rows once it releases. That release
+    rides its own halves, after this write.
+- **Ledger.** Opened before the first write with a PRE-READ of the table saved beside it; closed at the read-back,
+  which prints written, refused and the new row count.
+- **Rollback.** A DeleteItem per ticker from the written list, recorded in the read-back, never a scan-and-delete.
+- **Known gaps, not widened here.**
+  - `instrument_kind` and `industry` are absent on every scheduled row, because the Schwab and GICS inputs are not
+    wired. That is FWD-8's gap for the round-1 analysis.
+  - Unresolved names stay unclassified: bd 207, 49financial 601, inflection 76.
