@@ -102,6 +102,48 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "The worker's order flips <status> to complete and commits the proof instance, deliverables and flip together (worker standing rules).",
  "world_is": "The commit that stages any org/missions path is refused by the tree/index check on a drift in a file outside the worker's grant; the code commit adff7d4596 (no org/missions path) landed, the proof instance and the flip are written and VALID but uncommitted."
+},
+{
+ "id": "NFRA_TRNSPT-W1-S2",
+ "project": "NFRA_TRNSPT",
+ "fabric": "laptop",
+ "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+ "surfaced_at": "2026-09-30T15:30:00Z",
+ "one_line": "TO-TR-t1 criterion 2 names fixture files <meeting_id>.list.json etc., but a real 148-char online_meeting_id makes the path 276 chars, past the Windows 260-char limit: the file cannot be created in a worktree.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python Path.write_bytes on <wt>/data/transcripts/scripts/tests/fixtures/teams_pull/<148-char id>.MM-20260928-0858.metadata.vtt (2026-09-30 ~15:2xZ): len(path)=276, FileNotFoundError [Errno 2]",
+   "data/transcripts/scripts/teams/series.json: 4 of 4 online_meeting_id values are 148 chars"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "FixtureTransport replays <meeting_id>.list.json and <meeting_id>.<transcript_id>.vtt from a directory.",
+ "world_is": "Built as specified for any id that is its own file stem, plus a fixtures/teams_pull/index.json ({meeting_id: short stem}) so the four real ids resolve to monday_meeting.list.json etc.; the criterion outputs are unchanged.",
+ "notes": "The same length bites any future fixture or object keyed by a raw meeting id on a Windows checkout."
+},
+{
+ "id": "NFRA_TRNSPT-W1-S3",
+ "project": "NFRA_TRNSPT",
+ "fabric": "laptop",
+ "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+ "surfaced_at": "2026-09-30T15:32:00Z",
+ "one_line": "The parked gateway spec's read_meeting_transcript has no fmt argument and returns a paged dict, not bytes; it has no metadata-VTT format at all, and it names tools, not routes, so the transport protocol in TO-TR-t1 does not match the spec's tool shapes.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "docs/briefs/opal-gateway-meeting-transcript-tools-spec-20260929.md:51-55 (read at the worktree HEAD): read_meeting_transcript(meeting_id, transcript_id, offset=0, limit=0) -> {content,total_bytes,sha256,offset,returned_bytes,complete}, GET .../content with Accept: text/vtt",
+   "the same file 4.1-4.4 and section 5: no call fetches the metadata WebVTT (land_bronze.land requires metadata_bytes)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-TR-t1 item 2: read_meeting_transcript(meeting_id, transcript_id, fmt) -> bytes, fmt in vtt | metadata (spec 4.3).",
+ "world_is": "Built as the order states (fmt, bytes) against a fixture; the stub names the spec's tool and Graph route (list: GET /me/onlineMeetings/{meeting_id}/transcripts; read: GET .../transcripts/{transcript_id}/content). When S04 lands, the real GatewayTransport must page by offset/limit, reassemble, check sha256, and the source of the metadata VTT is unspecified.",
+ "notes": "Class and disposition are the reporter's form call; whether the spec or the order's shape moves is not this worker's."
 }
 ]
 ```
