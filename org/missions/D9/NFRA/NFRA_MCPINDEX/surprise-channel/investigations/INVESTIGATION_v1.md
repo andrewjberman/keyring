@@ -3639,6 +3639,32 @@ carries none.
     },
     "spec_asserts": "Bounds 3: the pre-existing failure at the cut is tests/test_entitlement_admin.py::test_ogz2_ac06.",
     "world_is": "Two more pre-existing failures in tests/test_data_entitlement_guard.py, outside this cell's paths, unchanged by it; test_ogz2_ac08 (the tool-count pin this cell moves) passes at 53."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S64",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T11:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W21-S9"
+    ],
+    "one_line": "RULES Z-W21-S9 (BLOCKING): the naming limb's refusal of opal-data-bd / silver/fees/ / 49financial is ROUTED for authority and RE-SHAPED here -- MX-t-13 A2 restructures the literals to the LEGACY-READ waiver's syntax (one read-helper site, one tf_local) and drafts the carrier entries; the ruling record that authorizes them is asked of 1.0.0_SA_CTO~O (the IRPT-M-LEGACY-READ-02 authority pattern). No bypass, no hand-typed workaround.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py:99-110 (carrier org/standards/NAMING_LEGACY_READS.json, 9 fields), :942-1180 (syntax allowlist, authority pin check, tf_local kind).",
+        "infra/logic/registry/remediations.json: ADVI_FIRMBKTS surfaces include bucket-alias 49financial->opal-data-bd and s3-prefix opal-data-bd silver/.",
+        "org/standards/NAMING_LEGACY_READS.json at HEAD: 0 entries.",
+        "Message to 1.0.0_SA_CTO~O 20260930T105757Z asking for the ruling."
+      ]
+    },
+    "spec_asserts": "Every BLOCKING row carries an issuer disposition; a builder refusal is never worked around by hand.",
+    "world_is": "The cell is built and passes AC1/AC2 uncommitted; it cannot land until the waiver's authority exists. MX-r-7 waits on MX-t-13.",
+    "notes": "If the CTO declines, MX-t-13 and MX-r-7 carry to the round-5 L10 slug as unserved FWD-4 work."
   }
 ]
 ```
