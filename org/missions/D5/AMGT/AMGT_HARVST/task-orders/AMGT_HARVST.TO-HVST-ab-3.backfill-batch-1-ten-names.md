@@ -104,6 +104,26 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   added at its re-sign.
 - **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
+**AMENDMENT 2 (issuer, 2026-09-30 ~14:5xZ) -- Seeking Alpha joins batch 1; the run shape follows the CLI.**
+- **sa is in scope** (CTO msg 27212, @`7db0a2f4d3`): Andrew confirms the sa account is active and its credentials are unchanged.
+  "sa waits on the renewal" came from one unmeasured 402 (`Z-W37-S4`, 2026-09-29 02:49Z) and is struck.
+- **Batch 1 is now** the 10 names x {bbg, wsj, sa}, AND Lenovo x {barrons, ft}.
+- **sa, before any sa job:** ONE account-check probe on the stored Secrets session. On a 402 or 401, retry ONCE with a fresh
+  session and KEEP the response body.
+  - Only a 402 that persists is a finding. It is recorded, with its kept body, and the sa jobs do not run.
+  - `Z-W37-S4`'s standing follows the probe (the CVO's).
+- **The run shape, measured at the CLI** (`__main__.py` ~:138): `--security-json` carries ONE security per invocation. So
+  phase A's collection is ONE invocation per name:
+  - 10 invocations with `--publishers bbg wsj sa`;
+  - 1 Lenovo invocation with `--publishers barrons ft`;
+  - each persists its own run record (11 in all);
+  - then ONE `upload-harvest`.
+
+  The halves name every argv and the per-name security files (built from `~46/securities.universe.json`). AC1 counts 11 new
+  run records and 32 jobs (30 + 2).
+- **`<paths>`:** unchanged. **Criteria:** the same two invocations.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
