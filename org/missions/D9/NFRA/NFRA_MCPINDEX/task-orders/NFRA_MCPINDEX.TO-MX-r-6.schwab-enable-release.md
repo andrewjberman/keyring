@@ -43,6 +43,12 @@ rollback is `infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md:233-276
 - Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
   finds `<placeholders>NONE</placeholders>`).
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-09-30 ~09:4xZ), on 1.0.0_SA_CTO~O's ruling msg 27068.** No grant is widened in round
+5. B2 bars it, and admitting a principal to data is Andrew's own act (FWD-9). r6.J1's transaction question is graded as a
+correct, honest refusal, and the proof names the principal and its grant. The CTO carries "widen one existing Schwab
+grant to dim_transaction through the grant admin tool" to Andrew's list. Graded by: no gate limb graded this
+modification.
+
 ### PHASE A -- no deploy, no apply
 1. Read the deployed commit from the host's artifact, by content (MX-r-5 left 093fc247c6). Cut the release there and
    cherry-pick MX-s-15's and MX-q-3's gateway commits. The issuer's GO names whether MX-t-10 rides too.
@@ -102,7 +108,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
   <expected_criteria>AC1,AC2,J1</expected_criteria>
   <criterion id="AC1" cell_refs="MX-r-6" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round5/checks/r6.AC1.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MX-r-6" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round5/checks/r6.AC2.sh; echo "exit=$?"</invocation><expect>status=Success; /health=200; shipped 3 of 3; ids enabled 6 of 6; live reader-role GetObject on dim_transaction allowed 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="J1" cell_refs="MX-r-6" judgment="true"><!-- r6.J1, graded at L9 by 3.0.0_SA_CVO~O, never self-graded: FWD-1 (PRD:102-109) EXERCISED -- a set of real questions, asked cold by an already-admitted Opal principal who did not author the index, routes correctly: discover answers from ONE catalog with property, dataset, freshness, firm scope, caveats and the next tool; a question about an uncatalogued property says so and names nothing. The set includes one Schwab position question and one Schwab transaction question, each answered for one master and one date. Denominator: the questions asked, printed. The issuer's cold-run record is the material. --></criterion>
+  <criterion id="J1" cell_refs="MX-r-6" judgment="true"><!-- r6.J1, graded at L9 by 3.0.0_SA_CVO~O, never self-graded: FWD-1 (PRD:102-109) EXERCISED -- a set of real questions, asked cold by an already-admitted Opal principal who did not author the index, routes correctly: discover answers from ONE catalog with property, dataset, freshness, firm scope, caveats and the next tool; a question about an uncatalogued property says so and names nothing. The set includes one Schwab position question, answered for one master and one date, and one Schwab transaction question, which PASSES as a correct, honest refusal naming the principal and its grant (AMENDED A2). No grant is widened in round 5. Denominator: the questions asked, printed. The issuer's cold-run record is the material. --></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~19/NFRA_MCPINDEX.TO-MX-r-6.schwab-enable-release.proof_of_spec.json</instance_path>
 </proof_of_spec>
 
