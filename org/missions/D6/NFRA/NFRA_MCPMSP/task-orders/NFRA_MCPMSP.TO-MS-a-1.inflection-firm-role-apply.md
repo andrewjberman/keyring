@@ -97,7 +97,7 @@ writer's environment. Spawn: the slot continues here after MS-t-2 is merged.
 dir + `terraform get` procedure is added; AC2's own-bucket arm is removed (round 1 grants no firm-bucket read; row
 Z-S2). AC2 still FAILs at base (`NoSuchEntity`). Graded by: no gate limb grades a modification's criteria.
 
-<status>staged</status>
+<status>complete -- drained by 2.0.0_SA_COO~MS 2026-09-30: applied 3 added / 0 changed / 0 destroyed (arn:aws:iam::313476888478:role/gateway-inf-firm-reader-role); AC1-AC3 PASS on the issuer's re-run; ledger nfra-mcpmsp-r1-firm-role CLOSED; instance VALID. Was: staged</status>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
