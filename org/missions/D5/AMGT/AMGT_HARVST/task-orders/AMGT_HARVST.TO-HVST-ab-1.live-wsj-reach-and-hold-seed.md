@@ -173,6 +173,17 @@ only for cached pages.
 - **Dispatched separately,** after AMENDMENT 1 reports, in the same worktree.
 - **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
+**AMENDMENT 3 (issuer, 2026-09-30 ~15:1xZ) -- ruling on row `Z-W81-S7`: the FRESHEST stored token first.**
+- **Measured by the worker:** the saved-session files are 5-19 days newer than the Secrets sessions for sa, ft and bbg.
+- **Ruling:** change 5(b)'s order becomes the NEWEST of the two stored tokens (the Secrets session and the saved-session file),
+  by each one's own timestamp. When only one exists, use it.
+- **Why:** Andrew's word is "use existing trust tokens secured from past runs". The newest is the one most likely to still
+  work, and a needless sign-in (for bbg, a captcha browser harvest) is what the word exists to avoid.
+- **Recording:** the run record names the source chosen and both timestamps.
+- **Criteria:** AC1 adds one plant: of two stored tokens, the newer is used, and a mutant preferring Secrets-first fails.
+- **`<paths>`:** unchanged (`sessions.py`).
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
