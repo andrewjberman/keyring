@@ -282,6 +282,97 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TO-TR-i1 build item 3: the Lambda is python3.12 with the layer pandas-pyarrow-layer:1.",
     "world_is": "Built as runtime = python3.11 with the layer read by name via data.aws_lambda_layer_version (the estate's own form), so the two agree. Nothing in the packaged tree needs 3.12; the handler ran from the unzipped dist under local Python 3.12.10. Plan is 9 adds either way.",
     "notes": "Whether the layer is rebuilt for 3.12 or the Lambda stays on 3.11 is not this worker's. Also of note: pull.py imports its siblings as top-level modules, so the handler imports gateway_client and land_bronze top-level too (the package-path copies define different Expired/Refused classes and pull would not catch them)."
+  },
+  {
+    "id": "NFRA_TRNSPT-S5",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "surfaced_at": "2026-09-30T18:20:00Z",
+    "one_line": "Closes NFRA_TRNSPT-S1 on 1.0.0_SA_CTO msg 103271: the laptop gateway mail-tool worktrees (wt-gw-f2/f3/int) are INERT for NFRA_TRNSPT; 0.0.0_AB_MSTR names their owner and site Z's order 4 adopts or supersedes them.",
+    "disarm_owner": "1.0.0_SA_CTO (ruled 103271; nothing owed by this project)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "inbox 20260930T144354Z_1.0.0_SA_CTO_RE_103267 (Msg-ID 103271): 'S1 ruled -- INERT for NFRA_TRNSPT ... Not your write surface; mark the row INERT with this message id as the disposition'",
+        "the channel is append-only; .tools/surprise-row-gate.py _mutation_violations refuses an in-place disposition edit, so the closure is this new row citing S1"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "1.0.0_SA_CTO msg 103271 rules S1 INERT for NFRA_TRNSPT and routes the worktrees to 0.0.0_AB_MSTR and site Z's order 4; no act remains for this project.",
+    "spec_asserts": "S1: the three mail tools are NFRA_OPLGTW's (site Z) build.",
+    "world_is": "Ruled INERT for this project by the CTO; the laptop branches are preserved by MSTR.",
+    "notes": "Cites NFRA_TRNSPT-S1. The id is S5 because the CVO minted S4 at a3473f576c."
+  },
+  {
+    "id": "NFRA_TRNSPT-S6",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "surfaced_at": "2026-09-30T18:20:00Z",
+    "one_line": "Post-drain hygiene at CLOUD: test_teams_parse_silver.py::test_missing_metadata_cue_leaves_wall_clock_null_with_warning splits the metadata fixture on a bare double LF, so it passes on the worker's LF-written file and fails on this autocrlf=true checkout, where every fixture reads CRLF.",
+    "disarm_owner": "2.0.0_SA_COO~T (the round's batched repair cell: read fixtures with universal newlines, or an eol=lf rule for data/transcripts/scripts/tests/fixtures/ in .gitattributes)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/transcripts/scripts/tests/test_teams_parse_silver.py at b9b933859f: 1 failed, 9 passed; assert rows[1]['start_utc'] is None -> '2026-01-02T15:00:13.000000+00:00'",
+        "fixture bytes: worktree CRLF 22 / LF-only 0; HEAD blob CRLF 0 / LF-only 22; the test's split finds 0 cue boundaries in the worktree text and 7 in the blob",
+        "git config core.autocrlf = true; git check-attr text eol on the fixture: unspecified; every teams_pull and outlook_replay fixture also reads CRLF on this checkout"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR1-t3-AC1: 10 of 10 tests pass (worker proof).",
+    "world_is": "One of the ten is checkout-dependent; the parser itself reads CRLF, and the real Monday meeting parsed with unparsed=0.",
+    "notes": "A repair row, never a silent recut."
+  },
+  {
+    "id": "NFRA_TRNSPT-S7",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "surfaced_at": "2026-09-30T18:20:00Z",
+    "one_line": "Post-drain hygiene at CLOUD: running data/transcripts/scripts/tests in ONE pytest process gives 22 failed / 30 passed because the teams and outlook packages both expose bare top-level modules named land_bronze and pull (sys.path insertion + 'import land_bronze'), so whichever loads first shadows the other.",
+    "disarm_owner": "2.0.0_SA_COO~T (the round's batched repair cell: package-qualified imports -- data.transcripts.scripts.teams.* / .outlook.* -- or unique module names; the Lambda packaging of TR-i-1 imports the teams modules top-level too)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/transcripts/scripts/tests -q at 275b43af6a: 22 failed, 30 passed; e.g. test_teams_pull.py AttributeError: module 'land_bronze' has no attribute 'transcript_id_for'",
+        "each file alone: test_outlook_bronze 11/11, test_teams_land_bronze 12/12, test_teams_read_meeting 7/7, test_teams_pull 9/10, test_pull_handler 1/2, test_teams_parse_silver 9/10",
+        "data/transcripts/scripts/teams/pull.py:28 'import land_bronze'; data/transcripts/scripts/outlook/pull.py:16 'import land_bronze'; tests import both by bare name"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every cell's tests pass (each proof graded its own file in its own worktree).",
+    "world_is": "Each file passes alone except the rows S6/S8 name; together the two sources' modules collide by name.",
+    "notes": "Found only at the union; no worker could see it. A repair row."
+  },
+  {
+    "id": "NFRA_TRNSPT-S8",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "surfaced_at": "2026-09-30T18:20:00Z",
+    "one_line": "Chain A x chain B seam after the drain: with parse_silver.py now beside pull.py, pull.run(with_silver=True) imports it for real and parse_and_write lists the bronze prefix, but the chain-A test fakes (FakeS3 in test_teams_pull.py, _MemS3 in test_pull_handler.py) have no list_objects_v2, so the SILVER-SKIPPED test and the handler test fail.",
+    "disarm_owner": "2.0.0_SA_COO~T (the round's batched repair cell: give both fakes list_objects_v2, and assert the in-process silver hop on the fixture instead of SILVER-SKIPPED)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test_teams_pull.py::test_with_silver_absent_module_is_typed_skipped and test_pull_handler.py::test_fixture_transport_returns_run_record: AttributeError: 'FakeS3'/'_MemS3' object has no attribute 'list_objects_v2' at data/transcripts/scripts/teams/parse_silver.py:169",
+        "TR-t-1 was built on a branch without parse_silver (the lazy import typed SILVER-SKIPPED, as its face ordered); TR-t-3 lists bronze to find the sidecar (worker ~2 report)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-t-1: with_silver imports parse_silver lazily and types SILVER-SKIPPED when it is absent.",
+    "world_is": "It is present now, so the hop runs; the seam is real and untested with a listing fake.",
+    "notes": "The seam the round built by construction; its first exercise is the next real scheduled pull."
   }
 ]
 ```
