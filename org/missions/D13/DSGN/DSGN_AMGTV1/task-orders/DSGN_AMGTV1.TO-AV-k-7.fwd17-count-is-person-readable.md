@@ -80,7 +80,7 @@ ui-contract-check.mjs); AV-k-2 (chain ~52) writes the standalone no-permission b
 0 conflicts, the issuer merges at the drain. Base 118cd005: foldopen.cjs 1 of 3; green r14-green-g @bce8e785 3 of 3 (re-run after the
 issuer's arm-2 amendment: see the decomposition).
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~53</slot>
 <fabric>site-z</fabric>
