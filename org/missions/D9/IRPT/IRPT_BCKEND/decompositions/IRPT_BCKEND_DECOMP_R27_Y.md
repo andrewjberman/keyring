@@ -95,3 +95,83 @@ resolves -- the defect and its detector land together.
 `no tests ran` (rc=5) as if that were a base measurement; it is not, and 17 siblings were failing for one cause in my
 own preflight table. Every criterion here is cut against a node or a suite that EXISTS at base and whose number is
 printed above.
+
+
+## Amendment 1 (2026-09-30 ~02:3xZ) -- `IB-yr-272` MET; AC1 NOT MET because I passed through an acceptance I never subtracted; and the instrument I have been quoting every tick was the wrong artifact
+
+Worker `~90` delivered AC2, AC3 and cell `IB-yr-272`, and refused AC1 without weakening it. **Issuer grade in its
+own worktree: AC1 `24 failed, 35 passed` (59 collected), AC2 PASS, AC3 empty, census `6 failed, 2 passed`.**
+Drained @**3ce99ec90a**.
+
+**`IB-yr-272` IS MET, exactly as predicted:** the three literals moved 17 -> 18, kept literal, dated with a comment
+naming the cell and row `W89-S2`, and the census reads **6 failed / 2 passed** -- the suite's own pre-route baseline,
+measured by me in its worktree.
+
+**AC2 verified by running it, not by reading the report, because a falsifier graded on its MESSAGE has to be seen.**
+I ran the node UNMUTATED and MUTATED in one script:
+- unmutated: `POSITIVE CONTROL FAILED for analysis-requests: Additional properties are not allowed
+  ('internal_correlation_id' was unexpected)`
+- mutated: `POSITIVE CONTROL FAILED for analysis-requests: 12345 is not one of ['RECEIVED', 'PARSED',
+  'NEEDS_CORRECTION', ...]`
+
+The mutation moves the failure to the `stage` enum. **AC2 PASSES.** (My script's own summary boolean printed False on
+a badly-written predicate; the two printed messages are the oracle and they are unambiguous. The fixture restored
+byte-identical, checked against `HEAD` at 2323/2323 bytes -- the worker's `git status` `M` was a stat-cache artifact,
+and I verified that rather than assuming either way.) **The worker's caveat stands and is the honest limit: that node
+fails WITHOUT the mutation too, so AC2 proves the control can still FAIL for the right reason, not that it can PASS.**
+
+### AC1 was not achievable in one cell, and the defect is mine
+
+The ruling's acceptance was *"the suite green"*. I passed it through into AC1 as `0 failed`. **Neither the ruling nor
+I had measured whether the parsing cause was the ONLY cause -- and my own preflight had PRINTED the denominator (33
+red) that the subtraction needed.** The worker did the subtraction the cut should have: the parser fix turned **10
+nodes green** (34 -> 24 in its worktree), and **six further causes** hold the rest, none inside its grant:
+
+| n | cause |
+|---|---|
+| 13 | the consumer portal fixture read from the primary checkout has drifted (12 entries where the test pins 11; flat-slug paths absent) |
+| 6 | no fixture pairs exist for `AnalysisUploadResult`, `OwnedAnalysisRequest`, `OwnedAnalysisRequestHistory`, `SelectedAccounts`, `PublicStatusEnvelope` |
+| 1 | `test_every_schema_carries_v1_and_contract_version` pins 11 schemas; v1 now holds 24 |
+| 1 | the declared-route check requires `data` in every response contract; `export-receipt` and `submit-export` do not require it |
+| 1 | `[resolve-scope]`'s contract is a `oneOf` of two documents and the test asserts exactly one |
+| 2 | `[analysis-requests]` and the wrong-shaped-firm-id test build from `StatusEnvelope`, but the contracts now ref `PublicStatusEnvelope`, which forbids `internal_correlation_id` |
+
+**AC1 is recorded NOT MET and NOT the worker's shortfall.** Three resolver sites were changed, not the one I measured
+(`_response_validator`, the declared-route ref check, and `_document_of` at :570 through a new `_ref_document_name`),
+with no filename special-casing and the collected total unmoved at 59 -- the cell did its job.
+
+### The instrument I have quoted in every tick was the WRONG ARTIFACT
+
+`2.0.0_SA_COO~P` 103100, correcting its own earlier word: `resident_worker.py` serves from the **EC2 resident host
+package (st4, installed 12:31Z)**, reached by an **st5 build plus an SSM install** -- *"inrij6hL is the Lambda zip,
+not the resident, so it is not the precondition marker for your read."* Corroborated here:
+`infra/aws/terraform/investor-reporting/ycharts/resident.tf` is a separate deployment unit with its own scopes and
+write families.
+
+**So "the gate is unchanged at `inrij6hL` / 15:00:32Z", which this lane printed every tick for many ticks, was a
+reading of the wrong plane.** It was never evidence about the resident. CLAUDE.md 22a says to diff deployed bytes
+against the BUILD INPUT and never by filename; I was not even on the right artifact. **The corrected marker is st5
+installed on the host with the queue at 0/0, and `~P` signals it.** Until then S218 step 2 and the four report arms
+are blocked on that signal -- the same blockage, correctly named for the first time.
+
+### `IB-yr-241`'s words cannot reach a served envelope -- a round-28 cell, and a fourth defect of one family
+
+`~P` 103096, verified here at source rather than on report: `ops/status.py::build_envelope` has exactly two callers,
+`ops/status_loader.py:164` and `ops/owned_status.py:59`. Caller 1 passes only `RUNNING` or `UNCERTAIN`. Caller 2's
+`public_state` comes only from `PHASES` (11 durable phases -> `QUEUED`/`RUNNING`/`FAILED`/`UNAVAILABLE`, plus a
+`READY` override). **`NEEDS_CORRECTION` is in neither.** So round 24's `RESOLVE_RETRY_EXHAUSTED` / `CORRECT` words are
+on a path nothing reaches, and the answer a user actually sees is built by `intake/uploads.py:313`'s own dict.
+
+**YES, it is a cell** (`~P` asked): the outcome is that a user SEES correction words, and today they cannot. Round 28.
+
+### FIVE DEFECTS, ONE ROOT, AND THE RULE THAT COVERS THEM
+
+R25: a grant that could not contain its own change. R26 AC3: a criterion that graded an instrument, cut against an
+absent node instead of a sibling. S223: a `$ref` verified by its SHAPE and never followed to its REFERENT. R27 AC1: a
+red population assigned one cause without subtracting from a denominator I had printed. `IB-yr-241`: a function
+verified without its caller, by a battery that called it directly.
+
+**Every one is the same error: I VERIFIED THE PART AND CALLED IT THE OUTCOME.** The rule, and the only line of this
+amendment that needs to survive: **NAME THE PATH BEFORE THE PART -- for every cell, state which caller, consumer or
+route reaches the thing being changed, and prove THAT path with the change in place. A test that calls the changed
+function directly is a unit check, never the outcome.** It is cheap: one line per cell, at the cut.
