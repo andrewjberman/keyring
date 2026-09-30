@@ -120,6 +120,11 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v3.2",
       "note": "L5 recut + L6 issuance, 2026-09-30, 2.0.0_SA_COO~H. Round 23 over ROUND_ANALYSIS.round22.md @9d7bd0e4f9: three read-only re-grade cells over the served store -- m-1 FWD-1/2/3, m-2 FWD-4/7, m-3 FWD-8/9 (all LOCAL); three independent chains; section 35."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.3",
+      "note": "L5 recut + L6 issuance, 2026-09-30, 2.0.0_SA_COO~H. Round 24 over ROUND_ANALYSIS.round23.md @d1ec6f4118 (FWD-4, FWD-8 REALIZED; 1/2/3/7/9 named gaps): n-1 collector received bytes + provenance + run record; n-2 sa silver fields/rows + mention-join query; n-3 served-rank population + gold diff; n-4 CHATTER_AXIS_SOURCE=gold flip (WORLD seat, after n-3); n-5 backfill plan for 191 names; n-6 /timeline/day profile + fix; section 36."
     }
   ],
   "leads": [

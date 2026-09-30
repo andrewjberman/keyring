@@ -2065,3 +2065,38 @@ and each prints what this machine cannot see as NOT MEASURABLE HERE rather than 
 - the link window;
 - the event route mount;
 - the Seeking Alpha capture (until the account reads 200).
+
+## 36. ROUND 24 -- L5 DECOMPOSITION v3.3, over the round-23 analysis (`ledger/ROUND_ANALYSIS.round23.md` @d1ec6f4118)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~02:0xZ. Round 23 CLOSED. The seven FWDs are graded: **FWD-4 and FWD-8 REALIZED**;
+FWD-1/2/3/7/9 NOT REALIZED with named gaps; 2 of 9 REALIZED. Series **`n`**; slots **`~56`..`~60`** plus the seat
+`0.7.0_AE_CloudOps~A`.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the collector keeps received bytes, links the listing object, rank+page for all, a run record (FWD-1/3) | `HVST-n-1` | LOCAL | `~56` |
+| 2 sa's 5 missing fields + 6 missing rows in silver; query-by-company over the mention join (FWD-2) | `HVST-n-2` | LOCAL (a served silver rebuild, if AC2 shows rows move, is a follow-on paired order) | `~57` |
+| 3 why the served rank holds 2 rows; the `gold` rank's expected diff (FWD-7) | `HVST-n-3` | LOCAL read | `~58` |
+| 4 the `CHATTER_AXIS_SOURCE=gold` flip (FWD-7) | `HVST-n-4` | WORLD, under a pair and a NEVER-2 entry | `0.7.0_AE_CloudOps~A` (after `n-3`) |
+| 5 the backfill plan for all 191 covered names, before any run (FWD-9) | `HVST-n-5` | LOCAL | `~59` |
+| 6 `/timeline/day`: profile, then fix in code (FWD-5 latency; routed from DSGN r7 ruling 2) | `HVST-n-6` | LOCAL (the redeploy is a follow-on paired WORLD seat order) | `~60` |
+
+**Fan-out: 5 of 5 chains start now (`n-1`, `n-2`, `n-3`, `n-5`, `n-6`); `n-4` follows `n-3`; N = 5 worker slots + 1 seat;
+cap 8 not pressed.**
+
+**Write sets are disjoint:**
+- `n-1` owns named collector files (not `silver_from_bronze.py`) and `store.py`.
+- `n-2` owns `silver_from_bronze.py` and its test.
+- `n-6` owns `timeline_api.py`, `publication_gold.py`, the timeline loaders in `scoped_amgt.py` and their tests.
+- `n-3` and `n-5` write only their deliverables.
+
+**The two follow-ons, `n-2`'s served silver rebuild and `n-6`'s redeploy,** are the `i-2` -> `i-4` pattern. Each is cut
+after its code merges, with its expected diff read from the merged code at signing.
+
+**`n-4`'s checks are issuer-written after `n-3` drains,** because their content IS `n-3`'s measurement. They are
+dry-run at the base before the dispatch. This is the one recorded departure from "every check a file at the cut".
+
+**NOT cells:**
+- re-fetching the 104 rebuilt originals;
+- the backfill run (until `n-5`'s plan is read);
+- events.
