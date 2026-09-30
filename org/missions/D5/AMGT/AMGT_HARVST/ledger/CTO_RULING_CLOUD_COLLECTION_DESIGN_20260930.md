@@ -73,6 +73,16 @@ The bot-ops study is `HARVST_BOT_OPS_STUDY_20260930.md` @`f5c3b0dbc7` (msg 27308
      - if it does not, the cell is re-scoped at the round-31 analysis.
    - **Cells 1 and 4 stand.**
 
+3b. **(~19:5xZ) Recorded: the CRO's trials 2-3b and the bot-ops playbook** (`4.0.0_SA_CRO~Z` @`7bcc258369`, msg 27351, on Andrew's
+   word that COO~H "goes through the motions").
+   - **The flag sits on the site Z box's IP.** It was degraded during the day by refused automated requests. By 19:4xZ even an
+     anonymous fresh browser was challenged.
+   - **HARD STOP:** no traffic to bbg, wsj or barrons from this box until the playbook's 05:00 ET first-light test. That test decides,
+     per publisher, between REST in the tab and page parsing.
+   - The batch-1 retry (the ab-3 path) does not run before first light.
+   - Round 31's cells 1 (the token store) and 4 (the residential-IP read) send no publisher traffic and stand.
+   - The playbook `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/HARVST_BOT_OPS_PLAYBOOK_20260930.md` is COO~H's step list.
+
 4. **FWD-10 (s.4) gains:** "the run may be the site Z box until the local job matures (Andrew ~17:4xZ); the cloud host is the end state."
 
 **The acts only Andrew can do (s.5) are now one:** confirm FWD-10's DONE WHEN. The Bright Data word is given (conditional). Licensed
