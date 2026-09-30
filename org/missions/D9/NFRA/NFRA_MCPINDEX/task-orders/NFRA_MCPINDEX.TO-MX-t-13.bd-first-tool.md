@@ -119,7 +119,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Reinstatement ruling B5 and round-5 order item 4. Orion, Eclipse and SmartX follow
 this pattern in later rounds. Dry-run at base: t13.AC1 FAIL (no black_diamond integration), t13.AC2 FAIL (file absent).
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @d3b0efe5c6 by 2.0.0_SA_COO~MI, 2026-09-30 ~23:5xZ: t13.AC1 PASS (1 of 1 blackdiamond_* catalog row), t13.AC2 PASS (4 of 4), instance VALID. blackdiamond_list_fees (dormant), reader role blackdiamond_reader_iam.tf (not applied); the 5 literals admitted under R20 X12 (entries R20-04..08 @0d71a22887, Andrew's word @1eba868308); equality re-proved on silver/fees/2026-09-29. Released by MX-r-7. Was: pending.</status>
 <round>5</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
