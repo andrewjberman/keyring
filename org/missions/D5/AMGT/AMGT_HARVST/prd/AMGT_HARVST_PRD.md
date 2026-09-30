@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.7",
+  "prd_version": "v0.8",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -750,7 +750,9 @@ applied here.
 **`C-HV-RANK-DECLARED-SET` (v0.4, FWD-7's denominator).** The chatter rank is a partial rank over a DECLARED publisher set.
 - Each generation declares its publisher set. **It is DERIVED, never typed:** every publisher in `ENABLED_PUBLISHERS`, minus any
   publisher whose collection, in the window, EITHER refused for the whole universe OR ran no UNIVERSE-SCOPE job (both read from
-  the run records). A universe-scope job is a run record whose target securities are the generation's universe. A per-name trial,
+  the run records). A publisher has universe-scope collection when the UNION of its jobs' targets (`jobs[]`: publisher,
+  security_key) across the window's run records covers the generation's universe, so a backfill run in batches qualifies
+  (v0.8). A per-name trial,
   such as sa on ASML or bbg/wsj on Lenovo, is NOT one: it neither adds a publisher nor keeps one in. A publisher outside the set is
   named on the page as not searched. Config decides membership; the run records decide only exit. (v0.7 replaces v0.6's "ran no job
   at all". Under that rule, one trial held 189 of 191 names ineligible on a publisher that never searched them. That contradicts the
