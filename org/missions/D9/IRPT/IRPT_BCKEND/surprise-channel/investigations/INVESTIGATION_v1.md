@@ -13385,3 +13385,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A restriction attribute the reader cannot interpret restricts everything (fail closed) rather than reading as unrestricted. Not exercised by the checks; no live row carries such a value (no row carries the attribute yet). Reversible by editing the one else-branch if the CTO wants a different rule."
 }
 ```
+
+
+## IRPT_BCKEND-W95-S1 -- AC2's fixture echoes one cookie on request and response yet expects cookies_scrubbed == 1; the scrub counts a (name, value) cookie once per entry
+
+```json
+{
+  "id": "IRPT_BCKEND-W95-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~95",
+  "surfaced_at": "2026-09-30T15:00:00Z",
+  "one_line": "check_292_har_scrub.py's planted HAR puts the same cookie in request.cookies and response.cookies yet expects cookies_scrubbed == 1; a per-object count gives 2, so har_scrub counts a (name, value) cookie once per entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y/R29_checks/check_292_har_scrub.py har(): cookies list is appended once and reused as list(cookies) in BOTH request and response; main() asserts cookies_scrubbed == 1.",
+      "First run of the check against a per-object count: census cookies_scrubbed 2, headers_scrubbed 3, residual_hits 0, planted value 0 occurrences in output -- FAIL only on the count."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-yr-292 part 2: every cookies[].value is replaced; the census returns cookies_scrubbed; AC2 expects cookies_scrubbed == 1 on a fixture holding two cookies[] objects.",
+  "world_is": "Both objects are the same cookie echoed on request and response of one entry. har_scrub.scrub replaces BOTH values (0 residual hits) but counts distinct (name, value) cookies once per entry, so the census reads 1. Headers are still counted per occurrence. The check script was not edited; the choice is the worker's reading of the ambiguous count and the issuer may prefer per-object counting with the fixture corrected.",
+  "notes": "Redaction is identical under either count; only the cookies_scrubbed integer differs."
+}
+```
