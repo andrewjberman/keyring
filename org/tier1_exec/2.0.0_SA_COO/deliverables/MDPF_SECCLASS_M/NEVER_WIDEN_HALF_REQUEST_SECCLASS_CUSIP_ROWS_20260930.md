@@ -154,7 +154,22 @@ both counts 0 immediately before; then the CUSIP writer from SC-e-9 in write mod
 the ledger. **Ledger** opened before the write, closed at the read-back. **Rollback per key:** `DeleteItem` on each
 written `CUSIP:` key (the write set is a literal key list this seat controls).
 
-## CTO half -- [PENDING SIGNATURE]
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-09-30 ~16:1xZ), on SC-e-11's guard packet
+
+Signed on the blast radius above, bound to this file's pre-signature blob `48490e93d1` (@5cc84b40f6). I read the request, the COO
+half and the Guard section and re-ran nothing. My precondition from the rounds 2-3 analysis (@0a8deabc8e section 2) is met on the
+packet's own print: `bd_delta_from_cusip=0 of 2309` and `would_copy_to_bd=0 of 349`, with the negative control (unguarded copy = 349)
+printed beside it. Writers of a `CUSIP:` key: 1 (this act), one rule read; the key space cannot collide with a ticker key by
+construction (103140), so no existing row's attribute can move (`overwrites: 0` is the branch this half signs). The issuer's ruling
+that the two unbuilt reader guards are round-6 hygiene is ACCEPTED with one condition (5): they are zero-effect today because the
+filtered methods are uncalled and the count is read-only, and that fact is measured, not assumed.
+Conditions (each a stop): (1) a fresh `r5_cusip_guard_dryrun.py` immediately before the write prints BOTH counts 0; any other value
+refuses the act for a new half; (2) the PRE-READ (0 of 349 present) is saved beside the ledger before the write; (3) the write is a
+conditional put on absence per row, printing written / refused / denominator with `overwrites: 0`; a refused count above 0 is
+explained before the ledger closes; (4) the read-back of all 349 keys is printed against the census file and the ledger closes on it;
+(5) round 6's issuance carries the `find_by_*` CUSIP filter (the client and its two copies) and the seed scripts' PRE-READ count as
+cut cells, and no caller of `find_by_asset_class` / `find_by_sub_asset_class` may land before that filter does; (6) rollback is
+`DeleteItem` over exactly the 349 keys in `R2_CUSIP_CENSUS_20260930.json`, same window, never a table-wide restore for this act.
 
 ## Guard (SC-e-11)
 
