@@ -112,10 +112,19 @@ reporting gold, `account_return_daily`, for the round-1 sample over its full his
   express, STOP on that limb, file the refusal text verbatim in a surprise row, and leave the policy file untouched: a builder refusal
   is a registry row for the LGIC lane, never a typed workaround.
 
-**The emit.** The five sample accounts (from `s3://opal-data-assets/blackdiamond/49f/_ops/taxsma_roster.json`, field `schwab_account`,
-`status active`; the thread account is `0027265115`) over every trading day from 2024-07-09 to the frontier, `--accounts <the five>
---upload`, writing `date=<D>/data.parquet` under the builder's address with ONLY those accounts' rows (a QA thread; the all-accounts
-scheduled run is round 2). Ledger BEFORE the first upload: `python .tools/deploy_ledger.py open --slug irpt-dashbd-account-return-daily-49f-r1-20260930
+**The emit (ISSUER AMENDMENT 1, 2026-09-30 ~17:1xZ, on the seat's message 103331: the five roster accounts are 2026 TaxSMA books,
+first positive value 2026-03-16 .. 2026-07-08).** The sample is SIX accounts: the five roster accounts (from
+`s3://opal-data-assets/blackdiamond/49f/_ops/taxsma_roster.json`, field `schwab_account`, `status active`; they are the tie-out sample
+DB-b-3 needs) PLUS ONE THREAD ACCOUNT chosen by census -- the 49 Financial account with the MOST days of positive `net_mv_plus_cash`
+across the 560 `dim_balance` partitions that also carries `fact_trn` rows (print the top five candidates with their day counts and pick
+the first; a tie is broken by the larger last-day value). Record it as `{"thread_account": "<id>", "census": [...]}` in
+`org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.4.0_DS_ClientPlatform~S/THREAD_ACCOUNT.json` BEFORE the emit; every round-1 check reads
+the thread account from that file. Emit `--accounts <the six> --upload` over every trading day from 2024-07-09 to the frontier, writing
+`date=<D>/data.parquet` under the builder's address with ONLY those accounts' rows (a QA thread; the all-accounts scheduled run is round
+2). A day BEFORE an account's first positive value is NOT emitted (no row; the account's rows carry `history_scope PARTIAL_HISTORY` and
+the manifest will carry `first_data_date`); `NOT_MEASURABLE` is for a day INSIDE the book that cannot be measured, never for a day before
+the book exists. The three guard numbers are measured over days that can carry a real return, denominators printed (the seat's default,
+accepted). No gate limb graded this modification (the L6 gate grades new orders); the CTO reads it at the round-1 analysis. Ledger BEFORE the first upload: `python .tools/deploy_ledger.py open --slug irpt-dashbd-account-return-daily-49f-r1-20260930
 --title "<one line>" --author 0.4.0_DS_ClientPlatform~S --leg "C1|verify|contracts + policy rows|two contract files with schema_hash, validator loads"
 --leg "M1|verify|the three guard numbers measured|distribution figures recorded in dim_return_method"
 --leg "W1|activation|gold written for 5 accounts, full history|partition count, first/last date, schema hash == contract"`;
