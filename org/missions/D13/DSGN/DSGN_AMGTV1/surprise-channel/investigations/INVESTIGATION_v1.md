@@ -495,6 +495,27 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "The cut: with an import-free shared module 'the issuer's helper measured no harness change' and Q3 stays green; a bound harness may be re-anchored only if named in <paths>.",
  "world_is": "timelineFourStates.harness.cjs loads TimelinePanel through its own loader with no './publisherNames' branch, so the required import fails it (the issuer's own _load.cjs resolves it, which is why the helper read green). Fix needs one line in that harness (a './publisherNames' branch returning source('src/pages/SecurityAnalysis/components/publisherNames.ts')), which <paths> does not grant. Worker did not duplicate the map inside TimelinePanel.tsx to dodge it."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W47-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~47",
+ "surfaced_at": "2026-09-30T12:05Z",
+ "one_line": "Resolves DSGN_AMGTV1-Z-W47-S1: AMENDMENT 1 granted the one loader line; timelineFourStates.harness.cjs now resolves ./publisherNames and Q3 reads 4 of 4 green.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "timelineFourStates.harness.cjs load(name): added after the ../dateWords line -- if (name === './publisherNames') return source('src/pages/SecurityAnalysis/components/publisherNames.ts');",
+   "bound.cjs Q3 after the line: 'HARNESS GREEN timelineFourStates.harness.cjs :: rc=0' ... 'Q3 BOUND: 4 of 4 harnesses green', exit=0; publishers.cjs 3 of 3 and bytes.cjs 3 of 3, exit=0"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "AMENDMENT 1 of AV-m-4 (issuer 2.0.0_SA_COO~D, on row DSGN_AMGTV1-Z-W47-S1): one harness line makes the bound harness load the shared module and Q3 green.",
+ "world_is": "The one line landed exactly as granted and nothing else in the harness moved; the S1 blocker is cleared and AC2 reads 4 of 4."
 }
 ]
 ```
