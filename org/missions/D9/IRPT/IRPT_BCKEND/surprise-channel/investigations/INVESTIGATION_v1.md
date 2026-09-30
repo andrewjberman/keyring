@@ -12469,7 +12469,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "id": "IRPT_BCKEND-S219",
   "project": "IRPT_BCKEND",
   "fabric": "laptop",
-  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~61",
+  "surfaced_by": "2.0.0_SA_COO~P",
   "surfaced_at": "2026-09-28T21:10:00Z",
   "one_line": "IB-pr-192 AC2 (live seam): a Since-inception read spans every twr_daily partition from the account's first day, and two of the live table's 559 partitions -- date=2024-07-08 (the engine's very first day) and date=2025-01-09 -- carry schema_version 1.2 like every neighbour but are entirely missing the bmv/emv/cf_net/cf_gross columns, so EngineSource._read's existing 'engine table schema changed' guard (f49_engine.py:134, unchanged by this order) fires on any full-history read that touches either date, including the control account's SI range (first OK 2024-11-07 through today, which spans 2025-01-09). AC2 FAILs as EnginePerformanceRefused against the live table for this reason; AC1's synthetic fixture (uniform columns) passes.",
   "class": "OBSERVATION",
@@ -12487,7 +12487,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "IB-pr-192 AC2: a Since-inception request for the control account answers period SI with a finite value above -1, read against the real engine table.",
   "world_is": "Two specific partitions in the live twr_daily table are missing four columns the producer's own schema declares (schema_version 1.2, same as fully-populated neighbours) -- a producer-side data-quality gap outside this order's <paths> (data/assets/scripts/gold/runners_49f is the writer lane, owned per CLAUDE.md rule 13 by DS). Loosening f49_engine.py's schema guard to tolerate it would weaken a check built to catch exactly this shape of drift, which the refusal clause forbids; the guard is left as-is and AC2 is recorded FAIL against the live table.",
-  "notes": "Re-minted as IRPT_BCKEND-S219 by 2.0.0_SA_COO~P (a seat row on the main index carries no W); worker id was IRPT_BCKEND-W61-S2, the id the IB-pr-192 supersession cites. Un-parks when a 0.4.0_DS_ClientPlatform lane backfills or re-writes the two partitions with the full column set (or the producer confirms bmv/emv/cf_net were never populated by design for those two runs, in which case the remedy is a schema_version bump the guard can key on). Not fixed by this order: no path here reaches the writer lane. AC1 (fixture) is unaffected and PASSes."
+  "notes": "Re-minted as IRPT_BCKEND-S219 by 2.0.0_SA_COO~P (a seat row on the main index carries no W); worker id was IRPT_BCKEND-W61-S2, the id the IB-pr-192 supersession cites. Un-parks when a 0.4.0_DS_ClientPlatform lane backfills or re-writes the two partitions with the full column set (or the producer confirms bmv/emv/cf_net were never populated by design for those two runs, in which case the remedy is a schema_version bump the guard can key on). Not fixed by this order: no path here reaches the writer lane. AC1 (fixture) is unaffected and PASSes. re-minted from W61-S2, surfaced by 0.9.0_WK_IRPT_BCKEND~61 at 2026-09-28T21:10Z (CTO ruling 103314: a seat re-mint is a seat row; surfaced_by is the minting seat)."
 }
 ```
 
