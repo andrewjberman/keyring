@@ -107,7 +107,7 @@ commit hashes, and any row.
 set). The re-run half of RESAPP FWD-12 has no served route: the page says so, and it is a round-12 input for AMGT_RESAPP (a per-input
 re-run route). Base 2bb60cc3: ledger.cjs 0 of 3; the green arm 3 of 3; ALL 16 of 16 with the stub lines; tsc rc=0.
 
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~44</slot>
 <fabric>site-z</fabric>
