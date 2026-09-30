@@ -59,7 +59,10 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 3. **The repair-failed path keeps its body.** `verification.py` ~:21 raises carrying the refused response (status, url,
    content_type, the capped and redacted body), exactly as `transport` does for a rejection. So the next bbg and barrons refusal
    is classifiable.
-4. **The expiry branch still fires.** A 401 or 403 whose kept body says the session is invalid (not a bot signature),
+4. **(AMENDMENT 1, PRD v0.11) Every refusal keeps a bounded body; a body-less refusal is `unclassified`, never expiry.**
+   Every refusal path keeps its capped, redacted body. A refusal that still has NO body classes `unclassified`: it never marks
+   a token expired and never starts a sign-in.
+5. **The expiry branch still fires.** A 401 or 403 whose kept body says the session is invalid (not a bot signature),
    persisting after backoff, still marks expiry as in v0.9.
 
 ## 2. PROOF OF SPEC (each invocation LITERAL; timeout 600). THREE mechanical
@@ -78,7 +81,9 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   - (b) a `bot_check` attempt marks no token expired and makes 0 sign-in or `refresh` calls, and the job ends `bot_check`;
   - (c) a planted session-invalid 401 persisting after backoff STILL marks expiry (the positive arm);
   - (d) the repair-failed path keeps its body;
-  - (e) a body with no signature keeps its prior class.
+  - (e) a body with no signature keeps its prior class;
+  - (f) (AMENDMENT 1) a planted body-less persistent 403 classes `unclassified`, marks no token expired, and makes 0 sign-in
+    calls.
 - **AC2:** replay the two kept batch-1 bodies (read-only) through the classifier. Print, per body:
   - the class and signature as DERIVED from the rule, never typed from the file name;
   - the record shape the new code writes.
@@ -96,6 +101,13 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   and barrons' refusals went through `verification.py`'s raise, which keeps none. Change 3 closes that, and AC2 names the two
   unclassifiable refusals instead of predicting them.
 - The `<expect>`s are plain printed tokens.
+
+**AMENDMENT 1 (issuer, 2026-09-30 ~17:3xZ, before dispatch) -- PRD v0.11 criterion (CTO msg, @`bb49eb7e76`).**
+- Change 4 (every refusal keeps a bounded body; a body-less refusal is `unclassified`, never expiry) is added. The old change 4 is
+  renumbered 5.
+- AC1 adds plant (f): a body-less persistent 403.
+- **Paths and invocations:** unchanged.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
