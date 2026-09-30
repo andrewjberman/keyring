@@ -67,7 +67,7 @@ half is written from AC2.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>24</round>
 <slot>~58</slot>
 <fabric>site-z</fabric>
