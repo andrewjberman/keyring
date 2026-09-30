@@ -406,6 +406,28 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "AV-s-3 item 4: 'In the timeline walk, for each named day of an opened --security' -- an existing timeline walk in walk.mjs is presumed.",
     "world_is": "walk.mjs at base d3770fe501 has no timeline step (AV-u-4's was lost in the merge). The worker added --day, walkTimelineDays and the timeline-days.json write only; it did not restore AV-u-4's code (a neighbouring defect, outside this cell)."
-  }
+  },
+{
+ "id": "DSGN_AMGTV1-Z-S4",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-09-30T01:22Z",
+ "one_line": "Resolves Z-W28-S1: the integrator merge 8b3f8e8833 resolved .claude/skills/ui-walk/walk.mjs to the origin side and dropped AV-v-2's pick step and AV-u-4's --thread, lead-lists.json and timeline steps; the issuer restored them by a three-way merge onto HEAD (keeping AV-s-3's --day and origin's --settle-extra-ms / --periods-per-account).",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git show HEAD vs 8b3f8e8833^1 of walk.mjs before the fix: Chart-picked|data-series-ticker 0 vs 2; opt.thread|--thread|lead-lists 0 vs 5; timeline-day|no-event-element 0 vs 2 (the w-1 sign-in guard survived: 4 vs 4)",
+   "git merge-file HEAD(+AV-s-3) / merge-base 5b69865bc7 / 8b3f8e8833^1: 9 conflict hunks, each a union of independent additions (opt initialiser merged; hunk 6 taken from the site-Z side, which carries the closing braces); walkTimelineDays placed after walkTimeline so each static check reads its own function",
+   "after the fix: round5 pickstep.cjs 3 of 3; round6 walkthread.cjs 3 of 3; round7 walkday.cjs 3 of 3; round4 detect.mjs 6 of 6; round7 walkvoid.sh signed-out control YES; node --check rc=0"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "Row DSGN_AMGTV1-Z-W28-S1 (ARMED, disarm owner this seat): AV-s-3's face presumed a timeline walk that the integrator merge had dropped from walk.mjs.",
+ "world_is": "Restored at HEAD by the issuer, every walker feature of rounds 4-7 present and every walker check green; the file-level cause (a conflict resolved to one side) is the integrator's merge, noted for 0.0.0_AB_MSTR~Z. Resolves Z-W28-S1."
+}
 ]
 ```
