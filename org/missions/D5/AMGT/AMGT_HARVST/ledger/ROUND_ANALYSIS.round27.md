@@ -33,17 +33,27 @@ project is NOT closed.** The PRD moves to v0.5 in this commit (one clause of `C-
    - **The code types the set today:** `chatter_axis.py:450` `DEFAULT_DECLARED_PUBLISHERS = ("bbg", "wsj")`. That is the defect a
      contract cannot see, and round-28 cell 4 derives it.
    - The CVO is right that eligibility stays 0 either way: adding a publisher only tightens it.
+   - **AMENDED ~09:5xZ (CVO~Z msg 27076, PRD v0.6):** the exit rule reads "refused OR ran no job" in the window, and an EMPTY
+     declared set HOLDs (`NO_DECLARED_PUBLISHER`). Without it, an enabled publisher that never ran would keep every name ineligible
+     indefinitely. A publisher that ran even one per-name job stays in; the names it did not cover are ineligible.
 2. **A key rejected for its body (`short_or_partial_body`) is HELD for the rest of that UTC day** and retried on a later day.
    - After 3 failed days it is recorded `rejected_final`, with its reason, and never re-fetched.
    - This replaces `p-2`'s "re-fetch rejected keys every run": that rule spent the job's only live request on a known-bad key and
      ended bbg `request_rejected`. The run record names the hold.
 3. **Cached listings must still record reach** (`o-1`'s gap, `Z-W70-S1`). A listing page served from same-day cache is still
    evidence of the span it covered. The reach is written from the cached page's own date bounds, marked `from_cache`.
-4. **The bbg silver rebuild's pair names the 11 hash-keyed empty rows' fate** (`Z-W71-S1`). This seat's REC for that pair:
-   - keep them;
-   - the story-id-keyed rows supersede them through the `silver_latest` tie-break (round 25 `o-3`);
-   - the pair's AC reads each of the 11 served once, non-empty, by story id;
-   - no delete.
+4. **[SUPERSEDED IN PLACE, ~09:5xZ, COO~H msg 27075]** ~~The story-id rows supersede the 11 hash-keyed rows through the
+   `silver_latest` tie-break.~~ **That was wrong.** `store.silver_latest` (`store.py:391-393`) groups by `article_key`, so the
+   tie-break orders rows of ONE key only. The fixed parse keys by story id, which is a different key, so a rebuild ADDS 11 rows
+   and the 11 empty hash-keyed rows stay served.
+   **RULED (on the issuer's REC):**
+   - keep them, no delete;
+   - the bbg silver pair's AC proves them INERT on every served reader: 0 mention pairs, absent from every served article list
+     (`/timeline/day`, the company query);
+   - it also proves each of the 11 story-id rows is served non-empty.
+   - A reader-side exclusion of empty rows is NOT ruled. A reader filter would hide the next empty row too, and an empty row is a
+     defect to see, not to filter.
+   - If the AC finds any empty row reachable from a served list, the pair STOPs, and the exclusion comes back to this seat.
 5. **FWD-7 is bound by collection reach, not the rank rule.** Widening reach is a large scripted vendor act (R-21). It starts,
    per `C-HV-EGRESS`, with the pre-run print of planned listing pages per publisher over the 190 names, with no request sent.
    That print is round-28 cell 5; the run is round 29 under a pair.
