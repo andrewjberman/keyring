@@ -3802,6 +3802,51 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Issuer row, answering the CTO's round-27 question (msg 27057). Carried to round 28 beside the cached-listing reach fix: whether a known-rejected key should be held (not re-fetched) within a day, since its re-fetch is what exposed the job to bbg's challenge."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~76",
+      "surfaced_at": "2026-09-30T10:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W76-S1",
+      "one_line": "publishers._hit_date does not read a wsj listing hit's date field (`timestamp`), so the LIVE reach path (fold_listing_reach) records every wsj span as basis stop_bound; only the new cached-page path reads it.",
+      "spec_asserts": "Order section 1: the job's reached_span is written from the cached page's own date bounds; the base live path (o-1) is assumed to read a hit's published date from the same fields.",
+      "world_is": "The recorded wsj listing pages (runtime harvest_listing/wsj_p1_e513433c8e6841d6.html, _p2_00fe6002a764d9bc.html, _p3_3400c59970f8d12e.html): 30 hits, 30 carry `timestamp` (e.g. 2026-09-23T09:30:00Z) and `printPublicationDate`, and _hit_date reads 0 of them (its keys are publishOn, published_on, publishedAt, publishedDateTimeUtc, datePublished, date). fold_listing_reach therefore gives a live wsj job hit_dates=[] -> basis stop_bound (start=end=fetch date). aa-1 reads `timestamp`/`printPublicationDate` in worker._cached_hit_date for CACHED pages only; _hit_date was not edited because _stop_paging (backfill bound stop) reads it too and adding keys would change paging.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py:_HIT_DATE_KEYS and _hit_date (read at the pin db27b6c3a4)",
+          "python census over the three recorded wsj pages: hits=30 timestamp=30 _hit_date-dated=0",
+          "aa1_ac2_replay_q1.py output: wsj reached_span 2025-11-20..2026-09-23 basis listing_dates from_cache true (q-1 recorded None)"
+        ]
+      },
+      "notes": "A live wsj (and barrons, unmeasured) run still records stop_bound spans. Fixing _hit_date changes what _stop_paging bound-stops on for wsj in backfill, so it is a decision, not a rider."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~76",
+      "surfaced_at": "2026-09-30T10:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W76-S2",
+      "one_line": "test_p2a_the_rejected_key_is_still_refetched_each_run asserts the behaviour ruling 3 replaces (refetch a rejected key every run); it stays green only because the hold is gated to harvest mode, and the test file is outside this order's <paths>.",
+      "spec_asserts": "Order section 1 change 2: the hold 'replaces p-2's re-fetch rejected keys every run'; AC3: no test that passed at the base fails.",
+      "world_is": "lib/opal_data_harvest/test_p2_fetched_and_stored_keys.py::test_p2a_the_rejected_key_is_still_refetched_each_run_and_still_named_rejected runs two collections through Worker(root, config, factory, sessions) with NO harvest_client and asserts the rejected story is GET-fetched once per run (count 2). With the hold applied in every mode it fails (run 2 would fetch 0). aa-1 therefore applies the hold only when harvest_grammar is true AND a harvest_client is present (Worker._hold_enabled), the mode q-1 ran in; the legacy/no-client mode keeps p-2's behaviour and the test passes (234 passed at base, 234 + 15 after).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_p2_fetched_and_stored_keys.py:78-98 (the accepted-limit test, read at db27b6c3a4)",
+          "lib/opal_data_harvest/worker.py Worker._hold_enabled; test_aa1_hold_is_off_outside_harvest_mode pins the legacy arm"
+        ]
+      },
+      "notes": "If the issuer wants the p-2 test to describe the new behaviour, it needs its own order with that file in <paths>; a stale docstring ('ACCEPTED LIMIT') remains in that test for the harvest-mode case."
     }
   ]
 ```
