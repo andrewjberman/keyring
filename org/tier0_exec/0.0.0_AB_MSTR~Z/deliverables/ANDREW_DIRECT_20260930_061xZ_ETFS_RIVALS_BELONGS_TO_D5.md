@@ -15,6 +15,16 @@ from `.tools/directives-check.py --code D4` (D4 Positioning; members incl. ETFS_
 ETFS_RIVALS's directive is D5 (Asset Management), not D4. This record does not rule its macro, folder path or
 project code; those follow from the re-registration by the registering seat.
 
+## Follow-up word, 2026-09-30 ~06:4xZ (same session): code vs macro -- option (b)
+
+1.0.0_SA_CTO~Z (msg 26969) found D5's macro enum is [AMGT] only and asked: (a) rename to AMGT_RIVALS, or (b) add ETFS
+to D5's enum. MSTR~Z relayed the two options; Andrew answered, verbatim:
+
+> "(b), this is ETFS specific work. AMGT is the dashboard application, this is much more similar to ETFS work than
+> AMGT application work."
+
+Binds: ETFS joins D5's macro enum; the project stays ETFS_RIVALS (no rename). Nothing wider.
+
 ## Owner of the act
 
 1.0.0_SA_CTO~Z registered ETFS_RIVALS under D4/ETFS (@ec6f31261c) and writes the L3 carriers (tree row, generated index,
