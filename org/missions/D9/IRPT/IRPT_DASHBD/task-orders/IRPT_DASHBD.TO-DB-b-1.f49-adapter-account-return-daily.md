@@ -148,7 +148,8 @@ FLOW_UNRECONCILED days carry `HOLDINGS_INCOME_FALLBACK`. Base: FAIL (no gold).
 - **Grant.** The `<paths>` block below, plus your deliverables folder and this order's file.
 - **AWS writes admitted:** objects under `irpt/49financial/gold/account_return_daily/` and `irpt/49financial/gold/dim_return_method/`
   in `opal-data-49financial` only. No other prefix, no other bucket, no Terraform, no Lambda.
-- **No vendor call of any kind** (C-TIEOUT; Andrew's per-use word is absent and not asked here).
+- **No vendor call.** The adapter reads Opal silver only (amendment 3: Andrew's egress grant to this seat, record @4c4989c800, covers
+  calls the work needs; this cell needs none, and the conditional tie-out pull belongs to DB-b-3).
 - **Refusal clause.** A method question the PRD does not answer is a surprise row (`IRPT_DASHBD-S<k>`, the project's channel), with the
   default you took stated; a builder or validator refusal stops that limb only. Never weaken a check.
 
