@@ -52,7 +52,7 @@ Deferred: the plan-only Terraform passes for TX-k-1 (mdpf-pipeline root) and TX-
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| Terraform roots for TX-i-3 / TX-i-1 / TX-i-2 | IRPT_BCKEND (TO-IB-rtc-6 names infra/aws/terraform/mdpf-pipeline/iam.tf; rtc-7, rtd-4..7 claim the mdpf-pipeline root) and NFRA_OUTSET (TO-OS-s-18 claims infra/aws/terraform/) | open orders with no status tag (lease tool reads them open, correctly); the IAM-t-3 claim was a misread, fixed @05f0a0b5af | BLOCKED until those orders close or narrow, or Andrew/CTO sequences the roots |
+| Terraform roots for TX-i-3 / TX-i-1 / TX-i-2 | IRPT_BCKEND (TO-IB-rtc-6 names infra/aws/terraform/mdpf-pipeline/iam.tf; rtc-7, rtd-4..7 claim the mdpf-pipeline root) and NFRA_OUTSET (TO-OS-s-18 claims infra/aws/terraform/) | open orders with no status tag (lease tool reads them open, correctly); the IAM-t-3 claim was a misread, fixed @05f0a0b5af | BLOCKED; sequencing asked of 1.0.0_SA_CTO 19:5xZ |
 | `portal/src/components/CategoryViewTree.tsx` | 2.0.0_SA_COO~D (DSGN_IRPTV1 FAST lease) | lease ends / component released | AWAITED |
 | G-O grade of OG-r-1 readback @e2f11d1e3d | issuer (this lane under Andrew's word) | TX-r-2 first line | AWAITED |
 | G-W never-widen halves | 1.0.0_SA_CTO + a COO | TX-r-3 | AWAITED |
@@ -63,7 +63,7 @@ Deferred: the plan-only Terraform passes for TX-k-1 (mdpf-pipeline root) and TX-
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| Who re-cuts the 102 expected cases to 0.6.0 and runs the journey harness: the decomposition bars the engine author (this seat now) from writing expectations it is graded against; /closer-drive bars subagents | Andrew | his word: an independent context (worker or CVO) re-cuts v-1 and builds v-2/v-3, or this seat does it with the CVO grading after the fact |
+| DECIDED 2026-09-30 ~19:5xZ by this seat under /closer-drive (no subagents; the CVO grades each pin after the fact, call 3): this seat re-cuts the 0.6.0-affected expected cases and builds TX-v-2/v-3; every changed case is listed for 3.0.0_SA_CVO's grade in the pin's report | 4.0.0_SA_CRO | closed |
 | Cottonwood's Tax ($6.04M on 09-28) is not added to Global yet: it would double-count if those accounts also carry a Cottonwood model assignment | this lane | a read of bd-rebalancer model assignments for the two accounts shows none (then one line in apply_taxsma_overlay), or Andrew rules |
 | aum-metrics `non_model_assets_detail` (W-6) is built before the Tax step, so its enterprise_total stays pre-Tax | this lane | the page is shown to read it; else leave |
 | TRADED-ONLY is the rule and Yang's sheet now reflects it (rows 12-15 flipped to Yes 2026-09-30 ~16:2xZ). Still outside 49F's 17.03M: row 9 (Traded=No, awaiting a transfer, 2.30M on 0833) and two 0833 accounts labelled Opal Tax SMA 145 with no workbook row (1.03M + 0.96M), reported as UNCONFIRMED candidates | Yang (workbook rows) / Andrew | two rows added with Traded=Yes; the transfer settling |
