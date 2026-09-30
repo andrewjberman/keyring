@@ -400,6 +400,28 @@
     "spec_asserts": "TO MS-a-3 AMENDMENT 1 item 0: the description literal is a valid New-LocalUser -Description.",
     "world_is": "The literal exceeded the 48-char limit, failing binding before any act. Fixed in the nested branch only; the issuer drains it.",
     "notes": "The same literal exists at opal_ai DEV fd8ab8a line 101 until the drain lands; Opal_Agent provisioning is unblocked by the same change."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T14:30Z",
+    "id": "NFRA_MCPMSP-Z-W4-S2",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MS-a-3 item 0b: the nested opal_ai commit 61841f5 (verify-boundary run-as route) cannot be recorded as a parent gitlink bump -- safe-commit's gitlink-publication-check refuses it as NOT PUBLISHED and the worker may not push; the parent branch carries only the CLOUD merge (222e02f51c).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh -- opal_ai rc=1: 'BLOCKED: gitlink-publication-check: opal_ai -> 61841f50ae is NOT PUBLISHED' (ls-remote rc=0, 9 heads tested).",
+        "git -C /c/tmp/ms-4/opal_ai log: 47cfd4b (item 0) and 61841f5 (item 0b) are on wk-NFRA_MCPMSP-4-opal_ai, local only."
+      ]
+    },
+    "spec_asserts": "TO MS-a-3 AMENDMENT 2: commit in the nested repo naming OA-t-2/OA-t-3; the issuer drains the commit.",
+    "world_is": "The nested commit exists locally on its branch; the issuer drains it from the nested branch (as with 47cfd4b). No parent gitlink commit was possible. verify-boundary.ps1 run from the worker shell prints 'BOUNDARY: CANNOT-RUN-AS-ACCOUNT deny probe could not start as Opal_MSP: Access is denied', exit 5 (the measured shell restriction; replaces the false BREACH).",
+    "notes": "The real AC2 run remains Andrew's after the drain."
   }
 ]
 ```
