@@ -44,6 +44,33 @@ the zip from the main tree (the issuer restored the DEPLOYED layer's exact bytes
 and passes plan-only placeholders for the two variables; it borrows the main tree's `.terraform` through
 `TF_DATA_DIR` (no `init`, which would fetch providers). Do not run `terraform init` and do not apply anything.
 
+**AMENDMENT 1 (issuer, 2026-09-30, on your row NFRA_MCPMSP-Z-W2-S2 -- the naming gate is ENFORCE and refused 14
+literals).** Items 1-3 above are REPLACED by these; keep your worktree and branch, rewrite the file:
+1'. **Every name through the HCL builder module** `infra/aws/terraform/modules/opal_name` (it is `lib/opal_naming.py
+   name()` in HCL; precedent `infra/aws/terraform/investor-reporting/holdings-performance/iam.tf:34-54`): one module
+   call per name, `system = "gateway"`, `scope = "inflection"` (a module `scope` input is the gate's permitted context
+   for the firm literal), `function = "firm-reader"`, `kind = "role"` for the role and `kind = "policy"` for its
+   policy; a second function (e.g. `firm-assume`, `kind = "policy"`) for the gateway's grant policy. Every
+   `name =` reads `module.<call>.name`. No typed name.
+2'. **The role reads ONE thing in round 1: `opal-data-portal-v2/platinum/mdpf/inflection/*`**, built ONLY from builder
+   outputs: the bucket is `module.<call>.scope_bucket["global"]`, and the firm's long form is derived from the
+   builder's own name output, e.g. `module.<call>.scope_long[split("-", module.<call>.name)[1]]` (a literal index
+   like `scope_long["inflection"]` or a variable default is refused by the gate -- measured). Allow `s3:GetObject` on
+   that prefix; add an explicit `Deny` on `s3:GetObject` for every OTHER object of that same builder-named bucket
+   (`NotResource` = the prefix). **Drop** the `opal-data-inf` Allow and the literal Denies on `opal-data-cot`,
+   `opal-data-bd`, `opal-data-49financial`: the builder cannot name the live `opal-data-inf` today (the registry's
+   `scope_bucket["inflection"]` is `opal-data-inflection`, and the live bucket is an alias with `lookup: false`; row
+   Z-S2 carries it to the CTO), round 1's figures live only under the portal prefix, and every firm bucket carries its
+   own live `DenyForeignFirmPrincipals` policy admitting only principals named `*-<firm short>-*` (measured in the
+   holdings-performance precedent's header), which already refuses this role on the other firms' buckets.
+3'. **The gateway's grant** unchanged in intent: `sts:AssumeRole` for `aws_iam_role.gw` on exactly this role's ARN.
+   The role's trust names `aws_iam_role.gw.arn`.
+4'. **Plans need the module registered:** AC2's check makes a PRIVATE copy of the main tree's `.terraform` providers
+   and backend state and runs `terraform get` (a local module path: no network) before the plan. Never `init`, and
+   never write the main tree's `.terraform`.
+The criteria below are amended to this; the issuer ran both against a conforming prototype and against your current
+file (AC1 PASS/FAIL respectively; AC2 `Plan: 3 to add` and the builder's role name seen on the prototype).
+
 ## 2. BOUNDS
 
 1. Write surface: `mcpmsp_firm_roles.tf` only. No other `.tf`, no apply, no registry file (the name resolves with no
@@ -69,8 +96,8 @@ Rows go to `org/missions/D6/NFRA/NFRA_MCPMSP/surprise-channel/investigations/INV
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MS-t-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t2.AC1.sh; echo "exit=$?"</invocation><expect>name()=gateway-inf-firm-reader-role; role_name=y trust_gateway_role=y allow_inf=y allow_portal_prefix=y deny_block=y deny_cot=y deny_bd=y deny_49f=y assume_grant=y verdict=OK -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MS-t-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t2.AC2.sh; echo "exit=$?"</invocation><expect>plan: Plan: N to add, 0 to change, 0 to destroy with N >= 3 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MS-t-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t2.AC1.sh; echo "exit=$?"</invocation><expect>role_module=y role_named_by_module=y served_bucket_from_builder=y mdpf_prefix=y assume_grant=y no_bucket_literal=y verdict=OK; naming gate: NAMING-GATE: PASS (paths in the graded diff: 1) -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MS-t-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t2.AC2.sh; echo "exit=$?"</invocation><expect>plan: Plan: N to add, 0 to change, 0 to destroy with N >= 3; planned role name gateway-inf-firm-reader-role seen>=1 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -85,6 +112,15 @@ FAIL as expected (file absent). AC2's machinery controlled at the cut: a plan ta
 `aws_iam_role.gw` with the restored layer zip and the placeholders reads "No changes" in ~4 s. The restored zip:
 `mcportal-grant-writer-deps-layer` version 1, 5,016,850 bytes, b64 sha256 `oO8BxcnG9EOvVz/pMpHlQCUGzkayANH3ryCKpNAaKfk=`
 = the live CodeSha256. Slot `~2` continues to MS-a-1.
+
+**AMENDMENT 1 (issuer):** on row Z-W2-S2 (naming gate ENFORCE, 14 REFUSE on literal names and bucket ARNs; also
+Z-W2-S1, AC1 not recognising `aws_iam_role.gw`). Names move to `module opal_name`; the role reads only the builder-
+built portal prefix; firm-bucket reads and literal cross-firm Denies are dropped for round 1 (the live firm-bucket
+fences deny foreign principals; the `opal-data-inf` builder gap is row Z-S2, disarm_owner `1.0.0_SA_CTO~O`). AC1 now
+checks module use, no bucket literal, and the naming gate over the whole file (denominator >= 1 path); AC2 adds the
+builder's role name to the plan read and uses a private TF data dir + `terraform get`. Controls: AC1 FAIL on the
+worker's literal file (REFUSE 14), PASS on the issuer's prototype; AC2 PASS on the prototype (`Plan: 3 to add`,
+name seen). Graded by: no gate limb grades a modification's criteria (GATE (viii) `<placeholders>` only, NONE).
 
 <status>pending</status>
 <round>1</round>

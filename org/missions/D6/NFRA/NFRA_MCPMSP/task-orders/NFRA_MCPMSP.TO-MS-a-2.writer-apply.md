@@ -86,6 +86,11 @@ FAIL as expected (live `lambda_function.py` is byte-identical to HEAD, sha256 `e
 `register_tenant` -- the check discriminates both arms); AC3 PASS as expected (`LIVE_FIRMS` absent, the C11 control).
 G-FIRM later sets `LIVE_FIRMS=inflection` as its own act, on Andrew's word.
 
+**AMENDMENT 1 (issuer, spawn precondition only):** this order runs only after MS-t-1's AMENDMENT 1 (`tenant_firm` in
+`app/access_state.py` `POLICY_RECORD_TYPES`) AND MS-w-1's AMENDMENT 1 (the write through `operator_transact`) are
+both merged to CLOUD, because the writer's package stages `app.access_state` from the gateway tree at build (row
+Z-W3-S1). No criterion changes. Graded by: no gate limb.
+
 <status>staged</status>
 <round>1</round>
 <slot>~3</slot>

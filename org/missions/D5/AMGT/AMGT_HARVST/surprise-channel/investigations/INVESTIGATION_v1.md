@@ -3519,6 +3519,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Observation only; nothing else was invoked. The article rows the CTO condition names are present with counts."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W68-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~68",
+      "surfaced_at": "2026-09-30T07:40Z",
+      "one_line": "The TO's <expect> 'AC1 RESULT: PASS (0 failure(s))' is a regex to proof-of-spec-check, so its literal parens never match the check's own verbatim output and a PASS row is refused until the instance's expect is regex-escaped.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order criteria AC1/AC2: expect 'AC<n> RESULT: PASS (0 failure(s))' is the deciding output line.",
+      "world_is": "proof-of-spec-check.py:123 does re.search(expect, output_evidence); '(0 failure(s))' groups as '0 failures', not the literal text, so the verbatim output (rc 0, 'AC1 RESULT: PASS (0 failure(s))') failed the match until the instance carried expect 'AC1 RESULT: PASS \\(0 failure\\(s\\)\\)'. Invocation alignment still matched 2/2.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~68/p3_AC1.txt: last line AC1 RESULT: PASS (0 failure(s)); proof-of-spec-check first run INVALID on this match, VALID rc=0 after escaping"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Instance expect field differs from the TO text only by regex escaping; the check scripts were not edited."
     }
   ]
 ```

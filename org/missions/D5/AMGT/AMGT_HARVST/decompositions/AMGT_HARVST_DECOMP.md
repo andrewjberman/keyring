@@ -2169,3 +2169,12 @@ the output, 2 of 9 FWDs REALIZED. Series **`p`**; slots **`~66`..`~69`**.
 - the other 190 names (ruling 4: ft and barrons are read first);
 - the gold flip (waits on `p-3`'s evidence);
 - the schedule (Andrew's).
+
+**Section 38 addendum (issuer, 2026-09-30 ~07:5xZ) -- `p-3` split per `ledger/CTO_RULING_ROUND26_P3_SPLIT_AND_FWD7_DENOMINATOR_20260930.md`.**
+- `HVST-p-3` is part (a) only, the `chatter_daily` rebuild: complete @`49611d45cb`.
+- **Part (b)** (the span-bearing Lenovo bbg/wsj run, its upload, and the rebuild that reads the persisted run record) is
+  **carried to round 27 as its first cell.**
+  - `to-pipeline-gate` refuses a second issuance within round 26 (ONE ISSUER PER ROUND). `p-3` is terminal.
+  - Round 27 opens FWD-7's denominator work, and (b) is that work's positive arm.
+- Its COO half and checks are already signed at `round26/NEVER_WIDEN_HALF_COO_P5.md` and `round26/checks/p-5.*`. The round-27
+  order cites them, re-measured at its cut.

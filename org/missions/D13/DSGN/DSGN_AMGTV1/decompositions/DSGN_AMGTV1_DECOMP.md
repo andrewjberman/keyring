@@ -780,3 +780,112 @@ x 8 names = 45 surfaces):**
   skeleton), so o-4's planted face is re-walked on TSM US (a planted name) at the re-walk.
 - **Gate limb that graded this amendment:** none graded the modification of `AV-o-3` (LIMB 6 fires on newly-added orders only;
   GATE (viii) reads its `<placeholders>NONE`). The surprise row is graded by `.tools/surprise-row-gate.py`.
+
+## v11 -- ROUND 11 (issuer, 2026-09-30 ~07:xZ), over PRD v0.3 @abfad1355c (ADMITTED)
+
+**Rectangle:** the round-10 analysis's enrichment list.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round10.md` @afad83a02f section 4, items 1-6, one cell per item, with rulings 1
+  (the qualifier leads an unresolved figure), 3 (the evidence names which evidence), 4 (a DENIED day with articles) and s.2 (o-2's
+  unexercised no-dossier arm; RESAPP round-51's routed page asks).
+- **Cell ids:** `AV-n-1`..`AV-n-6`. Letters e, o, p, q, r, s, t, u, v, w are on disk, so round 11 takes `n`.
+- **NOT cells:**
+  - ruling 2 (quoted document titles are names, not page dates: nothing to build);
+  - the names on 22 of 22 rows and the driver series (AMGT_RESAPP r51);
+  - RESAPP FWD-12's re-run half, which has no served per-input re-run route (the page says so; a round-12 input for AMGT_RESAPP);
+  - 6501's per-field dossier reasons (AMGT_RESAPP round-52 cell 2).
+- **The issuer's placements:**
+  - (a) Cell 4 is a WALKER cell. An issuer-spawned read-only research agent measured why 6501 JP never opened on walk I: the walker
+    typed and submitted it correctly, and the page issued `/overlay`, but walk.mjs waits a FIXED settle (3000 ms after the pick,
+    2500 ms per tab) and moved on while that first read was pending ("Loading identity header" on all seven 6501 steps). n-4 makes
+    the walker wait for the page's panel state (`data-panel-state`) and record it, so the no-dossier arm is walked.
+  - (b) Cells 5 and 6 share their write set (ModelTab, types, constants, the hooks, the endpoint file), so they are one chain on
+    slot ~44: n-5 then n-6.
+- **Portal base:** site-Z local DEV `2bb60cc3` (clean). **Walker base:** walk.mjs at CLOUD HEAD.
+- **Fixtures:** `deliverables/2.0.0_SA_COO~D/round11/fixtures/` = the round-10 set, carried unchanged (37 files), plus 14 SERVED
+  read-only captures at the cut (`round11/capture_r11.py`, committed, plus two one-off capture scripts in the issuer's scratchpad,
+  not committed: each fixture's `_capture_note` names the route, query, CodeSha256 and time). The captures are `opal-amgt-scoped-api`,
+  CodeSha256 `zHpr7FhS+irmKofIuKNqTkQm2hj7x2fvS1rrX1ohkfQ=`, LastModified 2026-09-30T05:20:04Z:
+  - `/ledger`, `/versions` and `/compare` for BA, VLO, IMB and AZN;
+  - `/compare?from=<oldest>&to=<newest>` for BA (212 added / 0 removed / 7 changed / 172 unchanged; every default compare of the
+    two newest stamps is 0 changed);
+  - `/thesis` for BA.
+  ISSUER VARIANTS are built in memory inside the checks, each labelled there.
+- **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-n-1` | 1 + ruling 1 | an UNRESOLVED unit reads "unit not resolved -- raw figure <digits> (<CUR>)": the qualifier first, the digits labelled raw; measured units unchanged | RESAPP FWD-30, FWD-11 | `SA/components/StatTile.tsx` | ~40 | LOCAL |
+| `AV-n-2` | 2 + ruling 3 | the Posture tab's evidence section and footer name the FILING evidence (never "pack"); no "on this object", no raw key; an absent side says no filing evidence is carried | FWD-11 | `SA/tabs/PostureTab.tsx`, `SA/postureCites.ts` | ~41 | LOCAL |
+| `AV-n-3` | 3 + ruling 4 | a DENIED day with N served articles reads "not searched for this company directly -- N articles found in other searches" (heading and tooltip); a 0-article day unchanged | HARVST FWD-5, FWD-11 | `SA/components/TimelinePanel.tsx` | ~42 | LOCAL |
+| `AV-n-4` | 4 (s.2) | walk.mjs `waitForLoaded(page)` on `data-panel-state` (ceiling >= 30 s) after the pick and each tab, replacing the fixed settles; `load-states.json` | CORPUS FWD-10/11/15/16/18 (the no-dossier arm) | `.claude/skills/ui-walk/walk.mjs` | ~43 | LOCAL |
+| `AV-n-5` | 5 (RESAPP r51) | `useModelVersions` / `useModelCompare` + client calls; the Model tab's versions (newest first, dated) and compare (oldest -> newest by default, served counts, the earlier version named, each change's line name and from/to); no raw mnemonic on the tab | RESAPP FWD-6 | the endpoint file, `SA/constants.ts`, `SA/types.ts`, `SA/hooks/useLeadPanelApi.ts`, `SA/tabs/ModelTab.tsx`, 2 harness stubs | ~44 | LOCAL |
+| `AV-n-6` | 6 (RESAPP r51) | `useInputLedger` + client call; the Model tab's input ledger (6 classes in words, source, last run dated, worked/failed/skipped or not run yet; "1 of 6"; re-run said unavailable; no storage path) | RESAPP FWD-12 | the same five files + the same 2 harness stubs | ~44 (after n-5) | LOCAL |
+
+**Edges and chains:**
+- There is no data edge.
+- Write sets: n-1 StatTile; n-2 PostureTab + postureCites; n-3 TimelinePanel; n-4 walk.mjs; n-5 -> n-6 the Model-tab set. They are
+  pairwise disjoint across chains.
+- M = 5 chains, N = 5 now, K = 0 queued (n-6 follows n-5 on its own slot), cap 8.
+- The surprise channel is shared append-only.
+
+**Checks (`round11/checks/`, dry-run at base 2bb60cc3 / walk.mjs at HEAD; `_load.cjs`, `bound.cjs`, `census.cjs`, `walkvoid.sh`,
+`surfaces.cjs` and `bytes.cjs` copied forward):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| unitlead.cjs | 1 of 3 (amount first: "TWD 71,993,494.73 (unit not resolved)"; the measured control passes at base by design) | 3 of 3 |
+| evidence.cjs | 1 of 3 ("pack" / "research pack" in the evidence section; "carried in packs on this object"; control passes at base) | 3 of 3 |
+| denied.cjs | 1 of 3 ("Not searched on this day" above 2 served articles; "1 found anyway"; control passes at base) | 3 of 3 |
+| loadstate.cjs | 0 of 3 (no waitForLoaded; fixed settles; nothing recorded) | 3 of 3 (scratch walk.mjs, CHECK_SRC_OVERRIDE) |
+| versions.cjs | 0 of 3 (no surface, no caller) | 3 of 3 |
+| ledger.cjs | 0 of 3 (no surface, no caller) | 3 of 3 |
+
+- **Green arms:**
+  - Scratch `C:/tmp/cood-r11a-root/portal` `r11-green-a` carries n-1..n-3 (an issuer-spawned helper agent).
+  - Scratch `C:/tmp/cood-r11b-root/portal` `r11-green-b` carries n-5 and n-6 (another helper).
+  - `r11-green-b` merged cleanly over `r11-green-a` = the drain state.
+  - On it: all five portal checks 3/3, bytes 3/3, ALL 16 of 16 harnesses, and portal `tsc -b` rc=0. The round-10 checks read dates
+    3/3, dossier 4/4, cases 3/3 and units 3/3.
+  - n-4's green arm is a scratch walk.mjs: loadstate 3/3; round-8 daystate 3/3 and walkerbound 3/3.
+- **Harness breaks, NECESSARY, granted:**
+  - n-5 / n-6 break `modelPattern.harness.cjs` and `tabs.harness.cjs`. Their stubs of `hooks/useLeadPanelApi` name only the hooks
+    they use ("useModelVersions is not a function").
+  - Each is granted one stub line per new hook, split by the hooks each cell adds. n-1..n-4 break none.
+- **Found by the green arms and folded into the faces:**
+  - n-2's absent-source clause is `postureCites.ts` `FILLED_BY` (granted);
+  - n-5: BA's served base-case reason carries `BEST_EPS` on the Model tab face, so `caseAbsenceWords` strips mnemonics with the
+    page's `formulaInWords`.
+
+**An issuer check defect, found at this cut:**
+- `census.cjs` (carried forward since round 6) has had nine literal 0x08 bytes where its MACHINE_PHRASES regex meant `\b`. So
+  "the object", "rung", "log cap", "cite(s)" and "covered" were never counted in rounds 6-10's non-prose census; the other phrases
+  were.
+- Fixed in `round11/checks/census.cjs` only. The earlier rounds' copies stay as their history.
+- It is the same class as row Z-S5. The census is an instrument for the CVO's judgment, not a criterion.
+
+**Cut rules applied:**
+- (a) Queue-aware bases: no check compares against a base snapshot; n-6 is chained on n-5's slot, not queued on another.
+- (b) Every necessary harness break is granted with its exact line and proven green on the combined drain state.
+
+**Battery:**
+- comp-schedule and comp-iam: DECLARED-NOT-APPLICABLE (no AWS in the cells; the cut's captures were read-only invokes by the issuer).
+- comp-adversary: the checks above, plus `bytes.cjs` on every portal cell (round 10's 0x08 class).
+- Blind spots:
+  - static markup with the estate chrome stubbed, so layout, selects, hover tooltips and the lazily opened card windows are the
+    walk's;
+  - loadstate's live latency is the walk's.
+- The issuer's close walk:
+  - signed-out control first;
+  - then VLO, INTU, SAP GY, 992 HK, IMB LN, AZN LN, TSM US, 6501 JP (0 dossier objects of 287) and BA US;
+  - TSM's header (n-1); IMB's Posture tab (n-2); 992 HK's opened days (n-3); 6501's Thesis tab loaded, with `load-states.json`
+    (n-4); BA's Model tab versions / compare and input ledger (n-5, n-6).
+
+**Rule 24:**
+- (i) MECE over the analysis's six items by subtraction: 6 placed; ruling 2 and the NOT-cells named with their reasons.
+- (ii) One write set per chain.
+- (iii) One intent per cell.
+- (iv) No cell moves a served value, a figure, a verdict, a count or an order:
+  - n-1 reorders words around an unscaled figure;
+  - n-2 and n-3 change words;
+  - n-4 changes only when the walker shoots;
+  - n-5 and n-6 add read-only surfaces over served routes.
