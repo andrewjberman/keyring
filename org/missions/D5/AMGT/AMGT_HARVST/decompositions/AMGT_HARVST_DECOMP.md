@@ -2100,3 +2100,40 @@ dry-run at the base before the dispatch. This is the one recorded departure from
 - re-fetching the 104 rebuilt originals;
 - the backfill run (until `n-5`'s plan is read);
 - events.
+
+## 37. ROUND 25 -- L5 DECOMPOSITION v3.4, over the round-24 analysis (`ledger/ROUND_ANALYSIS.round24.md` @6c5b4339a1)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~03:4xZ.
+- Round 24 is CLOSED, built but not served. 2 of 9 FWDs are REALIZED.
+- Rulings: `ledger/CTO_RULING_ROUND24_N4_HOLD_GRAMMAR_FLAG_SILVER_TIE_20260930.md` @5998e71f23, with ruling 2 amended
+  @e49bbdb3d2 on this seat's card (msg 26880).
+- Series **`o`**; slots **`~61`..`~65`**.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 `chatter_daily` coverage from run records (FWD-7) | `HVST-o-1` | LOCAL (a served rebuild on this rule is a later paired order) | `~61` | now |
+| 2 the scheduled run passes `--harvest-grammar` (FWD-1/3) | `HVST-o-2` | LOCAL, NO pair (amended ruling 2: the task is Disabled, 0 triggers; re-arming it is Andrew's) | `~62` | now |
+| 3 `silver_latest` tie-break on `run_stamp`, in EVERY newest-wins silver reader (FWD-2) | `HVST-o-3` | LOCAL | `~63` | now |
+| 4 the paired served sa silver rebuild (FWD-2) | `HVST-o-4` | WORLD, under a pair | `~64` | after `o-3` drains and both halves are committed; issuer-written checks |
+| 5 Lenovo's backfill on barrons/bbg/ft/wsj; the repeat fetches 0 (FWD-9, then 3) | `HVST-o-5` | WORLD, under a pair; R-21 scripted egress | `~65` | after both halves are committed; issuer-written checks with the BEFORE snapshot |
+
+**Fan-out: 4 of 4 chains start now (`o-1`, `o-2`, `o-3`, `o-5`). `o-4` follows `o-3`. N = 5 worker slots; cap 8.**
+- `o-1`, `o-2` and `o-3` are spawned now.
+- `o-5`'s worker is spawned when its pair is committed.
+
+**Write sets:**
+- `o-1` owns `worker.py`'s run-record code, and in `publication_gold.py` the coverage functions (`publisher_coverage`,
+  `daily_rows` coverage, `build_daily`).
+- `o-3` owns `store.py`, and in `publication_gold.py` the silver readers (`_iter_latest_articles`,
+  `_latest_articles_for_keys`).
+- `publication_gold.py` is therefore named by both, split at the function boundary each face states. A drain conflict
+  there is resolved by the issuer at the merge.
+- `o-2` owns `run-local.ps1` and `README.md`.
+- `o-4` and `o-5` write only their deliverables and the served objects their halves name.
+
+**NOT cells:**
+- `n-6`'s redeploy: it rides AMGT_RESAPP r51's one build (ruling 1, routed to `2.0.0_SA_COO~Z`).
+- Re-arming the Scheduled Task (Andrew's).
+- The portal DEV promotion (Andrew's, through the integrator).
+- The other 190 names' backfill (next round, on the Lenovo run's actual pages).
+- The `CHATTER_AXIS_SOURCE` flip, which is re-cut when gold resolves a gradable pair.
