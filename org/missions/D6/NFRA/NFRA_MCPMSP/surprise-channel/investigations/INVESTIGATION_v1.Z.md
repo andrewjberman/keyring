@@ -312,6 +312,50 @@
     "spec_asserts": "TO MS-d-1 2a: a cherry-pick conflict is a BLOCKING row naming the file and the foreign commit it needs.",
     "world_is": "The conflict is textual adjacency to another project's unreleased config block; the ported lines do not use it (60 of 60 tests read with the contract). Resolved by hand, recorded, not treated as a dependency.",
     "notes": "A judgment by the worker that the order's 'conflict is BLOCKING' aims at a dependence on foreign work, not at adjacency; S4 and S5 are what stop the release."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S7",
+    "one_line": "The deploy script builds the dashboard from a nested $WORKSPACE_ROOT/mcportal checkout, and the release tree carries none: mcportal is a gitlink pinned at fa1ff9693b (a README-only commit) while the served artifact was built at a3bff71ffa, so the worker added a detached git worktree of the mcportal repo at a3bff71ffa inside /c/tmp/ms-1-rel and /c/tmp/ms-1-rb.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deploy-to-ec2.sh: MCPORTAL_DIR=$WORKSPACE_ROOT/mcportal; 'ERROR: no mcportal checkout' when package.json is absent. git ls-tree 093fc247c6 mcportal = fa1ff9693b ('initial README only'); EC2_MANIFEST services.opal-gateway.mcportal_commit = a3bff71ffa3f5c73aa0fb7ea1e7386434e233054; the MX-r-5 ledger and /c/tmp/mx-rb7 name the same pin.",
+        "git -C <workspace>/mcportal worktree add --detach /c/tmp/ms-1-rel/mcportal a3bff71ffa (and /c/tmp/ms-1-rb/mcportal): the release build log reads 'built artifact opal-gateway-288fa78c93.tar.gz ... dashboard bundle mcportal@a3bff71ffa3f5c73aa0fb7ea1e7386434e233054'; the PREV rebuild from the rollback tree matched the live artifact 79 of 79 files."
+      ]
+    },
+    "spec_asserts": "TO MS-d-1 item 2: the release tree is PREV plus cherry-picked commits; nothing names the nested mcportal checkout the deploy script requires.",
+    "world_is": "The order's act cannot run from a bare release worktree: the script needs a mcportal checkout and the gitlink would pin the wrong (empty) commit. The worker pinned a3bff71ffa, the manifest's own mcportal_commit, so the dashboard shipped is the one already served. The two worktrees add entries to the shared mcportal module's worktree list (they are outside the repo tree of this order).",
+    "notes": "The two mcportal worktrees /c/tmp/ms-1-rel/mcportal and /c/tmp/ms-1-rb/mcportal are left in place for the drain to remove; git worktree prune in the mcportal module clears them after the trees are deleted."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S8",
+    "one_line": "The amendment-2 pytest run in the release tree modifies the TRACKED file infra/aws/ec2/opal-gateway/audit.jsonl (6 lines appended), which would make safe-ec2-deploy.sh stop at its 'Deploy with uncommitted changes? (y/N)' prompt; the worker rewrote the file from `git show HEAD:<path>` before the act (source path clean) and left nothing staged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C /c/tmp/ms-1-rel status after the suites: ' M infra/aws/ec2/opal-gateway/audit.jsonl' (6 insertions); safe-ec2-deploy.sh Step 1 runs `git diff --quiet $SOURCE_PATH` and prompts on a difference; after the restore `git diff --quiet infra/aws/ec2/opal-gateway` = clean and run 2 passed Step 1 without a prompt.",
+        "The tarball build excludes audit.jsonl (--exclude='audit.jsonl'), so the dirt never shipped."
+      ]
+    },
+    "spec_asserts": "TO MS-d-1 2a/5: run the suites, then the act from the release worktree; the order does not say the suites dirty the source path.",
+    "world_is": "A test side effect on a tracked runtime log blocks the deploy wrapper interactively. No served effect.",
+    "notes": "Any future release that runs the gateway suites in its release tree before the act meets the same prompt; the restore from git content is the one-line cure."
   }
 ]
 ```
