@@ -122,7 +122,7 @@ its orders), so the repair re-opens this order. Checked at DEV 5810586a: bytes.c
 fixed, 3 of 3, cases.cjs 3 of 3, ALL 16 of 16 harnesses, tsc -b rc=0. cases.cjs arm 2 passed the doubled label (it asks only that a
 line START with "Opal's") -- a check blind spot, closed by bytes.cjs arm 2 (AC4).
 
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~37</slot>
 <fabric>site-z</fabric>
