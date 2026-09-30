@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~5</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -36,6 +36,12 @@ Schwab/GICS input wired). This runs after SC-e-1 in your worktree. Build on its 
    does one conditional update per row: `SET instrument_kind` on `attribute_not_exists(instrument_kind)`, touching no
    other attribute, with `--dry-run`. Where W2-S3 needs it, the constituents seeder gains a matching kind-only mode.
    Run in dry-run only.
+   **Amendment 1 (row MDPF_SECCLASS-W5-S1):** round-1's `infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py`
+   `test_constituent_seeder_never_sets_classified_by` pins the pre-contract rule. Under the CTO's four-label ruling and
+   SC-e-1, the constituents seeder sets `classified_by = "constituents"`. Update that one test to assert the
+   `constituents` label on a written row and the refusal of a seed or scheduled row. Loosen nothing else.
+   **Note (row MDPF_SECCLASS-W5-S3):** the site-Z `--universe amgt-library` path is NOT on local CLOUD; it sits on
+   origin/CLOUD pending 0.0.0_AB_MSTR's sync. Do not merge origin. That path's labelling follows after the sync.
 3. **Tests** in `infra/aws/lambda/v2_portal/_shared/tests/test_set_instrument_kind.py`:
    - only `instrument_kind` changes;
    - a row that already has it is refused;
@@ -81,6 +87,7 @@ Dry-run at the base 2026-09-30 03:1xZ (@30727a9413): SC2-e2-AC1 no tests ran; SC
 infra/aws/lambda/v2_portal/yang_pipeline/set-instrument-kind.py
 infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py
 infra/aws/lambda/v2_portal/_shared/tests/test_set_instrument_kind.py
+infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_KIND_CENSUS_20260930.json
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_INSTRUMENT_KIND_20260930.md
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md

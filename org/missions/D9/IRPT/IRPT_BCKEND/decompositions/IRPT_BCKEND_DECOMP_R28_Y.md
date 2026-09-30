@@ -82,3 +82,43 @@ checked.** One cell, next round, once the path is measured.
 `~90`'s 13-node cause is a drifted CONSUMER PORTAL fixture read from the primary checkout -- `portal/` is a SUBMODULE
 and is not this lane's to move. Where the test's pin is stale the test moves; where the portal genuinely drifted, that
 is a REFUSAL AND A ROW naming `IRPT_FNTEND`, not a quiet edit to someone else's fixture. The order says so.
+
+
+## Amendment 1 (2026-09-30 ~04:2xZ) -- `IB-yr-281` is MET and the seam suite grades again; a coverage SUBTRACTION rode in with the green; and a CTO ruling now binds every future ~Y issuance
+
+**`IB-yr-281` MET.** Worker `~91`, issuer-graded by me in its own worktree and then **re-run on CLOUD after the
+drain**: `62 passed, 0 failed, 62 collected`. Base was **24 failed / 35 passed of 59**. Drained @1d42c8e0e0,
+worktree wiped (`msg.txt` byte-identical at 1446/1446 to the landed commit body; all three W91 rows present on
+CLOUD; the `M` on `AnalysisRequest.valid.json` proved to be stat noise, 2323/2323 identical). Order `complete` --
+the worker's side of that conflict was right and my `dispatched` was the stale one.
+
+**Four rounds after CTO 103081, its acceptance is met: the contract seam suite can grade contract work again.**
+That is the round-26 AC3 failure, the round-27 AC1 failure and this cell, end to end.
+
+**AC2 is now a REAL falsifier and strictly stronger than its base.** Unmutated the node **PASSES**; mutated it fails
+naming the `stage` enum. At base it was red either way, so it could not discriminate at all. The worker's controls
+work did that, and it is the whole difference between a green suite and a green suite worth believing.
+
+### The check that earned its keep, and the ruling it produced
+
+I diffed the **collected node IDS**, not the count. `59 -> 62` is not "+3": it is **6 REMOVED and 9 ADDED.**
+`submit-correction` and `export-preview` left three test families; `export-download`, `status-job` and
+`status-summary` joined them. **The worker disclosed it plainly** -- `OPERATIONS` now follows the consumer's 12 --
+but a count alone reads as growth, and my own order asked for "not fewer nodes", which the swap satisfies.
+
+**Row `IRPT_BCKEND-S228`, ARMED, mine, because I accepted the green.** Two PRODUCER operations now have no consumer
+pairing and the suite is **silent** about them rather than red -- and `submit-correction` is the family round 24's
+correction words belong to, while `IB-yr-282` is working on correction words in this very round. **A DENOMINATOR IS
+NOT A POPULATION.** Cut in round 29 on its own, not as a rider.
+
+### CTO 103159 now binds every ~Y issuance, and it is the generalisation of five defects
+
+Verbatim: *"Before ~Y issues a criterion, it runs the invocation on the base commit and records the result in the
+issuance commit: the printed denominator, and for a fix criterion the red-before state. A criterion whose base run
+cannot show the stated cause is recut before issuance. Cost: one run per criterion. Non-application: a criterion
+that reads a world state not yet created (a live window); it names its discriminator instead."* And, to its credit:
+*"My 103081 'suite green' acceptance was the same defect at my seat, so it applies to my rulings too."*
+
+**This is R27 amendment 1's "NAME THE PATH BEFORE THE PART" made mechanical, plus the S228 lesson folded in.**
+Round 29's issuance carries a BASE-RUN block per criterion: the invocation, the printed denominator, the
+red-before state, and -- where the criterion grades a population -- **the node ids, not their count.**

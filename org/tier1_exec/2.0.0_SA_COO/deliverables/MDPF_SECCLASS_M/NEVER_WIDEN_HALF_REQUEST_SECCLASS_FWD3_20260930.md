@@ -1,0 +1,82 @@
+# Never-widen half, MDPF_SECCLASS.TO-SC-e6 (cell SC-e-6) -- the first FWD-3 correction: seeding VNQI to fix its wrong scheduled row
+
+**Author:** 0.9.0_WK_MDPF_SECCLASS~7, 2026-09-30. **For:** the issuer (2.0.0_SA_COO~M) to sign and send, per the
+"never widen without a named blast radius + rollback per key" discipline (CLAUDE.md HARD STOPS section 5) and the
+precedent format used for `NEVER_WIDEN_HALF_REQUEST_SECCLASS_SEED_FIELDS_20260929.md`.
+
+**Status of the act described here: NOT YET RUN.** This task order is a LOCAL build + record: the seed-source edit
+(`infra/aws/lambda/v2_portal/_shared/etf_classification.py`, adding `VNQI`) was made and the live table was read
+read-only to confirm the current wrong row; nothing was written to `etf-classifications`. This half covers the FIRST
+real run of `seed-etf-classifications.py` that lands this correction (any other net-new module tickers added between
+now and that run ride the same run; this half's blast-radius claims are scoped to the one ticker this cell names,
+VNQI, and the seed run's general mechanics already signed by the SEED_FIELDS half).
+
+## The act
+
+One write, against the live DynamoDB table `etf-classifications` (2,309 rows at this build):
+
+`python infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py --region us-east-1` -- merges the module
+(`etf_classification.py`, now carrying `VNQI`) into the table. `merge_item` sets `classified_by = "seed"`
+unconditionally (PRD C-WRITER: seed always wins over scheduled), so this run REPLACES the live VNQI row:
+
+- Before (live read, this build): `{"ticker": "VNQI", "asset_class": "equity", "sub_asset_class": "International",
+  "classified_by": "scheduled", "last_updated": "2026-09-30T02:23:47.350920+00:00"}`.
+- After (candidate write, computed from the module, not yet applied): `{"ticker": "VNQI", "asset_class":
+  "alternatives", "sub_asset_class": "International Real Estate", "instrument_kind": "fund", "management_style":
+  "passive", "sector": "Real Estate", "name": "Vanguard Global ex-U.S. Real Estate ETF", "classified_by": "seed",
+  "updated_by": "seed-script"}`.
+
+Evidence: `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_FWD3_PLAN_20260930.json` -- the live item read,
+the VNQ precedent row (`alternatives`/`Real Estate`, `classified_by=seed`) that shows the table's own established
+convention for this fund family, and the census rows (bd, 49financial) confirming the wrong scheduled value.
+
+**Andrew's word governs this class of write:** 2026-09-29 ~21:4xZ, "yes, bd-securities values can seed new rows. They
+just don't overwrite existing rows" -- read together with PRD C-WRITER's `seed` always winning over `scheduled` (the
+row VNQI carries today), this act is the SEED path overwriting a `scheduled` row, which is the one case the ruling and
+the contract both name as the intended path (a `scheduled` row is provisional pending the seed source's own correction,
+never the canonical table's last word). It does not touch a `seed`-classified row.
+
+## Blast radius
+
+**Readers of `etf-classifications`, the one ticker this act changes (VNQI: `equity`/`International` ->
+`alternatives`/`International Real Estate`):**
+
+1. **`a07_dim_asset_classification.py` (49F data, PRD surface S11).** `classify()` (`:220-255`) reads
+   `item.get('asset_class', '')` from a live scan-built `ticker_map`. A 49F position in VNQI, previously tagged
+   `equity`, is tagged `alternatives` after the next 49F gold-layer run. No other 49F-held ticker's row changes.
+2. **`yang-generate-positioning` / `yang-generate-holdings-attribution` (Positioning, PRD surface S13).**
+   `ETFClassifier.get_asset_class()`/`get_sub_asset_class()` read the item's named keys directly. A client holding
+   VNQI shows `alternatives`/`International Real Estate` in the attribution hierarchy after the next report run,
+   instead of `equity`/`International`. No other ticker's value changes (this act's write set is VNQI alone).
+3. **Portal `HoldingsBreakdownTable.tsx` (PRD surface S16).** `subAssetBg(holding.asset_class,
+   holding.sub_asset_class)` (`:368`) renders the served fields; a VNQI row re-tints from its equity color to its
+   alternatives color on the next page load/API refresh, for any client whose holdings the portal shows VNQI in.
+4. **`find_by_asset_class` / `find_by_sub_asset_class` callers.** VNQI moves OUT of an `equity`/`International` query
+   result and INTO an `alternatives`/`International Real Estate` one. This is the same class of effect the SEED_FIELDS
+   half already signed for other net-new/corrected tickers (query-result membership, not a value a caller stored).
+
+**Every listed class change: exactly one ticker, VNQI.** No other row's `asset_class`, `sub_asset_class`,
+`instrument_kind`, `management_style`, `sector` or `name` changes: the seed source edit in this cell touches only the
+five `VNQI` dict entries added (`ETF_CLASSIFICATIONS`, `ETF_MANAGEMENT_STYLE`, `ETF_SUB_ASSET_CLASS`,
+`ETF_SECTOR_MAPPING`, `ETF_NAME_OVERRIDES`); the module's other 137 tickers are byte-unchanged (verified: `git diff`
+on this cell's commit touches only the five new lines/blocks named in `R2_FWD3_PLAN_20260930.json`
+`seed_source_edit`).
+
+**What every OTHER live row gets:** nothing from this act specifically; this half covers the VNQI candidate write only.
+A concurrent full seed run also carries whatever else is in the module at run time, which is the SEED_FIELDS half's
+own scope, not re-opened here.
+
+## Rollback per key
+
+DynamoDB `etf-classifications` is NOT S3-versioned; rollback is per-attribute, per-ticker, using this build's own
+PRE-READ (the live item captured above) as the "before" snapshot:
+
+- **To undo VNQI's reclassification:** `UpdateItem` on `Key={"ticker": "VNQI"}` with `SET asset_class = :ac,
+  sub_asset_class = :sac, classified_by = :cb` where `:ac = "equity"`, `:sac = "International"`, `:cb = "scheduled"`,
+  and `REMOVE instrument_kind, management_style, sector, name` (attributes this act adds that the PRE-READ item did
+  not carry) restores VNQI to its exact PRE-READ state.
+- No other ticker needs a rollback entry: VNQI is the only row this act's write set touches.
+
+## COO half -- PENDING (2.0.0_SA_COO~M)
+
+## CTO half -- PENDING (1.0.0_SA_CTO)
