@@ -54,3 +54,23 @@ until a gold rebuild.
 - any schedule change (reserved to Andrew, HANDOFF `:81`);
 - any deploy;
 - a third run.
+
+## AMENDMENT 1 -- RE-SIGNED (~04:4xZ, on 2.0.0_SA_COO~H msg 26908, COO half AMENDMENT 1 @a0134b0467)
+
+**The act, amended:**
+- `--publishers bbg ft wsj --max-jobs 3`, run twice.
+- barrons is Branch B from attempt 1 (`request_rejected`, a challenge, 0 objects) and is not retried, per condition 4.
+- barrons joins sa as a root that must gain no object.
+
+**Re-measured by this seat:**
+- **Roots, by `aws s3 ls --recursive | wc -l`:** barrons 30, bloomberg 978, ft 28, wsj 55, seeking-alpha 103. These are
+  unchanged from signing, and attempt 1 wrote nothing.
+- **The executor's code:** worktree `C:/Users/Opal Bloomberg/Desktop/wk-hvst-r25-65` at `51f7dd7c6f`, with an empty
+  `git status` on `lib`. `git diff --stat 65aa9251bc HEAD -- lib/opal_data_harvest lib/research/harvest` shows 2 files,
+  `README.md` and `run-local.ps1`: `o-2`'s flag, outside the fetch and put path. **Condition 1 holds in that worktree.**
+- **⚠ The shared trunk is NOT the signed code.** At CLOUD `a0134b0467` the same diff shows 10 files, including `worker.py`
+  (+105, `o-1`), `store.py` (+36, `o-3`) and `publication_gold.py`. **Running the act from the trunk, or from any tree whose
+  diff exceeds `o-2`'s two files, is a STOP and a re-sign.** The executor prints the worktree path, HEAD and that diff
+  immediately before run 1.
+
+Everything else in this half stands: conditions 2-5, the rollback, and NOT COVERED.
