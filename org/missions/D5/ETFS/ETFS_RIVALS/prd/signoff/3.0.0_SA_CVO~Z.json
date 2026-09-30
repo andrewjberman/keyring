@@ -1,13 +1,12 @@
 {
   "prd": "ETFS_RIVALS_PRD.md",
   "prd_version": "v0.3",
-  "prd_pin": "cbf0cfd6b0b6ea29fffba60e7059dfd112bf1813",
+  "prd_pin": "3027a47dc02a266268bb895e0d9601fd3bc15509",
   "half": "ratified-text",
-  "half_hash": "844c92a2a4a03eddc8970f5a5249f5f605c5f38d5cdd19bcb168b8ca20b331d3",
-  "endpoint_hash": "ea163a78376f14cd8ccd7b4b0d0270f46aad66055aef94a0db86d849358863b3",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ETFS_RIVALS_v0.3_RATIFIED_TEXT_20260930_Z.md@4f7d859d47",
+  "half_hash": "e381b934d478b2078c2a18bf460cce26049c6bfd0f7dd736164163d1a2c590c9",
+  "endpoint_hash": "6015445bf712ea9009577d5ffef122b9f7db5a442d1bc79ec36de708f7d16036",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ETFS_RIVALS_v0.3_RATIFIED_TEXT_20260930_Z.md@4fd637a7f0",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-09-30T16:13:11Z",
-  "reason": "ENDPOINT drops four ACCEPT constraints Andrew confirmed in Addendum A (FWD-5, 6, 7, 10); land the addendum fence verbatim with only his FWD-1 change; CONTRACTS pass"
+  "signed_at": "2026-09-30T16:29:18Z"
 }
