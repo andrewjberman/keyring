@@ -26,7 +26,8 @@ First failing hop: 1 (route undeployed) and 8 (publisher not wired).
 | TX-p-1, v-1, g-1, g-2, b-1, b-2, m-1, m-2, m-3, m-4, a-1, a-2 | COMPLETE (round 1, drained by COO~T) | position record @cbfeeef31f |
 | E1 engine: RIA firm axis + custodian-per-firm + workbook fallback + loaders | CANDIDATE @62fa52fa6f + f4c4614f33 | 189 of 189; real run 2 on Yang's corrected sheet (Traded=Yes on rows 12-15): 49F expected 11 covered 11, 17,034,745.40 (measured 12,584,745.40 + workbook-stated 4,450,000.00); Cottonwood 2 of 2, 6,041,791.65 measured on Black Diamond |
 | TX-k-1 gold package (+ `lib/opal_naming` subpackage + registry + schema + contract, S5) | CANDIDATE (the commit after f4c4614f33) | 39 of 39 members hash-equal to pin; closure OK; layer deps 0 FAIL; cold-start smoke from the extracted zip; Terraform plan NOT run (root claimed) |
-| TX-u-1 / TX-u-2 publisher | NOT STARTED | next |
+| TX-u-1 publisher extension (switch default OFF) | CANDIDATE @96f7932f91 + 5f58087a79 | 9 harness arms; real category document published offline with the switch ON: one put, Tax leaf covered 11 of 11 |
+| TX-u-2 publisher package | CANDIDATE (the commit after 5f58087a79) | 12 of 12 members hash-equal to pin 96f7932f91; sidecar declared; layer deps 0 FAIL (tool now reads the sidecar); Terraform env default and plan NOT done (root claimed) |
 | TX-i-3 / TX-i-1 / TX-i-2 IAM applies | BLOCKED (Terraform roots claimed by NFRA_IAMROLES202609 IAM-t-3) | |
 | TX-c-1 / TX-c-2 / TX-c-3 portal | NOT STARTED (c-2's component under DSGN_IRPTV1 lease) | |
 | TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED; v-1's expected cases for A02/A04 must be re-cut to 0.6.0 | |
@@ -40,8 +41,8 @@ Next claim: `infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py` +
 
 ## Next proof
 
-TX-u-1: the publisher (`infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py`) reads the Tax operational control and the 49financial/Global category Gold with the status extension and writes the served category-views with the `tax` leaf's `coverage` (15 wire fields) -- contract fields only, never `aua_including_tax`; proved by a local publish over the real run's category document.
-Deferred inside TX-k-1: the plan-only Terraform pass on `infra/aws/terraform/mdpf-pipeline` (root claimed by IAM-t-3).
+The consumer: TX-c-1 (`portal/src/api/endpoints/aum.ts` typed accessor for the 15 coverage fields and the two document fields, TTL at most five minutes, failed transport never cached, explicit refresh crosses both caches) proved by `bun test` in the portal, then TX-c-3 (`ModelPortfolios.tsx` honest affected totals); TX-c-2 waits for DSGN_IRPTV1 to release `CategoryViewTree.tsx`.
+Deferred: the plan-only Terraform passes for TX-k-1 (mdpf-pipeline root) and TX-u-2 (opal-assets root: `TAXSMA_ROLLOUT_SWITCH = "OFF"` env default) -- both roots claimed by IAM-t-3.
 
 ## Dependencies
 
