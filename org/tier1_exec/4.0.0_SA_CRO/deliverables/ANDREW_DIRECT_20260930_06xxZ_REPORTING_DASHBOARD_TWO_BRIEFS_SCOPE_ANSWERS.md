@@ -43,3 +43,11 @@ Effect (this seat's reading; scope not widened):
 2. Income is recognised when the cash is received (cash-receipt), as recommended.
 3. Returns are GROSS of fees, and labelled so. A fee RAIL is designed in now (a place and a field set for advisory fees) and left unused until a proper fee field exists, because the custodians' fee methodology is unknown.
 
+## Addendum 3 (~07:3xZ) -- Message 6, a second methodology to compare
+
+> Yeah I actually just asked GPT for methodology, could we accommodate both of these? which would be more accurate? which would be your recommendation?
+
+Attached (a paste of a GPT answer, not reproduced here): Version A, daily valuation-based GIPS return (separate investment income from external cash flows; daily return with the cash flow at end or start of day; geometric linking); Version B, transaction and cash-flow based (Modified Dietz, plus a security-level transaction return kept separate from the portfolio return); a note that gross-of-fees GIPS returns must reflect transaction costs.
+
+Effect (this seat's reading): a question, answered in the backend brief section 3: daily TWR is the headline, Modified Dietz is the cross-check and fallback computed from the same columns, the flow-timing convention is decided by a tie-out against Black Diamond, whole-account value must include cash, security-level returns are labelled separately, and the label is "before advisory fees" because trading costs sit inside the custodian's cash and value.
+
