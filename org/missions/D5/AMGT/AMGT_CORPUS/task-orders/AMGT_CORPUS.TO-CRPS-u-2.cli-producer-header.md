@@ -101,3 +101,4 @@ The hookup in `_ensure_unit_map` is the issuer's, at the merge, after u-1 drains
 <round>19</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
