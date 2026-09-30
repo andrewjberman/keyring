@@ -3393,6 +3393,92 @@ carries none.
     "spec_asserts": "Ledger L5/L9 proof = SSM Success on the new version, the merge log line, and the silver partition written by tonight's scheduled fires.",
     "world_is": "Today's realized/transactions inputs had already been merged at 06:37Z and 07:02Z, before the 08:25Z publish -- by timing, worker ~17's pre-publish runs (INFERRED, not attributed by a log); unrealized/allocations inputs are weekly. So tonight's fires had nothing to write. ABSENT is not EXERCISED: the write arm on the stripped documents is unproven.",
     "notes": "Issuer ruling: do NOT fire an ad-hoc run -- it would consume the next input and destroy the scheduled discriminator, which is how tonight's was lost. Re-read 2026-09-30 after the 21:46/21:53Z fires (realized, transaction: expect 'Found 1 new' and a silver/<leg>/2026-09-30 partition written by the fire); unrealized L5 and allocation L9 at the 2026-10-05 21:38/22:00Z fires. MX-s-14 is ruled at the round-4 close: complete once written, or its residual legs carried into round 5."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "dim_transaction has no unique grain: the producer declares it a per-partition APPEND with no row-unique key, so DATASET_GRAINS is None and cursor paging refuses for this dataset.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/silver/schwab_projections.py:52-54: 'per-partition APPEND, NO row-unique key (refuted from bytes v1.2.1; row identity downstream = (partition, row_position) provenance)'.",
+        "Live objects s3://opal-data-assets/schwab/{08242234,08335338}/silver/dim_transaction/date=2026-09-28/data.parquet: the 4-column key (account_id,tr_cd,cusip,tran_srcde) has 32 and 34 duplicate groups (max 2) over 1271 and 1983 rows; a 10-column key was unique on those two objects only.",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/query.py DATASET_GRAINS['dim_transaction'] = None; tests/test_schwab_transactions.py::test_mx_s15_grain_declared."
+      ]
+    },
+    "spec_asserts": "MX-s-15 step 2: 'Declare the unique grain in DATASET_GRAINS. If the data has no unique grain, declare None so paging refuses, and file a row.'",
+    "world_is": "The data has no unique grain, so None was declared; a rows-mode query returns one page and cannot be paged by cursor for dim_transaction. A caller needing more rows than one page must narrow by filter (account_ref, tr_cd, cusip).",
+    "notes": "Declared None rather than the 10-column key that held on two objects, because one partition does not prove a rule across 679 and 560 partitions."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "one_line": "dim_transaction is declared on the 6 surfaces but NOT on org/standards/NFRA_OPLGTW_CONTRACT.json (datasets, fields), outside this cell's paths: the running gateway still names it dataset_invalid, no grant can carry its columns, and tests/acceptance regresses 8 of 14 because data_entitlement.DATASETS now includes it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/NFRA_OPLGTW_CONTRACT.json @2cae2db258: datasets = [dim_position, dim_balance, dim_asset] (:10-14); fields has no dim_transaction key (:152-187); the IAM prefix list at :253-257 names the three dims only.",
+        "integration.py:427,470 `_enum(dataset, self.rules.datasets, ...)` and catalog.py:601,882 `contract.datasets` read the contract list; ops/schwab_entitlement_admin.py:166-169 approves a column only from contract fields[dataset].",
+        "infra/aws/ec2/opal-gateway: `python -m pytest tests/acceptance/test_local_acceptance.py` -> 14 passed at the cut's base, 8 failed 6 passed with this cell (KeyError 'dim_transaction' at tests/acceptance/conftest.py:289 _fields(), default datasets=de.DATASETS at :260). tests/test_schwab_wiring.py had the same default and was fixed in this cell's own paths."
+      ]
+    },
+    "spec_asserts": "MX-s-15 names 6 surfaces and its <paths> omit org/standards and tests/acceptance; AC1 reads the 6 surfaces only.",
+    "world_is": "A 7th surface (the contract) gates whether the dataset is reachable at runtime, and the acceptance conftest seeds grants from data_entitlement.DATASETS. Shipping this cell without a contract amendment (datasets + fields + additive_fields entry for dim_transaction, and the acceptance conftest default) leaves the gateway unable to serve the table and its acceptance suite red at MX-r-6.",
+    "notes": "Not widened: the contract and tests/acceptance are outside <paths>. The fix is a contract amendment by its owner plus one line in tests/acceptance/conftest.py and test_local_acceptance.py (datasets default), or limiting de.DATASETS default in those harnesses to the contract's datasets as tests/test_schwab_wiring.py now does."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The recorded object name {master}_dim_transaction.parquet (analysis-schwab.result.md:343) is not the live key form: dim_transaction objects are date=<YYYY-MM-DD>/data.parquet, like the dims; newest partition is date=2026-09-28 on both masters.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3 ls s3://opal-data-assets/schwab/08242234/silver/dim_transaction/date=2026-09-28/ -> 59293 bytes data.parquet; 08335338 -> 107339 bytes data.parquet; 679 and 560 date partitions, oldest 2024-01-16 and 2024-07-08; date=2026-09-29 absent.",
+        "data/assets/scripts/silver/schwab_projections.py:93-96 dim_key() builds schwab/<scope>/silver/<dim>/date=<date>/data.parquet.",
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~19/SCHEMA_MX-s-15.md."
+      ]
+    },
+    "spec_asserts": "MX-s-15 facts: the earlier record saw object names {master}_dim_transaction.parquet (:343); the dims read date=.../data.parquet.",
+    "world_is": "The live key form is the dims' form; the object carries 44 columns (39 pinned + 5 provenance), of which 15 are served."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Four gateway tests outside this cell's files fail identically with and without this cell: test_data_entitlement_guard.py (2), test_entitlement_admin.py::test_ogz2_ac06 (1), test_schwab_export_stream.py::test_ogx4_ac03 (1).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run per file from infra/aws/ec2/opal-gateway against a git-archive copy of HEAD (2cae2db258, no cell edits): test_data_entitlement_guard 2 failed 10 passed; test_entitlement_admin 1 failed 8 passed; test_schwab_export_stream 1 failed 2 passed. Same counts with this cell.",
+        "Failure texts: route-table set mismatch (extra '/api/admin', '/', '/assets/{path:path}'); 'expected profile + grant + operator_audit puts, got 4'; ServiceError: memory."
+      ]
+    },
+    "spec_asserts": "AC2 names only tests/test_schwab_transactions.py; the cell moves only the pins its dataset moves.",
+    "world_is": "These failures pre-exist the cell and are unrelated to dim_transaction; not touched."
   }
 ]
 ```
