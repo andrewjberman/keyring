@@ -112,7 +112,7 @@ A separate `rivalfunds` scope pointing at `opal-data-etfs` was refused by the va
 | Gold | `s3://opal-data-etfs/rivalfunds/etfs/gold/<table>/date=...` |
 | Platinum (served, by day) | `s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=...` |
 
-All nine proposed keys graded CONFORMANT (September 30 ~04:1x UTC). `etfs-rivalfunds-daily` graded CONFORMANT as EVENT_RULE and SCHEDULE; `etfs-rivalfunds-daily-lambda`, `rivalfunds-etfs-build-canonical-shape-lambda` and `rivalfunds-etfs-publish-page-lambda` as LAMBDA.
+All nine proposed keys graded CONFORMANT (September 30 ~04:1x UTC). `etfs-rivalfunds-daily` graded CONFORMANT as EVENT_RULE and SCHEDULE; `etfs-rivalfunds-daily-lambda` as LAMBDA. Stage Lambdas take `name()` output, not grade-only names: `rivalfunds-build-canonical-shape-lambda` and `rivalfunds-publish-page-lambda` (corrected per PRD v0.1 C-NAMES; `name()` refuses scope `etfs` in the resource scope slot although `grade()` passed the earlier `rivalfunds-etfs-...` forms).
 
 ## PART V — WHAT MUST BE TRUE: THE NON-NEGOTIABLE HOPS
 

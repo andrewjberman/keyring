@@ -55,7 +55,7 @@ Resource names (Andrew named the pipeline `etfs-rivalfunds-daily`, revision 2), 
 
 - `etfs-rivalfunds-daily` — the daily schedule, CONFORMANT as EVENT_RULE and as SCHEDULE.
 - `etfs-rivalfunds-daily-lambda` and `etfs-rivalfunds-fetch-holdings-lambda` — CONFORMANT as LAMBDA.
-- `rivalfunds-etfs-build-canonical-shape-lambda` and `rivalfunds-etfs-publish-page-lambda` -- CONFORMANT as LAMBDA (September 30 ~04:1x UTC). Further stage resources are graded when named.
+- `rivalfunds-build-canonical-shape-lambda` and `rivalfunds-publish-page-lambda` -- `name()` output (corrected per PRD v0.1 C-NAMES; the earlier `rivalfunds-etfs-...` forms passed `grade()` but `name()` refuses a PRODUCT scope in that slot). Further stage resources take `name()` output when named.
 
 Runtime templates shown above are documentation, not deployable names; expand and grade actual values. Local script filenames follow repository language conventions. Existing tier-first keys in the bucket (`bronze/`, `silver/`, `gold/`, `daily/`, `platinum/`) belong to other pipelines and are neither read nor moved here.
 
