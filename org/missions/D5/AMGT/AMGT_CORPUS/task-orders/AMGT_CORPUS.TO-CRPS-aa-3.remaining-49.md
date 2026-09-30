@@ -140,3 +140,4 @@ measured_before 49 ... projected_after 49`. The criterion text and the worker's 
 <round>25</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
