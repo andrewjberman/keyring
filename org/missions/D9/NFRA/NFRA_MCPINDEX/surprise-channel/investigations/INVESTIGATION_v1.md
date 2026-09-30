@@ -3639,6 +3639,84 @@ carries none.
     },
     "spec_asserts": "Bounds 3: the pre-existing failure at the cut is tests/test_entitlement_admin.py::test_ogz2_ac06.",
     "world_is": "Two more pre-existing failures in tests/test_data_entitlement_guard.py, outside this cell's paths, unchanged by it; test_ogz2_ac08 (the tool-count pin this cell moves) passes at 53."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S64",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T11:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W21-S9"
+    ],
+    "one_line": "RULES Z-W21-S9 (BLOCKING): the naming limb's refusal of opal-data-bd / silver/fees/ / 49financial is ROUTED for authority and RE-SHAPED here -- MX-t-13 A2 restructures the literals to the LEGACY-READ waiver's syntax (one read-helper site, one tf_local) and drafts the carrier entries; the ruling record that authorizes them is asked of 1.0.0_SA_CTO~O (the IRPT-M-LEGACY-READ-02 authority pattern). No bypass, no hand-typed workaround.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py:99-110 (carrier org/standards/NAMING_LEGACY_READS.json, 9 fields), :942-1180 (syntax allowlist, authority pin check, tf_local kind).",
+        "infra/logic/registry/remediations.json: ADVI_FIRMBKTS surfaces include bucket-alias 49financial->opal-data-bd and s3-prefix opal-data-bd silver/.",
+        "org/standards/NAMING_LEGACY_READS.json at HEAD: 0 entries.",
+        "Message to 1.0.0_SA_CTO~O 20260930T105757Z asking for the ruling."
+      ]
+    },
+    "spec_asserts": "Every BLOCKING row carries an issuer disposition; a builder refusal is never worked around by hand.",
+    "world_is": "The cell is built and passes AC1/AC2 uncommitted; it cannot land until the waiver's authority exists. MX-r-7 waits on MX-t-13.",
+    "notes": "If the CTO declines, MX-t-13 and MX-r-7 carry to the round-5 L10 slug as unserved FWD-4 work."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S65",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T11:25Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W21-S9",
+      "NFRA_MCPINDEX-Z-W21-S10"
+    ],
+    "one_line": "RULES Z-W21-S9 and Z-W21-S10 (BLOCKING): the LEGACY-READ waiver cannot admit a NEW literal (naming-gate.py:1413, :1444-1449), so MX-t-13's five literals go with B3 to Andrew as ONE R20 acknowledgement (1.0.0_SA_CTO~O msg 27114). MX-t-13 and MX-r-7 are HELD; the built cell stays uncommitted and frozen in wk-mcpindex-r5-21; no two-commit route, no gate edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py:1413 `new = pre_text is None or not _in_pre(lit, pre_text)`; :1444-1445 NEW OUT-OF-PATTERN/ALIAS -> REFUSE; :1447-1449 comment: 'a NEW or CHANGED literal can never reach it'.",
+        "worker ~21 report: gate dry run REFUSE on 5 literals with all 5 draft entries passing legacy_read_ok/tf_local_ok (wk-nfra_mcpindex-5-21 @4a9462b79a).",
+        "1.0.0_SA_CTO~O msg 27114 ruling."
+      ]
+    },
+    "spec_asserts": "A builder refusal is resolved by a registry row or an R20 entry Andrew acknowledges, never by a workaround.",
+    "world_is": "Nothing is committed or served; the hazard cannot reach the host before Andrew's word.",
+    "notes": "Superseded rows' draft carrier (LEGACY_READS_DRAFT_MX-t-13.json) is kept for the record only."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S66",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T12:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W19-S7",
+      "NFRA_MCPINDEX-Z-W19-S8",
+      "NFRA_MCPINDEX-Z-W19-S9"
+    ],
+    "one_line": "RULES MX-r-6 PHASE A rows: Z-W19-S7 DISARMED by MX-r-6 A3 -- the release ships the contract file and the Schwab service's host .env keys (ids and ARNs only, no secret value), proven in-process before the ANNOUNCE; Z-W19-S8 DISARMED -- the apply is the saved targeted plan on aws_iam_role_policy.schwab_data_read_policy only, re-planned and equal at the GO, via safe-apply; Z-W19-S9 INERT this round (no grant changes, B2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/NFRA_MCPINDEX.TO-MX-r-6.schwab-enable-release.md AMENDED A3, this commit.",
+        "worker ~19 PHASE A report: live 093fc247c6 (79 of 79 by content); release ac77acf9e8 / deploy-only abee4587f7, gateway tree a1e8533891; targeted plan 0/1/0; host .env 27 keys, none SCHWAB_*; artifact tar roots exclude org/standards."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "Nothing is deployed or applied before PHASE B, which needs the issuer's GO after the CTO's G-A delta and both never-widen halves; the fail-closed release and the untargeted apply are both excluded by A3.",
+    "notes": "S10 and S11 (INERT) ride the ANNOUNCE for the halves."
   }
 ]
 ```

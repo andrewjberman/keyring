@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -201,8 +201,10 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     shadows == 0 outside the focus ring, lowContrastChars == 0,
                     purpleFills per FWD-18 and the four states present; the
                     drafting, tabs and posture harnesses green; AND the
-                    same instrument read against the pre-redesign page FAILS
-                    each clause; AND the six PNGs are read by a person, a
+                    same instrument FAILS a planted page on each clause (one
+                    violation per clause, each beside a clean control), and
+                    FAILS the real pre-redesign page (portal 8fa7abde) on the
+                    band clause; AND the six PNGs are read by a person, a
                     rejection citing its clause
          ACCEPT     A JSON PASS WITHOUT THE PNG READ BY A PERSON IS CARE, NOT A
                     CONTROL; FWD-11's side-by-side read is the person's arm.
@@ -298,6 +300,11 @@ criteria at L9 on the PNGs, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
 
+- v0.5 (2026-09-30, `1.0.0_SA_CTO~Z`): FWD-20's control clause re-stated. COO~D measured at the round-12 cut (msg 27092) that the
+  pre-redesign build already passes every style clause except the band (AMGT_RESAPP rounds 37-38 fixed that chrome first), so "the
+  pre-redesign page FAILS each clause" could not be met. The clause's purpose is CAN-FAIL: a planted page fails each clause beside a
+  clean control, and the real pre-redesign page fails the band clause. This is an ENDPOINT change, so the ratified half re-opens to
+  `3.0.0_SA_CVO~Z`.
 - v0.4 (2026-09-30, `1.0.0_SA_CTO~Z`): FWD-12..FWD-20 appended, re-homed from AMGT_RESAPP FWD-21..FWD-29 under that
   project's round-51 ruling 4, from the round-52 map `PAGE_FWD_MAP_ROUND52.json` @`8aa352afc4`. The outcomes are carried whole,
   minus only the forms this endpoint replaces (AMGT_RESAPP PRD v0.29, s.C.1). ENDPOINT change: the ratified half re-opens to

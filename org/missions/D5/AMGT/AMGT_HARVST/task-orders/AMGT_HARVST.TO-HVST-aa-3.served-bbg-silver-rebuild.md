@@ -37,6 +37,8 @@ only; a delete is a human word.
 ## 2. SURFACES
 
 <paths>
+lib/opal_data_harvest/silver_from_bronze.py
+lib/opal_data_harvest/test_aa3_empty_struct.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~78/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 </paths>
@@ -58,6 +60,34 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 - **REC:** keep them, and have the AC prove them inert (0 mention pairs, in no served list); or the CTO rules a reader-side
   exclusion.
 - The checks and halves are issuer-written on that ruling.
+
+**AMENDMENT 1 (issuer, 2026-09-30 ~10:2xZ) -- the 11 rows ruled (@`803ea38a9e`, msg 27079); checks and COO half written.**
+- **The ruling:** KEEP the 11 hash-keyed empty rows (no delete, no reader filter) and prove them inert. Any empty row reachable
+  from a served list is a STOP.
+- **COO half:** `round28/NEVER_WIDEN_HALF_COO_AA3.md`. The expected write is 11 NEW rows (`bbg:<story id>`) in 1 part, and keys go
+  from 30 to 41.
+- **Checks:** `aa-3.signing.py`, `aa-3.AC1.py` and `aa-3.AC2.py` FAIL at the base for the right reasons. The inert reads already
+  hold at the base: 0 mention pairs on an empty row, and 32 of 32 bbg pairs are backed.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
+**AMENDMENT 2 (issuer, 2026-09-30 ~10:5xZ) -- attempt 1 wrote NOTHING (@`b2517c9c4b`, row `Z-W78-S1` BLOCKING); the order is RE-POINTED into two phases.**
+- **The cause:** `silver_append` raised at parquet serialization before any put. `q-2`'s bbg rows carry empty dicts (`{}`) at
+  `body.data`, `footer.data`, `footnotes.data`, `body.content[].data` and some attachments. pyarrow infers an empty struct,
+  which parquet cannot write.
+- **The issuer's signing miss:** the dry run mirrored `silver_append`'s filter but never serialized.
+- **The upgraded signing check** calls the real `silver_append` against a put-capturing client.
+- **PHASE A (LOCAL, now), paths GRANTED:**
+  - `lib/opal_data_harvest/silver_from_bronze.py` (the bbg builder only) and `lib/opal_data_harvest/test_aa3_empty_struct.py`.
+  - An empty dict anywhere in a bbg row becomes None (null), recursively. Nothing else changes. Every other publisher's rows
+    stay byte-identical.
+  - The test serializes all 11 real held bbg rows through `pa.Table.from_pylist` and `pq.write_table`. A mutant restoring
+    the base fails it.
+  - The rest of the suite passes; the base is `0df90b1535`.
+  - The issuer merges phase A.
+- **PHASE B (WORLD):** the act as in section 1, on the MERGED code, under a RE-SIGNED pair. The COO half is re-measured with the
+  serializing dry run. The CTO signs the same tick.
+- **Row `Z-W78-S1`:** disarmed by this re-point.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

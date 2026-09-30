@@ -135,6 +135,49 @@ At the apply, record each Lambda's `artifact_sha256`, `last_deployed_commit` and
 entry, per `infra/aws/lambda/README.md`. The gateway read policy's name is builder output as of TO-RIV-w-1's amendment
 (`gateway-rivalfunds-read-policy`): if your HEAD does not carry it, STOP. safe-apply refuses the old name.
 
+## 2c. ISSUER AMENDMENT 2 (2026-09-30 ~11:3xZ, 2.0.0_SA_COO~RV) -- rules BLOCKING row ETFS_RIVALS-Z-W5-S1
+
+**State at this amendment:**
+- Gate 1 held: a HEAD deploy would ship 23 other projects' gateway files.
+- The `etfs-rivalfunds` stack (39) and `gateway-rivalfunds-read-policy` (1) are APPLIED, create-only, and inside the pair.
+- Ledger `etfs-rivalfunds-thread-r1` is OPEN with L1/L2 closed. Its window ends ~16:13Z.
+- Everything is on branch `wk-ETFS_RIVALS-5` in `C:	mp\wk-rivals-5`.
+
+The issuer rules: NO rollback. Finish in two legs, both inside the signed pair (COO half @462db51701, CTO half @f468b621da).
+
+**LEG A -- the data plane, now. It needs no gateway.**
+1. Print the backfill request volume (CTO condition 4).
+2. Invoke the fetch Lambda in `backfill` ranges.
+3. Let the markers drive silver, gold and the page, or invoke the sweep.
+4. Write `d2_live.json` (below).
+5. Run AC1 and AC3.
+6. Stamp the five source-map entries (`artifact_sha256`, `last_deployed_commit`, `last_deployed_at`).
+
+**LEG B -- the gateway, from a DEPLOY-ONLY commit, never HEAD.**
+1. `git worktree add -b deploy-rivalfunds-gw-r1 C:	mp\wk-rivals-5gw 093fc247c6`. That is the EC2_MANIFEST's deployed
+   commit; re-read the manifest and STOP if it moved.
+2. Bring in exactly the key-16 files from HEAD:
+   - `app/rivalfunds_view.py`, `app/rivalfunds_location.json`, `app/gen_rivalfunds_location.py`, `app/tests/test_rivalfunds_view.py`
+     (byte copies from HEAD);
+   - the `server.py` hookup, as `git apply` of `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round1/hookup_d2.patch`,
+     server.py hunks only (`--include=infra/aws/ec2/opal-gateway/app/server.py`).
+   - If the hunks do not apply to that server.py, STOP with a row. Never hand-merge.
+   - If `rivalfunds_view.py` imports anything that differs between `093fc247c6` and HEAD, STOP with a row.
+3. Initialise `mcportal` as `deploy-to-ec2.sh` needs, and commit on that branch. This branch is a DEPLOY REF; it is never
+   merged into CLOUD.
+4. Re-run gate 1 against the deploy commit. The deployed-vs-deploy-commit diff must be exactly the key-16 files; anything
+   else STOPs.
+5. Then run `safe-ec2-deploy.sh` from that worktree, read `/healthz` 200, and do the CTO condition-5 read.
+6. `d2_live.json` gains `gateway_deploy_commit` = that commit. The amended AC2 compares the deployed bytes to it and asserts
+   its `rivalfunds_view.py` equals HEAD's.
+7. Record the deploy ref in the ledger entry and the EC2 manifest.
+
+**Close:**
+- Close the ledger when both legs land.
+- If LEG B STOPs, LEG A still closes its keys. Leave the gateway leg OPEN in the ledger with the STOP row, and report. The
+  issuer decides before ~16:13Z.
+- Never deploy HEAD's gateway directory.
+
 ## 3. SURFACES AND BOUNDS
 
 You READ (never edit):
@@ -158,6 +201,10 @@ OpenAI call; any alert, alarm, SNS or monitor; any file another cell of this rou
 <paths>
 infra/aws/ec2/EC2_MANIFEST.json
 infra/aws/ec2/opal-gateway/app/server.py
+infra/aws/ec2/opal-gateway/app/rivalfunds_view.py
+infra/aws/ec2/opal-gateway/app/rivalfunds_location.json
+infra/aws/ec2/opal-gateway/app/gen_rivalfunds_location.py
+infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py
 infra/aws/lambda/ci/lambda-source-map.json
 org/critical_paths/.open_deploys/etfs-rivalfunds-thread-r1.json
 org/critical_paths/change_management/

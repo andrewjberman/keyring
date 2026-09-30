@@ -33,17 +33,33 @@ project is NOT closed.** The PRD moves to v0.5 in this commit (one clause of `C-
    - **The code types the set today:** `chatter_axis.py:450` `DEFAULT_DECLARED_PUBLISHERS = ("bbg", "wsj")`. That is the defect a
      contract cannot see, and round-28 cell 4 derives it.
    - The CVO is right that eligibility stays 0 either way: adding a publisher only tightens it.
+   - **AMENDED ~09:5xZ (CVO~Z msg 27076, PRD v0.6):** the exit rule reads "refused OR ran no job" in the window, and an EMPTY
+     declared set HOLDs (`NO_DECLARED_PUBLISHER`). Without it, an enabled publisher that never ran would keep every name ineligible
+     indefinitely. A publisher that ran even one per-name job stays in; the names it did not cover are ineligible.
+   - **AMENDED AGAIN ~10:1xZ (CVO~Z msg 27081, PRD v0.7):** "ran no job" becomes "ran no UNIVERSE-SCOPE job". The v0.6 line above let
+     sa's ASML trial hold 189 of 191 names ineligible on a publisher that never searched them. That was this seat's inconsistency with
+     its own v0.5 intent and with the CRO's partial-rank research. Today every publisher's jobs are per-name trials, so the set is
+     EMPTY and the rank HOLDs (`NO_DECLARED_PUBLISHER`). The first universe-scope backfill (round 29) brings its publisher in.
+     Round-28 cell 4's AC plants a trial-only publisher (it exits) and a universe-scope run (it enters). The census prints, per
+     excluded name, the declared publishers it lacks.
 2. **A key rejected for its body (`short_or_partial_body`) is HELD for the rest of that UTC day** and retried on a later day.
    - After 3 failed days it is recorded `rejected_final`, with its reason, and never re-fetched.
    - This replaces `p-2`'s "re-fetch rejected keys every run": that rule spent the job's only live request on a known-bad key and
      ended bbg `request_rejected`. The run record names the hold.
 3. **Cached listings must still record reach** (`o-1`'s gap, `Z-W70-S1`). A listing page served from same-day cache is still
    evidence of the span it covered. The reach is written from the cached page's own date bounds, marked `from_cache`.
-4. **The bbg silver rebuild's pair names the 11 hash-keyed empty rows' fate** (`Z-W71-S1`). This seat's REC for that pair:
-   - keep them;
-   - the story-id-keyed rows supersede them through the `silver_latest` tie-break (round 25 `o-3`);
-   - the pair's AC reads each of the 11 served once, non-empty, by story id;
-   - no delete.
+4. **[SUPERSEDED IN PLACE, ~09:5xZ, COO~H msg 27075]** ~~The story-id rows supersede the 11 hash-keyed rows through the
+   `silver_latest` tie-break.~~ **That was wrong.** `store.silver_latest` (`store.py:391-393`) groups by `article_key`, so the
+   tie-break orders rows of ONE key only. The fixed parse keys by story id, which is a different key, so a rebuild ADDS 11 rows
+   and the 11 empty hash-keyed rows stay served.
+   **RULED (on the issuer's REC):**
+   - keep them, no delete;
+   - the bbg silver pair's AC proves them INERT on every served reader: 0 mention pairs, absent from every served article list
+     (`/timeline/day`, the company query);
+   - it also proves each of the 11 story-id rows is served non-empty.
+   - A reader-side exclusion of empty rows is NOT ruled. A reader filter would hide the next empty row too, and an empty row is a
+     defect to see, not to filter.
+   - If the AC finds any empty row reachable from a served list, the pair STOPs, and the exclusion comes back to this seat.
 5. **FWD-7 is bound by collection reach, not the rank rule.** Widening reach is a large scripted vendor act (R-21). It starts,
    per `C-HV-EGRESS`, with the pre-run print of planned listing pages per publisher over the 190 names, with no request sent.
    That print is round-28 cell 5; the run is round 29 under a pair.
@@ -93,3 +109,14 @@ project is NOT closed.** The PRD moves to v0.5 in this commit (one clause of `C-
 - The CVO's v36: the `amgt/harvest/` scan (3,058 objects, 1 modified), the gold part stamps, and the census re-derivation.
 - The packet's section 2 (`Z-S45` from `events.jsonl`).
 - This seat read `chatter_axis.py:450` (the typed declared set) and `publication_gold.py:375` (`ENABLED_PUBLISHERS`) for ruling 1.
+
+## AMENDMENT 2 -- cell 2 runs TODAY as the cached-path arm (2026-09-30 ~10:3xZ, COO~H msg 27090)
+
+**RULED on the issuer's REC.** `aa-1` merged @`0df90b1535`: cached listings now record reach (`from_cache`), and `NM5NLQ6K50XZ01` is held.
+- A same-day run therefore exercises exactly the fixed path.
+- The ~13h fresh-day wait discriminates nothing that path needs and has no Andrew word behind it. CLAUDE.md: "waiting for the
+  scheduled run is the same failure".
+**`aa-2` runs today, after `aa-3` lands** (the two WORLD acts do not overlap).
+- It is the CACHED-path positive arm for FWD-7 and FWD-3.
+- The LIVE-path arm follows the `Z-W76-S1` fix (a live wsj job records only a `stop_bound` span) in round 29.
+- `aa-2`'s pair names which path it grades, and it does not claim the live path.

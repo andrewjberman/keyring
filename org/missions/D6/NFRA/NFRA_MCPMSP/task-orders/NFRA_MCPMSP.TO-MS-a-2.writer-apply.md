@@ -98,7 +98,7 @@ G-FIRM later sets `LIVE_FIRMS=inflection` as its own act, on Andrew's word.
 both merged to CLOUD, because the writer's package stages `app.access_state` from the gateway tree at build (row
 Z-W3-S1). No criterion changes. Graded by: no gate limb.
 
-<status>staged</status>
+<status>complete -- drained by 2.0.0_SA_COO~MS 2026-09-30: writer code live == HEAD (sha256 7e80d4359859), register_tenant present, LIVE_FIRMS absent; AC1-AC3 PASS on the issuer's re-run; ledger nfra-mcpmsp-r1-writer-apply CLOSED; instance VALID. Row Z-W3-S2: the first package shipped CRLF bytes ~4 min, re-applied from HEAD bytes. Was: staged</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

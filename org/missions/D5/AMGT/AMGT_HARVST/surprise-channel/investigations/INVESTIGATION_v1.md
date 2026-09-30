@@ -3802,6 +3802,140 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Issuer row, answering the CTO's round-27 question (msg 27057). Carried to round 28 beside the cached-listing reach fix: whether a known-rejected key should be held (not re-fetched) within a day, since its re-fetch is what exposed the job to bbg's challenge."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~76",
+      "surfaced_at": "2026-09-30T10:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W76-S1",
+      "one_line": "publishers._hit_date does not read a wsj listing hit's date field (`timestamp`), so the LIVE reach path (fold_listing_reach) records every wsj span as basis stop_bound; only the new cached-page path reads it.",
+      "spec_asserts": "Order section 1: the job's reached_span is written from the cached page's own date bounds; the base live path (o-1) is assumed to read a hit's published date from the same fields.",
+      "world_is": "The recorded wsj listing pages (runtime harvest_listing/wsj_p1_e513433c8e6841d6.html, _p2_00fe6002a764d9bc.html, _p3_3400c59970f8d12e.html): 30 hits, 30 carry `timestamp` (e.g. 2026-09-23T09:30:00Z) and `printPublicationDate`, and _hit_date reads 0 of them (its keys are publishOn, published_on, publishedAt, publishedDateTimeUtc, datePublished, date). fold_listing_reach therefore gives a live wsj job hit_dates=[] -> basis stop_bound (start=end=fetch date). aa-1 reads `timestamp`/`printPublicationDate` in worker._cached_hit_date for CACHED pages only; _hit_date was not edited because _stop_paging (backfill bound stop) reads it too and adding keys would change paging.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py:_HIT_DATE_KEYS and _hit_date (read at the pin db27b6c3a4)",
+          "python census over the three recorded wsj pages: hits=30 timestamp=30 _hit_date-dated=0",
+          "aa1_ac2_replay_q1.py output: wsj reached_span 2025-11-20..2026-09-23 basis listing_dates from_cache true (q-1 recorded None)"
+        ]
+      },
+      "notes": "A live wsj (and barrons, unmeasured) run still records stop_bound spans. Fixing _hit_date changes what _stop_paging bound-stops on for wsj in backfill, so it is a decision, not a rider."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~76",
+      "surfaced_at": "2026-09-30T10:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W76-S2",
+      "one_line": "test_p2a_the_rejected_key_is_still_refetched_each_run asserts the behaviour ruling 3 replaces (refetch a rejected key every run); it stays green only because the hold is gated to harvest mode, and the test file is outside this order's <paths>.",
+      "spec_asserts": "Order section 1 change 2: the hold 'replaces p-2's re-fetch rejected keys every run'; AC3: no test that passed at the base fails.",
+      "world_is": "lib/opal_data_harvest/test_p2_fetched_and_stored_keys.py::test_p2a_the_rejected_key_is_still_refetched_each_run_and_still_named_rejected runs two collections through Worker(root, config, factory, sessions) with NO harvest_client and asserts the rejected story is GET-fetched once per run (count 2). With the hold applied in every mode it fails (run 2 would fetch 0). aa-1 therefore applies the hold only when harvest_grammar is true AND a harvest_client is present (Worker._hold_enabled), the mode q-1 ran in; the legacy/no-client mode keeps p-2's behaviour and the test passes (234 passed at base, 234 + 15 after).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_p2_fetched_and_stored_keys.py:78-98 (the accepted-limit test, read at db27b6c3a4)",
+          "lib/opal_data_harvest/worker.py Worker._hold_enabled; test_aa1_hold_is_off_outside_harvest_mode pins the legacy arm"
+        ]
+      },
+      "notes": "If the issuer wants the p-2 test to describe the new behaviour, it needs its own order with that file in <paths>; a stale docstring ('ACCEPTED LIMIT') remains in that test for the harvest-mode case."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W78-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~78",
+      "surfaced_at": "2026-09-30T10:30Z",
+      "one_line": "The signed HVST-aa-3 put cannot serialize: store.silver_append raises pyarrow ArrowNotImplementedError (struct 'data' with no child field) building the parquet for the 11 NEW bbg rows, BEFORE any S3 put; nothing written, both ACs FAIL.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Both never-widen halves and the TO: silver_append('bloomberg','article', aa3_common.rebuilt_rows() rows, ('article_key',), stamp) makes ONE never-overwrite put of 11 NEW rows; the signing dry run mirrors silver_append's filter and reads 11 NEW / 1 put.",
+      "world_is": "Act-start gate printed OK (parts 30, bronze 30, expected write 11 NEW, 1 fetch-date group). aa3_act.py ran silver_append once (run_stamp 20260930T102302Z): validation and the record_hash filter passed, then pa.Table.from_pylist built and pq.write_table raised 'Cannot write struct type data with no child field to Parquet'. Stack: store.py:462 pq.write_table. No put was made: silver parts still 30, no key with 20260930T102302Z. Cause located read-only: the 11 NEW rows (q-2's parse of the raw payload) carry empty dicts {} at row.footnotes.data, row.body.data, row.footer.data, row.body.content[].data (11 of 11 rows), row.footer.content[].data (5), row.videoAttachments (10), row.imageAttachments (1); pyarrow infers an empty struct that parquet cannot write. The 30 already-served rows carry no empty dict. The signing dry run only mirrors the filter and never serializes, so it could not see this. AC1 FAIL (new parts 0 != 1; 11 missing), AC2 FAIL (served keys 30 != 41; NEW non-empty 0 of 11; re-run would write 11). No retry per the order.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~78/aa3_act.txt: ArrowNotImplementedError traceback",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~78/aa3_AC1.txt and aa3_AC2.txt: RESULT: FAIL",
+          "lib/research/harvest/store.py:462 (pq.write_table in silver_append) @4de7da3cc7"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Fix is outside this order's paths (row builder in lib/opal_data_harvest/silver_from_bronze.py or silver_append serialization, e.g. dropping or typing empty dicts): a re-cut with its own pair is the issuer's call. The 11 empty rows and the 30 served keys are untouched."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W79-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~79",
+      "surfaced_at": "2026-09-30T10:20Z",
+      "one_line": "A run record carries per-job statuses only, so 'refused for the whole universe' is not readable from it as written: the derivation removes bbg on ONE request_rejected job for ONE name (the Z-S45 case, where o-5 completed bbg the same day), so today's DECLARED SET is [barrons, ft, sa, wsj] and ELIGIBLE is 0 of 191.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Ruling 1 / C-HV-RANK-DECLARED-SET v0.5: the declared set is ENABLED_PUBLISHERS minus any publisher whose collection REFUSED for the whole universe in the window, read from the persisted run records.",
+      "world_is": "publication_gold._iter_run_records returns 1 record today (20260930T084110Z-run-4ee47491) with jobs bbg=request_rejected (one security) and wsj=no_new_articles (one security); no field states the universe a job set spanned. Implemented rule (chatter_axis.universe_wide_refusals): a publisher with >=1 job in the window and none ending in SUCCESSFUL_RUN_STATUSES is removed; a publisher with no job is kept. Under it bbg is removed on 1 job / 1 name, ft/sa/barrons (no job) stay in, and the in-memory gold branch reads NOT_SEARCHED 188, PARTIAL_COVERAGE 3, ELIGIBLE 0 of 191 (HOLD, BELOW_ELIGIBLE_FLOOR). A normal future run that fails one name for one publisher, with no success for it in the window, silently shrinks the set.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~79/aa4_ac2_output.txt: REMOVED bbg line and POPULATION line",
+          "lib/research/metrics/chatter_axis.py universe_wide_refusals (the rule as implemented)",
+          "AMGT_HARVST-Z-S45: bbg's one request_rejected job was a single known-rejected key re-fetch, not a universe-wide refusal"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not decided by the worker. Options for the issuer: require the refusing jobs to span the universe (needs the run record to carry the job's security set or the universe size), or record a publisher-level refusal in the run record. Until then the rule is 'attempted in the window and never ran to a conclusion'."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W79-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~79",
+      "surfaced_at": "2026-09-30T11:10Z",
+      "one_line": "Issuer ruling on AMGT_HARVST-Z-W79-S1 implemented (the declared set is the ENABLED_PUBLISHERS with a concluded UNIVERSE-SCOPE job, unioned across the window's run records); S1's disposition is left to the CVO/issuer because a worker cannot graduate.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Issuer 2.0.0_SA_COO~H (PRD v0.6/v0.7/v0.8): the set = the ENABLED_PUBLISHERS whose collection ran a universe-scope job that concluded in the window; exit on refused, no job, or per-name trials only; an empty set HOLDs NO_DECLARED_PUBLISHER; universe scope is read from the run records (the publisher's CONCLUDED jobs, unioned across all the window's run records, cover EVERY security_key of the ranked universe; per job gold_security_key, falling back to security_key); no worker.py change.",
+      "world_is": "Implemented in lib/research/metrics/chatter_axis.py publisher_universe_verdicts / derive_declared_set. Over the 1 persisted run record today the set is EMPTY: barrons/ft/sa NO_JOB, bbg REFUSED (request_rejected=1), wsj PER_NAME_TRIALS_ONLY (concluded jobs cover 1 of 191 universe keys); the in-memory gold branch HOLDs empty_reason NO_DECLARED_PUBLISHER, eligible 0 of 191. A one-name failure cannot shrink the set and one covered name cannot grow it. The issuer asked for S1 to be set to GRADUATED: the surprise-row gate refuses an in-place edit of an existing row and refuses a worker's GRADUATED or adjudicates field (A-1, LGIC_ENFORCE-C-S24), so S1 stands UNDER_INVESTIGATION as filed and the graduation is the CVO's L9 act.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~79/aa4_ac2_output.txt",
+          "lib/research/metrics/tests/test_aa4_declared_set_derived.py (17 passed)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Evidence for the CVO's L9 disposition of AMGT_HARVST-Z-W79-S1: the ruled rule is implemented and its hazard (a one-name failure shrinking the set) no longer exists in the code; today's set is empty and the gold branch HOLDs NO_DECLARED_PUBLISHER."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W78-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~78",
+      "surfaced_at": "2026-09-30T11:10Z",
+      "one_line": "Phase A code is built and proven but cannot be committed: the lane gate admits only the order <paths> (deliverables + investigations); lib/opal_data_harvest/silver_from_bronze.py and test_aa3_empty_struct.py are refused (lane BASE_EXEC). Cites Z-W78-S1.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AMENDMENT 2 phase A: an empty dict anywhere in a bbg row becomes None; the 11 real held rows serialize through pa.Table.from_pylist + pq.write_table; the suite passes.",
+      "world_is": "safe-commit refused both lib paths under owned-paths block mode; the order <paths> block (lines 39-42) does not carry the AMENDMENT 2 grant. The files sit uncommitted in worktree wk-hvst-r28-78a. Built and proven: lib/opal_data_harvest/silver_from_bronze.py _prune_empty_dicts applied in _extract_bbg; aa3_phaseA_ac2.py printed SERIALIZED: 11 of 11; test_aa3_empty_struct.py 4 passed (mutant without pruning fails); suite base 531 passed / after 535 passed. The gate forbids editing S1 in place and reserves GRADUATED to the CVO, so S1 keeps its disposition.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~78/phaseA/aa3_phaseA_AC2.txt: SERIALIZED: 11 of 11",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~78/phaseA/aa3_phaseA_AC1.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Cites AMGT_HARVST-Z-W78-S1: its cause is fixed and proven; graduation is the CVO L9 transfer, not a worker act."
     }
   ]
 ```

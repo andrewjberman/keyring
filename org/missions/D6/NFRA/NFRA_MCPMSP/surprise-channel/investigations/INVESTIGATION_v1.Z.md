@@ -220,6 +220,53 @@
     "spec_asserts": "Decomposition section 7 (iv): MS-t-2 builds and names; it creates no resource -- and by the cut's reading moves no other seat's workflow in the directory.",
     "world_is": "The directory's plans now need a one-time `terraform get` per .terraform. The failure is loud (a named Terraform error with an obvious one-command fix, no network), never silent, so INERT. Site-Z main tree: repaired.",
     "notes": "Remedy on any other checkout: run `terraform get` once in infra/aws/terraform/opal-gateway (local only). Carried to the drain-end read for the other fabric's seats that plan this directory (NFRA_OPLGTW, NFRA_MCPORTAL, NFRA_MCPINDEX)."
+  },
+  {
+    "id": "NFRA_MCPMSP-Z-W2-S3",
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~2",
+    "surfaced_at": "2026-09-30T09:20Z",
+    "one_line": "safe-apply.sh's naming-plan limb (ENFORCE) REFUSES the whole opal-gateway apply because the tree's UNTARGETED plan shows aws_iam_role_policy.gw_rivalfunds_read (rivalfunds-iam.tf, name opal-gateway-rivalfunds-read) as an ADDITION; the gate plans the full tree and ignores -target and a saved planfile, so MS-a-1's three targeted additions cannot pass it; nothing was applied.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Targeted plan (TF_DATA_DIR private copy, 2026-09-30): 'Plan: 3 to add, 0 to change, 0 to destroy.' for aws_iam_role.inf_firm_reader, aws_iam_role_policy.inf_firm_reader, aws_iam_role_policy.gw_assume_inf_firm_reader.",
+        "safe-apply run 3 (HALT_ACK=1, after the staged dir was supplied): '[naming-plan-gate] NAMING REFUSE aws_iam_role_policy.gw_rivalfunds_read opal-gateway-rivalfunds-read -> gateway-rivalfunds-read-policy ... (ADDITION)', 'NAMING-PLAN: REFUSE 59 graded', 'safe-apply: BLOCKED by the naming plan limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=1). Nothing was planned further or applied.' .tools/safe-apply.sh lines ~100-130 run 'terraform plan -input=false -lock=false' with no -target; org/mcp/naming-gate.enforce exists.",
+        "Live read after the block: iam get-role gateway-inf-firm-reader-role = NoSuchEntity (nothing landed). a1.AC2 simulate = NoSuchEntity; a1.AC3 AssumeRole = implicitDeny.",
+        "Two earlier safe-apply faults, both environment: (1) HALT-GATE 'blocked' on 208 pending ROUTINE messages about other seats' ledgers, cleared per its own protocol with HALT_ACK=1 (no STOP-class line, 0 matches); (2) the full-tree plan the gates run needs a SECOND gitignored build input beyond the layer zip the order named: infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged (archive_file source_dir); copied from the main tree, untracked and gitignored, outside this order's <paths>."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MS-a-1 section 1 item 2: 'Plan, then apply, targeted ... through bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply -target=...' with the plan reading only additions for the targets; the directory 'needs' the layer zip and the key vars.",
+    "world_is": "A targeted plan reads 3 to add / 0 / 0, but safe-apply's gates plan the WHOLE tree, and under ENFORCE the naming-plan limb refuses it on an unrelated pre-existing addition (gw_rivalfunds_read, rivalfunds-iam.tf, which this order may not touch). No override for that limb exists short of removing org/mcp/naming-gate.enforce or an R20 entry, both outside this order; bare terraform apply is barred. The apply did not run; the ledger entry nfra-mcpmsp-r1-firm-role stays OPEN (nothing landed, blast radius untouched). The saved plan and TF_DATA_DIR sit in this worktree's .scratch for a retry.",
+    "notes": "Ways through, issuer's call: (a) a different cell lands the rivalfunds policy name (or its state import) so the full plan has no refused addition; (b) the CTO rules a one-apply naming-gate exemption for these three additions; (c) apply from a tree whose full plan is clean. Fresh time cost: each safe-apply run spends ~4.5 min in three full-tree refreshes before it reaches the refusal."
+  },
+  {
+    "id": "NFRA_MCPMSP-Z-W3-S2",
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "surfaced_at": "2026-09-30T10:50Z",
+    "one_line": "build_package.py stages lambda_function.py byte-for-byte from the WORKING TREE, which on this Windows checkout is CRLF (git ls-files --eol: i/lf w/crlf) while HEAD's blob is LF, so the first apply shipped bytes that failed a2.AC2 (identical=False); the staged copy was re-written from `git show HEAD:` bytes and re-applied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "a2.AC2.sh after apply 1: 'live sha256=72337fe88658 head sha256=7e80d4359859 identical=False register_tenant=True verdict=NO'; sha256sum of the working-tree file and of .build/staged/lambda_function.py = 72337fe88658...; `git ls-files --eol` = 'i/lf w/crlf attr/text eol=lf'; 381 CRLF pairs in the staged file, 0 in `git show HEAD:` (python bytes count).",
+        "Every other staged file (10 of 11) equals its HEAD blob byte-for-byte; only lambda_function.py differed.",
+        "Fix inside this order's .build path: wrote `git show HEAD:<path>` bytes over .build/staged/lambda_function.py (sha256 7e80d4359859 = HEAD), re-planned (0 add, 1 change, 0 destroy, code hash only), re-applied: CodeSha256 s+PDoMXpUn7YuMQqBThoLKezBNNIthyDhT8P75BN19A= -> nhz+dwJsDJLO9X3o1exvKdQ+OYE+PraxZSop2BJt9zI=; a2.AC2 then read identical=True verdict=OK. The writer's source file was not edited.",
+        "Consequence for the next applier on a Windows checkout: a2-style 'deployed == HEAD' checks fail unless the staged handler is LF; apply 1's package was live for about 4 minutes and differed from HEAD only by line endings."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MS-a-2 section 1 item 2: 'build_package.py stages the package' and AC2 expects the deployed lambda_function.py byte-identical to HEAD's.",
+    "world_is": "The staged handler is a copy of the working-tree file, whose line endings follow the checkout (CRLF here), not HEAD's blob (LF, .gitattributes eol=lf); the order's steps, as written, produce a package AC2 refuses. Worked around in .build only."
   }
 ]
 ```

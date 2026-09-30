@@ -889,3 +889,109 @@ x 8 names = 45 surfaces):**
   - n-2 and n-3 change words;
   - n-4 changes only when the walker shoots;
   - n-5 and n-6 add read-only surfaces over served routes.
+
+## v12 -- ROUND 12 (issuer, 2026-09-30 ~11:xZ), over PRD v0.5 @bf3a6f5614 (ADMITTED)
+
+**Rectangle:** the round-11 analysis's enrichment list.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round11.md` @8e46a89f9f section 4, items 1-6, with rulings 1 (covered vs
+  found publishers), 2 (version labels carry the time), 3 (FWD-13 binds every rendered figure) and 5 (FWD-20 first).
+- **Cell ids:** `AV-m-1`..`AV-m-5`. Letters e, n, o, p, q, r, s, t, u, v, w are on disk, so round 12 takes `m`.
+- **NOT cells:** FWD-14..19, which are graded by FWD-20's instrument once it lands; the driver series (RESAPP ab-6); the names on
+  ranked rows (RESAPP). Ruling 4 (the coverage-rule ask) is ruled by the CTO: nothing to route.
+- **The issuer's placements:**
+  - (a) **Item 6 (FWD-12, one dark band) folds into AV-m-1.** At the cut the estate instrument `ui-contract-check.mjs` read
+    bandContainersTopLevel 1, fonts {Lato} and purpleFills 0 (list) / 1 (Security states) on all six states of 5174 @4e4307be
+    (DEV 846ecc6c): a build cell's check could not FAIL at base. Its clauses (the band is the identity header; the tab panels are
+    white hairline panels; ONE dark container) ride AV-m-1's instrument, which the close grades.
+  - (b) **FWD-20's negative control, measured.** The cut's helper read the pre-redesign build (portal 8fa7abde, this project's
+    round-1 base) as PASSING the band, fonts, weights, sizes, radii, shadows, lowContrast and purple clauses in all six states
+    (AMGT_RESAPP rounds 37-38 fixed that chrome first); only its navy title strips (stripContainers 1 in thesis, exec, model,
+    posture; DEV 0) separate it. AV-m-1's AC therefore proves CAN-FAIL on the real page for darkContainers (band + strip) and on a
+    planted page for each style clause, beside a clean control. Asked `1.0.0_SA_CTO~Z` (msg 27092); the ENDPOINT was amended to
+    this form, PRD v0.5 @bf3a6f5614 (msg 27097).
+  - (c) **Cells 2 and 3 share ModelTab.tsx**, so they are one chain on slot ~46: m-2 then m-3.
+  - (d) **Item 5's never-collected timeline sentence rides AV-m-4**, which owns TimelinePanel.tsx; m-5 keeps the Posture half.
+  - (e) **AV-m-4 takes an import-free `components/publisherNames.ts`.** The green arm first put the name map in TimelinePanel.tsx and
+    turned shell.harness.cjs RED (three harnesses stub TimelinePanel with only its component); the shared module needs no harness
+    edit (measured by the same helper).
+  - (f) `portal/scripts/` is outside PRD PATHS' owned list; FWD-20 names `portal/scripts/ui-smoke.mjs` as its instrument.
+- **Portal base:** site-Z local DEV `846ecc6c` (clean).
+- **Fixtures:** `deliverables/2.0.0_SA_COO~D/round12/fixtures/` = the round-11 set plus 13 SERVED read-only captures at the cut
+  (`round12/capture_r12.py`; `opal-amgt-scoped-api` CodeSha256 `zHpr7FhS+irmKofIuKNqTkQm2hj7x2fvS1rrX1ohkfQ=`, LastModified
+  2026-09-30T05:20:04Z): `/versions` for BA (15 stamps: four on 20260910, no two in one minute), VLO, IMB, AZN; BA `/thesis`,
+  `/overlay`, `/compare` oldest -> newest (7 changed header figures); IMB `/thesis`; 992 HK `/timeline` and `/timeline/day/2026-08-13`
+  (now PARTIAL, covered [bbg], articles from wsj and sa); BA `/timeline` and `/timeline/day/2026-09-08` (DENIED, 5 articles); 6501 JP
+  `/timeline` (series [] -- never collected). Two local builds for AV-m-1: `C:/tmp/dsgn-r12-dist/pre` (8fa7abde) and
+  `C:/tmp/dsgn-r12-dist/dev` (846ecc6c); and three issuer pages `round12/checks/dists/{planted,clean,blank}/index.html`.
+- **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-m-1` | 1 + 6, ruling 5 | the render instrument: `--dist` (a build from disk, no server), `grades.json` over ten clauses per state (darkContainers, bandIsIdentityHeader, tabPanelsWhite + the style clauses), NOT_EXERCISED on a blind page, fourStates, the three harnesses by the estate runner | FWD-20, FWD-12 | `portal/scripts/ui-contract-check.mjs`, `ui-measure.mjs`, `ui-smoke.mjs`, `ui-dist.mjs` (new) | ~45 | LOCAL |
+| `AV-m-2` | 2 + ruling 2 | every version labelled with its long date and UTC time (seconds where two stamps share a minute): the list, both pickers, the what-moved sentence | RESAPP FWD-6 page half | `SA/tabs/ModelTab.tsx`, `SA/dateWords.ts` | ~46 | LOCAL |
+| `AV-m-3` | 3 + ruling 3 | header-card figures tabular with a tooltip of mnemonic + full value; what-moved lines readable (no >4 fractional digits, no ungrouped 5+ digits), each with its tooltip, named from served fields; no raw float on the Model tab | FWD-13 | `SA/components/HeaderCards.tsx`, `SA/components/StatTile.tsx`, `SA/tabs/ModelTab.tsx`, `SA/constants.ts`, 1 harness stub | ~46 (after m-2) | LOCAL |
+| `AV-m-4` | 4 + ruling 1 (+ item 5's timeline sentence) | every served publisher code named (shared import-free map); "Searched:" never credits found articles; "found, listing not run" for a found-only publisher; the absent found set said in words; the never-collected timeline in words | FWD-11, HARVST FWD-5 | `SA/components/publisherNames.ts` (new), `SA/components/TimelinePanel.tsx`, `SA/components/HeaderBrief.tsx` | ~47 | LOCAL |
+| `AV-m-5` | 5 (Posture half) | the comparable's side as a sentence when none is identified (never "this name"); the zero-citation footer in words | FWD-11 | `SA/tabs/PostureTab.tsx`, `SA/postureCites.ts` | ~48 | LOCAL |
+
+**Edges and chains:**
+- There is no data edge.
+- Write sets: m-1 portal/scripts; m-2 -> m-3 ModelTab + dateWords + HeaderCards + StatTile + constants + modelPattern harness;
+  m-4 publisherNames + TimelinePanel + HeaderBrief; m-5 PostureTab + postureCites. Pairwise disjoint across chains.
+- M = 4 chains, N = 4 now, K = 0 queued (m-3 follows m-2 on its own slot), cap 8.
+- The surprise channel is shared append-only.
+
+**Checks (`round12/checks/`, dry-run at base DEV 846ecc6c; `_load.cjs` (repointed at round12/fixtures), `bound.cjs`, `bytes.cjs`,
+`census.cjs`, `surfaces.cjs` and `walkvoid.sh` copied forward):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| rendercontrol.cjs | 0 of 3 (no --dist, no grades.json) | 3 of 3 (r12-green-a @75baeecc; a helper run over the fixed clean page) |
+| versiontime.cjs | 0 of 3 (four identical "September 10th, 2026" labels; pickers repeat; days only) | 3 of 3 (r12-green-b @1e87ce6c) |
+| figures.cjs | 0 of 3 (no card tooltip; "193510.78009600003"; "a line this page has no name for yet"; 10 raw floats on the Model tab) | 3 of 3 (r12-green-b @e19a38e2, over m-2) |
+| publishers.cjs | 0 of 3 (ft / bbg / barrons unnamed; "Searched: ... -- 2 found" credits Bloomberg; raw codes in rows and news; "No chatter_daily rows exist for this security_key yet") | 3 of 3 (r12-green-c @1227560a) |
+| zerowords.cjs | 1 of 3 ("... has not identified (comparable): ... for this name yet"; "0 of the 0 citations"; the VLO control passes at base by design) | 3 of 3 (r12-green-d @244593b7) |
+
+- **AV-m-1's green arm, measured (r12-green-a @75baeecc, 395+/36- over DEV):** pre-redesign darkContainers FAIL in list (1+2),
+  thesis, exec, model, posture (1+1 each), PASS in peers; DEV PASS (1+0) in the five Security states and FAIL in list (1+1: the Lead
+  Panel band plus one navy strip); every other clause PASS in both; harnesses drafting 8/8, tabs 20/20, posture 32/32; fourStates
+  FAIL in both (DEV: loading 2, error 5, empty 1, no-permission 0). So FWD-20 is NOT green on DEV yet (Universe-mode strip;
+  fourStates needs FWD-19's levers) -- the instrument says so, which is its job. The planted page FAILS all eight style clauses; the
+  blank page reads NOT_EXERCISED on all ten and exits 1. **An issuer page defect, found by that arm:** the clean control's button
+  computed Arial (Chromium's form-control font; the static page lacked the portal reset's `font-family: inherit`); fixed in
+  `dists/clean/index.html` before issuance, and the helper's run over the fixed copy read 3 of 3. Two FWD-12 clauses
+  (bandIsIdentityHeader, tabPanelsWhite) do not discriminate old from new; arm 1's real-page "can fail" rests on darkContainers.
+  The harness clause grades the source tree the instrument sits in, not the --dist build. A full rendercontrol run takes ~6 min.
+- **Harnesses:** in the helpers' scratch roots posture, posturePattern and tabs read RED at base because those harnesses run
+  `lib/research/api/scoped_amgt.py` from the workspace root and the roots lacked `lib/research`. With it junctioned in, the issuer
+  re-ran posture 32/32, posturePattern 13/13, tabs 20/20, shell 10/10, modelPattern 12/12 and errorEmpty 12/12 on r12-green-b and
+  r12-green-d. `assembled` and `exportCompare` need file arguments and are never in a bound list.
+- **Harness break, NECESSARY, granted:** m-3 brings `@/components/DataTooltip` into `modelPattern.harness.cjs` (no stub: "Cannot find
+  module"); one STUBS line is granted. m-1, m-2, m-4 (in the publisherNames.ts form) and m-5 break none.
+- **Found by the green arms and folded into the faces:** m-4's name map as an import-free module (placement (e)); m-1's harness runner
+  must be the estate runner (`_load.cjs` runHarness) -- another invocation crashed posture on its module paths; the helpers'
+  0x08 discipline held (bytes 3/3 on every arm), and one issuer check edit made through a heredoc put a 0x08 into zerowords.cjs,
+  repaired byte-level before the dry-run and scanned for over all round12 checks (0).
+
+**Cut rules applied:**
+- (a) Queue-aware bases: no check compares against a base snapshot; m-3 is chained on m-2's slot, not queued on another.
+- (b) Every necessary harness break is granted with its exact line.
+
+**Battery:**
+- comp-schedule and comp-iam: DECLARED-NOT-APPLICABLE (no AWS in the cells; the cut's captures were read-only invokes by the issuer).
+- comp-adversary: the checks above, plus `bytes.cjs` on every page cell.
+- Blind spots:
+  - static markup with the estate chrome stubbed, so hover tooltips, the native select popup and layout are the walk's;
+  - figures.cjs reads served figures from /overlay while the what-moved lines read the /thesis bundle's copy (they agree today);
+  - publishers.cjs does not render the day tooltip (it shares the sentence function);
+  - AV-m-1's fourStates is counted, not forced.
+- **The issuer's close:** the signed-out control; the walk of VLO, INTU, SAP GY, 992 HK, IMB LN, AZN LN, TSM US, 6501 JP and BA US
+  (BA's Model tab versions and figures, m-2/m-3; 992 HK's and BA's opened days and the news list, m-4; 6501's timeline, m-4; IMB's
+  Posture, m-5); and AV-m-1's instrument run on the drain state's build, its six PNGs read by the issuer and handed to the CVO.
+
+**Rule 24:**
+- (i) MECE over the analysis's six items by subtraction: 5 cells + item 6 folded (placement (a)); the NOT-cells named with reasons.
+- (ii) One write set per chain.
+- (iii) One intent per cell.
+- (iv) No cell moves a served value, a figure, a verdict, a count or an order: m-1 changes an instrument; m-2 and m-5 change words;
+  m-3 formats served figures for display and keeps each full value verbatim one hover away; m-4 names served codes and states which
+  served set a publisher is in.

@@ -67,9 +67,37 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 
 **ISSUER NOTES:** `ROUND_ANALYSIS.round27.md` s.4 item 4. Eligibility stays 0 either way; adding a publisher only tightens it.
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~10:2xZ) -- PRD v0.6 (@`803ea38a9e`, msg 27079): the exit rule is "refused OR ran no job", and an EMPTY set HOLDs.**
+- **AC1 gains two plants:**
+  - (e) an enabled publisher with NO job in the window leaves the set;
+  - (f) an empty derived set HOLDs with `empty_reason` `NO_DECLARED_PUBLISHER`.
+- The worker in flight receives this amendment as a continuation of its order before its drain.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
+**AMENDMENT 2 (issuer, 2026-09-30 ~10:1xZ) -- PRD v0.7 (@`0e6467847a`, msg 27083): a publisher exits the set on "no UNIVERSE-SCOPE job".**
+- A per-name trial neither adds nor keeps a publisher, so the declared set is EMPTY today. The rank HOLDs
+  (`NO_DECLARED_PUBLISHER`) until a universe-scope backfill runs.
+- **AC1 gains two more plants:**
+  - (g) a publisher with only per-name trial runs EXITS the set;
+  - (h) a publisher with a universe-scope run ENTERS it.
+- **AC2 also prints, per excluded name, the declared publishers it lacks.**
+- The worker in flight receives AMENDMENTS 1 and 2 together as a continuation of its order before its drain.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
+**AMENDMENT 3 (issuer, 2026-09-30 ~10:3xZ) -- PRD v0.8 (@`b56263c6a5`, msg 27087) and the issuer ruling on row `Z-W79-S1`.**
+- **Universe scope** = the UNION of a publisher's CONCLUDED jobs' targets across ALL of the window's run records. Each target
+  is the job's `gold_security_key`, falling back to `security_key`.
+- A batched backfill therefore qualifies once the union covers the universe. A single-name trial does not.
+- No `worker.py` change: `HVST-aa-1` owns it, and the run record already carries the per-job key.
+- **Plant (h) uses the batched shape:** two records that together, and not singly, cover the universe, so the publisher
+  ENTERS.
+- **A mutant** that requires coverage within ONE run fails on (h).
+- Row `Z-W79-S1` GRADUATES on this rule.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <slot>~79</slot>
 <fabric>site-z</fabric>
