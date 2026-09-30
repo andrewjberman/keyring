@@ -339,6 +339,52 @@
     "spec_asserts": "TO-RIV-d-2 step 1: a targeted safe-apply of the one aws_iam_role_policy if the gateway stack carries other drift; print the plan and act only if it is create-only for it.",
     "world_is": "The stack carries another project's required variables and build outputs, and 2 pending changes from other work; the targeted create-only apply was still possible with the workaround above. The placeholder variable value was never applied (the grant-writer function is outside the target).",
     "notes": "The untargeted drift (2 changes in opal-gateway) belongs to whichever seat owns the change; it was not read further. record-terraform-deploy.sh, if run for the etfs-rivalfunds stack, also writes infra/aws/terraform/etfs-rivalfunds/CHANGELOG.json, which is outside this order's paths; the source-map stamp (artifact_sha256, last_deployed_commit, last_deployed_at) was NOT written because the order stopped at gate 1."
-  }
+  },
+{
+  "id": "ETFS_RIVALS-Z-W5-S4",
+  "project": "ETFS_RIVALS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+  "surfaced_at": "2026-09-30T11:50Z",
+  "one_line": "The rivalfunds-build-canonical-shape-lambda package omits gold/etf_positioning_gold.py (rivalfunds_package.py STAGED has no entry for it), so the gold stage FAILS on every batch, no canonical_shape / trade_schedule / page object can exist, and RIV-d-2 AC1 and the gold half of AC3 cannot pass until the package is rebuilt and the Lambda code updated.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~RV",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Direct invoke of rivalfunds-build-canonical-shape-lambda (the scheduled batch 096abceb-b054-44d0-8e4e-064af5eb525c; the same Lambda's marker-driven runs of the 11:00Z fire, backfill-r1a and backfill-r1b, left no gold object either; CloudWatch REPORTs 77de5cae-79c7-49fb-86a9-882fdcb6fa9d, cdd311e4-cc4c-4130-8e83-d78a23c2a983, 465bc964-a5e8-4cf0-98b1-9f174c70b4a5 and the direct invoke) returned FAILED with failures[silver parquet date=2026-09-29] = \"FileNotFoundError: [Errno 2] No such file or directory: '/var/task/gold/etf_positioning_gold.py'\"; StatusCode 200, no FunctionError (the stage returns FAILED without a marker).",
+      "Source: data/etfs/scripts/rivalfunds/gold_canonical_shape.py:_epg() loads the vocabulary module from parents[2]/scripts/gold/etf_positioning_gold.py, else parents[1]/gold/etf_positioning_gold.py; in the Lambda tree parents[1] is /var/task. infra/aws/lambda/etfs-pipeline/rivalfunds_package.py STAGED (6 entries: rivalfunds/, lib/opal_naming.py, lib/trading_calendar.py, lib/research/identity, infra/logic/registry, org/standards/NAMING_SCHEMA.json) has no entry for data/etfs/scripts/gold/etf_positioning_gold.py, which exists in the tree.",
+      "Live effect, measured after the backfill: silver holds 325 parquet (324 backfill days + the 07:00 ET scheduled fire's 2026-09-29), the fetch_holdings and build_silver state prefixes hold 3 markers each (096abceb scheduled, backfill-r1a, backfill-r1b); gold/canonical_shape, gold/trade_schedule and platinum/page hold 0 objects and state/build_canonical_shape 0. The sweep etfs-rivalfunds-daily-lambda (request fea9831a-5a1f-4a4f-9b76-775649654e96, batch sweep-r1) returned PARTIAL, ran build-canonical-shape 3 times, stopped_at build-canonical-shape.",
+      "Armed: the 07:00 ET and 09:00 ET Mon-Fri schedules fire against this Lambda; every daily fetch and silver succeeds and the chain stops at gold, so no page is ever published. The sweep retries each batch that has a silver marker and no gold marker, so the chain self-heals once the package carries the file (no replay is owed). The gold, publish and gateway hops beyond gold were not exercised, so a second gap behind this one is unread.",
+      "Not fixable inside this order: rivalfunds_package.py, the Lambda wrapper directories and the etfs-rivalfunds stack are outside <paths>, and a code update of an applied Lambda is a terraform update of a resource the pair described as create-only (never aws lambda update-function-code)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-RIV-d-2 step 4: let the markers drive silver, gold and the page; AC1: the served page exists in the real bucket; AC3: silver/gold for the newest report exist. RIV-d-1 (packager) is accepted with all five Lambdas importable.",
+  "world_is": "Fetch and silver run from AWS and land real data (LEG A steps 1-3 for those two hops); gold stage fails on a missing packaged module, so no canonical_shape, trade_schedule or page exists. AC1 and the gold checks of AC3 read FAIL on a true absence.",
+  "notes": "Owner of the fix: the seat that owns RIV-d-1 (add the STAGED pair (data/etfs/scripts/gold/etf_positioning_gold.py, gold/etf_positioning_gold.py) and the file's imports (boto3, pandas, pyarrow are in the layer)), then a rebuilt-package apply of the etfs-rivalfunds stack (Lambda code update only) under a pair that names it. The issuer decides before the ledger window ends (~16:13Z)."
+},
+{
+  "id": "ETFS_RIVALS-Z-W5-S5",
+  "project": "ETFS_RIVALS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+  "surfaced_at": "2026-09-30T11:50Z",
+  "one_line": "COO-half gate 3 (keys 1-10 read 0) was already false when this worker resumed: the etfs-rivalfunds-daily schedule applied at ~10:39Z fired at 11:00Z (07:00 ET) and, as one of the five declared writers, landed 1 BASG raw + sidecar, 1 silver parquet and 2 markers; the backfill was cut at 2026-09-28 so that 2026-09-29 is not fetched twice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 before the first backfill request: issuer-site/etfs/bronze/holdings/date=2026-09-30/basg-20260930T110033Z-bfd36047cb41.{txt,json} (31748 B, 777 B), issuer-site/etfs/silver/holdings/date=2026-09-29/basg-20260930T110033Z-bfd36047cb41.parquet, state/fetch_holdings and state/build_silver date=2026-09-30/096abceb-b054-44d0-8e4e-064af5eb525c.json; Lambda request 096abceb-b054-44d0-8e4e-064af5eb525c (fetch, 11:00:33Z) and 221903e7-4022-457c-8a50-f6bac839ad00 (silver).",
+      "Writer check: every one of these keys sits in keys 1-10 and was written by a Lambda role of the etfs-rivalfunds stack (sidecar runtime etfs-rivalfunds-fetch-holdings-lambda), the 5-writer count of the COO half; no other writer exists. The scheduled fire is the first acceptance signal for FWD-1's fetch and silver hops from a cold schedule."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NEVER_WIDEN_HALF_COO_D2 act-start gate 3: keys 1-10 still read 0 objects at act start; a non-zero count means another writer exists: STOP.",
+  "world_is": "The count was 4 objects + 2 markers of this stack's own scheduled fire, not a foreign writer. The gate was read as intended (no foreign writer); the backfill ran 2025-06-13..2026-09-28 (324 trading days) and the scheduled fire supplied 2026-09-29, 325 in all.",
+  "notes": "The two applies were done hours before the act by design of the order's split; a schedule that goes live at apply time makes gate 3 unsatisfiable for any apply-then-act order that spans a 07:00 ET fire."
+}
 ]
 ```
