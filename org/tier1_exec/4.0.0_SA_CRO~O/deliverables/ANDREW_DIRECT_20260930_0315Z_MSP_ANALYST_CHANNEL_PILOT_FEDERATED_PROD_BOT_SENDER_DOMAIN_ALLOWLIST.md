@@ -73,4 +73,16 @@ Reading aid:
 - Direction: ONE MCP server for all client firms, with channels and the rest handled at a central control plane; NOT a
   separate server per client. This departs from the primer's section 4 drawing, which showed a gateway per firm.
 - Andrew's wording is "probably"; recorded as his stated direction, not a final design.
-- Not decided here: how firm isolation holds inside one server (CRO~O proposal pending in the discussion).
+- Not decided here: how firm isolation holds inside one server (answered in section 8).
+
+## 8. Andrew, verbatim, same channel, 2026-09-30 ~03:31Z
+
+Asked by CRO~O: the one server's own AWS identity holds no read on any firm's data; per request, the router maps the
+tenant ID to a firm and the server assumes that firm's role for that request only, so a scoping bug is refused by AWS
+rather than leaking data. "Yes on the per-firm role?"
+
+> "yes to per-firm role"
+
+Reading aid: firm isolation inside the one server is a per-firm AWS role assumed per request, selected by the
+tenant-to-firm router; the server's own identity reads no firm data. Role names and policies are not decided here
+(they come from the LGIC builders, CLAUDE.md rule 30). Still unauthorized: the Microsoft domain-to-tenant lookup.
