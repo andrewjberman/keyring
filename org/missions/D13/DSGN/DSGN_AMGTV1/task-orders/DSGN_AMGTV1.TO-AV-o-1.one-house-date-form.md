@@ -146,7 +146,7 @@ written by o-2, o-3 or o-4, so it starts only after those three drain, on the po
 b6634ba0: dates.cjs 1 of 3; the green arm (the issuer's scratch r10-green-b by a helper agent, merged over r10-green-a, 3 import-line
 conflicts resolved) reads 3 of 3 with ALL 16 of 16 and tsc rc=0.
 
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~39</slot>
 <fabric>site-z</fabric>
