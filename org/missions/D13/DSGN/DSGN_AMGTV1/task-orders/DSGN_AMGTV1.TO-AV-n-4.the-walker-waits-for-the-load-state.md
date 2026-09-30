@@ -86,7 +86,7 @@ read-only research agent: walk.mjs:449 `settle(page, 3000)` after the pick; the 
 ("Loading identity header" on all seven 6501 steps, findings.json UIW-009), the netlog records responses only. Base: loadstate.cjs 0
 of 3; green 3 of 3; daystate 3/3 and walkerbound 3/3 on green.
 
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~43</slot>
 <fabric>site-z</fabric>
