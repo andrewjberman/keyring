@@ -760,3 +760,23 @@ x 8 names = 45 surfaces):**
   - o-2 adds served text;
   - o-3 adds served tables and changes the rule lines' heads;
   - o-4 stops a scale the unit never claimed and leaves every measured figure byte-identical.
+
+### v10 AMENDMENT 1 (issuer, 2026-09-30 ~06:2xZ) -- `AV-o-3` re-opened for a byte repair, after walk I
+
+- **Why:** walk I (`tmp/ui-walk/20260930T055658Z`, shot 192) showed AZN's Model tab reading "Opal's opal's historical-multiple
+  reference". A byte scan of `portal/src/pages/SecurityAnalysis/` found three literal BACKSPACE bytes (0x08) where regexes meant
+  `\b`: `tabs/ModelTab.tsx:295` (o-3, cb14d218) and `components/HeaderBrief.tsx:48-49` (since 2515f456, round 1; no description
+  source has ever read "Company description from Bloomberg"). tsc and all 16 harnesses pass them. Row `DSGN_AMGTV1-Z-S5`.
+- **Cell:** `AV-o-3` re-opened -- its own `ModelTab.tsx` byte, with `HeaderBrief.tsx` granted (same class). It replaces the three
+  bytes with `\b` and nothing else, on DEV 5810586a; new criterion AC4 = bytes.cjs. A new order file (`AV-o-5`) was refused by
+  to-pipeline-gate LIMB 6 (one issuance per round; a re-cut modifies its orders), so the repair rides the order that introduced one
+  of the bytes. Worker slot ~37 (a fresh worker at the same serial), on its existing worktree brought to DEV.
+- **Check:** `round10/checks/bytes.cjs` -- 0 control bytes in the page's source; AZN's rule label read once (plus an unprefixed
+  variant); `descriptionSourceWords` reads Bloomberg / drafted / plain. Base 0 of 3; green 3 of 3; ALL 16 of 16 and Q5 4 of 4 at
+  base and on green; tsc rc=0.
+- **A check blind spot, named:** cases.cjs arm 2 asks only that a rule line START with "Opal's", which "Opal's opal's ..." does.
+  bytes.cjs arm 2 closes it.
+- **Walk:** 6501 JP never opened on walk I (only `/security/6501%20JP/peers` was requested; every 6501 shot is a loading
+  skeleton), so o-4's planted face is re-walked on TSM US (a planted name) at the re-walk.
+- **Gate limb that graded this amendment:** none graded the modification of `AV-o-3` (LIMB 6 fires on newly-added orders only;
+  GATE (viii) reads its `<placeholders>NONE`). The surprise row is graded by `.tools/surprise-row-gate.py`.

@@ -428,6 +428,29 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "Row DSGN_AMGTV1-Z-W28-S1 (ARMED, disarm owner this seat): AV-s-3's face presumed a timeline walk that the integrator merge had dropped from walk.mjs.",
  "world_is": "Restored at HEAD by the issuer, every walker feature of rounds 4-7 present and every walker check green; the file-level cause (a conflict resolved to one side) is the integrator's merge, noted for 0.0.0_AB_MSTR~Z. Resolves Z-W28-S1."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S5",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-09-30T06:12Z",
+ "one_line": "Three literal BACKSPACE bytes (0x08) where regexes meant \b: tabs/ModelTab.tsx:295 (AV-o-3, portal cb14d218) makes AZN's Model tab read \"Opal's opal's historical-multiple reference\"; components/HeaderBrief.tsx:48-49 (since 2515f456, round 1) means no description source ever reads \"Company description from Bloomberg\". tsc and all 16 harnesses pass them.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "walk I tmp/ui-walk/20260930T055658Z shot 192 (AZN Model): \"Opal's opal's historical-multiple reference: quote currency 'GBp' ...\"",
+   "byte scan of portal/src/pages/SecurityAnalysis at DEV 5810586a: 3 bytes below 0x20 other than tab/LF/CR, at HeaderBrief.tsx:48, :49 and ModelTab.tsx:295, each 0x08 inside /^...<0x08>/",
+   "round10/checks/bytes.cjs at DEV 5810586a: 0 of 3; on a scratch copy with the three bytes replaced by \b: 3 of 3, cases.cjs 3 of 3, ALL 16 of 16 harnesses, tsc -b rc=0",
+   "cases.cjs arm 2 passed the defect: it asks that each rule line START with Opal's, which \"Opal's opal's ...\" does -- a check blind spot, closed by bytes.cjs arm 2"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "AV-o-3 item 2: a served label that already starts \"Opal's\" is kept as served; AV-e-1 (round 1): a Bloomberg description source reads \"Company description from Bloomberg\".",
+ "world_is": "Both regexes carry 0x08 instead of \b, so neither ever matches: the label is prefixed twice and the source never names Bloomberg. Ruled by the issuer: AV-o-3 AMENDMENT 1 re-opens that order to replace the three bytes and nothing else (a new order file in an issued round is refused by to-pipeline-gate LIMB 6)."
 }
 ]
 ```

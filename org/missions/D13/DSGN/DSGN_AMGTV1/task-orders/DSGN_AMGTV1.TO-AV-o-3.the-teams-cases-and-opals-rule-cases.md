@@ -53,6 +53,22 @@ check count (the floor in the bound criterion). Only a harness named in `<paths>
 (old anchor -> new) in the instance. Measured on the green arm, no bound harness reads the case words, so none is granted and none
 should need one -- a red bound means the change reached past the cases.
 
+### AMENDMENT 1 (issuer, 2026-09-30 ~06:2xZ, after the close walk; row DSGN_AMGTV1-Z-S5) -- a repair, RE-OPENING this order
+
+The issuer's walk found AZN's Model tab reading "Opal's opal's historical-multiple reference: ...". The cause: a literal BACKSPACE
+byte (0x08) where the regex meant `\b` (word boundary), so the "already says Opal's" test never matches and the served label is
+prefixed again. A byte scan of `portal/src/pages/SecurityAnalysis/` finds exactly three such bytes:
+- `tabs/ModelTab.tsx` line 295: `/^Opal's<0x08>/i` -- must read `/^Opal's\b/i` (this order's own line);
+- `components/HeaderBrief.tsx` line 48: `/^bloomberg<0x08>/i` -- must read `/^bloomberg\b/i`;
+- `components/HeaderBrief.tsx` line 49: `/^D-1<0x08>/` -- must read `/^D-1\b/` (both since round 1: no description source has ever
+  read "Company description from Bloomberg"; granted here because it is the same defect class, three bytes, one repair).
+Build: replace each 0x08 byte with the two characters backslash + `b`, and change NOTHING else (no other byte, no reformatting, the
+files' own line endings kept). **Do it at the byte level** (e.g. a Python script reading the file in binary mode and replacing
+b'\x08' with bytes([92, 98])) -- a shell heredoc or an unescaped string is how these bytes got in. Re-read the three lines after
+the edit (`cat -A` shows `\b`, not `^H`). Your portal branch still carries your earlier commit; bring it to the current portal DEV
+first (`git -C portal merge --ff-only DEV` if it fast-forwards, else `git -C portal merge DEV`), so the repair sits on today's page.
+Rewrite this order's proof instance with all four criteria below and flip `<status>` to `complete` again in the same commit.
+
 ## 2. BOUNDS
 
 1. No server, no fetch, no network, no install, no push, no deploy. REFUSE, do not rescue.
@@ -63,6 +79,7 @@ should need one -- a red bound means the change reached past the cases.
 
 <paths>
 portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx
+portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx
 org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~37/
 org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -77,13 +94,15 @@ Read-only: the whole repository; in particular `portal/src/pages/SecurityAnalysi
   <criterion id="AC1" cell_refs="AV-o-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round10/checks/cases.cjs"; echo "exit=$?"</invocation><expect>TEAM CASES AND OPAL'S RULE CASES: 3 of 3 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AV-o-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round10/checks/bound.cjs" Q3 modelPattern.harness.cjs:12 tabs.harness.cjs:20 shell.harness.cjs:10; echo "exit=$?"</invocation><expect>Q3 BOUND: 3 of 3 harnesses green -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AV-o-3" judgment="true"/>
+  <criterion id="AC4" cell_refs="AV-o-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round10/checks/bytes.cjs"; echo "exit=$?"</invocation><expect>NO CONTROL BYTES, LABELS READ RIGHT: 3 of 3 arms -- and exit=0</expect></criterion>
 </proof_of_spec>
 
 AC1 is the built Model tab on the SERVED /thesis of AZN (the team's three cases SERVED; the rule's upside and downside ABSENT), IMB
 (team cases ABSENT; the rule base SERVED) and VLO (team cases ABSENT with reasons); AC2 the bound on every harness that loads the
 Model tab. AC3 is JUDGMENT, graded by `3.0.0_SA_CVO~Z` at L9 on the issuer's signed-in walk (AZN's Model tab), never self-graded: a
 PM reads the research team's Upside and Downside as the team's, reads Opal's rule cases as Opal's, and sees no "not in the pack"
-line beside a case the team did write (CORPUS FWD-12). Portal typecheck, if you run one: `node_modules/.bin/tsc -b --noEmit` inside
+line beside a case the team did write (CORPUS FWD-12). AC4 (AMENDMENT 1) is 0 control bytes over the page's source, AZN's rule
+label read once (plus an unprefixed variant read "Opal's ..." once), and the description source read in words. Portal typecheck, if you run one: `node_modules/.bin/tsc -b --noEmit` inside
 `portal/` (`tsc -p .` lists no files and checks nothing).
 
 ## 5. WHEN YOU ARE DONE
@@ -98,8 +117,12 @@ outer commit hashes, and any row.
 
 **ISSUER NOTES:** round 10 = the round-9 analysis s.4 item 3 with ruling 2. Base b6634ba0: cases.cjs 0 of 3; green 3 of 3; Q3 3 of 3
 at base and on the green arm (the green arm carried o-2, o-3 and o-4 together).
+AMENDMENT 1 (row Z-S5): graded by no gate limb as a new order (LIMB 6 refuses a new order file in an issued round; a re-cut modifies
+its orders), so the repair re-opens this order. Checked at DEV 5810586a: bytes.cjs 0 of 3; on a scratch copy with the three bytes
+fixed, 3 of 3, cases.cjs 3 of 3, ALL 16 of 16 harnesses, tsc -b rc=0. cases.cjs arm 2 passed the doubled label (it asks only that a
+line START with "Opal's") -- a check blind spot, closed by bytes.cjs arm 2 (AC4).
 
-<status>complete</status>
+<status>pending</status>
 <round>10</round>
 <slot>~37</slot>
 <fabric>site-z</fabric>
