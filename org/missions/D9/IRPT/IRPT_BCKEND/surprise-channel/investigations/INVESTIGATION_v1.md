@@ -13701,3 +13701,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Filed off-task at the round-27 cut and not worked. Not overridden and not relied on: both issuances stated the refusal as a parsing artifact in their commit messages. NOT MEASURED: whether other limbs that parse serials (the owned-paths resolver for worker grants, to-check's --assignee substring match) share the regex; the worker-grant resolver admitted WK~97's commits under 0.9.0_WK_IRPT_BCKEND~97 today, so at least that path reads the full serial."
 }
 ```
+
+
+## IRPT_BCKEND-S241 -- pr-271's served-boundary reader still reads a missing module as 'allowed nowhere' at runtime; only the build-time per-bundle import check guards it
+
+```json
+{
+  "id": "IRPT_BCKEND-S241",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T21:30Z",
+  "one_line": "TO-IB-pr-271's served-boundary reader (worker ~98 @c716489be8, served.py _service_allowed_firms) still wraps the lazy `from canonical_profile_reads import` in `except Exception: return []`, so at RUNTIME a missing module reads as 'allowed nowhere' for every service principal, silently. The build-time guard (P27-1-AC2, the import proven in each of the 7 deployed layouts) is the only thing that catches a bundle without the module.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (the issuer of TO-IB-pr-271; disarmed by narrowing the handler so an ImportError propagates or is logged by name, or by recording why AC2 alone suffices)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show c716489be8:infra/aws/lambda/investor-reporting/_authz/served.py lines 920-945: the import at :928 sits inside the try that ends `except Exception:  # noqa: BLE001 -- any failure to read the row restricts everything` / `return []` at :944-945; the caller turns [] into FIRM_BINDING.",
+      "The same shape was the defect ~P caught in Y's own candidate at the cut (103391: served.py in 7 bundles, the reader in 2; correction @de7719d376). pr-271 removes the TRIGGER by carrying the reader and its closure into all 7 bundles (lambda-source-map.json +80) and proving the import per bundle (P27-1-AC2 in checks/r27/p27_1_ac2_deployed_layout.py) -- it does not remove the silent runtime reading.",
+      "Scope of the failure if it ever fires: SERVICE subjects only (x-user-type service), so failing closed is the safe direction for an authorization check; the cost is observability, not exposure."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Y's correction on the candidate (@de7719d376): 'a fail-closed branch never catches an ImportError; a missing dependency is a build defect to surface, not an authorization answer.'",
+  "world_is": "The shipped cut keeps the catch-all over the import and relies on the per-bundle build check. Safe today (the module is in all 7 bundles); a future bundle that drops it would refuse every service principal with FIRM_BINDING and no log line naming the missing module.",
+  "notes": "Filed on the channel rather than by message: off-task for ~Y, the drain and the fix are ~P's. No act is asked of anyone by this row; it does not block pr-271 or W27."
+}
+```
