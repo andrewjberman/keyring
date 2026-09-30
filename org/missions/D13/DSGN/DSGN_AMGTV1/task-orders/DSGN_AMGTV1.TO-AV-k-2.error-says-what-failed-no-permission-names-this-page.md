@@ -100,7 +100,7 @@ src/ renders PanelNoPermission; the "advisor book" default's only user is the re
 is untouched for the page that owns advisor book" is kept as byte-equal defaults. Base 118cd005: states.cjs 1 of 3; green r14-green-b
 @8b1ee539 3 of 3; stacked over k-1 and k-4 3 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~52</slot>
 <fabric>site-z</fabric>

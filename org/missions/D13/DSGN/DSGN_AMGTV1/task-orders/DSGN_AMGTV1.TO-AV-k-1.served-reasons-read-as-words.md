@@ -95,7 +95,7 @@ write ExecManagementTab and PostureTab). Round 13's frozen `dossier.cjs` arm 2 r
 after this cell (inferred by the helper; a round-13 check, not a round-14 bound). Base 118cd005: reasonwords.cjs 1 of 3; green
 r14-green-a @f2258ff0 3 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~52</slot>
 <fabric>site-z</fabric>
