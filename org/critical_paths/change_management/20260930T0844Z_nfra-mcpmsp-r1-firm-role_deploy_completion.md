@@ -28,3 +28,5 @@ opal_name module instances. Nothing else (writer, existing gateway policies) is 
 "N to add, 0 to change, 0 to destroy" or no apply.
 ROLLBACK: terraform destroy -target of exactly aws_iam_role_policy.gw_assume_inf_firm_reader,
 aws_iam_role_policy.inf_firm_reader, aws_iam_role.inf_firm_reader.
+
+- 20260930T0920Z 0.9.0_WK_NFRA_MCPMSP~2: targeted plan read 3 to add, 0 to change, 0 to destroy; safe-apply BLOCKED by the naming-plan limb on an unrelated addition (row NFRA_MCPMSP-Z-W2-S3). NOTHING APPLIED: gateway-inf-firm-reader-role does not exist (NoSuchEntity). Entry held OPEN for the issuer's retry; L1/L2 carry no proof.
