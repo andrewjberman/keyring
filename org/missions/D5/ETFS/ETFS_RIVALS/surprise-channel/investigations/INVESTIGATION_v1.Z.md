@@ -568,6 +568,74 @@
     "spec_asserts": "Amendment 4 step 5: '/healthz 200 ... (or the health route the README names, or an SSM curl to localhost)'; amendment 3 CTO condition 5: record what the worker could read.",
     "world_is": "The gateway's liveness route is /health; /healthz is not a route (404), so a literal /healthz 200 read is unreachable on this app even after the deploy, and the ALB path /healthz answers the Entra redirect. The order's alternative (the route the app names) is /health.",
     "notes": "After the deploy, read /health (SSM localhost) for the L4 leg; /rivalfunds must read non-404 on localhost (redirect to login, 401 or 200) and the human's authenticated read compares to the sha256 above."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S14",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-09-30T14:50Z",
+    "one_line": "safe-ec2-deploy.sh's manifest rewrite turned escaped non-ASCII in unrelated EC2_MANIFEST entries into raw mojibake (measured by the issuer at the gateway deploy; the wrapper's manifest commit was discarded).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer report to this worker (2.0.0_SA_COO~RV, ~14:45Z): the wrapper's own manifest commit after the 4ce794642699 deploy was lane-refused in the ref tree, and its rewrite also changed escaped non-ASCII in unrelated entries into raw mojibake, so it was discarded. This worker did not re-run the wrapper; the manifest was edited byte-surgically instead (git diff: 2 lines, deployed_commit and deployed_at of the opal-gateway entry).",
+        "Same class already named in the manifest's own opal-gateway release_note: 'the script's jq.exe write re-encodes the manifest (row NFRA_OPALAI-Z-W2-S4)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-ec2-deploy.sh records the deploy in EC2_MANIFEST.json by changing that service's entry.",
+    "world_is": "Its jq-based rewrite re-encodes unrelated entries (escaped non-ASCII becomes raw mojibake); a hand-edited, byte-surgical manifest is the only safe record on this device.",
+    "notes": "Owner of the wrapper decides; nothing armed because the discarded rewrite never landed."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-09-30T14:50Z",
+    "one_line": "Today's other deploy-only gateway refs 288fa78c93 and 093fc247c6 carry no tag, so the commit the gateway ran before the 14:37Z deploy is reachable only by branch (GC exposure if that branch is pruned).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer report to this worker (2.0.0_SA_COO~RV, ~14:45Z): 288fa78c93 and 093fc247c6 carry no tag. Only deploy-gw-etfs-rivalfunds-r1 (4ce794642699) is tagged. Worker read: `git tag -l 'deploy*'` in C:/tmp/wk-rivals-5 lists deploy-gw-etfs-rivalfunds-r1 and the branch names deploy-rivalfunds-gw-r1, deploy-rivalfunds-gw-r1b only; neither hash is a tag."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A deployed gateway commit is recoverable as a rollback target (EC2_MANIFEST previous_deployed_commit).",
+    "world_is": "288fa78c93 is BASE of the ETFS_RIVALS ref and is the rollback base; it and 093fc247c6 are held only by branch refs, not by a tag.",
+    "notes": "Tagging is the issuer's act at the drain."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-09-30T14:52Z",
+    "one_line": "AC2 FAILS: a later gateway deploy (NFRA_MCPINDEX deploy-only ref 2e2254156e, cut on BASE 288fa78c93 without the 4ce794642699 key-16 files) restarted the gateway at 14:41:53Z and reverted server.py, so /rivalfunds and /rivalfunds/archive read 404 again; rivalfunds_view.py and the other three key-16 files remain equal to the ref.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Post-deploy SSM 627cf662-bd05-4c0c-a455-88e89d49dc13 (issuer, ~14:40Z): host server.py sha256 45d0494d3bc4266e7d6440a873384146460447c3d8b58330236b86de8f721b84 == the ref's.",
+        "d-2.AC2.py at 14:48Z: 'FAIL: deployed app/server.py sha256 82fd0421a60e777fca94fe29deca8df57d40f275adebccce04aee45840ed5b34 == deploy commit 45d0494d...' (SSM 6fc20d44-4479-4a75-98b0-a954c90d2677); rivalfunds_view.py 4af18359... equal; AC2 RESULT: FAIL 1 failures.",
+        "Full compare SSM 0d95b020-5a00-484b-b0ab-538dc93bcfa1 at 14:49Z: ref 80 files, host 80, equal 70, differ 10 (data_entitlement.py, destructive_ops.py, integrations/opal_discover/integration.py, integrations/portal_index/integration.py, integrations/schwab/{aws_roles.py,datasets.json,integration.py,query.py}, schwab_audit.py, server.py); the five key-16 files other than server.py are equal to the post-deploy hashes.",
+        "Read-only SSM eb02d72c-0318-43f8-a0c3-2402dac3510b: grep -c rivalfunds /opt/opal-gateway/app/server.py = 0; opal-gateway ActiveEnterTimestamp 2026-09-30 14:41:53 UTC (MainPID 480050); localhost /health 200, /rivalfunds 404, /rivalfunds/archive 404 (they read 401 at the 14:37Z health read, SSM 1bbbeb80-7533-42ab-bf98-f036dc6aa720).",
+        "git show 2e2254156e:infra/aws/ec2/opal-gateway/app/server.py | sha256sum = 82fd0421a60e777fca94fe29deca8df57d40f275adebccce04aee45840ed5b34 (== the host's), 0 'rivalfunds' matches; 4ce7946426 is not an ancestor of 2e2254156e; its message: release 63d6094823 dep-nfra-mcpindex-r5-schwab-enable-b cut on live base 288fa78c93. CLOUD's EC2_MANIFEST still reads deployed_commit 288fa78c93 (no manifest record of that deploy seen)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 4 step 5-6 and AC2: the deployed server.py and rivalfunds_view.py equal the deploy commit 4ce794642699, whose server.py carries the /rivalfunds routes.",
+    "world_is": "The gateway host no longer runs 4ce794642699: a second release built on 288fa78c93 was deployed over it, so the /rivalfunds routes are gone (404) while the rivalfunds files sit on disk. The manifest edit this worker was told to make (deployed_commit=4ce794642699, deployed_at 14:37Z) is therefore stale for the host as of 14:41:53Z. Ledger L3/L4/L6 are left OPEN; this worker did not redeploy (the deploy is the issuer's act per W5-S12) and did not touch the other seat's release.",
+    "notes": "Options for the issuer: rebuild a ref on the NEW host base (2e2254156e's gateway tree) plus the key-16 files and redeploy before ~16:13Z, or have the NFRA_MCPINDEX release re-cut on 4ce794642699 (the issuer's 'tell the in-flight release seat to base on it' step). ARMED: the ledger blares RED at ~16:13Z with L3, L4, L6 open, and the gateway serves 404 on /rivalfunds now."
   }
 ]
 ```
