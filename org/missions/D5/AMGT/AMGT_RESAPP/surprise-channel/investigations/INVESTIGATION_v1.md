@@ -16070,6 +16070,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "zz-8 COO half: /thesis for ASML reads thesis_driver_chart SERVED, source filing, 3 points after the rewrite.",
   "world_is": "The chart reads ABSENT; the served driver is the D-1 drafting document's embedded copy (row Z-S311). A check that hands a component its input directly validates the component, never the served join.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. CTO msg 26943 (@fdd0074be3): rollback WAIVED for AC2 only; the ASML rewrite kept; round 52 cuts the D-1 drafting regeneration under its own pair, AC = the SERVED /thesis chart reads the 3 spanned points (a served-route read, never an in-process call with a handed input)."
+},
+{
+  "id": "AMGT_RESAPP-Z-S313",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T07:40:00Z",
+  "one_line": "A D-1 drafting rebuild from the stored analysis DROPS served sentences under today's verbatim gate: for ASML_NA_Equity the in-memory rebuild (the --rebuild-pool transform) carries the spanned driver but serves company_description 1 (stored 6), investment_thesis 0 (1), risks 0 (2); a pool rebuild is therefore not a safe way to refresh any embedded field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round52/checks/ab_1_preview.py at the cut: top-level keys 15, differing 4 (denominators, held_no_span, sections, thesis_driver); stored sections {company_description 6, investment_thesis 1, risks 2, ceo_bio 0, recommendation 1}, rebuilt {1, 0, 0, 0, 1}; driver spans stored 0 of 3, rebuilt 3 of 3.",
+      "drafting_build.build_drafting_document carries thesis_driver from the analysis (:365); the verbatim gate (C-VERBATIM-GATE HOLD) moves HELD-NO-SPAN sentences out of sections."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-51 analysis item 1: ASML's D-1 drafting document is regenerated from the rewritten analysis.",
+  "world_is": "A regeneration moves 3 more top-level keys and drops served sentences; round 52 cuts a driver-only splice instead (AMGT-ab-1, written at AMGT-ab-6). Measured on ASML only; how many stored D-1 documents a pool rebuild would shrink is UNMEASURED.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. No act: a --rebuild-pool live run would be the hazard, and none is ordered. Issuer ruling at the cut, stated in s.60b.1 and the issuance commit."
 }
 ]
 ```
