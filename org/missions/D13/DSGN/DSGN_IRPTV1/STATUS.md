@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
 tick here; post-crash relaunch 2026-09-30 13:0xZ (`org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAUNCH_BRIEF_20260930_130xZ_POST_CRASH.md`).
-**As of 2026-09-30T18:1xZ.** Lease read FAST (until 14:23Z, extended by presence stamps). The 07:52Z reboot ended the
+**As of 2026-09-30T18:3xZ.** Lease read FAST (until 14:23Z, extended by presence stamps). The 07:52Z reboot ended the
 previous session mid-wait (DEV 44fd5f42 at Andrew's re-smoke); no worker, worktree, deploy entry or index lock of this
 lane survived it (measured 13:1xZ: 84 of 84 task orders terminal, no `.open_deploys/` entry names this seat, no
 `index.lock`). 5174 restarted 13:5xZ from the main portal checkout (`bun run dev:live --port 5174`).
@@ -57,6 +57,10 @@ live press stays Andrew's (walk-2 write guard).
    no contract file, no `dashboard/` dir, no IRPT_DASHBD task order, CVO half of the PRD unsigned); "any hop fed by a fixture
    fails the outcome", so nothing is built against an invented shape. Write surface when it un-parks:
    `tabs/reporting/` and the new `dashboard/` only.
+   **Pre-staged (item 44, 18:3xZ):** the build plan `deliverables/2.0.0_SA_COO~D/item44/IRPT_DASHBD_HOP5_BUILD_PLAN.md`
+   (five files, their tests, the real-run bar). Un-parks on three pieces of B's chain: the SERIES contract and the thread
+   account's files (DB-b-2, worker spawns after DB-b-1's gold) and the read route (DB-b-4). Items 1-3 of the plan start the tick
+   the contract file lands.
 1. ~~W2-16~~ (probe item 43: not reproduced at 390-1440 px; closes unless Andrew's capture recurs)
 2. **W2-20 front residue**: retire the 'Rebalancer strategy:' label path (`slices.ts:473-475`) once ~M's re-mint is
    the served shape (parked until then; retiring it early would blank a still-served node).
