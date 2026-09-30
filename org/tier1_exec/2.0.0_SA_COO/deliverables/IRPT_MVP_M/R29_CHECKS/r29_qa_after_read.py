@@ -8,6 +8,7 @@ Usage: python r29_qa_after_read.py [firm ...]   (default: all three)
 from __future__ import annotations
 
 import json
+import os
 import sys
 
 import boto3
@@ -15,9 +16,11 @@ import boto3
 FIRMS = {"49financial": "opal-data-49financial", "inflection": "opal-data-inflection", "cottonwood": "opal-data-cottonwood"}
 TICKERS = ("PHYS", "GLD", "VXX")
 
+NAMESPACE = os.environ.get("HOLDINGS_NAMESPACE", "holdings_qa")  # holdings_qa (the QA fire) or holdings (served)
+
 
 def newest_manifest(s3, bucket: str, firm: str) -> str:
-    prefix = f"irpt/{firm}/platinum/holdings_qa/date="
+    prefix = f"irpt/{firm}/platinum/{NAMESPACE}/date="
     best = None
     token = None
     scanned = 0
@@ -62,19 +65,25 @@ def main(argv):
             mkey = newest_manifest(s3, bucket, firm)
             nodes = securities = unclassified = 0
             found = {t: "absent" for t in TICKERS}
+            basis = {}
             for n in iter_nodes(s3, bucket, mkey):
                 nodes += 1
-                if n.get("kind") != "SECURITY" and n.get("node_type") != "SECURITY":
+                # served node shape (HoldingsSnapshot v1): node_kind, display.symbol, asset_class, sub_asset_class,
+                # asset_class_basis in {TABLE, NAME_ALIAS, NAME_PATTERN, TICKER_SHAPE, NONE}
+                if n.get("node_kind") != "SECURITY":
                     continue
                 securities += 1
                 ac = n.get("asset_class")
                 if ac in (None, "", "unclassified"):
                     unclassified += 1
-                t = (n.get("ticker") or (n.get("identity") or {}).get("ticker") or (n.get("display") or {}).get("ticker"))
+                b = n.get("asset_class_basis")
+                basis[b] = basis.get(b, 0) + 1
+                t = (n.get("display") or {}).get("symbol") or n.get("ticker")
                 if t in found and found[t] == "absent":
-                    found[t] = f"{ac}/{n.get('sub_asset_class')}"
-            print(f"QA-AFTER {firm} manifest={mkey} nodes={nodes} securities={securities} unclassified={unclassified} "
-                  + " ".join(f"{t}={found[t]}" for t in TICKERS))
+                    found[t] = f"{ac}/{n.get('sub_asset_class')}/basis={b}"
+            print(f"QA-AFTER ns={NAMESPACE} {firm} manifest={mkey} nodes={nodes} securities={securities} unclassified={unclassified} "
+                  + " ".join(f"{t}={found[t]}" for t in TICKERS)
+                  + " basis=" + ",".join(f"{k}:{v}" for k, v in sorted(basis.items(), key=lambda kv: str(kv[0]))))
         except Exception as exc:  # noqa: BLE001 -- one line per firm, never a silent skip
             print(f"QA-AFTER {firm} ERROR {type(exc).__name__}: {exc}")
             rc = 1
