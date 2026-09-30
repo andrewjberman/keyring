@@ -12810,3 +12810,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "REMEDY, per the row the arms file bound to this outcome BEFORE the run rather than after: the CTO's original 102967 shape -- ESTABLISH AND VERIFY A SESSION BEFORE CLAIMING, outside any request's allowance. With one refinement the read forces: establishing-before-claiming only helps if the capture can succeed, and AUTH_FAILED says it cannot today, so the auth failure is upstream of the sequencing and must be fixed first or the new shape simply fails earlier. S218 GRADUATES from UNDER_INVESTIGATION -- the question it was opened to answer is answered -- but stays ARMED, because nothing is remedied and no job can still reach the vendor. disarm_owner remains 2.0.0_SA_COO~P: the resident's session establishment is its surface, not ~Y's. THE FOUR REPORT ARMS (Multi-Comp, Y2 Target Weight, the first certified 49financial, a certified Inflection) STAY BLOCKED, and now for a NAMED cause rather than an open question. WINDOW ACCOUNTING: one body posted, one K4 and one K5, no retry by this lane. The resident's own retained_for_retry is its behaviour, not a second submission. The window closes 04:30:34Z and this lane fires nothing further in it."
 }
 ```
+
+## IRPT_BCKEND-S226 -- the resident is stopped to bound vendor attempts (ARMED, disarm_owner 2.0.0_SA_COO~P)
+
+```json
+{
+  "id": "IRPT_BCKEND-S226",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-30T03:56:00Z",
+  "one_line": "The resident is STOPPED (irpt-analysis-resident, 03:50:34Z, by 2.0.0_SA_COO~P) to bound YCharts login attempts: the W25 job's message was retained after CAPTURE_FAILED:AUTH_FAILED and re-offers 900 s after receive, so any restart makes another vendor attempt outside Andrew's one-window word. ARMED until the CTO rules the restart policy.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-generation attributes read 03:48Z: VisibilityTimeout 900, RedrivePolicy maxReceiveCount 5 to irpt-generation-dlq; ApproximateNumberOfMessagesNotVisible 1 after the resident's retained_for_retry at 03:36:28Z (journal, SSM read-only).",
+      "SSM read-back 03:53Z: irpt-analysis-resident.service active=inactive sub=dead, InactiveEnterTimestamp 2026-09-30 03:50:34 UTC; the last journal lines are POLL handled=0, so no redelivery was consumed. Queue 03:53Z: 1 visible, 0 in flight; DLQ 1 visible, 0 in flight (baseline unchanged).",
+      "S225 (2.0.0_SA_COO~Y, @040313abdc): one EVICTION verdict=EVICTED on the first vendor call, then retained_for_retry code=CAPTURE_FAILED:AUTH_FAILED for job REQ-86f1ce7062356bc5c109ce12."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W25 packet W25-4: if the resident misbehaves the window closes; Andrew's word (@d821060b8b) covers ONE window, no retry.",
+  "world_is": "The window's one body ended non-terminal at the job level (state SUBMITTING, message retained). Left running, the resident would re-receive it (up to 5 receives, then a DLQ message) and attempt a YCharts capture each time. Stopped instead. NOT claimed: that a redelivery would in fact reach the vendor (the capture may refuse before any call); ABSENT is not EXERCISED-AGAINST. A restart is the un-park act; it consumes the retained message.",
+  "notes": "Also recorded here: K1 was deleted at 03:45:34Z on ~Y's 'fired and graded' before ~Y's hold arrived; the packet says delete after terminal. Restart, or discarding the retained message, is a CTO ruling asked at 03:54Z (msg to 1.0.0_SA_CTO)."
+}
+```
