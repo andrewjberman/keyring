@@ -78,7 +78,7 @@ It runs no collection, calls no vendor and changes no S3 object. The next collec
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>26</round>
 <slot>~67</slot>
 <fabric>site-z</fabric>

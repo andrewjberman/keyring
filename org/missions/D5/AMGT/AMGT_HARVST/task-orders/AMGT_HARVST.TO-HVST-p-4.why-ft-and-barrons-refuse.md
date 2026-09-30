@@ -69,7 +69,7 @@ No request, no login, no fix. The route it names is cut in a later round.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>26</round>
 <slot>~69</slot>
 <fabric>site-z</fabric>
