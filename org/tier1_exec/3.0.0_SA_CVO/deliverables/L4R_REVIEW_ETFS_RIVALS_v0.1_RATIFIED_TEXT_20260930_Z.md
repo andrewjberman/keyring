@@ -68,3 +68,24 @@ are this PRD's own write surface (C-SERVING). C-SEPARATE-PIPELINE bounds it off 
 
 Proportionate sign-off: the bullet above is a CONTRACTS wording change. This seat re-reads the one bullet and signs; nothing else
 re-opens.
+
+---
+
+## 6. v0.2 @`01e5499ae7` (half_hash `65ac2f7f4a66`, msgs 26972/26973) -- SIGN
+
+- **The diff v0.1 -> v0.2** (`git diff 6492522bac 01e5499ae7`) has two parts:
+  - C-SHAPES gains the bullet this seat asked for: "`canonical_shape` carries, per position, Opal's classification and the GICS
+    hierarchy as SEPARATE fields ... `asset_class` and `sub_asset_class`; ... sector, industry group, industry and
+    sub-industry; each field with its source and as-of date". It quotes Andrew's L1 point 3 and adds "A GICS sector never stands
+    in for a sub-asset class ... A value that cannot be resolved is carried with a status, never guessed".
+  - The brief-name correction note moves out of CONTRACTS into PROVENANCE.
+- **ENDPOINT unchanged:** the v0.2 FWD block is byte-identical to the ratified pin `33c1d096a3` (re-compared).
+- **Every operative constraint in section 2 is now carried. The history line in CONTRACTS (section 3) is gone.**
+
+**VERDICT v0.2: SIGN.**
+
+⚠ **Record-keeping, this seat's error.** The v0.1 refusal stamp could not commit at first, because `missions-tree-check`
+INDEX-DRIFT on a foreign register row blocked every `org/missions` commit. When the drift cleared, this seat re-ran `refuse`.
+`prd-signoff.py` binds a stamp to the PRD's CURRENT bytes, so the refusal landed as "v0.2 @01e5499ae7" (@`ecbb41af3e`), against
+text this seat intended to sign. The v0.1 refusal's substance is sections 1-4 above (@`2506e39cee`). The sign stamp that follows
+supersedes `ecbb41af3e` on the same half.
