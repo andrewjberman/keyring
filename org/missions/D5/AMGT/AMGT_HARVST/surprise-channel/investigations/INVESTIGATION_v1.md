@@ -4047,6 +4047,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "ARMED against HVST-ab-3 (batch 1 would spend bbg fetches on pre-floor stories for each of 10 names). Disarm: HVST-ab-1 AMENDMENT 1 -- in backfill, a hit whose own date is before the floor is not fetched and is recorded skipped_pre_floor; an undated hit is still fetched. The 9 pre-floor pairs already in the ab-2 expected write are kept (gold is the pair store; the page window is the floor), named in the ab-2 halves."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:55Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S5",
+      "one_line": "Change 4's 'floor' is the job's bound_date, which is max(floor, per-(security,publisher) watermark): once a watermark exists, a dated hit before the WATERMARK (not only before the floor) is also not fetched.",
+      "spec_asserts": "Order section 1 change 4: in backfill, a listing hit whose own _hit_date is before the job's floor is not fetched.",
+      "world_is": "publishers.bloomberg/seeking_alpha/dow_jones read `bound = self.bound_date` (worker.py sets it to harvest_grammar.backfill_bound = max(floor, watermark)), the same bound _stop_paging already stops on. The new gate (Publisher._pre_floor_skip) uses that same bound, so it is the SAME semantic as the paging stop: a hit older than the watermark was already collected by an earlier run. With no watermark (all three recorded replays, a first run) bound == floor 2026-01-01 and the gate is exactly the order's text.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/harvest_grammar.py backfill_bound (:157-165)",
+          "lib/opal_data_harvest/worker.py client.bound_date = backfill_bound(...) (:473-478)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1_ac2_output.txt section 4"
+        ]
+      },
+      "notes": "Kept: reading 'the job's floor' as the job's bound keeps the fetch gate and the paging stop on one number. If the issuer wants the literal config floor only, the gate reads config backfill_floor instead of bound_date (a one-line change in worker.py plus a client attribute)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:55Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S6",
+      "one_line": "The order's 'bbg pages carry publishedAt on 30 of 30 hits, 22 before the floor' counts every hit; only 17 of the 30 are subtype Article (the only hits bloomberg() ever fetches), 13 of those 17 are before the floor.",
+      "spec_asserts": "Order amendment 1 / row Z-S46: the three recorded bbg Lenovo pages carry publishedAt on 30 of 30 hits, 22 before the floor.",
+      "world_is": "AC2 section 4 replays the three pages in backfill at floor 2026-01-01 and counts fetch candidates (subtype Article with a resourceId): p1 30dc8b: 5 hits, 3 pre-floor, 2 fetched; p1 93ba43: 5, 3, 2; p2 f24dcb: 7, 7, 0 -- 17 hits, 13 skipped_pre_floor, 4 fetched (base: 17). The other 13 of the 30 are non-Article hits that the loop never fetches at base or after. So the gate saves 13 fetches over these pages, not 22; bbg:NM5NLQ6K50XZ01 (page 2, dated 2015-04-02) is now skipped_pre_floor rather than reaching the hold.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1_ac2_output.txt section 4: TOTAL over 3 pages: hits=17 dated=17 pre-floor=13 | fetched=4 skipped_pre_floor=13"
+        ]
+      },
+      "notes": "Two of the three pages are two different p1 queries of the same search, so the 17 counts a story id twice where both pages list it; per-page counts are printed, not deduplicated."
     }
   ]
 ```
