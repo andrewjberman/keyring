@@ -27,7 +27,9 @@ on one line, that it is packaged and imported at request time through corpus.dos
 
 ## 2. BOUNDS
 
-1. Comment lines of `scoped_amgt.py` only; the diff must touch no non-comment line. Standing: no install, no push, no promote, no deploy.
+1. Comment lines of `scoped_amgt.py`, AND (AMENDMENT 1) the wording of the one docstring near `:2175` that still says `lib.opal_naming` is
+   "outside this adapter's vendored closure" (a claim wrapped across two lines) -- the same correction, text only; no code line, no
+   other docstring. Standing: no install, no push, no promote, no deploy.
 
 ## 3. SURFACES
 
@@ -53,6 +55,8 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 ~188 after ab-2 (same file).
 
 <status>pending</status>
+**AMENDMENT 1 (`2.0.0_SA_COO~Z`, 2026-09-30 ~08:2xZ):** the worker's report named a third false claim, in the docstring near `:2175`, wrapped across two lines so the check's per-line regex missed it (the issuer's check gap); the bounds now admit that docstring's wording and `ab_4_comment.py` also reads the whitespace-normalised text (base on the worker's branch: FAIL, 1 wrapped claim). The order re-opens.
+<status>complete</status>
 <round>52</round>
 <slot>~188</slot>
 <fabric>site-z</fabric>

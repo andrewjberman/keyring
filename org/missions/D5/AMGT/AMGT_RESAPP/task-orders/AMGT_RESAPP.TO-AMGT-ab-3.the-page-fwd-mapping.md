@@ -63,7 +63,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** round-51 analysis item 3 / ruling 4. Base: AC1 FAIL (file absent). The CTO writes the PRD addendum on the mapping.
 
-<status>pending</status>
+<status>complete</status>
 <round>52</round>
 <slot>~187</slot>
 <fabric>site-z</fabric>

@@ -97,7 +97,7 @@ with `to_id` `AMGT_HARVST.TO-HVST-p-3.span-bearing-lenovo-run-and-coverage-rebui
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>26</round>
 <slot>~68</slot>
 <fabric>site-z</fabric>

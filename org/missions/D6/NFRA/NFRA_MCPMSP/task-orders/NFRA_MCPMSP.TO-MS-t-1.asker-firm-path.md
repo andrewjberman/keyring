@@ -68,11 +68,28 @@ This project serves partner firms (Inflection first) from the same gateway. Buil
    gateway S3 client that fails the test if called; drive a firm asker through AssumeRole failure AND through read
    AccessDenied; both refuse and the planted client is never touched).
 
+**AMENDMENT 1 (issuer, 2026-09-30, on your row NFRA_MCPMSP-Z-W1-S1).** The CTO's N1 ruling (msg 26956, @c2f5d5a071)
+added the `tenant_firm` record type to NFRA_OPLGTW's contract `org/standards/NFRA_OPLGTW_CONTRACT.json`, but the
+adapter was not changed: `app/access_state.py:64` `POLICY_RECORD_TYPES` still lacks it, so `_as_key`/`_decode` refuse
+the key (your AC2 failure), the writer's `register_tenant` put would be refused live, and the adapter's own
+`tests/test_access_state.py::test_ogd1_ac03` (contract types == `RECORD_TYPES`) has been RED at CLOUD since that
+commit. You are now granted `app/access_state.py` for exactly this:
+7. Add `"tenant_firm"` to `POLICY_RECORD_TYPES`, and make any key-shape check the adapter applies admit the tenant
+   partition `POLICY#TENANT#<tid>` with sk `tenant_firm` (the `email_deny` precedent, `EMAIL_DENY_RECORD_TYPE`, is the
+   model). `operator_transact` already requires one `operator_audit` put in one partition; a `register_tenant`
+   transaction is `tenant_firm` put + `operator_audit` put, both in `POLICY#TENANT#<tid>` -- confirm the adapter
+   admits exactly that and still refuses a tenant partition carrying a principal record type. Change nothing else.
+8. Add to `tests/test_mcpmsp_asker_firm.py` the named test `test_tenant_firm_admitted_by_adapter`: the adapter decodes
+   a `tenant_firm` item at `POLICY#TENANT#<tid>`, and `operator_transact` admits the two-item tenant transaction
+   (fake client) and refuses a tenant partition with a `principal_profile` put.
+`app/access_state.py` is NFRA_OPLGTW's module; no non-terminal order of any project writes it at this amendment
+(measured). Keep your earlier commits; add this as a new commit on your branch.
+
 ## 2. BOUNDS
 
 1. Write surface: exactly the `<paths>` below. No Terraform, no deploy, no `.env`, no other gateway module.
-   `app/admin_api.py`, `app/data_entitlement.py`, `app/access_state.py`, `app/query_v0.py`, `catalog_gate.py` and
-   `app/context.py` are read-only (other projects' files).
+   `app/admin_api.py`, `app/data_entitlement.py`, `app/query_v0.py`, `catalog_gate.py` and `app/context.py` are
+   read-only (other projects' files); `app/access_state.py` only as AMENDMENT 1 names.
 2. Round-1 scope: a registered tenant's asker is served under its firm role; an unregistered tenant is refused and
    logged. The domain half of the sender gate (FWD-3) is NOT this cell's.
 3. Standing: no push, no vendor call. REFUSE a criterion you cannot meet as written, with its measurement.
@@ -85,6 +102,7 @@ infra/aws/ec2/opal-gateway/app/firm_role.py
 infra/aws/ec2/opal-gateway/app/asker_scope.py
 infra/aws/ec2/opal-gateway/app/audit.py
 infra/aws/ec2/opal-gateway/app/config.py
+infra/aws/ec2/opal-gateway/app/access_state.py
 infra/aws/ec2/opal-gateway/tests/test_mcpmsp_asker_firm.py
 org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~1/**
 org/missions/D6/NFRA/NFRA_MCPMSP/surprise-channel/investigations/INVESTIGATION_v1.Z.md
@@ -101,8 +119,8 @@ Rows go to `org/missions/D6/NFRA/NFRA_MCPMSP/surprise-channel/investigations/INV
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MS-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t1.AC1.sh; echo "exit=$?"</invocation><expect>pytest: N passed; test_registered_tenant_is_firm_principal=1 test_unregistered_tenant_refused_and_logged=1 test_firm_fetch_assumes_firm_role=1 test_missing_role_arn_refuses=1 test_firm_fetch_never_uses_gateway_identity=1 (each >=1, 0 failed) -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MS-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t1.AC2.sh; echo "exit=$?"</invocation><expect>asker suites: >=23 passed, 0 failed -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MS-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t1.AC1.sh; echo "exit=$?"</invocation><expect>pytest: N passed; test_registered_tenant_is_firm_principal=1 test_unregistered_tenant_refused_and_logged=1 test_firm_fetch_assumes_firm_role=1 test_missing_role_arn_refuses=1 test_firm_fetch_never_uses_gateway_identity=1 test_tenant_firm_admitted_by_adapter=1 (each >=1, 0 failed) -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MS-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t1.AC2.sh; echo "exit=$?"</invocation><expect>asker + adapter suites: >=41 passed, 0 failed -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MS-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t1.AC3.sh; echo "exit=$?"</invocation><expect>opal_asker_query includes asker_oid,bytes,key,verdict; asker_sender_refusal includes chat_id,display_name,oid,reason,tid; text_fields=[] verdict=OK -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -121,6 +139,14 @@ expected (`bytes` and the refusal entry absent). Measured at the cut: the gatewa
 `opal-data-inf` and `opal-data-cot` (A1n arm 3 holds today). Slot `~1` continues to MS-d-1 at the join. Fourth
 behaviour asserted inside AC1 (never-uses-gateway-identity) is the PRD v0.3 residual's router control, not a
 fourth criterion.
+
+**AMENDMENT 1 (issuer):** on row Z-W1-S1 (the worker's AC2 FAIL, 22/23, cause measured). Grants `app/access_state.py`
+for the `tenant_firm` record type the CTO's N1 ruling put in the OPLGTW contract; AC1 gains
+`test_tenant_firm_admitted_by_adapter`; AC2's control widens to the adapter's own suites (`test_access_state.py`,
+`test_email_deny.py`). Re-run at base after the amendment: AC1 FAIL as expected; AC2 FAIL as expected (1 failed,
+40 passed: `test_ogd1_ac03`, red since @c2f5d5a071 -- the same contract-vs-adapter gap, which this change closes).
+Graded by: no gate limb grades a modification's criteria (to-pipeline-gate GATE (viii) grades a modified order only
+for `<placeholders>`, which stay NONE).
 
 <status>pending</status>
 <round>1</round>
