@@ -275,3 +275,37 @@ The 920/27/18 suite count on a20b5a60, DEV CI run 36725618787's ESLint step, the
 presence-extension record after the reboot. Row S41's fix is DSGN_AMGTV1's and is graded at that project's drain.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 2026-09-30 ~17:0xZ -- items 38, 39, 40, 41 (handed over by `2.0.0_SA_COO~D`, message 103320)
+
+**Pins:** all four are ancestors of origin DEV `e67a03f484` (fetched; `merge-base --is-ancestor` yes for each; portal
+HEAD = origin DEV). **This seat's own runs at portal HEAD `e67a03f4`:** `bun test` over the ten pinned files -- 10 of 10
+pass (FOOTER-SOURCE-WORDS-OK, NAMED-MISSING-DAY-OK, FOCUS-REFUSAL-EXPORT-OK, PER-ACCOUNT-PERF-OK, PRESET-ASOF-OK,
+PICKER-REFUSAL-OK, ACCOUNT-YTD-OK, FACE-BATCH-OK, PICKER-ENTRIES-OK, DATES-SOURCES-OK; 1.26 s); dirty count 15 before
+and after. **Claim class of the real runs:** fixture plane on 5174 (the drivers fulfil the IR routes from
+`fixtures/smoke/dsgn-irptv1-cottonwood.json`; nothing reaches the live backend), each PNG read by this seat.
+
+| # | pin (portal DEV) | claim | evidence read | grade |
+|---|---|---|---|---|
+| 38 | `775c4261` (W2-19, absorbs UIC-14) | every Holdings footer reads words, never a producer coordinate; card, map and table are one string | unit iv-e-117, iv-e-45, iv-e-63 green at HEAD (this seat's run). Shot `item38/w2-19.fast-run.png`: three footers on the Holdings tab (card, SECURITIES MAP, SECURITIES) all read "September 23rd, 2026, 5:00p ET \| Source: Opal Capital Analysis." -- one distinct string, no `module.function`, no `build_` | PASS on the fixture-plane real run |
+| 39 | `1bcda74c` (W2-19b) | the Performance footer reads source words, never `lineage.sourceCoordinate` | unit iv-e-117 ARM (d) and iv-e-63 green at HEAD. Shot `item39/w2-19b.performance.fast-run.png`: the PERFORMANCE panel footer reads "Source: Opal Capital Analysis."; no coordinate and no function name anywhere on the face. The commit's second line ("Source: Black Diamond, as of September 23rd, 2026.") is not visible in the shot read; the driver's own verdict rule for the Performance tab requires exactly one distinct source string, which the shot satisfies | PASS on the fixture-plane real run |
+| 40 | `b1e18782` (W2-01 front residue) | a DEPENDENCY_UNAVAILABLE refusal with a business date names the missing upstream day; the picker never stays "pending" for good | unit iv-e-118 plus iv-e-34/39/40/58 green at HEAD. Shot `item40/w2-01.fast-run.png`: the refusal panel reads "... The latest day that source has answered for this account is September 22nd, 2026; the days after it are the ones missing." and the picker option reads "not supplied -- $200,000.00 -- YTD unavailable" (item 39's shot, taken before this pin, reads "YTD pending" on the same option: the before state) | PASS on the fixture-plane real run |
+| 41 | `e266a14a` (W2-19 words) | the registry vendor view lands as builder output and is `holdingsFooterSource`'s default, so a keyed snapshot names its sources in words | `header/vendorDisplayNames.generated.ts` sha256 `4dd7a2728592d2e4` (the commit's `4dd7a272`), 28 entries for 23 vendors (key and long form), header marked `registry@1c951921d4940c85`; `systems.json` at HEAD holds 25 VENDOR rows of which 23 carry `display_name`. iv-e-117 green. Shot `item41/w2-19-words.fast-run.png`: card, map and table footers all read "Source: Black Diamond." -- the driver injected `source_vendor_keys` into the holdings fixture (driver line 39-41, argv[5]), which is how the words path was exercised; the un-injected face reads the fallback, as the commit says | PASS on the fixture-plane real run of the words path |
+
+## Finding (carried to NFRA_TRNSPT's channel as row NFRA_TRNSPT-S4)
+
+`python lib/opal_naming.py generate --target .../vendorDisplayNames.generated.ts` at HEAD is REFUSED: `validate`
+reports 2 refusals, `systems.json[48].display_name` (`outlook`) and `[49].display_name` (`sharepoint`), both VENDOR
+rows added by `0.9.0_WK_NFRA_TRNSPT~3` @8e9ed1b539 (drained by `2.0.0_SA_COO~T` @fed423d013, 12:58Z) after the CRO's
+23 `display_name` rows @cd2ffcca99 (12:10Z). So the committed vendor view cannot be regenerated at HEAD, its mark
+predates the two rows, and every other `generate` target refuses with it. Item 41's pin is not at fault; the disarm
+is two `display_name` values on the NFRA_TRNSPT rows.
+
+## Observations (not grades)
+
+- **O-39a:** as noted in the table, the shot shows one source line on the Performance face where the commit text
+  describes two. If the source-age line renders only with a served source age, the fixture is the reason.
+- **O-41a:** the two new VENDOR keys `outlook` and `sharepoint` are absent from the generated view, so a snapshot
+  keyed on either would read the fallback until regeneration.
+
+-- 3.0.0_SA_CVO
