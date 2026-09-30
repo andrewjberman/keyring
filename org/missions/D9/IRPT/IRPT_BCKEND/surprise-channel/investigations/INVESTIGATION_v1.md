@@ -12550,3 +12550,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "S220's ARMED standing is 2.0.0_SA_COO~P's to clear, not this lane's -- a row's disarm_owner disarms it, and this row is the evidence for that act, not the act. ~P has declined to assign the mark by hand (served.py:1052), which is right: the fix is the census resolving through the dispatcher, in ~P's export lane and ~P's own round. NOT ABSORBED INTO ROUND 26: ~Y's round 26 was issued at 6c0317e55c with one cell, IB-yr-261, and a second issuance into a round the gate keys by ROUND is the exact error R25 amendment 1 records. The census cell belongs to ~P. WHAT THIS LANE CARRIES FORWARD REGARDLESS: TO-IB-yr-261 names ONE node id for the seam suite and measures the census as a drain-time DELTA against the printed baseline of 6, never as a green. That cut is unaffected by this dismissal, because a 33-red suite and a 6-red census are equally unusable as oracles whether their redness means a defect or an instrument artifact."
 }
 ```
+
+## IRPT_BCKEND-S222 -- DISARM RECORD for IRPT_BCKEND-S220 (issuer act; S221 is the evidence)
+
+```json
+{
+  "id": "IRPT_BCKEND-S222",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-30T01:15:00Z",
+  "one_line": "DISARM RECORD for IRPT_BCKEND-S220 (ARMED, disarm_owner 2.0.0_SA_COO~P): the unauthorized-reach reading is dismissed on IRPT_BCKEND-S221's import evidence, which this seat re-measured independently. S220's hazard is DISARMED as of this row; the census being 6-red and test_seam_paired.py 33 of 58 red are NOT disarmed by it and go to a ~P cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "import of infra/aws/lambda/investor-reporting/export/entry.py by this seat, 2026-09-30 ~00:5xZ: module lambda_handler __irpt_guarded__ False (a plain dispatcher, entry.py:389-395); _http_handler __irpt_guarded__ True (entry.py:386, lambda_entry(ENTRY)).",
+      "export/entry.py:358-365: the three route keys are declared in ROUTES on the guarded Entry; export/handler.py:359 (@enforcer.guard SUBMIT_OPERATION) and export/download.py:129 (@enforcer.guard DOWNLOAD_OPERATION) wrap the operations themselves.",
+      "export/submit_async.py:52-53: is_async_event needs a top-level key MARKER; the module docstring (lines 21-22) states an API Gateway event cannot carry it, so that branch is reachable by a direct lambda:Invoke only. This seat read the code and did NOT test a live request or the invoke grants."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard S220 names (an unauthorized request reaching export data through a handler without the mark) does not fire on the HTTP path: every HTTP event reaches the marked _http_handler. The census reads the module dispatcher, so its 3-of-17 is an instrument reading.",
+  "spec_asserts": "IRPT_BCKEND-S220: the guard census reads zero unguarded routes and its mutant arm fires when one handler is unregistered.",
+  "world_is": "The census reads 3 of 17 at the dispatcher; the served HTTP path is guarded. ABSENT, not claimed: a live unauthorized request (ABSENT is not EXERCISED-AGAINST) and the direct-invoke grant set. STILL OPEN and not disarmed: the census and its mutant controls are red at HEAD, and test_seam_paired.py reads 33 failed of 58; neither suite is a usable oracle until a ~P cell makes the census resolve through the dispatcher.",
+  "notes": "Filed as a new row because an ARMED row is not edited in place (surprise-row gate). Evidence pair: S221 (2.0.0_SA_COO~Y, @90fad5dbd4) and this seat's import read."
+}
+```
