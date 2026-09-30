@@ -19,7 +19,7 @@
   "name": "The Opal MSP Analyst -- one Opal-hosted Teams agent serving partner firms (Inflection and Cottonwood first) from each firm's own data, through one central gateway that assumes the asking firm's AWS role per request",
   "description": "Brief docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md (4.0.0_SA_CRO~O @77ddde1d13), from Andrew's discussion with 4.0.0_SA_CRO~O recorded in org/tier1_exec/4.0.0_SA_CRO~O/deliverables/ANDREW_DIRECT_20260930_0315Z_MSP_ANALYST_CHANNEL_PILOT_FEDERATED_PROD_BOT_SENDER_DOMAIN_ALLOWLIST.md (sections 1-10). Andrew named the project: '1.) New Project, NFRA_MCPMSP.' Primer: org/tier1_exec/1.0.0_SA_CTO/deliverables/PRIMER_MSP_ANALYST_FOR_CRO_O_20260930.md.",
   "phase": "L4 PRD v0.1 DRAFT 2026-09-30 by 1.0.0_SA_CTO~O (C1-C12, S1-S14, A0-A11; five L2 open items ruled at C3/C4/A1 and one carried to L5). || L3 REGISTERED 2026-09-30 by 1.0.0_SA_CTO~O under D6/NFRA. || L2 ENDPOINT FWD-1..FWD-11 CONFIRMED by Andrew ('yes aggreed for all of these', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_05xxZ_NFRA_MCPMSP_ENDPOINT_CONFIRMED.md; endpoint org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_MCPMSP_20260930.md @64617f8afa). || L1 BRIEF docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md (4.0.0_SA_CRO~O).",
-  "blocking": "L4-R: 3.0.0_SA_CVO~O signs the ratified-text half (ENDPOINT + CONTRACTS); the brief half is accepted because 4.0.0_SA_CRO~O wrote the brief (proportionate sign-off). L5 needs a 2.0.0_SA_COO lane, UNSEATED, asked of 0.0.0_AB_MSTR~Z. Round 1's live conversation also waits on external acts G-USER, G-IT-INF, G-ADVISOR, G-FIRM (PRD Canonical handoff).",
+  "blocking": "L4-R: 3.0.0_SA_CVO~O signs the ratified-text half (ENDPOINT + CONTRACTS); the brief half is accepted because 4.0.0_SA_CRO~O wrote the brief (proportionate sign-off). L5 is 2.0.0_SA_COO~MS's (seated by 0.0.0_AB_MSTR~Z, msg 26933), after the ratified-text half is signed. Round 1's live conversation also waits on external acts G-USER, G-IT-INF, G-ADVISOR, G-FIRM (PRD Canonical handoff).",
   "brief_ref": "docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md",
   "prds": [
     {
@@ -33,12 +33,12 @@
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~O",
-    "coo": "UNSEATED -- a 2.0.0_SA_COO lane is asked of 0.0.0_AB_MSTR~Z when the L4 PRD is delivered",
+    "coo": "2.0.0_SA_COO~MS",
     "cvo": "3.0.0_SA_CVO~O",
     "cro": "4.0.0_SA_CRO~O",
     "workers": "the worker subagents the COO's L6 issuance names (0.9.0_WK_NFRA_MCPMSP~<n>)"
   },
-  "coo_lane": null,
+  "coo_lane": "2.0.0_SA_COO~MS",
   "fabric_ruling": "site-z -- INHERITED FROM THE DIRECTIVE. D6's placement reads SITEZ; placement attaches to the directive, never to a member (LD-0498, LD-0502).",
   "rulings": [
     "CHANNEL -- Andrew 2026-09-30: 'I agree with 1 pilot, 3 prod.' (pilot federated chat, production multi-tenant bot; CRO~O record s.2).",
