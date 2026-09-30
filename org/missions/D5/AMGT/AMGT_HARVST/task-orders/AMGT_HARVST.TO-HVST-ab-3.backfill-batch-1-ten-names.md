@@ -76,6 +76,34 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   - the gold rebuilds that read batch 1 (they ride a later paired rebuild);
   - batches 2+ (they wait on this measurement).
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~14:0xZ) -- the round-29 re-cut (decomp section 42): PRD v0.9 `C-HV-TRUST-TOKEN`, the barrons and ft Lenovo jobs, and the schedule re-arm as phase B.**
+- **The source:** Andrew-direct 2026-09-30 ~12:5xZ (CTO msg 27155): "use existing trust tokens ... not confuse rate limit for trust
+  token expiry ... retry backoff"; card 4, barrons B1 yes; card 3, re-arm the schedule after batch 1, daily, for the names batch 1
+  reached.
+- **Section 0 item 1** now reads: `HVST-ab-1` is `complete`, with BOTH its amendments (A1: pre-floor hits are not fetched; A2:
+  `C-HV-TRUST-TOKEN`), and merged on CLOUD.
+- **PHASE A, the collection, ONE run:**
+  - It covers the 10 names x {bbg, wsj} AND Lenovo (`992_HK_Equity`) x {barrons, ft}.
+  - It runs token-first. The halves name each publisher's token source: the Secrets session for bbg and ft, and the
+    saved-session file for wsj and barrons (per the CVO's 13:13Z note).
+  - **Before the run, with no request:** read and classify ft's kept 403 body (`q-6` F1).
+  - The pre-run print covers every (name, publisher) pair.
+  - A barrons or ft refusal is recorded (token source, attempts, and class), never retried outside the bounded backoff, and it
+    does not stop the other jobs.
+  - AC1 counts the jobs as the 20 plus the 2. AC2 prints each job's token source, sign-in count and attempts.
+- **PHASE B, the schedule, after phase A's AC1 and AC2 pass, under a RE-SIGNED pair:**
+  - Give the existing harvest collection Scheduled Task ONE daily trigger. Its action runs the collector over EXACTLY the names
+    phase A reached (at least one concluded job), in the mode, publishers and caps the re-signed halves name. Enable it.
+  - Fire no run by hand.
+  - Rollback is disabling the task.
+  - Scheduled Tasks run the working tree on this device; the halves name what that checkout is.
+  - The phase-B check reads the task's trigger, action argv and name file back from Task Scheduler and diffs them against
+    the halves. It is named in the re-sign.
+  - The first scheduled fire is graded at the next round, never waited on.
+- **`<paths>`:** unchanged. **Criteria:** the same two invocations. The issuer's checks cover both phases; phase B's check is
+  added at its re-sign.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
