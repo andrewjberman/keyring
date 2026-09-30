@@ -85,6 +85,14 @@ commit. You are now granted `app/access_state.py` for exactly this:
 `app/access_state.py` is NFRA_OPLGTW's module; no non-terminal order of any project writes it at this amendment
 (measured). Keep your earlier commits; add this as a new commit on your branch.
 
+**AMENDMENT 2 (issuer, 2026-09-30, on your row NFRA_MCPMSP-Z-W1-S3).** With `tenant_firm` admitted, AC2's one red is
+`tests/test_access_state.py::test_ogd1_ac03`'s second assert, the literal `counts == {"POLICY": 3, "RUNTIME": 6}`
+(`:293`): it was already stale at 4 once `email_deny` landed (@3e936f77bd), and the contract now declares FIVE POLICY
+record types. You are granted `infra/aws/ec2/opal-gateway/tests/test_access_state.py` for exactly this:
+9. Change that literal to `{"POLICY": 5, "RUNTIME": 6}` with a one-line comment naming the five POLICY record types
+   (`principal_profile`, `data_entitlement`, `operator_audit`, `email_deny`, `tenant_firm`) and the contract as their
+   source. Change nothing else in that file (NFRA_OPLGTW's; both its writer orders, OG-d-1 and OG-i-5, are complete).
+
 ## 2. BOUNDS
 
 1. Write surface: exactly the `<paths>` below. No Terraform, no deploy, no `.env`, no other gateway module.
@@ -103,6 +111,7 @@ infra/aws/ec2/opal-gateway/app/asker_scope.py
 infra/aws/ec2/opal-gateway/app/audit.py
 infra/aws/ec2/opal-gateway/app/config.py
 infra/aws/ec2/opal-gateway/app/access_state.py
+infra/aws/ec2/opal-gateway/tests/test_access_state.py
 infra/aws/ec2/opal-gateway/tests/test_mcpmsp_asker_firm.py
 org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~1/**
 org/missions/D6/NFRA/NFRA_MCPMSP/surprise-channel/investigations/INVESTIGATION_v1.Z.md
@@ -147,6 +156,10 @@ for the `tenant_firm` record type the CTO's N1 ruling put in the OPLGTW contract
 40 passed: `test_ogd1_ac03`, red since @c2f5d5a071 -- the same contract-vs-adapter gap, which this change closes).
 Graded by: no gate limb grades a modification's criteria (to-pipeline-gate GATE (viii) grades a modified order only
 for `<placeholders>`, which stay NONE).
+
+**AMENDMENT 2 (issuer):** on row Z-W1-S3 -- the adapter fix exposed `test_ogd1_ac03`'s stale literal count (3; true
+count 4 since @3e936f77bd, 5 now). Grants `tests/test_access_state.py` for that one literal. No criterion changes.
+Graded by: no gate limb grades a modification's criteria.
 
 <status>pending</status>
 <round>1</round>
