@@ -13007,3 +13007,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "MY OWN FIRST ATTEMPT WAS AIMED AT THE WRONG FILE and I am recording it because it nearly became a finding: I ran st5's in-package wrapper copy, got 'secret-ids.env absent ... refusing to guess secret names' with rc=2, and briefly read that as an st5 packaging gap. It is not -- the file lives only beside the canonical wrapper, by design, and my own earlier directory read had printed the secret keys from a DIFFERENT root in the same loop, which is what misled me. An instrument pointed at a decorative copy produces a confident wrong answer. NEXT, on Andrew's direct ask for an ad-hoc three-variant proof: the question is now the SUBMISSION, not the login. Drive one body per variant (OVERVIEW 0 comparisons, COMPARISON exactly 1, MULTI 2-5, per templates.json's comparison_securities bounds) through a captured session and read whether an export is generated. That needs a session task rather than a probe, and it is the first test that would exercise recipe.generation_body against the vendor at all. ARMED because a broken-looking remedy is now known mis-aimed while four report arms still wait on it."
 }
 ```
+
+
+## IRPT_BCKEND-S231 -- a job cannot outlive its window: the walk deletes its principal and the resident resolves it, so REQ-86f1ce70 refuses ACTOR_NOT_FOUND forever
+
+```json
+{
+  "id": "IRPT_BCKEND-S231",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T05:20:00Z",
+  "one_line": "A job cannot outlive its window. The walk deletes its ui-walk principal at window close, and the resident resolves each job's RECORDED principal before doing anything, so REQ-86f1ce70 now refuses CurrentAuthorityRefused/ACTOR_NOT_FOUND on every poll and can never complete. Restarting the resident proved the restart, not the job.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (YCharts and the Analysis journey are this lane's per Andrew-direct 2026-09-30 ~04:3xZ)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Resident restarted under ledger irpt-resident-restart-3variant-20260930 (legs V1 and D1 closed with shas read back per CTO 103150): started 05:13:31Z, unit active, pid 313525 on the gated st5 root whose resident_worker.py sha256 8d1f5431... EQUALS CLOUD HEAD.",
+      "Its FIRST poll, 05:13:32Z: 'IRPT_RESIDENT_POLL retained_for_retry class=CurrentAuthorityRefused code=ACTOR_NOT_FOUND'. One second after start, so nothing else intervened.",
+      "CAUSE AT SOURCE: ycharts/generate/current_authority.py:86 refuses ACTOR_NOT_FOUND when `user is None` -- the projected profile row for the accepted record's owner.principal_id. The principal was irpt-uiwalk-1790739020@opal.test, and 2.0.0_SA_COO~P deleted it (K1) at 03:45:34Z, consistent read no Item (~P 103147, which named the early delete as its own deviation).",
+      "IT COSTS NO VENDOR CALL: the refusal happens in the authority decision on the accepted record, before any session capture or report POST. So the message may keep cycling harmlessly; it burns no YCharts login. DLQ re-read after the restart: 1, unchanged from baseline.",
+      "~P's stated reason for the early delete is refuted by this read: 103147 said 'The job does not need K1 (the resident runs as the recorded principal)'. The resident RESOLVES the recorded principal, and that resolution is exactly what fails once the principal is gone."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The W25 packet's own sequence: a ui-walk principal is minted per window and deleted at window close, with the job expected to complete inside the window.",
+  "world_is": "MEASURED: principal lifetime is WINDOW-scoped while job lifetime is QUEUE-scoped, and the two are not reconciled anywhere. A job that does not reach a terminal state inside its window becomes permanently unrunnable -- not failed, not refused to a user, just retrying a refusal until it DLQs. This is structural, not specific to tonight: every window has this property, and tonight is simply the first time a job outlived one. NOT MEASURED, and not claimed: how many earlier jobs died this way. W21's and W22's reports completed inside their windows, and W24's two failures were vendor-side, so no prior instance is established.",
+  "notes": "WHAT IT MEANS FOR ANDREW'S AD-HOC THREE-VARIANT ASK (Andrew-direct ~04:4xZ, 'prove an automated ycharts submission for each of the three variants right now'): the blocker is not auth (S230: a probe authenticates, rc=0) and not the body shape (never sent). It is that THERE IS NO LIVE PRINCIPAL TO SUBMIT AS. REQ-86f1ce70 cannot be revived, and the three variants need three fresh jobs accepted under a principal that still exists when the resident picks them up. TWO WAYS FORWARD, and the choice is a real fork rather than a detail: (a) mint a principal whose lifetime outlives the queue -- i.e. stop deleting it at window close, or delete it only once every job it accepted is terminal; (b) keep window-scoped principals and make the resident refuse a job whose window has closed with a NAMED, user-visible refusal instead of retrying an unresolvable authority until the DLQ. They are not exclusive and (b) is the smaller cell. Neither is cut yet: under CTO 103159 I run the base invocation before issuing a criterion, and the base here is a live window, whose non-application clause 103159 names -- so the cell states its discriminator instead. Round 29."
+}
+```
