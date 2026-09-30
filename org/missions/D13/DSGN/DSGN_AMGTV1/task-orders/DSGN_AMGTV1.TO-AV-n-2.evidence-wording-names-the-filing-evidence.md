@@ -94,7 +94,7 @@ Report once: what changed and where, the output line of every criterion, the por
 sentence's clause is its `FILLED_BY` constant (found by the green arm; its only caller is PostureTab.tsx). Base 2bb60cc3: evidence.cjs
 1 of 3; green 3 of 3; ALL 16 of 16; tsc rc=0.
 
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~41</slot>
 <fabric>site-z</fabric>
