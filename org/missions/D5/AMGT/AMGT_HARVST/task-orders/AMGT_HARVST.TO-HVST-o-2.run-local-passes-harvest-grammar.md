@@ -72,7 +72,7 @@ or scheduled) takes the grammar path.
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <slot>~62</slot>
 <fabric>site-z</fabric>
