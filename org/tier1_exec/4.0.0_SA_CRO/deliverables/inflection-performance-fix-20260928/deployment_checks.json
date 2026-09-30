@@ -1,0 +1,26 @@
+{
+  "source_commit": "978e4b0eec",
+  "artifact_commit": "58162c16ed",
+  "record_commit": "652cf48876",
+  "tag": "yang-v2.4.20",
+  "regression_tests": 4,
+  "regression_result": "PASS",
+  "old_code_failed_subtests": 49,
+  "old_code_execution_errors": 0,
+  "terraform_apply": {
+    "added": 0,
+    "changed": 2,
+    "destroyed": 0
+  },
+  "post_deploy_plan": {
+    "scope": "full untargeted yang-pipeline",
+    "exit_code": 0,
+    "result": "No changes. Your infrastructure matches the configuration."
+  },
+  "evidence_sha256": {
+    "apply.txt": "bd92b0f003e613f13244a56e1d9974037d39241dcbe10c4abfe675a0f9a9530c",
+    "post_deploy_plan.txt": "0cf3d07badd72d7f1f40df5a0ba07ea78a4b1970afd63db4c4b19168d263691a",
+    "negative_control.txt": "7fd14f677a87c4486a4ea90719cd25476215865b062d69c200ac8994387d5199",
+    "replay_control.log": "880af609485434644ec897e30c09f1e8c95acd77e633089296f0509c08d07b28"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "read_back_at": "2026-09-29T15:05:00Z",
+  "runner": "i-02448edb624a7a7cf",
+  "schedule_fire_requested": "2026-09-29T14:15Z (cron(15 10 ? * MON-FRI *) America/New_York = 10:15 ET, a trading day)",
+  "business_date_check": "2026-09-29 is a trading day; each firm's SSM output clocks block shows business_date (published, custody-lagged)=2026-09-28 and source_cutoff (the dispatched/requested date)=2026-09-29, custody_as_of=2026-09-28, overlay_as_of=2026-09-29 -- a NEW business date was published for all three firms (prior served manifest's latest_date was 2026-09-24/2026-09-22 per firm; T-1 custody lag per CLAUDE.md trading-calendar law, not a failure).",
+  "firms": [
+    {
+      "firm": "49financial",
+      "command_id": "9c903355-f989-47a3-864d-0caa80bfa526",
+      "status": "Success",
+      "rc": 0,
+      "as_of": "2026-09-28",
+      "source_cutoff": "2026-09-29",
+      "revision": "efcbb59fe077cfe00b2cfc02a5728f124373341a5e52a5f95faec8b9a66d6fd1",
+      "served_key": "irpt/49financial/platinum/holdings/current/manifest.json",
+      "served_bucket": "opal-data-49financial",
+      "served_version_before": "OqjgF6qs7e5QsF7HScOre54hxJ18Ktgf",
+      "served_version_before_last_modified": "2026-09-24T23:20:39Z",
+      "served_version_after": "AV66zNHkT6cbHiSJiUvKIoNRs5EX9_Fj",
+      "served_version_after_last_modified": "2026-09-29T14:20:35Z",
+      "reconcile": "reconcile_ok=true reconcile_before=1803717947.15 reconcile_after=1803717947.15 (unchanged, reconciles); difference_control.reading: 'the wrong build moves 163672108.87 USD out of 1629 account(s) and still reconciles to within 0.00 USD -- the total is not the control'; holdouts_held.custody_total=1803717947.15"
+    },
+    {
+      "firm": "cottonwood",
+      "command_id": "06569db1-aeee-471e-a54e-91fe612838be",
+      "status": "Success",
+      "rc": 0,
+      "as_of": "2026-09-28",
+      "source_cutoff": "2026-09-29",
+      "revision": "1df9f255ccd863d61344624c2d05d3fd9411241774f7610ea427c9f3fdfa9e82",
+      "served_key": "irpt/cottonwood/platinum/holdings/current/manifest.json",
+      "served_bucket": "opal-data-cottonwood",
+      "served_version_before": "ykQofbha2WKbcHFKvxMThBs0UNC_g9ji",
+      "served_version_before_last_modified": "2026-09-24T23:13:54Z",
+      "served_version_after": "3JfvRUHRmmDpKp6.VvTYBUmAuKmMaiTZ",
+      "served_version_after_last_modified": "2026-09-29T14:18:21Z",
+      "reconcile": "reconcile_ok=true reconcile_before=541745917.1 reconcile_after=541745917.1 (unchanged, reconciles); difference_control.reading TEXT NOT RETRIEVABLE -- SSM StandardOutputContent for this command is capped at 24000 bytes and this firm's verbose account-row dump consumed the cap before the difference_control block; no StandardOutputUrl/CloudWatchOutputConfig was configured on the command (both empty), so no fuller copy exists to read. The equality of reconcile_before/reconcile_after (both 541745917.1) is the reconciliation evidence available for this firm."
+    },
+    {
+      "firm": "inflection",
+      "command_id": "5770be64-6df2-4c88-9bdd-eb130a7d93bc",
+      "status": "Success",
+      "rc": 0,
+      "as_of": "2026-09-28",
+      "source_cutoff": "2026-09-29",
+      "revision": "ee954eb5a5f8a9a7896c82761496b010a0f1e2b925b903a2d21bfc9e883dc620",
+      "served_key": "irpt/inflection/platinum/holdings/current/manifest.json",
+      "served_bucket": "opal-data-inflection",
+      "served_version_before": "ipomYxTGLoE0pAgeh.nNtVJ6QUm5ynJG",
+      "served_version_before_last_modified": "2026-09-24T23:16:03Z",
+      "served_version_after": ".zfZoZlAkp9kYx6I9pMrtjEYvwVVcq0d",
+      "served_version_after_last_modified": "2026-09-29T14:18:18Z",
+      "reconcile": "reconcile_ok=true reconcile_before=206846622.0 reconcile_after=206846622.0 (unchanged, reconciles); difference_control.reading: 'the wrong build moves 84147754.12 USD out of 329 account(s) and still reconciles to within 0.00 USD -- the total is not the control'; holdouts_held.custody_total=206846622.0"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "table_source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/SCHWAB_ACCOUNT_CODES_BRIDGEFT_READ_20260929.json",
+  "source_url": "https://docs.bridgeft.com/docs/source-account-and-registration-types",
+  "field": "acct_regis",
+  "accounts": 7548,
+  "labelled_full_name": 7545,
+  "unrecognised": {
+    "RI401": 1,
+    "": 2
+  },
+  "guessed": 0,
+  "measured": {
+    "method": "real local 49F build (no upload): holdings_49f.load_49f_sources(s3, '2026-09-25') read against the live schwab/08335338/silver/dim_balance partition (opal-data-assets), then schwab_account_codes.registration_name() applied to every row's acct_regis exactly as holdings_49f.build_49f_actual's account_masks step now does (amendment 1, CTO refusal @05b9abe572)",
+    "as_of": "2026-09-25",
+    "source_object": "s3://opal-data-assets/schwab/08335338/silver/dim_balance/date=2026-09-25/data.parquet",
+    "acct_regis_value_counts": {
+      "CO": 1529, "RH": 1393, "RO": 1102, "IN": 792, "JT": 700, "DBIN": 611, "LT": 262, "DBJT": 238,
+      "IHIRA": 199, "SEP": 173, "SIMPL": 136, "CU": 99, "DASCG": 76, "CORP": 38, "LLC": 33, "I401K": 22,
+      "PT": 21, "IHIRH": 21, "CH": 20, "PA": 19
+    },
+    "sample_labels": {
+      "RH registration example": "0010047532 / Roth Contributory IRA",
+      "blank acct_regis example": "0068966566 / unrecognised ()"
+    },
+    "cross_check": "h49f.build_49f_actual(s3, '2026-09-25') ran end to end against live data (152,137 nodes, 9 refused -- unrelated to UIC-16); the account_masks generator, re-run directly against the same live dim_balance frame with schwab_account_codes.registration_name() over acct_regis, produced accounts=7548, labelled_full_name=7545, unrecognised={'RI401': 1, '': 2}, matching the CTO's expectation (7,545/7,548, RI401:1, blank:2) exactly"
+  }
+}

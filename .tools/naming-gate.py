@@ -731,6 +731,33 @@ def generated_ranges(lines, nm):
     return ranges
 
 
+def _nested_portal_path(path):
+    """A commit made inside the nested portal repo (safe-commit runs `git diff --cached` from its cwd) names its
+    files portal-relative, while generator targets are workspace-relative (`portal/src/...`). Only then is the
+    `portal/` prefix restored; any other cwd returns the path unchanged."""
+    portal = os.path.normcase(os.path.join(REPO, "portal"))
+    cwd = os.path.normcase(os.path.abspath(os.getcwd()))
+    if cwd == portal or cwd.startswith(portal + os.sep):
+        return "portal/" + path
+    return path
+
+
+def _diff_repo():
+    """The repo the diff's paths are relative to: the nested portal repo when the commit runs inside it (see
+    _nested_portal_path), else the workspace. HEAD:/index reads of a diff path must run there, or a modified
+    portal file reads no pre-image and its post-image is rebuilt from hunks alone (a partial file)."""
+    portal = os.path.join(REPO, "portal")
+    cwd = os.path.normcase(os.path.abspath(os.getcwd()))
+    if cwd == os.path.normcase(portal) or cwd.startswith(os.path.normcase(portal) + os.sep):
+        return portal
+    return REPO
+
+
+def git_in(repo, *args):
+    p = subprocess.run(["git"] + list(args), cwd=repo, capture_output=True)
+    return p.returncode, p.stdout, p.stderr
+
+
 def generator_output(nm, path, post_text):
     """The generator's output for a generated target whose post-image is post_text (the carrier's hand-kept
     bytes are read from the post-image, as generate() reads them from the working tree)."""
@@ -1468,19 +1495,20 @@ def grade_file(nm, f, post_from_index):
     if not path.endswith(GRADED_EXT):
         return []
     pre_text = None
+    diff_repo = _diff_repo()
     if f["old"] is not None:
-        rc, out, _err = git("show", "HEAD:%s" % f["old"])
+        rc, out, _err = git_in(diff_repo, "show", "HEAD:%s" % f["old"])
         if rc == 0:
             pre_text = text_of(out)
-        elif os.path.isfile(os.path.join(REPO, *f["old"].split("/"))):
-            with open(os.path.join(REPO, *f["old"].split("/")), "rb") as fh:
+        elif os.path.isfile(os.path.join(diff_repo, *f["old"].split("/"))):
+            with open(os.path.join(diff_repo, *f["old"].split("/")), "rb") as fh:
                 pre_text = text_of(fh.read())
     post_lines, added = apply_hunks(pre_text or "", f["hunks"])
     if not added:
         return []
     post_text = "\n".join(post_lines) + "\n"
     if post_from_index:
-        rc, out, _err = git("show", ":%s" % path)
+        rc, out, _err = git_in(diff_repo, "show", ":%s" % path)
         if rc == 0:
             post_text = text_of(out)
             post_lines = post_text.split("\n")
@@ -1494,12 +1522,13 @@ def grade_file(nm, f, post_from_index):
     gen_ranges = []
     if marked:
         tag = "<generated-file-edit>"
-        if path not in nm.targets:
+        target = path if path in nm.targets else _nested_portal_path(path)
+        if target not in nm.targets:
             return [("REFUSE", path, first_added, tag,
                      "not produced by lib/opal_naming.py generate (known targets: %d)" % len(nm.targets),
                      "the file carries the GENERATED mark but the generator does not produce it", "REFUSE")]
         try:
-            expected = generator_output(nm, path, post_text)
+            expected = generator_output(nm, target, post_text)
         except Exception as exc:  # the generator cannot run: a registry defect, never a refusal
             return [("RAISE", path, first_added, tag, "(rule or registry defect)",
                      "the generator could not produce %s: %s: %s" % (path, type(exc).__name__, exc), "WARN")]

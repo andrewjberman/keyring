@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-25T23:43:45.260517+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / leg R1 reads the next scheduled COT gold run's outputs; COT gold runs on trading days and today's run is past (held since 2026-09-25T23:45:54.600178+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / CTO ruling S188 (msg 102504): R1 FAILED on the 09-28 COT run (z09308463 / z09308511 cash served as fixed_income FCASH; row W41-S1), stays OPEN, no rollback; dispositioned by the S173 re-point of COT gold to etf-classifications (after the POSN fill) (held since 2026-09-25T23:45:54.600178+00:00)
 **Deploy:** S138 cash: deploy COT gold C_06 with cash in MIX_ASSET_CLASSES (own act, CTO @d257eb67aa; render on PROD 36a37afc portal-v2.1.188)
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -20,3 +20,4 @@
 - 20260925T234345Z OPENED by 2.0.0_SA_COO~M with 2 leg(s)
 - 20260925T234537Z LEG D1 closed: HALT_ACK=1 safe-deploy: DEPLOYED [cot] C_06.client_mix_timeseries.py -> code/gold/; VERIFY OK comp-pipescript deployed; 
 - 20260925T234554Z HELD-SOVEREIGN-GATED gate=external/leg R1 reads the next scheduled COT gold run's outputs; COT gold runs on trading
+- 20260929T002350Z HELD-SOVEREIGN-GATED gate=external/CTO ruling S188 (msg 102504): R1 FAILED on the 09-28 COT run (z09308463 / z09308

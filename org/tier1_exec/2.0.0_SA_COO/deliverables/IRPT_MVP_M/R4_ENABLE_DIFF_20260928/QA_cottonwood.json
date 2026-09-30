@@ -1,0 +1,317 @@
+{
+ "firm": "cottonwood",
+ "served_revision": "fc199c8ed6fb50751f187e85a876e9144f465a6bfbb3ffe7b68cbfc36a08d62e",
+ "served_latest_date": "2026-09-22",
+ "candidate": ".scratch/qa_candidates/cottonwood.json",
+ "candidate_business_date": "2026-09-25",
+ "counts": {
+  "node_added": 979,
+  "node_removed": 95,
+  "label_account": 754,
+  "amount": 16180,
+  "percentages": 16241,
+  "clocks": 16654,
+  "field:provenance": 845,
+  "classification": 12495,
+  "field:valuation_facts": 13584,
+  "display_other": 4,
+  "top:scope": 1,
+  "top:custody_totals": 1,
+  "top:coverage": 1,
+  "top:attribution_holdouts": 1
+ },
+ "dollars": {
+  "node_added:SECURITY": 79008235.59,
+  "node_added:ACCOUNT": 10027033.71,
+  "node_added:SLEEVE": 10027033.71,
+  "node_added:MODEL_WRAPPER": 3827044.73,
+  "node_added:MODEL_LEAF": 3827044.73,
+  "node_removed:SECURITY": 4923529.34,
+  "node_removed:ACCOUNT": 953620.36,
+  "node_removed:SLEEVE": 4849413.28,
+  "node_removed:MODEL_WRAPPER": 3496269.01,
+  "amount:ACCOUNT": -3796080.35,
+  "amount:SLEEVE": -2581390.86,
+  "amount:SECURITY": -68807373.26,
+  "amount:MODEL_WRAPPER": -1813490.89,
+  "amount:MODEL_LEAF": -1145941.3
+ },
+ "examples": {
+  "node_added": [
+   {
+    "node_id": "acc_01ae2e8903cec124d7ca7809:position:b867670f3c2f4db683d4758c01752067aec7bf6be80c48646b7bd2fedfc50c40",
+    "node_kind": "SECURITY",
+    "amount": 340.74962
+   },
+   {
+    "node_id": "acc_052a95a1b9ba744a3bdcfffd",
+    "node_kind": "ACCOUNT",
+    "amount": 27653.409
+   },
+   {
+    "node_id": "acc_052a95a1b9ba744a3bdcfffd:client",
+    "node_kind": "SLEEVE",
+    "amount": 27653.409
+   },
+   {
+    "node_id": "acc_052a95a1b9ba744a3bdcfffd:position:2051e2d51e8085d3f05b41d8e15e125781a50ae59015978c36f2afb6eeda09a9",
+    "node_kind": "SECURITY",
+    "amount": 0.0
+   },
+   {
+    "node_id": "acc_052a95a1b9ba744a3bdcfffd:position:3984ce390ef4d6e9f9adfa082a8b9f4461c7d92b6e146b3df9a949eddfdcf01a",
+    "node_kind": "SECURITY",
+    "amount": 10134.4228
+   }
+  ],
+  "node_removed": [
+   {
+    "node_id": "acc_01ae2e8903cec124d7ca7809:position:19a99224956c0d40c3d2d63625ce7990c58a0756be7239f8415e193a71d94edb",
+    "node_kind": "SECURITY",
+    "amount": 282.310908
+   },
+   {
+    "node_id": "acc_01ae2e8903cec124d7ca7809:position:36fbf060dc9f8e7a7f9a4ee44b03f4f4cbed9e2e3c106e1c19d2aec23b560c9d",
+    "node_kind": "SECURITY",
+    "amount": 8.554876
+   },
+   {
+    "node_id": "acc_01ae2e8903cec124d7ca7809:position:5811d5450a4a8c23667384a7c436ca2c2539c46bcad96b451eaf8187eebc5b31",
+    "node_kind": "SECURITY",
+    "amount": 196.762148
+   },
+   {
+    "node_id": "acc_01ae2e8903cec124d7ca7809:position:7b53ebf019b907d1a9f042bb89c37242d9a947fb12c6fc6a4e88df3935a50cd6",
+    "node_kind": "SECURITY",
+    "amount": 325.085288
+   },
+   {
+    "node_id": "acc_17c0263a5b12a8a66eb0789c:position:4091b33c24c54638b788abb4707d85e05bc770c5a58b5e50f2519fce1e52454b",
+    "node_kind": "SECURITY",
+    "amount": 379.534386
+   }
+  ],
+  "label_account": [
+   {
+    "node_id": "acc_00085efd234a85e6122d0952",
+    "served": "****8960 / JOINT",
+    "candidate": "****8962 / IRA"
+   },
+   {
+    "node_id": "acc_000c147a49a4d234b37dab66",
+    "served": "****9030 / IRA",
+    "candidate": "****9029 / IRA"
+   },
+   {
+    "node_id": "acc_0027c0b03b6b77a89334e942",
+    "served": "****8663 / IRA",
+    "candidate": "****7347 / CreditCard"
+   },
+   {
+    "node_id": "acc_0043be48de387145225a62dc",
+    "served": "****8948 / ROTHIRA",
+    "candidate": "****8948 / RothIRA"
+   },
+   {
+    "node_id": "acc_0045df3f6a4b4ea8f34639e8",
+    "served": "****8857 / ROTHIRA",
+    "candidate": "****5907 / No Account Type Assigned"
+   }
+  ],
+  "amount": [
+   {
+    "node_id": "acc_00085efd234a85e6122d0952",
+    "node_kind": "ACCOUNT",
+    "delta": -53.27
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:client",
+    "node_kind": "SLEEVE",
+    "delta": -53.27
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:291c853acdd437c0c18866b8a47278c8d59dbeea2c3b06b8b8eb012104c7e1dc",
+    "node_kind": "SECURITY",
+    "delta": 0.0
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:3f727fc424cb3d0d4176d42a9a1b6ad60a3dc8075782e6fe7378d3a5880d2e3f",
+    "node_kind": "SECURITY",
+    "delta": -53.27
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:5834be980cfa5f356a73659dcbf6cbfad5d4196b5a99468c6ede42af3b7187cb",
+    "node_kind": "SECURITY",
+    "delta": 0.0
+   }
+  ],
+  "percentages": [
+   {
+    "node_id": "acc_00085efd234a85e6122d0952",
+    "node_kind": "ACCOUNT"
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:client",
+    "node_kind": "SLEEVE"
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:3f727fc424cb3d0d4176d42a9a1b6ad60a3dc8075782e6fe7378d3a5880d2e3f",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:5834be980cfa5f356a73659dcbf6cbfad5d4196b5a99468c6ede42af3b7187cb",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_000c147a49a4d234b37dab66",
+    "node_kind": "ACCOUNT"
+   }
+  ],
+  "clocks": [
+   {
+    "node_id": "acc_00085efd234a85e6122d0952",
+    "node_kind": "ACCOUNT"
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:client",
+    "node_kind": "SLEEVE"
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:291c853acdd437c0c18866b8a47278c8d59dbeea2c3b06b8b8eb012104c7e1dc",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:3f727fc424cb3d0d4176d42a9a1b6ad60a3dc8075782e6fe7378d3a5880d2e3f",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:5834be980cfa5f356a73659dcbf6cbfad5d4196b5a99468c6ede42af3b7187cb",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "field:provenance": [
+   {
+    "node_id": "acc_00085efd234a85e6122d0952",
+    "node_kind": "ACCOUNT"
+   },
+   {
+    "node_id": "acc_000c147a49a4d234b37dab66",
+    "node_kind": "ACCOUNT"
+   },
+   {
+    "node_id": "acc_0027c0b03b6b77a89334e942",
+    "node_kind": "ACCOUNT"
+   },
+   {
+    "node_id": "acc_0043be48de387145225a62dc",
+    "node_kind": "ACCOUNT"
+   },
+   {
+    "node_id": "acc_0045df3f6a4b4ea8f34639e8",
+    "node_kind": "ACCOUNT"
+   }
+  ],
+  "classification": [
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:291c853acdd437c0c18866b8a47278c8d59dbeea2c3b06b8b8eb012104c7e1dc",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class",
+     "asset_class_basis",
+     "sub_asset_class"
+    ]
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:8310d03e2ff35d8e6a7c7ab31575c114bfce1c485b2ca9657f2b66a71823ca50",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class_basis",
+     "sub_asset_class"
+    ]
+   },
+   {
+    "node_id": "acc_000c147a49a4d234b37dab66:position:616f4a6e59062de7bf4bd7beb28c2645eb366c2cc3c4793f8d37c6cc82c7de8f",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   },
+   {
+    "node_id": "acc_000c147a49a4d234b37dab66:position:6584e391e2bc142a4a76af0678a43a2e15a340940e18d13a6b4c9071fb2a02d8",
+    "node_kind": "SECURITY",
+    "fields": [
+     "asset_class",
+     "asset_class_basis",
+     "sub_asset_class"
+    ]
+   },
+   {
+    "node_id": "acc_000c147a49a4d234b37dab66:position:7115c87f384cd95a5266651efbe3a3a4fd3c3faba2f134ede086f24375362c93",
+    "node_kind": "SECURITY",
+    "fields": [
+     "classification"
+    ]
+   }
+  ],
+  "field:valuation_facts": [
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:291c853acdd437c0c18866b8a47278c8d59dbeea2c3b06b8b8eb012104c7e1dc",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:3f727fc424cb3d0d4176d42a9a1b6ad60a3dc8075782e6fe7378d3a5880d2e3f",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:5834be980cfa5f356a73659dcbf6cbfad5d4196b5a99468c6ede42af3b7187cb",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_00085efd234a85e6122d0952:position:8310d03e2ff35d8e6a7c7ab31575c114bfce1c485b2ca9657f2b66a71823ca50",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_000c147a49a4d234b37dab66:position:4da66e45f0f7fb7bf44c39a84ff60190d12fe1db8e203243f68fcee8494a4258",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "display_other": [
+   {
+    "node_id": "acc_01ae2e8903cec124d7ca7809:position:9a880e7cb11d6627291f116481bc21ba3e50a3ef663d99d29a3a9f06858ab73f",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_17c0263a5b12a8a66eb0789c:position:840d88135c343a58340427e42b25615a2824d7cfcae1d2dfc5f9d699ea1fbef8",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_90d185435f6a1f6a7d5bb807:position:9f3a2e1b3f50f90ecfb109ddc3bc1f3ae39320a51e73c0b02ac979cc7e61aeb0",
+    "node_kind": "SECURITY"
+   },
+   {
+    "node_id": "acc_bedb7a62d882e8d442ad569f:position:a39be91e452414600c63d20f06625c815eb45a892c2f1699963d0efc8df2dfec",
+    "node_kind": "SECURITY"
+   }
+  ],
+  "top:scope": [
+   {
+    "node_id": "scope"
+   }
+  ],
+  "top:custody_totals": [
+   {
+    "node_id": "custody_totals"
+   }
+  ],
+  "top:coverage": [
+   {
+    "node_id": "coverage"
+   }
+  ],
+  "top:attribution_holdouts": [
+   {
+    "node_id": "attribution_holdouts"
+   }
+  ]
+ }
+}

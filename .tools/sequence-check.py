@@ -144,14 +144,16 @@ class Reader:
         prd = os.path.join(self.root, home, "prd", code + "_PRD.md")
         if not os.path.isfile(prd):
             return False, "no PRD at %s/prd/%s_PRD.md" % (home, code)
-        files = {}
-        for f in sorted(glob.glob(os.path.join(self.root, home, "prd", "signoff", "*.json"))):
-            try:
-                files[os.path.basename(f)] = json.load(open(f, encoding="utf-8"))
-            except Exception:  # noqa: BLE001
-                files[os.path.basename(f)] = None
+        # the same call prd-signoff.py status makes (_evaluate): the lib's own file reader, the coo_lane, the
+        # designated brief signer and the CRO-written-brief admission -- a reader that passes fewer arguments
+        # reads a different verdict than the gate for the same PRD
         try:
-            res = self._signoff_lib().evaluate(open(prd, encoding="utf-8").read(), files)
+            lib = self._signoff_lib()
+            text = open(prd, encoding="utf-8").read()
+            files = lib.read_signoff_files(os.path.join(self.root, home, "prd", lib.SIGNOFF_DIR))
+            res = lib.evaluate(text, files, coo_lane_of_project=(row or {}).get("coo_lane"),
+                               designated=lib.designated_brief_signer(row or {})[0],
+                               brief_by_cro=lib.brief_written_by_cro(self.root, text)[0])
         except Exception as exc:  # noqa: BLE001
             return None, "prd_signoff_lib.evaluate failed (%s)" % exc
         halves = ", ".join("%s %s" % (h, v["state"]) for h, v in sorted(res["halves"].items()) if not h.startswith("_"))

@@ -1,0 +1,18 @@
+MATCH     request        the composition's bytes hash to the request's composition_ref | {"sha256": "4c6c2c8f548a6332", "request_id": "REQ-4b2d437450499dde471c2f98", "variant": "overview"}
+MATCH     request        the composition binds the browser's input_id to that input's own artifact | {"input_id": "portfolio_f24f8553d7e47c19"}
+MATCH     request        the variant is the recipe's for the comparison count, and every recipe source names one template | {"keys": [], "variant": "OVERVIEW", "template_id": ["14141822"]}
+MATCH     request        each chosen key's frozen identity is the maintained catalogue's (security id, label, model portfolio) | {"frozen": {}, "catalogue_sha": "54656584"}
+MATCH     input          the normalized artifact hashes to its content-addressed input id | {"sha256": "f24f8553d7e47c19"}
+MATCH     upload         the retained original upload hashes to its recorded content_sha256, and the input cites it | {"filename": "aapl-vnq-12.03.xlsx", "lane": "TEMPLATE_UPLOAD", "sha256": "f20f0c08125df75f"}
+Traceback (most recent call last):
+  File "C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier1_exec\2.0.0_SA_COO\deliverables\IRPT_MVP_Y\live_walk\case_trace.py", line 293, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier1_exec\2.0.0_SA_COO\deliverables\IRPT_MVP_Y\live_walk\case_trace.py", line 188, in main
+    csv_rows = [r for r in csv.reader(io.StringIO(csv_bytes.decode("utf-8-sig"))) if r]
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\encodings\utf_8_sig.py", line 23, in decode
+    (output, consumed) = codecs.utf_8_decode(input, errors, True)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 10-11: invalid continuation byte
+decoding with 'utf-8-sig' codec failed

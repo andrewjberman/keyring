@@ -70,7 +70,8 @@ def k5_body(input_id):
     keys = [k for k in os.environ.get("WALK_COMPARISON_KEYS", "").split(",") if k]
     variant = "overview" if not keys else "comparison" if len(keys) == 1 else "multicomp"
     body = dict(ls.BODY, input_id=input_id, variant=variant, comparison_keys=keys,
-                request_id="y-live-1203-%s-%s" % (variant, lu.now().strftime("%Y%m%d")))
+                # per SECOND, like upload_token: window 21 sends several same-variant bodies for one firm in one day
+                request_id="y-live-1203-%s-%s" % (variant, lu.now().strftime("%Y%m%dT%H%M%S")))
     jsonschema.Draft202012Validator(json.load(open(ls.SCHEMA, encoding="utf-8"))).validate(body)
     return body
 
@@ -116,13 +117,18 @@ def main():
         dump()
         return 1
     say("LOGGED_IN", "login status", s)
-    while not password_gone(name):
+    # Window 21 keeps K1-CRED until its LAST arm (R), so each body logs in with it and does not wait for the delete.
+    retained = os.environ.get("WALK_PW_RETAINED") == "1"
+    if retained:
+        say("PASSWORD_RETAINED", name, "(the packet deletes it at its last arm)")
+    while not retained and not password_gone(name):
         if lu.now() >= deadline:
             say("ERROR: the password parameter is still present at the deadline; no POST made")
             dump()
             return 1
         time.sleep(10)
-    say("PASSWORD_DELETED", name, "reads absent")
+    if not retained:
+        say("PASSWORD_DELETED", name, "reads absent")
     headers = {"Content-Type": "application/json", "Authorization": "Bearer " + token, "X-Contract-Version": "v1"}
     try:
         body, data = k4_body()

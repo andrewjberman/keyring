@@ -3,77 +3,63 @@
 Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1/prd/DSGN_IRPTV1_PRD.md` v0.18
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
-tick here. As of 2026-09-28T18:3xZ.
+tick here. As of 2026-09-29T07:2xZ. **Lease read FULL at 07:18Z** (lapsed 07:11Z); CTO 102636 approved 29b33ef1 as a candidate: fast-forwarded onto local DEV, LOCAL @29b33ef1 (the DEV push is the integrator's under FULL; the integration window moves it). **Round 10 issued** @c29f572a6c (canonical, per CTO 102636): IV-e-80 (AD-13) DRAINED -- workspace 29711efab1, portal `7b4f4f83` on origin DEV (ls-remote 09:3xZ), real run on 5174: Identity shows WHO / HOW MUCH / AS OF / OVER WHAT only, census 0 violations; IV-e-81 (AD-11) DRAINED -- workspace 1e75dfbe2c, portal `7689c526` on origin DEV (ls-remote 10:3xZ), real run on 5174: one search input, no Browse trigger / drawer / button, 0 options on empty focus, options after typing (search-only-driver VERDICT SEARCH-ONLY-REAL-OK). Round 10's cut cells are both terminal; AD-10's page half is the round's open item (below).
+
+**AD-10 register (CRO 102700, CTO 102701):** the picker and the identity list label every account of a relationship with the relationship's `masked_discriminator` (49F three accounts `****9079 / IRA`, INF five `****3302 / JOINT`), minted from the head row (directory_runner.py:458/477); accounts are told apart by value alone. Fix: a per-account last-4 (with the UIC-16 registration name). Producer half 2.0.0_SA_COO~M (the directory entry serves each account's own mask); page half 2.0.0_SA_COO~D (picker + identity list read it), cut as AD-10's order when ~M names the served revision (IRPT_BCKEND-S182). **Measured 10:5xZ:** the picker's labels are the Holdings snapshot's account-node labels (IdentityCard.tsx:176-185), which holdings_snapshot.py:714-735 copies from the directory's entry-level mask -- ~M adopted that fix into TO-IB-m22-221 amendment 2 @e3fc064e1e. The portal half shrinks to the directory reader accepting `account_masks`: **item 28, portal `27eae57a` on origin DEV** (iv-e-102 DIRECTORY-ACCOUNT-MASKS-OK; real run on 5174 with the key injected: search returns the client, previous reader 0 options). Release order (~M 102733/102743): handlers' contract copy, this reader on PROD (integrator's), directory re-mint, Holdings re-mint. **PROD promotion approved** (Andrew-direct ~13:3xZ, 0.0.0_AB_MSTR 102821, record @4c5a06d401): 0.2.0_DT_PortfolioAnalytics~P runs /prod-deploy of DEV 27eae57a (includes 6c163889); the after-read of the served PROD bundle admitting `account_masks` is ~M's. **Read 14:14Z:** origin PROD = `9a8f6c71` (merge DEV->PROD v2.1.190); 27eae57a, 18899c96 and 6c163889 are ancestors (is-ancestor, a0314f22 as positive control) and PROD's directory-browse.ts carries account_masks (3 lines). The served-bundle after-read stays ~M's.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-28T19:47:43Z (presence-extended) |
+| Lease | FAST DSGN_IRPTV1, surface `portal/src/pages/InvestorReporting`, until 2026-09-29T02:46:35Z (re-armed by the CTO, ruling 102510; surface widened to Positioning HoldingsTab.tsx + portal/src/components/holdings) |
 | Working tree | the main portal checkout `C:/Users/AndrewBerman/Desktop/ajb_workspace/portal`, branch DEV |
-| Portal candidate pin | DEV `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
-| Portal origin | origin DEV `a47d3a75` (pushed by this seat under the lease; ls-remote read 18:3xZ); PROD `a0314f22`. CI for a47d3a75: run 36466179803 success |
-| Suite on a47d3a75 | IR scope 897 pass / 27 skip / 5 fail (the 5 known, by name); tsc -b 0; eslint 0 errors |
+| Portal candidate pin | DEV `5068973b` (item 32, canonical sub asset + single stocks last) on `2da4f470` (firmDisplayNames restamp, CTO 102931) on `3e2233de` (item 31, asset-class colours, Andrew-direct) on `a528392f` (item 30, Holdings Breakdown header) on `18899c96` (item 29, DirectoryEntry wire regen; CTO 102814 approved, on origin DEV) on `27eae57a` (FAST item 28, AD-10 reader) on `7689c526` (round 10 IV-e-81, AD-11) on `7b4f4f83` (round 10 IV-e-80, AD-13) on `29b33ef1` (item 27, AD-09) on `037657da` (FAST item 26, AD-07) on `d960e590` (FAST item 25, AD-08) on `6c163889` (FAST item 24, CATEGORY kind + wire regen) on `e5e96606` (FAST item 23, receipt poll) on `cabe0d5c` (FAST item 22, AD-06) on `50eb1d56` (OPAL_HOLDINGS wire, TO-IB-pr-201) on `d6f740cc` (FAST item 20b, IR table on the shared table) on `b9d49989` (FAST item 20a, shared table extracted) on `ee949234` (FAST item 19, shared tree map) on `5ff990dc` (FAST item 18, AD-04/05 in-surface half) on `84854311` (FAST item 17, AD-01 remainder) on `1f6612c8` (FAST item 16, AD-01/02 card) on `d516158f` (FAST item 15, AD-03) on `8d12987e` (FAST item 14, UIC-03) on `2febba0b` (FAST item 13, IV-e-76) on `8c6792df` (FAST item 12) on `b0acdee2` (item 10 follow-up) on `11c3fa4a` (FAST item 10) on `816eeb58` (FAST item 9) on `c77b693b` (FAST item 8) on `84519ede` (FAST item 7) on `4ded3791` (FAST item 6) on `38986671` (FAST item 5) on `921e6808` (FAST item 4) on `bfafa6c0` (FAST item 3) on `528acdcd` (FAST item 2) on `a47d3a75` (FAST item 1) on `28f5118c` (round 9 drained: IV-e-68/69/70/73/74/78/79) |
+| Portal origin | origin DEV `7b4f4f83` (pushed by this seat under the lease; ls-remote read 09:3xZ); PROD `a0314f22`. CI: a47d3a75 run 36466179803 success; 528acdcd run 36472948742 success; bfafa6c0 run 36478024129 success; 921e6808 run 36480377879 success; 38986671 run 36481803879 success; 4ded3791 run 36483696942 success; 84519ede run 36484672421 success; c77b693b run 36485548594 success; 816eeb58 run 36486189794 success; 11c3fa4a run 36487434529 success; b0acdee2 run 36488804219 success; 8c6792df run 36490163869 success; 2febba0b run 36492054339 success; 8d12987e run 36495184912 success; d516158f run 36496901922 success; 1f6612c8 run 36498832251 success; 84854311 run 36502989377 success; 5ff990dc run 36504594401 success; ee949234 run 36507364121 success; b9d49989 unread at this write |
+| Suite on d6f740cc | the known 5 (plus 3 process tests cut at their caps under load, each green alone -- see the 20b commit); earlier: IR scope 912 pass / 27 skip / 5 fail = the known 5, counted line by line; tsc -b 0; eslint 0 errors |
 | Screen | `localhost:5174` (dev-live from the main checkout) |
 | Workspace push state | CLOUD LOCAL; the push is 0.0.0_AB_MSTR's |
 
 ## Live thread
 
 State: LIVE END TO END on DEV for Holdings, Performance and Analysis. Last real run: `/ui-walk --client cowdin`
-on 5174 @a47d3a75 (tmp/ui-walk/20260928T182319Z, local only). S30 disarmed by row S31.
+on 5174 @528acdcd working tree (tmp/ui-walk/20260928T190559Z, local only). S30 disarmed by row S31, S29 by row S33.
 
 ## Landed under FAST (graded by the CVO after the fact)
 
 | Item | Pin | Rows | Check |
 |---|---|---|---|
 | 1 | portal `a47d3a75` | UIC-10, UIC-12, UIC-13, S30 | iv-e-72 HOLDINGS-ANY-COUNT-OK; real run cowdin shot 017 |
-
-Round 9 at the boundary (@f42e1b00fa): IV-e-68/69/70/73/74/78/79 terminal and drained; IV-e-71/72/75/76/77
-superseded by this lease, unbuilt, their rows carried into Next.
-
-## Next (in order; a defect that breaks the live thread goes first)
-
-1. **S29 (UIC-09 reopened):** "No source age yet" must not show before any source exists (StatusPanel source-age
-   slot; `NO_SOURCE_AGE_YET`, state/status.ts:342; fe-s-21 tests re-goldened to UIC-09).
-2. **Account identity (new, cowdin walk 18:2xZ):** all 11 cowdin accounts read "****8774 / UTMA" in OVER WHAT, the
-   pie legend and the table -- one tail for every account. Diagnose data vs page first (UIR-32 mask form).
-3. **IV-e-71 rows (UIR-32/34/49):** one account mask everywhere (`****1234 / TYPE`); ALL CATEGORIES draws no one-slice pie.
-4. **UIC-11 residue:** ACCOUNT_PALETTE[0] is neutral-100 `#f5f5f5`, near-white on the white panel (the first
-   wedge and swatch nearly vanish).
-5. **IV-e-75 rows (UIC-18..22, W35-S2):** Analysis setup behaves like a form; Export on Analysis opens only on an
-   answer-bearing report.
-6. **IV-e-77 rows (UIR-45, UIC-14, UIC-17):** one client date format on Performance and the directory stamp; the
-   source line in client words; the scope panel never prints 'unknown' (SCOPE AS OF still reads unknown).
-7. **IV-e-76 rows (UIR-04/13/30, W35-S1):** firm display names from the registry generated view. Per CTO 102351 the
-   view target lands in `lib/opal_naming.py`, outside this lease's surface: CTO reads the diff before it lands.
-8. **UIC-03:** no fix of record yet.
-9. CRO /ui-walk findings and Andrew's transcripts enter here as they arrive (CTO placement act 3).
-
-## Write claims
-
-`portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx`, `.../state/status.ts` (item 1 of Next).
-
-## Next proof
-
-S29: the loading and refusal status panels show no source-age words (test on the rendered panel per no-answer
-state; real run on 5174 reading the Performance loading face).
-
-## Dependencies
-
-| Needs | From (owner) | Interface / pin | State |
-|---|---|---|---|
-| K8 re-run window (adapter RENDER_DELEGATE fix + R11 RUNNING answer) | 2.0.0_SA_COO~P | served export path | AWAITED |
-| K10 re-run window (irpt-status rebuild 3) | 2.0.0_SA_COO~P | served status path | AWAITED |
-| Ruling on row W39-S2 (OwnedAnalysisRequestWire has no client field) | 1.0.0_SA_CTO | row W39-S2 | AWAITED |
-
-## Parked
-
-| Question (off-thread) | Owner | Un-parks when |
-|---|---|---|
-| The one-line FAST notice to the CVO ("FAST from 17:47Z; pins graded after the fact") | 3.0.0_SA_CVO | the CVO is seated (not LIVE at 17:5xZ) |
-| NEW-01 (49F YTD -100%, HIGH) | 2.0.0_SA_COO~P | ~P's first post-reboot item (CTO 102358) |
-
-## Limits
-
-No FAST pin is graded yet. The round-9 judgment criteria (AC2 rows) wait on the CVO's grade of the landed pins. PROD
-promotion stays gated. Any deploy is WORLD and runs under the deploy ledger.
+| 2 | portal `528acdcd` | UIC-09, S29 | six source-age files green but the known F25 set; the walk caught no loading face (unit render is the exercised path) |
+| 3 | portal `bfafa6c0` | UIR-32, UIR-49 (IV-e-71 mask half) | iv-e-71 STRATEGY-TAIL-OK; real run thiessen shot 026 caught the category-views modal before the adapter fix; the post-fix face is unit-proven only (walk killed for low memory) |
+| 4 | portal `921e6808` | UIC-23 residue (row S32): date in words, no raw id | iv-e-80 HISTORY-DATE-OK; no real run (walks paused after the harness's low-memory kill) |
+| 5 | portal `38986671` | UIC-11 residue (near-white account colour) | iv-e-81 ACCOUNT-PALETTE-VISIBLE-OK, iv-e-70/59 green; no real run (walks paused) |
+| 6 | portal `4ded3791` | UIC-20 (IV-e-75): required-field message only after an attempt | iv-e-82 REQUIRED-AFTER-ATTEMPT-OK, fe-s-15 variant green; no real run (walks paused) |
+| 7 | portal `84519ede` | UIC-22 (IV-e-75): loading until the snapshot read answers | iv-e-83 SNAPSHOT-LOADING-OK; no real run (walks paused) |
+| 8 | portal `c77b693b` | UIC-19 (IV-e-75): title names the client and the variant | iv-e-84 TITLE-CLIENT-VARIANT-OK, iv-e-22/14 green; no real run (walks paused) |
+| 9 | portal `816eeb58` | UIC-18 (IV-e-75): visible pick; the form asks what the variant needs | iv-e-85 VARIANT-ASKS-OK, fe-s-15/iv-e-22/82 green; no real run (walks paused) |
+| 10 | portal `11c3fa4a` | UIC-17 (IV-e-77): scope panel dates real or omitted | iv-e-86 SCOPE-DATES-OK, iv-t-1 re-goldened, F48 green; no real run (walks paused) |
+| 10 follow-up | portal `b0acdee2` | iv-e-3 IVE3-AC1 re-goldened to the formatted date | missed in item 10's own run (tail-read); CARD-FED green |
+| 12 | portal `8c6792df` | UIR-45 (IV-e-77): Performance date window in the page date format | iv-e-88 PERFORMANCE-DATES-OK; three raw-ISO checks re-goldened; no real run (walks paused) |
+| 13 | portal `2febba0b` | IV-e-76 (UIR-04/13/30, W35-S1): firm names from the registry view | iv-e-89 FIRM-NAMES-REGISTRY-OK, iv-e-56 re-goldened; landed after the CTO's naming-gate fix @85febf3bd1 (102449) |
+| 14 | portal `8d12987e` | UIC-03 + CTO ruling 102453 (AD-15): method/source in words; codes, hashes, producer names off the face | iv-e-90 METHOD-SOURCE-WORDS-OK; F40/F47/IVE63 re-goldened; no real run (walks paused) |
+| 15 | portal `d516158f` | AD-03: Holdings loses Allocation, Report details, Unique accounts / source dates | iv-e-91 HOLDINGS-PANELS-REMOVED-OK; iv-e-19 re-goldened; no real run (walks paused) |
+| 16 | portal `1f6612c8` | AD-01/02 card: L-1 accounts -> Models / SMAs / Client from served amounts | iv-e-92 L0-CARD-OK; the shape is not served yet (~M next round), so today's data keeps the previous path |
+| 17 | portal `84854311` | AD-01 remainder: the card is the drill, tree map + table at rest; W17-S1 + F39-AC6/AC7 re-homed onto the card (CTO 102488); negative / unsupplied rows named under the card (UIC-12/UIR-34) | iv-e-93 HOLDINGS-TWO-COMPONENTS-OK; 14 pins re-goldened, each named in the commit; no real run (walks paused) |
+| 18 | portal `5ff990dc` | AD-04/05 in-surface half: registry colours in Positioning's class order, Other grey; table by (class, weight); zero rows gone; tooltip names beside tickers | iv-e-94 POSITIONING-ORDER-OK; IVE27-AC2 + IVE43 UIR-25(c) re-goldened; no real run (walks paused) |
+| 19 | portal `ee949234` | AD-04 (CTO 102510): the tree map extracted to components/holdings, used by Positioning and IR; item 18's tooltip copy retired | Positioning before/after byte-identical PNG on 5174 with a discriminating control (deliverables/2.0.0_SA_COO~D/item19/README.md); IVE13/20/44/94 re-goldened; IR's live map not screenshot-proven |
+| 20a | portal `b9d49989` | AD-04 (CTO 102522): the breakdown table extracted to components/holdings, ground + totals as props | Positioning Characteristics and Performance before/after byte-identical PNGs (deliverables/2.0.0_SA_COO~D/item19/) |
+| 20b | portal `d6f740cc` | IR's Securities table = the shared table, light ground, no summed rows (F7-AC4), served value column | IV4-AC1/AC2 + IVE94 re-goldened; live render via the IVE20 census driver on 5174: deliverables/2.0.0_SA_COO~D/item19/ir-holdings-1440.png + -390.png, 0 scrollbar violations |
+| 21 | portal `50eb1d56` | TO-IB-pr-201 (~P 102545, CTO 102544): PerformanceReport provider OPAL_HOLDINGS -- wire regenerated from ~P's committed schema 78eeb223f8, words entry | IVE17-AC2 REGENERATED-OK, IVE90 OK |
+| 22 | portal `cabe0d5c` | AD-06: Analysis is Portfolio (Client / Prospect) -> Analysis type -> Output, pages hidden not unmounted | IVE22-AC1/AC2 + IVE85 re-goldened; real render on 5174 (census driver): page 1 two white cards, 0 scrollbar violations |
+| walk | W21 part P | K10 READY ANALYSIS_READY PER_SECTION RPT-5288c06d; K4 not reachable on the page; K8 one POST QUEUED exr_f3a8ba9c, then the page stopped polling on a data-less RUNNING receipt | deliverables/2.0.0_SA_COO~D/w21-part-p-walk-20260929.md @bc3a514122; HAR w21-20260929.har |
+| 23 | portal `e5e96606` | the receipt poll keeps going through a data-less RUNNING read (W21 K8) | iv-e-95 RECEIPT-RUNNING-DATALESS-OK; negative control crashes on the old submit.ts; the real K8 run waits on ~P's next window (102597: W21 closed; the render was refused at performance/entry.py:151, fix being cut by ~P) |
+| 24 | portal `6c163889` | ~M 102600: CATEGORY node kind end to end (wire regenerated from e705775791/1206612f63, adapter, view kind), sourceVendorKeys on the view | iv-e-96 CATEGORY-NODES-OK; IVE26 green again; FIELD_MAP 160/160; PROD promotion is the integrator's |
+| 25 | portal `d960e590` | AD-08: each analysis card opens the canonical modal (what it is, what it needs, Select); Comparison / Multi-Comp take an Opal model or an ETF, with composer.ts's counts | iv-e-97 VARIANT-MODAL-OK; real render on 5174 (modal white body, navy ink) |
+| 26 | portal `037657da` | AD-07: Upload button, rules modal from template_reader.py, template holdings-template.csv the reader accepts unchanged | iv-e-98 PROSPECT-UPLOAD-OK; reader run: basis USD, 3 rows, 0 findings; wrong-header control refused |
+| 27 | local DEV `29b33ef1` (CTO 102636 approved; push is the integrator's) | AD-09 page half: row reasons in words (no codes), request id / reason code / per-field source dates and extraction diagnostics behind one Technical details control | iv-e-99 READABLE-REQUESTS-OK; IVE62/IVE74 re-goldened to AD-15 |
+| 28 | portal `27eae57a` | AD-10 portal half: the directory reader accepts the optional per-account `account_masks` (refuses a malformed one; other unknown keys still refused) | iv-e-102 DIRECTORY-ACCOUNT-MASKS-OK; negative control on the previous reader; IR suite 920/27/5 = known five; real run on 5174 with the key injected (search returns the client; previous reader 0 options) |
+| 29 | portal `18899c96` (CTO 102814 approved; on origin DEV, ls-remote 13:2xZ) | AD-10: DirectoryEntry wire type regenerated by gen-wire.ts from the schema ~M drained @bb145ff1fe -- optional `account_masks` | fe-s-13 + iv-e-102 34/0; IR suite 920/5 = known five; tsc -b rc=0 |
+| 30 | portal `a528392f` (PROD v2.1.191) | Andrew-direct: Positioning Holdings Breakdown header carries no source subtitle and no date (the footer is their place) | tsc -b rc=0; eslint 0 errors |
+| 31 | portal `3e2233de` (PROD v2.1.191) | Andrew-direct: ASSET_CLASS Fixed Income green500, Equity blue500, Commodities yellow500 (restored); Alternatives/Real Estate light vermilion #ff4f1f (new token, dE00 10.5/10.3 from the two model neighbours); six colour tests re-goldened | IR suite + iv-e-49/51 926/5 = known five; Andrew smoked on 5174 ("approved on color") |
+| PROD | portal `ba8e971f`, tag portal-v2.1.191 | Andrew-directed /prod-deploy of DEV 3e2233de (payload items 30 + 31); parity empty; rollback 9a8f6c71 | run 36611202465 success; pointer 5ed101cd96 LOCAL |
+| 32 | portal `5068973b` (DEV only) | Andrew-direct canonical table, portal half (CTO 102980): IR rows read the served sub_asset_class; the shared table puts single stocks after the last ETF class | iv-e-103 CANONICAL-SUB-ASSET-OK + negative control; IR suite 921/5 = known five; Positioning Models pixel-identical |

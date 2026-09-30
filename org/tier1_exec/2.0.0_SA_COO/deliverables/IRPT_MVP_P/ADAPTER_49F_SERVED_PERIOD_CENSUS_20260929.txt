@@ -1,0 +1,24 @@
+method: the adapter's rule (holdings_gold.py:191-203 + retained ruling-16 guard, IB-pr-214) over the served gold as re-emitted; accounts = every account with a gold row in the window
+YTD: accounts 8028 | served figures 7127 | refused no-OK-row 901 | refused implausible-series 0 | served <= -100%: 0 | served >= +100%: 2
+    ..4180 +197.85% (last account_value 303497)
+    ..2297 +149.67% (last account_value 779287)
+1Y: accounts 8245 | served figures 7300 | refused no-OK-row 945 | refused implausible-series 0 | served <= -100%: 0 | served >= +100%: 4
+    ..4180 +197.85% (last account_value 303497)
+    ..8562 +141.42% (last account_value 1337529)
+    ..2297 +139.17% (last account_value 779287)
+    ..7477 +106.71% (last account_value 19351)
+SI: accounts 8818 | served figures 7814 | refused no-OK-row 1004 | refused implausible-series 0 | served <= -100%: 0 | served >= +100%: 7
+    ..2297 +230.52% (last account_value 779287)
+    ..2191 +218.29% (last account_value 30860)
+    ..4180 +197.85% (last account_value 303497)
+    ..7477 +134.96% (last account_value 19351)
+    ..8562 +125.25% (last account_value 1337529)
+    ..4060 +101.73% (last account_value 2232488)
+    ..4172 +100.30% (last account_value 461560)
+YTD accounts with rows 8028 | with >=1 OK row 7127 | with NO OK row 901
+by the set of statuses the account carries in YTD:
+  NO-PRIOR-HOLDINGS                             898
+  ALL-HOLDINGS-EXCLUDED+NO-PRIOR-HOLDINGS       2
+  NO-PRIOR-HOLDINGS+NON-POSITIVE-BASE           1
+of the 901: last-day account_value == 0: 901 | > 0: 0 | held_count 0 on last day: 899
+rows per account: 1 day 6 | 2-5 days 38 | >5 days 857

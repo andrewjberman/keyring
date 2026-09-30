@@ -1054,3 +1054,18 @@ CRO action. Driver, damaged-checkout, delivery and prevention findings remain op
 **Evidence:** current issuer full portfolios retrieved for WCMG, GQGU, TSEL, BASG, ETFT and PCLG; 23 dated BASG/GQGU samples reaching June/July 2025 with matching internal dates; full periodic portfolio reports identified for remaining funds. Bloomberg refdata healthy; seven of seven BQL requests (six funds and IBM control) refused authorization; index members worked on SPX as a positive control and were inapplicable to the ETF securities. Fundsmith CSV returned only ten rows versus 29 in the full embedded array; SEI net-asset weights are the correct portfolio denominator.
 
 **Conclusion:** issuer-first capture is viable; shared ingestion with five parser families, daily archive sampling supports BASG/GQGU backfill, remaining daily historical coverage unproved with periodic disclosures as fallback. Source feasibility assessment only; no collector deployed, no subscription purchased, no peer dispatched. Raw captures and probe scripts remain locally in ignored `.runtime/amgt-reconn-sources-20260929/`; no raw Bloomberg data committed.
+## RCN-0019 -- Portal total-return correctness and provenance (Inflection question)
+
+**Date:** 2026-09-28. **Produced under:** `4.0.0_SA_CRO~I`. **Commissioned:** Andrew-direct at the Codex
+terminal; original instruction and clarification in `deliverables/ANDREW_DIRECT_20260928_INFLECTION_PERFORMANCE_INVESTIGATION.md`.
+**Package:** `deliverables/RCN-0019_INFLECTION_PORTAL_PERFORMANCE_20260928.md`, with two reproducible scripts and
+three evidence JSON files under `deliverables/inflection-performance-audit-20260928/`.
+
+**Finding:** the source field is Bloomberg gross-dividend total return, and four dated local source PKLs are
+byte-identical to S3. Both deployed producer handlers match inspected source. All 300 Benchmark return cells and all
+160 Positioning YTD cells reconcile across September 21 and September 25. A confirmed Positioning date-boundary defect
+omits the first day's return from WTD/MTD/QTD: 231 affected historical cells and 224 latest cells; 2026 YTD is unaffected.
+The independent model-holdings reconstruction differs from the selected custom index by 2.36 bps latest YTD, and the
+upstream generic index price-return fallback lacks provenance flags. These are named limits, not an all-correct certificate.
+**Status: DELIVERED to Andrew, investigation only.** Read-only live AWS/S3/deployment and synced source evidence;
+authenticated browser rendering unavailable. No production edit, deployment, client email, or implementation dispatch.

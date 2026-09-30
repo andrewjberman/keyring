@@ -337,3 +337,22 @@ drains BEFORE IV-e-75, which writes the same two files.
 pinned tests that asserted the tab-body chip (iv-e-23 firm-chip and parity-kept, iv-e-38 header-identity, iv-e-56 firm-display, fe-s-10 parity).
 Issuer ruling: re-golden each to the ruled design, keeping its claim and a control that bites; the KEPT parity test's "never edited" line is
 superseded by this ruling. One LOCAL direct act, tests only, on slot ~36 as queue position 2 (net-zero disk); IV-e-73 and IV-e-79 drain together.
+
+
+## v10 -- round 10 (issuer, 2026-09-29 ~07:5xZ), over PRD v0.18 @5d44d0fa62 + the master brief Part VI
+
+**Rectangle:** 1.0.0_SA_CTO 102636 ("cut AD-10..13 from STATUS.md as your next round"; FAST lapsed on presence 07:11Z).
+The master brief `docs/briefs/irpt-master-guidance-brief-20260928.md` AD-10..AD-13, filtered by its own Owners lines:
+
+| cell | item | rows | chain / slot | key files (IR = portal/src/pages/InvestorReporting) |
+|---|---|---|---|---|
+| IV-e-80 | AD-13 | UIC-17, UIR-45 (identity) | I ~42, 1 of 2 | IR/header/IdentityCard.tsx (+ pinned tests that assert the disclosure) |
+| IV-e-81 | AD-11 | UIR-01's "Browse stays the listing" clause (superseded) | I ~42, 2 of 2 | IR/header/ClientSearch.tsx, IR/header/BrowseDrawer.tsx (+ pinned tests) |
+
+**Not cut, named:** AD-10 (one masked tail per account) -- the page half waits on 2.0.0_SA_COO~M serving distinct account labels
+(row IRPT_BCKEND-S182; every COT account reads "****8774 / UTMA" / "****9237 / BROKERAGE" at the producer); it is cut the tick ~M
+names the served revision. AD-12 (a client the search offers must open) is owned by 2.0.0_SA_COO~P and ~M per the brief; no ~D cell.
+
+**Edges:** one chain, one slot (~42), IV-e-80 then IV-e-81: both re-touch the header test pins (iv-e-38 and neighbours), so they run in
+series on one worktree. Both are DIRECT-ACT (one cell each, well under 300 product lines, LOCAL); the close is the issuer's real run
+on 5174. fanout: 1 of 1 chains, cap 8.

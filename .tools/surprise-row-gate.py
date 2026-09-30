@@ -856,7 +856,7 @@ def _row_was_carried(row, parent_ids):
 
 
 def _investigations_precondition_violations(rel, row, code, route_word, dispositions, merging=False,
-                                            parent_ids=None, gating=None):
+                                            parent_ids=None, gating=None, watermark=None, surfaced_at=None):
     """GATE (iii) second limb for ONE new route-carrying row. `dispositions` is the 4-tuple from
     _latest_dispositions (injectable for the self-test).
 
@@ -886,6 +886,10 @@ def _investigations_precondition_violations(rel, row, code, route_word, disposit
     if gating is not None:
         # spine v3.19 (report 3 item 1.2): only BLOCKING or ARMED rows hold the slug; `gating` None = every item gates.
         open_items = [k for k in open_items if k in gating]
+    if open_items and watermark is not None:
+        # THE SWEEP WATERMARK (see SWEEP_WATERMARK_RE): an item surfaced after the slug's declared cut is the next
+        # sweep's. `surfaced_at` is injected by the caller (PURE here); a missing entry holds the slug.
+        open_items, _after = _split_by_watermark([(k, (surfaced_at or {}).get(k)) for k in open_items], watermark)
     if open_items:
         out.append("%s: NEW row (%s) while %d of %d BLOCKING/ARMED-or-ungraded investigation item(s) under %s are NOT "
                    "dispositioned (latest carrier reads UNDER_INVESTIGATION): %s. The slug waits until every "
@@ -1531,8 +1535,95 @@ def _posn_round3_terminal_exception(root, rel, row, code, open_ids, total):
     return True
 
 
+# THE SWEEP WATERMARK (1.0.0_SA_CTO RULING 102674, one IRPT_BCKEND project sweep over every workstream-round drained
+# since the last watermark, while later rounds keep running; 3.0.0_SA_CVO 102703: sweep 1 landed only by audited
+# override because both GATE (iii) limbs counted orders issued and rows filed AFTER the sweep's cut).
+# HOW A SLUG DECLARES ITS SCOPE: the slug's own document (the REMEDIATION or ADJUDICATION file being committed) carries
+# ONE line-anchored element, `<sweep_watermark>YYYY-MM-DDTHH:MM(:SS)Z</sweep_watermark>` -- the UTC instant of the
+# sweep's cut. When present, a task order FIRST ADDED to git after that instant, and an investigation item whose
+# `surfaced_at` is after it, do not hold the slug: they belong to the next sweep. An order or item whose time cannot be
+# read still holds it (an unreadable time fails toward refusal). A document with NO watermark keeps the whole-project
+# rule unchanged. A prose mention of the tag is not the element (line-anchored, as <round> and <status> are).
+SWEEP_WATERMARK_RE = re.compile(
+    r"^[ \t]*<sweep_watermark>[ \t]*([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(?::[0-9]{2})?Z)[ \t]*</sweep_watermark>[ \t]*$",
+    re.M)
+
+
+def _parse_utc(s):
+    """datetime (UTC, aware) from an ISO-8601 string, or None. PURE; never raises."""
+    import datetime as _dt
+    try:
+        v = str(s or "").strip().replace("Z", "+00:00")
+        if not v:
+            return None
+        d = _dt.datetime.fromisoformat(v)
+        return d if d.tzinfo else d.replace(tzinfo=_dt.timezone.utc)
+    except (ValueError, TypeError):
+        return None
+
+
+def _sweep_watermark(text):
+    """The declared sweep watermark of a slug document (aware datetime), or None. PURE. Two DIFFERENT watermark
+    lines in one document are ambiguous and read as None -- the whole-project rule, the stricter one."""
+    vals = {m.group(1) for m in SWEEP_WATERMARK_RE.finditer(text or "")}
+    return _parse_utc(next(iter(vals))) if len(vals) == 1 else None
+
+
+def _split_by_watermark(entries, watermark):
+    """PURE. entries: [(label, when-or-None)]. Returns (holding, after): with no watermark every entry holds; with one,
+    an entry strictly AFTER the watermark is `after` (the next sweep's), everything else -- including an unreadable
+    time -- holds."""
+    if watermark is None:
+        return [lbl for lbl, _w in entries], []
+    holding, after = [], []
+    for lbl, when in entries:
+        (after if (when is not None and when > watermark) else holding).append(lbl)
+    return holding, after
+
+
+def _order_first_added(root, code):
+    """{basename: aware datetime of the commit that first ADDED it} for the project's task orders at HEAD, one git
+    call per order. A failed read maps to None (holds the slug)."""
+    out = {}
+    try:
+        ls = subprocess.run(["git", "ls-files", "--", "*/task_orders/%s.*.md" % code,
+                             "org/missions/D*/*/%s/task-orders/*.md" % code],
+                            cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+        paths = [p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()] if ls.returncode == 0 else []
+    except Exception:  # noqa: BLE001
+        paths = []
+    for p in paths:
+        try:
+            lg = subprocess.run(["git", "log", "--diff-filter=A", "--format=%aI", "--", p], cwd=root,
+                                capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+            lines = [x for x in lg.stdout.splitlines() if x.strip()] if lg.returncode == 0 else []
+            out[os.path.basename(p)] = _parse_utc(lines[-1]) if lines else None
+        except Exception:  # noqa: BLE001
+            out[os.path.basename(p)] = None
+    return out
+
+
+def _item_surfaced_at(root, code):
+    """{item id: aware datetime of its `surfaced_at`} over the project's investigation documents in the INDEX.
+    A missing or unparseable time maps to None (holds the slug)."""
+    out = {}
+    paths, _note = _index_paths(root, [p % code for p in INVESTIGATION_PATTERNS])
+    for p in paths or []:
+        st, text = _blob(root, "", p)
+        if st != "OK":
+            continue
+        try:
+            rows, _ = _rows(text)
+        except Exception:  # noqa: BLE001
+            continue
+        for r in rows or []:
+            if isinstance(r, dict) and r.get("id") and r["id"] not in out:
+                out[r["id"]] = _parse_utc(r.get("surfaced_at"))
+    return out
+
+
 def _route_precondition_violations(root, rel, row, code, open_tos=None, route_word=None, merging=False,
-                                   parent_ids=None):
+                                   parent_ids=None, watermark=None, issued_at=None):
     """GATE (iii) first limb for ONE new tree row carrying a route. `open_tos` is injectable for the
     red-first exercise; production passes None and the census runs.
 
@@ -1558,6 +1649,12 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
     if open_ids is None:
         return ["%s: the L10 precondition (every task order under %s terminal) could NOT be evaluated (%s) "
                 "-- REFUSED, fail-closed" % (rid, code, note)]
+    if open_ids and watermark is not None:
+        # THE SWEEP WATERMARK (see SWEEP_WATERMARK_RE): an order first added after the slug's declared cut is the next
+        # sweep's and does not hold this one. Labels are `<basename> [<word>]`, so the lookup keys on the basename.
+        when = issued_at if issued_at is not None else _order_first_added(root, code)
+        open_ids, _after = _split_by_watermark(
+            [(lbl, when.get(lbl.split(" [", 1)[0])) for lbl in open_ids], watermark)
     if open_ids:
         if _posn_round2_terminal_exception(root, rel, row, code, open_ids, total):
             return []
@@ -2170,12 +2267,17 @@ def check_file(root, rel):
             # PROVENANCE COMES FROM THE `_pids` READ ALREADY TAKEN ABOVE for the coordinate limb and
             # the foreign-row sweep -- one read of the merge's parents per channel file, now shared by
             # four limbs instead of two. No second read, and no way for the two answers to disagree.
+            # THE SWEEP WATERMARK: read from THIS document's staged bytes; absent -> the whole-project rule.
+            _wm = _sweep_watermark(staged)
             pre = _route_precondition_violations(root, rel, row, folder_project, route_word=_route_word,
-                                                 merging=_mrg, parent_ids=_pids)
+                                                 merging=_mrg, parent_ids=_pids, watermark=_wm)
             pre.extend(_investigations_precondition_violations(rel, row, folder_project, _route_word,
                                                                _latest_dispositions(root, folder_project),
                                                                merging=_mrg, parent_ids=_pids,
-                                                               gating=_gating_item_ids(root, folder_project)))
+                                                               gating=_gating_item_ids(root, folder_project),
+                                                               watermark=_wm,
+                                                               surfaced_at=(_item_surfaced_at(root, folder_project)
+                                                                            if _wm is not None else None)))
             # EN-g-37 / S74: rowlessness only -- a GRADUATED item under this project with no
             # remediation row bearing its id. Staleness (a row that EXISTS but has not moved) is a
             # DIFFERENT question this limb cannot see and does not attempt (EN-k-38).
@@ -2296,6 +2398,41 @@ def _self_test(root):
         ("v3.19: gating None (the read failed) gates on EVERY item, the stricter rule",
          lambda: _investigations_precondition_violations(
              "r", row, "X_PRJ", "route=SPEC_ERROR", ({"X_PRJ-S1": "UNDER_INVESTIGATION"}, [], 1, ""), gating=None) != []),
+        # THE SWEEP WATERMARK (1.0.0_SA_CTO RULING 102674; 3.0.0_SA_CVO 102703).
+        ("watermark: a line-anchored <sweep_watermark> parses; prose, two different values and a bad time read None",
+         lambda: (_sweep_watermark("x\n<sweep_watermark>2026-09-29T09:30:00Z</sweep_watermark>\n") is not None
+                  and _sweep_watermark("the `<sweep_watermark>2026-09-29T09:30Z</sweep_watermark>` tag") is None
+                  and _sweep_watermark("<sweep_watermark>2026-09-29T09:30Z</sweep_watermark>\n"
+                                       "<sweep_watermark>2026-09-29T10:30Z</sweep_watermark>\n") is None
+                  and _sweep_watermark("<sweep_watermark>2026-13-45T09:30Z</sweep_watermark>\n") is None)),
+        ("watermark: an order issued AFTER it, still open, does NOT hold the slug",
+         lambda: _route_precondition_violations(
+             root, "r", row, "X_PRJ", open_tos=(["X_PRJ.TO-9.late.md [pending]"], 5, ""), route_word="the slug",
+             watermark=_parse_utc("2026-09-29T09:30:00Z"),
+             issued_at={"X_PRJ.TO-9.late.md": _parse_utc("2026-09-29T10:00:00Z")}) == []),
+        ("watermark: an order issued BEFORE it, still open, DOES hold the slug",
+         lambda: any("X_PRJ.TO-3.early.md" in x for x in _route_precondition_violations(
+             root, "r", row, "X_PRJ", open_tos=(["X_PRJ.TO-3.early.md [pending]", "X_PRJ.TO-9.late.md [pending]"], 5, ""),
+             route_word="the slug", watermark=_parse_utc("2026-09-29T09:30:00Z"),
+             issued_at={"X_PRJ.TO-3.early.md": _parse_utc("2026-09-29T08:00:00Z"),
+                        "X_PRJ.TO-9.late.md": _parse_utc("2026-09-29T10:00:00Z")}))),
+        ("watermark: an open order whose issue time is unreadable still holds the slug",
+         lambda: _route_precondition_violations(
+             root, "r", row, "X_PRJ", open_tos=(["X_PRJ.TO-4.x.md [pending]"], 5, ""), route_word="the slug",
+             watermark=_parse_utc("2026-09-29T09:30:00Z"), issued_at={}) != []),
+        ("watermark: NO watermark keeps the whole-project rule (a late open order holds)",
+         lambda: _route_precondition_violations(
+             root, "r", row, "X_PRJ", open_tos=(["X_PRJ.TO-9.late.md [pending]"], 5, ""), route_word="the slug",
+             watermark=None, issued_at={"X_PRJ.TO-9.late.md": _parse_utc("2026-09-29T10:00:00Z")}) != []),
+        ("watermark: an ARMED item surfaced AFTER it does not hold the slug; one surfaced BEFORE does",
+         lambda: (_investigations_precondition_violations(
+                      "r", row, "X_PRJ", "the slug", ({"X_PRJ-S7": "UNDER_INVESTIGATION"}, [], 1, ""), gating={"X_PRJ-S7"},
+                      watermark=_parse_utc("2026-09-29T09:30:00Z"),
+                      surfaced_at={"X_PRJ-S7": _parse_utc("2026-09-29T09:45:00Z")}) == []
+                  and _investigations_precondition_violations(
+                      "r", row, "X_PRJ", "the slug", ({"X_PRJ-S7": "UNDER_INVESTIGATION"}, [], 1, ""), gating={"X_PRJ-S7"},
+                      watermark=_parse_utc("2026-09-29T09:30:00Z"),
+                      surfaced_at={"X_PRJ-S7": _parse_utc("2026-09-29T09:00:00Z")}) != [])),
         # spine v3.19 (report 3 item 1.3): the round tag the per-round census reads.
         ("v3.19: <round> tag parses at line start, `2` and `v2` alike; a prose mention does not",
          lambda: (int(TO_ROUND_RE.search("x\n<round>2</round>\n").group(1)) == 2

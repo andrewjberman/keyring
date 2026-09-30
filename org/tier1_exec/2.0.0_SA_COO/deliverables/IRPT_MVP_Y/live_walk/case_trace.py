@@ -86,6 +86,28 @@ def money(value):
     return Decimal(str(value)).quantize(Decimal("0.01"))
 
 
+def uploaded_holdings(data, file_type):
+    """{symbol: amount} as the user uploaded it, and the basis the header names ('dollars' for a CSV).
+
+    Read independently of the product's template_reader: an XLSX template is two columns, symbol in A and amount
+    in B, with B1 naming the basis (dollars / shares / target weight); duplicate symbols sum, as the freeze does.
+    """
+    if file_type != "xlsx":
+        rows = [r for r in csv.reader(io.StringIO(data.decode("utf-8-sig"))) if r]
+        return {r[0].strip(): money(r[1]) for r in rows[1:]}, "dollars"
+    import openpyxl
+    sheet = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True).worksheets[0]
+    rows = list(sheet.iter_rows(min_col=1, max_col=2, values_only=True))
+    basis = str(rows[0][1] or "").strip().lower()
+    holdings = {}
+    for symbol, amount in rows[1:]:
+        if symbol is None or str(symbol).strip() == "" or amount is None:
+            continue
+        key = str(symbol).strip().upper()
+        holdings[key] = holdings.get(key, Decimal(0)) + Decimal(str(amount))
+    return holdings, basis
+
+
 def printed_number(text):
     """The first number printed in a cropped cell: '0.30%' -> 0.30, '-1,234.5' -> -1234.5."""
     m = re.search(r"[-\u2212]?\d[\d,]*\.?\d*", text or "")
@@ -185,12 +207,19 @@ def main(argv=None):
     t.link("upload", "the retained original upload hashes to its recorded content_sha256, and the input cites it",
            sha(csv_bytes) == up["content_sha256"] == norm["source"]["content_sha256"],
            filename=up["filename"], lane=up["source_lane"], sha256=up["content_sha256"][:16])
-    csv_rows = [r for r in csv.reader(io.StringIO(csv_bytes.decode("utf-8-sig"))) if r]
-    csv_holdings = {r[0].strip(): money(r[1]) for r in csv_rows[1:]}
+    csv_holdings, basis = uploaded_holdings(csv_bytes, up.get("file_type"))
     norm_holdings = {r["security_id"]: money(r["dollars"]) for r in norm["holdings"]["rows"]}
-    t.link("normalize", "every uploaded row reaches the normalized holdings at the same dollars, and the total reconciles",
-           csv_holdings == norm_holdings and sum(norm_holdings.values()) == money(norm["holdings"]["total_dollars"]),
-           upload={k: str(v) for k, v in csv_holdings.items()}, total=norm["holdings"]["total_dollars"])
+    if basis == "dollars":
+        csv_holdings = {k: money(v) for k, v in csv_holdings.items()}
+        t.link("normalize", "every uploaded row reaches the normalized holdings at the same dollars, and the total reconciles",
+               csv_holdings == norm_holdings and sum(norm_holdings.values()) == money(norm["holdings"]["total_dollars"]),
+               upload={k: str(v) for k, v in csv_holdings.items()}, total=norm["holdings"]["total_dollars"])
+    else:
+        t.link("normalize", "every uploaded symbol reaches the normalized holdings (basis %s: dollars are derived)" % basis,
+               set(csv_holdings) == set(norm_holdings) and sum(norm_holdings.values()) == money(norm["holdings"]["total_dollars"]),
+               upload={k: str(v) for k, v in csv_holdings.items()}, total=norm["holdings"]["total_dollars"])
+        t.not_evaluated("normalize", "uploaded amounts equal normalized dollars",
+                        "basis %s converts through a price or the reference notional; only the symbol set is compared" % basis)
     norm_rows = aws("dynamodb", "query", "--table-name", "irpt-requests", "--consistent-read",
                     "--key-condition-expression", "tenant = :t AND begins_with(request_revision, :p)",
                     "--expression-attribute-values", json.dumps({":t": {"S": a.tenant},

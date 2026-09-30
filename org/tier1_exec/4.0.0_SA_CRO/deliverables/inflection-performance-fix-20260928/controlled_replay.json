@@ -1,0 +1,26 @@
+{
+  "control": "Pre-deploy source replay; S3 writes intercepted locally; AUM version pinned",
+  "old_handler_sha256": "0781cf3b1149a5222a8778f5cb5057503e0f9a025e97c0be2d9f3821343e0f19",
+  "reads": [
+    {
+      "bucket": "opal-data-portal-v2",
+      "key": "benchmarks/model_20260925_v1.pkl",
+      "version": "7g8i_WYpykY7zpDWFpa8sH6ndmWwqkUe"
+    },
+    {
+      "bucket": "opal-data-portal-v2",
+      "key": "platinum/mdpf/global/aum-metrics.json",
+      "version": "N_KOsRfVbwJr7danRAxFjAmYOfhCViGu"
+    }
+  ],
+  "surfaces": {
+    "positioning_data.json": {
+      "differences": 449,
+      "non_return_mismatches": []
+    },
+    "opal_aggregate.json": {
+      "differences": 83,
+      "non_return_mismatches": []
+    }
+  }
+}

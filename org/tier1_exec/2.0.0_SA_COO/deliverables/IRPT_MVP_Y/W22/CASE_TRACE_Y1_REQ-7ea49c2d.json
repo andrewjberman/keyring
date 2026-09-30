@@ -1,0 +1,258 @@
+{
+ "summary": {
+  "tenant": "cottonwood",
+  "request_id": "REQ-7ea49c2d9b27957d0ea8888f",
+  "revision": 1,
+  "report_id": "RPT-2e21b52edcb222205399100e026c2768",
+  "links": 22,
+  "match": 20,
+  "mismatch": 0,
+  "not_evaluated": 2
+ },
+ "links": [
+  {
+   "hop": "request",
+   "claim": "the composition's bytes hash to the request's composition_ref",
+   "verdict": "MATCH",
+   "measured": {
+    "sha256": "d58d1fbde76eb3a5",
+    "request_id": "REQ-7ea49c2d9b27957d0ea8888f",
+    "variant": "comparison"
+   }
+  },
+  {
+   "hop": "request",
+   "claim": "the composition binds the browser's input_id to that input's own artifact",
+   "verdict": "MATCH",
+   "measured": {
+    "input_id": "portfolio_9a6a6cd49d2bc2c3"
+   }
+  },
+  {
+   "hop": "request",
+   "claim": "the variant is the recipe's for the comparison count, and every recipe source names one template",
+   "verdict": "MATCH",
+   "measured": {
+    "keys": [
+     "opal_long_term"
+    ],
+    "variant": "COMPARISON",
+    "template_id": [
+     "14141824"
+    ]
+   }
+  },
+  {
+   "hop": "request",
+   "claim": "each chosen key's frozen identity is the maintained catalogue's (security id, label, model portfolio)",
+   "verdict": "MATCH",
+   "measured": {
+    "frozen": {
+     "opal_long_term": [
+      "P:1728413",
+      "Opal Long-Term"
+     ]
+    },
+    "catalogue_sha": "54656584"
+   }
+  },
+  {
+   "hop": "input",
+   "claim": "the normalized artifact hashes to its content-addressed input id",
+   "verdict": "MATCH",
+   "measured": {
+    "sha256": "9a6a6cd49d2bc2c3"
+   }
+  },
+  {
+   "hop": "upload",
+   "claim": "the retained original upload hashes to its recorded content_sha256, and the input cites it",
+   "verdict": "MATCH",
+   "measured": {
+    "filename": "aapl-vnq-12.03.csv",
+    "lane": "TEMPLATE_UPLOAD",
+    "sha256": "bb079cbf53aaa2be"
+   }
+  },
+  {
+   "hop": "normalize",
+   "claim": "every uploaded row reaches the normalized holdings at the same dollars, and the total reconciles",
+   "verdict": "MATCH",
+   "measured": {
+    "upload": {
+     "AAPL": "10.01",
+     "VNQ": "2.02"
+    },
+    "total": "12.03"
+   }
+  },
+  {
+   "hop": "normalize",
+   "claim": "the upload's normalization row reads NORMALIZED and names this input",
+   "verdict": "MATCH",
+   "measured": {
+    "rows": 1,
+    "state": "NORMALIZED"
+   }
+  },
+  {
+   "hop": "vendor",
+   "claim": "the vendor's upload echo equals the normalized holdings (rows sent = rows echoed)",
+   "verdict": "MATCH",
+   "measured": {
+    "echoed": {
+     "AAPL": "10.01",
+     "VNQ": "2.02"
+    },
+    "upload_record_id": 780711,
+    "weight_unit": "Dollars"
+   }
+  },
+  {
+   "hop": "vendor",
+   "claim": "the saved portfolio's settings read back: every row matches or is a tolerated, recorded row",
+   "verdict": "MATCH",
+   "measured": {
+    "matched": "7/7",
+    "tolerated": [
+     "level_as_of_type=custom_date"
+    ],
+    "portfolio": 2366957
+   }
+  },
+  {
+   "hop": "job",
+   "claim": "the job is READY for this request revision",
+   "verdict": "MATCH",
+   "measured": {
+    "state": "READY"
+   }
+  },
+  {
+   "hop": "pdf",
+   "claim": "the retained PDF hashes to its checkpoint, and the checkpoint binds this request",
+   "verdict": "MATCH",
+   "measured": {
+    "sha256": "7f8ed86e548bc6be",
+    "bytes": 827312,
+    "retrieved_at": "2026-09-29T13:31:07Z"
+   }
+  },
+  {
+   "hop": "pdf",
+   "claim": "the PDF's settings table prints a row for THIS job's portfolio name (the vendor document is ours)",
+   "verdict": "MATCH",
+   "measured": {
+    "name": "IRPT REQ-7ea49c2d9b27957d0ea8888f r1 3f4a32561f5c",
+    "printed": {
+     "type": "Static",
+     "as_of": "Custom"
+    }
+   }
+  },
+  {
+   "hop": "pdf",
+   "claim": "the effective settings the report records are the read-back's actual values",
+   "verdict": "MATCH",
+   "measured": {
+    "effective": {
+     "benchmark": "^SPXTR",
+     "level_as_of_type": "custom_date",
+     "management_fee": 0.003,
+     "rebalance_frequency": "quarterly",
+     "reinvest_dividends": false,
+     "start_of_series": "oldest",
+     "tax_status": "non_qualified"
+    }
+   }
+  },
+  {
+   "hop": "pdf",
+   "claim": "of the catalogue's portfolios, the PDF prints exactly the chosen comparisons (the vendor compared what was asked)",
+   "verdict": "MATCH",
+   "measured": {
+    "printed": {
+     "Opal Long-Term": [
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      13,
+      14,
+      16,
+      18,
+      19,
+      22,
+      23
+     ]
+    }
+   }
+  },
+  {
+   "hop": "pdf",
+   "claim": "the served foreign-firm name check passes the PDF for its own firm",
+   "verdict": "MATCH",
+   "measured": {
+    "foreign": []
+   }
+  },
+  {
+   "hop": "extract",
+   "claim": "the extraction evidence hashes to the certification sha the publication recorded",
+   "verdict": "MATCH",
+   "measured": {
+    "sha256": "cc8257508309d9c2"
+   }
+  },
+  {
+   "hop": "report",
+   "claim": "the report hashes to its REPORT# ref, and binds this request, PDF, composition and evidence",
+   "verdict": "MATCH",
+   "measured": {
+    "report_id": "RPT-2e21b52edcb222205399100e026c2768",
+    "sha256": "a607f9db86343782"
+   }
+  },
+  {
+   "hop": "report",
+   "claim": "the report's owner cites the original upload",
+   "verdict": "MATCH",
+   "measured": {
+    "prospect_input_id": "UP-bf609d334b662f2d1"
+   }
+  },
+  {
+   "hop": "sections",
+   "claim": "every scalar section's value is printed at its own page and coordinates in the retained PDF",
+   "verdict": "MATCH",
+   "measured": {
+    "reread": "72/72",
+    "sections": 76,
+    "charts": 4,
+    "misses": [],
+    "as_of_dates": {
+     "2026-09-29": 32,
+     "2026-09-28": 8,
+     "2026-08-31": 36
+    }
+   }
+  },
+  {
+   "hop": "screen",
+   "claim": "the portal renders these sections for this report revision, and a reload keeps them",
+   "verdict": "NOT_EVALUATED",
+   "reason": "2.0.0_SA_COO~D's K10 walk on RPT-2e21b52edcb222205399100e026c2768"
+  },
+  {
+   "hop": "export",
+   "claim": "the same-revision export carries these sections",
+   "verdict": "NOT_EVALUATED",
+   "reason": "window 16 (K7 + K8 export), 2.0.0_SA_COO~P"
+  }
+ ]
+}

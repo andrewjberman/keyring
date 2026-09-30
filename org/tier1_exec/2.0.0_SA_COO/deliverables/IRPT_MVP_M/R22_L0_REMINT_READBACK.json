@@ -1,0 +1,135 @@
+{
+ "ledger_slug": "irpt-holdings-l0-remint-m-20260929",
+ "mint": {
+  "members_sha256": "c695465758ea424b332dc639a0e0eadef3d4286053206ed96ce90b1fa0a06e3b",
+  "member_count": 43,
+  "prior_members_sha256": "94f2e3433d9ecc018027418ebb057c4ce6bfd2bb5baa45b8edb697f036421e5e",
+  "prior_member_count": 41,
+  "closure_retrace_added": [],
+  "closure_retrace_dropped": [],
+  "targets": {
+   "49financial": "s3://opal-data-49financial/irpt/49financial/code/gold/investor-reporting-holdings.tar.gz",
+   "inflection": "s3://opal-data-inflection/irpt/inflection/code/gold/investor-reporting-holdings.tar.gz",
+   "cottonwood": "s3://opal-data-cottonwood/irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz"
+  }
+ },
+ "qa_fire": {
+  "lambda": "irpt-holdings-refresh-lambda",
+  "payload": {
+   "qa": true
+  },
+  "fired_at": "2026-09-29T16:30:23.157001+00:00",
+  "command_ids": {
+   "49financial": "0c990e62-b31b-4f14-884d-a6691b25cf2e",
+   "cottonwood": "9fa9c917-0542-4668-96ab-99f85e1dcf45",
+   "inflection": "4114cede-6aae-4265-afdd-b7a5c7ef1c4c"
+  },
+  "ssm_status": {
+   "inflection": "Success",
+   "cottonwood": "Success",
+   "49financial": "Success"
+  },
+  "ssm_response_code": {
+   "inflection": 0,
+   "cottonwood": 0,
+   "49financial": 0
+  },
+  "holdings_qa_manifest_latest_date": {
+   "49financial": "2026-09-28",
+   "inflection": "2026-09-28",
+   "cottonwood": "2026-09-28"
+  },
+  "reads": {
+   "category_nodes_present": {
+    "49financial": true,
+    "inflection": true,
+    "cottonwood": true
+   },
+   "category_labels_sampled": {
+    "49financial": [
+     "Client"
+    ],
+    "inflection": [
+     "Models"
+    ],
+    "cottonwood": [
+     "Client"
+    ]
+   },
+   "source_vendor_keys": {
+    "49financial": [
+     "schwab",
+     "smartx"
+    ],
+    "inflection": [
+     "eclipse",
+     "orion"
+    ],
+    "cottonwood": [
+     "blackdiamond"
+    ]
+   },
+   "cot_assigned_strategy_sample": {
+    "node_id": "acc_000c147a49a4d234b37dab66",
+    "name": "Opal Ultra Short Term",
+    "model_id_namespace": "COT_REBALANCER_MODEL"
+   },
+   "49f_registration_labels_sample": [
+    "Charity Account Donor Advised Account",
+    "Contributory IRA",
+    "Designated Beneficiary IN",
+    "Individual",
+    "Inherited IRA from IRA",
+    "Joint Tenant",
+    "Rollover IRA",
+    "Roth Contributory IRA",
+    "Simplified Employee Plan"
+   ]
+  }
+ },
+ "served_versions": {
+  "pre_qa_fire": {
+   "49financial": {
+    "bucket": "opal-data-49financial",
+    "key": "irpt/49financial/platinum/holdings/current/manifest.json",
+    "latest_version_id": "AV66zNHkT6cbHiSJiUvKIoNRs5EX9_Fj",
+    "latest_modified": "2026-09-29 14:20:35+00:00"
+   },
+   "inflection": {
+    "bucket": "opal-data-inflection",
+    "key": "irpt/inflection/platinum/holdings/current/manifest.json",
+    "latest_version_id": ".zfZoZlAkp9kYx6I9pMrtjEYvwVVcq0d",
+    "latest_modified": "2026-09-29 14:18:18+00:00"
+   },
+   "cottonwood": {
+    "bucket": "opal-data-cottonwood",
+    "key": "irpt/cottonwood/platinum/holdings/current/manifest.json",
+    "latest_version_id": "3JfvRUHRmmDpKp6.VvTYBUmAuKmMaiTZ",
+    "latest_modified": "2026-09-29 14:18:21+00:00"
+   }
+  },
+  "post_qa_fire": {
+   "49financial": {
+    "bucket": "opal-data-49financial",
+    "key": "irpt/49financial/platinum/holdings/current/manifest.json",
+    "latest_version_id": "AV66zNHkT6cbHiSJiUvKIoNRs5EX9_Fj",
+    "latest_modified": "2026-09-29 14:20:35+00:00"
+   },
+   "inflection": {
+    "bucket": "opal-data-inflection",
+    "key": "irpt/inflection/platinum/holdings/current/manifest.json",
+    "latest_version_id": ".zfZoZlAkp9kYx6I9pMrtjEYvwVVcq0d",
+    "latest_modified": "2026-09-29 14:18:18+00:00"
+   },
+   "cottonwood": {
+    "bucket": "opal-data-cottonwood",
+    "key": "irpt/cottonwood/platinum/holdings/current/manifest.json",
+    "latest_version_id": "3JfvRUHRmmDpKp6.VvTYBUmAuKmMaiTZ",
+    "latest_modified": "2026-09-29 14:18:21+00:00"
+   }
+  },
+  "unchanged": true
+ },
+ "part1_status": "DONE -- ledger remains OPEN (V1-V3) for Part 2 after the next scheduled irpt-holdings-snapshot publication",
+ "part2_status": "NOT RUN -- separate spawn"
+}

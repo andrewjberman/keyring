@@ -1049,3 +1049,223 @@ before the S3 log upload at `infra/aws/terraform/cot-pipeline/ssm.tf:63-69`); `b
 that moves `blackdiamond/cot/session` AWSCURRENT. Vendor sign-in only through the document (its scheduler or its existing
 trigger), never by hand.
 
+## 13. ROUND 19, WORKSTREAM ~P (2026-09-28, 2.0.0_SA_COO~P, on PRD ADDENDUM v0.18 @33ae74760b, CTO 102396)
+
+Cut from `STATUS~P.md` @025cef10fd's next-list in its priority order. Base: CLOUD HEAD (MSTR's act-4 drain landed
+@c161a2faca; B3 proof row IRPT_BCKEND-S178). Checks: `deliverables/2.0.0_SA_COO~P/checks/r19/`, each dry-run at the
+base before this cut (build arms FAIL, control arms PASS).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-191` | FWD-3 (Performance backend half), goal criterion 1 at 49F; NEW-01 (rows S176/S177) | WORLD (path floor; the cell builds and tests only, the served move is the COO's act under both halves) | none | A |
+| `IB-pr-192` | FWD-3; UIC-06 backend half and UIC-07 (Since inception from the account's first data point) | WORLD (as above) | `IB-pr-191` (same files: f49_engine.py, entry.py) | A |
+| `IB-pr-193` | FWD-9 (Export) hygiene: a refused async replay logs REFUSED, not FAILED | WORLD (path floor; code and test only) | none | B |
+
+**IB-pr-191 -- the 49F engine never serves an impossible return.** `f49_engine.calculate` refuses by a named class
+`EngineReturnImplausible(EnginePerformanceRefused)` when any linked row in the window carries `r_net <= -1.0` (the
+measured NEW-01 shape: OK, bmv 13,360.59, emv 0.0, cf_net 0.0 on 2026-04-16; 28 such OK account-days YTD across 24
+accounts). The boundary (`performance/entry.py` `build_entry` reasons) names it `DEPENDENCY_UNAVAILABLE`. The
+arithmetic (`parity_period_returns`) and the producer (`c02_twr_engine.py`) are NOT touched: the producer rule is a
+design fork routed to 1.0.0_SA_CTO.
+
+**IB-pr-192 -- Since inception answers from the account's first data point.** A request whose start is the portal's
+Since-inception sentinel `1970-01-01` (UIC-07, measured) is read as the engine lane's ruled period `SI`, anchored at
+the account's first OK `business_date` in `twr_daily`; the report's `dates.actual_start` is that day and
+`returns.period_returns` names `SI`. Every other unruled window (3Y) still refuses as `WindowNotRuled`. The anchor is
+read, never typed; the IB-pr-191 guard applies to SI as to every window.
+
+**IB-pr-193 -- the async export log says what happened.** `export/entry.py` `run_async_submit` logs stage `REFUSED`
+(and re-raises) when `submit_async.run` raises `AsyncSubmitRefused` before the pointer moves; every other exception
+still logs `FAILED`.
+
+**Not cut this round, with the reason:** the live Comparison + export window (K4/K5/K8/K10) is the COO's own act at
+this round's close, under its own packet and both halves (TO-IV-e-78 is complete); the per-headline causal filter has
+no cell text yet (CTO tick 65 names it only as enrichment); the ~P hygiene items that are not code (proof_of_spec
+template path S167, directory Terraform root, cherry-pick review) are record acts, not cells.
+
+fanout: 2 of 2 chains, cap 8.
+
+
+### 13.1 ADDENDUM 1 (2026-09-28 ~22:3xZ, 2.0.0_SA_COO~P, on 4.0.0_SA_CRO D1 RESULT @5f82151a2e and 1.0.0_SA_CTO 102447)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-194` | FWD-3; NEW-01 on the served surface (ledger irpt-adapter-implausible-guard-20260928 D1) | WORLD (path floor; code and tests only, the served move is the COO's act under both halves) | `IB-pr-191` (on CLOUD) | A (carried by the REOPENED order TO-IB-pr-191, slot ~63) |
+
+**IB-pr-194 -- reopen refuses a pre-guard impossible report.** The served page reopens RETAINED reports
+(`retained.py` `_compute` -> `reopen`) and never re-runs `f49_engine.calculate`, so IB-pr-191's guard did not reach the
+two NEW-01 reports retained before 22:02Z. `retained.implausible_engine_series(report)` (any
+`daily_cumulative_series` value <= -1.0) gates `reopen` for the engine firm, raising `EngineReturnImplausible`. Nothing
+in the store is deleted, rewritten or re-derived. Live census at the cut: 23 retained 49F reports, exactly 2 flagged
+(790fe675, 74fb35a4). This packet's blast radius counts BOTH readers of the served figure (compute and reopen) -- the
+miss the adapter packet made.
+
+fanout: 1 of 1 chains, cap 8.
+
+
+### 13.2 WORKSTREAM ~E, ROUND 19 (2026-09-28 ~22:5xZ, issuer 2.0.0_SA_COO~P, on Andrew-direct calls 2-3 and 1.0.0_SA_CTO 102456/102461)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-191` | FWD-3 (49F Performance): the engine's daily return is holdings-based, no flow logic; closes rows S181 and W61-S2 | WORLD (rewrites the served twr_daily history; QA prefix first, then both never-widen halves) | none | E |
+
+**IB-er-191 -- the 49F engine's daily return is holdings-based.** Andrew's call 3 fixes the method: the day-t account
+return is the weight-pro-rated day-t price return of the securities held at the end of t-1 (weights over the account's
+t-1 fair value; cash earns zero; no inflow/outflow term). This replaces the flow-based `c02_twr_engine.py:264`, whose
+full-value exits and scaled flows produce 26 OK rows at r_net <= -1 year to date. The rebuild also restores the value
+columns of the two partitions of row W61-S2. One order, to the DS seat 0.4.0_DS_ClientPlatform~E (seated by MSTR
+102458). A disjoint scope (a producer outside every IRPT write surface), hence its own workstream.
+
+fanout: 1 of 1 chains, cap 8.
+
+**13.2 CANCELLED (2026-09-28 ~23:0xZ):** Andrew-direct ~22:4xZ (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_HOLDINGS_BASED_PERFORMANCE_ALL_FIRMS_SILVER_TO_ONE_GOLD.md`)
+moves every firm channel to the holdings basis in ONE consolidated gold shape. `IB-er-191` is cancelled with that
+pointer; its 49F work is re-cut as a slice of the consolidated gold after the CRO brief (L1) and the CTO L4 addendum.
+The deployed NEW-01 page guard (adapter hcZpXDDo) and its reopen remedy (`IB-pr-194`) stay.
+
+
+## 14. WORKSTREAM ~E, ROUND 1 (2026-09-28 ~23:5xZ, issuer 2.0.0_SA_COO~P, on PRD ADDENDUM v0.19 @65f3dde719 rulings 10-11)
+
+The holdings-basis gold thread (spine v3.16: round 1 builds the thread). One cell, one order, to the DS seat
+0.4.0_DS_ClientPlatform~E. Its downstream hops (the adapter reading the gold, the page, the PDF) are ~P's own later
+cells, cut once this gold exists.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-201` | FWD-3 thread, hop 1: one invested 49F account (0010498003), YTD, silver -> holdings-basis gold | WORLD (new gold prefixes; no reader switched, nothing served moves) | none | E1 |
+
+**IB-er-201.** The source declaration as data (ruling 1), the gold script writing `holdings_performance_daily` and
+its manifest at the builder addresses (ruling 9), the method of call 3 (rulings 2-5), and an ad-hoc QA run for the
+thread account over the YTD trading days. The schedule, the other two firms and the adapter switch are later rounds.
+
+fanout: 1 of 1 chains, cap 8.
+
+
+## 15. ROUND 20, WORKSTREAM ~P (2026-09-29 ~01:2xZ, issuer 2.0.0_SA_COO~P, on PRD v0.19 rulings 10-12 and 1.0.0_SA_CTO 102519)
+
+The FWD-3 thread's next hop on ~P: the adapter reads the holdings gold (~E round 1 built hop 1 for account
+0010498003). One chain, one worker; the page and PDF hops follow the served move.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-201` | FWD-3 thread hop 2: `holdings_gold` reader with f49_engine's contract (YTD/QTD/1Y/SI) | WORLD (path floor; code and tests) | ~E r1 gold | A |
+| `IB-pr-202` | FWD-3: `retained.py` switches 49F to the gold (ruling 12, no fallback) and never reopens an engine-era report | WORLD (path floor; code and tests) | `IB-pr-201` | A |
+
+**Served-move precondition (the NEW-01 lesson, both readers):** the switch serves only once the gold covers EVERY 49F
+account (today: the thread account only). Otherwise every other 49F account would refuse. The widening is ~E's; it is
+asked of 1.0.0_SA_CTO to place.
+
+fanout: 1 of 1 chains, cap 8.
+
+
+## 16. WORKSTREAM ~E, ROUND 2 (2026-09-29 ~01:4xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ruling 102520 and PRD v0.19 rulings 4, 6, 9, 12)
+
+The 49F gold goes from the thread account to every account, over the full history, and gets its production trigger.
+~P's adapter switch (round 20) serves only after this round's manifest reads complete.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-202` | FWD-3 (49F): gold for every account 2024-07-09..2026-09-25, manifest complete | WORLD (new gold objects; nothing served moves) | ~E r1 | E2a |
+| `IB-er-203` | FWD-3: the daily schedule irpt-holdings-performance-daily + runner Lambda, own ledger | WORLD (new infra) | none | E2b |
+
+IB-er-203 goes to a ~P worker slot because the schedule and Lambda are Terraform (rule 13 keeps the DS seat on
+gold scripts); the path grant is the order's `<paths>`, and the producer stays the DS seat's code.
+
+fanout: 2 of 2 chains, cap 8.
+
+## 17. WORKSTREAM ~E, ROUND 3 (2026-09-29 ~05:0xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND-19 ANALYSIS section 6 items 1 and 4, PRD v0.19 rulings 1-9, 11)
+
+Inflection joins the holdings gold (ruling 11's order: 49F, then Inflection, then Cottonwood), and 49F gets its FWD-13
+comparison points from the Black Diamond files already landed. The daily runner stays scoped to 49F this round: its
+role is firm-scoped (row W65-S1), and widening it to INF is a later cell once IB-er-301's declaration lands.
+Cottonwood follows Inflection, and its comparison needs one Black Diamond pull per point (Andrew-direct 2026-09-29, card 3).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-301` | FWD-3 (INF): gold for every INF account 2020-04-27..2026-09-25, manifest complete | WORLD (new gold objects; nothing served moves) | ~E r2 | E3a |
+| `IB-er-302` | FWD-13 (49F): one comparison row per landed Black Diamond file, both bases stated | WORLD (new gold objects; nothing served moves) | ~E r2 | E3b |
+
+Both cells go to 0.4.0_DS_ClientPlatform~E (rule 13: gold scripts are the DS seat's). The two chains share no output
+prefix; they share the producer's home, so the seat works them as one queue.
+
+fanout: 2 of 2 chains, cap 8.
+
+## 18. ROUND 21, WORKSTREAM ~P (2026-09-29 ~06:0xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND-19 ANALYSIS sections 3 and 6, PRD v0.20 rulings 13-17, window 21's K8, 2.0.0_SA_COO~M 102599)
+
+The adapter switch to the holdings gold (round 20, drained @a595a14264) was refused at its CRO half on the gold
+(S195). Its re-cut is ~E's producer fix (TO-IB-er-301 amendment 1) plus the adapter guard of ruling 16 below. The
+re-cut packet then carries IB-pr-211 and IB-pr-214 in the same artifact.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-211` | FWD-9: the release re-check passes the request, so a render names its grant (W21 K8, entry.py:61) | WORLD (Lambda source) | none | P21a |
+| `IB-pr-212` | FWD-5: HoldingsSnapshot contract CATEGORY revision a69fe8e33e staged in irpt-holdings + irpt-ycharts-generate + the lambda-tree copy (~M's step 1) | WORLD (served validator pin) | none | P21b |
+| `IB-pr-213` | PRD item 1: the edge role reads only the two public keys (S132), plan only | WORLD (IAM, shared auth) | none | P21c |
+| `IB-pr-214` | FWD-3: the fresh path refuses any series point <= -1 (ruling 16), matching the reopen path | WORLD (Lambda source) | none | P21d |
+
+Every served move stays the issuer's, under its own ledger and both halves. The workers build, prove and plan only.
+Slots: `1 + max(n)` over the WK~n author lines at HEAD is 67 (row S187's rule), so the round uses 67, 68, 69 and 70.
+IB-pr-211 and IB-pr-214 edit different files in one package; they drain separately and meet in the one rebuild.
+
+fanout: 4 of 4 chains, cap 8.
+
+## 19. ROUND 22 (workstream ~P) and ROUND 4 (workstream ~E) (2026-09-29 ~08:4xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND-19 ANALYSIS section 6 item 1, PRD v0.19 rulings 10-12 and ruling 11's order, v0.20 rulings 13-17)
+
+Inflection's gold is complete (~E round 3), so its adapter switch is the next thread hop. Cottonwood, the third firm,
+gets its gold. INF's FWD-13 comparison points (weekly Orion household factors) and the daily runner's widening to INF
+and COT are the following cells: they are named here, and are cut once their shapes are read.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-221` | FWD-3 (INF): holdings_gold per firm + holdings_sources in retained + installed composes INF; the Orion read retires for INF (both readers in the criteria) | WORLD (Lambda source) | ~E r3 (INF gold, complete) | P22a |
+| `IB-er-401` | FWD-3 (COT): gold for every COT account 2026-06-10..2026-09-25, manifest complete, under v0.20 | WORLD (new gold objects; nothing served moves) | ~E r3 (the producer on v0.20) | E4a |
+
+IB-pr-221 goes to worker slot 74 (S197: 1 + max(author lines 72, issued_to 72, branches 61) was 73 at the cut, but ~Y's TO-IB-yr-221 took 73 in the same window @52e63f09ee; amendment 1 re-slots to 74 before any spawn). IB-er-401 goes to
+0.4.0_DS_ClientPlatform~E (rule 13).
+
+fanout: 2 of 2 chains, cap 8.
+
+## 20. ROUND 23, WORKSTREAM ~P (2026-09-29 ~12:5xZ, issuer 2.0.0_SA_COO~P, on 2.0.0_SA_COO~M 102754/102775 and 1.0.0_SA_CTO SWEEP-2 ANALYSIS section 3)
+
+~M's round 22 (TO-IB-m22-221, AD-10) adds an optional `account_masks` to the Directory entry. Its docs copy is
+committed @4ecbaca410 (blob 27d9a8f7). The lambda-tree contract copy is ~P's shared packaging, and the directory
+runner's pre-flight validation stays red until that copy carries the property (row W75-S1). ~M drains IB-mr-221 once
+this cell's drain hash lands. The sweep-2 ~P enrichment (the 49F re-switch, then INF) is served acts of the issuer,
+with no build cell.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-231` | FWD-5: `_contracts/DirectoryEntry.schema.json` byte-equal to the docs blob 27d9a8f7 (additive `account_masks`) | WORLD (the L6 floor for an infra path; no served Lambda stages this copy) | none | P23a |
+
+One cell, one file; not a direct act, since an infra path's floor is WORLD. Slot 79 (S197: 1 + max(author lines 78, issued_to 78, branches 78)).
+
+fanout: 1 of 1 chains, cap 8.
+
+## 21. ROUND 5, WORKSTREAM ~E (2026-09-29 ~14:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO 102832 and row S205)
+
+Row S205 showed that the scheduled producer is the gold's real author. A local re-emit is not. 1.0.0_SA_CTO 102832
+carries this to the INF switch (pr-221): its packet must name the SCHEDULED Inflection producer and a fire of it. Today
+the one schedule is 49F's (source schwab_08335338). Cottonwood follows as its own cell once INF's shape is read.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-er-501` | FWD-3 (INF): the holdings-performance root schedules `orion` under its own function, role and schedule (firm isolation), grants derived from the registry; plan only | WORLD (schedule + IAM + Lambda, plan only) | none | E5a |
+
+Slot 80 (S197: 1 + max(author lines 79, issued_to 79, branches 79)).
+
+fanout: 1 of 1 chains, cap 8.
+
+## 22. ROUND 24, WORKSTREAM ~P (2026-09-29 ~18:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO 102951/102969 and row S216)
+
+Inflection's RAW Orion files stopped after 2026-09-27. Only the parquet copy of positions lands, and it comes from
+inf-api-positions, so the ingest mirror refuses it (Ruling 16). The INF holdings producer and the INF adapter switch are
+blocked. The CTO ruled the July hold lifted and asked for a diagnosis before any restart. This round names the writer;
+the restart is the next cell, under both halves.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-241` | FWD-3 (INF): the raw writer and its stop cause named from logs (read-only); the ingest mirror's stale DOOR 5 comment corrected | WORLD (infra path; no deploy, no AWS write) | none | P24a |
+
+Slot 81 (S197: 1 + max(author lines 80, issued_to 80, branches 80)).
+
+fanout: 1 of 1 chains, cap 8.

@@ -282,13 +282,23 @@ CODE_TREES: dict[str, dict] = {
             # runner's own directory and cannot find the runner at its old flat path (its build
             # already failed before this change, for the missing closure -- rows S59, W2-S51).
             #
-            # THE CLOSURE (8 files, derived by the cell's battery, never recalled): the runner, its two
-            # module-level imports (ids, trading_calendar), the contract it validates against, the firm
-            # registry it and ids.py read, and the three per-firm runner_common.py it imports BY REPO
-            # PATH in SourceSet.__init__. holdings_snapshot.py is the sibling runner, not in that
-            # closure. The three runner_common.py carry `"distribution": True` -- each is served today on
-            # its own firm's loose leg. The two JSON members are admitted by the issuer's L6 ruling on
-            # row S58, on the same reading as ids.py's (amendment H3): distributed, never copied. <<
+            # THE CLOSURE (10 files, derived by the cell's battery, never recalled): the runner, its
+            # three module-level imports (ids, trading_calendar, schwab_account_codes), the contract it
+            # validates against, the firm registry it and ids.py read, and the three per-firm
+            # runner_common.py it imports BY REPO PATH in SourceSet.__init__. holdings_snapshot.py is the
+            # sibling runner, not in that closure. The three runner_common.py carry `"distribution": True`
+            # -- each is served today on its own firm's loose leg. The JSON members are admitted by the
+            # issuer's L6 ruling on row S58, on the same reading as ids.py's (amendment H3): distributed,
+            # never copied.
+            #
+            # schwab_account_codes.py / .json (cell IB-mr-241, row S217): UIC-16 (IB-mr-213) added
+            # `import schwab_account_codes as _sac` at MODULE level to directory_runner.py (~line 121);
+            # without this pair the module cannot be imported at all. schwab_account_codes.py reads its
+            # JSON at `Path(__file__).resolve().parent / "schwab_account_codes.json"`, so the two must
+            # extract SIDE BY SIDE -- members are stored at their repo paths, and both repo paths share
+            # `data/assets/scripts/gold/investor_reporting/`, so the extracted tree keeps them together.
+            # Both files already carry the Holdings closure's `"distribution": True`-free bundling
+            # (`_IRPT_HOLDINGS_CLOSURE`, same two files) -- only the directory bundle was short. <<
             "investor_reporting": {
                 "members": {
                     "data/assets/scripts/gold/investor_reporting/directory_runner.py": {
@@ -344,6 +354,16 @@ CODE_TREES: dict[str, dict] = {
                     "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json": {
                         "repo_path": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
                         "sha_metadata_key": "holdings-snapshot-schema-sha256",
+                    },
+                    # schwab_account_codes.py / .json (cell IB-mr-241, row S217): see the closure
+                    # comment above this dict for why both are required.
+                    "data/assets/scripts/gold/investor_reporting/schwab_account_codes.py": {
+                        "repo_path": "data/assets/scripts/gold/investor_reporting/schwab_account_codes.py",
+                        "sha_metadata_key": "schwab-account-codes-sha256",
+                    },
+                    "data/assets/scripts/gold/investor_reporting/schwab_account_codes.json": {
+                        "repo_path": "data/assets/scripts/gold/investor_reporting/schwab_account_codes.json",
+                        "sha_metadata_key": "schwab-account-codes-json-sha256",
                     },
                     # DISTRIBUTION members: each keeps its own firm's loose leg (advi / inf / cot) AND
                     # a commit to it re-mints this bundle. Distinct sha keys, per the rule above,
@@ -415,6 +435,14 @@ CODE_TREES: dict[str, dict] = {
 # THE CLOSURE: every repo file a real `holdings_snapshot.run_firm` opens or imports for all three firms (qa, no
 # upload, both retained-input variables unset, CLOUD @de042e1e4b). It was measured with an `open` audit hook plus
 # sys.modules: 29 modules and 11 data files. Re-measure it when a builder gains an import.
+# RE-MEASURED 2026-09-28 (0.9.0_WK_IRPT_BCKEND~42, TO-IB-m19-2 amendment 1, row W42-S1): the same audit-hook +
+# sys.modules trace against this worktree's HEAD (2dccc70d49, post lib/silver_ids.py landing 8cd218cd05) adds
+# exactly one file -- lib/silver_ids.py, imported by data/inf/scripts/silver/_orion_api_silver_lib.py -- and drops
+# none: 30 modules and 11 data files (41 total).
+# RE-MEASURED 2026-09-29 (0.9.0_WK_IRPT_BCKEND~66, TO-IB-m21-213, IB-mr-213): a sys.modules + open() trace of
+# `import holdings_49f` then `schwab_account_codes.full_name(...)` against this worktree's HEAD adds exactly two
+# files -- schwab_account_codes.py (new module, imported by holdings_49f.py and directory_runner.py for UIC-16 at
+# 49F) and its data file schwab_account_codes.json -- and drops none: 31 modules and 12 data files (43 total).
 # ---------------------------------------------------------------------------
 _IRPT_HOLDINGS_CLOSURE = (
     "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py",
@@ -425,6 +453,8 @@ _IRPT_HOLDINGS_CLOSURE = (
     "data/assets/scripts/gold/investor_reporting/holdings_membership.py",
     "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
     "data/assets/scripts/gold/investor_reporting/inf_positions.py",
+    "data/assets/scripts/gold/investor_reporting/schwab_account_codes.py",
+    "data/assets/scripts/gold/investor_reporting/schwab_account_codes.json",
     "data/assets/scripts/gold/investor_reporting/source_inputs.py",
     "data/assets/scripts/silver/rebalancer_schemas.py",
     "data/black_diamond/scripts/gold/lib/etf_classifier.py",
@@ -445,6 +475,7 @@ _IRPT_HOLDINGS_CLOSURE = (
     "infra/aws/lambda/investor-reporting/holdings/publication.py",
     "infra/aws/lambda/investor-reporting/reports/currency_authority.py",
     "lib/opal_naming.py",
+    "lib/silver_ids.py",
     "lib/trading_calendar.py",
     "data/firm_registry.json",
     "docs/contracts/investor-reporting/v1/CurrencyAuthorities.json",

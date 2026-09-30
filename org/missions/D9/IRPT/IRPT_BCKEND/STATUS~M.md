@@ -1,6 +1,6 @@
 # IRPT_BCKEND~M -- Holdings with the snapshot model overlay -- status (FROZEN for hand-back)
 
-Seat `2.0.0_SA_COO~M`. Frozen 2026-09-28 ~17:5xZ under act 3 of
+Seat `2.0.0_SA_COO~M`. Round 19 closed 2026-09-29 ~00:2xZ; frozen 2026-09-28 ~17:5xZ under act 3 of
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20260928_174xZ_RELAUNCH_CANONICAL_DRIVE_PMY_CLOSER_D.md`
 (CTO msg 102386), per return brief section 3 A2
 (`org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_CLOSER_TO_CANONICAL_RETURN_BRIEF_20260924.md`).
@@ -54,32 +54,52 @@ today: `platinum/firm/mix_summary.json` LastModified 2026-09-28 11:36:20Z (measu
 - Caveat: IRPT_BCKEND-S173 (ARMED) says the COT gold host cannot read bd-securities, so the R1 legs that depend on
   the table are expected to fail on served output. That is a prediction, not a read.
 
-## Next-list, priority order (round 19 cells)
+## Round 19 result (closed 2026-09-29 ~00:2xZ)
 
-1. **R1 read-backs** on today's 11:36Z COT run for the three HELD ledgers (runbook A.1 + A.2). A fail is dispositioned
-   by the rollback in its own entry or by S173's re-point, never by a merge.
-2. **R4 D.0: re-mint the three Holdings packages** from CLOUD @bcf7a6adde under a new ledger. members-sha256 must
-   change from 83f6a81aab34. Nothing scheduled runs them (dispatch schedule DISABLED).
-3. **R4 D.2: one QA fire**, `aws lambda invoke --function-name irpt-holdings-refresh-lambda --payload '{"qa": true}'`,
-   then read holdings_qa.
-4. **R4 D.3: the ENABLE half.** Re-run the pinned diff (`account_mask_publication_diff.py dry --pin-served`) and the
-   INF name census at the QA as_of; fill `IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_R4_ENABLE_DRAFT.md` (ETF Part A 16 keys incl.
-   VNQ; own-mask labels; the cash rule; UIC-16 labels) and ADD the `investor-reporting.tar.gz` re-mint as a leg, since
-   it moves served directory code. Send to 1.0.0_SA_CTO and 4.0.0_SA_CRO (the CRO's 18:00Z latest is missed; the CRO was
-   told at 14:09Z it follows the reboot).
-5. **Goal /verify** criterion (3) after the first enabled publication (COT `CASH -- CASH` reads `cash`); then disarm
-   ~P's S152 (INF holdings as-of at or after 09-25).
+- TO-IB-m19-1 (R1 read-backs, drained @a765ef4dc5): cot-other-admission PASS, ledger CLOSED; cot-cash-admission FAIL
+  (z09308463 / z09308511 cash served as fixed_income FCASH; row W41-S1) and bd-securities-cot-new-p1 FAIL (COT: S173;
+  BD: C_06's incremental watermark never reprocesses a sealed date; row W41-S2) -- both ledgers stay HELD.
+- TO-IB-m19-2 (R4, drained @6ceb8c3e5a): packages re-minted (members-sha256 94f2e3433d9e, 41 members, closure
+  +lib/silver_ids.py); two firm-principal read-version grants signed and APPLIED (ledgers
+  irpt-holdings-principals-versionread-m-20260928 and -ownread-m-20260928 CLOSED); 49F build peak cut in code
+  (c81280bd75, OOM-SINGLE on the t3.medium, output identical); QA fire SUCCESS at all three firms (49F f61bb631,
+  INF 58cbeda0, COT 3f2dca9e, business_date 2026-09-25); ENABLE half SENT @8d601db072 (CTO 102498, CRO 102499).
+- Rows this round: W41-S1/S2 (CTO), W42-S1/S2 resolved by the grants, W42-S3 (pytest lib.silver_ids shadowing,
+  pre-existing at CLOUD, INERT), W42-S4 (proof-instance filename key, INERT).
+
+## Next-list, priority order (round 20 cells)
+
+1. **R4 enable**, on both signatures of @8d601db072: flip `irpt-holdings-snapshot` to ENABLED through safe-apply under
+   its own ledger; read the first scheduled publication.
+2. **Goal /verify** criterion 3 on that publication (COT `CASH -- CASH` reads `cash`); then disarm ~P's S152 (INF
+   holdings as-of at or after 09-25).
+3. **AD-01/02 Holdings shape** (CTO 102475): per account, L0 CATEGORY nodes Models / SMAs / Client, each with its own
+   amount, plus the L-1 account total; COT's Rebalancer-strategy wrapper removed. Served-shape change under its own half;
+   pin to 2.0.0_SA_COO~D (102469 amended).
+4. **UIC-14** (CTO 102443): the Holdings builder writes each snapshot's source vendor keys into its output.
+5. **Directory bundle** investor-reporting.tar.gz: CLOUD's members moved (cash rule, UIC-16, 49F memory cut); MSTR asked
+   to skip it at push; its re-mint goes with ~P's next directory package or under its own half.
 6. **S173 re-point** (COT gold, BD gold, Holdings -> DDB etf-classifications) as ONE act with halves (CTO 102323).
-   Gate: the POSN owner's etf-classifications fill. Coverage @9ab15461ca: COT 39.7%, BD 68.1%.
-7. **COT cash-line act** (runbook B: irpt-m-cot-cash-line-act + irpt-m-s152-cloud, one ledger). Gate: item 1 passes
-   and S173.
-8. **COT-new Part 2** (26 `other` keys, runbook C). Gate: item 1, and d08/d06 admit `other` (~X's B1 commits).
-9. **B1 drain**: irpt-m-cot-b1 + `ds-x-b1-cashline` + comp-constants 9135feae97 under B1's ledger; drop ~X's duplicate
-   S150-S153 rows at that merge.
-10. **ETF B2** (13 keys). Gate: B1 landed, ~D's C34 served, re-census at 0 RAISE / 0 drop.
-11. **COT B_01b deploy** (irpt-m-b01b-skip). Gate: COT's chain adds B_01b; merge + safe-deploy as one ledgered act.
-12. **6 stale COT D_03 composition files** (COT_SERVED_COMPOSITION_BASELINE_20260927.json): re-read after item 1; a
-    delete needs Andrew's confirmation.
+   Gate: the POSN owner's fill. Also carries W41-S1 (COT cash-admission) and W41-S2's COT half.
+7. **BD C_06 sealed-date reprocess** (W41-S2's BD half): the P1 write never reaches BD's historical mix; needs a
+   re-run or a ruling. Owner of BD gold via 1.0.0_SA_CTO.
+8. COT cash-line act; COT-new Part 2; B1 drain; ETF B2; COT B_01b deploy; 6 stale D_03 files -- unchanged gates as in
+   the round-19 list (S173, ~X B1, ~D C34, COT's chain adds B_01b, Andrew's confirmation).
+10. **UIC-16 at 49F** (CTO 102567): load the Schwab acct_type (9) and acct_regis (34 of 35) code table from Andrew's
+    source https://docs.bridgeft.com/docs/source-account-and-registration-types (read by the CTO 2026-09-29 ~04:1xZ) as
+    DATA with its URL and read date on the file; 49F labels carry the full names; RI401 (1 account) and blank (2) print
+    as unrecognised, never guessed. Same file family as IB-mr-202/203 (holdings_snapshot.py / directory_runner.py):
+    cut after round 20 drains.
+11. **S165 / S166** (CTO round-19 analysis @d797a87872 s.3): issue two orders to 0.6.2_AE_PartnerETL~S -- (a) commit the
+    RUNNING cot login script (28dd27a0, 35,049 B) under infra/aws/ec2/bd-cot-auto-login/ as the build input, no
+    behaviour change; (b) port the retry-capable script (BD_MAX_LOGIN_ATTEMPTS / BD_LOGIN_BACKOFF_MS) under a deploy
+    ledger, the diff read by this seat before it lands. Round 21 (GATE (x): round 20 ~M is issued).
+12. **W42-S3** (same analysis): the lib.silver_ids sys.path collision (a test inserting .tools/ ahead of the repo
+    root) -- fixed by the issuer at the chain-B drain of round 20.
+    RULE from round 20 (analysis s.2): an order that changes a served figure names EVERY reader of that figure in its
+    criteria, each with its own check, and proves on the served page. S187: worker slot n = 1 + max(n) over every
+    0.9.0_WK_IRPT_BCKEND~n author line at HEAD, printed in the issuance commit.
+9. Standing: answer 0.4.0_DS_ClientPlatform~E's source-read questions (PRD v0.19, CTO 102487).
 
 ## Andrew acts in flight
 

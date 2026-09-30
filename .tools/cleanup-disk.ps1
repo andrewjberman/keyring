@@ -276,6 +276,19 @@ function Invoke-PoolWorktreeSplit([bool]$RunMerged, [bool]$RunUnmerged) {
         # prune` is the correct fix, run once below; this loop must not call `git -C` on it.
         if (-not (Test-Path -LiteralPath $row.Path)) { $gone += $row; continue }
         if (Test-WorktreeLive $row.Path) { $live += $row; continue }
+        # A directory git cannot read as a worktree (its .git is not a gitfile, or is corrupt) is not
+        # a merge question -- it goes to the review pool untouched, never to removal.
+        & git -C $row.Path rev-parse --git-dir 2>$null | Out-Null
+        if ($LASTEXITCODE -ne 0) {
+            $row | Add-Member -NotePropertyName AheadOfCloud -NotePropertyValue -1
+            $row | Add-Member -NotePropertyName SizeBytes -NotePropertyValue (Get-DirSizeBytes $row.Path)
+            $row | Add-Member -NotePropertyName Dirty -NotePropertyValue -1
+            $unmerged += $row; continue
+        }
+        # UNCOMMITTED EDITS ARE UNIQUE CONTENT (2026-09-29: a merged worktree removed with --force lost 1 and 13
+        # modified files). Any tracked or untracked change -> review pool, never removal, merged or not.
+        $dirty = @(& git -C $row.Path status --porcelain 2>$null).Count
+        $row | Add-Member -NotePropertyName Dirty -NotePropertyValue $dirty
         # ONE TRUNK since 2026-09-24 (Andrew-direct "recs approved", card 1 (a), LD-0613): origin/SITEZ is retired
         # (tip = tag archive/SITEZ-20260924), so "fully merged" means an ancestor of origin/CLOUD alone. The old
         # two-ref AND would read every worktree as unmerged once the second ref is gone.
@@ -285,7 +298,7 @@ function Invoke-PoolWorktreeSplit([bool]$RunMerged, [bool]$RunUnmerged) {
         $row | Add-Member -NotePropertyName AheadOfCloud -NotePropertyValue $aheadCloud
         $row | Add-Member -NotePropertyName MergedCloud -NotePropertyValue $mergedCloud
         $row | Add-Member -NotePropertyName SizeBytes -NotePropertyValue (Get-DirSizeBytes $row.Path)
-        if ($mergedCloud) { $merged += $row } else { $unmerged += $row }
+        if ($mergedCloud -and $dirty -eq 0) { $merged += $row } else { $unmerged += $row }
     }
     if ($gone.Count -gt 0) {
         Write-Output ("[worktree-split] {0} registered worktree(s) whose directory no longer exists -- pruning git's own record, not touched as content" -f $gone.Count)
@@ -301,7 +314,9 @@ function Invoke-PoolWorktreeSplit([bool]$RunMerged, [bool]$RunUnmerged) {
         foreach ($row in $merged) {
             Write-Output ("  {0,10}  {1}  [{2}]" -f (Format-GB $row.SizeBytes), $row.Path, $row.Branch)
             if (-not $DryRun) {
-                & git worktree remove --force $row.Path 2>&1 | Out-Null
+                # No --force: git itself refuses a worktree that turned dirty after the census above.
+                & git worktree remove $row.Path 2>&1 | Out-Null
+                if ($LASTEXITCODE -ne 0) { Write-Output ("  SKIP: git refused removal (dirty or locked): {0}" -f $row.Path); continue }
                 $branchName = $row.Branch -replace '^refs/heads/', ''
                 & git branch -D $branchName 2>&1 | Out-Null
             }
@@ -313,7 +328,7 @@ function Invoke-PoolWorktreeSplit([bool]$RunMerged, [bool]$RunUnmerged) {
         Write-Output "[unmerged-worktrees] REVIEW ONLY -- nothing below is touched by this script:"
         foreach ($row in ($unmerged | Sort-Object AheadOfCloud -Descending)) {
             $branchName = $row.Branch -replace '^refs/heads/', ''
-            Write-Output ("  {0,4} ahead   {1,10}   {2}   [{3}]" -f $row.AheadOfCloud, (Format-GB $row.SizeBytes), $row.Path, $branchName)
+            Write-Output ("  {0,4} ahead  {1,4} dirty   {2,10}   {3}   [{4}]" -f $row.AheadOfCloud, $row.Dirty, (Format-GB $row.SizeBytes), $row.Path, $branchName)
         }
         if ($unmerged.Count -gt 0) {
             Write-Output ""

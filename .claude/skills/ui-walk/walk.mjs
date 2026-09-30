@@ -7,7 +7,6 @@
 // Usage (from any cwd):
 //   node .claude/skills/ui-walk/walk.mjs [--base http://localhost:5174] [--route /investor-reporting]
 //        [--client "Thiessen, Anna"]... [--max-minutes 40] [--no-arm] [--keep-armed] [--headed] [--no-login]
-//        [--security "VLO US"]... [--thread "Valero"] [--deep]
 //
 // By default it ARMS the account, walks, and DISARMS in a finally block (always, even on failure).
 import { createRequire } from 'node:module'
@@ -26,7 +25,7 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, login: true, thread: null }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, login: true, settleExtraMs: 0, periodsPerAccount: false }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
@@ -36,13 +35,16 @@ for (let i = 0; i < argv.length; i++) {
   }
   else if (a === '--client') opt.clients.push(argv[++i])
   else if (a === '--security') opt.securities.push(argv[++i])
-  else if (a === '--thread') opt.thread = argv[++i]
   else if (a === '--max-minutes') opt.maxMinutes = Number(argv[++i])
   else if (a === '--no-arm') opt.arm = false
   else if (a === '--keep-armed') opt.keepArmed = true
   else if (a === '--headed') opt.headed = true
   else if (a === '--deep') opt.deep = true
   else if (a === '--no-login') opt.login = false
+  // Extra wait after every settle, for a read whose answer lands after networkidle (a retained Performance
+  // reopen fires after the account switch, so a 1200 ms settle screenshots "Loading"). Default 0: unchanged.
+  else if (a === '--settle-extra-ms') opt.settleExtraMs = Number(argv[++i])
+  else if (a === '--periods-per-account') opt.periodsPerAccount = true
   else throw new Error('unknown argument ' + a)
 }
 if (!opt.routes.length) opt.routes.push('/investor-reporting')
@@ -67,7 +69,6 @@ const apiIssues = []
 const consoleErrors = []
 const findings = []
 const drillPaths = []
-const leadLists = []
 let shotN = 0
 let stubbed = 0
 let step = 'start'
@@ -190,7 +191,7 @@ async function checks(page, label) {
 
 const settle = async (page, ms = 1200) => {
   await page.waitForLoadState('networkidle', { timeout: 35000 }).catch(() => {})
-  await page.waitForTimeout(ms)
+  await page.waitForTimeout(ms + opt.settleExtraMs)
 }
 const timeLeft = () => Date.now() < deadline
 
@@ -218,7 +219,7 @@ async function exploreScope(page, scopeSel, label) {
       if (!timeLeft()) break
       await sel.selectOption(o.v).catch(() => {})
       await page.waitForLoadState('networkidle', { timeout: 6000 }).catch(() => {})
-      await page.waitForTimeout(1200)
+      await page.waitForTimeout(1200 + opt.settleExtraMs)
       await checks(page, `${label}-${name}-${o.t.slice(0, 24)}`)
     }
   }
@@ -260,88 +261,6 @@ async function amgtLeadState(page, movement, subject, view) {
   if (missing.length) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: `control not found or not clickable: ${missing.join(', ')}` })
   await settle(page, 1500)
 }
-// ---- FWD-2: read every row of a lead-panel List view (the four lists go to lead-lists.json) -------------------------
-// Reads only what the page prints: the row's lead text, its ticker line, its name-state attribute and its whole visible text.
-async function readLeadList(page, list) {
-  const rows = await page.locator('li[data-row-name-state]').evaluateAll((lis) => lis.map((li) => ({
-    lead: (li.querySelector('[data-row-lead]')?.textContent || '').trim(),
-    ticker: (li.querySelector('[data-row-ticker]')?.textContent || '').trim() || null,
-    name_state: li.getAttribute('data-row-name-state'),
-    text: (li.innerText || '').replace(/\s+/g, ' ').trim(),
-  }))).catch(() => [])
-  leadLists.push({ list, row_count: rows.length, rows })
-  log(`LEAD LIST ${list}: ${rows.length} row(s) read`)
-}
-
-// ---- FWD-1: one company picked BY ITS NAME, then the thread hop by hop ----------------------------------------------
-// The row is found by the company name its lead line prints (`[data-row-lead]`), on Trending x Price, List view. Never by
-// ticker and never through the ticker search box. A name no row prints is a measured finding and the thread stops.
-async function walkThread(page, route, name) {
-  step = `thread ${name}`
-  await page.goto(opt.base + route, { waitUntil: 'domcontentloaded', timeout: 30000 })
-  await settle(page, 2500)
-  await amgtLeadState(page, 'Trending', 'Price', 'List view')
-  const rows = page.locator('li[data-row-name-state]')
-  const lead = rows.locator('[data-row-lead]').filter({ hasText: name }).first()
-  const nRows = await rows.count().catch(() => 0)
-  if (!(await lead.count().catch(() => 0))) {
-    findings.push({ step, check: 'thread:name-not-found', claim: 'measured', observed: `no row of the Trending x Price list (${nRows} rows) reads the company name "${name}"`, rule: 'FWD-1: the PM picks the company out of the list by its name' })
-    log(`THREAD: no row reads "${name}" (${nRows} rows)`)
-    return
-  }
-  await lead.scrollIntoViewIfNeeded().catch(() => {})
-  await checks(page, 'thread-1-list')
-  step = `thread ${name} open`
-  await lead.click({ timeout: 4000 }).catch(() => {})
-  await settle(page, 3000)
-  await checks(page, 'thread-2-header-cards')
-  step = `thread ${name} financials`
-  const fin = page.locator('[data-header-card="financials"]').first()
-  if (await fin.count().catch(() => 0)) {
-    await fin.click({ timeout: 4000 }).catch(() => {})
-    await settle(page, 1500)
-    await checks(page, 'thread-3-financials-window')
-    await page.keyboard.press('Escape').catch(() => {})
-    await page.waitForTimeout(400)
-  } else findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: 'the Financials header card was not found' })
-  step = `thread ${name} thesis`
-  if (!(await clickLabel(page, 'Thesis'))) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: 'tab not found: Thesis' })
-  await settle(page, 2500)
-  await checks(page, 'thread-4-thesis-cards')
-  step = `thread ${name} recommendation`
-  const rec = page.locator('[data-thesis-card="recommendation"]').first()
-  if (await rec.count().catch(() => 0)) {
-    await rec.click({ timeout: 4000 }).catch(() => {})
-    await settle(page, 1500)
-    await checks(page, 'thread-5-recommendation-window')
-    await page.keyboard.press('Escape').catch(() => {})
-    await page.waitForTimeout(400)
-  } else findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: 'the Recommendation card was not found' })
-}
-
-// ---- the company timeline: one day pressed, one event opened (or its absence recorded) ------------------------------
-// The timeline sits in the opened name's header. The newest day is the last bar the panel draws. The panel may build no
-// event layer, and then the walk says so as a finding rather than passing silently.
-async function walkTimeline(page, sec) {
-  step = `timeline ${sec}`
-  const bars = page.locator('[data-day-bar]')
-  const nBars = await bars.count().catch(() => 0)
-  if (nBars) {
-    const bar = bars.last()
-    let pressed = await bar.click({ timeout: 4000, force: true }).then(() => true).catch(() => false)
-    if (!pressed) pressed = await bar.dispatchEvent('click').then(() => true).catch(() => false)
-    if (!pressed) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: `the newest of ${nBars} day bar(s) could not be pressed` })
-    await settle(page, 1500)
-  } else findings.push({ step, check: 'timeline:no-day-bar', claim: 'measured', observed: 'the company page carries no day bar to press', rule: 'FWD-5: a day-by-day line the PM can press' })
-  await checks(page, `${sec}-timeline-day`)
-  const ev = page.locator('[data-timeline-event]')
-  if (await ev.count().catch(() => 0)) {
-    await ev.first().click({ timeout: 4000, force: true }).catch(() => {})
-    await settle(page, 1500)
-    await checks(page, `${sec}-timeline-event`)
-  } else findings.push({ step, check: 'timeline:no-event-element', claim: 'measured', observed: `no [data-timeline-event] element on the ${sec} timeline (the panel builds no event layer, or none is served)`, rule: 'FWD-6: bursts of coverage appear as marked events with a headline' })
-}
-
 async function walkSecurityAnalysis(page, route) {
   for (const movement of ['Trending', 'Breakout']) {
     for (const subject of ['Chatter', 'Price']) {
@@ -350,22 +269,9 @@ async function walkSecurityAnalysis(page, route) {
         step = `amgt lead ${movement}-${subject}-${view}`
         await amgtLeadState(page, movement, subject, view)
         await checks(page, `lead-${movement}-${subject}-${view.split(' ')[0]}`)
-        if (view === 'List view') await readLeadList(page, `${movement} x ${subject}`)
-        if (view === 'Chart view') {
-          // press the first legend button (one name picked), then grade the picked line
-          const legend = page.locator('[data-series-ticker]').first()
-          if (await legend.count().catch(() => 0)) {
-            const pressed = await legend.click({ timeout: 4000 }).then(() => true).catch(() => false)
-            if (pressed) {
-              await settle(page, 1000)
-              await checks(page, `lead-${movement}-${subject}-Chart-picked`)
-            }
-          }
-        }
       }
     }
   }
-  if (opt.thread) await walkThread(page, route, opt.thread)
   for (const sec of opt.securities) {
     if (!timeLeft()) return
     step = `amgt select ${sec}`
@@ -382,7 +288,6 @@ async function walkSecurityAnalysis(page, route) {
     }
     await settle(page, 3000)
     await checks(page, `${sec}-overlay`)
-    await walkTimeline(page, sec)
     for (const tab of AMGT_TABS) {
       if (!timeLeft()) return
       step = `amgt ${sec} tab ${tab}`
@@ -391,6 +296,36 @@ async function walkSecurityAnalysis(page, route) {
       await checks(page, `${sec}-${tab}`)
       await exploreScope(page, 'body', `${sec}-${tab}`)
       if (opt.deep) await pressAll(page, 'body', `${sec}-${tab}`, 10)
+    }
+  }
+}
+
+// ---- periods per account: on the Performance tab, select EACH account of the picker and press each period preset once,
+// so a period figure is read for every account rather than for whichever account the select loop left selected.
+// Presets are matched by their exact label; a preset that is not on the page is simply not pressed. No write is reachable.
+const PERIOD_WORDS = /^(YTD|QTD|1Y|3Y|Since inception)$/i
+async function periodsPerAccount(page, scopeSel, label) {
+  const selects = page.locator(`${scopeSel} select`)
+  const nSel = await selects.count().catch(() => 0)
+  for (let i = 0; i < nSel && timeLeft(); i++) {
+    const sel = selects.nth(i)
+    const name = (await sel.getAttribute('aria-label').catch(() => null)) || `select-${i}`
+    const values = await sel.locator('option').evaluateAll((os) => os.map((o) => ({ v: o.value, t: (o.textContent || '').trim() }))).catch(() => [])
+    for (const o of values.slice(0, 8)) {
+      if (!timeLeft()) break
+      await sel.selectOption(o.v).catch(() => {})
+      await settle(page, 2500)
+      const btns = page.locator(`${scopeSel} button:visible`)
+      const n = await btns.count().catch(() => 0)
+      const labels = []
+      for (let k = 0; k < n; k++) labels.push((((await btns.nth(k).innerText().catch(() => '')) || '')).replace(/\s+/g, ' ').trim())
+      for (const txt of labels.filter((t) => PERIOD_WORDS.test(t))) {
+        if (!timeLeft()) break
+        const b = page.locator(`${scopeSel} button:visible`, { hasText: new RegExp(`^${txt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }).first()
+        await b.click({ timeout: 3000 }).catch(() => {})
+        await settle(page, 2500)
+        await checks(page, `${label}-${name}-${o.t.slice(0, 24)}-period-${txt.slice(0, 16)}`)
+      }
     }
   }
 }
@@ -587,6 +522,7 @@ try {
               log('DRILL PATHS', JSON.stringify(p).slice(0, 400))
             }
             await exploreScope(page, '[data-slot="tabs"]', `${client}-${name}`)
+            if (opt.periodsPerAccount && /performance/.test(name)) await periodsPerAccount(page, '[data-slot="tabs"]', `${client}-${name}`)
             if (opt.deep) {
               const pressed = await pressAll(page, '[data-slot="tabs"]', `${client}-${name}`)
               log('PRESSED', name, JSON.stringify(pressed).slice(0, 300))
@@ -622,7 +558,6 @@ try {
   for (const f of unique) counts[f.check] = (counts[f.check] || 0) + 1
   const doc = { schema_version: '1.1', tool: 'ui-walk', stamp, base: opt.base, routes: opt.routes, clients: opt.clients, minutes: +((Date.now() - t0) / 60000).toFixed(1), screenshots: shotN, raw_finding_count: findings.length, finding_count: unique.length, counts, guard_aborts: guard.length, telemetry_stubbed: stubbed, api_issues: apiIssues, console_errors: consoleErrors, drill_paths: drillPaths, findings: unique }
   writeFileSync(path.join(OUT, 'findings.json'), JSON.stringify(doc, null, 1))
-  writeFileSync(path.join(OUT, 'lead-lists.json'), JSON.stringify({ schema_version: '1.0', tool: 'ui-walk', stamp, lists: leadLists }, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')
   writeFileSync(path.join(OUT, 'guard.tsv'), guard.join('\n') + '\n')
   const md = [`# ui-walk ${stamp}`, '', `base ${opt.base}; routes ${opt.routes.join(', ')}; clients ${opt.clients.join(' | ') || '(none)'}; ${doc.minutes} min; ${shotN} screenshots`, '',

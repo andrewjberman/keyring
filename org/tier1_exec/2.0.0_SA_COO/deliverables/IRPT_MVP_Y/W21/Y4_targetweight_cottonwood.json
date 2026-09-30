@@ -1,0 +1,77 @@
+{
+ "principal": "irpt-uiwalk-1790651636@opal.test",
+ "tenant": "cottonwood",
+ "authority": "W21 packet 84ec7f79 (fb4c7813d9); ledger irpt-ui-walk-principal-w21-20260929; ~P 102563",
+ "upload_file": "aapl-vnq-target-weight.csv",
+ "upload_sha256": "6227594d4b44aeb3c75f5e654d429654f61853293aef0235f7f8004488fc9420",
+ "reference_notional": "1000",
+ "k4_status": 200,
+ "upload_id": "UP-3c26d4c3d1c502f47ad70eb78e3a7c51906afcb65d1eb65d51d2b02fcbb127d0",
+ "calls": [
+  {
+   "at": "2026-09-29T03:33:03.709736Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/login",
+   "request_headers": {
+    "Content-Type": "application/json"
+   },
+   "request_body": {
+    "email": "irpt-uiwalk-1790651636@opal.test",
+    "password": "<redacted>"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EcSpxjUTIAMEcUg=",
+    "set-cookie": "<redacted>"
+   },
+   "response_body": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "irpt-uiwalk-1790651636@opal.test",
+     "name": "IRPT UI walk principal (Andrew-direct 20260926)",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   }
+  },
+  {
+   "at": "2026-09-29T03:33:06.613648Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis/inputs?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "upload_token": "y-live-1203-20260929T033306",
+    "filename": "aapl-vnq-target-weight.csv",
+    "file_base64": "<38 bytes base64>",
+    "file_type": "csv",
+    "declared_currency": "USD",
+    "reference_notional": "1000"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EcSqOiNioAMEcqQ="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-input-upload",
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+    "data": {
+     "upload_id": "UP-3c26d4c3d1c502f47ad70eb78e3a7c51906afcb65d1eb65d51d2b02fcbb127d0",
+     "input_id": null,
+     "state": "RESOLVING"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    }
+   }
+  }
+ ]
+}

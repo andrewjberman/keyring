@@ -17,3 +17,4 @@
 2026-09-28T17:47:43Z END IRPT_BCKEND~P mode=FAST seat=2.0.0_SA_COO~P by=1.0.0_SA_CTO
 2026-09-28T17:47:43Z END IRPT_BCKEND~M mode=FAST seat=2.0.0_SA_COO~M by=1.0.0_SA_CTO
 2026-09-28T17:47:44Z END IRPT_BCKEND~Y mode=FAST seat=2.0.0_SA_COO~Y by=1.0.0_SA_CTO
+2026-09-29T00:46:35Z ARM DSGN_IRPTV1 seat=2.0.0_SA_COO~D surface=portal/src/pages/InvestorReporting,portal/src/pages/Positioning/tabs/HoldingsTab.tsx,portal/src/components/holdings expires=2026-09-29T02:46:35Z by=1.0.0_SA_CTO ruling 102510 (AD-04/AD-15 shared extraction)

@@ -5,10 +5,10 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.18",
+ "prd_version": "v0.21",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
  "status": "RATIFIED"
 }
 ```
@@ -34,13 +34,13 @@ Brief: `docs/briefs/investor-reporting-ir-bk-brief-20260910.md` @`2acf23d8fd`, 5
          CONSTRAINT highest blast radius in the set: a defect is a CROSS-FIRM EXPOSURE; the estate's cross-firm rule is substrate-shaped, both shapes live (bucket-scoped Deny; key-prefix + IAM condition); graded on its own, never as a side effect of FWD-1. The same rule binds at ingestion (FWD-10) and is GRANTED to the Opal-user class (FWD-11)
          PIN        58266dab2d
 
-  FWD-3  An advisor reads the provider's performance result in an Opal report and exports the same result
-         DONE WHEN  EXERCISED -- a captured provider response has been carried to a rendered view and a PDF at one report revision, for each supported partner and scope
-         ACCEPT     for the selected account or relationship and period, vendor-calculated performance appears in a common Opal layout and the PDF carries the SAME scope, returned dates, values, method basis, source attribution and approved disclosures; the UI distinguishes TWR/MWR, net/gross, cumulative/annualized, UNITS and UNAVAILABLE fields; a deliberately incomplete provider mapping yields a PARTIAL or UNSUPPORTED result rather than a full-client claim
-         PROOF      compare captured request/response, normalized report, rendered view and PDF at one revision per partner and scope; relationship return uses a VENDOR CALCULATION for the exact selected account set -- summing or averaging account returns is not a substitute and a fabricated aggregate fails this outcome
-         OWNER      IRPT_FNTEND.  THIS PROJECT: canonical meaning, UNITS, dates, the vendor-calculation-only rule, the normalized PerformanceReport; the PDF runs in this project's worker
-         CONSTRAINT UNITS ARE PART OF A NUMBER'S MEANING: Orion summary `calculated-performance.performance` is DECIMAL, daily breakdown `performance` is PERCENTAGE, daily `factor` links as product minus one; a normalizer treating both as one unit is wrong by 100x and renders correctly. A normalizer does not change a provider's methodology to make two numbers look comparable
-         PIN        58266dab2d
+  FWD-3  An advisor reads, for any account at any firm, a performance figure computed by Opal from that account's own end-of-day holdings, and exports the same figure
+         DONE WHEN  EXERCISED -- one invested account per firm (49F, INF, COT) has been computed from landed holdings, carried to the rendered view and the PDF at one gold revision, and reproduced by hand from that day's holdings
+         ACCEPT     each day's account return is the weight-pro-rated return of the securities it held, weights relative to the account's end-of-day value on the prior day, the delta taken day over day; period figures link the daily returns; a relationship or client composes its accounts' holdings by the same rule, never by summing or averaging period returns; the page and the export read ONE gold shape in which the firm is a column, never a firm code path
+         PROOF      for one account per firm, the gold's daily rows are recomputed from the landed silver positions of two consecutive trading days and match; the rendered view, the export and the gold read the same revision
+         OWNER      IRPT_FNTEND.  THIS PROJECT: the holdings-basis gold (FWD-12), its adapter, UNITS, dates, the composition rule, the normalized PerformanceReport; the PDF runs in this project's worker
+         CONSTRAINT NO INFLOW/OUTFLOW LOGIC: cash movements do not enter the calculation; the only inputs are end-of-day asset holdings values (Andrew-direct 2026-09-28 ~22:2xZ and ~22:4xZ); a vendor's calculated return is a comparison point (FWD-13), never the served figure
+         PIN        58266dab2d; 0b6f598df4
 
   FWD-4  An advisor obtains a YCharts sensitivity analysis in the same client context and exports it
          DONE WHEN  EXERCISED -- an approved report variant has been replayed from an analyst-approved input through its captured request/job/result chain to the tab and the PDF
@@ -99,6 +99,22 @@ Brief: `docs/briefs/investor-reporting-ir-bk-brief-20260910.md` @`2acf23d8fd`, 5
          OWNER      IRPT_FNTEND.  THIS PROJECT: the cross-firm entitlement CLASS (the same rule as FWD-2 and FWD-10, GRANTED to an Opal principal), the permitted-firm catalogue in ResolvedScope, and the multitenant `api/scoped/` routes
          CONSTRAINT the multitenant `api/scoped/` layout is the pattern -- fixed, not a build choice; Global never rebinds an email request's firm and never mixes firm data or destinations in one report; no new all-firm financial aggregate is authorized
          PIN        2dcd88091f
+
+  FWD-12 The holdings-basis performance gold is produced every trading day, and it says what it could and could not compute
+         DONE WHEN  EXERCISED -- a scheduled run has produced one trading day for every firm, a deliberately withheld silver partition has produced an ABSENT day, and a deliberately missing price has produced a named per-position exclusion
+         ACCEPT     a per-firm SOURCE DECLARATION (as data) names the silver table, keys, date, value and price columns it reads; the run lands daily on its own schedule; its manifest names the partitions consumed, the accounts computable and not computable with the reason (no position row, no price, zero value); a day whose holdings did not land is ABSENT and nothing rolls forward or fills with zero; since-inception starts at each account's first landed holdings day
+         PROOF      one scheduled run read back from its manifest per firm; the absent-day and missing-price arms driven deliberately, the organic run as the negative arm
+         OWNER      IRPT_BCKEND
+         CONSTRAINT addresses from lib/opal_naming.py address("irpt", <firm>, "gold", "holdings_performance_daily" | "holdings_performance_manifest", "date=YYYY-MM-DD"), one firm per bucket; the day axis is lib/trading_calendar.py; the gold reads silver only, never another page's gold
+         PIN        0b6f598df4
+
+  FWD-13 An Opal analyst reads Opal's figure beside the vendor's official figure at pre-set periods, with both bases stated
+         DONE WHEN  EXERCISED -- for each firm with landed official performance, the comparison has been produced at its pre-set points and the difference read with both bases named
+         ACCEPT     49 Financial relationships at the landed Black Diamond reporting pulls; Inflection households at the landed weekly Orion factors, composed to the household by FWD-3's rule; the difference is shown, never forced to zero; a firm with nothing landed reads NOT COMPARED
+         PROOF      one comparison per firm with landed material, read by the CVO
+         OWNER      IRPT_BCKEND
+         CONSTRAINT a bounded check at defined points, never a standing parity comparator or a build-alongside pipeline (CLAUDE.md section 5); a NEW vendor pull for a comparison (Cottonwood has none landed) needs Andrew's per-use word
+         PIN        0b6f598df4
 ```
 
 ## ENDPOINT PROVENANCE (outside the ratified section)
@@ -461,6 +477,90 @@ section 3 (C5, E1-E3), run early: the three journeys are NOT yet closed, so they
 4. **Andrew's acts in flight are EXERCISED arms, never waits** (E3), as each STATUS file lists them.
 5. **Precondition for worker cells:** the act-4 drain lands each seat branch on CLOUD and proves by content that CLOUD
    carries every served IRPT function's source (return brief B3). A cell cut before that names the seat branch as base.
-6. **Deferred, owner 1.0.0_SA_CTO:** renumbering the ENDPOINT so FWD-1 is the thread (spine v3.16-3.18). It is an
-   ENDPOINT change and re-opens the ratified-text half; no `3.0.0_SA_CVO` is seated, so it waits for one rather than
-   blocking round 19's issuance at LIMB 6.
+6. **Not done (1.0.0_SA_CTO, 2026-09-28 ~20:4xZ): no ENDPOINT renumbering.** Moving the thread to FWD-1 would re-key
+   every FWD citation across 18 rounds of orders, rows and analyses for no change in what is built; item 1 names the
+   thread and its order. The ENDPOINT text stays as ratified, so no half re-opens.
+
+## ADDENDUM v0.19 -- holdings-basis performance for every firm (L4; ENDPOINT changed: FWD-3 re-cut, FWD-12 and FWD-13 added)
+
+**Source.** Andrew-direct 2026-09-28 ~22:2xZ (call 3, `391ab19331`) and ~22:4xZ (`0b6f598df4`); L1 midstream brief
+`docs/briefs/irpt-holdings-basis-silver-inventory-brief-20260928.md` + register `...-inventory-20260928.json`
+(`1a9ef2b309`, 4.0.0_SA_CRO). The ENDPOINT changed, so `3.0.0_SA_CVO` re-signs the ratified-text half. FWD-3's
+vendor-calculation rule is RETIRED; a vendor figure is now only a comparison point (FWD-13).
+
+**Rulings on the brief's Part V** (1.0.0_SA_CTO, on its own REC under the self-drive routing; each is a design
+reading of Andrew's basis that his word can correct):
+
+1. **Source declaration as data.** One file beside the gold script names, per firm, the silver table, keys, date,
+   position value, price (or "value/units") and any cash-balance column read. 49F: `schwab/08335338/silver/dim_position`
+   + `dim_balance` cash fields. COT: `blackdiamond/cottonwood/silver/fact_holdings`. INF:
+   `orion/inflection/silver/fact_positions`. The second Schwab master `08242234` is OUT; the manifest counts IRPT
+   directory accounts it cannot find, which measures whether it is needed.
+2. **Account value = the sum of its end-of-day holdings values**, plus a declared cash balance where the firm keeps
+   cash outside its positions (49F). Weights are each holding's value over that sum on the prior trading day.
+3. **Cash and cash equivalents are holdings in the weights, with a zero daily return** unless the row carries its own
+   price (a money-market NAV). A cash-only account reads 0.00% per day. Reading: "weight of the assets relative to
+   the account".
+4. **Price-missing rule.** A position without a positive price on both days is excluded from that day's return, the
+   remaining weights are renormalized, and the account row carries the excluded count and weight. Never priced at
+   zero, never silent. COT price = Market Value / Units where Units is present; absent Units = price-missing.
+5. **Day axis:** `lib/trading_calendar.py`; a calendar-day partition folds to its trading day; a missing trading-day
+   partition is ABSENT.
+6. **Since inception** starts at each account's first landed holdings day.
+7. **Composition:** a relationship or client is the union of its accounts' holdings, weighted relative to the
+   relationship's value (FWD-3 ACCEPT).
+8. **Comparison points (FWD-13):** 49F at the 4 landed Black Diamond pulls (bronze, converted by the comparison cell);
+   INF at the weekly Orion household factors. COT: NOT COMPARED until Andrew gives a per-use word for a pull.
+9. **Homes and names (rule 30, builder output):** `s3://opal-data-<firm>/irpt/<firm>/gold/holdings_performance_daily/date=YYYY-MM-DD`
+   and `.../holdings_performance_manifest/...` for `<firm>` in 49financial, cottonwood, inflection
+   (`address("irpt", <firm>, "gold", <table>, "date=...")`); schedule `irpt-holdings-performance-daily`, function
+   `irpt-holdings-performance-lambda` if it runs as one (`name("irpt", None, "holdings-performance", <kind>)`).
+10. **Owners.** The gold script is a gold script (rule 13): `0.4.0_DS_ClientPlatform~E` builds all three firm slices,
+    the manifest and the runner as workstream `~E`, its orders issued by `2.0.0_SA_COO~P`; `2.0.0_SA_COO~M` answers
+    source-read questions (the holdings snapshot reads the same silver). `2.0.0_SA_COO~P` switches the adapter to the
+    gold and binds each retained report to its gold revision (a superseded revision recomputes from the gold);
+    `2.0.0_SA_COO~D` owns the page words.
+11. **Thread first (spine v3.16):** workstream ~E's first round is FWD-3 for ONE invested 49F account, YTD, silver ->
+    gold -> adapter -> page -> PDF (the brief's candidate); then Inflection, then Cottonwood.
+12. **No shadow path.** The 49F engine read and the per-use Black Diamond plan retire from the adapter per firm, in the
+    same window FWD-3 turns REALIZED for that firm, with same-window rollback; nothing runs alongside.
+
+## ADDENDUM v0.20 -- holdings-basis data rules (L4; rulings outside ENDPOINT, no half re-opens)
+
+**Source.** 4.0.0_SA_CRO's REFUSED half on the 49F adapter switch
+(`org/tier1_exec/4.0.0_SA_CRO/deliverables/NEVER_WIDEN_SIGNOFF_CRO_HALF_ADAPTER_HOLDINGS_GOLD_49F_20260929.md`
+@eca8083ad2, row IRPT_BCKEND-S195 @53b9a9beb3, msg 102608). Measured there from the producer's own output: 41 silver
+`dim_position` rows per day carry cusip '' across 33 accounts and `holdings_performance.py:273` prices them all under one
+key, so 18 accounts serve a YTD near +1e57 (22 of 7,127 at or above +100%); four OK rows read r <= -1 over a near-zero
+net base (a margin debit), so 2 YTD and 5 since-inception accounts serve <= -100%. These rulings amend v0.19's rulings
+2-4; each is a design reading of Andrew's basis that his word can correct.
+
+13. **A position is keyed by (account, security identifier), never by an empty identifier.** The identifier is the
+    first non-empty of cusip, symbol, the security description; a row with none of them is UNIDENTIFIED.
+14. **Cusip-less cash.** A row with no identifier whose price is 1.00 and whose quantity equals its value is cash and
+    follows ruling 3 (zero return unless it carries its own price). Every other UNIDENTIFIED row is excluded under
+    ruling 4, its count and weight on the account row.
+15. **The basket is the account's LONG holdings.** Weights are each holding's share of the sum of POSITIVE end-of-day
+    values (positive cash included) on the prior trading day. A negative balance (a margin debit, a short) is not in
+    the basket; the account row carries `leveraged: true` and the excluded negative value. A daily basket return
+    therefore cannot fall below -100% unless every held asset goes to zero.
+16. **Implausible days are not served.** An account day whose basket return is at or below -100%, or at or above
+    +100%, is NOT COMPUTABLE with the reason named in the manifest (a price discontinuity until shown otherwise); the
+    period figure is PARTIAL over it. The fresh path refuses any series point at or below -1, as the reopen path does.
+17. **Manifest completeness is per day.** Every day's manifest carries the completeness keys; a day without them is
+    not complete, and the adapter switch's precondition (ruling on 102520) reads 557 of 557 before it serves.
+
+## ADDENDUM v0.21 -- both edges of a price discontinuity (L4; outside ENDPOINT, no half re-opens)
+
+**Source.** 4.0.0_SA_CRO's R2 half (`NEVER_WIDEN_SIGNOFF_CRO_HALF_ADAPTER_HOLDINGS_GOLD_49F_R2_20260929.md` @c3298523cc
+section 3; row IRPT_BCKEND-S200 @131c55fcf1, msg 102666). Measured on the re-emitted gold: ruling 16 voids the day a
+custody price glitch crosses +/-100% (..0090: DLCFX 17.48 -> 546.00 -> 16.21 and DIEFX 16.12 -> 384.00 -> 14.61 on
+2025-12-17), but the reversion day prices against the glitched price, reads -92.3%, stays OK and chains: ..0090
+(~$1.9M, in the served directory) would serve 1Y -91.5%, since inception -91.4%; ..4714 1Y -69.8%.
+
+18. **A NOT COMPUTABLE day voids the next trading day for that account too.** When ruling 16 marks an account day NOT
+    COMPUTABLE, the account's following trading day is also NOT COMPUTABLE, with the reason "follows a price
+    discontinuity", so neither edge of the glitch enters the chain. The period stays PARTIAL with the computable-day
+    count. The option of re-pricing the reversion day against the last plausible price was not taken: it needs a
+    per-position plausibility model, and voiding one extra day is bounded and reads the same on every firm. Re-emit
+    the 49F gold before the adapter switch applies; the after-read adds ..0090 and ..4714.
