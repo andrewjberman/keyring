@@ -102,3 +102,17 @@ the challenge problem instead of fighting it.
 FT's token lifetime (the bundle has no expiry data); whether any publication accepts REST pulls from a Lambda address
 (unmeasured); Bright Data Web Unlocker's success rate on Barron's and bbg (only WSJ is proven, in ASTN); the cost of any
 option.
+
+## Andrew's answers to section 6, verbatim
+
+Recorded 2026-09-30 ~13:4x ET (17:4x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9. Exact receipt timestamp not exposed.
+
+> 1.) If we can assign our existing bright data residential IP to an EC2 box to do this, then great. 2.) I dont love that idea, i think we just need better bot ops, we have passed these before, i think the issue needs to be studied. I.e., are we having problems because were making 100 requests a second, in other words, are we trying to do too much out the gate? 3.) This is a last resort. 4.) Absolutley not.
+
+Consequences: (1) the existing Bright Data residential egress on an EC2 host is approved, if it can be assigned; (2) no Web Unlocker; the challenge rate is to be studied as a bot-operations problem (request rate and ramp first); (3) consolidating ASTN and HARVST is a last resort; (4) no licensed feeds.
+
+Two further messages, same session, verbatim:
+
+> The truth of the matter is, all harvest ops "could" just be a job that runs on the sitez box. It is perpetually on, and a local device.
+
+> I prefer a cloud solution of course, but local has more visibility. Maybe its a local job until it matures in process
