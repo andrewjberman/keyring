@@ -2830,6 +2830,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "The constant is 4 at 85fe787f17 and the re-run passes AC2 (b)-(e) and AC1, so the condition AMENDMENT 1 names for the disarm is met on this branch (LOCAL, unmerged).",
       "notes": "The disarm is the CTO's ruling; this row records its test result. Served chatter_event is untouched (round 22).",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W55-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~55",
+      "surfaced_at": "2026-09-30T01:31Z",
+      "one_line": "OBSERVATION: HVST-m-3 was told to search the repo for the undelivered-article inventory (manifest, file list, upload ledger); none is tracked, and the only inventory is the gitignored desktop progress.sqlite3 under the main workspace runtime, now 120 bodies / 121 links (field map A said 83 / 84), so AC1 reads it mode=ro from a path derived by git worktree list.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~55/m3_ac1_output.txt: article_objects 120, article_links 121, upload_outbox 241 all pending, record files present 120 of 120; every one of 120 matched to bronze by article_hash and to silver by article_key, 0 not in store, 0 duplicates",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~9/AMGT_HARVST.TO-HVST-h-9.desktop-outbox-upload-into-the-new-grammar.proof_of_spec.json: names .runtime/opal-data-harvest/progress.sqlite3 as the desktop runtime, gitignored and absent from a worktree"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-m-3 section 1: 'Search the repo for that inventory: an import manifest, a file list, an upload ledger.'; AC1 expects counts at the field-map reading (83 bodies / 84 links).",
+      "world_is": "No inventory is tracked in the repo; the readable inventory is the gitignored progress.sqlite3 in the main workspace runtime (120 / 121 now, grown by the runs of 2026-09-22 to 2026-09-26), whose legacy upload_outbox still reads pending because upload-legacy never marks it, so pending is not an undelivered signal.",
+      "notes": "Measured only; no grade. The desktop file is machine-local, so a second machine would read NOT MEASURABLE HERE.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W55-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~55",
+      "surfaced_at": "2026-09-30T01:40Z",
+      "one_line": "OBSERVATION: the <expect> of HVST-m-3 AC1 and AC2 is prose, and proof-of-spec-check searches each expect as a regex against output_evidence, so the TO's own text can never match; the instance records a worker-written regex on the deciding line instead.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/proof-of-spec-check.py conditional_checks: re.search(expect, output_evidence, S|M), a non-match on a PASS row is a VIOLATION; run with the TO's verbatim expect it printed 'output_evidence does NOT match expect' for AC1 and AC2, and printed VALID (rc=0) once expect was the regex on the deciding line",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~50/AMGT_HARVST.TO-HVST-k-2.updated-time-census.proof_of_spec.json: the prior worker also recorded an expect that is not the TO's prose"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-m-3 section 2: each criterion's <expect> is a descriptive sentence naming what the output shows; the worker records output against it.",
+      "world_is": "The checker treats the instance expect as a regex; the prose contains unescaped parentheses and cannot match, so the worker's instance carries its own regex on the printed deciding line (AC1 'INVENTORY ARTICLES NOT IN THE STORE ...: n of N'; AC2 'SHORT OF THE FLOOR ...: n of N'); the criterion_verbatim field carries the TO's text unchanged.",
+      "notes": "Form only. The deciding lines are printed by the scripts, not synthesised.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
