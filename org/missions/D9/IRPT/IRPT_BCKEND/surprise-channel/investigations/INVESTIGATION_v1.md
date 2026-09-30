@@ -12664,3 +12664,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "ISSUER DEFECT, third in three rounds and a NEW kind again: R25 under-granted, R26 cut an un-meetable criterion, and R26's drain then accepted a check that graded the shape of a pointer instead of following it. The transferable rule: A REFERENCE IS NOT VERIFIED UNTIL IT IS RESOLVED -- a census of ref PREFIXES (18 of 18 opal://) says nothing about whether the targets exist, and the two reads look identical in a report. REMEDY, already cut: round 27 cell IB-yr-271 publishes ComparisonCatalogue.schema.json to the v1 directory so the landed ref resolves, alongside the parser fix that makes the resolve-refs test able to report again. Publishing a MISSING contract a landed route already references is completing round 26; it is NOT the 'bend a published schema to satisfy the test' move CTO 103081 forbids, and that cell's control is narrowed to 'no EXISTING published schema is MODIFIED' so the distinction is machine-checked rather than promised."
 }
 ```
+
+
+## IRPT_BCKEND-S224 -- S194's off-window measurement: cause (a) refuted at the recipe's own guard, cause (b) weakened by the catalogue's live_proven evidence, and a third cause named -- all four section scopes are saved_asset_securities_only
+
+```json
+{
+  "id": "IRPT_BCKEND-S224",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T02:05:00Z",
+  "one_line": "S194's own next step, run off-window with no vendor call: cause (a) 'the resident's prepared comparisons were empty' is REFUTED by the recipe's own guard -- the COMPARISON template's bounds are min 1 max 1 and generation_body RAISES on any other count, so a body with no comparison could not have been built. Cause (b) is weakened by the catalogue's own live_proven evidence for this exact security. A THIRD candidate the row never named now fits the symptom: the body sets all four section scopes to saved_asset_securities_only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CAUSE (a) REFUTED AT TWO INDEPENDENT SITES, read at CLOUD HEAD: ycharts/generate/recipe.py:754-761 (generation_body) and :716-722 (report_security_ids) both do `if not (bounds['min'] <= len(comparisons) <= bounds['max']): raise RecipeRefused(...)`, where bounds is template['comparison_securities']. templates.json's three templates carry {min 0, max 0} for OVERVIEW, {min 1, max 1} for COMPARISON and {min 2, max 5} for MULTI. So a COMPARISON body with zero comparisons RAISES rather than degrading; W21 Y1's body must have carried exactly one, with a real vendor_id in secondarySecurity (:810-815).",
+      "CAUSE (b) WEAKENED, on the catalogue's own record rather than on argument: the entry for the very security this report chose -- key opal_long_term, security_id P:1728413, label 'Opal Long-Term' -- carries live_proven true with evidence 'Comparison 14141824, 31 pages'. The vendor has honoured secondarySecurity for THIS security in a real 31-page Comparison.",
+      "A FOURTH candidate considered and REFUTED in the same read: the comparison is not mistyped. All four catalogue entries carry security_type 'model_portfolio' (and each candidate block repeats it), and recipe.py:815 passes c.get('security_type', 'security') -- so the default is never reached for a catalogue entry.",
+      "THE THIRD CANDIDATE, read off the served body: recipe.py:793-796 sets fund_chart_securities_choice, scatter_plot_securities_choice, comp_table_securities_choice and timeseries_table_securities_choice all to 'saved_asset_securities_only', and :865-868 repeat the same four in the modal as fundChartSecuritiesChoice, scatterPlotSecuritiesChoice, compTableSecuritiesChoice, timeseriesTableSecuritiesChoice. If the chosen comparison is not among the account's SAVED ASSET SECURITIES, every chart and table section renders the primary portfolio alone WHILE secondarySecurity is correctly populated -- which is S194's symptom verbatim: the Portfolio Comparison pages show only the client portfolio."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S194: 'Two causes remain open: (a) the resident's prepared comparisons were empty at generation (composition -> recipe_inputs); (b) the vendor ignored secondarySecurity.' -- a two-member domain.",
+  "world_is": "The domain was not MECE: (a) is refuted by the producer's own refusal path, (b) is weakened by the catalogue's live_proven evidence for this security, and a third member existed that neither names -- a correctly populated comparison that no SECTION is scoped to render. MEASURED: the guard, the bounds, the four section-scope fields, the catalogue's security_type and its live_proven evidence, all read from source at HEAD. INFERRED, not measured, and labelled so: that 'saved_asset_securities_only' actually excludes a model portfolio passed as secondarySecurity. That is a vendor-behaviour claim and this lane has made no vendor call -- confirming it needs either the W21 Y1 HAR, a read of the vendor's own meaning for the field in docs/briefs/sources/INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910.json, or one live run under Andrew's word. ABSENT is not EXERCISED-AGAINST.",
+  "notes": "Fired as this tick's act precisely because it needed NOTHING from anyone: S194 named an off-window measurement as its next step, and it had been sitting behind the ~P rebuild in my own head when it was never behind it at all. The rebuild gates the four report arms and S218 step 2; it does not gate reading the producer that built the body. WHAT CHANGES FOR THE REMEDY: if the third candidate holds, the fix is a BODY FIELD on ~Y's Analysis surface, not a certifier change and not a vendor escalation -- a different cell from the one S194's two-cause framing implied. S194 STAYS ARMED and keeps this lane as its disarm_owner: nothing here shows a live Comparison printing its comparison, which is the only thing that disarms it. Its second half also stands on its own -- certification must refuse a Comparison whose PDF prints none of the chosen models -- and that is true under every one of the three causes, so it is the half worth cutting first. Round 27 is already issued for this lane (@a00a7fda7d, ONE ISSUANCE per round), so both halves are ENRICHMENT ITEMS for round 28 rather than a second issuance into 27."
+}
+```
