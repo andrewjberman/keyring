@@ -148,7 +148,10 @@ def open_orders(skip_codes):
                 text = fh.read()
         except Exception:  # noqa: BLE001
             continue
-        st = re.search(r"<status>\s*([A-Za-z_-]+)", text)
+        # The TAG, not the word: an order's prose may quote "<status>" (NFRA_IAMROLES202609 IAM-t-3 line 32,
+        # "Carries NO <status> tag at all") and the old first-match read that as status "tag" -- a complete
+        # order then read OPEN and refused every lease under infra/aws/terraform/ (MDPF_TAXSMA, 2026-09-30).
+        st = re.search(r"<status>\s*([A-Za-z_-]+)\s*</status>", text)
         if st and st.group(1).lower() in TERMINAL:
             continue
         blk = re.search(r"^<paths>\s*$(.*?)^</paths>", text, re.M | re.S)
@@ -283,6 +286,8 @@ def self_test():
             fh.write("<status>pending</status>\n<paths>\nportal/src/pages/Other/a.tsx\n</paths>\n")
         with open(os.path.join(tod, "OTHER_P.TO-2.x.md"), "w") as fh:
             fh.write("<status>complete</status>\n<paths>\nportal/src/pages/Done/\n</paths>\n")
+        with open(os.path.join(tod, "OTHER_P.TO-3.x.md"), "w") as fh:  # prose quoting the tag BEFORE the real one
+            fh.write("It carries NO <status> tag in its draft.\n<status>complete</status>\n<paths>\nportal/src/pages/Prose/\n</paths>\n")
         check("absent lease reads FULL", load("A_X") is None)
         check("arm FAST on a free surface", arm("A_X", "FAST", ["portal/src/pages/Mine"], 2, "S~1", "t") == 0)
         check("live lease reads FAST", (load("A_X") or {}).get("mode") == "FAST")
@@ -291,6 +296,8 @@ def self_test():
         check("FAST over another project's OPEN order REFUSED",
               arm("C_X", "FAST", ["portal/src/pages/Other"], 2, "S~3", "t") == 1)
         check("FAST over a COMPLETE order admitted", arm("D_X", "FAST", ["portal/src/pages/Done"], 2, "S~4", "t") == 0)
+        check("a COMPLETE order whose prose quotes <status> first is still COMPLETE (admitted)",
+              arm("E_X", "FAST", ["portal/src/pages/Prose"], 2, "S~5", "t") == 0)
         check("HOLD on the other project releases its orders",
               arm("OTHER_P", "HOLD", [], 2, "-", "t") == 0 and not conflicts("C_X", ["portal/src/pages/Other"]))
         check("prefix is component-bounded (mine vs mine-too)", not overlaps("portal/src/mine", "portal/src/mine-too"))
