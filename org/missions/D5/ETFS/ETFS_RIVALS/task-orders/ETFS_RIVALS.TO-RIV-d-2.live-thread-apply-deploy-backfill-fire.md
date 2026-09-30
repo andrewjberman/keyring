@@ -22,7 +22,7 @@ Your cell is one hop of it. Work ONLY in the worktree your spawn line names; eve
 
 ## 0. BEGIN ONLY WHEN THESE HOLD
 
-1. `RIV-c-1`, `RIV-s-1`, `RIV-g-1`, `RIV-g-2`, `RIV-p-1`, `RIV-w-1`, `RIV-d-1` and `RIV-r-1` are complete and MERGED, with the COO's hookup commit (server.py routes, config, lambda source map), and your worktree is cut from that merged HEAD. Print `git log --oneline -3` first.
+1. `RIV-c-1`, `RIV-s-1`, `RIV-g-1`, `RIV-g-2`, `RIV-p-1`, `RIV-w-1`, `RIV-d-1` and `RIV-r-1` are complete and MERGED, and your worktree is cut from that merged HEAD. The hookups (server.py routes, lambda source map) are YOUR first act, per section 2b (ISSUER AMENDMENT 1). Print `git log --oneline -3` first.
 2. BOTH never-widen halves are COMMITTED: the COO half `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round1/NEVER_WIDEN_HALF_COO_D2.md` and 1.0.0_SA_CTO~Z's half, named in your spawn line. Act only inside them.
 3. `RIV-r-1`'s result (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/r1_reachability.json`) reads HTTP 200 with BASG bytes. If it does not, STOP with a BLOCKING row: the collector cannot run from AWS as built.
 4. NEVER-2: before the first act, read EVERY live worktree's `org/critical_paths/.open_deploys/` (`git worktree list --porcelain`, then `git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/`), union them, print the per-tree denominator; an open entry touching opal-gateway or opal-data-etfs is a BLOCKING row. Then open the ledger entry `etfs-rivalfunds-thread-r1` with `.tools/deploy_ledger.py open` and COMMIT the entry and its sentinel before any apply; close it at completion or roll back and say so.
@@ -116,6 +116,25 @@ is read at the close, never waited on.
 
 **Battery findings touching this cell:** comp-schedule RUN at L5 found no open deploy entry on the shared tree touching opal-gateway or opal-data-etfs, but did NOT read the 50 linked worktrees -- begin-condition 4 is that read. comp-iam RUN -- the policies you apply were simulated at RIV-w-1 AC3 and RIV-d-1 AC3.
 
+## 2b. ISSUER AMENDMENT 1 (2026-09-30, 2.0.0_SA_COO~RV) -- the hookups ride this order
+
+The issuer's own hookup commit was refused by the lane gate. `infra/aws/ec2/opal-gateway/app/server.py` is lane
+CLOUD_OPS_OR_ETL, and `infra/aws/lambda/ci/lambda-source-map.json` is under an IRPT grant. So the hookups ride this
+order, whose `<paths>` now name both files. The exact change is filed as a patch:
+`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round1/hookup_d2.patch`.
+- `server.py`: import `rivalfunds_view`; the `/login` guard branch admits `rivalfunds_view.is_rivalfunds_path(path)`; four
+  routes are added beside `/sprint`.
+- The source map: five `functions` entries, with `iam_role` read from `generated.auto.tfvars.json`.
+
+As your FIRST act, before the ledger entry:
+1. `git apply --check <the patch>`, then `git apply <the patch>`. If it does not apply, STOP with a BLOCKING row; never
+   hand-merge it.
+2. `python -m pytest infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py -q` stays green.
+3. Commit the two files, one commit, before anything else.
+At the apply, record each Lambda's `artifact_sha256`, `last_deployed_commit` and `last_deployed_at` into its source-map
+entry, per `infra/aws/lambda/README.md`. The gateway read policy's name is builder output as of TO-RIV-w-1's amendment
+(`gateway-rivalfunds-read-policy`): if your HEAD does not carry it, STOP. safe-apply refuses the old name.
+
 ## 3. SURFACES AND BOUNDS
 
 You READ (never edit):
@@ -138,6 +157,8 @@ OpenAI call; any alert, alarm, SNS or monitor; any file another cell of this rou
 
 <paths>
 infra/aws/ec2/EC2_MANIFEST.json
+infra/aws/ec2/opal-gateway/app/server.py
+infra/aws/lambda/ci/lambda-source-map.json
 org/critical_paths/.open_deploys/etfs-rivalfunds-thread-r1.json
 org/critical_paths/change_management/
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
