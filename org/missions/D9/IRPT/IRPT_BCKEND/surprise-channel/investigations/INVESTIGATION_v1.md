@@ -12806,8 +12806,8 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the vocabulary reaches the dict, on the finding items, not at its top level. ARMED because the portal reads these findings and was not checked here (no portal in this grant): if it renders only known action strings, RESOLVE_RETRY_EXHAUSTED now shows no action where it showed REPLACE_FILE. A top-level answer would need the contract, the wire type portal/src/pages/InvestorReporting/contracts/wire/AnalysisUploadResult.ts and their pinned hashes to move together.",
   "notes": "Disarm = read how the portal renders a finding's `actions`/`description` for RESOLVE_RETRY_EXHAUSTED, or a CTO ruling to widen the contract."
 }
-```
-
+```
+
 ## IRPT_BCKEND-W92-S2 -- The envelope's CORRECTION_WORDS cannot be imported by intake/uploads.py: ops/status.py is not staged into irpt-ycharts-generate, the function that ships uploads.py, so the words are a literal copy locked by a test.
 
 ```json
@@ -12832,8 +12832,8 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: same words by equality test, not by shared import. INERT while that test runs; the source map is outside this order's <paths>.",
   "notes": "A shared home for the words (a module staged into both) would remove the copy."
 }
-```
-
+```
+
 ## IRPT_BCKEND-W92-S3 -- Y28-2-AC1's premise that `-k correction` currently selects nothing is wrong: it selects 7 tests at base, so the selected count does not evidence the added test.
 
 ```json
@@ -12856,8 +12856,8 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "spec_asserts": "The order: at base `-k correction` selects nothing, so the added test is what makes the number real.",
   "world_is": "MEASURED: base selects 7, now 11. The 4 new tests are in intake/tests/test_correction_words.py; the criterion cannot tell them from the 7 by count alone."
 }
-```
-
+```
+
 ## IRPT_BCKEND-W92-S4 -- The absent-bundle fix is proven against a doubled store error (NoSuchKey/NoSuchVersion) on the report blob read; the live cause of S213 (RPT-2e21b52e) was not read back.
 
 ```json
