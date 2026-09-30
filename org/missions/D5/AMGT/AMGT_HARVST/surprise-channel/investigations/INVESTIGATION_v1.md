@@ -2984,6 +2984,71 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "The checker treats the instance expect as a regex; the prose contains unescaped parentheses and cannot match, so the worker's instance carries its own regex on the printed deciding line (AC1 'INVENTORY ARTICLES NOT IN THE STORE ...: n of N'; AC2 'SHORT OF THE FLOOR ...: n of N'); the criterion_verbatim field carries the TO's text unchanged.",
       "notes": "Form only. The deciding lines are printed by the scripts, not synthesised.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W58-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~58",
+      "surfaced_at": "2026-09-30T02:27Z",
+      "one_line": "OBSERVATION: the producer's own gold branch does not compute a rank on this window -- it HOLDs (FAILED / INCOMPLETE_GOLD_INPUT, 0 of 191 security windows resolved, 0 rows for both movements), so the 'gold rank' HVST-n-4's flip pair is to name does not exist as a published list.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~58/n3_ac2_output.txt: 'GOLD-AS-RUN TRENDING_CHATTER rows=0 state=FAILED reason_code=INCOMPLETE_GOLD_INPUT ... RESOLVED 0 of 191 security windows'; read-state totals no_coverage 5675 + partial 55 over 191 x 30 = 5730 day-reads; 'gold chatter_daily on 2026-09-29: 191 rows; data_status {DENIED: 191}'",
+          "lib/research/metrics/chatter_axis.py:628-637 (unresolved = any name with a nonzero read state; failure_reason HOLD) and :662-665 (raw_scores emptied for both movements); infra/aws/terraform/harvest/chatter-axis-schedule.tf header comment already states the HOLD until 2b populates the table"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-3 section 1 item 2: 'The rank the producer's own gold branch computes on the same window and as-of, set beside legacy's ... the expected diff the flip's pair will name.'",
+      "world_is": "Run in memory on as_of 2026-09-29 (write_fn=None), the gold branch returns FAILED with zero rows for TRENDING and BREAKOUT because every one of the 191 windows carries a no_coverage or partial day; a flip of CHATTER_AXIS_SOURCE to gold would stop the daily generation writes (a _FAILED marker only). With the guard lifted by a pass-through wrapper (counterfactual, labelled) gold scores 36 names, all with as-of-day value 0, so TRENDING rank is the key tie-break.",
+      "notes": "Measured only; no grade. HVST-n-4 (WORLD flip) depends on this cell's numbers; the CTO half @c069b2d753 signed LEGACY for this reason. Disarm: HVST-n-4 is not to flip while the guard resolves 0 of 191.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W58-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~58",
+      "surfaced_at": "2026-09-30T02:27Z",
+      "one_line": "OBSERVATION: BREAKOUT x CHATTER reads ABSENT at the route's default date (2026-09-30 UTC) but EMPTY (a committed, successful empty generation) at the TO's as-of 2026-09-29; the two are different states behind the same page.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~58/n3_ac1_output.txt: 'DEFAULT-DATE READ BREAKOUT ... ranking_status=ABSENT as_of_date=2026-09-30' and 'PINNED as_of=2026-09-29 READ BREAKOUT ... ranking_status=EMPTY state=EMPTY generation_id=20260929T100015Z-25147d66b259 ... NO_SIGNAL_IN_WINDOW 189 of 191'",
+          "lib/research/api/scoped_amgt.py:562-582 (_find_latest_served_pointer accepts only a COMPLETE pointer, so an EMPTY one is never promoted to a later date)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-3 section 1: 'BREAKOUT x CHATTER is absent' at as-of 2026-09-29.",
+      "world_is": "At as-of 2026-09-29 BREAKOUT holds a committed EMPTY generation (0 rows, empty_reason NO_SIGNAL_IN_WINDOW 189 of 191); it reads ABSENT only when the requested date has no pointer of its own (today, after UTC rolled to 2026-09-30, before the 2026-09-30 fire).",
+      "notes": "Form only; both reads are printed by AC1. Not a defect of the producer.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W58-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~58",
+      "surfaced_at": "2026-09-30T02:27Z",
+      "one_line": "OBSERVATION: the <expect> of HVST-n-3 AC1 and AC2 is prose and proof-of-spec-check matches it as a regex, so the instance carries a worker-written regex on each script's printed deciding line; criterion_verbatim carries the TO's text unchanged.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md AMGT_HARVST-Z-W55-S2: the identical form finding on HVST-m-3; .tools/proof-of-spec-check.py conditional_checks re.search(expect, output_evidence)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-3 section 2: each criterion's <expect> is a descriptive sentence naming what the output shows.",
+      "world_is": "The checker treats the instance expect as a regex; the instance records a regex on the deciding line printed by each script (AC1 'DENOMINATORS: names_read=250 covered=191 ...'; AC2 'DENOMINATORS: covered=191 legacy_signal=2 ...').",
+      "notes": "Form only, a repeat of Z-W55-S2.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
