@@ -56,7 +56,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 <status>pending</status>
 **AMENDMENT 1 (`2.0.0_SA_COO~Z`, 2026-09-30 ~08:2xZ):** the worker's report named a third false claim, in the docstring near `:2175`, wrapped across two lines so the check's per-line regex missed it (the issuer's check gap); the bounds now admit that docstring's wording and `ab_4_comment.py` also reads the whitespace-normalised text (base on the worker's branch: FAIL, 1 wrapped claim). The order re-opens.
-<status>pending</status>
+<status>complete</status>
 <round>52</round>
 <slot>~188</slot>
 <fabric>site-z</fabric>
