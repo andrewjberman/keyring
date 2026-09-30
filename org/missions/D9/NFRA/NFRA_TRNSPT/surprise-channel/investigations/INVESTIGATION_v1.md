@@ -81,6 +81,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "spec_asserts": "Every generated target is byte-identical to what the registry at HEAD produces (LGIC_ENFORCE: per-view registry hashes, 39cbad4214).",
   "world_is": "The 12 targets carry the pre-merge registry hash; the site Z registry change landed without a laptop regenerate, and no gate refused the merge.",
   "notes": "Blast radius per CTO placement 2026-09-29 step 1: a restamp moves blob hashes that signed IRPT packets pin; the issuer names TR-g-1's drain to ~P and ~M first. Whether a merge-time gate should regenerate is the CTO's, not this project's."
+},
+{
+  "id": "NFRA_TRNSPT-W3-S1",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~3",
+  "surfaced_at": "2026-09-30T15:10:00Z",
+  "one_line": "safe-commit refuses every commit staging an org/missions/ path (the TO-TR-g1 complete flip, its proof instance, this row) because missions-tree-check reports INDEX-DRIFT org/projects/NFRA_TRNSPT.json dep_stage index='PRD' tree='EXECUTING', a file outside this order's grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -- <TO file> <proof instance> (2026-09-30 ~15:05Z): 'BLOCKED: missions-tree-check ... [INDEX-DRIFT] org/projects/NFRA_TRNSPT.json: dep_stage: index=PRD tree=EXECUTING; RESULT: 1 violation(s)'; remedy printed: 'R5 = the register's members list, 0.0.0_AB_MSTR's lane; never bypass'",
+      "The issuance commit 81e350ba0a moved the tree's dep_stage PRD -> EXECUTING; org/projects/NFRA_TRNSPT.json was not regenerated to match; that file is not in the TR-g1 <paths> grant",
+      "Landed and unaffected: registry+targets commit 8e9ed1b539 and nested portal commit d8bad891 (no org/missions path staged, so the check did not run). Uncommitted in worktree: TO status flip to complete, the proof instance (validated rc=0), this row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~T (issuer) or 0.0.0_AB_MSTR (index regenerate); this worker does not edit org/projects/",
+  "spec_asserts": "A worker commits its proof instance and the TO complete flip under its own grant.",
+  "world_is": "Any commit staging an org/missions/ path is refused while org/projects/NFRA_TRNSPT.json carries dep_stage PRD against the tree's EXECUTING; all three TR-g1 close-out files stay uncommitted in the worktree until the index is regenerated.",
+  "notes": "Every later NFRA_TRNSPT worker order will hit the same refusal on its own proof commit."
 }
 ]
 ```
