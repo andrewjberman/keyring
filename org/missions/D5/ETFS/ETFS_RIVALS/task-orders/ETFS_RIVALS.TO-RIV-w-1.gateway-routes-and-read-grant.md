@@ -152,7 +152,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~2 @d50b1231ce merged @2274b529ef; AC1-AC3 PASS + 11 unit tests re-run by the issuer; row ETFS_RIVALS-Z-W2-S1 (status flip is the issuer's) answered by this flip; server.py hookups ride the pre-d-2 hookup commit.</completion_note>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
