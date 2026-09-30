@@ -616,3 +616,33 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "DISARMED: base defect fixed by the issuer; commit b622e6a245 on wk-MDPF_SECCLASS-9 (cherry-pick of 17ad3ea043) regenerates org/projects/NFRA_TRNSPT.json; evidence: python .tools/missions-tree-index.py check in this worktree -> RESULT: 0 violation(s). Once the index row is regenerated, one commit of the three org/missions paths (proof instance dir, INVESTIGATION_v1.md, this order file with status complete) finishes the order; those files sit valid and uncommitted in the worktree."
 }
 ```
+
+
+## MDPF_SECCLASS-S5 -- the BD thread library cannot import the shared client on the flat gold runner (C_06 crashed; rolled back)
+
+```json
+{
+  "id": "MDPF_SECCLASS-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-30T18:05:00Z",
+  "one_line": "The BD thread library data/black_diamond/scripts/gold/lib/etf_classifier.py reaches the shared client through a repo-relative hop (Path(__file__).resolve().parents[5] / infra/aws/lambda/v2_portal/_shared, :19); the gold runner syncs scripts flat to /tmp/gold_layer_scripts/, which has no fifth ancestor and no shared client, so the deployed C_06 crashed at import (IndexError: 5) in the 16:36Z exercise run and D_03/D_04 never ran. E_18 carries the same class of hop (parents[4], :54). Every in-repo test passed because the repo tree supplies the ancestors the runner lacks.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (disarmed 18:16:09Z by rolling the five BD code objects back to their pre-window versions; the fix-forward needs a new half, CTO condition 7)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-bd/logs/gold-layer/gold_incremental_2026-09-30_20260930_174903.log -- 17:47:29Z C_06: 'File \"/tmp/gold_layer_scripts/lib/etf_classifier.py\", line 19 ... parents[5] ... IndexError: 5'; 'C_06 done (rc=1)'; '=== COMPLETE (exit code: 1) ===' at 17:49:03Z; D_03/D_04 absent from the run.",
+      "Served keys unchanged across the run (watch 17:49:54Z, changed=0 of 4): firm_composition AUXYImvT.., mix_daily_summary oIyAV02C.., z08327149 summary RMmQy.i3.., firm mix_summary 4iHMfpRA.. -- no served value moved.",
+      "Rollback 18:16:09Z, copy-object from the prior VersionId, ETag verified per key: lib/etf_classifier.py 884889c0.., silver/build_bd_assets_dim.py 662ef035.., D_03 346e7b0f.., D_04 a4b867d4.., C_06 8b1f012c.. (the versions the 04:00Z run executed successfully).",
+      "E_18: 0 occurrences in the cumulative gold log (5.6M lines); E_18.detect_new_securities.py:54 _REPO_ROOT = parents[4] would IndexError on the same flat layout."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BD_THREAD_R2 half step 1: the five committed files deploy to opal-data-bd/code/{gold,silver} and step 3's ordinary run executes them; the round-1 thread cells SC-t-1..t-4 graded the library's import of the shared client as working.",
+  "world_is": "The runner executes a flat copy of code/gold/ with no infra/ tree beside it, so any module-level repo-relative hop into infra/aws/lambda/v2_portal/_shared fails at import. The thread cannot run on the runner until the shared client ships with the gold code (or the library resolves it from the runner's own layout) and a real runner exercise proves the import.",
+  "notes": "Same class as W6-S1 (E_18's hop), which was fixed for the repo tree only. Fix-forward is a code cell plus a new half (a new file on the runner is a deviation the signed half does not name). E18 IAM+deploy half's acceptance (first 04:00Z scheduled run of E_18) is unreachable as written: E_18 is not in the gold chain."
+}
+```
