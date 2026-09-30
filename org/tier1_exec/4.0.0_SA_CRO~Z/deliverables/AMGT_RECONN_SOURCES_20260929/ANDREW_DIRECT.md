@@ -173,3 +173,11 @@ Recorded September 30, 2026, approximately 11:5x ET; Claude Code terminal, `4.0.
 > It sounds like bbg is better for this group if the issuers are not as hq, so yes, agreed with point 1. On point 2, yes agreed. On point 3, yeah it might be helpful to include the Opal Funds like IDVZ and PFOE into this list so we have them on the same analysis plane, that is a good idea. Regarding the threshold for trading, did we already account for dividend/interest income? That should be covered if we want to tighten up trade identification.
 
 Decisions: (1) Bloomberg is the primary daily source for the IDVZ group; (2) flat storage keyed by fund plus an Opal-fund-to-rivals mapping, not folders; (3) each Opal fund (IDVZ, PFOE) joins its own group as the home member. On dividends: not yet accounted for; measured the same hour, cash and currency lines are 4.7-59.2% of the preview's add/trim events (see `IDVZ_GROUP_SOURCE_CENSUS.md` section 4).
+
+## Addendum A DONE WHEN lines, verbatim
+
+Recorded September 30, 2026, approximately 12:0x ET (16:0x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, answering whether the DONE WHEN lines of `ENDPOINT_FORWARD_RIVALFUNDS_ADDENDUM_A_PEER_GROUPS_IDVZ_20260930.md` @bd6effc4f3 are confirmed as written. Exact receipt timestamp not exposed.
+
+> fwd 1 should include idvz and pfoe right as the two opal etfs, with their respective peer groups. otherwise, yes, all of these are fine.
+
+Means: FWD-1's live trace covers both Opal ETFs, IDVZ and PFOE, each with its own peer group; every other DONE WHEN line of Addendum A is approved as written.
