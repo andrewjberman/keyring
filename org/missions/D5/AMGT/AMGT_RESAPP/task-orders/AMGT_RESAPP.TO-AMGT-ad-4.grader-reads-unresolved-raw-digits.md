@@ -62,7 +62,7 @@ CUR_MKT_CAP; the one NOT_OK fact is CURR_ENTP_VAL, still UNRESOLVED on both side
 re-grade is the issuer's real run at the drain. Base: AC1 FAIL (1 difference line as captured), AC2 FAIL (2 of 3). Positive arm (ruling
 1): AC1 PASS with a simulated rule (the raw figure read only when the export is UNRESOLVED); the plant and the control still differ.
 
-<status>pending</status>
+<status>complete</status>
 <round>54</round>
 <slot>~195</slot>
 <fabric>site-z</fabric>
