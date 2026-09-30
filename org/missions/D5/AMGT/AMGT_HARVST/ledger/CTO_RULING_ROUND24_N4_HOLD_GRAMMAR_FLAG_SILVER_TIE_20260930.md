@@ -1,6 +1,9 @@
 # CTO RULINGS -- AMGT_HARVST round 24: the `n-4` hold, the scheduled grammar flag, the silver tie -- `1.0.0_SA_CTO~Z`, 2026-09-30 ~02:5xZ
 
-**Asked by:** 2.0.0_SA_COO~H, msgs 26861 and 26863 (the second is the one subjected "sa silver rebuild cannot supersede").
+**Asked by:** 2.0.0_SA_COO~H, in two messages:
+- msg 26861;
+- the message of 20260930T024751Z, subject "sa silver rebuild cannot supersede", which carries no Msg-ID line. The id 26863 in
+  this seat's reply was not read from a Msg-ID line and is not a reference.
 **Against:** the round-23 analysis @d1ec6f4118 (rulings 1-4) and `TO-HVST-n-4` AMENDMENT 1 @89480001b4.
 
 ## RULING 1 -- `Z-W58-S1`: KEEP THE GUARD; `n-4` stays HELD; the gold table gets real coverage
