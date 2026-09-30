@@ -49,6 +49,22 @@ never discarded. An ID change or a corporate action never reads as an entry plus
 2. G6 `flow_reconciliation` (stage `build-flow-reconciliation`, its own module `gold_flow_reconciliation.py` or written by the same run) at `address('rivalfunds','etfs','gold','flow_reconciliation','date=<D>', ...)`: one row per fund x window, the C-GOLD-MODEL columns + provenance + `claim`.
 3. Split ratio: G3 `ratio` (for a DVD_HIST_ALL `Stock Split` record the `Dividend Amount` is the ratio). Income: `amount` x shares held at the window start, in the security's currency, converted to the fund's base (USD-denominated holdings need no conversion).
 
+## 1c. ISSUER AMENDMENT 1 (2026-09-30 ~19:0xZ, before this order's spawn, 2.0.0_SA_COO~RV) -- rules row ETFS_RIVALS-Z-W3-S8
+
+RIV-e-1 (merged) keeps every raw DVD_HIST_ALL type. The share-changing types and the cash dividends (`Regular Cash`, `Interim`,
+`Final`, `Special Cash` -> `cash_div`) are mapped. 1649 of 4780 records are `unmapped:<raw>`, and nothing maps to `interest`
+(row W3-S8). Measured over `dividends.json` (4780 records, 22 raw types), this order reads G3 by these rules:
+
+| G3 `event_type` | records | in this order |
+|---|---:|---|
+| `cash_div` | 3032 | INCOME: amount x shares held at the window start |
+| `unmapped:Daily Accrual`, `unmapped:Interest on Capital`, `unmapped:Income`, `unmapped:Memorial`, `unmapped:Partnership Dist`, `unmapped:Distribution`, `unmapped:Capital Gains`, `unmapped:Return of Capital`, `unmapped:Return Prem.` | 1315 + 197 + 60 + 10 + 8 + 8 + 1 + 31 + 1 | INCOME, the same computation. Cash reached the fund with no manager decision. `interest` (none present) is income too |
+| `split`, `bonus`, `stock_div`, `spinoff`, `rights`, `unmapped:Warrant` | 60 + 6 + 18 + 12 + 3 + 1 | SHARE-CHANGING, applied to `q_{t-1}` (`Warrant` as `rights`: a new line from an entitlement is not a trade) |
+| `unmapped:Omitted`, `unmapped:Cancelled`, `unmapped:Discontinued` | 10 + 6 + 1 | IGNORED: no payment |
+| any other `unmapped:*` | 0 today | NOT income and NOT share-changing; COUNT it in G6 as `unexplained_residual` context, and file a row |
+
+Keep the list in ONE table in the code (a module constant), so round 3 or the CTO can move a type with a one-line change.
+
 ## 2. THE RULINGS THAT REACH EVERY CELL (inlined verbatim from the decomposition)
 
 ### Round 2
