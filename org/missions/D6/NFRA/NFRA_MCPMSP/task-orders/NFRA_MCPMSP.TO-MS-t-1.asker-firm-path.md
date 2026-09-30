@@ -161,7 +161,7 @@ for `<placeholders>`, which stay NONE).
 count 4 since @3e936f77bd, 5 now). Grants `tests/test_access_state.py` for that one literal. No criterion changes.
 Graded by: no gate limb grades a modification's criteria.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

@@ -24,6 +24,13 @@ You continue here after `MS-t-1` (your earlier order) has merged; the issuer's s
 commits on CLOUD (MS-t-1's, MS-t-5's, and the issuer's one-line `app/admin_api.py` hookup) and the Inflection role ARN
 from `MS-a-1`.
 
+0. **AMENDMENT 1 (issuer, 2026-09-30) -- the hookup is YOURS, on your branch, committed before item 1.** The issuer
+   cannot write `infra/aws/**` (lane `CLOUD_OPS_OR_ETL` refused 2.0.0_SA_COO~MS, measured), so the one hookup the
+   round needs lands in this order: in `infra/aws/ec2/opal-gateway/app/admin_api.py` add `from . import admin_tenants`
+   beside `from . import admin_grants`, and `*admin_tenants.routes,` as the last entry of the `routes = [...]` list
+   (after the `/changes` Route). Nothing else in that file. Then `tests/test_admin_tenants.py`, `test_admin_grants.py`
+   and `test_admin_round2.py` must read 0 failed (the issuer measured 12 passed with exactly these two lines), and
+   `admin_app` must mount `/tenants/{tid}`. This commit is one of the project's gateway commits the release carries.
 1. **The deploy script, on YOUR branch, committed first.** The deploy rewrites the host's whole `.env` every time
    (`infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:108-111`, the `REMOTE_SCRIPT`), so a hand-edited host line would be
    wiped by the next deploy. Add ONE static line to the `.env` it writes: `FIRM_ROLE_ARNS={"inflection": "<the role
@@ -69,6 +76,7 @@ from `MS-a-1`.
 ## 3. SURFACES
 
 <paths>
+infra/aws/ec2/opal-gateway/app/admin_api.py
 infra/aws/ec2/opal-gateway/deploy-to-ec2.sh
 infra/aws/ec2/EC2_MANIFEST.json
 org/critical_paths/change_management/
@@ -109,6 +117,10 @@ GATE (v)'s `<paths>` presence. Checks dry-run at base: AC1 FAIL as expected; AC2
 `093fc247c6`, 8 foreign files vs its prior value, 0 of 3 modules); AC3 FAIL as expected (`/health=200` -- the
 control -- with three MISMATCH and 0 `FIRM_ROLE_ARNS` lines). The override for release-branch commits follows the
 MCPORTAL MP-d-1 precedent.
+
+**AMENDMENT 1 (issuer):** the `admin_api.py` hookup moves here (item 0; path granted) because lane `CLOUD_OPS_OR_ETL`
+refused the issuer's hookup commit on `infra/aws/**` at MS-t-5's drain. d1.AC2's allowed set already names
+`app/admin_api.py`. No criterion changes. Graded by: no gate limb grades a modification's criteria.
 
 <status>staged</status>
 <round>1</round>

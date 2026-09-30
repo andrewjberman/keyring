@@ -55,8 +55,9 @@ NOT closed.** The PRD moves to v0.4 in this commit: two CONTRACTS are added, `C-
    - The repair is a LOCAL build graded on the 11 held bbg bronze objects, read-only.
    - The silver rebuild from bronze is a WORLD act. It goes to round 28 under its own pair, after the round-27 run adds more bbg
      bronze, so one rebuild covers both.
-5. **barrons B2 (the `worker.py:393` guard edit) and ft F1 (keep the 403 body) are LOCAL code cells.** Their RUNS are vendor
-   egress and stay on Andrew's per-use word (`C-HV-EGRESS`). Andrew does the running; the cell is the code.
+5. **barrons B2 (the `worker.py:393` guard edit) and ft F1 (keep the 403 body) are LOCAL code cells.** Their runs need a
+   signed-in session (barrons) or credentials (ft F2), and both are Andrew's under R-21 call 1. The egress itself is granted by
+   R-21. The cell is the code. (Corrected same day; see section 5.)
 6. **`p-3(b)`'s CTO half is signed at the cut, not now.**
    - Its COO half @`dadba8badd` was signed on the round-26 code.
    - This seat re-measures the snapshot and checks that the code at the act equals the code at signing. Round-27 cells 4 and 5
@@ -104,7 +105,11 @@ NOT closed.** The PRD moves to v0.4 in this commit: two CONTRACTS are added, `C-
 ## 5. ACTS ONLY ANDREW CAN DO (cited; no decision is listed)
 
 - Re-arm the harvest schedule [`ledger/HANDOFF_L4_TO_L5_COO_Y_20260922.md:81`].
-- The barrons run B1 and the ft credential re-harvest F2 [`C-HV-EGRESS`: per-use word].
+- The barrons run B1 (the `p-4` packet: the saved session is logged out, and B1 is a run on his word) and the ft credential
+  re-harvest F2 [R-21 @`b390c36444`
+  call 1: *"a signed-in admin+Dev browser, or he runs the readout. NOT credentials."*]. **CORRECTION (same day):** this line first
+  cited `C-HV-EGRESS`'s per-use word. That is wrong: R-21 already grants scripted vendor egress. What stays his is the sign-in and
+  the credentials, never the call.
 - The portal DEV merge and push [CLAUDE.md Portal] (FWD-5/6).
 - Remove the drained worktrees `wk-hvst-r24..r26` [CLAUDE.md Agent Autonomy: recursive deletion].
 
@@ -116,3 +121,16 @@ NOT closed.** The PRD moves to v0.4 in this commit: two CONTRACTS are added, `C-
 - The FWD-7 ruling @`ddcc71fd2d`.
 
 This seat ran no new instrument for the analysis: every number above is the CVO's or the packet's, each cited.
+
+## AMENDMENT 1 -- cell 7 (the `gold` flip) WITHDRAWN from round 27 (2026-09-30 ~09:0xZ, msg 27056)
+
+- **Measured by the issuer:** `q-4`'s gold branch (declared bbg+wsj, as-of 09-30) puts **0 of 191** names in the eligible
+  population: NOT_SEARCHED 190, PARTIAL 1. The result is HOLD `BELOW_ELIGIBLE_FLOOR`.
+- **`q-1` was withdrawn.** bbg refused; wsj's cached listings recorded no span; the reach gap goes to round 28.
+- **RULED (driver, on the issuer's REC): WITHDRAW `q-7` this round.**
+  - A flip whose only reachable outcome is HOLD changes no served rank.
+  - It would stop the legacy rank refreshing, leaving the last generation served behind a HOLD marker. That is a freshness loss
+    for no gain.
+  - `q-7` is re-cut when an eligibility census reads at least 10 eligible names (`C-HV-RANK-DECLARED-SET`'s floor).
+- **What this says about FWD-7:** the binding constraint is now COLLECTION REACH (FWD-1 and FWD-9), not the rank rule.
+- **Also carried to the round-27 analysis:** why bbg refused a run that `o-5` completed on the same name.

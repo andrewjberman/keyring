@@ -1095,3 +1095,28 @@ Their manifests are self-consistent. When cut, this is one repair cell per famil
 from CLOUD HEAD, safe-apply, deployed-bytes check). It is NOT cut in this round. Its un-park condition is the
 round-2 close or an Andrew word to DO it.
 
+# ROUND 5 -- THE REINSTATEMENT (L5, 2.0.0_SA_COO~MI, 2026-09-30)
+
+Source: `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/REINSTATE_RULINGS_20260930.md` @4e598ab7be
+(1.0.0_SA_CTO~O's rulings B1-B9 on Andrew's reinstatement order), cut against PRD v0.6 @e91ce9a0d5. MX-t-10 and MX-s-14
+stay round-4 orders: t-10 lands on B3 (Andrew's R20 acknowledgement), s-14 on its scheduled fires (B6, gates nothing here).
+
+| Cell | Source | What | Risk |
+|---|---|---|---|
+| `MX-s-15` | ruling B4; order item 2 | Schwab `dim_transaction` declared beside the three `dim_*` tables on all 6 surfaces (datasets.json, query.py schemas + grains, data_entitlement, schwab_audit, the reader role's prefix list for both masters); one master, one date; how existing grants resolve it recorded, never changed; worker `0.9.0_WK_NFRA_MCPINDEX~19` | WORLD (infra-path floor) |
+| `MX-q-3` | ruling B7; order item 3 | `query_v0` as ONE read-only MCP tool in portal_index on the same handler, gate and caps, under C2 in full; discover names it (`kind: mcp_tool`) where no purpose-built tool exists; the HTTP route stays; worker `0.9.0_WK_NFRA_MCPINDEX~20` | WORLD (infra-path floor) |
+| `MX-r-6` | rulings B1, B2, B4, B7; order items 2, 3, 6 | the Schwab enable release (MX-r-5 pattern): `schwab` added to ENABLED_INTEGRATIONS (6 ids), the reader role's dim_transaction prefixes safe-applied, MX-s-15 + MX-q-3 shipped (MX-t-10 if drained, named at the GO); never-widen halves + G-A delta; then the FWD-1 cold run by an already-admitted non-author principal holding a Schwab grant (r6.J1); worker ~19 after MX-s-15 and MX-q-3 | WORLD |
+| `MX-a-8` | ruling B5; order item 4 | Black Diamond's analysis record refreshed at today's silver (MX-a-3's structure, 9 sections, `read_at`), naming ONE first tool, its exact read fence and the firm scope rule; J1 by the CVO; worker `0.9.0_WK_NFRA_MCPINDEX~21` | SERVED |
+| `MX-t-13` | ruling B5; order item 4 | the first BD tool from MX-a-8: a dormant `black_diamond` integration, one fenced reader role (C7) from the record's read fence, a catalog row through the emitter, C2 in full; worker ~21 after MX-a-8 | WORLD (infra-path floor) |
+| `MX-r-7` | ruling B5; order item 4 | the BD release: the reader role safe-applied, `black_diamond` enabled (7 ids), never-widen halves + G-A delta; FWD-4 PROOF live (r7.J1); worker ~21 after MX-t-13 and after MX-r-6 is complete (one release at a time on the host) | WORLD |
+| `MX-t-12` | order item 5 (carried from MX-t-11) | a catalog row and read-only tool for platinum/advi -- HELD on G-W (Andrew NOT YET; 1.0.0_SA_CTO~O msg 27022); issued to ~20, not spawned | WORLD, HELD |
+
+**Chains (fan-out 3 of 3 live chains, cap 8):** [MX-s-15 -> MX-r-6] ~19 and [MX-q-3] ~20 join at MX-r-6;
+[MX-a-8 -> MX-t-13 -> MX-r-7] ~21, whose release waits on MX-r-6 complete. MX-t-12 is HELD and not spawned.
+
+**Order item 7** (the COO's close run on all of it) is the issuer's act at the drain, not a cell; 3.0.0_SA_CVO~O grades
+a8.J1, r6.J1 and r7.J1 at L9. **FWD-8 (v0.6, B8):** no build item was ordered; the issuer's close run exercises A8's
+market-data half through Bloomberg's standing read and names the substrate, and any gap goes to the round-5 L10 slug.
+
+**NOT CLAIMED by this cut:** Orion, Eclipse and SmartX tools (they follow MX-t-13's pattern in later rounds); FWD-9
+(deferred on Andrew's word, B2); any identity, grant or sign-in change (B2); G-C inside NFRA_OPLGTW's own OG-g-1 (B1).

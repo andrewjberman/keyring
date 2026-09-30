@@ -179,7 +179,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~3 @7405f0d359 merged @f42f12108f under issuer amendment 1 (746558e232, row W3-S5: snake state tables); AC1-AC3 PASS, c-1.AC3 PASS on the merged tree, 28 tests, all re-run by the issuer. Plan only (39 creates); rows W3-S1..S4 OBSERVATION to the round analysis. Source-map entries ride the pre-d-2 hookup commit (the file is infra/aws/lambda/ci/lambda-source-map.json).</completion_note>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

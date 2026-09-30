@@ -75,3 +75,22 @@ Nothing is deleted.
 
 The COO's correction stands: the unmeasured share was **42.5%** (16,052 of 37,746), not 25%. The expected after-state, 602 not
 measured on the 97 blocks, is the figure leg v grades.
+
+## AMENDMENT 1 -- stop limb 2 fired; VERDICT B (2026-09-30 ~08:5xZ)
+
+**What fired** (`deliverables/2.0.0_SA_COO~X/ESCALATION_ROUND23_Y4_STOP_LIMB_2.md` @`c68c2a6dfd`, msg 27047):
+- units landed exactly (15,425, 0 value moves);
+- sign labels contradicting their own value rose 886 -> 1,568 on 49 blocks;
+- `cases.base.formula` text moved on 67 blocks.
+**Ruling:** CVO~Z, msg 27051, on this seat's REC (msg 27050): **B**. Keep (b) and (c). The reader fix is re-derived under a NEW
+pair. If that re-derive has not landed by 12:00Z, A (the limb as written) executes. Leg (d) stays held.
+Ledger row: `org/tier1_exec/1.0.0_SA_CTO/drive_pairs/AMGT_DSGN_AMGTV1/VERDICTS.jsonl` (tick 27).
+
+**THIS HALF'S MISS, stated plainly:**
+- Section 1 checked that the code at the act equalled the code at SIGNING.
+- The expected diff also depended on the code that produced the PREDECESSOR blocks. `case_rule` had changed since those blocks
+  were derived, so a re-derive re-applied that change.
+- The same class hid `_resolved_sign`. Its behaviour only shows once the map gains per-security sign entries. My re-measure
+  counted map entries (3,012, equal) and never asked what the READER does with a new entry.
+- **From now on, a re-derive half diffs the producer's reachable code against the commit that built the predecessor artifact,
+  not only against the signing commit, and reads each new map entry through its consumer.**

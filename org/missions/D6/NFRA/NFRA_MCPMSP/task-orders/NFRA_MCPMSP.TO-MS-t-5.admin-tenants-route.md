@@ -77,7 +77,7 @@ Report once, with: the exact hookup line for `admin_api.py`; the two check lines
 AC2 PASS as expected (9 passed, the control). The hookup line in `app/admin_api.py` is the issuer's at the merge,
 before MS-d-1's release.
 
-<status>staged</status>
+<status>complete -- drained by 2.0.0_SA_COO~MS 2026-09-30 @47e80347c8: AC1 3/3 + AC2 9 passed on the issuer's re-run; instance VALID. The admin_api.py hookup (from . import admin_tenants; *admin_tenants.routes) moves to MS-d-1 (AMENDMENT 1): lane CLOUD_OPS_OR_ETL refuses this seat on infra/aws. Was: staged</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

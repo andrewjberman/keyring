@@ -79,9 +79,32 @@ with `to_id` `AMGT_HARVST.TO-HVST-q-1.span-bearing-lenovo-run`. Report once, wit
 - The slot `~70` is the one its checks read (`p5_common.WK`).
 - It also exercises `p-2`'s per-key outcomes on a real run (FWD-3).
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~09:1xZ) -- WITHDRAWN after its act; outcome recorded @`608cd4a257`.**
+
+**What the act did:** ONE run record was persisted (`amgt/harvest/bronze/run_record/date=2026-09-30/20260930T084110Z-run-4ee47491.json`),
+and 0 other objects were written. So the persist path is exercised, and the pair held on every root.
+
+**Why the positive arm failed:**
+- **bbg:** `request_rejected`, a press-and-hold challenge (Branch B, row `Z-W70-S2`).
+- **wsj:** `no_new_articles` with `reached_span` NULL. Today's wsj Lenovo listing pages were served from same-day cached bronze, so
+  the job recorded no reach (row `Z-W70-S1`, BLOCKING).
+- AC1 and AC2 FAIL. `build-daily` was withheld per the CTO's condition 3.
+
+**The finding is a code gap in `o-1`'s reach:** a job whose listings come from the same-day cache records no span. A re-run today
+hits the same cache, so the order cannot pass as cut.
+
+**Carried to round 28:**
+- the fix: record reach from cached listing pages;
+- a fresh-day span-bearing run under a re-signed pair.
+
+**Ruling 6** (code cells merge after `q-1` drains) is satisfied by this terminal state, because `q-1`'s act is complete and
+recorded.
+
+**Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>withdrawn</status>
 <round>27</round>
 <slot>~70</slot>
 <fabric>site-z</fabric>

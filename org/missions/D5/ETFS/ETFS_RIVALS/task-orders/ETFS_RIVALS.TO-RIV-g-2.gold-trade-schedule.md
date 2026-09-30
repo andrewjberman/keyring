@@ -144,7 +144,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: merged @b2834dc66a; AC1 PASS (80/80 oracle trades, 0 extra) and AC2 PASS re-run by the issuer.</completion_note>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

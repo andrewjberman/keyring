@@ -3540,6 +3540,268 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Instance expect field differs from the TO text only by regex escaping; the check scripts were not edited."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W70-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~70",
+      "surfaced_at": "2026-09-30T09:00Z",
+      "one_line": "The wsj job ended no_new_articles (a SUCCESSFUL status) with reached_span null, because its listing pages 1-3 were served from today's held listing bronze (dedupe cache), which records no listing capture and so no reach; AC1 FAIL and build-daily was not run.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "COO half s.2 Branch A / o-1: a job whose status is in SUCCESSFUL_RUN_STATUSES, including no_new_articles, carries a reached_span; AC1 requires a reached_span on every successful job.",
+      "world_is": "Run 20260930T084110Z-run-4ee47491 persisted (1 object). Jobs: bbg request_rejected reached_span null; wsj no_new_articles reached_span null, 16 keys skipped known_urls, fetched 0, ~6s. Measured after the run: wsj news_listing pages p1,p2,p3 for the Lenovo query hash exist in date=2026-09-30 with LastModified 05:12Z (before the run), and NO new bbg/wsj object was created (AC1 diff new 0). worker.fold_listing_reach folds only client.listings, which Publisher._record_listing fills from session.captured; the get_listing_bronze cache branch (publishers.py ~:650) sets listing_ref from the bucket object and never calls _record_listing. Inference (not separately traced): the wsj job read cached pages, so no reach was accumulated. AC1 printed 'FAIL: successful job wsj carries no reached_span'. Per CTO condition 3 (each after-read passing before the next) the upload was a no-op (remaining_pending 0) and build-daily was NOT run; chatter_daily stays 9 parts. Both AC1 and AC2 would need a wsj span that this code cannot write on a same-day dedupe-served walk.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~70/q1_AC1.txt: AC1 RESULT: FAIL (1 failure(s)); successful job wsj carries no reached_span",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~70/q1_persisted_run_record.json: jobs[1] wsj no_new_articles reached_span null",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~70/q1_run.stdout.txt: job_finished wsj no_new_articles; run_record_persisted put_performed true",
+          "lib/opal_data_harvest/publishers.py:650-661 cached_listing branch; lib/opal_data_harvest/worker.py:56-85 fold_listing_reach"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Forward only; nothing retried. The only S3 put by this act is the run record (amgt/harvest/bronze/run_record/date=2026-09-30/20260930T084110Z-run-4ee47491.json). Code cells q-2/q-4..q-6 may be the place the span for a cache-served walk is decided; not this order's."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W70-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~70",
+      "surfaced_at": "2026-09-30T09:00Z",
+      "one_line": "The bbg job ended request_rejected (Branch B) after the adaptive press-and-hold verification found no checkmark in 12s; one bbg article key (NM5NLQ6K50XZ01) was fetched and recorded not stored / no_outcome_recorded.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "COO half s.2 Branch B: a job that refuses is recorded and not retried, contributes no span, and the record still persists.",
+      "world_is": "events.jsonl: verification_started bbg 08:41:34Z, press-and-hold 'no checkmark or peak detected within 12s ... releasing anyway', job_finished bbg request_rejected 08:42:22Z. Persisted run record: bbg reached_span null, keys_fetched_not_stored [bbg:NM5NLQ6K50XZ01 no_outcome_recorded], keys_stored_join [], 10 bbg keys skipped known_ids. No retry made; no agent HTTP or browser call.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~70/q1_run.stdout.txt: verification_action and job_finished bbg request_rejected",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~70/q1_run_record_outcomes.txt: keys_fetched_not_stored bbg:NM5NLQ6K50XZ01 no_outcome_recorded"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Served /timeline read taken with no rebuild: ['bbg'] 265 days and ['bbg','wsj'] 8, equal to baseline (q1_served_read.txt)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~73",
+      "surfaced_at": "2026-09-30T08:40Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W73-S1",
+      "one_line": "The declared-set score cannot come from chatter_daily.mention_score (it sums every publisher's articles), so the gold branch now reads the per-article article_security_mention snapshot for the score and chatter_daily only for coverage; the two are separate gold snapshots.",
+      "spec_asserts": "Order clause: 'The score counts only articles from publishers in the declared set. A found-only article is never scored.' on the gold branch, which today ranks the chatter_daily mention_score series.",
+      "world_is": "chatter_daily.mention_score is the sum of signal_weight over ALL publishers' rows for the (security, day) and carries no per-publisher split (publication_gold.daily_rows: mention_score += signal_weight over every day_row), so a declared-set-only figure is not derivable from it. gold_declared_mention_scores reads article_security_mention (columns publisher, signal_weight, published_utc) through pool_reader._gold_latest_snapshot_rows, a private helper of the same adapter. The served newest snapshots are different builds (mention part 20260930T062354Z, chatter_daily part 20260930T072527Z), so a day's coverage and its declared score can come from different builds.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py daily_rows: mention_score sums signal_weight over day_rows of every publisher; publishers_distinct is a count, not codes",
+          "lib/research/metrics/chatter_axis.py gold_declared_mention_scores and declared_set_scores (this worktree, uncommitted at row time)",
+          "S3 listing of amgt/harvest/gold/article_security_mention/ and chatter_daily/ read 2026-09-30: newest parts 20260930T062354Z and 20260930T072527Z"
+        ]
+      },
+      "notes": "Not fixed here; whether one build should stamp both tables (or chatter_daily carry per-publisher scores) is the issuer's call. The declared-set score reads no chatter_daily column."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~73",
+      "surfaced_at": "2026-09-30T08:40Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W73-S2",
+      "one_line": "'HOLD with an empty_reason, prior generation stays served' cannot be an EMPTY generation (EMPTY commits a pointer and clears the earlier membership), so the floor HOLD is a FAILED marker beside the prior pointer that also carries empty_reason, population and footer.",
+      "spec_asserts": "Order contract: 'Below [the floor of 10 eligible names] the generation HOLDs with an empty_reason, and the prior generation stays served.'",
+      "world_is": "generation_writer.build_pointer refuses an EMPTY state without empty_reason but an EMPTY pointer, once put, makes the earlier membership unreadable ('the earlier membership is NO LONGER readable through it', chatter_axis.py docstring); only STATE_FAILED leaves the prior pointer current. build_generation also nulls empty_reason on FAILED. The hold now builds STATE_FAILED with reason_code BELOW_ELIGIBLE_FLOOR and attaches empty_reason {reason, count, denominator, floor, eligible} through a new hold_reason argument; default_write_generation copies empty_reason/population/footer onto the _FAILED marker.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/metrics/generation_writer.py build_pointer / build_generation / default_write_generation (this worktree)",
+          "lib/research/metrics/tests/test_q4_rank_declared_set.py::test_d_nine_eligible_names_hold_with_an_empty_reason_and_keep_the_prior_generation: prior items byte-equal after the hold, 2 markers added carrying empty_reason BELOW_ELIGIBLE_FLOOR"
+        ]
+      },
+      "notes": "A reader that reads only the pointer will not see the hold reason; it is on the marker beside the pointer. Whether a served page should surface it is a downstream cell."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W74-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~74",
+      "surfaced_at": "2026-09-30T09:10Z",
+      "one_line": "The TO's AC3 <expect> '0 failed' is not a string pytest prints when nothing fails (the summary reads '298 passed'), so the literal AC3 invocation cannot itself produce the expected token.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AC3 invocation `python -m pytest lib/research/harvest/tests/ lib/research/api/tests/test_timeline_routes.py -rA --tb=line` with expect '0 failed', and 'prints the base and after counts'.",
+      "world_is": "The literal command exits 0 with the summary line '298 passed in 10.16s' and no 'failed' token; it also prints no base count. A helper scripts/q5_ac3_base_and_after.py runs the same command at the pinned base ff4405d3d5 (git archive extract; it also needs infra/logic, org/standards and integrations/bloomberg from the base) and at HEAD and prints 'base: 293 passed, 0 failed', 'after: 298 passed, 0 failed', '0 failed'. The instance records the literal pytest line and the helper output together.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~74/q5_ac3_after_output.txt: last line '298 passed', 0 lines starting FAILED",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~74/q5_ac3_output.txt: BASE ff4405d3d5: 293 passed; AFTER HEAD: 298 passed; 0 failed"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Base 293 + the 5 new q5 tests = after 298. The helper edits nothing in the repo."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W74-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~74",
+      "surfaced_at": "2026-09-30T09:10Z",
+      "one_line": "AC2 names no securities input; the local build_daily used the 191-security universe file of the round-26 daily rebuild (0.9.0_WK_AMGT_HARVST~46/securities.universe.json), not the 6-security ~4 file that carries Lenovo's sa_symbol.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AC2: a LOCAL in-memory build_daily over the current gold inputs; the securities set is not named.",
+      "world_is": "build_daily(securities, as_of) needs the securities list. The last production chatter_daily put (i3_act_build_daily_output.txt: 191 securities, 272 days) used ~46's securities.universe.json, whose 992_HK_Equity row has no sa_symbol. The local build over it gives 52,143 rows (191 x 273) and 992_HK_Equity 2026-02-12 covered=['bbg'] found=['sa', 'wsj'], data_status PARTIAL, articles_total 2; 271 rows (67 securities) have found not a subset of covered. A different securities file could move the covered side only through sa_symbol matching.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~74/q5_ac2_output.txt: 'DAYS where found is not a subset of covered: 271 of 52143 rows (67 securities)'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Input choice recorded so a rerun reads the same file; nothing was written to S3."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W75-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~75",
+      "surfaced_at": "2026-09-30T08:55Z",
+      "one_line": "The order's B2 change ('one repair after one reauth') cannot replay at all inside the existing range(2) attempt loop, so the loop bound went from 2 to 3 attempts (MAX_ATTEMPTS).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "TO section 1: within ONE job the contracted repair may run once after a reauth; the number of attempts is bounded and there is no loop; nothing else about the repair changes.",
+      "world_is": "worker.py's `for attempt in range(2)`: attempt 0 is the reauth, so a repair at attempt 1 is followed by no attempt to replay the challenged search -- the repair would run and its result be discarded. A third attempt is required. Bounded by construction: the AuthExpired branch and repair_permitted each fire at most once per job, so no path reaches a fourth attempt (AC1 test_repair_after_reauth_stops_after_one_repair_when_the_challenge_repeats: 3 attempts, 1 repair, 1 reauth).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py MAX_ATTEMPTS = 3 and repair_permitted(); AC1 output org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~75/q6_ac1_output.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The repair after a reauth is allowed for barrons only (REPAIR_AFTER_REAUTH); bbg keeps the base guard (test_bbg_challenge_after_a_reauth_is_still_not_repaired), because the finding and the ledger evidence are barrons-only."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W75-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~75",
+      "surfaced_at": "2026-09-30T08:55Z",
+      "one_line": "The order's line references for the base behaviour (worker.py ~:393 and :426, transport.py:95) are the p-4 vintage; at HEAD 0cfb3406bf the guard is worker.py:431 (base) and the RequestRejected handler is :464.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "TO section 1: worker.py ~:393 `if attempt or publisher not in {\"bbg\",\"barrons\"}: raise`; the 403 body is never kept (transport.py:95, worker.py:426).",
+      "world_is": "The same code sits at other lines at the cut's HEAD (git show 0cfb3406bf:lib/opal_data_harvest/worker.py: guard at 431, `except RequestRejected` at 464); the behaviour the order describes is unchanged, only the citations drifted.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git diff --stat ff4405d3d5 HEAD -- lib/opal_data_harvest is empty, so the drift is against p-4's own vintage (81fd5632c2), not a later edit"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "No effect on the change; recorded because a path being elsewhere is a row."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W75-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~75",
+      "surfaced_at": "2026-09-30T08:55Z",
+      "one_line": "AC3's <expect> '0 failed' is not a string a clean pytest run prints (it prints 'N passed'), so the literal invocation alone cannot match it; the counts line comes from a compare script over the base and after runs.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AC3: invocation `python -m pytest lib/opal_data_harvest/ -rA --tb=line`, expect '0 failed', and 'prints the base and after counts'.",
+      "world_is": "pytest prints '223 passed, 1 skipped' with no '0 failed' when nothing fails. The instance's AC3 output_evidence therefore carries the pytest tail plus the output of scripts/q6_ac3_compare.py (base 207 passed / after 223 passed / '0 failed'), the same shape p-2's AC3 used.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~75/q6_ac3_after_output.txt (tail: 223 passed, 1 skipped); org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~75/q6_ac3_compare_output.txt (last line: 0 failed)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Same class as AMGT_HARVST-Z-W68-S1 (an <expect> that the literal invocation does not print)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W71-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~71",
+      "surfaced_at": "2026-09-30T08:40Z",
+      "one_line": "With the parse fixed, the 11 bbg rows get a NEW article_key (bbg:<story id>) because the empty rows were keyed on a bronze-key hash, so the round-28 silver append adds 11 rows and leaves the 11 empty ones served beside them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order section 1: the served silver rebuild from bronze is a later paired act (round 28); article_rows parses the as-received bytes into the silver fields.",
+      "world_is": "silver_from_bronze.py article_rows sets article_id = content_hash(bronze_key)[:24] when the parse yields no id (base: story empty, id None), so the 11 served 2026-09-30 rows are bbg:d518d82d..., bbg:c85a9068... etc. (title None, 0 blocks). The fixed parse yields the story id (e.g. bbg:TKPBVYKK3NY800 for the object served as bbg:d518d82dba5edbf17c889629), a different record key; store.silver_append keys on article_key, so a rebuild appends 11 new keys and does not replace the 11 empty ones.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~71/q2_ac2_output.txt: per-object article_id under the new builder (TKPBVYKK3NY800 ...) against the served keys bbg:<24 hex> read in this cell (store.silver_latest)",
+          "lib/opal_data_harvest/silver_from_bronze.py:222-223 (article_id fallback to content_hash(bronze_key)[:24])"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not touched by this cell (no silver write). The round-28 rebuild order needs to say what happens to the 11 empty keys."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W72-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~72",
+      "surfaced_at": "2026-09-30T09:30Z",
+      "one_line": "The TO's <expect> 'ELIGIBLE UNDER (bbg, wsj):' is a regex to proof-of-spec-check, so its literal parens never match the script's verbatim output; a PASS row is refused until the instance's expect is regex-escaped (same class as AMGT_HARVST-Z-W68-S1).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order AC1: expect 'ELIGIBLE UNDER (bbg, wsj):' is the deciding output line.",
+      "world_is": "proof-of-spec-check does re.search(expect, output_evidence); '(bbg, wsj)' groups as 'bbg, wsj', so the verbatim line 'ELIGIBLE UNDER (bbg, wsj): 0 of 191' failed the match until the instance carried expect 'ELIGIBLE UNDER \\(bbg, wsj\\):'.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~72/q3_ac1_output.txt: line 'ELIGIBLE UNDER (bbg, wsj): 0 of 191'; proof-of-spec-check first run INVALID on this match"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Instance expect differs from the TO text only by regex escaping; the check scripts were not edited."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S45",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-30T09:30Z",
+      "one_line": "HVST-q-1's bbg refusal was walked into by re-fetching the ONE known-rejected key: with today's listings served from same-day cache the job made no listing request, its first and only live request re-fetched bbg:NM5NLQ6K50XZ01 (p-2's accepted limit: rejected keys are re-fetched every run) -> 403 -> the contracted press-and-hold repair saw no checkmark in 12s -> request_rejected.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-p-2's accepted limit: a rejected article is re-fetched one GET per run because a short body may later unlock; o-5 completed bbg on Lenovo the same day.",
+      "world_is": "events.jsonl 2026-09-30: 08:41:15Z GET www.bloomberg.com/article/api/story/id/NM5NLQ6K50XZ01 -> 403; 08:41:34Z login.bloomberg.com/user-info 200; verification_started; 08:42:14Z 'adaptive press-and-hold: no checkmark or peak detected within 12s'; 08:42:22Z job_finished request_rejected (runs/20260930T084110Z-bbg-4bb3c44cfa.json: 'Browser verification repair did not restore HTTP access (403)'). No bbg /nemo-next/api/search/query request in that job (o-5's runs at 04:40Z-04:54Z made 4, all 200).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "runtime root events.jsonl, the bbg lines of 2026-09-30",
+          "runs/20260930T084110Z-bbg-4bb3c44cfa.json status request_rejected"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Issuer row, answering the CTO's round-27 question (msg 27057). Carried to round 28 beside the cached-listing reach fix: whether a known-rejected key should be held (not re-fetched) within a day, since its re-fetch is what exposed the job to bbg's challenge."
     }
   ]
 ```

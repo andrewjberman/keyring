@@ -42,6 +42,13 @@ firm live.
    Andrew's word, G-FIRM).
 3. Read AC2/AC3, then close the legs and the entry, committing it with the sentinel removed.
 
+**AMENDMENT 2 (issuer, 2026-09-30, row Z-S3).** The directory now carries a LOCAL module call (`module opal_name`, in
+`mcpmsp_firm_roles.tf`), so a plan needs the module registered. Do NOT borrow the main tree's `.terraform`: copy its
+`providers/` and `terraform.tfstate` into a private temp dir, `export TF_DATA_DIR=<it>`, run `terraform get` (local
+module path, no network), then plan and `safe-apply` with that same `TF_DATA_DIR`. The writer's targeted plan must
+still show ONLY the function's code changing; the three NFRA_MCPMSP role resources are already applied by MS-a-1 or
+are outside your target -- anything else in the plan is a BLOCKING row and no apply.
+
 ## 2. BOUNDS
 
 1. The writer's code package only. No Terraform file edit, no environment change, no layer build, no gateway act.

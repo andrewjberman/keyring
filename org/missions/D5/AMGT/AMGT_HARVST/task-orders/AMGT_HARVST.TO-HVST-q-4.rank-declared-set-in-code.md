@@ -86,7 +86,7 @@ This cell merges only after `HVST-q-1` drains (ruling 6). The issuer holds the m
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>27</round>
 <slot>~73</slot>
 <fabric>site-z</fabric>

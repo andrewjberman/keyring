@@ -4,7 +4,7 @@
 
 <decomp_ref>
 <decomp_doc>org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md</decomp_doc>
-<owned_cells>CRPS-y-2</owned_cells>
+<owned_cells>CRPS-y-2, CRPS-y-5</owned_cells>
 </decomp_ref>
 <issued_to>0.9.0_WK_AMGT_CORPUS~2</issued_to>
 <issued_by>2.0.0_SA_COO~X</issued_by>
@@ -45,6 +45,8 @@ re-label but which could also move VALUES through a vendor call: 8316 and 8766 c
 <paths>
 integrations/bloomberg/research/model_block_pull.py
 integrations/bloomberg/research/tests/test_model_block_no_sa_fallback.py
+integrations/bloomberg/research/tests/test_model_block_sign_per_figure.py
+integrations/bloomberg/research/tests/test_model_block_resolved_exception.py
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-y-2.derive-no-sa-fallback.md
 </paths>
@@ -64,6 +66,8 @@ Your worktree is a SPARSE cone (`lib integrations .tools .claude org docs rcg in
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-y-2"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round23/y2_AC1.sh</invocation><expect>(?m)^DRY-RUN DERIVE: 8766 JP Equity -> .* sa_fallback held_off$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-y-2"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round23/y2_AC2.sh</invocation><expect>(?m)^\d+ passed(, \d+ \w+)* in </expect></criterion>
+  <criterion id="AC3" cell_refs="CRPS-y-5"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round23/y5_AC1.sh</invocation><expect>(?m)^y5 blocks 97 figures \d+ sign_labelled \d+ plain_disagree 0 convention_disagree 0 unresolved_kept \d+ module_in_toplevel yes$</expect></criterion>
+  <criterion id="AC4" cell_refs="CRPS-y-5"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round23/y5_AC2.sh</invocation><expect>(?m)^\d+ passed(, \d+ \w+)* in </expect></criterion>
 </proof_of_spec>
 
 - AC1: the CLI dry-run names the fallback held off, with the flag, for the two names it exists for.
@@ -76,6 +80,60 @@ Your worktree is a SPARSE cone (`lib integrations .tools .claude org docs rcg in
    plus the instance.
 4. Report ONCE: each AC line, the parameter and flag names, and the `forecast_fallback` record a held-off derive writes.
 
+## 7. AMENDMENT 1 (round-23 amendment 1, on 1.0.0_SA_CTO~Z's VERDICT B, msg 27053) -- this order is RE-OPENED for cell `CRPS-y-5`
+
+**Where this came from.** `integrations/bloomberg/research/model_block_pull.py` `_resolved_sign(mnemonic, security,
+observed_value)` returns the field map's sign for (field, security). That is ONE label, sampled from ONE value by
+`build_unit_map.classify_sign`, and it is served on EVERY figure (every fiscal year) of that field. Only when the map has no
+entry does it fall back to `_sign_label(observed_value)`.
+
+So a loss year reads `POSITIVE`. Over the 97 served blocks, 1,568 figures carry a plain `POSITIVE` / `NEGATIVE` / `ZERO` that
+contradicts their own value: PROF_MARGIN, RETURN_ON_ASSET, IS_OPER_INC, IS_EPS, NET_INCOME and more.
+
+`build_unit_map.classify_sign(mnemonic, value, security) -> (label, status, reason)` is the one sign rule:
+- a text field gives `N/A (non-numeric field)`;
+- `> 0` gives POSITIVE and `< 0` gives NEGATIVE, mapped through `SIGN_CONVENTIONS`: NET_DEBT to "POSITIVE (net-debt position)" /
+  "NEGATIVE (net-cash position)", and CAPITAL_EXPEND to "NEGATIVE (Bloomberg cash-outflow convention ...)";
+- exactly zero gives UNRESOLVED.
+
+`model_block_pull` already loads that module by path (`_load_build_unit_map()`).
+
+**RULED -- what you build (y-5):**
+1. In `_resolved_sign` only:
+   - (a) If the map resolves this (field, security) to a sign starting `UNRESOLVED`, return it unchanged. That covers the entry's
+     own status or exception (round 19's `_scalar_exception`).
+   - (b) Otherwise, classify THIS figure's `observed_value` with `classify_sign(mnemonic, observed_value, security)`. If MEASURED,
+     return its label.
+   - (c) Otherwise, return `_sign_label(observed_value)`.
+   Never return a label whose sign contradicts `observed_value`. Change nothing else in the file.
+2. `integrations/bloomberg/research/tests/test_model_block_sign_per_figure.py` (new), with a temp field map and no network:
+   - a PLANTED LOSS YEAR: a map sign sampled POSITIVE, and a value < 0, gives NEGATIVE;
+   - CAPITAL_EXPEND (the convention path): a negative value gives the cash-outflow label;
+   - NET_DEBT: negative gives "NEGATIVE (net-cash position)", and positive "POSITIVE (net-debt position)";
+   - a map sign that is UNRESOLVED stays UNRESOLVED;
+   - an exact zero gives ZERO.
+3. No served write and no derive: the re-derive is the issuer's act under a new pair. Time matters: the CTO bound is 12:00Z.
+
+**Proof for the amendment:** AC3 and AC4 in section 5.
+- AC3: your reader on every figure of the 97 newest served blocks, with the committed map: 0 plain labels, and 0 convention
+  sign words, contradict their own value (base: 1,568 and 1).
+- AC4: your tests with the producer suites.
+
+Write the instance at
+`org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-y-2.amendment1-sign-per-figure.proof_of_spec.json`, run
+`python .tools/proof-of-spec-check.py <instance> AC3,AC4 --governing-order <this order>` (rc 0), then append a status tag reading
+complete at the END of this file, commit, and report ONCE: each AC line and the lines you changed.
+
+## 8. AMENDMENT 2 (issuer ruling on row `Z-W2-S17`) -- one path granted
+
+`integrations/bloomberg/research/tests/test_model_block_resolved_exception.py::test_dict_valued_field_unchanged`, at line 69, asserts
+`_resolved_sign("DICT_F", "EXC JP Equity", 1.0) == "NEGATIVE"`. That serves the map's sampled sign against a positive value, which is
+exactly the behaviour VERDICT B supersedes.
+
+**Ruled:** that one assertion expects `"POSITIVE"` (the figure's own sign), with a comment citing CRPS-y-5. The test's other
+assertions, which cover the dict-valued UNIT being unchanged, stay as they are. The path is granted above. Change nothing else in that
+file.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-22 analysis ruling 3 @`a940eb6813`. Dry-run at base CLOUD `afad83a02f`:
@@ -86,4 +144,13 @@ Your worktree is a SPARSE cone (`lib integrations .tools .claude org docs rcg in
 <round>23</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
+
+**AMENDMENT 1 (issuer notes):** round-23 amendment 1 on VERDICT B (msg 27053). Re-opened for cell CRPS-y-5, because the round's issuance gate admits a re-cut only as a MODIFIED order (one issuer per round). Dry-run at base CLOUD 608cd4a257: y5_AC1 FAIL as expected (`plain_disagree 1568 convention_disagree 1 unresolved_kept 602`); y5_AC2 FAIL as expected (no tests ran).
+<status>pending</status>
+
+**AMENDMENT 2 (issuer notes):** row Z-W2-S17 ruled; path granted; the order remains pending.
+<status>pending</status>
+
+**AMENDMENT 1 executed (0.9.0_WK_AMGT_CORPUS~2):** AC3 and AC4 PASS; instance VALID.
 <status>complete</status>

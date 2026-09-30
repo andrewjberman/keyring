@@ -3393,6 +3393,212 @@ carries none.
     "spec_asserts": "Ledger L5/L9 proof = SSM Success on the new version, the merge log line, and the silver partition written by tonight's scheduled fires.",
     "world_is": "Today's realized/transactions inputs had already been merged at 06:37Z and 07:02Z, before the 08:25Z publish -- by timing, worker ~17's pre-publish runs (INFERRED, not attributed by a log); unrealized/allocations inputs are weekly. So tonight's fires had nothing to write. ABSENT is not EXERCISED: the write arm on the stripped documents is unproven.",
     "notes": "Issuer ruling: do NOT fire an ad-hoc run -- it would consume the next input and destroy the scheduled discriminator, which is how tonight's was lost. Re-read 2026-09-30 after the 21:46/21:53Z fires (realized, transaction: expect 'Found 1 new' and a silver/<leg>/2026-09-30 partition written by the fire); unrealized L5 and allocation L9 at the 2026-10-05 21:38/22:00Z fires. MX-s-14 is ruled at the round-4 close: complete once written, or its residual legs carried into round 5."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T09:10Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S1",
+    "hazard_standing": "ARMED",
+    "one_line": "MX-a-8 asks for a C3-valid tool name starting bd_, and no such name exists: bd is not a systems.json key and scopes.json records it as refused in every naming slot. The record names blackdiamond_list_fees instead.",
+    "spec_asserts": "MX-a-8 act item 4: give the first tool 'a C3-valid name starting bd_'; J1 asks for 'one bd_* tool'.",
+    "world_is": "C3 (PRD) requires {system}_{function}[_{qualifier}] with system a key of infra/logic/registry/systems.json. systems.json has 49 keys (read 2026-09-30) and none is bd (blackdiamond is the vendor key). scopes.json firm 49financial carries the alias bd with refused: 'NAMING_SCHEMA.json refused_tokens: refused in every slot; the vendor is blackdiamond, the firm is 49financial'. A bd_* name fails MX-n-1's registration validator. The record names blackdiamond_list_fees (C3-valid).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/systems.json read at worktree HEAD (CLOUD @3ce0240861): 49 system keys, none equal to bd; key blackdiamond class VENDOR.",
+        "infra/logic/registry/scopes.json scopes[0].aliases[0]: spelling bd, refused text as quoted in world_is.",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md:236-244 (C3 text).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~21/analysis-blackdiamond.r5.result.md section Question to tool."
+      ]
+    },
+    "notes": "ARMED because MX-t-13 is cut from this record's name; if its worker face carries bd_ from the order text, registration is refused by MX-n-1. Disarm: cut MX-t-13's face from the record's name, or rule bd_ and accept the refusal."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T09:10Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S2",
+    "hazard_standing": "INERT",
+    "one_line": "MX-a-8 act item 3 asks for the key segment that separates firms in opal-data-bd silver, and there is none: every silver key is silver/<table>/<date>.parquet. Firm separation rests on the bucket and on the z08 account-id prefix, both recorded in the analysis.",
+    "spec_asserts": "MX-a-8 act item 3: 'Name the key segment that separates firms and state that a principal resolves only its own firm.'",
+    "world_is": "No firm or master token appears in any silver key under s3://opal-data-bd/silver/ (key shapes read 2026-09-30 on all 6 dated prefixes: 1 to 3 shapes each). scopes.json lists opal-data-bd as a graded alias of firm 49financial's bucket; account_id carries z08 on 100 percent of rows read (fees 60 newest partitions 47,464 of 47,464; transactions 7,643; realized 10,242; allocations 7,257; unrealized 111,527). The record states the tool's scope rule as the scope argument, the single-prefix read role and a fail-closed z08 assertion, not a key segment.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ListObjectsV2 of s3://opal-data-bd/silver/ read 2026-09-30T08:50Z, 8,061 objects; key shapes tallied per prefix.",
+        "infra/logic/registry/scopes.json scopes[0] (49financial) aliases and scopes[7] (z09 note: 49 Financial ids carry z08, zero overlap).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~21/analysis-blackdiamond.r5.result.md section Scope rule."
+      ]
+    },
+    "notes": "INERT: nothing breaks. Full history of the other tables was not scanned for z09 rows; only the listed objects were."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T09:10Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S3",
+    "hazard_standing": "ARMED",
+    "one_line": "The first tool rests on silver/fees, whose writer cannot be named: the scheduled Playwright fees document last logged a login failure on 2026-09-25, yet bronze/fees lands at 22:20Z and silver/fees at 22:21Z every weekday through 2026-09-29.",
+    "spec_asserts": "MX-a-8 act item 1 and 5: state the producer per leg; a leg stale or dead today never feeds the first tool.",
+    "world_is": "logs/fees-download-2026-09-25.log (read 2026-09-30) ends Download exit code 1 and SKIP: silver conversion skipped; it is the newest fees log (121 logs listed). Yet bronze/fees/Fees_OpalCapital_Daily_2026-09-15_to_2026-09-29.xlsx landed 2026-09-29T22:20Z (also 09-28, 09-25, 09-24 ... at 22:20Z) and silver/fees partitions were last-modified 2026-09-29T22:21Z with data through trade_date 2026-09-28. So a writer outside that document's logged path lands the data. The analysis treats fees as LIVE on the measured data and leaves the writer INFERRED (possibly the BD REST vehicle).",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "s3://opal-data-bd/logs/fees-download-2026-09-25.log read 2026-09-30 (login TimeoutError, exit code 1).",
+        "s3://opal-data-bd/bronze/fees/ listing read 2026-09-30: 133 objects, newest 2026-09-29T22:20Z.",
+        "org/critical_paths/change_management/20260714T1124Z_d1a-bd-rest-vehicle-a_deploy_completion.md names Fees_OpalCapital_Daily in its REST tenancy probe (attribution not verified)."
+      ]
+    },
+    "notes": "ARMED: if the unnamed writer stops, silver/fees goes stale while nothing pages (no monitor by moratorium) and blackdiamond_list_fees would serve an old as_of; its answer envelope states as_of so the staleness is visible to the caller, not to an operator. Disarm: name the writer before the MX-r-7 release, or accept the fees leg as unattributed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S62",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T09:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W21-S1",
+      "NFRA_MCPINDEX-Z-W21-S3"
+    ],
+    "one_line": "RULES worker ~21's two ARMED rows at the MX-a-8 drain (@2f81e5aa77): Z-W21-S1 is DISARMED by MX-t-13 A1 and MX-r-7 A1 -- the integration id is blackdiamond, the tool prefix blackdiamond_, the first tool blackdiamond_list_fees (C3-valid; bd is refused in every slot); Z-W21-S3 is DISARMED by MX-r-7 A1 -- no BD tool is served before r-7's PHASE A names the silver/fees writer from a read-only trace or states it unattributed for the never-widen halves.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/systems.json read 2026-09-30: key blackdiamond, class VENDOR; no key bd.",
+        "task-orders/NFRA_MCPINDEX.TO-MX-t-13.bd-first-tool.md AMENDED A1 and NFRA_MCPINDEX.TO-MX-r-7.bd-release.md AMENDED A1, this commit.",
+        "round5/checks/r5_probe.py t13, t13.AC1.sh, t13.AC2.sh, r7.AC2.sh amended to blackdiamond in this commit; t13.AC1 re-dry-run at base FAIL (registry names blackdiamond=False)."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "S1's hazard (a bd_ name refused at registration) cannot occur once the order names blackdiamond_. S3's hazard (a stale fees leg served) cannot reach a caller before MX-r-7, which now carries the writer's attribution into the halves; the tool's as_of also shows staleness to the caller.",
+    "notes": "The analysis record's other findings (empty 09-28/09-29 transaction workbooks, no proceeds/gain column in silver/realized, bd_assets_dim last_seen_trade_date 2026-04-13) do not touch the first tool's fence and go to the round-5 L10 slug."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "dim_transaction has no unique grain: the producer declares it a per-partition APPEND with no row-unique key, so DATASET_GRAINS is None and cursor paging refuses for this dataset.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/silver/schwab_projections.py:52-54: 'per-partition APPEND, NO row-unique key (refuted from bytes v1.2.1; row identity downstream = (partition, row_position) provenance)'.",
+        "Live objects s3://opal-data-assets/schwab/{08242234,08335338}/silver/dim_transaction/date=2026-09-28/data.parquet: the 4-column key (account_id,tr_cd,cusip,tran_srcde) has 32 and 34 duplicate groups (max 2) over 1271 and 1983 rows; a 10-column key was unique on those two objects only.",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/query.py DATASET_GRAINS['dim_transaction'] = None; tests/test_schwab_transactions.py::test_mx_s15_grain_declared."
+      ]
+    },
+    "spec_asserts": "MX-s-15 step 2: 'Declare the unique grain in DATASET_GRAINS. If the data has no unique grain, declare None so paging refuses, and file a row.'",
+    "world_is": "The data has no unique grain, so None was declared; a rows-mode query returns one page and cannot be paged by cursor for dim_transaction. A caller needing more rows than one page must narrow by filter (account_ref, tr_cd, cusip).",
+    "notes": "Declared None rather than the 10-column key that held on two objects, because one partition does not prove a rule across 679 and 560 partitions."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "one_line": "dim_transaction is declared on the 6 surfaces but NOT on org/standards/NFRA_OPLGTW_CONTRACT.json (datasets, fields), outside this cell's paths: the running gateway still names it dataset_invalid, no grant can carry its columns, and tests/acceptance regresses 8 of 14 because data_entitlement.DATASETS now includes it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/NFRA_OPLGTW_CONTRACT.json @2cae2db258: datasets = [dim_position, dim_balance, dim_asset] (:10-14); fields has no dim_transaction key (:152-187); the IAM prefix list at :253-257 names the three dims only.",
+        "integration.py:427,470 `_enum(dataset, self.rules.datasets, ...)` and catalog.py:601,882 `contract.datasets` read the contract list; ops/schwab_entitlement_admin.py:166-169 approves a column only from contract fields[dataset].",
+        "infra/aws/ec2/opal-gateway: `python -m pytest tests/acceptance/test_local_acceptance.py` -> 14 passed at the cut's base, 8 failed 6 passed with this cell (KeyError 'dim_transaction' at tests/acceptance/conftest.py:289 _fields(), default datasets=de.DATASETS at :260). tests/test_schwab_wiring.py had the same default and was fixed in this cell's own paths."
+      ]
+    },
+    "spec_asserts": "MX-s-15 names 6 surfaces and its <paths> omit org/standards and tests/acceptance; AC1 reads the 6 surfaces only.",
+    "world_is": "A 7th surface (the contract) gates whether the dataset is reachable at runtime, and the acceptance conftest seeds grants from data_entitlement.DATASETS. Shipping this cell without a contract amendment (datasets + fields + additive_fields entry for dim_transaction, and the acceptance conftest default) leaves the gateway unable to serve the table and its acceptance suite red at MX-r-6.",
+    "notes": "Not widened: the contract and tests/acceptance are outside <paths>. The fix is a contract amendment by its owner plus one line in tests/acceptance/conftest.py and test_local_acceptance.py (datasets default), or limiting de.DATASETS default in those harnesses to the contract's datasets as tests/test_schwab_wiring.py now does."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The recorded object name {master}_dim_transaction.parquet (analysis-schwab.result.md:343) is not the live key form: dim_transaction objects are date=<YYYY-MM-DD>/data.parquet, like the dims; newest partition is date=2026-09-28 on both masters.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3 ls s3://opal-data-assets/schwab/08242234/silver/dim_transaction/date=2026-09-28/ -> 59293 bytes data.parquet; 08335338 -> 107339 bytes data.parquet; 679 and 560 date partitions, oldest 2024-01-16 and 2024-07-08; date=2026-09-29 absent.",
+        "data/assets/scripts/silver/schwab_projections.py:93-96 dim_key() builds schwab/<scope>/silver/<dim>/date=<date>/data.parquet.",
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~19/SCHEMA_MX-s-15.md."
+      ]
+    },
+    "spec_asserts": "MX-s-15 facts: the earlier record saw object names {master}_dim_transaction.parquet (:343); the dims read date=.../data.parquet.",
+    "world_is": "The live key form is the dims' form; the object carries 44 columns (39 pinned + 5 provenance), of which 15 are served."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Four gateway tests outside this cell's files fail identically with and without this cell: test_data_entitlement_guard.py (2), test_entitlement_admin.py::test_ogz2_ac06 (1), test_schwab_export_stream.py::test_ogx4_ac03 (1).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run per file from infra/aws/ec2/opal-gateway against a git-archive copy of HEAD (2cae2db258, no cell edits): test_data_entitlement_guard 2 failed 10 passed; test_entitlement_admin 1 failed 8 passed; test_schwab_export_stream 1 failed 2 passed. Same counts with this cell.",
+        "Failure texts: route-table set mismatch (extra '/api/admin', '/', '/assets/{path:path}'); 'expected profile + grant + operator_audit puts, got 4'; ServiceError: memory."
+      ]
+    },
+    "spec_asserts": "AC2 names only tests/test_schwab_transactions.py; the cell moves only the pins its dataset moves.",
+    "world_is": "These failures pre-exist the cell and are unrelated to dim_transaction; not touched."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S63",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T10:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W19-S2"
+    ],
+    "one_line": "RULES Z-W19-S2 (BLOCKING, ARMED) at the MX-s-15 drain (@46587d5134): DISARMED by MX-r-6 AMENDED A1 -- step 0 adds dim_transaction and its 15 served fields to org/standards/NFRA_OPLGTW_CONTRACT.json and fixes the acceptance harness default before the release cut; the ANNOUNCE names the contract change for the CTO's G-A and the never-widen halves; no grant is created or changed (B2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/NFRA_MCPINDEX.TO-MX-r-6.schwab-enable-release.md AMENDED A1, this commit.",
+        "Nothing is deployed before MX-r-6 PHASE B, so the red acceptance suite and the dataset_invalid answer cannot reach the served host first."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "The hazard (a release shipping a declared-but-uncontracted dataset and a red acceptance suite) is removed by step 0 of the only cell that can ship it.",
+    "notes": "The CTO is asked separately whether r6.J1's transaction question may use a grant naming dim_transaction; by default it is graded as a correct refusal."
   }
 ]
 ```

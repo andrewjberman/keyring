@@ -61,3 +61,28 @@ and y-3 drain.
   - Then y-4's pair (the expected diff from the builder, with both branches stated), its NEVER-2 entry, and the act.
   - The L8 packet then goes to `3.0.0_SA_CVO~Z`.
 - Surprise rows from `Z-S68`. Worker rows are `AMGT_CORPUS-Z-W<n>-S<k>`, with `disarm_owner 2.0.0_SA_COO~X`.
+
+---
+
+## AMENDMENT 1 (~09:1xZ) -- cell `CRPS-y-5`, on `1.0.0_SA_CTO~Z`'s VERDICT B (msg 27053; CVO~Z msg 27051)
+
+**Why.** Stop limb 2 of y-4's pair fired after leg (c) (escalation `c68c2a6dfd`, row `Z-S68`).
+`model_block_pull._resolved_sign` serves one SAMPLED per-security sign on every figure of a field. After the map rebuild, 1,568
+figures on the 97 re-derived blocks carry a sign label that contradicts their own value, against 886 before.
+
+**The ruling:** keep y-4's (b) and (c); cut the reader fix; re-derive under a NEW pair signed by the CTO. **Bound: not landed by
+12:00Z -> A (revert) executes.**
+
+| cell | `<risk>` | write set | the build |
+|---|---|---|---|
+| `CRPS-y-5` | LOCAL (direct act; the re-derive is the issuer's under the new pair) | `integrations/bloomberg/research/model_block_pull.py` (`_resolved_sign` only), `.../tests/test_model_block_sign_per_figure.py` (new) | each figure's sign is classified from its OWN value by the builder's `classify_sign` (plain sign, NET_DEBT's net-debt/net-cash pair, CAPITAL_EXPEND's convention); a map sign that is UNRESOLVED stays UNRESOLVED |
+
+**Measured at the cut** (`checks/round23/y5_signs.py` over the 97 served blocks, base `608cd4a257`): `sign_labelled 35518
+plain_disagree 1568 convention_disagree 1 unresolved_kept 602`.
+
+**CTO condition 1 (the formula text), read by this seat:** `lib/research/api/case_rule.py:72-74` computes the Base case from
+`BEST_EPS`. `BASE_FORMULA` = "Bloomberg consensus EPS (FY1, BEST_EPS) x adjusted trailing-median P/E ..." was set by AMGT_RESAPP
+`vv-1` @`c56763731b` under the CTO's round-46 ruling 1. **The new text is the true one, so it is KEPT, not reverted.**
+
+**Order (ruling 1):** y-5 merges; then the new pair; then ONE re-derive of the blocks whose signs move, under `--no-sa-fallback`;
+then y-4's held leg (d) and leg v.

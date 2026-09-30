@@ -104,6 +104,53 @@
     "notes": "Op is not deployed; tests pass on fakes (AC1 7 passed, AC2 12 passed). The gateway-reader cell's own access_state change, or a follow-on cell, must land this before MS-a-2 makes the op live. Exact shape written: pk POLICY#TENANT#<lowercased tid>, sk tenant_firm, record_type tenant_firm, fields tid, firm, registered_at, registered_by."
   },
   {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T09:40Z",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "id": "NFRA_MCPMSP-Z-W1-S1",
+    "one_line": "app/access_state.py refuses the tenant_firm record type: POLICY_RECORD_TYPES lacks it, so AccessState.get/query/operator_transact raise AccessStateRefused (or DependencyUnavailable on decode) for POLICY#TENANT#<tid>, and the reader (MS-t-1) and the writer (MS-w-1) cannot touch the registry through the adapter until that one tuple is extended.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/access_state.py:59 POLICY_RECORD_TYPES = (principal_profile, data_entitlement, operator_audit, email_deny); _as_key (:185-190) and _decode (:320-322) return/raise unless key.record_type is in it (via _expected_type :172-181).",
+        "org/standards/NFRA_OPLGTW_CONTRACT.json declares tenant_firm in state_store.record_types and key_namespaces.POLICY (POLICY#TENANT#<tid>), but access_state.py was not amended.",
+        "Measured in worktree wk-NFRA_MCPMSP-1: asker suites run 22 passed 1 failed; the failure is tests/test_asker_binding.py::test_resolve_asker_class -- resolve_asker_class(<foreign guid>) with the default store raises AccessStateRefused 'not a well-formed POLICY# or RUNTIME# key: Key(pk=POLICY#TENANT#9999..., sk=tenant_firm, record_type=tenant_firm)' before any AWS call.",
+        "Remedy measured, not applied (access_state.py is read-only for this cell): with acs.POLICY_RECORD_TYPES extended by 'tenant_firm' in-process, the same four files (test_asker_scope, test_asker_binding, test_asker_nochannels, test_mcpmsp_asker_firm) run 29 passed 0 failed, including the default-store read of an absent tenant_firm key returning None."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MS-t-1 item 1: firm_of reads the tenant_firm record 'through the existing store (app/access_state.py: strong reads; an unreachable store raises DependencyUnavailable)'; MS-t-1 AC2: the existing asker suites stay at >=23 passed, 0 failed; decomposition section 2 treats access_state.py as read-only for every cell and names the key as a fixed name.",
+    "world_is": "The adapter cannot read or write a tenant_firm key at all. firm_of therefore raises AccessStateRefused for every GUID tid that is not Opal's own, and resolve_asker_class surfaces that as asker_store_unavailable for a real asker (fail closed, no data read; never read as 'unregistered'). AC2 reads 22 passed / 1 failed because one pre-existing test calls resolve_asker_class with the default store.",
+    "notes": "Fails closed (no exposure), so hazard INERT; BLOCKING for the live hop (MS-d-1) and for MS-w-1's register_tenant write through the same adapter. The fix is one tuple entry in a file owned by NFRA_OPLGTW (a cell outside this round's paths), plus the writer-side operator_transact admission for that type if it differs. MS-t-1 deliberately does NOT treat AccessStateRefused as 'absent' (that would make every registered tenant read as tenant_denied and hide this cause). AC2 is recorded as measured, not met."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T09:40Z",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "id": "NFRA_MCPMSP-Z-W1-S2",
+    "one_line": "The task order fixes the partition key and says the firm value is one of KNOWN_FIRMS ('inflection','cottonwood') but names no attribute for the firm in the tenant_firm record, and catalog_gate.KNOWN_FIRMS is actually ('49financial','inflection','cottonwood'); MS-t-1's reader and MS-w-1's writer must agree on both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/NFRA_OPLGTW_CONTRACT.json key_namespaces.POLICY: 'one Microsoft tenant id -> one firm_id' (no attribute name is given).",
+        "infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py:40 KNOWN_FIRMS = (\"49financial\", \"inflection\", \"cottonwood\").",
+        "infra/aws/ec2/opal-gateway/app/tenant_registry.py (this cell): firm_of reads attribute 'firm', accepts 'firm_id' when 'firm' is absent, Malformed when both are present and unequal; the firm must be in catalog_gate.KNOWN_FIRMS as written (so 49financial is accepted by the reader; the writer's own BAD-FIRM/LIVE_FIRMS refusals keep it from being registered)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MS-t-1 item 1: 'The firm value is one of catalog_gate.KNOWN_FIRMS (\"inflection\", \"cottonwood\")'; MS-w-1 item 1 refuses a firm not in (inflection, cottonwood) with BAD-FIRM.",
+    "world_is": "KNOWN_FIRMS carries a third member, 49financial. The reader follows the named constant (three firms); the writer's own two-firm refusal is what keeps 49financial out of the registry. No firm attribute name is fixed by the contract or either order.",
+    "notes": "Reconcile at the merge: if MS-w-1 writes the attribute as 'firm' the reader is exact; if it writes 'firm_id' the reader also accepts it. No change needed if so."
+  },
+  {
     "id": "NFRA_MCPMSP-Z-S2",
     "project": "NFRA_MCPMSP",
     "fabric": "site-z",
@@ -126,6 +173,53 @@
     "spec_asserts": "PRD v0.3 C5: the per-firm role reads its firm's bucket (opal-data-inf for Inflection, record s.10 card 5 'current buckets for now') AND its firm's prefixes in opal-data-portal-v2, with a bucket-scoped Deny on every other firm's bucket.",
     "world_is": "Round 1's role (MS-t-2 AMENDMENT 1) reads only opal-data-portal-v2/platinum/mdpf/inflection/*, named and addressed through module opal_name; no firm-bucket Allow and no literal cross-firm Deny (the buckets' own live fences deny foreign principals). FWD-1 is served; C5's firm-bucket read is not yet expressible through the builder.",
     "notes": "Not blocking round 1 (A1's figures live only under the portal prefix). Needed before any cell reads opal-data-inf: a registry route that yields the routed bucket for a firm (an LGIC act), or an R20 departure Andrew acknowledges. The CTO rules which."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:10Z",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "id": "NFRA_MCPMSP-Z-W1-S3",
+    "one_line": "MS-t-1 AC2 cannot reach 0 failed: tests/test_access_state.py::test_ogd1_ac03 also asserts the literal POLICY key count is 3 (counts == {'POLICY': 3, 'RUNTIME': 6}), stale since email_deny landed; with tenant_firm admitted the count is 5, and the test file is outside this order's paths.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/tests/test_access_state.py:293 `assert counts == {\"POLICY\": 3, \"RUNTIME\": 6}` where counts tallies every contract record type that is in acs.POLICY_RECORD_TYPES (:284-293).",
+        "Measured in wk-NFRA_MCPMSP-1 after AMENDMENT 1 items 7-8 (access_state.py adds tenant_firm): `pytest tests/test_access_state.py` -> 1 failed, 6 passed; E {'POLICY': 5} != {'POLICY': 3}. The first assert (sorted(types) == sorted(RECORD_TYPES)) now PASSES; this is the next assertion in the same test.",
+        "The literal 3 pre-dates email_deny (3e936f77bd, NFRA_OPLGTW OG-e-1, made the POLICY set 4): at CLOUD before this cell the set was 4 against a literal 3, so the test was red on its first assert AND would have been red here on this one; the amendment's 'test_ogd1_ac03 red at the amendment, the contract gap this cell closes' counted only the first.",
+        "t1.AC2.sh on the branch: 'asker + adapter suites: 1 failed, 40 passed' -> RESULT: FAIL, exit=1. AC1 (7 passed) and AC3 (verdict=OK) PASS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MS-t-1 AMENDMENT 1 / AC2: the asker suites and the adapter's own suites (incl. test_access_state.py) pass with 0 failed and at least 41 passed once tenant_firm is added to POLICY_RECORD_TYPES; test_ogd1_ac03 is 'the contract-vs-adapter gap this cell closes'.",
+    "world_is": "The gap this cell closes is two gaps: the contract-vs-adapter record-type set (closed: first assert passes) and a stale literal count in the test (3, now 5 with the contract's five POLICY types). tests/test_access_state.py is NFRA_OPLGTW's file and is not in this order's <paths>, so the worker cannot edit it.",
+    "notes": "Fails closed, INERT. Remedy for the issuer: grant tests/test_access_state.py (one literal, 3 -> 5) or amend AC2's floor to exclude test_ogd1_ac03 (40 passed + this one named red); the adapter change itself is complete and measured (7 passed in test_mcpmsp_asker_firm.py incl. test_tenant_firm_admitted_by_adapter; test_email_deny.py and the other three asker suites all pass)."
+  },
+  {
+    "id": "NFRA_MCPMSP-Z-S3",
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MS",
+    "surfaced_at": "2026-09-30T12:20Z",
+    "one_line": "MS-t-2's merge (@289bde0b4a) put the first local-module call (module opal_name) into infra/aws/terraform/opal-gateway, so every plan or apply there from a .terraform that has not run `terraform get` since fails 'Error: Module not installed'; the site-Z main tree was repaired by the issuer, other checkouts (the laptop, any linked worktree with its own .terraform) will hit it once.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Main tree, 2026-09-30 after the MS-t-2 drain: `terraform plan -target=aws_iam_role.gw` (TF_DATA_DIR = the main tree's .terraform) -> 'Error: Module not installed' x3; .terraform held providers/ and terraform.tfstate only (no modules/).",
+        "Issuer's repair: `terraform get` in the main tree (local module path ..\\modules\\opal_name, no network) registered inf_firm_assume_policy_name, inf_firm_reader_policy_name, inf_firm_reader_role_name; the same plan then read 'No changes. Your infrastructure matches the configuration.'",
+        "infra/aws/terraform/opal-gateway/mcpmsp_firm_roles.tf (CLOUD @289bde0b4a): three module blocks with source ../modules/opal_name."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition section 7 (iv): MS-t-2 builds and names; it creates no resource -- and by the cut's reading moves no other seat's workflow in the directory.",
+    "world_is": "The directory's plans now need a one-time `terraform get` per .terraform. The failure is loud (a named Terraform error with an obvious one-command fix, no network), never silent, so INERT. Site-Z main tree: repaired.",
+    "notes": "Remedy on any other checkout: run `terraform get` once in infra/aws/terraform/opal-gateway (local only). Carried to the drain-end read for the other fabric's seats that plan this directory (NFRA_OPLGTW, NFRA_MCPORTAL, NFRA_MCPINDEX)."
   },
   {
     "id": "NFRA_MCPMSP-Z-W2-S3",
