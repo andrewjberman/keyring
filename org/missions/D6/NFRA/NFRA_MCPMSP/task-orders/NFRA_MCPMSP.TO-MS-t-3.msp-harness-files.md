@@ -47,6 +47,14 @@ Build, in your nested `opal_ai` worktree:
      (`C:\opal_runtime_msp\opal_ai`, `C:\opal_runtime_msp\state`, the same workspace probe file, `PROD`) plus
      `"account_name": "Opal_MSP"`.
 
+**AMENDMENT 1 (issuer, 2026-09-30, on the CTO's release ruling msg 27126).** The four shared scripts are NFRA_OPALAI's;
+its `OA-t-3` round-2 order (`NFRA_OPALAI.TO-OA-t-3.r2-runtime-setup-launch-gate-fence.md`) will edit them later and
+is held on Andrew's acts, unstarted. The CTO released this cell to edit them now, on two conditions you must meet:
+- an ABSENT `account_name` key means `Opal_Agent` with BYTE-IDENTICAL behaviour (AC2's default-config arm is that
+  proof);
+- your nested `opal_ai` commit message NAMES `OA-t-3` (e.g. "additive account_name key, default Opal_Agent -- read by
+  NFRA_OPALAI OA-t-3 r2") so that order's issuer sees it.
+
 ## 2. BOUNDS
 
 1. Write surface: the four scripts and `opal/runtime-msp/**` EXCEPT `opal/runtime-msp/record/` (the next order in your
@@ -99,6 +107,11 @@ is opal_ai DEV HEAD at that time. Checks dry-run at base: AC1 FAIL as expected (
 `opal_ai` gitlink is the README-only `90ca424fc7`); AC2 FAIL as expected (script absent at the gitlink). AC2's
 default arm controlled against opal_ai DEV `fd8ab8a57f` bytes: `-Plan` prints `PLAN: CREATE-USER Opal_Agent` and eight
 plan lines, no act. Slot `~4` continues to MS-t-4, then MS-a-3.
+
+**AMENDMENT 1 (issuer):** the hold on sequencing (a) is RELEASED by the CTO (msg 27126: "released. MS-t-3 may edit
+opal_ai/opal/runtime/{launcher,launch-gate}.ps1 and provision/*.ps1 now"; OA-t-3 r2 is held on Andrew's G-ACCT/G-AUTH,
+unstarted). Conditions carried onto the face: byte-identical no-key behaviour; the commit names OA-t-3. Spawn at
+opal_ai DEV `fd8ab8a57f`. No criterion changes. Graded by: no gate limb grades a modification's criteria.
 
 <status>staged</status>
 <round>1</round>
