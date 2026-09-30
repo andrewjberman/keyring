@@ -3938,6 +3938,94 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "notes": "Cites AMGT_HARVST-Z-W78-S1: its cause is fixed and proven; graduation is the CVO L9 transfer, not a worker act."
     },
     {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S1",
+      "one_line": "The order says the wsj backfill stop needs `_stop_paging` to read `_hit_date`; it already does. The wsj backfill's hits were bare {url} dicts, so `_hit_date` widening alone would not have moved the stop. The dow_jones loop now carries each wsj item's dates onto its hit.",
+      "spec_asserts": "Order section 1 change 1: `_stop_paging` reads `_hit_date` too, so a wsj backfill stops older_than_bound on a page whose hits all predate the floor.",
+      "world_is": "publishers.py `_stop_paging` (~:184) already read `_hit_date` at base 123befacf8; the wsj/barrons loop (`dow_jones`, ~:708) built `hits = [{\"url\": u} for u in urls]`, dropping every listing date. Adding timestamp/printPublicationDate to `_HIT_DATE_KEYS` changed the live reach (worker.fold_listing_reach reads full silver rows) but left the backfill stop undated. Fix inside publishers.py (an order path): `DowJones._parse_dates` (wsj only, empty for barrons) and `discover()` records `page_dates`; the loop builds each hit as {url, timestamp, printPublicationDate}. Barrons and every other publisher's hits are unchanged. AC1 (b)/(c) and their mutants (base keys; hits carried without dates) prove it.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py DowJones._parse_dates and the dow_jones hits line",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1_ac1_output.txt: test_ab1b_mutant_undated_hits_carried_without_dates_fails PASSED"
+        ]
+      },
+      "notes": "The paging change the issuer ruled on Z-W76-S1 is real but took this second edit to take effect. Issuer to confirm the wider edit is inside the ruling."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S2",
+      "one_line": "A live wsj reached_span ends at the FETCH date, not the newest hit date: `reach_span` (unchanged by this cell) runs from the oldest dated hit through the newest fetch date. AC1 (a) asserts that reading.",
+      "spec_asserts": "AC1 (a): a live wsj page's hits yield a reached_span equal to their own date bounds, basis listing_dates.",
+      "world_is": "worker.reach_span (o-1) sets end = max(fetch_dates) whenever a live page was fetched; only a cache-only job takes end from the hits (from_cache). Replay of the recorded wsj page wsj_p1_e513433c8e6841d6.html (20 hits, 2025-11-20 .. 2026-09-23): reached_span = {start 2025-11-20, end 2026-09-30 (the fetch day), basis listing_dates}. The start is the oldest hit; the end is not the newest hit (2026-09-23). reach_span was not edited: the order names no change to it.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1_ac2_output.txt: wsj reached_span {start 2025-11-20, end 2026-09-30, basis listing_dates}",
+          "lib/opal_data_harvest/worker.py reach_span (:136-157)"
+        ]
+      },
+      "notes": "If 'their own date bounds' means end = newest hit date, reach_span needs a ruling and a further cell; the cell as cut does not change it."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S3",
+      "one_line": "events.jsonl alone does not record a body rejection: the seed derives it by joining each bbg job_finished event to the job's result file (runs/<name>.json), because the events carry only http and job_finished lines.",
+      "spec_asserts": "Order section 1 change 3: `failed_days` and `last_failed_day` are derived from the key's recorded body rejections in the runtime events.jsonl.",
+      "world_is": "The runtime events.jsonl has three http events for bbg:NM5NLQ6K50XZ01 (200 04:45, 200 04:54, 403 08:41 on 2026-09-30) and no rejection event. The rejections are in the result files each job_finished event names: jobs 20260930T044003Z-bbg-c268841b7e and 20260930T045332Z-bbg-301ffc37d9 list the key in fetched_keys, not in accepted, with one rejected entry short_or_partial_body (a 1:1 join by count, unambiguous). The 403 job (084110Z, request_rejected, no_outcome_recorded) is not a body rejection and adds no day. Result: 1 failed day (2026-09-30), state held, same as the order's note. The run_records' keys_rejected are empty for this key (they predate p-2).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1_ac2_output.txt: evidence lines and derived row",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/scripts/ab1_seed_hold.py body_rejection_evidence"
+        ]
+      },
+      "notes": "The join is by counting and holds only where unambiguous; a job with mixed rejection kinds derives no row. Later collector runs record fetch_outcomes, which the script reads first."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S4",
+      "one_line": "`_hit_date` now reads timestamp/printPublicationDate for EVERY publisher; the recorded sa and bbg listing pages carry neither, ft hits are url-only, but no barrons listing page is recorded to check.",
+      "spec_asserts": "Order section 1 change 1: nothing else changes for any other publisher's hits.",
+      "world_is": "Measured over the runtime harvest_listing/ pages: 3 bbg pages (30 hits: dated only by publishedAt) and 2 sa pages (40 hits: publishOn) carry no timestamp or printPublicationDate; ft hits are {url}. No barrons page is recorded there (wsj: 5 pages), so a barrons item carrying `timestamp` cannot be excluded: its live reach (worker.fold_listing_reach, silver rows) would then gain dates. The barrons backfill stop is unchanged (its hits stay {url}).",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "runtime harvest_listing/ bbg_p1_*.json, bbg_p2_*.json, sa_p1_*.json, wsj_p*.html (read-only scan)",
+          "lib/opal_data_harvest/publishers.py DowJones._parse_dates returns {} unless pub == wsj"
+        ]
+      },
+      "notes": "INERT: a barrons date read only widens reach to what the page showed."
+    },
+    {
       "id": "AMGT_HARVST-Z-S46",
       "project": "AMGT_HARVST",
       "fabric": "site-z",
@@ -3959,6 +4047,141 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "ARMED against HVST-ab-3 (batch 1 would spend bbg fetches on pre-floor stories for each of 10 names). Disarm: HVST-ab-1 AMENDMENT 1 -- in backfill, a hit whose own date is before the floor is not fetched and is recorded skipped_pre_floor; an undated hit is still fetched. The 9 pre-floor pairs already in the ab-2 expected write are kept (gold is the pair store; the page window is the floor), named in the ab-2 halves."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:55Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S5",
+      "one_line": "Change 4's 'floor' is the job's bound_date, which is max(floor, per-(security,publisher) watermark): once a watermark exists, a dated hit before the WATERMARK (not only before the floor) is also not fetched.",
+      "spec_asserts": "Order section 1 change 4: in backfill, a listing hit whose own _hit_date is before the job's floor is not fetched.",
+      "world_is": "publishers.bloomberg/seeking_alpha/dow_jones read `bound = self.bound_date` (worker.py sets it to harvest_grammar.backfill_bound = max(floor, watermark)), the same bound _stop_paging already stops on. The new gate (Publisher._pre_floor_skip) uses that same bound, so it is the SAME semantic as the paging stop: a hit older than the watermark was already collected by an earlier run. With no watermark (all three recorded replays, a first run) bound == floor 2026-01-01 and the gate is exactly the order's text.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/harvest_grammar.py backfill_bound (:157-165)",
+          "lib/opal_data_harvest/worker.py client.bound_date = backfill_bound(...) (:473-478)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1_ac2_output.txt section 4"
+        ]
+      },
+      "notes": "Kept: reading 'the job's floor' as the job's bound keeps the fetch gate and the paging stop on one number. If the issuer wants the literal config floor only, the gate reads config backfill_floor instead of bound_date (a one-line change in worker.py plus a client attribute)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:55Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S6",
+      "one_line": "The order's 'bbg pages carry publishedAt on 30 of 30 hits, 22 before the floor' counts every hit; only 17 of the 30 are subtype Article (the only hits bloomberg() ever fetches), 13 of those 17 are before the floor.",
+      "spec_asserts": "Order amendment 1 / row Z-S46: the three recorded bbg Lenovo pages carry publishedAt on 30 of 30 hits, 22 before the floor.",
+      "world_is": "AC2 section 4 replays the three pages in backfill at floor 2026-01-01 and counts fetch candidates (subtype Article with a resourceId): p1 30dc8b: 5 hits, 3 pre-floor, 2 fetched; p1 93ba43: 5, 3, 2; p2 f24dcb: 7, 7, 0 -- 17 hits, 13 skipped_pre_floor, 4 fetched (base: 17). The other 13 of the 30 are non-Article hits that the loop never fetches at base or after. So the gate saves 13 fetches over these pages, not 22; bbg:NM5NLQ6K50XZ01 (page 2, dated 2015-04-02) is now skipped_pre_floor rather than reaching the hold.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1_ac2_output.txt section 4: TOTAL over 3 pages: hits=17 dated=17 pre-floor=13 | fetched=4 skipped_pre_floor=13"
+        ]
+      },
+      "notes": "Two of the three pages are two different p1 queries of the same search, so the 17 counts a story id twice where both pages list it; per-page counts are printed, not deduplicated."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T14:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W81-S7",
+      "one_line": "For sa, ft and bbg the saved-session file is NEWER than the Secrets session, so 'the Secrets session first' starts a job from the OLDER token and is likely to draw the 401 (and a sign-in) this cell exists to avoid.",
+      "spec_asserts": "Order section 1 change 5(b): a job starts from the stored token of a prior successful run -- the Secrets session for ft, sa and bbg, the saved-session file for wsj and barrons.",
+      "world_is": "The token-source census (ab1b_ac2_output.txt section 6, names and mtimes only): Secrets session last changed sa 2026-09-10 (seeking-alpha/session), ft 2026-09-10 (astn/ft/session), bbg 2026-09-11 (bloomberg/session); the collector's saved-session file mtime is sa 2026-09-26, ft 2026-09-15, bbg 2026-09-30 (UTC). The saved file is rewritten by persist_http_cookies after each job (rotated cookies) and by every sign-in, the Secrets session only by a harvester park, so it is the later token by 5 to 19 days. TokenFirstSessions._stored_envelope follows the order as written (Secrets first, the file only when Secrets holds none). A bbg sign-in is a browser harvest with a challenge.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1b_ac2_output.txt section 6 (census lines for sa, ft, bbg: Secrets 'changed' date against saved-session file 'mtime')",
+          "lib/opal_data_harvest/sessions.py TokenFirstSessions._stored_envelope",
+          "lib/opal_data_harvest/auth.py SessionManager.persist_http_cookies (vault.save after each job)"
+        ]
+      },
+      "notes": "Not decided here. If the issuer wants the freshest of the two, _stored_envelope compares the Secrets secret's LastChangedDate with the file mtime (one describe_secret, no value read) and takes the newer; it is a local change inside sessions.py. Armed against the first batch that collects from sa, ft or bbg (ab-3)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T14:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W81-S8",
+      "one_line": "The worker reads the sign-in credentials from Secrets as a presence check and a recorded secret name; the harvester scripts (outside <paths>) read the same secret again themselves, because no credential value is passed to them.",
+      "spec_asserts": "Order section 1 change 5(a): a sign-in reads its publisher's credentials from Secrets Manager; none is typed or prompted for.",
+      "world_is": "The sign-in itself is the canonical harvester subprocess or module (auth.SessionManager._refresh -> dowjones_harvest_session.py / harvest_local_session.py under org/tier1_exec/4.0.0_SA_CRO/scripts/), which already reads its credentials from Secrets by name (dowjones/credentials, astn/ft/credentials, seeking-alpha/credentials, google/andrew-goldengate/credentials). Those files and auth.py are outside this order's <paths>. TokenFirstSessions.refresh therefore reads the credentials (credentials.SecretsReader.read_credentials), refuses the sign-in with AccountUnavailable when the secret is unreadable, records the secret NAME, and hands the values to an injectable signin(publisher, credentials); the default signin calls SessionManager.refresh, which re-reads. A value is not passed through argv or the environment, to keep it out of process listings and logs.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/sessions.py TokenFirstSessions.refresh",
+          "lib/opal_data_harvest/credentials.py CREDENTIAL_SECRETS / SecretsReader.read_credentials",
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/dowjones_harvest_session.py CREDENTIAL_SECRET (:18) and get_secret_value (:37)"
+        ]
+      },
+      "notes": "Two reads of one secret per sign-in; the second is the harvester's own. Collapsing them needs a harvester edit (outside this order)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T14:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W81-S9",
+      "one_line": "The 'invalid session' 403 markers are the worker's own list: the order names the class ('a 403 whose kept body says the session is invalid') but no recorded body, and the runtime history holds none.",
+      "spec_asserts": "Order section 1 change 5(d): a 403 whose kept body says the session is invalid, persisting after backoff, marks the token expired.",
+      "world_is": "The runtime history (148 run files in .runtime/opal-data-harvest/runs/, events.jsonl): 0 jobs kept a rejected_response body, 0 http events with status 429, and 401/403 events only as bbg 403 x15, ft 403 x2, barrons 401 x5. So no invalid-session 403 body is recorded to match, and no 429 has been seen on this runtime. transport.INVALID_SESSION_MARKERS is therefore a conservative guess (invalid session, session expired, not logged in, login required, ...); a 403 matching none of them stays RequestRejected as before, and a challenge body always keeps its repair path.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/transport.py INVALID_SESSION_MARKERS",
+          "count over .runtime/opal-data-harvest/runs/*.json (148 files, rejected_response present in 0) and events.jsonl (http status 429 in 0, 401 in 5, 403 in 17)"
+        ]
+      },
+      "notes": "Inert until a real invalid-session body is kept; the marker tuple is one line to correct then."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T14:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W81-S10",
+      "one_line": "A non-challenge 401 now raises AuthExpired (a sign-in) after one wait, where the base raised RequestRejected (cooldown 900, no sign-in); the RequestRejected docstring and the q6 mutant anchor still carry the old wording.",
+      "spec_asserts": "Order section 1 change 5(d): only a 401, or a 403 with an invalid-session body, that persists after backoff marks the token expired.",
+      "world_is": "transport.PacedSession.get retries a 401 auth_confirm_retries times (default 1) with backoff, then raises AuthExpired, so worker.run_job's existing AuthExpired branch signs in ONCE (attempt 0), then auth_failed_after_refresh with a 3600 s cooldown on a second. The base classified every non-challenge 401/403 as RequestRejected ('not evidence the session expired'); that docstring in transport.py is left as written. test_q6_barrons_guard_ft_body.py mutates the exact line 'rejected = self._rejected_response(response, kwargs)' in transport.py, so that line is kept verbatim in _resolve. Recorded barrons history has 5 http 401 events, which under the new code would each reach a sign-in after one wait unless they carry a challenge body.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/transport.py PacedSession.get / _resolve",
+          "lib/opal_data_harvest/test_q6_barrons_guard_ft_body.py BODY_ATTACH (:280)",
+          "lib/opal_data_harvest/worker.py except AuthExpired branch"
+        ]
+      },
+      "notes": "The change is the order's own; filed because it moves a class (RequestRejected -> AuthExpired) that a docstring and a neighbouring test describe."
     }
   ]
 ```
