@@ -3759,6 +3759,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Not touched by this cell (no silver write). The round-28 rebuild order needs to say what happens to the 11 empty keys."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W72-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~72",
+      "surfaced_at": "2026-09-30T09:30Z",
+      "one_line": "The TO's <expect> 'ELIGIBLE UNDER (bbg, wsj):' is a regex to proof-of-spec-check, so its literal parens never match the script's verbatim output; a PASS row is refused until the instance's expect is regex-escaped (same class as AMGT_HARVST-Z-W68-S1).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order AC1: expect 'ELIGIBLE UNDER (bbg, wsj):' is the deciding output line.",
+      "world_is": "proof-of-spec-check does re.search(expect, output_evidence); '(bbg, wsj)' groups as 'bbg, wsj', so the verbatim line 'ELIGIBLE UNDER (bbg, wsj): 0 of 191' failed the match until the instance carried expect 'ELIGIBLE UNDER \\(bbg, wsj\\):'.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~72/q3_ac1_output.txt: line 'ELIGIBLE UNDER (bbg, wsj): 0 of 191'; proof-of-spec-check first run INVALID on this match"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Instance expect differs from the TO text only by regex escaping; the check scripts were not edited."
     }
   ]
 ```
