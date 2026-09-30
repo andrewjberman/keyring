@@ -4372,6 +4372,28 @@ carries none.
       ]
     },
     "notes": "INERT: nothing is armed; the cell is uncommitted. Ways forward, the issuer's or the CTO's to choose: (A) a two-commit route in which a commit first lands each file with NO refused literal (the address read from gateway configuration, or the tf locals fed by variables) and a later commit makes the literal an EXISTING one under the waiver, which reopens the fence design; (B) a CTO ruling that admits a NEW literal under a waiver (a gate change, owner 1.0.0_SA_CTO~O / 0.0.0_AB_MSTR); (C) a first commit of the two files with the literals removed from the graded lines is not possible for a hand-kept literal without changing the fence. The worker has not chosen and has not bypassed the gate."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T17:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S11",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "CLOUD advanced to 195e74f5ea (MX-t-10 etfs_get_positioning landed in the same gateway files) while this worker's merge of 7aba7bcc4d was committing; the merge commit's pre-commit hook took about 35 minutes.",
+    "spec_asserts": "Order step 1: bring CLOUD in (CLOUD @7aba7bcc4d carries the R20 carrier) and move the count pin to CLOUD's 53 plus this cell's one tool.",
+    "world_is": "The merge of 7aba7bcc4d landed as 975832d5ad and the count pin is 54 against it. git log HEAD..CLOUD now lists MX-t-10's drain 29a40f5d4c and its close 26cc4e7252, whose measured diff against this branch (git diff --stat HEAD...CLOUD) is data_entitlement.py, portal_index/integration.py, test_portal_index.py, DATA_CATALOG.yaml, emit_catalog_v02.py and a new catalog_entries/portal_etfs_positioning.yaml -- data_entitlement.py, DATA_CATALOG.yaml and emit_catalog_v02.py are files this cell also edits, and CLOUD's MX-t-10 adds a portal_index tool, so the registered-tool pin and the portal_index entry of the per-integration pin in test_entitlement_admin.py move again (55 expected, unmeasured) and the catalog re-emits when the drain merges. The merge commit (1,806 staged paths) spent about 35 minutes in the pre-commit chain: surprise-row-gate.py's standing corpus pass ran at about 7 percent CPU with no child process; a first attempt run in the foreground was killed at the 300 s tool bound and had to be re-run in the background.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --oneline HEAD..CLOUD (CLOUD 195e74f5ea) 2026-09-30.",
+        "git log -1 975832d5ad (merge of CLOUD 7aba7bcc4d)."
+      ]
+    },
+    "notes": "INERT: the drain merge of this branch onto CLOUD is expected to conflict in data_entitlement.py, DATA_CATALOG.yaml and emit_catalog_v02.py; the resolution is both sides plus a re-emit of DATA_CATALOG.yaml through emit_catalog_v02.py and the pins moved."
   }
 ]
 ```
