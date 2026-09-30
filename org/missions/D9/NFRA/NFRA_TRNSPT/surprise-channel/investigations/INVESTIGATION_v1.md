@@ -343,6 +343,51 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "The inline default carries the three domains 49financial.com (firm key 49f), inflectionwealth.com (inflection), cottonwoodmail.com (cottonwood).",
     "world_is": "Hand-typed firm identifiers in a new data/ file are refused by the naming gate; the registry carries the same three domains, so the default is registry-derived with the scope key as the firm key. Downstream cells that expect the literal '49f' in recipient_firm (TR-w-1, TR-k-1) see '49financial' from the default table; TR-a-1's client_domains.json firm_key value governs when that file lands.",
     "notes": "The order's mixed key forms (49f is a short form; inflection and cottonwood are long keys) are the reason to prefer the registry's single key form."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S10",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T19:00:00Z",
+    "one_line": "The irpt-requests table holds no request composition (variant, comparison_keys, account type, holdings): a full read-only scan of 1102 items found 0 carrying them, so the replay set is the six invented fixture requests.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "boto3 dynamodb scan of irpt-requests (us-east-1), read-only, 2026-09-30: 1102 items scanned; request_revision prefixes: RETENTION 447, ARTIFACT 188, SELECTION 146, REPORT 117, PERFORMANCE_ACCEPTED 112, UPLOAD 25, NORMALIZATION 25, INPUT 21, analysis 15, PERFORMANCE_USE 6",
+        "REPORT# items (117) carry only ref{sha256,report_id,revision,immutable,report_kind}, tenant, blob{version_id,bucket,key}, owner{...}, retention_ref, request_revision (attribute-name census; values not printed); SELECTION items (146) and 'analysis' items (15) carry a JSON string of owner/account_set and identity/composition_ref fields; no item has variant, comparison_keys, account_type or holdings",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/report_index.py publish(): the REPORT# item is ref/owner/blob/retention only; the Generate composition sits behind analysis.record composition_ref (an artifact blob), which this order's read-only table scan does not open",
+        "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/0.9.0_WK_NFRA_TRNSPT~4/R1_REPLAY_REQUESTS.json: source fixture, items_scanned 1102, composition_items 0, count 6 (invented requests from replay.FIXTURE_REQUESTS)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-q1 build item 2: a read-only scan of irpt-requests for REPORT#/request items yields variant, comparison_keys, an account-type field and holdings category weights for the replay set.",
+    "world_is": "The table projects none of those fields; replay.py --extract-irpt scanned 1102 items, found 0 compositions and wrote the six invented fixture requests as the order directs. A real replay set needs the composition blobs (analysis.record composition_ref), an S3 read of client-bearing artifacts this order does not grant.",
+    "notes": "project_item() in replay.py is tested on a synthetic item only; it has never met a real composition, so its field names (variant, comparison_keys, account_type, holdings[].category/weight) are the face's, unverified against real data."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S11",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T19:10:00Z",
+    "one_line": "The naming limb of safe-commit refuses every commit that stages a .py/.json file because systems.json rows outlook (index 48) and sharepoint (index 49) are VENDOR rows with no display_name; the fix is outside this order's paths, so the slicer, replay, tests and proof instance are uncommitted.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... on the q1 paths, 2026-09-30 ~19:05Z: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' naming-gate: 'the registry is refused by validate (2 refusal(s)): systems.json[48].display_name: a VENDOR row carries the words a served face prints; missing or empty'",
+        "python read of infra/logic/registry/systems.json at this worktree HEAD fb2d56e333 (the merge of CLOUD 13337dbd4e): VENDOR rows with no display_name = 2 of the VENDOR rows: outlook (48), sharepoint (49); the same two rows are in CLOUD (git log CLOUD -- infra/logic/registry/systems.json: 8e9ed1b539 added them from ~3, cd2ffcca99 added display_name to the 23 VENDOR rows that then existed)",
+        ".tools/safe-commit.sh:736-745: the limb runs whenever the staged set holds a *.py/*.json/*.yaml/*.tf/*.js file; an .md-only commit is not refused"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker commits its owned paths through safe-commit.sh and the naming limb grades the commit's own files.",
+    "world_is": "The limb validates the whole registry, and the registry on CLOUD is invalid on two rows the NFRA_TRNSPT chain C added, so no .py/.json commit passes on any branch that carries them. Adding a display_name to those two rows is one edit in infra/logic/registry/systems.json, which is not in this order's grant.",
+    "notes": "Criteria were run on the uncommitted files: AC1 20 passed; AC2 SLICER-REPLAY client_identifiers=0 requests=6 with_candidates=6 fallback=2 no_precedent=0. The issuer or the registry's owner lands the two display_name values (owner claim for the rows: D9); then the files commit unchanged."
   }
 ]
 ```
