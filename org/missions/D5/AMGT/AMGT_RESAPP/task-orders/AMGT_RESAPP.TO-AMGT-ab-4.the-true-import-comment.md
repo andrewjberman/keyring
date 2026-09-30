@@ -53,6 +53,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 ~188 after ab-2 (same file).
 
 <status>pending</status>
+<status>complete</status>
 <round>52</round>
 <slot>~188</slot>
 <fabric>site-z</fabric>
