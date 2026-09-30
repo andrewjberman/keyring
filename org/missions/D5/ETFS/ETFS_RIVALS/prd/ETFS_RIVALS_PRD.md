@@ -377,8 +377,14 @@ page itself.
 `integrations/bloomberg/pipeline/etf_constituents_pull.py`.
 - The first Addendum-A cell MEASURES that producer's output against FWD-2/3's grain: daily, share counts, and history depth.
 - If it meets the grain, this pipeline READS it into silver as a named source.
-- If not, the fund joins this pipeline's Bloomberg request and the old pull stops writing that fund in the same window.
-- **Never two producers of one fund's holdings** (CLAUDE.md, no duplicate output path).
+- If not, the fund joins this pipeline's Bloomberg request.
+- **(v0.4, Andrew-direct 2026-09-30 ~20:2xZ: "we're leaving the existing pull alone")** The Positioning pull is NOT modified. It
+  keeps landing IDVZ and PFOE, and its derived scalars, for its own consumers.
+  - Where RIV-m-1 measured it short of the grain (both funds: JOIN_BLOOMBERG), this pipeline lands its own copy.
+  - **This pipeline READS ONLY its own landing.** No ETFS_RIVALS reader reads `bbg/*/constituents/`, and no reader outside it reads
+    this pipeline's landing as a substitute for the Positioning pull's.
+  - The two landings serve different consumers, and each has one writer.
+  - This v0.4 line replaces v0.3's "the old pull stops writing" and "never two producers of one fund's holdings" on his word.
 
 **C-INCOME-CLEAN (Addendum A FWD-5; Andrew: "did we already account for dividend/interest income? That should be covered").**
 - Before any residual reads as a trade, trade inference:
