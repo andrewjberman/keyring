@@ -44,6 +44,150 @@
         "occurrences": 1,
         "reference_count": 3
       }
+    },
+    {
+      "id": "NFRA-MCPINDEX-R20-01",
+      "file": "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml",
+      "literal": "platinum/etfs/positioning_data.json",
+      "remediation": "ETFS_CANON",
+      "purpose": "MX-t-10 ETF catalog row (portal_index read of the served platinum/etfs key)",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md",
+        "pin": "e692000c06fe5ac35f07f0f2a937945978f503d3"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X11",
+        "occurrences": 1
+      }
+    },
+    {
+      "id": "NFRA-MCPINDEX-R20-02",
+      "file": "workflows/atom_decomposition/emit_catalog_v02.py",
+      "literal": "platinum/etfs/",
+      "remediation": "ETFS_CANON",
+      "purpose": "MX-t-10 emitter source for the ETF catalog row",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md",
+        "pin": "e692000c06fe5ac35f07f0f2a937945978f503d3"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X11",
+        "occurrences": 3
+      }
+    },
+    {
+      "id": "NFRA-MCPINDEX-R20-03",
+      "file": "workflows/atom_decomposition/emit_catalog_v02.py",
+      "literal": "platinum/etfs/positioning_data.json",
+      "remediation": "ETFS_CANON",
+      "purpose": "MX-t-10 emitter source for the ETF catalog row",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md",
+        "pin": "e692000c06fe5ac35f07f0f2a937945978f503d3"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X11",
+        "occurrences": 1
+      }
+    },
+    {
+      "id": "NFRA-MCPINDEX-R20-04",
+      "file": "infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py",
+      "literal": "opal-data-bd",
+      "remediation": "ADVI_FIRMBKTS",
+      "purpose": "MX-t-13 blackdiamond_list_fees read fence (read-only, 49financial)",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md",
+        "pin": "e692000c06fe5ac35f07f0f2a937945978f503d3"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X12",
+        "occurrences": 3
+      }
+    },
+    {
+      "id": "NFRA-MCPINDEX-R20-05",
+      "file": "infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py",
+      "literal": "silver/fees/",
+      "remediation": "ADVI_FIRMBKTS",
+      "purpose": "MX-t-13 blackdiamond_list_fees read fence (read-only, 49financial)",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md",
+        "pin": "e692000c06fe5ac35f07f0f2a937945978f503d3"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X12",
+        "occurrences": 4
+      }
+    },
+    {
+      "id": "NFRA-MCPINDEX-R20-06",
+      "file": "infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py",
+      "literal": "49financial",
+      "remediation": "ADVI_FIRMBKTS",
+      "purpose": "MX-t-13 blackdiamond_list_fees read fence (read-only, 49financial)",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md",
+        "pin": "e692000c06fe5ac35f07f0f2a937945978f503d3"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X12",
+        "occurrences": 5
+      }
+    },
+    {
+      "id": "NFRA-MCPINDEX-R20-07",
+      "file": "infra/aws/terraform/opal-gateway/blackdiamond_reader_iam.tf",
+      "literal": "opal-data-bd",
+      "remediation": "ADVI_FIRMBKTS",
+      "purpose": "MX-t-13 reader-role exact-prefix fence (applied by MX-r-7)",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md",
+        "pin": "e692000c06fe5ac35f07f0f2a937945978f503d3"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X12",
+        "occurrences": 1
+      }
+    },
+    {
+      "id": "NFRA-MCPINDEX-R20-08",
+      "file": "infra/aws/terraform/opal-gateway/blackdiamond_reader_iam.tf",
+      "literal": "silver/fees/",
+      "remediation": "ADVI_FIRMBKTS",
+      "purpose": "MX-t-13 reader-role exact-prefix fence (applied by MX-r-7)",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md",
+        "pin": "e692000c06fe5ac35f07f0f2a937945978f503d3"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X12",
+        "occurrences": 1
+      }
     }
   ],
   "_r20_exception_kind": "A third read_context kind, r20_exception (landed by 1.0.0_SA_CTO 2026-09-30 on Andrew's 'yes thats fine on naming exception' at 1.0.0_SA_CTO~O, relay 103235): the gate HONOURS an R20 DECLARED EXCEPTION (infra/logic/02_DOCTRINE.md R20; the register row is a 06_CONFORMANCE_LEDGER.md section 6 row such as X11). Entry fields are the usual nine; read_context is exactly {kind: r20_exception, register_ref: <row id>, occurrences: <int>=1>}; as_of_cutoff is a YYYY-MM-DD date or the word PERMANENT; authority is a full pin plus a record that carries the entry id (Andrew's acknowledgement record). It is the ONLY kind that reaches a NEW literal, in any file type, and it grades naming only: the count must hold, and it advances no remediation and proves nothing about reads versus writes."
