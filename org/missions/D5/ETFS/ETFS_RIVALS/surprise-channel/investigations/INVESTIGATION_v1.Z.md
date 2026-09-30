@@ -658,6 +658,49 @@
     "spec_asserts": "Row W5-S16: the gateway serves 404 on /rivalfunds after the 2e2254156e overwrite; ARMED until redeployed.",
     "world_is": "The overwrite is reverted: the host runs the signed ref again, so W5-S16's hazard is disarmed; W5-S16 itself is unedited history.",
     "notes": "Supersedes ETFS_RIVALS-Z-W5-S16 (the gate forbids editing a row in place). The issuer dispositions S16."
+  },
+  {
+      "id": "ETFS_RIVALS-Z-W1-S6",
+      "project": "ETFS_RIVALS",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+      "surfaced_at": "2026-09-30T17:05Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "UNDER_INVESTIGATION",
+      "one_line": "publish_page.py is still a single-fund page, so replacing its BASG literal with universe.funds() needed a page-fund choice the order did not name; RIV-p-2 owns the grouped page.",
+      "spec_asserts": "RIV-u-1 step 4: replace the BASG literal in gold_canonical_shape.py, gold_trade_schedule.py and publish_page.py with the universe (funds with data in the input); BASG behaviour unchanged.",
+      "world_is": "gold_canonical_shape and gold_trade_schedule now keep every universe fund (trade inference runs per fund_ticker). publish_page and render build ONE fund's page (render titles it by ctx fund_ticker), so publish_page picks the first map fund with rows in the latest report, falls back to the issuer adapter's ticker (adapters.basg.FUND_TICKER, when in the map) when the input is empty, and records funds_in_input in the manifest. With several funds present the page shows one and the rest are named only in the manifest.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "data/etfs/scripts/rivalfunds/publish_page.py _page_fund() and _load() at this worker's commit",
+              "data/etfs/scripts/rivalfunds/render.py:219-235 single-fund title and banner strings"
+          ]
+      },
+      "notes": "Behaviour for BASG input is unchanged (round-1 p-1.AC1 PASS). The multi-fund page is RIV-p-2's cell; its author should replace _page_fund, not build on it."
+  },
+  {
+      "id": "ETFS_RIVALS-Z-W1-S7",
+      "project": "ETFS_RIVALS",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+      "surfaced_at": "2026-09-30T17:05Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "UNDER_INVESTIGATION",
+      "one_line": "The map's fund_id (the ticker) is a different key space from canonical_shape.fund_id (the issuer's own fund id); a stage joining G0 to canonical_shape must join on ticker.",
+      "spec_asserts": "RIV-u-1: peer_groups.json carries one entry per (group, fund) with group_id, home_fund_id, fund_id, ticker; 'a fund in two groups appears once per group, with one fund_id'.",
+      "world_is": "The decomposition names no fund-id authority for Bloomberg-only funds, and the universe API (universe.funds/policy/role, and the u-1 checks) takes the ticker as the fund key, so peer_groups.json sets fund_id == ticker. canonical_shape.fund_id is carried unchanged from the issuer silver (r.get('fund_id'), the issuer's internal id, e.g. 9999 in the unit-test fixtures), so G0.fund_id will not equal canonical_shape.fund_id; fund_ticker is the shared key.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "data/etfs/scripts/rivalfunds/peer_groups.json (fund_id == ticker on all 13 entries)",
+              "data/etfs/scripts/rivalfunds/gold_canonical_shape.py build_rows: 'fund_id': r.get('fund_id') from the silver row",
+              "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/u-1.AC1.py: universe.role('SCHY','IDVZ'), universe.policy('IDVZ') take tickers"
+          ]
+      },
+      "notes": "Also: homes.py has no peer_group_map address function and is outside this order's paths, so gold_peer_group_map.py calls homes.address('rivalfunds','etfs','gold','peer_group_map',...) directly (builder output, rule 30)."
   }
 ]
 ```
