@@ -106,7 +106,7 @@ outer commit hashes, and any row.
 green 3 of 3 (18 of 18); Q2 5 of 5 at base, 5 of 5 on green with the three named re-anchors (before them: leadPanelPattern RED on
 source_footer + caption_facts_unchanged, errorEmpty RED MODULE_NOT_FOUND).
 
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <slot>~30</slot>
 <fabric>site-z</fabric>
