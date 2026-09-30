@@ -161,48 +161,87 @@ approved it.
          ACCEPT     every step shows real published holdings; a step fed by
                     sample data fails the outcome
          SOURCE     brief O1; Andrew point 3 and his FWD-1 confirmation
-  FWD-2  (AMENDED) as above, for every fund in both groups; a fund in two
-         groups is shown once, with one history
-  FWD-3  (AMENDED) Fresh holdings arrive every trading morning with nobody
-         downloading anything, from each fund's chosen source
+  FWD-2  (AMENDED: every fund in every group) Andrew sees how much real
+         history each fund has, and never mistakes an old report for a fresh one
+         DONE WHEN  EXERCISED -- for every fund in both groups, Andrew reads
+                    which days carry a genuinely new report, which repeat an
+                    older one, and which are gaps, back up to two years or the
+                    fund's own start
+         ACCEPT     as before; a fund that is in two groups is shown once, with
+                    one history
+         SOURCE     brief O2, IV.1
+  FWD-3  (AMENDED: the source is chosen per fund) Fresh holdings arrive every
+         trading morning with nobody downloading anything, from each fund's
+         chosen source
          DONE WHEN  EXERCISED -- over several consecutive trading days, every
                     fund is collected each morning by its own source policy:
                     the IDVZ group from Bloomberg, the PFOE group from each
                     fund's own site with Bloomberg as the fallback; the page
                     names the source per fund and day
-         ACCEPT     a fund's policy is a setting, not code; a failed source
-                    says so plainly
-  FWD-5  (AMENDED) as above, and: on a fund and window that contain a
-         dividend, a split and a cash/currency line, none of the three appears
-         as a trade, and a purchase funded from income reads as a trade
-         labelled income-funded
-  FWD-6  (AMENDED) Andrew sees where each manager's trading helped or hurt,
-         by sector and by security
+         ACCEPT     Andrew does nothing by hand; a fund's policy is a setting,
+                    not code; a day a source fails says so plainly
+         SOURCE     brief O2, IV.1-IV.2; Andrew "bbg is better for this group"
+  FWD-5  (AMENDED: income and corporate actions) Andrew reads each fund's
+         trade schedule: what the manager actually bought and sold, and when
+         DONE WHEN  EXERCISED -- for every fund Andrew reads its trades
+                    (entries, adds, trims, exits) with shares, window, estimated
+                    price and size and confidence; on a fund and window that
+                    contain a dividend, a split and a cash/currency line, none
+                    of the three appears as a trade, and a purchase funded from
+                    income reads as a trade labelled as income-funded
+         ACCEPT     dividend and interest income, their currency conversion,
+                    splits, bonus issues, spinoffs, stock dividends and rights
+                    issues never read as a manager's decision; cash and
+                    currency lines are the cash cross-check, not positions
+         SOURCE     brief O3, IV.3; Andrew "did we already account for
+                    dividend/interest income? That should be covered"
+  FWD-6  (AMENDED: by sector and security) Andrew sees where each manager's
+         trading helped or hurt, by sector and by security
          DONE WHEN  EXERCISED -- for one fund and period Andrew reads which
-                    trades and trade clusters out- or under-performed
-                    afterwards, summarised by sector and by security, each with
-                    its window and denominator, including positions since sold
-  FWD-7  (AMENDED) for one fund Andrew reads (a) its projected trading by
-         sector and security if the observed trends persist, each with what
-         would contradict it, and (b) a labelled wildcard section in which
-         every item cites its rows and says what would disprove it; a later
-         account grades the earlier projection against trades inferred after it
+                    trades and trade clusters out- or under-performed afterwards,
+                    summarised by sector and by security, each with its window
+                    and denominator, including positions since sold
+         ACCEPT     a holding with a missing price or sector is counted as
+                    missing, never left out
+         SOURCE     brief O5; Andrew view 1
+  FWD-7  (AMENDED: projections and the wildcard) Andrew uses the AI to form
+         views about a manager's behaviour, and can check them later
+         DONE WHEN  EXERCISED -- for one fund Andrew reads (a) its projected
+                    trading by sector and security if the observed trends
+                    persist, each with what would contradict it, and (b) a short,
+                    labelled wildcard section in which every item cites its rows
+                    and says what would disprove it; a later account grades the
+                    earlier projection against trades inferred after it
+         ACCEPT     nothing invents a return, a trade or a motive; a later
+                    grading cannot rewrite the earlier account
+         SOURCE     brief O6, O7; Andrew views 2 and 3
   FWD-10 (NEW) Andrew sees whether each manager trades with discretion or by
          system, and why
-         DONE WHEN  EXERCISED -- each fund's style read shows its evidence
-                    (timing concentration, breadth of the book touched, trade
-                    size), and the group's index fund (SCHY) reads as
+         DONE WHEN  EXERCISED -- Andrew reads each fund's style read with its
+                    evidence (timing concentration, breadth of the book touched,
+                    trade size), and the group's index fund (SCHY) reads as
                     systematic on that same evidence
-         ACCEPT     a trade count alone is never the evidence
+         ACCEPT     a count of trades alone is never the evidence; a label is
+                    shown only after the control reads correctly
+         SOURCE     brief O4, IV.3; Andrew "at a 20bps tolerance it's
+                    immediately clear who is discretionary and who is
+                    systematic"
   FWD-11 (NEW) Andrew compares an Opal fund with its rivals on the same
          measures
-         DONE WHEN  EXERCISED -- IDVZ against its peers and PFOE against its
-                    peers, on the style read, trading results and projections,
-                    by the same rules, with no separate method for Opal's fund
+         DONE WHEN  EXERCISED -- Andrew reads IDVZ against its peers and PFOE
+                    against its peers on the style read, the trading results and
+                    the projections, computed by the same rules
+         ACCEPT     Opal's own fund has no separate method and no special
+                    treatment
+         SOURCE     brief O8; Andrew point 3
   FWD-12 (NEW) Opal adds a peer group without a new pipeline
-         DONE WHEN  EXERCISED -- a third group is added as a mapping entry and
-                    flows through collection, tables, page and archive with no
-                    code change; a fund in two groups is stored once
+         DONE WHEN  EXERCISED -- a third group is added as a mapping entry
+                    (the Opal fund, its rivals, each fund's source policy) and
+                    flows through collection, the tables, the page and the
+                    archive with no code change
+         ACCEPT     a fund rivalling two Opal funds is stored once; adding a
+                    group changes a mapping, not code
+         SOURCE     brief O9, IV.4
 ```
 
 ## CONTRACTS
