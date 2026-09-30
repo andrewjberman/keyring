@@ -2178,3 +2178,41 @@ the output, 2 of 9 FWDs REALIZED. Series **`p`**; slots **`~66`..`~69`**.
   - Round 27 opens FWD-7's denominator work, and (b) is that work's positive arm.
 - Its COO half and checks are already signed at `round26/NEVER_WIDEN_HALF_COO_P5.md` and `round26/checks/p-5.*`. The round-27
   order cites them, re-measured at its cut.
+
+## 39. ROUND 27 -- L5 DECOMPOSITION v3.6, over the round-26 analysis (`ledger/ROUND_ANALYSIS.round26.md` @ff4405d3d5)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~08:3xZ. Round 26 is CLOSED, 2 of 9 FWDs REALIZED. PRD v0.4 adds
+`C-HV-RANK-DECLARED-SET` and `C-HV-COVERED-VS-FOUND`.
+- The packet's "serves `[bbg, wsj]`" was the union. The series reads `[bbg, wsj]` on 8 of 273 days (CVO v35, ruling 1).
+- Series **`q`**; slots **`~70`..`~75`** plus the seat `0.7.0_AE_CloudOps~A`.
+
+| analysis item | order | class | slot | dispatch / merge |
+|---|---|---|---|---|
+| 1 `p-3(b)`: span-bearing Lenovo run, upload, and the rebuild reading the persisted run record | `HVST-q-1` | WORLD, under a pair plus R-21 | `~70` | FIRST, once the CTO half is signed at the cut |
+| 2 `Z-S44`: bbg as-received parses into silver | `HVST-q-2` | LOCAL | `~71` | now; merges after `q-1` drains |
+| 3 FWD-7 eligibility census, declared set (bbg, wsj), COVERED only | `HVST-q-3` | LOCAL read | `~72` | after `q-1` drains |
+| 4 `C-HV-RANK-DECLARED-SET` in code (`chatter_axis`, `generation_writer.py`) | `HVST-q-4` | LOCAL | `~73` | now; merges after `q-1` drains |
+| 5 `C-HV-COVERED-VS-FOUND` in code (`publishers_found_codes`) | `HVST-q-5` | LOCAL | `~74` | now; merges after `q-1` drains |
+| 6 barrons B2 guard edit + ft F1 403 body, tests only | `HVST-q-6` | LOCAL, no request | `~75` | now; merges after `q-1` drains |
+| 7 the gold flip on the declared-set rule | `HVST-q-7` | WORLD, under a pair plus NEVER-2 | `0.7.0_AE_CloudOps~A` | after `q-3` and `q-4` merge; issuer checks from `q-3`'s N |
+
+**Fan-out: 7 of 7 cut in ONE issuance.**
+- `q-1` goes first (ruling 6).
+- `q-2`, `q-4`, `q-5` and `q-6` run now, with their merges held until `q-1` drains.
+- `q-3` follows `q-1`, and `q-7` follows `q-3` and `q-4`.
+- N = 6 slots + 1 seat; cap 8.
+
+**Write sets:**
+
+| order | owns |
+|---|---|
+| `q-2` | `silver_from_bronze.py` |
+| `q-4` | `chatter_axis.py`, `generation_writer.py` |
+| `q-5` | `publication_gold.py` (`daily_rows` fields and schema only) and `timeline_api.py` |
+| `q-6` | `worker.py`, `transport.py` |
+| `q-1`, `q-3`, `q-7` | their deliverables and the served objects their halves name |
+
+**NOT cells:**
+- the 190-name backfill;
+- the bbg silver rebuild (round 28);
+- the schedule (Andrew's).
