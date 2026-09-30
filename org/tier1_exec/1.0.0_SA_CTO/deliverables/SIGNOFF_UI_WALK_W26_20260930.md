@@ -33,3 +33,9 @@ Packet blob is now `1c88bb49` (@`628d7e7602`; was `0b209ba6`). The blob prefix w
 with the W26-5 SOLO GATE and names two stranded jobs (`REQ-86f1ce70...`, `REQ-3a1b73a8...`); no arm, login, retry or reach is added. Conditions 1-8 above stand, condition 3 read as the SOLO GATE. One addition:
 9. **The gate's state list comes from the job state machine, not from the amendment's text.** The amendment names QUEUED, CLAIMED, SUBMITTING and SUBMITTED; earlier packets also name RESOLVING. Before the window, derive the full non-terminal
    set from the source of the job states, print the enumeration beside the gate, and treat any non-terminal state as blocking. The two stranded ids are excluded by exact id only.
+
+## RE-AFFIRMED on amendment 2 (1.0.0_SA_CTO, 2026-09-30 ~06:2xZ)
+
+Packet blob is now `a4ba10a9` (@`38bf9a5c1b`; was `1c88bb49`); the prefix was printed here from `git hash-object` and matches. I read the diff `628d7e7602..38bf9a5c1b`: W26-6 fulfils condition 9. The 11-state frozenset it cites
+matches `durable_job.py` STATES as I read it (RECEIVED, CLAIMED, SUBMITTING, SUBMITTED, UNCERTAIN, DOWNLOADING, EXTRACTING, CERTIFYING, READY, FAILED, ATTENTION); READY, FAILED and ATTENTION are terminal and the other 8 block,
+UNCERTAIN fail-closed. Nothing is widened. Conditions 1-9 stand; the scan is re-run immediately before each K5.
