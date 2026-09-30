@@ -59,6 +59,12 @@ only for cached pages.
    - a seed script runs it ONCE and prints the table row before and after;
    - a second run is a no-op that prints the same row.
 
+4. **(AMENDMENT 1) A dated hit before the floor is not fetched.** In `backfill` mode, a listing hit whose own
+   `_hit_date` is before the job's floor is NOT fetched. It is recorded in the run record as `skipped_pre_floor`, with its
+   key and date, and counted per job. An undated hit is still fetched, as today. Live mode and paging are unchanged,
+   except for change 1's wsj dates. (Row `Z-S46`: bbg search is relevance-ordered, so a page mixes 2017..2026 hits.
+   9 of `o-5`'s 11 bbg Lenovo articles were 2015-2019.)
+
 ## 2. PROOF OF SPEC (each invocation LITERAL; timeout 600). THREE mechanical
 
 <proof_of_spec>
@@ -76,12 +82,17 @@ only for cached pages.
   - (b) a wsj backfill with floor `2026-01-01` stops `older_than_bound` on a page whose hits all carry a `timestamp` before
     the floor;
   - (c) a page mixing dated and undated hits does NOT bound-stop;
-  - (d) a bbg harvest-mode job with the seeded hold makes no request for that key.
+  - (d) a bbg harvest-mode job with the seeded hold makes no request for that key;
+  - (e) (AMENDMENT 1) a backfill job over a recorded-shape bbg page mixing pre- and post-floor `publishedAt` hits
+    fetches only the on-or-after-floor hits and records the rest `skipped_pre_floor`; an undated hit is fetched; a
+    live-mode job is unchanged.
 - **AC2:** the seed (section 1 change 3) against the runtime root, then a replay of `q-1`'s recorded bbg and wsj job shapes
   through the new code on stubs. Print:
   - the seed row before and after;
   - the live-shaped wsj `reached_span`;
   - that `bbg:NM5NLQ6K50XZ01` is HELD (not fetched);
+  - (AMENDMENT 1) for the recorded bbg Lenovo pages replayed in backfill with floor `2026-01-01`: hits, fetched,
+    `skipped_pre_floor`;
   - the line `NETWORK CALLS MADE: 0`.
 - **AC3:** the base is commit `6caac02338`, pinned. Print the base and after pass counts. No test that passed at the base
   fails.
@@ -98,6 +109,17 @@ only for cached pages.
   - Batch 1 (`HVST-ab-3`) has no Lenovo job, so its listings cannot name this key.
   - A later Lenovo bbg job re-meets it; that is the hold's designed retry, not a defect.
 - The `<expect>`s are plain printed tokens.
+
+**AMENDMENT 1 (issuer, 2026-09-30 ~13:3xZ) -- change 4, a dated pre-floor hit is not fetched (row `Z-S46`, ARMED against `ab-3`).**
+- **Measured:** the three recorded bbg Lenovo pages carry `publishedAt` on 30 of 30 hits, and 22 are before the floor. Page 1
+  (6 of 10 pre-floor) does not bound-stop, so its old hits are fetched. The `ab-2` signing puts 9 of the 11 story ids'
+  992_HK pairs on 2015-2019.
+- **Ruling (inside the decomposition):** the floor gates the FETCH of a dated hit, not only the paging. This serves
+  Andrew's quota word, and batch 1 (`ab-3`) is measured on it.
+- **Paths:** unchanged (`publishers.py`, `worker.py`, the new test). **Criteria:** unchanged invocations. AC1 adds plant (e),
+  and AC2 adds a replay line.
+- **Delivery:** the worker was dispatched before this amendment, so it is handed over as a continuation of the same worker.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

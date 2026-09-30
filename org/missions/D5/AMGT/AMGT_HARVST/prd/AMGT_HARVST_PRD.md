@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.8",
+  "prd_version": "v0.9",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -779,6 +779,17 @@ applied here.
 - A publisher in the found set but not in the covered set reads as "found, listing not run", never as "not searched".
 - Coverage marks (`data_status`, FWD-7 eligibility) read the COVERED set only. A found-only article never makes a day
   SEARCHED.
+
+
+**`C-HV-TRUST-TOKEN` (v0.9, Andrew-direct 2026-09-30 ~12:5xZ, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_125xZ_OPEN_CALLS_RECS_APPROVED_TRUST_TOKENS_BACKOFF.md`).**
+- Publisher credentials are read from AWS Secrets Manager. None is asked of Andrew, typed, or harvested by an agent.
+- A run starts from the stored trust/session token of a prior successful run. A fresh sign-in or crawl runs ONLY when that token is
+  shown not to work.
+- **A rate limit is never read as token expiry.** A 429 or throttle response backs off and retries, and the token is kept. Only an
+  auth failure that persists after backoff (a 401, or a 403 whose kept body says the session is invalid) marks the token expired.
+- Every REST call retries with bounded exponential backoff plus jitter on rate-limit responses. Each attempt's status and wait is
+  written to the run record, so a reader can tell throttling from expiry.
 
 ---
 

@@ -32,6 +32,20 @@ queue; merged, with its nested opal_ai commit):
 3. Read AC1 and AC2. `launch-gate.ps1` needs the opal_ai PROD checkout, which waits on G-PUSH (opal_ai DEV -> PROD,
    `0.0.0_AB_MSTR~Z` on Andrew's word); it is NOT a criterion here and runs at the close.
 
+**AMENDMENT 1 (issuer, 2026-09-30) -- item 0, before the account act.** Andrew ran item 2 in an elevated session and
+`provision-account.ps1` failed at parameter binding, before any act: "Cannot validate argument on parameter
+'Description'. The character length of the 86 argument is too long ... fewer than or equal to '48' characters". Measured
+after: no `Opal_MSP` user, no `C:\opal_runtime_msp\state`, no credential file. The description is a pre-existing literal
+(`opal/runtime/provision/provision-account.ps1:116`, identical at opal_ai DEV `fd8ab8a` line 101, NFRA_OPALAI's OA-t-2):
+`New-LocalUser -Description` accepts at most 48 characters.
+0. In your nested `opal_ai` worktree, shorten ONLY that literal to 48 characters or fewer (for example
+   `'Opal runtime agent (provision-account.ps1)'`, 42). Change nothing else. Re-run AC2 of MS-t-3
+   (`bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t3.AC2.sh`) and require PASS
+   (the default config still plans `Opal_Agent`). Commit it in the nested repo with a message that names NFRA_OPALAI
+   OA-t-2 and OA-t-3 (it also unblocks `Opal_Agent`'s own provisioning), and fast-forward nothing yourself -- the
+   issuer drains it. File one OBSERVATION row. Then STOP and report: the account act (items 1-3) is Andrew's elevated
+   re-run, after which you continue with AC1/AC2 when the issuer hands the order back.
+
 ## 2. BOUNDS
 
 1. One local account and its two directories and ACLs, by the script. `Opal_Agent`, its directories and its credential
@@ -42,6 +56,7 @@ queue; merged, with its nested opal_ai commit):
 ## 3. SURFACES
 
 <paths>
+opal_ai/opal/runtime/provision/provision-account.ps1
 org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~4/**
 org/missions/D6/NFRA/NFRA_MCPMSP/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
@@ -68,6 +83,10 @@ Report once, with: the `-Plan` lines; the two check lines; whether G-ADMIN was n
 **ISSUER NOTES:** round-1 issuance (CTO msg 26985); WORLD: a device account. Checks dry-run at base: AC1 FAIL as
 expected (`exists=False`, `opal_agent_exists=True`); AC2 FAIL as expected (the script is absent at the parent's
 opal_ai gitlink). G-ADMIN is Andrew's; G-PUSH for the launch gate is `0.0.0_AB_MSTR~Z`'s.
+
+**AMENDMENT 1 (issuer):** item 0 -- Andrew's elevated run of provision-account.ps1 failed at parameter binding (the
+86-character `-Description` literal, pre-existing since OA-t-2; limit 48); nothing was created (measured). The script
+path is granted for that one literal. Graded by: no gate limb grades a modification's criteria.
 
 <status>staged</status>
 <round>1</round>

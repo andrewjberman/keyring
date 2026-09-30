@@ -7071,3 +7071,70 @@ fanout:
   ledger page surfaces (FWD-6, FWD-12) go to DSGN_AMGTV1 (ruling 1). The CTO's PRD addendum follows ab-3's mapping (ruling 4).
 - **AMENDMENT (issuer, ~07:3xZ, before any spawn; CTO msg 27014):** ab-1's splice records its provenance (analysis key + VersionId) in the
   document; Z-S313's rebuild regression is a DEFECT (row Z-S314, ARMED) carried to round 53 as its own cell.
+
+## 61. ROUND 53 -- FWD-30'S GRADER READS THE DISPLAYED FIGURE, A D-1 REGENERATION KEEPS ITS SERVED SENTENCES, THE SLASH-KEY WINDOW, AND THE STORE DOCSTRING. Four cells, four orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 52 ANALYSIS** (`ledger/ROUND_ANALYSIS.round52.md` @`5d3052d8d7`, msg 27145;
+round 52 CLOSED). Rulings carried: FWD-30's grader reads the displayed figure and is graded again only on that grader (ruling 2);
+Z-S314 stays ARMED until the regeneration keeps every served sentence (ruling 3); the next scoped-API build IS the slash-key window --
+ONE pair, legs (a) copy the 30 raw-slash objects to encoded keys, (b) deploy the build at a pinned HEAD carrying CORPUS z-4's readers and
+HARVST q-5's 91b74a9047 -- and nothing deploys from HEAD before it (ruling 4). No outcome is added.
+
+### 61a. THE FOUR ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 FWD-30's grader reads the displayed figure | `AMGT-ac-1` (LOCAL, worker) |
+| 2 Z-S314: regeneration keeps served sentences | `AMGT-ac-2` (LOCAL, worker) |
+| 3 the slash-key window | `AMGT-ac-3` (WORLD, `0.7.0_AE_CloudOps~A`), after CORPUS round-24 cell 4 drains and COO~X supplies the list |
+| 4 Z-S315: the harvest.store docstring | `AMGT-ac-4` (LOCAL, worker-light) |
+
+### 61b. MEASUREMENTS THE CUT RESTS ON
+
+1. **Item 1:** the grader's `_PageReader` reads HEADER values from `<li data-card-figure-mnemonic=...>`; DSGN r12 nests a hover tooltip
+   (`role="tooltip" data-figure-tooltip data-full-value`) inside it, and the cell text read is figure + tooltip. `ac_1_plant.py` on a real
+   ASML render: a tooltip plant changes the read at the base (the defect); a visible-figure control moves PX_LAST (the control works).
+   The round-52 close sweep: 131 of 32,057 facts differ, all HEADER (PX_LAST 95, EQY_BETA 35, CURR_ENTP_VAL 1).
+2. **Item 2:** `ac_2_keep.py` (ASML, the in-memory `--rebuild-pool` transform vs the stored D-1): company_description 6 -> 1,
+   investment_thesis 1 -> 0, risks 2 -> 0 (8 served sentences lost).
+3. **Item 3:** keys containing `BP/_LN` or `NG/_LN` in opal-data-harvest: 40 (peers 14, derived/model_block 12, raw/bloomberg 4, scores 4,
+   filings 2); 87 `-SLASH-` encoded objects already exist; the CTO names 30 in scope -- COO~X supplies the list and before-state, which
+   the issuer writes to `round53/SLASH_OBJECTS.json` before the GO. BP's routes serve today through the URL-quoted raw key (full peers);
+   through `-SLASH-` peers read thin. `/timeline` series entries (273 on AMZN) lack `publishers_found_codes` at the base.
+4. **Item 4:** the ~:2175 docstring says "the first [harvest.store] is unavailable in the deployed package"; store.py is packaged and
+   /thesis loads it (dynamic probe True).
+5. **The base for ac-3:** CodeSha256 `nKWCfQRQ3/lL6cJxgYG3dZr0tcVdOBheeMMNaoWQE+w=` (ab-6, 11:43:22Z).
+
+### 61c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ac-1` | FWD-30'S GRADER READS THE DISPLAYED FIGURE | `~190` | worker | LOCAL | `deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py` |
+| `AMGT-ac-2` | A D-1 REGENERATION KEEPS ITS SERVED SENTENCES | `~191` | worker | LOCAL | `lib/research/filings/drafting_build.py`, `lib/research/drafting/`, their tests |
+| `AMGT-ac-4` | THE STORE DOCSTRING | `~192` | worker-light | LOCAL | `lib/research/api/scoped_amgt.py` (one docstring clause) |
+| `AMGT-ac-3` | THE SLASH-KEY WINDOW: COPY + DEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | 30 object copies (raw kept), the artifact, ONE safe-apply (code only), deliverables, the ledger |
+
+### 61d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's four items, one cell each.
+- **(ii) Same grain.** One grader read, one producer rule, one act, one clause.
+- **(iii) Intent.** One axis: what is graded and served is what a person sees and what the stores hold, at their real keys.
+- **(iv) What a cell does NOT move.** ac-1 moves no product file and no non-HEADER read; ac-2 moves no served D-1 object (no live rebuild);
+  ac-4 moves no code line; ac-3 moves exactly its pair's radius (30 copies, raw kept; the function's code).
+
+### 61e. EDGES AND FAN-OUT
+
+```
+ac-4 -> ac-3   (scoped_amgt.py is in the build; the docstring rides it)
+CORPUS round-24 cell 4 drained + COO~X's list -> ac-3   (every reader routed before the window)
+ac-1, ac-2 -> (none)
+fanout:
+  cap: 8
+  orders_total: 4
+  chains_total: 3                      # {ac-4 -> ac-3}, {ac-1}, {ac-2}
+  wave_0: [ac-1 ~190, ac-2 ~191, ac-4 ~192]
+  wave_1: [ac-3]                       # a seat order: after ac-4 merges, CORPUS cell 4 drains, the list is written, both halves committed
+  no_s3_deletes: true
+  egress: none (Opal AWS only); ac-3's build pip-downloads its pinned wheels
+  no_promote: true
+```

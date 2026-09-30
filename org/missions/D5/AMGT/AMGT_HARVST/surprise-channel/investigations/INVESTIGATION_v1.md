@@ -4024,6 +4024,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "INERT: a barrons date read only widens reach to what the page showed."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S46",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-30T13:25Z",
+      "one_line": "A backfill fetches DATED listing hits published before its floor: 9 of the 11 bbg Lenovo story-id articles (o-5, floor 2026-01-01) were published 2015-01-07..2019-05-23, so they spent fetches and yield mention pairs no page day can show.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Round-29 enrichment item 3 and Andrew's quota word (brief @6f1a72e4be :129-130): a backfill bounded by --floor 2026-01-01 spends requests on the window it serves; _stop_paging's older_than_bound is the floor's only enforcement.",
+      "world_is": "The recorded bbg Lenovo listing pages (runtime harvest_listing/bbg_p1_30dc8b1ceb74344a.json, bbg_p1_93ba43e4efdf296e.json, bbg_p2_f24dcb2958e9f3c7.json) carry publishedAt on 30 of 30 hits, which _hit_date reads; bbg search is relevance-ordered, so page 1 mixes 2017..2026 (6 of 10 pre-floor) and only page 2 (10 of 10 pre-floor) bound-stops. Every hit on a fetched page is fetched regardless of its own date. The ab-2 signing dry build puts the 11 story ids' 992_HK pairs on 2015-01-07..2019-05-23 (9) and 2026-08-13, 2026-09-01 (2); chatter_daily for 992_HK begins 2026-01-01, so the day route can list only the 2.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python census over the three recorded bbg listing pages with publishers._hit_date at CLOUD 123befacf8: hits 30, dated 30, pre-floor 22",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round29/ab2_signing_expected.json: diff.new 21 pairs, 992_HK published_utc days as above",
+          "lib/opal_data_harvest/publishers.py _stop_paging (the floor is a paging stop over a whole page, not a per-hit fetch gate)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "ARMED against HVST-ab-3 (batch 1 would spend bbg fetches on pre-floor stories for each of 10 names). Disarm: HVST-ab-1 AMENDMENT 1 -- in backfill, a hit whose own date is before the floor is not fetched and is recorded skipped_pre_floor; an undated hit is still fetched. The 9 pre-floor pairs already in the ab-2 expected write are kept (gold is the pair store; the page window is the floor), named in the ab-2 halves."
     }
   ]
 ```
