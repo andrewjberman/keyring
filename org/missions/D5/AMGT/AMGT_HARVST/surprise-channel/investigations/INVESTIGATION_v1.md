@@ -4249,6 +4249,72 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Two distinct causes: publisher-side challenges (bbg, wsj, barrons, ft) and a universe-side gap (security rows carry no Seeking Alpha symbol, incl. US names such as AAPL). Not acted on by this worker."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~85",
+      "surfaced_at": "2026-09-30T19:05Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W85-S1",
+      "one_line": "The worker order names lib/opal_data_harvest/bot_check.py's classifier, but that file is not in the pinned code (4852128779); it exists only on branch wk-AMGT_HARVST-84 (d9f82cfadc).",
+      "spec_asserts": "Dispatch instruction for ac-2: record the refusal class with lib/opal_data_harvest/bot_check.py's classifier if a body is refused.",
+      "world_is": "git log --all -- lib/opal_data_harvest/bot_check.py names only d9f82cfadc; comp-find --name 'bot_check*' read 0 files in the worktree; the act-start gate requires an empty diff against 4852128779, so the file could not be taken in. The probe classified with the transport's own markers (blockScript, captcha-delivery, px-captcha, press and hold) and the exception type. Both requests answered 200, so no refusal body was classified and the gap did not bite.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git log --all --oneline -- lib/opal_data_harvest/bot_check.py -> d9f82cfadc only",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~85/scripts/ac2_probe.py function classify"
+        ]
+      },
+      "notes": "Not acted on: the classifier was not imported from another branch."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~85",
+      "surfaced_at": "2026-09-30T19:05Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W85-S2",
+      "one_line": "sa_rest_fetch.check() requests /api/v3/account/1btfwdu/info with the user id hard-coded, not the {user_id} that contracts.json auth_check names from the session.",
+      "spec_asserts": "contracts.json sa auth_check: GET https://seekingalpha.com/api/v3/account/{user_id}/info; COO half step 1 names that endpoint.",
+      "world_is": "org/tier1_exec/4.0.0_SA_CRO/scripts/sa_rest_fetch.py check() passes the literal path /api/v3/account/1btfwdu/info?include=proSubscription. The probe's recorded request path was /api/v3/account/1btfwdu/info (HTTP 200, authorized). The authorized verdict therefore reads account 1btfwdu, whichever user the stored token belongs to; the token's own user_id was not compared (no cookie value read).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~85/ac2_probe.json request_paths",
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/sa_rest_fetch.py check()"
+        ]
+      },
+      "notes": "Not acted on. The account read is the collector's own client as the pair names it; whether the literal id is the paying account is the issuer's call."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~85",
+      "surfaced_at": "2026-09-30T19:05Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W85-S3",
+      "one_line": "PacedSession.get retries INSIDE one call (429 up to 5 attempts, 401 once), so a count of calls is not a count of requests; the 3-request cap held only because the probe set the retry policy to one attempt.",
+      "spec_asserts": "CTO half condition 2: at most 3 requests, counted from len(session.captured) after each call, the probe stopping if the count would pass 3.",
+      "world_is": "transport.PacedSession.get loops _send until a non-retry class, each attempt appending to captured; with the collector's default policy one check() could send up to 5 requests on a 429. The probe set Publisher.backoff to max_attempts 1 and auth_confirm_retries 0 and wrapped the inner session so a 4th send raises before it is sent. Measured: requests_made 2 of the cap 3.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~85/ac2_probe.json requests_made",
+          "lib/opal_data_harvest/transport.py PacedSession.get"
+        ]
+      },
+      "notes": "Not acted on. Any later probe under a request cap needs the same one-attempt policy and a send-level counter."
     }
   ]
 ```
