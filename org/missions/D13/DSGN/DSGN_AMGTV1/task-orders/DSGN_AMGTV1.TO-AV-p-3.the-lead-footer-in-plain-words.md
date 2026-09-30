@@ -101,7 +101,7 @@ AV-p-2, the Positioning model window's source is not cut). Base 29c8226a: onefor
 base, and on green with the two named re-anchors (before them: leadPanelPattern RED, CHECKS-WRONG-WAY source_footer,
 stale_dated_said).
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <slot>~34</slot>
 <fabric>site-z</fabric>
