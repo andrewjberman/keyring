@@ -4,37 +4,31 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE), `/canonical-drive 10m` standard form (lease FULL
 re-authorised by the post-crash relaunch brief 2026-09-30 13:0xZ). As of 2026-09-30T14:4xZ. Older sections below are
 kept for pins and the served-artifact map; this section supersedes their next-lists.
 
-## 0. ROUND 29 IN FLIGHT -- the W27 window's preconditions (issued @64a37ccbd5, dispatched @0aa45f7188)
+## 0. ROUND 29 DRAINED 3 of 3; svc-irpt-analysis EXISTS; the W27 window WAITS on the CTO's re-read (row S238)
 
-Authority: W27 packet `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/NEVER_WIDEN_SIGNOFF_PACKET_UI_WALK_W27_20260930.md`
-@00f9ef2df8 (blob 4c1dbb545f), CTO half @dbbac713fc (103229), CRO half @2ab90bf162 (103230). Decomposition
-`decompositions/IRPT_BCKEND_DECOMP_R29_Y.md`. Every criterion base-run at a7a6d286f2 (CTO 103159), checks under
-`deliverables/2.0.0_SA_COO~Y/R29_checks/`.
+As of 2026-09-30T16:4xZ. Authority: W27 packet @00f9ef2df8 (blob 4c1dbb545f), CTO half @dbbac713fc, CRO half @2ab90bf162.
 
-| cell | worker | worktree | what | status |
-|---|---|---|---|---|
-| IB-yr-291 | `0.9.0_WK_IRPT_BCKEND~94` | `C:/Users/AndrewBerman/Desktop/wk_irpt_bckend_94` | receipt.json carries the vendor endpoint ledger (ten-key shapes, refused off-shape) | pending |
-| IB-yr-292 | `~95` | `.../wk_irpt_bckend_95` | Playwright HAR of the login capture behind YC_RECORD_HAR=1 + har_scrub.py proven by a planted value | pending |
-| IB-yr-293 | `~96` | `.../wk_irpt_bckend_96` | projection carries allowedFirmIds; decide() refuses ACTOR_FIRM_NOT_ALLOWED (CRO condition 1: proven BEFORE the window) | pending |
+| cell | landed | what |
+|---|---|---|
+| IB-yr-291 | worker b21aacec70; drain on the index | receipt.json carries `vendor_requests` (ten-key shapes, refused off-shape); replay conforms (amendment 1 @641dc0411c) |
+| IB-yr-292 | @f39c3b0617 | `contextOptions()` records a HAR only behind `YC_RECORD_HAR=1`; `har_scrub.py` proven by a planted value |
+| IB-yr-293 | @784ac650d0 | projection carries `allowedFirmIds`; `decide()` refuses `ACTOR_FIRM_NOT_ALLOWED` (5 of 5 on CLOUD; 94 passed) |
 
-**Shared-surface note for `~P` (CONTRACT.md row 21):** IB-yr-293 lands a ONE-FIELD patch in
-`infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py` (`allowedFirmIds` appended to `_USER_FIELDS`
-and `_USER_RETURN_FIELDS`) and moves the pin in `_scope/tests/test_canonical_profile_reads.py`. The landed hash is
-recorded here at the drain. Measured before the cut: no non-terminal ~P/~M order names either file.
+**Shared-surface hash for `~P` (CONTRACT.md row 21):** the one-field `_scope/canonical_profile_reads.py` patch and its
+test pin landed at @784ac650d0 (`_USER_FIELDS` / `_USER_RETURN_FIELDS` + `allowedFirmIds`).
 
-**ONE next proof:** drain 293, then the creation act `svc-irpt-analysis` under ledger `irpt-svc-analysis-principal-20260930`
-(both halves cover it; CTO conditions 1-4 read at the act: row + secret read back, secret readers census, the
-no-vendor-call negative control under the principal on a non-cottonwood resource), then the W27 window (cap 150 min,
-three bodies, serialized on the irpt-jobs terminal). **Dependency not mine:** `irpt-analysis-resident` STOPPED since
-03:50Z; restart is `~P`'s under CTO 103150.
+**The principal (ledger `irpt-svc-analysis-principal-20260930` CLOSED @4303ef0b2e):** `svc-irpt-analysis@opalinvest.com`,
+admin / service / opal-capital / active / allowedFirmIds cottonwood; secret `irpt/svc-irpt-analysis/password`, readers =
+the walker's user only (24 of 24 roles explicitDeny); K2 login 200. Script `deliverables/IRPT_MVP_Y/live_walk/svc_principal.py`.
 
-**S194 / S213 (IB-yr-283, NOT CUT):** the CTO-adopted body-field candidate is REFUTED on Andrew's own 2026-08-21 HAR
-(his 201 Comparison POST carries the same four `saved_asset_securities_only` scopes the recipe sends, comparison in
-`secondarySecurity` P:1728413). Round 30 cuts the certifier data path (`certify()` handed the chosen comparisons).
+**ONE next proof:** the CTO's re-read of row `IRPT_BCKEND-S238` (condition 4 fired: the API served an inflection
+directory entry to the principal; enforcement is resident-only). On "open": the W27 window (three bodies, cap 150 min,
+serialized), which also needs `irpt-analysis-resident` running (`~P`'s restart under CTO 103150). On "API half first":
+Y supplies the exact `_authz/served.py selected_tenant` patch for `~P` under CONTRACT row 21.
 
-**Rows:** S234 disarms S228 by record (v1 never routed the two operations). S231 (a job cannot outlive its principal)
-stays ARMED, mine: its remedy (a terminal state for a permanent authority refusal) is a round-30 candidate.
-`TO-IB-yr-242/261/271` flipped `pending` per CTO analysis @dd4c69b696; terminal at the drain's proof read.
+**Round 30 list:** the certifier data path (`certify()` handed the chosen comparisons; the body-field candidate is
+refuted on Andrew's HAR); S231's remedy (a terminal state for a permanent authority refusal); W94-S2 hygiene (the
+`fixtures` module-name collision when the whole test directory is collected).
 
 ## 0-prior. Round 19 ~Y CLOSED (2 of 2 orders drained); round 20 list
 
