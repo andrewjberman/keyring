@@ -34,5 +34,17 @@ CRO~O recommendation: pilot on 1, production on 3.
 
 - Whether the domain check stands alone or must also agree with the tenant ID (tid -> firm) on the same message.
 - Where the check sits: the agent harness, the router, the gateway, or more than one.
-- Whether a refused message leaves an audit record (not responding and not recording are different acts).
+- ~~Whether a refused message leaves an audit record (not responding and not recording are different acts).~~
+  ANSWERED in section 5.
 - How a guest-form address (`...#EXT#@...`) is read against the allowlist.
+
+## 5. Andrew, verbatim, same channel, 2026-09-30 ~03:23Z
+
+Asked by CRO~O: "Do you want refused messages logged silently, or dropped with no trace?"
+
+> "Refused messages absolutely should be logged."
+
+Reading aid: a message refused by the sender-domain allowlist gets no response AND leaves a log record. Where the
+record lives and what it carries is not decided here. Still open from CRO~O's proposal (no answer yet): mapping each
+allowed domain to its Microsoft tenant ID and enforcing on the tenant ID, and enforcing at the gateway as well as the
+harness.
