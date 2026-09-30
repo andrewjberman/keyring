@@ -725,3 +725,57 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not widened: fixing the test file is outside the order's paths."
 }
 ```
+
+## MDPF_SECCLASS-W10-S4 -- Amendment 1 of TO-SC-e13 (c3d41dc9dd) disarms row MDPF_SECCLASS-W10-S1 in the repo: infra/aws/ssm/opal-bd-asset-dim-download.json now stages the three
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T23:00:00Z",
+  "one_line": "Amendment 1 of TO-SC-e13 (c3d41dc9dd) disarms row MDPF_SECCLASS-W10-S1 in the repo: infra/aws/ssm/opal-bd-asset-dim-download.json now stages the three shipped shared modules, the deployed-layout check imports the silver builder from that document (SILVER-LAYOUT-AS-STAGED-TODAY OK) and exits non-zero on a silver gap; the live document (DefaultVersion 4) is unchanged until Leg 0 of the BD_THREAD_R3 half runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_deployed_layout_import.py (wk-MDPF_SECCLASS-10) prints 'SILVER-LAYOUT-AS-STAGED-TODAY SHARED-KEYS-MATCH-TOOL document names 3 _shared keys, safe_deploy_core.shipped_artifacts_for names 3, sets equal', 'SILVER-LAYOUT-AS-STAGED-TODAY OK build_bd_assets_dim import=OK', 'SILVER-NEGATIVE-CONTROL REFUSED-AS-EXPECTED', exit 0; run against the pre-amendment document (git show c3d41dc9dd:infra/aws/ssm/opal-bd-asset-dim-download.json) it prints SHARED-KEYS-MISMATCH document=[] and REFUSED and exits 1.",
+      "Live document read only: .tools/aws ssm describe-document -> DefaultVersion=4 LatestVersion=4, Hash 294a7036...ae95e == sha256 of git show c3d41dc9dd:<file>; the repo edit is not live. The BD_THREAD_R3 half carries Leg 0 (the update-document act, the live version before, the rollback) and marks P1 satisfied by it per amendment 1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row MDPF_SECCLASS-W10-S1 (BLOCKING, ARMED): the silver bootstrap document does not fetch the shared client, so the silver builder refuses after the gold redeploy; disarm owner 2.0.0_SA_COO~M.",
+  "world_is": "Amendment 1 put the document in this order's paths; the document, the check and the half are edited and proven locally. The disarm is complete only when Leg 0 runs live (not done here: no SSM update). W10-S1 itself is not edited.",
+  "notes": "Cites MDPF_SECCLASS-W10-S1. See MDPF_SECCLASS-W10-S5 for the ordering hazard inside Leg 0."
+}
+```
+
+## MDPF_SECCLASS-W10-S5 -- The silver trigger Lambda reads the SSM document at DocumentVersion '$LATEST', so update-document takes effect at the very next 22:10Z fire and restor
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T23:00:30Z",
+  "one_line": "The silver trigger Lambda reads the SSM document at DocumentVersion '$LATEST', so update-document takes effect at the very next 22:10Z fire and restoring the default version does not roll it back; and the three new cp sources are first-mint keys that the gold redeploy creates, so a fire between Leg 0 and step 1 exits at the first missing key (set -eo pipefail) BEFORE shutdown is armed and strands the runner.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (sign the half with Leg 0 and step 1 as ONE gap between 22:10Z fires, or reorder so the shared keys exist before the document changes; and treat the rollback as republish-the-v4-bytes, not restore-default alone)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger/lambda_function.py:55-58 ssm.send_command(DocumentName=SSM_DOCUMENT, DocumentVersion='$LATEST'); rule bd-asset-dim-pipeline-trigger cron(10 22 ? * MON-FRI *) ENABLED (aws events describe-rule, read only); live Lambda code not byte-read, repo source cited.",
+      "infra/aws/ssm/opal-bd-asset-dim-download.json: 'set -eo pipefail' at the top of runCommand; each cp line ends '2>&1 | tee -a $LOG'; 'shutdown -h +2 &' comes after the dim rebuild, so an early exit leaves the instance running. The three _shared keys are head-object 404 today (R3 half, change 4); step 1 of the half creates them.",
+      "org/critical_paths/change_management/20260928T2032Z_nfra-mcpindex-bd-asset-dim-rest-schedule_deploy_completion.md leg L2 states 'Rollback = update-document-default-version 3' while the same trigger read $LATEST: that rollback form would not have moved the scheduled fire."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1: add the document update as its own leg BEFORE the silver builder's redeploy, with the live default version before and the rollback 'restore the prior default version'.",
+  "world_is": "Both halves of that instruction are unsafe as worded: the default version is not what the trigger runs ($LATEST is), and a document that changes before the shared keys exist fails the next fire without arming shutdown. Leg 0 in the half states the same-gap constraint and a two-part rollback (default to 4, then republish the v4 bytes as a new $LATEST); the order inside the gap stays the issuer's.",
+  "notes": "Nothing was updated or run; the act is unsigned. Cites MDPF_SECCLASS-W10-S1 and -S4."
+}
+```

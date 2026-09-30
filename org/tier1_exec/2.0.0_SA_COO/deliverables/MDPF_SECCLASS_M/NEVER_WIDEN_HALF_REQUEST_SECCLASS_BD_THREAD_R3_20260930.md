@@ -41,17 +41,62 @@ uploaded, deployed or run on any runner; S3 was read (VersionIds, below) and not
 
 Preconditions, each a stop:
 
-- **P1 (row `MDPF_SECCLASS-W10-S1`, BLOCKING, ARMED).** `infra/aws/ssm/opal-bd-asset-dim-download.json` stages the silver
-  runner's tree with `aws s3 cp` lines for `code/gold/lib/etf_classifier.py` and `__init__.py` only. The shared client is
-  absent there, so the silver builder refuses at `ETFClassifier.instance()` after this act. Three `cp` lines and one `mkdir`
-  (`code/gold/lib/_shared/` -> `$RUNROOT/data/black_diamond/scripts/gold/lib/_shared/`) must land in that document, by a
-  separate cell outside this order's paths, BEFORE step 1. Without P1 step 1 does not run. The check prints both branches:
-  `SILVER-LAYOUT-AS-STAGED-TODAY REFUSED ...` and `SILVER-LAYOUT-WITH-SHIPPED-ARTIFACTS OK ...`.
+- **P1 (row `MDPF_SECCLASS-W10-S1`) -- SATISFIED BY LEG 0 below, per AMENDMENT 1 of TO-SC-e13 (2.0.0_SA_COO~M, 2026-09-30).**
+  The silver bootstrap document `infra/aws/ssm/opal-bd-asset-dim-download.json` now carries one `mkdir` path and three
+  `aws s3 cp` lines staging `code/gold/lib/_shared/{etf_classifications_dynamodb,etf_classification_scheduled,
+  etf_classification}.py` into `$RUNROOT/data/black_diamond/scripts/gold/lib/_shared/` (committed with this cell; the
+  check proves the three keys equal `safe_deploy_core.shipped_artifacts_for()`). The repo file is not live until Leg 0
+  runs, so Leg 0 is the act that discharges P1; it is not a separate cell any more.
 - **P2 (timing).** The silver job fires about 22:10Z (`bd_assets_dim.parquet` LastModified 22:11Z on 09-28 and 09-29) and stages
   `code/gold/lib/etf_classifier.py` and `code/silver/build_bd_assets_dim.py` at start, so the two must change together: step 1
   is ONE `safe-deploy` call, run in a gap between that job's fires, with the UTC time read into the ledger.
 
 Steps:
+
+0. **LEG 0 -- the silver document update (amendment 1; runs BEFORE step 1, in the same gap as step 1).**
+   - **How the document reaches AWS (read from the estate, 2026-09-30 22:5xZ).** It is NOT Terraform-managed (only
+     `infra/aws/lambda/bd-pipeline/iam.tf:97` names it) and has no deploy script. The one precedent is a MANUAL publish:
+     `org/critical_paths/change_management/20260928T2032Z_nfra-mcpindex-bd-asset-dim-rest-schedule_deploy_completion.md`
+     leg L2 (`aws ssm update-document --name opal-bd-asset-dim-download --content file://<file> --document-version '$LATEST'`,
+     then `update-document-default-version`; writers of the content: one, the manual call).
+   - **Live state BEFORE (read only, `.tools/aws ssm describe-document` + `list-document-versions` + `get-document`,
+     2026-09-30 22:5xZ):** `DefaultVersion=4`, `LatestVersion=4`, versions 1, 2, 3, 4 all Active; v4 created
+     2026-09-28T20:37:58Z; `Hash=294a703617118218e386c275c4a1511bdef6dd833722031c6192ee04fd8ae95e` (Sha256). The live v4
+     content equals the repo file at the parent of the amendment commit (`git show c3d41dc9dd:<file>`, parsed JSON equal,
+     125 of 125 `runCommand` lines identical), so the diff Leg 0 applies is exactly the TO-SC-e13 edit: +1 `mkdir` path,
+     +3 comment lines, +3 `cp` lines.
+   - **THE TRIGGER READS `$LATEST`, NOT THE DEFAULT.** `infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger/lambda_function.py:55-58`
+     calls `ssm.send_command(DocumentName='opal-bd-asset-dim-download', DocumentVersion='$LATEST')` (rule
+     `bd-asset-dim-pipeline-trigger`, `cron(10 22 ? * MON-FRI *)`, ENABLED; live Lambda code not byte-read, this is the repo
+     source). `update-document` therefore changes what the NEXT 22:10Z fire runs the moment it returns; the default-version
+     step does not gate it. (Live Lambda `LastModified` 2026-04-14 predates every document version.)
+   - **The act:** (1) read the next silver fire time and require it more than 30 minutes away, and write the UTC time into
+     the ledger; (2) `git show <drain commit>:infra/aws/ssm/opal-bd-asset-dim-download.json > <scratch>/doc_v5.json`
+     (the index blob is LF; the working copy on this device is CRLF, so publish the `git show` bytes, never the working
+     file), expected sha256 `d3a38c7b1a92b3d92030c241ab6502245c5a25d3b40930dcef67548943d3f407` (10840 bytes; the working
+     file with CR removed, re-verified against the drain commit's blob); (3) `get-document --document-version 4 --query
+     Content --output text > <scratch>/doc_v4_rollback.json` and check its sha256 is the `Hash` above; (4) `.tools/aws ssm
+     update-document --name opal-bd-asset-dim-download --content file://<scratch>/doc_v5.json --document-version '$LATEST'`
+     -> expect new `DocumentVersion 5` with `Hash` equal to the sha256 in (2); (5) `.tools/aws ssm
+     update-document-default-version --name opal-bd-asset-dim-download --document-version 5`; (6) readback
+     `get-document` (default) equals the file as parsed JSON and carries three `_shared` `cp` lines.
+   - **Rollback, in this order (restoring the default alone does NOT roll back the trigger, which reads `$LATEST`):**
+     (a) `update-document-default-version --document-version 4` (the prior default, read live above); AND (b) republish the
+     v4 bytes as the new `$LATEST`: `update-document --name opal-bd-asset-dim-download --content file://<scratch>/doc_v4_rollback.json
+     --document-version '$LATEST'` -> version 6 whose `Hash` equals `294a7036...ae95e`, then `update-document-default-version
+     --document-version 6`. (SSM refuses identical-to-latest content with `DuplicateDocumentContent`; v5 is latest by then, so
+     this republish is not a duplicate.) Readback: `get-document` (`$LATEST`) `Hash` equals `294a7036...ae95e`.
+   - **ORDER HAZARD this leg carries (row `MDPF_SECCLASS-W10-S5`).** The three new `cp` sources are FIRST-MINT keys that
+     step 1 creates. The document runs `set -eo pipefail`, and each `cp` is piped to `tee`, so a fire that runs the new
+     document BEFORE step 1 has uploaded them exits at the first missing key, BEFORE `shutdown -h +2` is armed: the
+     t3.medium is stranded running and `silver/bd_assets_dim.parquet` is not written (an honest exit, no served move).
+     Leg 0 and step 1 are therefore one gap, back to back, with no silver fire between them; if step 1 does not complete,
+     run the rollback above immediately. The order inside the gap is the issuer's (amendment 1: Leg 0 first).
+   - **Local proof:** `r6_deployed_layout_import.py` prints `SILVER-LAYOUT-AS-STAGED-TODAY OK build_bd_assets_dim` from the
+     document in the repo, `SHARED-KEYS-MATCH-TOOL`, and `SILVER-NEGATIVE-CONTROL REFUSED-AS-EXPECTED` (the document minus its
+     `_shared` lines); it exits non-zero when the as-staged import is refused. These replace the
+     `SILVER-LAYOUT-...-WITH-SHIPPED-ARTIFACTS` line names used in the "Both branches" paragraph and the Evidence section
+     below, which are left as written.
 
 1. **Deploy (candidate diff, not yet applied):** `.tools/safe-deploy.sh`, DS lane (CLAUDE.md rule 13), ONE call on the six
    committed files below. Its receipt lists each `[script]` and each `[shipped]` destination, and it uploads the three

@@ -15,7 +15,8 @@ How it is built (nothing hand-listed):
      (infra/aws/ssm/opal-bd-asset-dim-download.json: the `aws s3 cp ... "$RUNROOT/..."` lines), parsed, not retyped.
 Prints `OK <module> client=<resolved path>` per module and, when all five import from the extract,
 `DEPLOYED-LAYOUT-IMPORT modules=5 of 5 files=<n>`; the silver layout gets its own lines. Exit 0 only when the five
-gold modules import AND each resolved its client from inside the extract. Nothing is uploaded or run anywhere.
+gold modules import AND each resolved its client from inside the extract AND the silver builder imports from the
+layout the document stages today AND the negative control (the document minus its _shared copy lines) is refused. Nothing is uploaded or run anywhere.
 Run from any directory:  python <this file>
 """
 from __future__ import annotations
@@ -211,9 +212,11 @@ def gold_section(core, work: Path) -> bool:
     return False
 
 
-def _silver_stage(core, work: Path, label: str, add_shipped: bool) -> tuple[Path, list[str], list[str]]:
+def _silver_stage(core, work: Path, label: str, drop_shared: bool) -> tuple[Path, list[str], list[str], list[str]]:
     """Stage the silver runner's tree from the SSM document's own `aws s3 cp` lines; map each key back to its
-    repo source through the deploy tool (code/lib/ keys are the separately-deployed fabric lib, source lib/)."""
+    repo source through the deploy tool (code/lib/ keys are the separately-deployed fabric lib, source lib/).
+    drop_shared=True is the NEGATIVE CONTROL: the document's code/gold/lib/_shared/ copy lines are removed.
+    Returns (root, staged, skipped, shared_keys_named_by_the_document)."""
     doc = json.loads((REPO / SSM_DOC).read_text(encoding="utf-8"))
     lines = doc["mainSteps"][0]["inputs"]["runCommand"]
     key_to_repo = {}
@@ -222,13 +225,20 @@ def _silver_stage(core, work: Path, label: str, add_shipped: bool) -> tuple[Path
         tgt = core.file_to_s3_target(rel)
         if tgt is not None:
             key_to_repo[tgt[1]] = rel
+    # the shipped modules' keys are declared by the tool, not by a file under data/: source them from the tool
+    for repo_path, _b, key in core.shipped_artifacts_for([GOLD_HOME + "/lib/etf_classifier.py"]):
+        key_to_repo[key] = repo_path
     root = work / label
-    staged, skipped = [], []
+    staged, skipped, shared_keys = [], [], []
     for ln in lines:
         m = re.search(r'aws s3 cp s3://[\w.-]+/(\S+)\s+"\$RUNROOT/([^"]*)"', ln)
         if not m:
             continue
         key, dest = m.group(1), m.group(2)
+        if "/_shared/" in key:
+            shared_keys.append(key)
+            if drop_shared:
+                continue
         src = key_to_repo.get(key)
         if src is None and key.startswith("code/lib/"):
             src = "lib/" + key.rsplit("/", 1)[-1]
@@ -238,33 +248,55 @@ def _silver_stage(core, work: Path, label: str, add_shipped: bool) -> tuple[Path
         target = root / dest / key.rsplit("/", 1)[-1] if dest.endswith("/") else root / dest
         _copy(src, target)
         staged.append("%s -> %s" % (key, (dest + key.rsplit('/', 1)[-1]) if dest.endswith("/") else dest))
-    if add_shipped:
-        gold_lib = root / "data/black_diamond/scripts/gold/lib"
-        for repo_path, _b, key in core.shipped_artifacts_for([GOLD_HOME + "/lib/etf_classifier.py"]):
-            _copy(repo_path, gold_lib / "_shared" / key.rsplit("/", 1)[-1])
-            staged.append("%s -> data/black_diamond/scripts/gold/lib/_shared/ (ADDED; not in the document today)" % key)
-    return root, staged, skipped
+    return root, staged, skipped, shared_keys
 
 
-def silver_section(core, work: Path) -> None:
+def silver_section(core, work: Path) -> bool:
+    """True only when (a) the document's _shared keys equal the tool's shipped keys, (b) the silver builder imports
+    from the layout the document stages TODAY, and (c) the negative control (document minus its _shared lines)
+    is REFUSED -- a control that imports proves nothing."""
     print("SILVER-LAYOUT measured from %s: a repo-shaped RUNROOT holding silver/build_bd_assets_dim.py, "
-          "gold/lib/{etf_classifier,__init__}.py (two cp lines) and lib/{silver_ids,trading_calendar}.py; the script "
-          "runs as `cd $RUNROOT && python3 data/black_diamond/scripts/silver/build_bd_assets_dim.py`; "
-          "gold/ is reached through the builder's own ../gold sys.path insert" % SSM_DOC)
-    for label, add in (("silver_as_staged_today", False), ("silver_with_shipped_artifacts", True)):
-        root, staged, skipped = _silver_stage(core, work, label, add)
+          "gold/lib/{etf_classifier,__init__}.py and gold/lib/_shared/*.py (the shipped modules) and "
+          "lib/{silver_ids,trading_calendar}.py; the script runs as `cd $RUNROOT && python3 "
+          "data/black_diamond/scripts/silver/build_bd_assets_dim.py`; gold/ is reached through the builder's own "
+          "../gold sys.path insert" % SSM_DOC)
+    tool_keys = sorted(k for _r, _b, k in core.shipped_artifacts_for([GOLD_HOME + "/lib/etf_classifier.py"]))
+    ok = True
+    for label, drop in (("silver_as_staged_today", False), ("silver_negative_control", True)):
+        root, staged, skipped, shared = _silver_stage(core, work, label, drop)
         res = _child(root, "file", "build_bd_assets_dim", SILVER_BUILDER,
                      [str(root / "data/black_diamond/scripts/silver")])
-        tag = "SILVER-LAYOUT-AS-STAGED-TODAY" if not add else "SILVER-LAYOUT-WITH-SHIPPED-ARTIFACTS"
-        print("%s files_staged=%d (document keys with no repo source, not staged: %d)" % (tag, len(staged), len(skipped)))
-        for s in staged:
-            print("  " + s)
-        if res.get("ok") and _inside(res["client"], root):
-            print("%s OK build_bd_assets_dim import=OK client=%s" % (tag, res["client"]))
-        elif res.get("imported"):
-            print("%s REFUSED build_bd_assets_dim import=OK client=UNRESOLVED %s" % (tag, res.get("client_error")))
+        imported_ok = bool(res.get("ok") and _inside(res["client"], root))
+        if not drop:
+            tag = "SILVER-LAYOUT-AS-STAGED-TODAY"
+            print("%s files_staged=%d (document keys with no repo source, not staged: %d)" % (tag, len(staged), len(skipped)))
+            for s in staged:
+                print("  " + s)
+            if sorted(shared) == tool_keys:
+                print("%s SHARED-KEYS-MATCH-TOOL document names %d _shared keys, safe_deploy_core.shipped_artifacts_for "
+                      "names %d, sets equal" % (tag, len(shared), len(tool_keys)))
+            else:
+                ok = False
+                print("%s SHARED-KEYS-MISMATCH document=%s tool=%s" % (tag, sorted(shared), tool_keys))
+            if imported_ok:
+                print("%s OK build_bd_assets_dim import=OK client=%s" % (tag, res["client"]))
+            else:
+                ok = False
+                if res.get("imported"):
+                    print("%s REFUSED build_bd_assets_dim import=OK client=UNRESOLVED %s" % (tag, res.get("client_error")))
+                else:
+                    print("%s NOT-IMPORTED build_bd_assets_dim %s" % (tag, res.get("error")))
         else:
-            print("%s NOT-IMPORTED build_bd_assets_dim %s" % (tag, res.get("error")))
+            tag = "SILVER-NEGATIVE-CONTROL"
+            print("%s files_staged=%d (the document minus its %d _shared copy lines)" % (tag, len(staged), len(shared)))
+            if imported_ok:
+                ok = False
+                print("%s FAILED-TO-REFUSE build_bd_assets_dim imported without the _shared modules; the check cannot "
+                      "tell a staged client from an absent one" % tag)
+            else:
+                print("%s REFUSED-AS-EXPECTED build_bd_assets_dim %s" % (
+                    tag, (res.get("client_error") or res.get("error") or "")[:160]))
+    return ok
 
 
 def main() -> int:
@@ -272,10 +304,12 @@ def main() -> int:
     work = Path(tempfile.mkdtemp(prefix="r6_layout_"))
     try:
         gold_ok = gold_section(core, work)
-        silver_section(core, work)
+        silver_ok = silver_section(core, work)
     finally:
         shutil.rmtree(work, ignore_errors=True)
-    return 0 if gold_ok else 1
+    if not silver_ok:
+        print("SILVER-LAYOUT-CHECK-FAILED exit 1 (the silver builder does not import from the layout the document stages)")
+    return 0 if (gold_ok and silver_ok) else 1
 
 
 if __name__ == "__main__":
