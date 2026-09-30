@@ -231,20 +231,36 @@
   "search": [
     {
       "pattern": "etf-classifications",
-      "hits": 5945,
-      "files": 505
+      "hits": 213,
+      "files": 68
     },
     {
       "pattern": "classified_by",
-      "hits": 4966,
-      "files": 116
+      "hits": 109,
+      "files": 23
     },
     {
       "pattern": "etf_classifications_dynamodb",
-      "hits": 383,
-      "files": 159
+      "hits": 62,
+      "files": 31
     }
   ],
+  "search_scope": "tracked files outside org/, docs/, archive/ with a code, config or shell extension (py ts tsx js mjs cjs tf sh json yaml yml): org/ and docs/ are prose and records that change with every commit, including this cell's own outputs, so they are not counted",
+  "comp_find_at_build": {
+    "measured_by": "comp-find <pattern> --files --all, corpus=all, worktree root, 2026-09-30 (a one-time record, not re-run by this check)",
+    "etf-classifications": {
+      "hits": 5962,
+      "files_scanned": 46462
+    },
+    "classified_by": {
+      "hits": 4908,
+      "files_scanned": 46466
+    },
+    "etf_classifications_dynamodb": {
+      "hits": 440,
+      "files_scanned": 46467
+    }
+  },
   "not_readers": {
     "infra/aws/lambda/v2_portal/_shared/etf_classification.py": "the static seed SOURCE module (dicts), not a table reader; the seeders above read it",
     "data/assets/scripts/gold/investor_reporting/bd_securities_fallback.py": "reads the LEGACY per-firm table (LEGACY_TABLE = _legacy_table_name()), not etf-classifications",

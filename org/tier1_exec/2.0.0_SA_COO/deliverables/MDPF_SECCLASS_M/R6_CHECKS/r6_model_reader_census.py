@@ -963,11 +963,24 @@ def tracked_files():
     return [f for f in out.split("\n") if f]
 
 
+SEARCH_SCOPE = ("tracked files outside org/, docs/, archive/ with a code, config or shell extension "
+                "(py ts tsx js mjs cjs tf sh json yaml yml): org/ and docs/ are prose and records that change with every "
+                "commit, including this cell's own outputs, so they are not counted")
+COMP_FIND_AT_BUILD = {
+    "measured_by": "comp-find <pattern> --files --all, corpus=all, worktree root, 2026-09-30 (a one-time record, not re-run by this check)",
+    "etf-classifications": {"hits": 5962, "files_scanned": 46462},
+    "classified_by": {"hits": 4908, "files_scanned": 46466},
+    "etf_classifications_dynamodb": {"hits": 440, "files_scanned": 46467},
+}
+
+
 def search_census(files):
     search, universe = [], {}
     texts = {}
     for f in files:
-        if f.endswith(STRUCTURAL + CODE_EXT + (".md", ".yaml", ".yml", ".txt")):
+        if f.startswith(("org/", "docs/", "archive/", ".scratch")):
+            continue
+        if f.endswith(STRUCTURAL + CODE_EXT + (".yaml", ".yml")):
             try:
                 texts[f] = (ROOT / f).read_text(encoding="utf-8", errors="ignore")
             except OSError:
@@ -979,7 +992,7 @@ def search_census(files):
             if c:
                 hits += c
                 files_n += 1
-                if f.endswith(CODE_EXT) and not f.startswith(("org/", "docs/", "archive/", ".scratch")):
+                if f.endswith(CODE_EXT):
                     universe.setdefault(f, []).append(pat)
         search.append({"pattern": pat, "hits": hits, "files": files_n})
     return search, universe
@@ -1049,6 +1062,8 @@ def main() -> int:
                         "of_which_declared_not_readers": sum(1 for f in universe if f in NOT_READERS),
                         "uncensused": missing},
         "search": search,
+        "search_scope": SEARCH_SCOPE,
+        "comp_find_at_build": COMP_FIND_AT_BUILD,
         "not_readers": NOT_READERS,
     }
     OUT.write_text(json.dumps(doc, indent=2, sort_keys=False) + "\n", encoding="utf-8")
