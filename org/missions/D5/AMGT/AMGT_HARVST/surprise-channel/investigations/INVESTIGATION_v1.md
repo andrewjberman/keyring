@@ -4182,6 +4182,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "The change is the order's own; filed because it moves a class (RequestRejected -> AuthExpired) that a docstring and a neighbouring test describe."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S47",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-30T16:35Z",
+      "one_line": "HVST-ab-3's sa account-check probe was VACUOUS: it ran on 2317_TT_Equity (Hon Hai), which has no resolved Seeking Alpha symbol, so the job ended contract_unavailable with 0 requests -- the account was never touched; the first real sa request falls to the first US name's run, beside bbg/wsj.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO half @2fa1940cad condition (i): the sa probe runs first and alone; COO half @6b3b243c4e step 1: the probe is `run ... --security-json <SEC 2317_TT_Equity> --publishers sa --max-jobs 1`.",
+      "world_is": "Probe run 20260930T162824Z-run-8accfbd1 (rc 2): sa job status contract_unavailable, detail 'Security lacks a resolved Seeking Alpha symbol', request_attempts [] , token_source saved_session_file sa.dpapi (captured 2026-09-15, newer than the Secrets session 2026-09-11), signed_in false. The issuer picked the probe name as 'name 1 in file order' without checking sa symbol resolution -- a cut-time miss.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest/runs/20260930T162824Z-sa-36443886fb.json (status, detail, request_attempts)",
+          "wk-hvst-r29-83 deliverables ab3_01_probe_sa_2317.stdout (stored_token_used, job_finished, run_record_persisted)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "INERT, not ARMED: ab-3 phase A0 keeps a 402's body and makes one in-job fresh-session retry, and a persisting 402 sets a 1 h sa cooldown that skips the later sa jobs -- so the guard the probe was for still holds, per job. Issuer ruling: the act continues inside the pair; the account check is read from the first sa job that makes a request (AC2 prints it). Next time the probe name is chosen by a resolved sa symbol."
     }
   ]
 ```
