@@ -5,10 +5,10 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
  "status": "DRAFT"
 }
 ```
@@ -140,6 +140,69 @@ approved it.
                     is missing or failed, the page tells him what
          SOURCE     brief Part III ("nothing publishes past a failed
                     guardrail"); Part V H7; ANDREW_DIRECT item 10
+
+  ===== ADDENDUM A, v0.3, 2026-09-30 -- peer groups, the IDVZ group ========
+  From docs/briefs/etfs-rivals-idvz-expansion-20260930.md (midstream) and the
+  endpoint addendum ENDPOINT_FORWARD_RIVALFUNDS_ADDENDUM_A_PEER_GROUPS_IDVZ_20260930.md,
+  DONE WHEN confirmed by Andrew with one change to FWD-1 ("fwd 1 should include
+  idvz and pfoe right as the two opal etfs, with their respective peer groups.
+  otherwise, yes, all of these are fine"). The lines below SUPERSEDE FWD-1, 2,
+  3, 5, 6 and 7 above; FWD-4, 8 and 9 stand as above.
+
+  FWD-1  (AMENDED) Andrew opens each of the two Opal ETFs' peer groups on
+         the live page and reads it, the Opal fund included, on one plane
+         DONE WHEN  EXERCISED -- one live trace per Opal ETF: Andrew selects
+                    IDVZ and reads IDVZ and its peers (TXUE, BIDD, CGIC, INEQ,
+                    SCHY) side by side, then selects PFOE and reads PFOE and its
+                    peers (WCMG, GQGU, TSEL, BASG, ETFT, PCLG) the same way:
+                    trade schedules, style reads and the FWD-6/7 views; in each
+                    group he follows one rival's trade back to the holdings
+                    reports it was inferred from and to where they came from
+         ACCEPT     every step shows real published holdings; a step fed by
+                    sample data fails the outcome
+         SOURCE     brief O1; Andrew point 3 and his FWD-1 confirmation
+  FWD-2  (AMENDED) as above, for every fund in both groups; a fund in two
+         groups is shown once, with one history
+  FWD-3  (AMENDED) Fresh holdings arrive every trading morning with nobody
+         downloading anything, from each fund's chosen source
+         DONE WHEN  EXERCISED -- over several consecutive trading days, every
+                    fund is collected each morning by its own source policy:
+                    the IDVZ group from Bloomberg, the PFOE group from each
+                    fund's own site with Bloomberg as the fallback; the page
+                    names the source per fund and day
+         ACCEPT     a fund's policy is a setting, not code; a failed source
+                    says so plainly
+  FWD-5  (AMENDED) as above, and: on a fund and window that contain a
+         dividend, a split and a cash/currency line, none of the three appears
+         as a trade, and a purchase funded from income reads as a trade
+         labelled income-funded
+  FWD-6  (AMENDED) Andrew sees where each manager's trading helped or hurt,
+         by sector and by security
+         DONE WHEN  EXERCISED -- for one fund and period Andrew reads which
+                    trades and trade clusters out- or under-performed
+                    afterwards, summarised by sector and by security, each with
+                    its window and denominator, including positions since sold
+  FWD-7  (AMENDED) for one fund Andrew reads (a) its projected trading by
+         sector and security if the observed trends persist, each with what
+         would contradict it, and (b) a labelled wildcard section in which
+         every item cites its rows and says what would disprove it; a later
+         account grades the earlier projection against trades inferred after it
+  FWD-10 (NEW) Andrew sees whether each manager trades with discretion or by
+         system, and why
+         DONE WHEN  EXERCISED -- each fund's style read shows its evidence
+                    (timing concentration, breadth of the book touched, trade
+                    size), and the group's index fund (SCHY) reads as
+                    systematic on that same evidence
+         ACCEPT     a trade count alone is never the evidence
+  FWD-11 (NEW) Andrew compares an Opal fund with its rivals on the same
+         measures
+         DONE WHEN  EXERCISED -- IDVZ against its peers and PFOE against its
+                    peers, on the style read, trading results and projections,
+                    by the same rules, with no separate method for Opal's fund
+  FWD-12 (NEW) Opal adds a peer group without a new pipeline
+         DONE WHEN  EXERCISED -- a third group is added as a mapping entry and
+                    flows through collection, tables, page and archive with no
+                    code change; a fund in two groups is stored once
 ```
 
 ## CONTRACTS
