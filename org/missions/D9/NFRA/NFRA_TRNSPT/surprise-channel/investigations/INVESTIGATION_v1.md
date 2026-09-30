@@ -190,6 +190,66 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "The original order face named authors.json and client_domains.json as carriers of firm tokens and a SSA/Census name-list fetch.",
   "world_is": "The amended face replaced all three; W4-S1, W4-S3 and W4-S4 stand as written and are superseded by these applied rulings. W4-S2 is moot (Yang's second address is covered by firm_domain_rule)."
+},
+{
+  "id": "NFRA_TRNSPT-W4-S6",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+  "surfaced_at": "2026-09-30T17:30:00Z",
+  "one_line": "lib.opal_naming.address() refuses object=\"\", so the order's bronze prefix call address('outlook','transcripts','bronze','analysis_commentary','date=<d>','') cannot run as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address() at HEAD 4ef97cc7dd: `if not isinstance(object, str) or not object ...: raise ValueError`",
+      "python call address('teams','transcripts','bronze','analysis_commentary','date=2026-09-30','') -> ValueError; object=None -> s3://opal-data-transcripts/teams/transcripts/bronze/analysis_commentary/date=2026-09-30"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-TR-w1 build item 2: the bronze partition prefix is address(source, scope, 'bronze', 'analysis_commentary', 'date=<d>', '') (a trailing empty object).",
+  "world_is": "address() raises ValueError \"object must be a non-empty ASCII string not starting with '/'\" for object=''; object=None returns the partition address without a trailing slash. silver.py builds the prefix as address(..., partition) + '/' instead; the output key still uses the object argument."
+},
+{
+  "id": "NFRA_TRNSPT-W4-S7",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+  "surfaced_at": "2026-09-30T17:30:00Z",
+  "one_line": "This branch's registry has no `outlook` source row (it is TR-g-1's, on wk-NFRA_TRNSPT-3 @8e9ed1b539), so address('outlook',...) raises here; the silver test borrows a registered source until that row drains.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python: opal_naming.address('outlook','transcripts','bronze','analysis_commentary','date=2026-09-30') -> ValueError source 'outlook' is not a systems.json key (worktree wk_nfra_trnspt_4 HEAD 4ef97cc7dd)",
+      "git show 8e9ed1b539 -- infra/logic/registry/systems.json: adds rows outlook and sharepoint; git branch --contains 8e9ed1b539 -> wk-NFRA_TRNSPT-3 only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-TR-w1 build item 2: silver reads and writes under address('outlook','transcripts', ...) built by lib.opal_naming.",
+  "world_is": "On this base the registry's systems.json has no key `outlook` (ValueError: source 'outlook' is not a systems.json key). silver.py takes the source from its own directory name; the test test_outlook_silver.py monkeypatches silver.SOURCE to the first registered source that resolves a bronze address ONLY when 'outlook' does not resolve, and uses the real one once TR-g-1 has drained. The real run at the drain must resolve address('outlook',...) for real; the issuer's run at the drain is that proof."
+},
+{
+  "id": "NFRA_TRNSPT-W4-S8",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+  "surfaced_at": "2026-09-30T17:30:00Z",
+  "one_line": "Wipe limits found while building: a name is matched in another case only with same-message evidence (or ALL-CAPS in the dictionary); capitalised surnames that are also English words (Ask, Mail, Reach) are wiped at sentence start; capitalised non-stopword words (headings, labels) go to residual flags, so real messages will hold out often.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/outlook/wipe.py wipe_blocks (commit e555ef8ac9): pass 1 learns names per message, pass 2 applies; STOPWORDS list",
+      "python: wipe_blocks('we asked ottoline today') with ottoline in the given-name set leaves it unchanged; 'Ask' and 'Mail' are members of surnames.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-WIPE: names applied case-sensitively behind an allowlist; anything capitalised and unknown goes to pii_residual_flags and is held out; C-WIPE-GATE plants a name 'in a different case'.",
+  "world_is": "Case-sensitive dictionary matching means a standalone lower-case name (e.g. 'we asked ottoline') is NOT wiped unless the same message showed the name capitalised or ALL-CAPS; matching lower-case case-insensitively would wipe ordinary words (will, grant, mark, rate). The surnames list holds ordinary English words, so sentence-initial 'Ask'/'Mail' are wiped unless in the stopword list (a small one is in wipe.py). The planted-token test plants the lower-case name beside its ALL-CAPS form. The held-out rate on the real sample is unmeasured here; the issuer's real silver run prints held_out=<h>."
 }
 ]
 ```
