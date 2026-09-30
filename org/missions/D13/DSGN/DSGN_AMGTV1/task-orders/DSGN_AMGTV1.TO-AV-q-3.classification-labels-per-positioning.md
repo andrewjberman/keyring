@@ -95,7 +95,7 @@ outer commit hashes, and any row.
 **ISSUER NOTES:** round 8 = the round-7 analysis s.4 item 3 with ruling 5. Base ab7e1e49: labels.cjs 0 of 3; green 3 of 3; Q3 5 of 5
 and round-7 columns.cjs 3 of 3 at base and on the green arm (the green arm carried cells 2 and 3 together -- the drain state).
 
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <slot>~31</slot>
 <fabric>site-z</fabric>
