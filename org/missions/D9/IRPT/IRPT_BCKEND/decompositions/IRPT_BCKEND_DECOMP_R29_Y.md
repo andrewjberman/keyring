@@ -99,3 +99,26 @@ spawn; if the body field is the cause, round 30 cuts ONE cell on `recipe.py`; if
 `TO-IB-yr-242`, `-261`, `-271` were drained (`589a553074`, `a225440af7`, `3ce99ec90a`) with their workers'
 commits and proof instances on CLOUD; their status word lagged the act. Flipped to `pending` in this commit as the
 CTO asks; the terminal flip follows the drain's read of each proof-of-spec instance (sweep 5).
+
+
+## Amendment 1 (2026-09-30 ~15:0xZ) -- `IB-yr-291` refused on an ISSUER defect: the replay transport's record carries an eleventh key; the fix is the replay's, not production's
+
+Worker `~94` refused as written (row `IRPT_BCKEND-W94-S1`, commit 38b0270a66 on its branch): `ReplayTransport`'s
+evidence record (`transport.py:588-597`) carries `location` as an ELEVENTH key; the real `Transport._record`
+(`:476-480`) carries ten. My AC1 check and the face pinned the real shape and named `transport.py` READ-ONLY, so the
+worker could not close the gap. **The refusal was right and the defect is mine** -- I read the real transport's
+record and asserted the replay's "same surface" from its docstring instead of printing its keys (rule 22a: the
+instrument I quoted was the wrong object).
+
+**RULING (rule 7, gate limb: none graded it; this is an amendment of a MODIFIED order).** Measured: nothing reads
+`location` from an evidence record -- `job.py:300` reads it from a step's reply `info`, and `run_offline_suite.py:481`
+builds a `tx.Reply`; the only writer of the key into `evidence` is the replay's own record line. The replay's
+docstring promises "Same surface as `Transport`". So the replay conforms to production, never the reverse:
+- `transport.py` joins the grant for EXACTLY ONE change: remove the `"location": fixture.get("location", "")` line
+  from `ReplayTransport`'s evidence record, so the replay records the ten-key shape. The reply/`info` path is untouched.
+- `job.py` validates STRICTLY against `VENDOR_LEDGER_SHAPE` (the worker's `candidate_strict_validate.patch`); no key
+  is stripped in production code. The `candidate_strip_location.patch` is NOT taken: a production line that
+  silently drops a key exists only to please a fixture, and hides the next drift.
+- The three criteria are unchanged. AC3's "equal to `tx.evidence`" now holds by construction.
+Rejected alternative: adding `location` to the shape constant would make the ledger's contract the replay's shape,
+which is the drift written into law.
