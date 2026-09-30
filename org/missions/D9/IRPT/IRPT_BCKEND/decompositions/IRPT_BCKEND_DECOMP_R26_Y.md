@@ -65,3 +65,58 @@ unguarded handler`, all three the export routes on `irpt-export-render` -- `2.0.
 explicitly NOT this cell's to fix or to route around. **Consequence for the cut:** no criterion here names a whole red
 suite. AC3 names ONE node id; the census is measured by the issuer at the drain as a DELTA against the printed
 baseline of 6, never as a green.
+
+
+## Amendment 1 (2026-09-30 ~01:4xZ) -- the cell's OUTCOME IS SERVED; AC3 was VOID AS CUT, and that is a second issuer defect of a DIFFERENT kind
+
+Worker `~89` delivered AC1 and AC2 and refused AC3 without weakening it. Issuer grade in its own worktree:
+**2 passed, 1 failed.** Write surface entirely inside the grant. Drained @**a225440af7**.
+
+**ROUND 25's DEFECT IS FIXED, and the control is what proves it.** AC1 reads `1 passed` (the route is registered
+under the scoped family) while **AC2, the control, stayed green at `13 passed`** -- so the route is declared AND the
+deployed boundary constructs. `build_boundary`'s `operations` now carries `CATALOGUE_OPERATION ->
+generate_entry.read_comparison_catalogue`, and the exact-equality route pin was UPDATED to the true three-route
+table with `==` kept, which is the required form and not a weakening.
+
+**The WORLD property, verified by the issuer and not taken on report:** the census verdict now reads
+`{'guarded': 15, 'routes': 18, 'unguarded': [the three export routes]}` against a base of
+`{'guarded': 14, 'routes': 17, ...}`. The unguarded set is UNCHANGED. **The new served route is guarded** -- which is
+the whole reason the cell was `WORLD` and the one thing a new route must prove.
+
+### AC3 WAS UN-MEETABLE, BY ANY WORKER, UNDER ANY GRANT -- MY DEFECT, AND NOT THE SAME ONE AS LAST ROUND
+
+Round 25's defect was an under-granted cell. **This one is worse in kind: a criterion that no grant could satisfy.**
+`_contracts/tests/test_seam_paired.py:570` derives a document name as
+`r.split("#")[0][len("../"):][: -len(".schema.json")]` -- it assumes EVERY `$ref` is a relative `../X.schema.json`.
+The published convention is `opal://irpt/contracts/v1/X.schema.json`, so stripping three characters yields
+`l://irpt/contracts/v1/X`, and the fixture lookup can never resolve. **That is the exact `l://` string in AC3's
+failure message and in all 17 of its sibling control nodes' messages -- which my own preflight printed.**
+
+**The drain's sound substitute for AC3, run in place of it, denominator printed:** `routes.json` is 18 rows with
+`declared` and `total` both 18; the catalogue row names
+`responses/comparison-catalogue.response.schema.json`; that file exists, is valid JSON, carries `$id`,
+`x-contract-version`, `additionalProperties` and `required`; and its refs are `opal://...` like
+**18 of 18 published response schemas**. So the outcome AC3 was meant to witness IS MET. **AC3 asked the worker to
+break the convention that 18 of 18 files follow in order to satisfy a test that mis-parses all 18.** It is recorded
+**VOID AS CUT** -- not met, and not the cell's shortfall.
+
+**THE TRANSFERABLE LESSON, because a second defect in two rounds is a pattern and not bad luck.** I wrote in the order
+that AC3's base `no tests ran` (rc=5) was "a third answer state beside pass and fail" -- correct as far as it went, and
+then I used it as if it were a base MEASUREMENT. It is not one. **For a PARAMETRIZED node, the base control is not the
+absent node -- it is a SIBLING node.** An absent node cannot show you that it will inherit a systemic failure the
+moment it is minted. I had 17 siblings failing with one identical cause, printed in my own preflight table, and read
+them as "the file is red, so name a single node" when the sound reading was "every sibling fails for ONE cause, so
+the new node will too". Naming one node id escapes a NOISY suite; it does not escape a SYSTEMIC one.
+
+### Disposition and what is routed where
+
+- `TO-IB-yr-261` -> **`staged`**: the cell's served outcome is complete and guarded; AC1 and AC2 MET; AC3 VOID AS CUT.
+  This is NOT round 25's disposition repeated -- there the cell was incomplete, here the criterion was wrong.
+- **The seam-suite defect goes to `1.0.0_SA_CTO` as a DECISION, not a cell**: `test_seam_paired.py:570`'s ref
+  convention is wrong for 18 of 18 published response schemas, so the suite cannot grade any contract work by any
+  seat, and 33 of its 58 nodes are red for this one cause. Either the suite's parser learns `opal://` or the published
+  convention changes; that choice is above this workstream and it is not ~Y's to make. Row `IRPT_BCKEND-W89-S1`.
+- **Row `IRPT_BCKEND-W89-S2`, verified at source:** the census's 7th failure is a stale literal `17` at
+  `_authz/tests/test_unguarded_census.py:99` (`assert len(table) == 17`), with the same literal at `:114` and `:141`,
+  against a published file that now holds 18. **Not** an unresolved route. A third small grant gap -- that file should
+  have been in `<paths>` -- and a loud tripwire, not silent harm. It rides the next ~Y cell.
