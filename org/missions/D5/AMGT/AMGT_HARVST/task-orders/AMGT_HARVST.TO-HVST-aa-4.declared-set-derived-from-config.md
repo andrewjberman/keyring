@@ -74,6 +74,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 - The worker in flight receives this amendment as a continuation of its order before its drain.
 - **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
+**AMENDMENT 2 (issuer, 2026-09-30 ~10:1xZ) -- PRD v0.7 (@`0e6467847a`, msg 27083): a publisher exits the set on "no UNIVERSE-SCOPE job".**
+- A per-name trial neither adds nor keeps a publisher, so the declared set is EMPTY today. The rank HOLDs
+  (`NO_DECLARED_PUBLISHER`) until a universe-scope backfill runs.
+- **AC1 gains two more plants:**
+  - (g) a publisher with only per-name trial runs EXITS the set;
+  - (h) a publisher with a universe-scope run ENTERS it.
+- **AC2 also prints, per excluded name, the declared publishers it lacks.**
+- The worker in flight receives AMENDMENTS 1 and 2 together as a continuation of its order before its drain.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
