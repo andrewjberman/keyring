@@ -96,8 +96,10 @@ def main() -> int:
     # WRAPPER: this exec'd native python survived as an orphan, kept the lock (every re-arm refused, rc=3), and
     # wrote to a pipe nobody read -- site Z was deaf until the orphan was killed by hand (measured: pid 2116617,
     # alive after its Monitor b0vrs6jhl expired). Exit just before the cap, like inbox-watch.sh (1770 s), so the
-    # Monitor ends normally and atexit frees the lock. AGENTBUS_MAX_SECONDS overrides; 0 disables.
-    max_s = int(os.environ.get("AGENTBUS_MAX_SECONDS", "1770") or 0)
+    # Monitor ends normally and atexit frees the lock. 1700 s, not 1770: the Monitor clock starts before the bash
+    # preamble (device resolve, lock, AWS checks), and at 1770 the harness killed the first live run first.
+    # AGENTBUS_MAX_SECONDS overrides; 0 disables.
+    max_s = int(os.environ.get("AGENTBUS_MAX_SECONDS", "1700") or 0)
     t0 = time.monotonic()
 
     def _expired() -> bool:
