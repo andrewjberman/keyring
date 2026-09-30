@@ -274,6 +274,30 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "spec_asserts": "A worker's complete-flip commit of the task order and its proof instance passes safe-commit (missions-tree-index check 0 violations).",
   "world_is": "The generated index org/projects/NFRA_TRNSPT.json is one dep_stage behind the tree row at the base, so any commit staging an org/missions/D*/ path is refused; the worker's grant excludes org/projects/, and the worker does not bypass or force.",
   "notes": "State left in the worktree, uncommitted: task order <status> flipped to complete, proof instance VALID (rc=0, violations=0), this row. Retry the commit once the index carrier is committed and merged into the branch base."
+},
+{
+  "id": "NFRA_TRNSPT-W4-S9",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+  "surfaced_at": "2026-09-30T18:10:00Z",
+  "one_line": "The TR-k-1 face asks for pdf_sha256 null this round while the issuer's AC1 check requires nullable true ONLY on holdings and request_text; the contract marks pdf_sha256 non-nullable and gold emits the empty string with claim absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R1_CHECKS/r1_gold_contract_check.py: NULLABLE = {holdings, request_text}; the check prints GOLD-CONTRACT-BAD if any other field is nullable",
+      "TO-TR-k1 worker face build item 2: 'pdf_sha256 null this round' and build item 1 'claim pdf_sha256 absent'; the contract validation refuses a null in a non-nullable field, so both cannot hold",
+      "org/standards/NFRA_TRNSPT_COMMENTARY_GOLD_CONTRACT.json pdf_sha256: nullable false, claim absent; data/transcripts/scripts/outlook/gold.py derive_row emits '' and test_hashes_and_carried_fields asserts it",
+      "Also decided without a face line: gold.derive drops silver rows with held_out true or ingest false (C-WIPE holds them out); models_referenced matches single-token aliases case-sensitively (so a capitalised 'Short' at a sentence start matches the Short Term alias); 'Dividend Income' alone is not in model_aliases.json (only 'Dividend Income Strategy/Portfolio'), so it does not match",
+      "after git merge CLOUD, address('outlook','transcripts','gold',...) still raises ValueError: source 'outlook' is not a systems.json key (infra/logic/registry/systems.json has no outlook row); the gold test borrows a registered source as W4-S7 does"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "pdf_sha256 is null this round AND is non-nullable per the issuer's check (nullable true only on holdings, request_text).",
+  "world_is": "One of the two must give: the contract carries pdf_sha256 as a non-nullable string with the empty-string coverage value and claim absent; when attachment bytes land (S12) the real sha256 replaces it with no schema change. If the issuer wants a true null, the check's NULLABLE set and the contract change together (a version bump).",
+  "notes": "Residue: the registry still lacks the outlook source row after the CLOUD merge, so the issuer's gold run needs chain C's row before gold.py resolves its address."
 }
 ]
 ```
