@@ -13671,3 +13671,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "An owner of the ycharts tests may want per-file invocation recorded as the suite's convention."
 }
 ```
+
+
+## IRPT_BCKEND-W98-S1 -- _authz/tests/test_unguarded_census.py fails 6 tests at the issuance base (census over 18 published routes: 15 guarded, 3 declared by no entry, the export routes), independent of IB-pr-271.
+
+```json
+{
+  "id": "IRPT_BCKEND-W98-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~98",
+  "surfaced_at": "2026-09-30T18:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "_authz/tests/test_unguarded_census.py fails 6 tests at the issuance base (census over 18 published routes: 15 guarded, 3 declared by no entry, the export routes), independent of IB-pr-271.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cd infra/aws/lambda/investor-reporting && python -m pytest -q _authz/tests -> 6 failed, 138 passed without test_service_allowed_firms.py; with served.py swapped back to HEAD (git show HEAD:...served.py) test_unguarded_census.py alone -> 6 failed, 2 passed. Same 6 with and without the IB-pr-271 edit.",
+      "Deciding assertion: test_every_entry_carries_the_published_route_table_it_serves '3 of 18 in-lane published route(s) are declared by NO entry' (GET /api/sc.../export among them)."
+    ]
+  },
+  "spec_asserts": "The order's criteria run two named scripts; it does not claim the _authz tests directory is green.",
+  "world_is": "MEASURED: 6 pre-existing failures in test_unguarded_census.py at 22b99e32fd, unrelated to the service-principal branch. Not fixed (outside the grant).",
+  "notes": "The new test_service_allowed_firms.py passes alone (7 passed) and inside the whole directory run."
+}
+```
+
+
+## IRPT_BCKEND-W98-S2 -- After IB-pr-271 the served.py `staged_from` pin/sha256 in all 7 bundles no longer describe the worktree bytes; the served move (IB-pr-275) must re-pin them. A service subject whose profile row is NOT FOUND (get_user returns None) is treated as unrestricted, as in ~Y's candidate.
+
+```json
+{
+  "id": "IRPT_BCKEND-W98-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~98",
+  "surfaced_at": "2026-09-30T18:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After IB-pr-271 the served.py `staged_from` pin/sha256 in all 7 bundles no longer describe the worktree bytes; the served move (IB-pr-275) must re-pin them. A service subject whose profile row is NOT FOUND (get_user returns None) is treated as unrestricted, as in ~Y's candidate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json: served.py staged_from rows carry older pins (e.g. irpt-directory-search 9cf6a63d6f, sha cb134acd...), not the edited bytes; the order adds only the canonical_profile_reads/maintained_sources rows.",
+      "served.py _service_allowed_firms: `row = row or {}` then `'allowedFirmIds' not in row` -> None (unrestricted) for a missing row; only a RAISING read fails closed (arm E), as the order specifies."
+    ]
+  },
+  "spec_asserts": "The order says nothing else changes and mirrors ~Y's candidate, which treats an absent row like an absent attribute.",
+  "world_is": "MEASURED on the code: a verified service principal with no profile row keeps today's reach (any registry firm). The stricter reading (missing row -> refuse, as current_authority ACTOR_NOT_FOUND) was not applied.",
+  "notes": "Issuer/CTO may want the missing-row case decided before the served move; the change is one line in _service_allowed_firms."
+}
+```
