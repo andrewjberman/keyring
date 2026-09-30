@@ -1,6 +1,6 @@
 {
   "_what": "MDPF_SECCLASS data contract: the two enumerations the PRD closes as data (PRD CONTRACTS C-FIELD and C-WRITER). The canonical table is DynamoDB etf-classifications; its existing columns (ticker, asset_class, sub_asset_class, sector, name, management_style) are POSN_ASTTAX's and are not restated here.",
-  "contract_version": "0.1.0",
+  "contract_version": "0.2.0",
   "project": "MDPF_SECCLASS",
   "prd": "org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md",
   "fields": {
@@ -24,23 +24,44 @@
         "token_census": "word-boundary census of instrument_kind, 2026-09-29 ~20:1xZ, native Grep: infra/aws/lambda/v2_portal 0 hits, data/**/*.py 0 hits, portal/src 0 hits -- no collision"
       }
     },
-    "classified_by": {
-      "serves": "FWD-3, FWD-7",
+    "identifier_namespace": {
+      "serves": "FWD-2, FWD-7 (E9, CTO RULING 103140)",
       "type": "string",
-      "values": ["seed", "scheduled"],
+      "values": ["TICKER", "CUSIP"],
+      "domain": "every row of etf-classifications, one row per ticker",
+      "definitions": {
+        "TICKER": "the row's ticker column holds an ordinary exchange ticker symbol -- the pre-existing shape of every row before E9, and the default reading for any row where identifier_namespace is absent",
+        "CUSIP": "the row's ticker column holds a CUSIP-prefixed key, `\"CUSIP:<9 chars>\"` (the literal 9-character CUSIP), for a security with no exchange ticker (e.g. a bond); the table gains no new column -- the existing ticker attribute carries the prefixed string"
+      },
+      "absent": "a row without identifier_namespace reads as TICKER (CTO RULING 103140); the value is never inferred from the ticker column's own shape (e.g. a leading \"CUSIP:\" substring) -- it is a stated attribute, not a derived one, so a row's identifier_namespace and its ticker's shape are two carriers that must agree by construction of the writer, never by a reader re-parsing the key",
+      "rule24_record": {
+        "domain_declared": "the rows of etf-classifications (tickers), the population E9's CUSIP-keyed write touches",
+        "mece_by_subtraction": "every row's ticker column holds either an ordinary exchange ticker (TICKER) or a CUSIP-prefixed key (CUSIP); the remainder after subtracting both is empty over this field's own domain -- an absent value reads TICKER, never forced to CUSIP by inference",
+        "same_grain": "one value per ticker (row)",
+        "intent_coherence": "one axis: which identifier scheme keys the row; no class, ordering or vendor meaning is carried in it",
+        "state_coherence": "setting identifier_namespace moves no asset_class, sub_asset_class or classified_by value; a CUSIP row's full identifier lives in the one ticker column, never split across two attributes",
+        "token_census": "word-boundary census of identifier_namespace, 2026-09-30 ~03:2xZ, native/comp-find: infra/aws/lambda/v2_portal 0 hits, data 0 hits, portal/src 8 hits -- ALL in IRPT_BCKEND's own wire contract (portal/src/pages/InvestorReporting/contracts/wire/AnalysisRequest.ts, adapt.ts, fixtures/tests), whose identifier_namespace enum is wider (TICKER|CUSIP|ISIN|CASH|MODEL|UNMATCHED) and is a DIFFERENT schema (IRPT's own normalized-holdings wire, not etf-classifications) -- same token name, disjoint domain; flagged as row MDPF_SECCLASS-W5-S2, not a write-path collision"
+      }
+    },
+    "classified_by": {
+      "serves": "FWD-3, FWD-7, FWD-4",
+      "type": "string",
+      "values": ["seed", "scheduled", "constituents", "legacy"],
       "domain": "every row of etf-classifications",
       "definitions": {
         "seed": "written by the seed path from infra/aws/lambda/v2_portal/_shared/etf_classification.py (the one place a person adds or corrects a row)",
-        "scheduled": "written by the scheduled classification of FWD-7 for a ticker that had NO row; the write is conditional on the row's absence, so it never overwrites a seed row"
+        "scheduled": "written by the scheduled classification of FWD-7 for a ticker that had NO row; the write is conditional on the row's absence, so it never overwrites a seed or constituents row",
+        "constituents": "written by infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py for a constituent ticker of Opal's own ETFs that had NO row (or carried no label); the write is conditional on the row's absence or its lacking a label, so it never overwrites a seed, scheduled or already-labelled row",
+        "legacy": "not written by any path: a missing label reads as legacy. It means the row predates this contract and its provenance was not recorded -- it is not a claim about which seeder wrote it, and it never overwrites or is written to an existing attribute; it is produced by ONE additive conditional label update (label-legacy-classified-by.py) on rows carrying no classified_by attribute"
       },
-      "precedence": "a seed row always wins: a correction to a scheduled row is made by adding the ticker to the seed source, and the next seed run replaces the row with classified_by = seed",
-      "estate_note": "the estate's per-firm classifiers already write a free-text classified_by into their own tables (bd-securities: seed_from_yang, gpt-5.4-mini, gpt-4o-mini, auto-detected); those tables and their writers retire under FWD-5/FWD-4; on etf-classifications the field takes only the two values above",
+      "precedence": "a seed row always wins: a correction to a scheduled or constituents row is made by adding the ticker to the seed source, and the next seed run replaces the row with classified_by = seed. scheduled and constituents each write ONLY where no row exists (attribute_not_exists(classified_by)), so neither overwrites the other or a seed row. A row with no classified_by attribute reads as legacy until the one label update sets it; legacy therefore loses to seed and to a future scheduled/constituents write (attribute_not_exists still holds against a row that never received a label), and wins against nothing -- it is the read-time default for an absent attribute, not a write that competes for the row.",
+      "estate_note": "the estate's per-firm classifiers already write a free-text classified_by into their own tables (bd-securities: seed_from_yang, gpt-5.4-mini, gpt-4o-mini, auto-detected); those tables and their writers retire under FWD-5/FWD-4; on etf-classifications the field takes only the four values above",
       "rule24_record": {
-        "domain_declared": "the writers of etf-classifications rows",
-        "mece_by_subtraction": "a row is written by the seed path or by the scheduled classification; any other writer is a copy that FWD-4's census reports",
-        "same_grain": "one writer per row write",
-        "intent_coherence": "one axis: which of the two sanctioned paths wrote the row",
-        "state_coherence": "classified_by moves no class value; a seed run over a scheduled row changes both classified_by and, where they differ, the class values"
+        "domain_declared": "the writers of etf-classifications rows (and, for rows with no writer of record, the read-time label)",
+        "mece_by_subtraction": "a row is written by the seed path, the scheduled classification, the constituents path, or -- for a row with none of the three's attribute set -- it reads legacy; any other writer is a copy that FWD-4's census reports",
+        "same_grain": "one writer (or read-time label) per row",
+        "intent_coherence": "one axis: which of the three sanctioned write paths wrote the row, or that none did (legacy)",
+        "state_coherence": "classified_by moves no class value; a seed run over a scheduled, constituents or legacy row changes both classified_by and, where they differ, the class values; the legacy label update (SET classified_by = legacy on attribute_not_exists(classified_by)) moves no other attribute on any row"
       }
     }
   }
