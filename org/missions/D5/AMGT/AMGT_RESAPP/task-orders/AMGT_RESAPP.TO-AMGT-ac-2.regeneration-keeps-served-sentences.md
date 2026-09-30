@@ -50,7 +50,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-ac-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round53/checks/ac_2_keep.py; echo "exit=$?"</invocation><expect>rebuilt section counts >= stored, 0 served sentences lost; A D-1 REGENERATION KEEPS EVERY SERVED SENTENCE: YES -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-ac-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round53/checks/ac_2_keep.py; echo "exit=$?"</invocation><expect>every span-carrying stored sentence present in the rebuild; the count without a span printed; A D-1 REGENERATION KEEPS EVERY SPAN-CARRYING SERVED SENTENCE: YES -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-ac-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" timeout 115 python -m pytest lib/research/filings/tests -q; echo "exit=$?"</invocation><expect>N passed and 0 failed, N &gt; 127 (plus your new tests) -- and exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -63,6 +63,8 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 **ISSUER NOTES:** round-52 analysis item 2 / ruling 3 (disarms Z-S314). Base: AC1 FAIL (8 lost), AC2 PASS 127.
 
 <status>pending</status>
+<status>complete</status>
+**AMENDMENT 1 (`2.0.0_SA_COO~Z`, 2026-09-30 ~14:0xZ):** the worker STOPPED per the cell's clause (row Z-W191-S1): the 8 sentences a rebuild drops for ASML are stored with `quoted_spans []` (none-found), non-verbatim, served vacuously before C-VERBATIM-GATE HOLD; the 2 span-carrying ones survive. CTO msg 27185: Z-S314 re-classified as HOLD working as designed; AC1 re-scoped to span-carrying stored sentences (`ac_2_keep.py` amended; on CLOUD: 2 of 2 kept, 8 held by design -> YES). The worker's slot closes the order on its branch (its record was not carried by merge 4b472c8249).
 <round>53</round>
 <slot>~191</slot>
 <fabric>site-z</fabric>
