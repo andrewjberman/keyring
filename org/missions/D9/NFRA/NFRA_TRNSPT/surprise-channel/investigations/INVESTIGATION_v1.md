@@ -150,6 +150,31 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "The inline default carries the three domains 49financial.com (firm key 49f), inflectionwealth.com (inflection), cottonwoodmail.com (cottonwood).",
     "world_is": "Hand-typed firm identifiers in a new data/ file are refused by the naming gate; the registry carries the same three domains, so the default is registry-derived with the scope key as the firm key. Downstream cells that expect the literal '49f' in recipient_firm (TR-w-1, TR-k-1) see '49financial' from the default table; TR-a-1's client_domains.json firm_key value governs when that file lands.",
     "notes": "The order's mixed key forms (49f is a short form; inflection and cottonwood are long keys) are the reason to prefer the registry's single key form."
+  },
+  {
+    "id": "NFRA_TRNSPT-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-30T17:05:00Z",
+    "one_line": "The two VENDOR rows this project added to infra/logic/registry/systems.json (outlook, sharepoint; WK~3 @8e9ed1b539, drained @fed423d013) carry no display_name, so lib/opal_naming.py validate REFUSES the registry at HEAD and every `generate` target refuses with it (found grading DSGN_IRPTV1 item 41, whose vendorDisplayNames.generated.ts mark predates the rows).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T (the rows are this project's; the display_name value is the CRO's PLATFORM_LOGIC_DOCS lane per @cd2ffcca99 -- one cut naming both, then the CTO regenerates the view)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python lib/opal_naming.py validate (2026-09-30 ~16:5xZ, HEAD): 'REFUSED systems.json[48].display_name: a VENDOR row carries the words a served face prints; missing or empty', the same for [49]; 'VALIDATE: REFUSED 2 refusal(s), 40 warning(s)'",
+        "python lib/opal_naming.py generate --out <scratch> --target portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts: 'ERROR: the registry is refused (2 refusal(s))', 0 files written",
+        "git log -S'sharepoint' -- infra/logic/registry/systems.json: 8e9ed1b539 0.9.0_WK_NFRA_TRNSPT~3 11:04Z 'registry(NFRA_TRNSPT TO-TR-g1): systems.json rows outlook and sharepoint (VENDOR, D9)'; fed423d013 2.0.0_SA_COO~T 12:58Z drain",
+        "cd2ffcca99 4.0.0_SA_CRO 12:10Z: display_name on the 23 VENDOR rows; systems.json at HEAD: 25 rows carry a VENDOR value, 23 carry display_name (this seat's json read)",
+        "portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts header: 'GENERATED ... from infra/logic/registry@1c951921d4940c85' (DSGN_IRPTV1 item 41 @e266a14a)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "lib/opal_naming.py validate exits 0 on CLOUD HEAD and every generated target regenerates from the registry (CLAUDE.md rule 30: a builder refusal is a missing registry row to add, never a hand-typed workaround).",
+    "world_is": "validate exits with 2 refusals at HEAD; generate writes nothing; the committed vendor view stands on a registry hash two rows old and cannot be reproduced until outlook and sharepoint carry display_name.",
+    "notes": "Nothing edited by this seat (registry rows are not the CVO's write surface). The grade of DSGN_IRPTV1 item 41 is unaffected: its file matches its stated sha256 and its test is green. First appended 17:05Z; the shared-tree copy was overwritten at 17:32Z before it was committed, so this is the same row re-appended."
   }
 ]
 ```
