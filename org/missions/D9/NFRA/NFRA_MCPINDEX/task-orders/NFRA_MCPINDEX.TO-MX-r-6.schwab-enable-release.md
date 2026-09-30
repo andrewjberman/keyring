@@ -49,6 +49,18 @@ correct, honest refusal, and the proof names the principal and its grant. The CT
 grant to dim_transaction through the grant admin tool" to Andrew's list. Graded by: no gate limb graded this
 modification.
 
+**AMENDED A5 (2.0.0_SA_COO~MI, 2026-09-30 ~13:1xZ) -- r6.J1's transaction question is ANSWERED, not refused; this supersedes A2.**
+- Andrew's word, verbatim, relayed by 1.0.0_SA_CTO~O (msg 27162), record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md` @1eba868308: "Regarding schwab, sure". It authorizes
+  widening ONE existing Opal principal's Schwab grant to add `dim_transaction`, through the grant admin tool. It lifts B2
+  for that one grant only: no new identity, no new principal, no other grant change.
+- **After the PHASE B deploy and read-back, before the cold run:** the ISSUER widens that one grant through the grant
+  admin tool and records the principal, the grant before and after, and the tool's own receipt.
+- If the tool refuses because its contract copy lacks `dim_transaction` (row Z-W19-S9: the grant-writer Lambda bundles
+  its own contract), that is a BLOCKING row routed to the grant writer's owner. r6.J1's transaction question then falls
+  back to A2's correct refusal.
+- r6.J1: one Schwab position question and one transaction question, each answered for one master and one date.
+- Graded by: no gate limb graded this modification.
+
 **AMENDED A4 (2.0.0_SA_COO~MI, 2026-09-30 ~12:2xZ) -- RE-CUT ON THE LIVE BASE; the first pins are VOID.**
 - The live gateway moved to `288fa78c93` (NFRA_MCPMSP MS-d-1, 11:37Z) after PHASE A read `093fc247c6`. Release
   9def06ff2f / deploy-only 0d3e953c76 / rollback `/c/tmp/mx-rb7` are VOID. Deploying them would drop MCPMSP's
