@@ -5053,3 +5053,29 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S21",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-30T21:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "On opal-gateway, git ancestry does not mean shipped: live 42c52ed4d9 has OG-t-2's four build commits in its history but not in its bytes, so OG-t-2's release-order and cherry-pick steps are graded by content (amendment A1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor <c> 42c52ed4d9 = yes for b5a585cf2f, 344cca64a1, c4d2274c6d, 0906bf01e5 (4 of 4).",
+      "git show 42c52ed4d9:infra/aws/ec2/opal-gateway/app/tier.py: MASTER_ADMIN_PRINCIPALS 0 hits, email rosters 4 hits; positive control HEAD and b5a585cf2f: 2 hits each.",
+      "git merge-base --is-ancestor 4248b70b39 42c52ed4d9 = no, yet 0c3d545002's gateway added lines are present in live 460 of 490; the 27 absent engine.py lines are OG-x-4's rewrite (d1ba79742c, 132a07ee11, both in 4248b70b39..42c52ed4d9)."
+    ]
+  },
+  "spec_asserts": "TO-OG-t-2 step 1: the live commit must be OG-x-3's release commit or descend from it; step 2 cherry-picks the build cells' commits onto live.",
+  "world_is": "Release refs are deploy-only commits whose history includes CLOUD but whose bytes are pinned to the previous live tree, so ancestry reads 'no' where the content is present and 'yes' where it is absent.",
+  "notes": "Issuer disposition: amendment A1 on TO-OG-t-2 grades both by content (CLAUDE.md 22a). Same trap applies to every gateway releaser's AC that reads 'descends'.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

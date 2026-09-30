@@ -4215,6 +4215,29 @@ carries none.
     "world_is": "The v3 sentinel path was written outside the named grant and admitted; the ledger and sentinel for the slug the GO named are committed and closed."
   },
   {
+    "id": "NFRA_MCPINDEX-Z-W15-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-30T21:10Z",
+    "one_line": "MX-t-10 commits: the S5 naming refusal no longer stands (R20 X11 entries NFRA-MCPINDEX-R20-01..03 admit the three literals) and the S2 disarm (INDEX_TOOLS) lands with it; the served object refreshed since the first equality read, so the figure was re-proved.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/naming-gate.py --diff <git diff HEAD -- infra workflows> printed NAMING DECLARED-EXCEPTION for DATA_CATALOG.yaml:402 (R20-01), emit_catalog_v02.py:55 (R20-02, 3 occurrences) and :71 (R20-03), and 'NAMING-GATE: WARN 3 graded', rc=0; the literal counts held at 1 / 3 / 1 after the merge.",
+        "The frozen candidate (03a19ac282) applied with conflicts in 4 files against CLOUD's MX-q-3/MX-s-15 changes; each was resolved by keeping both sides (INDEX_TOOLS names mdpf_get_model_benchmarks, etfs_get_positioning and gateway_query_catalog; ALL_TOOLS = PINNED+(BENCH, ETFS, QUERY); the DATA_CATALOG header is the candidate's v0.4). AC1 5 of 5, AC2 16 passed 0 failed.",
+        "EQUALITY_MX-t-10.md re-measured: object now VersionId YAsEJRNn8j_3Mu.nmkr_hwALppMRQFCB (2026-09-30T13:01:30Z), PFDE aum 167398064.0, as-of 2026-09-29, equal on both sides; the 2026-09-29 version yBqGKuVXd0Fc3LLZDBV8ojJ_ONfgTbUY is superseded.",
+        "test_ogz1_ac05 and test_ogz1_ac08 re-baselined on an archive of CLOUD @7aba7bcc4d and on this tree: both fail in both (2 failed, 10 passed); this change did not cause them (row Z-W15-S4)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 ruling B3: the frozen candidate commits as-is once the naming exception holds; A2: both new tools entitled and the registry assertion strict.",
+    "world_is": "The exception holds, the candidate committed with only the merge resolutions above, and the equality record carries the refreshed object's figure."
+  },
+  {
     "project": "NFRA_MCPINDEX",
     "fabric": "site-z",
     "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",

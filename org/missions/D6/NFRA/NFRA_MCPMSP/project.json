@@ -18,19 +18,20 @@
   ],
   "name": "The Opal MSP Analyst -- one Opal-hosted Teams agent serving partner firms (Inflection and Cottonwood first) from each firm's own data, through one central gateway that assumes the asking firm's AWS role per request",
   "description": "Brief docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md (4.0.0_SA_CRO~O @77ddde1d13), from Andrew's discussion with 4.0.0_SA_CRO~O recorded in org/tier1_exec/4.0.0_SA_CRO~O/deliverables/ANDREW_DIRECT_20260930_0315Z_MSP_ANALYST_CHANNEL_PILOT_FEDERATED_PROD_BOT_SENDER_DOMAIN_ALLOWLIST.md (sections 1-10). Andrew named the project: '1.) New Project, NFRA_MCPMSP.' Primer: org/tier1_exec/1.0.0_SA_CTO/deliverables/PRIMER_MSP_ANALYST_FOR_CRO_O_20260930.md.",
-  "phase": "L6 ISSUANCE round 1 2026-09-30 by 2.0.0_SA_COO~MS on Andrew's \"go ahead and dispatch round 1\" (CTO msg 26985): 10 task orders, fanout 4 of 4 chains + 1 join; slots ~1/~2/~3 spawn at the cut, ~4 after NFRA_OPALAI OA-t-3 r2 is terminal. || L5 DECOMP v1 2026-09-30 by 2.0.0_SA_COO~MS: round 1 = the FWD-1 thread, 10 cells on 4 chains + 1 join; hop 0 (A0 federated-chat probe) is the issuer's act before the cut, on G-OUTSIDE. || L4 PRD v0.3 2026-09-30: C2 names the tenant_firm record and its sole writer (MCPORTAL register_tenant; N1); C5 stages the gateway identity's portal-v2 zero-read to an enrichment round (msg 26951). || L4 PRD v0.2 2026-09-30: C5 amended (per-firm role also reads its own firm prefixes in opal-data-portal-v2 with a Deny on other firms' prefixes; option (a) on COO~MS row Z-S1 @110d6e6398, msg 26947); CONTRACTS changed, so the ratified-text half re-opens for 3.0.0_SA_CVO~O. || L4-R ADMITTED 2026-09-30: ratified-text half SIGNED by 3.0.0_SA_CVO~O (@8647b72584, review @8d6851f97c, msg 26939: ENDPOINT 33 of 33 verbatim, C1-C12 agree, none of the four L4 rulings contested); brief half auto-admitted (CRO wrote the brief). || L4 PRD v0.1 DRAFT 2026-09-30 by 1.0.0_SA_CTO~O (C1-C12, S1-S14, A0-A11; five L2 open items ruled at C3/C4/A1 and one carried to L5). || L3 REGISTERED 2026-09-30 by 1.0.0_SA_CTO~O under D6/NFRA. || L2 ENDPOINT FWD-1..FWD-11 CONFIRMED by Andrew ('yes aggreed for all of these', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_05xxZ_NFRA_MCPMSP_ENDPOINT_CONFIRMED.md; endpoint org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_MCPMSP_20260930.md @64617f8afa). || L1 BRIEF docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md (4.0.0_SA_CRO~O).",
-  "blocking": "Round 1 executing. Held spawns: ~4 (MS-t-3 -> MS-t-4 -> MS-a-3) until NFRA_OPALAI OA-t-3 r2 terminal; MS-d-1 until MS-t-1/MS-t-5/MS-a-1 drained, no other gateway deploy entry open, and NFRA_OPLGTW OG-t-2 terminal. MS-a-3 needs G-ADMIN (Andrew). Hop 0 (A0 probe) needs G-OUTSIDE (Andrew). The close run waits on G-USER, G-IT-INF, G-ADVISOR, G-FIRM (external acts) and G-PUSH (opal_ai PROD).",
+  "phase": "L5 DECOMP v2 round 2 2026-09-30 by 2.0.0_SA_COO~MS on the round-1 analysis @5e2ff94c28 (E1-E5): 13 cells, 6 chains + 3 joins; E1 Deny HELD (CTO 27414), E2 live arm / E4 run on G-MSPID (CTO 27416). || L10 ROUND-1 ANALYSIS 2026-09-30 by 1.0.0_SA_CTO~O on 3.0.0_SA_CVO~O's slug (msg 27394, REMEDIATION_v1.Z @3d96e360a6): ledger/ROUND_ANALYSIS.round1.md -- 0 REALIZED / 2 HELD / 9 NOT_REALIZED; round-2 list E1 portal-v2 zero-read (never-widen, J1), E2 sender gate in full (J2), E3 onboarding queue minimum, E4 one replayable run, E5 batch repair (R-4, R-5); recut is 2.0.0_SA_COO~MS's, ONE issuance. || L4 PRD v0.4 2026-09-30 by 1.0.0_SA_CTO~O on Andrew-direct ~17:45Z (record cooMS_ANDREW_DIRECT_20260930_1745Z_NFRA_MCPMSP_A0_STRUCK_LIVE_CONVERSATION_NOT_A_GATE.md @3103954a36): hop 0 (A0/S1/G-OUTSIDE) struck; FWD-1's live conversation (A1) PARKED, owner Andrew, gates no round; ENDPOINT/CONTRACTS unchanged, ratified-text half not re-opened. || L7 round 1 DRAINED 10/10 terminal @1fe1ef07b3 (2.0.0_SA_COO~MS drain-end read msg 27219); L8 slug owed by 3.0.0_SA_CVO~O. || L6 ISSUANCE round 1 2026-09-30 by 2.0.0_SA_COO~MS on Andrew's \"go ahead and dispatch round 1\" (CTO msg 26985): 10 task orders, fanout 4 of 4 chains + 1 join; slots ~1/~2/~3 spawn at the cut, ~4 after NFRA_OPALAI OA-t-3 r2 is terminal. || L5 DECOMP v1 2026-09-30 by 2.0.0_SA_COO~MS: round 1 = the FWD-1 thread, 10 cells on 4 chains + 1 join; hop 0 (A0 federated-chat probe) is the issuer's act before the cut, on G-OUTSIDE. || L4 PRD v0.3 2026-09-30: C2 names the tenant_firm record and its sole writer (MCPORTAL register_tenant; N1); C5 stages the gateway identity's portal-v2 zero-read to an enrichment round (msg 26951). || L4 PRD v0.2 2026-09-30: C5 amended (per-firm role also reads its own firm prefixes in opal-data-portal-v2 with a Deny on other firms' prefixes; option (a) on COO~MS row Z-S1 @110d6e6398, msg 26947); CONTRACTS changed, so the ratified-text half re-opens for 3.0.0_SA_CVO~O. || L4-R ADMITTED 2026-09-30: ratified-text half SIGNED by 3.0.0_SA_CVO~O (@8647b72584, review @8d6851f97c, msg 26939: ENDPOINT 33 of 33 verbatim, C1-C12 agree, none of the four L4 rulings contested); brief half auto-admitted (CRO wrote the brief). || L4 PRD v0.1 DRAFT 2026-09-30 by 1.0.0_SA_CTO~O (C1-C12, S1-S14, A0-A11; five L2 open items ruled at C3/C4/A1 and one carried to L5). || L3 REGISTERED 2026-09-30 by 1.0.0_SA_CTO~O under D6/NFRA. || L2 ENDPOINT FWD-1..FWD-11 CONFIRMED by Andrew ('yes aggreed for all of these', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_05xxZ_NFRA_MCPMSP_ENDPOINT_CONFIRMED.md; endpoint org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_MCPMSP_20260930.md @64617f8afa). || L1 BRIEF docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md (4.0.0_SA_CRO~O).",
+  "blocking": "Round 2 recut: 2.0.0_SA_COO~MS (E1-E5, ledger/ROUND_ANALYSIS.round1.md). Not gates (PRD v0.4): A1 PARKED on G-USER, G-IT-INF, G-ADVISOR, G-FIRM (owner Andrew). Open elsewhere: R-2 safe-apply -target (laptop CTO, relayed via 0.0.0_AB_MSTR~Z); R-3 writer CRLF staging (2.0.0_SA_COO~O); R-6 opal_ai DEV publish (G-PUSH) + Andrew's AC2 run as Opal_MSP.",
   "brief_ref": "docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md",
   "prds": [
     {
       "path": "org/missions/D6/NFRA/NFRA_MCPMSP/prd/NFRA_MCPMSP_PRD.md",
-      "version": "v0.3",
+      "version": "v0.4",
       "status": "DRAFT"
     }
   ],
   "prd_lineage": [
     "v0.1 @b90b97652f (ratified-text signed @8647b72584)",
-    "v0.2 @82fddba4ff (C5 portal-v2 firm prefixes)"
+    "v0.2 @82fddba4ff (C5 portal-v2 firm prefixes)",
+    "v0.3 @743bfa866f (A0 hop 0 live)"
   ],
   "decompositions": [
     {
@@ -38,6 +39,12 @@
       "version": "v1",
       "round": 1,
       "prd_ref": "prd/NFRA_MCPMSP_PRD.md@c2f5d5a071"
+    },
+    {
+      "path": "org/missions/D6/NFRA/NFRA_MCPMSP/decompositions/NFRA_MCPMSP_DECOMP.md",
+      "version": "v2",
+      "round": 2,
+      "prd_ref": "prd/NFRA_MCPMSP_PRD.md@7ecc812be5"
     }
   ],
   "decomposition_lineage": [],

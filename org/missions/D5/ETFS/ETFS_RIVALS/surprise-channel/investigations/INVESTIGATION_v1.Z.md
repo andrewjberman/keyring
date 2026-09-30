@@ -937,6 +937,269 @@
       ]
     },
     "notes": "Not fixed here: it would need a revision scheme that orders by input-set completeness, which is a contract change for G1 and trade_schedule."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-09-30T20:52Z",
+    "one_line": "Gateway deploys from different seats have no mutual exclusion: NFRA_MCPINDEX's 2e2254156e (cut on 288fa78c93 before 14:36Z) deployed at 14:41Z over ETFS_RIVALS' 4ce7946426 (deployed 14:37Z) and removed /rivalfunds; each seat's base guard was read BEFORE the other's deploy landed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2.0.0_SA_COO~MI msg 27204: 'my MX-r-6 deploy (14:41:23Z, 2e2254156e on 288fa78c93) OVERWROTE ~RV's 4ce7946 (14:36:48Z) -- /rivalfunds routes gone'; 'My GO's base guard was void: the base moved to 4ce7946 at 14:36:48Z before the deploy.'",
+        "Host read-back SSM 0d95b020 (worker ~5, ~14:50Z): /rivalfunds 404, host server.py sha256 82fd0421... == 2e2254156e's, 0 rivalfunds routes.",
+        "Restore under 1.0.0_SA_CTO~O Plan A (msgs 27225/27228): 4ce7946426 redeployed 15:23:02Z by this seat, host == ref 80/80 (SSM 41de73dc).",
+        "infra/aws/ec2/safe-ec2-deploy.sh takes no cross-seat lock; the base guard (EC2_MANIFEST deployed_commit + host hash) is a read, not a hold."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A deploy-only gateway ref is verified against the live base immediately before upload, so no seat's deploy can silently remove another seat's released files (COO half gate 1, CTO half condition 3).",
+    "world_is": "The guard is a point-in-time read; between a seat's guard and its upload, another seat's deploy can land. Two such deploys four minutes apart did exactly that on 2026-09-30; the second removed /rivalfunds for 42 minutes until Plan A restored it.",
+    "notes": "INERT today: every current gateway releaser was told to base on the live ref and re-read the base immediately before upload (msgs 27202/27203, 27333: next base 42c52ed4d9). The structural fix (a deploy lease in safe-ec2-deploy.sh, or the ledger's open entry for opal-gateway treated as a lock) is CTO-class infra, owner 1.0.0_SA_CTO~Z; carried in this seat's round-1 drain-end read."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S12",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T20:40Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "G2 cannot witness a Bloomberg re-publication from G1 and the silvers: a DATE-MISMATCH capture never reaches silver, so G2 also reads the Bloomberg and issuer bronze sidecars.",
+    "spec_asserts": "RIV-h-1 step 1: G2 replays over G1 and both silvers; h-1.AC2 plants a real capture re-published under a later requested date and expects status repeat with the older date.",
+    "world_is": "collector_bloomberg.analyze marks a capture whose DATES differ from requested_date DATE-MISMATCH and silver_bloomberg skips every non-OK sidecar, so the planted re-publication has no silver row and no G1 row; only its sidecar (claimed_report_date, requested_date) and bronze bytes show it. The same holds for an issuer DATE-MISMATCH file. gold_holdings_coverage therefore reads bronze sidecars for the day list, and silver (else the bronze bytes, sha256-checked) for row_count and weight_sum.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py analyze()",
+        "data/etfs/scripts/rivalfunds/silver_bloomberg.py handler_entry (status != OK is skipped)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/h-1.AC2.py"
+      ]
+    },
+    "notes": "Read surface is wider than the face names (bronze prefixes of both sources); read-only, inside the stage's own tier chain. A live vendor re-publication would be OK-status when the vendor also restamps DATES (test_an_ok_capture_carrying_an_older_report_reads_repeat) and then silver carries it."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T20:40Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "`selected` is True on exactly one row per fund-day, and on a gap fund-day it is that day's only row (source null); h-1.AC1 filters on selected == True and expects the gap row in that set.",
+    "spec_asserts": "RIV-h-1: selected is the one source G1 used and selection_reason says why.",
+    "world_is": "A gap day has no source and G1 used none, so 'the source G1 used' is empty; the check reads the gap status from rows with selected == True, so the gap row must carry selected True. The rule used: one selected row per (fund, expected_date) -- the new row G1 used, else the new row the fund's policy prefers, else the same order over repeat/periodic rows, else the sole gap row. Non-selected rows carry a reason naming the chosen source.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py choose_selected()",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/h-1.AC1.py (sub = df[... selected == True])"
+      ]
+    },
+    "notes": "A consumer counting selected rows as 'days with data' would count gap rows; it must read status."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S14",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T20:40Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The periodic rule is the worker's: at least 3 gaps between distinct report dates and a median gap >= 2 trading days; the face says 'measured, not assumed' and names no threshold.",
+    "spec_asserts": "RIV-h-1: periodic = the fund reports on a non-daily cadence, measured, not assumed.",
+    "world_is": "No cadence threshold is given in the cell or the PRD text the face carries. Measured on the 501 IDVZ-group census captures (IDVZ group, five rivals) every rival's median gap is 1.0 and none reads periodic, so the threshold is unexercised on real data; the PFOE-group captures were not replayed. Constants PERIODIC_MIN_GAPS=3, PERIODIC_MEDIAN_GAP=2; a fund below 3 gaps is never called periodic (cadence_gap_median NULL).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py measure_cadence()",
+        "data/etfs/scripts/rivalfunds/tests/test_g21_holdings_coverage.py test_a_periodic_fund_is_measured_not_assumed"
+      ]
+    },
+    "notes": "If a PFOE fund turns out to report weekly or monthly, the median rule reads it periodic; a fund with a cadence only visible over a longer history than the window reads repeat until it has 3 gaps."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S9",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T21:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "G5 security_id is the Bloomberg id as pulled, because G1's security_id (the crosswalk key) is NULL or a different string on most Bloomberg rows and G3 and the round-2 checks join on the Bloomberg id.",
+    "spec_asserts": "C-GOLD-MODEL G5 key is (fund_id, security_id, window_end), and the face says to key on fund_ticker; G3 security_id is 'the Bloomberg security string as pulled, the join to G1's identity is the consumer's'.",
+    "world_is": "Over the 6 real IDVZ-group captures G1 has 3260 rows of which 396 are RESOLVED with a crosswalk key like 'TTE_FP_Equity' and 2864 are UNRESOLVED with security_id NULL; every row carries security_bloomberg ('TTE FP Equity'). The checks g-4.AC1-AC3 select a trade by the Bloomberg id. G5 therefore carries security_id = security_bloomberg when present (else the trade key) and fund_id = fund_ticker; security_key stays the G1 identity key because the page traces a trade to its report rows by it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py row() builder: 'security_id': bbg or key",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/g-4.AC2.py plant(): sec = rows[idx][ID]; hit = t[t['security_id'] == sec]",
+        "python over the chain output: G1 resolution_status RESOLVED 396, UNRESOLVED 2864 of 3260"
+      ]
+    },
+    "notes": "G5 now has two identity columns (security_key: G1 key, page trace; security_id: Bloomberg id, G3 join). A cell that reads G5 for the page grouped by Opal fund should pick one on purpose."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S10",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T21:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Applying a share-changing action at its ex-date, as the face orders, turns real Japanese splits into false trims: the holding's share count did not move on the ex-date, so G5 observes the move before it is applied.",
+    "spec_asserts": "Cell step 2 and the amendment: apply G3's share-changing actions whose ex-date falls in the window to q_{t-1}.",
+    "world_is": "Real G3 has 9 JP 'Stock Split' records with Ex-Date 2026-09-29, Record 2026-09-30, Payable 2026-10-01 (ratios 2, 3, 2, 3, 2, 10, 15, 2, 5), and the G1 holdings on 2026-09-29 did NOT move (CGIC 285A JP 66000 -> 66000, 8035 JP 205000 -> 205000; 8766 JP 2223000 -> 2227500 against factor 15). Applied at the ex-date that read as 3 CGIC and 3 INEQ trims of two thirds of the position each (CGIC window residual -1.79e8 instead of -2.0e5). G5 now applies an action only where the holding moved by it (observed ratio nearer the action's factor than 1, within MATCH_TOL 2%), keeps an action a candidate for LOOKBACK_DAYS 14 after its ex-date so the window holding the pay-date move is also clean, counts unmoved ones as share_event_pending_count in G6, and falls back to the spec rule (applied iff ex-date in window) when the move matches neither. AC2's planted split (ex-date in window, doubled count) is the visible-at-ex-date branch.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py _pair_rows gate (cand / take) and the module docstring",
+        "python -c over .runtime/etfs-rivals-idvz-20260930/dividends.json: Stock Split ex-dates 2026-09-29 with Payable Date 2026-10-01",
+        "before/after output of the 6-capture chain: 6 CORP-ACTION trims before the gate, 0 after; test_g52_trade_schedule_v2.py test_an_action_the_share_count_has_not_followed_is_pending_then_applied_once_it_moves"
+      ]
+    },
+    "notes": "The later-window branch (pay-date move lands after the census ends 2026-09-29) is proven on synthetic counts only, not on real data; the first real proof is the day after 2026-10-01 is captured. LOOKBACK_DAYS and MATCH_TOL are starting values."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S11",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T21:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "G3 and G1 name no dividend currency, and the amounts on LN, SJ and IT listings come in mixed units, so income conversion rests on an exchange-suffix table, the funds' own currency lines and a yield ceiling.",
+    "spec_asserts": "Face step 3: income is amount x shares at the window start in the security's currency, converted to the fund's base (USD-denominated holdings need no conversion).",
+    "world_is": "G3 currency is NULL (DVD_HIST_ALL names none) and G1 currency is 'USD' on all 3260 rows including 8306 JP and TTE FP, so a holding's own currency is not recoverable. Real LN amounts are pence for some (ULVR 39.82, BATS 61.26, GSK 17.0) and dollars for others (AZN 1.06, SHEL 0.3906, HSBA 0.1). G5 converts by exchange suffix at the rate the funds' own '<CCY> Curncy' lines imply on the window-end date (sum |market value| / sum |quantity|), reads LN, SJ and IT amounts as base, and treats a receipt above 25% of the position's value as implausible; unconverted and implausible receipts are counted in G6 and left out of the sum. Residual exposure: a pence-scale amount on a near-zero-yield LN stock passes the ceiling and is over-counted, up to 25% of that position's value.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py SUFFIX_CCY, MIXED_UNIT_SUFFIX, MAX_YIELD",
+        "python over .runtime/etfs-rivals-idvz-20260930/dividends.json: first Regular Cash, Interim or Final record of each '* LN Equity' security",
+        "G6 columns income_unconverted_count, income_implausible_count"
+      ]
+    },
+    "notes": "What closes it is a per-record currency in G3 (Bloomberg DVD_CRNCY beside DVD_HIST_ALL), a change to RIV-e-1's pull; income_funded is a label on a trade that stays a trade either way."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S12",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T21:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "G3 names only the parent security of a spinoff, rights issue or warrant, so the new line it creates cannot be tied to the parent and still reads as an entry.",
+    "spec_asserts": "Amendment 1: spinoff, rights and Warrant are share-changing, applied to q_{t-1} ('Warrant as rights: a new line from an entitlement is not a trade').",
+    "world_is": "These three types leave the parent's shares unchanged (factor 1.0) and G3 carries no child identity, so nothing in G3 says which new G1 line they created. The parent's trades in the window carry confidence CORP-ACTION and the corporate_action_ref; a child line that appears in the same window is an 'entry' trade. Measured scale: 16 of 4780 records (12 spinoff, 3 rights, 1 Warrant).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py rows_from_responses: one row per security and record, no child field",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py EVENT_CLASS 'keep' rule"
+      ]
+    },
+    "notes": "A child-line link needs a source beyond DVD_HIST_ALL (or a manual map); not in this order."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T21:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "trade_schedule objects are never-overwrite and named by the canonical revision alone, so a G3 pull that lands after a date's trade object leaves that date's trades income-unclean for good, with only a column value saying so.",
+    "spec_asserts": "C-GOLD-MODEL: G5 runs after G1 and G3; every table is never-overwrite, one revision per write.",
+    "world_is": "G5 and G6 object names carry only the window-end canonical revision (the guardrail compares the trade revision to the canonical revision for equality), while G3 is now an input. If G5 for a date is written before its G3 exists, or before a later G3 pull, a rerun writes nothing (the object exists) and the trades keep corporate_actions_applied = 'none-available' and income_funded = false. The G3 revision read is recorded per row (corporate_actions_revision), nothing re-triggers the stage on a new G3, and pull-enrichment and the gold stages are not sequenced against each other in this round.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py run_stage: 'if not s.exists(target)' and target 'trades-<canonical revision>.parquet'",
+        "data/etfs/scripts/rivalfunds/guardrails.py:129-133 trade revision == canonical revision",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py STAGE 'pull-enrichment' (own marker, own schedule leg)"
+      ]
+    },
+    "notes": "Open ruling: a revision scheme that includes the G3 revision (and the guardrail read that follows it), or a sequencing rule that holds build-trade-schedule until that date's pull-enrichment marker exists. RIV-d-3 wires the legs and should state which.",
+    "disarm_owner": "2.0.0_SA_COO~RV"
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S14",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T21:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The face is silent on four choices G5 and G6 had to make: which G3 pull wins, which date places an income event, what the cash cross-check tests, and what 'unexplained residual' is.",
+    "spec_asserts": "Face: income is 'amount x shares held at the window start'; G6 has a cash_line_delta_base, an income_received_base and an unexplained_residual_base; 'the cash cross-check attributes the purchase's funding to income'.",
+    "world_is": "Chosen and documented in the module docstring: (a) G3 objects accumulate per pull, the stage reads every object and keeps per security the rows of its latest pull (greatest as_of, revision); (b) an income event belongs to the window holding its ex-date (Daily Accrual pays days later), shares taken at the window start; (c) a buy (entry or add, not ID-CHANGE) is income_funded when the window's converted income, allocated largest buy first, covers its whole notional AND the cash lines' delta is below the income (income_cash_check_passed): a conservative label, never inflated by a creation; (d) unexplained_residual_base is the window's net est_notional less the income-funded notional. On the real 6-capture chain this labels 5 trades (4 CGIC, 1 SCHY) all on 2026-09-29, including a 1.53e6 add to CMQXX, a money-market line.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py _pair_rows cash cross-check block and load_actions",
+        "python over the 6-capture chain: income_funded count 5"
+      ]
+    },
+    "notes": "Round 3 or the CTO can move any of the four; each is a constant or a short block."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T22:37Z",
+    "one_line": "The face says a failing fund is marked not-updated and the rest publish, but is silent on the publish-page status and batch marker when some funds are not-updated; chosen: a fund with no G1 rows is not-updated without being a failed check (status OK, marker written), a failed check or no fund with data at all is PARTIAL with no marker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Face 1b.3: 'a fund with no G1 for the day is not-updated with its reason; the rest publish'; W1-S8: a home fund with no G1 data reads data-status=not-updated with a clear data-reason, never silently missing.",
+    "world_is": "publish_page.handler_entry returns OK and writes the publish-page marker when every fund WITH data passes its checks, however many funds have no data (13 funds of the map, 2 home funds with no home-producer reader: they are not-updated with data-reason 'home-producer reader: next round' and listed in detail.funds_not_updated and the manifest's funds block, kind no_data). It returns PARTIAL with no marker when a fund with data fails a check (kind failed) or when NO fund has data. Round 1's p-1.AC1 (bound into u-1.AC3) requires status OK with one fund of 13 having data, so a no-data fund cannot count as a failed check. An added event key plant_fund limits plant_failure to one fund (the H7 exercise per fund); an unknown plant_fund is FAILED with nothing written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py handler_entry: agg_failed from guardrails.rollup over per_fund (funds with data only); _no_data_view carries the reason",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round1/checks/p-1.AC1.py: 'publish status OK' with BASG the only fund with data",
+        "data/etfs/scripts/rivalfunds/tests/test_p2_page_grouped_by_fund.py test_a_fund_with_no_data_is_not_a_failed_check_and_the_page_still_marks_its_batch"
+      ]
+    },
+    "notes": "If the sweep or a later round wants a no-data rival to hold the marker, it is one line in publish_page (count kind no_data non-home funds as failed); RIV-d-3 reads the marker as 'page written' today."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T22:37Z",
+    "one_line": "Round 1's p-1 checks (p-1.AC1, p-1.AC2; p-1.AC1 is bound into u-1.AC3) require the literal strings id=\"trades\" and id=\"holdings\" once each, trades first, and no id=\"trades\" on a planted failure, so the grouped page wraps every fund block in ONE trades section and ONE holdings section instead of giving each fund its own.",
+    "spec_asserts": "Face 1b.1: one section per group with data-group, each fund block with data-fund; 'the trade-first lead and the six guardrails stand'.",
+    "world_is": "Layout: <section id=\"trades\"> holds every group (data-group) and every fund block (data-fund, data-role, data-status[, data-reason]) with its trades, excluded counts and calendar; <section id=\"holdings\"> holds one <details data-holdings-of=TICKER> per updated fund; <section id=\"status\"> holds the funds table and the rolled-up checks. When no fund is updated the lead section is id=\"not-updated\" (no trades or holdings section), which p-1.AC2 requires. Two threshold keys were added to guardrails_config.json, both PROVISIONAL: calendar_days_shown 20 and canonical_dates_scanned 12 (trade_rows_cap is now per fund). test_p1_page_and_guardrails.py was edited for the new contract (data-status updated, the status block's absences, the input kinds).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round1/checks/p-1.AC1.py: html.find('id=\"trades\"') < html.find('id=\"holdings\"')",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round1/checks/p-1.AC2.py: 'id=\"trades\"' not in html on the planted page",
+        "data/etfs/scripts/rivalfunds/render.py render_page"
+      ]
+    },
+    "notes": "The round-2 checks p-2.AC1 and p-2.AC2 constrain only data-group / data-fund / data-role / data-status / data-reason / data-calendar / data-source / data-excluded-*, so the wrapper choice is mine; a per-fund id scheme would need p-1.AC1 and p-1.AC2 amended by the issuer."
   }
 ]
 ```

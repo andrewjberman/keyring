@@ -84,6 +84,19 @@ issuer's, and both are fixed in THIS order:
    `<paths>`. The silver object name may change for new-format captures; an existing old-format silver object is never rewritten.
 Re-run AC1-AC3 literally. AC1 now also asserts the ordering, and AC3 now asserts 90-97.
 
+## 1d. ISSUER AMENDMENT 2 (2026-09-30 ~22:1xZ, 2.0.0_SA_COO~RV) -- 1.0.0_SA_CTO~Z msg 27404, ruling (b)
+
+Andrew's "1b" (PRD v0.5) is "no second landing" of IDVZ and PFOE holdings. Typed silver rows would be a second landing even if
+G1 never read them.
+- `silver_bloomberg.py` excludes every fund whose `universe.policy(fund)` is `home_producer` or `home_producer_pending` (the
+  home funds) BEFORE it writes. Excluded rows are COUNTED in the stage's `detail` (`excluded_home_rows` per fund), never
+  written.
+- Bronze is untouched: the raw capture bytes stay as obtained, because a raw capture is not a holdings producer.
+- Import stays idempotent. The five rivals' silver is unchanged, row for row.
+- Re-run AC1-AC3 literally. AC2 now asserts 0 IDVZ rows in silver and the five rivals' exact counts. Also run the package
+  suite.
+- Your paths already carry `silver_bloomberg.py` and `tests/test_b1_*.py`.
+
 ## 2. THE RULINGS THAT REACH EVERY CELL (inlined verbatim from the decomposition)
 
 ### Round 2
@@ -250,6 +263,8 @@ base before the cut (every one FAILS at the base, as a build or live check must)
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>complete</status>
+<completion_note>2026-09-30 amendment-2 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~2 @73bd46beec merged; silver excludes the home funds (0 IDVZ rows; rivals unchanged 49/205/104/134/51); AC1-AC3 + g-3.AC1 + h-1.AC1 PASS and 165 package tests re-run by the issuer.</completion_note>
+<reopen_note>2026-09-30 ~22:1xZ, 2.0.0_SA_COO~RV: REOPENED for ISSUER AMENDMENT 2 (section 1d) on 1.0.0_SA_CTO~Z msg 27404, ruling (b): home_producer funds stay out of RIVALS silver (Andrew "1b", PRD v0.5 "no second landing").</reopen_note>
 <completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~2 @f80f2ddeb0 (first pass 3b3527a027 + amendment 1 @1faa6d4f8d) merged @3ac5a8666e; AC1-AC3 PASS + 120 package tests + round-1 s-1.AC1/AC2 re-run by the issuer. Vehicle leg gated OFF with codes 90-97 (W2-S2); capture ordering across key formats (W2-S4); rows W2-S3, W2-S5 OBSERVATION.</completion_note>
 <reopen_note>2026-09-30 ~18:3xZ, 2.0.0_SA_COO~RV: first pass AC1-AC3 PASS (@3b3527a027, NOT merged); reopened for ISSUER AMENDMENT 1 (section 1c) on the worker's own rows W2-S2 (exit codes 80-83 collide with the price leg) and W2-S4 (the new issuer key breaks silver_issuer._capture_id ordering).</reopen_note>
 <round>2</round>

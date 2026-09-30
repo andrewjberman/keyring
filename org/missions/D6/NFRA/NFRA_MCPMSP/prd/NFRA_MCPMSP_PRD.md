@@ -3,7 +3,7 @@
   "project": "NFRA_MCPMSP",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.3",
+  "prd_version": "v0.4",
   "step": 4,
   "brief_ref": "docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md@77ddde1d13",
   "endpoint_outcomes": [
@@ -74,8 +74,9 @@ SLA during the pilot (record s.10, card 6).
 **Evidence boundary.**
 - Nothing in AWS or Microsoft was read for the brief or for this PRD. The gateway's live release, tool count and roles
   are the primer's figures.
-- **Whether Opal's Teams reader can see a cross-organization one-to-one chat is UNVERIFIED.** It is the first hop of
-  FWD-1 and round 1's first cell.
+- **Whether Opal's Teams reader can see a cross-organization one-to-one chat is UNVERIFIED.** v0.4: its standalone
+  test (hop 0, A0, S1) is STRUCK on Andrew's word; the question stays open and is answered by FWD-1's first live
+  conversation itself, which is the first act that can see it (see the v0.4 addendum under Canonical handoff).
 - Whether Inflection's and Cottonwood's Teams allow chats with outside organizations is UNKNOWN; their IT contacts are
   not yet identified.
 - Every outcome is DESIRED until a cell exercises it.
@@ -282,7 +283,7 @@ its blast radius (CLAUDE.md hard stops).
 
 | id | surface | what it is | depends on | outcomes |
 |---|---|---|---|---|
-| S1 | federated-chat probe | proves Opal's Teams reader sees a cross-organization one-to-one chat | G-USER, one outside test account | FWD-1 |
+| S1 | ~~federated-chat probe~~ STRUCK v0.4 | (was: proves Opal's Teams reader sees a cross-organization one-to-one chat) | -- | -- |
 | S2 | tenant registry + router | tenant ID to firm; unknown tenant refused and logged | C2 | FWD-1, FWD-2, FWD-4 |
 | S3 | sender gate | allowed domain AND registered tenant, at agent and gateway | S2 | FWD-3 |
 | S4 | refusal log | entries in the gateway audit record; listing; approval | S3, MCPORTAL Entitlements | FWD-3, FWD-4 |
@@ -347,7 +348,7 @@ Sum: 1+1+11+4+1+7+1+1+1+1 = **29**.
 
 | id | acceptance | outcome |
 |---|---|---|
-| A0 | one cross-organization one-to-one chat to the Opal Analyst user is visible to the gateway's Teams reader, sender tenant ID and user ID read from the message | FWD-1 (hop 0) |
+| A0 | STRUCK v0.4 on Andrew's word ("I would be fine with striking that from reqs even"). Was: one cross-organization one-to-one chat visible to the gateway's Teams reader | -- |
 | A1 | one named Inflection advisor's question answered in the chat from Inflection's model-portfolio figures that the portal already serves (`platinum/mdpf/inflection/`), matching the portal for the same item and stating the data's date; every hop real | FWD-1 |
 | A1n | NEGATIVE ARMS: the Inflection role reading `opal-data-cot` refused by AWS; the Inflection role reading another firm's prefix in `opal-data-portal-v2` (e.g. `platinum/mdpf/cottonwood/`) refused by AWS; the gateway identity reading `opal-data-inf` or `opal-data-cot` refused (its `opal-data-portal-v2` zero-read is an enrichment arm, C5 v0.3); an unregistered tenant refused and logged | FWD-1, FWD-2 |
 | A2 | one Cottonwood conversation answered; one cross-firm question each way yields nothing about the other firm, with the refusal traced to the access controls | FWD-2 |
@@ -367,8 +368,7 @@ L5 belongs to a `2.0.0_SA_COO` lane for this project. It is UNSEATED at authorsh
 at delivery.
 
 **FWD-1 is the thread, and round 1 builds it over its hops:**
-0. the federated-chat probe (S1, A0). If the reader cannot see a cross-organization chat, the pilot channel fails
-   here, and the finding returns to this seat before any other cell builds on it;
+0. ~~the federated-chat probe (S1, A0)~~ STRUCK v0.4 (addendum below);
 1. the tenant registry and router for Inflection (S2), with the refusal log's minimum (S4) so an unknown tenant is
    logged from the first day;
 2. the Inflection firm role and the gateway identity's zero read (S5, A1n);
@@ -376,8 +376,8 @@ at delivery.
 4. the supervised pilot session under its own runtime account (S8), with the run record's minimum (S9);
 5. one live question from the named advisor, graded against A1.
 
-**Round 1's live conversation waits on external acts:** G-USER, G-IT-INF, G-ADVISOR and G-FIRM for Inflection. Cells 0-4
-are buildable and testable before them, cell 0 with an outside test account under Andrew's word. The audit coverage of
+**Round 1's live conversation waits on external acts:** G-USER, G-IT-INF, G-ADVISOR and G-FIRM for Inflection. Cells 1-4
+are buildable and testable before them. v0.4: that wait gates NO round (addendum below). The audit coverage of
 the new tool (row NFRA_OPALAI-Z-W2-S2, `app/audit.py` `_ARGS_ALLOWLIST`) is decomposed at L5.
 
 **Enrichment rounds,** in the brief's order, with one precondition placed first: the gateway identity's
@@ -388,3 +388,27 @@ production: the bot (FWD-9), the partner ceiling (FWD-10) and the go-live bar as
 
 **Sequencing against siblings:** gateway cells are never issued into the same round as NFRA_OPALAI or NFRA_MCPORTAL
 gateway cells with overlapping paths.
+
+### v0.4 addendum (2026-09-30 ~20:5xZ, 1.0.0_SA_CTO~O) -- hop 0 struck; FWD-1's live conversation gates no round
+
+**Andrew, VERBATIM** (in-session at the 2.0.0_SA_COO~MS terminal, ~17:45Z; record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooMS_ANDREW_DIRECT_20260930_1745Z_NFRA_MCPMSP_A0_STRUCK_LIVE_CONVERSATION_NOT_A_GATE.md` @3103954a36):
+> There is no way for us to test outside teams test. I dont think that needs to be tested anyway, its not a major
+> priority nor should it block work accordingly. I would be fine with striking that from reqs even. Also the first live
+> inflection conversation is not happening, we are so far from that. There are countless things we need to do before
+> that; that cannot be a gate at this stage in development.
+
+What changes (no wider, no narrower):
+1. **Hop 0 is struck from the requirements:** acceptance A0, surface S1 and gate G-OUTSIDE. No round issues a
+   federated-chat probe. Whether Opal's Teams reader sees a cross-organization one-to-one chat stays UNVERIFIED, and is
+   answered by FWD-1's first live conversation, the first act that can see it. Named residual: if the reader cannot see
+   such a chat, the pilot channel is found to fail at that conversation, after rounds that built on it; the hops those
+   rounds build (router, roles, grants, harness, record) are channel-independent and carry over to the production bot
+   (S13).
+2. **FWD-1's live conversation (A1) gates no round at this stage.** Per the L2 rule, this is the expressly qualified
+   essential wait: its reason is the external acts G-USER, G-IT-INF, G-ADVISOR and G-FIRM; Andrew's word is the quote
+   above. Round 2 onward is cut from the enrichment list without waiting on it. A1 is PARKED, owner Andrew; it un-parks
+   when those four gates are held, and it is then run as round N's close run.
+3. **Unchanged:** the ENDPOINT and CONTRACTS sections (the ratified-text half, signed by 3.0.0_SA_CVO~O at v0.3, is
+   not re-opened); FWD-1's DONE WHEN and ACCEPT stand as the endpoint, so the project does not CLOSE until A1 is run and
+   FWD-1 grades REALIZED. The round-close hop evidence for FWD-1 is the one each round can produce on demand: A1n's
+   negative arms and each hop's own cell criteria.

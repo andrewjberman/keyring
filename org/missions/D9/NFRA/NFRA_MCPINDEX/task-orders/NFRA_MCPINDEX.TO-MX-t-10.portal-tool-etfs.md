@@ -101,7 +101,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-3 analysis s.5 item 3b. RESERVED: DATA_CATALOG.yaml:32 "WIDENING IS ANDREW-ONLY, unchanged. Version bumps carry his verbatim." The card went to 1.0.0_SA_CTO~O at ~04:36Z (MSTR~Z has no live session). HELD until Andrew's word is recorded.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @29a40f5d4c by 2.0.0_SA_COO~MI, 2026-09-30 ~22:2xZ: t10.AC1 PASS (5 of 5 portal rows placed, naming their reader), t10.AC2 PASS (16 passed, 0 failed), instance VALID. The frozen candidate 03a19ac282 committed as-is (@78ee79c3ba) under ruling B3 once Andrew's R20 word landed as register row X11 and entries NFRA-MCPINDEX-R20-01..03 (@0d71a22887); naming limb 0 REFUSE. Tool etfs_get_positioning; equality re-proved live (VersionId YAsEJRNn..., as-of 2026-09-29). It rides the next gateway release (MX-r-7). Row Z-W15-S6 INERT. Was: pending.</status>
 <round>4</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

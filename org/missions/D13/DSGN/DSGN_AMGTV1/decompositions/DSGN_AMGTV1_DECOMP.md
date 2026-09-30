@@ -1075,3 +1075,98 @@ Peers, Posture and Thesis for l-3); the instrument's `--states-sweep` run on a b
 **Rule 24:** (i) MECE over the six items by subtraction: 6 cells, the NOT-cell named. (ii) One write set per chain. (iii) One intent per
 cell. (iv) No cell moves a served value, figure, verdict, count or order: l-1 reads served reasons (and refreshes test fixtures); l-2
 labels served units and adds tooltips; l-3 changes words and folds a block; l-4..l-6 change an instrument.
+
+## v14 -- ROUND 14 (issuer, 2026-09-30 ~21:xZ), over PRD v0.5 @bf3a6f5614 (ADMITTED)
+
+**Rectangle:** the round-13 analysis's enrichment list.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round13.md` @1e7d4bac11 section 4, items 1-7, with rulings 1 (machine tokens in
+  served reasons fixed at the page by the caseAbsenceWords pattern), 2 (ERROR says what failed and what to do; the body never on the
+  face), 3 (NO-PERMISSION names this page's object), 4 (Peers EMPTY), 5 (Exec's empty sentence from the served reason), 6 (an ABSENT model
+  vs its history), 7 (Posture's settled footer) and 8 (the instrument arms: the opened-fold PNG; sizes and radii against C1/C11).
+- **Cell ids:** `AV-k-1`..`AV-k-7`. Letters e, l, m, n, o, p, q, r, s, t, u, v, w are on disk, so round 14 takes `k`.
+- **NOT cells:** the portal PROD promotion (Andrew's act, analysis s.5); the `radii` clause's blindness to C11's "pill for status dots and
+  avatars only" (a helper finding, an instrument input for a later round -- ruling 8 fixes the page, not the instrument).
+- **The issuer's placements:**
+  - (a) **Chains are drawn from the MEASURED write sets** of seven issuer-spawned helpers' green arms (one per cell, each on its own
+    scratch root off DEV 118cd005), not from the analysis's table: the table read "all 7 independent", but cells 1, 2 and 4 all write
+    ExecManagementTab.tsx and PostureTab.tsx (and 1 and 2 write ThesisTab.tsx and SecurityOverlay.tsx), and cells 2, 3 and 7 all write
+    portal/scripts/ui-contract-check.mjs.
+  - (b) **Chain ~52: k-1 -> k-4 -> k-2.** k-1 leads (the shared reason-word mapping k-4 reads through); k-2 last (its error-site edits span
+    the four tabs and SecurityOverlay). Stacked in the issuer's scratch root (k-1 + k-4 + k-2 merged clean): reasonwords, execfooter,
+    states and bytes 3 of 3 each, all 16 harnesses green, tsc rc=0.
+  - (c) **Chain ~53: k-7 -> k-3** (both write ui-contract-check.mjs). k-7 leads (instrument only). Stacked in the issuer's scratch root:
+    see the checks table.
+  - (d) **Chain ~54: k-5** (ModelTab.tsx; no other round-14 cell writes it). **Chain ~55: k-6** (TimelinePanel.tsx, ThesisCards.tsx; the
+    analysis named Exec's 12 dots too, but the helper measured the clause -- it rejects only 1px -- and C11 -- status dots may be pills --
+    so ExecManagementTab.tsx is not in k-6).
+  - (e) **Cross-chain overlap, ruled by the issuer:** k-2 (~52) and chain ~53 both write PeersTab.tsx (k-2: one `causeAt` line on the error
+    branch; k-3: the ABSENT branch) and ui-contract-check.mjs (k-2: the standalone no-permission block; k-7: the posture fold capture;
+    k-3: the peers empty patch). Region-disjoint; `git merge-tree` over the green arms reads 0 conflicts (k-7+k-3; the ~52 stack with
+    each of k-7 and k-3). The issuer merges both at the drain; serialising the two chains would have made the round one five-deep chain.
+  - (f) **k-2's no-permission, measured against the analysis's premise:** no page under src/ renders PanelNoPermission; the "advisor book"
+    default's only user is the render script's standalone capture. Ruling 3's "the shared default is untouched" is kept as byte-equal
+    defaults (states.cjs arm 3); the page's own sentence lives in a new ResearchNoPermission component the capture renders.
+  - (g) **Granted harness changes** (each tested on its green arm, staged as `round14/grants/*.diff`): k-1 adds one loader line to
+    drafting, execFallback and execText (they load only named modules, so the new reasonWords module needs naming -- the claim is
+    unchanged); k-3 moves one check each in peersReadFailed and peersPattern from the visible "(read ABSENT)" to
+    `data-peers-read-status="ABSENT"` (the same fact).
+- **Portal base:** site-Z local DEV `118cd005` (clean; LOCAL -- origin/DEV 29bfec2d does not contain ccca64ef; the DEV push is held for
+  Andrew's word via 0.0.0_AB_MSTR~Z).
+- **Fixtures:** `deliverables/2.0.0_SA_COO~D/round14/fixtures/` = round 13's set carried forward unchanged (no new capture: every cell is
+  presentation over shapes already captured). Builds: the base page build `C:/tmp/dsgn-r13-dist/final` (= the page bytes of 118cd005) and
+  the base close run `C:/tmp/dsgn-r13-close-render` are INPUTS to peersempty, styles and foldopen and are held through round 14.
+- **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-k-1` | 1 + ruling 1 | one shared reason-word mapping (the caseAbsenceWords pattern); every face that prints a served dossier reason reads it in words, the whole reason in a data attribute; a new token family worded too | FWD-11 | `SA/reasonWords.ts` (new), `SA/components/SecurityOverlay.tsx`, `SA/tabs/ExecManagementTab.tsx`, `SA/tabs/PostureTab.tsx`, `SA/tabs/ThesisTab.tsx`, `SA/__harness__/{drafting,execFallback,execText}.harness.cjs` (granted) | ~52 | LOCAL |
+| `AV-k-4` | 4 + rulings 5, 7 | Exec's empty sentence from the served reason (no static 10-K); the source line names a 10-K only when served; Posture's settled footer states the comparable outcome | FWD-11, FWD-19 | `SA/tabs/ExecManagementTab.tsx`, `SA/tabs/PostureTab.tsx` | ~52 (after k-1) | LOCAL |
+| `AV-k-2` | 2 + rulings 2, 3 | PanelError carries the cause in a data attribute on this page (default unchanged); what failed + what to do; this page's no-permission sentence; the capture renders it | FWD-19, FWD-11 | `src/ui/components/states/PanelStates.tsx`, `SA/components/ResearchNoPermission.tsx` (new), `SA/tabs/{ThesisTab,PostureTab,PeersTab,ExecManagementTab}.tsx`, `SA/components/{RankedList,SecurityOverlay}.tsx`, `portal/scripts/ui-contract-check.mjs` | ~52 (after k-4) | LOCAL |
+| `AV-k-7` | 7 + ruling 8 | the render run writes posture-cites-open.png and a sidecar whose visible counts equal fwd17's; never silent on a blind read | FWD-17, FWD-20 | `portal/scripts/ui-contract-check.mjs`, `portal/scripts/ui-measure.mjs` | ~53 | LOCAL |
+| `AV-k-3` | 3 + ruling 4 | Peers' designed EMPTY state on a served ABSENT read; the sweep's peers empty patch from a served absent shape | FWD-19 | `SA/tabs/PeersTab.tsx`, `portal/scripts/ui-contract-check.mjs`, `SA/__harness__/{peersReadFailed,peersPattern}.harness.cjs` (granted) | ~53 (after k-7) | LOCAL |
+| `AV-k-5` | 5 + ruling 6 | with the latest model ABSENT, the compare block is headed as history (not hidden) | FWD-15, FWD-19 | `SA/tabs/ModelTab.tsx` | ~54 | LOCAL |
+| `AV-k-6` | 6 + ruling 8 | the timeline's Y-axis ticks at 11px, its legend swatches and the MACHINE chip at 2px (C1, C11) | FWD-20 | `SA/components/TimelinePanel.tsx`, `SA/components/ThesisCards.tsx` | ~55 | LOCAL |
+
+**Edges and chains:** no data edge. M = 4 chains (~52 k-1 -> k-4 -> k-2; ~53 k-7 -> k-3; ~54 k-5; ~55 k-6), N = 4 now, K = 0 queued (k-4,
+k-2 and k-3 follow on their own slots), cap 8. Write sets pairwise disjoint across chains EXCEPT placement (e). The surprise channel is
+shared append-only.
+
+**Checks (`round14/checks/`, dry-run at base DEV 118cd005 from the shared root; `_load.cjs` repointed at round14/fixtures; `bound.cjs`,
+`bytes.cjs`, `census.cjs`, `surfaces.cjs`, `walkvoid.sh`, `dists/` and `rendercontrol.cjs` carried from round 13):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| reasonwords.cjs | 1 of 3 (BA: 4 token faults over 4 faces; a planted new family verbatim; arm 3 control) -- issuer re-run | 3 of 3 (r14-green-a @f2258ff0) |
+| states.cjs | 1 of 3 (7 of 7 surfaces error on a forced 503, six print the body's braces; no page no-permission; arm 3 control) -- issuer re-run | 3 of 3 (r14-green-b @8b1ee539) |
+| peersempty.cjs | 1 of 3 (fwd19 FAIL, peers/empty unreachable; no PanelEmpty on an ABSENT read; arm 3 control), 866 s | 3 of 3 (r14-green-c @b7931ed3), 928 s |
+| execfooter.cjs | 0 of 3 (6501's static 10-K; BA's footer "still loading" on a retrying read; the fallback names a 10-K) -- issuer re-run | 3 of 3 (r14-green-d @d7d29dd5) |
+| modelhistory.cjs | 2 of 3 (the compare headed "What moved between two versions" beside the ABSENT sentence; arms 2-3 controls) -- issuer re-run | 3 of 3 (r14-green-e @2a9ef6a4) |
+| styles.cjs | 1 of 3 (sizes FAIL [10] and radii FAIL in five states; ticks 10px, swatches 1px; arm 3 control), 608 s | 3 of 3 (r14-green-f @88205f47), 630 s |
+| foldopen.cjs | 1 of 3 (no opened-fold PNG, no visible count; blank silent; arm 2 control) | 3 of 3 (r14-green-g @bce8e785) |
+
+- **Green arms** (issuer-spawned helpers, scratch roots `C:/tmp/dsgn-r14-green-{a..g}`, portal branches `r14-green-{a..g}` off 118cd005):
+  tsc rc=0, bytes 3/3 and ALL 16 of 16 harnesses on every arm (k-1 and k-3 with their granted harness lines).
+- **Stacks (issuer):** `C:/tmp/dsgn-r14-green-h` = k-1 + k-4 + k-2 (chain ~52): reasonwords, execfooter, states, bytes 3 of 3; 16 of 16;
+  tsc 0. `C:/tmp/dsgn-r14-green-i` = k-7 + k-3 (chain ~53): foldopen and peersempty running at the issuance (merge-tree 0 conflicts); their result goes to the issuer's drive log, and k-3's worker keeps foldopen 3 of 3 as a stated condition.
+- **Issuer amendment at the cut -- foldopen.cjs arm 2:** the helper's control compared every grades.json VALUE with the round-13 close run;
+  k-2's and k-3's instrument changes move values by design once drained, so the arm now compares SHAPE (every base cell present and graded,
+  no new cell, the same number of graded cells). Re-run by the issuer after the amendment: base 1 of 3 (arms 1 and 3 FAIL, arm 2 the control PASS: 72 cells present and graded, no new cell), 705 s; green r14-green-g 3 of 3, 707 s.
+- **Issuer check notes:** execfooter arm 1 matches the served reason's plain words of 4+ letters (the chain words them through k-1's
+  mapping; stacked, 3 of 3); peersempty arm 1 needs a full fwd19 PASS (another panel's regression fails it too); styles and peersempty
+  build the page from the worktree (vite) and take 10-15 minutes; round 13's frozen dossier.cjs arm 2 will read FAIL after k-1 (it
+  expects BA's verbatim reason; a round-13 check, not a round-14 bound).
+
+**Cut rules applied:** (a) queue-aware bases: no check compares values against a base snapshot (foldopen amended); the chained orders
+follow on their own slots. (b) Every necessary harness break is granted with its exact change. (c) At most three mechanical criteria per
+order (the cell's check, its harness bound, bytes -- or, for the instrument cell, rendercontrol and the self-test).
+
+**Battery:** comp-schedule and comp-iam DECLARED-NOT-APPLICABLE. comp-adversary: the checks above plus bytes.cjs on every page cell.
+Blind spots are named per order. **The issuer's close:** the signed-out control; the signed-in walk (BA's header, Exec, Posture, Thesis
+for k-1; 6501's Exec and BA's Posture for k-4; the Model tab for k-5); the instrument's `--states-sweep` run on a build of the drain
+state (every error PNG and the standalone no-permission for k-2, peers-empty.png for k-3, model-empty.png for k-5, sizes/radii for k-6,
+posture-cites-open.png for k-7), its PNGs read.
+
+**Rule 24:** (i) MECE over the seven items by subtraction: 7 cells, the two NOT-cells named. (ii) One write set per chain, the one
+cross-chain overlap ruled (e). (iii) One intent per cell. (iv) No cell moves a served value, figure, verdict, count or order: k-1, k-4 and
+k-2 change words and where a served reason sits; k-3 and k-5 frame a served absence or history; k-6 changes type size and radius; k-7
+changes an instrument.

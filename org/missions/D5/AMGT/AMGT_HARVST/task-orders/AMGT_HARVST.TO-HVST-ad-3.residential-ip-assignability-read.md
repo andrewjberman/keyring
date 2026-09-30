@@ -68,7 +68,7 @@ Read the configuration that ACTUALLY routes the existing Bright Data traffic.
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>31</round>
 <slot>~89</slot>
 <fabric>site-z</fabric>

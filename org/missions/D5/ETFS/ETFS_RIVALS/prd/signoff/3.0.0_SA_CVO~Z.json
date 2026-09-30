@@ -1,12 +1,12 @@
 {
   "prd": "ETFS_RIVALS_PRD.md",
-  "prd_version": "v0.3",
-  "prd_pin": "3027a47dc02a266268bb895e0d9601fd3bc15509",
+  "prd_version": "v0.5",
+  "prd_pin": "5345674e9d21ccec4a1ddb63c7fdbd257bbd8794",
   "half": "ratified-text",
-  "half_hash": "e381b934d478b2078c2a18bf460cce26049c6bfd0f7dd736164163d1a2c590c9",
+  "half_hash": "060f4aedd7b9c667ac0e6618cd469b990c655f015f3b22cd8769df99bc159c1d",
   "endpoint_hash": "6015445bf712ea9009577d5ffef122b9f7db5a442d1bc79ec36de708f7d16036",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ETFS_RIVALS_v0.3_RATIFIED_TEXT_20260930_Z.md@4fd637a7f0",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_ETFS_RIVALS_v0.5_HARVST_v0.12_RATIFIED_TEXT_20260930_Z.md@275471545c",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-09-30T16:29:18Z"
+  "signed_at": "2026-09-30T22:07:13Z"
 }

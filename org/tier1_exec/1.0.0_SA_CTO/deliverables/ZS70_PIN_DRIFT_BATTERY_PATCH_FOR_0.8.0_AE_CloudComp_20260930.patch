@@ -1,0 +1,44 @@
+diff --git a/.tools/tests/test_proof_of_spec_artifact_resolution.py b/.tools/tests/test_proof_of_spec_artifact_resolution.py
+index fdc9986aef..5454047f03 100644
+--- a/.tools/tests/test_proof_of_spec_artifact_resolution.py
++++ b/.tools/tests/test_proof_of_spec_artifact_resolution.py
+@@ -69,3 +69,39 @@ def test_commit_not_in_local_store_is_announced_not_asserted():
+     v, frames = posc.artifact_resolution_check(m)
+     assert v == [], v
+     assert "1 UNRESOLVED-HERE" in frames[0]
++
++
++# PIN DRIFT (AMGT_CORPUS-Z-S70, 1.0.0_SA_CTO~Z 2026-09-30): the real CRPS-aa-3 instance, POST-COMMIT. Its current
++# pins read no drift. Re-pinning the table to a05ead8252 (the pre-amendment version, before_total 59) must be
++# ANNOUNCED in the pin-drift frame and must NOT become a violation (an announced frame, by design).
++AA3 = ROOT / "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-aa-3.remaining-49.proof_of_spec.json"
++AA3_TABLE = "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/UNRESOLVED_CLASSES_ROUND25.json"
++
++
++def _drift_frame(frames):
++    return next(f for f in frames if f.startswith("artifact-resolution/pin-drift:"))
++
++
++def test_pin_drift_baseline_reads_none_post_commit():
++    inst = json.loads(AA3.read_text(encoding="utf-8"))
++    v, frames = posc.artifact_resolution_check(inst, AA3)
++    assert [x for x in v if x.startswith("artifact-resolution")] == [], v
++    f = _drift_frame(frames)
++    assert "POST-COMMIT" in f and "0 row(s)" in f and "Rows: none" in f, f
++
++
++def test_stale_pin_is_announced_not_refused():
++    inst = json.loads(AA3.read_text(encoding="utf-8"))
++    m = copy.deepcopy(inst)
++    row = next(r for r in m["artifacts_produced"] if r["path_or_key"] == AA3_TABLE)
++    row["commit_or_etag"] = "a05ead8252"
++    v, frames = posc.artifact_resolution_check(m, AA3)
++    assert [x for x in v if x.startswith("artifact-resolution")] == [], v
++    f = _drift_frame(frames)
++    assert "1 row(s)" in f and AA3_TABLE + "@a05ead8252" in f, f
++
++
++def test_unknown_context_reads_no_reference():
++    v, frames = posc.artifact_resolution_check(_inst())
++    f = _drift_frame(frames)
++    assert "UNKNOWN; no reference, not read" in f and "0 row(s)" in f, f

@@ -226,7 +226,8 @@ base before the cut (every one FAILS at the base, as a build or live check must)
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~3 @af72811643 merged @5897445325; AC1-AC3 PASS + 147 package tests re-run by the issuer (split planted: 0 trades, control add; income planted: income_funded true, control false); rows W3-S9..S14, W3-S13 ARMED disarmed by RIV-d-3 amendment 2 (G5 waits for G3).</completion_note>
 <round>2</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

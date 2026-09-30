@@ -2026,6 +2026,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     },
     "spec_asserts": "Spine L10: every BLOCKING or ARMED row is dispositioned before the round's slug.",
     "world_is": "All 10 were answered in-round and their orders completed. After this row, comp-surprise should read 0 open BLOCKING rows for NFRA_OPALAI."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S50",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-09-30T22:14Z",
+    "one_line": "G-ACCT step 6 ran to DONE (Opal_Agent's Claude signed in to opal-gateway-bbg; whoami = Opal Bloomberg) only through an operator hand-launch, because the runtime launcher has two defects the handoff did not list: (5) the runtime's concierge-gate hook requires jq on PATH and nothing provisions it, so every tool call is BLOCKED; (6) Start-Process -Credential gives an Opal_Agent window that renders output but never takes keyboard input, at High AND at Medium integrity. Both sit on the cutover close run's path (OA-t-3's launcher).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Five measured launch attempts, 2026-09-30 ~18:30-18:55Z: runas /trustlevel:0x20000 yields a HIGH-integrity shell (not de-elevated); explorer.exe gives Medium; Start-Process -Credential at Medium: window NOT typeable (Andrew); .NET Process.Start (UseShellExecute=false, LoadUserProfile, cwd C:\\opal_runtime\\state, -File) at Medium: typeable, whoami typed = opal_bloomberg\\opal_agent. CreateProcessWithLogonW caps the command line at 1024 chars ('The parameter is incorrect' on -EncodedCommand).",
+        "opal_ai/opal/agent/hooks/concierge-gate.sh:35-41 (checkout C:\\opal_runtime\\opal_ai at PROD fd8ab8a): jq resolves from PATH only, else every call is denied. Unblocked on this box by a hash-equal copy of the vendored jq 1.7.1 into C:\\Users\\Opal_Agent\\.local\\bin plus that folder on Opal_Agent's user PATH.",
+        "Operator launcher v2 C:\\Users\\Opal Bloomberg\\.opal_runtime\\launch-v2.ps1 (outside the repo): -GateOnly -> fetch up to date, GATE: PASS, rc=0; negative control, the same gate run as the operator -> GATE: REFUSE PROBE-READABLE ADMIN-GROUP, rc=1; full launch by Andrew ~19:4xZ -> the 'Opal_Agent Analyst' window took his typing.",
+        "Full record: C:\\Users\\Opal Bloomberg\\.opal_runtime\\G-ACCT_STEP6_RESULT_20260930.md (operator-local, not in the repo)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The runtime launcher (opal_ai/opal/runtime/launcher.ps1, OA-t-3) starts the Analyst as Opal_Agent in a window the operator can use, with every tool the runtime's own hooks need.",
+    "world_is": "It starts the Analyst via Start-Process -Credential, whose window takes no keyboard input, and nothing puts jq on Opal_Agent's PATH, so the concierge-gate fails closed on every call. The same launcher and provisioning serve NFRA_MCPMSP's Opal_MSP (MS-t-3), so the fix is cut ONCE, here (NFRA_MCPMSP ROUND_ANALYSIS.round1.md @5e2ff94c28). Route: 2.0.0_SA_COO~AI cuts it at the next issuance, from launch-v2.ps1's pattern (Process.Start; Medium-integrity parent; gate output on a pipe) plus jq provisioning."
   }
 ]
 ```

@@ -44,7 +44,7 @@ The next trading day's 08:03 leg plus the 09:00 sweep is the acceptance, read at
 
 ## 1b. THE ACT, STEP BY STEP (the interface the checks call)
 
-1. `peer_groups.json`: set each home fund's `source_policy` from `deliverables/0.9.0_WK_ETFS_RIVALS~4/m1_home_producer.json` (READ -> `home_producer`, JOIN_BLOOMBERG -> `bloomberg_primary`), `map_version` 1.
+1. `peer_groups.json`: set BOTH home funds' `source_policy` to `home_producer` (amendment 2, Andrew "1b"), `map_version` 1.
 2. Wire the new stages into the sweep (`sweep.py`) and the Lambda wrappers; regenerate the policies (`gen_policies.py`) so each stage role may write its new gold prefix; `safe-apply` the `etfs-rivalfunds` stack -- the plan is in-place updates plus the role-policy widening, anything else STOPs; stamp the source map.
 3. From the terminal machine (this box), run `collector_bloomberg` in `import` mode with `sink: s3` over BOTH capture sets (print the count first); let the markers/sweep build silver, G1, G2; run `enrichment_bloomberg` `import` over `dividends.json` with `sink: s3`; then G5/G6 and the page by the sweep.
 4. Enable the vehicle: add the ONE line `set "RIVALFUNDS_BBG_LEG=1"` at the head of `:rivalfunds_bbg_leg`'s gate in `scheduled_daily_pull.cmd` (the only vehicle edit), record it as `vehicle_enable_line` in `deliverables/0.9.0_WK_ETFS_RIVALS~5/d3_live.json` with every S3 prefix and object count, the Lambda request ids and the act day.
@@ -62,6 +62,24 @@ The next trading day's 08:03 leg plus the 09:00 sweep is the acceptance, read at
   PASS after it.
 - The pair names both landings of IDVZ and PFOE holdings (the Positioning pull's, unchanged, and this pipeline's) as a known state,
   not a defect of this act.
+
+## 1d. ISSUER AMENDMENT 2 (2026-09-30 ~21:3xZ, before this order's spawn, 2.0.0_SA_COO~RV) -- Andrew-direct "1b" (PRD v0.5) and row W3-S13
+
+1. **The home funds (Andrew-direct ~21:0xZ "1b", relayed by `1.0.0_SA_CTO~Z` msg 27379).** ETFS_RIVALS reads the POSITIONING pull's
+   landing for IDVZ and PFOE. Both leave this pipeline's Bloomberg request.
+   - Step 1 therefore sets both home funds' `source_policy` to `home_producer`, NOT `bloomberg_primary`. RIV-m-1's verdict stays
+     on record as the measurement.
+   - `collector_bloomberg`'s daily request already excludes `home_producer` funds; verify that from the printed request, which
+     must hold no IDVZ and no PFOE.
+   - G1 has no home-producer reader this round (row W1-S8). IDVZ and PFOE therefore read ABSENT on the page, with the reason
+     `home-producer reader: next round`. Their gaps are recorded as ABSENT, per the CTO: capture from 2026-08-21, 22 of 27
+     days.
+   - The imported IDVZ-group captures carry IDVZ rows inside their raw bytes (bronze keeps bytes as obtained). G1 never reads
+     them. Whether silver keeps them is routed to the CTO; do NOT filter them in this order.
+2. **Row W3-S13, ARMED (a G5 object built before its date's G3 stays income-unclean for good).** Wire the sweep and the marker
+   rules so that `build-trade-schedule` for date D runs only when `pull_enrichment` has a marker for D (or for the import batch
+   covering D). For the import, land G3 (step 3's `enrichment_bloomberg` import) BEFORE the sweep builds G5. State the order in
+   `d3_live.json`. This disarms W3-S13 by construction; record it as the row's resolution.
 
 ## 2. THE RULINGS THAT REACH EVERY CELL (inlined verbatim from the decomposition)
 

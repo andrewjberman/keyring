@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.11",
+  "prd_version": "v0.12",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -17,7 +17,8 @@
     "FWD-6",
     "FWD-7",
     "FWD-8",
-    "FWD-9"
+    "FWD-9",
+    "FWD-10"
   ],
   "status": "RATIFIED"
 }
@@ -174,6 +175,33 @@ act a seat can take on demand; none is a wait.
                     ran.
          SOURCE     Andrew "the first job is basically going to be doing a
                     backfill back to the start of 2026"; brief s.3.3, s.6.5
+
+  ===== v0.12, 2026-09-30 -- FWD-10 appended; DONE WHEN CONFIRMED by Andrew ("2yes", ~21:0xZ) =====
+
+  FWD-10 Collection runs in Opal's cloud from a stored long-lived token,
+         over each publication's REST shape -- no crawler, no login page,
+         no desktop
+         DONE WHEN  EXERCISED -- one on-demand run on the cloud harvester (a
+                    small EC2, or a Lambda where a probe measured that
+                    publication unchallenged) starts from each publication's
+                    token in AWS Secrets, pulls the validation security's
+                    articles for all five publications through their REST
+                    shapes, and signs in -- on the same host -- only for a
+                    publication whose token its probe showed not to work;
+                    the run record names, per publication, the token source,
+                    the host, and each attempt's class. The run may be the
+                    site Z box until the local job matures; the cloud host
+                    is the end state.
+         ACCEPT     No collection depends on Andrew's desktop or on anyone
+                    signing in by hand; a lapsed token is renewed in the
+                    cloud and written back to Secrets.
+         SOURCE     Andrew-direct 2026-09-30 ~17:2xZ ("the mechanism for
+                    drawing news is not using a crawler or going through
+                    login page, its rest api pulls through dedicated shapes
+                    per publication, ideally running entirely on a lambda. I
+                    don't mind having a dedicated small or nano ec2"); ~17:4xZ
+                    ("Maybe its a local job until it matures in process");
+                    confirmed ~21:0xZ ("2yes")
 ```
 
 ---

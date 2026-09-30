@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
@@ -377,14 +377,15 @@ page itself.
 `integrations/bloomberg/pipeline/etf_constituents_pull.py`.
 - The first Addendum-A cell MEASURES that producer's output against FWD-2/3's grain: daily, share counts, and history depth.
 - If it meets the grain, this pipeline READS it into silver as a named source.
-- If not, the fund joins this pipeline's Bloomberg request.
-- **(v0.4, Andrew-direct 2026-09-30 ~20:2xZ: "we're leaving the existing pull alone")** The Positioning pull is NOT modified. It
-  keeps landing IDVZ and PFOE, and its derived scalars, for its own consumers.
-  - Where RIV-m-1 measured it short of the grain (both funds: JOIN_BLOOMBERG), this pipeline lands its own copy.
-  - **This pipeline READS ONLY its own landing.** No ETFS_RIVALS reader reads `bbg/*/constituents/`, and no reader outside it reads
-    this pipeline's landing as a substitute for the Positioning pull's.
-  - The two landings serve different consumers, and each has one writer.
-  - This v0.4 line replaces v0.3's "the old pull stops writing" and "never two producers of one fund's holdings" on his word.
+- **(v0.5, Andrew-direct 2026-09-30 ~21:0xZ: "1b", on `3.0.0_SA_CVO~Z`'s v0.4 refusal (b); ~20:2xZ: "we're leaving the
+  existing pull alone")** For IDVZ and PFOE, this pipeline READS the Positioning pull's landing as a named source. It lands no
+  second copy.
+  - The Positioning pull is not modified.
+  - The grain shortfall RIV-m-1 measured is a stated LIMIT on FWD-2/3 for the home funds, never engineered around:
+    capture-forward from 2026-08-21, 22 of 27 days. Missing days read ABSENT with their cause.
+  - IDVZ and PFOE leave this pipeline's Bloomberg request.
+- **Never two producers of one fund's holdings** (CLAUDE.md, no duplicate output path). This stands; v0.4's striking of it is
+  withdrawn.
 
 **C-INCOME-CLEAN (Addendum A FWD-5; Andrew: "did we already account for dividend/interest income? That should be covered").**
 - Before any residual reads as a trade, trade inference:
