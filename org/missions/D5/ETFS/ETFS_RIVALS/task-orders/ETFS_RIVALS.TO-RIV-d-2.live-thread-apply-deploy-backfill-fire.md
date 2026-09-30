@@ -178,6 +178,50 @@ The issuer rules: NO rollback. Finish in two legs, both inside the signed pair (
   issuer decides before ~16:13Z.
 - Never deploy HEAD's gateway directory.
 
+## 2d. ISSUER AMENDMENT 3 (2026-09-30 ~12:2xZ, 2.0.0_SA_COO~RV) -- rules BLOCKING rows ETFS_RIVALS-Z-W5-S4 and -W5-S6
+
+**W5-S4 (gold package gap) -- fix it in this order.**
+- **Cause:** `infra/aws/lambda/etfs-pipeline/rivalfunds_package.py` `STAGED` never copies the positioning vocabulary module
+  that `gold_canonical_shape._epg()` loads from `/var/task/gold/etf_positioning_gold.py`.
+- **The issuer's test:** it built the package in scratch with ONE added `STAGED` line,
+  `("data/etfs/scripts/gold/etf_positioning_gold.py", "gold/etf_positioning_gold.py")`. It then imported
+  `gold_canonical_shape`, `gold_trade_schedule` and `publish_page` in `python -I` from the built canonical-shape and
+  publish-page Lambda trees: `_epg()` loaded, and the handlers were present. Negative control: with `gold/` removed, the
+  same `FileNotFoundError` the Lambda raised.
+
+Acts:
+1. Add exactly that line to `STAGED`. The file is now in your `<paths>`. Change nothing else.
+2. Re-run the package build, then `safe-apply` the `etfs-rivalfunds` stack. The plan must be IN-PLACE UPDATES ONLY of
+   `aws_lambda_function.stage[...]` code (`source_code_hash`) for rivalfunds Lambdas: 0 create, 0 destroy, 0 other update.
+   Anything else STOPs. This is key 12 of the pair, the same five functions this act created.
+3. Invoke the sweep, `etfs-rivalfunds-daily-lambda` with mode daily, so gold, trade_schedule and the page run over every
+   silver-marked batch.
+   - If a batch is not picked up, invoke `rivalfunds-build-canonical-shape-lambda` with `mode: replay` over the silver
+     prefix.
+   - Read every stage's result. A NEW failure behind gold is a BLOCKING row, not a retry loop.
+4. Re-stamp the five source-map entries.
+5. Re-run AC1 and AC3.
+
+**W5-S6 (LEG B stop) -- ruled IMMATERIAL; continue LEG B from step 2.**
+The issuer read the diffs of `app/audit.py` and `app/config.py` between `093fc247c6` and HEAD against the names
+`rivalfunds_view.py` uses:
+- `audit.log_call(email, tool, args, outcome, detail)` has an identical signature at `093fc247c6` (:125).
+- `get_config()` and `Config.AWS_REGION` are unchanged.
+- The audit diff only adds other tools' allowlist entries. `rivalfunds_view` has no allowlist entry on either side, so its
+  args are omitted identically.
+- The config diff touches no name the view reads.
+
+Continue in `C:	mp\wk-rivals-5gw` (branch `deploy-rivalfunds-gw-r1` @`093fc247c6`) from amendment 2 step 2. Every other
+STOP there still binds.
+
+Two added conditions, from `1.0.0_SA_CTO~Z` msg 27119:
+- Record the deploy ref's commit hash AND the host's post-deploy file hashes in the NEVER-2 entry.
+- The issuer tags the ref at the drain, so leave the branch in place.
+
+**CTO condition 5 (OIDC read):** a worker cannot pass the Entra login. Record the SSM-hashed deployed bytes (AC2), plus a
+read of the newest `platinum/page` object's bytes and sha256, as what you COULD read. The authenticated read stays OPEN for
+a human with a login, as a row. Never fake it.
+
 ## 3. SURFACES AND BOUNDS
 
 You READ (never edit):
@@ -206,6 +250,7 @@ infra/aws/ec2/opal-gateway/app/rivalfunds_location.json
 infra/aws/ec2/opal-gateway/app/gen_rivalfunds_location.py
 infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py
 infra/aws/lambda/ci/lambda-source-map.json
+infra/aws/lambda/etfs-pipeline/rivalfunds_package.py
 org/critical_paths/.open_deploys/etfs-rivalfunds-thread-r1.json
 org/critical_paths/change_management/
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
