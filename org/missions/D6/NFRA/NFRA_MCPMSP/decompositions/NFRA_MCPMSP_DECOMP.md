@@ -361,3 +361,20 @@ served byte; MS-d-2 changes no Terraform.
 1. No cell has run. The Deny's key set comes from MS-c-1's census; the MSP identity from Andrew.
 2. Subtracted per the analysis: FWD-2/Cottonwood, FWD-6/7, FWD-8 (G-KEY), FWD-9..11, R-1 (parked), R-2 (laptop gate
    owner), R-3 (NFRA_MCPORTAL), the launcher fix (NFRA_OPALAI), and A1 (PARKED, v0.4).
+
+## R2.9 CELL IDS AT ISSUANCE (the gate's grammar)
+
+`.tools/to-pipeline-gate.py` `CELL_ID_RE` admits `<PREFIX>-<1-4 lowercase letters>-<optional letter><digits>`; ten v2
+ids (`MS-e<n>-<letter>`) fail it. Renamed at issuance, one to one, meaning unchanged; the task orders carry the new ids.
+
+| v2 id | issued id | v2 id | issued id |
+|---|---|---|---|
+| `MS-e1-t` | `MS-ir-1` | `MS-e2-h` | `MS-sh-1` |
+| `MS-e1-a` | `MS-ir-2` | `MS-e2-v` | `MS-sv-1` |
+| `MS-e1-g` | `MS-ig-1` | `MS-e3-g` | `MS-rq-1` |
+| `MS-e1-z` | `MS-dn-1` | `MS-e4-r` | `MS-rn-1` |
+| `MS-e2-g` | `MS-sg-1` | `MS-e4-x` | `MS-rx-1` |
+
+Unchanged: `MS-c-1`, `MS-r-1`, `MS-d-2`, `MS-s-1`. Chains as issued: A `MS-c-1 -> MS-ir-1 -> MS-ir-2`; B `MS-ig-1`;
+C `MS-sg-1`; D `MS-rq-1`; E `MS-r-1 -> MS-d-2 -> MS-dn-1`; F `MS-sh-1 -> MS-rn-1 -> MS-rx-1`; G `MS-s-1`; joins
+`MS-d-2`, `MS-dn-1`, `MS-sv-1`.
