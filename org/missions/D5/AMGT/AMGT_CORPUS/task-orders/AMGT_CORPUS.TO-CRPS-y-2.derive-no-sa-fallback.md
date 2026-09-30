@@ -46,6 +46,7 @@ re-label but which could also move VALUES through a vendor call: 8316 and 8766 c
 integrations/bloomberg/research/model_block_pull.py
 integrations/bloomberg/research/tests/test_model_block_no_sa_fallback.py
 integrations/bloomberg/research/tests/test_model_block_sign_per_figure.py
+integrations/bloomberg/research/tests/test_model_block_resolved_exception.py
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-y-2.derive-no-sa-fallback.md
 </paths>
@@ -123,6 +124,16 @@ Write the instance at
 `python .tools/proof-of-spec-check.py <instance> AC3,AC4 --governing-order <this order>` (rc 0), then append a status tag reading
 complete at the END of this file, commit, and report ONCE: each AC line and the lines you changed.
 
+## 8. AMENDMENT 2 (issuer ruling on row `Z-W2-S17`) -- one path granted
+
+`integrations/bloomberg/research/tests/test_model_block_resolved_exception.py::test_dict_valued_field_unchanged`, at line 69, asserts
+`_resolved_sign("DICT_F", "EXC JP Equity", 1.0) == "NEGATIVE"`. That serves the map's sampled sign against a positive value, which is
+exactly the behaviour VERDICT B supersedes.
+
+**Ruled:** that one assertion expects `"POSITIVE"` (the figure's own sign), with a comment citing CRPS-y-5. The test's other
+assertions, which cover the dict-valued UNIT being unchanged, stay as they are. The path is granted above. Change nothing else in that
+file.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-22 analysis ruling 3 @`a940eb6813`. Dry-run at base CLOUD `afad83a02f`:
@@ -136,4 +147,7 @@ complete at the END of this file, commit, and report ONCE: each AC line and the 
 <status>complete</status>
 
 **AMENDMENT 1 (issuer notes):** round-23 amendment 1 on VERDICT B (msg 27053). Re-opened for cell CRPS-y-5, because the round's issuance gate admits a re-cut only as a MODIFIED order (one issuer per round). Dry-run at base CLOUD 608cd4a257: y5_AC1 FAIL as expected (`plain_disagree 1568 convention_disagree 1 unresolved_kept 602`); y5_AC2 FAIL as expected (no tests ran).
+<status>pending</status>
+
+**AMENDMENT 2 (issuer notes):** row Z-W2-S17 ruled; path granted; the order remains pending.
 <status>pending</status>
