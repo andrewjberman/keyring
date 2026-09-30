@@ -4315,6 +4315,72 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Not acted on. Any later probe under a request cap needs the same one-attempt policy and a send-level counter."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~84",
+      "surfaced_at": "2026-09-30T18:05Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W84-S1",
+      "one_line": "TO-HVST-ac-1 change 2 (a bot check ends the leg with job status bot_check) conflicts with a base-passing test that pins request_rejected when a DataDome challenge survives the contracted repair; the worker kept the test green and carries the class on the job instead.",
+      "spec_asserts": "ac-1 change 2 and AC1(b): a bot_check attempt ends that publisher's leg in the job with status bot_check. AC3: no test that passed at base d0bc0a79f0 fails.",
+      "world_is": "lib/opal_data_harvest/test_q6_barrons_guard_ft_body.py assert_barrons_bounded (:239-245) asserts result status == 'request_rejected' after a barrons job meets a captcha-delivery.com 401 body twice with one repair between (test_repair_after_reauth_stops_after_one_repair_when_the_challenge_repeats and mutant case barrons_repair_unbounded). With job status bot_check applied unconditionally both failed (2 failed, 315 passed). Resolution in worker.py (outer except RequestRejected): job status bot_check when the refusal classes bot_check and verification_repairs == 0 (wsj/ft/sa first bot check; the batch-1 cases); when the contracted repair already ran (bbg/barrons) the status stays request_rejected and the job, rejected_response, run-record jobs entry and request_attempts row carry attempt_class=bot_check and the signature. Either way: no token marked expired, 0 sign-in/refresh. Whether the post-repair job should read bot_check (and the q6 test be amended) is the issuer's call; it needs a path outside this order's <paths>.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_q6_barrons_guard_ft_body.py:239-245 @0814b408e4",
+          "lib/opal_data_harvest/worker.py outer 'except RequestRejected' @branch wk-AMGT_HARVST-84"
+        ]
+      },
+      "notes": "Not acted on beyond keeping AC3 green; no test file outside <paths> was edited."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~84",
+      "surfaced_at": "2026-09-30T18:06Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W84-S2",
+      "one_line": "publishers.py catches RequestRejected (a bot_check refusal included) and calls check_auth() before re-raising: one extra account request into a challenged publisher, and an AuthExpired from it would reach the worker's refresh (a sign-in); publishers.py is outside this order's <paths>.",
+      "spec_asserts": "ac-1 change 2: a bot_check attempt never marks a token expired and never calls a sign-in or refresh.",
+      "world_is": "lib/opal_data_harvest/publishers.py ~:455 'except RequestRejected: self.check_auth(); raise'; check_auth (~:462) raises AuthExpired for sa (account check logged out) and bbg (user-info with no userId), and runs DowJones.check() for wsj/barrons. The batch-1 wsj run record shows it: listing 401 (class other) followed by an auth_check /client 200 (runs/20260930T163418Z-wsj-241953e39e.json request_attempts). The ac-1 tests and AC2 cover the transport and worker limbs (0 sign-ins) with a stubbed client/ft publisher (check_auth a no-op); the check_auth limb for sa/bbg/wsj/barrons is not covered and not changed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py:455-470 @0814b408e4",
+          "runtime runs/20260930T163418Z-wsj-241953e39e.json (request_attempts: listing 401 then auth_check 200)"
+        ]
+      },
+      "notes": "Fix would be a publishers.py guard (skip check_auth when the exception's attempt_class is bot_check); not done: outside <paths>."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~84",
+      "surfaced_at": "2026-09-30T18:40Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W84-S3",
+      "one_line": "AMENDMENT 2 change 5 makes test_q6_barrons_guard_ft_body.py::test_logged_out_barrons_start_reauths_repairs_once_and_replays fail (a base-passing test); the amendment says that file stays as it is and it is outside <paths>.",
+      "spec_asserts": "AMENDMENT 2: after a bot_check/unclassified refusal the publisher path makes no check_auth re-check; test_q6_barrons_guard_ft_body.py stays as it is; AC3: no test that passed at base d0bc0a79f0 fails.",
+      "world_is": "That test pins the http log [(0,/client,200),(1,/client,200),(1,/search,401),(1,/client,200),(2,/client,200),(2,/search,200)]; the third /client (gen 1, after the captcha-delivery 401 at /search) is the check_auth() re-check. With change 5 the 401 challenge body classes bot_check, check_auth is skipped, and the log is [(0,/client),(1,/client),(1,/search,401),(2,/client),(2,/search,200)]. AC3 after: 1 failed, 334 passed, 1 skipped. Change 5 is built as ruled; AC1 (18 passed) and AC2 (NETWORK CALLS MADE: 0) pass. Resolving needs the q6 expected log amended (outside <paths>) or change 5 narrowed so barrons keeps the re-check; both are the issuer's call.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_q6_barrons_guard_ft_body.py:335-339 @0e6347ffc7",
+          "lib/opal_data_harvest/publishers.py articles() except RequestRejected, branch wk-AMGT_HARVST-84"
+        ]
+      },
+      "notes": "No file outside <paths> edited."
     }
   ]
 ```
