@@ -68,7 +68,7 @@ measured state. Risk is LOCAL: it reads the store and writes deliverables only.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>23</round>
 <slot>~55</slot>
 <fabric>site-z</fabric>
