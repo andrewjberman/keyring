@@ -5079,3 +5079,134 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-30T22:50Z",
+  "one_line": "TO-OG-t-2 step 6 and AC3 say ENABLED_INTEGRATIONS renders `ycharts opal_portal globgrph`; the live template and the host carry SIX ids (ycharts opal_portal globgrph opal_discover portal_index schwab), so the order's literal value would REMOVE three integrations and AC3's literal compare reads FAIL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 42c52ed4d9:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh .env printf: ENABLED_INTEGRATIONS=ycharts opal_portal globgrph opal_discover portal_index schwab (live 33 keys incl. 5 Schwab host keys).",
+      "Read-only SSM 2026-09-30 (command 28544048-dae6-4033-ad28-b408544ea75d, Success): the host .env ENABLED_INTEGRATIONS line is the same six ids; /health 200.",
+      "deliverables/2.0.0_SA_COO~O/round2/checks/tr.AC3.sh compares the host line to the literal 'ENABLED_INTEGRATIONS=ycharts opal_portal globgrph'; the EC2_MANIFEST release_note of MX-r-6 v3 (42c52ed4d9) says ENABLED_INTEGRATIONS gained schwab (6 ids).",
+      "Release branch rel-nfra-oplgtw-tier-auth d61fde4693: rendered ENABLED_INTEGRATIONS equals live's six ids; the only template keys added are MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS (live 33 keys -> 35, 0 removed, 0 shared values changed)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 6: `ENABLED_INTEGRATIONS` must render `ycharts opal_portal globgrph`; AC3: `ENABLED_INTEGRATIONS` unchanged, graded against that literal.",
+  "world_is": "The string is the pre-Schwab value of the round-2 issuance base. The release keeps the live six-id value (the order's intent is 'unchanged'; its literal would be a three-integration regression). PHASE B's 'ENABLED_INTEGRATIONS unchanged' read is correct against the six ids; tr.AC3.sh's literal is not.",
+  "notes": "Issuer disposition needed before GO: amend tr.AC3.sh (and step 6's literal) to the live six-id value, read at act time. Not edited by this worker (outside <paths>)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-30T22:50Z",
+  "one_line": "tr.AC2.sh grades the shipped gateway files against the files changed by the ~12 slot's commits on the worktree HEAD; deploy-to-ec2.sh, which step 2's census and step 6 themselves ship, is not in that set, so AC2 reads 'outside the build cells set 1' and FAILS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Reproduced AC2's three reads against the release (p=42c52ed4d9, c=d61fde4693) from the worker worktree: gateway files shipped 15; allowed set 14; foreign: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh; descends=yes; tier.py email roster reads 0.",
+      "The release-branch commit that edits deploy-to-ec2.sh is authored by ~12 but lives only on rel-nfra-oplgtw-tier-auth, not in the worktree HEAD history AC2 reads.",
+      "TO-OG-t-2 step 2: the census 'names ONLY files the build cells changed, plus deploy-to-ec2.sh for step 6'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2: the deployed commit ships only files the build slot's commits changed.",
+  "world_is": "The step-6 template edit is a release-branch change no committed build-slot commit on the worktree carries, so the check's allowed set cannot contain it.",
+  "notes": "Issuer disposition needed before GO: add deploy-to-ec2.sh to AC2's allowed set (an explicit exception for the step-6 file), or accept the one named foreign file. Not edited by this worker."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-30T22:50Z",
+  "one_line": "Step 6 adds `MASTER_ADMIN_PRINCIPALS=<value>` to the .env printf, but the hand-off forbids writing the tid/oid pairs into any committed file; the release branch therefore renders them from two deploy-time env vars and refuses to run without them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Release commit d61fde4693 (deploy-to-ec2.sh): printf %s count 9 -> 11 and argument count 9 -> 11; new args are OG_MASTER_ADMIN_PRINCIPALS and OG_WRITE_CAPABLE_PRINCIPALS; a guard before the stale-base read exits 3 with no build or upload when either is unset or any entry is not a <tid>/<oid> GUID pair (bash -n clean).",
+      "A rendered-.env check with the hand-off pairs in memory: 35 keys, 35 unique; both principal lines equal the pairs as handed (1 admin pair, 2 write-capable pairs); the four email roster keys stay.",
+      "Hand-off values are cited to org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/PART_D_RECORD_20260930.md @205c2e7f6c and appear in no committed file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 6 (add the two lines with the hand-off values) against the hand-off rule 'never write them into any committed file'.",
+  "world_is": "A literal printf line would put both pairs in a release-branch commit. The two values must be exported by the seat that runs PHASE B step 10 (the issuer re-supplies them at GO); the SSM command the deploy sends carries them to the host .env, as any .env value does.",
+  "notes": "PHASE B step 10's command gains two environment assignments: OG_MASTER_ADMIN_PRINCIPALS and OG_WRITE_CAPABLE_PRINCIPALS. Fail-closed if absent. The rollback tree /c/tmp/og-rb2 is the live template and needs neither."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-30T22:50Z",
+  "one_line": "The operator's upload client (identity_tool_allowlist.txt:19) does NOT expire at release time, but its only refresh family was revoked 2026-09-29 (refresh_token_reuse) so nothing holds it: it reads EXPIRED under OG-u-2's idle lifetime from about 2026-10-18 unless an authorization-code exchange extends it first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read-only consistent scan of gateway-access-state-table 2026-09-30: 303 items; oauth_client 6, none with an expires_at attribute (the release computes expiry at read from created_at + 2592000 s); expired at get_client 0 of 6; expired at exchange 0 of 6.",
+      "The operator client's record: created 2026-09-18, age 12.3 days, expiry in 17.7 days; live refresh families by client: 5 clients hold 7 live families, the operator client holds 0 (its one family: status revoked, revoked_reason refresh_token_reuse, last used 2026-09-29).",
+      "identity_tool_allowlist.txt:19 comment measured '1 active family, 1 client' on 2026-09-25; that family is now revoked."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 4: count the oauth_client records that would read EXPIRED under OG-u-2 at release time and say whether the operator's upload client is among them.",
+  "world_is": "At release time the count is 0 of 6 and the operator client is not among them; the clock is 17.7 days, and a revoked family does not hold a client.",
+  "notes": "Not a STOP under step 4. Reported so the operator's next re-authorization is not left to chance."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-30T22:50Z",
+  "one_line": "Step-4 census: the table's only real POLICY partition is the write-capable person #1's, and it holds an ACTIVE email_deny record (plus 3 synthetic probe partitions from 2026-09-16); neither moves any tier, but the deny record is a live refusal on a roster principal's sign-in path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Table scan 2026-09-30 (303 items): POLICY partitions = 1 real principal partition (principal_profile, 2 data_entitlement, 2 operator_audit, 1 email_deny status active, all for one principal that is in the WRITE_CAPABLE_PRINCIPALS hand-off) + 3 synthetic probe-og-i1 partitions + no tenant partition.",
+      "Step-4 delta table: 3 real principals (table union) + 2 audit-only persons + 1 server-held machine identity (callers ms, 49f, cot) + 3 synthetic probes = 9 identities; 0 deltas (1 machine identity: MASTER_ADMIN old and new via the email roster rule).",
+      "app/access_state.py email_deny_key: a denial-only record keyed by the email hash; it is read by the GUI path (/login, /sprint*) before any tier, not by resolve_tier."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 4: the ONLY allowed delta is the synthetic test fixture.",
+  "world_is": "The three probe partitions are the allowed fixture class and show no tier delta. The active email_deny on a roster principal is a pre-existing state unchanged by this release.",
+  "notes": "Reported as observed; nothing in the release reads or writes it."
+}
+```
