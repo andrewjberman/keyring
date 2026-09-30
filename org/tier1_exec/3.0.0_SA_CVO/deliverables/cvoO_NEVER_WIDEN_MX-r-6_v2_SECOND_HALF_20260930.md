@@ -5,6 +5,12 @@
 (unchanged at HEAD). It supersedes v1, which this seat REFUSED (`cvoO_NEVER_WIDEN_MX-r-6_SECOND_HALF_20260930.md`
 @da28ca51f9) because the release was cut on a stale base. **That cause is closed.**
 
+**STATUS 2026-09-30 ~14:5xZ: VOID under G1.** The live base moved to `4ce7946426` (2.0.0_SA_COO~RV, ETFS_RIVALS,
+live 14:36:48Z) BEFORE this act's host deploy at 14:41:23Z, which overwrote it and dropped the `/rivalfunds` routes
+(1.0.0_SA_CTO~O msg 27208). G1's read was taken at ~13:46-14:0xZ, about 35-55 minutes before the host leg, so it did
+not bind the moment of the act. COO~MI is restoring `4ce7946426`, and the IAM leg rolls back. A v3 re-ask on the new
+base gets a fresh half. The amended G2 (the Alyssa grant) is kept below as the text this seat will re-sign.
+
 **VERDICT: SIGNED,** on these pins, with guards G1-G3.
 - release `63d6094823`
 - deploy-only `2e2254156e`
@@ -38,10 +44,19 @@
 
 - **G1 -- base at the GO.** If the live artifact is anything but `288fa78c93` at the GO (S3 `-latest` ETag and the
   host files), this half is VOID. This is the ask's own clause, adopted here as a condition of the half.
-- **G2 -- the one grant.** The principal is named in the ledger BEFORE the write. It is an existing Opal principal
-  that already holds a Schwab grant. The only change is adding `dim_transaction`: the masters, the other datasets and
-  the operations are unchanged. The before and after records are both kept. Any other grant change is outside this
-  half.
+- **G2 -- the one grant (AMENDED 2026-09-30 ~14:4xZ; supersedes the first cut, which covered widening an EXISTING
+  Schwab grant by `dim_transaction` only).** Andrew's later word, "agreed", is recorded at
+  `ANDREW_DIRECT_20260930_14xxZ_AGREED_LAPTOP_PUSH_AND_ALYSSA_SCHWAB_GRANT.md` @29bc46d827. The question it answered
+  was: "who should get Schwab access to both master accounts, including transactions? I'd suggest Alyssa". The one
+  grant change this half covers is therefore ONE new Schwab grant to Alyssa (the principal holding the portal-only
+  grant 6810043e/ad037ea5):
+  - both masters 08242234 and 08335338;
+  - exactly `dim_position`, `dim_balance`, `dim_asset` and `dim_transaction`;
+  - written through the grant admin tool, with before and after recorded, and the principal named in the ledger
+    BEFORE the write;
+  - her portal channels unchanged;
+  - no other principal's grant touched.
+  Anything wider is outside this half. The rollback is the recorded before-state re-issued (her portal-only grant).
 - **G3 -- the read-back proves both halves of the widening.** The tool count reads 52 -> 58 with 0 removed. And
   `FIRM_ROLE_ARNS` is present in the live `.env` after the deploy, so MCPMSP's path is proven intact on the host, not
   just in the tree.
