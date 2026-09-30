@@ -7,6 +7,64 @@
 (msg 27298, read to EOF).
 **The routing:** a DESIGN FORK, ruled by the driver the tick the research landed (/self-drive Step 1).
 
+## 0. SUPERSEDING (~17:5xZ): Andrew answered the CRO's four decisions directly
+
+His answers are recorded verbatim by `4.0.0_SA_CRO~Z` in `HARVST_CLOUD_COLLECTION_DESIGN_20260930.md`, "Andrew's answers" @`f5c3b0dbc7`.
+The bot-ops study is `HARVST_BOT_OPS_STUDY_20260930.md` @`f5c3b0dbc7` (msg 27303, read to EOF, 5,499 B).
+- **(1) Bright Data:** *"If we can assign our existing bright data residential IP to an EC2 box to do this, then great."*
+  - The residential egress on an EC2 host is APPROVED, conditional on its being assignable.
+  - This replaces s.2's "NOT adopted" and s.5 item 2.
+- **(2) Web Unlocker:** *"I dont love that idea, i think we just need better bot ops ... the issue needs to be studied."*
+  - NO Web Unlocker.
+- **(3) Consolidation with ASTN:** *"This is a last resort."*
+  - s.2's shared-token-store line stands as the only consolidation.
+  - Moving ASTN's box is off the table unless nothing else works.
+- **(4) Licensed feeds:** *"Absolutley not."*
+  - s.5 item 3 is WITHDRAWN.
+  - This seat's REC for licensed access is withdrawn with it.
+- **Where the job runs:** *"all harvest ops "could" just be a job that runs on the sitez box ... I prefer a cloud solution of course, but
+  local has more visibility. Maybe its a local job until it matures in process"*.
+
+**The study's finding (measured on bbg): volume is not the cause.**
+- Pacing is about one request per 20 s.
+- Rejections are cold first requests, carrying a valid login (to 2027-09-11) and PerimeterX trust cookies that expired about four
+  minutes after the 09-11 capture.
+- Retrying into a challenge makes it worse.
+- **The remedy is ordinary bot operations, with no solver:**
+  - warm the session in a real browser on the same egress, then run the REST pulls inside the trust window;
+  - stop at the first challenge;
+  - ramp from a page load to an article read before any search.
+
+**RULING (supersedes s.2 and s.3; s.4 FWD-10 stands with one line added):**
+
+1. **Phase 1 is LOCAL, on the site Z box. "Until it matures" is read as: until a warm-then-pull run collects from each publication
+   with no challenge.**
+   - The harvester gains:
+     - a warm-up step (a headed browser loads an ordinary page on the box's own connection, and fresh trust cookies go to the REST
+       pulls);
+     - stop-at-first-challenge (already v0.10-v0.11);
+     - the page -> article -> search ramp.
+   - The REST shapes do not change.
+2. **Phase 2 is the cloud host:** the design's host, token keeper and orchestrator, on the existing Bright Data residential IP (his
+   answer 1). It is built once phase 1 has matured, so that no cloud path runs beside a proven local one (CLAUDE.md NEVER
+   shadow pipelines). The residential IP's assignability is read now, from the existing ASTN and BD box configuration, with no vendor
+   call.
+3. **Round-31 cells replace s.3:**
+
+   | # | cell | risk |
+   |---|---|---|
+   | 1 | **Token store:** wsj and barrons bundles into Secrets; ft's bundle expiry measured (as before) | WORLD, pair |
+   | 2 | **The warm-up and ramp in the harvester** (warm-up step, cookie hand-off, page -> article -> search ramp), with a planted stale-trust bundle showing the warm-up replaces the trust cookies | LOCAL |
+   | 3 | **One bounded warm-then-pull trial per publication on the site Z box**, one name each, each attempt classed per v0.11, stop at first challenge. This is the study's next step. | WORLD, pair + R-21 |
+   | 4 | **Residential-IP assignability read:** from the ASTN and BD boxes' configuration, whether the existing Bright Data residential egress can be bound to an EC2 host | LOCAL read |
+
+4. **FWD-10 (s.4) gains:** "the run may be the site Z box until the local job matures (Andrew ~17:4xZ); the cloud host is the end state."
+
+**The acts only Andrew can do (s.5) are now one:** confirm FWD-10's DONE WHEN. The Bright Data word is given (conditional). Licensed
+feeds are refused by him.
+
+*The sections below are kept as the record of the pre-answer ruling.*
+
 ## 1. WHAT THE RESEARCH ESTABLISHED (as measured by the CRO)
 
 1. **NopeCHA is NOT an all-in-one captcha solution.** This answers his question.
