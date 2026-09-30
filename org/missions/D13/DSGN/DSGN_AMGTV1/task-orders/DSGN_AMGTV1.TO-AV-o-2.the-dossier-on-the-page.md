@@ -113,7 +113,7 @@ outer commit hashes, and any row.
 **ISSUER NOTES:** round 10 = the round-9 analysis s.4 item 2 with ruling 2. Base b6634ba0: dossier.cjs 0 of 4; green 4 of 4; Q2 8 of 8
 at base and on the green arm (the green arm carried o-2, o-3 and o-4 together).
 
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~36</slot>
 <fabric>site-z</fabric>
