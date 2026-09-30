@@ -312,7 +312,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~5 @08494e3984 merged @b4915310f4. AC1-AC3 PASS re-run by the issuer at 15:25Z. etfs-rivalfunds stack (39) + gateway-rivalfunds-read-policy applied; BASG 325 days bronze/silver/canonical_shape, 324 trade_schedule, page 2026-09-30 from AWS; gateway on deploy-only ref 4ce7946426 (tag deploy-gw-etfs-rivalfunds-r1), first deployed 14:37Z, overwritten 14:41Z by NFRA_MCPINDEX 2e2254156e, restored 15:23Z by the issuer under 1.0.0_SA_CTO~O Plan A (host == ref 80/80). Ledger etfs-rivalfunds-thread-r1 CLOSED. OPEN for a human: CTO condition 5 authenticated /rivalfunds read. Rows W5-S1..S17 to the round-1 analysis (S16 resolved by S17; the in-place edit was refused by the row gate).</completion_note>
 <round>1</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>

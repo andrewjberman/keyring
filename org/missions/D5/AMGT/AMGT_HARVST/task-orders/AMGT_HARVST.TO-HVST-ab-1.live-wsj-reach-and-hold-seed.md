@@ -186,7 +186,7 @@ only for cached pages.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~81</slot>
 <fabric>site-z</fabric>

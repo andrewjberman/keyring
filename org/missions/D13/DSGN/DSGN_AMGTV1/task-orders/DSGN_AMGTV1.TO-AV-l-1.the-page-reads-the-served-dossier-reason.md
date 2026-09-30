@@ -105,7 +105,7 @@ the portal and outer commit hashes, and any row.
 files (not only ThesisTab: the header, Posture and Exec lines made the same pack claim). Base ba62e945: dossier.cjs 0 of 3; green
 r13-green-a @3a9f4c25 3 of 3 (6 files); leadPanelPattern re-anchor tested 15/15 then reverted by the helper.
 
-<status>pending</status>
+<status>complete</status>
 <round>13</round>
 <slot>~49</slot>
 <fabric>site-z</fabric>
