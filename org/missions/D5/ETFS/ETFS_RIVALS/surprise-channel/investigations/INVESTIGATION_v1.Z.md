@@ -455,6 +455,29 @@
   "spec_asserts": "Amendment 2 LEG B step 1 and amendment 3: the deploy ref is cut at 093fc247c6, the EC2_MANIFEST's deployed commit; STOP if the manifest moved.",
   "world_is": "The manifest moved to 288fa78c93 and the host matches it. The issuer's remedy is a decision, not this worker's: re-base the deploy ref on the CURRENT deployed commit (288fa78c93, which is itself an unmerged deploy-only branch rel-nfra-mcpmsp-r1-gateway) with the same key-16 files, or wait for the second in-flight release to land and re-read again.",
   "notes": "LEG A is complete and closed (AC1 and AC3 PASS). Ledger legs L3, L4, L6 are OPEN pending this row. The gateway read policy is applied and inert until the routes deploy."
+},
+{
+  "id": "ETFS_RIVALS-Z-W5-S9",
+  "project": "ETFS_RIVALS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+  "surfaced_at": "2026-09-30T12:58Z",
+  "one_line": "LEG B STOP under amendment 4: step 1 PASSED (BASE 288fa78c93, host equals it 79 of 79), but step 2's `git reset --hard BASE` in the deploy-only worktree C:\tmp\\wk-rivals-5gw was DENIED by the permission system, so the deploy ref was not re-pointed, nothing was built or deployed, and ledger L3, L4, L6 stay OPEN.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~RV",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Amendment 4 step 1 read: infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway.deployed_commit = 288fa78c93e1c57be0ad7b8d6371c69145a69856 (deployed_at 2026-09-30T11:37:34Z, by 0.9.0_WK_NFRA_MCPMSP~1) on CLOUD, on the shared tree file and on this branch HEAD d43d247314. Read-only SSM command 433b8c15-cf2b-4cb9-a0fe-b0a1d3bb123f on i-07dccb1615503ac99 hashed /opt/opal-gateway app, deploy, requirements.txt, identity_tool_allowlist.txt at ~12:53Z; against git show 288fa78c93 of the same files: files 79, host 79, only_ref [], only_host [], differ [] (EQUAL 79 of 79).",
+      "Union read of .open_deploys over 90 worktrees (git ls-tree HEAD) plus the shared tree's working directory: 35 distinct entries; none names opal-gateway or safe-ec2-deploy; the only ETFS entry is this ledger; nfra-mcpindex-bd-playwright-strip.json is a bd-playwright entry, not a gateway deploy. No in-flight gateway release has a ledger entry as of ~12:55Z.",
+      "Step 2 act: `git reset --hard 288fa78c93e1c57be0ad7b8d6371c69145a69856` inside C:\tmp\\wk-rivals-5gw (clean worktree, branch deploy-rivalfunds-gw-r1 @093fc247c6, no commits ahead). The Bash tool returned: Permission to use Bash with command ... has been denied. Re-measured after: `git -C C:/tmp/wk-rivals-5gw rev-parse --short HEAD` reads 093fc247c6, status clean; `git merge-base --is-ancestor 093fc247c6 288fa78c93` is true (BASE is a descendant, so the re-point is a pure fast-forward)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 4 step 2: `git reset --hard BASE` inside the deploy-only worktree re-points the deploy ref to the manifest's deployed commit, and the worker then brings in the key-16 files.",
+  "world_is": "The permission system denied the reset. The worker rules also bar merge, rebase, checkout -- and clean, and an issuer's message cannot grant a permission the system withheld, so the worker did not re-shape the act (no fast-forward merge, no ref rewrite, no new branch under another name). The gateway serves 288fa78c93 unchanged; no ref, copy, apply or deploy happened.",
+  "notes": "The path is ready and short: BASE is unchanged since 12:53Z as read, the server.py hunks applied cleanly to 288fa78c93 in the W5-S8 check, and the worktree is clean. To proceed, permit the reset (or the equivalent fast-forward, or a fresh branch/worktree at BASE) for a worker, or run steps 2-6 at the issuer's seat; then re-read the manifest immediately before the deploy (amendment 4 step 4). ARMED only because ledger etfs-rivalfunds-thread-r1 blares RED at ~16:13Z with L3, L4, L6 open; the gateway itself is unchanged."
 }
 ]
 ```
