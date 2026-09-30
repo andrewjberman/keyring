@@ -5,7 +5,7 @@
   "fabric": "site-z",
   "pipeline": "etfs-rivalfunds-daily",
   "status": "active",
-  "dep_stage": "DECOMP",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-30",
   "registered_under_tree": "2026-09-30",
   "placement": "SITEZ",
@@ -50,7 +50,7 @@
   },
   "coo_lane": "2.0.0_SA_COO~RV",
   "fabric_ruling": "site-z -- D5 is placed SITEZ (DIRECTIVES.yaml D5 placement: 'We're going to take D5 to this device'), and the Bloomberg leg needs the logged-in Terminal on this box (brief IV.3). Moved from D4 on Andrew's word ('ok yeah RIVALS should be on D5 Asset Management', @e6de2392c2; 'yes it can, ETFS can also be included in D5 as one of the macros', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_063xZ_ETFS_INCLUDED_IN_D5_MACROS_ETFS_RIVALS_TO_D5.md).",
-  "blocking": "L5 DECOMP committed by 2.0.0_SA_COO~RV (round 1, 9 cells, BASG thread). L6 issuance is 2.0.0_SA_COO~RV's next act.",
+  "blocking": "Round 1 ISSUED by 2.0.0_SA_COO~RV: 9 task orders (RIV-c-1..d-2), slots ~1-~4 spawned; the join RIV-d-2 (slot ~5) spawns after the four chains merge with hookups and a signed never-widen pair (1.0.0_SA_CTO~Z + 2.0.0_SA_COO~RV).",
   "thread_counter": 0,
   "threads": []
 }
