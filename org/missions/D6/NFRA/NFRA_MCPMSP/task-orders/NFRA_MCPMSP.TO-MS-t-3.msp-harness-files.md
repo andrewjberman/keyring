@@ -113,7 +113,7 @@ opal_ai/opal/runtime/{launcher,launch-gate}.ps1 and provision/*.ps1 now"; OA-t-3
 unstarted). Conditions carried onto the face: byte-identical no-key behaviour; the commit names OA-t-3. Spawn at
 opal_ai DEV `fd8ab8a57f`. No criterion changes. Graded by: no gate limb grades a modification's criteria.
 
-<status>staged</status>
+<status>complete</status>
 <round>1</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

@@ -49,6 +49,20 @@ correct, honest refusal, and the proof names the principal and its grant. The CT
 grant to dim_transaction through the grant admin tool" to Andrew's list. Graded by: no gate limb graded this
 modification.
 
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-09-30 ~12:2xZ) -- RE-CUT ON THE LIVE BASE; the first pins are VOID.**
+- The live gateway moved to `288fa78c93` (NFRA_MCPMSP MS-d-1, 11:37Z) after PHASE A read `093fc247c6`. Release
+  9def06ff2f / deploy-only 0d3e953c76 / rollback `/c/tmp/mx-rb7` are VOID. Deploying them would drop MCPMSP's
+  `tenant_registry.py` and `firm_role.py` and rewrite `asker_scope`, `audit`, `config` and `.env`. 3.0.0_SA_CVO~O
+  refused the second half (msg 27131, @da28ca51f9); 1.0.0_SA_CTO~O withdrew the CTO half (msg 27132).
+- **Re-cut PHASE A on the live commit, read by content at re-cut time.** Cherry-pick the same project commits and A3's
+  delta. Merge the host `.env` shape onto MCPMSP's (their keys kept, ours added). Rebuild and re-prove the rollback
+  tree against the new live artifact. Re-run the in-process proof and the tests.
+- **Re-read the live base IMMEDIATELY before writing the ANNOUNCE, and again at PHASE B before the deploy.** Put a
+  base-moved clause in the ANNOUNCE: a different live commit voids the pins.
+- The IAM leg (the targeted plan) is unchanged.
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
+  finds `<placeholders>NONE</placeholders>`).
+
 **AMENDED A3 (2.0.0_SA_COO~MI, 2026-09-30 ~12:0xZ) -- on PHASE A rows Z-W19-S7 and Z-W19-S8 (BLOCKING, ARMED, issuer-owned), ruled by row Z-S66.**
 - **Z-W19-S7: the Schwab service needs its host inputs, and the release must ship them.** Adding `schwab` alone
   registers 5 tools that all fail closed (`ContractUnavailable` / `RoleConfigError`). The release therefore also ships:

@@ -2249,3 +2249,36 @@ the output, 2 of 9 FWDs REALIZED. Series **`p`**; slots **`~66`..`~69`**.
 - the gold flip (it needs at least 10 eligible names);
 - the backfill run (round 29);
 - the barrons and ft runs (Andrew's).
+
+## 41. ROUND 29 -- L5 DECOMPOSITION v3.8, over the round-28 analysis (`ledger/ROUND_ANALYSIS.round28.md` @c907537920)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~12:5xZ.
+- Round 28 is CLOSED, 2 of 9 FWDs REALIZED. The run-record path is a SOURCE of coverage; FWD-7 is bound only by reach.
+- Series **`ab`**; slots **`~81`..`~83`**.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 live wsj reach from `timestamp` (`Z-W76-S1`), `p-2`'s test re-pointed (`Z-W76-S2`), `NM5NLQ6K50XZ01` seeded into the hold | `HVST-ab-1` | LOCAL | `~81` | now |
+| 2 the mention rebuild over silver with the 11 bbg rows | `HVST-ab-2` | WORLD, under a pair | `~82` | after its halves are signed; does not overlap `ab-3` |
+| 3 backfill batch 1, 10 names x {bbg, wsj}, measured-first | `HVST-ab-3` | WORLD, under a pair plus R-21 | `~83` | after `ab-1` merges; halves signed against the merged code; does not overlap `ab-2` |
+
+**Fan-out: 3 of 3 cut.**
+- Chain 1: `ab-1` then `ab-3`.
+- Chain 2: `ab-2`.
+- The WORLD acts run one at a time. N = 3 slots; cap 8.
+
+**Write sets:**
+
+| order | owns |
+|---|---|
+| `ab-1` | `publishers.py`, `worker.py`, `test_p2_fetched_and_stored_keys.py`, its new test, and one seed row in the runtime `rejected_hold` |
+| `ab-2`, `ab-3` | their deliverables and the served objects their halves name |
+
+**Issuer ruling on `Z-W76-S1`:** `_hit_date` reads `timestamp` and `printPublicationDate`, so a wsj backfill bound-stops at
+the floor. The paging change is intended, because it spends fewer pages.
+
+**NOT cells:**
+- batches 2+ (they wait on batch 1's measurement);
+- the gold flip (the declared set is empty);
+- the barrons and ft runs (Andrew's);
+- the daily rebuild that reads the new mention snapshot and batch 1 (a later paired rebuild).
