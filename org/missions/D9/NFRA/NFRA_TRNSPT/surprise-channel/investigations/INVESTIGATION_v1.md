@@ -81,6 +81,27 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "spec_asserts": "Every generated target is byte-identical to what the registry at HEAD produces (LGIC_ENFORCE: per-view registry hashes, 39cbad4214).",
   "world_is": "The 12 targets carry the pre-merge registry hash; the site Z registry change landed without a laptop regenerate, and no gate refused the merge.",
   "notes": "Blast radius per CTO placement 2026-09-29 step 1: a restamp moves blob hashes that signed IRPT packets pin; the issuer names TR-g-1's drain to ~P and ~M first. Whether a merge-time gate should regenerate is the CTO's, not this project's."
+},
+{
+ "id": "NFRA_TRNSPT-W1-S1",
+ "project": "NFRA_TRNSPT",
+ "fabric": "laptop",
+ "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+ "surfaced_at": "2026-09-30T15:05:00Z",
+ "one_line": "safe-commit's missions-tree-index check refuses the TO-TR-t2 complete flip on an INDEX-DRIFT it did not cause: org/projects/NFRA_TRNSPT.json says dep_stage PRD at CLOUD HEAD 81e350ba0a while the tree project.json says EXECUTING.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~T (its uncommitted org/projects/NFRA_TRNSPT.json edit PRD -> EXECUTING sits modified in the main worktree; committing it, or the drain, closes the drift; the worker's write grant does not include org/projects)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "bash .tools/safe-commit.sh ... -- <TO file> <proof instance> (2026-09-30 ~15:0xZ, worktree wk_nfra_trnspt_1 @adff7d4596): '[INDEX-DRIFT] org/projects/NFRA_TRNSPT.json: dep_stage: index=PRD tree=EXECUTING', RESULT: 1 violation(s), safe-commit did NOT commit (rc=1)",
+   "git -C C:/Users/AndrewBerman/Desktop/ajb_workspace diff HEAD -- org/projects/NFRA_TRNSPT.json: dep_stage PRD -> EXECUTING, generated_at 2026-09-30T14:05:26Z, uncommitted in the main worktree"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The worker's order flips <status> to complete and commits the proof instance, deliverables and flip together (worker standing rules).",
+ "world_is": "The commit that stages any org/missions path is refused by the tree/index check on a drift in a file outside the worker's grant; the code commit adff7d4596 (no org/missions path) landed, the proof instance and the flip are written and VALID but uncommitted."
 }
 ]
 ```
