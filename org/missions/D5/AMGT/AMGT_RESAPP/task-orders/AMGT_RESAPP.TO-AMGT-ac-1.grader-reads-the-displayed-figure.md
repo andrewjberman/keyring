@@ -59,7 +59,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 **ISSUER NOTES:** round-52 analysis item 1 / ruling 2. Base: AC1 FAIL (the plant moves the read; the control moves PX_LAST), AC2 FAIL
 (differ=6 over 3 names). The full 96-name re-grade is the issuer's drain run; FWD-30 is graded again only on this grader.
 
-<status>pending</status>
+<status>complete</status>
 <round>53</round>
 <slot>~190</slot>
 <fabric>site-z</fabric>
