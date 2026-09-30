@@ -658,6 +658,93 @@
     "spec_asserts": "Row W5-S16: the gateway serves 404 on /rivalfunds after the 2e2254156e overwrite; ARMED until redeployed.",
     "world_is": "The overwrite is reverted: the host runs the signed ref again, so W5-S16's hazard is disarmed; W5-S16 itself is unedited history.",
     "notes": "Supersedes ETFS_RIVALS-Z-W5-S16 (the gate forbids editing a row in place). The issuer dispositions S16."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-09-30T17:20Z",
+    "one_line": "The RIV-b-1 cell orders the new leg's exit codes 80-83, but the vehicle's existing price leg already owns 80-83 (RC_PRICE) and its comment calls them disjoint from every other leg.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd @5c54630648 lines 352-388 (price leg codes 80-83)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/b-1.AC3.py @5c54630648: asserts codes 80-87 are documented in the leg"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-b-1 cell and ruling: the Bloomberg leg has its own RC_RIVBBG with DISJOINT exit codes 80-83 (81 unreachable, 82 partial, 83 nothing written).",
+    "world_is": "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd @5c54630648 :price_leg..:price_missing already set RC_PRICE to 80 (price producer not found), 81 (an axis failed), 82 (producer crashed or Bloomberg unreachable), 83 (interpreter not found), and its banner says its codes (80-83) are DISJOINT from models/ETF/constituents. The new leg, as ordered and as check b-1.AC3 requires, reuses 80-83 for RC_RIVBBG with different meanings.",
+    "notes": "Built as ordered. The two are told apart by the leg banner in the log and by which variable is set (RC_PRICE vs RC_RIVBBG), never by the number; the new leg's comment says so. Neither leg feeds the task exit code, which stays the models chain's. If a later reader of the log or an automated parser keys on the bare number the two collide; renumbering RC_RIVBBG/RC_RIVENR (and b-1.AC3) is the issuer's call."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-09-30T17:20Z",
+    "one_line": "The cell says the vehicle leg uses %PY_AWS%, but PY_AWS is unset on the rc-50 (DAPI precondition failed) path that jumps to :prune past where it is assigned.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd @5c54630648 :precond_down ends 'set RC=50' / 'goto :prune'; 'set \"PY_AWS=' appears once, after :pull",
+        "Measured with a harness that runs the leg text with PY_AWS unset: the leg resolves the Python311 interpreter and proceeds (the fallback line `if not defined PY_AWS set ...`)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-b-1 step 5: :rivalfunds_bbg_leg sits right after :prune and runs under %PY_AWS%; 'every existing path reaches :prune'.",
+    "world_is": "Every path does reach :prune, but the rc-50 path (goto :prune from :precond_down) skips the set PY_AWS line that sits after :pull, so on that path PY_AWS is empty and the leg would invoke an empty interpreter, the exact defect AMGT_RESAPP-Z-S248 disarmed for the ETF and constituents legs.",
+    "notes": "Handled inside the leg with `if not defined PY_AWS set \"PY_AWS=<the same Python311 path>\"`, which assigns no existing variable to a new value on any path that already had one. Measured in PY_AWS (Python 3.11.9): win32com.client, pythoncom, win32process, boto3, pyarrow and pandas all import, so the one interpreter carries Excel COM and the S3 sink."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S4",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-09-30T17:20Z",
+    "one_line": "Round-1 silver (silver_issuer.py) orders captures by an id that starts with the UTC timestamp, so the W1-S2 key change (id now starts with the requested date) makes every new-format capture sort OLDER than any old-format silver object for the same report date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/silver_issuer.py @5c54630648 _capture_id, handler_entry best_existing > win['capture_id']",
+        "data/etfs/scripts/rivalfunds/collector_issuer.py: stem now basg-<requested_date>-<ts>-<sha12> (this worker's branch)",
+        "whether served silver/bronze holds old-format keys was not read (no AWS read in a build cell); the round-1 live fire suggests it does"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round-1 silver ruling: the latest capture wins per report date; silver_issuer._capture_id returns the bronze stem after 'basg-', which sorted in capture order as <ts>-<sha12>.",
+    "world_is": "With collector_issuer's stem now basg-<requested_date>-<ts>-<sha12>, _capture_id yields '2026-09-28-20260929T204617Z-...' while an already-landed round-1 object yields '20260929T204617Z-...'. Compared as strings '-' (0x2d) < '0'-'9', so a new-format capture loses to (is dropped as superseded by) any old-format silver/bronze capture of the same report date, regardless of capture time. silver_issuer.py is outside this cell's paths, so it is unchanged.",
+    "notes": "Only bites a re-capture of a report date that already has old-format silver; it then keeps the OLD rows silently. The Bloomberg silver is not affected (its capture_id is <ts>-<sha12>). A fix is a one-line change in silver_issuer._capture_id (drop the requested-date segment), in a cell that owns that file."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S5",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-09-30T17:20Z",
+    "one_line": "The cell says Bloomberg silver types every row 'into date=<report_date>', but each capture carries per-row REPORT_DATEs and about four stray rows per day (one per IDVZ-group fund) are stale by weeks or months.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Census scan of .runtime/etfs-rivals-idvz-20260930/daily (501 captures): 2819 of 273045 rows with DATES != REPORT_DATE; per-fund row breakdown for the last four captures read directly",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/b-1.AC2.py @5c54630648: rows per fund == capture's"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-b-1: silver types every row of every fund into address('bloomberg','etfs','silver','holdings','date=<report_date>', ...); AC2: silver for the newest date holds exactly each fund's capture row count.",
+    "world_is": "In the real IDVZ-group captures of 2026-09-24/25/28/29 each fund has one row whose REPORT_DATE differs from the requested date (2026-07-31, 2025-12-31, 2025-11-26, 2026-08-17), and 2819 of 273045 rows across 501 captures have DATES != REPORT_DATE. Partitioning by the ROW's own report date would put those rows outside date=<D> and fail AC2's per-fund count, so silver partitions a fund's whole capture by that fund's claimed (modal) report date and keeps each row's own REPORT_DATE in the `report_date` column; on a tie the latest date is the mode.",
+    "notes": "Gold readers (canonical_shape and the coverage cell) must not assume silver date=<D> implies report_date == D for every row: read the row's `report_date`. A fund with no parseable REPORT_DATE is skipped and counted, never given a guessed date."
   }
 ]
 ```
