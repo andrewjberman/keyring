@@ -224,6 +224,18 @@ def audit_function(fn_name: str, cfg: dict) -> dict:
         for f in files
         if "/" not in f and f.endswith(".py")
     }
+    # A builder that assembles the package from a pinned commit declares every member in its sidecar
+    # (<package>.BUILD_MANIFEST.json beside the source). Those members are local too: a flat member by its
+    # stem, a nested member by its top path component (lib/opal_naming.py satisfies `import lib`).
+    # The sidecar is the package's own declaration, not a copy of the source dir, which is why the
+    # source-map `files` list alone under-counts a vendored subpackage (MDPF_TAXSMA TX-u-2, 2026-09-30).
+    for sidecar in sorted(src_dir.glob("*.BUILD_MANIFEST.json")):
+        try:
+            declared = json.loads(sidecar.read_text(encoding="utf-8")).get("modules") or {}
+        except (OSError, ValueError):
+            continue
+        for member in declared:
+            local_modules.add(member.split("/")[0] if "/" in member else Path(member).stem)
 
     # Imports from each .py file
     all_imports: set[str] = set()
