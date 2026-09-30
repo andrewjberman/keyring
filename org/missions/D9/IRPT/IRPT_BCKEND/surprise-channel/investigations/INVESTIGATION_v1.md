@@ -12977,3 +12977,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Filed as a new row because an ARMED row is not edited in place (surprise-row gate). This seat takes no further YCharts or resident act; if a restart needs an operator on the host, that is asked of 1.0.0_SA_CTO, not assumed."
 }
 ```
+
+
+## IRPT_BCKEND-S230 -- the YCharts credential authenticates right now (probe rc=0, authenticated true) -- S225's AUTH_FAILED was not a standing auth break, and never the report shape
+
+```json
+{
+  "id": "IRPT_BCKEND-S230",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T05:00:00Z",
+  "one_line": "The YCharts credential AUTHENTICATES right now: a capture on the canonical host wrapper returned rc=0 with receipt {ok: true, task: probe, authenticated: true}. So S225's CAPTURE_FAILED:AUTH_FAILED was NOT a standing auth break, and it was never the report shape either -- capture runs before any body exists. Andrew-direct asked exactly this.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (Andrew-direct 2026-09-30 ~04:3xZ: 'the owner of YCharts is COO~Y as it has always been')",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIVE RUN on the canonical wrapper /opt/investor-reporting-ycharts/run-ycharts-session.sh at 2026-09-30T04:58:12Z, output retained to a 0600 host file and printed REDACTED: rc=0, 8471 bytes stdout, orchestrator lines 'task=probe headless=1 max_reacquisitions=1 otp_branch=ABSENT' and 'exit rc=0'. Receipt: 1 line, keys ['ok','record','result','task'], {ok: True, task: 'probe', failure_class: None, authenticated: True}.",
+      "IT IS NOT THE SHAPE, structurally: host_capture.run_capture() must return a session BEFORE any report body is built; recipe.generation_body() (the three variants) is sent only afterwards. Tonight's job died at 03:36:10Z with its body never sent.",
+      "WHY THE REASON WAS INVISIBLE: 'AUTH_FAILED' is ycharts_session.js:163's AuthError failure class, and host_capture.failure_code() keeps only failure_class -- its own comment says 'never its message or record'. Host census: NO /var/log/ycharts*, no /tmp/ycharts*, so the wrapper leaves no log. The one thing needed to tell a wrong credential from MFA from a changed page is discarded by design.",
+      "HOST CENSUS with denominators: 17 run-ycharts-session.sh on the host, exactly ONE secret-ids.env and it is at /opt/investor-reporting-ycharts/, not inside any resident package root. Since host_capture.py:120 refuses unless secret-ids.env sits beside the wrapper, the 16 in-package copies are decoration and only the canonical one can run."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S225's remedy line: 'the auth failure is upstream of the sequencing and must be fixed first or the new shape simply fails earlier' -- written as if the credential itself were broken.",
+  "world_is": "The credential is fine. A probe authenticates on the first attempt with no OTP branch taken. So S225's remedy is mis-aimed: there is no auth to fix. MEASURED: authentication succeeds, task=probe, max_reacquisitions=1. NOT MEASURED, and explicitly not claimed: that a FULL session capture for a job succeeds. My run was task=probe, which is a different task from the one the resident drives, so a probe authenticating does not prove the resident's capture would. The three live candidates for 03:36 are therefore (a) the max_reacquisitions=1 budget being spent, since the job's FIRST recorded operation was session_refresh, (b) a lease conflict on YC_LEASE_*, and (c) a task-specific failure the probe does not exercise. None is excluded yet.",
+  "notes": "MY OWN FIRST ATTEMPT WAS AIMED AT THE WRONG FILE and I am recording it because it nearly became a finding: I ran st5's in-package wrapper copy, got 'secret-ids.env absent ... refusing to guess secret names' with rc=2, and briefly read that as an st5 packaging gap. It is not -- the file lives only beside the canonical wrapper, by design, and my own earlier directory read had printed the secret keys from a DIFFERENT root in the same loop, which is what misled me. An instrument pointed at a decorative copy produces a confident wrong answer. NEXT, on Andrew's direct ask for an ad-hoc three-variant proof: the question is now the SUBMISSION, not the login. Drive one body per variant (OVERVIEW 0 comparisons, COMPARISON exactly 1, MULTI 2-5, per templates.json's comparison_securities bounds) through a captured session and read whether an export is generated. That needs a session task rather than a probe, and it is the first test that would exercise recipe.generation_body against the vendor at all. ARMED because a broken-looking remedy is now known mis-aimed while four report arms still wait on it."
+}
+```
