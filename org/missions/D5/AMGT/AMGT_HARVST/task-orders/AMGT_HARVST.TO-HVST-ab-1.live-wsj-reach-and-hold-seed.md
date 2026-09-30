@@ -30,6 +30,11 @@ lib/opal_data_harvest/publishers.py
 lib/opal_data_harvest/worker.py
 lib/opal_data_harvest/test_p2_fetched_and_stored_keys.py
 lib/opal_data_harvest/test_ab1_live_reach_and_seed.py
+lib/opal_data_harvest/transport.py
+lib/opal_data_harvest/sessions.py
+lib/opal_data_harvest/credentials.py
+lib/opal_data_harvest/config.json
+lib/opal_data_harvest/test_ab1b_trust_token_and_backoff.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 </paths>
@@ -65,10 +70,36 @@ only for cached pages.
    except for change 1's wsj dates. (Row `Z-S46`: bbg search is relevance-ordered, so a page mixes 2017..2026 hits.
    9 of `o-5`'s 11 bbg Lenovo articles were 2015-2019.)
 
+5. **(AMENDMENT 2, PHASE B) `C-HV-TRUST-TOKEN`** (PRD v0.9, Andrew-direct 2026-09-30 ~12:5xZ).
+   - **The base, measured:**
+     - a 429 raises `transport.Throttled` (~:204), and the worker ends the WHOLE job `throttled` with a publisher cooldown
+       (~:629), with no in-job retry;
+     - sessions live in the collector's `SessionManager`;
+     - AWS Secrets Manager is read only by `verification_locator.py`;
+     - Secrets holds credentials for all five publishers and SESSIONS for ft, sa and bbg, but no Dow Jones session. So wsj's
+       and barrons' stored token is the collector's saved-session file.
+   - **(a) Credentials from AWS Secrets.** A sign-in reads its publisher's credentials from Secrets Manager; none is typed
+     or prompted for.
+   - **(b) A stored token first.** A job starts from the stored token of a prior successful run: the Secrets session for ft,
+     sa and bbg, and the saved-session file for wsj and barrons. It signs in fresh ONLY when that token is shown not to work
+     (d). The run record names, per job, the token SOURCE and whether a sign-in happened.
+   - **(c) A rate limit is never expiry.** A 429 or throttle is retried IN the job with bounded exponential backoff and
+     jitter:
+     - a maximum attempt count and a maximum total wait, as config keys with defaults;
+     - `Retry-After` honoured, capped at the bound;
+     - the token KEPT.
+
+     Only when the bound is exhausted does the job end `throttled`, with the existing cooldown.
+   - **(d) Expiry only after backoff.** Only a 401, or a 403 whose kept body says the session is invalid, persisting after
+     backoff, marks the token expired. A 403 challenge keeps its contracted repair path.
+   - **(e) Every attempt is in the run record:** publisher, request kind, attempt, status, wait in seconds, and class
+     (`rate_limited` / `auth_expired` / `ok` / `other`).
+   - **No secret VALUE** is printed, logged, written or committed. Secrets are read by NAME in the census.
+
 ## 2. PROOF OF SPEC (each invocation LITERAL; timeout 600). THREE mechanical
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="HVST-ab-1"><invocation>python -m pytest lib/opal_data_harvest/test_ab1_live_reach_and_seed.py -rA --tb=line</invocation><expect>passed</expect></criterion>
+  <criterion id="AC1" cell_refs="HVST-ab-1"><invocation>python -m pytest lib/opal_data_harvest/test_ab1_live_reach_and_seed.py lib/opal_data_harvest/test_ab1b_trust_token_and_backoff.py -rA --tb=line</invocation><expect>passed</expect></criterion>
 
   <criterion id="AC2" cell_refs="HVST-ab-1"><invocation>python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/scripts/ab1_ac2_seed_and_replay.py</invocation><expect>NETWORK CALLS MADE: 0</expect></criterion>
 
@@ -119,6 +150,27 @@ only for cached pages.
 - **Paths:** unchanged (`publishers.py`, `worker.py`, the new test). **Criteria:** unchanged invocations. AC1 adds plant (e),
   and AC2 adds a replay line.
 - **Delivery:** the worker was dispatched before this amendment, so it is handed over as a continuation of the same worker.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
+**AMENDMENT 2 (issuer, 2026-09-30 ~14:0xZ) -- PHASE B: `C-HV-TRUST-TOKEN` (the round-29 re-cut, decomp section 42).**
+- **The source:** PRD v0.9 @`e1b5fd6d8c` (signed @`b9f1a8bc81`); CTO msg 27155; the CVO's 13:13Z build note.
+- **Why ab-1:** it binds on all collection, so it precedes `ab-3`. `ab-1` already owns `publishers.py` and `worker.py`, and a
+  separate order was refused (one issuance per round).
+- **The additions:**
+  - Section 1 change 5;
+  - `<paths>` gain `transport.py`, `sessions.py`, `credentials.py`, `config.json` and `test_ab1b_trust_token_and_backoff.py`;
+  - AC1's invocation adds that test file, whose plants are (a) through (f) below;
+  - AC2's script adds a per-publisher token-source census, printing secret NAMES and file paths only;
+  - AC3's base stays `6caac02338`.
+- **AC1 plants (phase B)** -- a mutant restoring each base behaviour fails:
+  - (a) a 429 burst shorter than the bound is retried in-job with growing jittered waits, the job succeeds, and the token is
+    kept (no sign-in);
+  - (b) a burst past the bound ends the job `throttled`, with no sign-in and the token kept;
+  - (c) `Retry-After` is honoured, capped at the bound;
+  - (d) a 401 persisting after backoff marks expiry and triggers ONE sign-in from Secrets-sourced credentials (stubbed);
+  - (e) a working stored token makes no sign-in;
+  - (f) every attempt appears in the run record with status, wait and class.
+- **Dispatched separately,** after AMENDMENT 1 reports, in the same worktree.
 - **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
 <risk>LOCAL</risk>

@@ -150,6 +150,11 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v3.8",
       "note": "L5 recut, 2026-09-30, 2.0.0_SA_COO~H. Round 29: three orders HVST-ab-1..ab-3 over ROUND_ANALYSIS.round28.md @c907537920; section 41."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.9",
+      "note": "Round-29 re-cut, 2026-09-30, 2.0.0_SA_COO~H. PRD v0.9 C-HV-TRUST-TOKEN + Andrew-direct ~12:5xZ: ab-1 AMENDMENT 2 (the contract), ab-3 AMENDMENT 1 (barrons/ft Lenovo jobs + phase B schedule re-arm); section 42."
     }
   ],
   "leads": [

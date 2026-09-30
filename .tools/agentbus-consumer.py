@@ -92,7 +92,26 @@ def main() -> int:
           "single-process boto3). Emits one line per message; silent otherwise.",
           file=sys.stderr, flush=True)
 
+    # SELF-EXPIRY (0.0.0_AB_MSTR~Z, 2026-09-30). The harness kills a Monitor at 30 min, but it kills the bash
+    # WRAPPER: this exec'd native python survived as an orphan, kept the lock (every re-arm refused, rc=3), and
+    # wrote to a pipe nobody read -- site Z was deaf until the orphan was killed by hand (measured: pid 2116617,
+    # alive after its Monitor b0vrs6jhl expired). Exit just before the cap, like inbox-watch.sh (1770 s), so the
+    # Monitor ends normally and atexit frees the lock. AGENTBUS_MAX_SECONDS overrides; 0 disables.
+    max_s = int(os.environ.get("AGENTBUS_MAX_SECONDS", "1770") or 0)
+    t0 = time.monotonic()
+
+    def _expired() -> bool:
+        return bool(max_s) and time.monotonic() - t0 >= max_s
+
     while True:
+        if _expired():
+            try:
+                print(f"[AGENTBUS-EXPIRED] consumer for {args.device} ended after {max_s}s (Monitors die at 30 min). "
+                      "RE-ARM with ONE Monitor call: cd <workspace-root> && exec bash .tools/agentbus-sqs.sh watch",
+                      flush=True)
+            except Exception:  # noqa: BLE001
+                pass
+            return 0
         try:
             resp = sqs.receive_message(
                 QueueUrl=args.queue_url,
@@ -104,7 +123,7 @@ def main() -> int:
             detail = f"{type(exc).__name__}: {exc}"[:160]
             print(f"[agentbus] RECV ERROR -- this is NOT an empty queue: {detail}",
                   flush=True)
-            time.sleep(60)
+            time.sleep(min(60, max(1, max_s - (time.monotonic() - t0))) if max_s else 60)
             continue
 
         for msg in resp.get("Messages", []):
@@ -115,7 +134,9 @@ def main() -> int:
                 print(f"[AGENTBUS -> {args.device}] [id {mid}] {body}", flush=True)
                 emitted = True
             except Exception:  # noqa: BLE001 -- emit failed: DO NOT DELETE
-                pass
+                # With stdout re-encoded above, a failed emit means the READER IS GONE (the orphan case). Exit so the
+                # lock frees and the undeleted message redelivers to a consumer someone is reading.
+                return 4
             if emitted:
                 try:
                     sqs.delete_message(QueueUrl=args.queue_url,

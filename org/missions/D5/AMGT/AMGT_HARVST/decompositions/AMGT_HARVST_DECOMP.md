@@ -2282,3 +2282,31 @@ the floor. The paging change is intended, because it spends fewer pages.
 - the gold flip (the declared set is empty);
 - the barrons and ft runs (Andrew's);
 - the daily rebuild that reads the new mention snapshot and batch 1 (a later paired rebuild).
+
+## 42. ROUND 29 RE-CUT -- L5 DECOMPOSITION v3.9, over PRD v0.9 (`C-HV-TRUST-TOKEN`) and Andrew-direct 2026-09-30 ~12:5xZ
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~14:0xZ.
+- **The source:** CTO msg 27155. The record is
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_125xZ_OPEN_CALLS_RECS_APPROVED_TRUST_TOKENS_BACKOFF.md`.
+  PRD v0.9 @`e1b5fd6d8c`, signed @`b9f1a8bc81`.
+- **The act list moved:** Andrew's word moved barrons B1, ft and the schedule re-arm out of his acts and into collection work.
+  The CTO directed them into round 29.
+
+**A re-cut into the round's ONE issuance.** It MODIFIES orders and adds no file. `to-pipeline-gate` refused three added order
+files: ONE ISSUER PER ROUND is keyed to the round, and a re-cut adds no file.
+
+| item | carried by | class | dispatch |
+|---|---|---|---|
+| `C-HV-TRUST-TOKEN` in the collector: Secrets credentials, stored token first, a 429 is not expiry, bounded backoff with jitter, every attempt in the run record | `HVST-ab-1` AMENDMENT 2 (phase B) | LOCAL | after `ab-1` AMENDMENT 1 reports; the same worktree, where `publishers.py` and `worker.py` are already `ab-1`'s |
+| barrons (B1) and ft Lenovo jobs, token-first, ft's kept 403 body read first | `HVST-ab-3` AMENDMENT 1: the batch-1 collection run also carries Lenovo x {barrons, ft}, under the same pair | WORLD, pair plus R-21 | after `ab-1` (both amendments) merges |
+| re-arm the collection schedule, daily, for the names batch 1 reached | `HVST-ab-3` AMENDMENT 1, phase B, under a re-signed pair | WORLD, pair | after batch 1's after-reads pass |
+
+**The chains now:**
+- Chain 1: `ab-1` (A1, A2), then `ab-3` (phase A: batch 1 plus barrons/ft Lenovo), then `ab-3` phase B (the schedule).
+- Chain 2: `ab-2`.
+
+The WORLD acts run one at a time, `ab-2` then `ab-3`. N = 3 slots; cap 8.
+
+**NOT cells:**
+- the ft credential re-harvest (superseded: the credentials are in AWS Secrets);
+- the NEVER-2 edit (Andrew asked to see the text; the CTO's).
