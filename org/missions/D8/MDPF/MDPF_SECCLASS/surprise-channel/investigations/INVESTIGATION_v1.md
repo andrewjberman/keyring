@@ -465,3 +465,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "No effect on this cell's own build: SC-e-9's bounds never grant a write to org/standards/MDPF_SECCLASS_CONTRACT.json, and the planner/tests/census/half all carry identifier_namespace as a plain data attribute on the planned rows themselves, independent of whether the contract JSON file has been amended yet. Named so the round-3 compile does not assume the contract file already reflects SC-e-1's text merely because a sibling task order describes it that way."
 }
 ```
+
+## MDPF_SECCLASS-S4 -- the additive updates would mint a row on a missing key
+
+```json
+{
+  "id": "MDPF_SECCLASS-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-30T07:27:00Z",
+  "one_line": "label_row_if_unlabelled() and set_kind_if_absent() condition only on the ONE attribute being absent, so an update_item on a ticker with no row would MINT a skeleton row carrying only that attribute.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (round-N analysis: add attribute_exists(ticker) to both conditions)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/label-legacy-classified-by.py:80-97 and set-instrument-kind.py:84-104: ConditionExpression attribute_not_exists(<attr>) only; DynamoDB UpdateItem on a missing key creates the item when the condition holds",
+      "the issuer's runs @7e171f5510 dropped any census ticker with no row BEFORE writing (FRESHNESS: 0 of 238 and 0 of 156 dropped), and the read-back shows 2,309 -> 2,309 rows",
+      "both CLIs refuse a live run, so no path calls either function without a caller-side pre-read today"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The label and kind updates are additive on an EXISTING row and never create one.",
+  "world_is": "The functions' own condition does not require the row to exist; only the caller's pre-read kept today's runs from minting rows.",
+  "notes": "Inert because both CLIs are blocked and the issuer's driver guards the runs. A one-clause fix, carried to the analysis."
+}
+```
