@@ -121,6 +121,28 @@
     "spec_asserts": "RIV-s-1 AC2 expects, after landing 3 real days plus one DATE-MISMATCH object, 533 silver rows (all 3 real files) and skipped_not_ok == 1; RIV-c-1 says the object key is basg-<ts>-<sha256[:12]>.",
     "world_is": "With that key, the DATE-MISMATCH landing and the last real file are ONE object pair; the sidecar that survives is the mismatch, so exactly one bronze object exists and it is not OK. silver_issuer skips it as the cell requires (sidecar status decides), giving 356 rows and skipped_not_ok 1. Both expectations cannot hold at once: 533 rows needs the OK sidecar, skipped_not_ok == 1 needs a second, non-OK object.",
     "notes": "Not fixable inside RIV-s-1: silver may not re-date or re-classify a bronze object against its sidecar (C-SHAPES), and collector_issuer.py is RIV-c-1's file (outside this order's paths). Two fixes, the issuer's or CTO's to pick: (a) the bronze stem carries the requested date (basg-<requested>-<ts>-<sha12>), which also closes row ETFS_RIVALS-Z-W1-S2; (b) check s-1.AC2 passes a different captured_at to its mismatch land. AC1 is unaffected and passes."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S4",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T09:10Z",
+    "one_line": "The crosswalk resolves none of the issuer's plain identifiers: all 35 BASG positions (34 equities) land UNRESOLVED on real days, though the crosswalk holds MSFT under 'MSFT US'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "g-1.AC1 run 2026-09-30 on gold_canonical_shape.py: '2026-09-28: rows 35 resolved 0 unresolved 35' (same 0/35 on 09-24 and 09-25)",
+        "crosswalk.load_crosswalk() pool object s3://opal-data-harvest/crosswalk/v1/2026-09-29.json: 237 records, all MEASURED, 1044 index forms; forms are Bloomberg-style (display_ticker 'ASML NA', 'ADBE US')",
+        "probe: resolve('MSFT')=UNRESOLVED, resolve('MSFT US')=MEASURED, resolve('MSFT US Equity')=MEASURED, resolve('594918104')/('US5949181045')/('2588173') (MSFT CUSIP/ISIN/SEDOL) = UNRESOLVED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-g-1: identity through lib/research/identity/crosswalk.resolve() tried on CUSIP, then ISIN, then SEDOL, then ticker; a miss keeps the position UNRESOLVED with the raw identifier, never a guessed key.",
+    "world_is": "The crosswalk indexes only Bloomberg-form identifiers (ticker plus exchange code, and that form plus ' Equity'); it holds no CUSIP, ISIN or SEDOL forms and a bare issuer ticker never matches. So the four tried forms miss for every BASG position and the gold shape has security_id null throughout. The cell follows its spec (no suffix appended, no guessed key), so nothing is wrong in gold; the identity join is empty until a crosswalk carries CUSIP/ISIN/SEDOL forms or an exchange-aware adapter is authorised.",
+    "notes": "Not fixable inside RIV-g-1: appending ' US' would be the guessed key the cell forbids, and the crosswalk is not in this order's paths. The trade_schedule and page cells key on security_id at their peril: on real BASG data they see 0 resolved securities and must fall back to raw_identifier."
   }
 ]
 ```
