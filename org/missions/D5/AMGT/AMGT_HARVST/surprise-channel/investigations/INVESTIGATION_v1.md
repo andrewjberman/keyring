@@ -3230,6 +3230,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "Branch B fired on barrons as the pair describes. The 'reauth' events are the collector's own scripted session refresh inside its run (no agent login, no agent HTTP, no browser opened by this worker). Zero article objects, zero listing objects landed.",
       "notes": "Measured only.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W65-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~65",
+      "surfaced_at": "2026-09-30T04:58Z",
+      "one_line": "The collector's grammar run (bbg, ft, wsj, --max-jobs 3, twice) wrote ZERO S3 objects: it stores fetched articles and listings in the local progress.sqlite3 outbox (status pending) and the S3 put is upload-harvest, the writer the pair marked 'not run'; o-5.AC1's 'each fetched key backed by a new bronze object' cannot pass on this act.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_AC1.txt: 'objects AFTER' == BEFORE on 5 of 5 roots (moved 0, removed 0, new 0); 'run 1 fetched 22 key(s) but no new bronze object landed'",
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/progress.sqlite3 (read-only): harvest_raw_outbox bbg pending 11, wsj pending 11 + uploaded 11 (earlier), sa uploaded 5; harvest_listing_outbox bbg pending 4, wsj pending 6",
+          "NEVER_WIDEN_HALF_COO_O5.md s.2: the three writers are the grammar path, upload-harvest and upload-legacy; only the first ran"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "NEVER_WIDEN_HALF_COO_O5.md s.3-4 and o-5.AC1.py: run 1 stores new bronze objects (received bytes plus rebuild, listing pages) and new silver parts under the four publishers' harvest roots.",
+      "world_is": "Run 1 (20260930T044003Z-run-b75f9299) fetched 22 keys (bbg 11, wsj 11), ft request_rejected. Pending outbox rows exist locally; no S3 object moved on any root. Nothing else was run: no upload-harvest, no upload-legacy.",
+      "notes": "Decision for the issuer: whether the upload step is a third signed act (it is a different writer, N=3) or the o-5 outcome is read as local-outbox only. The AC1 failure line is the check's own unmet clause, not a wrong-object read.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+{
+      "id": "AMGT_HARVST-Z-W65-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~65",
+      "surfaced_at": "2026-09-30T04:58Z",
+      "one_line": "The same-day repeat fetched 2 keys, not 0 (bbg NM5NLQ6K50XZ01, fetched in run 1 but never stored, and bbg OURYDJ6TTDSG01, new); skipped_as_held 26; ft answered 'cooldown' (Branch B carried from its run 1 request_rejected); wsj no_new_articles.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_AC2.txt: 'run 2 fetched 2 (keys 2), not 0'; 'run 2 skipped as held: 26'",
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/run_records/20260930T045332Z-run-75d4c464.json: keys_fetched [bbg:OURYDJ6TTDSG01, bbg:NM5NLQ6K50XZ01]; jobs bbg new_articles, ft cooldown, wsj no_new_articles",
+          "progress.sqlite3 harvest_raw_outbox: bbg:NM5NLQ6K50XZ01 has no row after run 1, bbg:OURYDJ6TTDSG01 pending"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "NEVER_WIDEN_HALF_COO_O5.md s.4 Run 2: counts.fetched == 0, every article run 1 stored is skipped as held before its body request.",
+      "world_is": "Run 2 skipped 26 keys as held (run 1 fetched 22, and 5 of run 1's skips were known_urls); the decomposition of the 26 was not measured. Two keys were fetched: one that run 1 counted fetched but did not store, one first seen on run 2's newer listing pass. Not a re-fetch of a stored article. Zero S3 objects moved in either run.",
+      "notes": "Measured only; the two-key reading is from the run record and outbox, not from a code read of why NM5NLQ6K50XZ01 was not stored.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
