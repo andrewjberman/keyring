@@ -61,7 +61,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 **ISSUER NOTES:** round-51 analysis item 5 / ruling 7. Base: AC1 FAIL (plant verified {'2025': '200'}); AC2 PASS (the ASML control, a
 component-level check -- the SERVED chart is ab-6's); AC3 PASS 118. analyze.py's packaging is read from ab-6's content diff.
 
-<status>pending</status>
+<status>complete</status>
 <round>52</round>
 <slot>~189</slot>
 <fabric>site-z</fabric>
