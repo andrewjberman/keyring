@@ -95,6 +95,20 @@ with `to_id` `AMGT_HARVST.TO-HVST-o-5.lenovo-backfill-four-live-publishers`. Rep
 6. **FWD-9 grades on this run** (ruling 2: the plan is a labelled ceiling). The other 190 names follow next round, on
    this run's actual page counts.
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~04:4xZ) -- RE-CUT after attempt 1 (row `Z-W65-S1`, ARMED -> disarmed by this re-cut; record `0f4d0c5109`).**
+- **What went wrong.** The signed command lacked `--max-jobs`, and `config.json:7` `jobs_per_run: 1` ran ONE job (barrons).
+  barrons was challenged (`request_rejected`, Branch B, recorded, not retried). 0 objects were written.
+- **The act now reads:** `--publishers bbg ft wsj --max-jobs 3`, from the same pinned worktree code. barrons becomes a
+  root that must gain no object.
+- **Re-signing.** The COO half is re-signed as its AMENDMENT 1: the snapshot is identical, ETags included, and the checks
+  are amended (`JOB_PUBLISHERS`, `NO_NEW`). The CTO half is re-asked.
+- **Dispatch waits for the CTO's re-sign.**
+- **Worker face for the re-run:**
+  - First move attempt 1's files (`o5_before.json`, `o5_run_ids.json`, `o5_after_run1.json`, `o5_run1.txt`,
+    `o5_preflight.txt`) into `attempt1/` beside them.
+  - Then act exactly as section 1, with the amended command. Step 6's repeat is the same amended command.
+- **Gate limb:** `.tools/to-pipeline-gate.py` grades a modified order's `<placeholders>` only (NONE here).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
