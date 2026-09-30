@@ -406,6 +406,19 @@ if [ -z "${OPAL_AGENT_SERIAL:-}" ]; then
   exit 2
 fi
 _AUTH="${OPAL_AGENT_SERIAL} <${OPAL_AGENT_SERIAL}@opal.agent>"
+# LAST FOREIGN SWEEP BEFORE THE COMMIT (DSGN_AMGTV1 round 7: 6fcaa52f79 carried 14 of 2.0.0_SA_COO~X's staged files).
+# The clean-index check above runs BEFORE the merge; the grade takes minutes, and a peer's safe-commit that passed its
+# own merge check just before this merge opened stages into the shared index inside that window. A merge can only
+# stage paths whose sides differ, so anything else staged now is a peer's: unstage it (working copy untouched; its
+# owner re-commits) and name it. The post-commit tree check still reports any path that slips in during the hooks.
+git diff --name-only HEAD MERGE_HEAD 2>/dev/null | LC_ALL=C sort -u > "$STATE.own" || true
+_LATE="$(git diff --cached --name-only 2>/dev/null | LC_ALL=C sort -u | LC_ALL=C comm -23 - "$STATE.own")"
+rm -f "$STATE.own" 2>/dev/null || true
+if [ -n "$_LATE" ]; then
+  echo "safe-merge: WARN -- unstaging $(printf '%s\n' "$_LATE" | wc -l | tr -d ' ') path(s) another seat staged into this merge's index (outside HEAD..MERGE_HEAD; working copies kept; their owner re-commits):" >&2
+  printf '%s\n' "$_LATE" | sed 's/^/              /' >&2
+  while IFS= read -r _p; do [ -n "$_p" ] && git restore --staged -- "$_p" 2>/dev/null; done <<< "$_LATE"
+fi
 echo "safe-merge: committing the merge as ${OPAL_AGENT_SERIAL}"
 if ! git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then
   echo "safe-merge: *** COMMIT REFUSED DOWNSTREAM after this script's grade PASSED. ***" >&2

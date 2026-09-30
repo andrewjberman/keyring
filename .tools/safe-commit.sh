@@ -444,6 +444,30 @@ fi
 # Re-emit git's own non-fatal chatter (e.g. CRLF warnings) that 2>&1 captured.
 [ -n "$ADD_ERR" ] && printf '%s\n' "$ADD_ERR" >&2
 
+# (2b) RE-CHECK FOR A MERGE AFTER STAGING (DSGN_AMGTV1 round 7: 6fcaa52f79 swept 14 of this kind of file). The merge
+# check above ran BEFORE staging; a drain that opened in between would carry what we just staged under ITS author.
+# Unstage exactly what this run added that the merge does not itself touch, and refuse as the pre-check does.
+if [ -n "$_MERGE_HEAD_PATH" ] && [ -f "$_MERGE_HEAD_PATH" ]; then
+  _merge_own="$(git diff --name-only HEAD MERGE_HEAD 2>/dev/null || true)"
+  declare -A _MERGE_OWN_SET=()
+  while IFS= read -r f; do [ -n "$f" ] && _MERGE_OWN_SET["$f"]=1; done <<< "$_merge_own"
+  _undo=(); _clash=()
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    [ -n "${BASELINE_SET[$f]:-}" ] && continue
+    if [ -n "${_MERGE_OWN_SET[$f]:-}" ]; then _clash+=("$f"); else _undo+=("$f"); fi
+  done <<< "$(git diff --cached --name-only -- "${PATHSPEC[@]}" 2>/dev/null || true)"
+  if [ "${#_undo[@]}" -gt 0 ]; then git restore --staged -- "${_undo[@]}" 2>/dev/null || true; fi
+  echo "safe-commit: REFUSED -- a merge OPENED in this worktree while this run was staging (MERGE_HEAD $(head -c 12 "$_MERGE_HEAD_PATH" 2>/dev/null))." >&2
+  echo "             Unstaged this run's ${#_undo[@]} path(s); your working copies are untouched. Re-run after the merge lands." >&2
+  if [ "${#_clash[@]}" -gt 0 ]; then
+    echo "             ${#_clash[@]} path(s) are ALSO part of the merge -- this run's staging replaced the merge's version; tell the merging seat:" >&2
+    printf '               %s\n' "${_clash[@]}" >&2
+  fi
+  echo "${ISO_TS} MERGE-REFUSED-LATE  ${AGENT:-UNKNOWN}  ${#_undo[@]}  (merge opened during staging; unstaged; clash=${#_clash[@]})" >> "$AUDIT_LOG" 2>/dev/null || true
+  exit 3
+fi
+
 # (3) IN_SCOPE: git-expanded files matching our declared pathspec.
 IN_SCOPE="$(git diff --cached --name-only -- "${PATHSPEC[@]}" 2>/dev/null || true)"
 declare -A IN_SCOPE_SET=()
