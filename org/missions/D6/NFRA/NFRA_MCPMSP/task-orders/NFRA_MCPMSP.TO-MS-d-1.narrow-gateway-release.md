@@ -46,6 +46,17 @@ from `MS-a-1`.
    - The release base predates this order, so the lane resolver cannot see your grant there. **The issuer authorizes
      the audited `GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPMSP~1` for exactly the release-branch commit(s) of those
      files.** Name each use in your report.
+2a. **AMENDMENT 2 (issuer, 2026-09-30) -- test the RELEASE tree before anything else.** This project's gateway
+   commits were built on a CLOUD that also carries other projects' UNRELEASED gateway work (measured at spawn:
+   NFRA_MCPINDEX `aac92bdff8` query_v0 and `925b0357a5`, ETFS_RIVALS `d70267f372` routes), and a narrow cherry-pick
+   onto PREV must not depend on any of it. In the release tree run
+   `python -m pytest tests/test_mcpmsp_asker_firm.py tests/test_asker_scope.py tests/test_asker_binding.py
+   tests/test_asker_nochannels.py tests/test_access_state.py tests/test_email_deny.py tests/test_admin_tenants.py
+   tests/test_admin_grants.py tests/test_admin_round2.py -q` from `infra/aws/ec2/opal-gateway/`: 0 failed. A failure,
+   or a cherry-pick conflict, is a BLOCKING row naming the file and the foreign commit it needs -- STOP, no deploy.
+   The commits to carry, in order (issuer's census, non-merge, `git log --no-merges 7f71d150b5..CLOUD -- infra/aws/ec2/opal-gateway`):
+   `c19f86c295`, `343534a883`, `2d15859595` (MS-t-1), `f137855422` (MS-t-5), then your own item-0 hookup and item-1
+   deploy-script commits.
 3. **Before the act:** (i) render the `.env` locally: extract the release tree's `.env` `printf` line, run it with every
    `%s` replaced by a distinct marker, and print the `KEY=VALUE` lines -- every marker on ITS OWN key and
    `FIRM_ROLE_ARNS` present with valid JSON; any misalignment: STOP. (ii) Prove the rollback: rebuild PREV's artifact
@@ -121,6 +132,13 @@ MCPORTAL MP-d-1 precedent.
 **AMENDMENT 1 (issuer):** the `admin_api.py` hookup moves here (item 0; path granted) because lane `CLOUD_OPS_OR_ETL`
 refused the issuer's hookup commit on `infra/aws/**` at MS-t-5's drain. d1.AC2's allowed set already names
 `app/admin_api.py`. No criterion changes. Graded by: no gate limb grades a modification's criteria.
+
+**AMENDMENT 2 (issuer):** item 2a -- the release tree's suites must read 0 failed before the act (MS-t-1 was built on
+a CLOUD carrying MCPINDEX's and ETFS_RIVALS' unreleased gateway commits); the four commits to carry are named. Spawn
+preconditions measured at 2026-09-30 ~10:3xZ: MS-t-1 @a942e9b446, MS-t-5 @47e80347c8, MS-a-1 @de0a47efd2 drained;
+role ARN arn:aws:iam::313476888478:role/gateway-inf-firm-reader-role; no gateway deploy sentinel open across 76
+worktrees (the one open sentinel is MCPINDEX's BD documents, HELD-SOVEREIGN-GATED); OG-t-2 staged (not mid-edit).
+Graded by: no gate limb grades a modification's criteria.
 
 <status>staged</status>
 <round>1</round>
