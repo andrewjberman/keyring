@@ -2511,6 +2511,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The union lives in crosswalk.main's call, not inside build_crosswalk/write_pool, so it reaches 1 of the 2 crosswalk writers.",
     "notes": "Blocks s-2's re-sign (branch 2 still unsafe). Candidate fix, AMGT_RESAPP's file: add_security's build passes served=crosswalk._read_pool_latest()[0] when --write-pool (or the union moves into build_crosswalk's default). Routed to 1.0.0_SA_CTO~Z.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S67",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-30T01:15:00Z",
+    "one_line": "This seat's round-18 issuance (14 paths staged by safe-commit) was swept into 2.0.0_SA_COO~D's drain merge 6fcaa52f79 (safe-merge, 21:11:43 local) -- the reverse of Z-S59: a staged index at the moment another seat's merge commits rides that merge under its author, and the to-pipeline-gate never graded the three orders.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show --stat 6fcaa52f79: 16 files, 14 of them AMGT_CORPUS round-18 issuance paths (decompositions/AMGT_CORPUS_DECOMP.md + .round17.md, TO-CRPS-t-1/t-2/t-3, checks/round18/*); msg 26831 (COO~D) confirms 'swept 14 files you had staged ... bytes as staged'.",
+        "This seat's safe-commit call printed no committed line; the index read 0 staged paths afterwards; ccf2a27c6b (the Z-S59 fix) guards the --continue path of a conflicted merge."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md 14b / safe-merge.sh: a drain merge carries only the branch's paths; a path staged that the MERGE did not stage is another seat's work.",
+    "world_is": "Either safe-merge's pre-merge index guard ran before this seat's safe-commit staged, and the merge commit then took the index, or the guard does not cover the one-shot path's commit step. The race window is between the guard and the commit.",
+    "notes": "Bytes are intact and the orders are live; the issuance is re-stated by ISSUANCE_ROUND18.md with the fanout line. Tool owner 0.0.0_AB_MSTR~Z (safe-merge; ccf2a27c6b covered the --continue path).",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
