@@ -1,146 +1,149 @@
-# ETF holdings research: canonical holdings, manager activity and analysis
+# Rival funds: daily holdings, canonical shape, served research page
 
-L1 BRIEF | NEW | Author: 4.0.0_SA_CRO~Z | September 29, 2026
+L1 BRIEF | NEW | Author: 4.0.0_SA_CRO~Z | September 29, 2026 | **Revision 2, September 29 ~23:5x ET**, folding Andrew's rulings on the 14-item gap pass (verbatim in the linked `ANDREW_DIRECT.md`)
 
-Andrew's direction is a lightweight research foundation for WCMG, GQGU, TSEL, BASG, ETFT and PCLG. Preserve as much disclosed holdings information as possible, standardize it once, and use reproducible tables to study the managers. The history target is up to two years, bounded by each ETF's own available history. Less frequent disclosures are acceptable when daily history is unavailable; they must remain identifiable as such.
+Andrew's direction is a lightweight research product, **rivalfunds**, over six rival active ETFs: WCMG, GQGU, TSEL, BASG, ETFT and PCLG. Collect every fund's disclosed holdings daily, backfill up to two years (bounded by each ETF's own history), coalesce every source shape into one Opal-defined master table, compute change and performance tables from it, and serve a daily research page with chart views and AI analyses at `mcp.opalinvest.dev/rivalfunds`, archived by day. Less frequent disclosures are acceptable where daily history does not exist; they stay identifiable as such.
 
-**Recommendation:** issuer-first daily holdings for all six; issuer archive backfill for GQGU and BASG; Bloomberg Excel BQL backfill for WCMG, TSEL, ETFT and PCLG. Add a selective Bloomberg script to the existing morning run, skipping holdings requests already satisfied by fresh, complete issuer data. A daily issuer Lambda is feasible from the public feed shapes exercised locally, but its AWS execution remains untested. Characteristics and enrichment must not block holdings collection.
+**Recommendation:** issuer-first daily collection for all six under a new, separate pipeline, `etfs-rivalfunds-daily`, fired at **7:00 AM ET**. Bloomberg's existing **8:03 AM ET** morning run is the fallback for funds Bloomberg carries, and the supplier of backfill and enrichment (prices, total returns, GICS, benchmarks). The backfill runs ad hoc from the outset through BOTH channels: issuer archives for GQGU and BASG, Bloomberg Excel BQL for WCMG, TSEL, ETFT and PCLG. Each stage hands the next a batch-complete marker; a daily schedule backstops every hop. OpenAI writes the analyses from computed tables. Everything, bronze through platinum, lives in `opal-data-etfs`.
 
-Supporting design: [table, prompt and naming specification](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/GOLD_TABLES_AND_PROMPTS.md). Direct instructions and source evidence are linked in the references.
+Supporting design: [table, prompt, naming and serving specification](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/GOLD_TABLES_AND_PROMPTS.md). Direct instructions and source evidence are linked in the references.
 
 ## PART I — THE OUTCOME TERRITORY
 
-### O1 — Andrew reviews one ETF's changes through one complete research journey
+### O1 — Andrew opens one ETF's day on the served page and traces a change to its source
 
-**Candidate thread first:** Andrew selects BASG and its latest two genuinely dated holdings reports, opens the standardized holdings and change tables, and reads a short evidence-linked account of what changed and what cannot be inferred. He can trace a highlighted holding back through typed data to the issuer's raw record. The initial consumer entry can be a research query or a small generated research report; a dashboard is not required. The broader research window is the available ETF history up to two years.
-
-This is one real use over real holdings, ending in Andrew's observed research result. A QA output is sufficient for that candidate thread; production scheduling belongs to the wider capability below.
+**Candidate thread first:** Andrew opens `mcp.opalinvest.dev/rivalfunds`, selects BASG, and reads the latest genuinely dated holdings report against the prior one: the change tables as charts, and an evidence-linked AI account of what changed and what cannot be inferred. He can trace a highlighted holding back through the canonical table and typed silver to the issuer's raw bytes. The page he reads is the day's archived served file, and `/rivalfunds/archive` lists every published day. This is one real use over real holdings, ending in Andrew's observed research result; it crosses every hop in PART V once. The broader research window is the available history up to two years.
 
 ### O2 — Andrew obtains the best available history without mistaking stale snapshots for daily disclosure
 
 Andrew can inspect coverage for every confirmed ticker, retrieve its available history within the requested window, and distinguish daily, weekly, quarterly, missing and carried-forward observations. He sees legal inception, first source availability, requested date, actual report date and gaps separately. Predecessor mutual-fund history is not silently counted as ETF history. See supporting specification S1 and S3.
 
-### O3 — Andrew receives fresh holdings each day with Bloomberg requests limited to demonstrated needs
+### O3 — Andrew receives fresh holdings each day without manual downloads, with Bloomberg spent only where needed
 
-Andrew can rely on scheduled issuer collection and the existing Bloomberg morning vehicle without manually downloading portfolios. The issuer Lambda captures each fund independently; the Bloomberg script checks coverage and handles eligible backfill, missing holdings or separately requested enrichment. A satisfied issuer day produces a recorded Bloomberg skip. An issuer delay remains pending through the configured collection/retry window rather than immediately spending a Bloomberg request. Fund failures and unrelated morning-run failures remain distinguishable. See S1 and S2.
+The issuer collection fires at 7:00 AM ET from AWS and captures each fund independently. At 8:03 AM ET the Bloomberg morning run reads the coverage record and requests only funds still uncovered that Bloomberg actually carries; a satisfied fund records a skip. GQGU has no Bloomberg fallback, and the page says so on a GQGU miss. Fund failures and unrelated morning-run failures remain distinguishable. See S1 and S2.
 
 ### O4 — Andrew compares any fund or source through one rich Canonical Shape
 
-Andrew can query every disclosed position through an Opal-defined, denormalized base table regardless of issuer or Bloomberg channel. He has available quantities, weights, values, identifiers, cash, instrument details, Opal asset/subasset classes and GICS hierarchy fields together, with the provenance and dates needed to interpret them. Unknown fields remain unknown; richer future data can be added without losing raw source information. Bronze originals, typed silver Parquet and gold Parquet live in `opal-data-etfs` under LGIC source-first names. See S2–S4.
+Bronze and silver keep each channel's own shape, one per source. Gold's `canonical_shape` is the accrual table that coalesces every shape into one Opal-defined master shape: every disclosed position with quantities, weights, values, identifiers, cash, instrument details, Opal asset/subasset classes and GICS hierarchy, with provenance and dates. Unknown fields stay unknown; a raw field survives even before it has a canonical column. See S2-S4.
 
 ### O5 — Andrew distinguishes portfolio tilts and likely trading from mechanical changes
 
-Andrew can examine additions, exits, increases, reductions, concentration, sector/industry deltas and peer overlap. He can distinguish changes potentially explained by market prices, FX, fund share issuance/redemption, corporate actions, source changes or reporting gaps from residual activity consistent with manager trading. He can inspect uncertainty and choose actual observation intervals rather than receive invented daily transactions. See S5.
+Andrew can examine additions, exits, increases, reductions, concentration, sector/industry deltas and peer overlap. He can distinguish changes potentially explained by market prices, FX, fund share issuance/redemption, corporate actions, source changes or reporting gaps from residual activity consistent with manager trading. He chooses actual observation intervals rather than receive invented daily transactions. See S5.
 
 ### O6 — Andrew evaluates where a manager's positioning and observable decisions helped or hurt
 
-Andrew can inspect top-ten and bottom-ten holdings by security return and by estimated portfolio contribution, together with starting/ending weights and coverage. He can evaluate observed additions/reductions over subsequent measured windows against an explicit comparison, including exited holdings. Contribution, counterfactual decision evaluation and actual fund performance stay distinguishable. Missing prices or incomplete exposure history reduce what can be concluded rather than disappear from the denominator. See S5 and S6.
+Andrew can inspect top-ten and bottom-ten holdings by security return and by estimated portfolio contribution, with starting/ending weights and coverage. He can evaluate observed additions/reductions over subsequent windows against an explicit comparison, including exited holdings. Missing prices or incomplete exposure history reduce what can be concluded rather than disappear from the denominator. See S5 and S6.
 
 ### O7 — Andrew uses AI to form and revisit evidence-based hypotheses about manager behavior
 
-Andrew can ask how a manager is tilting, what repeatable behavior the disclosed changes suggest, where past choices appear to have helped or hurt, and what portfolio direction could follow if that behavior continues. The response cites versioned table rows, distinguishes observation from inference, offers alternative explanations and states what would invalidate each forecast. Saved hypotheses can later be compared with new holdings without hindsight rewriting. See S7.
+Andrew can ask how a manager is tilting, what repeatable behavior the disclosed changes suggest, where past choices helped or hurt, and what direction could follow if that behavior continues. The response cites versioned table rows, separates observation from inference, offers alternatives and states what would invalidate each forecast. Saved hypotheses are later graded against new holdings without hindsight rewriting. See S7.
 
 ### O8 — An Opal researcher can reproduce and extend the research without changing its meaning
 
-An Opal researcher can rebuild outputs from preserved raw observations, inspect source selection and corrections, and add a ticker or feed through the same schema, classification and LGIC naming rules. A rerun preserves evidence and does not duplicate positions or silently replace historical vintages. The researcher can tell whether a result uses today's best reconstruction or information actually available at an earlier time. See S2–S7.
+An Opal researcher can rebuild outputs from preserved raw observations, inspect source selection and corrections, and add a ticker or feed through the same schema, classification and LGIC naming rules. A rerun preserves evidence and does not duplicate positions or silently replace historical vintages. See S2-S7.
 
 ## PART II — WHERE THE BOUNDARY SITS
 
-This product owns the six-fund research universe, source-selection policy, historical coverage, raw/typed/canonical holdings, derived research tables, analysis prompt contracts and evidence-linked research outputs. It owns the new issuer collection capability and the scoped Bloomberg holdings addition to the existing morning vehicle. These are outcome boundaries, not a work allocation or implementation sequence.
+This product owns the six-fund universe, source-selection policy, historical coverage, raw/typed/canonical holdings, derived research tables, analysis prompt contracts, the served page and its daily archive. It owns the new issuer collector and the scoped Bloomberg holdings leg added to the existing morning vehicle.
 
-It relies on **ETFS_POSITIONING / ETFS_INGEST** for reusable holdings and classification conventions; **OPAL_BBGTML** for the established Bloomberg morning vehicle and local authenticated environment; **LGIC_NAMING / LGIC_ENFORCE / LGIC_CANON** for naming, placement and canonical builders; and the established security identity and price/reference-data substrate. Existing ETF positioning and partner ETF-ownership outputs have separate consumers and are not implicitly migrated or widened.
+**It is a separate pipeline from `etfs-netassets-daily`** (Andrew, item 1). That Lambda serves a different purpose (DIVZ/IDVZ/PFDE/PFOE AUM and holdings) and keeps its own schedule, homes and contracts. Nothing here extends, migrates or reads it; the shared FilePoint platform is a coincidence of vendor, not a shared pipeline.
 
-**AMGT_RESAPP** may consume the resulting research tables. **AMGT_CORPUS / AMGT_HARVST** are potential later context sources for manager commentary and explanations; they are not prerequisites for this holdings-led thread. A full research application, transaction execution, fund replication, a guaranteed prediction model, and migration of existing four-fund products are outside this brief.
+It relies on **OPAL_BBGTML** for the established Bloomberg morning vehicle and local authenticated environment; **LGIC_NAMING / LGIC_ENFORCE / LGIC_CANON** for naming, placement and builders; the **research identity layer** (`lib/research/identity/`, built for AMGT) for security resolution; the **opal-gateway** for the authenticated route; and **ETFS_POSITIONING** for its established asset-class, subasset-class and GICS vocabulary. **AMGT_RESAPP** may consume the tables. A full research application, transaction execution, fund replication, a guaranteed prediction model and migration of existing ETF products are outside this brief.
 
-The distinction between *securities held inside an ETF* and *clients holding ETF shares* is explicit. Existing ETF ownership aggregation in the same bucket is prior art for storage, not a substitute for composition data.
+The distinction between *securities held inside an ETF* and *clients holding ETF shares* is explicit. The client-ownership products already in `opal-data-etfs` are untouched.
 
 ## PART III — THE QUALITATIVE BAR
 
-- Andrew can substantiate a claimed portfolio change by opening the underlying observations, and see when the evidence permits only an interval-level inference.
-- A stale Bloomberg answer cannot masquerade as a fresh issuer disclosure or create a false no-trade day. A changed source basis cannot silently become a trade.
+- Andrew can substantiate a claimed portfolio change by opening the underlying observations, and sees when the evidence permits only an interval-level inference.
+- A stale Bloomberg answer cannot masquerade as a fresh disclosure or create a false no-trade day. A changed source basis cannot silently become a trade.
+- **Nothing publishes past a failed guardrail** (Andrew, item 10). The pre-publish checks in S9 run before the served file is written; a failed check publishes a page that states what failed, or publishes nothing, never a quietly wrong page.
 - Andrew can compare funds without learning six source formats, while still knowing which source supplied each material figure.
-- A raw field survives collection even if Opal has not yet assigned it a canonical column. Cash, derivatives and unidentified positions are visible rather than dropped to make totals look clean.
-- A top/bottom table says what it ranks, its window and denominator. An AI explanation cites those computed results and does not manufacture returns or manager intent.
-- Daily holdings can land when optional GICS, beta, prices or other enrichment is unavailable. Research requiring those fields visibly remains incomplete.
-- A researcher can derive proposed resource and storage names from LGIC's actual registry and grammar; the bucket placement follows Andrew's explicit direction and the placement metadata agrees with it before production writes.
+- Cash, derivatives and unidentified positions are visible rather than dropped to make totals look clean.
+- A top/bottom table says what it ranks, its window and denominator. An AI explanation cites computed results and does not manufacture returns or manager intent.
+- Daily holdings land when enrichment is unavailable; research requiring those fields visibly remains incomplete.
+- Every S3 address and resource name is LGIC builder output and grades CONFORMANT.
 
 ## PART IV — THE SUBSTRATE: measured findings
 
-### IV.1 — Full issuer holdings are accessible for all six funds
+### IV.1 — Full issuer holdings are accessible for all six funds (locally)
 
-Earlier September 29 captures obtained complete current issuer portfolios. A repeat local HTTP/parser check at **2026-09-29 21:38:52–21:39:04 UTC** returned WCMG 49 rows, GQGU 39, BASG 35, TSEL 29, ETFT 29 and PCLG 29; reported weight totals were consistent with source rounding. TSEL's accompanying full-holdings page now states September 29, while WCMG and ETFT still state September 28. GQGU/BASG requests explicitly targeted September 28; PCLG's file carries a September 28 execution timestamp, which must not automatically become a certified holdings date.
+A repeat local HTTP/parser check at **2026-09-29 21:38:52–21:39:04 UTC** returned WCMG 49 rows, GQGU 39, BASG 35, TSEL 29, ETFT 29 and PCLG 29; weight totals were consistent with source rounding. TSEL's full-holdings page then stated September 29 while WCMG and ETFT still stated September 28. PCLG's file carries an execution timestamp, which must not automatically become a holdings date.
 
-The files expose different semantics. GQGU/BASG share dated FilePoint patterns with fund filtering; TSEL's CSV lacks an internal date; ETFT's download link supplies only a top-ten slice while its page embeds the full portfolio. These require source adapters, not one blind CSV downloader. Source details and links are in S1.
+The files expose different semantics: GQGU/BASG share dated FilePoint patterns with fund filtering; TSEL's CSV lacks an internal date; ETFT's download link supplies only a top-ten slice while its page embeds the full portfolio. These need per-source adapters. **None of the six has been fetched from AWS**; that is the first test (Andrew, item 11). Publication times are unmeasured; a few days of observation settle them (item 12).
 
 ### IV.2 — Historical coverage has been counted, not inferred from request success
 
-The completed census at **2026-09-29 approximately 20:39–20:48 UTC**, ending September 28, found:
+The completed census at **2026-09-29 approximately 20:39–20:48 UTC**, ending September 28:
 
-| Fund | Recommended history route | First report in tested route | Fresh report dates / trading dates in span |
+| Fund | Backfill route | First report in tested route | Fresh report dates / trading dates in span |
 |---|---|---|---|
 | WCMG | Bloomberg Excel BQL | 2026-04-23 | 91 / 109 |
-| GQGU | Issuer archive | 2025-07-14 | 305 / 305 |
+| GQGU | Issuer archive (no Bloomberg holdings) | 2025-07-14 | 305 / 305 |
 | TSEL | Bloomberg Excel BQL | 2024-12-31 | 394 / 436 |
 | BASG | Issuer archive | 2025-06-13 | 324 / 324 |
 | ETFT | Bloomberg Excel BQL | 2025-12-02 | 206 / 206 |
 | PCLG | Bloomberg Excel BQL | 2025-10-16 | 225 / 238 |
 
-Bloomberg fills uncovered dates with older reports. TSEL's longest observed stale interval is 37 trading dates and PCLG's is 12. No daily issuer archive has been established for WCMG/TSEL/ETFT/PCLG. No unavailable days are promised. Source start dates are not synonymous with fund inception. The [full census](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/DAILY_COVERAGE_CENSUS.md) carries the reproducible method and exceptions.
+Bloomberg fills uncovered dates with older reports: TSEL's longest stale interval is 37 trading dates, PCLG's 12. No daily issuer archive has been established for WCMG/TSEL/ETFT/PCLG. Source start dates are not fund inception. The [full census](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/DAILY_COVERAGE_CENSUS.md) carries the method.
 
-### IV.3 — The working Bloomberg channel is installed Excel BQL
+### IV.3 — The working Bloomberg channel is installed Excel BQL, on a logged-in Terminal
 
-Full historical holdings were exercised through Excel's `BQL.Query` with `holdings(...,dates=...)`, preserving `REPORT_DATE`. Raw `//blp/bqlsvc` remained unauthorized even when Excel worked. This supports reusing the working Windows route; it does not support assuming the raw Python BQL service now works. GQGU returned no Bloomberg holdings in the completed census. Date-range queries failed; individual dated queries worked, including multi-fund queries.
+Full historical holdings were exercised through Excel's `BQL.Query` with `holdings(...,dates=...)`, preserving `REPORT_DATE`. Raw `//blp/bqlsvc` remained unauthorized. Date-range queries failed; single-date queries worked, including multi-fund queries. The morning run (`integrations/bloomberg/pipeline/scheduled_daily_pull.cmd`, 8:03 AM ET) runs in the logged-in user's context and does nothing if no one is logged in, so the fallback is available only on days the Terminal is up. Unattended Excel, process cleanup and isolation from the other morning legs still need validation.
 
-The existing morning wrapper already has independently handled ETF legs. It is reusable orchestration, but existing code's broad claims about no backfill do not describe the newly exercised Excel route. Headless unattended Excel operation under the scheduled identity, process cleanup and source fallback still need production validation.
+### IV.4 — Relevant substrate exists
 
-### IV.4 — Relevant producers exist, with different universes and legacy paths
+`lib/trading_calendar.py` is the shared calendar. `lib/research/identity/` is the security identity layer AMGT built: one canonical key `<ROOT>_<CC>_Equity`, a versioned crosswalk, identifiers never guessed as US, alias collisions recorded as UNRESOLVED, every cell carrying MEASURED / INFERRED / UNRESOLVED, and `add_security` registering a new name with one Bloomberg reference-data call, raw response landed first. That is the resolution pattern to reuse for about 200 holdings, many non-US (Andrew, item 13). `data/etfs/scripts/gold/etf_positioning_gold.py` carries the established asset-class, subasset-class and GICS vocabulary.
 
-Read September 29: `integrations/bloomberg/pipeline/etf_constituents_pull.py` targets DIVZ/IDVZ/PFDE/PFOE; `data/etfs/scripts/gold/etf_positioning_gold.py` already builds holdings/book Parquet and uses established asset-class, subasset-class and GICS industry-group semantics. `lib/trading_calendar.py` provides the shared trading calendar. `lib/research/identity/` supplies existing security identity machinery whose fit must be checked before creating a parallel resolver.
+The /daily-sprint cloud run is the serving precedent: a scheduled container Lambda (`infra/aws/lambda/daily_sprint_generator/`) authors with an OpenAI call, renders through the repo's renderer, publishes by day to S3 with read-back, and the gateway's `sprint_view.py` serves `/sprint`, `/sprint/<day>` and `/sprint/archive` (a delimiter listing of day prefixes) behind Entra sign-in and a roster. Its pages live at `s3://opal-data-portal-v2/daily-reports/<DAY>/`. This product copies the pattern with its archive in `opal-data-etfs` instead (Andrew, item 4).
 
-The live `opal-data-etfs` root listing at **approximately 21:35 UTC** contains `bbg/`, `bbg-testpull/`, `silver/`, `gold/`, `daily/`, `platinum/`, `config/` and `snapshots/`. That is evidence of existing substrate, not evidence that the new LGIC layout is deployed.
+`opal-data-etfs` has no S3 event notification configured (read 2026-09-30 ~03:2x UTC), so a new marker trigger overwrites nothing.
 
-The deployed `etfs-netassets-daily` Lambda was read without invocation at **21:39:04 UTC**. Its code contains requests/retry handling, raw capture and TrueShares/Pathfinder collection. Its handler writes data, so it was not used as a read-only issuer probe. Existing cloud collection is prior art; these six sources have not been exercised from Lambda by this research.
+### IV.5 — LGIC already has the placement fix; this product needs one scope row
 
-### IV.5 — LGIC supplies the names; research belongs in its product bucket
+The tier home rule (`infra/logic/registry/tiers.json`) routes a PRODUCT-tenancy scope's bronze and silver to `opal-data-assets`; that is why `address('issuer-site','etfs','bronze',...)` returns `opal-data-assets`. The fix Andrew recalled is live in the registry: the **GENERAL tenancy** (`1675a8f631`, R4 narrowed 2026-09-18) homes every tier, platinum included, in the scope's own bucket; `harvest` and `transcripts` use it. The `etfs` scope must stay PRODUCT, because its bucket also carries client-ownership products.
 
-`org/standards/NAMING_SCHEMA.json` v1.12, `infra/logic/registry/` and `lib/opal_naming.py` are the naming authorities. The existing registry includes `issuer-site`, `bloomberg` and `etfs`; six new vendor tokens are unnecessary. Source identity inside the data still records the actual issuer and endpoint.
+**The fix is one new scope row: `rivalfunds`, tenancy GENERAL, bucket `opal-data-etfs`.** Simulated in memory against the live builder at ~03:5x UTC September 30 (registry file untouched), it derives:
 
-The proposed source-first keys and Lambda/schedule examples in S2 graded CONFORMANT through the canonical grader at **approximately 21:39 UTC**. However, `address('issuer-site','etfs','bronze',...)` and its silver counterpart currently return `opal-data-assets`; the canonical gold address returns `opal-data-etfs/etfs/global/gold/...`.
+| Tier | Builder address |
+|---|---|
+| Issuer bronze / silver | `s3://opal-data-etfs/issuer-site/rivalfunds/{bronze,silver}/holdings/date=...` |
+| Bloomberg bronze / silver | `s3://opal-data-etfs/bloomberg/rivalfunds/{bronze,silver}/holdings/date=...` |
+| Gold | `s3://opal-data-etfs/etfs/rivalfunds/gold/<table>/date=...` |
+| Platinum (served, by day) | `s3://opal-data-etfs/etfs/rivalfunds/platinum/page/date=...` |
 
-The governing rule already places this research in `opal-data-etfs`: `infra/logic/02_DOCTRINE.md` R4 confines the shared `opal-data-assets` route to client/partner custodial information and homes outside research, public information and other general/product data in their own scope's bucket, including bronze and silver. Andrew reaffirmed that distinction on September 29, citing `opal-data-harvest` and `opal-data-transcript` as examples. The ETF composition researched here is outside research, not a client's custodial holdings.
+All graded CONFORMANT with the row present. `etfs-rivalfunds-daily` graded CONFORMANT as EVENT_RULE and SCHEDULE, and `etfs-rivalfunds-daily-lambda` as LAMBDA, at the same time.
 
-All three layers therefore belong in `opal-data-etfs` under the existing policy; this is not a new exception or an open bucket-placement decision. The measured builder result above exposes placement metadata that has not caught up for this research use. Its correction is implementation alignment with R4, preserving LGIC's source-first grammar. R4 also states that existing addresses do not move automatically; this new research layout does not authorize migration of unrelated existing data or reclassification of the bucket's client-ownership products.
+## PART V — WHAT MUST BE TRUE: THE NON-NEGOTIABLE HOPS
 
-## PART V — WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW
+Andrew named these explicitly so no hop is left unowned (item 8). They are requirements, not a sequence or a work allocation; round 1 crosses each once for BASG (O1), later rounds widen to all six.
 
-- Canonical LGIC placement metadata must reflect R4's existing distinction: client/partner custodial assets use `opal-data-assets`; this outside ETF research uses `opal-data-etfs` at every requested tier. Correcting the affected research placement is implementation work, not a policy exception requiring another decision. Key and resource names use the existing registry and builders; existing consumers retain their contracts.
-- Each source must have an exercised date extractor, complete-portfolio check, publication/retry policy and compatible unattended network access. Lambda egress/parser behavior must be checked with real responses before calling it operational.
-- The Windows Bloomberg script needs the installed add-ins, authenticated user context, asynchronous completion handling and ownership-safe Excel cleanup. The morning integration must isolate its status from other legs.
-- Reusable identity, Opal classification vocabulary, GICS reference data, prices/total returns, FX and corporate actions must expose their date basis and coverage. Fund share counts and net assets are needed where analysis claims to adjust for creations/redemptions. Their absence constrains analysis, not raw ingestion.
-- Source selection, corrected vintages, date semantics, unit conventions, allowable nulls and performance definitions must be closed in the subsequent schema/PRD. S3–S7 provide concrete proposals for that decision.
-- The analysis runner must be able to retrieve bounded, versioned evidence and preserve prompt/model/input versions. AI is a consumer of computed tables, not their numeric authority.
+- **H1 — Homes.** The `rivalfunds` scope row lands, and every address and name is builder output. Bronze and silver keep one shape per channel and source; gold is the one master shape.
+- **H2 — Backfill through both channels, ad hoc, from the outset** (item 7). Issuer archives for GQGU and BASG; Bloomberg Excel BQL for WCMG, TSEL, ETFT and PCLG; raw responses land in bronze with requested and report dates. A backfill is QA-class data landing, not production evidence.
+- **H3 — Bronze to silver.** Silver is typed, deduplicated Parquet, every source column and row kept, fired by the bronze batch-complete marker. It also processes bronze that landed before it existed (the H2 backfill), by replay.
+- **H4 — Silver to gold.** `canonical_shape` coalesces every silver shape; the S5 tables derive from it. Prices, total returns, GICS and benchmarks come from Bloomberg (item 13), resolved through the identity layer.
+- **H5 — Gold to served page.** A publisher renders the day's page (charts plus OpenAI analyses from computed tables), writes it to the platinum day prefix with read-back, and the gateway serves `/rivalfunds`, `/rivalfunds/<day>` and `/rivalfunds/archive`.
+- **H6 — Daily run.** `etfs-rivalfunds-daily` fires the issuer collector at 7:00 AM ET from AWS; the 8:03 AM ET Bloomberg leg covers funds still uncovered that Bloomberg carries; the chain runs through the page. Scheduled, never success-of-upstream alone.
+- **H7 — Pre-publish guardrails** (item 10). The S9 checks run before H5 writes the served file.
+
+**Trigger design, proposed for Andrew's review (item 3), detailed in S9:** each stage writes a batch-complete marker when its batch is whole, and the next stage fires on that marker (silver stays event-triggered, per R10). A daily scheduled sweep after the Bloomberg window runs any stage whose input marker has no matching output marker, then publishes the day's page. Every stage is idempotent on its batch id. The schedule makes the page arrive every trading day even when an event is lost, and it is the acceptance run.
+
+Other things that must be true: each source has an exercised date extractor, complete-portfolio check and retry policy, and runs from AWS; the Bloomberg leg initializes its add-ins, handles asynchronous completion, cleans up its own Excel, and isolates its status from the other morning legs; identity, classification, prices, FX and corporate actions expose their date basis and coverage.
 
 ## PART VI — STATUS — NOT OUTCOME-BEARING
 
-As measured on September 29, 2026: local issuer and Bloomberg research captures exist; historical coverage counts are measured through September 28; repeated issuer fetching and parsing completed at 21:38:52–21:39:04 UTC; the deployed collector's bytes and configuration were read at 21:39:04 UTC; naming examples and placement behavior were exercised at approximately 21:39 UTC. Exact local probe timestamps, payload hashes and Lambda code hash are preserved under `.runtime/amgt-reconn-brief-20260929/`.
-
-This brief and the accompanying specification are design deliverables. No new production collector, schedule, table, resource rename or placement-registry mutation was performed for this brief. The current skill invocation does not dispatch work or create an endpoint/PRD.
+As measured on September 29, 2026: local issuer and Bloomberg captures exist; historical coverage is counted through September 28; local issuer fetch/parse completed at 21:38:52–21:39:04 UTC. The rivalfunds scope row is simulated, not landed. Nothing has been built, scheduled or deployed; no issuer has been fetched from AWS; no page exists. Exact probe timestamps and hashes are under `.runtime/amgt-reconn-brief-20260929/` (device-local).
 
 ## PART VII — WHAT THIS BRIEF DOES NOT CLAIM
 
-The research does not establish a source publication SLA, complete historical issuer archives for every fund, AWS accessibility for these six endpoints, measured Bloomberg billing savings, or reliable unattended Excel operation. It does establish public local retrieval and the historical coverage stated above. Bloomberg request avoidance is the recommended design; an exact quota saving is not quantified.
-
-Cross-source equivalence is incomplete: earlier same-date comparisons found a WCMG quantity discrepancy with equal market value, broad BASG equity quantity differences, and cash representation differences. These are unresolved measurement qualifications, not certified trades or corporate-action explanations. Full position-level reconciliation, historical GICS coverage, performance attribution, predictive validity and prompt output quality remain untested.
-
-Backfilled holdings received today do not prove when a historical investor could have known them. Historical analysis must disclose this availability limitation. A live-data candidate thread and eventual daily operations are desired outcomes, not status claims in this brief.
+The research does not establish issuer publication times, AWS reachability of the six endpoints, Bloomberg quota cost, or reliable unattended Excel operation. Cross-source equivalence is incomplete: same-date comparisons found a WCMG quantity discrepancy with equal market value, broad BASG quantity differences, and cash representation differences. These are unresolved qualifications, not certified trades. Position-level reconciliation, historical GICS coverage, performance attribution, predictive validity and prompt quality remain untested. Backfilled holdings received today do not prove when a historical investor could have known them.
 
 ## References for the next consumer
 
-- **BRIEF PATH:** `docs/briefs/etf-holdings-research-20260929.md`
-- **PROJECT:** NONE-YET; new research capability, with existing substrate reused.
-- **EXISTING PRD:** NONE for this six-fund research product.
-- **SIBLING PROJECTS:** ETFS_POSITIONING, ETFS_INGEST, OPAL_BBGTML, LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON, AMGT_RESAPP; potential later AMGT_CORPUS / AMGT_HARVST context.
-- **PRIOR ART:** files and live measurements in IV.1–IV.5; [supporting specification](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/GOLD_TABLES_AND_PROMPTS.md); [Bloomberg access evidence](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/BBG_EXCEL_ACCESS_VERIFIED.md); [daily census](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/DAILY_COVERAGE_CENSUS.md); [Andrew-direct record](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/ANDREW_DIRECT.md).
-- **NAMING AUTHORITY:** `org/standards/NAMING_SCHEMA.json`; `infra/logic/registry/{systems,scopes,tiers}.json`; `lib/opal_naming.py`; `org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md`.
-- **PLACEMENT AUTHORITY:** `infra/logic/02_DOCTRINE.md` R4, narrowed September 18 and reaffirmed by Andrew September 29; the verbatim reaffirmation is in `ANDREW_DIRECT.md` linked above. R4 was checked against the local doctrine at approximately 2026-09-30 00:59 UTC.
-- **MEASURED AT:** each status claim carries its UTC clock in IV and VI; timestamps marked approximately are bounded research-session observations, not server timestamps.
+- **BRIEF PATH:** `docs/briefs/etf-holdings-research-20260929.md` (revision 2)
+- **PROJECT:** NONE-YET; product token `rivalfunds`, pipeline `etfs-rivalfunds-daily`, route `/rivalfunds`.
+- **EXISTING PRD:** NONE.
+- **SIBLING PROJECTS:** OPAL_BBGTML, LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON, ETFS_POSITIONING, AMGT_RESAPP, AMGT_HARVST (identity layer). ETFS_INGEST / `etfs-netassets-daily` is a separate pipeline, named here only so no one conflates them.
+- **PRIOR ART:** [supporting specification](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/GOLD_TABLES_AND_PROMPTS.md); [Bloomberg access evidence](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/BBG_EXCEL_ACCESS_VERIFIED.md); [daily census](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/DAILY_COVERAGE_CENSUS.md); [Andrew-direct record](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/ANDREW_DIRECT.md); /daily-sprint serving: `infra/aws/lambda/daily_sprint_generator/`, `infra/aws/ec2/opal-gateway/app/sprint_view.py`, `daily_reports/scripts/publish_daily_report.py`, `infra/aws/terraform/opal-gateway/daily-reports-iam.tf`; identity: `lib/research/identity/crosswalk.py`, `add_security.py`.
+- **NAMING AUTHORITY:** `org/standards/NAMING_SCHEMA.json`; `infra/logic/registry/{systems,scopes,tiers}.json`; `lib/opal_naming.py`.
+- **PLACEMENT AUTHORITY:** `infra/logic/02_DOCTRINE.md` R4 (narrowed 2026-09-18) and the GENERAL tenancy in `tiers.json`; Andrew's September 29 reaffirmations in `ANDREW_DIRECT.md`.
+- **AUTHORIZATIONS ON RECORD:** OpenAI for the analyses (Andrew, item 4). Bloomberg for backfill and enrichment (items 7, 13); each pull remains subject to Andrew's per-use vendor word.
