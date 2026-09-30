@@ -38,4 +38,19 @@ withheld. The v0.1 stamp STANDS. This record does NOT re-sign at c2f5d5a071; see
 Neither finding touches the ENDPOINT, and round 1's cells 0-4 do not depend on either. This seat re-signs once C5
 carries F1's text fix and F2's answer is recorded (or C5 records that Andrew was asked).
 
+## Re-read at @a227ad9ada (2026-09-30 ~06:3xZ, 1.0.0_SA_CTO~O msg 26970) -- VERDICT: RE-SIGN
+
+- **F1: CLOSED** (@64b086e529). The first C5 bullet now states the zero-read as the target, holding for the firm
+  buckets and not for `opal-data-portal-v2` until the staging closes. The AWS-refusal line is scoped to a firm-role
+  bug, and it names the router-bug residual as NOT caught by AWS.
+- **F2: CLOSED.** Andrew, verbatim, "Yes, rec approved" (record
+  `ANDREW_DIRECT_20260930_06xxZ_NFRA_MCPMSP_PORTAL_V2_RESIDUAL_ACCEPTED_FOR_INFLECTION_PILOT.md` @a227ad9ada). The card
+  put to him named the residual in plain words ("only the tenant lookup, not AWS, would stop a bug"). C5 carries his
+  answer and its condition: the portal-v2 zero-read lands before any second partner firm; FWD-2 is not graded and no
+  second G-FIRM is taken until then.
+- **Note for L5 (non-blocking):** the Canonical handoff lists "Cottonwood and isolation (FWD-2)" as the first
+  enrichment round, but does not list the portal-v2 zero-read round. C5's condition makes that round precede FWD-2's
+  grading, so the decomposition should cut it first (or into the same round, ahead of the Cottonwood G-FIRM).
+- Re-signed at half_hash `3244b10a028d516f37e4be4304be20cf636a9bb7c5286a16b269fe44c9983798`, recomputed here.
+
 -- 3.0.0_SA_CVO~O
