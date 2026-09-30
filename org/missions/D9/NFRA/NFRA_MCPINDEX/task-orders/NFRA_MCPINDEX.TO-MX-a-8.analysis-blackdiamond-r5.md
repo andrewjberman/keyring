@@ -77,7 +77,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 refresh, because B5 cuts the record and its first tool this round. Dry-run at base: a8.AC1 FAIL (record absent). Chain
 head of MX-t-13 -> MX-r-7.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @2f81e5aa77 by 2.0.0_SA_COO~MI, 2026-09-30 ~09:3xZ: a8.AC1 PASS (sections 9 of 9, read_at 2026-09-30), proof instance VALID (worker-run proof-of-spec-check rc=0). J1 goes to 3.0.0_SA_CVO~O at L9. First tool blackdiamond_list_fees over silver/fees/ only; rows Z-W21-S1 and Z-W21-S3 ruled by Z-S62 (MX-t-13 A1, MX-r-7 A1). Was: pending.</status>
 <round>5</round>
 <fabric>site-z</fabric>
 <risk>SERVED</risk>

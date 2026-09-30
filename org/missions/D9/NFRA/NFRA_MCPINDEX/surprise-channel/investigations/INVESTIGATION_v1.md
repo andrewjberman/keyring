@@ -3463,6 +3463,32 @@ carries none.
       ]
     },
     "notes": "ARMED: if the unnamed writer stops, silver/fees goes stale while nothing pages (no monitor by moratorium) and blackdiamond_list_fees would serve an old as_of; its answer envelope states as_of so the staleness is visible to the caller, not to an operator. Disarm: name the writer before the MX-r-7 release, or accept the fees leg as unattributed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S62",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T09:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W21-S1",
+      "NFRA_MCPINDEX-Z-W21-S3"
+    ],
+    "one_line": "RULES worker ~21's two ARMED rows at the MX-a-8 drain (@2f81e5aa77): Z-W21-S1 is DISARMED by MX-t-13 A1 and MX-r-7 A1 -- the integration id is blackdiamond, the tool prefix blackdiamond_, the first tool blackdiamond_list_fees (C3-valid; bd is refused in every slot); Z-W21-S3 is DISARMED by MX-r-7 A1 -- no BD tool is served before r-7's PHASE A names the silver/fees writer from a read-only trace or states it unattributed for the never-widen halves.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/systems.json read 2026-09-30: key blackdiamond, class VENDOR; no key bd.",
+        "task-orders/NFRA_MCPINDEX.TO-MX-t-13.bd-first-tool.md AMENDED A1 and NFRA_MCPINDEX.TO-MX-r-7.bd-release.md AMENDED A1, this commit.",
+        "round5/checks/r5_probe.py t13, t13.AC1.sh, t13.AC2.sh, r7.AC2.sh amended to blackdiamond in this commit; t13.AC1 re-dry-run at base FAIL (registry names blackdiamond=False)."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "S1's hazard (a bd_ name refused at registration) cannot occur once the order names blackdiamond_. S3's hazard (a stale fees leg served) cannot reach a caller before MX-r-7, which now carries the writer's attribution into the halves; the tool's as_of also shows staleness to the caller.",
+    "notes": "The analysis record's other findings (empty 09-28/09-29 transaction workbooks, no proceeds/gain column in silver/realized, bd_assets_dim last_seen_trade_date 2026-04-13) do not touch the first tool's fence and go to the round-5 L10 slug."
   }
 ]
 ```

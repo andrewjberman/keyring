@@ -1,4 +1,4 @@
-# NFRA_MCPINDEX task order -- `MX-r-7` -- the Black Diamond release: its reader role applied, `black_diamond` enabled, then a live answer per tool class (r7.J1, FWD-4)
+# NFRA_MCPINDEX task order -- `MX-r-7` -- the Black Diamond release: its reader role applied, `blackdiamond` enabled, then a live answer per tool class (r7.J1, FWD-4)
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
@@ -24,7 +24,7 @@ The issuer continues you with this order.
 Follow MX-r-6's order exactly (`org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-r-6.schwab-enable-release.md`,
 PHASE A and PHASE B), with these differences:
 1. The release is cut at the commit MX-r-6 left live, read by content, and cherry-picks MX-t-13's gateway commits.
-2. `deploy-to-ec2.sh:197` gains exactly `black_diamond`, giving 7 ids.
+2. `deploy-to-ec2.sh:197` gains exactly `blackdiamond`, giving 7 ids.
 3. The saved `terraform plan` must CREATE only the Black Diamond reader role and its policy, plus the gateway role's
    permission to assume it. Any other planned change is a BLOCKING row.
 4. `ANNOUNCE_MX-r-7.md` carries the pin, census, plan, tool-count delta and MX-a-8's read fence beside the role's
@@ -33,6 +33,11 @@ PHASE A and PHASE B), with these differences:
    the delta. Roll back on any failed leg.
 6. **r7.J1's material, after the deploy.** The ISSUER asks the first tool's question class through a principal session.
    You record in-process on the deployed tree which tools the host lists and what discover names for that question.
+
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-30 ~09:3xZ), ruled by row Z-S62:** the integration id is `blackdiamond` (row
+Z-W21-S1), and r7.AC2 reads it. PHASE A's ANNOUNCE also NAMES THE WRITER of `s3://opal-data-bd/silver/fees/` (row
+Z-W21-S3) from a read-only trace, or states it unattributed with what was read, so the never-widen halves see it.
+Graded by: no gate limb graded this modification.
 
 ## 2. BOUNDS
 
@@ -45,7 +50,7 @@ PHASE A and PHASE B), with these differences:
 <paths>
 infra/aws/ec2/EC2_MANIFEST.json
 infra/aws/ec2/opal-gateway/**
-infra/aws/terraform/opal-gateway/bd_reader_iam.tf
+infra/aws/terraform/opal-gateway/blackdiamond_reader_iam.tf
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-r5-bd-release.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~21/**
