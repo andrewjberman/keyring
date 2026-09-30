@@ -3540,6 +3540,49 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Instance expect field differs from the TO text only by regex escaping; the check scripts were not edited."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W74-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~74",
+      "surfaced_at": "2026-09-30T09:10Z",
+      "one_line": "The TO's AC3 <expect> '0 failed' is not a string pytest prints when nothing fails (the summary reads '298 passed'), so the literal AC3 invocation cannot itself produce the expected token.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AC3 invocation `python -m pytest lib/research/harvest/tests/ lib/research/api/tests/test_timeline_routes.py -rA --tb=line` with expect '0 failed', and 'prints the base and after counts'.",
+      "world_is": "The literal command exits 0 with the summary line '298 passed in 10.16s' and no 'failed' token; it also prints no base count. A helper scripts/q5_ac3_base_and_after.py runs the same command at the pinned base ff4405d3d5 (git archive extract; it also needs infra/logic, org/standards and integrations/bloomberg from the base) and at HEAD and prints 'base: 293 passed, 0 failed', 'after: 298 passed, 0 failed', '0 failed'. The instance records the literal pytest line and the helper output together.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~74/q5_ac3_after_output.txt: last line '298 passed', 0 lines starting FAILED",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~74/q5_ac3_output.txt: BASE ff4405d3d5: 293 passed; AFTER HEAD: 298 passed; 0 failed"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Base 293 + the 5 new q5 tests = after 298. The helper edits nothing in the repo."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W74-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~74",
+      "surfaced_at": "2026-09-30T09:10Z",
+      "one_line": "AC2 names no securities input; the local build_daily used the 191-security universe file of the round-26 daily rebuild (0.9.0_WK_AMGT_HARVST~46/securities.universe.json), not the 6-security ~4 file that carries Lenovo's sa_symbol.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AC2: a LOCAL in-memory build_daily over the current gold inputs; the securities set is not named.",
+      "world_is": "build_daily(securities, as_of) needs the securities list. The last production chatter_daily put (i3_act_build_daily_output.txt: 191 securities, 272 days) used ~46's securities.universe.json, whose 992_HK_Equity row has no sa_symbol. The local build over it gives 52,143 rows (191 x 273) and 992_HK_Equity 2026-02-12 covered=['bbg'] found=['sa', 'wsj'], data_status PARTIAL, articles_total 2; 271 rows (67 securities) have found not a subset of covered. A different securities file could move the covered side only through sa_symbol matching.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~74/q5_ac2_output.txt: 'DAYS where found is not a subset of covered: 271 of 52143 rows (67 securities)'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Input choice recorded so a rerun reads the same file; nothing was written to S3."
     }
   ]
 ```
