@@ -270,7 +270,8 @@
    "DUPLICATE_ACCOUNT",
    "MASTER_CONFLICT",
    "STRATEGY_CONFLICT",
-   "TRANSFER_UNRESOLVED"
+   "TRANSFER_UNRESOLVED",
+   "FIRM_UNRESOLVED"
   ],
   "membership_date_status": [
    "OBSERVED_TRADED",
@@ -381,7 +382,9 @@
    "reason_codes",
    "supersedes_observation_id",
    "membership_date_basis",
-   "membership_source_event_id"
+   "membership_source_event_id",
+   "firm",
+   "value_basis"
   ],
   "observation_key": "SHA-256 of canonical JSON containing full account key, valuation date, source versions/hashes, workbook snapshot, observed Traded-history event/correction version and basis version; omit ingestion clock and run UUID so retries are stable.",
   "gold_partition_axis": "knowledge_date",
@@ -420,7 +423,10 @@
    "unresolved_accounts",
    "reason_codes",
    "correction_pending_since",
-   "last_complete_date"
+   "last_complete_date",
+   "measured_aua",
+   "workbook_stated_aua",
+   "workbook_stated_accounts"
   ],
   "wire_privacy": "Aggregate counts/status/date only. No account identifiers, names or row-level evidence in ordinary category JSON or the portal.",
   "member_id": "tax",
