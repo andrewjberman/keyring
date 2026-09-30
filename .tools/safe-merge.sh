@@ -308,19 +308,19 @@ if ! git merge --no-commit --no-ff "$BRANCH"; then
   # its files under the draining seat's name (2751f0be77 carried 0.7.0_AE_CloudOps~A's NEVER-2
   # entry). A merge can only stage a path whose two sides differ, so bound the snapshot by
   # `HEAD..MERGE_HEAD` and name anything outside it now, while nothing has landed.
-  _MINE="$(git diff --name-only HEAD MERGE_HEAD 2>/dev/null | LC_ALL=C sort -u)"
-  : > "$STATE"
-  _PEER=0
-  while IFS= read -r _p; do
-    [ -n "$_p" ] || continue
-    if printf '%s\n' "$_MINE" | grep -Fxq "$_p"; then
-      echo "$_p" >> "$STATE"
-    else
-      [ "$_PEER" -eq 0 ] && echo "safe-merge: WARN -- path(s) staged in the shared index that THIS MERGE could not have staged (another seat's; left OUT of the conflict state, so --continue will refuse them until unstaged):" >&2
-      echo "              $_p" >&2
-      _PEER=$((_PEER+1))
-    fi
-  done < <(git diff --cached --name-only 2>/dev/null)
+  # File-based set arithmetic, NO pipe into `grep -q`: under this script's `set -o pipefail`,
+  # `printf <2000+ paths> | grep -Fxq` SIGPIPEs the writer on an early match and the pipeline
+  # reads FALSE -- the first version of this block (ccf2a27c6b) flagged 680 of a merge's own
+  # paths as foreign on the first real drain it met.
+  git diff --name-only HEAD MERGE_HEAD 2>/dev/null | LC_ALL=C sort -u > "$STATE.mine" || true
+  git diff --cached --name-only 2>/dev/null | LC_ALL=C sort -u > "$STATE.cached" || true
+  LC_ALL=C comm -12 "$STATE.cached" "$STATE.mine" > "$STATE"
+  _PEERS="$(LC_ALL=C comm -23 "$STATE.cached" "$STATE.mine")"
+  if [ -n "$_PEERS" ]; then
+    echo "safe-merge: WARN -- path(s) staged in the shared index that THIS MERGE could not have staged (another seat's; left OUT of the conflict state, so --continue will refuse them until unstaged):" >&2
+    printf '%s\n' "$_PEERS" | sed 's/^/              /' >&2
+  fi
+  rm -f "$STATE.mine" "$STATE.cached" 2>/dev/null || true
   git diff --name-only --diff-filter=U >> "$STATE" 2>/dev/null || true
   echo "$BRANCH" > "$STATE.branch" 2>/dev/null || true
   echo "safe-merge: *** CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED. ***" >&2
