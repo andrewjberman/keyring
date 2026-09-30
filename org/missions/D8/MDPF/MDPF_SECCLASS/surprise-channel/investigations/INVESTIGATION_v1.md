@@ -35,6 +35,81 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
 ```
 
 ```json
+[
+{
+  "id": "MDPF_SECCLASS-W3-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~3",
+  "surfaced_at": "2026-09-29T22:15Z",
+  "one_line": "SC1-t1-AC2's own check (PLACED) and SC-k-1's check (PINNED) both assume GLD, PHYS and VXX already carry canonical etf-classifications rows; PHYS does not, so AC2 fails on real data as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (SC-k-1's backfill PINS PHYS as already-present and so will never write it; the round needs an owner to seed PHYS's row, or the PLACED/PINNED checks amended, before AC2 can pass on live data)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb get-item etf-classifications ticker=PHYS, region us-east-1, 2026-09-29 ~22:0xZ: no Item; a full ProjectionExpression=ticker scan of all 344 rows confirms PHYS absent while GLD and VXX are present",
+      "aws dynamodb get-item bd-securities ticker=PHYS, 2026-09-29: Item present, asset_class=alternatives, sub_asset_class=Gold, classified_by=gpt-4o-mini, last_updated 2026-04-09 -- PHYS was AI-classified into the OLD table and never carried into the canonical one",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_CHECKS/r1_bd_resolution_census.py:16 PLACED={'GLD':('commodities','Metals'),'PHYS':('commodities','Metals'),'VXX':('structured','Hedge')}; r1_backfill_census.py:8,19 'GLD, PHYS and VXX already have rows' / PINNED={'GLD','PHYS','VXX'}",
+      "s3://opal-data-bd/gold/holdings_lots/2026-09-25.parquet (the day E_18 reads): 2 open lots ticker=PHYS, asset_name='SPROTT ASSET MANAGEMENT LP PHYSICAL GOLD TR' -- PHYS is a real, currently-held BD security, not a hypothetical",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_BD_RESOLUTION_CENSUS_20260929.json@(this commit): PHYS move before={'asset_class':'alternatives','sub_asset':'Gold'} after={'asset_class':'','sub_asset':''}; python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_CHECKS/r1_bd_resolution_census.py -> 'NOT-CENSUSED: PHYS lands {...}, placed (commodities, Metals)' rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC1-t1-AC2's check (r1_bd_resolution_census.py PLACED) and SC-k-1's check (r1_backfill_census.py PINNED) both assert GLD, PHYS and VXX already carry canonical etf-classifications rows.",
+  "world_is": "etf-classifications (344 rows, live scan 2026-09-29) carries GLD and VXX but not PHYS; PHYS exists only in the legacy bd-securities table. The library built for SC-t-1 reads the canonical table faithfully (no fold, no guess) and correctly reports PHYS UNCLASSIFIED, which the AC2 check refuses because it was written assuming PHYS already resolves.",
+  "notes": "Not a defect in the library under test: classify('PHYS') answering '' is exactly SC-t-1's spec (a holding the table lacks is unclassified, by name, never a guess). The mismatch is between the two checks' shared assumption and the table's measured contents. AC2 is recorded FAIL against this order's own invocation per the refusal clause -- the census JSON itself is honest and complete."
+},
+{
+  "id": "MDPF_SECCLASS-W3-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~3",
+  "surfaced_at": "2026-09-29T22:15Z",
+  "one_line": "Removing layers 2-4 (SC-t-1's build item 2) drops the private _ticker_map/_name_map attributes that data/black_diamond/scripts/silver/build_bd_assets_dim.py:156 reads directly for a diagnostic print, so that reader now raises AttributeError on its very next real run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (build_bd_assets_dim.py is explicitly a read-only reader of this cell and moves in SC-t-2/SC-t-3 of this worker's own queue -- the fix belongs there, before this LOCAL-only build is ever deployed)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/silver/build_bd_assets_dim.py:156 (HEAD @c1e9b60e63): print(f'  {len(clf._ticker_map):,} tickers, {len(clf._name_map):,} name aliases loaded', flush=True) -- the only external reference to these two private attributes in the estate (comp-find '_ticker_map|_name_map' data/black_diamond, SURFACED=17, single external hit)",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py (this commit): the rewritten ETFClassifier wraps the shared etf-classifications client and carries no _ticker_map/_name_map attribute -- the task order's Build item 2 scopes the kept public API to instance/classify/get_sub_asset_class/resolve_ticker only, none of which is this private pair"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BOUNDS: 'Readers are read-only here... move in the next orders of your queue (SC-t-2, SC-t-3)', and Build item 2's kept-API list names only instance/classify/get_sub_asset_class/resolve_ticker.",
+  "world_is": "build_bd_assets_dim.py's apply_blend() reads clf._ticker_map and clf._name_map directly (not through the kept public API) one line after instantiating the new classifier, so it raises immediately rather than degrading gracefully. No production impact today -- this order is LOCAL build + record only, no upload, no deploy -- but the next deploy of this file breaks that reader until SC-t-2/SC-t-3 lands.",
+  "notes": "Not fixed here: build_bd_assets_dim.py is outside this order's <paths> write grant."
+},
+{
+  "id": "MDPF_SECCLASS-W3-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~3",
+  "surfaced_at": "2026-09-30T02:30Z",
+  "one_line": "D_04.client_portal_summary.py has a FOURTH classify site the cell's reader list did not name -- build_advisor_positions's _classify_ticker (:2766) -- whose positions[] items still lack the canonical class/sub-class/class_source fields SC-t-3 adds everywhere else in this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (a future round-1 enrichment can route build_advisor_positions through the same _classify_with_canonical helper this cell added, or the issuer can rule the frozen ADVI_49EXEC.md Section 4.5 wire contract out of scope entirely)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The cell's own reader list names exactly three classify sites: D_03.classify_series (:116), D_04._classify near :1235, and C_06 generally -- build_advisor_positions's _classify_ticker (D_04.client_portal_summary.py:2766, pre-cell line number) is a distinct closure the cell text does not mention",
+      "build_advisor_positions's docstring names a FROZEN wire contract (PRD ADVI_49EXEC.md Section 4.5, with explicit 'CTO redlines' on the exact field list): {ticker, security_name, asset_class, market_value, cost_basis, unrealized_gain, unrealized_gain_pct, pct_of_advisor_aum, account_count, lot_count, first_acquisition_date, last_acquisition_date, oldest_lot_holding_days} -- adding fields here is a different governance surface than the composition/summary/timeseries artifacts this cell's BOUNDS grants",
+      "This worker's own new helper, D_04._classify_with_canonical (added this cell, near line 152), is reused by build_account_summaries (the named :1235 site) but NOT by build_advisor_positions, which still calls its own local _classify_ticker returning a single coarse string"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build item 1: 'D_03, D_04 and C_06 carry each holding's canonical class and sub-class, plus a class_source' -- read at the FILE level, this covers every classify site in D_04.",
+  "world_is": "platinum/advisors/{id}/positions.json's positions[] carry only the coarse asset_class (equity/fixed_income/alternatives/cash/other); GLD/PHYS/VXX (and every other moved ticker) show their new canonical class everywhere else this cell touches, but not on this one served artifact.",
+  "notes": "Not fixed here: the cell's own reader enumeration stops at three named sites, and build_advisor_positions serves a separately-governed frozen wire contract (ADVI_49EXEC.md) this order's BOUNDS does not name. Referenced from this cell's own never-widen half (NEVER_WIDEN_HALF_REQUEST_SECCLASS_BD_THREAD_20260929.md, Blast radius section 2) as a known gap."
+}
+]
+```
+
+```json
 {
   "id": "MDPF_SECCLASS-W2-S1",
   "project": "MDPF_SECCLASS",
