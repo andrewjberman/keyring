@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.4",
+  "prd_version": "v0.5",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -748,8 +748,10 @@ key for research, Andrew 2026-09-22).
 applied here.
 
 **`C-HV-RANK-DECLARED-SET` (v0.4, FWD-7's denominator).** The chatter rank is a partial rank over a DECLARED publisher set.
-- Each generation declares its publisher set. A publisher that refused for the whole universe in the window is not in the set,
-  and the page names it as not searched.
+- Each generation declares its publisher set. **It is DERIVED, never typed:** every publisher in `ENABLED_PUBLISHERS`, minus any
+  publisher whose collection refused for the whole universe in the window (read from the run records). A publisher outside the
+  set is named on the page as not searched. (v0.5: the set is the publishers ENABLED for the universe, not the publishers
+  OBSERVED covering someone. A per-name trial run, such as sa on ASML, neither adds a publisher nor keeps one out.)
 - A name is ELIGIBLE only if every publisher in the declared set covered every day of the window. Any other name is EXCLUDED
   with its reason (`PARTIAL_COVERAGE`, `NOT_SEARCHED`) and is never scored.
 - Eligibility is decided BEFORE the no-signal test. An unsearched name is never read as a quiet one.
