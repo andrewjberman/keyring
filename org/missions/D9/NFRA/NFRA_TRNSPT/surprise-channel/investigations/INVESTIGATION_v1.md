@@ -723,6 +723,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The seating lint counts a seat instance's open orders across projects.",
     "world_is": "It truncates a project code containing an underscore, so every NFRA_* project's workers look like one seat; if the lint is armed to ENFORCE it will refuse every such issuance."
+  },
+  {
+    "id": "NFRA_TRNSPT-S13",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-30T22:20:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "A byte-exact recording of a real message is not reliably available to this seat: the harness persists a gateway read_email result to a file only when it is very large (the two saved samples were 55,763 and 72,569 bytes), and the two admissible candidates read this round came back INLINE (about 40 KB and 22 KB), so they reach this seat only as model context, which is not 'exactly as received'.",
+    "disarm_owner": "1.0.0_SA_CTO (routing: the byte-exact bronze landing of a real admitted message rides site Z's headless mail route, item 5 of the relay; until then FWD-7's real run is a LOCAL measurement, never a bronze write)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gateway read_email on candidate n=74 (2026-08-11, admitted: author sender, client recipients, application/pdf 585,757 bytes, body 'Attached is the YC report') and n=14 (2025-11-06, PDF 586,762 bytes): both returned inline at 2026-09-30 21:3xZ-22:1xZ",
+        "C:/Users/AndrewBerman/Desktop/NFRA_TRNSPT_SAMPLE_LOCAL/idx_25_rawtool.json (72,569 bytes) and idx_36_rawtool.json (55,763 bytes): the only harness-persisted read_email outputs; both are near-misses (no PDF)",
+        "decomposition round 2, 'The issuer's real runs at close' item 1 foresaw this branch: 'or states that the byte-exact recording waits on site Z's headless mail route'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO analysis ruling 3b: a real run lands ONE message the criterion admits, its silver read by the two named readers.",
+    "world_is": "The admitted message exists and is identified, but the only byte-exact path to it from this laptop is the unbuilt headless mail route; bronze must not receive a model-relayed copy.",
+    "notes": "The round-1 near-miss pair stays the only byte-exact real input."
   }
 ]
 ```
