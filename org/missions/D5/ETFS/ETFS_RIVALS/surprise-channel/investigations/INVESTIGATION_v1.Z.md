@@ -1156,6 +1156,50 @@
       ]
     },
     "notes": "Round 3 or the CTO can move any of the four; each is a constant or a short block."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T22:37Z",
+    "one_line": "The face says a failing fund is marked not-updated and the rest publish, but is silent on the publish-page status and batch marker when some funds are not-updated; chosen: a fund with no G1 rows is not-updated without being a failed check (status OK, marker written), a failed check or no fund with data at all is PARTIAL with no marker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Face 1b.3: 'a fund with no G1 for the day is not-updated with its reason; the rest publish'; W1-S8: a home fund with no G1 data reads data-status=not-updated with a clear data-reason, never silently missing.",
+    "world_is": "publish_page.handler_entry returns OK and writes the publish-page marker when every fund WITH data passes its checks, however many funds have no data (13 funds of the map, 2 home funds with no home-producer reader: they are not-updated with data-reason 'home-producer reader: next round' and listed in detail.funds_not_updated and the manifest's funds block, kind no_data). It returns PARTIAL with no marker when a fund with data fails a check (kind failed) or when NO fund has data. Round 1's p-1.AC1 (bound into u-1.AC3) requires status OK with one fund of 13 having data, so a no-data fund cannot count as a failed check. An added event key plant_fund limits plant_failure to one fund (the H7 exercise per fund); an unknown plant_fund is FAILED with nothing written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py handler_entry: agg_failed from guardrails.rollup over per_fund (funds with data only); _no_data_view carries the reason",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round1/checks/p-1.AC1.py: 'publish status OK' with BASG the only fund with data",
+        "data/etfs/scripts/rivalfunds/tests/test_p2_page_grouped_by_fund.py test_a_fund_with_no_data_is_not_a_failed_check_and_the_page_still_marks_its_batch"
+      ]
+    },
+    "notes": "If the sweep or a later round wants a no-data rival to hold the marker, it is one line in publish_page (count kind no_data non-home funds as failed); RIV-d-3 reads the marker as 'page written' today."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T22:37Z",
+    "one_line": "Round 1's p-1 checks (p-1.AC1, p-1.AC2; p-1.AC1 is bound into u-1.AC3) require the literal strings id=\"trades\" and id=\"holdings\" once each, trades first, and no id=\"trades\" on a planted failure, so the grouped page wraps every fund block in ONE trades section and ONE holdings section instead of giving each fund its own.",
+    "spec_asserts": "Face 1b.1: one section per group with data-group, each fund block with data-fund; 'the trade-first lead and the six guardrails stand'.",
+    "world_is": "Layout: <section id=\"trades\"> holds every group (data-group) and every fund block (data-fund, data-role, data-status[, data-reason]) with its trades, excluded counts and calendar; <section id=\"holdings\"> holds one <details data-holdings-of=TICKER> per updated fund; <section id=\"status\"> holds the funds table and the rolled-up checks. When no fund is updated the lead section is id=\"not-updated\" (no trades or holdings section), which p-1.AC2 requires. Two threshold keys were added to guardrails_config.json, both PROVISIONAL: calendar_days_shown 20 and canonical_dates_scanned 12 (trade_rows_cap is now per fund). test_p1_page_and_guardrails.py was edited for the new contract (data-status updated, the status block's absences, the input kinds).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round1/checks/p-1.AC1.py: html.find('id=\"trades\"') < html.find('id=\"holdings\"')",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round1/checks/p-1.AC2.py: 'id=\"trades\"' not in html on the planted page",
+        "data/etfs/scripts/rivalfunds/render.py render_page"
+      ]
+    },
+    "notes": "The round-2 checks p-2.AC1 and p-2.AC2 constrain only data-group / data-fund / data-role / data-status / data-reason / data-calendar / data-source / data-excluded-*, so the wrapper choice is mine; a per-fund id scheme would need p-1.AC1 and p-1.AC2 amended by the issuer."
   }
 ]
 ```
