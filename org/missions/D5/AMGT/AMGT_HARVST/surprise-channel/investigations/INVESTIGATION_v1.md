@@ -4091,6 +4091,97 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Two of the three pages are two different p1 queries of the same search, so the 17 counts a story id twice where both pages list it; per-page counts are printed, not deduplicated."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T14:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W81-S7",
+      "one_line": "For sa, ft and bbg the saved-session file is NEWER than the Secrets session, so 'the Secrets session first' starts a job from the OLDER token and is likely to draw the 401 (and a sign-in) this cell exists to avoid.",
+      "spec_asserts": "Order section 1 change 5(b): a job starts from the stored token of a prior successful run -- the Secrets session for ft, sa and bbg, the saved-session file for wsj and barrons.",
+      "world_is": "The token-source census (ab1b_ac2_output.txt section 6, names and mtimes only): Secrets session last changed sa 2026-09-10 (seeking-alpha/session), ft 2026-09-10 (astn/ft/session), bbg 2026-09-11 (bloomberg/session); the collector's saved-session file mtime is sa 2026-09-26, ft 2026-09-15, bbg 2026-09-30 (UTC). The saved file is rewritten by persist_http_cookies after each job (rotated cookies) and by every sign-in, the Secrets session only by a harvester park, so it is the later token by 5 to 19 days. TokenFirstSessions._stored_envelope follows the order as written (Secrets first, the file only when Secrets holds none). A bbg sign-in is a browser harvest with a challenge.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1b_ac2_output.txt section 6 (census lines for sa, ft, bbg: Secrets 'changed' date against saved-session file 'mtime')",
+          "lib/opal_data_harvest/sessions.py TokenFirstSessions._stored_envelope",
+          "lib/opal_data_harvest/auth.py SessionManager.persist_http_cookies (vault.save after each job)"
+        ]
+      },
+      "notes": "Not decided here. If the issuer wants the freshest of the two, _stored_envelope compares the Secrets secret's LastChangedDate with the file mtime (one describe_secret, no value read) and takes the newer; it is a local change inside sessions.py. Armed against the first batch that collects from sa, ft or bbg (ab-3)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T14:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W81-S8",
+      "one_line": "The worker reads the sign-in credentials from Secrets as a presence check and a recorded secret name; the harvester scripts (outside <paths>) read the same secret again themselves, because no credential value is passed to them.",
+      "spec_asserts": "Order section 1 change 5(a): a sign-in reads its publisher's credentials from Secrets Manager; none is typed or prompted for.",
+      "world_is": "The sign-in itself is the canonical harvester subprocess or module (auth.SessionManager._refresh -> dowjones_harvest_session.py / harvest_local_session.py under org/tier1_exec/4.0.0_SA_CRO/scripts/), which already reads its credentials from Secrets by name (dowjones/credentials, astn/ft/credentials, seeking-alpha/credentials, google/andrew-goldengate/credentials). Those files and auth.py are outside this order's <paths>. TokenFirstSessions.refresh therefore reads the credentials (credentials.SecretsReader.read_credentials), refuses the sign-in with AccountUnavailable when the secret is unreadable, records the secret NAME, and hands the values to an injectable signin(publisher, credentials); the default signin calls SessionManager.refresh, which re-reads. A value is not passed through argv or the environment, to keep it out of process listings and logs.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/sessions.py TokenFirstSessions.refresh",
+          "lib/opal_data_harvest/credentials.py CREDENTIAL_SECRETS / SecretsReader.read_credentials",
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/dowjones_harvest_session.py CREDENTIAL_SECRET (:18) and get_secret_value (:37)"
+        ]
+      },
+      "notes": "Two reads of one secret per sign-in; the second is the harvester's own. Collapsing them needs a harvester edit (outside this order)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T14:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W81-S9",
+      "one_line": "The 'invalid session' 403 markers are the worker's own list: the order names the class ('a 403 whose kept body says the session is invalid') but no recorded body, and the runtime history holds none.",
+      "spec_asserts": "Order section 1 change 5(d): a 403 whose kept body says the session is invalid, persisting after backoff, marks the token expired.",
+      "world_is": "The runtime history (148 run files in .runtime/opal-data-harvest/runs/, events.jsonl): 0 jobs kept a rejected_response body, 0 http events with status 429, and 401/403 events only as bbg 403 x15, ft 403 x2, barrons 401 x5. So no invalid-session 403 body is recorded to match, and no 429 has been seen on this runtime. transport.INVALID_SESSION_MARKERS is therefore a conservative guess (invalid session, session expired, not logged in, login required, ...); a 403 matching none of them stays RequestRejected as before, and a challenge body always keeps its repair path.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/transport.py INVALID_SESSION_MARKERS",
+          "count over .runtime/opal-data-harvest/runs/*.json (148 files, rejected_response present in 0) and events.jsonl (http status 429 in 0, 401 in 5, 403 in 17)"
+        ]
+      },
+      "notes": "Inert until a real invalid-session body is kept; the marker tuple is one line to correct then."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T14:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W81-S10",
+      "one_line": "A non-challenge 401 now raises AuthExpired (a sign-in) after one wait, where the base raised RequestRejected (cooldown 900, no sign-in); the RequestRejected docstring and the q6 mutant anchor still carry the old wording.",
+      "spec_asserts": "Order section 1 change 5(d): only a 401, or a 403 with an invalid-session body, that persists after backoff marks the token expired.",
+      "world_is": "transport.PacedSession.get retries a 401 auth_confirm_retries times (default 1) with backoff, then raises AuthExpired, so worker.run_job's existing AuthExpired branch signs in ONCE (attempt 0), then auth_failed_after_refresh with a 3600 s cooldown on a second. The base classified every non-challenge 401/403 as RequestRejected ('not evidence the session expired'); that docstring in transport.py is left as written. test_q6_barrons_guard_ft_body.py mutates the exact line 'rejected = self._rejected_response(response, kwargs)' in transport.py, so that line is kept verbatim in _resolve. Recorded barrons history has 5 http 401 events, which under the new code would each reach a sign-in after one wait unless they carry a challenge body.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/transport.py PacedSession.get / _resolve",
+          "lib/opal_data_harvest/test_q6_barrons_guard_ft_body.py BODY_ATTACH (:280)",
+          "lib/opal_data_harvest/worker.py except AuthExpired branch"
+        ]
+      },
+      "notes": "The change is the order's own; filed because it moves a class (RequestRejected -> AuthExpired) that a docstring and a neighbouring test describe."
     }
   ]
 ```
