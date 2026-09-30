@@ -2216,3 +2216,36 @@ the output, 2 of 9 FWDs REALIZED. Series **`p`**; slots **`~66`..`~69`**.
 - the 190-name backfill;
 - the bbg silver rebuild (round 28);
 - the schedule (Andrew's).
+
+## 40. ROUND 28 -- L5 DECOMPOSITION v3.7, over the round-27 analysis (`ledger/ROUND_ANALYSIS.round27.md` @8c0b34526b)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~09:5xZ.
+- Round 27 is CLOSED, 2 of 9 FWDs REALIZED. PRD v0.5: the declared set is derived from config.
+- Series **`aa`** (every single letter is used); slots **`~76`..`~80`**.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 reach from cached listings + the rejected-key hold | `HVST-aa-1` | LOCAL | `~76` | now |
+| 2 fresh-day span-bearing Lenovo run + the daily rebuild serving `publishers_found_codes` | `HVST-aa-2` | WORLD, under a pair plus R-21 | `~77` | after `aa-1` merges, on a fresh UTC day (>= 2026-10-01); the pair is signed against the merged code |
+| 3 the served bbg silver rebuild on `q-2`'s parse | `HVST-aa-3` | WORLD, under a pair | `~78` | after the CTO rules the 11 hash-keyed rows' fate (carded ~09:43Z); does not overlap `aa-2` |
+| 4 the declared set derived from `ENABLED_PUBLISHERS` minus universe-wide refusals | `HVST-aa-4` | LOCAL | `~79` | now |
+| 5 the pre-run listing-page print over the 190 names (`C-HV-EGRESS`) | `HVST-aa-5` | LOCAL, no request | `~80` | now |
+
+**Fan-out: 5 of 5 cut.**
+- `aa-1`, `aa-4` and `aa-5` start now.
+- `aa-2` follows `aa-1` and a fresh day.
+- `aa-3` follows its ruling.
+- N = 5 slots; cap 8.
+
+**Write sets:**
+
+| order | owns |
+|---|---|
+| `aa-1` | `worker.py`, `publishers.py` |
+| `aa-4` | `chatter_axis.py` |
+| `aa-2`, `aa-3`, `aa-5` | their deliverables and the served objects their halves name |
+
+**NOT cells:**
+- the gold flip (it needs at least 10 eligible names);
+- the backfill run (round 29);
+- the barrons and ft runs (Andrew's).
