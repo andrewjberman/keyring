@@ -75,6 +75,31 @@ CODE_TREES: dict[str, dict] = {
             "silver": ("data/black_diamond/scripts/silver", "code/silver/"),
             "bronze": ("data/black_diamond/scripts/bronze", "code/bronze/"),
         },
+        # SHIPPED ARTIFACTS (MDPF_SECCLASS SC-e-13, row MDPF_SECCLASS-S5). A deploy of ANY file in
+        # the named layer also uploads these repo files, flat, under `dest_subdir` of that layer's own
+        # S3 prefix (code/gold/ for bd gold, read from "layers" -- never typed a second time). They are the
+        # BYTES of modules whose ONE home is outside data/black_diamond/ (PRD contract C-TABLE
+        # forbids a second repo copy), delivered to the runner the way `_IRPT_HOLDINGS_CLOSURE`
+        # delivers the same client to the IRPT Holdings bundle.
+        # WHY: the BD gold runner (gold_dispatch.sh sync_scripts) runs
+        # `aws s3 sync s3://opal-data-bd/code/gold/ /tmp/gold_layer_scripts/`, so ONLY code/gold/
+        # reaches it and there is no infra/ tree beside it. lib/etf_classifier.py and
+        # E_18.detect_new_securities.py therefore resolve the client from `lib/_shared/` first.
+        # MEMBERS = the client (etf_classifications_dynamodb.py) plus, for E_18, the scheduled
+        # planner (etf_classification_scheduled.py) and the one module it imports at load
+        # (etf_classification.py); measured by importing the planner with only its own directory
+        # on sys.path (repo modules loaded: those three, no others).
+        # The data is read by shipped_artifacts_for()/upload_plan(), never restated at a call site.
+        "shipped_artifacts": {
+            "gold": {
+                "dest_subdir": "lib/_shared/",
+                "members": (
+                    "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+                    "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py",
+                    "infra/aws/lambda/v2_portal/_shared/etf_classification.py",
+                ),
+            },
+        },
     },
     "inf": {
         "bucket": "opal-data-inf",
@@ -997,6 +1022,43 @@ def second_targets_for(rel_path: str) -> list[tuple[str, str]]:
     return out
 
 
+def shipped_artifacts_for(rel_paths: list[str]) -> list[tuple[str, str, str]]:
+    """Declared SHIPPED ARTIFACTS that ride along with a deploy of rel_paths.
+
+    Returns [(repo_path, bucket, s3_key)], de-duplicated, in declaration order. A layer's
+    artifacts ride when at least one path in rel_paths resolves to that (tree, layer)."""
+    out: list[tuple[str, str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    for rel_path in rel_paths:
+        rtl = resolve_tree_layer(rel_path)
+        if rtl is None:
+            continue
+        _name, tree, layer = rtl
+        spec = tree.get("shipped_artifacts", {}).get(layer)
+        if not spec:
+            continue
+        for member in spec["members"]:
+            key = tree["layers"][layer][1] + spec["dest_subdir"] + member.rsplit("/", 1)[-1]
+            if (tree["bucket"], key) in seen:
+                continue
+            seen.add((tree["bucket"], key))
+            out.append((member, tree["bucket"], key))
+    return out
+
+
+def upload_plan(rel_paths: list[str]) -> list[tuple[str, str, str]]:
+    """Every (repo_path, bucket, s3_key) a per-file deploy of rel_paths uploads: each path's
+    own target (file_to_s3_target) followed by the shipped artifacts. The deploy loop and the
+    deployed-layout check both read THIS, so the check asks the tool and never a hand-built list."""
+    plan: list[tuple[str, str, str]] = []
+    for rel_path in rel_paths:
+        target = file_to_s3_target(rel_path)
+        if target is not None:
+            plan.append((rel_path.replace("\\", "/"), target[0], target[1]))
+    plan.extend(shipped_artifacts_for(rel_paths))
+    return plan
+
+
 def build_bundle_payload(b: dict) -> tuple[Optional[bytes], dict, str]:
     """Deterministic tar.gz of the bundle members -> (payload, shas, err).
 
@@ -1452,6 +1514,8 @@ def main(argv: list[str]) -> int:
             if is_distribution_spec(spec):
                 both = f" AND bundle {hit[1]} (DISTRIBUTION)"
         print(f"  [script]        {f}  (authored by {author}) -> {dest}{both}")
+    for sp, sb, sk in shipped_artifacts_for(files):
+        print(f"  [shipped]       {sp} -> s3://{sb}/{sk}  (declared shipped artifact, CODE_TREES)")
     for f in _bundle_only:
         # No file_to_s3_target: a bundle member's destination is the BUNDLE's, resolved at the
         # mint below. Naming the leg honestly beats printing a '?' destination that reads as a
@@ -1584,6 +1648,22 @@ def main(argv: list[str]) -> int:
             print(f"  ERROR  {status}  bundle {bname} -> {dest}")
             if detail:
                 print(f"           {detail}")
+            failed = True
+            break
+
+    # SHIPPED ARTIFACTS first, so code that imports them never lands before its dependency.
+    # They are not appended to `deployed` (comp-pipescript does not model the lib/_shared leg;
+    # the ETag verify in deploy_file is their acceptance), the same stance as second targets.
+    for sp, sb, sk in shipped_artifacts_for(to_deploy):
+        s_status, s_detail = deploy_file(WORKSPACE / sp.replace("/", os.sep), sb, sk, sp)
+        if s_status == "SHA_MISMATCH":
+            etag_refusal = True
+        if s_status == "MATCH":
+            print(f"  DEPLOYED-SHIPPED  {sp} -> s3://{sb}/{sk}")
+        else:
+            print(f"  ERROR  {s_status}  [shipped] {sp} -> s3://{sb}/{sk}")
+            if s_detail:
+                print(f"           {s_detail}")
             failed = True
             break
 
