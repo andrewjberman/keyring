@@ -115,6 +115,11 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v3.1",
       "note": "L5 recut + L6 issuance, 2026-09-30, 2.0.0_SA_COO~H. Round 22 over ROUND_ANALYSIS.round21.md @63c272600a (corrected @3100474cde after the issuer measured ruling 2 a no-op): l-1, the guard reads co_mention_count >= 4 only, outcome-identical (LOCAL, worker-light); l-2, the served chatter_event rebuild on the span rule under a never-widen pair (SERVED); two independent chains; section 34."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.2",
+      "note": "L5 recut + L6 issuance, 2026-09-30, 2.0.0_SA_COO~H. Round 23 over ROUND_ANALYSIS.round22.md @9d7bd0e4f9: three read-only re-grade cells over the served store -- m-1 FWD-1/2/3, m-2 FWD-4/7, m-3 FWD-8/9 (all LOCAL); three independent chains; section 35."
     }
   ],
   "leads": [

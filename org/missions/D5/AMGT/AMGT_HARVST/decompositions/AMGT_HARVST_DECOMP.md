@@ -2037,3 +2037,31 @@ its CTO half.
 - the `is_roundup` producer;
 - the link window;
 - the event route mount (HELD).
+
+## 35. ROUND 23 -- L5 DECOMPOSITION v3.2, over the round-22 analysis (`ledger/ROUND_ANALYSIS.round22.md` @9d7bd0e4f9)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~01:1xZ. Round 22 CLOSED: 2 of 2, AC4 MET 3 of 3, and `Z-W41-S1` graduated. The
+event work is done for the served half. **Finding (analysis ruling 3):** seven of nine FWDs have gone ungraded since
+round 10. Round 23 re-reads them from the served store. Series **`m`**; slots **`~53`**, **`~54`** and **`~55`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 FWD-1/2/3: re-readable byte-exact, every sent field kept, how each article was found | `HVST-m-1` | LOCAL (read-only over the served store) | `~53` |
+| 2 FWD-4/7: the strength carriers per pair (grade re-derived from stored text), and the page's rank against a rank recomputed from the graded daily table | `HVST-m-2` | LOCAL (read-only) | `~54` |
+| 3 FWD-8/9: undelivered desktop articles, and article history since 2026-01-01 per covered security | `HVST-m-3` | LOCAL (read-only) | `~55` |
+
+**Fan-out: 3 of 3 chains, independent; N = 3 worker slots; cap 8 not pressed.** Each cell writes only its own
+deliverables folder and the channel. Each carries at most 3 criteria, each quotes its FWDs' DONE WHEN lines verbatim,
+and each prints what this machine cannot see as NOT MEASURABLE HERE rather than estimating it.
+
+**The adversaries, named in each preflight:**
+- A pass rate over a filtered population.
+- A grade "re-derived" by the producer itself.
+- FWD-9's history read off the daily table's ROW range, which covers every day by construction, instead of off the
+  ARTICLES.
+
+**NOT cells:**
+- events;
+- the link window;
+- the event route mount;
+- the Seeking Alpha capture (until the account reads 200).
