@@ -2984,6 +2984,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "The checker treats the instance expect as a regex; the prose contains unescaped parentheses and cannot match, so the worker's instance carries its own regex on the printed deciding line (AC1 'INVENTORY ARTICLES NOT IN THE STORE ...: n of N'; AC2 'SHORT OF THE FLOOR ...: n of N'); the criterion_verbatim field carries the TO's text unchanged.",
       "notes": "Form only. The deciding lines are printed by the scripts, not synthesised.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W56-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~56",
+      "surfaced_at": "2026-09-30T02:40Z",
+      "one_line": "OBSERVATION: harvest_grammar.py, the one bronze writer, is outside HVST-n-1's <paths>, so the received-hash rides the store's put and the listing link rides the outbox record, not bronze metadata.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/harvest_grammar.py@aed290b548: put_article_bronze(publisher_code, article_id, body, ext, fetched_at, received_form, client) takes no metadata argument and hard-codes metadata={'received-form': received_form}",
+          "lib/opal_data_harvest/test_harvest_grammar.py@aed290b548 test_one_writer_for_both_channels: fake_put(publisher_code, article_id, body, ext, fetched_at, client=None) has no extra parameter, so any new keyword passed by uploads.py breaks it (same constraint as row AMGT_HARVST-Z-W1-S1)",
+          "lib/research/harvest/store.py bronze_put now adds received-sha256 to every as_received put; lib/opal_data_harvest/worker.py writes listing_bronze_key into the outbox record and discovery; lib/opal_data_harvest/uploads.py hands that discovery to silver_from_bronze.article_rows"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-1 section 1 items 1-2: each response body is stored as received with its own recorded hash, and every stored article links the listing object that found it (a field naming that listing object's key).",
+      "world_is": "The received hash is a bronze metadata key written by store.bronze_put itself (as_received puts only), and the rebuild is kept beside the received bytes as a local sibling file with its own hash rather than as a second bronze object (a second object under the article_hash partition would count as a second article to fetch_key_exists, check_as_received and silver_from_bronze consumers). The listing link is a field on the durable outbox record and on the discovery dict, not on the bronze object; the silver column that persists it is silver_from_bronze.article_rows, which is HVST-n-2's file and today reads only the four search_* keys, first_discovered_at, retrieval_rung and discovered_for from discovery.",
+      "notes": "Not graded. Whether the link belongs in bronze metadata is a call for the issuer: it needs put_article_bronze to accept extra metadata and test_harvest_grammar's fake_put to change, both outside this order.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W56-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~56",
+      "surfaced_at": "2026-09-30T02:40Z",
+      "one_line": "OBSERVATION: the raw-bytes capture, listing link and run record sit on the harvest_grammar path; a run without harvest_grammar still keeps only the normalised record, and a second same-day run with a harvest client reads listings from the bucket.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py@aed290b548 run_job: _write_harvest_raw and _write_harvest_listings are both gated on config harvest_grammar (default False, ruling 4 of AMGT-rk-85); the run record added by HVST-n-1 is written by Worker.run for every mode",
+          "lib/opal_data_harvest/publishers.py get_listing_bronze branch: with harvest_dedupe on, a listing already held for today's date partition is read from bronze and never re-fetched, so a same-day second run with --harvest-grammar cannot discover an article first published after the first run's listing",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~56/scripts/n1_ac2_counting_stub.py: the held/new proof runs harvest_grammar on with no harvest client, so held keys are skipped through the local articles table (known_ids / known_urls) and listings are fetched on both runs"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-1 AC2: two same-day runs, held keys fetch 0, a planted new key fetches exactly 1; section 1: the collector stores each response as received going forward.",
+      "world_is": "The going-forward capture is real only for a run started with --harvest-grammar; a legacy run (flag absent) still writes only the normalised record through Catalog.store, exactly as before, so a scheduled collection that omits the flag keeps producing normalised_record objects. Separately, with the flag and a harvest client the same-day listing is served from bronze, so the planted-new-key case in AC2 is exercised on the local-state path (new_only), not on the bucket-authority path.",
+      "notes": "ARMED only if the scheduled collection is started without --harvest-grammar: the going-forward claim would then be false for it. Config today: config.json has no harvest_grammar key and recurring_schedule_enabled is false. Disarm by the issuer choosing whether harvest_grammar becomes the default; this order did not change that default.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
