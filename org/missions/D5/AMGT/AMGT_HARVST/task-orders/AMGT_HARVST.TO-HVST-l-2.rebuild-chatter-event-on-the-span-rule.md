@@ -95,7 +95,7 @@ No delete, no mention or daily put, no code change, no deploy, no route mount, n
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>22</round>
 <slot>~52</slot>
 <fabric>site-z</fabric>
