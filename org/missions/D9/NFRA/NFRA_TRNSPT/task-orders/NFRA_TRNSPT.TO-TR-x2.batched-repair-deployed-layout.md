@@ -49,8 +49,16 @@ layout itself, on the runner or on an exact extract of what the deploy ships, pr
    the top of a `__main__` block is acceptable; a sibling-directory insert is not). Every existing CLI line and exit code is unchanged.
 2. Tests import package-qualified, never bare; `handler.py` imports package-qualified; `build.sh` unchanged unless the bundle needs a
    file it lacks (state why).
-3. Fixture reads use universal newlines (S6) -- or add an `eol=lf` rule for `data/transcripts/scripts/tests/fixtures/**` in the repo's
-   `.gitattributes` ONLY if the order's grant names it (it does not; use universal-newline reads).
+3. **AMENDED 2026-09-30 ~23:0xZ by the issuer (grant widened to `.gitattributes`):** add ONE block to the repo's `.gitattributes`
+   (append only; never edit an existing line) with a comment naming this order and rows S6 / W1-S6 / the assets lock:
+   `data/transcripts/assets/** text eol=lf` and `data/transcripts/scripts/tests/fixtures/** text eol=lf`. Measured at the amendment:
+   every pinned asset's sha256 in `data/transcripts/assets/ASSETS.lock.json` equals the committed LF blob and differs from this
+   `core.autocrlf=true` checkout's CRLF bytes, so `test_assets_lock.py::test_every_pinned_sha_matches` fails here for the same reason as
+   S6's fixture split. After adding the rule, re-materialise those paths in YOUR worktree (`git rm -r --cached -q` + `git checkout --`
+   on the two directories, or delete the files and `git checkout --` them) so they read LF, and state the command in the report.
+   Keep universal-newline reads where a test splits on newlines, too (defence in depth).
+6. **AMENDED:** round 1's `test_outlook_bronze.py::test_tables_source_recorded` asserts the retired tables label; TR-f-2 made the label
+   `assets+registry` (row W1-S6). Update that assertion to the new label; change nothing else in that test.
 4. Both test fakes gain `list_objects_v2` (with `Prefix` and pagination fields), and the seam is ASSERTED: a test runs
    `pull.run(..., apply=True, with_silver=True)` over the TR-t-1 fixture on the fake S3 and asserts a silver parquet key for each landed
    transcript (S8), replacing the round-1 SILVER-SKIPPED assumption.
@@ -85,6 +93,7 @@ data/transcripts/scripts/outlook/
 data/transcripts/scripts/tests/
 infra/aws/lambda/transcripts-pull/handler.py
 infra/aws/lambda/transcripts-pull/build.sh
+.gitattributes
 org/missions/D9/NFRA/NFRA_TRNSPT/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
