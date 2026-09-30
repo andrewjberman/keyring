@@ -250,6 +250,30 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "C-WIPE: names applied case-sensitively behind an allowlist; anything capitalised and unknown goes to pii_residual_flags and is held out; C-WIPE-GATE plants a name 'in a different case'.",
   "world_is": "Case-sensitive dictionary matching means a standalone lower-case name (e.g. 'we asked ottoline') is NOT wiped unless the same message showed the name capitalised or ALL-CAPS; matching lower-case case-insensitively would wipe ordinary words (will, grant, mark, rate). The surnames list holds ordinary English words, so sentence-initial 'Ask'/'Mail' are wiped unless in the stopword list (a small one is in wipe.py). The planted-token test plants the lower-case name beside its ALL-CAPS form. The held-out rate on the real sample is unmeasured here; the issuer's real silver run prints held_out=<h>."
+},
+{
+  "id": "NFRA_TRNSPT-W2-S1",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+  "surfaced_at": "2026-09-30T15:00:00Z",
+  "one_line": "safe-commit refuses the TR-t-3 complete-flip commit: missions-tree-index check reports INDEX-DRIFT org/projects/NFRA_TRNSPT.json dep_stage index='PRD' tree='EXECUTING' at the worktree base, and the fix is outside the worker's write grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~T (holds the regenerated org/projects/NFRA_TRNSPT.json uncommitted in the shared tree; 0.0.0_AB_MSTR is the integrator fallback for the index carrier)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output 2026-09-30 ~15:0xZ on branch wk-NFRA_TRNSPT-2: '[INDEX-DRIFT] org/projects/NFRA_TRNSPT.json: dep_stage: index=PRD tree=EXECUTING; RESULT: 1 violation(s)'; commit refused rc=1",
+      "git -C C:/Users/AndrewBerman/Desktop/ajb_workspace diff org/projects/NFRA_TRNSPT.json: uncommitted dep_stage PRD -> EXECUTING (and generated_at 2026-09-30T14:05:26Z) in the shared tree",
+      "git log -1 -- org/projects/NFRA_TRNSPT.json at worktree base 81e350ba0a: 1d8905b007 (the L3 register commit), so the issuance commit flipped the tree row but the generated index was never committed",
+      "code commit 80a22d9a89 landed (no org/missions path staged); only the status flip and proof instance commit is refused"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker's complete-flip commit of the task order and its proof instance passes safe-commit (missions-tree-index check 0 violations).",
+  "world_is": "The generated index org/projects/NFRA_TRNSPT.json is one dep_stage behind the tree row at the base, so any commit staging an org/missions/D*/ path is refused; the worker's grant excludes org/projects/, and the worker does not bypass or force.",
+  "notes": "State left in the worktree, uncommitted: task order <status> flipped to complete, proof instance VALID (rc=0, violations=0), this row. Retry the commit once the index carrier is committed and merged into the branch base."
 }
 ]
 ```

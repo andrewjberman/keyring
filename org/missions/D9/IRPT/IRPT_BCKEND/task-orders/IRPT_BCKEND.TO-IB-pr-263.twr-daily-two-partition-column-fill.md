@@ -5,7 +5,8 @@
 <issued_to>0.4.0_DS_ClientPlatform~S</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>pending</status>
+<status>superseded</status>
+<superseded_by>row IRPT_BCKEND-S236 (0.4.0_DS_ClientPlatform~S @6b5755c32c, 2026-09-30 15:3xZ): the four columns are NOT derivable on either date by the producer's own path -- date=2024-07-08 is the series' first day (no prior canonical_valuation partition; 4,074 of 4,074 rows REFUSED-NO-BMV) and date=2025-01-09 is not a trading day (NYSE closure; 4,808 of 4,808 NO-PRIOR-TRADING-DAY); c02_twr_engine.py attaches bmv/emv/cf_net/cf_gross only on the OK branch (:273-276), so a re-emit at DEPLOYED bytes returns the same 11 columns (rc 0, no S3 write, all five ETags equal the BEFORE record). The issuer rules (round 26, inside its own decomposition): the need is met by the finding -- both partitions are non-performance days by the producer's own rule, and the reader guard that trips on them (f49_engine.py:134, the retiring engine's reader) no longer serves 49F since the r3 re-switch; no schema bump is cut. S219 is dispositioned by S236; a reader-side skip of zero-OK partitions is cut only if a live reader of twr_daily is shown to touch those two dates.</superseded_by>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>

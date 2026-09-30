@@ -13360,3 +13360,148 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "FOR THE CTO'S RULING, the two dates are NOT one remedy (Rule 24 (iv) -- name which values one remedy does not move). (a) date=2024-07-08 is the series' first partition and is CORRECT AND PERMANENT: GLD-b-3 says this state must never be fixed. The one thing arguably wrong there is the STATUS VOCABULARY -- the rows read REFUSED-NO-BMV, which c02:205-217 defines as a wiring/data-availability state and as 'the population Andrew's ratified acceptance requires to reach ZERO', when the truthful state is NO-PRIOR-TRADING-DAY ('correct at a series' first partition, not a gap'). 4,074 rows therefore sit permanently in a bucket that is specified to reach zero, because dim_calendar's null prev renders as the string 'None' and c02's own prev_map (deliberately untouched per GLD-b-1) tests it as truthy. That is a real, separate, NON-BLOCKING finding about the status field, not about the four columns. (b) date=2025-01-09 is a different class entirely: a twr_daily partition (and a canonical_valuation partition) exist for a day the NYSE was CLOSED. No return is computable on a closed market, so the four columns are meaningless there by construction; the live question is why a non-trading day produces a partition at all, which is upstream of this engine. NEITHER is fixed by a re-emit. The order's own proposed remedy -- a schema_version bump the guard can key on -- addresses the READER, which is the right layer: the guard at f49_engine.py:124-126 would then refuse on a version it understands rather than on an absent column, and a full-history read could skip or tolerate the two days deliberately. A second option the CTO may prefer: widen daily_returns so EVERY row carries the four keys (null on the refusal branches), making the column set invariant across partitions -- that is an emission-contract change and rides on schema_version per c02:40-49, so it is the CTO's to rule and not this lane's to take. Filed and stopped per the clause; nothing was improvised and no parquet was hand-written."
 }
 ```
+
+
+## IRPT_BCKEND-W96-S1 -- allowedFirmIds of an unspecified type fails closed in allowed_firm_ids()
+
+```json
+{
+  "id": "IRPT_BCKEND-W96-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~96",
+  "surfaced_at": "2026-09-30T15:00:00Z",
+  "one_line": "allowed_firm_ids() fails closed on an allowedFirmIds value that is neither a string nor a list/set: the order named only the string and list forms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py allowed_firm_ids(): a DynamoDB SS/NS set is accepted as an iterable, and any other type (number, map, bool) yields an empty list, so decide() refuses every data_firm with ACTOR_FIRM_NOT_ALLOWED. TO-IB-yr-293 says only 'comma-separated string is split ... a list is taken as-is'; canonical_profile_reads decodes DynamoDB L to list and SS to set, so a non-string non-list value is reachable."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-yr-293 part 2: the helper returns None for absent/ALL, else a split string or a list as-is; no other value type is specified.",
+  "world_is": "A restriction attribute the reader cannot interpret restricts everything (fail closed) rather than reading as unrestricted. Not exercised by the checks; no live row carries such a value (no row carries the attribute yet). Reversible by editing the one else-branch if the CTO wants a different rule."
+}
+```
+
+
+## IRPT_BCKEND-W95-S1 -- AC2's fixture echoes one cookie on request and response yet expects cookies_scrubbed == 1; the scrub counts a (name, value) cookie once per entry
+
+```json
+{
+  "id": "IRPT_BCKEND-W95-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~95",
+  "surfaced_at": "2026-09-30T15:00:00Z",
+  "one_line": "check_292_har_scrub.py's planted HAR puts the same cookie in request.cookies and response.cookies yet expects cookies_scrubbed == 1; a per-object count gives 2, so har_scrub counts a (name, value) cookie once per entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y/R29_checks/check_292_har_scrub.py har(): cookies list is appended once and reused as list(cookies) in BOTH request and response; main() asserts cookies_scrubbed == 1.",
+      "First run of the check against a per-object count: census cookies_scrubbed 2, headers_scrubbed 3, residual_hits 0, planted value 0 occurrences in output -- FAIL only on the count."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-yr-292 part 2: every cookies[].value is replaced; the census returns cookies_scrubbed; AC2 expects cookies_scrubbed == 1 on a fixture holding two cookies[] objects.",
+  "world_is": "Both objects are the same cookie echoed on request and response of one entry. har_scrub.scrub replaces BOTH values (0 residual hits) but counts distinct (name, value) cookies once per entry, so the census reads 1. Headers are still counted per occurrence. The check script was not edited; the choice is the worker's reading of the ambiguous count and the issuer may prefer per-object counting with the fixture corrected.",
+  "notes": "Redaction is identical under either count; only the cookies_scrubbed integer differs."
+}
+```
+
+
+## IRPT_BCKEND-W94-S1 -- ReplayTransport records carry an ELEVENTH key, `location`, that the real Transport does not, so IB-yr-291 AC1 (ten-key ledger, 7 records) and AC3 (ledger equal to tx.evidence, off-shape raises) cannot both be met as written.
+
+```json
+{
+  "id": "IRPT_BCKEND-W94-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~94",
+  "surfaced_at": "2026-09-30T15:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "ReplayTransport records carry an ELEVENTH key, `location`, that the real Transport does not, so IB-yr-291 AC1 (ten-key ledger, 7 records) and AC3 (ledger equal to tx.evidence, off-shape raises) cannot both be met as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "transport.py:476-480 (real Transport._record) builds ten keys; transport.py:588-597 (ReplayTransport, the offline transport the checks and the suite use) builds eleven, adding `\"location\": fixture.get(\"location\", \"\")`. Both at worktree base 64a37ccbd5.",
+      "With the strict validation the order specifies (key set == ten keys, else JobRefused VENDOR_LEDGER_SHAPE before the receipt put): check_291_receipt_ledger.py -> JobRefused VENDOR_LEDGER_SHAPE (rc=1) on the first replay record; check_291_dup_control.py -> FAIL 'suite printed no RESULT block' (the same refusal inside run_offline_suite.py, so AC2 goes RED, not green); pytest test node 1 fails the same way, control node 2 passes. Patch: deliverables/0.9.0_WK_IRPT_BCKEND~94/candidate_strict_validate.patch.",
+      "Probe over all 7 replay records: symmetric difference from the ten-key set is exactly ['location'] on every one (7 of 7).",
+      "Variant that drops exactly the key `location` before validating (candidate_strip_location.patch): AC1 PASS (7 records, 0 off-shape), AC2 PASS (dup 0, first 7), and the off-shape `cookie` control still raises; but a test asserting receipt ledger == tx.evidence fails on the `location` key, so AC3's literal 'equal to tx.evidence' needs the issuer to say projected evidence."
+    ]
+  },
+  "spec_asserts": "The order: transport records are 'ten keys ... no header value, no cookie, no body'; the receipt ledger is validated against exactly those ten keys and equals tx.evidence; the issuer's base run read 7 records for the OVERVIEW replay.",
+  "world_is": "MEASURED: the 7 replay records have 11 keys each (location is the eleventh). The order's shape is the real transport's; the replay the criteria run against is not the same shape. transport.py, run_offline_suite.py and the check scripts are read-only to this worker, so the divergence cannot be closed inside the grant. Refusal clause applied: job.py and the test were NOT committed in either variant; nothing was weakened to pass.",
+  "notes": "Issuer choices: (a) authorize transport.py ReplayTransport to drop `location` (or move it out of the record); (b) amend the order to let job.py drop the named replay-only key `location` and AC3 to compare to the projected evidence (candidate_strip_location.patch is ready); (c) add `location` to the shape constant, which would then diverge from the real transport's ten keys."
+}
+```
+
+
+## IRPT_BCKEND-S237 -- the skipped closed day orphans its flow_ledger, so 44 served 2025-01-10 returns render client cash as performance (up to +91 pp)
+
+```json
+{
+  "id": "IRPT_BCKEND-S237",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~S",
+  "surfaced_at": "2026-09-30T16:21:30Z",
+  "one_line": "SERVED DEFECT, found while grounding S236: on 2025-01-10 the 49F twr_daily gold renders client CASH FLOWS as PERFORMANCE for 44 accounts, because the flows settled on 2025-01-09 -- a day the NYSE was CLOSED -- and NOTHING consumes that day's flow_ledger. dim_calendar correctly skips the closed day (2025-01-10's prev_trading_day is 2025-01-08), so c02 takes BMV from 01-08; the 01-09 settlements ARE inside 01-10's EMV; and c02_twr_engine.py:460 reads flow_ledger at date=D ONLY, so the 01-09 CF is in neither the BMV baseline nor the CF term. Worked example, served today: account 0093614544 took a $1,125,000.00 EXTERNAL deposit on 2025-01-09; its served 2025-01-10 row reads status OK, bmv $1,995,191.90, emv $3,114,480.00, cf_net $0.00, r_net +56.10% for one day. Measured error across the affected population: max +91.13 pp, median 1.34 pp, 22 accounts over 1 pp, 13 over 10 pp, out of 4,091 OK returns served that day.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (issuer of the 49F cells and of the sibling row S236; the METHOD choice may need 1.0.0_SA_CTO because every candidate remedy changes what c02 reads or what the chain emits). NOT disarmed this turn: the served rows are wrong now, and no act this lane can take under its own grant corrects them -- a re-emit of 2025-01-10 requires a ruling on WHICH remedy, and this lane holds no open task order on this table.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE DECISIVE READ (live, boto3; bucket from lib.opal_naming.lookup('49financial')['bucket']). Account 0093614544: canonical_valuation fair_value 2025-01-08 $1,995,191.90 -> 2025-01-09 $3,120,191.90 -> 2025-01-10 $3,114,480.00. flow_ledger date=2025-01-09 holds exactly 1 row for it, final_class EXTERNAL, signed_amount $1,125,000.00. flow_ledger date=2025-01-10 holds 10 rows for it, all INTERNAL, signed_amount sum $0.00. The SERVED twr_daily date=2025-01-10 row reads status=OK, bmv=$1,995,191.90, emv=$3,114,480.00, cf_net=$0.00, cf_gross=$0.00, r_net=r_gross=0.5609927045112804. A $1.125M deposit is being served as a 56.1% one-day return.",
+      "THE MECHANISM, in the producer's own source: c02_twr_engine.py:460 reads 'canonical/flow_ledger/date={args.date}/data.parquet' -- date D ONLY, never D-1. :456-457 builds prev_map from a04's dim_calendar, and that calendar CORRECTLY omits 2025-01-09 (538 rows, no self-row; 2025-01-10's prev_trading_day = 2025-01-08). :465-486 therefore loads BMV from date=2025-01-08. So for the single date whose prev is NOT the immediately preceding partition, the skipped day's flow_ledger is read by NO run: 2025-01-09's own c02 run emitted 4,808 of 4,808 NO-PRIOR-TRADING-DAY (zero OK rows, so zero returns and no CF consumed), and 2025-01-10's run reads only its own date's ledger.",
+      "POPULATION, computed with c02's OWN account-grain filter (final_class EXTERNAL, or INTERNAL whose resolution_provenance is in {pair-match, text-counterpart}; in-kind legs valued from in_kind_signed_value per :365-368): flow_ledger date=2025-01-09 yields orphaned CF for 46 accounts, net $1,199,021.69, absolute $2,890,299.37. 44 of those 46 carry a SERVED status=OK return on 2025-01-10; the other 2 are not OK rows that day.",
+      "MEASURED SERVED ERROR on 2025-01-10, counterfactual = c02's own EOD form r = (EMV - CF)/BMV - 1 with the skipped day's CF folded into the window (NOT a vendor-official figure): max +91.13 pp (0063952925, bmv $109,729, orphan_cf $100,000, served +91.17% vs +0.03%), median 1.34 pp, 22 accounts over 1 pp, 13 accounts over 10 pp. Both signs occur: 0027256463 serves -87.05% against -0.11% on a -$17,000 withdrawal, and 0036184450 serves -32.41% against -0.80% on -$750,000. Denominator: 4,091 OK returns served in twr_daily date=2025-01-10.",
+      "SCOPE, swept not assumed (Rule 24 (i)). Every date= partition under s3://opal-data-49financial/gold/advi/ read: 26,078 keys, 23 date-partitioned tables. EXACTLY ONE non-NYSE-trading-day partition exists in each of the 18 CHAIN tables (canonical/*, dimensions/*, reference/ref_txn_classification), and it is 2025-01-09 in every one of them -- 560 or 561 partitions each. EXCLUDED from that claim, and named so the denominator is honest: reference/bd_legacy_{holdings,nna,performance} are calendar-day-partitioned legacy snapshots (2,424-2,425 partitions, 756-757 non-trading days each) and are not chain output; three more tables hold a single undated partition. So the chain fired on a closed market EXACTLY ONCE in 560 trading days, and 2025-01-10 is the ONLY date whose prev_trading_day skips an existing partition.",
+      "THE CLOSED DAY IS REAL, NOT FABRICATED DATA -- which is why this is a wiring defect and not a data-quality one. canonical_valuation 2025-01-09 carries business_date 2025-01-09 on all 4,808 rows and its fair_value is IDENTICAL to 2025-01-08 on 4,717 of 4,801 common accounts (98.3%); the 84 that differ move by $3,116,562.14 absolute, with the large deltas at round figures ($1,125,000.00, -$750,008.50, $250,000.00) and a median |delta| of $49.26. That is a custodian book moving on a BANK business day while the NYSE was shut for the national day of mourning for President Carter -- settlements plus accruals, exactly as expected.",
+      "CALENDAR RESOLVED at the one frontier: lib/trading_calendar.py, calendar_source NYSE/pandas_market_calendars -- is_trading_day('2025-01-09') = False, prev_trading_day('2025-01-10') = 2025-01-08. The a04 dim_calendar agrees. NOTHING here is a calendar defect: the calendar is right, and the defect exists BECAUSE the data plane carries a day the calendar correctly refuses to count.",
+      "PROVENANCE: found while grounding row IRPT_BCKEND-S236 for TO-IB-pr-263 (superseded @ed0be5b557). S236 named 2025-01-09 as a non-trading day and said the question of why a partition exists there was 'upstream of this engine'; it did NOT measure the consequence. This row measures it. Workspace HEAD at this write: be66b80ccd."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "c02_twr_engine's ratified form (module docstring :7-13, POLICY_BLOCK flow_timing EOD): r(t) = [EMV(t) - CF(t)] / BMV(t) - 1, where CF is the external capital that entered or left between the BMV date and the EMV date. The GROSS/NET pair and the geometric linking both rest on CF being complete over the window -- the module's own :327-334 states the failure mode verbatim, from the in-kind defect: a flow that reaches the return as ZERO FLOW while its value lands in ending market value 'was then rendered as PERFORMANCE'.",
+  "world_is": "For the window (2025-01-08, 2025-01-10] the CF term is INCOMPLETE by construction. The window spans two calendar days because the calendar correctly skips the closed one, but c02 reads a SINGLE day's flow_ledger, so every external flow that settled on 2025-01-09 is omitted from CF while its value is present in EMV. 44 served returns carry the resulting error, up to 91 percentage points in a single day. The same shape is NOT present at the other gap date: for date=2024-07-08 the flows are inside the 2024-07-09 run's BMV baseline, so nothing is orphaned there -- which is why this row is about 2025-01-09 alone.",
+  "notes": "OPEN QUESTION THAT DECIDES THE BLAST RADIUS, and I did not resolve it: does the error propagate into PERIOD returns? link_geometric (:286-291) refuses a window containing any non-OK subperiod -- and 2025-01-09's partition is 4,808 of 4,808 non-OK. So IF the caller loads twr_daily by partition listing, every period spanning the date is UNCOMPUTABLE and the harm stops at the daily grain (a protective accident). IF the caller enumerates trading days from dim_calendar instead, 2025-01-09 is never loaded, the hole is invisible, and the +56% flows straight into every period return spanning it. NOT MEASURED here: which shape the live callers (perfrp_emit_core, perfrp_rollup, parity_period_returns, c04_validation_battery, holdings_performance.py) take, and whether any of those period returns is served to a client today. That read is the first thing the disarm owner should do. CANDIDATE REMEDIES, none taken (all change what the chain reads or emits, so all are the owner's): (1) have c02 read flow_ledger for EVERY date in (prev_trading_day, D] rather than date=D alone -- correct in general and fixes any future skipped day, but it changes the producer's read contract; (2) re-emit 2025-01-10 alone with the 01-09 CF folded in -- narrow, but leaves the mechanism live for the next market closure; (3) delete or never emit chain partitions for non-trading days -- but the custodian book genuinely moved that day, so this DISCARDS $2.89M of real flow rather than accounting for it, and it would still need (1) to place those flows somewhere. I recommend (1) with a re-emit of 2025-01-10; (3) alone is the one that looks tidy and loses data. NOT A MONITOR: this is a finding with an owner, not an alarm to build (CLAUDE.md standing moratorium)."
+}
+```
+
+
+## IRPT_BCKEND-S238 -- CTO condition 4 fired: the new service principal read an inflection directory entry through the API; allowedFirmIds is enforced at the job (resident) only; the W27 window waits for the CTO's re-read
+
+```json
+{
+  "id": "IRPT_BCKEND-S238",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T16:31:00Z",
+  "one_line": "CTO half condition 4 FIRED: under the new svc-irpt-analysis principal (allowedFirmIds cottonwood), one API read of an INFLECTION resource SUCCEEDED -- GET directory/search?selected_tenant=inflection&limit=1 served 1 inflection directory entry (HTTP 200). The API admits ANY selected firm for this principal; allowedFirmIds is enforced only inside the resident since IB-yr-293. The W27 window WAITS for the CTO's re-read.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (the CTO half's own clause: a success on condition 4 is a BLOCKING row, the packet's claim is corrected, and the window waits for the CTO's re-read; the API-side enforcement surface _authz/served.py selected_tenant is P's under CONTRACT row 21)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Ledger irpt-svc-analysis-principal-20260930 leg N1, 16:2xZ: POST /auth/login 200 as svc-irpt-analysis@opalinvest.com (token never printed); GET /api/scoped/investor-reporting/directory/search?selected_tenant=inflection&q=&limit=1 -> HTTP 200, response keys contract_version/data/firm_id/operation/unprojected_grant, firm_id fir_b6b200b4395e94aaa604d5fa, 1 entry served (counts only logged; no entry content kept). The same read on cottonwood: HTTP 200, firm_id fir_0fe2a06331f1b4a68133fcb2, 1 entry.",
+      "status-summary on selected_tenant=inflection resolved the same inflection firm_id and answered NOT_FOUND (no job) -- the tenant was ADMITTED, the resource was absent; the directory read is the discriminator.",
+      "No vendor call was made: Opal's own API over CloudFront only. Log: org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/SVC_PRINCIPAL_NEGCONTROL_20260930.json.",
+      "Resident-side enforcement is LANDED: IB-yr-293 @784ac650d0 -- decide() refuses ACTOR_FIRM_NOT_ALLOWED for a data_firm outside the row's allowedFirmIds (5 of 5 cases on CLOUD). The API side (_scope/resolve.py classify_principal -> FIRM_OPERATIONS on the SELECTED firm; _authz/served.py selected_tenant) reads no allowedFirmIds -- exactly the packet's own W27-2 limit (2) sentence, now EXERCISED rather than read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W27 packet W27-2: 'the only thing keeping this principal off inflection or 49financial data is that no job for those firms is submitted under it' (a policy limit). CTO half condition 4: 'If it succeeds, that is a BLOCKING row, the packet's claim is corrected, and the window waits for my re-read.'",
+  "world_is": "MEASURED: the principal can READ another firm's directory population through the API today (1 entry of inflection served), and could SUBMIT an Analysis upload for inflection at K4 (the API admits the selected tenant); the resident would then refuse the JOB at decide() with ACTOR_FIRM_NOT_ALLOWED (293), so no vendor call and no report could be produced for a non-cottonwood firm -- but the upload, the normalized input and the request row would exist. CORRECTION TO THE PACKET'S CLAIM: 'recorded, not enforced' is now HALF-enforced -- enforced at the job (resident), not at the API. The window's three bodies are cottonwood and are unaffected; what the CTO re-reads is whether a resident-only mechanism plus an API-side convention is enough to open, or whether the API half (P's surface) is a precondition.",
+  "notes": "Retirement path stands: disable, never delete (svc_principal.py disable). Secret readers: walker only, 24 of 24 roles explicitDeny (leg S1)."
+}
+```
