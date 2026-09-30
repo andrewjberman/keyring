@@ -3540,6 +3540,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Instance expect field differs from the TO text only by regex escaping; the check scripts were not edited."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W71-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~71",
+      "surfaced_at": "2026-09-30T08:40Z",
+      "one_line": "With the parse fixed, the 11 bbg rows get a NEW article_key (bbg:<story id>) because the empty rows were keyed on a bronze-key hash, so the round-28 silver append adds 11 rows and leaves the 11 empty ones served beside them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order section 1: the served silver rebuild from bronze is a later paired act (round 28); article_rows parses the as-received bytes into the silver fields.",
+      "world_is": "silver_from_bronze.py article_rows sets article_id = content_hash(bronze_key)[:24] when the parse yields no id (base: story empty, id None), so the 11 served 2026-09-30 rows are bbg:d518d82d..., bbg:c85a9068... etc. (title None, 0 blocks). The fixed parse yields the story id (e.g. bbg:TKPBVYKK3NY800 for the object served as bbg:d518d82dba5edbf17c889629), a different record key; store.silver_append keys on article_key, so a rebuild appends 11 new keys and does not replace the 11 empty ones.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~71/q2_ac2_output.txt: per-object article_id under the new builder (TKPBVYKK3NY800 ...) against the served keys bbg:<24 hex> read in this cell (store.silver_latest)",
+          "lib/opal_data_harvest/silver_from_bronze.py:222-223 (article_id fallback to content_hash(bronze_key)[:24])"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not touched by this cell (no silver write). The round-28 rebuild order needs to say what happens to the 11 empty keys."
     }
   ]
 ```
