@@ -261,3 +261,57 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The issuer's miss: the drain-time hygiene did not include suites that import a changed shared module. The narrowed release cell IB-mr-291 removes the cross-project import."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-W6-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~6",
+  "surfaced_at": "2026-09-30T03:40:00Z",
+  "one_line": "BD's own round-1 E_18 caller (data/black_diamond/scripts/gold/E_18.detect_new_securities.py) computes _REPO_ROOT via Path(__file__).resolve().parents[3], one hop short of repo root for a 4-deep nesting (gold/scripts/black_diamond/data) -- its own comment says '4 levels up' but the index used is 3, not 4 -- so _SHARED resolves to <repo>/data/infra/aws/lambda/v2_portal/_shared, which does not exist, and the deferred `from etf_classification_scheduled import (...)` inside detect_new_securities() raises ModuleNotFoundError whenever this file is invoked from the real repo layout (not just under test).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (a one-line fix in BD's own file, parents[3] -> parents[4]; outside this cell's <paths> write grant, which names only COT's own E_18.detect_new_securities.py)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python: Path('data/black_diamond/scripts/gold/E_18.detect_new_securities.py').resolve().parents[3] == '<repo>/data'; parents[4] == '<repo>' (measured 2026-09-30 in this worktree)",
+      "(root/'infra'/'aws'/'lambda'/'v2_portal'/'_shared').is_dir() is False via parents[3], True via parents[4] -- the same check performed against this cell's own (now-fixed) copy of the file, data/cot/scripts/gold/E_18.detect_new_securities.py, before its correction",
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py:47-52 (HEAD): comment 'four levels up (gold -> scripts -> black_diamond -> data -> repo root)', code 'Path(__file__).resolve().parents[3]' -- comment names 4 hops, index used is 3",
+      "No existing test imports and calls BD's E_18.detect_new_securities() end-to-end (infra/aws/lambda/v2_portal/_shared/tests/test_etf_classification_scheduled.py tests the shared module directly, never the BD caller file), so this path was never exercised by SC1-k1-AC1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC1-k1's Build item 2: BD's E_18 'feeds its new tickers to the module instead of writing stubs to bd-securities' on the BD gold-layer's existing schedule -- FWD-7's first live scheduled caller.",
+  "world_is": "Run from the real repo layout (not a test harness that pre-inserts the _shared directory onto sys.path some other way), BD's detect_new_securities(upload=True) raises ModuleNotFoundError at the deferred import and never reaches plan_rows/scheduled_write; the daily gold-layer invocation is wrapped '|| true' (per this file's own usage comment), so the failure is silent and FWD-7's BD backfill/schedule has not actually been running live since SC1-k1 landed.",
+  "notes": "Found while wiring this cell's own analogous COT caller (SC-e-4) with the identical pattern copied from BD's file; caught only because this cell's own copy failed loudly under its own new test (test_e18_scheduled_caller.py) before the index was corrected to parents[4] here. Not fixed in BD's file: data/black_diamond/scripts/gold/E_18.detect_new_securities.py is outside this order's <paths> write grant."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-W6-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~6",
+  "surfaced_at": "2026-09-30T04:20:00Z",
+  "one_line": "SC-e-7's Build step 2 names infra/aws/terraform/bd-pipeline/iam.tf as the file carrying the E_18 principal's bd-securities PutItem to remove, but that grant does not live there -- it is infra/aws/terraform/shared-infra/main.tf's aws_iam_policy.bd_securities_access (unconditional PutItem/UpdateItem/BatchWriteItem/Scan/GetItem on BOTH bd-securities and etf-classifications), attached to bd-exporter-ec2-role AND partners-lambda-role, a file outside this cell's <paths> write grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (a follow-on task order scoped to infra/aws/terraform/shared-infra/main.tf must edit aws_iam_policy.bd_securities_access -- drop bd-securities from its Action/Resource pair and, per this row's grounding, note that DynamoDB IAM condition keys cannot express attribute_not_exists -- and must give its own half, since the same policy is also attached to partners-lambda-role, an unrelated BD lambda)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find/Grep 'PutItem|dynamodb:' across infra/aws/terraform/bd-pipeline/iam.tf (2026-09-30, this worktree HEAD before this cell's edit): the only dynamodb Action present is dynamodb:Scan on bd-securities (Sid AdviChainBdSecuritiesScan, a07/etf_classifier control-import read, unrelated to E_18) -- zero PutItem grants of any kind in this file",
+      "infra/aws/terraform/shared-infra/main.tf:395-421 (this worktree HEAD): resource aws_iam_policy.bd_securities_access grants ['dynamodb:Scan','dynamodb:GetItem','dynamodb:PutItem','dynamodb:UpdateItem','dynamodb:BatchWriteItem'] on [aws_dynamodb_table.bd_securities.arn, 'arn:aws:dynamodb:us-east-1:313476888478:table/etf-classifications'], no Condition block; attached via aws_iam_role_policy_attachment.ec2_bd_securities (role='bd-exporter-ec2-role') and .lambda_bd_securities (role='partners-lambda-role')",
+      "infra/aws/terraform/bd-pipeline/iam.tf:340-358 (aws_iam_role.bd_exporter, name='bd-exporter-ec2-role'): the exact role name shared-infra/main.tf's ec2_bd_securities attachment names -- confirming the LIVE bd-securities PutItem for BD's E_18 production principal is carried by the shared-infra policy, not by anything in bd-pipeline/iam.tf",
+      "infra/aws/terraform/partners-api/iam.tf:9-33: aws_iam_role.partners_lambda (name='partners-lambda-role') is a separate BD partners-API lambda, not an E_18 caller -- the shared policy's second attachment is to an unrelated consumer, so editing it in place has a second blast-radius surface"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e7 Build step 2, verbatim: 'In infra/aws/terraform/bd-pipeline/iam.tf, add PutItem on etf-classifications ... Remove the bd-securities PutItem.'",
+  "world_is": "bd-pipeline/iam.tf carries no bd-securities PutItem to remove; the actual live, unconditional PutItem (plus UpdateItem/BatchWriteItem/Scan/GetItem) on bd-securities for the exact same production principal (bd-exporter-ec2-role) is granted by a DIFFERENT file, infra/aws/terraform/shared-infra/main.tf, which this order's <paths> does not include. This cell's evidence JSON (R2_E18_IAM_20260930.json putitem_bd_securities=false) is accurate for bd-pipeline/iam.tf alone and is NOT a true statement of the principal's overall live grants.",
+  "notes": "This cell still adds a genuine least-privilege PutItem-on-etf-classifications grant to bd-pipeline/iam.tf (aws_iam_role_policy.bd_exporter_e18_etf_classifications_put) per the letter of step 2's first half, and documents this gap inline in that file's comment plus in the cell's NEVER_WIDEN half (NEVER_WIDEN_HALF_REQUEST_SECCLASS_E18_IAM_20260930.md, SURPRISE / gap section) so the issuer does not sign off 'bd-securities PutItem removed' on the strength of this commit alone."
+}
+```

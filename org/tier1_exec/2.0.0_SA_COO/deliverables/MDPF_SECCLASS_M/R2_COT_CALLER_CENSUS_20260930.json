@@ -1,0 +1,1933 @@
+{
+  "table_rows_at_build": 2309,
+  "firm": "cottonwood",
+  "as_of": "2026-09-28",
+  "source": "opal-data-assets:blackdiamond/cottonwood/silver/fact_holdings/date=2026-09-28/data.parquet (Symbol/Ticker, Asset Name, Market Value)",
+  "held_tickers": 1113,
+  "already_present": 781,
+  "seed_pending": 0,
+  "seed_pending_names": [],
+  "would_write": 198,
+  "unresolved": [
+    "APPLIED OPTOELECTRONICS INC COM",
+    "AMERICAN FUNDS BOND FUND OF AMER F-2",
+    "APPLIED INDL TECHNOLOGIES INC COM",
+    "ANTERO MIDSTREAM CORP COM",
+    "ALERIAN MLP ETF",
+    "ANGEL OAK MULTI-STRATEGY INCOME INSTL",
+    "APPLIED DIGITAL CORP COM NEW",
+    "ARK 21SHARES BITCOIN ETF",
+    "ATI INC COM",
+    "AVERY DENNISON CORP COM",
+    "BRIGHT HORIZONS FAM SOL IN DEL COM",
+    "BUNGE GLOBAL SA COM SHS",
+    "BIO RAD LABS INC CL A",
+    "BITWISE 10 CRYPTO INDEX ETF",
+    "BRAMSHILL MULTI-STRATEGY INCOME INSTL",
+    "SABA CAPITAL INCOME & OPRNT FD SHS NEW",
+    "BXP INC COM",
+    "AMERICAN FUNDS CAPITAL INC BLDR F-2",
+    "MAPLEBEAR INC COM",
+    "COEUR MNG INC COM NEW",
+    "CAUSEWAY EMERGING MARKETS INSTL",
+    "CHIME FINL INC COM SHS CL A",
+    "CIM REAL ESTATE FIN TR INC COM",
+    "CNH INDL N V SHS",
+    "COLUMBIA SPORTSWEAR CO COM",
+    "CORPAY INC COM SHS",
+    "COREWEAVE INC COM CL A",
+    "CALAMOS STRATEGIC TOTAL RETURN COM SH BEN INT",
+    "COLUMBIA SELECT LARGE CAP VALUE INST3",
+    "CLEARWAY ENERGY INC CL C",
+    "DORCHESTER MINERALS L P COM UNIT",
+    "DT MIDSTREAM INC COMMON STOCK",
+    "ISHARES MSCI EMERGING MARKETS EX CHINA ETF",
+    "EQUITABLE HLDGS INC COM",
+    "ESAB CORPORATION COM",
+    "ELEMENT SOLUTIONS INC COM",
+    "GRAYSCALE ETHEREUM STAKING MINI ETF",
+    "ISHARES ETHEREUM TRUST ETF",
+    "GRAYSCALE ETHEREUM STAKING ETF",
+    "EATON VANCE SHORT DURATION MUNICIPAL INCOME ETF",
+    "EXLSERVICE HLDGS INC COM",
+    "EAGLE MATLS INC COM",
+    "FIDELITY WISE ORIGIN BITCOIN FUND",
+    "FCASH",
+    "FIRST EAGLE GOLD I",
+    "FLAHERTY & CRUMRIN PFD & INM S COM",
+    "FLUTTER ENTMT PLC SHS",
+    "FPA NEW INCOME - INSTITUTIONAL",
+    "FIRST INDL RLTY TR INC COM",
+    "FRANKLIN INCOME ADV",
+    "LIBERTY MEDIA CORP DEL COM SER A",
+    "LIBERTY MEDIA CORP DEL COM SER C",
+    "FIDELITY U.S. BOND INDEX",
+    "GRAYSCALE BITCOIN TRUST ETF",
+    "VANECK GOLD MINERS ETF",
+    "GOTHAM ENHANCED RETURN INSTITUTIONAL",
+    "GATES INDL CORP LTD COM SHS",
+    "JPMORGAN LARGE CAP VALUE I",
+    "ISHARES BITCOIN TRUST ETF",
+    "ISHARES 5-10 YEAR INVESTMENT GRADE CORPORATE BOND ETF",
+    "ISHARES 1-5 YEAR INVESTMENT GRADE CORPORATE BOND ETF",
+    "INGRAM MICRO HLDG CORP COM",
+    "VANECK INTERNATIONAL INVESTORS GOLD Y",
+    "IREN LIMITED ORDINARY SHARES",
+    "ISHARES U.S. HOME CONSTRUCTION ETF",
+    "JANUS HENDERSON BALANCED T",
+    "JANUS LIVING INC CL A-1",
+    "JANUS HENDERSON GLOBAL RESEARCH T",
+    "JANUS HENDERSON BALANCED I",
+    "JBS N.V. CL A SHS",
+    "NUVEEN PFD & INCOME OPPORTUNIT COM",
+    "KIMCO REALTY CORP COM",
+    "KARMAN HLDGS INC COMMON STOCK",
+    "LORD ABBETT BOND-DEBENTURE I",
+    "LIBERTY LIVE HOLDINGS INC COM SER A",
+    "LIBERTY LIVE HOLDINGS INC COM SHS SER C",
+    "GLOBAL X U.S. NATURAL GAS ETF",
+    "LOAR HOLDINGS INC COM SHS",
+    "MOBILITY GLOBAL INC COM SHS",
+    "MEDICAL PROPERTIES TRUST INC COM",
+    "MILLROSE PPTYS INC COM CL A",
+    "AMERICAN FUNDS NEW WORLD A",
+    "AMERICAN FUNDS NEW WORLD F-2",
+    "NET LEASE OFFICE PROPERTIES COM",
+    "ANNALY CAPITAL MANAGEMENT INC COM NEW",
+    "NUVEEN PREFERRED SECS & INC I",
+    "NEW YORK TIMES CO MTN BE CL A",
+    "REALTY INCOME CORP COM",
+    "INVESCO GOLD & SPECIAL MINERALS R6",
+    "VANECK OIL SERVICES ETF",
+    "OLLIES BARGAIN OUTLET HLDGS COM",
+    "INVESCO CORE BOND R6",
+    "PAN AMERN SILVER CORP COM",
+    "ISHARES PREFERRED & INCOME SECURITIES ETF",
+    "PIMCO INCOME STRATEGY FD COM",
+    "ISHARES MSCI GLOBAL METALS & MINING PRODUCERS ETF",
+    "VICTORY PIONEER BOND Y",
+    "PIMCO INCOME I2",
+    "PUBLIC STORAGE COM",
+    "SPROTT ASSET MANAGEMENT LP PHYSICAL SILVER",
+    "RB GLOBAL INC COM",
+    "RUBRIK INC. CL A",
+    "VANECK RARE EARTH AND STRATEGIC METALS ETF",
+    "ISHARES MSCI GLOBAL GOLD MINERS ETF",
+    "RANGE RES CORP COM",
+    "REVOLUTION MEDICINES INC COM",
+    "RYAN SPECIALTY HOLDINGS INC CL A",
+    "RYDEX PRECIOUS METALS INV",
+    "SABINE RTY TR UNIT BEN INT",
+    "SEABOARD CORP DEL COM",
+    "SEI INVTS CO COM",
+    "FIRST EAGLE GLOBAL I",
+    "SILGAN HLDGS INC COM",
+    "SIMON PPTY GROUP INC NEW COM",
+    "NEOS S&P 500 HIGH INCOME ETF",
+    "STAG INDUSTRIAL INC COM",
+    "SUN CMNTYS INC COM",
+    "FAIRLEAD TACTICAL SECTOR ETF",
+    "TEMPUS AI INC CL A",
+    "HANOVER INS GROUP INC COM",
+    "TKO GROUP HOLDINGS INC CL A",
+    "TEXAS PACIFIC LAND CORPORATION COM",
+    "TREX INC COM",
+    "TRADEWEB MKTS INC CL A",
+    "GLOBAL X URANIUM ETF",
+    "SPROTT URANIUM MINERS ETF",
+    "VANGUARD TOTAL BOND MARKET INDEX I",
+    "VANGUARD REAL ESTATE INDEX ADMIRAL",
+    "VIVMARK RESIDENTIAL SH BEN INT",
+    "JPMORGAN SMALL CAP EQUITY R6",
+    "WYNDHAM HOTELS & RESORTS INC COM",
+    "WP CAREY INC COM",
+    "WHEATON PRECIOUS METALS CORP COM",
+    "STATE STREET SPDR S&P METALS & MINING ETF"
+  ],
+  "overwrites": 0,
+  "vendor_calls": 0,
+  "rows": [
+    {
+      "ticker": "ACTSX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO HIGH YIELD MUNICIPAL R6",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "ACWV",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ISHARES MSCI GLOBAL MIN VOL FACTOR ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "Global"
+    },
+    {
+      "ticker": "ADLYX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN BEACON DOUBLELINE FLTNG RT Y",
+      "input": "legacy-fork",
+      "sub_asset_class": "Structured Credit"
+    },
+    {
+      "ticker": "AFTEX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS TAX-EXEMPT BOND A",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "AIBAX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FDS ITMT BD FD OF AMER A",
+      "input": "legacy-fork",
+      "sub_asset_class": "Intermediate"
+    },
+    {
+      "ticker": "AMZE",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMAZE HOLDINGS INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "ARKF",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ARK BLOCKCHAIN & FINTECH INNOVATION ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "AU",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ANGLOGOLD ASHANTI PLC COM SHS",
+      "input": "legacy-fork",
+      "sub_asset_class": "Global"
+    },
+    {
+      "ticker": "BANC",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "BANC OF CALIFORNIA INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "BCE",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "BCE INC COM NEW",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "BCTK",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "BARON TECHNOLOGY ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "BISOX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "BLACKROCK SHORT OBLIGATIONS INSTL",
+      "input": "legacy-fork",
+      "sub_asset_class": "Ultra Short Duration"
+    },
+    {
+      "ticker": "BLW",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "BLACKROCK LTD DURATION INCOME COM SHS",
+      "input": "legacy-fork",
+      "sub_asset_class": "Long Duration"
+    },
+    {
+      "ticker": "BTT",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "BLACKROCK MUN TARGET TERM TR COM SHS BEN IN",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "CARY",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ANGEL OAK INCOME ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "High Yield"
+    },
+    {
+      "ticker": "CCEYF",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "CANCAMBRIA ENERGY CORP COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "CDDYX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "COLUMBIA DIVIDEND INCOME INST3",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "CDSIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "CALVERT SHORT DURATION INCOME I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Short Duration"
+    },
+    {
+      "ticker": "CQP",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "CHENIERE ENERGY PARTNERS L P COM UNIT",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "CRK",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "COMSTOCK RES INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "CSHI",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NEOS ENHANCED INCOME 1-3 MONTH T-BILL ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "Cash"
+    },
+    {
+      "ticker": "CWVIX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "CALVERT INTERNATIONAL EQUITY I",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "DEM",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "WISDOMTREE EMERGING MARKETS HIGH DIVIDEND FUND",
+      "input": "legacy-fork",
+      "sub_asset_class": "EM"
+    },
+    {
+      "ticker": "DLB",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "DOLBY LABORATORIES INC COM CL A",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "DNVYX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "DAVIS NY VENTURE Y",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "DOXIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "DODGE & COX INCOME X",
+      "input": "legacy-fork",
+      "sub_asset_class": "Intermediate"
+    },
+    {
+      "ticker": "DTF",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "DTF TAX-FREE INCOME 2028 TERM COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "EG",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EVEREST GROUP LTD COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "EIBIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EATON VANCE INCOME FUND OF BOSTON I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Intermediate"
+    },
+    {
+      "ticker": "EIBLX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EATON VANCE FLOATING RATE I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Short Duration"
+    },
+    {
+      "ticker": "EIHMX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EATON VANCE NATIONAL MUNICIPAL INCOME I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "EIHYX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EATON VANCE HIGH-YIELD MUNICIPAL INC I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "EISMX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EATON VANCE ATLANTA CAPITAL SMID-CAP I",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Mid Cap"
+    },
+    {
+      "ticker": "EQPT",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EQUIPMENTSHARE COM INC COM CL A",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "EROK",
+      "asset_class": "alternatives",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EAGLEROCK LD LLC CL A SHS REP LTD",
+      "input": "legacy-fork",
+      "sub_asset_class": "Real Estate"
+    },
+    {
+      "ticker": "EVMO",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EATON VANCE MORTGAGE OPPORTUNITIES ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "Structured Credit"
+    },
+    {
+      "ticker": "EVV",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EATON VANCE LIMITED DURATION I COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Short Duration"
+    },
+    {
+      "ticker": "FAFGX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS GROWTH FD OF AMER 529-F-2",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FAX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ABRDN ASIA PACIFIC INCOME FUND COM NEW",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "FBKWX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY ADVISOR TOTAL BOND Z",
+      "input": "legacy-fork",
+      "sub_asset_class": "Intermediate"
+    },
+    {
+      "ticker": "FCIAX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS INVMT CO OF AMER 529-F-2",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FCNCA",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIRST CTZNS BANCSHARES INC DEL CL A",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FCSTX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY CALIFORNIA LTD TRM TAX-FREE BD",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "FCWGX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS CAPITAL WORLD GR&INC529F2",
+      "input": "legacy-fork",
+      "sub_asset_class": "Global"
+    },
+    {
+      "ticker": "FDIQ",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO BLOOMBERG FINANCIAL DATA PROVIDERS ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FEHIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIRST EAGLE HIGH YIELD MUNICIPAL I",
+      "input": "legacy-fork",
+      "sub_asset_class": "High Yield"
+    },
+    {
+      "ticker": "FESGX",
+      "asset_class": "alternatives",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIRST EAGLE GLOBAL C",
+      "input": "legacy-fork",
+      "sub_asset_class": "Real Estate"
+    },
+    {
+      "ticker": "FFBOX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS BOND FUND OF AMER 529-F-2",
+      "input": "legacy-fork",
+      "sub_asset_class": "Intermediate"
+    },
+    {
+      "ticker": "FFMMX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS AMERICAN MUTUAL 529-F-2",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FFPNX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS NEW PERSPECTIVE 529-F-2",
+      "input": "legacy-fork",
+      "sub_asset_class": "Global"
+    },
+    {
+      "ticker": "FIEZX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY ADVISOR TOTAL INTL EQUITY Z",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "FIGXX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY COLCHESTER STR TR MNY MRKT FDS I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Cash"
+    },
+    {
+      "ticker": "FIQZX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY ADVISOR INTERM MUNI INC Z",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "FISXX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY COLCHESTER STR TR MNY MRKT FDS I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Cash"
+    },
+    {
+      "ticker": "FKGRX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FRANKLIN GROWTH A",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FLCOX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY LARGE CAP VALUE INDEX",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FLR",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FLUOR CORP COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FMPXX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY COLCHESTER STR TR MONEY MKT CL I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Cash"
+    },
+    {
+      "ticker": "FNEEX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS NEW ECONOMY 529-F-2",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FNFWX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS NEW WORLD 529-F-2",
+      "input": "legacy-fork",
+      "sub_asset_class": "Global"
+    },
+    {
+      "ticker": "FNMA",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FEDERAL NATL MTG ASSN COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Mid Cap"
+    },
+    {
+      "ticker": "FOTJX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY ADVISOR OTC Z",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FRCZX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "Franklin CA Interm-Term Tx-Fr Inc Adv",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "FSLR",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIRST SOLAR INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FSPGX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY LARGE CAP GROWTH IDX",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FSSZX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY ADVISOR STOCK SELECTOR SM CP Z",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "FSWFX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS SMALLCAP WORLD 529-F-2",
+      "input": "legacy-fork",
+      "sub_asset_class": "Global"
+    },
+    {
+      "ticker": "FTHSX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FULLERTHALER BEHAVIORAL SM-CP EQ INST",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "FUEPX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS EUPAC 529-F-2",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "FWMMX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS WASHINGTON MUTUAL 529-F-2",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FXH",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIRST TRUST HEALTH CARE ALPHADEX FUND",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "FZEMX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FIDELITY ADVISOR EMERGING MARKETS Z",
+      "input": "legacy-fork",
+      "sub_asset_class": "EM"
+    },
+    {
+      "ticker": "GLVAX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO GLOBAL FOCUS A",
+      "input": "legacy-fork",
+      "sub_asset_class": "Global"
+    },
+    {
+      "ticker": "GPPIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "GOLDMAN SACHS SHORT-TERM CNSRV INC INSTL",
+      "input": "legacy-fork",
+      "sub_asset_class": "Short Duration"
+    },
+    {
+      "ticker": "GTBP",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "GT BIOPHARMA INC COM NEW",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "HAS",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "HASBRO INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "HIO",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "WESTERN ASSET HIGH INCOME OPPO COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "High Yield"
+    },
+    {
+      "ticker": "HLIEX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "JPMORGAN EQUITY INCOME I",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "HSIC",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "SCHEIN HENRY INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "HUT",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "HUT 8 CORP COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "HWHZX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "HOTCHKIS & WILEY HIGH YIELD FUND",
+      "input": "legacy-fork",
+      "sub_asset_class": "High Yield"
+    },
+    {
+      "ticker": "HWMZX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "HOTCHKIS & WILEY MID-CAP VALUE FUND CLASS Z",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Mid Cap"
+    },
+    {
+      "ticker": "HYMAX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "LORD ABBETT HIGH INCOME MUNI BOND A",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "HYMIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "LORD ABBETT HIGH INCOME MUNI BOND I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "INSD",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INSTADOSE PHARMA CORP COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "IPI",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INTREPID POTASH INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "ISVDT",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO STABLE VALUE RET CL 2",
+      "input": "legacy-fork",
+      "sub_asset_class": "Cash"
+    },
+    {
+      "ticker": "ITEQ",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMPLIFY BLUESTAR ISRAEL TECHNOLOGY ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "ITYAX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO TECHNOLOGY A",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "IVLU",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ISHARES MSCI INTL VALUE FACTOR ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "IVOV",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VANGUARD S&P MID-CAP 400 VALUE ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Mid Cap"
+    },
+    {
+      "ticker": "IVZ",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO LTD SHS",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "J",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "JACOBS SOLUTIONS INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "JAENX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "JANUS HENDERSON ENTERPRISE T",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "JATTX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "JANUS HENDERSON TRITON T",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "JCCIX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "JHancock Small Cap Core I",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "JDMNX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "JANUS HENDERSON ENTERPRISE N",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "JGSMX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "JPMORGAN SMALL CAP GROWTH R6",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "JHG",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "JANUS HENDERSON GROUP PLC ORD SHS",
+      "input": "legacy-fork",
+      "sub_asset_class": "Developed"
+    },
+    {
+      "ticker": "JMGRX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "JANUS HENDERSON ENTERPRISE I",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "LAND",
+      "asset_class": "alternatives",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "GLADSTONE LD CORP COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Real Estate"
+    },
+    {
+      "ticker": "LAR",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "LITHIUM ARGENTINA AG COM SHS",
+      "input": "legacy-fork",
+      "sub_asset_class": "Developed"
+    },
+    {
+      "ticker": "MCR",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "MFS CHARTER INCOME TR SH BEN INT",
+      "input": "legacy-fork",
+      "sub_asset_class": "High Yield"
+    },
+    {
+      "ticker": "MEAR",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ISHARES SHORT MATURITY MUNICIPAL BOND ACTIVE ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "MFEIX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "MFS GROWTH I",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "MHF",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "WESTERN ASSET MUN HIGH INCOME COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "MIAGX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "MFS AGGRESSIVE GROWTH ALLOCATION I",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "MLPA",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "GLOBAL X MLP ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "Global"
+    },
+    {
+      "ticker": "MMT",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ABERDEEN MULTI-MARKET INCOME SH BEN INT",
+      "input": "legacy-fork",
+      "sub_asset_class": "High Yield"
+    },
+    {
+      "ticker": "MSD",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "MORGAN STANLEY EMKT DBT FD INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "MSEQX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "MORGAN STANLEY INST GROWTH I",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "MSIQX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "MORGAN STANLEY INST INTERNATIONAL EQ I",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "MWTSX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "TCW METWEST TOTAL RETURN BD PLAN",
+      "input": "legacy-fork",
+      "sub_asset_class": "Intermediate"
+    },
+    {
+      "ticker": "NBPIX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NEUBERGER LARGE CAP VALUE INSTL",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "NCHRX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NUVEEN CA HIGH YIELD MUNICIPAL BOND I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "NESIX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NEEDHAM SMALL CAP GROWTH INSTITUTIONAL",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "NEXT",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NEXTDECADE CORP COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "NINLX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NEUBERGER INTRINSIC VALUE I",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "NOG",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NORTHERN OIL & GAS INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "NSIOX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NUVEEN STRATEGIC MUNICIPAL OPPS I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "NTTYY",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NTT INC SPONSORED ADR",
+      "input": "legacy-fork",
+      "sub_asset_class": "Developed"
+    },
+    {
+      "ticker": "NUW",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NUVEEN AMT-FREE MUN VALUE FD COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "NVG",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "NUVEEN AMT FREE MUN CR INC FD COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "OARDX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO RISING DIVIDENDS A",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "OLCYX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO LIMITED TERM CA MUNICIPAL Y",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "OPMSX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO MAIN STREET MID CAP A",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Mid Cap"
+    },
+    {
+      "ticker": "P",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "EVERPURE INC CL A",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "PAAA",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PGIM AAA CLO ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "Structured Credit"
+    },
+    {
+      "ticker": "PBT",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PERMIAN BASIN RTY TR UNIT BEN INT",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "PFG",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PRINCIPAL FINANCIAL GROUP INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "PFMIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PIMCO MUNICIPAL BOND INSTL",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "PFUIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PIMCO INTERNATIONAL BOND (UNHEDGED)INSTL",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "PHK",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PIMCO HIGH INCOME FD COM SHS",
+      "input": "legacy-fork",
+      "sub_asset_class": "High Yield"
+    },
+    {
+      "ticker": "PHO",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO WATER RESOURCES ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "PIUIX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FEDERATED HERMES INTERNATIONAL EQUITY IS",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "PML",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PIMCO MUN INCOME FD II COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "PMUPX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PIMCO MUNICIPAL BOND I2",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "POVYX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PUTNAM INTERNATIONAL EQUITY Y",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "PPG",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PPG INDS INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "PRTMX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "T. ROWE PRICE INTERMEDIATE MUNCPL BD I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "PRUZX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PGIM JENNISON UTILITY Z",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "PTY",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PIMCO CORPORATE & INCOME OPPOR COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "High Yield"
+    },
+    {
+      "ticker": "PUMP",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PROPETRO HLDG CORP COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "PVAL",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PUTNAM FOCUSED LARGE CAP VALUE ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "PYLD",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PIMCO MULTISECTOR BOND ACTIVE EXCHANGE-TRADED FUND",
+      "input": "legacy-fork",
+      "sub_asset_class": "Structured Credit"
+    },
+    {
+      "ticker": "QACDS",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "CHASE DEPOSIT SWEEP JPMORGAN CHASE BANK NA",
+      "input": "legacy-fork",
+      "sub_asset_class": "Cash"
+    },
+    {
+      "ticker": "QIWSQ",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "FDIC BANK DEPOSIT SWEEP NOT COVERED BY SIPC",
+      "input": "legacy-fork",
+      "sub_asset_class": "Cash"
+    },
+    {
+      "ticker": "QQQE",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "DIREXION NASDAQ-100 EQUAL WEIGHTED INDEX ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "RGVGX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS US GOVERNMENT SEC R-6",
+      "input": "legacy-fork",
+      "sub_asset_class": "Intermediate"
+    },
+    {
+      "ticker": "RLBFX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "AMERICAN FUNDS AMERICAN BALANCED R-5",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "RPMT",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "REGO PMT ARCHITECTURES INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "RRBI",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "RED RIVER BANCSHARES INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "RSPG",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO S&P 500 EQUAL WEIGHT ENERGY ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "RTMTX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "RUSSELL INV TAX-MANAGED US LARGE CAP M",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "SAABY",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "SAAB AB UNSPONSRED ADS",
+      "input": "legacy-fork",
+      "sub_asset_class": "Developed"
+    },
+    {
+      "ticker": "SBI",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "WESTERN ASSET INTER MUNI COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "SHYM",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ISHARES SHORT DURATION HIGH YIELD MUNI ACTIVE ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "SIVLX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "SEAFARER OVERSEAS VALUE INSTITUTIONAL",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "SLRC",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "SLR INVESTMENT CORP COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "SPLB",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "STATE STREET SPDR PORTFOLIO LONG TERM CORPORATE BOND ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "Long Duration"
+    },
+    {
+      "ticker": "SUIAF",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "SUBSTRATE ARTIFICIAL INTEL SUBSTRATE ARTIFI",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "TER",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "TERADYNE INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "TFIN",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "TRIUMPH FINANCIAL INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "TGOPY",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "3I GROUP PLC UNSPONSORD ADR",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "TGVIX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "THORNBURG INTERNATIONAL EQUITY I",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "TIVRX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "THORNBURG INTERNATIONAL EQUITY R5",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "TMNIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "COUNTERPOINT TACTICAL MUNICIPAL I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "TOIXX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "MONEY MKT OBLIGS TR FH TREAS INS OBL",
+      "input": "legacy-fork",
+      "sub_asset_class": "Cash"
+    },
+    {
+      "ticker": "TORIX",
+      "asset_class": "alternatives",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "TORTOISE ENERGY INFRASTRUCTURE TR INS",
+      "input": "legacy-fork",
+      "sub_asset_class": "Real Estate"
+    },
+    {
+      "ticker": "TQAIX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "T. ROWE PRICE INTEGRATED US SM GR EQ I",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "TROW",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PRICE T ROWE GROUP INC COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "TSIIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "THORNBURG STRATEGIC INCOME I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Intermediate"
+    },
+    {
+      "ticker": "UBVSX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "UNDISCOVERED MANAGERS BEHAVIORAL VAL I",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "UFO",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PROCURE SPACE ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "UTG",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "REAVES UTIL INCOME FD COM SH BEN INT",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "VADAX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO EQUALLY-WTD S&P 500 A",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "VADDX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO EQUALLY-WTD S&P 500 Y",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "VADFX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO EQUALLY-WTD S&P 500 R6",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "VBITX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VANGUARD SHORT-TERM BOND IDX I",
+      "input": "legacy-fork",
+      "sub_asset_class": "Short Duration"
+    },
+    {
+      "ticker": "VCADX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VANGUARD CA INTERM-TERM TAX-EXEMPT ADM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "VCR",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VANGUARD CONSUMER DISCRETIONARY ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "VG",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VENTURE GLOBAL INC COM CL A",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "VITSX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VANGUARD MORN TOTAL STK MKT IDX INSTL",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "VMLUX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VANGUARD LTD-TERM TX-EX ADM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Municipal"
+    },
+    {
+      "ticker": "VNM",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VANECK VIETNAM ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "EM"
+    },
+    {
+      "ticker": "VTIFX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VANGUARD TOTAL INTL BD IDX INSTITUTIONAL",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "VTMSX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VANGUARD TAX-MANAGED SMALL CAP ADM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "VVR",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "INVESCO SR INCOME TR COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "Intermediate"
+    },
+    {
+      "ticker": "VWALX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VANGUARD HIGH-YIELD TAX-EXEMPT ADM",
+      "input": "legacy-fork",
+      "sub_asset_class": "High Yield"
+    },
+    {
+      "ticker": "VWDRY",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "VESTAS WIND SYS AS UNSP ADR",
+      "input": "legacy-fork",
+      "sub_asset_class": "Developed"
+    },
+    {
+      "ticker": "WFSPX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ISHARES S&P 500 INDEX K",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "WITIX",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ALLSPRING INTERMEDIATE TAX/AMT-FR INST",
+      "input": "legacy-fork",
+      "sub_asset_class": "Intermediate"
+    },
+    {
+      "ticker": "WRB",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "BERKLEY W R CORP COM",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "WTW",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "WILLIS TOWERS WATSON PLC LTD SHS",
+      "input": "legacy-fork",
+      "sub_asset_class": "International"
+    },
+    {
+      "ticker": "XAIX",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "XTRACKERS ARTIFICIAL INTELLIGENCE AND BIG DATA ETF",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Large Cap"
+    },
+    {
+      "ticker": "XTIA",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "XTI AEROSPACE INC COM NEW",
+      "input": "legacy-fork",
+      "sub_asset_class": "US Small Cap"
+    },
+    {
+      "ticker": "ZFSVF",
+      "asset_class": "equity",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "ZURICH INSURANCE GROUP AG ORD",
+      "input": "legacy-fork",
+      "sub_asset_class": "Developed"
+    },
+    {
+      "ticker": "ZROZ",
+      "asset_class": "fixed_income",
+      "classified_by": "scheduled",
+      "updated_by": "e18-scheduled-census",
+      "name": "PIMCO 25+ YEAR ZERO COUPON US TREASURY INDEX EXCHANGE-TRADED FUND",
+      "input": "legacy-fork",
+      "sub_asset_class": "Long Duration"
+    }
+  ]
+}
