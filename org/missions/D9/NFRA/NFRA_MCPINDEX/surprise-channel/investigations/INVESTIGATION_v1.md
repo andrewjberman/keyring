@@ -3393,6 +3393,76 @@ carries none.
     "spec_asserts": "Ledger L5/L9 proof = SSM Success on the new version, the merge log line, and the silver partition written by tonight's scheduled fires.",
     "world_is": "Today's realized/transactions inputs had already been merged at 06:37Z and 07:02Z, before the 08:25Z publish -- by timing, worker ~17's pre-publish runs (INFERRED, not attributed by a log); unrealized/allocations inputs are weekly. So tonight's fires had nothing to write. ABSENT is not EXERCISED: the write arm on the stripped documents is unproven.",
     "notes": "Issuer ruling: do NOT fire an ad-hoc run -- it would consume the next input and destroy the scheduled discriminator, which is how tonight's was lost. Re-read 2026-09-30 after the 21:46/21:53Z fires (realized, transaction: expect 'Found 1 new' and a silver/<leg>/2026-09-30 partition written by the fire); unrealized L5 and allocation L9 at the 2026-10-05 21:38/22:00Z fires. MX-s-14 is ruled at the round-4 close: complete once written, or its residual legs carried into round 5."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T09:10Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S1",
+    "hazard_standing": "ARMED",
+    "one_line": "MX-a-8 asks for a C3-valid tool name starting bd_, and no such name exists: bd is not a systems.json key and scopes.json records it as refused in every naming slot. The record names blackdiamond_list_fees instead.",
+    "spec_asserts": "MX-a-8 act item 4: give the first tool 'a C3-valid name starting bd_'; J1 asks for 'one bd_* tool'.",
+    "world_is": "C3 (PRD) requires {system}_{function}[_{qualifier}] with system a key of infra/logic/registry/systems.json. systems.json has 49 keys (read 2026-09-30) and none is bd (blackdiamond is the vendor key). scopes.json firm 49financial carries the alias bd with refused: 'NAMING_SCHEMA.json refused_tokens: refused in every slot; the vendor is blackdiamond, the firm is 49financial'. A bd_* name fails MX-n-1's registration validator. The record names blackdiamond_list_fees (C3-valid).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/systems.json read at worktree HEAD (CLOUD @3ce0240861): 49 system keys, none equal to bd; key blackdiamond class VENDOR.",
+        "infra/logic/registry/scopes.json scopes[0].aliases[0]: spelling bd, refused text as quoted in world_is.",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md:236-244 (C3 text).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~21/analysis-blackdiamond.r5.result.md section Question to tool."
+      ]
+    },
+    "notes": "ARMED because MX-t-13 is cut from this record's name; if its worker face carries bd_ from the order text, registration is refused by MX-n-1. Disarm: cut MX-t-13's face from the record's name, or rule bd_ and accept the refusal."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T09:10Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S2",
+    "hazard_standing": "INERT",
+    "one_line": "MX-a-8 act item 3 asks for the key segment that separates firms in opal-data-bd silver, and there is none: every silver key is silver/<table>/<date>.parquet. Firm separation rests on the bucket and on the z08 account-id prefix, both recorded in the analysis.",
+    "spec_asserts": "MX-a-8 act item 3: 'Name the key segment that separates firms and state that a principal resolves only its own firm.'",
+    "world_is": "No firm or master token appears in any silver key under s3://opal-data-bd/silver/ (key shapes read 2026-09-30 on all 6 dated prefixes: 1 to 3 shapes each). scopes.json lists opal-data-bd as a graded alias of firm 49financial's bucket; account_id carries z08 on 100 percent of rows read (fees 60 newest partitions 47,464 of 47,464; transactions 7,643; realized 10,242; allocations 7,257; unrealized 111,527). The record states the tool's scope rule as the scope argument, the single-prefix read role and a fail-closed z08 assertion, not a key segment.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ListObjectsV2 of s3://opal-data-bd/silver/ read 2026-09-30T08:50Z, 8,061 objects; key shapes tallied per prefix.",
+        "infra/logic/registry/scopes.json scopes[0] (49financial) aliases and scopes[7] (z09 note: 49 Financial ids carry z08, zero overlap).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~21/analysis-blackdiamond.r5.result.md section Scope rule."
+      ]
+    },
+    "notes": "INERT: nothing breaks. Full history of the other tables was not scanned for z09 rows; only the listed objects were."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T09:10Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S3",
+    "hazard_standing": "ARMED",
+    "one_line": "The first tool rests on silver/fees, whose writer cannot be named: the scheduled Playwright fees document last logged a login failure on 2026-09-25, yet bronze/fees lands at 22:20Z and silver/fees at 22:21Z every weekday through 2026-09-29.",
+    "spec_asserts": "MX-a-8 act item 1 and 5: state the producer per leg; a leg stale or dead today never feeds the first tool.",
+    "world_is": "logs/fees-download-2026-09-25.log (read 2026-09-30) ends Download exit code 1 and SKIP: silver conversion skipped; it is the newest fees log (121 logs listed). Yet bronze/fees/Fees_OpalCapital_Daily_2026-09-15_to_2026-09-29.xlsx landed 2026-09-29T22:20Z (also 09-28, 09-25, 09-24 ... at 22:20Z) and silver/fees partitions were last-modified 2026-09-29T22:21Z with data through trade_date 2026-09-28. So a writer outside that document's logged path lands the data. The analysis treats fees as LIVE on the measured data and leaves the writer INFERRED (possibly the BD REST vehicle).",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "s3://opal-data-bd/logs/fees-download-2026-09-25.log read 2026-09-30 (login TimeoutError, exit code 1).",
+        "s3://opal-data-bd/bronze/fees/ listing read 2026-09-30: 133 objects, newest 2026-09-29T22:20Z.",
+        "org/critical_paths/change_management/20260714T1124Z_d1a-bd-rest-vehicle-a_deploy_completion.md names Fees_OpalCapital_Daily in its REST tenancy probe (attribution not verified)."
+      ]
+    },
+    "notes": "ARMED: if the unnamed writer stops, silver/fees goes stale while nothing pages (no monitor by moratorium) and blackdiamond_list_fees would serve an old as_of; its answer envelope states as_of so the staleness is visible to the caller, not to an operator. Disarm: name the writer before the MX-r-7 release, or accept the fees leg as unattributed."
   }
 ]
 ```
