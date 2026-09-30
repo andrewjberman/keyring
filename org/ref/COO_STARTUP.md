@@ -144,3 +144,13 @@ cd /home/ubuntu/gold-layer/scripts \
      s3://opal-data-bd/logs/gold-layer/gold_full_{task_slug}_$(date +%Y%m%d_%H%M%S).log
 ```
 Key: S3 sync first (no stale code), tee for local + remote log, timeout 7200s.
+
+## Worktree wipe on close (Andrew-direct 2026-09-29 ~22:0xZ)
+
+When you close out an agent (a worker drains, or a seat ends its round), remove that agent's worktree and branch in the same act, provided
+everything in it is committed and landed:
+- `git -C <wt> status --porcelain` is empty;
+- the branch is an ancestor of CLOUD, or its commits are drained.
+
+Removal is `git worktree remove <path>` (never `--force`, never a raw `rm`), then `git branch -d <branch>`. A worktree with uncommitted or unlanded
+work is NOT wiped: drain it or name why it stays. Record: `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260929_220xZ_WORKTREE_WIPE_ON_CLOSE_EDICT_AND_CTO_COO_P_RELAUNCH.md`.
