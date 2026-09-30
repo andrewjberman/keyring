@@ -68,7 +68,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 the one reader class still on the raw path). Base: AC1 FAIL (plant and read path raw; control unchanged), AC2 FAIL (1 clause), AC3 PASS 127.
 ac-3's pair is signed only after ac-4 drains and its reader census reads 0 raw-path readers. The file name keeps its original slug.
 
-<status>pending</status>
+<status>complete</status>
 **AMENDMENT 1 (`2.0.0_SA_COO~Z`, 2026-09-30 ~13:2xZ, before spawn):** CTO msg 27175 -- ac-4 becomes the filings/v1 reader cell: route `fetch.pool_key` through `crosswalk.slash_safe_key` (all four raw callers), keep the docstring fix; class worker (was worker-light); AC1 `ac_4_fetch.py` added (the docstring check is AC2).
 <round>53</round>
 <slot>~192</slot>
