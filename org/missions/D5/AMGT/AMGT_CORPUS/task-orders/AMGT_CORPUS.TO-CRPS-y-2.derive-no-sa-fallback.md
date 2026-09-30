@@ -151,3 +151,6 @@ file.
 
 **AMENDMENT 2 (issuer notes):** row Z-W2-S17 ruled; path granted; the order remains pending.
 <status>pending</status>
+
+**AMENDMENT 1 executed (0.9.0_WK_AMGT_CORPUS~2):** AC3 and AC4 PASS; instance VALID.
+<status>complete</status>
