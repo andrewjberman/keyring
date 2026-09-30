@@ -3014,6 +3014,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "table remaining_after is 31 = 21 stays_unresolved figures (BBSE3 10, BP PE_RATIO 10, TSM 1) + 10 BP PROF_MARGIN pointer figures listed under remaining_after_breakdown, because the checker requires remaining == projected; before_total (59) does not contain them.",
     "notes": "Filed, not fixed (the check files are the issuer's). BP/NG is CRPS-aa-4's pass.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S71",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-30T19:20:00Z",
+    "one_line": "After RESAPP r53 ac-3 moved the slash-key objects, lib/research/corpus/dossier.py still reads model blocks at the RAW key (`:927`, `:966`: MODEL_BLOCK_POOL_PREFIX + security_key, no slash_safe_key), so BP/_LN and NG/_LN dossiers stay built from the kept 2026-09-25 raw-key blocks: aa-4 re-derived both on the encoded keys and write_one wrote 0 (inputs unchanged).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "dossier.current_inputs('BP/_LN_Equity') names derived/model_block/BP/_LN_Equity/20260925T200039Z/model_block.json; NG names .../NG/_LN_Equity/20260925T200133Z/...; the newest encoded blocks are 20260930T190146Z / 190147Z.",
+        "d25.py write (D25_KEYS BP/NG) at 19:0xZ: 'LEG-D names 2 wrote 0 unchanged 2 errors 0'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every per-security reader goes through slash_safe_key before the slash-key objects move (Z-W4-S6, supplied to RESAPP r53 as a precondition @7e569c4d1d s.2).",
+    "world_is": "The move landed with dossier.py's two model-block readers still on the raw key; the kept raw copies make them read stale blocks silently (no error, no absence).",
+    "notes": "Fix: route dossier.py :927/:966 through slash_safe_key (or decode both forms), then write_one BP/NG. Surfaced at aa-4 leg d; ask to CTO~Z in AA4_DEVIATIONS_ROUND25.md. Same class: peers/universe.py (Z-W4-S6 names it) -- not re-measured here.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
