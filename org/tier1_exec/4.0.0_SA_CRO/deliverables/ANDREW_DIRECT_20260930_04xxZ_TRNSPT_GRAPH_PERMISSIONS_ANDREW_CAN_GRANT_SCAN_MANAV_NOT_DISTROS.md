@@ -16,3 +16,10 @@ Message 2, mid-turn:
 1. Graph permissions are Andrew's to grant; the working rule is to classify each difficulty as a limit of the AGENT/SCRIPT/TOOL or of the APPLICATION (Microsoft), then adjust and retry.
 2. `49@opalinvest.com`, `inflection@opalinvest.com` and `cottonwood@opalinvest.com` are distribution channels. The primary source is a scan of Manav's own emails (and Yang's, per the 2026-09-30 record), not the distro channels. The distros are optional.
 3. The client-domain recipient test (criterion b) is called inconsistent for some clients; whether it stays a GATE or becomes a recorded attribute is put back to Andrew, not decided here.
+
+## Addendum (same session, ~04:3xZ) -- Message 3, answering this seat's question on criterion (b)
+
+> I dont fully understand regarding the recomended route. give me /exec-sum where you break down what we're trying to do, what the problem is, and what your solution is, all high level. Make it a recorded attribute as well.
+
+Effect: the client-domain recipient test (criterion b) is a RECORDED ATTRIBUTE, not a gate. The ingest rule is now: sender is Manav or Yang, a YCharts report attached, investment feedback; the recipient domain is stored on the row. This closes point 3 of the Effect list above. The mailbox-access route stays a recommendation and is not decided; Andrew asked for a plain-language account of it first.
+
