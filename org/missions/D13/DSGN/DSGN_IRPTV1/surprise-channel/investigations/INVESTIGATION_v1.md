@@ -3095,3 +3095,30 @@
   "notes": "Found while landing Andrew-direct design feedback on DEV 5c7eead8; that change touches no contract file. The portal half is the comparison-catalogue cell's own (IRPT_BCKEND ~Y, IB-yr-261 / its successor); DSGN_IRPTV1 does not take it without a grant. Every later DSGN_IRPTV1 suite run reads 18 = known five + these 13 until it lands."
 }
 ```
+
+## DSGN_IRPTV1-S41 -- DEV CI red at ESLint on every push since 620ea953: HeaderBrief.tsx regexes carry a literal 0x08 byte (DSGN_AMGTV1's); this lane's four test lint errors fixed in item 37
+
+```json
+{
+  "id": "DSGN_IRPTV1-S41",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-30T14:25:00Z",
+  "one_line": "Portal DEV CI (\"DEV CI - Build & Validate\") has concluded FAILURE at its Run ESLint step on every DEV push since 620ea953 (2026-09-29 21:06Z): src/pages/SecurityAnalysis/components/HeaderBrief.tsx:47-48 carry a LITERAL 0x08 byte inside two regexes (a \b word boundary that became a backspace), so ESLint no-control-regex fails and the two matches can never fire on a served source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gh run list (portal, 2026-09-30 14:0xZ): runs 36631065593 (620ea953), 36642163907, 36653706339, 36658548696, 36675104113, 36725618787 (a20b5a60) all conclusion=failure; job 'Lint, Type Check & Build' step 7 'Run ESLint' failure, steps 8-11 skipped",
+      "local `bun run lint` at portal a20b5a60: 6 errors -- HeaderBrief.tsx 47:17 and 48:17 no-control-regex (\b); iv-e-106.request-list-order.test.tsx 151/157 no-control-regex (\u0000); iv-e-116.generate-journey.test.tsx 128/129 no-regex-spaces",
+      "od -c of HeaderBrief.tsx lines 47-48: `/ ^ b l o o m b e r g \b / i` and `/ ^ D - 1 \b /` -- the byte is 0x08, present at HEAD and at 620ea953 (python count 2 in both); authored by 0.9.0_WK_DSGN_AMGTV1~9 @cb25695b (AV-r-1) on 2515f456 (AV-e-1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every DEV push runs CI green (VALGATE + ESLint + tsc + build); descriptionSourceWords returns 'Company description from Bloomberg' for a served source that starts with 'bloomberg' and 'from the drafted thesis' for one that starts with 'D-1'.",
+  "world_is": "CI has been red at ESLint since 620ea953; the two HeaderBrief.tsx regexes require a backspace character after the prefix, which no served source carries, so both branches are dead and the face reads 'Company description' for every source. The four IR-test errors were this lane's and are fixed in DSGN_IRPTV1 FAST item 37; the HeaderBrief.tsx pair sits outside this lane's lease surface (DSGN_AMGTV1, site-Z 2.0.0_SA_COO~D) and is not edited here.",
+  "notes": "Owner of the remediation: DSGN_AMGTV1's seat (site-Z 2.0.0_SA_COO~D) -- replace the two 0x08 bytes with the intended `\b` escape (or drop the boundary) under its own pin; the fix is two bytes. Until it lands, every DEV push's CI reads FAILURE at ESLint whatever the push carries, and the lease seat's 'CI running' landing carries no green oracle. Found by the lease seat reading CI for a20b5a60."
+}
+```
