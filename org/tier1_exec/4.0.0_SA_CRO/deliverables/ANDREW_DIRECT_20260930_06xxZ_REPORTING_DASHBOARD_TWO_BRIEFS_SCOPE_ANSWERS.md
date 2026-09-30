@@ -19,3 +19,10 @@ Message 2 (answering this seat's data-gap table and its three decisions):
 4. Account grain is what matters; household and client levels are aggregates built from it.
 5. Performance is TOTAL RETURN: how dividends and other income enter it is a design question the brief must settle.
 6. 49 Financial is built first; Cottonwood follows with its Black Diamond backfill arriving later, so the shape must be firm-agnostic and get right now. Inflection's Orion API and Black Diamond's endpoints are to be searched for the missing lot, cost-basis and transaction feeds (agents sent).
+
+## Addendum (~07:0xZ) -- Message 3, the gold layer is always the Opal shape
+
+> Yes again I want to make the point that when we have these data pipelines, the gold layer is always the opal shape. that means that whatever these various firms shapes are, that is fine for bronze in raw form, that is fine in silver in typed deduplicated parquet, but gold is the adapter layer, thats when we take opal shape and everything has to be coalesced into that. Just want to make that extra clear as you're going through the plumbing on the subject.
+
+Effect (this seat's reading): a standing rule for both dashboard briefs and the commentary work. Bronze holds each source's raw shape; silver holds it typed and de-duplicated in parquet, still in the source's own shape; GOLD is the adapter layer, where every firm's shape is coalesced into ONE Opal shape. Firm-specific columns do not survive into gold; where a firm lacks a field, gold carries it as null with a coverage marker, not as a firm-specific variant of the table.
+
