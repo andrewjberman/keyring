@@ -332,14 +332,30 @@ if [ -z "${OPAL_AGENT_SERIAL:-}" ]; then
 fi
 _AUTH="${OPAL_AGENT_SERIAL} <${OPAL_AGENT_SERIAL}@opal.agent>"
 echo "safe-merge: committing the merge as ${OPAL_AGENT_SERIAL}"
-if ! git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then
+# HOOK-HANG RETRY (1.0.0_SA_CTO msg 103165, 2026-09-30). The pre-commit hook can stall at PROCESS START
+# (env.exe at 0 CPU, no child; captures in org/mcp/hook-hang-capture.log). Killing it failed the commit, and the abort
+# below then threw away a fully graded merge (1,933 paths, 04:49Z). A watchdog that kills a hung hook first writes the
+# marker file below in the COMMON git dir. A commit failure with a marker NEWER than this attempt's start is a killed
+# hang, not a refusal: MERGE_HEAD and the index survive, so only `git commit` re-runs, at most 3 attempts. A genuine
+# refusal writes no marker and still aborts exactly as before.
+_HANG_MARK="$(git rev-parse --git-common-dir)/safe-merge-hook-killed"
+_try=0
+while :; do
+  _try=$((_try + 1))
+  _t0=$(date +%s)
+  if git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then break; fi
+  if [ -f "$_HANG_MARK" ] && [ "$(date -r "$_HANG_MARK" +%s 2>/dev/null || echo 0)" -ge "$_t0" ] && [ "$_try" -lt 3 ]; then
+    echo "safe-merge: commit attempt $_try failed on a KILLED HUNG HOOK ($(cat "$_HANG_MARK" 2>/dev/null)); the merge is intact -- retrying git commit only" >&2
+    rm -f "$_HANG_MARK"
+    continue
+  fi
   echo "safe-merge: *** COMMIT REFUSED DOWNSTREAM after this script's grade PASSED. ***" >&2
   echo "            That is a defect in THIS script's grade, not only in the branch: a hook" >&2
   echo "            saw something the merged-index grade above did not. Aborting the merge so" >&2
   echo "            nothing is left staged, and REPORT the discrepancy." >&2
   git merge --abort 2>/dev/null || true
   exit 1
-fi
+done
 rm -f "$STATE" "$STATE.branch" 2>/dev/null || true
 echo "safe-merge: MERGED and committed -- $(git rev-parse --short HEAD)"
 echo "safe-merge: remember the drain's remaining steps -- remove the worktree and its branch explicitly."
