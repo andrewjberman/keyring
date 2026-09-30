@@ -3409,6 +3409,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Issuer row; surfaced while signing HVST-p-1. wsj's 11 articles parse (48 pairs incl. co-mentions). Disposition detail: not a hazard (nothing wrong is served; the rows are absent, not miscounted). Cause unmeasured: most likely silver_from_bronze.article_rows does not parse bbg's as-received response shape. Carried to 1.0.0_SA_CTO~Z in the round-26 packet as a repair cell; p-1 proceeds on what silver holds, and a second mention rebuild after the fix is cheap."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W67-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~67",
+      "surfaced_at": "2026-09-30T06:30Z",
+      "one_line": "The two recorded runs did not run on the cell's stated base: HVST-o-5 ran on code pin 65aa9251bc, which lacks HVST-o-1's worker.py additions, so worker.py line numbers differ by 64-76 between the run pin and b635dadc66 (the logic cited is byte-identical on both).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git diff --stat 65aa9251bc b635dadc66 -- lib/opal_data_harvest/: worker.py +105/-3 (HVST-o-1 reach), publishers.py 0 lines, catalog.py 0 lines",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~67/p2_ac1_output.txt: every cited line printed at both refs, e.g. worker.py:297 @b635dadc66 = :230 @65aa9251bc, text byte-identical (asserted)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_preflight_upload.txt: run code pinned at 65aa9251bc (lib diff shows only run-local.ps1 and README.md)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO-HVST-p-2 s.1: the run record writer is worker.py write_run_record (~:406) and the outbox writer _write_harvest_raw (~:147); the check base is b635dadc66, whose lib/ equals the issuance commit.",
+      "world_is": "write_run_record is at worker.py:476 at b635dadc66 and the recorded jobs[] entries carry no gold_security_key / reached_span (a pre-HVST-o-1 record); the lines in the reject, fetched_keys-fold and run-record paths that the runs went through are the same text on both refs, so the cause holds at either; the cell's fix lands on b635dadc66 and the next run on it will also write HVST-o-1's fields.",
+      "notes": "Form only: no cause or fix depends on the difference. AC1 cites each line at both refs.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
