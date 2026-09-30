@@ -15,5 +15,19 @@ and `wk-crps18-1/2/3`).
 - Removed with `git worktree remove --force`, then `git worktree prune`.
 - Every `wk-crps*` branch is KEPT. No other seat's worktree was touched.
 
-**Not acted:** `C:/tmp/wk-crps-1`, an empty directory that is not a registered worktree. The instruction does not reach
-worktrees outside AMGT_CORPUS.
+**Not acted (at 02:5xZ):** `C:/tmp/wk-crps-1`, an empty directory that is not a registered worktree. The instruction does
+not reach worktrees outside AMGT_CORPUS.
+
+## ADDENDUM -- ANDREW-DIRECT 2026-09-30 ~06:3xZ, same channel
+
+**Verbatim:**
+
+> delete the empty wk-crps-1 folder too
+
+**Acted:**
+- **Measured first.** The folder was not empty. It held `portal/node_modules`, a JUNCTION to the live
+  `ajb_workspace\portal\node_modules`, whose target read 263 top-level entries. A recursive delete could have followed the
+  junction into the live dependencies.
+- **Removed non-recursively, one level at a time:** `rmdir` without `/s` on the junction removes the link only. Then
+  `rmdir` on the empty `portal\`, then on `wk-crps-1\`. Each rc was 0.
+- **After:** `C:/tmp/wk-crps-1` is absent. The live `portal\node_modules` exists with 263 top-level entries, unchanged.
