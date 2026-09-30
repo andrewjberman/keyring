@@ -3387,6 +3387,72 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "Silver parts are named by fetch timestamp, one per article row and one per listing page with hits: 30 silver parts (bbg 15, wsj 15) beside 27 bronze objects (bbg 13, wsj 14). Bronze stays inside the 32 bound; the part count is a naming grain the half did not state. Listing pages fetched by run 2 re-used run 1's bronze (skipped, existing) and wrote new silver listing_hit parts.",
       "notes": "Measured from the upload receipt and AC1's tier/table counts. Read as a description gap, not an out-of-scope write.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W69-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~69",
+      "surfaced_at": "2026-09-30T06:25Z",
+      "one_line": "The recorded challenge marker the order asks for is not on disk: events.jsonl and runs/*.json carry status, host, path and size but no response body, so the marker is proven only by the exception class in the job detail, and the ft 403 body is not recorded anywhere.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/transport.py:95-103: the body is appended to PacedSession.captured (memory) and the ledger row carries host, path, status, bytes only; lib/opal_data_harvest/worker.py:426-429 persists str(exc) only",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~69/p4_ac1_output.txt: CHALLENGE MARKER block -- barrons detail 'Publisher verification challenge from www.barrons.com' (a marker matched, which of five unrecorded); ft detail 'HTTP 403 from www.ft.com/search' (no marker matched; 270955 bytes; body not kept)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-p-4 section 1 item 1: the recorded response (status, host, path, size, the challenge marker) for ft and barrons from events.jsonl and the runs/*.json files.",
+      "world_is": "status, host, path and size are recorded; the challenge marker is not (bodies are never stored on the rejection path). For barrons the marker's existence is inferred from the exception class; for ft the absence of a marker is inferred the same way and the 270 KB page's nature is unknown.",
+      "notes": "AC1 prints exactly what is recorded and states the inference. It is the reason the ft cause stays a limit (AMGT_HARVST-Z-W69-S3).",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W69-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~69",
+      "surfaced_at": "2026-09-30T06:25Z",
+      "one_line": "Barrons' contracted challenge repair cannot run in a job that had to re-authenticate first: the reauth spends the loop's attempt 0 and the repair branch refuses when attempt is truthy, so every logged-out barrons start ends request_rejected (2 of 2 on the ledger).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py:258 `for attempt in range(2)`, :403 `except AuthExpired` (reauth, loop continues at attempt 1), :393 `if attempt or publisher not in {\"bbg\", \"barrons\"}: raise`, :426 `except RequestRejected`",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~69/p4_ac2_output.txt: BARRONS block -- 8-event sequence on 2026-09-30T04:08Z reproduced on 2026-09-23T00:32Z; verification_repairs=0, 0 verification_* events; bbg the same day repaired at attempt 0 and got 200; contracts.json:80 automatic_verification_enabled true"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HARVEST_COMMISSIONING_20260915_W.md and contracts.json:80: automatic Barron's recovery is qualified and enabled, the worker recovering a challenge with a scripted repair.",
+      "world_is": "Enabled but unreachable whenever the same job first found the session logged out (a /client answer under 200 bytes): both recorded barrons jobs that started that way (09-23, 09-30) reauthed, met the challenge at attempt 1 and were rejected without a repair. Left alone, every barrons job after the session idles logged out fails the same way.",
+      "notes": "Route B2 in p4_ac2_output.txt names the smallest edit. The scripted slider repair is the collector's own ratified path, not a new bypass; whether it falls under the order's 'no challenge solving' clause is for the issuer.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W69-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~69",
+      "surfaced_at": "2026-09-30T06:25Z",
+      "one_line": "The ft envelope is 15 days old, was not minted by the collector's reauth, and no path in the collector can refresh it on a 403; the same unchanged request that returned 200 on 09-15 has returned a 270 KB 403 on 09-23 and 09-30, so its cause is a stated limit.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~69/p4_ac1_output.txt: SESSION ENVELOPES ft -- secrets/ft.dpapi mtime 2026-09-15T03:26:43Z (37 s before the first ledger row), 0 auth/ folders, 0 reauth events; LEDGER HISTORY ft /search 200,200,200 (~199 KB) then 403 270973 and 403 270955",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~69/p4_ac2_output.txt: FT block -- build_session() byte-identical between 58535ee9a7 and HEAD, GET line unchanged since 8b11d236c4; check_auth has no ft branch (publishers.py:384-395), verification.repair refuses ft (verification.py:66), contracts.json:45 says 403 is not a re-auth"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-p-4 section 1 item 3: the cause of the ft refusal, and the smallest scripted route to a clean fetch or a stated limit.",
+      "world_is": "Three readings fit (aged session, edge rule on this client's UA/TLS pairing, blocked egress) and the record separates none of them; the only ft refresh path (auth.py:87 -> ft_harvest_session.py) needs AuthExpired, which a 403 never raises, and that harvester logs in with stored credentials and calls a vendor captcha solver (ft_harvest_session.py:132,213).",
+      "notes": "Routes F1 (keep the rejection's classification), F2 (re-harvest, Andrew's word), F3 (no route) are in p4_ac2_output.txt. Nothing was requested from ft.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
