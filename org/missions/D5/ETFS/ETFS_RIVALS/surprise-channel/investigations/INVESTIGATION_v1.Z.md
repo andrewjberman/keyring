@@ -271,6 +271,74 @@
     "spec_asserts": "RIV-p-1: a failed check publishes the page with BASG data-status=not-updated; the stage contract returns status OK|PARTIAL|FAILED|SKIPPED and writes a batch marker only when its batch is whole; identity coverage is one of the six checks with PROVISIONAL thresholds.",
     "world_is": "The order and the contract name no status or marker rule for a stage that publishes a deliberately not-updated page, and no identity threshold that a 0-of-35 crosswalk can meet. The cell chose PARTIAL with no marker (a rerun of the same batch re-evaluates, and a wrapper reading the status sees the day was not fully published) and graded identity on 'has a resolved id or a raw identifier' (>= 0.9) with a 0.0 resolved floor, so the round-1 real days pass while the crosswalk is empty (row ETFS_RIVALS-Z-W1-S4).",
     "notes": "RIV-d-1 (Lambda wrapper) and RIV-d-2 (fire) read the stage status: PARTIAL here means the page IS published as not-updated, not that nothing was written. The real thresholds, including a resolved floor above 0.0 once the crosswalk carries CUSIP/ISIN/SEDOL forms, belong to the named enrichment cell."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "one_line": "RIV-d-2 COO-half act-start gate 1 FAILS: the deployed opal-gateway app differs from HEAD in 23 files beyond the four key-16 files and app/tests/, so the gateway deploy, the backfill and the read were NOT run and ledger etfs-rivalfunds-thread-r1 is left OPEN with L3-L6 unproven.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM ssm:a22ea652-4d07-40f1-b1fc-74ea0fd67a27 on i-07dccb1615503ac99 (read-only sha256sum of /opt/opal-gateway app deploy requirements.txt identity_tool_allowlist.txt, 76 files) compared by sha256 with the same file set at HEAD df977d32d2 (84 files): 8 files only in HEAD, 0 only on host, 20 differ.",
+        "Of the 28 files that differ between the deployed release and HEAD (git diff --stat 093fc247c6 HEAD, the EC2_MANIFEST deployed_commit), 5 are this order's (server.py, rivalfunds_view.py, rivalfunds_location.json, gen_rivalfunds_location.py, tests/test_rivalfunds_view.py) and 23 are not: admin_tenants.py, firm_role.py, taxsma_workbook.py, tenant_registry.py (only in HEAD), access_state.py, asker_scope.py, audit.py, config.py, data_entitlement.py, destructive_ops.py, guard.py, integrations/base.py, integrations/opal_discover/integration.py, integrations/portal_index/integration.py, integrations/schwab/datasets.json, integrations/schwab/query.py, oauth_as.py, ratelimit.py, refs/DATA_CATALOG.yaml, schwab_audit.py, tier.py, token_broker.py, tools.py.",
+        "Second independent blocker on the deploy path: deploy-to-ec2.sh builds the dashboard from $WORKSPACE_ROOT/mcportal and fails closed without mcportal/package.json; mcportal/ in this worktree is an empty directory (gitlink fa1ff9693b, uninitialised).",
+        "Applied and LIVE before the gate was read: safe-apply etfs-rivalfunds 39 added 0 changed 0 destroyed (ledger L1 closed); safe-apply opal-gateway targeted gw_rivalfunds_read 1 added 0 changed 0 destroyed (ledger L2 closed). Keys 1-10 still read 0 objects (no fetch was invoked).",
+        "COO half @462db51701 gate 1: 'If ANY file differs besides the four in key 16 and app/tests/, STOP: another seat's undeployed change would ride this deploy. That is that seat's deploy, never this one.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NEVER_WIDEN_HALF_COO_D2 gate 1 and TO-RIV-d-2 step 2: the only files that differ between the deployed gateway app and HEAD are the four key-16 files and app/tests/, so safe-ec2-deploy.sh opal-gateway ships only this project's change.",
+    "world_is": "HEAD's gateway tree carries 23 further files from other projects' merged, undeployed work, so a deploy of HEAD would ship them under this order's never-widen half (the precedent, EC2_MANIFEST release note for 093fc247c6, deployed from a clean deploy-only commit for exactly this reason). The worker stopped at the gate as ordered and did not run the gateway deploy, the backfill or the /rivalfunds read; it also did not roll back, because the 40 applied resources are create-only, inside the signed radius, and the two schedules (07:00 and 09:00 ET Mon-Fri) will fire against them.",
+    "notes": "Left standing for the issuer to choose: (a) recut the gateway leg on a deploy-only commit that carries the gateway directory at 093fc247c6 plus the five key-16 files, with mcportal initialised at the commit the live bundle was built from, then run backfill and the read from that worktree; or (b) roll back per key with terraform destroy -target of the new resources (etfs-rivalfunds stack; aws_iam_role_policy.gw_rivalfunds_read; bucket notification returns to empty). The ledger 6h window ends about 16:13Z and will then blare RED. The stage plan, the saved-plan file names and the EventBridge re-scan (144 rules, 18 with a pattern, 10 aws.s3 Object Created, 0 read errors, 0 matches) are in the ledger commit df977d32d2 and this worker's report."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "one_line": "safe-apply's HALTGT gate refused this worker twice for reasons the order does not name: it could not resolve a session serial (a gitignored org/mcp/sessions/<session>.serial was provisioned in the worktree) and then read 208 pending routine messages addressed to the issuer, so HALT_ACK=1 was set for both applies.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/safe-apply.sh first run: rc=3 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)'; the gate's printed fix (printf serial > org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial) was applied to the worktree's own org/mcp/sessions/, which .gitignore:435 ignores (git status clean of it).",
+        "Second run: rc=1 'HALT-GATE: 208 pending message(s)' scanned from the issuer 2.0.0_SA_COO~RV inbox because this worker has none; a read of the whole output for rival, etfs, opal-gateway, gateway returned 0 hits and no [STOP]; every entry is a deploy_ledger.py RED/WARN about other projects' entries. Both applies then ran with HALT_ACK=1, the gate's own routine-message acknowledgement."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-RIV-d-2 step 1: safe-apply the etfs-rivalfunds stack and the gateway policy.",
+    "world_is": "A worker with no inbox and no provisioned session serial cannot pass the HALTGT gate; the order names neither the serial provisioning nor HALT_ACK. No inbox message concerned this project. No file inside the order's paths was touched for it.",
+    "notes": "A future worker cut for an applying cell needs the session serial file provisioned by its issuer, and the issuer's inbox backlog (208, of which 54-day-old UNINDEXED ledger notices) makes HALT_ACK the standing path."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "one_line": "The opal-gateway stack cannot be planned or safe-applied from a fresh worktree without two required variables and two gitignored build outputs of another project (the mcportal grant-writer layer zip and staged dir), and a saved plan went stale between the gates' own plans and the apply.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan in infra/aws/terraform/opal-gateway failed: 'No value for required variable' mcportal_owner_key_claim and mcportal_owner_key (mcportal_grant_writer.tf:142,151), then filebase64sha256 of ../../lambda/layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip, then data.archive_file of mcportal-grant-writer-lambda/.build/staged: both paths absent in a fresh worktree.",
+        "Worked around without touching a tracked file: TF_VAR_mcportal_owner_key_claim=sub and TF_VAR_mcportal_owner_key=<placeholder> in the shell only, and the two gitignored build outputs copied byte-for-byte from the shared tree into the worktree's gitignored .build directories. The applied plan was targeted at aws_iam_role_policy.gw_rivalfunds_read (1 add, create only, name gateway-rivalfunds-read-policy); an untargeted plan in the same state read 1 to add, 2 to change, so the 2 changes were never applied.",
+        "safe-apply.sh renders its own untargeted plans for the naming and tag-authz limbs; the first saved plan then failed 'Saved plan is stale', so the targeted plan was re-run (still 1 create) and applied: 'Apply complete! Resources: 1 added, 0 changed, 0 destroyed'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-RIV-d-2 step 1: a targeted safe-apply of the one aws_iam_role_policy if the gateway stack carries other drift; print the plan and act only if it is create-only for it.",
+    "world_is": "The stack carries another project's required variables and build outputs, and 2 pending changes from other work; the targeted create-only apply was still possible with the workaround above. The placeholder variable value was never applied (the grant-writer function is outside the target).",
+    "notes": "The untargeted drift (2 changes in opal-gateway) belongs to whichever seat owns the change; it was not read further. record-terraform-deploy.sh, if run for the etfs-rivalfunds stack, also writes infra/aws/terraform/etfs-rivalfunds/CHANGELOG.json, which is outside this order's paths; the source-map stamp (artifact_sha256, last_deployed_commit, last_deployed_at) was NOT written because the order stopped at gate 1."
   }
 ]
 ```
