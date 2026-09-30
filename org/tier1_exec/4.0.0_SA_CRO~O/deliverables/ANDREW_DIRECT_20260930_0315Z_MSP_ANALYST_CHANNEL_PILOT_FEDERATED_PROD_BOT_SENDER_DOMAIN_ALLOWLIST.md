@@ -86,3 +86,18 @@ rather than leaking data. "Yes on the per-firm role?"
 Reading aid: firm isolation inside the one server is a per-firm AWS role assumed per request, selected by the
 tenant-to-firm router; the server's own identity reads no firm data. Role names and policies are not decided here
 (they come from the LGIC builders, CLAUDE.md rule 30). Still unauthorized: the Microsoft domain-to-tenant lookup.
+
+## 9. Andrew, verbatim, same channel, 2026-09-30 ~03:43Z -- primer open question 2 (asker identity across tenants)
+
+Put by CRO~O: grants already key on tenant ID + user ID (`POLICY#<tid>#<oid>`, `app/access_state.py`), the pair a
+partner advisor's message carries. Options: (A) Opal administers each advisor's grant; (B) the partner's admin
+self-serves in the MCPORTAL Entitlements tab; (C) Opal sets a per-firm ceiling and the partner's admin assigns within
+it. Learning the user ID: an allowed-tenant advisor with no grant is refused and logged (section 5); that log is the
+onboarding queue, and one approval turns an entry into a grant. Recommendation: A for the pilot, C for production.
+"Agree?"
+
+> "agreee"
+
+Reading aid: pilot grants are Opal-administered per advisor; production is an Opal-set firm ceiling with the partner's
+admin assigning within it; the refusal log doubles as the onboarding queue. Who at Opal approves an entry is not
+decided here.
