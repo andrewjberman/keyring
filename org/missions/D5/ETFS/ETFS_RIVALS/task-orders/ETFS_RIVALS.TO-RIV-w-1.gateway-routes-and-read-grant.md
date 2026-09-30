@@ -93,6 +93,33 @@ entry are HOOKUPS, added by the COO at the merge; the cell's report names them.
 
 **Battery finding touching this cell (comp-iam RUN):** AC3 IS the lens's instrument for the gateway policy; the gateway role's existing statements are not changed by this order.
 
+## 2b. ISSUER AMENDMENT 1 (2026-09-30, 2.0.0_SA_COO~RV) -- the read policy's NAME is builder output
+
+`infra/aws/terraform/opal-gateway/rivalfunds-iam.tf` names the policy `"${var.name}-rivalfunds-read"`. The value exists only in a
+plan, so the commit-time naming gate passed it. safe-apply's ENFORCE naming-plan limb plans the WHOLE directory, ignoring
+`-target`, and refuses `opal-gateway-rivalfunds-read -> gateway-rivalfunds-read-policy (ADDITION)`. While that addition is
+unapplied and off-pattern, no seat can safe-apply anything in that directory (2.0.0_SA_COO~MS msg 27058, row
+NFRA_MCPMSP-Z-W2-S3). This is an ARMED hazard on other seats: finish it first and fast.
+
+Fix, in `rivalfunds-iam.tf` ONLY (now the whole of your `<paths>` besides the channel):
+1. Add `module "gw_rivalfunds_read_policy_name" { source = "../modules/opal_name", system = "gateway", function =
+   "rivalfunds-read", kind = "policy" }`, the shape `infra/aws/terraform/opal-gateway/mcpmsp_firm_roles.tf` uses (read
+   it; never edit it).
+2. Set `name = module.gw_rivalfunds_read_policy_name.name`. Change nothing else. The policy stays UNAPPLIED; the apply
+   is RIV-d-2's.
+3. Prove it at PLAN time, plan only and never apply:
+   - `terraform -chdir=infra/aws/terraform/opal-gateway init -input=false` (if needed), then
+     `terraform -chdir=infra/aws/terraform/opal-gateway plan -lock=false -input=false -out=<your deliverables>/w1a.tfplan`
+     and `terraform -chdir=infra/aws/terraform/opal-gateway show -json <that plan> > <your deliverables>/w1a.plan.json`.
+     Use the `.tools/terraform` shim if one resolves.
+   - `python .tools/naming-apply-gate.py --enforce --plan-json <your deliverables>/w1a.plan.json`
+   - **AC4:** the gate's line for `aws_iam_role_policy.gw_rivalfunds_read` reads CONFORMANT, with name
+     `gateway-rivalfunds-read-policy`, and NO line for that resource reads REFUSE.
+   - Report the gate's summary line and every REFUSE line it prints for OTHER resources. Those are other seats'
+     facts; record them and do not fix them.
+   - Do not commit the `.tfplan`, which can carry secrets; the `.plan.json` is also not committed.
+4. Re-run AC1-AC3 literally; they must stay PASS. AC3 reads the policy document, not its name.
+
 ## 3. SURFACES AND BOUNDS
 
 You READ (never edit):
@@ -113,11 +140,6 @@ bucket's existing tier-first keys (`bronze/`, `silver/`, `gold/`, `daily/`, `pla
 OpenAI call; any alert, alarm, SNS or monitor; any file another cell of this round owns. Write unit tests at `infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py`; run them with `python -m pytest` from `infra/aws/ec2/opal-gateway`.
 
 <paths>
-infra/aws/ec2/opal-gateway/app/gen_rivalfunds_location.py
-infra/aws/ec2/opal-gateway/app/rivalfunds_location.json
-infra/aws/ec2/opal-gateway/app/rivalfunds_view.py
-infra/aws/ec2/opal-gateway/app/tests/
-infra/aws/terraform/opal-gateway/rivalfunds-iam.policy.json
 infra/aws/terraform/opal-gateway/rivalfunds-iam.tf
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
@@ -152,7 +174,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>complete</status>
+<status>in_progress</status>
+<reopen_note>2026-09-30 ~09:3xZ, 2.0.0_SA_COO~RV: REOPENED for ISSUER AMENDMENT 1 (section 2b) on 2.0.0_SA_COO~MS msg 27058 / row NFRA_MCPMSP-Z-W2-S3: the policy name reaches the plan through ${var.name}, the commit gate cannot see it, and safe-apply's ENFORCE plan limb refuses the addition, which blocks every safe-apply in infra/aws/terraform/opal-gateway.</reopen_note>
 <completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~2 @d50b1231ce merged @2274b529ef; AC1-AC3 PASS + 11 unit tests re-run by the issuer; row ETFS_RIVALS-Z-W2-S1 (status flip is the issuer's) answered by this flip; server.py hookups ride the pre-d-2 hookup commit.</completion_note>
 <round>1</round>
 <slot>~2</slot>

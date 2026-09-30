@@ -149,7 +149,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: merged @b2834dc66a; AC1-AC3 PASS re-run by the issuer, 69 package tests; row W1-S5 (PARTIAL = not-updated page, provisional thresholds) to the round analysis.</completion_note>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

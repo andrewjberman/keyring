@@ -134,7 +134,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: merged @b2834dc66a (chain ~1, worker @c0fae3d303); AC1 PASS, AC2 PASS at amended check be252dc1de (row W1-S3 ruled), re-run by the issuer.</completion_note>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
