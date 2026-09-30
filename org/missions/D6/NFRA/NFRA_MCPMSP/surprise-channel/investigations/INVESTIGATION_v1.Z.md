@@ -197,6 +197,29 @@
     "spec_asserts": "MS-t-1 AMENDMENT 1 / AC2: the asker suites and the adapter's own suites (incl. test_access_state.py) pass with 0 failed and at least 41 passed once tenant_firm is added to POLICY_RECORD_TYPES; test_ogd1_ac03 is 'the contract-vs-adapter gap this cell closes'.",
     "world_is": "The gap this cell closes is two gaps: the contract-vs-adapter record-type set (closed: first assert passes) and a stale literal count in the test (3, now 5 with the contract's five POLICY types). tests/test_access_state.py is NFRA_OPLGTW's file and is not in this order's <paths>, so the worker cannot edit it.",
     "notes": "Fails closed, INERT. Remedy for the issuer: grant tests/test_access_state.py (one literal, 3 -> 5) or amend AC2's floor to exclude test_ogd1_ac03 (40 passed + this one named red); the adapter change itself is complete and measured (7 passed in test_mcpmsp_asker_firm.py incl. test_tenant_firm_admitted_by_adapter; test_email_deny.py and the other three asker suites all pass)."
+  },
+  {
+    "id": "NFRA_MCPMSP-Z-S3",
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MS",
+    "surfaced_at": "2026-09-30T12:20Z",
+    "one_line": "MS-t-2's merge (@289bde0b4a) put the first local-module call (module opal_name) into infra/aws/terraform/opal-gateway, so every plan or apply there from a .terraform that has not run `terraform get` since fails 'Error: Module not installed'; the site-Z main tree was repaired by the issuer, other checkouts (the laptop, any linked worktree with its own .terraform) will hit it once.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Main tree, 2026-09-30 after the MS-t-2 drain: `terraform plan -target=aws_iam_role.gw` (TF_DATA_DIR = the main tree's .terraform) -> 'Error: Module not installed' x3; .terraform held providers/ and terraform.tfstate only (no modules/).",
+        "Issuer's repair: `terraform get` in the main tree (local module path ..\\modules\\opal_name, no network) registered inf_firm_assume_policy_name, inf_firm_reader_policy_name, inf_firm_reader_role_name; the same plan then read 'No changes. Your infrastructure matches the configuration.'",
+        "infra/aws/terraform/opal-gateway/mcpmsp_firm_roles.tf (CLOUD @289bde0b4a): three module blocks with source ../modules/opal_name."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition section 7 (iv): MS-t-2 builds and names; it creates no resource -- and by the cut's reading moves no other seat's workflow in the directory.",
+    "world_is": "The directory's plans now need a one-time `terraform get` per .terraform. The failure is loud (a named Terraform error with an obvious one-command fix, no network), never silent, so INERT. Site-Z main tree: repaired.",
+    "notes": "Remedy on any other checkout: run `terraform get` once in infra/aws/terraform/opal-gateway (local only). Carried to the drain-end read for the other fabric's seats that plan this directory (NFRA_OPLGTW, NFRA_MCPORTAL, NFRA_MCPINDEX)."
   }
 ]
 ```
