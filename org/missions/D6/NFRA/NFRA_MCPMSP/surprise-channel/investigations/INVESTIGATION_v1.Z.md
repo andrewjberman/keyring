@@ -244,6 +244,29 @@
     "spec_asserts": "TO MS-a-1 section 1 item 2: 'Plan, then apply, targeted ... through bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply -target=...' with the plan reading only additions for the targets; the directory 'needs' the layer zip and the key vars.",
     "world_is": "A targeted plan reads 3 to add / 0 / 0, but safe-apply's gates plan the WHOLE tree, and under ENFORCE the naming-plan limb refuses it on an unrelated pre-existing addition (gw_rivalfunds_read, rivalfunds-iam.tf, which this order may not touch). No override for that limb exists short of removing org/mcp/naming-gate.enforce or an R20 entry, both outside this order; bare terraform apply is barred. The apply did not run; the ledger entry nfra-mcpmsp-r1-firm-role stays OPEN (nothing landed, blast radius untouched). The saved plan and TF_DATA_DIR sit in this worktree's .scratch for a retry.",
     "notes": "Ways through, issuer's call: (a) a different cell lands the rivalfunds policy name (or its state import) so the full plan has no refused addition; (b) the CTO rules a one-apply naming-gate exemption for these three additions; (c) apply from a tree whose full plan is clean. Fresh time cost: each safe-apply run spends ~4.5 min in three full-tree refreshes before it reaches the refusal."
+  },
+  {
+    "id": "NFRA_MCPMSP-Z-W3-S2",
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "surfaced_at": "2026-09-30T10:50Z",
+    "one_line": "build_package.py stages lambda_function.py byte-for-byte from the WORKING TREE, which on this Windows checkout is CRLF (git ls-files --eol: i/lf w/crlf) while HEAD's blob is LF, so the first apply shipped bytes that failed a2.AC2 (identical=False); the staged copy was re-written from `git show HEAD:` bytes and re-applied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "a2.AC2.sh after apply 1: 'live sha256=72337fe88658 head sha256=7e80d4359859 identical=False register_tenant=True verdict=NO'; sha256sum of the working-tree file and of .build/staged/lambda_function.py = 72337fe88658...; `git ls-files --eol` = 'i/lf w/crlf attr/text eol=lf'; 381 CRLF pairs in the staged file, 0 in `git show HEAD:` (python bytes count).",
+        "Every other staged file (10 of 11) equals its HEAD blob byte-for-byte; only lambda_function.py differed.",
+        "Fix inside this order's .build path: wrote `git show HEAD:<path>` bytes over .build/staged/lambda_function.py (sha256 7e80d4359859 = HEAD), re-planned (0 add, 1 change, 0 destroy, code hash only), re-applied: CodeSha256 s+PDoMXpUn7YuMQqBThoLKezBNNIthyDhT8P75BN19A= -> nhz+dwJsDJLO9X3o1exvKdQ+OYE+PraxZSop2BJt9zI=; a2.AC2 then read identical=True verdict=OK. The writer's source file was not edited.",
+        "Consequence for the next applier on a Windows checkout: a2-style 'deployed == HEAD' checks fail unless the staged handler is LF; apply 1's package was live for about 4 minutes and differed from HEAD only by line endings."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MS-a-2 section 1 item 2: 'build_package.py stages the package' and AC2 expects the deployed lambda_function.py byte-identical to HEAD's.",
+    "world_is": "The staged handler is a copy of the working-tree file, whose line endings follow the checkout (CRLF here), not HEAD's blob (LF, .gitattributes eol=lf); the order's steps, as written, produce a package AC2 refuses. Worked around in .build only."
   }
 ]
 ```
