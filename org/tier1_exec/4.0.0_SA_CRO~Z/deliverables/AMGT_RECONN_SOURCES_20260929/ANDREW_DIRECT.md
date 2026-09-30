@@ -147,3 +147,13 @@ The cards, as asked:
 3. Send the drafted Bloomberg support question (GQGU coverage, direct BQL): **NO**. The unattended-Excel route stays, proven by day-over-day tests.
 4. /rivalfunds viewers: **any signed-in account**.
 5. Remove the 09-29 crash dumps: **remove**. Applied 01:53 ET elevated: `C:\Windows\MEMORY.DMP` REMOVED (18,686,448,893 bytes). The Sentinel dump (`C:\ProgramData\Sentinel\CrashDumps\af142cfc-....dmp`) was REFUSED even elevated; its folder is owned by `NT SERVICE\SentinelHelperService` (SentinelOne tamper protection) and was not forced. `C:\dedicateddump.sys` is the live reserved capture target configured in `HKLM\...\CrashControl` (`DedicatedDumpFile`, `DumpFileSize=32768`), so it is held for Andrew's word on disabling crash capture.
+
+## Dedicated dump file, verbatim
+
+Recorded September 30, 2026, approximately 03:2x ET; Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, answering whether to switch off crash capture and delete `C:\dedicateddump.sys`. Exact receipt timestamp not exposed.
+
+> keep crash capture, but delete the 32gb .sys
+
+Means: `CrashDumpEnabled` (kernel dump) and `DumpFile` stay; the `DedicatedDumpFile` and `DumpFileSize` values are removed so the dump goes through the system-managed page file; `C:\dedicateddump.sys` is deleted (at reboot if the system holds it).
+
+Applied 2026-09-30 03:33-03:35 ET, elevated (log `.runtime/crash-investigation-20260929/remove-dedicated-dump-elevated.log`; key backup `CrashControl-backup-before-dedicated-removal.reg` beside it): `DedicatedDumpFile` and `DumpFileSize` removed; `CrashDumpEnabled=2` (kernel dump) and `DumpFile=C:\windows\MEMORY.DMP` unchanged, through the system-managed page file. `C:\dedicateddump.sys` (34,359,738,368 bytes) is held open by the system, so its deletion is scheduled for the next reboot (MoveFileEx delay-until-reboot returned true; PendingFileRenameOperations names it).

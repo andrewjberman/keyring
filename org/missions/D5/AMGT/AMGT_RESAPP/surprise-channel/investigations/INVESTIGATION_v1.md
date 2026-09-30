@@ -16070,6 +16070,69 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "zz-8 COO half: /thesis for ASML reads thesis_driver_chart SERVED, source filing, 3 points after the rewrite.",
   "world_is": "The chart reads ABSENT; the served driver is the D-1 drafting document's embedded copy (row Z-S311). A check that hands a component its input directly validates the component, never the served join.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. CTO msg 26943 (@fdd0074be3): rollback WAIVED for AC2 only; the ASML rewrite kept; round 52 cuts the D-1 drafting regeneration under its own pair, AC = the SERVED /thesis chart reads the 3 spanned points (a served-route read, never an in-process call with a handed input)."
+},
+{
+  "id": "AMGT_RESAPP-Z-S313",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T07:40:00Z",
+  "one_line": "A D-1 drafting rebuild from the stored analysis DROPS served sentences under today's verbatim gate: for ASML_NA_Equity the in-memory rebuild (the --rebuild-pool transform) carries the spanned driver but serves company_description 1 (stored 6), investment_thesis 0 (1), risks 0 (2); a pool rebuild is therefore not a safe way to refresh any embedded field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round52/checks/ab_1_preview.py at the cut: top-level keys 15, differing 4 (denominators, held_no_span, sections, thesis_driver); stored sections {company_description 6, investment_thesis 1, risks 2, ceo_bio 0, recommendation 1}, rebuilt {1, 0, 0, 0, 1}; driver spans stored 0 of 3, rebuilt 3 of 3.",
+      "drafting_build.build_drafting_document carries thesis_driver from the analysis (:365); the verbatim gate (C-VERBATIM-GATE HOLD) moves HELD-NO-SPAN sentences out of sections."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-51 analysis item 1: ASML's D-1 drafting document is regenerated from the rewritten analysis.",
+  "world_is": "A regeneration moves 3 more top-level keys and drops served sentences; round 52 cuts a driver-only splice instead (AMGT-ab-1, written at AMGT-ab-6). Measured on ASML only; how many stored D-1 documents a pool rebuild would shrink is UNMEASURED.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. No act: a --rebuild-pool live run would be the hazard, and none is ordered. Issuer ruling at the cut, stated in s.60b.1 and the issuance commit."
+},
+{
+  "id": "AMGT_RESAPP-Z-S314",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T07:40:00Z",
+  "one_line": "Correction of AMGT_RESAPP-Z-S313's standing (CTO msg 27014 condition 2): a D-1 regeneration that drops served sentences is a DEFECT, not an accepted limit -- carried to round 53 as its own cell. ARMED: any live --rebuild-pool run would regress served /thesis sentences until it is fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Z-S313's measurement (round52/checks/ab_1_preview.py): ASML rebuild serves company_description 1 of 6, investment_thesis 0 of 1, risks 0 of 2.",
+      "CTO msg 27014: 'Z-S313 ... is a DEFECT row carried to round 53 as its own cell, not accepted as a limit'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A D-1 rebuild from the stored analysis refreshes a document without shrinking what it serves.",
+  "world_is": "Under today's verbatim gate the rebuild drops served sentences (ASML measured; the pool's population unmeasured). Round 52 splices the driver only; the rebuild defect is round 53's cell.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Disarmed by: no live --rebuild-pool run is ordered in round 52 (ab-6 runs --splice-driver only); the round-53 cell fixes the rebuild. Cites AMGT_RESAPP-Z-S313."
+},
+{
+  "id": "AMGT_RESAPP-Z-W186-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~186",
+  "surfaced_at": "2026-09-30T08:00:00Z",
+  "one_line": "AMGT-ab-1 AC2's <expect> says the dry-run names the moved keys as ONLY thesis_driver, but AMENDMENT 1 (provenance recorded in the document) makes the spliced document differ in thesis_driver PLUS one provenance key; the dry-run line prints both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC1 (ab_1_splice.py, amended) exits 0 with differing top-level keys ['thesis_driver', 'thesis_driver_provenance'].",
+      "AC2 dry-run line: ASML_NA_Equity: moved_keys=['thesis_driver', 'thesis_driver_provenance'] (content key thesis_driver; provenance key thesis_driver_provenance) driver_points=3 spanned=3 ... served_validator=True ... [DRY-RUN: wrote nothing]; exit=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 expect: one ASML_NA_Equity line naming the moved keys as only thesis_driver.",
+  "world_is": "The line names thesis_driver plus the ONE added provenance key thesis_driver_provenance, as AMENDMENT 1 and AC1 require; AC2's expect text predates the amendment. The content key moved is only thesis_driver. Judgment on the wording is the issuer's; no code change follows either way."
 }
 ]
 ```

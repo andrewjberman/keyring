@@ -6985,3 +6985,89 @@ fanout:
 - Cell 3 (the six UNRESOLVED units): row `Z-S309`, re-home asked of `1.0.0_SA_CTO~Z` (AMGT_CORPUS unit-map discriminator; DSGN page
   scale). The 10 zero-point driver names: a fresh extraction, AMGT_CORPUS's producer. The NEVER-2 sentinel-read law text: the CVO's
   governance fork (ruling 7). The page rendering of names and places moved: DSGN_AMGTV1.
+
+## 60. ROUND 52 -- ASML'S DRIVER REACHES THE SERVED CHART, EVERY NAME SERVES ITS DOSSIER BLOCK WITH PACK SHAPE, THE PAGE OUTCOMES MAPPED TO THEIR DSGN OWNER, THE TRUE IMPORT COMMENT, THE OWN-COLUMN GATE, AND THE ONE BUILD. Six cells, six orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 51 ANALYSIS** (`ledger/ROUND_ANALYSIS.round51.md` @`c5dc123f42`, msg 27003;
+round 51 CLOSED). Rulings carried: a check whose claim is a SERVED outcome reads the served route, never a component called with a
+handed input (ruling 5 -- binds every criterion below); the page-shaped outcomes are mapped, never retired silently (ruling 4); the
+comment is text only (ruling 6); the verification gate verifies only against a number's own column (ruling 7). No outcome is added,
+so no L4-R half re-opens.
+
+### 60a. THE SIX ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 ASML's D-1 drafting document carries the rewritten driver | `AMGT-ab-1` (the splice, LOCAL, worker) + `AMGT-ab-6` (the ONE object write, under the pair) |
+| 2 6501's per-field ABSENT block; the `pack_shape` pass-through | `AMGT-ab-2` (SERVED build, worker) + `AMGT-ab-6` |
+| 3 the page-FWD mapping | `AMGT-ab-3` (LOCAL read, worker) |
+| 4 the `scoped_amgt.py:120` comment | `AMGT-ab-4` (LOCAL, the same worker after ab-2: same file) + `AMGT-ab-6` |
+| 5 the own-column gate | `AMGT-ab-5` (LOCAL, worker) |
+| 6 the ONE build and apply | `AMGT-ab-6` (WORLD, `0.7.0_AE_CloudOps~A`), which also carries item 1's object write under the same pair |
+
+### 60b. MEASUREMENTS THE CUT RESTS ON
+
+1. **Item 1 is cut as a SPLICE, not a regeneration (issuer ruling at the cut).** `round52/checks/ab_1_preview.py` builds ASML's D-1
+   document in memory with the committed producer (`drafting_build.build_drafting_document`, the `--rebuild-pool` transform) from the
+   rewritten analysis: the driver carries 3 of 3 spanned points, BUT 4 top-level keys move (`denominators`, `held_no_span`,
+   `sections`, `thesis_driver`) and the served sections DROP -- company_description 6 -> 1, investment_thesis 1 -> 0, risks 2 -> 0 --
+   because today's verbatim gate is stricter than the build that wrote the stored document. A regeneration would move served sentences
+   beyond the AC. The splice replaces `thesis_driver` only (`drafting_build.py:365` is where the build carries it), validated by the
+   SERVED reader's own `_validate_drafting_document`. Same accession (000162828026011378) on both sides. The item's AC is unchanged:
+   the SERVED `/thesis` chart reads the 3 spanned points. Row Z-S313 records the sentence drop a rebuild causes (measured on ASML only; the pool's population is unmeasured).
+2. **Item 2:** 6501_JP_Equity has NO research_dossier object (LookupError), so `/thesis` serves `dossier_fields: {status: READ_FAILED}`.
+   The `/5` dossiers hold `pack_shape` (AZN pdf, ADBE pdf, AMD ABSENT 'no class-A or class-B report was picked, so no file was read').
+   `METHOD_VERSION` is `/5` at HEAD and `/4` at the deployed build, so the read preference moves to `/5` with ab-6's build (closure, no code).
+3. **Item 4:** `scoped_amgt.py:120` and `:193` claim `lib.opal_naming` is outside the closure / never imported at runtime; it is imported
+   at REQUEST time on /thesis (`:3218`'s lazy `corpus.dossier` -> `harvest.store` -> `lib.opal_naming`), not at the adapter's import.
+4. **Item 5:** a planted columnar table verifies 2024's number as 2025's (`ab_5_column.py`); ASML's real 3 points are the control
+   (`round51/checks/zz_6_reverify.py`, PASS at the base, must stay PASS).
+5. **The base for ab-6:** CodeSha256 `zHpr7FhS+irmKofIuKNqTkQm2hj7x2fvS1rrX1ohkfQ=` (zz-8, 05:20:04Z).
+
+### 60c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ab-1` | THE D-1 DRIVER SPLICE | `~186` | worker | LOCAL | `lib/research/filings/drafting_build.py` + a new test under `lib/research/filings/tests/` |
+| `AMGT-ab-3` | THE PAGE-FWD MAPPING | `~187` | worker | LOCAL | its deliverables only |
+| `AMGT-ab-2` | EVERY NAME'S DOSSIER BLOCK + PACK SHAPE | `~188` | worker | SERVED | `lib/research/api/scoped_amgt.py` + `lib/research/api/tests/**` |
+| `AMGT-ab-4` | THE TRUE IMPORT COMMENT | `~188` (after ab-2) | worker-light | LOCAL | `lib/research/api/scoped_amgt.py` (comments only) |
+| `AMGT-ab-5` | THE OWN-COLUMN GATE | `~189` | worker | LOCAL | `lib/research/filings/analyze.py` + a new test under `lib/research/filings/tests/` |
+| `AMGT-ab-6` | THE ONE BUILD + ASML'S D-1 SPLICE | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the artifact, ONE safe-apply (code only), ONE object write (`drafting/v1/ASML_NA_Equity.json`), deliverables, the ledger |
+
+### 60d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's six items; each lands in one build cell; ab-6 carries items 2/4's build and item 1's write together.
+- **(ii) Same grain.** One splice, one block shape, one mapping, one comment, one gate, one act.
+- **(iii) Intent.** One axis: what the page reads is the served data, measured on the route.
+- **(iv) What a cell does NOT move.** ab-1 moves no key but `thesis_driver` (no section, sentence or count); ab-2 moves no SERVED dossier
+  field for a name with a dossier except adding `pack_shape`; ab-3 moves no file outside its deliverables; ab-4 moves no code; ab-5 moves
+  no verified point that sits in its own column (ASML stays 3 of 3); ab-6 moves exactly its pair's radius.
+
+### 60e. EDGES AND FAN-OUT
+
+```
+ab-2 -> ab-4   (same worker, same file: scoped_amgt.py)
+ab-1 -> ab-6, ab-2 -> ab-6, ab-4 -> ab-6   (the splice code must be committed before the act runs it; the build carries ab-2/ab-4)
+ab-5 -> ab-6   (packaging edge only if analyze.py is in the closure; the content diff at the pin decides)
+ab-3 -> (none)
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 3                      # {ab-1, ab-2 -> ab-4, ab-5 -> ab-6}, {ab-3}
+  wave_0: [ab-1 ~186, ab-3 ~187, ab-2 ~188, ab-5 ~189]
+  wave_1: [ab-4 ~188]                  # after ab-2 drains (file edge)
+  wave_2: [ab-6]                       # a seat order: after ab-1/2/4/5 merge and both never-widen halves are committed
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  egress: none in waves 0-1 (Opal AWS reads only); ab-6's build pip-downloads its pinned wheels
+  route_change: none (payload fields only)
+  no_promote: true
+```
+
+### 60f. CARRIED
+
+- FWD-30's ACCEPT (Adam forwards the output without reformatting) is a person's act, not a cell (ruling 3). The versions/compare and
+  ledger page surfaces (FWD-6, FWD-12) go to DSGN_AMGTV1 (ruling 1). The CTO's PRD addendum follows ab-3's mapping (ruling 4).
+- **AMENDMENT (issuer, ~07:3xZ, before any spawn; CTO msg 27014):** ab-1's splice records its provenance (analysis key + VersionId) in the
+  document; Z-S313's rebuild regression is a DEFECT (row Z-S314, ARMED) carried to round 53 as its own cell.
