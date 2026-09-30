@@ -99,3 +99,4 @@ tests).
 <round>26</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
