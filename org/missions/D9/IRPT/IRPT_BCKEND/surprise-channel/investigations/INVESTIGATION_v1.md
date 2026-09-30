@@ -13207,3 +13207,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "THE SHAPE IF THE LIMIT HOLDS: shared session plus REST for DATA, with browser automation confined to the ONE act that has no REST equivalent (the rendered export), instead of a parallel session, principal and worker for the whole journey. Recommendation, not a ruling. WHY IT IS ARMED: two sessions on one vendor account is a plausible contributor to the eviction family S218/S225/S230 has been chasing all night, and that possibility was never on the table because nobody had noticed there were two. It is not established -- it is newly askable. I ALSO OWE A CORRECTION HERE: earlier tonight I told Andrew the vendor side 'follows your pattern'. It captures a token like the pattern and then does neither of the pattern's other two halves -- it does not share the estate's credential and it does not call REST. The CTO (103196) is what prompted me to check the layer I had waved at."
 }
 ```
+
+
+## IRPT_BCKEND-S234 -- S228 disarmed by record: v1 never routed submit-correction or export-preview, so there is no producer pair to restore
+
+```json
+{
+  "id": "IRPT_BCKEND-S234",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T14:05:00Z",
+  "one_line": "S228 DISARMED by record: the two operations the seam suite stopped exercising (submit-correction, export-preview) were NEVER routed by contract v1, so there is no producer pair to restore; the population did not lose two producer operations, it stopped naming two consumer-only entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (S228's own disarm clause: restore the pairs or record why the two need none; this row is the record)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "_contracts/tests/test_seam_paired.py:70-76 at CLOUD HEAD a7a6d286f2, the suite's own re-cut comment: 'The two operations the consumer named then and v1 never routed (submit-correction, export-preview) are no longer in its fixture, so they are no longer in this table; the three routes it now names that v1 has always declared (status-summary, status-job, export-download) are.'",
+      "The OPERATIONS table at :78-91 holds 12 entries, every one a route contract v1 declares; CONSUMER_SMOKE_ENTRIES = 12 is a PIN checked against the consumer's own fixture by test_the_operation_map_covers_the_consumers_own_denominator, so a drift in either direction fails there rather than being absorbed.",
+      "S228's own evidence: the six REMOVED nodes were all parametrised on export-preview and submit-correction; the worker's report said the portal no longer names them. Read against the comment above, the removal is the consumer catching up with the producer, not the producer losing coverage."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Contract v1 never routed submit-correction or export-preview (test_seam_paired.py:70-76 at HEAD a7a6d286f2); a producer operation that does not exist cannot lose its pairing, so there is no pair to restore and S228 is disarmed by this record under its own disarm clause.",
+  "spec_asserts": "S228: 'two PRODUCER operations now have no consumer pairing and the suite is silent about them rather than red' -- written as though v1 served the two.",
+  "world_is": "MEASURED at HEAD: contract v1 routes neither submit-correction nor export-preview (the suite's comment and its 12-entry table, both read at :70-91). A producer operation that does not exist cannot lose a pairing. The correction-words family S228 worried about (round 24) lands on the upload answer at intake/uploads.py (IB-yr-282, complete), which the analysis-requests pair exercises; export-preview has no producer at all. S228 stays in the file as the reason this check was worth making: a count that reads growth can hide a swap, and the swap was benign this time.",
+  "notes": "No cell is cut. If a future contract version routes either operation, the pin CONSUMER_SMOKE_ENTRIES and the operation-map coverage test fail loudly and the pair is added then."
+}
+```
