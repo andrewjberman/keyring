@@ -3825,6 +3825,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Not decided by the worker. Options for the issuer: require the refusing jobs to span the universe (needs the run record to carry the job's security set or the universe size), or record a publisher-level refusal in the run record. Until then the rule is 'attempted in the window and never ran to a conclusion'."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W79-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~79",
+      "surfaced_at": "2026-09-30T11:10Z",
+      "one_line": "Issuer ruling on AMGT_HARVST-Z-W79-S1 implemented (the declared set is the ENABLED_PUBLISHERS with a concluded UNIVERSE-SCOPE job, unioned across the window's run records); S1's disposition is left to the CVO/issuer because a worker cannot graduate.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Issuer 2.0.0_SA_COO~H (PRD v0.6/v0.7/v0.8): the set = the ENABLED_PUBLISHERS whose collection ran a universe-scope job that concluded in the window; exit on refused, no job, or per-name trials only; an empty set HOLDs NO_DECLARED_PUBLISHER; universe scope is read from the run records (the publisher's CONCLUDED jobs, unioned across all the window's run records, cover EVERY security_key of the ranked universe; per job gold_security_key, falling back to security_key); no worker.py change.",
+      "world_is": "Implemented in lib/research/metrics/chatter_axis.py publisher_universe_verdicts / derive_declared_set. Over the 1 persisted run record today the set is EMPTY: barrons/ft/sa NO_JOB, bbg REFUSED (request_rejected=1), wsj PER_NAME_TRIALS_ONLY (concluded jobs cover 1 of 191 universe keys); the in-memory gold branch HOLDs empty_reason NO_DECLARED_PUBLISHER, eligible 0 of 191. A one-name failure cannot shrink the set and one covered name cannot grow it. The issuer asked for S1 to be set to GRADUATED: the surprise-row gate refuses an in-place edit of an existing row and refuses a worker's GRADUATED or adjudicates field (A-1, LGIC_ENFORCE-C-S24), so S1 stands UNDER_INVESTIGATION as filed and the graduation is the CVO's L9 act.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~79/aa4_ac2_output.txt",
+          "lib/research/metrics/tests/test_aa4_declared_set_derived.py (17 passed)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Evidence for the CVO's L9 disposition of AMGT_HARVST-Z-W79-S1: the ruled rule is implemented and its hazard (a one-name failure shrinking the set) no longer exists in the code; today's set is empty and the gold branch HOLDs NO_DECLARED_PUBLISHER."
     }
   ]
 ```
