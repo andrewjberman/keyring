@@ -108,3 +108,28 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not a defect in this cell's code: the census correctly distinguishes 'what the seed source knows' from 'what this run writes', and the half names the 10/157 split explicitly. Flagged so a future FWD-4 census or the CTO's round-2 addendum on folding the constituents seeder into the seed path also closes this instrument_kind backfill gap, not just the classified_by ownership question RULING 103050 already answers."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-W1-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~1",
+  "surfaced_at": "2026-09-29T22:40:00Z",
+  "one_line": "Cell SC-k-1's own task-order text asserts 'GLD, PHYS and VXX already have rows' in etf-classifications; a live get_item on PHYS at build time reads no row at all (GLD and VXX do).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb get-item etf-classifications ticker=PHYS (boto3, 2026-09-29 ~22:3xZ): {} (no Item) -- ticker=GLD and ticker=VXX both return full Items the same read",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-k1.scheduled-classification.md step 4: 'GLD, PHYS and VXX already have rows in the table'",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-k2.seed-kind-and-industry.md step 1: 'Keep IB-mr-251's PHYS row exactly as it landed' -- names IB-mr-251 (a different project, IRPT_BCKEND) as PHYS's actual writer, not yet observed live"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "GLD, PHYS and VXX already carry rows in etf-classifications at the time cell SC-k-1 builds against it.",
+  "world_is": "GLD and VXX carry rows; PHYS does not, as of this build. PHYS's row is apparently pending from a different workstream (IB-mr-251, IRPT_BCKEND), not yet landed live.",
+  "notes": "No effect on this cell's own output: PHYS's only input here is bd-securities' alternatives/Gold, which is a fold against the canonical vocabulary (alternatives only carries Real Estate) regardless of whether PHYS already has a row, so PHYS lands in 'unresolved' either way (see R1_BACKFILL_CENSUS_20260929.json, bd firm unresolved list) and the r1_backfill_census.py PINNED check (GLD/PHYS/VXX never would-write) passes without relying on the stale premise. Flagged because a DIFFERENT cell's half (e.g. SC-k-2's, or any thread half computing a 'before' snapshot that assumes PHYS is already classified) could read a false state if IB-mr-251 has not landed by the time it runs."
+}
+```
