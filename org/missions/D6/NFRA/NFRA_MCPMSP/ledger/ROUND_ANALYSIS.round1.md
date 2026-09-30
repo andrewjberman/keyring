@@ -47,8 +47,12 @@ round, on Andrew-direct ~17:45Z). **The recut is `2.0.0_SA_COO~MS`'s, in ONE iss
   outcome needs it. The row stays OPEN, parked on "a cell that reads the firm bucket is proposed". That proposal
   carries either an LGIC registry route that yields the routed bucket, or an R20 departure Andrew acknowledges.
   Andrew's 13:0xZ naming exception does not cover it.
-- **R-2 Z-W2-S3 (safe-apply ignores `-target`).** Gate owner: laptop `1.0.0_SA_CTO` (LGIC_ENFORCE). Routed by relay
-  through `0.0.0_AB_MSTR~Z` this turn. Not cut here.
+- **R-2 Z-W2-S3 (safe-apply ignores `-target`).** Gate owner laptop `1.0.0_SA_CTO` RULED (msg 103400, relayed as
+  27418; ruling file `RULING_SAFE_APPLY_NAMING_LIMB_TARGETED_APPLIES_20260930.md` @2ee337baf8, laptop-LOCAL). Both
+  stages ignore `-target`. The plan stage renders the same plan the apply runs (it passes `-target`, `-replace`,
+  `-var`, `-var-file`, `-refresh` and `-destroy`, or reads the given planfile) and binds for targeted or planfile
+  applies. The pre-plan stage is WARN there. Untargeted applies are unchanged. A targeted plan that cannot render
+  refuses in ENFORCE. Site Z may cut it here: item E6.
 - **R-3 Z-W3-S2 (grant writer stages CRLF working-tree bytes).** Owner `2.0.0_SA_COO~O` (NFRA_MCPORTAL writer). Its
   remedy is `git show HEAD:` staging in `build_package.py`. Not cut here: the writer's paths are NFRA_MCPORTAL's.
 - **R-4 Z-W1-S7 (release tree carries the wrong mcportal pin) and R-5 Z-W1-S8 (tests dirty tracked `audit.jsonl`).**
@@ -82,6 +86,14 @@ Cut order (every item is buildable and provable on demand without A1's external 
 5. **E5, the batch repair cell:** R-4 (the release tree checks out the manifest's `mcportal_commit`, or the gitlink
    is bumped) and R-5 (suites write audit to a temp path). Cut only if no sibling round holds
    `deploy-to-ec2.sh` or the gateway `tests/` at the cut (PRD sequencing rule); otherwise it waits one round.
+
+6. **E6, safe-apply's targeted plan (R-2),** exactly as the laptop gate owner ruled, with the ruling's five-arm
+   self-test as its criteria. Its path is `.tools/safe-apply.sh`, which overlaps no other round-2 item.
+
+**Amendment 2026-09-30 ~22:5xZ:** E6 was added on the gate owner's ruling. E2's live arm and E4 are gated on
+**G-MSPID**: Andrew answered "Not yet" (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_225xZ_NFRA_MCPMSP_MSP_CALLING_IDENTITY_NOT_YET.md`).
+`MSP_CALLING_IDENTITIES` ships empty, and `opalbloomberg@` is never an MSP calling identity.
 
 **Deliberately NOT in round 2:**
 - FWD-2/Cottonwood: behind E1, G-IT-COT and G-FIRM.
