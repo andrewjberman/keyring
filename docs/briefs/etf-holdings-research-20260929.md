@@ -98,26 +98,26 @@ The /daily-sprint cloud run is the serving precedent: a scheduled container Lamb
 
 `opal-data-etfs` has no S3 event notification configured (read 2026-09-30 ~03:2x UTC), so a new marker trigger overwrites nothing.
 
-### IV.5 — LGIC already has the placement fix; this product needs one scope row
+### IV.5 — The placement fix is LANDED in the LGIC registry
 
-The tier home rule (`infra/logic/registry/tiers.json`) routes a PRODUCT-tenancy scope's bronze and silver to `opal-data-assets`; that is why `address('issuer-site','etfs','bronze',...)` returns `opal-data-assets`. The fix Andrew recalled is live in the registry: the **GENERAL tenancy** (`1675a8f631`, R4 narrowed 2026-09-18) homes every tier, platinum included, in the scope's own bucket; `harvest` and `transcripts` use it. The `etfs` scope must stay PRODUCT, because its bucket also carries client-ownership products.
+The tier home rule (`infra/logic/registry/tiers.json`) routed a PRODUCT-tenancy scope's bronze and silver to `opal-data-assets`; that is why `address('issuer-site','etfs','bronze',...)` returned `opal-data-assets`. The fix Andrew recalled was already in the registry: the **GENERAL tenancy** (`1675a8f631`, R4 narrowed 2026-09-18) homes every tier, platinum included, in the scope's own bucket; `harvest` and `transcripts` use it.
 
-**The fix is one new scope row: `rivalfunds`, tenancy GENERAL, bucket `opal-data-etfs`.** Simulated in memory against the live builder at ~03:5x UTC September 30 (registry file untouched), it derives:
+A separate `rivalfunds` scope pointing at `opal-data-etfs` was refused by the validator (a scope's bucket must be `opal-data-{scope}`). On Andrew's word (*"we can use etfs scope"*) the registry change is two edits, validated with 0 refusals: **the `etfs` scope moves to GENERAL tenancy**, and **a new system key `rivalfunds`** becomes the source of the product's derived tiers (`etfs/etfs/` is refused, and `etfs/global/` platinum homes in `opal-data-portal-v2`). R4's no-automatic-migration clause holds: existing `etfs/global/` addresses do not move, and all 12 generated registry targets are content-identical before and after (only their registry-hash stamps differ). From the live builder with the landed registry:
 
 | Tier | Builder address |
 |---|---|
-| Issuer bronze / silver | `s3://opal-data-etfs/issuer-site/rivalfunds/{bronze,silver}/holdings/date=...` |
-| Bloomberg bronze / silver | `s3://opal-data-etfs/bloomberg/rivalfunds/{bronze,silver}/holdings/date=...` |
-| Gold | `s3://opal-data-etfs/etfs/rivalfunds/gold/<table>/date=...` |
-| Platinum (served, by day) | `s3://opal-data-etfs/etfs/rivalfunds/platinum/page/date=...` |
+| Issuer bronze / silver | `s3://opal-data-etfs/issuer-site/etfs/{bronze,silver}/holdings/date=...` |
+| Bloomberg bronze / silver | `s3://opal-data-etfs/bloomberg/etfs/{bronze,silver}/holdings/date=...` |
+| Gold | `s3://opal-data-etfs/rivalfunds/etfs/gold/<table>/date=...` |
+| Platinum (served, by day) | `s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=...` |
 
-All graded CONFORMANT with the row present. `etfs-rivalfunds-daily` graded CONFORMANT as EVENT_RULE and SCHEDULE, and `etfs-rivalfunds-daily-lambda` as LAMBDA, at the same time.
+All nine proposed keys graded CONFORMANT (September 30 ~04:1x UTC). `etfs-rivalfunds-daily` graded CONFORMANT as EVENT_RULE and SCHEDULE; `etfs-rivalfunds-daily-lambda`, `rivalfunds-etfs-build-canonical-shape-lambda` and `rivalfunds-etfs-publish-page-lambda` as LAMBDA.
 
 ## PART V — WHAT MUST BE TRUE: THE NON-NEGOTIABLE HOPS
 
 Andrew named these explicitly so no hop is left unowned (item 8). They are requirements, not a sequence or a work allocation; round 1 crosses each once for BASG (O1), later rounds widen to all six.
 
-- **H1 — Homes.** The `rivalfunds` scope row lands, and every address and name is builder output. Bronze and silver keep one shape per channel and source; gold is the one master shape.
+- **H1 — Homes.** The registry change is landed (IV.5); every address and name is builder output. Bronze and silver keep one shape per channel and source; gold is the one master shape.
 - **H2 — Backfill through both channels, ad hoc, from the outset** (item 7). Issuer archives for GQGU and BASG; Bloomberg Excel BQL for WCMG, TSEL, ETFT and PCLG; raw responses land in bronze with requested and report dates. A backfill is QA-class data landing, not production evidence.
 - **H3 — Bronze to silver.** Silver is typed, deduplicated Parquet, every source column and row kept, fired by the bronze batch-complete marker. It also processes bronze that landed before it existed (the H2 backfill), by replay.
 - **H4 — Silver to gold.** `canonical_shape` coalesces every silver shape; the S5 tables derive from it. Prices, total returns, GICS and benchmarks come from Bloomberg (item 13), resolved through the identity layer.
@@ -131,7 +131,7 @@ Other things that must be true: each source has an exercised date extractor, com
 
 ## PART VI — STATUS — NOT OUTCOME-BEARING
 
-As measured on September 29, 2026: local issuer and Bloomberg captures exist; historical coverage is counted through September 28; local issuer fetch/parse completed at 21:38:52–21:39:04 UTC. The rivalfunds scope row is simulated, not landed. Nothing has been built, scheduled or deployed; no issuer has been fetched from AWS; no page exists. Exact probe timestamps and hashes are under `.runtime/amgt-reconn-brief-20260929/` (device-local).
+As measured on September 29, 2026: local issuer and Bloomberg captures exist; historical coverage is counted through September 28; local issuer fetch/parse completed at 21:38:52–21:39:04 UTC. The registry change (etfs GENERAL, system key rivalfunds) is committed locally; its generated targets are content-identical and were not re-stamped. Nothing has been built, scheduled or deployed; no issuer has been fetched from AWS; no page exists. Exact probe timestamps and hashes are under `.runtime/amgt-reconn-brief-20260929/` (device-local).
 
 ## PART VII — WHAT THIS BRIEF DOES NOT CLAIM
 
