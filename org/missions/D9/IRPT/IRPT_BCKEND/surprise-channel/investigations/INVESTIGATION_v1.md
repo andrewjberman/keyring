@@ -12838,3 +12838,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Also recorded here: K1 was deleted at 03:45:34Z on ~Y's 'fired and graded' before ~Y's hold arrived; the packet says delete after terminal. Restart, or discarding the retained message, is a CTO ruling asked at 03:54Z (msg to 1.0.0_SA_CTO)."
 }
 ```
+
+
+## IRPT_BCKEND-S228 -- the seam suite went green while losing two operations from its population -- the count said growth, the node ids said 6 removed and 9 added
+
+```json
+{
+  "id": "IRPT_BCKEND-S228",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T04:05:00Z",
+  "one_line": "The contract seam suite went from 24 failed to 62 passed, and in the same change its POPULATION lost two producer operations: submit-correction and export-preview are no longer exercised by any node. The node count read 59 -> 62 and looked like growth; the node IDS read 6 removed and 9 added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (the issuer that accepted the green; disarmed by either restoring the pairs or recording why the two need none)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer diff of COLLECTED NODE IDS, not counts, between CLOUD HEAD and wk-IRPT_BCKEND-91 (pytest --collect-only -q, CR-stripped, sorted, comm): HEAD 59 nodes, branch 62 nodes, 6 REMOVED and 9 ADDED.",
+      "REMOVED, all six: test_paired_consumer_request_through_the_real_dispatcher[export-preview] and [submit-correction]; test_negative_mismatched_contract_version[export-preview] and [submit-correction]; test_negative_wrong_firm_is_refused_with_zero_protected_bytes[export-preview] and [submit-correction].",
+      "ADDED, all nine: the same three test families parametrized on export-download, status-job and status-summary.",
+      "DISCLOSED BY THE WORKER, not hidden: 0.9.0_WK_IRPT_BCKEND~91's report states 'OPERATIONS is now the consumer's 12 operations. It dropped submit-correction and export-preview, which the portal no longer names. It gained status-summary, status-job and export-download.' The cell is graded MET on all three criteria, issuer-verified: 62 passed / 0 failed / 62 collected, AC2's falsifier now genuinely discriminates (unmutated PASSES, mutated fails naming the stage enum), AC3 empty."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-yr-281's own face: 'a green suite with fewer nodes than 58 is a different claim from a green suite with 58, and the issuer grades that difference' -- written against a COUNT.",
+  "world_is": "The count was the wrong instrument and the order said so in the wrong units. 59 -> 62 satisfies 'not fewer' and hides a swap: two operations left the population while three joined. MEASURED: submit-correction and export-preview are exercised by ZERO nodes of this suite on the branch. The mechanism is sound rather than sloppy -- OPERATIONS is derived from the CONSUMER's fixture, so an operation the portal no longer names has no pair to test. But the consequence is that two PRODUCER routes now have no consumer pairing and the suite is SILENT about them rather than RED. NOT MEASURED, and not claimed: whether the producer still serves those two routes, and whether the portal dropping them was intended or is itself drift. Row IRPT_BCKEND-W91-S1 records the inverse direction (three operations the portal names that routes.json says no consumer operation names).",
+  "notes": "WHY THIS IS NOT BOOKKEEPING: submit-correction is the operation family round 24's correction words belong to, and IB-yr-282 is working on correction words in this very round. Losing its pairing from the seam suite while a live cell touches that surface removes the check most likely to catch a mistake there. THE LESSON, and it is the same one five times over: a DENOMINATOR is not a POPULATION. I graded round 27's suite on 'fewer nodes' and got the units wrong; the right instrument is the set of node ids, and the diff cost one command. Silence replacing redness is what every defect this session has had in common. DISARM: either the two pairs are restored (if the producer still serves those routes), or it is recorded why an unpaired producer route needs no node -- and in that case the suite should say so out loud rather than by omission. Mine, because I accepted the green. Cut in round 29, not as a rider on IB-yr-282."
+}
+```
