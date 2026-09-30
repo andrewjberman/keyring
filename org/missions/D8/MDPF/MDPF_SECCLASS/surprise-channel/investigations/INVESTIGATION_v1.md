@@ -309,6 +309,28 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "spec_asserts": "Coordinator message (2026-09-30, this session): 'CLOUD now carries a cross-device union of ...seed-etf-constituents.py ... the union merge stands.'",
   "world_is": "This worktree's local CLOUD branch (the one named 'CLOUD' that 'git merge CLOUD' resolves) does not carry that commit; it is reachable only via origin/CLOUD, itself 1,245 commits ahead of and 176 commits behind local CLOUD. No fetch/merge of that scale was performed.",
   "notes": "Not executed here: TO-SC-e1's BOUNDS name LOCAL build + record and a specific <paths> write grant; reconciling a 1,245-commit cross-fabric divergence is a branch-integration act, not this cell's. This worker's own contract and test edits (identifier_namespace, classified_by='constituents') stand on the verified, in-branch amendment @1302fa149e and are unaffected by this row."
+},
+{
+  "id": "MDPF_SECCLASS-W5-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~5",
+  "surfaced_at": "2026-09-30T04:30:00Z",
+  "one_line": "MDPF_SECCLASS-W5-S1's stale assertion is fixed under this order (TO-SC-e2, amendment 1, row MDPF_SECCLASS-W5-S1): test_seed_fields.py::test_constituent_seeder_never_sets_classified_by is replaced by test_constituent_seeder_sets_constituents_label_and_refuses_seed_or_scheduled, which asserts the constituents label on a written row and the refusal of a seed or scheduled row; the file's own suite is green again (19 passed).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py (this commit): test_constituent_seeder_never_sets_classified_by removed, replaced by test_constituent_seeder_sets_constituents_label_and_refuses_seed_or_scheduled, asserting row['classified_by'] == 'constituents' and RowProtected on a seed-labelled and a scheduled-labelled ticker alike",
+      "python -m pytest infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py -q -p no:cacheprovider (this build, before the edit): '1 failed, 18 passed' (the W5-S1 regression); after the edit: '19 passed in 0.23s'",
+      "MDPF_SECCLASS.TO-SC-e2.instrument-kind-population.md amendment 1 (row MDPF_SECCLASS-W5-S1): 'Under the CTO's four-label ruling and SC-e-1, the constituents seeder sets classified_by = \"constituents\". Update that one test to assert the constituents label on a written row and the refusal of a seed or scheduled row. Loosen nothing else.' -- this row's edit is that exact, sole change; no other assertion in the file was touched."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MDPF_SECCLASS-W5-S1: 'disarm_owner: 2.0.0_SA_COO~M ... its one assertion needs updating -- or removing as superseded -- in SC-e-2 or a later cell before a repo-wide test run is clean again.'",
+  "world_is": "This IS that cell (TO-SC-e2), and its own amendment 1 directs exactly this fix (row MDPF_SECCLASS-W5-S1 named verbatim in the order). The disarm is performed here, by the worker the amendment addressed, not by 2.0.0_SA_COO~M directly executing a keystroke -- the issuing seat's own task order is the disarm act's authorization. This row does not itself flip W5-S1's hazard_standing (append-only; a worker does not edit or adjudicate an existing row) -- it records that the named condition is now met, for the issuer/CVO to close at L8/L9.",
+  "notes": "Loosened nothing else in test_seed_fields.py, per the order's refusal clause; the other 18 pre-existing tests in the file are unchanged and still pass."
 }
 ]
 ```
