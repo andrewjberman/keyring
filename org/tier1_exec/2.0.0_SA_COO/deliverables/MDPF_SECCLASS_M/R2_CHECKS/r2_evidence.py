@@ -140,8 +140,31 @@ def check_unresolved(d):
     return "REVIEW-COMPLETE %d of %d (classed %d)" % (len(d["entries"]), d["denominator"], classed)
 
 
+def check_cusip(d):
+    """Amendment 1 (E9, CTO 103140): CUSIP-keyed rows on a prefixed key, after a census of every scanning reader."""
+    err = need(d, ("reader_denominator", "readers", "would_write", "rows", "overwrites", "guessed"))
+    if err:
+        return err
+    if d["reader_denominator"] != len(d["readers"]) or not d["readers"]:
+        return "reader_denominator %s but %d readers" % (d["reader_denominator"], len(d["readers"]))
+    open_readers = [r.get("path") for r in d["readers"] if r.get("surfaces_cusip") and not r.get("guard")]
+    if open_readers:
+        return "readers that would surface a CUSIP key in a ticker list with no guard named: %s" % open_readers[:5]
+    bad = [r.get("ticker") for r in d["rows"]
+           if not str(r.get("ticker", "")).startswith("CUSIP:") or r.get("identifier_namespace") != "CUSIP"
+           or len(str(r.get("ticker", ""))) != len("CUSIP:") + 9]
+    if bad:
+        return "rows not keyed CUSIP:<9 chars> with identifier_namespace CUSIP: %s" % bad[:5]
+    if d["overwrites"] or d["guessed"] or d["would_write"] != len(d["rows"]):
+        return "overwrites %s guessed %s would_write %s rows %d" % (d["overwrites"], d["guessed"], d["would_write"],
+                                                                   len(d["rows"]))
+    return "CUSIP-CENSUS readers=%d would_write=%d" % (d["reader_denominator"], d["would_write"])
+
+
+FILES["cusip"] = "R2_CUSIP_CENSUS_20260930.json"
 RULES = {"label": check_label, "kind": check_kind, "thread": check_thread, "cot": check_cot,
-         "positions": check_positions, "fwd3": check_fwd3, "e18": check_e18, "unresolved": check_unresolved}
+         "positions": check_positions, "fwd3": check_fwd3, "e18": check_e18, "unresolved": check_unresolved,
+         "cusip": check_cusip}
 
 
 def main():

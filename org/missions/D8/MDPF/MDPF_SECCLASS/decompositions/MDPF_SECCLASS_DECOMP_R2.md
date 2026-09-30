@@ -65,3 +65,9 @@ the drain. A write to an EXISTING row from a bd-securities value is outside Andr
     E_18.detect_new_securities.py.
   - BLIND: the instrument_kind input source (e-2 names it), and Cottonwood's ticker-bearing holdings source (e-4
     finds it).
+
+## Note (2026-09-30 ~03:4xZ)
+
+The CTO added E9 (CUSIP-keyed rows; RULINGS 103137/103140). GATE (x) admits one issuance per round, so E9 is cut
+as ROUND 3 (`decompositions/MDPF_SECCLASS_DECOMP_R3.md`) and queued on slot ~4 after SC-e-3. Its contract field
+`identifier_namespace` rides SC-e-1 (amendment 1 of that order).

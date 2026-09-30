@@ -30,6 +30,10 @@ label: the ones written before the contract.
    becomes `["seed", "scheduled", "constituents", "legacy"]`, each with the definition the ruling gives, plus the
    precedence rule (`seed` wins; `scheduled` and `constituents` write only where no row exists; a missing label reads
    as `legacy`). Keep the rule-24 record current.
+   **Amendment 1 (CTO RULING 103140, E9):** the contract ALSO gains the field `identifier_namespace` with values
+   `{TICKER, CUSIP}`. A `CUSIP` row is keyed `ticker = "CUSIP:<9 chars>"`, and an absent value reads `TICKER`. Give it
+   its definitions and rule-24 record beside `instrument_kind`, and a test in `test_classified_by_v2.py` that the
+   contract lists it.
 2. **Constituents seeder.** `infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py` sets
    `classified_by = "constituents"` on every row it writes. Its condition stays: the row does not exist, or carries no
    label.
