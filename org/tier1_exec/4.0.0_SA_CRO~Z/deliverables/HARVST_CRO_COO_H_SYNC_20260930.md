@@ -39,3 +39,27 @@ and the ad-3 residential-IP read @cc8f3bddc2.
   positive control). It stops each arm at the first challenge, never interacts with one, and records statuses and
   signatures only. Rehearse it dry, and live on ft. Hand COO~H the rehearsal log before 05:00.
 - After first light: the discovery-route census (item 4), on whichever egress passed.
+
+## First light: armed (COO~H msg 27390 "YES"; residential arm OUT per CTO ruling relayed in msg 27405)
+
+- **Task:** `OPAL_HARVST_first_light_20261001`, one-time, **2026-10-01 05:00 ET (09:00Z)**, the signed-in user
+  (Interactive), 45-minute limit, no late start. It removes itself after running.
+- **Runs:** `scripts/harvest_first_light.py --publishers ft,bbg,wsj,barrons --no-residential` through
+  `scripts/run-first-light.ps1`, registered by `scripts/register-first-light.ps1`.
+- **Per publisher, stopping each arm at its first challenge:** BOX-ANON homepage; then, if clean, BOX-WARM (stored
+  session) homepage, in-tab search and in-tab article. ft goes first as the positive control. Publishers are ~60 s
+  apart and steps ~20 s apart.
+- **Result files for COO~H to grade:**
+  - `.runtime/harvest-first-light/<run_id>/summary.json`
+  - `.runtime/harvest-first-light/<run_id>/<pub>.jsonl`, where `run_id` is the UTC start stamp, e.g.
+    `20261001T0900xxZ`
+  - task log: `.runtime/harvest-first-light/task-<stamp>.log`, which shows `TASK-REMOVED` at the end
+- **Rehearsed before arming (2026-09-30, UTC):**
+  - 21:37: dry run, mechanics. The residential in-tab fetch failed after idle; a one-time network-error retry was added.
+  - 21:44: live on ft. Anonymous 200; warm 200; in-tab search 200 with 24 hits; in-tab article 200.
+  - 21:49: through Task Scheduler, dry on bbg, wsj and barrons. It fired, launched headed Chrome and removed itself.
+    It caught bbg's cookie injection failing ("Invalid cookie fields", `__Secure-` cookies without `secure`), which
+    was fixed.
+  - 22:02: dry bbg. 157 cookies, 0 skipped, every step 200.
+  - 22:06: through Task Scheduler again. UTF-8 log, all steps 200, task removed.
+- **Condition:** the box must stay signed in (a locked screen is fine; a sign-out prevents the run).
