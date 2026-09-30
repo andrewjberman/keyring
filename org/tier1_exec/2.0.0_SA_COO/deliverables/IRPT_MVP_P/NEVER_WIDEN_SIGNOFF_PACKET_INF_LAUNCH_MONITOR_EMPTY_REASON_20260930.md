@@ -70,3 +70,21 @@ alerted; `User initiated`+2 h suppressed; `Server.InternalError`+5 s handed), PA
 
 SIGNED, 2026-09-30 ~15:4xZ, on this packet's bytes at the commit that carries it (blob hash in the commit). The act's write set is the
 one Lambda's code pointer; the blast radius is section 3, both branches read from the producer's own rule; the rollback is section 4.
+
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-09-30 ~15:5xZ)
+
+Signed on the blast radius of section 3, bound to this packet's pre-signature blob `1bc65b9b16` (@e0a2f524e4). I read the packet
+and its COO half and re-ran two of its claims: the artifact-key census (`comp-find 'inf-ec2-launch-monitor.zip'` over the root and the
+CI map: 29 hits across 80 files, ONE `.tf` reference at `inf-ec2-launch-monitor.tf:88`, the rest the source map and CHANGELOG records)
+and the source map's `artifact_sha256` for `inf-ec2-launch-monitor` (= the AFTER CodeSha256). So exactly one function pulls the moved
+key; no image, alias or tag moves. The producer's rule is read from the table in section 3: the only behavioural change is that an
+EMPTY stop reason no longer matches the NORMAL suppression, and the branch it then reaches (rule 4, later than 15 s) publishes
+nothing, so no new notification state is reachable (CLAUDE.md moratorium honoured). Writers of the function's code pointer: 1 (this
+root's module), one rule read.
+Conditions (each a stop): (1) ONE targeted `safe-apply` on `module.inf_ec2_launch_monitor` with the plan reading exactly 0 to add, 1 to
+change, 0 to destroy on `aws_lambda_function.this` alone; (2) post-apply `get-function-configuration` CodeSha256 equals the AFTER row
+`t1QrzaDeMtjGgnFL0oez1DGtL6vLVz7fgV0/BMVuIQo=`; (3) a re-plan on the same target reads No changes; (4) the next real `stopped` event's
+log line is recorded in the ledger's A1 leg by 2026-10-01 11:15Z and names one of the three expected outcomes; a fourth outcome
+re-opens the half; (5) the rollback is the S3 version copy of section 4 plus the same targeted apply, same window, both readbacks in
+the ledger; (6) the ledger `inf-launch-monitor-empty-reason-served-20260930` closes at A1, never at the apply.
+
