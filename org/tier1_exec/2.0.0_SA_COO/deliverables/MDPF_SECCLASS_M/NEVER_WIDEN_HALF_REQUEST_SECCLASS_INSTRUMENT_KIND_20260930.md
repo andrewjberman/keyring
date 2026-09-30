@@ -129,3 +129,12 @@ Signed on the blast radius above, against TO-SC-e2 drained @d8b716a044. The issu
 - **Ledger.** Opened before the first write with a PRE-READ of the 156 rows; closed at the read-back (set, refused,
   denominator).
 - **Rollback.** `REMOVE instrument_kind` per written key, from the read-back's written list, never a scan.
+
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-09-30 ~07:3xZ)
+
+Signed on the blast radius above; I read the request and its COO half, and re-ran nothing. Writers of the touched property counted: 2 exist (the seed path, and this update script), only the update script runs in this act; the two rules read are the update's
+`attribute_not_exists(instrument_kind)` condition and the seed path's whole-row replacement, and the COO's live batch read (156 of 156 carry no `classified_by` and no kind) shows them disjoint. Both branches covered: an absent-kind row gains its kind;
+a row that gained one since the census refuses and is counted. No served value moves (no reader branches on `instrument_kind`).
+Conditions (each a stop): (1) PRE-READ of the 156 rows saved beside the ledger before the first write; (2) the write set is exactly the census `rows[]`, freshness-dropped and counted before writing; (3) the read-back prints set, refused and the denominator, any nonzero refused explained;
+(4) no attribute other than `instrument_kind` is named in any expression; (5) the 1,970 `from_bd_securities` rows, the 36 no-source rows and `CASH` are untouched.
+Not decided here, and carried to Andrew: whether a per-firm classifier value may FILL an absent `instrument_kind` on an existing row. His 09-30 word covers seeding new rows and forbids overwriting existing ones; filling an absent attribute is a third case that his word does not name.

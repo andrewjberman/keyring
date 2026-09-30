@@ -117,3 +117,11 @@ Signed on the blast radius above, against TO-SC-e1 drained @d8b716a044. The issu
 - **Ledger.** Opened before the first write with a PRE-READ of the 238 rows; closed at the read-back, which prints
   labelled, refused and their denominator.
 - **Rollback.** `REMOVE classified_by` per written key, from the read-back's written list, never a scan.
+
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-09-30 ~07:3xZ)
+
+Signed on the blast radius above; I read the request and its COO half, and re-ran nothing. Writers of the touched property counted: 1 (the label script), 2 rules read: the update's `attribute_not_exists(classified_by)`
+condition and the contract's precedence (a later seed run replaces `legacy`; a scheduled or constituents write to a labelled row is refused). Both branches covered: an unlabelled row gains `legacy`; a row labelled since the census refuses and is counted.
+No served value moves (no reader branches on `legacy`). This is the label ruled in the round-1 analysis @151c890591 section 1.
+Conditions (each a stop): (1) PRE-READ of the 238 rows saved beside the ledger before the first write; (2) the write set is exactly the census `tickers[]`, and any ticker labelled since the census is dropped and counted with its denominator before writing;
+(3) the read-back prints labelled, refused and the denominator, and any nonzero refused count is explained before the ledger closes; (4) no attribute other than `classified_by` is named in any expression.
