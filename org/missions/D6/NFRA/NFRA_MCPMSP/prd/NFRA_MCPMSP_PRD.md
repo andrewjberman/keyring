@@ -197,7 +197,8 @@ is cut against the path where the gateway lives at issuance.
   which is already Andrew-only (MCPORTAL C2).
 
 **C5 -- Per-firm AWS role, assumed per request; the gateway holds no firm read.**
-- The gateway's own identity carries no read on any firm's data (record s.8).
+- The gateway's own identity carries no read on any firm's data (record s.8). This is the target, and it holds in full
+  once the v0.3 staging below closes. Until then it holds for the firm buckets and not for `opal-data-portal-v2`.
 - For each served request it assumes the role of the firm the router selected. That role reads ONLY its own firm's
   data, in both shapes the estate holds it (CLAUDE.md's cross-firm rule: "shared bucket -> key-prefix + IAM condition;
   per-firm buckets -> bucket-scoped Deny"):
@@ -220,7 +221,10 @@ is cut against the path where the gateway lives at issuance.
     askers, under never-widen sign-off (CLAUDE.md, "NEVER move served output").
   - Named residual until then: for partner requests the per-firm role does the read, but the gateway identity could
     still read any firm's served figures. The router, not IAM, is what keeps it from doing so on a partner's behalf.
-- A scoping bug therefore surfaces as an AWS refusal, not as a leak (brief Part III).
+- A scoping bug in a firm role therefore surfaces as an AWS refusal, not as a leak (brief Part III). A router bug that
+  sent a partner request through the gateway identity against `opal-data-portal-v2` is NOT caught by AWS until the v0.3
+  staging closes. That is the named residual above, and whether it is acceptable for live partner traffic is Andrew's
+  (CVO~O finding F2, msg 26963).
 - Role names come from `lib/opal_naming.py name()` after a registry row lands in `infra/logic/registry/` (CLAUDE.md
   Rule 30). Each role and trust change is an IAM act under the change ledger (C12).
 
