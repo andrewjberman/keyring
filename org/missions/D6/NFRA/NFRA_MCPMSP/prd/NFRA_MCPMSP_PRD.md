@@ -3,7 +3,7 @@
   "project": "NFRA_MCPMSP",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.2",
+  "prd_version": "v0.3",
   "step": 4,
   "brief_ref": "docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md@77ddde1d13",
   "endpoint_outcomes": [
@@ -168,6 +168,9 @@ is cut against the path where the gateway lives at issuance.
 - A tenant with no row keeps today's refusal, `asker_tenant_denied`, now written to the refusal log (C4).
 - A row is created ONLY by approving a refusal-log entry (FWD-4; record s.10, card 3), and only for a firm Andrew has
   brought live (C11). No Microsoft or vendor lookup is made.
+- **v0.3:** the row is the `tenant_firm` record at `POLICY#TENANT#<tid>` in the gateway's access-state table. It is
+  written ONLY by NFRA_MCPORTAL's grant writer through its `register_tenant` op (MCPORTAL C4 addendum, 2026-09-30).
+  The record type is added to NFRA_OPLGTW's contract in the same commit. The gateway only reads it.
 
 **C3 -- The sender gate: allowed domain AND registered tenant, at the agent and at the gateway.**
 - **Allowed domains, verbatim from Andrew:** `opalinvest.com`, `49financial.com`, `inflectionwealth.com`,
@@ -208,6 +211,15 @@ is cut against the path where the gateway lives at issuance.
   - Option (b), a copy of those figures in `opal-data-inf`, would be a duplicate output path (CLAUDE.md's no-shadow
     rule).
   - Option (c), serving through the gateway identity, breaks record s.8.
+- **v0.3, the gateway identity's zero read, staged** (2.0.0_SA_COO~MS msg 26951, ruled by this seat):
+  - Round 1 enforces it on the firm buckets `opal-data-inf` and `opal-data-cot` only.
+  - The gateway identity keeps its current read of `opal-data-portal-v2` for now. It serves Opal-internal askers every
+    firm's figures (`query_v0.py:58`, the catalog's "Opal sees all firms" rule), and a Deny there would move the
+    internal Analyst's and `/query/v0`'s served answers.
+  - That prefix zero-read moves to an enrichment round that first builds an Opal-internal reader role for internal
+    askers, under never-widen sign-off (CLAUDE.md, "NEVER move served output").
+  - Named residual until then: for partner requests the per-firm role does the read, but the gateway identity could
+    still read any firm's served figures. The router, not IAM, is what keeps it from doing so on a partner's behalf.
 - A scoping bug therefore surfaces as an AWS refusal, not as a leak (brief Part III).
 - Role names come from `lib/opal_naming.py name()` after a registry row lands in `infra/logic/registry/` (CLAUDE.md
   Rule 30). Each role and trust change is an IAM act under the change ledger (C12).
@@ -328,7 +340,7 @@ Sum: 1+1+11+4+1+7+1+1+1+1 = **29**.
 |---|---|---|
 | A0 | one cross-organization one-to-one chat to the Opal Analyst user is visible to the gateway's Teams reader, sender tenant ID and user ID read from the message | FWD-1 (hop 0) |
 | A1 | one named Inflection advisor's question answered in the chat from Inflection's model-portfolio figures that the portal already serves (`platinum/mdpf/inflection/`), matching the portal for the same item and stating the data's date; every hop real | FWD-1 |
-| A1n | NEGATIVE ARMS: the Inflection role reading `opal-data-cot` refused by AWS; the Inflection role reading another firm's prefix in `opal-data-portal-v2` (e.g. `platinum/mdpf/cottonwood/`) refused by AWS; the gateway identity reading either firm's data refused; an unregistered tenant refused and logged | FWD-1, FWD-2 |
+| A1n | NEGATIVE ARMS: the Inflection role reading `opal-data-cot` refused by AWS; the Inflection role reading another firm's prefix in `opal-data-portal-v2` (e.g. `platinum/mdpf/cottonwood/`) refused by AWS; the gateway identity reading `opal-data-inf` or `opal-data-cot` refused (its `opal-data-portal-v2` zero-read is an enrichment arm, C5 v0.3); an unregistered tenant refused and logged | FWD-1, FWD-2 |
 | A2 | one Cottonwood conversation answered; one cross-firm question each way yields nothing about the other firm, with the refusal traced to the access controls | FWD-2 |
 | A3 | one message from a non-allowed domain, one from an allowed domain in an unregistered tenant, one guest-form address: no reply to any, three log entries with sender and time | FWD-3 |
 | A4 | one ungranted advisor refused and listed; one approval; their next question answered; the firm's tenant row created by that approval | FWD-4 |
