@@ -385,6 +385,30 @@
   "spec_asserts": "NEVER_WIDEN_HALF_COO_D2 act-start gate 3: keys 1-10 still read 0 objects at act start; a non-zero count means another writer exists: STOP.",
   "world_is": "The count was 4 objects + 2 markers of this stack's own scheduled fire, not a foreign writer. The gate was read as intended (no foreign writer); the backfill ran 2025-06-13..2026-09-28 (324 trading days) and the scheduled fire supplied 2026-09-29, 325 in all.",
   "notes": "The two applies were done hours before the act by design of the order's split; a schedule that goes live at apply time makes gate 3 unsatisfiable for any apply-then-act order that spans a 07:00 ET fire."
+},
+{
+  "id": "ETFS_RIVALS-Z-W5-S6",
+  "project": "ETFS_RIVALS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+  "surfaced_at": "2026-09-30T12:05Z",
+  "one_line": "LEG B STOP: amendment 2 step 2 says STOP if rivalfunds_view.py imports anything that differs between the deployed commit 093fc247c6 and HEAD; it imports app/audit.py and app/config.py, both of which differ, so the deploy-only commit was NOT built, the gateway was NOT deployed, and ledger legs L3 and L4 stay OPEN.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~RV",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "EC2_MANIFEST re-read: services.opal-gateway.deployed_commit is still 093fc247c6306dc0e5d26d92107dc9519965c7ad on CLOUD @415f31fda6 and on this branch (deployed_at 2026-09-29T10:11:34Z, mcportal_commit a3bff71ffa); it did not move. Worktree C:\\tmp\\wk-rivals-5gw and branch deploy-rivalfunds-gw-r1 were created at 093fc247c6 and hold no change.",
+      "rivalfunds_view.py imports (lines 16-30, 97, 147): __future__, datetime, html, json, pathlib, re, time, typing, starlette.requests, starlette.responses, from . import audit, from .config import get_config, boto3 (lazy), from .identity import IdentityError, get_user_email (lazy). git diff --stat 093fc247c6 HEAD: app/audit.py 6 lines (+5 -1) and app/config.py 61 lines (+54 -7) differ; app/identity.py does not.",
+      "What differs does not touch what the view uses (read from the diffs, not a deploy test): audit.py adds an asker_sender_refusal allowlist entry and a bytes arg to opal_asker_query in _ARGS_ALLOWLIST, and log_call(email, tool, args, outcome, detail, tier) exists at 093fc247c6 (audit.py:125); config.py at 093fc247c6 carries Config.AWS_REGION (:163) and get_config (:358). The view's audit.log_call(..., \"rivalfunds_view\", {...}) has no allowlist entry at either commit. This is a reading, not a ruling: the order says STOP on any differing import.",
+      "Read-only apply check in the deploy worktree: git apply --check --include=infra/aws/ec2/opal-gateway/app/server.py hookup_d2.patch -> rc 0 (the server.py hunks apply cleanly to 093fc247c6's server.py). Nothing was applied, copied or committed there."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-RIV-d-2 amendment 2 LEG B step 2: if rivalfunds_view.py imports anything that differs between 093fc247c6 and HEAD, STOP with a row.",
+  "world_is": "Two of the view's three in-package imports (audit, config) differ between the deployed commit and HEAD, on unrelated lines. The gateway serves its 093fc247c6 bytes unchanged; /rivalfunds is not routed; AC2 has no gateway_deploy_commit to compare and reads FAIL.",
+  "notes": "The issuer decides before the ledger window ends (~16:13Z): (a) rule the audit/config differences immaterial (they are unrelated allowlist and tenancy lines) and re-issue LEG B steps 2-7 to a fresh worker, whose path is ready (patch applies, worktree at 093fc247c6 exists); or (b) ship audit.py and config.py from HEAD too, which enlarges the key-16 radius under a new pair; or (c) hold the gateway leg until the 23 rider files are deployed by their owners. Independent of this, LEG B cannot satisfy CTO condition 5 until row W5-S4 is fixed: no platinum/page object exists to read. ARMED only because ledger etfs-rivalfunds-thread-r1 blares RED at ~16:13Z with L3/L4 open; the gateway itself is unchanged."
 }
 ]
 ```
