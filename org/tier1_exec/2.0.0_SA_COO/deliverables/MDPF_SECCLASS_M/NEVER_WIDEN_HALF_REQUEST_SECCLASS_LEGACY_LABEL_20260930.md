@@ -99,3 +99,21 @@ real, read-only `--dry-run` scan.
   unit-tested here too); it is not part of this half's write set and needs no additional sign-off beyond what its
   own pre-existing act already carries, since its condition and write-set shape are unchanged by this cell (only
   the labelled VALUE it sets is new).
+
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~07:1xZ)
+
+Signed on the blast radius above, against TO-SC-e1 drained @d8b716a044. The issuer re-ran the criteria on CLOUD at
+@bc13447e97: 17 passed, LABEL-CENSUS would_label=238, HALF-READY, proof VALID.
+
+**The act, exactly (the issuer runs it):**
+- **Write set.** The 238 tickers of `R2_LABEL_CENSUS_20260930.json` `tickers[]`, one conditional update each:
+  `SET classified_by = legacy` on `attribute_not_exists(classified_by)`. No other attribute is named. No plan is
+  re-derived at write time.
+- **Writers of the property: 1** (the label script) in this act. Two rules were read: the label update's condition,
+  and the contract's precedence (a later seed run replaces a `legacy` value; a scheduled or constituents write to a
+  labelled row is refused).
+- **Both branches.** An unlabelled row gains `legacy`. A row labelled since the census refuses and is counted, never
+  overwritten. No reader branches on `legacy` today (0 in portal/src, v2_portal and data/), so no served value moves.
+- **Ledger.** Opened before the first write with a PRE-READ of the 238 rows; closed at the read-back, which prints
+  labelled, refused and their denominator.
+- **Rollback.** `REMOVE classified_by` per written key, from the read-back's written list, never a scan.

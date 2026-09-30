@@ -34,7 +34,7 @@
     "cvo": "3.0.0_SA_CVO",
     "cro": "4.0.0_SA_CRO"
   },
-  "coo_lane": null,
+  "coo_lane": "2.0.0_SA_COO~T",
   "workstreams": {
     "transcripts": "FWD-1..FWD-5 (Teams meeting transcripts); write surface: the transcripts source, silver and gold tables, and the pull job",
     "communications": "FWD-6..FWD-11 (market updates, investment feedback, the commentary drafter and its ticket); write surface: the market_update and analysis_commentary tables and the commentary Lambda"
