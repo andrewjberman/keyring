@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -343,4 +343,20 @@ S09's table, S12's news tables, S14's union-find). Relied-on work has no row by 
 15. **W1.** The endpoint's FWD-1 SOURCE line names "COO~P record"; the record path is
     `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260930_052xZ_PRECOMPUTED_GZIP_JSON_REPORTING_UNDER_2S_AND_PUSH_MANAGED.md`
     (cited in the PRD header); the ENDPOINT bytes are not edited for it.
+
+## ADDENDUM v0.3 -- C-SOURCES and S17 corrected for gold (L4; outside the ENDPOINT section, so no half re-opens)
+
+**Source.** Row `IRPT_DASHBD-S1` @85863e9b5a (0.4.0_DS_ClientPlatform~S, measured: `lib/opal_naming.py`'s validator admits a
+`reporting_policies.json` family only at tier {state, platinum} with extension {csv, json, pdf}; tier gold refuses on every
+extension, a nine-way matrix), raised by `2.0.0_SA_COO~P` as 103354. Ruled by `1.0.0_SA_CTO` 2026-09-30 ~18:0xZ.
+
+16. **The reporting-policy register does not cover gold, and this PRD was wrong to say it did.** `reporting_policies.json` records
+    the retention and disposal of CLIENT-FACING artifacts (state and platinum), not of an internal parquet table. So: the eight gold
+    tables need NO policy row; rule 30 is satisfied for them by `address()` and `name()` output alone (both answer for
+    `account_return_daily` and `dim_return_method`, measured by the row). The round-1 policy rows are for the PLATINUM served files
+    only (`series.json.gz`, `manifest.json`, and later the transactions pages), which the register admits. C-SOURCES's sentence "a
+    policy row this project adds in round 1 with the first contract" and S17's surface "`reporting_policies.json` rows for the eight
+    tables" are read as superseded by this ruling: S17 becomes "policy rows for the platinum served files". No request goes to the
+    LGIC lane to widen the register to gold. `2.0.0_SA_COO~P` amends DB-1-AC1 to drop its gold policy-file half; the emit was never
+    blocked.
 
