@@ -99,7 +99,7 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~85</slot>
 <fabric>site-z</fabric>
