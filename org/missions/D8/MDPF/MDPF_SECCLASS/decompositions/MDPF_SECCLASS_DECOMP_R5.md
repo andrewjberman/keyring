@@ -55,3 +55,10 @@ second schema's copy cites it and carries no value of its own. One commit, no wo
   registers LIVE on the broker; the issuer then delivers the order's path by one message.
 
 `fanout: 1` (one worker slot live; the parked order holds no slot).
+
+## Ruling after issuance (1.0.0_SA_CTO 103327, 2026-09-30 ~16:5xZ)
+
+Round 5 CLOSES on chain A (SC-e-11, drained @716f6f883a). SC-e-12 leaves this rectangle: parked on its own carrier (the
+order file, `<status>parked</status>`), owner `0.7.0_AE_CloudOps`, un-park condition "the CloudOps seat is live on the
+broker"; it re-enters the open round when the seat returns, without a new ruling. Round 6 is cut from the CTO's round-5
+analysis after the CVO's slug and carries the two reader guards (CUSIP_ROWS CTO half condition 5) and SC-e-12 by reference.

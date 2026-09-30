@@ -538,3 +538,81 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Inert because both CLIs are blocked and the issuer's driver guards the runs. A one-clause fix, carried to the analysis."
 }
 ```
+
+## MDPF_SECCLASS-W9-S1 -- the live CUSIP-keyed row count is 0, so the live dry-run line is trivially 0
+
+```json
+{
+  "id": "MDPF_SECCLASS-W9-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~9",
+  "surfaced_at": "2026-09-30T15:00:00Z",
+  "one_line": "The live etf-classifications table holds 0 CUSIP:-keyed rows today, so CUSIP-GUARD bd_delta_from_cusip=0 is true before the guard is even consulted; the discriminating line is CUSIP-GUARD-PLANNED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R5_CHECKS/r5_cusip_guard_dryrun.py -> CUSIP-GUARD etf_rows=2309 cusip_rows=0 bd_rows=10929 bd_delta_from_cusip=0 ; CUSIP-GUARD-PLANNED planned=349 would_copy_to_bd=0 ; stderr control: unguarded planned copy would be 349"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The dry-run's bd_delta_from_cusip=0 reading shows the guard holds against live CUSIP rows.",
+  "world_is": "cusip_rows=0 of etf_rows=2309 at 2026-09-30: SC-e-9's 349 rows are not yet written, so the live line has nothing to guard; only the planned line (349 planned, 0 would copy; unguarded control 349) exercises the guard.",
+  "notes": "The half's standing condition (a fresh dry-run immediately before the act) is what makes the live line meaningful, and the act's own post-write re-run would then show cusip_rows=349 with bd_delta_from_cusip=0. No effect on this cell."
+}
+```
+
+## MDPF_SECCLASS-W9-S2 -- seed_bd_securities.py's 'Seeded N items' count now excludes skipped CUSIP rows
+
+```json
+{
+  "id": "MDPF_SECCLASS-W9-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~9",
+  "surfaced_at": "2026-09-30T15:00:00Z",
+  "one_line": "The order says keep the seeder's output lines; the 'Seeded/Would seed <n> items' number is now len(items)-skipped_cusip so it states rows actually copied, and a new skipped_cusip=<n> line precedes it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/classification/seed_bd_securities.py lines 99-101 (diff on wk-MDPF_SECCLASS-9)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Output lines stay as they are; the guard adds skipped_cusip=<n>.",
+  "world_is": "With no CUSIP rows (today) the line is byte-identical to before; with CUSIP rows offered, reporting len(items) would claim seeding rows the guard skipped.",
+  "notes": "Judged a truthfulness fix inside the guard's own edit, not a copy-logic change. Revert to len(items) if the issuer wants the literal old line."
+}
+```
+
+## MDPF_SECCLASS-W9-S3 -- tree-check INDEX-DRIFT blocks every org/missions commit
+
+```json
+{
+  "id": "MDPF_SECCLASS-W9-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~9",
+  "surfaced_at": "2026-09-30T15:10:00Z",
+  "one_line": "safe-commit's missions-tree-check refuses every commit that stages a path under org/missions/ because the committed index org/projects/NFRA_TRNSPT.json says dep_stage PRD while its tree row says EXECUTING.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR (regenerate the NFRA_TRNSPT index row; the shared checkout already carries it as an uncommitted modification)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/missions-tree-index.py check on wk-MDPF_SECCLASS-9 @6d44575a7f -> [INDEX-DRIFT] org/projects/NFRA_TRNSPT.json: dep_stage: index='PRD' tree='EXECUTING'; RESULT: 1 violation(s)",
+      "git log -- org/projects/NFRA_TRNSPT.json -> last commit 1d8905b007 (L3 register, PRD); 81e350ba0a moved the tree row to EXECUTING without the index"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Base defect, not this cell: the NFRA_TRNSPT issuance omitted its generated index. Fixed by the issuer at 17ad3ea043, cherry-picked onto wk-MDPF_SECCLASS-9 as b622e6a245; python .tools/missions-tree-index.py check now reads RESULT: 0 violation(s). Issuer-ruled state RESOLVED is not in the ratified disposition enum, so DISMISSED_WITH_REASON carries it.",
+  "spec_asserts": "A worker's commit of its proof, flip and surprise rows under org/missions/ passes safe-commit.",
+  "world_is": "The tree check fails at HEAD independent of this cell, so the proof instance, the status flip and rows W9-S1..S3 could not be committed; the code, test, R5 check and half (outside org/missions/) were committed separately. org/projects/ is outside this order's paths, so no edit was made there and no bypass was used.",
+  "notes": "DISARMED: base defect fixed by the issuer; commit b622e6a245 on wk-MDPF_SECCLASS-9 (cherry-pick of 17ad3ea043) regenerates org/projects/NFRA_TRNSPT.json; evidence: python .tools/missions-tree-index.py check in this worktree -> RESULT: 0 violation(s). Once the index row is regenerated, one commit of the three org/missions paths (proof instance dir, INVESTIGATION_v1.md, this order file with status complete) finishes the order; those files sit valid and uncommitted in the worktree."
+}
+```

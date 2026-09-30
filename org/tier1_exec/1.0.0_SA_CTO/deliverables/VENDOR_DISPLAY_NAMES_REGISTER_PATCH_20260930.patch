@@ -1,0 +1,253 @@
+diff --git a/infra/logic/registry/systems.json b/infra/logic/registry/systems.json
+index 21cc0a8560..30503100b8 100644
+--- a/infra/logic/registry/systems.json
++++ b/infra/logic/registry/systems.json
+@@ -1,7 +1,7 @@
+ {
+  "_about": {
+   "what": "The identity registry's SYSTEM rows (LGIC_ENFORCE DEC-1): every token that may fill a resource name's {system} slot or a key's {source}.",
+-  "row_fields": "key; class, one of NAMING_SCHEMA.json system.classes; long, the spelled-out name where the estate uses one (a directive title or a repository tree), else the key; short, only where a short form is sanctioned (none is, at this seed); owner_directive, the D-code of the owning directive, which must resolve in org/missions/DIRECTIVES.yaml; owner_claim, measured (a DIRECTIVES.yaml line or a mission-tree project names the owner) or inferred (a reading, owed a confirmation); owner_basis, the citation.",
++  "row_fields": "key; class, one of NAMING_SCHEMA.json system.classes; long, the spelled-out name where the estate uses one (a directive title or a repository tree), else the key; short, only where a short form is sanctioned (none is, at this seed); owner_directive, the D-code of the owning directive, which must resolve in org/missions/DIRECTIVES.yaml; owner_claim, measured (a DIRECTIVES.yaml line or a mission-tree project names the owner) or inferred (a reading, owed a confirmation); owner_basis, the citation.; display_name, VENDOR rows only: the words a served face prints for the vendor (the VENDOR_DISPLAY_NAMES generated view; DSGN_IRPTV1 W2-19, landed 2026-09-30).",
+   "seeded_from": "infra/logic/05_IDENTITY_SPINE.md s.3 (PRODUCTS, VENDORS) and org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md V1, V2 and V3 (the interim vocabularies, read from infra/logic/09_NAMING_CENSUS.md s.3).",
+   "not_here": "Kinds and cadences belong to org/standards/NAMING_SCHEMA.json, which lib/opal_naming.py reads at run time and never copies. Firms, products-as-scopes, masters and global are scopes.json rows. opal is never a row (NAMING_SCHEMA.json system.reserved).",
+   "platform_subsystems": "gateway, added 2026-09-15 by the registry owner under CLAUDE.md Rule 30: infra/logic/02_DOCTRINE.md s.1 names it a platform subsystem, and 1.0.0_SA_CTO msg 97130 rules it the {source} of the Tax workbook bronze. The V2 tokens stay under unresolved: the census does not say which are subsystems and which are project codes (row LGIC_NAMING-W1-S2); LGIC_ENFORCE's EN-r-2 classifies them.",
+@@ -66,7 +66,8 @@
+    "long": "schwab",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'); DIRECTIVES.yaml mentions Schwab under D2 :67 and D3 :75 without naming an owner"
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'); DIRECTIVES.yaml mentions Schwab under D2 :67 and D3 :75 without naming an owner",
++   "display_name": "Charles Schwab"
+   },
+   {
+    "key": "blackdiamond",
+@@ -74,7 +75,8 @@
+    "long": "blackdiamond",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines')"
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines')",
++   "display_name": "Black Diamond"
+   },
+   {
+    "key": "orion",
+@@ -82,7 +84,8 @@
+    "long": "orion",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines')"
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines')",
++   "display_name": "Orion"
+   },
+   {
+    "key": "eclipse",
+@@ -90,7 +93,8 @@
+    "long": "eclipse",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines')"
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines')",
++   "display_name": "Orion Eclipse"
+   },
+   {
+    "key": "smartx",
+@@ -98,7 +102,8 @@
+    "long": "smartx",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'); DIRECTIVES.yaml mentions SmartX under D3 :75 and D9 :362 without naming an owner"
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'); DIRECTIVES.yaml mentions SmartX under D3 :75 and D9 :362 without naming an owner",
++   "display_name": "SMArtX"
+   },
+   {
+    "key": "pathfinder",
+@@ -106,7 +111,8 @@
+    "long": "pathfinder",
+    "owner_directive": "D4",
+    "owner_claim": "inferred",
+-   "owner_basis": "infra/logic/05_IDENTITY_SPINE.md s.3: every pathfinder scope (filepoint, PFDE, PFOE) resolves to the etfs product, whose owner is D4"
++   "owner_basis": "infra/logic/05_IDENTITY_SPINE.md s.3: every pathfinder scope (filepoint, PFDE, PFOE) resolves to the etfs product, whose owner is D4",
++   "display_name": "Pathfinder"
+   },
+   {
+    "key": "trueshares",
+@@ -114,7 +120,8 @@
+    "long": "trueshares",
+    "owner_directive": "D4",
+    "owner_claim": "measured",
+-   "owner_basis": "org/missions/DIRECTIVES.yaml D4 :229-246 carry the TrueShares capture and egress confirm as D4's work"
++   "owner_basis": "org/missions/DIRECTIVES.yaml D4 :229-246 carry the TrueShares capture and egress confirm as D4's work",
++   "display_name": "TrueShares"
+   },
+   {
+    "key": "ycharts",
+@@ -122,7 +129,8 @@
+    "long": "ycharts",
+    "owner_directive": "D9",
+    "owner_claim": "measured",
+-   "owner_basis": "org/missions/DIRECTIVES.yaml D9 :370-373: 'YCharts FOLDS INTO D9'"
++   "owner_basis": "org/missions/DIRECTIVES.yaml D9 :370-373: 'YCharts FOLDS INTO D9'",
++   "display_name": "YCharts"
+   },
+   {
+    "key": "fred",
+@@ -130,7 +138,8 @@
+    "long": "fred",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines')"
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines')",
++   "display_name": "FRED"
+   },
+   {
+    "key": "seeking-alpha",
+@@ -138,7 +147,8 @@
+    "long": "seeking-alpha",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'); the vendor's name is two tokens, matched as one (GRADING_RULE.md V1)"
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'); the vendor's name is two tokens, matched as one (GRADING_RULE.md V1)",
++   "display_name": "Seeking Alpha"
+   },
+   {
+    "key": "sec",
+@@ -146,7 +156,8 @@
+    "long": "sec",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'), the same inference already carried by bloomberg/schwab/blackdiamond/orion/eclipse/smartx/pathfinder/fred/seeking-alpha. Added 2026-09-18 because AMGT_RESAPP (D5) cannot name this source in a conforming key without it: measured by 4.0.0_SA_CRO~Z (plan @0756d2897d) and carried by the L4 ruling @2560e04f46. First consumer is D5; the OWNING directive is the inference above, not D5, and it is owed a confirmation. the US SEC's EDGAR: the filings battery's step 1 and 2 source (C-FILINGS-ANALYZER). A public government source, not a paid vendor, classed VENDOR because the slot is the key's {source}."
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'), the same inference already carried by bloomberg/schwab/blackdiamond/orion/eclipse/smartx/pathfinder/fred/seeking-alpha. Added 2026-09-18 because AMGT_RESAPP (D5) cannot name this source in a conforming key without it: measured by 4.0.0_SA_CRO~Z (plan @0756d2897d) and carried by the L4 ruling @2560e04f46. First consumer is D5; the OWNING directive is the inference above, not D5, and it is owed a confirmation. the US SEC's EDGAR: the filings battery's step 1 and 2 source (C-FILINGS-ANALYZER). A public government source, not a paid vendor, classed VENDOR because the slot is the key's {source}.",
++   "display_name": "SEC"
+   },
+   {
+    "key": "lusha",
+@@ -154,7 +165,8 @@
+    "long": "lusha",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'), the same inference already carried by bloomberg/schwab/blackdiamond/orion/eclipse/smartx/pathfinder/fred/seeking-alpha. Added 2026-09-18 because AMGT_RESAPP (D5) cannot name this source in a conforming key without it: measured by 4.0.0_SA_CRO~Z (plan @0756d2897d) and carried by the L4 ruling @2560e04f46. First consumer is D5; the OWNING directive is the inference above, not D5, and it is owed a confirmation. Lusha prospecting: the officer enrichment step of C-EXEC-MANAGEMENT. Every call is billed and runs only under Andrew's per-use word."
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'), the same inference already carried by bloomberg/schwab/blackdiamond/orion/eclipse/smartx/pathfinder/fred/seeking-alpha. Added 2026-09-18 because AMGT_RESAPP (D5) cannot name this source in a conforming key without it: measured by 4.0.0_SA_CRO~Z (plan @0756d2897d) and carried by the L4 ruling @2560e04f46. First consumer is D5; the OWNING directive is the inference above, not D5, and it is owed a confirmation. Lusha prospecting: the officer enrichment step of C-EXEC-MANAGEMENT. Every call is billed and runs only under Andrew's per-use word.",
++   "display_name": "Lusha"
+   },
+   {
+    "key": "bright-data",
+@@ -162,7 +174,8 @@
+    "long": "bright-data",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'), the same inference already carried by bloomberg/schwab/blackdiamond/orion/eclipse/smartx/pathfinder/fred/seeking-alpha. Added 2026-09-18 because AMGT_RESAPP (D5) cannot name this source in a conforming key without it: measured by 4.0.0_SA_CRO~Z (plan @0756d2897d) and carried by the L4 ruling @2560e04f46. First consumer is D5; the OWNING directive is the inference above, not D5, and it is owed a confirmation. Bright Data SERP: the CEO public-profile step of C-EXEC-MANAGEMENT. Two tokens matched as one, hyphenated on the seeking-alpha precedent (GRADING_RULE.md V1). Every call is billed and runs only under Andrew's per-use word."
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'), the same inference already carried by bloomberg/schwab/blackdiamond/orion/eclipse/smartx/pathfinder/fred/seeking-alpha. Added 2026-09-18 because AMGT_RESAPP (D5) cannot name this source in a conforming key without it: measured by 4.0.0_SA_CRO~Z (plan @0756d2897d) and carried by the L4 ruling @2560e04f46. First consumer is D5; the OWNING directive is the inference above, not D5, and it is owed a confirmation. Bright Data SERP: the CEO public-profile step of C-EXEC-MANAGEMENT. Two tokens matched as one, hyphenated on the seeking-alpha precedent (GRADING_RULE.md V1). Every call is billed and runs only under Andrew's per-use word.",
++   "display_name": "Bright Data"
+   },
+   {
+    "key": "gateway",
+@@ -224,7 +237,8 @@
+    "long": "bloomberg",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'), the same inference already carried by schwab/blackdiamond/orion/eclipse/smartx/pathfinder/fred/seeking-alpha; integrations/bloomberg/READ_HERE.md documents the integration but names no owning directive"
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'), the same inference already carried by schwab/blackdiamond/orion/eclipse/smartx/pathfinder/fred/seeking-alpha; integrations/bloomberg/READ_HERE.md documents the integration but names no owning directive",
++   "display_name": "Bloomberg"
+   },
+   {
+    "key": "msci",
+@@ -232,7 +246,8 @@
+    "long": "msci",
+    "owner_directive": "D8",
+    "owner_claim": "inferred",
+-   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'), the same inference already carried by the other 8 feed VENDOR rows"
++   "owner_basis": "a feed no directive names as its own is read as D8's (title 'Data Pipelines'), the same inference already carried by the other 8 feed VENDOR rows",
++   "display_name": "MSCI"
+   },
+   {
+    "key": "harvest",
+@@ -321,7 +336,8 @@
+    "long": "anthropic",
+    "owner_directive": "D6",
+    "owner_claim": "inferred",
+-   "owner_basis": "An AI-model vendor. Andrew-direct ~18:2xZ: 'WE COULD GROUP THESE AS OPENAI AND ANTHROPIC RESPECTIVELY' (the AI credentials). Removed from refused_keys.generic_noun by the same word. D6 ('Opal AI') is the nearest directive title; inferred. record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260921_163xZ_FOUR_OPEN_CALLS_ALL_RECS_APPROVED.md"
++   "owner_basis": "An AI-model vendor. Andrew-direct ~18:2xZ: 'WE COULD GROUP THESE AS OPENAI AND ANTHROPIC RESPECTIVELY' (the AI credentials). Removed from refused_keys.generic_noun by the same word. D6 ('Opal AI') is the nearest directive title; inferred. record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260921_163xZ_FOUR_OPEN_CALLS_ALL_RECS_APPROVED.md",
++   "display_name": "Anthropic"
+   },
+   {
+    "key": "openai",
+@@ -329,7 +345,8 @@
+    "long": "openai",
+    "owner_directive": "D6",
+    "owner_claim": "inferred",
+-   "owner_basis": "An AI-model vendor, on the same word as 'anthropic'. Removed from refused_keys.generic_noun by it. D6 ('Opal AI') is the nearest directive title; inferred. record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260921_163xZ_FOUR_OPEN_CALLS_ALL_RECS_APPROVED.md"
++   "owner_basis": "An AI-model vendor, on the same word as 'anthropic'. Removed from refused_keys.generic_noun by it. D6 ('Opal AI') is the nearest directive title; inferred. record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260921_163xZ_FOUR_OPEN_CALLS_ALL_RECS_APPROVED.md",
++   "display_name": "OpenAI"
+   },
+   {
+    "key": "barrons",
+@@ -337,7 +354,8 @@
+    "long": "barrons",
+    "owner_directive": "D5",
+    "owner_claim": "inferred",
+-   "owner_basis": "AMGT_RESAPP harvest channel (harvest scope, opal-data-harvest). Plan PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md s.8 call 2 (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/, origin/SITEZ @bc8c18a28f), adopted into AMGT_RESAPP PRD v0.14 @c09b35ee5a; relayed by 0.0.0_AB_MSTR~Z (99123). A VENDOR key is minted by 'the first ingest that lands it' (infra/logic/05_IDENTITY_SPINE.md s.2), landed by 4.0.0_SA_CRO 2026-09-21 after a census simulation: 0 of 1,738 graded names change, validate 0 refusals. D5 (Asset Management, AMGT_RESAPP's directive) inferred as owner."
++   "owner_basis": "AMGT_RESAPP harvest channel (harvest scope, opal-data-harvest). Plan PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md s.8 call 2 (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/, origin/SITEZ @bc8c18a28f), adopted into AMGT_RESAPP PRD v0.14 @c09b35ee5a; relayed by 0.0.0_AB_MSTR~Z (99123). A VENDOR key is minted by 'the first ingest that lands it' (infra/logic/05_IDENTITY_SPINE.md s.2), landed by 4.0.0_SA_CRO 2026-09-21 after a census simulation: 0 of 1,738 graded names change, validate 0 refusals. D5 (Asset Management, AMGT_RESAPP's directive) inferred as owner.",
++   "display_name": "Barron's"
+   },
+   {
+    "key": "wsj",
+@@ -345,7 +363,8 @@
+    "long": "wall-street-journal",
+    "owner_directive": "D5",
+    "owner_claim": "inferred",
+-   "owner_basis": "AMGT_RESAPP harvest channel (harvest scope, opal-data-harvest). Plan PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md s.8 call 2 (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/, origin/SITEZ @bc8c18a28f), adopted into AMGT_RESAPP PRD v0.14 @c09b35ee5a; relayed by 0.0.0_AB_MSTR~Z (99123). A VENDOR key is minted by 'the first ingest that lands it' (infra/logic/05_IDENTITY_SPINE.md s.2), landed by 4.0.0_SA_CRO 2026-09-21 after a census simulation: 0 of 1,738 graded names change, validate 0 refusals. D5 (Asset Management, AMGT_RESAPP's directive) inferred as owner."
++   "owner_basis": "AMGT_RESAPP harvest channel (harvest scope, opal-data-harvest). Plan PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md s.8 call 2 (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/, origin/SITEZ @bc8c18a28f), adopted into AMGT_RESAPP PRD v0.14 @c09b35ee5a; relayed by 0.0.0_AB_MSTR~Z (99123). A VENDOR key is minted by 'the first ingest that lands it' (infra/logic/05_IDENTITY_SPINE.md s.2), landed by 4.0.0_SA_CRO 2026-09-21 after a census simulation: 0 of 1,738 graded names change, validate 0 refusals. D5 (Asset Management, AMGT_RESAPP's directive) inferred as owner.",
++   "display_name": "The Wall Street Journal"
+   },
+   {
+    "key": "ft",
+@@ -353,7 +372,8 @@
+    "long": "financial-times",
+    "owner_directive": "D5",
+    "owner_claim": "inferred",
+-   "owner_basis": "AMGT_RESAPP harvest channel (harvest scope, opal-data-harvest). Plan PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md s.8 call 2 (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/, origin/SITEZ @bc8c18a28f), adopted into AMGT_RESAPP PRD v0.14 @c09b35ee5a; relayed by 0.0.0_AB_MSTR~Z (99123). A VENDOR key is minted by 'the first ingest that lands it' (infra/logic/05_IDENTITY_SPINE.md s.2), landed by 4.0.0_SA_CRO 2026-09-21 after a census simulation: 0 of 1,738 graded names change, validate 0 refusals. D5 (Asset Management, AMGT_RESAPP's directive) inferred as owner."
++   "owner_basis": "AMGT_RESAPP harvest channel (harvest scope, opal-data-harvest). Plan PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md s.8 call 2 (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/, origin/SITEZ @bc8c18a28f), adopted into AMGT_RESAPP PRD v0.14 @c09b35ee5a; relayed by 0.0.0_AB_MSTR~Z (99123). A VENDOR key is minted by 'the first ingest that lands it' (infra/logic/05_IDENTITY_SPINE.md s.2), landed by 4.0.0_SA_CRO 2026-09-21 after a census simulation: 0 of 1,738 graded names change, validate 0 refusals. D5 (Asset Management, AMGT_RESAPP's directive) inferred as owner.",
++   "display_name": "Financial Times"
+   },
+   {
+    "key": "filings-xbrl",
+@@ -361,7 +381,8 @@
+    "long": "esef-xbrl-filings",
+    "owner_directive": "D5",
+    "owner_claim": "inferred",
+-   "owner_basis": "AMGT_RESAPP harvest channel (harvest scope, opal-data-harvest). Plan PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md s.8 call 2 (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/, origin/SITEZ @bc8c18a28f), adopted into AMGT_RESAPP PRD v0.14 @c09b35ee5a; relayed by 0.0.0_AB_MSTR~Z (99123). A VENDOR key is minted by 'the first ingest that lands it' (infra/logic/05_IDENTITY_SPINE.md s.2), landed by 4.0.0_SA_CRO 2026-09-21 after a census simulation: 0 of 1,738 graded names change, validate 0 refusals. D5 (Asset Management, AMGT_RESAPP's directive) inferred as owner."
++   "owner_basis": "AMGT_RESAPP harvest channel (harvest scope, opal-data-harvest). Plan PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md s.8 call 2 (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/, origin/SITEZ @bc8c18a28f), adopted into AMGT_RESAPP PRD v0.14 @c09b35ee5a; relayed by 0.0.0_AB_MSTR~Z (99123). A VENDOR key is minted by 'the first ingest that lands it' (infra/logic/05_IDENTITY_SPINE.md s.2), landed by 4.0.0_SA_CRO 2026-09-21 after a census simulation: 0 of 1,738 graded names change, validate 0 refusals. D5 (Asset Management, AMGT_RESAPP's directive) inferred as owner.",
++   "display_name": "ESEF XBRL filings"
+   },
+   {
+    "key": "issuer-site",
+@@ -369,7 +390,8 @@
+    "long": "issuer-company-site",
+    "owner_directive": "D5",
+    "owner_claim": "inferred",
+-   "owner_basis": "AMGT_RESAPP harvest channel (harvest scope, opal-data-harvest). Plan PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md s.8 call 2 (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/, origin/SITEZ @bc8c18a28f), adopted into AMGT_RESAPP PRD v0.14 @c09b35ee5a; relayed by 0.0.0_AB_MSTR~Z (99123). A VENDOR key is minted by 'the first ingest that lands it' (infra/logic/05_IDENTITY_SPINE.md s.2), landed by 4.0.0_SA_CRO 2026-09-21 after a census simulation: 0 of 1,738 graded names change, validate 0 refusals. D5 (Asset Management, AMGT_RESAPP's directive) inferred as owner."
++   "owner_basis": "AMGT_RESAPP harvest channel (harvest scope, opal-data-harvest). Plan PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md s.8 call 2 (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/, origin/SITEZ @bc8c18a28f), adopted into AMGT_RESAPP PRD v0.14 @c09b35ee5a; relayed by 0.0.0_AB_MSTR~Z (99123). A VENDOR key is minted by 'the first ingest that lands it' (infra/logic/05_IDENTITY_SPINE.md s.2), landed by 4.0.0_SA_CRO 2026-09-21 after a census simulation: 0 of 1,738 graded names change, validate 0 refusals. D5 (Asset Management, AMGT_RESAPP's directive) inferred as owner.",
++   "display_name": "Issuer company site"
+   },
+   {
+    "key": "portal",
+@@ -397,12 +419,13 @@
+    "owner_basis": "org/missions/D6/NFRA/NFRA_MCPORTAL/project.json (project_code NFRA_MCPORTAL, directive D6); org/missions/DIRECTIVES.yaml D6 :278 'projects: [NFRA_OPALAI, NFRA_MCPORTAL]'"
+   },
+   {
+-    "key": "teams",
+-    "class": "VENDOR",
+-    "long": "microsoft-teams",
+-    "owner_directive": "D9",
+-    "owner_claim": "inferred",
+-    "owner_basis": "Microsoft Teams as the {source} of meeting transcripts pulled through the Opal gateway (NFRA_OPLGTW, a D9 member). Andrew-direct 2026-09-29 'this is fine' on the layout naming teams as the recommended source (docs/briefs/transcripts-sharepoint-layout-proposal-20260929.md s.4). D9 inferred as owner."
++   "key": "teams",
++   "class": "VENDOR",
++   "long": "microsoft-teams",
++   "owner_directive": "D9",
++   "owner_claim": "inferred",
++   "owner_basis": "Microsoft Teams as the {source} of meeting transcripts pulled through the Opal gateway (NFRA_OPLGTW, a D9 member). Andrew-direct 2026-09-29 'this is fine' on the layout naming teams as the recommended source (docs/briefs/transcripts-sharepoint-layout-proposal-20260929.md s.4). D9 inferred as owner.",
++   "display_name": "Microsoft Teams"
+   },
+   {
+    "key": "rivalfunds",

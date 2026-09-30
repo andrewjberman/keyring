@@ -1,0 +1,153 @@
+{
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "at": "2026-09-30T16:24:53.046596Z",
+ "results": {
+  "login_status": 200,
+  "token_present": true,
+  "inflection": {
+   "status": 200,
+   "ok": false,
+   "reason": "NOT_FOUND"
+  },
+  "cottonwood": {
+   "status": 200,
+   "ok": false,
+   "reason": "NOT_FOUND"
+  },
+  "directory_inflection": {
+   "status": 200,
+   "ok": null,
+   "entries": 1,
+   "reason": null
+  },
+  "directory_cottonwood": {
+   "status": 200,
+   "ok": null,
+   "entries": 1,
+   "reason": null
+  }
+ },
+ "calls": [
+  {
+   "at": "2026-09-30T16:24:48.488541Z",
+   "method": "POST",
+   "path": "/auth/login",
+   "status": 200,
+   "response": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "svc-irpt-analysis@opalinvest.com",
+     "name": "IRPT Analysis Service",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   },
+   "request": {
+    "email": "svc-irpt-analysis@opalinvest.com",
+    "password": "<redacted>"
+   }
+  },
+  {
+   "at": "2026-09-30T16:24:50.885854Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status?selected_tenant=inflection",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "status-summary",
+    "status": {
+     "operation": {
+      "operation_id": "status-summary",
+      "operation_kind": "read",
+      "revision": "v1"
+     },
+     "state": "UNAVAILABLE",
+     "source_dates": {
+      "source_completion_date": null,
+      "business_date": "2026-09-25"
+     },
+     "actions": [
+      {
+       "action": "NONE",
+       "safe": true,
+       "description": "no retry or recovery action is offered for this outcome"
+      }
+     ],
+     "public_reason_code": "NOT_FOUND"
+    },
+    "firm_id": "fir_b6b200b4395e94aaa604d5fa"
+   }
+  },
+  {
+   "at": "2026-09-30T16:24:51.420767Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status?selected_tenant=cottonwood",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "status-summary",
+    "status": {
+     "operation": {
+      "operation_id": "status-summary",
+      "operation_kind": "read",
+      "revision": "v1"
+     },
+     "state": "UNAVAILABLE",
+     "source_dates": {
+      "source_completion_date": null,
+      "business_date": "2026-09-22"
+     },
+     "actions": [
+      {
+       "action": "NONE",
+       "safe": true,
+       "description": "no retry or recovery action is offered for this outcome"
+      }
+     ],
+     "public_reason_code": "NOT_FOUND"
+    },
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2"
+   }
+  },
+  {
+   "at": "2026-09-30T16:24:52.516650Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/search?selected_tenant=inflection&q=&limit=1",
+   "status": 200,
+   "response": {
+    "ok": null,
+    "reason": null,
+    "entries_returned": 1,
+    "firm_id": "fir_b6b200b4395e94aaa604d5fa",
+    "keys": [
+     "contract_version",
+     "data",
+     "firm_id",
+     "operation",
+     "unprojected_grant"
+    ]
+   }
+  },
+  {
+   "at": "2026-09-30T16:24:53.046596Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/search?selected_tenant=cottonwood&q=&limit=1",
+   "status": 200,
+   "response": {
+    "ok": null,
+    "reason": null,
+    "entries_returned": 1,
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+    "keys": [
+     "contract_version",
+     "data",
+     "firm_id",
+     "operation",
+     "unprojected_grant"
+    ]
+   }
+  }
+ ]
+}

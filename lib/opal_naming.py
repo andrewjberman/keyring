@@ -76,6 +76,7 @@ VIEWS = (
     (".tools/ds-precommit-check.py", "py", ("_CROSS_FIRM_FOREIGN_BUCKETS", "_CROSS_FIRM_FOREIGN_KEY_PREFIXES")),
     ("data/black_diamond/scripts/bronze/_asset_dim_rest_pin.py", "py", ("ASSET_DIM_REST_PIN",)),
     ("portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts", "mjs", ("FIRM_DISPLAY_NAMES",)),
+    ("portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts", "mjs", ("VENDOR_DISPLAY_NAMES",)),
 )
 
 # Targets the generator owns WHOLE: the file is nothing but its generated block(s), so _render_view builds it
@@ -83,6 +84,7 @@ VIEWS = (
 # hand-kept file with a generated block inside, and its base must exist.
 WHOLE_FILE_TARGETS = (
     "portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts",
+    "portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts",
 )
 
 # Which registry file(s) each generated target's renderer reads (LGIC_ENFORCE EN-r-6; row W1-S14): one
@@ -122,6 +124,9 @@ TARGET_REGISTRY_KEYS = {
     # FIRM_DISPLAY_NAMES (DSGN_IRPTV1 IV-e-76, rows UIR-04/13/30, W35-S1; CTO ruling 102351) --
     # _blk_firm_display_names() reads _tenants() only: each served tenant's key and display_name, scopes.json.
     "portal/src/pages/InvestorReporting/header/firmDisplayNames.generated.ts": ("scopes",),
+    # VENDOR_DISPLAY_NAMES (DSGN_IRPTV1 W2-19 / UIC-14, IV-e-117; CTO 102443 "never a hand-typed map"; landed by
+    # 1.0.0_SA_CTO 2026-09-30 on 2.0.0_SA_COO~D 103272) -- _blk_vendor_display_names() reads systems.json VENDOR rows only.
+    "portal/src/pages/InvestorReporting/header/vendorDisplayNames.generated.ts": ("systems",),
     LOCALS_PATH: ("scopes", "exemptions"),
     VECTORS_PATH: ("scopes", "systems", "exemptions", "resources"),
     TFTEST_PATH: ("scopes", "systems", "exemptions", "resources"),
@@ -474,6 +479,12 @@ def validate(reg_dir=None, systems_file=None):
             refuse(where, "long", "missing or empty")
         if "short" in row and (not isinstance(row["short"], str) or not row["short"] or row["short"] in refused_tokens):
             refuse(where, "short", "present only where a short form is sanctioned, and never a refused token")
+        # display_name: VENDOR rows carry the words a served face prints (VENDOR_DISPLAY_NAMES view); no other class does.
+        if row.get("class") == "VENDOR":
+            if not isinstance(row.get("display_name"), str) or not row["display_name"].strip():
+                refuse(where, "display_name", "a VENDOR row carries the words a served face prints; missing or empty")
+        elif "display_name" in row:
+            refuse(where, "display_name", "only a VENDOR row carries display_name")
         od = row.get("owner_directive")
         if not od:
             refuse(where, "owner_directive", "missing -- every system row names the D-code of the directive that owns it,"
@@ -834,6 +845,24 @@ def _blk_firm_display_names(reg, h16, path):
     return _block("FIRM_DISPLAY_NAMES", h16, "//", path, "\n".join(lines))
 
 
+def _blk_vendor_display_names(reg, h16, path):
+    """Vendor key -> display words for a served face (DSGN_IRPTV1 W2-19 / UIC-14; CTO 102443).
+
+    systems.json VENDOR rows only, each carrying `display_name` (validate refuses a VENDOR row without one). Both the
+    row's key and, where it differs, its long form map to the same words, because a served snapshot may carry either
+    spelling (`blackdiamond`, `wall-street-journal`); nothing else about the vendor reaches the browser.
+    """
+    lines = ["export const VENDOR_DISPLAY_NAMES = Object.freeze<Record<string, string>>({"]
+    for row in reg["systems"].get("systems", []):
+        if row.get("class") != "VENDOR":
+            continue
+        for sp in dict.fromkeys([row["key"], row.get("long")]):
+            if sp:
+                lines.append("  %s: %s," % (_js_str(sp), _js_str(row["display_name"])))
+    lines.append("});")
+    return _block("VENDOR_DISPLAY_NAMES", h16, "//", path, "\n".join(lines))
+
+
 BLOCKS = {
     "FIRM_CONFIG": _blk_firm_config,
     "firm_bucket_map": _blk_firm_bucket_map,
@@ -843,6 +872,7 @@ BLOCKS = {
     "_CROSS_FIRM_FOREIGN_KEY_PREFIXES": _blk_foreign_prefixes,
     "ASSET_DIM_REST_PIN": _blk_asset_dim_rest_pin,
     "FIRM_DISPLAY_NAMES": _blk_firm_display_names,
+    "VENDOR_DISPLAY_NAMES": _blk_vendor_display_names,
 }
 
 
