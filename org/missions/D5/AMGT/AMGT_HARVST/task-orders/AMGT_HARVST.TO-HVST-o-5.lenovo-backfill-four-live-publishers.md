@@ -124,7 +124,7 @@ with `to_id` `AMGT_HARVST.TO-HVST-o-5.lenovo-backfill-four-live-publishers`. Rep
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <slot>~65</slot>
 <fabric>site-z</fabric>
