@@ -3802,6 +3802,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Issuer row, answering the CTO's round-27 question (msg 27057). Carried to round 28 beside the cached-listing reach fix: whether a known-rejected key should be held (not re-fetched) within a day, since its re-fetch is what exposed the job to bbg's challenge."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W79-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~79",
+      "surfaced_at": "2026-09-30T10:20Z",
+      "one_line": "A run record carries per-job statuses only, so 'refused for the whole universe' is not readable from it as written: the derivation removes bbg on ONE request_rejected job for ONE name (the Z-S45 case, where o-5 completed bbg the same day), so today's DECLARED SET is [barrons, ft, sa, wsj] and ELIGIBLE is 0 of 191.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Ruling 1 / C-HV-RANK-DECLARED-SET v0.5: the declared set is ENABLED_PUBLISHERS minus any publisher whose collection REFUSED for the whole universe in the window, read from the persisted run records.",
+      "world_is": "publication_gold._iter_run_records returns 1 record today (20260930T084110Z-run-4ee47491) with jobs bbg=request_rejected (one security) and wsj=no_new_articles (one security); no field states the universe a job set spanned. Implemented rule (chatter_axis.universe_wide_refusals): a publisher with >=1 job in the window and none ending in SUCCESSFUL_RUN_STATUSES is removed; a publisher with no job is kept. Under it bbg is removed on 1 job / 1 name, ft/sa/barrons (no job) stay in, and the in-memory gold branch reads NOT_SEARCHED 188, PARTIAL_COVERAGE 3, ELIGIBLE 0 of 191 (HOLD, BELOW_ELIGIBLE_FLOOR). A normal future run that fails one name for one publisher, with no success for it in the window, silently shrinks the set.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~79/aa4_ac2_output.txt: REMOVED bbg line and POPULATION line",
+          "lib/research/metrics/chatter_axis.py universe_wide_refusals (the rule as implemented)",
+          "AMGT_HARVST-Z-S45: bbg's one request_rejected job was a single known-rejected key re-fetch, not a universe-wide refusal"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not decided by the worker. Options for the issuer: require the refusing jobs to span the universe (needs the run record to carry the job's security set or the universe size), or record a publisher-level refusal in the run record. Until then the rule is 'attempted in the window and never ran to a conclusion'."
     }
   ]
 ```
