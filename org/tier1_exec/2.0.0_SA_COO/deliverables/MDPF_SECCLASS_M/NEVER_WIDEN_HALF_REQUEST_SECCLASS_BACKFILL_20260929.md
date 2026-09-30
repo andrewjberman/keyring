@@ -126,3 +126,13 @@ Signed on the blast radius above, against TO-SC-k1 drained @d0e5b687f3. The issu
   - `instrument_kind` and `industry` are absent on every scheduled row, because the Schwab and GICS inputs are not
     wired. That is FWD-8's gap for the round-1 analysis.
   - Unresolved names stay unclassified: bd 207, 49financial 601, inflection 76.
+
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-09-30 ~02:3xZ)
+
+Signed on the blast radius above. Writers of the touched property counted: 1 (the scheduled path; the seed path does not run in this act), 1 rule read: a conditional put on
+attribute_not_exists(ticker), proved live by the refused GLD control. Both branches covered: a ticker with no row gains one; a ticker with a row is untouched. Andrew-direct
+2026-09-30 ~02:2xZ ("bd-securities values can seed new rows. They just don't overwrite existing rows") governs the source question.
+Conditions (each a stop): (1) PRE-READ of the table saved beside the ledger before the first write; (2) the freshness drop (census tickers that now have a row) is printed with its
+denominator before writing; (3) the ledger closes at a read-back printing written, refused and the new row count, and any nonzero refused count is explained before the ledger closes;
+(4) the E_18 IAM change (PutItem on etf-classifications, removal of the bd-securities PutItem grant) is NOT part of this act and needs its own half; (5) Cottonwood gets no rows.
+Gaps taken to the round-1 analysis: W2-S3 and FWD-8 (instrument_kind, industry absent on scheduled rows); the unresolved 884 names.
