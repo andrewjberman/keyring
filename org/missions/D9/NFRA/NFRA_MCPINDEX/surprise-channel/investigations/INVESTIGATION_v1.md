@@ -3625,6 +3625,29 @@ carries none.
       ]
     },
     "notes": "INERT: nothing is armed; the cell is stopped. TWO ways forward, the issuer's or the CTO's to choose: (A) land the R20 waiver entries (Andrew-acknowledged) for the five file+literal pairs in a commit BEFORE the cell's commit, then re-run the same safe-commit command from the worktree; or (B) rule that the integration takes bucket, prefix and scope from gateway configuration (env set by MX-r-7, like the role ARN) so the code holds no address, which still leaves the two terraform literals needing (A). The worker has not chosen, has not bypassed the gate, and has not redesigned the fence."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T11:40Z",
+    "class": "BLOCKING",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S10",
+    "hazard_standing": "INERT",
+    "one_line": "MX-t-13 A2 restructured to the waiver's syntax and all 5 draft carrier entries are RECOGNIZED by the gate's own checkers, yet the whole-gate verdict stays REFUSE on the same 5 literals: judge() refuses a NEW literal before the waiver is consulted, and every literal of a new file is NEW.",
+    "spec_asserts": "Order A2 (ruled by Z-S64): the LEGACY-READ waiver (.tools/naming-gate.py:99-110,942-1180, carrier org/standards/NAMING_LEGACY_READS.json) is the lawful route, and restructured literals plus carrier entries let the cell commit.",
+    "world_is": "2026-09-30: integration.py now names opal-data-bd, silver/fees/ and 49financial once each, as direct args 0, 2, 3 of ONE call _read_fence(...) inside _fence (helper _read_fence, body sha256 62fa1fbe6204cc8a13bded14c338e93986c4de2a017a1f3eda020a144a2f5629; args[1] is the Name access = 'read', the assignment the recognizer requires); blackdiamond_reader_iam.tf holds opal-data-bd only as locals.bd_bucket (1 reference) and silver/fees/ only as locals.bd_fees_prefix (1 reference), 0 occurrences of either in comments. Draft entries at deliverables/0.9.0_WK_NFRA_MCPINDEX~21/LEGACY_READS_DRAFT_MX-t-13.json. Running legacy_read_ok / tf_local_ok on each of the 5 entries against the worktree post-images returns True 5 of 5. Running the whole gate over the cell's diff with load_legacy_reads patched to those entries (authority_ok patched True, cutoff 2099) still prints NAMING-GATE: REFUSE 9 graded with the same 5 REFUSE lines (integration.py:64 x3, blackdiamond_reader_iam.tf:31 and :32). Cause: .tools/naming-gate.py judge() sets new = pre_text is None or not _in_pre(lit, pre_text) (a new file has pre_text None, so every literal is NEW) and returns REFUSE at 'if new and verdict in (OUT-OF-PATTERN, ALIAS)' (and the NEW hand-kept-carrier branch for 49financial) BEFORE the waiver lookup at 'if rem:' (the comment there says a NEW literal can never reach it, structurally). The one precedent, OPLGTW-LEGACY-READ-01, waived a literal in advi_49f_floor.tf that already existed at HEAD. So a waiver entry, at any authority and pin, cannot admit these literals in integration.py and blackdiamond_reader_iam.tf while both files are new. Not patched: .tools/naming-gate.py is outside the order's paths.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .scratch/sim.py in the worktree (legacy_read_ok/tf_local_ok 5 of 5 True; patched whole-gate run REFUSE on the same 5 literals), 2026-09-30.",
+        ".tools/naming-gate.py judge(): 'new = pre_text is None or ...', the NEW branch above the 'THE ONE CONSUMPTION POINT OF THE LEGACY-READ WAIVER' comment.",
+        "org/standards/NAMING_LEGACY_READS.json at HEAD: the two existing entries both cover files present at HEAD."
+      ]
+    },
+    "notes": "INERT: nothing is armed; the cell is uncommitted. Ways forward, the issuer's or the CTO's to choose: (A) a two-commit route in which a commit first lands each file with NO refused literal (the address read from gateway configuration, or the tf locals fed by variables) and a later commit makes the literal an EXISTING one under the waiver, which reopens the fence design; (B) a CTO ruling that admits a NEW literal under a waiver (a gate change, owner 1.0.0_SA_CTO~O / 0.0.0_AB_MSTR); (C) a first commit of the two files with the literals removed from the graded lines is not possible for a hand-kept literal without changing the fence. The worker has not chosen and has not bypassed the gate."
   }
 ]
 ```
