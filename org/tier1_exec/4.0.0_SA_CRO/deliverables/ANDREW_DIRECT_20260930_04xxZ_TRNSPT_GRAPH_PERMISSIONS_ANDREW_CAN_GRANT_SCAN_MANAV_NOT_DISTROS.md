@@ -39,3 +39,9 @@ Message 6, mid-turn:
 
 Effect (this seat's reading): NO new app registration and NO IT request for now. The pull runs through the existing Opal gateway, under Andrew's account. Measured this turn (`comp-find` over `infra/aws/ec2/opal-gateway`, 27 hits / 161 files): the gateway's delegated scopes already include `Mail.Read` and `Mail.ReadWrite` (`app/config.py:51`, `.env.example:9`); `IT_REQUEST.md:21-51` records what IT consented. The attachment gap is the gateway's TOOLS, not a permission. The two-registration recommendation of this seat is WITHDRAWN.
 
+## Addendum 3 (same session, ~05:1xZ) -- Message 7, HOLD on gateway changes until site Z's work is seen
+
+> The sitez box has done a ton of work on the gateway and mcp tool indexing. I want to see what they've got before we attempt to change anything or make any calls. I'm having their fabric push now, i will cover it with CTO in the interim, continue with your agent, will be back shortly
+
+Effect (this seat's reading, scope not widened): no gateway change and no NEW gateway call is attempted by this seat until Andrew has seen site Z's gateway and MCP tool-indexing work; he is covering it with the CTO. The already-running read-only mailbox pass continues, by his word. The three gateway tools named in addendum 2 are a hold item, not a request.
+
