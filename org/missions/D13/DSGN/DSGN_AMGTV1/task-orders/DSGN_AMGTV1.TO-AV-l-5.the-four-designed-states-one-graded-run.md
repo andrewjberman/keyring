@@ -83,7 +83,7 @@ outer commit hashes, and any row.
 green r13-green-c @cc2705d1 3 of 3. Behaviour change recorded: `--states-sweep` no longer prints its own RESULT (a `SWEEP:` line
 instead; the run's RESULT is grades.json's).
 
-<status>pending</status>
+<status>complete</status>
 <round>13</round>
 <slot>~51</slot>
 <fabric>site-z</fabric>
