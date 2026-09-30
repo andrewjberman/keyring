@@ -2511,6 +2511,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The union lives in crosswalk.main's call, not inside build_crosswalk/write_pool, so it reaches 1 of the 2 crosswalk writers.",
     "notes": "Blocks s-2's re-sign (branch 2 still unsafe). Candidate fix, AMGT_RESAPP's file: add_security's build passes served=crosswalk._read_pool_latest()[0] when --write-pool (or the union moves into build_crosswalk's default). Routed to 1.0.0_SA_CTO~Z.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S9",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-30T02:00:00Z",
+    "one_line": "The one reader of derived/model_block/ that builds a non-raw key is the render_pack.py main() CLI (security_key() maps '/' to '-'), so it reads BP and NG as ABSENT; no served surface reaches it, and the TO expected an ABSENT to carry one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/print/render_pack.py:148 security_key(): security.replace(' ', '_').replace('/', '-'); :1043 main() passes it to scoped_amgt.read_model_block; live read-only: 'BP/_LN_Equity' -> 'BP-_LN_Equity' -> None, NG likewise (MODEL_BLOCK_READERS_ROUND18.json row 19 of 20).",
+        "git grep render_pack over lib/ integrations/ infra/ (tests excluded): no caller of main(); the served print route scoped_amgt.py:4480 reads with the resolved raw key. The other 18 store readers read BP and NG OK (dossier, peers, scores, scoped_amgt routes, seed-etf-constituents)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO CRPS-t-3 item 3: for any ABSENT reader, name the served surface (an API route or page) that shows it.",
+    "world_is": "The single ABSENT reader is a hand-run CLI with no caller; no API route or page shows it. Served routes /versions and /thesis for BP and NG return 200, SERVED, 6 versions.",
+    "notes": "The CLI's read key is a local-filesystem form (its own docstring says never an S3 key). Whether to fix it or leave it is the issuer's and CTO's call; this worker changed no code."
   }
 ]
 ```
