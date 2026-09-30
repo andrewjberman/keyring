@@ -1,61 +1,56 @@
-# AMGT_CORPUS -- L5 decomposition v21.0 -- ROUND 21 (two independent cells now; the r-1 re-sign sequenced)
+# AMGT_CORPUS -- L5 decomposition v22.0 -- ROUND 22 (three cells; each served act under a pair)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-09-30 ~04:1xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-20 analysis
-`ledger/ROUND_ANALYSIS.round20.md` @`609100db54` (msg 26888, READ-acked), s.4 ENRICHMENT LIST, and its ADDENDUM @`7708a8506f`
-(msg 26893, READ-acked), which adds cell 3. Round 20's decomposition is kept as `AMGT_CORPUS_DECOMP.round20.md`. Base of the
-cut: CLOUD `f17ca57280`.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-09-30 ~04:5xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-21 analysis
+`ledger/ROUND_ANALYSIS.round21.md` @`0bf907bee8` (msg 26915, READ-acked), s.4 ENRICHMENT LIST (three items) and s.2 rulings 1-4.
+Round 21's decomposition is kept as `AMGT_CORPUS_DECOMP.round21.md`. Base of the cut: CLOUD `2a4c7f5451`.
 
 ## 0. What this round IS
 
-| # | item (analysis s.4 + addendum) | cell | slot |
+| # | item (analysis s.4) | cell | slot / executor |
 |---|---|---|---|
-| 1 | `pack_shape` in the dossier (ruling 3; FWD-16's floor) | `CRPS-w-1` | `~1` |
-| 2 | re-sign `r-1` (with the `admit` step) once AMGT_RESAPP r51 `zz-1` drains | `CRPS-w-2` | the issuer's WORLD act under a pair; no order |
-| 3 | a unit-map discriminator that does not rest on magnitude alone (the addendum; the nine UNRESOLVED facts) | `CRPS-w-3` | `~2` |
-
-**Routed, NOT cells** (the analysis): the page render of the six outcomes, to DSGN_AMGTV1; 6501's empty-block reasons and the
-`pack_shape` pass-through, to AMGT_RESAPP.
+| 1 | `pack_shape` served: the `METHOD_VERSION` bump + the dossier rewrite | `CRPS-x-1` | `~1` builds the bump (LOCAL); the rewrite is the issuer's WORLD act under a pair |
+| 2 | the unit apply: 8 per-security units with evidence and read count; 5 model blocks re-derived | `CRPS-x-2` | `~2` builds the apply writer (LOCAL); the `field_map.json` commit and the re-derive are the issuer's WORLD act under a pair |
+| 3 | re-sign `r-1` | `CRPS-x-3` | the issuer's WORLD act; COO half SIGNED @`0d437b429d` (`NEVER_WIDEN_ROUND21_INDUCTION_SCHEDULE_RESIGN.md`), CTO half owed |
 
 ## 1. The rectangle
 
 | cell | `<risk>` | write set | the build |
 |---|---|---|---|
-| `CRPS-w-1` | LOCAL (a served dossier rewrite, if it moves served bytes, is the issuer's act under a pair at the drain) | `lib/research/corpus/dossier.py`, `lib/research/corpus/tests/test_dossier_pack_shape.py` (new) | `dossier.pack_shape(security_key, client=None)` and `build()`'s `fields["pack_shape"]`, from the reports the fold picks |
-| `CRPS-w-3` | LOCAL (a unit-map commit and re-derive, if served units move, is the issuer's act under a pair at the drain) | `integrations/bloomberg/research/build_unit_map.py`, `.../tests/test_build_unit_map_discriminate.py` (new) | `build_unit_map.discriminate_facts(facts, s3=None)`: a cross-field consistency read that resolves a unit with its evidence or leaves it UNRESOLVED with the reason; never a guess |
+| `CRPS-x-1` | WORLD at the drain (the order itself is LOCAL code) | `lib/research/corpus/dossier.py` (the `METHOD_VERSION` line only), `.../tests/test_dossier_method_bump.py` (new), `.../tests/test_dossier_case_positional.py`, `.../tests/test_dossier_case_body.py`, `.../tests/test_dossier_case_unit.py` (their `/4` literals) | `amgt-corpus-dossier/5`, so `write_one` writes |
+| `CRPS-x-2` | WORLD at the drain (the order itself is LOCAL code) | `integrations/bloomberg/research/build_unit_map.py`, `.../tests/test_build_unit_map_apply.py` (new) | `apply_discriminated(facts, field_map_path, s3=None)`: writes only RESOLVED facts, each with `unit_evidence` {`method`, `reads`, `detail`}; never an UNRESOLVED fact, never any other entry |
 
-Write sets are disjoint.
+Write sets are disjoint. x-2 runs its apply only on a temp copy; the committed `field_map.json` is written by the issuer's pair
+act alone.
 
-## 1a. Re-groundings at L5 (measured at base `f17ca57280`)
+## 1a. Re-groundings at L5 (measured)
 
-- **w-1, "the files the fold actually read"**, the ruling's words, is read as the class-A and class-B reports the dossier picks
-  (`_picked_reports`, from `continuation._read_reports_with_bytes`). Measured through `_most_recent_of_class`:
-  - `IMB_LN_Equity`: A `2026-07-17` docx.
-  - `ADBE_US_Equity`: A `2026-07-13` pdf.
-  - `AZN_LN_Equity`: A `2026-06-17` pdf, B `2026-Q2` pdf.
-  - `6501_JP_Equity`: 0 report rows.
-
-  Those four are the census's controls. All reports, rather than the picks, would call IMB "mixed" (10 pdf, 1 docx, 2 xlsx,
-  2 png), which is not the shape the fold read. The census runs over the 96 keys of the round-17 census; the dossier's own
-  resolved list reads 95.
-- **w-3, the nine facts** (addendum), all read UNRESOLVED-ON in the committed map:
-  - `SALES_REV_TURN`: 6501, 8316;
-  - `CURR_ENTP_VAL`: 6501, 9433, 8035, 8766, TSM;
-  - `NET_DEBT`: 8316;
-  - `BEST_SALES` (the scalar exception): 6501.
-
-  The MEASURED control is `SAP GY Equity` `CURR_ENTP_VAL` (MILLIONS; 86 names MEASURED on that field). Anchors the map holds as
-  MEASURED: `CUR_MKT_CAP` (ABSOLUTE, scalar), `PX_LAST`, `IS_SH_FOR_DILUTED_EPS` (per security).
-- **w-2: dependency as data.** `lib/research/identity/crosswalk.py`'s newest commit is still `6a940b02b8`; AMGT_RESAPP r51 is
-  issued with `zz-1` first.
+- **x-1's rewrite, expected diff read from the writer** (`checks/round21/w1_expected_moves.py` over the dossier's 95 resolved
+  names, HEAD `5b55a4ee1d`; `evidence/r21_w1_expected_moves.txt`):
+  - `names 95 built 95 errors 0 pack_shape_only 95 other_moves 0`, and `pack_shape pdf 48 docx 25 mixed 4 none 18`;
+  - every dossier gains `pack_shape`, and no other field moves (ruling 2's bar).
+  - The analysis says "96 folders"; the dossier's own universe is 95. 6501 is the 96th census key, with no report.
+- **x-1, the served read path.**
+  - The deployed scoped API reads dossiers through its OWN packaged `read_dossier`, which prefers objects naming ITS
+    `METHOD_VERSION` (`/4`, `dossier.py:1310`).
+  - So a `/5` rewrite adds objects that the deployed reader does not pick until AMGT_RESAPP redeploys with `/5`. That is its
+    r52 pass-through item.
+  - The rewrite moves no served page by itself; the pair names that.
+- **x-2, the read count, measured** (`discriminate_facts` at HEAD `2a4c7f5451`): **all 8 RESOLVED facts rest on 1 read.**
+  - SALES_REV_TURN, CURR_ENTP_VAL and BEST_SALES use value / CUR_MKT_CAP; NET_DEBT uses |value| / CUR_MKT_CAP.
+  - The per-share x shares read exists only for SALES_REV_TURN and is skipped on 6501 and 8316 (row `Z-W2-S16`(b)).
+  - Ruling 3's "the other six state 2 reads" does not match the measurement. The entries state the MEASURED count, which is 1
+    for all 8 today; this is the ruling's intent ("the unit with its strength of evidence") carried with the measured number.
+- **x-3:** its dependency is met. AMGT_RESAPP `zz-1` drained @`fde642f9f6` (msg 26911), and the COO half is signed against
+  `33c1d096a3`.
 
 ## 5. The round -- one issuance, fan-out as data
 
-- `fanout: 2 of 3 chains, cap 8, reason: w-1/w-3 independent now (disjoint write sets); w-2 is the issuer's WORLD act sequenced
-  behind AMGT_RESAPP r51 zz-1.`
-- **Drain:**
-  - Each tip is re-graded, then merged.
-  - The one real run: the w-1 census and the w-3 discrimination on the merged tree.
-  - If w-3 resolves any fact, the unit-map commit and the re-derive of the moved blocks go under a pair (NEVER-2 entry). If w-1's
-    field moves served dossier bytes, the rewrite goes under a pair.
-  - The L8 packet then goes to `3.0.0_SA_CVO~Z`.
+- `fanout: 2 of 3 chains, cap 8, reason: x-1/x-2 independent builds (disjoint write sets); x-3 is the issuer's WORLD act on its
+  own pair, no order.`
+- **Drain, per chain:**
+  - Re-grade, then merge.
+  - Then the issuer's WORLD act under its pair, each with a NEVER-2 entry opened at start and closed with content proof.
+  - x-1: the 95-name rewrite. x-2: the apply to `field_map.json`, its commit, then the re-derive of the 5 blocks (6501, 8316,
+    9433, 8035, 8766). One executor (this seat) may run both acts under one entry (ruling 3).
+- The L8 packet goes to `3.0.0_SA_CVO~Z` after the acts, or states which pair is still owed.
 - Surprise rows from `Z-S68`. Worker rows are `AMGT_CORPUS-Z-W<n>-S<k>`, with `disarm_owner 2.0.0_SA_COO~X`.
