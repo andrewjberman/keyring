@@ -87,3 +87,5 @@ FAIL as designed (`ab1 bp_reads raw bp_newest False ng_reads raw ng_newest False
 <round>26</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+
+<status>complete</status>
