@@ -480,9 +480,15 @@ def validate(reg_dir=None, systems_file=None):
         if "short" in row and (not isinstance(row["short"], str) or not row["short"] or row["short"] in refused_tokens):
             refuse(where, "short", "present only where a short form is sanctioned, and never a refused token")
         # display_name: VENDOR rows carry the words a served face prints (VENDOR_DISPLAY_NAMES view); no other class does.
+        # A MISSING word is a WARN, never a refusal: validate() refusing blocks the naming gate, and with enforcement on
+        # that blocks every graded commit in the fabric (measured 2026-09-30, two VENDOR rows drained without words).
+        # The view skips a row without words, so the served face reads its fallback for that vendor.
         if row.get("class") == "VENDOR":
-            if not isinstance(row.get("display_name"), str) or not row["display_name"].strip():
-                refuse(where, "display_name", "a VENDOR row carries the words a served face prints; missing or empty")
+            if "display_name" not in row:
+                warnings.append((where, "display_name", "VENDOR row %r has no display_name: the vendor view omits it"
+                                 " and the served face reads its fallback" % key))
+            elif not isinstance(row["display_name"], str) or not row["display_name"].strip():
+                refuse(where, "display_name", "present but not a non-empty string")
         elif "display_name" in row:
             refuse(where, "display_name", "only a VENDOR row carries display_name")
         od = row.get("owner_directive")
@@ -856,6 +862,8 @@ def _blk_vendor_display_names(reg, h16, path):
     for row in reg["systems"].get("systems", []):
         if row.get("class") != "VENDOR":
             continue
+        if not row.get("display_name"):
+            continue  # validate() warns; the served face reads its fallback for this vendor
         for sp in dict.fromkeys([row["key"], row.get("long")]):
             if sp:
                 lines.append("  %s: %s," % (_js_str(sp), _js_str(row["display_name"])))
