@@ -37,6 +37,8 @@ only; a delete is a human word.
 ## 2. SURFACES
 
 <paths>
+lib/opal_data_harvest/silver_from_bronze.py
+lib/opal_data_harvest/test_aa3_empty_struct.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~78/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 </paths>
