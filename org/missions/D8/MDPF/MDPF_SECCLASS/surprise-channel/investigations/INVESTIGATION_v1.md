@@ -315,3 +315,102 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "This cell still adds a genuine least-privilege PutItem-on-etf-classifications grant to bd-pipeline/iam.tf (aws_iam_role_policy.bd_exporter_e18_etf_classifications_put) per the letter of step 2's first half, and documents this gap inline in that file's comment plus in the cell's NEVER_WIDEN half (NEVER_WIDEN_HALF_REQUEST_SECCLASS_E18_IAM_20260930.md, SURPRISE / gap section) so the issuer does not sign off 'bd-securities PutItem removed' on the strength of this commit alone."
 }
 ```
+
+```json
+[
+{
+  "id": "MDPF_SECCLASS-W5-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~5",
+  "surfaced_at": "2026-09-30T03:15:00Z",
+  "one_line": "TO-SC-e1's sanctioned C-WRITER change (seed-etf-constituents.py now sets classified_by='constituents' on every row it writes) makes round-1's own test_seed_fields.py::test_constituent_seeder_never_sets_classified_by fail; that test file encodes the now-superseded RULING 103050 text and sits outside this order's <paths> write grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (test_seed_fields.py is round-1's file, not in TO-SC-e1's write grant; its one assertion needs updating -- or removing as superseded -- in SC-e-2 or a later cell before a repo-wide test run is clean again)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND1_ANALYSIS_MDPF_SECCLASS_20260930.md@151c890591 section 1: 'The constituents seeder (seed-etf-classifications.py, my ruling 103050) now sets classified_by = constituents on every row it writes' -- the round-2 ruling this task order (MDPF_SECCLASS.TO-SC-e1) implements",
+      "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py (this commit): build_row() now returns 'classified_by': 'constituents' on every row",
+      "infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py:137-140 (HEAD, pre-existing, round-1 SC-k-2 file): def test_constituent_seeder_never_sets_classified_by(...): assert 'classified_by' not in row -- this is the literal, now-contradicted assertion",
+      "python -m pytest infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py -q -p no:cacheprovider (this build, after the SC-e-1 edit): '1 failed, 18 passed' -- AssertionError: assert 'classified_by' not in {..., 'classified_by': 'constituents', ...}"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "test_seed_fields.py (round-1 SC-k-2, RULING 103050): 'the constituents seeder never sets classified_by and refuses to overwrite a row that already carries one.'",
+  "world_is": "The round-2 C-WRITER ruling supersedes RULING 103050's first half: the seeder now DOES set classified_by='constituents' (the refuse-to-overwrite half is unchanged and still passes). TO-SC-e1's <paths> grant does not include test_seed_fields.py, so this worker cannot update the stale assertion itself.",
+  "notes": "Not fixed here: test_seed_fields.py is outside this order's write grant (refusal clause). TO-SC-e1's own acceptance criterion (SC2-e1-AC1) runs only test_classified_by_v2.py, which is unaffected and passes 13/13. This row exists so the repo-wide suite's one known regression is tracked and closed by whichever cell/owner next holds test_seed_fields.py."
+},
+{
+  "id": "MDPF_SECCLASS-W5-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~5",
+  "surfaced_at": "2026-09-30T03:40:00Z",
+  "one_line": "Amendment 1's new etf-classifications field identifier_namespace {TICKER, CUSIP} shares its exact name with an existing, wider identifier_namespace field on IRPT_BCKEND's own wire contract (portal/src/pages/InvestorReporting/contracts/wire/AnalysisRequest.ts: TICKER|CUSIP|ISIN|CASH|MODEL|UNMATCHED) -- same token, disjoint domain, no write-path collision.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e1.contract-and-legacy-label.md amendment 1 (CTO RULING 103140, E9), landed @1302fa149e: 'the contract ALSO gains the field identifier_namespace with values {TICKER, CUSIP}'",
+      "comp-find 'identifier_namespace' portal/src --all (2026-09-30 ~03:3xZ): 8 hits, SURFACED=3 CONFIG=2 TEST=3, all in IRPT_BCKEND's own tree -- portal/src/pages/InvestorReporting/contracts/wire/AnalysisRequest.ts:35: \"readonly identifier_namespace: 'TICKER' | 'CUSIP' | 'ISIN' | 'CASH' | 'MODEL' | 'UNMATCHED'\"; adapt.ts:859 and :1544 read/build it from a normalized_holdings wire shape",
+      "comp-find 'identifier_namespace' infra/aws/lambda/v2_portal --all and data --all (same build): 0 hits each -- no etf-classifications code path references the token yet (this cell only adds it to the contract JSON and one test)",
+      "org/standards/MDPF_SECCLASS_CONTRACT.json (this commit): identifier_namespace.values = [TICKER, CUSIP], a strict subset of IRPT's six -- the two fields are never read or written by the same code path today"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Rule 24: a value-enum proposal carries a word-boundary token census as part of its four-postulate record, so a collision is surfaced rather than silently accepted.",
+  "world_is": "The token identifier_namespace already exists in the estate on a DIFFERENT schema (IRPT_BCKEND's wire contract) with a wider value set; etf-classifications' new field of the same name is a narrower, unrelated enum on a different table. No consumer reads both today, so there is no live collision, only a shared name a future reader could confuse.",
+  "notes": "Not fixed here: amendment 1 named this exact field name and value set (CTO RULING 103140), and this cell's <paths> grant does not include the IRPT wire contract. Flagged so a future fold or shared-vocabulary decision between the two identifier_namespace fields is deliberate, not accidental."
+},
+{
+  "id": "MDPF_SECCLASS-W5-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~5",
+  "surfaced_at": "2026-09-30T04:05:00Z",
+  "one_line": "A mid-task coordinator message claimed 'CLOUD now carries a cross-device union of seed-etf-constituents.py' (site Z's --universe amgt-library path) and asked this worker to build on it and add classified_by/instrument_kind handling to that path; measured, the local CLOUD branch in this worktree does NOT contain that commit -- it exists only on origin/CLOUD, 1,245 commits ahead of local CLOUD, which this worktree has not fetched/merged. This worker did not perform that merge or edit the amgt-library path: doing so is a repo-wide branch integration far outside TO-SC-e1's LOCAL-build-and-record BOUNDS and <paths> grant, not a same-file edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (the cross-fabric merge of origin/CLOUD into this device's local CLOUD -- or a targeted cherry-pick of 8757ce95eb -- is a branch-integration act for the issuer/integrator, not a single worker's LOCAL-build task order; until it lands locally, this worker's seed-etf-constituents.py edit cannot see or extend the amgt-library path)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge --no-edit CLOUD (this build, twice): both fast-forwards, neither touches infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py",
+      "git log --all --oneline -- infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py: 8757ce95eb 'build(AMGT_RESAPP round 48, AMGT-ww-3, 0.9.0_WK_AMGT_RESAPP~172): the etf-classifications writer gains --universe amgt-library' exists in the repo's object store but is not an ancestor of local CLOUD",
+      "git merge-base --is-ancestor 8757ce95eb CLOUD -> NOT-ANCESTOR-OF-CLOUD; git branch --all --contains 8757ce95eb -> remotes/origin/CLOUD, remotes/origin/HEAD only",
+      "git rev-parse CLOUD origin/CLOUD: 8b7d5738af vs fd3b3b7bf2; git log CLOUD..origin/CLOUD --oneline | count = 1245; git log origin/CLOUD..CLOUD --oneline | count = 176 -- large, two-way divergence, not a simple fast-forward gap",
+      "comp-find 'test_positioning_universe_plan_unchanged' --all (this build): measured zero across 45,686 scanned files -- the named test does not exist anywhere reachable from local CLOUD either"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Coordinator message (2026-09-30, this session): 'CLOUD now carries a cross-device union of ...seed-etf-constituents.py ... the union merge stands.'",
+  "world_is": "This worktree's local CLOUD branch (the one named 'CLOUD' that 'git merge CLOUD' resolves) does not carry that commit; it is reachable only via origin/CLOUD, itself 1,245 commits ahead of and 176 commits behind local CLOUD. No fetch/merge of that scale was performed.",
+  "notes": "Not executed here: TO-SC-e1's BOUNDS name LOCAL build + record and a specific <paths> write grant; reconciling a 1,245-commit cross-fabric divergence is a branch-integration act, not this cell's. This worker's own contract and test edits (identifier_namespace, classified_by='constituents') stand on the verified, in-branch amendment @1302fa149e and are unaffected by this row."
+},
+{
+  "id": "MDPF_SECCLASS-W5-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~5",
+  "surfaced_at": "2026-09-30T04:30:00Z",
+  "one_line": "MDPF_SECCLASS-W5-S1's stale assertion is fixed under this order (TO-SC-e2, amendment 1, row MDPF_SECCLASS-W5-S1): test_seed_fields.py::test_constituent_seeder_never_sets_classified_by is replaced by test_constituent_seeder_sets_constituents_label_and_refuses_seed_or_scheduled, which asserts the constituents label on a written row and the refusal of a seed or scheduled row; the file's own suite is green again (19 passed).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py (this commit): test_constituent_seeder_never_sets_classified_by removed, replaced by test_constituent_seeder_sets_constituents_label_and_refuses_seed_or_scheduled, asserting row['classified_by'] == 'constituents' and RowProtected on a seed-labelled and a scheduled-labelled ticker alike",
+      "python -m pytest infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py -q -p no:cacheprovider (this build, before the edit): '1 failed, 18 passed' (the W5-S1 regression); after the edit: '19 passed in 0.23s'",
+      "MDPF_SECCLASS.TO-SC-e2.instrument-kind-population.md amendment 1 (row MDPF_SECCLASS-W5-S1): 'Under the CTO's four-label ruling and SC-e-1, the constituents seeder sets classified_by = \"constituents\". Update that one test to assert the constituents label on a written row and the refusal of a seed or scheduled row. Loosen nothing else.' -- this row's edit is that exact, sole change; no other assertion in the file was touched."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "MDPF_SECCLASS-W5-S1: 'disarm_owner: 2.0.0_SA_COO~M ... its one assertion needs updating -- or removing as superseded -- in SC-e-2 or a later cell before a repo-wide test run is clean again.'",
+  "world_is": "This IS that cell (TO-SC-e2), and its own amendment 1 directs exactly this fix (row MDPF_SECCLASS-W5-S1 named verbatim in the order). The disarm is performed here, by the worker the amendment addressed, not by 2.0.0_SA_COO~M directly executing a keystroke -- the issuing seat's own task order is the disarm act's authorization. This row does not itself flip W5-S1's hazard_standing (append-only; a worker does not edit or adjudicate an existing row) -- it records that the named condition is now met, for the issuer/CVO to close at L8/L9.",
+  "notes": "Loosened nothing else in test_seed_fields.py, per the order's refusal clause; the other 18 pre-existing tests in the file are unchanged and still pass."
+}
+]
+```
