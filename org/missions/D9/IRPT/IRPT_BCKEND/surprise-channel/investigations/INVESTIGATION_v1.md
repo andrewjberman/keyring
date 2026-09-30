@@ -13360,3 +13360,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "FOR THE CTO'S RULING, the two dates are NOT one remedy (Rule 24 (iv) -- name which values one remedy does not move). (a) date=2024-07-08 is the series' first partition and is CORRECT AND PERMANENT: GLD-b-3 says this state must never be fixed. The one thing arguably wrong there is the STATUS VOCABULARY -- the rows read REFUSED-NO-BMV, which c02:205-217 defines as a wiring/data-availability state and as 'the population Andrew's ratified acceptance requires to reach ZERO', when the truthful state is NO-PRIOR-TRADING-DAY ('correct at a series' first partition, not a gap'). 4,074 rows therefore sit permanently in a bucket that is specified to reach zero, because dim_calendar's null prev renders as the string 'None' and c02's own prev_map (deliberately untouched per GLD-b-1) tests it as truthy. That is a real, separate, NON-BLOCKING finding about the status field, not about the four columns. (b) date=2025-01-09 is a different class entirely: a twr_daily partition (and a canonical_valuation partition) exist for a day the NYSE was CLOSED. No return is computable on a closed market, so the four columns are meaningless there by construction; the live question is why a non-trading day produces a partition at all, which is upstream of this engine. NEITHER is fixed by a re-emit. The order's own proposed remedy -- a schema_version bump the guard can key on -- addresses the READER, which is the right layer: the guard at f49_engine.py:124-126 would then refuse on a version it understands rather than on an absent column, and a full-history read could skip or tolerate the two days deliberately. A second option the CTO may prefer: widen daily_returns so EVERY row carries the four keys (null on the refusal branches), making the column set invariant across partitions -- that is an emission-contract change and rides on schema_version per c02:40-49, so it is the CTO's to rule and not this lane's to take. Filed and stopped per the clause; nothing was improvised and no parquet was hand-written."
 }
 ```
+
+
+## IRPT_BCKEND-W96-S1 -- allowedFirmIds of an unspecified type fails closed in allowed_firm_ids()
+
+```json
+{
+  "id": "IRPT_BCKEND-W96-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~96",
+  "surfaced_at": "2026-09-30T15:00:00Z",
+  "one_line": "allowed_firm_ids() fails closed on an allowedFirmIds value that is neither a string nor a list/set: the order named only the string and list forms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py allowed_firm_ids(): a DynamoDB SS/NS set is accepted as an iterable, and any other type (number, map, bool) yields an empty list, so decide() refuses every data_firm with ACTOR_FIRM_NOT_ALLOWED. TO-IB-yr-293 says only 'comma-separated string is split ... a list is taken as-is'; canonical_profile_reads decodes DynamoDB L to list and SS to set, so a non-string non-list value is reachable."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-yr-293 part 2: the helper returns None for absent/ALL, else a split string or a list as-is; no other value type is specified.",
+  "world_is": "A restriction attribute the reader cannot interpret restricts everything (fail closed) rather than reading as unrestricted. Not exercised by the checks; no live row carries such a value (no row carries the attribute yet). Reversible by editing the one else-branch if the CTO wants a different rule."
+}
+```
