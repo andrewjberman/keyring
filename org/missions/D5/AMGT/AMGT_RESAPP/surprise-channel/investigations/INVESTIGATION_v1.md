@@ -16200,6 +16200,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-ac-2 cell: a sentence the stored document serves verbatim-on-span is still served on rebuild; if the cause is that the stored sentences were served under an older, looser rule and genuinely fail today's gate, STOP and file a row -- that is a ruling, not a build.",
     "world_is": "The stored sentences that were served verbatim-on-span (2 of 10) all survive a rebuild. The 8 that drop were never on-span: they were served with no span under the pre-HOLD vacuous rule and are HELD-NO-SPAN under C-VERBATIM-GATE = HOLD. Keeping them would require loosening the gate (serving a sentence with no verbatim text), which the cell forbids; no producer or pipeline change at the cause can make them verbatim. AC1 (ac_2_keep.py) compares ALL stored served sentences, so it cannot exit 0 under HOLD for this name; the ruling needed is either (a) accept the drop as HOLD working (the stored /thesis document is then regenerated smaller by design) and re-scope AC1 to span-carrying stored sentences, or (b) a CTO/Andrew ruling to change what HOLD serves. Disarm_owner 2.0.0_SA_COO~Z; the hazard is Z-S314's, unchanged: a live --rebuild-pool regresses these 8 served /thesis sentences until ruled. No file changed; AC1 stays exit=1; the order stays open.",
     "notes": "disarm_owner 2.0.0_SA_COO~Z. Cites AMGT_RESAPP-Z-S313 and AMGT_RESAPP-Z-S314."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S317",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-30T14:36:00Z",
+    "one_line": "ack_messages returned 'broker call FAILED. Nothing acked (reported, not swallowed)' on a call that HAD written the ack -- the one delivery primitive whose purpose is to be the clock an orphan cannot forge reported a false negative about its own write.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ack_messages('27196') called three times in one turn (~14:33-14:36Z). Calls 1 and 2 each returned verbatim: 'ack_messages: broker call FAILED. Nothing acked (reported, not swallowed).' Call 3 returned: 'READ ack recorded by 0.7.0_AE_CloudOps~A for 0 message(s): [27196]  (1 already carried an ACK -- an ACK is write-once, so the FIRST reader's timestamp is preserved rather than overwritten.)'",
+        "Only this seat can ack its own mail, and no other ack path ran, so the ACK that call 3 found already present was written by call 1 or call 2 -- each of which reported 'Nothing acked'.",
+        "The broker was NOT down in that window: heartbeat() returned 'Heartbeat OK' twice, get_agent_status('0.7.0_AE_CloudOps~A') returned 'LIVE (last seen 0s ago, PID 33812)', and netstat read TCP 127.0.0.1:7800 LISTENING pid 4696. So this is a per-primitive failure, not an outage.",
+        "get_delivery_state('0.7.0_AE_CloudOps~A') in the same window returned 'get_delivery_state: broker call FAILED (reported, not swallowed).' while heartbeat succeeded seconds later. org/XXX.md step B.0 makes get_delivery_state the seat's delivery-ledger read at startup, so while it fails a seat cannot enumerate its unread rows.",
+        "Not measured by this seat, and NOT claimed: whether the write happens before or after the point that raises; whether send_message or other primitives share the path; how often it reproduces. One occurrence, one message id."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The broker's own wording is the contract: 'Nothing acked (reported, not swallowed)' asserts that a FAILED ack_messages call performed no write, and ack_messages is documented as 'the ONLY delivery signal an orphan cannot forge, and the only one that claims an AGENT saw a message'.",
+    "world_is": "At least one ack_messages call that reported 'Nothing acked' DID write the ACK. The instrument the fabric designates as its one trustworthy delivery clock misreported its own effect, in the SAFE direction here (the ack landed) but in the direction that teaches a seat to distrust a true positive. The reachable consequences are two, and neither is exercised here: a seat that believes the report may loop on retries, or may conclude it is deaf and escalate a reachability incident that does not exist; and with get_delivery_state failing in the same window, the org/XXX.md step B.0 backstop that would settle the question independently is unavailable at the same moment. This seat's own broker summary briefly carried the false claim 'msg 27196 acked' -- written before the first result returned -- and was corrected in the next heartbeat. No AMGT_RESAPP artifact is affected and AMGT-ac-3 proceeded; the ack is recorded and 27196 reads READ.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Surfaced off-task during AMGT-ac-3 startup; row filed and work continued per CLAUDE.md section 2. The mechanism lives in org/mcp/server.py, which is 0.0.0_AB_MSTR's lane, not this seat's write surface -- routing is the disarm_owner's call."
   }
 ]
 ```
