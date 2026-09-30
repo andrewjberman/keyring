@@ -488,7 +488,7 @@
    "builder": "address",
    "args": [
     "gateway",
-    "49financial",
+    "global",
     "bronze",
     "taxsma_workbook",
     "date={knowledge_date_compact}",
@@ -498,13 +498,14 @@
    "writer": "S02",
    "readers": [
     "S19"
-   ]
+   ],
+   "scope_note": "0.6.0: the sheet carries rows for more than one firm (RIA column), so the raw snapshot and its typed Silver sit at the registry's GLOBAL (composite) scope in the ingest bucket; per-firm state is split downstream."
   },
   "workbook_silver": {
    "builder": "address",
    "args": [
     "gateway",
-    "49financial",
+    "global",
     "silver",
     "taxsma_workbook",
     "date={knowledge_date}",
@@ -514,13 +515,14 @@
    "writer": "S19",
    "readers": [
     "S03"
-   ]
+   ],
+   "scope_note": "0.6.0: the sheet carries rows for more than one firm (RIA column), so the raw snapshot and its typed Silver sit at the registry's GLOBAL (composite) scope in the ingest bucket; per-firm state is split downstream."
   },
   "membership_dispositions": {
    "builder": "address",
    "args": [
     "mdpf",
-    "49financial",
+    "{firm}",
     "state",
     "taxsma_membership",
     "dispositions.json"
@@ -532,7 +534,8 @@
     "S04",
     "S05"
    ],
-   "retention": "No expiry: permanent protected audit evidence and append-only disposition history; explicit family declaration under CTO97115 note (i), not an expiring workflow lease."
+   "retention": "No expiry: permanent protected audit evidence and append-only disposition history; explicit family declaration under CTO97115 note (i), not an expiring workflow lease.",
+   "scope_note": "0.6.0: one per firm ({firm} = 49financial | cottonwood), each in its own firm bucket; a row whose RIA does not resolve owns no history and writes into no firm's."
   },
   "operational_control": {
    "builder": "address",
@@ -556,7 +559,7 @@
    "builder": "address",
    "args": [
     "mdpf",
-    "49financial",
+    "{firm}",
     "gold",
     "taxsma_assets",
     "date={knowledge_date}",
@@ -568,7 +571,8 @@
     "S06",
     "S07"
    ],
-   "partition_axis": "The literal date= label contains knowledge_date, independently of valuation_date in each row."
+   "partition_axis": "The literal date= label contains knowledge_date, independently of valuation_date in each row.",
+   "scope_note": "0.6.0: one per firm ({firm} = 49financial | cottonwood), each in its own firm bucket; a row whose RIA does not resolve owns no history and writes into no firm's."
   },
   "firm_category": {
    "builder": "address",
@@ -772,7 +776,7 @@
    "version": "0.6.0",
    "when": "2026-09-30",
    "by": "4.0.0_SA_CRO under the FAST lease",
-   "what": "RIA column routes the firm; AUM (Mn) projected; workbook fallback for MISSING_CUSTODIAN; per-firm value basis and category source basis; canonical_valuation phantom replaced by fact_rps_s2",
+   "what": "RIA column routes the firm; AUM (Mn) projected; workbook fallback for MISSING_CUSTODIAN; per-firm value basis and category source basis; canonical_valuation phantom replaced by fact_rps_s2; E2a: workbook Bronze/Silver at the global scope, dispositions and taxsma_assets per firm, production S3 stores and live loaders wired",
    "authority": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_142xZ_TAXSMA_CLOSER_DRIVE_GO_RIA_COLUMN_WORKBOOK_FALLBACK.md"
   }
  ]
