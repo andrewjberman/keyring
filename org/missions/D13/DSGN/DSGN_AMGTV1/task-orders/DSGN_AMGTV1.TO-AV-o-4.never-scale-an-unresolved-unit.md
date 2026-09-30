@@ -96,7 +96,7 @@ outer commit hashes, and any row.
 **ISSUER NOTES:** round 10 = the round-9 analysis s.4 item 4 with ruling 3. Base b6634ba0: units.cjs 0 of 3; green 3 of 3; Q4 3 of 3
 at base and on the green arm (the green arm carried o-2, o-3 and o-4 together).
 
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~38</slot>
 <fabric>site-z</fabric>
