@@ -3875,6 +3875,90 @@ carries none.
       },
       "spec_asserts": "A3/A4 ask the release to carry the Schwab host inputs and the deploy-only tree to ship the gateway dir only.",
       "world_is": "Shipped as ordered; the merge cost lands on whoever releases OG-i-3/OG-x-2 or drains this branch, recorded so it is not a surprise then."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+      "surfaced_at": "2026-09-30T17:05Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "id": "NFRA_MCPINDEX-Z-W19-S16",
+      "one_line": "The live host carries one file the live artifact does not: deploy/NFRA_OPLGTW_CONTRACT.json, left by the rolled-back v2 deploy (a tar extract never deletes), byte-equal to the v3 release's copy.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "SSM ab7a521f-2a22-48e2-a960-21c5f90dc392 (2026-09-30T16:14:59Z) on i-07dccb1615503ac99: 87 hashed host files against the 86 of the downloaded -latest artifact (421088 bytes); 86 of 86 identical, 0 differ, 1 only-host = deploy/NFRA_OPLGTW_CONTRACT.json (sha256 a86f7e667cfc3ec8b0eebfe155a02e11e94e52ddb39fcfa82d3505fddd4fa4ad).",
+              "The v3 deploy-only artifact's copy of that file has the same sha256, so a v3 deploy overwrites it with identical bytes; PHASE B's host-equals-artifact read should expect 87 host files now (86 + this one) and 87 of 87 after.",
+              "It is inert today: the live .env names no NFRA_OPLGTW_CONTRACT_PATH (0 of 28 key names) and schwab is not enabled."
+          ]
+      },
+      "spec_asserts": "A6 says the rollback restored 4ce7946426 (the host 80/80 at RV's read).",
+      "world_is": "The host runs 4ce7946426's code; the artifact-vs-host comparison is 86 of 86 plus one stale contract copy that the rollback could not remove."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+      "surfaced_at": "2026-09-30T17:05Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "id": "NFRA_MCPINDEX-Z-W19-S17",
+      "one_line": "ETFS_RIVALS' app/tests/test_rivalfunds_view.py fails at the live ref itself: it needs infra/logic/registry/systems.json to carry a 'rivalfunds' key, which the tree at 4ce7946426 does not.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "In the release tree /c/tmp/mx-rel9 (a5e73b6e72) `python -m pytest app/tests/test_rivalfunds_view.py` (MOCK_GRAPH=1): 3 failed, 1 passed, 7 errors, each `ValueError: source 'rivalfunds' is not a systems.json key`.",
+              "The same command in the rollback tree /c/tmp/mx-rb9 (4ce7946426, a sparse tree without infra/logic): 3 failed, 1 passed, 7 errors, `FileNotFoundError ... infra/logic/registry/systems.json`; the release's copy of the test and of app/rivalfunds_view.py are byte-equal to 4ce7946426 (preservation proof), so this release adds no failing test.",
+              "The test ships inside the artifact (app/tests/) but is never run on the host; it is another project's suite."
+          ]
+      },
+      "spec_asserts": "The release's test list names the Schwab, portal_index, discover, MCPMSP and acceptance suites.",
+      "world_is": "ETFS_RIVALS' own test is red against the registry at its own deployed ref; not run for criteria and not ours to fix."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+      "surfaced_at": "2026-09-30T17:05Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "id": "NFRA_MCPINDEX-Z-W19-S18",
+      "one_line": "The stale-base guard protects only a deploy that runs a deploy-to-ec2.sh carrying it: a seat deploying from a tree cut before this release runs the old script and is unguarded, and the first read after this release has no git-ref metadata to read.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (f1c302fbd3 on wk-nfra_mcpindex-5-19, a5e73b6e72 on the release) reads the live ref from S3: the git-ref object metadata on -latest, else the one opal-gateway-<sha>.tar.gz key sharing -latest's ETag, else it refuses. The live -latest (15:22:18Z, written by the pre-guard script) has no git-ref metadata, so the first read is the key-match fallback and resolves to 4ce7946426 (the 4ce7946426 key and -latest share ETag and size 421088, list-objects-v2 at 2026-09-30T16:13Z).",
+              "An older tree's script (the one v2 used) uploads without the metadata and without the check; nothing on the S3 plane refuses its PutObject, and infra/aws/ec2/safe-ec2-deploy.sh (outside this order's <paths>) passes its environment through but does not itself require DEPLOY_BASE_REF.",
+              "tests/test_deploy_base_guard.py: 6 of 6 pass; removing the upload-time call fails 2 of 6 (mutation run), so the upload-time read is what the tests grade."
+          ]
+      },
+      "spec_asserts": "A6: the guard ships in this release and refuses on a live-ref mismatch with no upload.",
+      "world_is": "The guard is in place for every deploy made from this release forward; coverage of older trees needs either the wrapper to require DEPLOY_BASE_REF or an S3-side condition, both outside this order."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+      "surfaced_at": "2026-09-30T17:05Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "id": "NFRA_MCPINDEX-Z-W19-S19",
+      "one_line": "A6 re-cut record: three more audited overrides (rel-c, dep-c) and the deploy-only tree on CLOUD d4fe6127ee drops 8 gateway files of other projects' unreleased work and changes 23 more relative to CLOUD.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "Release a5e73b6e72 (rel-nfra-mcpindex-r5-schwab-enable-c, /c/tmp/mx-rel9) and deploy-only 42c52ed4d9 (dep-nfra-mcpindex-r5-schwab-enable-c, /c/tmp/mx-dep9) were committed under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~19 (Z-W14-S8 precedent).",
+              "git diff --name-status d4fe6127ee 42c52ed4d9: 34 files, 0 outside infra/aws/ec2/opal-gateway: 8 D (app/taxsma_workbook.py, tests/test_taxsma_workbook.py, tests/test_tier_principal.py, tests/test_auth_hardening.py, tests/test_dcr_idle_lifetime.py, tests/test_login_retire.py, tests/acceptance/onhost_bench.py, tests/acceptance/test_onhost_bench_grader.py), 23 M, 3 A (the contract copy, test_schwab_host_inputs.py, test_deploy_base_guard.py). Each D and M is other projects' unreleased gateway work that CLOUD holds and the live ref does not; none is shipped.",
+              "Gateway tree object: a3893da22ad839edb26e9537ac13d7347b02396d in both the release and the deploy-only commit."
+          ]
+      },
+      "spec_asserts": "A6 asks for a release on the live ref and a deploy-only tree whose gateway tree object equals the release's.",
+      "world_is": "Done as ordered; the overrides and the dropped-file set are recorded for the L8 reading."
   }
 ]
 ```
