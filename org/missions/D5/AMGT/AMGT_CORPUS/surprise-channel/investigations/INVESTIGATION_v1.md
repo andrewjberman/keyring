@@ -2856,6 +2856,96 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "stage_derive has a tracked-file write side effect for an unmapped security (model_block_pull.py:854 via _ensure_unit_map); the test now stubs _ensure_unit_map, so the tree stays clean. S8's premise (that the existing suite mutates field_map.json) is withdrawn.",
     "notes": "S8 is not edited (a row is never edited); this row supersedes its attribution. Re-verified: after the fix the AC2 suites and the bloomberg suite leave git status clean for field_map.json.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T15:39:00Z",
+    "id": "AMGT_CORPUS-Z-W1-S21",
+    "one_line": "AC1 cannot pass as written: the checker aa1_check.py measures the population as 79 figures on 27 securities, not 73 on 25, because S3 holds BP-SLASH-_LN_Equity and NG-SLASH-_LN_Equity beside BP/_LN_Equity and NG/_LN_Equity and the checker excludes only the slash forms.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round25/aa1_AC1.sh -> 'aa1 population 79 securities 27 census_covered 73 classes_valid True reader_matches 73 tsm_mkt_cap USD control_reporting TWD unmeasured_labelled 0' (expected 'population 73 securities 25 census_covered 73 ...')",
+        "s3 list of derived/model_block/BP and /NG (prefix) shows BOTH BP-SLASH-_LN_Equity/<stamp>/model_block.json and BP/_LN_Equity/<stamp>/model_block.json (6 stamps each, likewise NG); aa1_check.py:26 EXCLUDED = {'BP/_LN_Equity','NG/_LN_Equity'} matches only the second family",
+        "the 6 extra figures are the BP-SLASH- and NG-SLASH- CUR_MKT_CAP, NET_DEBT, CURR_ENTP_VAL blocks (mixed true, reporting basis)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The population is 73 figures on 25 securities: the newest block of every key except BP/_LN_Equity and NG/_LN_Equity (Z-S64), and the checker prints 'population 73 securities 25'.",
+    "world_is": "The checker's exclusion list names only the slash key forms; the -SLASH- twin keys of the same two securities are read as population, so the printed population is 79 on 27 whatever the census says. All other AC1 fields match: census_covered 73, classes_valid True, reader_matches 73, tsm_mkt_cap USD, control_reporting TWD, unmeasured_labelled 0. The census deliberately covers exactly the ordered 73 (adding the 6 twin figures would make classes_valid False only if the twins were later excluded).",
+    "notes": "Fix is the issuer's: add 'BP-SLASH-_LN_Equity' and 'NG-SLASH-_LN_Equity' to EXCLUDED (then AC1 reads 73 on 25 with this census unchanged), or order the twins into the census. The worker did not edit the issuer's check.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T15:39:00Z",
+    "id": "AMGT_CORPUS-Z-W1-S22",
+    "one_line": "model_block_pull's callers of _figure_currency (lines 1016, 1097, 1256, 1298 before this edit) pass no security, so the round-25 label rule is INERT in the served derive until they pass security=; the order forbids touching those functions, so no test_currency_labels.py assertion was superseded and none was changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp Grep _figure_currency integrations/bloomberg/research -> 4 call sites, each _figure_currency(mnemonic, quote_ccy, reporting_ccy), none passes security",
+        "AC2 bash aa1_AC2.sh -> '13 passed in 0.68s' (test_figure_currency_round25.py + test_currency_labels.py unchanged)",
+        "census: 41 of 73 figures are UNRESOLVED, so once wired the derive prints NO currency on 41 figures (CUR_MKT_CAP 8, NET_DEBT 20, CURR_ENTP_VAL 13) and Lenovo's 992 HK CUR_MKT_CAP flips from USD to HKD, which arm 1 of test_currency_labels.py (about :225-227, the CUR_MKT_CAP/NET_DEBT pins on the Lenovo fixture) then supersedes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The served figure's currency label follows the measured census once _figure_currency has the rule.",
+    "world_is": "The rule exists and is tested through _figure_currency directly, but stage_derive's four call sites still call it with three arguments, so a re-derive today would serve the same TSM CUR_MKT_CAP labelled TWD. test_currency_labels.py's Lenovo arm (992 HK Equity, in the census) will need its CUR_MKT_CAP/NET_DEBT pins changed in the same commit that wires security=.",
+    "notes": "Wiring is a small edit to four call sites in other functions of model_block_pull.py plus the test_currency_labels.py arm-1 assertions; both belong in one issuer-cut cell. The issuer decides whether a wired rule that prints no currency on 41 figures is what the reader should see before the remaining 41 are decided.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T15:39:00Z",
+    "id": "AMGT_CORPUS-Z-W1-S23",
+    "one_line": "The market cap on the GBp-quoted names is denominated in GBP (the major unit), a currency neither label in the two-class vocabulary states: on the 3 GBp names that report in USD or EUR (AZN, HSBA, ULVR) the round-25 rule prints no currency for CUR_MKT_CAP, and RIO's ratio of 1.367 is unexplained.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "census DENOMINATION_CENSUS_ROUND25.json: AZN/HSBA/ULVR CUR_MKT_CAP / (PX_LAST/100 x EQY_SH_OUT_REAL) = 1.00000 (value in GBP); reporting USD/USD/EUR, quote GBp",
+        "RIO_LN_Equity ratio = 1.36700 against a block-implied reporting-per-GBP factor of 1.3452; a dual-listed share count and a USD value are both candidate causes and the block measures neither, so RIO is UNRESOLVED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A figure is either quote-currency or reporting-currency denominated (the two-class label).",
+    "world_is": "For a GBp quote the quote label GBp names the pence subunit, so a value in pounds is neither 'quote (CRNCY)' nor the reporting currency; the label vocabulary needs a third state (quote currency, major unit) before these can be labelled honestly, or the derive keeps printing no currency for them.",
+    "notes": "Decision needed only if the issuer wants these three labelled; the census holds the ratio evidence.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T16:20:00Z",
+    "id": "AMGT_CORPUS-Z-W1-S24",
+    "one_line": "AMENDMENT 1 grants changing the arm-1 pins of test_currency_labels.py, but the wired rule also breaks arm 3 (test_missing_reporting_ccy_is_unstated), which pins the same 992 HK fixture's CUR_MKT_CAP / NET_DEBT; AC2 cannot pass without changing it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest integrations/bloomberg/research/tests/test_currency_labels.py after wiring security= at the four call sites: arm 3 failed with 'HKD' is None on CUR_MKT_CAP (992 HK census class quote), the same fixture and figures arm 1 pins",
+        "test_currency_labels.py arm 3 now pins CUR_MKT_CAP HKD/quote and NET_DEBT None/UNMEASURED with an AMENDMENT 1 comment; its UNSTATED pin is kept for the remaining currency-sensitive fields (SALES_REV_TURN, IS_EPS); 5 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1 item 1: change the arm-1 pins the wired rule supersedes (the 992 HK Equity fixture's CUR_MKT_CAP / NET_DEBT); keep every other arm.",
+    "world_is": "The wired rule also supersedes those two pins in arm 3, which uses the same 992 HK fixture with EQY_FUND_CRNCY absent. Only the CUR_MKT_CAP and NET_DEBT assertions of arm 3 were changed; every other arm-3 assertion is unchanged.",
+    "notes": "The change is the minimum the same wired rule forces; the issuer may read it as inside the amendment's intent or ask for it to be reverted.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
