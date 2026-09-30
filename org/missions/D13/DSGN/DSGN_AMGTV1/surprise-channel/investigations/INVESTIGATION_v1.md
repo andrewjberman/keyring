@@ -558,6 +558,71 @@
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "AV-m-1 item 3: tabPanelsWhite: the tab panel is white with a hairline border (N/A in list).",
  "world_is": "Reading used: the tab panel's surface is the nearest painted ancestor below <main> (>300px wide, >=40px tall), else the top-level painted surfaces inside it (table rows and skeleton bars excluded); PASS iff at least one exists, every one is opaque white (255,255,255) and carries a light (luminance >= 0.4) 1px+ border. Zero surfaces grades FAIL, never PASS. A different reading is a change to ui-measure.mjs section 8 only. Separately: the issuer's clean page grades bandIsIdentityHeader FAIL (a static page carries no data-starred-toggle Lead Panel marker); AV-m-1's arm 2 asks only the eight style clauses, so nothing is affected."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W51-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~51",
+ "surfaced_at": "2026-09-30T17:18Z",
+ "one_line": "AV-l-6's fwd14 names a sentence's PASS face and its passage and accession line; on DEV a PASS sentence paints no face and the page never prints an accession, so I graded the attribute and the citation line in words.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/ThesisCards.tsx SentenceBlock (lines 276-280 at DEV ba62e945): the sentence carries data-verbatim-check and renders a CheckFaceBadge only when the verdict is not PASS; ThesisTab.tsx header comment: the face 'never' prints the accession number",
+   "DEV run (C:/tmp/dsgn-r13-dist/dev, three windows opened): 17 sentences, 17 read data-verbatim-check=PASS with no badge; 18 citation lines [data-citation-document] name the document in words (10-K, filing date, section path)",
+   "reading used in ui-contract-check.mjs gradeFwd14: the FACE is the data-verbatim-check attribute (a non-PASS verdict must also show its badge) and the ACCESSION LINE is the [data-citation-document] line; a page whose PASS sentences must paint a visible face would need that reading changed in gradeFwd14 only"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-l-6 fwd14: in the Thesis windows each sentence shows its PASS face and passage count; opening it reveals the passage and accession line from the DOM.",
+ "world_is": "DEV paints no visible face on a PASS sentence (attribute only) and prints no accession number (the citation line names the filing in words), so the clause as worded has no literal DOM referent; the reading above grades what the page actually renders."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S7",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-09-30T16:40Z",
+ "one_line": "AV-l-1 carries the served dossier reason onto the page verbatim, and for every name WITH a dossier the served reasons are producer words: BA's Exec and Thesis read \"no MANAGEMENT section in class A missing or class B missing\" and \"no report's RECOMMENDATION line names a fund token (IDVZ|PFOE|DIVZ)\".",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "round13/fixtures/thesisBundle.BA_US_Equity.json:17122 and :17127 (dossier_fields.management.reason, dossier_fields.fund_of_record.reason); the same two strings in the 992_HK and VLO captures, the fund-token string in TSM's: 4 of the 5 captured bundles carry them; 6501 (no dossier) reads the plain 'no research dossier exists for this name'",
+   "walk M (tmp/ui-walk/20260930T162446Z, signed-in, 5174) BA Exec and Thesis shots show both strings on the face; the /api/scoped/amgt/security/BA%20US/compare 500 on the Posture step of the same walk is row Z-S8",
+   "AV-l-1 item 1 asked for the served reason as served (C-PRESENTATION-ONLY), so l-1 met its criteria; the words are the producer's (AMGT_RESAPP dossier builder), not the page's"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "Design law (portal DESIGN.md): a code, field name or path may sit in a data attribute or in code, never in visible text; AV-l-1: the page reads the served dossier reason.",
+ "world_is": "The served reason for a name with a dossier is a producer diagnostic (section names, class letters, a fund-token regex), so the page shows machine words by carrying the reason faithfully. Round-14 input: either RESAPP serves a reader sentence beside its diagnostic, or the page maps the reason class to one plain sentence and keeps the diagnostic in a data- attribute. Which one is the CTO's call at the round-13 analysis."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S8",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-09-30T16:40Z",
+ "one_line": "On the signed-in walk the Posture step for BA calls /api/scoped/amgt/security/BA%20US/compare and gets HTTP 500: the display ticker, not the security key (BA_US_Equity), is used as the path key.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20260930T162446Z/findings.json api_issues: {step 'amgt BA US tab Posture', GET /api/scoped/amgt/security/BA%20US/compare, http 500}",
+   "the round-13 captures read the compare route under the key BA_US_Equity (round13/fixtures, BA compare capture) and it answers; the other BA routes on the same walk use BA_US_Equity",
+   "walk M ran on 5174 serving a4b81627 (CTO~Z's worktree C:/tmp/amgt-walk-5174), which predates DEV ccca64ef. At DEV the one /compare fetcher (portal/src/api/endpoints/amgt-lead-panel.ts:157 getModelCompare, via hooks/useLeadPanelApi.ts:171 useModelCompare) always sends ?from=&to=; the walk logged no query, so the walk's call site is not yet located at DEV (the walker may strip queries)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "The page addresses every scoped security route by the security key the list served (BA_US_Equity).",
+ "world_is": "One Posture call keys on the display ticker 'BA US' and the route answers 500 (a 404 or a named refusal would be the honest miss). Round-14 input: find the call site at DEV and key it on the security key; the route's 500 on an unknown key goes to AMGT_RESAPP."
 }
 ]
 ```

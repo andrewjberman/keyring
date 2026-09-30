@@ -92,7 +92,7 @@ for each fwd clause, the portal and outer commit hashes, and any row.
 **ISSUER NOTES:** round 13 = the round-12 analysis s.4 item 6. After AV-l-5 on slot ~51. Base ba62e945: fwd1419.cjs 1 of 3; green
 r13-green-c @9ce993d3 3 of 3. fwd19 FAILS on DEV (Peers lacks a designed empty state) -- a round-14 page input, graded honestly here.
 
-<status>pending</status>
+<status>complete</status>
 <round>13</round>
 <slot>~51</slot>
 <fabric>site-z</fabric>

@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.10",
+  "prd_version": "v0.11",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -801,6 +801,8 @@ applied here.
   - It stops that publisher's leg: no retry is made against a check.
   - A new signature is added to the list when a kept body shows one, never inferred.
   - Expiry still reads as above: an auth failure that persists after backoff whose kept body matches no bot-check signature.
+  - **(v0.11, CVO~Z msg 27289)** Every refusal keeps its body, bounded as ft's F1 is. A refusal with no kept body is `unclassified`,
+    and `unclassified` is never expiry. A missing body cannot pass the signature test vacuously.
 
 ---
 

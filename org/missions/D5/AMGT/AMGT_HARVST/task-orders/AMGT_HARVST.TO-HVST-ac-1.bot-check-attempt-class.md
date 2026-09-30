@@ -30,6 +30,8 @@ lib/opal_data_harvest/worker.py
 lib/opal_data_harvest/verification.py
 lib/opal_data_harvest/bot_check.py
 lib/opal_data_harvest/test_ac1_bot_check_class.py
+lib/opal_data_harvest/publishers.py
+lib/opal_data_harvest/test_q6_barrons_guard_ft_body.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~84/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 </paths>
@@ -59,7 +61,14 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 3. **The repair-failed path keeps its body.** `verification.py` ~:21 raises carrying the refused response (status, url,
    content_type, the capped and redacted body), exactly as `transport` does for a rejection. So the next bbg and barrons refusal
    is classifiable.
-4. **The expiry branch still fires.** A 401 or 403 whose kept body says the session is invalid (not a bot signature),
+4. **(AMENDMENT 1, PRD v0.11) Every refusal keeps a bounded body; a body-less refusal is `unclassified`, never expiry.**
+   Every refusal path keeps its capped, redacted body. A refusal that still has NO body classes `unclassified`: it never marks
+   a token expired and never starts a sign-in.
+5. **(AMENDMENT 2) No account re-check after a bot check.** `publishers.py` ~:455 calls `check_auth()` after ANY
+   `RequestRejected`. After a refusal that classes `bot_check` or `unclassified`, it does NOT: that is one more request into a
+   challenged publisher, and an `AuthExpired` from it would reach a sign-in (row `Z-W84-S2`; the wsj batch-1 record shows the
+   extra `/client` auth_check after the 401). Other rejections keep the re-check.
+6. **The expiry branch still fires.** A 401 or 403 whose kept body says the session is invalid (not a bot signature),
    persisting after backoff, still marks expiry as in v0.9.
 
 ## 2. PROOF OF SPEC (each invocation LITERAL; timeout 600). THREE mechanical
@@ -78,7 +87,11 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   - (b) a `bot_check` attempt marks no token expired and makes 0 sign-in or `refresh` calls, and the job ends `bot_check`;
   - (c) a planted session-invalid 401 persisting after backoff STILL marks expiry (the positive arm);
   - (d) the repair-failed path keeps its body;
-  - (e) a body with no signature keeps its prior class.
+  - (e) a body with no signature keeps its prior class;
+  - (f) (AMENDMENT 1) a planted body-less persistent 403 classes `unclassified`, marks no token expired, and makes 0 sign-in
+    calls;
+  - (g) (AMENDMENT 2) a `bot_check` rejection inside the publisher listing path makes 0 `check_auth` calls, while a
+    non-bot rejection still makes 1.
 - **AC2:** replay the two kept batch-1 bodies (read-only) through the classifier. Print, per body:
   - the class and signature as DERIVED from the rule, never typed from the file name;
   - the record shape the new code writes.
@@ -96,6 +109,34 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   and barrons' refusals went through `verification.py`'s raise, which keeps none. Change 3 closes that, and AC2 names the two
   unclassifiable refusals instead of predicting them.
 - The `<expect>`s are plain printed tokens.
+
+**AMENDMENT 1 (issuer, 2026-09-30 ~17:3xZ, before dispatch) -- PRD v0.11 criterion (CTO msg, @`bb49eb7e76`).**
+- Change 4 (every refusal keeps a bounded body; a body-less refusal is `unclassified`, never expiry) is added. The old change 4 is
+  renumbered 5.
+- AC1 adds plant (f): a body-less persistent 403.
+- **Paths and invocations:** unchanged.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
+**AMENDMENT 2 (issuer, 2026-09-30 ~18:3xZ, before merge) -- rulings on `Z-W84-S1` and `Z-W84-S2`.**
+- **`Z-W84-S1`, ACCEPTED as built:**
+  - with no repair run, a bot check ends the job `bot_check`;
+  - after a contracted repair it stays `request_rejected`, with the class and signature carried on the job;
+  - either way, no expiry and 0 sign-ins.
+
+  `test_q6_barrons_guard_ft_body.py` stays as it is.
+- **`Z-W84-S2`, GRANTED and ruled in:** change 5 and plant (g). The path gains `lib/opal_data_harvest/publishers.py`.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
+**AMENDMENT 3 (issuer, 2026-09-30 ~19:0xZ) -- ruling on `Z-W84-S3` (BLOCKING): the pre-v0.10 test is updated; change 5 stands.**
+- **What fails:** `test_q6_barrons_guard_ft_body.py::test_logged_out_barrons_start_reauths_repairs_once_and_replays` pins a
+  third `/client` GET. That is the `check_auth` re-check after a barrons DataDome challenge, which PRD v0.10 forbids (a bot check
+  never leads to an account re-check or a sign-in). The test encodes the behaviour the contract now removes.
+- **Ruling:** GRANT `lib/opal_data_harvest/test_q6_barrons_guard_ft_body.py`, and update ONLY that test's expected HTTP log to
+  drop the `(1, '/client', 200)` re-check. Add a one-line comment citing PRD v0.10 `C-HV-TRUST-TOKEN` and `ac-1` change 5.
+  Every other assertion in the file stays byte-identical. Change 5 is NOT narrowed.
+- **AC3** is then graded as "no base-passing test fails, except this one test's single expected-log line, changed by this
+  amendment". The worker prints the diff of that test.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

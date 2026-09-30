@@ -745,6 +745,113 @@
     "spec_asserts": "RIV-b-1: silver types every row of every fund into address('bloomberg','etfs','silver','holdings','date=<report_date>', ...); AC2: silver for the newest date holds exactly each fund's capture row count.",
     "world_is": "In the real IDVZ-group captures of 2026-09-24/25/28/29 each fund has one row whose REPORT_DATE differs from the requested date (2026-07-31, 2025-12-31, 2025-11-26, 2026-08-17), and 2819 of 273045 rows across 501 captures have DATES != REPORT_DATE. Partitioning by the ROW's own report date would put those rows outside date=<D> and fail AC2's per-fund count, so silver partitions a fund's whole capture by that fund's claimed (modal) report date and keeps each row's own REPORT_DATE in the `report_date` column; on a tie the latest date is the mode.",
     "notes": "Gold readers (canonical_shape and the coverage cell) must not assume silver date=<D> implies report_date == D for every row: read the row's `report_date`. A fund with no parseable REPORT_DATE is skipped and counted, never given a guessed date."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "one_line": "Real DVD_HIST_ALL dates are not all dates: 191 records carry the literal string 'Payable Date =' and 13 carry 'Record Date =' in place of a date, so a date32 column cannot hold them as given.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".runtime/etfs-rivals-idvz-20260930/dividends.json (device-local, gitignored): per-field scan of all 4780 records, non-ISO values: ('Payable Date', 'Payable Date =') x191, ('Record Date', 'Record Date =') x13.",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py rows_from_responses and _date(); tests/test_e1_enrichment_bloomberg.py::test_rows_ratio_amount_and_status_rows."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-GOLD-MODEL G3 lists ex_date and pay_date as dates and the cell says nothing of a non-date value in a date field.",
+    "world_is": "In dividends.json (738 securities, 4780 records) Ex-Date and Declared Date parse on every record; Payable Date is 'Payable Date =' on 191 records and Record Date is 'Record Date =' on 13. enrichment_bloomberg.py types such a cell NULL and keeps the original text in G3 column date_anomalies, so nothing is lost.",
+    "notes": "date_anomalies is a column added beyond the C-GOLD-MODEL list; a consumer reading pay_date NULL should read date_anomalies before treating the payable date as absent."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S7",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "one_line": "The cell's cash drop (every non-cash security) and CRO~Z's pull script's CASHLIKE regex disagree on one identifier shape, so a security G1 keeps can be one dividends.json never requested.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Replayed the regex over the ids of the newest .runtime/etfs-rivals-idvz-20260930/daily capture: 30 matches = 29 Curncy + '9996651D US Equity'.",
+        "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/dividend_history_pull.py CASHLIKE; e-1.AC2.py cash = endswith Curncy.",
+        ".runtime/etfs-rivals-idvz-20260930/dividends.json (device-local, gitignored): no key starting '99966'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell and AC2: cash/currency securities are dropped and every other security sits in exactly one batch; dividends.json is the DVD_HIST_ALL pull of the universe.",
+    "world_is": "AC2 treats only '... Curncy' as cash (473 ids in the newest IDVZ capture -> 444 planned, 29 dropped). dividend_history_pull.py CASHLIKE also drops 'CASH|MONEY|MMF' substrings and '^\\d{7}[A-Z]? US Equity$', which matches '9996651D US Equity' in that capture; dividends.json has no key for it. The plan keeps it (AC2 requires it); the import cannot carry it.",
+    "notes": "Plan mode drops only ' Curncy'; the daily leg will ask Bloomberg about '9996651D US Equity' once G1 carries it. Whether it is a cash line is the issuer's call."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S8",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "one_line": "Of 4780 real dividend records, 1649 (34.5%) carry a type the cell does not map and are kept as unmapped:<raw>; the largest are Daily Accrual 1315, Interest on Capital 197, Income 60.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Counter over map_event_type of every record in .runtime/etfs-rivals-idvz-20260930/dividends.json (device-local, gitignored) run at this cut (cash_div 3032 + share-changing 99 + unmapped 1649 = 4780).",
+        "org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md:409 G3 event_type enum {cash_div, interest, split, bonus, spinoff, stock_div, rights}."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell maps cash dividends, splits, stock dividends, spinoffs, bonus and rights, and carries any other type as unmapped:<raw>; C-GOLD-MODEL's event_type enum also lists interest.",
+    "world_is": "Mapped: cash_div 3032, split 60, stock_div 18, spinoff 12, bonus 6, rights 3. Unmapped, 13 raw types, 1649 rows: Daily Accrual 1315, Interest on Capital 197, Income 60, Return of Capital 31, Memorial 10, Omitted 10, Partnership Dist 8, Distribution 8, Cancelled 6, Warrant 1, Capital Gains 1, Discontinued 1, Return Prem. 1. No raw type maps to interest.",
+    "notes": "G6 income reconciliation (RIV-g-4) will read these as unmapped, not as cash_div or interest; any wider mapping is a decision for the issuer or CTO, not this cell."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "publish_page.py is still a single-fund page, so replacing its BASG literal with universe.funds() needed a page-fund choice the order did not name; RIV-p-2 owns the grouped page.",
+    "spec_asserts": "RIV-u-1 step 4: replace the BASG literal in gold_canonical_shape.py, gold_trade_schedule.py and publish_page.py with the universe (funds with data in the input); BASG behaviour unchanged.",
+    "world_is": "gold_canonical_shape and gold_trade_schedule now keep every universe fund (trade inference runs per fund_ticker). publish_page and render build ONE fund's page (render titles it by ctx fund_ticker), so publish_page picks the first map fund with rows in the latest report, falls back to the issuer adapter's ticker (adapters.basg.FUND_TICKER, when in the map) when the input is empty, and records funds_in_input in the manifest. With several funds present the page shows one and the rest are named only in the manifest.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py _page_fund() and _load() at this worker's commit",
+        "data/etfs/scripts/rivalfunds/render.py:219-235 single-fund title and banner strings"
+      ]
+    },
+    "notes": "Behaviour for BASG input is unchanged (round-1 p-1.AC1 PASS). The multi-fund page is RIV-p-2's cell; its author should replace _page_fund, not build on it."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S7",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The map's fund_id (the ticker) is a different key space from canonical_shape.fund_id (the issuer's own fund id); a stage joining G0 to canonical_shape must join on ticker.",
+    "spec_asserts": "RIV-u-1: peer_groups.json carries one entry per (group, fund) with group_id, home_fund_id, fund_id, ticker; 'a fund in two groups appears once per group, with one fund_id'.",
+    "world_is": "The decomposition names no fund-id authority for Bloomberg-only funds, and the universe API (universe.funds/policy/role, and the u-1 checks) takes the ticker as the fund key, so peer_groups.json sets fund_id == ticker. canonical_shape.fund_id is carried unchanged from the issuer silver (r.get('fund_id'), the issuer's internal id, e.g. 9999 in the unit-test fixtures), so G0.fund_id will not equal canonical_shape.fund_id; fund_ticker is the shared key.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/peer_groups.json (fund_id == ticker on all 13 entries)",
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py build_rows: 'fund_id': r.get('fund_id') from the silver row",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/u-1.AC1.py: universe.role('SCHY','IDVZ'), universe.policy('IDVZ') take tickers"
+      ]
+    },
+    "notes": "Also: homes.py has no peer_group_map address function and is outside this order's paths, so gold_peer_group_map.py calls homes.address('rivalfunds','etfs','gold','peer_group_map',...) directly (builder output, rule 30)."
   }
 ]
 ```
