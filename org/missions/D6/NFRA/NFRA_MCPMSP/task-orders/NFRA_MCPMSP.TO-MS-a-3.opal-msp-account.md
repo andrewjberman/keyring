@@ -46,6 +46,26 @@ after: no `Opal_MSP` user, no `C:\opal_runtime_msp\state`, no credential file. T
    issuer drains it. File one OBSERVATION row. Then STOP and report: the account act (items 1-3) is Andrew's elevated
    re-run, after which you continue with AC1/AC2 when the issuer hands the order back.
 
+**AMENDMENT 2 (issuer, 2026-09-30) -- item 0b, the boundary verifier's run-as route.** After item 0, Andrew's elevated
+run provisioned `Opal_MSP` (AC1 PASS on the issuer's run: exists, enabled, admin=0, codex=0, Opal_Agent unchanged).
+AC2 then read `BOUNDARY: BREACH probe=ERROR:Connecting to remote server localhost failed ...`: `verify-boundary.ps1`
+runs both probes with `Invoke-Command -ComputerName localhost -Credential` (`:107`, `:112`), which needs WinRM (not
+enabled on this box) and, for a non-admin account, Remote Management Users membership -- a security change this project
+will not make. It also labels an inability to RUN as the account a `BREACH`, which is false. The sibling
+`launcher.ps1:100-102` already runs as the account with `Start-Process -Credential ... -LoadUserProfile`.
+0b. In `opal/runtime/provision/verify-boundary.ps1` only:
+   - run each probe as the account with `Start-Process -FilePath "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
+     -Credential $credential -LoadUserProfile -WorkingDirectory <state_dir> -Wait -PassThru` (the account cannot open
+     the operator's own current directory -- measured: "The directory name is invalid"), each probe writing its one
+     result token to a file in `state_dir` that the verifier then reads and deletes;
+   - an inability to START the process as the account (any launch exception, a missing result file, a non-zero exit)
+     prints `BOUNDARY: CANNOT-RUN-AS-ACCOUNT <short reason>` and exits 5 -- never `BREACH`;
+   - `DENIED-OK` / `BREACH` keep their meanings (probe DENIED and state OK / probe ALLOWED), unchanged.
+   Keep every other behaviour. Re-run MS-t-3's AC2 (default config still plans `Opal_Agent`). Commit in the nested repo
+   naming NFRA_OPALAI OA-t-2/OA-t-3. **You cannot run the real verifier from your shell** (measured: this harness's
+   shell gets "Access is denied" on any run-as-another-user launch); the real AC2 run is Andrew's, in his window, after
+   the issuer drains your commit. Then STOP and report.
+
 ## 2. BOUNDS
 
 1. One local account and its two directories and ACLs, by the script. `Opal_Agent`, its directories and its credential
@@ -57,6 +77,7 @@ after: no `Opal_MSP` user, no `C:\opal_runtime_msp\state`, no credential file. T
 
 <paths>
 opal_ai/opal/runtime/provision/provision-account.ps1
+opal_ai/opal/runtime/provision/verify-boundary.ps1
 org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~4/**
 org/missions/D6/NFRA/NFRA_MCPMSP/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
@@ -87,6 +108,11 @@ opal_ai gitlink). G-ADMIN is Andrew's; G-PUSH for the launch gate is `0.0.0_AB_M
 **AMENDMENT 1 (issuer):** item 0 -- Andrew's elevated run of provision-account.ps1 failed at parameter binding (the
 86-character `-Description` literal, pre-existing since OA-t-2; limit 48); nothing was created (measured). The script
 path is granted for that one literal. Graded by: no gate limb grades a modification's criteria.
+
+**AMENDMENT 2 (issuer):** item 0b -- `Opal_MSP` provisioned by Andrew (AC1 PASS, issuer's run); AC2's verifier used
+WinRM (`Invoke-Command -ComputerName localhost`), not enabled, and mislabelled the launch failure BREACH. It moves to
+the launcher's `Start-Process -Credential` route with an explicit CANNOT-RUN-AS-ACCOUNT outcome. The issuer's own
+shell measured "Access is denied" on every run-as launch, so AC2's real run is Andrew's. Graded by: no gate limb.
 
 <status>staged</status>
 <round>1</round>
