@@ -13237,3 +13237,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No cell is cut. If a future contract version routes either operation, the pin CONSUMER_SMOKE_ENTRIES and the operation-map coverage test fail loudly and the pair is added then."
 }
 ```
+
+
+## IRPT_BCKEND-W96-S1 -- allowedFirmIds of an unspecified type fails closed in allowed_firm_ids()
+
+```json
+{
+  "id": "IRPT_BCKEND-W96-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~96",
+  "surfaced_at": "2026-09-30T15:00:00Z",
+  "one_line": "allowed_firm_ids() fails closed on an allowedFirmIds value that is neither a string nor a list/set: the order named only the string and list forms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py allowed_firm_ids(): a DynamoDB SS/NS set is accepted as an iterable, and any other type (number, map, bool) yields an empty list, so decide() refuses every data_firm with ACTOR_FIRM_NOT_ALLOWED. TO-IB-yr-293 says only 'comma-separated string is split ... a list is taken as-is'; canonical_profile_reads decodes DynamoDB L to list and SS to set, so a non-string non-list value is reachable."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-yr-293 part 2: the helper returns None for absent/ALL, else a split string or a list as-is; no other value type is specified.",
+  "world_is": "A restriction attribute the reader cannot interpret restricts everything (fail closed) rather than reading as unrestricted. Not exercised by the checks; no live row carries such a value (no row carries the attribute yet). Reversible by editing the one else-branch if the CTO wants a different rule."
+}
+```
