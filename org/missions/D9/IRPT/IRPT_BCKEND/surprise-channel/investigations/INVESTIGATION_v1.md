@@ -13292,3 +13292,35 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "RESOLUTION TAKEN, not blocking: no test weakened; suite 319 passed and the census unchanged after the change. Cost: the fallback module now imports lib/opal_naming at load, which the Holdings closure already carries (holdings_snapshot imports it at module level)."
 }
 ```
+
+
+## IRPT_BCKEND-S235 -- the Schwab silver positions for trading day 2026-09-29 had not landed by 13:3xZ on 09-30 (four hours past the measured ~09:46Z landing), so the 49F holdings-performance scheduled fire refused ABSENT and the 49F re-switch ledger's A1 leg cannot close on a scheduled partition today
+
+```json
+{
+  "id": "IRPT_BCKEND-S235",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-30T13:40:00Z",
+  "one_line": "opal-data-assets schwab/08335338/silver/dim_position/date=2026-09-29/ is ABSENT at 2026-09-30 13:3xZ; every earlier trading day's partition landed the next calendar morning at ~09:46Z (date=2026-09-28 at 09-29 09:46:44Z, 09-25 at 09-26 09:46:37Z, 09-24 at 09-25 09:46:39Z). The 11:30Z scheduled fire of irpt-holdings-performance-lambda (RequestId 666abcf2-b8f0-4b77-a655-190a2901b2ee) computed date=2026-09-29 and refused: '2026-09-29 ABSENT: no schwab/08335338/silver/dim_position/date=2026-09-29/'. The 49F holdings gold's newest partition stays date=2026-09-28 (written ad hoc 09-29 14:45Z), so no SCHEDULED fire has yet produced a partition since the r3 re-switch and ledger irpt-adapter-holdings-gold-49f-r3-20260929 leg A1 stays OPEN (past its 8 h window).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (placement: the Schwab silver conversion's owner is not named in this channel; data/assets/scripts/silver/schwab_conversion.py is the producer, its trigger and lane are the AE ingest per the 49-schwab-conv skill; ~P holds only the blocked A1 leg)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 opal-data-assets prefix schwab/08335338/silver/dim_position/date=2026-09-2 at 13:3xZ 09-30: 6 objects, dates 09-21..09-25 and 09-28, LastModified 09-22 09:46:37Z, 09-23 09:46:42Z, 09-24 09:46:40Z, 09-25 09:46:39Z, 09-26 09:46:37Z, 09-29 09:46:44Z; no date=2026-09-29",
+      "CloudWatch /aws/lambda/irpt-holdings-performance-lambda 2026-09-30 11:30:11Z: 'computing date=2026-09-29 upload=True' then '2026-09-29 ABSENT: no schwab/08335338/silver/dim_position/date=2026-09-29/ -- the day-t holdings partition is not present, so no day-t price exists'; REPORT Duration 779.98 ms",
+      "lib/trading_calendar.py at 13:35Z: expected_last_trading_day(2026-09-30) = 2026-09-30, prev_trading_day = 2026-09-29 (a trading day; the handler's target), so the absence is not a calendar artifact",
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf comment block: the declared silver lands the NEXT CALENDAR DAY at ~09:46 UTC, measured 2026-09-29 from the live objects; the 07:30 America/New_York fire is placed 1h44m past that worst case",
+      "comp-freshness artifact s3://opal-data-assets/schwab/08335338/silver/dim_position/: PASS at 27.9 h against a DEFAULT 48 h daily threshold (no cadence config entry for this prefix), so the freshness gate does not see a 4-hour miss on a feed that lands at a fixed hour",
+      "s3api list-objects-v2 opal-data-49financial prefix irpt/49financial/gold/holdings_performance_daily/: 558 partitions, newest date=2026-09-28 LastModified 2026-09-29T14:45:04Z (ad hoc), date=2026-09-22..25 all rewritten 09-29 09:25Z (the S205 re-emit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The 49F Schwab silver for trading day T lands at ~09:46Z on T+1 (schedule.tf's measured basis), so the 07:30 ET scheduled fire of the holdings-performance producer always finds day T's partition; the r3 ledger's A1 leg closes on a scheduled partition after the first fire following the re-switch.",
+  "world_is": "For T = 2026-09-29 the silver had not landed 3h44m after its usual hour, the fire refused correctly (no guess, no stale read), and the served 49F gold is unchanged. Nothing is broken on the producer's side; the upstream silver landing is late or missed and its cause is not read here (off-task for this seat). NOT MEASURED: whether the Schwab source files for 09-29 reached OneDrive/S3 (the 49-schwab-conv ingest's input) and whether the conversion ran and failed or never ran. NOT CLAIMED: staleness under the freshness gate (it reads PASS); the claim is a departure from the feed's own measured hour.",
+  "notes": "Filed off-task and left as a row, no halt-and-investigate. A1 of irpt-adapter-holdings-gold-49f-r3-20260929 waits for the next scheduled fire that finds its silver (tomorrow 11:30Z computes 09-30 if the 09-30 silver lands, and 09-29 is then a gap the producer's day math never revisits -- the second thing the owner should know). The freshness config gap (no cadence entry; default 48 h) is a finding for comp-freshness's owner, not a monitor to build."
+}
+```
