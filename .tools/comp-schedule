@@ -333,42 +333,113 @@ def _owner_from_condition(cond):
     return m.group(1) if m else "UNNAMED"
 
 
+_LEDGER_REL = "org/critical_paths/.open_deploys"
+
+
+def _ledger_names(names):
+    # A DOT-PREFIXED file here is the ledger tool's own STATE (.unindexed_red_state.json),
+    # not a deploy entry. Counting it invented a gate with no owner and no discharge -- found
+    # by running this tool against live data, which is why it was run before it was trusted.
+    return sorted(x for x in names if x.endswith(".json") and not x.startswith("."))
+
+
+def _linked_worktrees():
+    """[(path, head_sha)] of every LINKED worktree (the main checkout excluded). During a WORKER deploy the entry
+    sits on the worker's branch until the drain, so the shared tree alone is not evidence (CLAUDE.md NEVER-2)."""
+    r = _git("worktree", "list", "--porcelain")
+    out, cur = [], {}
+    for ln in (r.stdout or "").splitlines() + [""]:
+        if not ln:
+            if cur.get("worktree") and cur.get("HEAD"):
+                out.append((cur["worktree"], cur["HEAD"]))
+            cur = {}
+            continue
+        k, _, v = ln.partition(" ")
+        cur[k] = v
+    main = os.path.normcase(os.path.normpath(repo_root()))
+    return [(p, h) for p, h in out if os.path.normcase(os.path.normpath(p)) != main]
+
+
+def _worktree_entry_is_stale(head, rel):
+    """RESAPP Z-S308 rule (3.0.0_SA_CVO~Z ADJUDICATION_v60 s.3): an entry a worktree holds but CLOUD lacks is STALE
+    when CLOUD deleted it in a commit that is not an ancestor of the tree's HEAD -- unless the tree itself modified
+    the file since its merge-base with CLOUD (then it is that tree's live entry)."""
+    mb = (_git("merge-base", head, "HEAD").stdout or "").strip()
+    if not mb:
+        return False
+    if (_git("diff", "--name-only", mb, head, "--", rel).stdout or "").strip():
+        return False
+    return bool((_git("log", "--diff-filter=D", "--format=%H", "%s..HEAD" % mb, "--", rel).stdout or "").strip())
+
+
 def c2_ledger(clock=None):
-    """OPEN DEPLOY LEDGER -- file presence IS the armedness, and the entry names its own author."""
+    """OPEN DEPLOY LEDGER -- file presence IS the armedness, and the entry names its own author.
+    Read on EVERY worktree: the shared tree from disk (uncommitted entries count), each linked worktree at its HEAD
+    via ls-tree; union by entry name, minus Z-S308 stale copies; the per-tree denominator is printed in the note."""
     c = Carrier("C2", "DEPLOY-LEDGER", "DECIDABLE")
     d = os.path.join(repo_root(), "org", "critical_paths", ".open_deploys")
     if not os.path.isdir(d):
         c.unreadable = "org/critical_paths/.open_deploys/ not present"
         return c
     try:
-        # A DOT-PREFIXED file here is the ledger tool's own STATE (.unindexed_red_state.json),
-        # not a deploy entry. Counting it invented a gate with no owner and no discharge -- found
-        # by running this tool against live data, which is why it was run before it was trusted.
-        names = sorted(x for x in os.listdir(d)
-                       if x.endswith(".json") and not x.startswith("."))
+        main_names = _ledger_names(os.listdir(d))
     except OSError as e:
         c.unreadable = "listdir failed: %s" % type(e).__name__
         return c
+    # entry name -> {"src": ("disk", None) | ("tree", (path, head)), "trees": [labels]}
+    entries = {n: {"src": ("disk", None), "trees": ["shared"]} for n in main_names}
+    per_tree = ["shared=%d" % len(main_names)]
+    stale = 0
+    by_head = {}
+    for path, head in _linked_worktrees():
+        if _budget_is_spent(clock):
+            break
+        if head not in by_head:
+            r = subprocess.run(["git", "-C", repo_root(), "ls-tree", "--name-only", head, _LEDGER_REL + "/"],
+                               capture_output=True, text=True)
+            by_head[head] = _ledger_names(os.path.basename(x) for x in (r.stdout or "").splitlines())
+        names = by_head[head]
+        label = os.path.basename(path.rstrip("/\\"))
+        per_tree.append("%s=%d" % (label, len(names)))
+        for n in names:
+            if n in entries:
+                if label not in entries[n]["trees"]:
+                    entries[n]["trees"].append(label)
+                continue
+            if _worktree_entry_is_stale(head, "%s/%s" % (_LEDGER_REL, n)):
+                stale += 1
+                continue
+            entries[n] = {"src": ("tree", (path, head)), "trees": [label]}
+    names = sorted(entries)
     c.denominator = len(names)
     for index, n in enumerate(names):
         if _budget_is_spent(clock):
             return _budget_cut(c, index, len(names), "ledger entries", c.work_cursor)
-        rel = "org/critical_paths/.open_deploys/" + n
+        rel = "%s/%s" % (_LEDGER_REL, n)
+        kind, where = entries[n]["src"]
+        ev = [rel] if kind == "disk" else ["%s@%s:%s" % (os.path.basename(where[0].rstrip("/\\")), where[1][:10], rel)]
+        if len(entries[n]["trees"]) > 1:
+            ev.append("also in: " + ",".join(t for t in entries[n]["trees"] if t != entries[n]["trees"][0]))
         try:
-            j = json.load(open(os.path.join(d, n), encoding="utf-8"))
+            if kind == "disk":
+                j = json.load(open(os.path.join(d, n), encoding="utf-8"))
+            else:
+                j = json.loads(_git("show", "%s:%s" % (where[1], rel)).stdout or "")
         except Exception as e:
             c.gates.append({"owner": "UNKNOWN", "discharge": "UNPARSEABLE ledger entry (%s)"
                             % type(e).__name__, "last_verified": _last_touched(rel),
-                            "evidence": [rel], "carrier": "C2"})
+                            "evidence": ev, "carrier": "C2"})
             c.work_cursor = rel
             continue
         c.gates.append({"owner": j.get("author") or "UNNAMED",
-                        "discharge": "ledger entry OPEN, status=%s" % (j.get("status") or "?"),
+                        "discharge": "ledger entry OPEN, status=%s%s" % (
+                            j.get("status") or "?", "" if kind == "disk" else " (worktree-only, not on the shared tree)"),
                         "last_verified": (j.get("held_at") or j.get("opened_at") or "UNKNOWN")[:10],
-                        "evidence": [rel], "carrier": "C2"})
+                        "evidence": ev, "carrier": "C2"})
         c.work_cursor = rel
     c.work_scanned, c.work_total, c.work_unit = len(names), len(names), "ledger entries"
-    c.note = "%d open deploy-ledger entry(ies); OPEN file = ARMED gate" % len(names)
+    c.note = ("%d open deploy-ledger entry(ies) across %d tree(s) (union by name; %d stale worktree cop(ies) dropped "
+              "per Z-S308); per tree: %s; OPEN file = ARMED gate" % (len(names), len(per_tree), stale, ", ".join(per_tree)))
     return c
 
 
