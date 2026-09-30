@@ -4,7 +4,7 @@
  "directive": "D9",
  "macro_code": "IRPT",
  "fabric": "laptop",
- "dep_stage": "DECOMP",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "The client reporting dashboard: Opal-shape reporting gold with total return on a conservative GIPS methodology, a precomputed served series per account, and the dashboard views that read it",
  "generated_from": "org/missions/D9/IRPT/IRPT_DASHBD/project.json",
