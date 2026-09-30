@@ -380,7 +380,9 @@ at delivery.
 are buildable and testable before them, cell 0 with an outside test account under Andrew's word. The audit coverage of
 the new tool (row NFRA_OPALAI-Z-W2-S2, `app/audit.py` `_ARGS_ALLOWLIST`) is decomposed at L5.
 
-**Enrichment rounds,** in the brief's order: Cottonwood and isolation (FWD-2), the sender gate in full (FWD-3), the
+**Enrichment rounds,** in the brief's order, with one precondition placed first: the gateway identity's
+`opal-data-portal-v2` zero-read (an Opal-internal reader role for internal askers, under never-widen sign-off; C5 v0.3
+and Andrew's "Yes, rec approved"), which must land before Cottonwood goes live; then Cottonwood and isolation (FWD-2), the sender gate in full (FWD-3), the
 onboarding queue (FWD-4), replay (FWD-5), the daily sample and page (FWD-6, FWD-7), firm stop and spend (FWD-8), then
 production: the bot (FWD-9), the partner ceiling (FWD-10) and the go-live bar as a standing check (FWD-11).
 
