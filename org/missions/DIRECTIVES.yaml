@@ -289,7 +289,7 @@ directives:
   D7:
     title: "Opal Ticketing"
     directive: "docs/architecture/D7_TICKETING_INTAKE_PRD.md"
-    placement: "SITEZ -- RESTATED 2026-08-31 for the CURRENT member set. Andrew-direct ~23:15Z at the site-Z
+    placement: "LAPTOP -- MOVED 2026-09-30 from SITEZ by Andrew-direct ~03:xxZ at the 4.0.0_SA_CRO terminal (laptop), VERBATIM: \"Yes, we are going to move D7 over to the laptop also, tell CTO that, because we may need to get involved with some of those functions in the process here, namely building in an \"attachment\" function to ticket submission.\" Record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_03xxZ_TRNSPT_REQUESTER_MAY_CLAIM_OWN_TICKET_D7_MOVES_TO_LAPTOP_ATTACHMENTS.md @1dcc313303; relayed by 1.0.0_SA_CTO msg 103125; register act by 0.0.0_AB_MSTR. SUPERSEDES the SITEZ placement preserved verbatim below; a reader takes the latest. SCOPE: this word names D7 ONLY -- no other directive moves with it. Placement attaches to the DIRECTIVE (its one member OPAL_TICKET_VNEXT moves with it). CREATES ZERO SPAWNS. --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED --- SITEZ -- RESTATED 2026-08-31 for the CURRENT member set. Andrew-direct ~23:15Z at the site-Z
       terminal, verbatim \"All recs approved\" on 1.0.0_SA_CTO~Z's /open-calls CALL 1; authority @efcfa8cc5b.
       OPAL_TICKET_VNEXT -- this directive's ONLY member -- is SITEZ, whole. ⛔ THE SPLIT BELOW IS HISTORY AND
       DOES NOT APPLY TO IT: it describes the PRIOR ticketing workstreams (TO-A/B/C/D), none of which is in the
