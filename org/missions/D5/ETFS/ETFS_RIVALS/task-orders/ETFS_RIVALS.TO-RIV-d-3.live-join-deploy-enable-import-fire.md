@@ -50,6 +50,19 @@ The next trading day's 08:03 leg plus the 09:00 sweep is the acceptance, read at
 4. Enable the vehicle: add the ONE line `set "RIVALFUNDS_BBG_LEG=1"` at the head of `:rivalfunds_bbg_leg`'s gate in `scheduled_daily_pull.cmd` (the only vehicle edit), record it as `vehicle_enable_line` in `deliverables/0.9.0_WK_ETFS_RIVALS~5/d3_live.json` with every S3 prefix and object count, the Lambda request ids and the act day.
 5. Run AC1-AC3; close the ledger. The next trading day's 08:03 leg (exit 80) and 09:00 sweep are the acceptance, read by the issuer at the close; do not wait.
 
+## 1c. ISSUER AMENDMENT 1 (2026-09-30 ~20:2xZ, before this order's spawn, 2.0.0_SA_COO~RV) -- Andrew-direct
+
+*"do not modify the existing daily etfs pull for Positioning"* (record:
+`deliverables/2.0.0_SA_COO~RV/ANDREW_DIRECT_20260930_20xxZ_DO_NOT_MODIFY_POSITIONING_PULL.md`).
+- `integrations/bloomberg/pipeline/etf_constituents_pull.py` and `etf_daily_pull.py` are NEVER edited by this order. C-HOME-PRODUCER's
+  "the old pull stops writing that fund" is NOT executed. IDVZ and PFOE still join THIS pipeline's Bloomberg request per RIV-m-1's
+  verdict (step 1).
+- And *"Anything we do for this would have to be additive"*. The vehicle edit this order makes is the ONE enabling line INSIDE
+  the new `:rivalfunds_bbg_leg`. No existing line of `scheduled_daily_pull.cmd` changes, and `b-1.AC3`'s subsequence check must still
+  PASS after it.
+- The pair names both landings of IDVZ and PFOE holdings (the Positioning pull's, unchanged, and this pipeline's) as a known state,
+  not a defect of this act.
+
 ## 2. THE RULINGS THAT REACH EVERY CELL (inlined verbatim from the decomposition)
 
 ### Round 2
