@@ -3788,6 +3788,50 @@ carries none.
     },
     "spec_asserts": "R-8: every gateway release is NARROW, cut at the deployed commit plus this project's own changes.",
     "world_is": "The narrow cut holds; a release cut from CLOUD instead would also ship the MCPMSP, ETFS_RIVALS and NFRA_OPALAI gateway commits."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T12:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 A3 (S7 delta): the Schwab loaders read each ExternalId as an env VALUE and name no ExternalId-source key, so A3's 'no secret value in .env' needed a small code addition: aws_roles.environ_with_external_ids resolves an unset SCHWAB_*_EXTERNAL_ID from the secret named by the new env key SCHWAB_EXTERNAL_IDS_SECRET_ID.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Code at the live base 093fc247c6 and in the release: aws_roles.py:78-79 ROLE_ARN_VAR / EXTERNAL_ID_VAR name SCHWAB_READER_EXTERNAL_ID and SCHWAB_CATALOG_EXTERNAL_ID; role_config() (aws_roles.py:132-134) refuses a missing or malformed value; no loader reads a secret for them. Only SCHWAB_ACCOUNT_REF_SECRET_ID (account_ref.py:56) is a secret-id key.",
+        "The alternative the deploy script's own pattern allows (fetch the secret on the box and printf the VALUE into .env, as FERNET_KEY and the bearers are) puts an ExternalId VALUE in .env, which A3 bars; it was not taken.",
+        "Change, release 9def06ff2f (deploy-only 0d3e953c76): aws_roles.py +40 lines (constants EXTERNAL_IDS_SECRET_VAR / EXTERNAL_ID_FIELD = data_read, catalog_read; environ_with_external_ids, a COPY of the environment, env value wins, nothing written to os.environ, error text carries no value) and integration.py build_default_service passes that copy to role_configs (1 line). The secret is read once at service construction through base.SecretsCredential, the Gateway role's resource-policy grant (schwab_reader_iam.tf:112-126). tests/test_schwab_host_inputs.py: 7 passed.",
+        "Proof: probes/inprocess_schwab_host_inputs_MX-r-6_A3.txt in deliverables/0.9.0_WK_NFRA_MCPINDEX~19: with the release's .env shape and the operator's read credentials build_default_service() returns a SchwabService; without the keys it raises ContractUnavailable."
+      ]
+    },
+    "spec_asserts": "A3: the release also ships the host .env keys the service's own loaders name (contract path, two reader-role ARNs, the ExternalId source, the account_ref secret id), taking the key names from the code; no secret VALUE in the repo, artifact or .env.",
+    "world_is": "The code names no ExternalId-source key, so one was added (SCHWAB_EXTERNAL_IDS_SECRET_ID) with the 40-line resolver above, on the never-merged rel-/dep- branches only. If the issuer would rather have the on-box value route, the .env printf line and aws_roles.py are the two places to change; nothing is deployed.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T12:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 A3 record: the contract ships as a byte copy in the gateway's own deploy/ root (artifact 79 -> 80 files), cut from the release tree's contract (base 093fc247c6 + dim_transaction), which is OLDER than CLOUD's org/standards copy; a later release cut from CLOUD must refresh the copy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Why a copy inside infra/aws/ec2/opal-gateway: the deploy-only tree is CLOUD with only the gateway dir replaced, and CLOUD's org/standards/NFRA_OPLGTW_CONTRACT.json lacks step 0's dim_transaction (it drains later); the gateway tree object (c8e4449bcf57e3357371dbf9bb41c3b6b1cb45ad, release = deploy-only) then fully determines the artifact, and the tar roots need no change.",
+        "git diff CLOUD 093fc247c6 -- org/standards/NFRA_OPLGTW_CONTRACT.json: 2 insertions, 3 deletions (CLOUD carries the tenant_firm POLICY row text of NFRA_MCPMSP C2, absent at the live base). The shipped copy equals the release tree's org/standards file (cmp, tests/test_schwab_host_inputs.py::test_shipped_contract_equals_the_standard).",
+        "Also observed (no cause found, not caused by this delta): tests/test_portal_index.py::test_portal_tools_catalog_refs_resolve failed in the release tree and on the live tree in PHASE A and passes in this run; the other 3 of the PHASE A 4 still fail (test_ogz2_ac06, test_ogz1_ac05, test_ogz1_ac08), on the live tree too."
+      ]
+    },
+    "spec_asserts": "A3 allows the contract file into the artifact 'or onto the host by the deploy script'.",
+    "world_is": "Shipped as a copy in deploy/, byte-equal to the release tree's contract. The test that pins the copy to org/standards lives on the never-merged rel-/dep- branches and would fail against CLOUD's newer contract, which is the signal to refresh the copy at the next release cut."
   }
 ]
 ```
