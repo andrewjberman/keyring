@@ -2705,6 +2705,69 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The pre-existing test encodes the superseded per-field sign behaviour; the ruled reader returns POSITIVE for value 1.0. y5_AC1 passes (plain_disagree 0 convention_disagree 0).",
     "notes": "Filed, not fixed: the line-69 assertion should expect POSITIVE (or the file be added to paths). Reader change and new test are in place.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S6",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:00:00Z",
+    "one_line": "lib/research/peers/universe.py builds its model-block pool index by taking the raw store segment as the identity (model_block_pool_index: k[len(PREFIX):].rsplit('/', 2)[0], :318), and lib/research/corpus/dossier.py reads derived/model_block/<raw security_key>/ (:927, :966); both are outside CRPS-z-4's <paths> and the z4 census does not name them, so after the round-25 move to encoded segments the peers engine's pool-first read misses BP/_LN and NG/_LN and dossier lists an empty raw prefix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/peers/universe.py:312-318 (index key = raw segment) and :331-332 (index.get(security_key)); lib/research/corpus/dossier.py:927 and :966 (base = MODEL_BLOCK_POOL_PREFIX + raw security_key + '/'); worker branch wk-crps24-4: engine._load_model_block now reads pool_index by the raw identity, unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-z-4: every per-security path, writers and readers, is built through slash_safe_key so no reader serves between the two forms at the round-25 move.",
+    "world_is": "Two reader files that touch derived/model_block/ per security sit outside the order's <paths>: peers/universe.py (index keyed by the stored segment, no decode) and corpus/dossier.py (raw key interpolation). Slash-free keys are unaffected; the two raw-slash names (BP/_LN, NG/_LN, BRK/B where live) are.",
+    "notes": "Filed, not fixed (outside paths). Fix for round 25 alongside the move: universe.model_block_pool_index decodes a slash-free segment with crosswalk.security_key_from_slash_safe (keep a raw-slash segment as found), and dossier.py builds base with crosswalk.slash_safe_key. lib/research/filings/fetch.py:472 pool_key is a label only (never dereferenced), left raw.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:00:00Z",
+    "one_line": "The z4 census reads 24 functions but under-reports the per-security path sites: it matches string literals only, so module-constant sites (scoped_amgt read_pool_object/_read_model_block_pool/read_model_block_versions/ledger read, enrich.management_key, engine.pool_key, judge.pool_key, run_scores _latest_model_block/_latest_peer_set/pool_key) were invisible to it; the worker routed those constant-based sites through slash_safe_key beyond the census list, and marked 10 census functions that build no path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "z4_check.py TEMPLATE matches literals under ast.Constant; constants like MODEL_BLOCK_POOL_PREFIX/PEERS_PREFIX/MANAGEMENT_PREFIX/POSTURE_PREFIX/SCORES_PREFIX are module-level names so their users never match; worker diff on wk-crps24-4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's census of 24 is the population of raw per-security path builders.",
+    "world_is": "The census is a literal-based lower bound; AC1 reaching raw 0 does not prove no raw per-security path remains (see AMGT_CORPUS-Z-W4-S6 for two out-of-path readers it never saw).",
+    "notes": "Recorded so the drain reviewer reads AC1 as a floor. The 10 markers (24 census functions = 14 routed + 10 marked) are in enrich.py (4), engine.py (3: resolve_subject, run_batch, main), run_scores._robustness_record, crosswalk._record_for and model_block_pull._model_block_keys_in_store, each with its reason on the marker line.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:30:00Z",
+    "one_line": "Running the integrations/bloomberg/research suite in a worktree rewrites the tracked file integrations/bloomberg/research/field_map.json (1013 insertions, 110 deletions after one full run), a file outside this order's paths; the worker restored it byte-for-byte from HEAD before committing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --stat after 'pytest integrations/bloomberg/research' (170 passed): field_map.json | 1123 +++--; restored with 'git show HEAD:<path>' and git status then clean for that path"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The repo-wide suites the issuer runs at the drain leave the tree clean.",
+    "world_is": "At least one test in integrations/bloomberg/research/tests writes the tracked field_map.json as a side effect, so a drain that runs the suite before its commit gate carries an unowned 1123-line diff.",
+    "notes": "Filed, not fixed (outside paths). The AC2 suites named by z4_AC2.sh do not trigger it.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
