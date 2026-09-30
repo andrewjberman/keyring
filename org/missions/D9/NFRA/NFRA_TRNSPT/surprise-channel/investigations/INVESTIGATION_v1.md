@@ -144,6 +144,50 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
  "spec_asserts": "TO-TR-t1 item 2: read_meeting_transcript(meeting_id, transcript_id, fmt) -> bytes, fmt in vtt | metadata (spec 4.3).",
  "world_is": "Built as the order states (fmt, bytes) against a fixture; the stub names the spec's tool and Graph route (list: GET /me/onlineMeetings/{meeting_id}/transcripts; read: GET .../transcripts/{transcript_id}/content). When S04 lands, the real GatewayTransport must page by offset/limit, reassemble, check sha256, and the source of the metadata VTT is unspecified.",
  "notes": "Class and disposition are the reporter's form call; whether the spec or the order's shape moves is not this worker's."
+},
+{
+ "id": "NFRA_TRNSPT-W1-S4",
+ "project": "NFRA_TRNSPT",
+ "fabric": "laptop",
+ "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+ "surfaced_at": "2026-09-30T16:20:00Z",
+ "one_line": "lib.opal_naming.name() refuses the kinds log-group and secret (and rule), so NAMES.json carries 4 rows (lambda, role, policy, cadence-named EventBridge rule), not the 6 the order lists; the log group and the secret are named by their own grammars and graded by grade().",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python: name('teams','global','transcripts-pull','log-group') -> \"ValueError: kind 'log-group' is neither a NAMING_SCHEMA.json kind nor a cadence\"; the same refusal text for 'secret' and 'rule' (2026-09-30 ~16:0xZ, wk_nfra_trnspt_1 @9fc353133a)",
+   "org/standards/NAMING_SCHEMA.json: kind.values has no log-group/secret/rule; kind.closed_at_l4 says 'secret was DROPPED: secrets keep their own slash-path grammar'; resource.last_slot.EVENT_RULE = cadence; log_group.grammar = /aws/{service}/{resource-name}, derived",
+   "name('teams','global','transcripts-pull','hourly') -> teams-global-transcripts-pull-hourly; grade('teams/global/gateway-token','SECRET') -> CONFORMANT; grade('/aws/lambda/teams-global-transcripts-pull-lambda','LOG_GROUP') -> CONFORMANT",
+   "org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R1_CHECKS/r1_names_check.py rebuilds every NAMES.json row with name() and would report NAMES-BAD on a log-group or secret row"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-TR-i1 build item 1: a NAMES.json row for the Lambda, its role, its policy, its log group, the EventBridge rule and the gateway-bearer secret, each computed with name(); a refused kind is replaced by the kind the builder admits.",
+ "world_is": "Rows: lambda, role, policy (kinds the builder admits) and the EventBridge rule with kind 'hourly' (the cadence the builder admits for an EVENT_RULE). The log group /aws/lambda/teams-global-transcripts-pull-lambda (derived from the lambda name) and the secret teams/global/gateway-token are literals in pull.tf with no NAMES row, because no kind the builder admits fits them and a row would fail the issuer's check.",
+ "notes": "The check therefore proves 4 of 6 names; the other two are proved by grade(), whose output is recorded above."
+},
+{
+ "id": "NFRA_TRNSPT-W1-S5",
+ "project": "NFRA_TRNSPT",
+ "fabric": "laptop",
+ "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+ "surfaced_at": "2026-09-30T16:22:00Z",
+ "one_line": "The order says python3.12 and the layer pandas-pyarrow-layer:1, but that layer is py3.11-only, so pull.tf declares runtime python3.11.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/lambda/ci/lambda-layer-map.json layers.pandas-pyarrow-layer: python_version '3.11', description 'pandas + pyarrow for data processing (Python 3.11)', latest_version_arn ...:layer:pandas-pyarrow-layer:1",
+   "infra/aws/terraform/opal-assets/silver.tf (comment ahead of data.aws_lambda_layer_version.pandas_pyarrow): 'the mirror families run python3.11 -- pinned to pandas-pyarrow-layer (py3.11-only wheels)'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-TR-i1 build item 3: the Lambda is python3.12 with the layer pandas-pyarrow-layer:1.",
+ "world_is": "Built as runtime = python3.11 with the layer read by name via data.aws_lambda_layer_version (the estate's own form), so the two agree. Nothing in the packaged tree needs 3.12; the handler ran from the unzipped dist under local Python 3.12.10. Plan is 9 adds either way.",
+ "notes": "Whether the layer is rebuilt for 3.12 or the Lambda stays on 3.11 is not this worker's. Also of note: pull.py imports its siblings as top-level modules, so the handler imports gateway_client and land_bronze top-level too (the package-path copies define different Expired/Refused classes and pull would not catch them)."
 }
 ]
 ```
