@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-30",
   "registered_under_tree": "2026-09-30",
   "placement": "LAPTOP",
@@ -39,8 +39,8 @@
     "transcripts": "FWD-1..FWD-5 (Teams meeting transcripts); write surface: the transcripts source, silver and gold tables, and the pull job",
     "communications": "FWD-6..FWD-11 (market updates, investment feedback, the commentary drafter and its ticket); write surface: the market_update and analysis_commentary tables and the commentary Lambda"
   },
-  "blocking": "Not blocked at L3. L4 PRD next; the two workstreams take different ~lane COO instances so they hold disjoint write surfaces. Owned dependencies elsewhere: gateway tools (NFRA_OPLGTW, site Z), the IRPT READY hook (IRPT_BCKEND), the ticket type, attachment and requester-claim work (D7 OPAL_TICKET_VNEXT, now LAPTOP).",
+  "blocking": "Round 1 EXECUTING. Owned elsewhere and asked through the CTO's relay at L6: S04 transcript tools + a headless transcripts route, S05 stored-sign-in lifetime, S12 the three mail tools + a headless mail route (NFRA_OPLGTW, site Z); laptop worktrees wt-gw-f2/f3/int carry uncommitted mail-tool work by un-relaunched seats (row NFRA_TRNSPT-S1). Hops 1-2 of FWD-1 are exercised only after those land and TR-i-1 is applied under halves; hops 3-6 are exercised this round on the held Monday meeting. Round 2 asks: the IRPT READY hook (S18), the D7 ticket work (S20), the Kimi first call on Andrew's word after C-WIPE-GATE.",
   "fabric_ruling": "laptop: Andrew-direct 2026-09-30 (\"This fabric will own TRNSPT\"); D9 is LAPTOP as a whole since 2026-09-10 (DIRECTIVES.yaml), so no per-project exception exists or is needed. The gateway project NFRA_OPLGTW stays on site Z as a dependency.",
-  "phase": "L3 registered 2026-09-30 after Andrew confirmed the DONE WHEN lines of FWD-1..FWD-11 (L2 passed). L4 PRD in progress.",
+  "phase": "L6 ISSUED 2026-09-30 by 2.0.0_SA_COO~T: round 1 = the FWD-1 transcripts thread (TR-t-2, TR-t-1, TR-i-1 desired-only, TR-t-3, TR-t-4, TR-t-5) and the FWD-7 communications thread in test (TR-g-1, TR-b-1, TR-a-1, TR-w-1, TR-k-1, TR-q-1); 12 cells, 4 chains, 4 workers, cap 8. Decomposition decompositions/NFRA_TRNSPT_DECOMP.md. L4 PRD v0.1 @3a6e3dad13 ADMITTED (CVO half @12880e7f00; brief half auto).",
   "last_updated": "2026-09-30"
 }
