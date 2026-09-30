@@ -4293,6 +4293,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Fix would be a publishers.py guard (skip check_auth when the exception's attempt_class is bot_check); not done: outside <paths>."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~84",
+      "surfaced_at": "2026-09-30T18:40Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W84-S3",
+      "one_line": "AMENDMENT 2 change 5 makes test_q6_barrons_guard_ft_body.py::test_logged_out_barrons_start_reauths_repairs_once_and_replays fail (a base-passing test); the amendment says that file stays as it is and it is outside <paths>.",
+      "spec_asserts": "AMENDMENT 2: after a bot_check/unclassified refusal the publisher path makes no check_auth re-check; test_q6_barrons_guard_ft_body.py stays as it is; AC3: no test that passed at base d0bc0a79f0 fails.",
+      "world_is": "That test pins the http log [(0,/client,200),(1,/client,200),(1,/search,401),(1,/client,200),(2,/client,200),(2,/search,200)]; the third /client (gen 1, after the captcha-delivery 401 at /search) is the check_auth() re-check. With change 5 the 401 challenge body classes bot_check, check_auth is skipped, and the log is [(0,/client),(1,/client),(1,/search,401),(2,/client),(2,/search,200)]. AC3 after: 1 failed, 334 passed, 1 skipped. Change 5 is built as ruled; AC1 (18 passed) and AC2 (NETWORK CALLS MADE: 0) pass. Resolving needs the q6 expected log amended (outside <paths>) or change 5 narrowed so barrons keeps the re-check; both are the issuer's call.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_q6_barrons_guard_ft_body.py:335-339 @0e6347ffc7",
+          "lib/opal_data_harvest/publishers.py articles() except RequestRejected, branch wk-AMGT_HARVST-84"
+        ]
+      },
+      "notes": "No file outside <paths> edited."
     }
   ]
 ```
