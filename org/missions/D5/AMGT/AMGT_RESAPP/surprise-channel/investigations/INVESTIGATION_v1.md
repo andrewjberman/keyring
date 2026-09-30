@@ -16049,6 +16049,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "The COO half's EXPECTED OUTCOME: \"/thesis for ASML_NA_Equity: thesis_driver_chart reads SERVED, source 'filing', 3 points\"; the order's act (3) is the rewrite through analyze.reverify_stored_thesis_driver; and both halves make any criterion failing after the act the ROLLBACK trigger.",
   "world_is": "The rewrite reaches the filings analysis object and the served chart reads the D-1 document. They are two different objects holding two copies of thesis_driver, and only the first was written. AC2 was therefore unreachable by the specified act from the moment it was written -- a PREMISE defect, not a deploy defect. No act inside this order's <paths> and BOUNDS can close it: reaching the D-1 document is a code or producer change beyond the function's code, which BOUNDS 1 makes a REFUSAL.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. ROLLBACK WAS NOT EXECUTED, deliberately, and the reason is on the record in the NEVER-2 entry's V1 leg: the trigger is written for an act that went wrong, and this act did not. A code rollback to pVa+sgzj would destroy three verified outcomes (zz-5's names, zz-4's restamp, zz-1's write-path union and n-6's measured speed-up) and would not move AC2 one step, because AC2 does not depend on the code that would be rolled back. BOTH rollback routes are proven available and ready on the issuer's word: the code by re-applying VersionId lEaSg8QQxUuyYkDUCtNUElsfr5mbj83l, and the ASML object by copying VersionId Reu7PGvXpjg29Zm7npyvl2BrriBQDe06 back over the key (re-verified present at 92,524 B AFTER the write, so the copy-back is available right now). The transferable lesson for the next cut: a control that hands a function its input directly cannot certify that the served path will load that input -- the join is the claim."
+},
+{
+  "id": "AMGT_RESAPP-Z-S312",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T05:58:00Z",
+  "one_line": "Issuer attribution for AMGT_RESAPP-Z-S311: zz-8 AC2's false premise was the issuer's cut -- zz-6's AC1 handed thesis_driver_chart the re-verified driver in process and the zz-8 COO half predicted a SERVED chart from it, neither exercising the join to the D-1 drafting document the served /thesis reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer re-measure at CodeSha zHpr7FhS: zz_8_served.py --what chart -> 'ASML chart ABSENT source None points 0' (AC2 NO before and after the act).",
+      "round51/checks/zz_6_reverify.py calls scoped_amgt.thesis_driver_chart(driver, []) with the dry-run driver; NEVER_WIDEN_HALF_COO_ZZ8.md 'EXPECTED OUTCOME' names the chart SERVED on that basis."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "zz-8 COO half: /thesis for ASML reads thesis_driver_chart SERVED, source filing, 3 points after the rewrite.",
+  "world_is": "The chart reads ABSENT; the served driver is the D-1 drafting document's embedded copy (row Z-S311). A check that hands a component its input directly validates the component, never the served join.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. CTO msg 26943 (@fdd0074be3): rollback WAIVED for AC2 only; the ASML rewrite kept; round 52 cuts the D-1 drafting regeneration under its own pair, AC = the SERVED /thesis chart reads the 3 spanned points (a served-route read, never an in-process call with a handed input)."
 }
 ]
 ```
