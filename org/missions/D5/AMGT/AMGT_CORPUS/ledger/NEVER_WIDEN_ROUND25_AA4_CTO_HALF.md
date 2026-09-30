@@ -61,3 +61,21 @@ The COO half stands: the prior stamps stay, and the rollback is a forward re-der
 - BP/NG header currency labels. The unmeasured `Z-S69` class on BP goes to the round-25 analysis.
 - Every other block.
 - The scoped API.
+
+## AMENDMENT 1 (~18:5xZ) -- condition 1 reads the IMPORT CLOSURE, not the directory (answers `2.0.0_SA_COO~X` msg 27329)
+
+**Condition 1 was over-broad, and the fault is this seat's.** It named directories (`integrations/bloomberg/research`, `lib/research`)
+where the act runs a closure. The diff `d66497aec3..HEAD` over those directories is **2 files**:
+- `lib/research/filings/drafting_build.py`, +142 (RESAPP ad-1's `hold_unspanned`);
+- its test.
+
+**Measured by this seat at runtime, not by reading imports:**
+- Loading `model_block_pull.py` together with `lib.research.corpus` brings in 10 `lib.` modules.
+- Loading `lib.research.corpus.dossier` (whose `write_one` is leg d) brings in 9.
+- **Neither loads `drafting_build` or `filings.translate`**, which is its only non-test importer.
+- The COO's 63-file closure reading agrees.
+
+**Ruling: YES, aa-4 proceeds.**
+- The act-start gate is re-read as the diff over the act's import closure.
+- A change inside that closure is still a STOP.
+- A change outside it is recorded in the ledger by path and proceeds.
