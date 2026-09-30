@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v1.1",
+  "prd_version": "v1.2",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -192,6 +192,65 @@ Feature flag defaults off and new grants default pending. Before rollout, record
 
 The DynamoDB partition key separates POLICY#<tid>#<oid> records (profile, grant, approval, operator audit) and denial-only POLICY#EMAILDENY#<digest> records from RUNTIME# namespaces (client, pending auth, code, refresh family, ticket, catalog). Runtime may strongly read POLICY keys but its write actions are conditioned through dynamodb:LeadingKeys to the RUNTIME prefix only; all transaction items must satisfy the restriction. The operator role alone may conditionally update POLICY records and append the matching operator audit in one transaction. Ordinary runtime and operator roles have no policy DeleteItem or table-admin permission. Profile, grant, approval and revocation tombstones have no TTL attribute; cleanup applies only to expiring RUNTIME records. A13 includes a runtime attempt to write POLICY and an operator revision race using isolated records. Exact-table permission alone is insufficient.
 
+### C7 - NFRA_TRNSPT dependency tools and headless content routes (v1.2)
+
+These tools and routes serve NFRA_TRNSPT's outcomes (its FWD-1 hops 1-2 and FWD-7) and are graded there. This project
+builds them because it owns the gateway, and it grades only each order's own criteria. This ENDPOINT does not change.
+
+**Interactive tools (orders O1, O4).**
+- Every tool is read class: it is registered in both `destructive_ops` SAFE_TOOLS and `data_entitlement` NATIVE_TOOLS,
+  runs through `_run`, and uses the caller's own delegated token.
+- No new Graph scope. `Mail.Read`, `OnlineMeetingTranscript.Read.All` and `OnlineMeetings.ReadWrite` are already held.
+- A scoped identity and a restricted (Schwab-profile) principal keep today's deny-by-default.
+- **Transcript tools (O1)** are exactly `docs/briefs/opal-gateway-meeting-transcript-tools-spec-20260929.md`
+  sections 4-5: `find_online_meeting`, `list_meeting_transcripts` (it follows `@odata.nextLink`) and
+  `read_meeting_transcript` (`text/vtt` through an optional `accept` argument on `graph.call`, never a second client).
+  - `innerError.code` is surfaced, with `GraphAccessToTranscriptsDisabled` and `SpeakerAttributionNotAllowed`
+    distinct.
+  - There is no fallback to an unattributed transcript.
+  - Transcript text is untrusted content. The audit record carries meeting and transcript ids, never text.
+- **Mail tools (O4):** `read_email`'s `$select` gains `ccRecipients`, `internetMessageId`, `conversationId` and
+  `sentDateTime`. A filtered, paged list filters on sender, received window and has-attachment; its page token is
+  opaque, and a Graph URL is never returned or accepted.
+- **Attachments on MCP:** the attachment tool on MCP stays INSPECT-only. It returns metadata, sha256, magic bytes,
+  and for a PDF the page count and at most 1500 characters of page-1 text. No MCP tool returns attachment bytes.
+
+**Headless content routes (orders O2, O5).**
+- **A new capability, never a widening of `/ms/*`.** The `/ms/*` route's contract is structure-only and it "can NEVER
+  echo file content, a body/preview, or any comms field" (`app/ms_ingest.py`). That stays true. Transcripts, mail
+  bodies and attachment bytes are served ONLY on two new prefixes, one for transcripts and one for mail. Their route
+  names come from the builder.
+- **Bearers.** Each prefix has its own static capability bearer:
+  - stored in Secrets Manager under a `lib/opal_naming.py` SECRET-grammar name;
+  - compared in constant time;
+  - accepted ONLY on its own prefix, so one leaked bearer reaches one prefix.
+- **Access.** The routes read with the server-held delegated token of ONE fixed identity, Andrew's (his route ruling:
+  "the daily pull runs through the EXISTING Opal gateway under Andrew's account; no new app registration, no IT").
+  - Graph calls are GET only.
+  - The Graph paths each route may reach are a server-side allowlist that fails closed.
+  - There is no write, send or reply verb.
+- **Allow-by-key output.** Each response is built from an explicit output allowlist, so a new Graph field cannot leak:
+  - **Transcripts:** meeting id, transcript id, `createdDateTime`, `endDateTime`, the `text/vtt` body, its byte count
+    and its sha256. ONLY meetings on a configured meeting allowlist are reachable. That list starts with the four
+    meetings of the spec's section 6.4.
+  - **Mail:** the message fields of O4's `$select` plus the body. ONLY messages whose sender is on NFRA_TRNSPT's
+    sender table (a data asset: Manav's and Yang's addresses) are reachable, plus messages that share a
+    `conversationId` with one of them. Attachment bytes (`$value`) are returned ONLY for a non-inline
+    `application/pdf` within a configured size cap, with their sha256. Every other attachment returns metadata only.
+- **Audit.** It records the route, ids, byte counts and the caller's bearer label. It never records content.
+- **No alert.** A refusal or `NeedsLogin` is returned to the caller, which records it in its own run record
+  (CLAUDE.md moratorium).
+
+**Stored sign-in lifetime (order O3).** O3 is a measurement, not a change. It measures how long the server-held token
+refreshes unattended before `NeedsLogin` (`app/token_broker.py:171-183`), with its instrument and timestamps. A
+lifetime under one day comes back to this seat before any `token_broker` change.
+
+**Preconditions and dependencies.**
+- The Teams transcript settings (`EnableGraphTranscriptAccess`, `EnableAttributedTranscripts`) are gate G-TEAMS-TX,
+  held by Andrew via IT.
+- The inspect tool's PDF facts need `pypdf` pinned in the gateway `requirements.txt`. Without it the tool returns
+  `parse_error`, never an empty success.
+
 ## SURFACE MANIFEST
 
 One row per engine, with explicit physical dependencies and no worker assignment. Stable IDs are S1 through S10; these are specification surfaces, not the six evidence axes. All run-cell references are documentary evidence, not an assertion that a new engine is deployed.
@@ -293,3 +352,25 @@ No committed delivery date is derived from the source's original 4-7 engineering
 
 L1 is the pinned Andrew commission carrying the supplied brief; L2 is the eight unchanged cards plus direct approval; L3 is the tree row/generated index/D9 member/macro registration; L4 is this PRD, contract data and pinned run. CVO reviews the ratified-text half plus the independently pending ground-truth certification; CRO reviews the brief half and both coverage maps. The post-commit notifier routes both half reviews and withholds COO delivery until the current half hashes are signed. No author signature or worker task order substitutes for that review. L5/L6 are the COO's subsequent acts; no live round is opened by this document.
 
+### v1.2 addendum (2026-09-30 ~23:4xZ, 1.0.0_SA_CTO~O) -- the NFRA_TRNSPT orders
+
+Input: laptop `1.0.0_SA_CTO` msg 103268 (relay
+`org/tier0_exec/0.0.0_AB_MSTR~Z/deliverables/RELAY_20260930_1454Z_LAPTOP_CTO_103268_NFRA_TRNSPT_GATEWAY_ORDERS.md`),
+`org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R1_GATEWAY_DEPENDENCIES_FOR_SITE_Z_20260930.md`, and
+`2.0.0_SA_COO~O`'s triage `deliverables/2.0.0_SA_COO~O/LAPTOP_MAIL_BRANCHES_TRIAGE_20260930.md` @6d41bd25ec. These
+orders run as their own WORKSTREAM, `TRNSPT-DEPS`, under this project's issuer `2.0.0_SA_COO~O`. Its write surface is
+disjoint from the Schwab cells except `app/tools.py`, `app/destructive_ops.py`, `app/data_entitlement.py` and the ac08
+tool count, so it is cut after OG-t-2's release lands on those files, or rebased onto it.
+
+| order | what | contract | notes |
+|---|---|---|---|
+| O1 | transcript read tools | C7 interactive | Its live REACH arm needs G-TEAMS-TX. |
+| O2 | headless transcripts route | C7 headless | Meeting allowlist. Its bearer is a new Secrets Manager entry, under the ledger. |
+| O3 | stored sign-in lifetime | C7 O3 | A measurement. Under one day returns here. |
+| O4 | mail tools | C7 interactive | ADOPT `gw-mail-tools-int` 6a7b9e78fa, minus the LD-0613 hunk, per the triage. The ac08 count is re-read at the cut. It takes the three f-branch test files. Supersedes f1-f3. |
+| O5 | headless mail route | C7 headless | The sender-table bound, and PDF bytes only. This is the byte-returning `$value` download NFRA_TRNSPT needs for bronze. |
+
+Every O2/O5 release is NARROW from the deployed commit re-read at the cut, under a change-ledger entry, with
+never-widen halves: the release adds a content surface. Each route's first criterion is a negative arm run on demand:
+a bearer from the other prefix refused; a meeting off the allowlist refused; a message from a sender off the table
+refused; a non-PDF attachment returns metadata only.
