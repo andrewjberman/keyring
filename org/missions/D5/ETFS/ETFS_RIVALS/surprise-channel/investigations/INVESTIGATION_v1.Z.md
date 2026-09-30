@@ -77,6 +77,29 @@
     "spec_asserts": "RIV-c-1 cell: raw lands at basg-<ts>-<sha256[:12]>.txt with a JSON sidecar beside it carrying requested_date and status, one file per day in backfill.",
     "world_is": "The key carries no requested date, so land_bronze of identical bytes with identical captured_at and different requested_date (check c-1.AC2 does exactly this: OK arm then DATE-MISMATCH arm) writes the same raw key and the same sidecar key; the last sidecar wins on the object store. The returned dict per call is correct; only the stored sidecar of the earlier call is lost.",
     "notes": "INERT in round 1: a real backfill fetches one distinct URL per day so distinct bytes and timestamps normally differ; it only bites when the issuer serves one stale file for several requested days inside one second. The key format is the cell's; left as specified."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T08:20Z",
+    "one_line": "Check s-1.AC2 cannot pass from RIV-s-1's paths: its DATE-MISMATCH arm lands the same bytes with the same captured_at as the last real file, which is the S2 bronze key collision, so the last real file's OK sidecar is overwritten and its rows are (correctly) skipped by silver.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round1/checks/s-1.AC2.py: c.land(files) then land_bronze(raw=files[-1].read_bytes(), requested_date='2099-01-02', captured_at=meta['at']) -- same bytes, same captured_at as files[-1]",
+        "data/etfs/scripts/rivalfunds/collector_issuer.py land_bronze: stem = basg-<ts>-<sha12>, no requested date (row ETFS_RIVALS-Z-W1-S2)",
+        "probe run 2026-09-30: land_bronze OK arm then DATE-MISMATCH arm -> sidecar_uri equal True; the stored sidecar reads status DATE-MISMATCH, requested_date 2099-01-02",
+        "s-1.AC2 run on silver_issuer.py: 'FAIL: first replay: 356 rows == 533 source rows' (356 = 2 x 178; the missing 177 are files[-1]); second replay adds no rows OK; no silver partition for the mismatched date OK; detail.skipped_not_ok == 1 OK"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-s-1 AC2 expects, after landing 3 real days plus one DATE-MISMATCH object, 533 silver rows (all 3 real files) and skipped_not_ok == 1; RIV-c-1 says the object key is basg-<ts>-<sha256[:12]>.",
+    "world_is": "With that key, the DATE-MISMATCH landing and the last real file are ONE object pair; the sidecar that survives is the mismatch, so exactly one bronze object exists and it is not OK. silver_issuer skips it as the cell requires (sidecar status decides), giving 356 rows and skipped_not_ok 1. Both expectations cannot hold at once: 533 rows needs the OK sidecar, skipped_not_ok == 1 needs a second, non-OK object.",
+    "notes": "Not fixable inside RIV-s-1: silver may not re-date or re-classify a bronze object against its sidecar (C-SHAPES), and collector_issuer.py is RIV-c-1's file (outside this order's paths). Two fixes, the issuer's or CTO's to pick: (a) the bronze stem carries the requested date (basg-<requested>-<ts>-<sha12>), which also closes row ETFS_RIVALS-Z-W1-S2; (b) check s-1.AC2 passes a different captured_at to its mismatch land. AC1 is unaffected and passes."
   }
 ]
 ```
