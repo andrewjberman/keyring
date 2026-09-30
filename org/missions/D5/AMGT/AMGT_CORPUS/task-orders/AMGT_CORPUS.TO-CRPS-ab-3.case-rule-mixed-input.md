@@ -91,3 +91,5 @@ pair.
 <round>26</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
+
+<status>complete</status>
