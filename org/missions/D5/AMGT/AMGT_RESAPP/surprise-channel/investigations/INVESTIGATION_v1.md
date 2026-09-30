@@ -15775,6 +15775,76 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "Amendment 1: management.schema.json joins <paths>; the worker widens it and commits with the order's own safe-commit.",
   "world_is": "The lane gate reads the order at the worktree's HEAD, which is the pre-amendment order, so the one file the amendment adds cannot be committed from this worktree until the amended order reaches its HEAD.",
   "notes": "The issuer merges CLOUD into wk-AMGT_RESAPP-177 (or grants the path another way); the worker then commits the already-written schema diff and re-pins the instance. Nothing else is outstanding."
+},
+{
+  "id": "AMGT_RESAPP-Z-S306",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-30T02:05:00Z",
+  "one_line": "AMGT-yy-5: the scoped-api build REFUSED again on the _harvest_prefixes.py REGISTRY_HASH stamp (a RECURRENCE of Z-S256, 4th occurrence) because unrelated registry admissions moved the hash to 54d1865c; test_harvest_prefixes.py::test_ii_registry_hash_matches is RED on CLOUD HEAD for every seat; and A RESTAMP IS NOT A SAFE UNBLOCK -- the stamp guard is the only thing preventing a HEAD build from packaging changed registry files (see Z-S307).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build-and-upload-scoped-amgt.sh at CLOUD 48a5b4a1cf: 'FAIL: lib/research/api/_harvest_prefixes.py DRIFTS from fresh lib.opal_naming output (registry hash 54d1865c...)', committed stamp 3118e82e. The script prints both versions and ALL FOUR prefix constants are byte-identical; only the REGISTRY_HASH line and its comment differ.",
+      "registry_hash() covers infra/logic/registry/ + org/standards/NAMING_SCHEMA.json (gen_harvest_prefixes.py:94, naming.registry_hash()). Four commits move it after yy-3's drain: 01646908e1 (opal_naming), de56cfd02f and 6dcd6df254 (scopes.json), 73896b6c42 (scopes.json + systems.json). All four are ancestors of 48a5b4a1cf and NONE is a descendant of 50cc86edd6, so they arrive through merges touching no lib/ file -- which is why the COO half's lib/-only admissibility condition cannot see them.",
+      "python -m pytest lib/research/api/tests/test_harvest_prefixes.py: TRUE exit 1, '1 failed, 4 passed', test_ii_registry_hash_matches AssertionError 3118e82e... != 54d1865c.... This is red on the trunk right now, for every seat, not only inside this build.",
+      "A census of REGISTRY_HASH over the repo returns 21 hits whose only assertion site is that test, and tests are EXCLUDED from the package -- so the stamp has NO packaged reader and the drift is provenance-only at runtime.",
+      "THIS CELL DID NOT WRITE THE PATH. It built at 50cc86edd6 instead, which the COO half itself admits, after verifying in a sparse worktree there that gen_harvest_prefixes.py --check exits 0 at stamp 3118e82e. Controls: all four hash inputs clean in the working tree; the harvest terraform tree and the lambda seed dir byte-identical between 50cc86edd6 and HEAD."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The COO half: 'Build commit: CLOUD at or after 50cc86edd6 with lib/ unchanged from it', and the order BOUNDS 1: 'a gate refusal is a REFUSAL'.",
+  "world_is": "The build's admissibility depends on infra/logic/registry/ as well as lib/, and a registry admission by any seat in the fabric re-blocks this build without touching one lib/ file. The condition as written cannot see that class of change. The restamp that has unblocked it three times before is a lib/** write no AE lane holds, and -- newly measured here -- it would ALSO remove the only barrier to packaging changed registry files (Z-S307), so it is not a safe unblock on its own.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z, which holds lib/** through BASE_EXEC and restamped at 19a22f2f51, 9e983b5ea2 and 63ecfe1e20. Two durable options for the issuer, neither this cell's to take: (a) restamp AND re-grade the closure, since restamping alone lets a HEAD build package the changed registry files; (b) state the build commit as a PIN in future halves rather than an at-or-after range, which is what this cell did by hand. The red trunk test is the same fix."
+},
+{
+  "id": "AMGT_RESAPP-Z-S307",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-30T02:05:00Z",
+  "one_line": "AMGT-yy-5: BOTH never-widen halves assert lib/opal_naming.py 'sits OUTSIDE the adapter's vendored closure' and would be confirmed ABSENT from the package. IT IS PACKAGED, together with six infra/logic/registry/*.json files and org/standards/NAMING_SCHEMA.json -- so the half's own absence control would have passed VACUOUSLY while three CHANGED files rode into a HEAD build.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The build's own closure walk: 'CLOSURE+ lib/opal_naming.py <- lib/research/corpus/gold.py imports lib.opal_naming (top-level)'. Confirmed at source: lib/research/corpus/gold.py:16 'import lib.opal_naming as naming'.",
+      "The same build reports the registry as DATA MEMBERS: 'DATA+ infra/logic/registry/{exemptions,remediations,resources,reporting_policies}.json opened by lib/opal_naming.py REGISTRY_DIR (REPO-relative), read by lookup()/key() at store import' and 'DATA+ org/standards/NAMING_SCHEMA.json opened by lib/opal_naming.py SCHEMA_PATH'.",
+      "Entry-by-entry content diff of the built zip against the DEPLOYED artifact uq53Z5kc (whose identity was closed by content first: base64(sha256) Um3BOJ+j... EQUALS the live CodeSha256): probes read lib/opal_naming.py in-deployed, in-new, IDENTICAL; infra/logic/registry/scopes.json in-deployed, in-new, IDENTICAL; org/standards/NAMING_SCHEMA.json in-deployed, in-new, IDENTICAL.",
+      "Therefore the halves' INTENT was met, but by a different control than the one they name: not absence, but IDENTITY of the packaged copy. Building at 48a5b4a1cf as first attempted would have packaged the CHANGED opal_naming.py (@01646908e1) and the CHANGED scopes.json and systems.json (@73896b6c42) -- three files beyond the halves' nine, i.e. limb 2 -- and an 'is it absent' check would have returned the reassuring answer for all three."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "COO half, THE CLOSURE: 'lib/opal_naming.py ... scoped_amgt.py:120/:193/:2087 record that lib.opal_naming sits OUTSIDE the adapter's vendored closure and is never imported at runtime; the content diff at the build confirms it is absent from the package.' The CTO half re-measured the closure and did not correct it.",
+  "world_is": "opal_naming.py IS in the closure via gold.py's top-level import, and the registry JSONs plus NAMING_SCHEMA.json ride as data members. The adapter may never call opal_naming on the request path -- that part of the claim is untested here -- but the PACKAGING claim is false, and it is the packaging claim the limb-2 control rests on. A control phrased as ABSENCE cannot detect a CHANGED file that is present; only an identity or content comparison can.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. No act changed here: the closure this cell shipped is exactly the halves' nine and the three probes read IDENTICAL. The correction is to the halves' TEXT and to the shape of the control future halves write -- 'absent from the package' should read 'identical to the deployed copy' for any file that is packaged transitively. Pairs with Z-S306: the stamp guard is currently the only thing that stops a HEAD build from carrying these three, which makes an isolated restamp unsafe."
+},
+{
+  "id": "AMGT_RESAPP-Z-S308",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-30T02:05:00Z",
+  "one_line": "NEVER-2 hygiene, found during this cell's pre-act sentinel sweep: FOUR AMGT open-deploy sentinels sit on undrained worker branches for acts that are world-done, so a shared-tree read of .open_deploys reads 'no AMGT sentinel open' while four are open somewhere.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Union of `git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/` across every live worktree, per-tree denominator printed, 32 trees swept: the SHARED tree carries 16 rows and NO AMGT row, agreeing with the COO half's 'No AMGT sentinel open at signing'.",
+      "Four AMGT sentinels appear on other trees' HEADs: amgt-resapp-ww1-redeploy-research-dossier-restart-20260929.json (oa-s45-redrain, wk-crps14-5r, wk-hvst-r18-45), amgt-resapp-xx4-series-name-redeploy-20260929.json (wk-crps16-1, wk-hvst-r20-47, wk-hvst-r20-48), amgt-harvst-i4-scoped-api-publisher-codes-20260929.json (r49-175), amgt-corpus-r17-hitachi-model-block.json (r50-177, wk-crps17-1, wk-hvst-r22-51, wk-hvst-r22-52) plus amgt-corpus-r10-dossier-rewrite.json (wk-mcpindex-r4-15).",
+      "THEY ARE WORLD-DONE, MEASURED, NOT ASSUMED: xx-4's change_management record in the shared tree reads 'Status: CLOSED -- nothing stranded -- closed 20260929T223247Z', and xx-4's act is the very one that produced the Um3BOJ+j base this cell started from. ww-1 likewise has two completion records in the shared tree.",
+      "So the open sentinels are stale BRANCH state, not half-landed deploys, and NEVER-2's rule applies: world-done -> close SUPERSEDED, never re-execute."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER-2: a deploy entry sits on the worker's branch until the drain, so a shared-tree read of .open_deploys/ is not evidence; before acting on any open entry, measure the ARTIFACT.",
+  "world_is": "The drains that merged these rounds' work did not carry the sentinel removals, so the OPEN state is stranded on branches that are no longer worked. Nothing is at risk right now -- the entries' acts all completed and their completion records are on the trunk -- but `deploy_ledger.py check --red` run in any of those worktrees would blare on a finished deploy, and a future seat reading only the shared tree gets a clean answer it did not earn.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. This cell did not touch another round's sentinels: its own entry (amgt-resapp-yy5-one-build-20260930) was opened AND COMMITTED to the shared trunk before the build and CLOSED with all three legs proven, so it strands nothing. Filed because the sweep that NEVER-2 requires surfaced it, not because it blocked this act."
 }
 ]
 ```
