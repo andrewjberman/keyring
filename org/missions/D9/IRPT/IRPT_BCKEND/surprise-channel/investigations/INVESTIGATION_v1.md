@@ -12490,3 +12490,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Re-minted as IRPT_BCKEND-S219 by 2.0.0_SA_COO~P (a seat row on the main index carries no W); worker id was IRPT_BCKEND-W61-S2, the id the IB-pr-192 supersession cites. Un-parks when a 0.4.0_DS_ClientPlatform lane backfills or re-writes the two partitions with the full column set (or the producer confirms bmv/emv/cf_net were never populated by design for those two runs, in which case the remedy is a schema_version bump the guard can key on). Not fixed by this order: no path here reaches the writer lane. AC1 (fixture) is unaffected and PASSes."
 }
 ```
+
+
+## IRPT_BCKEND-S220 -- the guard census is 6-red at HEAD: 3 of 17 published routes reach an unguarded handler (the three export routes) and the census's own mutant controls are red
+
+```json
+{
+  "id": "IRPT_BCKEND-S220",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T00:50:00Z",
+  "one_line": "The guard census reads 6 failed / 2 passed at CLOUD HEAD and says BLOCKED: 3 of 17 published routes reach an unguarded handler -- the three export routes on irpt-export-render -- and its own mutant control nodes are red too, so the suite currently cannot distinguish a real regression from its present state. Found in an issuer preflight for the round-26 catalogue route, not by looking for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider _authz/tests/test_unguarded_census.py run in the MAIN worktree at CLOUD HEAD from infra/aws/lambda/investor-reporting: 6 failed, 2 passed. Captured stdout of test_the_whole_file_census_is_zero: \"WHOLE FILE: BLOCKED: 3 of 17 route(s) reach an unguarded handler: ['GET /api/scoped/investor-reporting/export/{exportId}', 'GET /api/scoped/investor-reporting/export/{exportId}/download', 'POST /api/scoped/investor-reporting/export']\"; the verdict dict reads {'guarded': 14, 'routes': 17}. DENOMINATOR 17 of 17 published routes, printed by the suite itself.",
+      "The three route_keys resolve in docs/contracts/investor-reporting/v1/routes.json to handler irpt-export-render, operations submit-export / export-receipt / export-download, all status DECLARED.",
+      "test_every_published_route_resolves_to_a_real_entry_point PASSES at HEAD (it fails only when the round-26 catalogue route is added), so these three are NOT declared-without-an-entry: they resolve to a real entry point that the census reads as unguarded. The separate failure test_every_entry_carries_the_published_route_table_it_serves reads '3 of 17 in-lane published route(s) are declared by NO entry'.",
+      "The suite's OWN falsifiers are among the failures: test_the_census_fires_when_one_handler_is_unregistered[0], [3] and [7] all fail 'assert [GET /api/sc...rting/export] == []', i.e. the mutant arm cannot show the census firing on an injected break because the unmutated baseline is already non-empty.",
+      "test_the_whole_file_census_is_zero's own docstring states the file previously read ZERO over the whole published file and that it has twice asserted a gap rather than tolerating it ('3 of 11' for irpt-status before W2-S19, '1 of 12' for irpt-holdings before W2-S30), so the current 3 of 17 is a REGRESSION against that recorded zero, not an unbuilt state."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The guard census over the published route file reads ZERO unguarded routes, and its mutant arm shows the census firing when one handler is unregistered (test_unguarded_census.py's own docstring, which records the whole file at zero).",
+  "world_is": "MEASURED: the census reads 3 of 17 published routes reaching a handler that does not carry the mark guard() sets (__irpt_guarded__), all three on irpt-export-render, and 3 of 17 declared by no entry; 6 of 8 nodes in the suite fail, the three mutant-control nodes among them. ABSENT, and deliberately not claimed: whether an unauthorized request actually reaches export data in production. This lane measured the CENSUS's reading, not a live request -- a handler can be authorized by another path and simply not carry the mark, and ABSENT is not EXERCISED-AGAINST. The hazard is ARMED because that possibility is not excluded, not because it is established.",
+  "notes": "OFF-TASK for this lane: surfaced while preflighting the round-26 catalogue route registration (the issuer measuring its own grant after IB-yr-242's mis-cut, R25 amendment 1). Not ~Y's to disarm -- irpt-export-render is 2.0.0_SA_COO~P's export lane, and CLAUDE.md forbids converting this into a gate on another seat, so it is a row and a message, not a stop. SECOND, SEPARATE FINDING IN THE SAME PREFLIGHT, recorded here rather than as its own row because it shares the instrument: _contracts/tests/test_seam_paired.py reads 33 failed / 25 passed at CLOUD HEAD in the MAIN worktree, cwd-independent (same 33 from investor-reporting/, from _contracts/ and from _contracts/tests/), and its test_control_* nodes are among the failures. CONSEQUENCE FOR EVERY SEAT: neither suite is usable as a pass/fail oracle at HEAD, so a cell graded 'the seam suite passes' cannot be graded that way, and a red there is not evidence of the cell that ran it. Round 26 therefore grades the catalogue route on SINGLE NODE IDS and on a before/after DELTA against these printed baselines (39 -> 45 over four suites; per file 0 -> 4 in reports/tests/test_generate_installed.py, 6 -> 7 in the census, 33 -> 34 in the seam), never on a file being green. Un-arms when ~P's lane either guards the three export handlers or records why the mark is absent by design."
+}
+```
