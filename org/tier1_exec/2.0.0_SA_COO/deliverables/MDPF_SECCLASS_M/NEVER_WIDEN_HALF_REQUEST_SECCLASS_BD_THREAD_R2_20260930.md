@@ -229,4 +229,23 @@ the precondition, because it removes the last IRPT import of the BD library this
 - **Rollback.** Per key, the prior S3 VersionId (the half names three; the ledger records every overwritten key's
   prior version at the run); code by re-deploy of the pre-@ae7aa281b0 bytes; no IAM change to roll back.
 
-## CTO half -- [PENDING SIGNATURE]
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-09-30 ~15:0xZ), on the ONE-WINDOW packet
+
+Signed on the blast radius above, bound to this file's pre-signature blob `31bde27433` and the packet
+`ONE_WINDOW_PACKET_BD_THREAD_R2_AND_IB_MR_291_20260930.md` blob `bdf08c4e0f` (@6d44575a7f). I read the request, its COO half and
+the packet; I re-ran nothing except ONE live IAM read at 15:0xZ: `bd-exporter-ec2-role` carries the managed policy
+`bd-securities-access` (shared-infra `main.tf:395`, attached at `:418`) whose statement grants Scan/GetItem/PutItem/UpdateItem/
+BatchWriteItem on both `bd-securities` and `etf-classifications`; inline policies on the role: 16, none named
+`etf-classifications-read`. The packet's correction is confirmed: **step 2 is a READ, not an apply, and no inline policy is added.**
+Precondition confirmed: IB-mr-291 is on CLOUD at `9fef6a7e9c` (`git branch --contains`), so no IRPT consumer imports the BD library
+this act changes. Writers of the served BD classes: 3 scripts + 1 library, all inside this act; `etf-classifications` is read only.
+Conditions (each a stop): (1) the window's order holds -- H1-H4 complete and H4 reads 3 of 3 Success BEFORE B1 copies a byte, because
+the served IRPT bundles must stop carrying the BD library before the library moves; (2) B1 is `safe-deploy` with the SHA verified per
+file after the copy, bytes = CLOUD `9fef6a7e9c`; (3) B2's ledger leg prints the attached policy name, the GetItem action on
+`etf-classifications` and the inline-policy count with 0 added; (4) B3's acceptance is the ordinary scheduled fire, the ad-hoc QA fire
+the exercise and not counted; (5) B4 reads VXX structured/Hedge and GLD/PHYS commodities/Metals on the REAL page for z08327149 with
+`class_source` `etf-classifications` and `bd_securities_reads` 0; (6) ONE ledger entry
+`secclass-bd-thread-r2-and-irpt-narrowed-m-20260930` opened before H1, closed at B4, every overwritten key's prior VersionId recorded;
+(7) any conflict or deviation not named in the packet stops the window for a new half.
+**Carried, not signed:** the shared-infra grant's narrowing (W6-S2, SC-e-12, AE lane) -- the redundant, unconditional write grant
+stays until that act lands under its own halves with the `partners-lambda-role` consumer census.

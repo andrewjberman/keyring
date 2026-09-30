@@ -170,3 +170,25 @@ for the Holdings principals only) -> H2 safe-apply + read-back of Sid `Canonical
 three bundles from CLOUD 9fef6a7e9c -> H4 QA fire and `holdings_qa` read (PHYS/GLD commodities/Metals, VXX
 structured/Hedge; served manifests unchanged) -> H5 the served publication, read on the page. **Rollback per key** as
 above. Nothing runs before the CTO half is at HEAD.
+
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-09-30 ~15:0xZ), on the ONE-WINDOW packet
+
+Signed on the blast radius above, bound to this file's pre-signature blob `f611e7a2c9` and the packet
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/ONE_WINDOW_PACKET_BD_THREAD_R2_AND_IB_MR_291_20260930.md` blob
+`bdf08c4e0f` (@6d44575a7f). I read the request, its COO half and the packet; I re-ran nothing. CTO 103169's four conditions are read
+as met on the COO half's measurements (the FWD-6 declaration in the fallback's header; the census with `to_unclassified` 0 / 120,944,
+0 / 34,347, 0 / 15,355; halves new and separate from IB-mr-251..272, which stay HELD; PHYS, GLD, VXX from the TABLE at every firm that
+holds them). The two deviations are ACCEPTED: (W93-S2) the fallback's two `'bd-securities'` defaults and the served label read from the
+naming registry, identical strings, suite 319 re-measured; (W93-S1) a canonical hit serves basis `TABLE`, not `CANONICAL` -- the contract
+is NOT widened now; `class_source` in the producer's census is the record of the source, and a PRD addendum follows only if a reader
+needs the source on the wire (none does today). Writers of `asset_class_basis`: 1, one rule read.
+Conditions (each a stop): (1) H1's plan shows in-place policy updates on the Holdings principals ONLY, 0 add, 0 destroy, every changed
+resource named; (2) H2 through `safe-apply` with HALT_ACK, a re-plan reading 0-diff, and a per-firm `get-role-policy` read-back naming
+Sid `CanonicalClassifierLookup`; (3) H3 mints the three bundles from CLOUD `9fef6a7e9c` with members-sha256 and member-count printed, the
+closure carrying `bd_securities_fallback.py` and `etf_classifications_dynamodb.py` and NOT the BD library; (4) H4 reads 3 of 3 Success
+and `holdings_qa` per firm (PHYS/GLD commodities/Metals, VXX structured/Hedge, `to_unclassified` 0 against the census) with the served
+`holdings/current/manifest.json` VersionId unchanged at all three firms; (5) H5 is the next SCHEDULED fire, read on the Investor
+Reporting Holdings page (PHYS commodities/Metals, Andrew's ~05:0xZ complaint, is the acceptance read); an ad-hoc served publication
+needs its own word; (6) ONE ledger entry with BD_THREAD_R2, opened before H1, closed at B4; (7) any deviation not named in the packet
+stops the window for a new half.
+
