@@ -66,6 +66,18 @@ Cells 2-4 are served moves on the same function. They ride ONE build, ONE never-
 
 | 5 | **The crosswalk never drops a served record** (added ~23:0xZ, before issuance: AMGT_CORPUS round-16 analysis ruling 1; row CORPUS `Z-S63`) | LOCAL code in `lib/research/identity/crosswalk.py`, which AMGT_RESAPP owns (one writer per artifact). `write_pool` / `build_crosswalk` unions the latest served pool's records with the build, and a record leaves only by an explicit retirement input. **AC:** (a) a planted pool record absent from the build's inputs survives the next `write_pool`; (b) a planted retirement removes it (the negative control); (c) today's pool round-trips digest-equal, 237 in and 237 out; (d) **the exact fork:** a pinned-side append followed by one CLOUD-side `write_pool` keeps the appended record. No served move beyond (c)'s digest-equal no-op. |
 
+**Cell 5 follow-up (~00:0xZ, AMGT_CORPUS row `Z-S66`, COO~X msg 26796): the union must sit in the choke point, not in
+one caller.**
+- `yy-6` @`6a940b02b8` made only `crosswalk.main --write-pool` union-first.
+- `add_security.py:366`/`:401` is the other `crosswalk/v1` writer, and it is the scheduled fire's path. It still builds
+  without `served=`, so the pinned-fire fork survives.
+- Of 14 `write_pool` call sites, 2 write `crosswalk/v1`.
+- Cell 5's own text named "the ONE function every pool write passes through". **The union moves INTO `write_pool` (or
+  `build_crosswalk`), so no caller can omit it.**
+- **AC:** the fork test (d) runs through BOTH writers: a pinned-side `add_security` append, then a CLOUD-side
+  `add_security` write, keeps the record.
+- This is the next RESAPP cell. AMGT_CORPUS re-signs `r-1` after it.
+
 **Fan-out:** 5. Cells 2-4 share one deploy cell at the end: a build-and-apply order after all three drain. Cell 5 is
 independent, and it unblocks AMGT_CORPUS's scheduled registration.
 

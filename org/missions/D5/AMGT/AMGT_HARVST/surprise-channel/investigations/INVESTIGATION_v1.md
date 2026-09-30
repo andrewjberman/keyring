@@ -2696,6 +2696,140 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "ROUND_ANALYSIS.round19.md s.2 ruling 3 / row Z-W41-S1: the AMZN coverage is a 6-article 2026-09-06..09-10 burst of one story, split by the served span rule into a 3-article 09-07-only event; the census asks what a same-story-consecutive-days span rule changes.",
       "world_is": "Two things are conflated in the row. The served SPAN rule is what cuts 09-06 (1 article, one publisher, not a qualifying day) and 09-08 (tier B only) off the 09-07 event: the candidate recovers both, giving 5 articles 09-06..09-08. The served STORY test is what cuts 09-10 off, through its 2-day link window between tier-A articles (not through headline words, which the 09-10 piece shares with the 09-07 pieces): bbg's 09-10 piece is its own 1-article story, which no span rule reusing the story test can join. The 6-article burst exists only if the story test is also changed, which this cell may not do (standing clause 1). The census makes no verdict on either change.",
       "notes": "INERT: measurement only, nothing served is affected. For the CTO at round 20's analysis: ruling on the span rule alone yields the 5-article event; a 6-article event needs a ruling on the story test's link window as well."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W50-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~50",
+      "surfaced_at": "2026-09-29T23:40:00Z",
+      "one_line": "The order says HD's served event is led by a barrons article; the NEWEST served chatter_event part (part-20260929T192706Z) leads HD with bbg:TJX9W8T96OSJ00 (2026-08-18 only) -- the barrons lead is in the three parts up to 20260924T134754Z.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~50/k2_ac1_output.txt section (c), from scripts/k2_ac1_updated_time_census.py run 2026-09-29: 8 chatter_event parts scanned; HD lead is barrons:WP-BAR-0001875805 in part-20260922T215254Z, part-20260923T021336Z, part-20260924T134754Z (event 2026-08-17..2026-08-20, 7 articles); from part-20260928T210944Z through part-20260929T192706Z (the newest) HD's one event is 2026-08-18..2026-08-18, 2 articles, lead bbg:TJX9W8T96OSJ00 'Home Depot Results Beat Estimates, Overcoming Housing Slump' (published_utc 2026-08-18 10:03:19.783Z)",
+          "the barrons article barrons:WP-BAR-0001875805 ('Home Depot Stock Rises as Earnings Defy Housing Slump', published_utc 2026-08-17 16:24Z) is still a tier A HD row in the newest article_security_mention snapshot but is in no served HD event today"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "ROUND_ANALYSIS.round20.md s.2 ruling 3 and the order s.1: HD's served event is led by a barrons article stored at published_utc 2026-08-17 16:24Z; choosing the earliest published_utc promotes it.",
+      "world_is": "That was true of the served parts through 2026-09-24. The served events since part-20260928T210944Z carry HD as a one-day, two-article event led by bbg (earliest published_utc among its members, 2026-08-18). The census (c) therefore prints both: the newest snapshot's lead with every time value, and the barrons article that led the earlier parts with every time value. Neither has an updated or modified time in silver or bronze (barrons: published, published_utc, published_date_utc, fetched_at, first_discovered_at, run_stamp only). The census records no ruling on which lead the CTO means.",
+      "notes": "INERT: measurement only. The question the CTO put (does silver carry an updated time?) is answered independently of which HD lead is meant: barrons, bbg and ft carry none; wsj carries one on 11 of 26 and sa on 5 of 46."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:20:00Z",
+      "one_line": "BLOCKING: HVST-k-1 AC2 (b) cannot hold as written -- NVDA_US_Equity's served 2026-06-01 event has ONLY guarded members (wsj co_mention_count 3, two sa is_roundup True), so the ruled guard (a guarded member never leads, the span is set by the non-roundup members) leaves it no span and no lead: it is GONE, and 4 of the 5 j-2-kept events are row-equal, not 5.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/k1_ac2_output.txt sections (a) and (b): 'GONE 39c0b3d69453 NVDA_US_Equity' with members GUARDED(co_mention=3), GUARDED(is_roundup), GUARDED(is_roundup); '(b) 4 of 5 j-2-kept events row-equal ... FAILS'",
+          "lib/research/harvest/publication_gold.py _story_runs (this branch): a story with no non-guarded row returns [] -- the literal reading of ruling 2 ('The span is set by the non-roundup members. The lead is chosen among the non-roundup members')",
+          "deliverables/0.9.0_WK_AMGT_HARVST~48/j2_census_result.json counts KEPT=5 (j-2's candidate had no guard, so it kept NVDA's all-roundup event)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-k-1 s.1 ruling 2 and s.2 AC2(b): a guarded member never extends the span and never leads; AND the 5 events j-2 kept (992_HK 02-12, 992_HK 05-22, BA, COST, NVDA) are row-equal to the served rows.",
+      "world_is": "The two statements cannot both hold for NVDA. Its three members are all guarded, so under the guard as stated it has no span and no lead and forms no event; the alternative that keeps it (a run with no non-roundup member falls back to the unguarded span and lead) is a different rule from the ruled one, and the cell did not choose it. Implemented as written; the other four are row-equal (992_HK 02-12 keeps its wsj lead and its co=3 sa member as a guarded MEMBER).",
+      "notes": "Informational, in k1_ac2_output.txt: with the guard columns stripped the same rows give NVDA 2026-06-01..2026-06-01, 3 members. For the CTO's round-21 analysis: rule the all-guarded run (no event, or the fallback). If the rebuild lands as written in round 22, the served NVDA event disappears.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:20:00Z",
+      "one_line": "BLOCKING: HVST-k-1 AC2 (c) cannot hold for AMZN_US_Equity -- j-2's candidate (span 2026-09-06..09-08, lead bbg 'Amazon Cargo Plane Overshoots Runway') had no guard, but bbg 09-06 has co_mention_count 3 and barrons 09-08 is is_roundup True, so under the ruled guard neither extends the span and the lead cannot be the bbg article: the event is 2026-09-07..09-07 with 5 members, lead barrons 'Scene of Fatal Amazon Plane Crash in Miami', event_id unchanged from the served one.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/k1_ac2_output.txt section (c): 'AMZN ... j-2 candidate 472a1836a7be span 2026-09-06..2026-09-08 members=5 ... new-rule c9e34b38e4ba span 2026-09-07..2026-09-07 members=5 ... NOT EQUAL; members only in either: []; lead differs bbg:TKYJAAVTTCZL00 (j-2) vs barrons:WP-BAR-0001904504 (new rule); lead guard status in j-2: GUARDED(co_mention=3)'",
+          "mention part-20260929T192610Z rows: bbg:TKYJAAVTTCZL00 (2026-09-06, tier A) is_roundup False co_mention_count 3; barrons:WP-BAR-0001904706 (2026-09-08, tier B) is_roundup True co_mention_count 5",
+          "the member SET is identical (5 of 5); only the span (09-06..09-08 vs 09-07..09-07) and the lead differ"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-k-1 s.2 AC2(c): 992_HK_Equity's and AMZN_US_Equity's changed events equal j-2's candidate events (span, member set, lead).",
+      "world_is": "992_HK's changed event is equal (2026-08-13..08-14, 3 members, lead wsj Lenovo Posts Record Revenue). AMZN's is not: the guard and j-2's candidate disagree on the same five articles. The guard (co_mention_count >= 3 OR is_roundup) marks the 09-06 lead-candidate and the 09-08 piece, so the ruled rule puts the span on the three 09-07 core articles. The event grows 3 -> 5 members but its span and event_id do not move. Implemented as written.",
+      "notes": "The ruling read j-2's AMZN event as the intended result, but j-2 ran without the guard. For the CTO: either the guard is right and AMZN's event is the 09-07 one (the 09-06 report is a member, not the lead), or the threshold is wrong for a crash report that names Boeing and one other security.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:20:00Z",
+      "one_line": "HVST-k-1 AC2 (c) says both changed events are read from j2_census_result.json, but that file carries the AMZN candidate only (span and article count, no member set, no lead) and nothing for 992_HK_Equity; the comparison object was recomputed by importing j-2's own candidate function and cross-checked to j2_ac1_output.txt and the json.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~48/j2_census_result.json keys: amzn_candidate (span, articles), amzn_current, baseline_equal, candidate_events, counts, ids_unique, merged_candidate_events, new, served_event_key, served_events, served_mention_key -- no 992_HK, no members, no lead",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/scripts/k1_ac2_dry_rebuild.py (c): j2.candidate_event_rows over today's inputs; 992_HK matched to j2_ac1_output.txt 'CHANGED event 8be45608d81b 992_HK_Equity span 2026-08-13..2026-08-14 ... articles=3'; AMZN matched to both the text and the json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-k-1 s.2 AC2(c): equality read from j2_census_result.json.",
+      "world_is": "The json is too thin for the stated comparison; the same comparison object is available by calling j-2's script (read-only import) and both j-2 outputs agree with it.",
+      "notes": "No effect on the verdict; recorded so the criterion's source is honest."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:20:00Z",
+      "one_line": "Two existing tests asserted the pre-ruling per-day rule and were updated to the ruled rule inside the cell's own tests/ path: test_only_coverage_multi_day_story_keeps_its_words_and_forms_its_event (event span 09-10..09-11 with 4 members became 09-10..09-12 with 6) and test_without_match_forms_the_story_words_are_still_read_as_the_name (no event became one thin 2-member event 09-10..09-12).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/tests/test_publication_gold_name_detection.py (this branch): both assertions now carry a HVST-k-1 comment; the suite was 203 passed, 2 failed after the rule change and before the two edits, those two being the only failures, and is 212 passed after (205 + 7 new)",
+          "lib/research/harvest/publication_gold.py _story_runs: the run is judged whole and spans every consecutive story-day, including a day that never qualified alone"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-k-1 AC1: the harvest suite passes with new tests named; the cell does not say existing tests may change.",
+      "world_is": "Two existing assertions were the superseded rule's own consequences (a non-qualifying last day cut off the event; fragments never met the per-day bar). Changing them is the ruling applied: the story test, the thresholds and the link window are untouched.",
+      "notes": "The second test's arm (no alias evidence) now yields a thin event rather than none; the name-stripping behaviour it protects is unchanged (its names assertions still hold)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:50:00Z",
+      "one_line": "OBSERVATION: AMENDMENT 1 (guard threshold 4, RULED by 1.0.0_SA_CTO~Z msg 26783, ROUND_ANALYSIS.round20.md s.2a @168acda05e; amendment c4f2fedc94) landed at 85fe787f17 with EVENT_GUARD_CO_MENTIONS = 4; the literal AC2 re-run is PASS (KEPT 5, CHANGED 3, MERGED 0, GONE 0 of 8; (b) 5/5, (c) 2/2, (d) 1/1, (e) 8/8), which is the disarm test for rows Z-W49-S1 (NVDA all-guarded) and Z-W49-S2 (AMZN lead and span). S1 and S2 are not edited.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py@85fe787f17: EVENT_GUARD_CO_MENTIONS = 4 (git show 85fe787f17:lib/research/harvest/publication_gold.py)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/k1_ac2_output.txt@85fe787f17: 'COUNTS of 8 served: KEPT=5 CHANGED=3 MERGED=0 GONE=0'; '(b) 5 of 5 ... HOLDS'; AMZN new-rule db2286aabb9f span 2026-09-06..2026-09-07 members=5 lead bbg 'Amazon Cargo Plane Overshoots Runway in Miami, Killing Five'; HD ends 2026-08-18 with '6 Big Takeaways' GUARDED(co_mention=4); 'AC2 RESULT: PASS'; a second run byte-identical",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/k1_ac1_after.txt@85fe787f17: collected 212, 212 passed; guard test asserts co 4 guarded and co 3 NOT guarded",
+          "the issuer's own read-only measurement at 4 (KEPT 5, CHANGED 3, GONE 0) matches the worker's run"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Rows Z-W49-S1 and Z-W49-S2 (BLOCKING, INERT) stood open at the ruled threshold 3; AMENDMENT 1 says they disarm on the constant landing at 4 with the re-run as the test.",
+      "world_is": "The constant is 4 at 85fe787f17 and the re-run passes AC2 (b)-(e) and AC1, so the condition AMENDMENT 1 names for the disarm is met on this branch (LOCAL, unmerged).",
+      "notes": "The disarm is the CTO's ruling; this row records its test result. Served chatter_event is untouched (round 22).",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```

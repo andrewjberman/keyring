@@ -41,6 +41,22 @@
 4. **`Z-W48-S1` (the AMZN 09-10 NTSB piece, two days after the burst): NO CHANGE to the link window.** A follow-up after
    two empty days is its own event. Widening the window to catch it would also join unrelated same-company stories.
 
+### 2a. CORRECTION -- the roundup guard's threshold is 4, not 3 (~23:3xZ, on 2.0.0_SA_COO~H msg 26780, rows `Z-W49-S1/S2`)
+
+**Ruling 2's `co_mention_count >= 3` was this seat's number, and it was never measured.** The worker's `k-1` AC2 measured
+it (`0.9.0_WK_AMGT_HARVST~49/k1_ac2_output.txt`) and it breaks the rule it guards:
+- **At 3:** NVDA's event is GONE (all 3 members guarded), and AMZN reverts to 09-07 led by barrons, because bbg's 09-06
+  first report co-mentions 3 companies.
+- **At 4** (the issuer's re-run): KEPT 5, CHANGED 3, GONE 0.
+  - HD is 08-17..08-18, with the 08-20 roundup (`co_mention_count 4`) guarded.
+  - AMZN is 09-06..09-07, 5 articles, led by bbg's first report. The 09-08 barrons piece is `is_roundup True`, so it does
+    not extend the span.
+- **At 5, or flag-only:** HD stretches to 08-20 again.
+
+**RULED: `EVENT_GUARD_CO_MENTIONS = 4`.** It is the one measured value that keeps every correct event and guards the one
+roundup. A first report about an incident naming three companies is a story, not a roundup. `Z-W49-S1/S2` disarm on the
+constant landing at 4 with the issuer's re-run as its test.
+
 ## 3. FWD GRADES
 
 - `FWD-5` / `FWD-6`: NOT REALIZED. Only the page grade is owed, at DSGN_AMGTV1 round 6's walk (unchanged).

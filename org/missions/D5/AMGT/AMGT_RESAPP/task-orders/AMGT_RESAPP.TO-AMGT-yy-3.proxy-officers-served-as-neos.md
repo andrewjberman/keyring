@@ -49,6 +49,7 @@ fallback source writing into that SAME object.
 
 <paths>
 lib/research/management/proxy_officers.py
+lib/research/management/management.schema.json
 lib/research/management/tests/
 lib/research/api/scoped_amgt.py
 lib/research/api/tests/
@@ -59,7 +60,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-yy-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round50/checks/yy_neo.py --plane plan; echo "exit=$?"</invocation><expect>INTU_US_Equity and HAL_US_Equity each officers &gt;= 3, set 'named_executive_officers', source 'DEF 14A' + an accession; THE PROXY'S OFFICERS ARE SERVED AS NAMED EXECUTIVE OFFICERS (plan): YES -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-yy-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round50/checks/yy_neo.py --plane plan; echo "exit=$?"</invocation><expect>INTU_US_Equity and HAL_US_Equity each officers &gt;= 3, set 'named_executive_officers', source 'DEF 14A' + an accession, each planned object validates against management.schema.json (AMENDMENT 1); THE PROXY'S OFFICERS ARE SERVED AS NAMED EXECUTIVE OFFICERS (plan): YES -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-yy-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round50/checks/yy_neo.py --plane local; echo "exit=$?"</invocation><expect>the same through this tree's read_management; THE PROXY'S OFFICERS ARE SERVED AS NAMED EXECUTIVE OFFICERS (local): YES -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-yy-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round48/checks/api-suite.sh; echo "exit=$?"</invocation><expect>pytest reports N passed and 0 failed -- and exit=0</expect></criterion>
 </proof_of_spec>
@@ -74,6 +75,8 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 
 **ISSUER NOTES:** round-49 analysis s.4 row 3, ruling 3. Base: AC1 FAIL, AC2 FAIL (no --persist), AC3 PASS. Continues ~177 after yy-2
 drains (file edge). The two real M-1 writes are yy-5's, under the pair.
+
+**AMENDMENT 1 (2026-09-30 ~00:0xZ, issuer 2.0.0_SA_COO~Z): REOPENED before its drain.** Row Z-W177-S2 (the worker's): `management.schema.json` has `additionalProperties: false` and admits only `filing` / `bloomberg` officer sources, so the object yy-5 would write into the served M-1 store fails that store's own schema (inert only because `enrich.write_document` does not validate). Ruled: the planned object MUST validate. `lib/research/management/management.schema.json` joins `<paths>`; widen it to admit exactly the proxy source and the four NEO fields (`officer_set`, `officer_set_label`, `source_form`, and the source fields the object already carries) -- nothing else widened; a filing or Bloomberg object must validate exactly as before. AC1's check now runs `enrich.validate` on each planned object. The worker's yy-3 commits (58a7b5b7d1, af80b4b90c) stand. Gate: GATE (viii) grades this modified order.
 
 <status>pending</status>
 <round>50</round>

@@ -2008,3 +2008,32 @@ slots MAX+1 over 48 are **`~49`** and **`~50`**.
 - the link window (ruling 4);
 - the event route mount (HELD);
 - the roundup flag's producer.
+
+## 34. ROUND 22 -- L5 DECOMPOSITION v3.1, over the round-21 analysis (`ledger/ROUND_ANALYSIS.round21.md` @63c272600a, corrected @3100474cde)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~00:0xZ. Round 21 CLOSED: 2 of 2. The span rule plus the guard at 4 is merged.
+The retitled-preview lead is ACCEPTED and DISCLOSED. Series **`l`**; slots **`~51`** and **`~52`**.
+
+**Before the cut the issuer measured analysis ruling 2's premise FALSE:**
+- `is_roundup` IS `co_mention_count >= 5` by construction (`DEFAULT_ROUNDUP_AT`; 304 of 304 rows).
+- So "the guard reads `co_mention >= 4` only" is outcome-identical to `k-1` (dry run: KEPT 5 / CHANGED 3 / GONE 0; AMZN
+  09-06..09-07, not 09-08).
+- Carded (msg 26795). The CTO corrected s.2a @`3100474cde`: cell 1 is a one-line simplification with AC "8 of 8
+  identical", and cell 2 is cut NOW.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the guard reads `co_mention_count >= 4` only -- a simplification, 8 of 8 events identical to `k-1` | `HVST-l-1` | LOCAL | `~51` (`worker-light`) |
+| 2 the served `chatter_event` rebuild on the span rule, under a never-widen pair naming HD's lead change and AMZN's span | `HVST-l-2` | SERVED | `~52` |
+
+**Fan-out: 2 of 2 chains, independent; N = 2 worker slots; cap 8 not pressed.** `l-1` cannot move an outcome, so `l-2`
+does not wait on it. `l-2` builds from the rule at `88dbe4af64`. Write sets are disjoint: `l-1` owns
+`publication_gold.py` and its tests; `l-2` writes only its deliverables and the channel.
+
+**Pair owed:** `l-2`'s COO half `deliverables/2.0.0_SA_COO_H/round22/NEVER_WIDEN_HALF_COO_L2.md` (signed this tick) and
+its CTO half.
+
+**NOT cells:**
+- the `is_roundup` producer;
+- the link window;
+- the event route mount (HELD).

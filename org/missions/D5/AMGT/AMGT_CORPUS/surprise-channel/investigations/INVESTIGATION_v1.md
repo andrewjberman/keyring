@@ -2445,6 +2445,72 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Branch 1 (population 0, today) writes nothing, so the hazard is dormant; branch 2 would fork the registration ledger between the pinned checkout and CLOUD.",
     "notes": "Named in the round-16 pair's COO half for the CTO half to grade. Candidate remedies (the CTO's call): point AMGT_REGISTRATIONS_PATH at one durable shared location in the task action, or carry the pinned checkout's registrations delta back to CLOUD as a committed act after each non-empty fire. Disarm owner is this seat until ruled.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S64",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T23:35:00Z",
+    "one_line": "The model-block writer (integrations/bloomberg/research/model_block_pull.py) puts slash tickers under a LITERAL '/' key -- derived/model_block/BP/_LN_Equity/... (6 objects) -- and never through crosswalk.slash_safe_key, so BP/ LN and NG/ LN sit outside C-SLASH-SAFE-KEY on this surface; 0 objects exist under the slash-safe form BP-SLASH-_LN_Equity.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer's own S3 list 2026-09-29 ~23:3xZ, bucket opal-data-harvest: derived/model_block/BP/_LN_Equity/ 6 objects; derived/model_block/BP-SLASH-_LN_Equity/ 0; derived/model_block/IMB_LN_Equity/ 9 (control).",
+        "CRPS-s-1 census (0.9.0_WK_AMGT_CORPUS~1, merged 01682baecd): 'the producer does not call slash_safe_key; no -SLASH- key exists' across 618 objects / 99 prefixes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "lib/research/identity/crosswalk.py C-SLASH-SAFE-KEY: 'An entity id sits in a partition, minted by the crosswalk' (security_key_partition / slash_safe_key).",
+    "world_is": "The dossier and the corpus write the slash-safe partition; the model-block producer writes the raw '/' key. Readers of the model block work today because they read the same raw form.",
+    "notes": "Not this project's writer (integrations/bloomberg/research/, AMGT_RESAPP's model-block producer). Carried to the round-17 analysis for routing; no served read is broken today.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S65",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T23:40:00Z",
+    "one_line": "Hitachi's model-block derive (build_unit_map additive merge) changed SHARED field-level entries in integrations/bloomberg/research/field_map.json beyond adding Hitachi: 4 fields' unit_status/sign_status flip MEASURED -> 'UNRESOLVED-ON-6501 JP Equity: sampled magnitude 11962163.4 does not discriminate absolute vs millions', and 1 field's unit/sign changes SHAPE from a scalar ('MILLIONS'/'POSITIVE') to a per-security dict; the pair's condition 3 (only 6501 keys added, 0 changed) fails, so the delta is WITHHELD uncommitted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-crps17-1 after derive 20260929T232834Z: element-wise diff vs HEAD -- securities 98 -> 99 (+6501 only); fields 66: 37 measured_on lists gain Hitachi, 5 'finding' strings recomputed, 4 unit_status + 4 sign_status MEASURED -> UNRESOLVED-ON-6501, 1 unit + 1 sign scalar -> dict (evidence/r17_after.txt, evidence/r17_field_map_withheld.diff, 2445 lines).",
+        "Runtime readers of field_map.json: lib/research/provenance/render_print.py, lib/research/provenance/validate.py, lib/research/checkface/run_checks.py (+ the producer and its tests)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Pair NEVER_WIDEN_ROUND17_HITACHI_MODEL_BLOCK COO half + CTO half c58e96e867 condition 3: 'the field_map.json diff against CLOUD HEAD adds only 6501 keys (0 changed, 0 removed)'; build_unit_map docstring: additive merge, never overwrite a MEASURED entry.",
+    "world_is": "The merge preserves every per-security MEASURED entry but recomputes field-level aggregates (status, finding, scalar-vs-dict unit), so one new name with an ambiguous magnitude degrades 4 shared fields' status for all 98 names.",
+    "notes": "Served state now: Hitachi's model block is served (census 96/96); field_map.json on CLOUD is unchanged. Entry amgt-corpus-r17-hitachi-model-block leg F is OPEN pending the CTO's ruling: commit the delta as the producer wrote it, commit only Hitachi's per-security entries (leaving aggregates), or leave Hitachi's units out of the map. The shared tree's field_map.json also carries a peer's uncommitted edit (CTO condition 2).",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S66",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T23:59:00Z",
+    "one_line": "AMGT_RESAPP yy-6 (6a940b02b8) makes crosswalk.main --write-pool UNION-FIRST over the served pool, but the other crosswalk/v1 writer, add_security (build at add_security.py:366, put at :401), still builds WITHOUT served=, so Z-S63's fork survives on the path the scheduled induction fire uses and on every later CLOUD-side registration: a pinned-checkout fire's names are dropped by the next add_security put from CLOUD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git grep 'write_pool(|build_crosswalk(' over lib/ integrations/ .tools/ (tests excluded): 14 call sites; the crosswalk/v1 key is built by exactly 2 -- crosswalk.py:1416/1436/1453 (main; yy-6 passes served=_read_pool_latest()[0] under --write-pool) and add_security.py:366/401 (no served=). git grep 'served=' on add_security.py and build_universe.py: 0 hits. The other 11 sites write filings/management/peers/scores/universe keys.",
+        "induction_run --fire calls add_security.main (--batch ... --write-pool) -- lib/research/corpus/induction_run.py module docstring (amendment 3)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NEVER_WIDEN_ROUND16_R1_CTO_HALF.md: the invariant 'in the ONE function every pool write passes through (crosswalk.write_pool, or build_crosswalk beneath it)'; ROUND_ANALYSIS.round16.md ruling 1: this project re-signs r-1 once that cell drains.",
+    "world_is": "The union lives in crosswalk.main's call, not inside build_crosswalk/write_pool, so it reaches 1 of the 2 crosswalk writers.",
+    "notes": "Blocks s-2's re-sign (branch 2 still unsafe). Candidate fix, AMGT_RESAPP's file: add_security's build passes served=crosswalk._read_pool_latest()[0] when --write-pool (or the union moves into build_crosswalk's default). Routed to 1.0.0_SA_CTO~Z.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

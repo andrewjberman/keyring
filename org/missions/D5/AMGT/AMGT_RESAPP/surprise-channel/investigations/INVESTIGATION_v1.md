@@ -15647,6 +15647,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The issuer decides whether to amend AC1's checker/expectation (13, list-only want_p) or to rule the absent-pillars shape. The build itself is complete and AC2 passes (337 passed, 0 failed)."
 },
 {
+  "id": "AMGT_RESAPP-Z-W179-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~179",
+  "surfaced_at": "2026-09-29T22:20:00Z",
+  "one_line": "AMGT-yy-6: 'counted as carried in denominators' and AC3's 'digest in == digest out' cannot both hold for a plain build; resolved by a plain-build NO-OP that returns the served document when the union records equal the served records.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python yy_crosswalk.py --arm roundtrip before the NO-OP: 'records in 237 out 256' then, after retiring the keyless UNRESOLVED twins on carried records, records equal but denominators/identity_universe/research_universe differ (the plain build has no universe input: 158 records carried, 'carried': 158 stamped, identity_universe and research_universe absent). After: 'records in 237 out 237; digest in 68a788347ec2 out 68a788347ec2'.",
+      "lib/research/identity/crosswalk.py build_crosswalk: the NO-OP fires only when identity_universe is None AND research_folders is None AND result records == served records; main --write-pool always supplies the universe, so the CLI write path never takes it and always stamps denominators['carried'] when it carries. Tests: lib/research/identity/tests/test_crosswalk_served_union.py (16 arms; suite 135 passed)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-yy-6 cell text: a carried record is counted in the document's denominators as carried; AC3: build at the served as_of with served = the served pool gives the same count and the same serialised digest.",
+  "world_is": "For a plain build (no universe/research input) the union always carries every universe-side record and would stamp 'carried' and drop identity_universe, so digest equality is only reachable by returning the served document. The plain-build NO-OP does that; consequence: AC1(a) and AC2 pass through the NO-OP in plain mode (the carry itself is exercised by the unit arms with research_folders supplied, and by AC1(b) where retire makes the records differ), and a plain build that only changes doc-level inputs (coverage_vintage) is not reflected.",
+  "notes": "INERT: no write_pool call, nothing served or persisted by this order. The issuer may prefer inheriting doc-level fields from served instead of the NO-OP; that is a cut-level choice."
+},
+{
+  "id": "AMGT_RESAPP-Z-W176-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~176",
+  "surfaced_at": "2026-09-29T23:45:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMGT-yy-1: on 6 of 96 names the export states a header figure's unit as UNRESOLVED (\"does not discriminate absolute vs millions\") while the page prints a scaled magnitude (JPY 24.15T), so the value grade compares those figures' DIGITS but cannot compare their SCALE.",
+  "spec_asserts": "AMGT-yy-1 cell: a FIGURE fact's value is compared against the served figure the export states, normalised for unit and precision.",
+  "world_is": "For 6501_JP, 9433_JP, 8316_JP, 8035_JP, 8766_JP and TSM_US the export's Header row carries `<number> UNRESOLVED-ON-<name>: sampled magnitude <n> does not discriminate absolute vs millions` in place of a unit word (CURR_ENTP_VAL on five, NET_DEBT on 8316), so no unit scale exists to normalise the page's K/M/B/T against. Read as MILLIONS the export equals the page on all six; read as ABSOLUTE the page overstates by 10^6. sweep.py's values_agree therefore accepts the page's magnitude at any power-of-1000 scale for an UNRESOLVED unit and counts it (`digits compared, scale unchecked (export unit UNRESOLVED)=6` on the 96-name served run); a page that misstated only the SCALE of one of these six would read equal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served sweep over the live library, 96 folders, read_at 2026-09-29T23:37:00Z, worktree C:/tmp/r50-176: with the UNRESOLVED case read as a difference the grade was equal 79 of 96, the 17 being 11 GBp price prefixes (fixed in the number reader) and these 6 (--diff lines '(HEADER, CURR_ENTP_VAL) value differs: page=[JPY 24.15T] export=24154022.783025 UNRESOLVED-ON-6501 JP Equity ...').",
+      "After the reader change: 'FWD-30 GRADE: equal 96 of 96 identified names; values equal 96 of 96; ... digits compared, scale unchecked (export unit UNRESOLVED)=6' (.scratch/full2.log, not committed).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py values_agree carries the rule and names this row."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): either the export's owner resolves the unit for these six (the reader then compares scale too), or the grade's blind spot on their scale is accepted by the CTO at the round-50 analysis",
+  "notes": "ARMED only in the sense that the scale of six figures is not graded; nothing is served or written by this order."
+},
+{
   "id": "AMGT_RESAPP-Z-W177-S2",
   "project": "AMGT_RESAPP",
   "fabric": "site-z",
