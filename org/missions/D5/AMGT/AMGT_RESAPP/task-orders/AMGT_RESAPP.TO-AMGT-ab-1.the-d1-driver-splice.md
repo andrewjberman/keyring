@@ -73,7 +73,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 rebuild drops served sentences. Base: AC1 FAIL (no splice_driver); AC2 FAIL (argparse refuses --splice-driver); AC3 PASS 118. The live
 write is ab-6's act under the pair.
 
-<status>pending</status>
+<status>complete</status>
 **AMENDMENT 1 (`2.0.0_SA_COO~Z`, 2026-09-30 ~07:3xZ, before spawn):** CTO msg 27014 condition 1 -- the splice records its provenance (analysis key + VersionId) in the document; AC1's check amended to require it (moved keys: thesis_driver plus at most one provenance key). Base still FAIL (no splice_driver).
 <round>52</round>
 <slot>~186</slot>

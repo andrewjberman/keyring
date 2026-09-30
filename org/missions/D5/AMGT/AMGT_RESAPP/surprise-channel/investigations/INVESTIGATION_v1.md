@@ -16113,6 +16113,26 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "A D-1 rebuild from the stored analysis refreshes a document without shrinking what it serves.",
   "world_is": "Under today's verbatim gate the rebuild drops served sentences (ASML measured; the pool's population unmeasured). Round 52 splices the driver only; the rebuild defect is round 53's cell.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Disarmed by: no live --rebuild-pool run is ordered in round 52 (ab-6 runs --splice-driver only); the round-53 cell fixes the rebuild. Cites AMGT_RESAPP-Z-S313."
+},
+{
+  "id": "AMGT_RESAPP-Z-W186-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~186",
+  "surfaced_at": "2026-09-30T08:00:00Z",
+  "one_line": "AMGT-ab-1 AC2's <expect> says the dry-run names the moved keys as ONLY thesis_driver, but AMENDMENT 1 (provenance recorded in the document) makes the spliced document differ in thesis_driver PLUS one provenance key; the dry-run line prints both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC1 (ab_1_splice.py, amended) exits 0 with differing top-level keys ['thesis_driver', 'thesis_driver_provenance'].",
+      "AC2 dry-run line: ASML_NA_Equity: moved_keys=['thesis_driver', 'thesis_driver_provenance'] (content key thesis_driver; provenance key thesis_driver_provenance) driver_points=3 spanned=3 ... served_validator=True ... [DRY-RUN: wrote nothing]; exit=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 expect: one ASML_NA_Equity line naming the moved keys as only thesis_driver.",
+  "world_is": "The line names thesis_driver plus the ONE added provenance key thesis_driver_provenance, as AMENDMENT 1 and AC1 require; AC2's expect text predates the amendment. The content key moved is only thesis_driver. Judgment on the wording is the issuer's; no code change follows either way."
 }
 ]
 ```
