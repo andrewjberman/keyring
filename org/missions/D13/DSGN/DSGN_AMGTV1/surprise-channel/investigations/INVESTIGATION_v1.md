@@ -473,6 +473,48 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "Row DSGN_AMGTV1-Z-S5 (ARMED, disarm owner this seat): three literal backspace bytes broke two regexes on the page.",
  "world_is": "Repaired and drained; bytes.cjs stays in round 10's checks so a reintroduced control byte in the page's source fails a check, not only a walk. Resolves Z-S5."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W45-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~45",
+ "surfaced_at": "2026-09-30T12:16Z",
+ "one_line": "AV-m-1's cell says ui-smoke.mjs writes the per-state grades, but ui-smoke.mjs is a one-route screenshot tool; the six-state driver is ui-contract-check.mjs, so grades.json is written there.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/scripts/ui-smoke.mjs @DEV 846ecc6c takes ONE <route> <outfile.png> per run and has no state loop; portal/scripts/ui-contract-check.mjs lines 60-72 and 379-409 own the six states (list, thesis, exec, peers, model, posture) and spawn ui-smoke.mjs and ui-measure.mjs per state",
+   "round12/checks/rendercontrol.cjs:55 invokes `scripts/ui-contract-check.mjs --dist <dir> --out <dir>` and reads <out>/grades.json -- the check itself already names the driver, so no criterion is affected",
+   "--dist was added to all three scripts as asked (ui-dist.mjs helper); rendercontrol.cjs 3 of 3 arms, exit=0"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-m-1 item 2: `<out>/grades.json`, beside the PNGs and per-state JSON and the printed table, is written by the instrument ui-smoke.mjs (driven by ui-contract-check.mjs and ui-measure.mjs).",
+ "world_is": "grades.json is written by ui-contract-check.mjs, the only script that runs all six states; ui-smoke.mjs and ui-measure.mjs gained --dist and (measure) the readings the grades are made of. The CTO's PRD wording 'ui-smoke.mjs ... writes, for each of the six states' names the instrument as a family."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W45-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~45",
+ "surfaced_at": "2026-09-30T12:16Z",
+ "one_line": "The cell names tabPanelsWhite ('the tab panel is white with a hairline border') without saying where the panel is; I read it as the tab's painted wrapper, else its top-level painted surfaces, and DEV passes it in all five Security states.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "DEV 846ecc6c build, exec.png of the DEV run (C:/tmp/dsgn-r12-devrun-final/exec.png): the [data-tab-panel] div is transparent and sits INSIDE a white hairline panel that wraps it (Exec, Peers, Model); in Thesis and Posture the [data-tab-panel] div is transparent and its children are the white panels",
+   "a first reading that looked only inside [data-tab-panel] graded Exec, Peers and Model FAIL on DEV (a false alarm: zebra table rows and skeleton bars read as non-white surfaces); the final reading is in ui-measure.mjs section 8 (tabPanels)",
+   "final DEV run: tabPanelsWhite PASS in thesis, exec, peers, model, posture; pre-redesign build (8fa7abde): PASS in all five as well (the clause does not discriminate the two builds -- darkContainers does)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-m-1 item 3: tabPanelsWhite: the tab panel is white with a hairline border (N/A in list).",
+ "world_is": "Reading used: the tab panel's surface is the nearest painted ancestor below <main> (>300px wide, >=40px tall), else the top-level painted surfaces inside it (table rows and skeleton bars excluded); PASS iff at least one exists, every one is opaque white (255,255,255) and carries a light (luminance >= 0.4) 1px+ border. Zero surfaces grades FAIL, never PASS. A different reading is a change to ui-measure.mjs section 8 only. Separately: the issuer's clean page grades bandIsIdentityHeader FAIL (a static page carries no data-starred-toggle Lead Panel marker); AV-m-1's arm 2 asks only the eight style clauses, so nothing is affected."
 }
 ]
 ```

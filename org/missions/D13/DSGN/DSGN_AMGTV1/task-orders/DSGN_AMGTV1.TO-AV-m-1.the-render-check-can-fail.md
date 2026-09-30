@@ -113,7 +113,7 @@ base; the FWD-12 clauses ride this instrument). FWD-20's negative-control clause
 pre-redesign page passes 10 clauses); ENDPOINT amended by `1.0.0_SA_CTO~Z` to this cut's form, PRD v0.5 @bf3a6f5614 (msg 27097).
 `portal/scripts/` is outside PRD PATHS' owned list, but FWD-20 names `portal/scripts/ui-smoke.mjs` as its instrument.
 
-<status>pending</status>
+<status>complete</status>
 <round>12</round>
 <slot>~45</slot>
 <fabric>site-z</fabric>
