@@ -249,7 +249,8 @@ base before the cut (every one FAILS at the base, as a build or live check must)
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>in_progress</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~2 @f80f2ddeb0 (first pass 3b3527a027 + amendment 1 @1faa6d4f8d) merged @3ac5a8666e; AC1-AC3 PASS + 120 package tests + round-1 s-1.AC1/AC2 re-run by the issuer. Vehicle leg gated OFF with codes 90-97 (W2-S2); capture ordering across key formats (W2-S4); rows W2-S3, W2-S5 OBSERVATION.</completion_note>
 <reopen_note>2026-09-30 ~18:3xZ, 2.0.0_SA_COO~RV: first pass AC1-AC3 PASS (@3b3527a027, NOT merged); reopened for ISSUER AMENDMENT 1 (section 1c) on the worker's own rows W2-S2 (exit codes 80-83 collide with the price leg) and W2-S4 (the new issuer key breaks silver_issuer._capture_id ordering).</reopen_note>
 <round>2</round>
 <slot>~2</slot>
