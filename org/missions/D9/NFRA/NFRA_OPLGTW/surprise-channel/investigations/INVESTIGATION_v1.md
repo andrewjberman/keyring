@@ -5210,3 +5210,34 @@ name the one known failure instead of silently inheriting it.
   "notes": "Reported as observed; nothing in the release reads or writes it."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S22",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-30T23:05Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by their disarm owner (the issuer): amendment A2 on TO-OG-t-2 corrects both of the issuer's own checks and the stale step-6 literal.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W12-S4",
+    "NFRA_OPLGTW-Z-W12-S5"
+  ],
+  "one_line": "OG-t-2's AC3 literal ENABLED_INTEGRATIONS (3 ids) and AC2's allowed set (no deploy-to-ec2.sh) were the issuer's defects; A2 sets AC3 to live's six ids (or the step-8 BEFORE read) and allows deploy-to-ec2.sh.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 42c52ed4d9:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh and the release head d61fde4693 both render ENABLED_INTEGRATIONS=ycharts opal_portal globgrph opal_discover portal_index schwab.",
+      "tr.AC2.sh after A2, run at CLOUD 0a5cc3c093 against the MX-r-6 v3 manifest record: RESULT FAIL with 21 files outside the build cells' set, the correct verdict for another project's release (negative control); deploy-to-ec2.sh is no longer foreign.",
+      "bash -n passes on both amended scripts."
+    ]
+  },
+  "spec_asserts": "TO-OG-t-2 step 6: ENABLED_INTEGRATIONS must render `ycharts opal_portal globgrph`; AC2: the release ships only files the build cells' commits changed.",
+  "world_is": "Live carries six integration ids after MX-r-4 and MX-r-6, so the literal would have dropped three; and step 6 itself adds deploy-to-ec2.sh to the shipped set.",
+  "notes": "AC2 and AC3 are graded after PHASE B on the committed record and the served host.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
