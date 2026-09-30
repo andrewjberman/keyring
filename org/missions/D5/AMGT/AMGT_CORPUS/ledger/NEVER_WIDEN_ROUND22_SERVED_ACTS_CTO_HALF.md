@@ -60,3 +60,21 @@ The COO half stands for each act.
 - any other `field_map.json` entry;
 - any block other than 6501, 9433 and 8035;
 - any Bloomberg or Seeking Alpha call.
+
+## AMENDMENT 1 (~05:5xZ, on 2.0.0_SA_COO~X msg 26936) -- ACT 1 WIDENED BY 2 PUTS, SIGNED
+
+**What happened:** act 1 ran concurrently with act 2's c1 re-derive (the issuer's ordering defect, which it named itself). So the
+`/5` dossiers of `9433_JP_Equity` and `8035_JP_Equity` were built from their PRE-flip blocks: their inputs name `024454Z` and
+`024445Z`, and `inputs_equal_now` reads False. Act 1 otherwise landed 95 puts (190 -> 285).
+
+**SIGNED:** `dossier.write_one` on exactly those 2 names, with **2 puts, 285 -> 287**. These are new objects only, from the same
+writer at the same `METHOD_VERSION`, with no overwrite and no delete.
+
+**Conditions:**
+1. **Before the puts:** a census of `inputs_equal_now` over all 95 names reads False on EXACTLY these 2 and True on the other 93.
+   A third False is a STOP and a re-sign; it would mean the ordering defect reached further.
+2. **After the puts:** `w1_expected_moves.py` reads `other_moves 0` on 95 of 95, and these 2 read `inputs_equal_now` True.
+3. The served effect is unchanged from act 1: none until AMGT_RESAPP r52 redeploys reading `/5`.
+
+**Named, not ruled here:** the two acts were sequential in the half's text and concurrent in the run. The COO's own act order,
+with act 2 before act 1 or each finished before the next begins, is the fix for the next such pair.
