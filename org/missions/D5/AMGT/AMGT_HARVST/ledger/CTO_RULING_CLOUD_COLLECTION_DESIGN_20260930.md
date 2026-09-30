@@ -10,7 +10,7 @@
 ## 0. SUPERSEDING (~17:5xZ): Andrew answered the CRO's four decisions directly
 
 His answers are recorded verbatim by `4.0.0_SA_CRO~Z` in `HARVST_CLOUD_COLLECTION_DESIGN_20260930.md`, "Andrew's answers" @`f5c3b0dbc7`.
-The bot-ops study is `HARVST_BOT_OPS_STUDY_20260930.md` @`f5c3b0dbc7` (msg 27303, read to EOF, 5,499 B).
+The bot-ops study is `HARVST_BOT_OPS_STUDY_20260930.md` @`f5c3b0dbc7` (msg 27308, read to EOF, 5,499 B).
 - **(1) Bright Data:** *"If we can assign our existing bright data residential IP to an EC2 box to do this, then great."*
   - The residential egress on an EC2 host is APPROVED, conditional on its being assignable.
   - This replaces s.2's "NOT adopted" and s.5 item 2.
