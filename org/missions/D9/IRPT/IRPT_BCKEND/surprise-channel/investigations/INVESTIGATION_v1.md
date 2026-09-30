@@ -12636,3 +12636,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "For the issuer's drain evidence: census 6 -> 7 is the pin, and the seam file 33 -> 34 is the one new [comparison-catalogue] node (AC3's), both as predicted in row IRPT_BCKEND-S220's notes."
 }
 ```
+
+
+## IRPT_BCKEND-S223 -- round 26 landed a dangling published $ref (1 of 18), and the drain check that passed it graded the pointer's shape instead of following it
+
+```json
+{
+  "id": "IRPT_BCKEND-S223",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T01:55:00Z",
+  "one_line": "IB-yr-261 published a response schema whose $ref does not resolve: responses/comparison-catalogue.response.schema.json refs opal://irpt/contracts/v1/ComparisonCatalogue.schema.json, and that file is not among the 23 published top-level schemas -- the contract exists only under the lambda's _contracts/. 1 dangling ref of 18 response schemas, and it is the one this lane just landed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Census over docs/contracts/investor-reporting/v1 at CLOUD @73f53c499d: 18 response schemas scanned, 23 published top-level schemas, DANGLING refs = 1 -- comparison-catalogue.response.schema.json -> opal://irpt/contracts/v1/ComparisonCatalogue.schema.json. The other 17 of 18 resolve.",
+      "docs/contracts/investor-reporting/v1/ComparisonCatalogue.schema.json does not exist (ls errors); infra/aws/lambda/investor-reporting/_contracts/ComparisonCatalogue.schema.json does exist, 3322 bytes, delivered by round 25's IB-yr-242. The published set and the lambda's bundled set are different locations and only the published one is what a $ref of this form names.",
+      "The test that exists to catch precisely this, _contracts/tests/test_seam_paired.py::test_every_declared_route_has_a_response_contract_whose_refs_resolve, is among the 33 nodes red at HEAD for the opal:// parsing cause (S220, W89-S1), so it could not have reported this. That is what a broken oracle costs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "R26 amendment 1's drain-time substitute for the void AC3: 'the catalogue row names responses/comparison-catalogue.response.schema.json; that file exists, is valid JSON ... and its refs are opal://... like 18 of 18 published response schemas' -- read as evidence that the contract half of the cell was MET.",
+  "world_is": "The substitute check verified the ref's CONVENTION and never verified its REFERENT. The string is correctly shaped and points at nothing. So R26 amendment 1 overstated its own evidence: the route is served and guarded (that part was measured three ways), but its published contract half is incomplete. INERT: the only reader that resolves a ref of this form is the seam suite, which cannot resolve ANY ref today. ABSENT and deliberately not claimed: whether a consumer build (portal / FNTEND) resolves published refs at build time -- if it does, this is louder than INERT and FNTEND owns that read. Nothing at lambda runtime resolves it: the function bundles _contracts/.",
+  "notes": "ISSUER DEFECT, third in three rounds and a NEW kind again: R25 under-granted, R26 cut an un-meetable criterion, and R26's drain then accepted a check that graded the shape of a pointer instead of following it. The transferable rule: A REFERENCE IS NOT VERIFIED UNTIL IT IS RESOLVED -- a census of ref PREFIXES (18 of 18 opal://) says nothing about whether the targets exist, and the two reads look identical in a report. REMEDY, already cut: round 27 cell IB-yr-271 publishes ComparisonCatalogue.schema.json to the v1 directory so the landed ref resolves, alongside the parser fix that makes the resolve-refs test able to report again. Publishing a MISSING contract a landed route already references is completing round 26; it is NOT the 'bend a published schema to satisfy the test' move CTO 103081 forbids, and that cell's control is narrowed to 'no EXISTING published schema is MODIFIED' so the distinction is machine-checked rather than promised."
+}
+```
