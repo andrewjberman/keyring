@@ -4381,6 +4381,73 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "No file outside <paths> edited."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~87",
+      "surfaced_at": "2026-09-30T19:10Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W87-S1",
+      "one_line": "The stored ft bundle is a flat cookie name->value map with no expiry field, so neither per-cookie expiry nor the earliest login-cookie expiry can be read from it.",
+      "spec_asserts": "WORKER FACE item 3: print, per cookie in the stored ft bundle, the cookie NAME and its expiry (UTC), plus the earliest expiry of the login cookies.",
+      "world_is": "ft.dpapi decrypts to {bundle: {<52 cookie names>: <str value>}, auth_evidence, network_auth_corroborated}; no value is a dict and no key is an expiry. The shape is by design: ft_harvest_session.py builds bundle = {c['name']: c['value']} (the cookie's expires is dropped) and auth.py persist_http_cookies rewrites the ft bundle as {cookie.name: cookie.value}. The login cookie present is FTSession_s (FTSession absent). AC1 prints 'expiry_utc=NOT RECORDED IN BUNDLE' per cookie and 'ft earliest login-cookie expiry: UNKNOWN'. The only date on the file is its mtime, 2026-09-15T03:26:43Z (ft.dpapi, 4694 bytes). sa and wsj/barrons bundles do carry an 'expires' per cookie; ft does not.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/auth.py:35-36 @fa71ab063e",
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/ft_harvest_session.py:361 @fa71ab063e",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~87/scripts/ad1_ac1_store_readback.py output, this commit"
+        ]
+      },
+      "notes": "Measuring ft's expiry needs the ft harvester to keep 'expires' (a change to the flat-jar shape its consumers read as a Cookie header) or a separate expiry record; neither is in this order's paths. Not done."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~87",
+      "surfaced_at": "2026-09-30T19:10Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W87-S2",
+      "one_line": "The stored sa session's user_id cookie value is NOT the hard-coded literal 1btfwdu that check() used: the old check asked about a different account than the parked session.",
+      "spec_asserts": "Z-W85-S2: check() hard-codes /api/v3/account/1btfwdu/info while contracts.json names {user_id}; HVST-ad-1 makes check() take the id from the stored session.",
+      "world_is": "The stored sa envelope (sa.dpapi) carries the id in bundle.all_cookies[name=user_id] (2 entries, domains seekingalpha.com and .seekingalpha.com, both the same value, 8 chars); no other bundle field carries it (email, user_agent, cookie_names, captured_at, network_auth_events hold none). That value does not equal '1btfwdu' (7 chars): measured as a boolean, the value itself never printed. sa_rest_fetch.check() now builds its URL from it (bundle_user_id), raises NotAuthorized when none carries it, and never falls back to the literal.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/sa_rest_fetch.py bundle_user_id/check, this commit",
+          "AC1 output line 'sa stored user_id equals the old hard-coded literal: False'"
+        ]
+      },
+      "notes": "Whether 1btfwdu was a different account, a stale one, or a typo is not measured here; the first live check() after this change decides it."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~87",
+      "surfaced_at": "2026-09-30T19:10Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W87-S3",
+      "one_line": "The wsj and barrons Secret NAMES are not in the worker face; AC1 and the writer take them as parameters, and AC1 defaults to wsj/session and barrons/session.",
+      "spec_asserts": "Issuer note: the Secret names are named in the halves at phase B, following the existing pattern (bloomberg/session, seeking-alpha/session, astn/ft/session).",
+      "world_is": "write_session_bundle(publisher, secret_name, runtime_root) takes the name as an argument and refuses any name in CREDENTIAL_SECRETS or SESSION_SECRETS. ad1_ac1_store_readback.py reads AD1_SECRET_WSJ / AD1_SECRET_BARRONS and, unset, uses wsj/session and barrons/session (printed name_source=default). At A0 neither exists in Secrets Manager (describe: ResourceNotFoundException), so AC1 prints NOT YET WRITTEN for both.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/credentials.py write_session_bundle, this commit",
+          "AC1 output, this commit"
+        ]
+      },
+      "notes": "At phase B the halves' names must be passed to the writer and set in AD1_SECRET_WSJ / AD1_SECRET_BARRONS before AC1, or AC1 reads the default names."
     }
   ]
 ```
