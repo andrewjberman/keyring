@@ -405,3 +405,90 @@ forward from round 5.
 - **(iii) Intent:** one intent per cell.
 - **(iv) What no cell moves:** a served value, a figure, a verdict, a cite, a count or a pick. u-1 changes the words around served
   counts and codes. u-3 changes dot opacity. u-5 adds attributes whose values are the served values.
+
+## v7 -- ROUND 7 (issuer, 2026-09-30 ~00:xZ), over PRD v0.3 @abfad1355c (ADMITTED)
+
+**Rectangle:** the round-6 analysis's enrichment list.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round6.md` @378fd0c04b (msg 26790) section 4, items 1-4, one cell per item,
+  with rulings 1 (no-call posture), 2 (footer form), 4 (DENIED = not searched), 5 (FWD-2 columns: measure, then build) and 6 (the
+  PASS badge) folded into their cells as the analysis places them.
+- **Cell ids:** `AV-s-1`..`AV-s-4`. The letter `t` is round 1's (`AV-t-1`..`AV-t-4`, still on disk), so round 7 takes `s`.
+- **NOT cells:**
+  - ruling 3 (the reference pages' band / contrast defects -- their owners);
+  - ruling 7 and the producer asks to AMGT_RESAPP (posture reason in words, crosswalk-name fallback, places moved, the thesis
+    driver's series);
+  - "$1,234" in drafted prose (carried).
+- **Portal base:** site-Z local DEV `fd4deb75`.
+- **Fixtures:** `deliverables/2.0.0_SA_COO~D/round7/fixtures/` = the round-6 set plus these, SERVED, captured at the cut by
+  read-only invokes of `opal-amgt-scoped-api` (each file's `_capture` / `_capture_note` names the route, CodeSha256 and time):
+  - `thesisBundle.992_HK_Equity.json`, `overlay.992_HK_Equity.json` (posture SERVED, verdict absent, comparable null, the
+    producer's machine reason -- cell 1's positive control);
+  - `timelineDay.992_HK_Equity.2026-08-13.json` (DENIED, 2 articles); `timeline.VLO_US_Equity.json` (272 DENIED, 0 articles);
+  - `rankings.{TRENDING,BREAKOUT}_{CHATTER,PRICE}.json` (the four lead lists, as served).
+  - ISSUER VARIANTS are built in memory inside the checks, each labelled there (an ABSENT posture with a planted reason;
+    date-only vintages; an all-quiet ASML; a served sector; a REFUSE sentence).
+- **FWD-2 served-column census (measured at the cut, ruling 5):** asset class and sub-asset class 30 of 32 on each price list and
+  2 of 2 on Trending x Chatter; sector 0 on every list; NO places-moved field on any row; Breakout x Chatter serves 0 rows. So
+  cell 4 renders asset / sub-asset class, names sector and places moved as not served, and "places moved" is a RESAPP ask.
+- **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-s-1` | 1 + ruling 1 | A no-call posture (status ABSENT, or SERVED verdict absent) reads "No call on this name yet" + one reason class from the served status (`data-posture-reason-class`: not-drafted / no-comparable / no-call-made) on the tab and both header-line copies; the served reason only on `data-posture-reason` | FWD-11 | `SA/tabs/PostureTab.tsx`, `SA/components/SecurityOverlay.tsx`, `SA/components/LeadPanel.tsx`, harnesses `posture` (re-anchor absent_arm_explicit), `exportCompare` (re-anchor the ABSENT-state key) | ~26 | LOCAL |
+| `AV-s-2` | 2 + ruling 2 | Both window footers (header cards, Thesis) stamp through the estate's `formatPanelTimestamp`: a time prints whole, a bare date prints the long date with no invented clock and says it is a date; each source begins "Source: "; `headerCardStamp` / `thesisWindowStamp` exported | FWD-11 | `SA/components/HeaderCards.tsx`, `SA/components/ThesisCards.tsx`, harness `drafting` (one loader line) | ~27 (1st) | LOCAL |
+| `AV-s-3` | 3 + ruling 4 | DENIED reads "Not searched on this day" (dissection, tooltip, legend); the all-quiet caption says an unsearched range was not searched, with served counts, never "honest zero"; each served event marked `[data-timeline-event]` with its headline; the walker's `--day "<sec>=<date>"` opens a day by date and writes `timeline-days.json` | HARVST FWD-5, FWD-6 | `SA/components/TimelinePanel.tsx`, `.claude/skills/ui-walk/walk.mjs`, `SKILL.md` | ~28 | LOCAL |
+| `AV-s-4` | 4 + rulings 5, 6 | The lead lists show the served asset / sub-asset class (and sector where served) as aligned columns under a header row, the unserved columns named once, nothing computed; the PASS badge leaves the face (`data-verbatim-check`), a refusal keeps its badge | FWD-2, FWD-11 | `SA/components/RankedList.tsx`, `SA/components/ThesisCards.tsx`, harnesses `drafting` (re-anchor verbatim_badge), `thesisLadder` (re-anchor pass_faces_kept) | ~27 (2nd) | LOCAL |
+
+**Edges and chains:**
+- There is no data edge.
+- Write sets: `ThesisCards.tsx` and `drafting.harness.cjs` are written by `AV-s-2` and `AV-s-4`, so slot ~27 runs s-2 then s-4.
+  Every other surface is written by exactly one cell.
+- M = 3 chains (s-1; s-2 -> s-4; s-3), N = 3, cap 8.
+- The surprise channel is shared append-only.
+
+**Checks (`round7/checks/`, dry-run at base fd4deb75; `_load.cjs`, `bound.cjs`, `census.cjs`, `walkvoid.sh` copied forward):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| absent.cjs | 1 of 3 (the 992 HK header prints the producer's reason verbatim; the VLO control passes) | 3 of 3 |
+| footer.cjs | 0 of 3 (builders unexported; base stamps ISO / "Pack read") | 3 of 3 |
+| timeline7.cjs | 0 of 3 | 3 of 3 |
+| walkday.cjs | 0 of 3 | 3 of 3 |
+| columns.cjs | 0 of 3 | 3 of 3 |
+
+- **Bounds PASS at base AND on the green arm:** U1 8 of 8, U2 5 of 5, U3 3 of 3, U4 5 of 5. RESAPP vv-5.AC1 YES at base; on the
+  green arm the four parity sets are exact. walkvoid.sh YES.
+- **census.cjs** now covers EVERY walked name (header-/posture- for VLO, INTU, SAP GY, 992 HK) plus a planted-reason arm. It reads
+  40 tokens at base (header-HK alone 7: the file name, AMGT-s-1, F2/G-24 ...; planted 12, 4 of them [planted]) and 20 on the green
+  arm (planted 1).
+
+**Cut rules applied (round 6's two cut defects):**
+- **(a) No base comparisons.** No check compares against a base snapshot, count or diff; each check grades the worker's own tree,
+  so slot ~27's second order has no pre-queue base to drift from.
+- **(b) Bounds run against a green build.** Every bound was run against a GREEN BUILD of all four cells: a scratch detached portal
+  worktree at fd4deb75 with the cells built. That run found every harness a required change NECESSARILY breaks:
+  - `posture` and `exportCompare` for s-1;
+  - `drafting` for s-2 (its loader cannot resolve a new import);
+  - `drafting` and `thesisLadder` for s-4.
+  Each is granted in its cell's `<paths>`, with the exact re-anchor named on the face and proven green on the green arm.
+- **Two build constraints the green run found, stated on the faces:**
+  - `errorEmpty`'s loader cannot resolve a NEW sibling module, so s-1 restates its helper per file.
+  - The loaders cannot resolve an unknown `@/` module, so s-2 imports `dateUtils` relatively.
+
+**Battery:**
+- comp-schedule and comp-iam: DECLARED-NOT-APPLICABLE.
+- comp-adversary: the checks above.
+- Blind spots:
+  - static markup with the estate chrome stubbed;
+  - the header window is lazy-loaded, so footer.cjs reads the exported builders;
+  - react-query and recharts are stubbed in timeline7.cjs, so pixels are the walk's;
+  - walkday.cjs reads walk.mjs statically; the issuer's walk (`--thread "Valero"`, `--day "992 HK=2026-08-13"`, the four names,
+    /market /positioning /philosophy) is its live run.
+
+**Rule 24:**
+- (i) MECE over the analysis's four items by subtraction: 4 placed; the NOT-cells named with their reasons.
+- (ii) One cell per write set; two shared files resolved by one queue.
+- (iii) One intent per cell.
+- (iv) No cell moves a served value, a figure, a verdict, a cite, a count or an article order. s-1 and s-4 move visible words
+  onto attributes; s-2 moves only the stamp's format; s-3 moves a status word to its meaning and draws served events it never
+  drew.
