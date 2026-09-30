@@ -15845,6 +15845,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "CLAUDE.md NEVER-2: a deploy entry sits on the worker's branch until the drain, so a shared-tree read of .open_deploys/ is not evidence; before acting on any open entry, measure the ARTIFACT.",
   "world_is": "The drains that merged these rounds' work did not carry the sentinel removals, so the OPEN state is stranded on branches that are no longer worked. Nothing is at risk right now -- the entries' acts all completed and their completion records are on the trunk -- but `deploy_ledger.py check --red` run in any of those worktrees would blare on a finished deploy, and a future seat reading only the shared tree gets a clean answer it did not earn.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. This cell did not touch another round's sentinels: its own entry (amgt-resapp-yy5-one-build-20260930) was opened AND COMMITTED to the shared trunk before the build and CLOSED with all three legs proven, so it strands nothing. Filed because the sweep that NEVER-2 requires surfaced it, not because it blocked this act."
+},
+{
+  "id": "AMGT_RESAPP-Z-S309",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T03:40:00Z",
+  "one_line": "Round-51 cell 3 (the export resolves per-security units) cannot move the six names: the export already prints the model block's per-security unit, and for the six that unit is UNRESOLVED in field_map.json itself ('sampled magnitude ... does not discriminate absolute vs millions'), so the resolution is a unit-map discriminator (AMGT_CORPUS's artifact), and the page's K/M/B/T scale on those facts is a claim the unit map refuses.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integrations/bloomberg/research/field_map.json at HEAD (last written 6077a2d939, AMGT_CORPUS round 17): the value-bearing facts of the six carry per-security UNRESOLVED-ON units -- SALES_REV_TURN (6501, 8316), CURR_ENTP_VAL (6501, 9433, 8035, 8766, TSM), NET_DEBT (8316), BEST_SALES scalar exception (6501) -- each 'sampled magnitude N does not discriminate absolute vs millions'.",
+      "model_block_pull._resolved_unit (:713) returns that per-security text (dict units) or the CRPS-u-1 scalar exception (:690-710); AMGT_CORPUS round 19 u-1 is complete, so the exception is already visible.",
+      "The served sweep at the base (zz-8.AC2.sh): values equal 6 of 6, 'scale unchecked (export unit UNRESOLVED)=6' -- the sweep counts a fact only when the PAGE text carries a K/M/B/T scale (sweep.py:435), i.e. the page states a scale the export and the unit map refuse to claim."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-50 ruling 3: the export resolves each header figure's unit from the model block's per-security unit (after CORPUS u-1), and FWD-30 is REALIZED when the six read values-equal with units resolved.",
+  "world_is": "The export already reads the per-security unit and prints UNRESOLVED where it is unresolved; nothing inside RESAPP's export surface can resolve it. Resolution needs a unit-map discriminator that does not rest on magnitude alone (a cross-field consistency read, e.g. an EV or revenue figure against a resolved per-share figure times shares), which is build_unit_map.py / field_map.json, AMGT_CORPUS's artifact; and 'never scaled silently' is broken on the PAGE (DSGN_AMGTV1), not the export.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Ruled at the cut: cell 3 is NOT cut in RESAPP round 51 (no RESAPP-owned write moves the six); the re-home (CORPUS unit-map discriminator; DSGN page scale) is asked of 1.0.0_SA_CTO~Z as one decision, since it moves where FWD-30's last hold is served. Cell 8 carries cells 5 and 6 only."
 }
 ]
 ```

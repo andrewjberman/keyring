@@ -6889,3 +6889,99 @@ fanout:
 
 - Hitachi's model block: AMGT_CORPUS round 17 (ruling 4). The page's rendering of the dossier fields, NEOs and the label:
   DSGN_AMGTV1. Values with no page attribute (Z-W173-S1..S4): DSGN asks, already sent 22:21Z.
+
+## 59. ROUND 51 -- THE UNION AT THE CHOKE POINT, THE DERIVED ROOT, THE SCOPED STAMP AND ITS CONTENT DIFF, NAMES AND PLACES MOVED ON THE LEAD LISTS, THE DRIVER CHART'S SERIES, THE FWD RE-GRADE, AND THE ONE BUILD. Seven cells, seven orders (cell 3 re-homed at the cut)
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 50 ANALYSIS** (`ledger/ROUND_ANALYSIS.round50.md` @`debbec1907`, msg 26859;
+round 50 CLOSED). Rulings carried: the union goes INTO `write_pool`, first (ruling 1); `price_axis_pull.py` derives its root (ruling 2);
+the build prints its packaged-file content diff against the deployed artifact and `REGISTRY_HASH` is scoped, restamped with the four
+constants unchanged (ruling 4); names and places moved on the lead lists, and the driver chart's series (ruling 5); the FWD-1..31
+re-grade, read-only (ruling 6); ONE build and apply under one pair and one NEVER-2 entry (enrichment item 8). No outcome is added, so
+no L4-R half re-opens.
+
+### 59a. THE EIGHT ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 the union inside `write_pool` | `AMGT-zz-1` (LOCAL, worker) |
+| 2 `price_axis_pull.py` derives its root | `AMGT-zz-2` (LOCAL, worker-light) |
+| 3 the export resolves per-security units | **NOT CUT -- row `Z-S309`**; re-home asked of `1.0.0_SA_CTO~Z` (59b.3) |
+| 4 content diff + scoped `REGISTRY_HASH` + restamp | `AMGT-zz-4` (WORLD by path floor, worker; no apply) |
+| 5 lead-list names + places moved | `AMGT-zz-5` (SERVED build, worker) + `AMGT-zz-8` |
+| 6 the thesis driver's chart series | `AMGT-zz-6` (SERVED build, worker) + `AMGT-zz-8` (ASML's real rewrite) |
+| 7 FWD-1..31 re-grade | `AMGT-zz-7` (LOCAL read, worker) |
+| 8 ONE build and apply carrying 5 and 6 | `AMGT-zz-8` (WORLD, `0.7.0_AE_CloudOps~A`), plus AMGT_HARVST n-6 as a NAMED, NON-INERT rider (CTO msg 26878) |
+
+### 59b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The choke point** (`round51/checks/zz_choke.py`): a fake S3 seeded with the served pool plus a planted record; both
+   `crosswalk/v1` writers (`add_security._mint_pool` and `build_crosswalk` + `write_pool`) DROP the plant at the base.
+2. **The root** (`price_axis_pull.py:97`): `REPO = os.environ.get("OPAL_WS_ROOT") or r"C:\Users\Opal Bloomberg\Desktop\ajb_workspace"`;
+   `:98` puts `REPO/integrations/bloomberg/mcp` on `sys.path` at import; `:136`/`:143` build deliverable paths from `REPO`;
+   `_REPO_SELF` (`:107-109`) already derives the tree from `__file__`. The two bound suites read 9 passed at the base.
+3. **Cell 3, measured and not cut.** `field_map.json` (last written by AMGT_CORPUS @`6077a2d939`) carries per-security UNRESOLVED-ON units
+   on the six names' value-bearing facts ("sampled magnitude N does not discriminate absolute vs millions": SALES_REV_TURN 6501/8316,
+   CURR_ENTP_VAL 6501/9433/8035/8766/TSM, NET_DEBT 8316, BEST_SALES 6501). `_resolved_unit` returns exactly that and CORPUS u-1 is
+   complete, so the export already prints the model block's per-security unit. No RESAPP write moves the six; the resolution is a
+   unit-map discriminator (AMGT_CORPUS's artifact), and the page's K/M/B/T on those facts is DSGN_AMGTV1's. Row `Z-S309`; the served
+   instrument `round51/checks/zz-8.AC2.sh` (base: values equal 6 of 6, scale unchecked 6) stays the FWD-30 grade for whoever lands it.
+4. **The stamp:** `REGISTRY_HASH` `3118e82e...` vs a fresh `54d1865c...`; `--check` RED at HEAD while the four constants are byte-equal
+   (`zz_4_stamp.py`). The build script runs `--check` under `set -e` (`:123`), so `--build-only` exits 1 at the base before packaging.
+   The deployed artifact (`pVa+sgzj`, 40.1 MB, 344 files) packages `lib/opal_naming.py` (Z-S307) -- the content-diff check's control.
+5. **Lead lists:** 66 rows over the four axes, 16 named, no `name_source`, no `places_moved` (`zz_5_rows.py`, served `zz_8_served.py`);
+   the adapter already imports `crosswalk` (`scoped_amgt.py:115`), so the name fallback needs no new closure member.
+6. **Driver chart:** ASML's stored analysis holds 3 points and resolution 'cited' but reads ABSENT (the filing branch needs >= 2 points
+   with a `span`); `analyze.reverify_stored_thesis_driver` (`:1349`) rewrites the stored object unconditionally, so the worker adds
+   `dry_run` and the REAL rewrite is zz-8's act under the pair. The other 10 driver names hold 0 points: carried (59f).
+7. **The rider** (CTO msg 26878; HARVST round-24 ruling 1): HARVST n-6's `/timeline/day` read path (`timeline_api.py`, drained
+   @`150b717373`) ships in zz-8's build. The pair's expected diff names `/timeline/day` latency moving with bodies byte-equal;
+   `round51/checks/zz_8_timeline.py` re-runs n-6's OLD == DEPLOYED body check on the deployed function (a bound: PASS at the base).
+8. **Closure note for zz-8's halves:** `crosswalk.py` is packaged (the adapter imports it), so zz-1's `write_pool` change ships in the
+   one build; zz-4's content diff names it. `write_pool` is not on the adapter's served path.
+
+### 59c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-zz-1` | THE UNION INSIDE `write_pool` | `~180` | worker | LOCAL | `lib/research/identity/crosswalk.py`, `add_security.py`, `lib/research/identity/tests/**` |
+| `AMGT-zz-2` | `price_axis_pull.py` DERIVES ITS ROOT | `~181` | worker-light | LOCAL | `integrations/bloomberg/research/price_axis_pull.py`, `integrations/bloomberg/research/tests/test_price_axis_pull.py` |
+| `AMGT-zz-7` | THE FWD-1..31 RE-GRADE | `~182` | worker | LOCAL | its deliverables only |
+| `AMGT-zz-4` | CONTENT DIFF + SCOPED STAMP + RESTAMP | `~183` | worker | WORLD (path floor; no apply) | `infra/aws/terraform/harvest/{gen_harvest_prefixes.py,content_diff.py,build-and-upload-scoped-amgt.sh}`, `lib/research/api/_harvest_prefixes.py`, `lib/research/api/tests/test_harvest_prefixes.py` |
+| `AMGT-zz-5` | LEAD-LIST NAMES + PLACES MOVED | `~184` | worker | SERVED | `lib/research/api/scoped_amgt.py` + `lib/research/api/tests/**` |
+| `AMGT-zz-6` | THE DRIVER CHART'S SERIES | `~185` | worker | SERVED | `lib/research/filings/analyze.py` + `lib/research/filings/tests/**` |
+| `AMGT-zz-8` | THE ONE BUILD: DEPLOY + ASML'S REWRITE + THE HARVST n-6 RIDER | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the artifact, ONE safe-apply (code only), ONE analysis-object rewrite (ASML), deliverables, the ledger |
+
+### 59d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's eight items; seven land in one cell each, item 3 is placed by subtraction on a measured row (59b.3).
+- **(ii) Same grain.** One writer invariant, one derived root, one stamp + one printout, one row shape, one series, one pass, one act.
+- **(iii) Intent.** One axis: what is served is what the tree says, and each claim about it is measured against the deployed state.
+- **(iv) What a cell does NOT move.** zz-1 moves no served crosswalk byte (the round trip stays digest-equal); zz-2 moves no computed
+  rank; zz-4 moves none of the four constants and uploads nothing; zz-5 moves no rank, score or existing name; zz-6 writes no
+  object; zz-7 moves no file outside its deliverables; zz-8 moves exactly its pair's radius.
+
+### 59e. EDGES AND FAN-OUT
+
+```
+zz-5 -> zz-8, zz-6 -> zz-8, zz-4 -> zz-8   (the one build carries 5 and 6; its half cites zz-4's printout; zz-1's crosswalk.py rides it)
+zz-1 -> zz-8   (packaging edge only: crosswalk.py is in the closure, so zz-1 drains before the build)
+zz-7 -> (none)  graded at pVa+sgzj, BEFORE zz-8 moves the base
+zz-2 -> (none)
+fanout:
+  cap: 8
+  orders_total: 7
+  chains_total: 3                      # {zz-1, zz-4, zz-5, zz-6 -> zz-8}, {zz-2}, {zz-7}
+  wave_0: [zz-1 ~180, zz-2 ~181, zz-7 ~182, zz-4 ~183, zz-5 ~184, zz-6 ~185]
+  wave_1: [zz-8]                       # a seat order: after zz-1/4/5/6 merge, zz-7 graded, and both never-widen halves committed
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  egress: none in wave 0 (Opal AWS reads only); zz-8's build pip-downloads its pinned wheels
+  route_change: none (payload fields only)
+  no_promote: true
+```
+
+### 59f. CARRIED
+
+- Cell 3 (the six UNRESOLVED units): row `Z-S309`, re-home asked of `1.0.0_SA_CTO~Z` (AMGT_CORPUS unit-map discriminator; DSGN page
+  scale). The 10 zero-point driver names: a fresh extraction, AMGT_CORPUS's producer. The NEVER-2 sentinel-read law text: the CVO's
+  governance fork (ruling 7). The page rendering of names and places moved: DSGN_AMGTV1.
