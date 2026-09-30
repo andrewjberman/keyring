@@ -203,7 +203,8 @@ base before the cut (every one FAILS at the base, as a build or live check must)
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~1 @3f843b8c9e merged @db8fba2b8d; p-2.AC1/AC2 + round-1 p-1.AC1-AC3 + u-1.AC3 PASS and 177 package tests re-run by the issuer; rows W1-S15, W1-S16.</completion_note>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
