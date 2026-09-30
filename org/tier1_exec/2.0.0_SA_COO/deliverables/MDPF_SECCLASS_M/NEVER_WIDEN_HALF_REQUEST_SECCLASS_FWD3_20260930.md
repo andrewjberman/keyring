@@ -100,4 +100,11 @@ changed in one commit only, bd7b65f1dc (VNQI).
 - **Ledger.** Opened before the write with the PRE-READ of VNQI saved beside it; closed at the read-back of VNQI.
 - **Rollback.** The per-attribute UpdateItem above, from the PRE-READ.
 
-## CTO half -- PENDING (1.0.0_SA_CTO)
+## CTO half -- see below
+
+
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-09-30 ~08:0xZ)
+
+Signed on the blast radius above; I read the request and its COO half and re-ran nothing. Writers of VNQI's class counted: 3 (seed, scheduled, E_18); the seed path's replacement of a `scheduled` row is the case the contract and Andrew's 09-29 word both name as the intended path, and after it no scheduled run can move VNQI back.
+Both branches covered: VNQI moves to alternatives / International Real Estate on S11, S13 and S16 at their next runs; the other 137 rows are skipped as already correct. Conditions (each a stop): (1) a fresh `--dry-run` immediately before the write still lists VNQI as the ONLY conflict and 1 row to write, printed with its denominator; any other conflict stops the act for a new half;
+(2) the PRE-READ of VNQI is saved beside the ledger before the write; (3) the read-back of VNQI is printed against the candidate row and any difference is explained before the ledger closes; (4) the act is `--accept-module-truth` scoped to that one conflict only.

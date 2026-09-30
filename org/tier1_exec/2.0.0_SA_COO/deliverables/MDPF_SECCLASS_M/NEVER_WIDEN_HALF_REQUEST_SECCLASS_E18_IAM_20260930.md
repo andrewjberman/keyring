@@ -107,3 +107,14 @@ Signed on the blast radius above, against TO-SC-e7 drained @aa89145a8e. The issu
   ad-hoc QA run before it is permitted and is not the acceptance.
 - **Ledger.** One entry covering both steps, opened before step 1 and closed at the post-run read (rows written,
   refused, denominator).
+
+
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-09-30 ~08:0xZ), step 1 and step 2 separately
+
+Signed on the blast radius above; I read the request and its COO half, and re-ran nothing.
+**Step 1 (IAM, additive):** signed as an additive inline policy, PutItem on `etf-classifications` for `bd-exporter-ec2-role`, and nothing more. It grants nothing new today because shared-infra's `bd_securities_access` already grants the role an unconditional PutItem on that table (row W6-S2).
+This half does NOT sign "bd-securities PutItem removed", and no record may say it does. Conditions: (1) a plan read before the apply shows exactly one added resource and no change or destroy; (2) the apply goes through `safe-apply`; (3) the read-back names the new Sid.
+**Step 2 (code deploy and the scheduled run):** signed, with the limit stated: the conditional put on absence is enforced by application code, not by IAM, and the role's shared-infra grant is unconditional, so until that grant is narrowed the guard is a code guarantee only. Conditions: (1) `safe-deploy.sh` with the SHA verified after the copy;
+(2) the acceptance is the first ordinary 04:00Z scheduled run, with an ad-hoc QA run allowed and not counted; (3) the post-run read prints written, refused and the denominator, and confirms every written row is new (no row that held a `classified_by` value changed) and that no `bd-securities` call appears in the run's logs;
+(4) one ledger covers both steps, opened before step 1 and closed at the post-run read.
+**Carried, not signed:** narrowing `shared-infra/main.tf`'s `bd_securities_access` and its unconditional `etf-classifications` write is a separate act with its own halves, because that policy also serves `partners-lambda-role`. It is a round-2-or-later cell and should be cut; until it lands, FWD-5's IAM read cannot report zero.
