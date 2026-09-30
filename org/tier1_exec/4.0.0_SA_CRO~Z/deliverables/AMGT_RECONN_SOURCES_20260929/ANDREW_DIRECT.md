@@ -125,3 +125,11 @@ Recorded September 30, 2026, approximately 00:2x-00:3x ET; Claude Code terminal,
 > bbg should have dividend calendar for the holdings
 
 Applied: the trade floor is 0.2% of prior shares (probe re-run; `TRADE_INFERENCE_FEASIBILITY.md`), and dividends enter the method from Bloomberg's per-holding dividend calendar (S6).
+
+## 0.2% confirmed, verbatim
+
+Recorded September 30, 2026, approximately 00:4x ET; Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, after the 0.2% / 0.5% comparison. Exact receipt timestamp not exposed.
+
+> ok stick with 0.2%, send it to CTO when committed
+
+Already in force: rev 3 committed at 2a1f275a78 with the 0.2% floor, sent to 1.0.0_SA_CTO~Z (msg 26910), and the endpoint amended at 33c1d096a3 (msg 26913).
