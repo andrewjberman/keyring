@@ -166,9 +166,30 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   (the collection), then phase B (the schedule, re-signed).
 - **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
+**AMENDMENT 4 (issuer, 2026-09-30 ~17:1xZ) -- WITHDRAWN after its phase-A act; phase B NOT run (0 names reached).**
+- **Phase A ran once under the pair** (@`6b3b243c4e` / @`2fa1940cad`), and its record is drained @`2c9c337f92`:
+  - 12 run records and 14 jobs; 0 names reached; pending 0, so no upload;
+  - AC1 FAILS (14 of 32 owed jobs); AC2 passes (0 measured, 0 reached).
+- **The refusal classes,** read from the kept bodies (runtime `rejected_bodies/`):
+  - wsj 401: a DataDome captcha page (`geo.captcha-delivery.com`, "Please enable JS and disable any ad blocker");
+  - ft 403: a "Security Verification" interstitial;
+  - bbg 403: the contracted press-and-hold repair did not restore access;
+  - barrons 401: after one repair.
+
+  These are BOT CHECKS on the collector's requests, not token expiry. Per the CTO half's condition (ii) (an interactive
+  challenge is Andrew's login, never bypassed), the bbg and wsj legs stopped after name 1, and barrons and ft ended at their
+  refusals.
+- **sa:** `contract_unavailable` on all 10 jobs: "Security lacks a resolved Seeking Alpha symbol". The issuer copied the
+  security files from the GOLD universe, which carries no SA symbol, instead of the collector's own resolved securities. This
+  is an issuer cut-time miss (rows `Z-S47`, `Z-W83-S1`). The sa account was never touched.
+- **Phase B** (the schedule) re-arms for the names reached. It is 0, so nothing is armed.
+- **Why withdrawn, not re-cut:** how to collect past bot checks, and whether an Andrew-run headed session is the route, is a
+  direction question for `1.0.0_SA_CTO~Z` at the round-29 analysis, outside this decomposition.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>withdrawn</status>
 <round>29</round>
 <slot>~83</slot>
 <fabric>site-z</fabric>
