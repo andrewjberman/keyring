@@ -87,7 +87,7 @@ hashes, and any row.
 which owns the fixture file). Chain C on slot ~51: l-4 -> l-5 -> l-6. Base ba62e945: strip.cjs 1 of 3; green r13-green-c @19420ece 3 of
 3; rendercontrol 3/3.
 
-<status>pending</status>
+<status>complete</status>
 <round>13</round>
 <slot>~51</slot>
 <fabric>site-z</fabric>
