@@ -3802,6 +3802,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Issuer row, answering the CTO's round-27 question (msg 27057). Carried to round 28 beside the cached-listing reach fix: whether a known-rejected key should be held (not re-fetched) within a day, since its re-fetch is what exposed the job to bbg's challenge."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W78-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~78",
+      "surfaced_at": "2026-09-30T10:30Z",
+      "one_line": "The signed HVST-aa-3 put cannot serialize: store.silver_append raises pyarrow ArrowNotImplementedError (struct 'data' with no child field) building the parquet for the 11 NEW bbg rows, BEFORE any S3 put; nothing written, both ACs FAIL.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Both never-widen halves and the TO: silver_append('bloomberg','article', aa3_common.rebuilt_rows() rows, ('article_key',), stamp) makes ONE never-overwrite put of 11 NEW rows; the signing dry run mirrors silver_append's filter and reads 11 NEW / 1 put.",
+      "world_is": "Act-start gate printed OK (parts 30, bronze 30, expected write 11 NEW, 1 fetch-date group). aa3_act.py ran silver_append once (run_stamp 20260930T102302Z): validation and the record_hash filter passed, then pa.Table.from_pylist built and pq.write_table raised 'Cannot write struct type data with no child field to Parquet'. Stack: store.py:462 pq.write_table. No put was made: silver parts still 30, no key with 20260930T102302Z. Cause located read-only: the 11 NEW rows (q-2's parse of the raw payload) carry empty dicts {} at row.footnotes.data, row.body.data, row.footer.data, row.body.content[].data (11 of 11 rows), row.footer.content[].data (5), row.videoAttachments (10), row.imageAttachments (1); pyarrow infers an empty struct that parquet cannot write. The 30 already-served rows carry no empty dict. The signing dry run only mirrors the filter and never serializes, so it could not see this. AC1 FAIL (new parts 0 != 1; 11 missing), AC2 FAIL (served keys 30 != 41; NEW non-empty 0 of 11; re-run would write 11). No retry per the order.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~78/aa3_act.txt: ArrowNotImplementedError traceback",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~78/aa3_AC1.txt and aa3_AC2.txt: RESULT: FAIL",
+          "lib/research/harvest/store.py:462 (pq.write_table in silver_append) @4de7da3cc7"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Fix is outside this order's paths (row builder in lib/opal_data_harvest/silver_from_bronze.py or silver_append serialization, e.g. dropping or typing empty dicts): a re-cut with its own pair is the issuer's call. The 11 empty rows and the 30 served keys are untouched."
     }
   ]
 ```
