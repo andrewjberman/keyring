@@ -636,6 +636,28 @@
     "spec_asserts": "Amendment 4 step 5-6 and AC2: the deployed server.py and rivalfunds_view.py equal the deploy commit 4ce794642699, whose server.py carries the /rivalfunds routes.",
     "world_is": "The gateway host no longer runs 4ce794642699: a second release built on 288fa78c93 was deployed over it, so the /rivalfunds routes are gone (404) while the rivalfunds files sit on disk. The manifest edit this worker was told to make (deployed_commit=4ce794642699, deployed_at 14:37Z) is therefore stale for the host as of 14:41:53Z. Ledger L3/L4/L6 are left OPEN; this worker did not redeploy (the deploy is the issuer's act per W5-S12) and did not touch the other seat's release.",
     "notes": "Options for the issuer: rebuild a ref on the NEW host base (2e2254156e's gateway tree) plus the key-16 files and redeploy before ~16:13Z, or have the NFRA_MCPINDEX release re-cut on 4ce794642699 (the issuer's 'tell the in-flight release seat to base on it' step). ARMED: the ledger blares RED at ~16:13Z with L3, L4, L6 open, and the gateway serves 404 on /rivalfunds now."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S17",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-09-30T15:35Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W5-S16: 2.0.0_SA_COO~RV redeployed signed ref 4ce794642699 at 15:23:02Z (Plan A, CTO~O msgs 27225/27228); /rivalfunds routes are back (401) and AC1-AC3 PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Deploy rc 0 at 15:23:02Z, 'OK: opal-gateway deployed successfully' (issuer report).",
+        "Host == ref 80/80 files (SSM 41de73dc-bcca-4558-acfb-4b98cb316d98); /health 200, /rivalfunds 401, /rivalfunds/archive 401, service active (SSM 1e047775-4987-4cd3-8180-5dd9850af451).",
+        "d-2.AC1, AC2, AC3 each 'RESULT: PASS 0 failures' re-run by this worker ~15:26-15:30Z (AC2 one run read SSM Status Pending, retried once, PASS)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row W5-S16: the gateway serves 404 on /rivalfunds after the 2e2254156e overwrite; ARMED until redeployed.",
+    "world_is": "The overwrite is reverted: the host runs the signed ref again, so W5-S16's hazard is disarmed; W5-S16 itself is unedited history.",
+    "notes": "Supersedes ETFS_RIVALS-Z-W5-S16 (the gate forbids editing a row in place). The issuer dispositions S16."
   }
 ]
 ```
