@@ -3036,6 +3036,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The move landed with dossier.py's two model-block readers still on the raw key; the kept raw copies make them read stale blocks silently (no error, no absence).",
     "notes": "Fix: route dossier.py :927/:966 through slash_safe_key (or decode both forms), then write_one BP/NG. Surfaced at aa-4 leg d; ask to CTO~Z in AA4_DEVIATIONS_ROUND25.md. Same class: peers/universe.py (Z-W4-S6 names it) -- not re-measured here.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W5-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+    "surfaced_at": "2026-09-30T19:45:00Z",
+    "one_line": "The UNMEASURED basis text that _figure_currency returns is hard-coded to '(CRPS-aa-1 round-25 census)', so BP/ LN Equity's two held figures, measured in round 26 (CRPS-ab-5), print a provenance naming the wrong census.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/research/model_block_pull.py _figure_currency: return None, \"UNMEASURED: %s (CRPS-aa-1 round-25 census)\" % _DENOMINATION_REASONS[held] (one literal for every held security)",
+        "test_figure_currency_round26.py::test_bp_market_cap_is_unresolved_no_currency: basis for BP/ LN Equity CUR_MKT_CAP starts UNMEASURED: and cites the round-25 census, which excluded BP (Z-S64)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order grants only the denomination tables of model_block_pull.py and says change no other function; the basis a held figure prints is expected to name the census that measured it.",
+    "world_is": "The provenance suffix is inside _figure_currency, outside my grant, so BP's held figures carry '(CRPS-aa-1 round-25 census)' though their measurement is DENOMINATION_CENSUS_ROUND26.json; the currency (None) and the UNMEASURED: prefix are right, only the suffix is stale.",
+    "notes": "Filed, not fixed. A one-line edit to the suffix (or a per-census reason table) is the issuer's to cut.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
