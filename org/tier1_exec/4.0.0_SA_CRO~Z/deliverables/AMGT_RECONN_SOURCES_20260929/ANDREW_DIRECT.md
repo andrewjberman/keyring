@@ -67,3 +67,11 @@ Recorded September 29, 2026, approximately 20:59 ET (September 30, 00:59 UTC); d
 > only client assets go through that route to opal-data-assets. outside research, public info, etc (e.g. opal-data-harvest, opal-data-transcript, etc) are managed in their own buckets.
 
 This reaffirms the existing R4 in `infra/logic/02_DOCTRINE.md`, read during this correction. The brief and supporting specification now explicitly identify `opal-data-etfs` bronze/silver/gold as the existing policy's application to outside ETF research. The observed builder output is an implementation/placement-metadata mismatch, not a new policy exception or an open decision. No global registry edit, production migration or peer dispatch was performed for this correction.
+
+## Six-step build order and gap pass, verbatim
+
+Recorded September 29, 2026, approximately 23:2x ET (September 30, 03:2x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9. Exact receipt timestamp not exposed.
+
+> Let's just do a pass on the current state of the brief and any associated evidence and make sure that there are no holes in any processes here. The way I see it, there are the following steps that have to be executed essentially in this order. 1.) Bucket structure createdin opal-data-etfs with bronze/silver folders for bloomberg and issuers respectively, as I expect they will be in different shapes. Gold folder will be unified shape that can accrue from either channel. 2.) Backfill from Bloomberg pulled ad hoc per ETF into bronze. 3.) lambda designed to activate on bronze ingestion completion to type/dedup silver parquets. 4.) lambda designed to activate on silver completion that runs gold foundational shape + any other gold tables. 5.) Lambda runs at completion to generate presentation worksheet with relevant chart views and AI analyses, probably hosted on mcp.opalinvest.dev/activefunds (can borrow a lot for this from /daily-sprint cloud process). 6.) Schedules set up for daily csv ingestion and parsing that goes to the issuer bronze/silver folder path. Bloomberg exists as backup retry if issuer fails. These run daily.
+
+Step 5 (a hosted presentation page with AI analyses) is new relative to the brief, whose O1 said a dashboard was not required. The gap pass is reported in-session; no brief text, build or dispatch was changed by this record.
