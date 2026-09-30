@@ -30,6 +30,17 @@ cottonwood 200) -> both prints to the CTO -> S238 disarms -> the W27 window (als
 **Round 30 list:** the certifier data path; S231's terminal state for a permanent authority refusal; ONE hygiene cell
 (W94-S2 + the two base-red generate test files); the issuance commit states CTO 103159 and CTO 103372.
 
+**Pre-cut measurement for the certifier cell (tick 74, 19:4xZ):** the data path EXISTS without a contract change.
+`ycharts/generate/publisher.py` `publish()` already loads and hash-checks the retained composition (`_promote_sources`,
+`json.loads(retained["data"])["resolved"]`), and `RequestComposition.schema.json` carries `resolved.comparison_catalog`
+(object, maxProperties 5, one `$defs/comparison` per chosen key). Today `publish()` calls
+`build_publication(data, census, ...)` (publisher.py:115) and `build_publication` -> `verify_extraction` calls
+`certify.certify(eligible, pdf_bytes, census=census)` (publication.py:151) and `certify(charts, ...)` (:192) with no
+comparisons. The cell threads the catalogue's chosen names publisher -> build_publication -> certify, and certify refuses
+a COMPARISON/MULTI report whose PDF prints none of them. Paths: publisher.py (IRPT_Y_ACCESS_INTEGRATION_P, Y semantic
+writer), extract/publication.py, extract/certify.py and their tests. No import-line change is implied (CTO 103372 not
+engaged unless one is added).
+
 ## 0-prior. Round 19 ~Y CLOSED (2 of 2 orders drained); round 20 list
 
 Decomposition `decompositions/IRPT_BCKEND_DECOMP_R19_Y.md` (@89f619e28b, amendments 1 @ecbb08548f and 2 @81cb041780).
