@@ -64,7 +64,7 @@ main workspace's paths); AC2 PASS 9. The ruling's "planted defect in the worktre
 arm: the cross-tree read happens only through the sys.path entries it counts (blp_client is imported lazily, so a two-file pytest
 cannot reach a plant there).
 
-<status>pending</status>
+<status>complete</status>
 <round>51</round>
 <slot>~181</slot>
 <fabric>site-z</fabric>
