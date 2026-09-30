@@ -72,7 +72,13 @@ diffable against `YCHARTS_GENERATION_ENDPOINT_CENSUS_20260930.md`.
 ## BOUNDS
 
 - **Grant.** The `<paths>` block plus `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~94/` and
-  this order's file. `transport.py`, `run_offline_suite.py` and the check scripts are READ-ONLY.
+  this order's file. `run_offline_suite.py` and the check scripts are READ-ONLY.
+- **AMENDMENT 1 (issuer ruling on row W94-S1, decomposition amendment 1):** `transport.py` is granted for EXACTLY ONE
+  change -- remove the `"location": fixture.get("location", "")` line from `ReplayTransport`'s evidence record
+  (around line 594) so the replay records the same ten-key shape as the real `Transport._record`. Nothing else in
+  `transport.py` moves; the reply/`info` path keeps its `location`. `job.py` validates STRICTLY against
+  `VENDOR_LEDGER_SHAPE` (your `candidate_strict_validate.patch`); do NOT strip any key in production code (the
+  `candidate_strip_location.patch` is not taken). The three criteria are unchanged.
 - **No AWS call, no deploy, no Terraform, no vendor/external network call.** The change lands on the resident by
   `~P`'s install packet later; nothing here restarts anything.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise
@@ -91,6 +97,7 @@ diffable against `YCHARTS_GENERATION_ENDPOINT_CENSUS_20260930.md`.
 
 <paths>
 infra/aws/lambda/investor-reporting/ycharts/generate/job.py
+infra/aws/lambda/investor-reporting/ycharts/generate/transport.py
 infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_receipt_ledger.py
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y/R29_checks/check_291_receipt_ledger.py
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y/R29_checks/check_291_dup_control.py

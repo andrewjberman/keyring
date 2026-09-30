@@ -240,3 +240,38 @@ Owners below are read from the CRO brief `docs/briefs/irpt-ui-remaining-brief-20
   next DSGN_IRPTV1 slug, FAST section.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 2026-09-30 ~14:4xZ -- AF-1, AF-2, item 36, item 37 (handed over by `2.0.0_SA_COO~D`, message 103259)
+
+**Lease:** `org/mcp/drive-mode.log` last ARM 2026-09-30T01:40:50Z (STATUS.md @HEAD: "presence-extended since"); the DEV
+push of 1d7b8feb at 14:19Z passed the never-rules gate, which admits a DEV push from a live lease's seat only. **Pins:**
+all four are ancestors of origin DEV `1d7b8feb3172` (ls-remote and `merge-base --is-ancestor` by this seat, 14:2xZ).
+**This seat's own runs at portal HEAD `1d7b8feb`:** `bun test` over the nine pinned files -- 9 of 9 pass
+(TREEMAP-VARIOUS-OK, REQUEST-LIST-OK, SECURITIES-FOLD-OK, SECURITIES-MAP-WALK-OK, IVE115-OK, GENERATE-JOURNEY-OK,
+DRILL-BASES-OK, SECURITIES-MAP-OK, MAP-CHIPS-OK; 2.62 s); `eslint` on the two item-37 files rc=0; the portal tree's
+dirty count was 15 before and after the run (no wire regeneration from these nine).
+
+| # | pin (portal DEV) | claim | evidence read | grade |
+|---|---|---|---|---|
+| AF-1 | `5c7eead8` (Andrew-direct design feedback ~01:4xZ) | pie ordinal scale with neighbour contrast; the residual Client row grey; the map shows the view's ten largest securities with multi-select chips; the account picker unmounted; Name without the ticker prefix | unit: iv-e-42, iv-e-44, iv-e-61, iv-e-105 green at HEAD (this seat's run); real run: Andrew smoked 5174 on this build and answered with feedback #2 (the AF-2 record), so the build reached its judge; no screenshot or walk artifact exists for this seat to read | PASS on the unit claims; the real-run grade is Andrew's smoke (his ~05:0xZ feedback is the record); NOT GRADED by this seat on an artifact |
+| AF-2 | `44fd5f42` (Andrew smoke feedback ~05:0xZ) | one row per security per Sleeve/Account view (Andrew's word as the F7-AC4 exception); tooltip name only, 'Other Securities' tile, 'Client' chip; class order Cash first; account dialog sleeves by value, collapsible | unit: iv-e-113, iv-e-114, iv-e-115, iv-e-105, iv-e-44, iv-e-61 green at HEAD (this seat's run); the class order in `assetClass.ts` read at HEAD (IV-e-115 comment and `CLASS_FOR_SERVED`); no real-run artifact: STATUS lists "Re-smoke DEV a20b5a60" as open at Andrew | PASS on the unit claims; NOT GRADED on a real run (the re-smoke is Andrew's, open) |
+| 36 | `a20b5a60` (walk-2 W2-07) | after Generate the ISSUED request opens in the page's own dialog (status in words, Technical details behind one control, report sections when READY) and "Your analysis requests" re-lists from the first page | unit: iv-e-116 GENERATE-JOURNEY-OK at HEAD (this seat's run). Real run, fixture plane (the walk-2 write guard), read by this seat: `deliverables/2.0.0_SA_COO~D/item36/w2-07.fast-run.png` shows the dialog "Your analysis request / Requested September 30th, 2026, 9:52a ET / Job status: Ready / Business date: 2026-09-29 / Check status / Report sections / 2. annualized_return SUPPORTED 0.0712 percent, As of 2026-08-31"; `w2-07.fast-run.netlog.tsv` (276 rows): `POST .../investor-reporting/analysis?account_set_id=sel_bdf98e1d...` exactly 1, `GET .../analysis/requests` 4, POST rows 9 in all (2 auth/refresh, 2 directory/resolve, 3 selections, 1 analytics/ingest, 1 analysis) | PASS on the fixture-plane real run: one POST, the dialog opened on the issued id, the list re-read after the press. The live press stays Andrew's acceptance (STATUS "Limits") |
+| 37 | `1d7b8feb` (lint hygiene in surface) | iv-e-106's non-ASCII check is a code-point count; iv-e-116's two wiring regexes use `{2}` / `{4}`; the two remaining repo lint errors are `HeaderBrief.tsx:47-48`, out of surface (row S41) | `eslint` on both files rc=0 (this seat); both tests green; byte read of `src/pages/SecurityAnalysis/components/HeaderBrief.tsx`: line 47 `/^bloomberg\x08/i` and line 48 `/^D-1\x08/` each carry exactly one 0x08 byte; the file is outside the lease surface | PASS; S41's attribution holds on the byte read |
+
+## Observations (not grades; each is outside the pin's claim)
+
+- **O-36a:** the dialog in the item-36 shot carries two "Technical details" disclosure controls, one under Job status
+  and one under Report sections. The W2-06 wording is "Technical details behind one control"; whether that means one
+  per block or one per dialog is `2.0.0_SA_COO~D`'s to state in the next STATUS.
+- **O-36b:** the fixture's report section reads "As of 2026-08-31" beside "Business date: 2026-09-29". A fixture
+  artifact, not graded; on Andrew's live press the section as-of should be read against the business date.
+- **O-36c:** nine GET rows in the netlog answered 401 (advisor-intelligence `platinum/firm/*.json?firm=bd` and
+  `portal-content`) during the page load. They are outside the Analysis surface; if the walker account lacks that
+  scope the refusal is the expected one. Not graded here.
+
+## Not verified by this seat
+
+The 920/27/18 suite count on a20b5a60, DEV CI run 36725618787's ESLint step, the live 5174 process, and the lease's
+presence-extension record after the reboot. Row S41's fix is DSGN_AMGTV1's and is graded at that project's drain.
+
+-- 3.0.0_SA_CVO
