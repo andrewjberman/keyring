@@ -30,9 +30,10 @@ First failing hop: 1 (route undeployed) and 8 (publisher not wired).
 | TX-u-2 publisher package | CANDIDATE (the commit after 5f58087a79) | 12 of 12 members hash-equal to pin 96f7932f91; sidecar declared; layer deps 0 FAIL (tool now reads the sidecar); Terraform env default and plan NOT done (root claimed) |
 | TX-i-3 / TX-i-1 / TX-i-2 IAM applies | BLOCKED (Terraform roots claimed by NFRA_IAMROLES202609 IAM-t-3) | |
 | E2a production wiring (global sheet snapshot, per-firm dispositions + assets Gold, S3 Gold store, live loaders in the handler) | CANDIDATE @0e1d37e80b + bd2e9a1181 | 203 of 203; real run per-firm: 49F 11 of 11 = 17,034,745.40, Cottonwood 2 of 2 = 6,041,791.65, both Gold partitions COMPLETE |
-| E2b served fold (Tax into 49F and Global totals) | NEXT, one decision owed (Parked) | found: the overlay's fields on two of four scopes would trip the L-1 key-set assertion and stop the whole Gold run at activation; aum-metrics and category-views are built without Tax; `aua_including_tax` would be served |
+| E2b served fold (Tax into 49F and Global totals; carry last complete, no backfill -- Andrew-direct 18:3xZ) | CANDIDATE @faf88511b9 | 211 of 211; real served spines 09-29: 49F 1,761,000,294.98 on timeseries, category tree and aum-metrics alike; Global 2,083,972,030.82 reconciles to the cent with a named taxsma component; L-1 PASS x 4 |
 | TX-c-1 portal accessor | CANDIDATE portal 4235e77c (branch wk-taxsma-c1, pull-merged origin/DEV 20f95f79 at 29bfec2d) | 6 bun arms; tsc clean on the branch; on the merged tree the only two tsc errors are in COO~D's iv-e-119 test (`.block` read without narrowing the union), pre-existing at 20f95f79 |
-| TX-c-2 / TX-c-3 portal | NOT STARTED (c-2's component under DSGN_IRPTV1 lease) | |
+| TX-c-3 page caption ("Total includes Tax-Managed SMA $X · valued <date>", "(last complete figure)" when carried) | CANDIDATE portal 370d2fe8 on origin/DEV | 10 bun arms; tsc 0; eslint 0 errors; no signed-in render (no served Tax until activation; walker disabled) |
+| TX-c-2 tree leaf | NOT STARTED (component under DSGN_IRPTV1 lease; the tree already renders the tax member's served amount) | |
 | TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED; v-1's expected cases for A02/A04 must be re-cut to 0.6.0 | |
 | TX-r-1 / TX-r-2 / TX-r-3 | NOT STARTED (G-O grade, G-W, G-P ahead) | |
 
@@ -62,7 +63,8 @@ Deferred: the plan-only Terraform passes for TX-k-1 (mdpf-pipeline root) and TX-
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| E2b: on a day Tax is unknown (Gateway auth lapses, sheet unreadable), do the 49F and Global served totals go UNAVAILABLE (contract `categories.incomplete_rule`; blanks the 49F headline and withholds its category tree that day) or show the last complete Tax figure labelled with its date? | Andrew | his word; E2b builds the contract rule until then |
+| Cottonwood's Tax ($6.04M on 09-28) is not added to Global yet: it would double-count if those accounts also carry a Cottonwood model assignment | this lane | a read of bd-rebalancer model assignments for the two accounts shows none (then one line in apply_taxsma_overlay), or Andrew rules |
+| aum-metrics `non_model_assets_detail` (W-6) is built before the Tax step, so its enterprise_total stays pre-Tax | this lane | the page is shown to read it; else leave |
 | TRADED-ONLY is the rule and Yang's sheet now reflects it (rows 12-15 flipped to Yes 2026-09-30 ~16:2xZ). Still outside 49F's 17.03M: row 9 (Traded=No, awaiting a transfer, 2.30M on 0833) and two 0833 accounts labelled Opal Tax SMA 145 with no workbook row (1.03M + 0.96M), reported as UNCONFIRMED candidates | Yang (workbook rows) / Andrew | two rows added with Traded=Yes; the transfer settling |
 | STRATEGY_CONFLICT valued (workbook SMA 145 vs custodian SMA 200 on 2 accounts): decision at `taxsma_assets.IDENTITY_STATUSES_VALUED` | Andrew (reverse by one tuple edit) | if he wants a label conflict to withhold value |
 | Black Diamond accounts whose Account Number is masked-only (937 of 984 on 09-28) can never match; a Cottonwood Tax claim on one falls to the workbook value | this lane | a BD field carrying the full number is found, or Andrew accepts the fallback for them |
