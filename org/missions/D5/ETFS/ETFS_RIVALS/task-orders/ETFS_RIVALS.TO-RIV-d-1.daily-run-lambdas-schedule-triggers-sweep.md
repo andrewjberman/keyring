@@ -103,6 +103,22 @@ the check plans against a local throwaway state through a temporary `backend_ove
 
 **Battery findings touching this cell:** comp-iam RUN -- AC3 IS the lens's instrument for the five role policies. comp-schedule RUN at L5 -- the standing notifier moratorium binds: NO alarm, NO SNS, NO metric filter; the only cadence armed is the two schedules named in the cell.
 
+## 2b. ISSUER AMENDMENT 1 (2026-09-30, 2.0.0_SA_COO~RV) -- rules row ETFS_RIVALS-Z-W3-S5
+
+The enforcing naming gate refuses a state-tier S3 key whose table is hyphenated (`rivalfunds/etfs/state/build-silver/`
+is `NEW and OUT-OF-PATTERN as S3Key: REFUSE`; its canonical form is `rivalfunds/etfs/state/build_silver/`). CLAUDE.md
+rule 30 outranks the decomposition's literal `'<stage>'`, so: **the STAGE NAME stays hyphenated** (the event contract,
+`STAGES`, the Lambda names and the marker API's `stage` argument are unchanged), and **the state-tier TABLE is the stage
+name with `-` replaced by `_`**: `address('rivalfunds','etfs','state', stage.replace('-','_'), 'date=<D>', ...)`.
+Do all of this in THIS order:
+1. `data/etfs/scripts/rivalfunds/homes.py` (RIV-c-1's merged file, now in your `<paths>`): add
+   `state_table(stage) -> str` returning `stage.replace('-', '_')` after the `STAGES` membership check, and make
+   `marker_prefix` and `marker_uri` pass `state_table(stage)` as the table. Change nothing else in the file.
+2. `gen_policies.py` `_state_table()` returns the same snake form; regenerate the six generated files and commit them.
+3. `sweep.py` parses a marker key's table back to its stage (`_` -> `-`), and `test_d1_sweep.py` expects the snake keys.
+4. Re-run all three criteria. AC2 now runs against the real merged `markers.py`, because your branch merges CLOUD.
+   Also run `python -m pytest data/etfs/scripts/rivalfunds/tests -q`, which must stay green, including RIV-c-1's tests.
+
 ## 3. SURFACES AND BOUNDS
 
 You READ (never edit):
@@ -123,6 +139,7 @@ bucket's existing tier-first keys (`bronze/`, `silver/`, `gold/`, `daily/`, `pla
 OpenAI call; any alert, alarm, SNS or monitor; any file another cell of this round owns. Write unit tests beside the code (`data/etfs/scripts/rivalfunds/tests/`), run with `python -m pytest <file> -q` from the tree root.
 
 <paths>
+data/etfs/scripts/rivalfunds/homes.py
 data/etfs/scripts/rivalfunds/sweep.py
 data/etfs/scripts/rivalfunds/tests/test_d1_*.py
 infra/aws/lambda/etfs-pipeline/etfs-rivalfunds-*
