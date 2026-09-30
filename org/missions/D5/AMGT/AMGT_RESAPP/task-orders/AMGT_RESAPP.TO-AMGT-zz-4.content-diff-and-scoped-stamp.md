@@ -81,7 +81,7 @@ scoped_registry_hash); AC3 FAIL (no content_diff.py). Control on the deployed zi
 packaged. `<risk>` WORLD is the path floor (infra/); the order applies nothing. Cut to a worker, not AE~A, because every criterion is
 bounded under 120 s and the write surface includes lib/**, which no AE lane holds.
 
-<status>pending</status>
+<status>complete</status>
 <round>51</round>
 <slot>~183</slot>
 <fabric>site-z</fabric>
