@@ -995,3 +995,83 @@ x 8 names = 45 surfaces):**
 - (iv) No cell moves a served value, a figure, a verdict, a count or an order: m-1 changes an instrument; m-2 and m-5 change words;
   m-3 formats served figures for display and keeps each full value verbatim one hover away; m-4 names served codes and states which
   served set a publisher is in.
+
+## v13 -- ROUND 13 (issuer, 2026-09-30 ~15:xZ), over PRD v0.5 @bf3a6f5614 (ADMITTED)
+
+**Rectangle:** the round-12 analysis's enrichment list.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round12.md` @81907cfe5f section 4, items 1-6, with rulings 1 (the page reads
+  the served per-field dossier reason; the live no-dossier regression is DSGN's), 2 (FWD-13 binds the Model tab's fiscal cells), 3 (the
+  three C14 blocks and FWD-11's raw tokens), 4 (a strip inside a band is that band) and 5 (the no-permission lever).
+- **Cell ids:** `AV-l-1`..`AV-l-6`. Letters e, m, n, o, p, q, r, s, t, u, v, w are on disk, so round 13 takes `l`.
+- **NOT cells:** `publishers_found_codes` on the page (AMGT_RESAPP ac-3 serves it; round 12's found branch goes live then, msg 27194).
+- **The issuer's placements:**
+  - (a) **Cell 1 leads and spans four readers.** The pack claim sat on the Thesis pillars AND the header's fund line
+    (SecurityOverlay.tsx), Posture's fund line and Exec's management line; one cell fixes every per-field reader. It also refreshes the
+    ui-contract fixture set from the live shapes (the CTO put the refresh in cells 1 and 4; it rides cell 1, which owns the file), by
+    the issuer's `round13/grants/refresh_fixtures.py`.
+  - (b) **Cells 1 and 3 share PostureTab.tsx and ExecManagementTab.tsx**, so they are one chain on slot ~49: l-1 then l-3.
+  - (c) **Ruling 3's "derived before C-MODEL-WINDOW-AND-ROWS (5)" rides cell 2**, which owns ModelTab.tsx. Cell 3 adds the issuer's
+    same-class Peers words seen on walk L ("R-1", "CSC").
+  - (d) **Cells 4, 5 and 6 share portal/scripts**, so they are one chain on slot ~51: l-4, l-5, l-6.
+  - (e) **The leadPanelPattern harness re-anchor rides cell 1:** the refreshed rankings are not a dated read (the page is right), so
+    three of its checks read a dated variant; the diff was tested on the green arm (15 of 15) and is staged as
+    `round13/grants/leadPanelPattern.reanchor.diff`.
+- **Portal base:** site-Z local DEV `ba62e945` (clean). The portal DEV push (Andrew-direct @e1b5fd6d8c card 1, `0.0.0_AB_MSTR~Z`) waits
+  on cell 1's drain; the issuer signals it with the harness invocations.
+- **Fixtures:** `deliverables/2.0.0_SA_COO~D/round13/fixtures/` = the round-12 set plus 15 SERVED read-only captures at the cut
+  (`round13/capture_r13.py`; `opal-amgt-scoped-api` CodeSha256 `nKWCfQRQ3/lL6cJxgYG3dZr0tcVdOBheeMMNaoWQE+w=`, LastModified
+  2026-09-30T11:43:22Z -- redeployed since round 12): /thesis for 6501 JP (every dossier field ABSENT, "no research dossier exists for
+  this name"), BA US, IMB LN, VLO US, 992 HK; BA /overlay, /peers, /versions, /compare, /ledger, /timeline; 6501 /overlay; /watchlist;
+  the trending-chatter rankings and timeseries. Builds for the instrument cells: `C:/tmp/dsgn-r13-dist/dev` (DEV ba62e945) and
+  `C:/tmp/dsgn-r13-dist/pre` (8fa7abde). Static pages `round13/checks/dists/{planted,clean,blank,inband,outstrip}`.
+- **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-l-1` | 1 + ruling 1 | every dossier-field reader reads the per-field served reason; a failed read a designed sentence; "none are stated in the research team's pack" only where a dossier states none; the contract fixtures refreshed from the live shapes; the leadPanelPattern re-anchor | FWD-11, CORPUS no-dossier outcomes | `SA/tabs/ThesisTab.tsx`, `SA/components/SecurityOverlay.tsx`, `SA/tabs/PostureTab.tsx`, `SA/tabs/ExecManagementTab.tsx`, `SA/types.ts`, `SA/__harness__/tests/uiContractFixtures.json`, `SA/__harness__/leadPanelPattern.harness.cjs` | ~49 | LOCAL |
+| `AV-l-2` | 2 + ruling 2 (+ the C-MODEL token) | each fiscal cell tabular with the header's tooltip (mnemonic + full value); each row its unit in words; no contract code on the Model tab | FWD-13, FWD-15 | `SA/tabs/ModelTab.tsx`, `SA/components/StatTile.tsx` | ~50 | LOCAL |
+| `AV-l-3` | 3 + ruling 3 | an ABSENT description one plain sentence; Exec's CEO profile one sentence; Posture's evidence counts folded; Peers' as-of in long form, no R-1 / CSC; no passage id on the driver chart | FWD-11, FWD-20 (C14) | `SA/components/HeaderBrief.tsx`, `SA/components/ThesisCards.tsx`, `SA/components/ThesisDriverChart.tsx`, `SA/tabs/ExecManagementTab.tsx`, `SA/tabs/PostureTab.tsx`, `SA/tabs/PeersTab.tsx` | ~49 (after l-1) | LOCAL |
+| `AV-l-4` | 4 + ruling 4 | darkContainers counts a strip inside a band as that band; a separate container still FAILS | FWD-20, FWD-12 | `portal/scripts/ui-contract-check.mjs`, `ui-measure.mjs`, `ui-smoke.mjs`, `ui-dist.mjs` | ~51 | LOCAL |
+| `AV-l-5` | 5 + ruling 5 | `--states-sweep` folds the four designed states into the graded run's fourStates; no-permission standalone and labelled | FWD-19, FWD-20 | the same four scripts | ~51 (after l-4) | LOCAL |
+| `AV-l-6` | 6 | FWD-14..19 clauses in grades.json, each with its value; never a PASS on nothing | FWD-14..19 | the same four scripts | ~51 (after l-5) | LOCAL |
+
+**Edges and chains:** no data edge. Write sets: l-1 -> l-3 the dossier readers, fixtures and C14 files (share PostureTab and
+ExecManagementTab); l-2 ModelTab + StatTile; l-4 -> l-5 -> l-6 portal/scripts. Pairwise disjoint across chains. M = 3 chains, N = 3 now,
+K = 0 queued (l-3, l-5, l-6 follow on their own slots), cap 8. The surprise channel is shared append-only.
+
+**Checks (`round13/checks/`, dry-run at base DEV ba62e945; `_load.cjs` (repointed at round13/fixtures), `bound.cjs`, `bytes.cjs`,
+`census.cjs`, `surfaces.cjs`, `walkvoid.sh` and round 12's `dists/` copied forward; round 12's `rendercontrol.cjs` carried as a bound,
+repointed at `C:/tmp/dsgn-r13-dist`):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| dossier.cjs | 0 of 3 (6501 and BA read "none are stated in the research team's pack"; all 10 fixture routes differ from the live shapes) | 3 of 3 (r13-green-a @3a9f4c25) |
+| fiscal.cjs | 0 of 3 (no fiscal-cell tooltip; 32 of 35 rows without a unit; the planted C-MODEL token visible) | 3 of 3 (r13-green-b @49771e9c) |
+| c14.cjs | 0 of 3 ("Description: ABSENT -- ..."; "unreadable object -- status=ABSENT ..."; raw ISO / R-1 / CSC on Peers; passage ids; the count block at rest) | 3 of 3 (r13-green-a @3f79ec94, over l-1) |
+| strip.cjs | 1 of 3 (DEV list and the inband page read band 1 + strip 1; the negative arm passes at base by design) | 3 of 3 (r13-green-c @19420ece) |
+| sweep.cjs | 2 of 3 (the lever arm FAILS: the sweep is a separate mode; labelling and the blank negative are controls) | 3 of 3 (r13-green-c @cc2705d1) |
+| fwd1419.cjs | 1 of 3 (no FWD-14..19 clause; arm 3 vacuous at base) | 3 of 3 (r13-green-c @9ce993d3) |
+
+- **Green arms** (issuer-spawned helpers, scratch roots `C:/tmp/dsgn-r13-green-{a,b,c}`): tsc rc=0 and bytes 3/3 on the page arms;
+  ALL 16 of 16 harnesses on r13-green-b; 15 of 16 on r13-green-a before the granted leadPanelPattern re-anchor (tested 15/15);
+  rendercontrol 3/3 and the ui-measure self-test OK after every instrument cell.
+- **What the instrument arm measured on DEV (for the analysis):** darkContainers PASS in all six states; fourStates PASS (no-permission
+  standalone); fwd14..fwd18 PASS; fwd19 FAIL -- Peers has no designed empty state. On the pre-redesign build fwd14, fwd15 and fwd17 FAIL.
+- **Issuer check notes:** c14's long-form as-of clause also matches the identity line's date (the raw-ISO clause grades the Peers
+  as-of); fiscal.cjs strips tooltip markup with a pattern that holds on the stubbed DataTooltip; dossier.cjs's header says "top-level
+  `dossier.status`" meaning `dossier_fields.status`.
+- **Ruled at the cut:** BA's per-field served reasons are shown verbatim as ruling 1 asks; they carry producer words ("RECOMMENDATION
+  line", "(IDVZ|PFOE|DIVZ)", "class A") -- a round-14 input (readable reasons from AMGT_RESAPP, or a page fallback), not a cell here.
+
+**Cut rules applied:** (a) queue-aware bases: no check compares against a base snapshot; the chained orders follow on their own slots.
+(b) Every necessary harness break is granted with its exact change (leadPanelPattern, l-1). The worktree removal Andrew approved
+(@e1b5fd6d8c card 2) ran during the cut: every junction link removed first, targets verified intact, branches kept.
+
+**Battery:** comp-schedule and comp-iam DECLARED-NOT-APPLICABLE. comp-adversary: the checks above plus bytes.cjs on every page cell.
+Blind spots: static markup (hover, overflow and layout are the walk's); the instrument reads fixture-fed builds (the live page is the
+walk's). **The issuer's close:** the signed-out control; the walk (6501 JP's four surfaces for l-1; BA's Model for l-2; BA's header, Exec,
+Peers, Posture and Thesis for l-3); the instrument's `--states-sweep` run on a build of the drain state, its PNGs read.
+
+**Rule 24:** (i) MECE over the six items by subtraction: 6 cells, the NOT-cell named. (ii) One write set per chain. (iii) One intent per
+cell. (iv) No cell moves a served value, figure, verdict, count or order: l-1 reads served reasons (and refreshes test fixtures); l-2
+labels served units and adds tooltips; l-3 changes words and folds a block; l-4..l-6 change an instrument.
