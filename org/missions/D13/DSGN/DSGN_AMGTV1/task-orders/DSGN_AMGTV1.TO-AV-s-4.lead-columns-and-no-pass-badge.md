@@ -101,7 +101,7 @@ outer commit hashes, and any row.
 
 **ISSUER NOTES:** round 7 = the round-6 analysis s.4 item 4 with rulings 5 and 6. Base fd4deb75: columns.cjs 0 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~27</slot>
 <fabric>site-z</fabric>
