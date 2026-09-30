@@ -46,3 +46,23 @@ Forward only. Every put is never-overwrite. A delete is Andrew's act.
 - the mention rebuild (the NEW rows add bbg pairs only when it runs, under its own pair);
 - any other publisher's silver;
 - any gold table.
+
+## RE-SIGN FOR PHASE B (2026-09-30 ~11:3xZ) -- SIGNED
+
+**Against:** the COO half's section "RE-SIGNED FOR PHASE B" @`ab3b203182` (msg 27116, READ-acked).
+
+- **Attempt 1 wrote nothing, re-measured by this seat:** bbg silver `article` is still 30 parts (newest 05:14:32Z), 30 rows / 30
+  keys / 11 empty, equal to section 1 above.
+- **Code since this seat's first signature** (`bdbae7c371`..HEAD, harvest libs), 5 files:
+  - `silver_from_bronze.py`: only `_prune_empty_dicts` (an empty dict at any depth becomes None), applied to the bbg `vendor`
+    dict alone.
+  - `publishers.py`: changes are inside `class Publisher` (aa-1's collection path). The builder imports only `json_fields`,
+    `typed_blocks` and `typed_text`, which are unchanged.
+  - `worker.py` and the two tests are not imported by the builder.
+- **The first half's own miss, named:** this seat accepted a dry run that "mirrors `silver_append`'s filter" and never asked
+  whether it SERIALIZED. A dry run that stops short of the put's own encoding cannot see an encoding failure. The phase-B dry run
+  runs the REAL `silver_append` against a put-capturing client (1 put, 11 rows), so it is the correct instrument.
+- **Conditions:** unchanged from section 2 (the act-start gate on the new expected write; AC1/AC2; any served list reaching an
+  empty row is a STOP; no overlap with aa-2), plus one:
+  - the act's put carries the same byte count the serializing dry run captured, or the act STOPs before its after-reads are
+    trusted.

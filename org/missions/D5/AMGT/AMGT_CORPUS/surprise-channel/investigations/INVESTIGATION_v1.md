@@ -2705,6 +2705,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The pre-existing test encodes the superseded per-field sign behaviour; the ruled reader returns POSITIVE for value 1.0. y5_AC1 passes (plain_disagree 0 convention_disagree 0).",
     "notes": "Filed, not fixed: the line-69 assertion should expect POSITIVE (or the file be added to paths). Reader change and new test are in place.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S69",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-30T11:45:00Z",
+    "one_line": "model_block header market figures take the REPORTING currency label: TSM_US_Equity CUR_MKT_CAP 2339877750964.95 is served with currency TWD (basis 'reporting (EQY_FUND_CRNCY)') while currencies.quote is USD, converted false, and the raw refdata carries CRNCY USD with the same value -- a USD figure labelled TWD. The same labelling rule places CUR_MKT_CAP / NET_DEBT / CURR_ENTP_VAL on 79 header figures across 27 mixed-currency securities; only TSM CUR_MKT_CAP is measured wrong, the other 78 are the rule's reach, unmeasured per figure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/derived/model_block/TSM_US_Equity/20260930T084113Z/model_block.json figures[5]: mnemonic CUR_MKT_CAP, value 2339877750964.9497, unit 'ABSOLUTE (full currency units)', currency 'TWD', currency_basis 'reporting (EQY_FUND_CRNCY)'; currencies {quote USD, reporting TWD, mixed true, converted false}.",
+        "Worker census org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/TSM_ANCHOR_SOURCES_ROUND24.md (merged 92f1403d25): TSM refdata 20260925T043112Z carries CRNCY USD and CUR_MKT_CAP 2.3399e12 in the listing currency.",
+        "Issuer census 11:4xZ over the newest model_block of each of 100 securities (769 objects): 31 mixed-currency blocks; header figures labelled reporting-currency by basis 'reporting (EQY_FUND_CRNCY)': CUR_MKT_CAP 27, NET_DEBT 27, CURR_ENTP_VAL 25 (79 on 27 securities); 4 more securities carry no reporting currency ('UNSTATED')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A served figure's currency label states the currency its value is denominated in.",
+    "world_is": "The header currency rule labels CUR_MKT_CAP, NET_DEBT and CURR_ENTP_VAL with the reporting currency (EQY_FUND_CRNCY) and converts nothing; for TSM the value is the USD listing-currency figure, so the label is wrong. Value-free: no figure value moves, no unit moves.",
+    "notes": "Surfaced by 0.9.0_WK_AMGT_CORPUS~2 in the CRPS-z-2 census (it declined the figure as an anchor) and confirmed on the served object by the issuer. Enrichment candidate for the round-24 analysis: the per-field currency denomination of these three header fields on the 27 securities, then the label rule. Not an anchor source for Z-W2-S16.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

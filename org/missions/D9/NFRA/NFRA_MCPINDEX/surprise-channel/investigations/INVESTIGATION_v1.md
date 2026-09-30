@@ -3691,6 +3691,32 @@ carries none.
     "spec_asserts": "A builder refusal is resolved by a registry row or an R20 entry Andrew acknowledges, never by a workaround.",
     "world_is": "Nothing is committed or served; the hazard cannot reach the host before Andrew's word.",
     "notes": "Superseded rows' draft carrier (LEGACY_READS_DRAFT_MX-t-13.json) is kept for the record only."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S66",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T12:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W19-S7",
+      "NFRA_MCPINDEX-Z-W19-S8",
+      "NFRA_MCPINDEX-Z-W19-S9"
+    ],
+    "one_line": "RULES MX-r-6 PHASE A rows: Z-W19-S7 DISARMED by MX-r-6 A3 -- the release ships the contract file and the Schwab service's host .env keys (ids and ARNs only, no secret value), proven in-process before the ANNOUNCE; Z-W19-S8 DISARMED -- the apply is the saved targeted plan on aws_iam_role_policy.schwab_data_read_policy only, re-planned and equal at the GO, via safe-apply; Z-W19-S9 INERT this round (no grant changes, B2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/NFRA_MCPINDEX.TO-MX-r-6.schwab-enable-release.md AMENDED A3, this commit.",
+        "worker ~19 PHASE A report: live 093fc247c6 (79 of 79 by content); release ac77acf9e8 / deploy-only abee4587f7, gateway tree a1e8533891; targeted plan 0/1/0; host .env 27 keys, none SCHWAB_*; artifact tar roots exclude org/standards."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "Nothing is deployed or applied before PHASE B, which needs the issuer's GO after the CTO's G-A delta and both never-widen halves; the fail-closed release and the untargeted apply are both excluded by A3.",
+    "notes": "S10 and S11 (INERT) ride the ANNOUNCE for the halves."
   }
 ]
 ```
