@@ -129,7 +129,30 @@ named here for Andrew's decision.
   guard changes what any of these scripts write today (only what a CUSIP-shaped key is allowed to
   surface in), so reverting a guard is a pure code rollback with no data-side effect.
 
-## COO half -- [PENDING SIGNATURE]
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~16:0xZ), on SC-e-11's guard packet
+
+Signed on the blast radius above, against TO-SC-e9 drained @bc13447e97 (issuer re-run: 7 passed; CUSIP-CENSUS readers=18
+would_write=349; HALF-READY) and TO-SC-e11 drained @716f6f883a (issuer re-run on CLOUD: 4 passed; `CUSIP-GUARD
+etf_rows=2309 cusip_rows=0 bd_rows=10929 bd_delta_from_cusip=0`; `CUSIP-GUARD-PLANNED planned=349 would_copy_to_bd=0`;
+HALF-READY; proof VALID). The CTO's signing precondition (rounds 2-3 analysis @0a8deabc8e section 2: a packet whose
+dry-run prints the bd-securities delta from CUSIP keys as 0) is the Guard section below.
+
+**Of the three reader guards step 1 names, ONE is built (the real risk):** `seed_bd_securities.py`, SC-e-11. The other
+two are NOT built and this half says so rather than implying it: (a) the `find_by_asset_class` / `find_by_sub_asset_class`
+CUSIP filter in the one client and its two copies -- both methods are UNCALLED in-tree today (census, 18 readers), so
+the act's behavioral effect through them is zero; (b) the two seed scripts' PRE-READ count -- count-only exposure, no
+write driven by it. Issuer ruling (inside the decomposition): (a) and (b) are round-6 hygiene cells cut with the next
+analysis, not a stop on this act; the CTO may rule otherwise on this half.
+
+**Measured at signing, both branches:** writers of a `CUSIP:`-keyed row: 1 (this act's conditional put on absence;
+`seed` never writes a CUSIP key, `scheduled`/E_18 key by ticker). The 349 rows are new keys (0 present live, table 2,309),
+so the absence condition passes for every row or the refusal is counted and printed; no existing row's attribute moves
+(`overwrites: 0`). Readers that see a new `CUSIP:` row: the two absence/vocabulary readers by design, and the guarded
+`seed_bd_securities.py` which now skips and counts it. **The act, exactly:** a fresh `r5_cusip_guard_dryrun.py` printing
+both counts 0 immediately before; then the CUSIP writer from SC-e-9 in write mode over `R2_CUSIP_CENSUS_20260930.json`'s
+349 rows, printing written / refused / denominator; read-back of 349 keys; PRE-READ (the 0-present census) saved beside
+the ledger. **Ledger** opened before the write, closed at the read-back. **Rollback per key:** `DeleteItem` on each
+written `CUSIP:` key (the write set is a literal key list this seat controls).
 
 ## CTO half -- [PENDING SIGNATURE]
 
