@@ -75,6 +75,26 @@ with `to_id` `AMGT_HARVST.TO-HVST-p-3.span-bearing-lenovo-run-and-coverage-rebui
 - `p-2`'s fix to `worker.py`, if it merges first, changes the collection's run record. So `p-3` signs on the code at its
   signing, and the halves name that pin.
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~07:2xZ) -- SPLIT per `ledger/CTO_RULING_ROUND26_P3_SPLIT_AND_FWD7_DENOMINATOR_20260930.md` (msg 27005).**
+
+**This order is now part (a) ONLY: the `chatter_daily` rebuild, with NO vendor egress.**
+- **The act:** step 3 alone, with the as-of PINNED:
+  `python -m lib.research.harvest.publication_gold build-daily --securities-json org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~46/securities.universe.json --as-of 2026-09-30`.
+- **Steps 1 and 2 (the collection and the upload) are REMOVED from this order.** They become part (b), a later order cut
+  after this one drains.
+- **The begin-gate** is `round26/checks/p-3.signing.py` without `--signing`, which must print OK and writes `~68/p3_before.json`.
+  Section 0's item 4 (`p-1` complete) holds (@`ab11e2c48a`).
+- **The expected outcome** is the COO half `round26/NEVER_WIDEN_HALF_COO_P3.md`, read from the producer's own dry build (1
+  put):
+  - 52,143 rows;
+  - Lenovo DENIED -> PARTIAL on 271 days;
+  - 43 `articles_total` rows move;
+  - +191 rows;
+  - RESOLVED stays 0 of 191 by the guard's rule (the CTO's correction, section 1).
+- **Checks:** `p-3.AC1.py` (one part, rows digest equals the signed digest) and `p-3.AC2.py` (the served snapshot is the
+  rebuild; Lenovo's distribution is as signed). Both are dry-run at the base, where both FAIL.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
