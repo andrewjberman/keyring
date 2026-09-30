@@ -2830,6 +2830,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "The constant is 4 at 85fe787f17 and the re-run passes AC2 (b)-(e) and AC1, so the condition AMENDMENT 1 names for the disarm is met on this branch (LOCAL, unmerged).",
       "notes": "The disarm is the CTO's ruling; this row records its test result. Served chatter_event is untouched (round 22).",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W54-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~54",
+      "surfaced_at": "2026-09-30T01:25:59Z",
+      "one_line": "OBSERVATION: HVST-m-2 AC2 asks for the rank correlation between the page's served chatter rank and a rank recomputed from the graded chatter_daily part; the served TRENDING x CHATTER list holds 2 rows (BA, HD, both score 0), so the correlation is NOT MEASURABLE HERE (n=2 common companies, fewer than 3) and the script prints that instead of a number.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~54/m2_ac2_stdout.txt: 'served TRENDING rank vs recomputed graded 30-day-window rank: NOT MEASURABLE HERE (n=2 companies in common ...)'; served generation 20260929T100015Z-d09ee37a8f3b row_count=2, CHATTER_AXIS_SOURCE='legacy'; recomputed graded window set 36 companies, overlap 2 of 36",
+          "the same file also prints the correlation that IS measurable: raw-count window measure vs graded window measure over 36 companies = 0.8302, and the passing-mention list (6 companies)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-m-2 AC2 expects the two rankings printed side by side with their rank correlation.",
+      "world_is": "The served list under CHATTER_AXIS_SOURCE=legacy carries 2 ranked names with as-of-day score 0 (legacy pool counts), against 36 names with graded window signal, so a served-vs-recomputed correlation has n=2. The worker printed NOT MEASURABLE HERE for it and added the raw-vs-graded correlation over all 36 as the measurable comparison; nothing is graded.",
+      "notes": "Measured, not graded; the CTO reads it at L10. BREAKOUT x CHATTER read ABSENT for 2026-09-30 (no generation pointer) and is recorded in the same output.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
