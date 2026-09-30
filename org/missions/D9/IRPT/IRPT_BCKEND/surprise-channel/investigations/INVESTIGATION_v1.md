@@ -13787,3 +13787,104 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The leaf is stale (as_of 2026-09-01) and no relationship-level performance leaf exists; whether a schedule republishes it was not read."
 }
 ```
+
+## IRPT_BCKEND-W99 -- IB-pr-272 diagnosis rows (NNA partition basis, accounts_v2 client_id, mirror eclipse raise, silver sweep alien)
+
+### IRPT_BCKEND-W99-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-W99-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~99",
+  "surfaced_at": "2026-09-30T20:30:00Z",
+  "one_line": "The served 09-24 NNA partition was built from the 09-25 raw, not the 09-27 run's raw: the last good full run did not rewrite it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/gold/canonical/canonical_nna_2026-09-24.parquet HeadObject LastModified 2026-09-25T12:39:26Z; silver/transactions/2026-09-24.parquet has 0 rows for accounts 866/769/1096 on 2026-09-24; bronze/transactions/2026-09-25,26,27,30.jsonl.gz rows for ids 5885260, 5885261, 5885276, 5885298 read as in the nna section"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the last good full run was chain_full_20260927_113304 with raw bronze/transactions/2026-09-27.jsonl.gz and asks for the raw that produced the served rows.",
+  "world_is": "MEASURED: s3://opal-data-inf/gold/canonical/canonical_nna_2026-09-24.parquet has LastModified 2026-09-25T12:39:26Z (one version), and the 09-24 transactions for the three accounts first appear in the 09-25 silver/raw (createdDate 2026-09-25 04:11). The 09-27 raw already carries the reclassified rows, yet the partition was not rewritten, so the coverage guard first fired on the 09-30 run. The diagnosis compares the 09-25 raw (before) with the 09-30 raw (after); the 09-26 and 09-27 raw equal the 09-30 raw for these ids.",
+  "notes": "ROUND27_DIAGNOSIS.json nna section."
+}
+```
+
+### IRPT_BCKEND-W99-S2
+
+```json
+{
+  "id": "IRPT_BCKEND-W99-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~99",
+  "surfaced_at": "2026-09-30T20:30:00Z",
+  "one_line": "silver/api_dims/accounts_v2 has no client_id column; the order's client_id source is household-only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/silver/api_dims/accounts_v2/snapshot_date=2026-09-30/data.parquet column list printed; accounts 866/769/1096 household_id=63, account_name Carol O Holden"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says to take household_id and client_id from opal-data-inf/silver/api_dims/accounts_v2/.",
+  "world_is": "MEASURED: the 2026-09-30 snapshot's columns carry household_id but no client_id (columns: account_id ... household_id, registration_id, custodian ... rep_id, advisor_of_record_raw). client_id 63 was read from the clientId column of silver/transactions and bronze/transactions for the same accounts (household 63 equals client 63). The record says so in the nna answer."
+}
+```
+
+### IRPT_BCKEND-W99-S3
+
+```json
+{
+  "id": "IRPT_BCKEND-W99-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~99",
+  "surfaced_at": "2026-09-30T20:30:00Z",
+  "one_line": "opal-assets-ingest-mirror raises MirrorRaise ALIEN SURPLUS on its eclipse row on every INF invocation (12 of 12, 09-27 to 09-30), after the orion row has copied",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (route the eclipse_membership_map alien class to the CTO; no worker act in this cell disarms it)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/opal-assets-ingest-mirror streams 2026/09/27-2026/09/30 13:05Z; lambda_function.py:221-268 (_assert_landed_membership alien check); s3://opal-data-assets/eclipse/inflection/bronze/eclipse_membership_map/date=2026-09-24/manifest.json LastModified 2026-09-25T15:40:03Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order asks why fact_positions did not move and expects a failed component in the mirror or silver-orion path.",
+  "world_is": "MEASURED: each daily INF fire (13:05Z plus two async retries) ends [ERROR] MirrorRaise: ALIEN SURPLUS on eclipse/inflection: 2 unexpected key(s) under eclipse/inflection/bronze/ (eclipse_membership_map/date=2026-09-24/manifest.json and membership_map.json, written 2026-09-25T15:40:03Z by a writer other than the mirror). The orion row is processed first and lands its keys, so positions are not blocked, but the function reports failure every day, so a real orion-row failure would be indistinguishable from this standing one.",
+  "notes": "Repair option (c) in ROUND27_DIAGNOSIS.json mirror.repair; the mirror map is 'born with three rows and never grows', so a class for this prefix is a CTO ruling."
+}
+```
+
+### IRPT_BCKEND-W99-S4
+
+```json
+{
+  "id": "IRPT_BCKEND-W99-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~99",
+  "surfaced_at": "2026-09-30T20:30:00Z",
+  "one_line": "The silver-orion sweep verdict is FAIL every day on one alien key, orion/inflection/silver/fact_assets/date=2026-08-06/data.parquet (landed 4941 vs expected 4940)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/meta/conversions/20260930T160043Z-bcc6c8dc.json set_identity_post: expected 4940, landed 4941, matched 4940, alien 1, verdict FAIL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order reads the silver-orion function's logs expecting a failure or a no-op explanation.",
+  "world_is": "MEASURED: the sweep manifests for 09-28, 09-29 and 09-30 (meta/conversions/20260928T160043Z-cb627fe5.json, 20260929T160043Z-6d4e0012.json, 20260930T160043Z-bcc6c8dc.json) each carry set_identity verdict FAIL with missing=0 and one alien fact_assets key; the verdict does not stop conversion and is not the cause of the positions stall. The function's CloudWatch logs carry only START/END/REPORT because the happy path prints nothing; the manifests are the real evidence."
+}
+```
