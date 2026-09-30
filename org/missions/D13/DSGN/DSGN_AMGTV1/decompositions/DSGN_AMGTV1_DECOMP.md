@@ -492,3 +492,74 @@ forward from round 5.
 - (iv) No cell moves a served value, a figure, a verdict, a cite, a count or an article order. s-1 and s-4 move visible words
   onto attributes; s-2 moves only the stamp's format; s-3 moves a status word to its meaning and draws served events it never
   drew.
+
+## v8 -- ROUND 8 (issuer, 2026-09-30 ~02:xZ), over PRD v0.3 @abfad1355c (ADMITTED)
+
+**Rectangle:** the round-7 analysis's enrichment list.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round7.md` @0c498ee766 section 4, items 1-3, one cell per item, with
+  rulings 1 (the walker waits for state), 3 (FWD-6's last clause graded on the same re-walk), 4 (the lead source line, date only)
+  and 5 (labels per Positioning; the finer field by its grain) folded into their cells as the analysis places them.
+- **Cell ids:** `AV-q-1`..`AV-q-3`. Letters e, r, s, t, u, v, w are on disk, so round 8 takes `q`.
+- **NOT cells:**
+  - ruling 2 (the `/timeline/day` ~5.5 s latency) -- AMGT_HARVST's round-24 input, routed by the CTO; this project grades the page
+    on whatever the route returns;
+  - the AMGT_RESAPP standing asks (names for the other 15 rows, places moved, the thesis driver's series).
+- **Portal base:** site-Z local DEV `ab7e1e49` (clean). **Walker base:** `.claude/skills/ui-walk/walk.mjs` @4a0628755b.
+- **Fixtures:** `deliverables/2.0.0_SA_COO~D/round8/fixtures/` = the round-7 set, carried unchanged (25 files; each keeps its
+  `_capture` note). No new capture: no cell reads a payload round 7 did not. ISSUER VARIANTS are built in memory inside the checks,
+  each labelled there (a dateless list; a served finer field; a held day route on a stub page).
+- **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-q-1` | 1 + rulings 1, 3 | `waitForDayState(page, date)` polls the panel's served state attributes (rows / empty / failed) under `[data-timeline-selected-day]`, ceiling `DAY_STATE_CEILING_MS` >= 15 s, a held route records "ceiling"; the --day step, the newest-day press and the event open each wait before the shot (no `settle(page, 1500)`); every opened day recorded with `via`, `state`, `waited_ms`; `timeline-days.json` written whenever non-empty | HARVST FWD-5, FWD-6 | `.claude/skills/ui-walk/walk.mjs`, `SKILL.md` | ~29 | LOCAL |
+| `AV-q-2` | 2 + ruling 4 | The lead source line reads "Dated <long date> \| Source: ..." through `formatPanelTimestamp` with its clock stripped (date only, never an invented time); the requested day, when it differs, as "; requested for <long date>"; no ISO | FWD-11 | `SA/components/LeadPanel.tsx`, harnesses `errorEmpty` (one loader line), `leadPanelPattern` (re-anchor source_footer, caption_facts_unchanged) | ~30 | LOCAL |
+| `AV-q-3` | 3 + ruling 5 | The lead-list columns take Positioning's labels per key ("Asset Class", "Sub Asset", read from `HoldingsBreakdownTable.tsx`); `sector` is named by its grain ("Industry group (finer than Sub Asset)"), never "Sector"; the unserved note uses the same labels; keys unchanged | FWD-2 | `SA/components/RankedList.tsx` | ~31 | LOCAL |
+
+**Edges and chains:**
+- There is no data edge.
+- Write sets are disjoint: q-1 writes the walker only; q-2 writes `LeadPanel.tsx` and two harnesses; q-3 writes `RankedList.tsx`
+  only (measured on the green arm: no bound harness reads its labels, so it needs no harness grant and shares no file with q-2).
+- M = 3 chains (q-1; q-2; q-3), N = 3, K = 0 queued, cap 8.
+- The surprise channel is shared append-only.
+
+**Checks (`round8/checks/`, dry-run at base ab7e1e49 / walk.mjs @4a0628755b; `_load.cjs`, `bound.cjs`, `census.cjs`,
+`walkvoid.sh` copied forward):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| daystate.cjs | 0 of 3 (no wait; every day and event shot follows settle 1500; timeline-days.json only under --day) | 3 of 3 (ceiling 20000; held route -> "ceiling") |
+| sourceline.cjs | 0 of 3 (ISO inside the source; census 14 of 18) | 3 of 3 (census 18 of 18) |
+| labels.cjs | 0 of 3 ("Asset class" / "Sub-asset class" / "Sector" against "Asset Class" / "Sub Asset") | 3 of 3 |
+
+- **Bounds PASS at base AND on the green arm:** walkerbound 3 of 3 (round5 pickstep, round6 walkthread, round7 walkday); Q2 5 of 5;
+  Q3 5 of 5; round-7 columns.cjs 3 of 3. walkvoid.sh YES at base (5174 serving); not run on the green arm (the green change touches no
+  sign-in or void path -- named blind spot). Portal `tsc -b --noEmit` rc=0 on the green arm (q-2 + q-3).
+- **Census:** sourceline.cjs prints every footer on the page (4 lead lines, 12 header card windows over VLO / SAP GY / 992 HK, 2 Thesis
+  windows); labels.cjs prints each key's page label beside Positioning's.
+
+**Cut rules applied:**
+- **(a) Queue-aware bases.** No check compares against a base snapshot, count or diff; there is no queue this round.
+- **(b) Bounds run against a green build.** A scratch detached portal worktree at ab7e1e49 (`C:/tmp/cood-r8-root/portal`) with q-2
+  and q-3 built, and a scratch walk.mjs fed by the issuer-only `CHECK_SRC_OVERRIDE`. That run found every harness a required change
+  NECESSARILY breaks: `errorEmpty` (its loader cannot resolve the new relative `dateUtils` import) and `leadPanelPattern`
+  (`source_footer`, `caption_facts_unchanged` anchored on the ISO line) for q-2. Each is granted in q-2's `<paths>` with the exact
+  re-anchor named on the face and proven green (Q2 5 of 5). q-1 and q-3 break none.
+
+**Battery:**
+- comp-schedule and comp-iam: DECLARED-NOT-APPLICABLE.
+- comp-adversary: the checks above.
+- Blind spots:
+  - daystate.cjs runs the extracted wait on a stub page and fake clock; the live latency is the issuer's walk;
+  - static markup with the estate chrome stubbed (sourceline, labels); column widths and wrap are the walk's;
+  - walkvoid.sh not re-run on the green arm.
+- The issuer's close walk: signed-out control first; then `--day "992 HK=2026-08-13"` plus one event open (HARVST FWD-5 / FWD-6),
+  the lead panel beside a header card window and a Market / Positioning window (FWD-11), a lead list beside the Positioning
+  breakdown (FWD-2).
+
+**Rule 24:**
+- (i) MECE over the analysis's three items by subtraction: 3 placed; the NOT-cells named with their reasons.
+- (ii) One cell per write set; no shared file.
+- (iii) One intent per cell.
+- (iv) No cell moves a served value, a figure, a verdict, a count or an article order. q-1 moves only when the walker shoots and
+  what it records; q-2 moves only the line's date format; q-3 moves only the words that name three columns.
