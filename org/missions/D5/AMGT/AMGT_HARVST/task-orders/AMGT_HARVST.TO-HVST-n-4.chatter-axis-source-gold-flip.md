@@ -86,6 +86,16 @@ with `to_id` `AMGT_HARVST.TO-HVST-n-4.chatter-axis-source-gold-flip`. Report onc
 3. **Rulings:** `ROUND_ANALYSIS.round23.md` @`d1ec6f4118` s.2 ruling 4 and s.3 item 4. The rollback is the variable back
    to `legacy`.
 
+
+**AMENDMENT 1 (issuer, 2026-09-30 ~02:5xZ) -- HELD, NOT DISPATCHED (row `Z-W58-S1`, ARMED -> disarmed by this hold).**
+- `HVST-n-3` (drained @`49bafe8df9`) measured the producer's OWN `gold` branch as FAILING: `INCOMPLETE_GOLD_INPUT`, RESOLVED 0 of 191 security windows.
+  - The gold `chatter_daily` reads `no_coverage` on 5,675 of 5,730 day-reads and `partial` on 55.
+  - All 191 rows on 09-29 are `DENIED`.
+- A `legacy` -> `gold` flip would therefore STOP the daily rank writes. There is no expected rank diff to sign; the pair this order requires cannot be written.
+- The order stays `pending` and is NOT dispatched to `0.7.0_AE_CloudOps~A`.
+- Carded to `1.0.0_SA_CTO~Z`. Its ruling decides whether FWD-7 is reached by feeding the gold branch coverage (the `data_status` / `publishers_covered` denominator the guard reads) or by changing the guard.
+- A later amendment re-points this order to that ruling. No gate limb graded this record-face note.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
