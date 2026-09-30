@@ -23,3 +23,19 @@ Message 2, mid-turn:
 
 Effect: the client-domain recipient test (criterion b) is a RECORDED ATTRIBUTE, not a gate. The ingest rule is now: sender is Manav or Yang, a YCharts report attached, investment feedback; the recipient domain is stored on the row. This closes point 3 of the Effect list above. The mailbox-access route stays a recommendation and is not decided; Andrew asked for a plain-language account of it first.
 
+## Addendum 2 (same session, ~05:0xZ) -- Messages 4-6, the route
+
+Message 4, answering this seat's question of using IRPT's mail reader / one or two registrations:
+
+> What i think is that eventually we can do that, but for now we just need to wing it through my account. there should be attachment permissions built into the gateway already
+
+Message 5, mid-turn:
+
+> The reason i say that is because i dont think i can make another registration, i think i need our IT to do that, and thats a hassle.
+
+Message 6, mid-turn:
+
+> If its possible to do it somehow tacked underneath the opalgateway, then i think i can manage it as a cloud application admin, but if i need to go to IT then its a hassle
+
+Effect (this seat's reading): NO new app registration and NO IT request for now. The pull runs through the existing Opal gateway, under Andrew's account. Measured this turn (`comp-find` over `infra/aws/ec2/opal-gateway`, 27 hits / 161 files): the gateway's delegated scopes already include `Mail.Read` and `Mail.ReadWrite` (`app/config.py:51`, `.env.example:9`); `IT_REQUEST.md:21-51` records what IT consented. The attachment gap is the gateway's TOOLS, not a permission. The two-registration recommendation of this seat is WITHDRAWN.
+
