@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| a | activation | PYTHONPATH=<root> build_unit_map.py --population crosswalk on the committed map | 6 fields changed (the named 6), 0 shared, 0 top-level, 0 added |  | OPEN |
+| a | activation | PYTHONPATH=<root> build_unit_map.py --population crosswalk on the committed map | 6 fields changed (the named 6), 0 shared, 0 top-level, 0 added | PYTHONPATH=<root> build_unit_map.py --population crosswalk rc 0 at 3d5235be21; diff vs pre-image: entries_changed 6 fields_touched 6 (BEST_EPS BEST_PE_RATIO BOOK_VAL_PER_SH BS_TOTAL_LIABILITIES CURR_ENTP_VAL REVENUE_PER_SH) shared_changed 0 securities_added [] top_level_changed 0 lf_only True = the stated line | CLOSED 20260930T165332Z |
 | b | git | field_map.json commit | commit hash |  | OPEN |
 | c | activation | model_block_pull derive --no-sa-fallback over the 22 (3 per call) | 22 stamps; per-block unit/sign/currency = m3 lines; 0 value/case/measured-to-other; label moves header only; 0 sign contradicts; filled_by_sa 0 |  | OPEN |
 | d | activation | dossier write_one over the 21 (named script, python -u) | 21 puts; exactly one new per name; changed keys model_rows/inputs/content_sha256; inputs_equal_now 21/21 |  | OPEN |
@@ -21,3 +21,4 @@
 ## Log
 
 - 20260930T164926Z OPENED by 2.0.0_SA_COO~X with 5 leg(s)
+- 20260930T165332Z LEG a closed: PYTHONPATH=<root> build_unit_map.py --population crosswalk rc 0 at 3d5235be21; diff vs pre-image: entries_changed 6 fiel
