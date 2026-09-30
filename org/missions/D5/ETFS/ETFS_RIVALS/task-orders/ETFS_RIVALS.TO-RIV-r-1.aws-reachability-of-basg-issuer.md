@@ -140,7 +140,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~4 @b908d3252d merged @442e265a0c; AC1 PASS re-run by the issuer in the worktree (HTTP 200, 31748 B, 0.50 s, root 200; SSM b009f44f). No rows.</completion_note>
 <round>1</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
