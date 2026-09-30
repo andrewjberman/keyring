@@ -26,8 +26,13 @@ ABSENT. `lib/research/filings/drafting_build.py` builds D-1 documents (`build_dr
 `analyze.write_outputs(None, analysis, document, write_pool=True, drafting_only=True, client=client)`). **A full rebuild of ASML is NOT
 acceptable:** measured at the cut it also drops served sentences (company_description 6 -> 1, investment_thesis 1 -> 0, risks 2 -> 0).
 
-**Build:** `splice_driver(stored_document, analysis) -> document` -- a pure function returning a COPY of the stored D-1 document with ONLY
-`thesis_driver` replaced by `analysis.get("thesis_driver")` (never mutating its input; every other key byte-equal). And a CLI mode
+**Build:** `splice_driver(stored_document, analysis, provenance) -> document` -- a pure function returning a COPY of the stored D-1
+document with ONLY `thesis_driver` replaced by `analysis.get("thesis_driver")` (never mutating its input; every other key byte-equal),
+AND the splice's PROVENANCE recorded in the document -- `provenance` = {"analysis_key": <the analysis object's key>,
+"analysis_version_id": <its S3 VersionId>} -- so the D-1 document is never silently mixed-vintage (AMENDMENT 1). Record it inside
+`thesis_driver` or in ONE added top-level key, wherever `lib/research/drafting/schema.json` (the served reader validates against it)
+admits it; if the schema admits neither, that is a row and a stop on AC1, never a schema edit (the schema is not in your paths). The
+CLI reads the analysis object's VersionId with head_object. And a CLI mode
 `--splice-driver --only-keys K1,...` with `--dry-run` (prints, per key, the moved top-level keys, the driver's points and spans, and
 the served validator's verdict, and writes nothing) and `--pre-act-dir DIR` (saves each key's pre-act bytes before the write), writing
 through the SAME one writer `_rebuild_pool` uses. It refuses (non-zero exit, nothing written) when the spliced document fails
@@ -53,7 +58,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-ab-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round52/checks/ab_1_splice.py; echo "exit=$?"</invocation><expect>differing top-level keys: ['thesis_driver']; driver points 3, spanned 3; served validator: True; input mutated: False; THE D-1 DOCUMENT TAKES THE SPANNED DRIVER AND NOTHING ELSE MOVES: YES -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-ab-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round52/checks/ab_1_splice.py; echo "exit=$?"</invocation><expect>differing top-level keys: 'thesis_driver' plus at most one provenance key; driver points 3, spanned 3; served validator: True; input mutated: False; provenance ... recorded: True; THE D-1 DOCUMENT TAKES THE SPANNED DRIVER AND NOTHING ELSE MOVES: YES -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-ab-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" timeout 115 python -m lib.research.filings.drafting_build --splice-driver --only-keys ASML_NA_Equity --dry-run; echo "exit=$?"</invocation><expect>one ASML_NA_Equity line naming the moved keys as only thesis_driver, 3 spanned points, the validator's verdict, and that it wrote nothing -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-ab-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" timeout 115 python -m pytest lib/research/filings/tests -q; echo "exit=$?"</invocation><expect>N passed and 0 failed, N &gt; 118 (118 at the cut, plus your new tests) -- and exit=0</expect></criterion>
 </proof_of_spec>
@@ -69,6 +74,7 @@ rebuild drops served sentences. Base: AC1 FAIL (no splice_driver); AC2 FAIL (arg
 write is ab-6's act under the pair.
 
 <status>pending</status>
+**AMENDMENT 1 (`2.0.0_SA_COO~Z`, 2026-09-30 ~07:3xZ, before spawn):** CTO msg 27014 condition 1 -- the splice records its provenance (analysis key + VersionId) in the document; AC1's check amended to require it (moved keys: thesis_driver plus at most one provenance key). Base still FAIL (no splice_driver).
 <round>52</round>
 <slot>~186</slot>
 <fabric>site-z</fabric>

@@ -16091,6 +16091,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "CTO round-51 analysis item 1: ASML's D-1 drafting document is regenerated from the rewritten analysis.",
   "world_is": "A regeneration moves 3 more top-level keys and drops served sentences; round 52 cuts a driver-only splice instead (AMGT-ab-1, written at AMGT-ab-6). Measured on ASML only; how many stored D-1 documents a pool rebuild would shrink is UNMEASURED.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. No act: a --rebuild-pool live run would be the hazard, and none is ordered. Issuer ruling at the cut, stated in s.60b.1 and the issuance commit."
+},
+{
+  "id": "AMGT_RESAPP-Z-S314",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T07:40:00Z",
+  "one_line": "Correction of AMGT_RESAPP-Z-S313's standing (CTO msg 27014 condition 2): a D-1 regeneration that drops served sentences is a DEFECT, not an accepted limit -- carried to round 53 as its own cell. ARMED: any live --rebuild-pool run would regress served /thesis sentences until it is fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Z-S313's measurement (round52/checks/ab_1_preview.py): ASML rebuild serves company_description 1 of 6, investment_thesis 0 of 1, risks 0 of 2.",
+      "CTO msg 27014: 'Z-S313 ... is a DEFECT row carried to round 53 as its own cell, not accepted as a limit'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A D-1 rebuild from the stored analysis refreshes a document without shrinking what it serves.",
+  "world_is": "Under today's verbatim gate the rebuild drops served sentences (ASML measured; the pool's population unmeasured). Round 52 splices the driver only; the rebuild defect is round 53's cell.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Disarmed by: no live --rebuild-pool run is ordered in round 52 (ab-6 runs --splice-driver only); the round-53 cell fixes the rebuild. Cites AMGT_RESAPP-Z-S313."
 }
 ]
 ```
