@@ -15888,6 +15888,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "Cell AMGT-zz-6: a point whose value is NOT found in the excerpt must stay unspanned; ADDENDUM 2 A2.3: a point verifies only inside the block carrying ITS OWN period label.",
  "world_is": "For the last-located period the block is the rest of the excerpt, so 'its own block' is not bounded; a wrong-column value present anywhere below the header still verifies. ASML_NA_Equity's three points are correct (each equals its own column, checked by hand against the excerpt), so zz-6's result is unaffected; the cause of the ORIGINAL missing spans was the columnar shape (earlier years' blocks are just their header line), fixed in _columnar_verify.",
  "notes": "disarm_owner 2.0.0_SA_COO~Z. Not fixed here: tightening _period_blocks or verify_points_against_excerpt changes a ruled gate other filings' stored objects rest on."
+},
+{
+  "id": "AMGT_RESAPP-Z-W180-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~180",
+  "surfaced_at": "2026-09-30T04:20:00Z",
+  "one_line": "AMGT-zz-1 AC1 cannot pass inside its <paths>: crosswalk.schema.json denominators has additionalProperties:false and does not admit `carried` or `retired_from_served`, so ANY write_pool that carries a served record (the cell's own required counter) is refused at write-time validation; the schema is not in the order's <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.schema.json@77712167dc properties.denominators: additionalProperties false; properties listed are input_names, records, MEASURED, UNRESOLVED, with_association_keys, association_conventions, registered, enriched, resolved_folders, retired_unresolved_by_enrich, superseded_unresolved_registrations, folders_in_records, research_folders_live, universe_*; no `carried`, no `retired_from_served`; last touched 856cc1f005 (CRPS-f-1).",
+      "crosswalk.py build_crosswalk (round 50 yy-6, ~:929-930) already writes denominators['carried'] and ['retired_from_served'] when served= carries or retires, so the crosswalk CLI's own `--write-pool` was already refused whenever it carried a record -- the union has been unreachable behind the write-time validator since yy-6.",
+      "AC1 as issued, real schema: both writers print 'REFUSED: crosswalk document fails lib/research/identity/crosswalk.schema.json at $['denominators']: Additional propertie...', 'planted kept: False', 'EVERY CROSSWALK WRITER KEEPS A SERVED RECORD: NO', exit=1.",
+      "Same check with AMGT_CROSSWALK_SCHEMA_PATH pointed at a scratch copy of the schema that adds ONLY those two optional integer denominators: both writers 'planted kept: True; served+planted records dropped: 0', 'EVERY CROSSWALK WRITER KEEPS A SERVED RECORD: YES', exit=0. So the only missing piece is the two schema properties."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-zz-1: carried records are counted in the written document's denominators as carried, the payload is the serialised document including them, and the write validates -- AC1 expects YES/exit=0 with the repo's schema.",
+  "world_is": "The schema refuses the counter the cell requires. write_pool, add_security and the tests are done and pass (135 -> 141 with six new arms that validate against a temp schema copy); AC1 stays FAIL until crosswalk.schema.json admits denominators.carried and denominators.retired_from_served (optional integer, minimum 1, present only when n > 0, matching the schema's own pattern) -- a two-property, CRLF-preserving edit to a file outside this order's <paths>.",
+  "notes": "Not rescued: no schema edit, no validator loosening, no dropping of the counter. Ask of the issuer: add the schema file to zz-1's <paths> (or cut a follow-on order) and re-run AC1. Until then any real write_pool that carries a record refuses loudly (nothing put) rather than writing an unvalidated document."
+},
+{
+  "id": "AMGT_RESAPP-Z-W180-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~180",
+  "surfaced_at": "2026-09-30T05:10:00Z",
+  "one_line": "DISPOSITIONS AMGT_RESAPP-Z-W180-S1 as RESOLVED BY AMENDMENT 1 (4c5ece565e, merged 52c492ff9e): crosswalk.schema.json now admits denominators.carried and denominators.retired_from_served as optional non-negative integers, the tests' temp-schema workaround is dropped, and AC1 reads YES exit=0 against the repo schema.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.schema.json (this worker's branch, after the schema commit): properties.denominators.properties gains exactly `carried` and `retired_from_served`, each {type integer, minimum 0}; additionalProperties false is unchanged and no other property moves (diff is +10 lines, both new properties, CRLF preserved).",
+      "AC1 on the repo schema from C:/tmp/r51-180: 'A add_security._mint_pool planted kept: True; served+planted records dropped: 0', 'B crosswalk build + write_pool planted kept: True; served+planted records dropped: 0', 'EVERY CROSSWALK WRITER KEEPS A SERVED RECORD: YES', exit=0 (S1 recorded the same run as NO/exit=1 before the schema edit).",
+      "AC2 roundtrip: records in 237 out 237, digest 68a788347ec2 in and out, YES exit=0. AC3: 141 passed, 2 subtests passed, exit=0 with tests/test_write_pool_union.py validating against the repo schema (no ENV_CROSSWALK_SCHEMA override, no tempfile copy)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT_RESAPP-Z-W180-S1 stands ARMED with disarm_owner 2.0.0_SA_COO~Z: the schema refuses the carried/retired_from_served counters, so any carrying write_pool is refused.",
+  "world_is": "The refusal no longer exists at this branch's HEAD: the schema admits both counters and a carrying write validates. The hazard remains present on the trunk until this branch drains; S1's row is untouched (append-only).",
+  "notes": "Filed at the issuer's instruction (AMENDMENT 1 ruling: disposition Z-W180-S1 as resolved, do not delete it). This worker judges the row's form only; the adjudication of S1 is the CVO's via the `adjudicates` carrier, not carried here. Note the schema minimum is 0 (the ruling said non-negative), while S1 proposed minimum 1; write_pool emits the counter only when n > 0 either way."
 }
 ]
 ```
