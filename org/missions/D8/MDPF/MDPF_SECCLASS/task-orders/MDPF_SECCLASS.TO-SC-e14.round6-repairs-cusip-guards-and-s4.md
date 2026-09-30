@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~11</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -59,7 +59,7 @@ a skeleton row. Add `attribute_exists(ticker)` to each condition (one clause eac
 
 ### ACCEPTANCE
 
-<criterion id="SC6-e14-AC1" cell_refs="SC-e-14"><invocation>python -m pytest infra/aws/lambda/v2_portal/_shared/tests/test_find_by_cusip_filter.py infra/aws/lambda/v2_portal/yang_pipeline/tests/test_update_requires_existing_row.py -q -p no:cacheprovider</invocation><expect>passed</expect></criterion>
+<criterion id="SC6-e14-AC1" cell_refs="SC-e-14"><invocation>python -m pytest infra/aws/lambda/v2_portal/_shared/tests/test_find_by_cusip_filter.py infra/aws/lambda/v2_portal/yang_pipeline/tests/test_update_requires_existing_row.py infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py infra/aws/lambda/v2_portal/_shared/tests/test_set_instrument_kind.py -q -p no:cacheprovider</invocation><expect>passed</expect></criterion>
 `SC6-e14-AC1` -- the filter and the update-condition tests pass.
 
 <criterion id="SC6-e14-AC2" cell_refs="SC-e-14"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_client_copies_identical.py</invocation><expect>COPIES-IDENTICAL 3 of 3</expect></criterion>
@@ -97,6 +97,8 @@ infra/aws/lambda/v2_portal/yang_pipeline/tests/test_update_requires_existing_row
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_client_copies_identical.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_seed_preread_count.py
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py
+infra/aws/lambda/v2_portal/_shared/tests/test_set_instrument_kind.py
 </paths>
 
 The block is your WRITE grant. Everything else named here you READ and never edit.
@@ -126,3 +128,23 @@ lane: the <paths> block IS the grant.
 
 Source: 1.0.0_SA_CTO rounds 4-5 analysis @533bcae124 section 4 items 2 and 3; CUSIP_ROWS CTO half @1f4792c45a condition 5;
 REMEDIATION_v3 MDPF_SECCLASS-S4.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M, 2026-09-30 ~20:4xZ) -- grant the two older tests the S4 change breaks
+
+Ruling on row `MDPF_SECCLASS-W11-S1` (the issuer rules inside its own decomposition). The S4 condition
+`attribute_exists(ticker) AND attribute_not_exists(<attr>)` breaks four assertions that pin the old condition string, in
+`infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py` and `test_set_instrument_kind.py`. Two more assertions
+in `test_classified_by_v2.py` already fail on CLOUD because round 4 (SC-e-10) moved the contract to 0.3.0 and they still
+pin 0.2.0 and four `classified_by` values. Both files are now in `<paths>`.
+
+- Update the four S4 assertions to the new condition string. They must still prove what they proved: only the named
+  attribute changes, and an already-set row is refused.
+- Update the two contract assertions to the contract at HEAD: version 0.3.0, five `classified_by` values including `model`.
+  Read the contract file for the values; do not type them from this text.
+- No assertion is weakened or deleted. AC1 now runs the two files beside your two new ones; its expectation is unchanged.
+- `test_seed_etf_constituents.py::test_positioning_universe_plan_unchanged` fails on CLOUD's unmodified script. It is NOT
+  granted: record it in row W11-S1 as pre-existing, with the failing line, and leave it.
+- Re-run all three criteria, re-validate the proof (VALID rc=0), flip `<status>` back to complete, and commit.
+
+Gate limb: none graded this modification (a modification of an existing order; `.tools/to-pipeline-gate.py` LIMB 6 fires on
+new orders only, and this order declares no placeholders).
