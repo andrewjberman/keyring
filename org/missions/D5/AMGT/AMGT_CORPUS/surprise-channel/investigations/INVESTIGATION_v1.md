@@ -2924,6 +2924,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "For a GBp quote the quote label GBp names the pence subunit, so a value in pounds is neither 'quote (CRNCY)' nor the reporting currency; the label vocabulary needs a third state (quote currency, major unit) before these can be labelled honestly, or the derive keeps printing no currency for them.",
     "notes": "Decision needed only if the issuer wants these three labelled; the census holds the ratio evidence.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T16:20:00Z",
+    "id": "AMGT_CORPUS-Z-W1-S24",
+    "one_line": "AMENDMENT 1 grants changing the arm-1 pins of test_currency_labels.py, but the wired rule also breaks arm 3 (test_missing_reporting_ccy_is_unstated), which pins the same 992 HK fixture's CUR_MKT_CAP / NET_DEBT; AC2 cannot pass without changing it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest integrations/bloomberg/research/tests/test_currency_labels.py after wiring security= at the four call sites: arm 3 failed with 'HKD' is None on CUR_MKT_CAP (992 HK census class quote), the same fixture and figures arm 1 pins",
+        "test_currency_labels.py arm 3 now pins CUR_MKT_CAP HKD/quote and NET_DEBT None/UNMEASURED with an AMENDMENT 1 comment; its UNSTATED pin is kept for the remaining currency-sensitive fields (SALES_REV_TURN, IS_EPS); 5 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1 item 1: change the arm-1 pins the wired rule supersedes (the 992 HK Equity fixture's CUR_MKT_CAP / NET_DEBT); keep every other arm.",
+    "world_is": "The wired rule also supersedes those two pins in arm 3, which uses the same 992 HK fixture with EQY_FUND_CRNCY absent. Only the CUR_MKT_CAP and NET_DEBT assertions of arm 3 were changed; every other arm-3 assertion is unchanged.",
+    "notes": "The change is the minimum the same wired rule forces; the issuer may read it as inside the amendment's intent or ask for it to be reverted.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
