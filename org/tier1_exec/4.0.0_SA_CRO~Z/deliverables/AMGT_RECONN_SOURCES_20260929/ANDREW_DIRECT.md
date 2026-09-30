@@ -59,3 +59,11 @@ Same active brief session, direct Codex user channel; exact receipt timestamp no
 > Yes also keep in mind that you should be following LGIC NAMING standards for all of this
 
 Carried into `docs/briefs/etf-holdings-research-20260929.md` and this folder's `GOLD_TABLES_AND_PROMPTS.md`. The brief uses the actual LGIC registry and grader, records the measured bronze/silver placement-builder mismatch with the explicit bucket direction, and does not treat existing legacy prefixes as the standard. This invocation authors the brief and supporting design; it does not dispatch or deploy production work.
+
+## Client assets versus outside research, verbatim
+
+Recorded September 29, 2026, approximately 20:59 ET (September 30, 00:59 UTC); direct Codex user channel, exact receipt timestamp not exposed.
+
+> only client assets go through that route to opal-data-assets. outside research, public info, etc (e.g. opal-data-harvest, opal-data-transcript, etc) are managed in their own buckets.
+
+This reaffirms the existing R4 in `infra/logic/02_DOCTRINE.md`, read during this correction. The brief and supporting specification now explicitly identify `opal-data-etfs` bronze/silver/gold as the existing policy's application to outside ETF research. The observed builder output is an implementation/placement-metadata mismatch, not a new policy exception or an open decision. No global registry edit, production migration or peer dispatch was performed for this correction.
