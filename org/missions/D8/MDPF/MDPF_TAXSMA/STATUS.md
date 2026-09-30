@@ -10,7 +10,7 @@ Authority: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_142x
 |---|---|
 | Working branch / worktree | `wk-mdpf_taxsma-cro` at `C:/Users/AndrewBerman/Desktop/wk-taxsma-cro` |
 | Workspace candidate pin | stage A 79b446e0e0 + 56491c907c + 030cef41b5 + 8609ffe5bd; stage B = the two commits after this file's |
-| Portal candidate pin | n/a |
+| Portal candidate pin | 4235e77c on DEV via merge 29bfec2d (origin/DEV read back 17:3xZ); PROD untouched |
 | Deployed artifact pin | mdpf-gold-lambda CodeSha256 5aKNH5WB.. (bundle 2026-08-29, NO taxsma module) -- NOT DEPLOYED |
 | Push state | LOCAL (ls-remote not read since 13:4xZ) |
 
@@ -29,7 +29,8 @@ First failing hop: 1 (route undeployed) and 8 (publisher not wired).
 | TX-u-1 publisher extension (switch default OFF) | CANDIDATE @96f7932f91 + 5f58087a79 | 9 harness arms; real category document published offline with the switch ON: one put, Tax leaf covered 11 of 11 |
 | TX-u-2 publisher package | CANDIDATE (the commit after 5f58087a79) | 12 of 12 members hash-equal to pin 96f7932f91; sidecar declared; layer deps 0 FAIL (tool now reads the sidecar); Terraform env default and plan NOT done (root claimed) |
 | TX-i-3 / TX-i-1 / TX-i-2 IAM applies | BLOCKED (Terraform roots claimed by NFRA_IAMROLES202609 IAM-t-3) | |
-| TX-c-1 / TX-c-2 / TX-c-3 portal | NOT STARTED (c-2's component under DSGN_IRPTV1 lease) | |
+| TX-c-1 portal accessor | CANDIDATE portal 4235e77c (branch wk-taxsma-c1, pull-merged origin/DEV 20f95f79 at 29bfec2d) | 6 bun arms; tsc clean on the branch; on the merged tree the only two tsc errors are in COO~D's iv-e-119 test (`.block` read without narrowing the union), pre-existing at 20f95f79 |
+| TX-c-2 / TX-c-3 portal | NOT STARTED (c-2's component under DSGN_IRPTV1 lease) | |
 | TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED; v-1's expected cases for A02/A04 must be re-cut to 0.6.0 | |
 | TX-r-1 / TX-r-2 / TX-r-3 | NOT STARTED (G-O grade, G-W, G-P ahead) | |
 
