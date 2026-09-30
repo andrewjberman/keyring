@@ -2511,6 +2511,49 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The union lives in crosswalk.main's call, not inside build_crosswalk/write_pool, so it reaches 1 of the 2 crosswalk writers.",
     "notes": "Blocks s-2's re-sign (branch 2 still unsafe). Candidate fix, AMGT_RESAPP's file: add_security's build passes served=crosswalk._read_pool_latest()[0] when --write-pool (or the union moves into build_crosswalk's default). Routed to 1.0.0_SA_CTO~Z.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S13",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T00:20:00Z",
+    "one_line": "A per-security exception under a SCALAR shared field (e.g. BEST_SALES, shared unit 'MILLIONS', 6501 UNRESOLVED) is invisible to the readers: model_block_pull._resolved_unit/_resolved_sign return the shared scalar for ANY security, so the served figure for 6501 reads MEASURED 'MILLIONS' although its own map entry says the magnitude did not discriminate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/research/model_block_pull.py:684-718 @48a5b4a1cf: _resolved_unit returns entry['unit'] when it is not a dict, with no read of per_security_detail[security]; committed field_map.json @ead621d685 BEST_SALES: unit 'MILLIONS' scalar, per_security_detail['6501 JP Equity'].unit_status 'UNRESOLVED-ON-6501 JP Equity: sampled magnitude 11962163.4 does not discriminate absolute vs millions'.",
+        "CRPS-t-2 rule (ruling 2: a shared field's type never changes) makes the scalar form permanent for such fields, so the exception can only be read from per_security_detail[<security>]['exception'] (build_unit_map.py, this order); no reader consults it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ruling round17 s.2 ruling 2 / CRPS-t-2: an unmeasurable name is recorded as a per-security exception and the shared field is untouched; a value must carry its claim (CLAUDE.md section 4).",
+    "world_is": "The writer now records the exception; the producer's _resolved_unit/_resolved_sign (outside this order's paths) do not read it, so the same 6501 figure the pre-t-2 map served as 'MILLIONS' (committed at ead621d685 in the same shape) is still served with the shared MEASURED label.",
+    "notes": "Candidate fix, model_block_pull.py's file (not in CRPS-t-2 paths): _resolved_unit/_resolved_sign check per_security_detail[security] for an 'exception' (or non-MEASURED unit_status) key and return the UNRESOLVED-ON text. Scope today: fields with a scalar unit and a 6501 exception in the committed map (BEST_SALES; CURR_ENTP_VAL and SALES_REV_TURN are already dict-form and carry the UNRESOLVED text in the unit dict).",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S14",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T00:20:00Z",
+    "one_line": "build_unit_map's own CLI (main --securities) and model_block_pull._ensure_unit_map feed build_entries different headers: the CLI passes the raw header (CIE_DES_BULK as a row-dict list, no BEST_ forecast values), the producer pre-joins CIE_DES_BULK and merges the FY1 bestdata row, so the CLI replay reproduces 209 of the 214 committed Hitachi additions; 5 measured_on entries (BEST_DPS, BEST_EBITDA, BEST_EPS, BEST_PE_RATIO, CIE_DES_BULK) come out as exceptions instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "t2_replay.py output at HEAD of wk-crps18-2: 'hitachi_reproduced 209 of 214'; the 5 missing paths are /fields[mnemonic=X]/measured_on[+\"6501 JP Equity\"] for BEST_DPS, BEST_EBITDA, BEST_EPS, BEST_PE_RATIO, CIE_DES_BULK (0 extra paths).",
+        "model_block_pull.py:790-830 @48a5b4a1cf (_ensure_unit_map: _bulk_text_value join and bestdata FY1 merge before build_entries) versus build_unit_map.py main/load_raw_for_key (header = refdata top-level dict as landed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "build_unit_map.py docstring: the CLI is the builder's own entry point for a named run; C-UNIT-MAP-MEASURED: the map is built for every name.",
+    "world_is": "Only the producer path yields MEASURED for the 5 mnemonics; a CLI run (--securities / --population crosswalk) records them UNRESOLVED (exception-marked), so the two builders disagree on the same raw.",
+    "notes": "Not widened here (the order's ruling is the exception shape). Candidate fix: main() applies the producer's header preparation (join CIE_DES_BULK, merge bestdata FY1) before build_entries."
   }
 ]
 ```
