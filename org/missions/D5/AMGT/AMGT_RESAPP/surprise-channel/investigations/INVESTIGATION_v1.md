@@ -15934,6 +15934,49 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "AMGT_RESAPP-Z-W180-S1 stands ARMED with disarm_owner 2.0.0_SA_COO~Z: the schema refuses the carried/retired_from_served counters, so any carrying write_pool is refused.",
   "world_is": "The refusal no longer exists at this branch's HEAD: the schema admits both counters and a carrying write validates. The hazard remains present on the trunk until this branch drains; S1's row is untouched (append-only).",
   "notes": "Filed at the issuer's instruction (AMENDMENT 1 ruling: disposition Z-W180-S1 as resolved, do not delete it). This worker judges the row's form only; the adjudication of S1 is the CVO's via the `adjudicates` carrier, not carried here. Note the schema minimum is 0 (the ruling said non-negative), while S1 proposed minimum 1; write_pool emits the counter only when n > 0 either way."
+},
+{
+  "id": "AMGT_RESAPP-Z-W184-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~184",
+  "surfaced_at": "2026-09-30T04:00:00Z",
+  "one_line": "AC3's api-suite reads 1 failed / 349 passed on a tree where zz-5 is complete: test_harvest_prefixes.py::test_ii_registry_hash_matches fails because the generated lib/research/api/_harvest_prefixes.py carries REGISTRY_HASH 54d1865c8a65 while naming.registry_hash() now reads 3118e82e9c47 (registry moved after the last regeneration); the fix is a regeneration outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "api-suite.sh at wk-AMGT_RESAPP-184 (base 6c61d0ce73 plus zz-5 edits): '1 failed, 349 passed in 44.86s', exit=1; FAILED lib/research/api/tests/test_harvest_prefixes.py::test_ii_registry_hash_matches -- assert '3118e82e9c47...' == '54d1865c8a65...' (hp.REGISTRY_HASH vs naming.registry_hash()).",
+      "test_ii compares hp.REGISTRY_HASH with naming.registry_hash() only -- neither reads scoped_amgt.py or any file zz-5 edited (read at test_harvest_prefixes.py:58-59), so the failure is independent of zz-5 by construction (not re-measured on an unedited tree); the other 4 tests of that file pass (the four constants match fresh opal_naming output, arm i).",
+      "git log on infra/logic/registry: 73896b6c42 regenerated 'the 11 CLOUD targets at registry@54d1865c8a65cfb2'; later registry commits 6dcd6df254 and de56cfd02f moved the registry hash, so _harvest_prefixes.py (a GENERATED module, outside this order's <paths>) is stale by design of its drift test."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC3: pytest reports N passed and 0 failed over lib/research/api/tests and lib/research/print/tests.",
+  "world_is": "0 failed is unreachable from this order's write grant: the failing test's remedy is regenerating lib/research/api/_harvest_prefixes.py against the current registry hash, a path this order does not name. zz-5's own 10 new tests and the 293+ existing api tests pass; AC3 is recorded FAIL, not rescued.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z (the fix is a regeneration by whoever owns _harvest_prefixes.py, then AC3 re-runs green). Also noted: read_rankings now walks up to 14 calendar days of pointer GetItems per axis for the prior generation (zz_5_rows --what moved took 66s of the 120s bound over four axes)."
+},
+{
+  "id": "AMGT_RESAPP-Z-S310",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T04:40:00Z",
+  "one_line": "Resolves AMGT_RESAPP-Z-W184-S1: zz-5's AC3 failure (test_harvest_prefixes::test_ii_registry_hash_matches) was the REGISTRY_HASH stamp drift that AMGT-zz-4 scoped and restamped; with CLOUD synced into wk-AMGT_RESAPP-184 (bde4f0dc02, carrying zz-4's drain @b113807360) the api suite reads 351 passed, 0 failed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash deliverables/2.0.0_SA_COO~Z/round48/checks/api-suite.sh run by the issuer in C:/tmp/r51-184 after the sync: '351 passed in 46.35s', exit 0.",
+      "zz-4 drained @b113807360: zz_4_stamp.py reads --check rc=0, four constants byte-equal."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "zz-5 AC3: the api suite reads N passed and 0 failed.",
+  "world_is": "It does, once the tree carries zz-4's restamp; the one failure was the stamp, not zz-5's code.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Also measured: read_rankings per axis in-process, zz-5 tree vs CLOUD: 4.9 vs 2.6 s, 27.1 vs 22.7 s, 10.0 vs 10.6 s, 23.8 vs 24.3 s -- the prior-generation walk adds no material latency beyond noise; the served timing is read at zz-8."
 }
 ]
 ```

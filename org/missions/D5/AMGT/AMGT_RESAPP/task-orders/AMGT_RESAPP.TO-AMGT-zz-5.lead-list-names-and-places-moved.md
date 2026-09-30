@@ -67,6 +67,8 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 places_moved); AC3 PASS (the api suite). Served in zz-8.
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-30 ~04:4xZ):** AC1 PASS (18 of 66 named: etf-classifications 16, crosswalk 2; 0 by ticker), AC2 PASS (66 of 66 carry places_moved, 66 int). AC3 FAILED in the worker's run on the REGISTRY_HASH stamp only (row Z-W184-S1); the issuer synced CLOUD (carrying zz-4's restamp) into the branch at bde4f0dc02 and re-ran AC3: 351 passed, 0 failed. Resolving row Z-S310. The prior-generation walk measured within noise of CLOUD per axis.
+<status>complete</status>
 <round>51</round>
 <slot>~184</slot>
 <fabric>site-z</fabric>
