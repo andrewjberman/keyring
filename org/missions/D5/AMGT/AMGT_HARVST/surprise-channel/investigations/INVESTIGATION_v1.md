@@ -3914,6 +3914,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Evidence for the CVO's L9 disposition of AMGT_HARVST-Z-W79-S1: the ruled rule is implemented and its hazard (a one-name failure shrinking the set) no longer exists in the code; today's set is empty and the gold branch HOLDs NO_DECLARED_PUBLISHER."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W78-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~78",
+      "surfaced_at": "2026-09-30T11:10Z",
+      "one_line": "Phase A code is built and proven but cannot be committed: the lane gate admits only the order <paths> (deliverables + investigations); lib/opal_data_harvest/silver_from_bronze.py and test_aa3_empty_struct.py are refused (lane BASE_EXEC). Cites Z-W78-S1.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AMENDMENT 2 phase A: an empty dict anywhere in a bbg row becomes None; the 11 real held rows serialize through pa.Table.from_pylist + pq.write_table; the suite passes.",
+      "world_is": "safe-commit refused both lib paths under owned-paths block mode; the order <paths> block (lines 39-42) does not carry the AMENDMENT 2 grant. The files sit uncommitted in worktree wk-hvst-r28-78a. Built and proven: lib/opal_data_harvest/silver_from_bronze.py _prune_empty_dicts applied in _extract_bbg; aa3_phaseA_ac2.py printed SERIALIZED: 11 of 11; test_aa3_empty_struct.py 4 passed (mutant without pruning fails); suite base 531 passed / after 535 passed. The gate forbids editing S1 in place and reserves GRADUATED to the CVO, so S1 keeps its disposition.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~78/phaseA/aa3_phaseA_AC2.txt: SERIALIZED: 11 of 11",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~78/phaseA/aa3_phaseA_AC1.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Cites AMGT_HARVST-Z-W78-S1: its cause is fixed and proven; graduation is the CVO L9 transfer, not a worker act."
     }
   ]
 ```
