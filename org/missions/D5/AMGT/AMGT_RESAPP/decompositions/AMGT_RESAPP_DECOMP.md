@@ -7166,6 +7166,19 @@ ad-3 lands (ruling 2). No outcome is added.
    object's `held_no_span` therefore leaves the page's sentence text unchanged; the served delta is the hold's accounting only
    (at_read -> 0, on_object -> the count, basis -> `READ_GATE_PLUS_OBJECT`; the count is unchanged). The stored objects are the act's
    whole write set. Asked of the CTO at issuance whether the pair still earns its cost (msg below); ad-2's GO waits on that answer.
+2a. **THE READER CENSUS (CTO msg 27301: ad-2 drops only if every reader goes through the at-read hold) -- ad-2 STANDS.** Every code
+   reference to `drafting/v1` / `DRAFTING_PREFIX` / `_drafting_pool_key` / `_read_drafting_document` outside tests, fixtures and records
+   (a Grep over *.py/*.ts/*.tsx/*.js/*.cjs/*.sh/*.tf/*.json/*.yaml, 169 files, 6 of them product): `scoped_amgt._read_drafting_document`
+   has ONE caller (:1807, the /thesis drafting block, gated at read) and every adapter consumer -- /thesis, the header's description
+   source (:3488), the rich export FWD-30 grades -- reads that gated block; `analyze.py:1638` and `drafting_build.py` are the WRITERS;
+   `HeaderBrief.tsx:46` is a comment; `scoped-amgt-api.tf:130` is the adapter's read grant. **ONE reader takes the stored text WITHOUT
+   the hold: `lib/research/posture/packs.py:110` `build_pack`**, which puts every `sections[].sentences` entry into the posture judgment's
+   evidence pack as a `drafted_sentence` (read by `posture/judge.py`, run by `integrations/bloomberg/research/management_posture_batch.py`).
+   So the act's expected diff is the sentences, and the pack is the served delta to verify: `ad_2_packs.py` (AMENDMENT 1, AC3) builds
+   the pack from the pre-act bytes and from the live object and requires it to lose EXACTLY the no-span sentences (base with a capture
+   and no act: removed 0 -> FAIL; reference transform -> PASS; one span-carrying sentence also dropped -> FAIL). The served posture
+   (`posture/v1`, read by `read_posture` without re-reading D-1) moves only when that batch next runs; the pack's `S:<section>:<n>` ids
+   renumber within a section at that run.
 3. **Item 4 -- CORPUS round 25 did not resolve TSM's gap.** COO~X msg 27279: the re-derive landed (TSM `CUR_MKT_CAP` now USD). The TSM-only
    served sweep after it (17:0xZ, `--diff`): still NOT_OK on `('HEADER', 'CURR_ENTP_VAL')` -- page "unit not resolved -- raw figure
    71,993,494.73", export "71993494.73205896 UNRESOLVED-ON-TSM ...". Both sides state the unit unresolved and the digits agree; the grader

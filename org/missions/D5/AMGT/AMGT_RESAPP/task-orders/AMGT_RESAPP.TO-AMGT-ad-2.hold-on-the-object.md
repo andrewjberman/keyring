@@ -22,7 +22,8 @@ ONE act, ONE NEVER-2 entry, ONE never-widen pair: run AMGT-ad-1's `python -m lib
 --population <the newest crosswalk/v1 key> --pre-act-dir <your deliverables>/ad2-pre-bytes` LIVE, which moves every stored D-1 document's
 no-span sentences (the census `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~193/D1_UNSPANNED_CENSUS.json`, 179 in
 12 documents at the cut) from `sections[].sentences` to the object's `held_no_span`. The page's sentence text does not move: the deployed
-adapter already holds these at read, and after the act it reads the same hold from the object.
+adapter already holds these at read, and after the act it reads the same hold from the object. ONE reader takes the stored text without that
+hold -- the posture judgment's evidence pack (`lib/research/posture/packs.py:110`) -- and it loses exactly these sentences (AC3).
 
 **Begin only when all hold:** AMGT-ad-1 has drained; the issuer's GO names the commit to run from; both halves are committed (their paths
 are in the GO); a `--dry-run` at that commit lists exactly the census's names and counts. **The order of work, under the entry opened AND
@@ -50,6 +51,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-ad-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round54/checks/ad_2_hold.py --what store --dir org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/ad2-pre; echo "exit=$?"</invocation><expect>12 documents, no-span left 0 each, no BAD line; EVERY STORED D-1 DOCUMENT HOLDS ITS NO-SPAN SENTENCES AND MOVES NOTHING ELSE: YES -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-ad-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round54/checks/ad_2_hold.py --what served --dir org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/ad2-pre; echo "exit=$?"</invocation><expect>per name at_read -> 0, on_object = the pre-act at_read, count unchanged, no BAD line; THE SERVED /THESIS TEXT IS UNMOVED AND READS THE HOLD FROM THE OBJECT: YES -- and exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-ad-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round54/checks/ad_2_packs.py --dir org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/ad2-pre; echo "exit=$?"</invocation><expect>per name removed = want, no BAD line; pack sentences removed equals the pre-act no-span count; THE POSTURE PACK LOSES EXACTLY THE NO-SPAN SENTENCES: YES -- and exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -65,6 +67,11 @@ at_read not 0). Positive arms (ruling 1): AC1 PASS on the reference transform ap
 with the adapter's accounting applied.
 
 <status>pending</status>
+**AMENDMENT 1 (`2.0.0_SA_COO~Z`, 2026-09-30 ~18:0xZ, before any GO; graded by `.tools/to-pipeline-gate.py` GATE (viii) only -- the order
+declares `<placeholders>`):** per CTO msg 27301 the reader census decides ad-2 (s.62b.2a): one reader takes the stored text without the
+at-read hold (`lib/research/posture/packs.py:110`, the posture judgment's evidence pack), so ad-2 STANDS and AC3 grades that reader's
+output (`ad_2_packs.py`: base with a capture and no act FAIL, reference transform PASS, a span-carrying sentence also dropped FAIL). The
+face's line "The page's sentence text does not move" stays true of the page; the posture pack is the moving reader.
 <round>54</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
