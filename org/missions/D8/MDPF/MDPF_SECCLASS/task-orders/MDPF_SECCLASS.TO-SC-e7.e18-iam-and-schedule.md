@@ -40,6 +40,12 @@ This runs after SC-e-4 in your worktree; COT's caller needs the same grant.
    "putitem_etf_classifications": true, "putitem_bd_securities": false, "fmt_ok": true, "validate_ok": true,
    "schedule"}`. Write the half `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_E18_IAM_20260930.md` for the IAM apply plus
    the E_18 code deploy (DS lane), with the first ordinary run as the acceptance.
+5. **Amendment 1 (row MDPF_SECCLASS-W6-S1).** BD's round-1 `data/black_diamond/scripts/gold/E_18.detect_new_securities.py`
+   computes `_REPO_ROOT` via `parents[3]`, one hop short of the repo root, so its deferred import of
+   `etf_classification_scheduled` raises ModuleNotFoundError outside a test harness. SC-e-4 fixed COT's copy to
+   `parents[4]`. Fix BD's the same way, and prove the import resolves when E_18 is run as a plain script from the repo
+   root. Give the proof as an `import_ok: true` field in the evidence JSON, which the half cites, BEFORE the E_18
+   deploy is named ready.
 
 **Standing rulings (carried from the round-2 decomposition):**
 - Andrew-direct 2026-09-30 ~02:2xZ: "yes, bd-securities values can seed new rows. THey just don't overwrite existing rows."
@@ -73,6 +79,7 @@ Dry-run at the base 2026-09-30 03:1xZ (@30727a9413): SC2-e7-AC1 NOT-MET (evidenc
 
 <paths>
 infra/aws/terraform/bd-pipeline/iam.tf
+data/black_diamond/scripts/gold/E_18.detect_new_securities.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_E18_IAM_20260930.json
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_E18_IAM_20260930.md
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
