@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.5",
+  "prd_version": "v0.6",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -26,7 +26,7 @@
 
 ## Authority and project arc
 
-Author and accountable CTO: `1.0.0_SA_CTO`. Directive D9, Opal Workflows; macro NFRA; execution fabric laptop.
+Author and accountable CTO: `1.0.0_SA_CTO`. Directive D9, Opal Workflows; macro NFRA; execution fabric site-z (v0.6; it read "laptop" through v0.5).
 
 Andrew commissioned the scope at the `4.0.0_SA_CRO` terminal on 2026-09-17 and answered five cards there, all verbatim in
 the brief: tool names follow the LGIC naming canon; the catalog is versioned in S3; the project sits under D9; Opal staff
@@ -41,6 +41,15 @@ indexes everything else, so the model is never guessing which tool to call. **Th
 his words: the official plugins are poorly indexed, and we will not have that problem.**
 
 The header stays DRAFT until both halves are signed at L4-R. The author signs neither half.
+
+**v0.6 (2026-09-30 ~08:0xZ, `1.0.0_SA_CTO~O`)** is the B8 addendum of the reinstatement rulings
+`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/REINSTATE_RULINGS_20260930.md` @4e598ab7be, on Andrew's
+2026-09-30 order to reinstate the project. The project runs on the site-z fabric (header `fabric`), where the Bloomberg
+standing read lives, so the brief VII.4 scope limit ("Bloomberg ... NOT claimed reachable from the laptop fabric") no
+longer holds. S10, A8 and the VII.4 coverage row now make FWD-8's market-data half reachable through Bloomberg under its
+own standing read (`integrations/bloomberg/READ_HERE.md`) as well as through YCharts. ENDPOINT and CONTRACTS are
+unchanged: FWD-8 already reads "Bloomberg where its own standing word allows" and "no new vendor egress beyond Andrew's
+standing per-use word", and this addendum adds no vendor egress.
 
 **v0.4 (2026-09-17 ~23:5xZ)** answers `3.0.0_SA_CVO`'s refusal of the v0.3 ratified-text half @`7fef989e77`. The ten
 outcome cards are now TRANSCRIBED from the ratified pin verbatim -- statement, DONE WHEN, ACCEPT and PROOF -- with only
@@ -273,7 +282,7 @@ Entitlements screen exists, the operator command is the path. Removal takes effe
 | S7 | read roles and grants | one fenced role per property; the grant model extended | LGIC_ENFORCE's registry and builders | FWD-3..FWD-5, FWD-9 |
 | S8 | the per-property analysis | the written record of what people actually ask, per property. **Its standing input is PART III's beta bar: each admitted person's first week produces the list of questions the index could not route, and that list is the next round's analysis input** -- which is also how VII.2 (the common questions are not enumerated anywhere yet) closes by measurement rather than by guesswork | -- | FWD-4, FWD-5, FWD-10 |
 | S9 | entity resolution | the stated matching rule, its precision and recall, its unmatched list | S4 | FWD-7 |
-| S10 | on-demand paths | the long-history substrate and the vendor reads in the same index. **SCOPE LIMIT, from brief VII.4: Bloomberg on-demand is the SITEZ standing read and is NOT claimed reachable from the laptop fabric. This is a LAPTOP project, work is never routed across fabrics, so FWD-8's market-data half is served by the Gateway's YCharts tools on Andrew's per-use word -- Bloomberg is out of scope here and a cross-fabric reach is a re-cut, not a cell** | S1, S6 | FWD-8 |
+| S10 | on-demand paths | the long-history substrate and the vendor reads in the same index. **v0.6: the scope limit from brief VII.4 is lifted.** This is a site-z project, where the Bloomberg standing read lives, so FWD-8's market-data half may be served by Bloomberg under its own standing read (`integrations/bloomberg/READ_HERE.md`) or by the Gateway's YCharts tools on Andrew's per-use word. No new vendor egress; a Bloomberg reach outside its standing read is not in scope | S1, S6 | FWD-8 |
 | S11 | the beta roster | admission, removal, per-person tool lists | S7, the Gateway's identity | FWD-9 |
 
 ## Ground truth measured at authorship (2026-09-17, repository only)
@@ -340,7 +349,7 @@ settled value), or NOT CARRIED with the reason on its own line.
 | VII.1 | no AWS state was read; table sizes, object counts and query timings over silver are unmeasured | OPEN and stated in the evidence boundary: **every capacity claim here is DESIRED until a cell exercises it**, and each property's first analysis cell carries the measurement |
 | VII.2 | the per-property common questions are not enumerated anywhere | OPEN, and it CLOSES BY MEASUREMENT: S8's analysis pass plus PART III's beta bar -- the first week's unrouted questions are the next round's input, so the enumeration is produced by use rather than guessed |
 | VII.3 | the tool-naming rule is the CRO seat's READING of Andrew's answer; the canon does not grade tool names | CARRIED EXPLICITLY -- C3 now says so in its own first line, binds the rule by criterion, and routes the GRADING question to LGIC_NAMING as a schema bump |
-| VII.4 | **Bloomberg on-demand is the SITEZ standing read; NOT claimed reachable from the laptop fabric** | CARRIED AS A SCOPE LIMIT in S10 and A8. This is a LAPTOP project and work is never routed across fabrics, so FWD-8's market-data half is exercised through YCharts on Andrew's per-use word and Bloomberg is OUT of scope. Reaching for it later is a re-cut of FWD-8, never a cell |
+| VII.4 | **Bloomberg on-demand is the SITEZ standing read; NOT claimed reachable from the laptop fabric** | CARRIED, then LIFTED at v0.6. The project runs on the site-z fabric, so the limit no longer binds: S10 and A8 admit Bloomberg under its own standing read beside YCharts, with no new vendor egress (reinstatement ruling B8) |
 | VII.5 | citations are the research passes' reads at the stated vintage, not re-verified line by line | OPEN and it BINDS L5: the first cell of each surface re-verifies the citations it relies on by PRINTING THE BYTES at the cited line, never by grepping for the quote -- a citation ages separately from the text it quotes, and this PRD's own v0.1 defect was exactly a claim inherited from a header nobody re-read |
 | VII.6 | the earlier scoping record recommended D6 and business-first names; both were OVERRULED by Andrew, and the record is kept unedited as research | CARRIED: the record is on L5's reading list AS RESEARCH, never as direction. Its D6 placement and its business-first naming are superseded by his 2026-09-17 words (D9 Opal Workflows; Refer to LGIC naming), and a cell that cites it cites the overrule beside it |
 
@@ -355,7 +364,7 @@ settled value), or NOT CARRIED with the reason on its own line.
 | A5 | per fund: one live answer per question class compared with the served artifact | FWD-5 |
 | A6 | the typed query refuses an unsafe shape, states truncation, and the routing set prefers purpose-built tools | FWD-6 |
 | A7 | one client answered across two systems, with the match rule, its precision and recall on a named sample, and the unmatched list | FWD-7 |
-| A8 | one long-history answer and one market-data answer, each naming its substrate and its cost; the market-data half is exercised through the Gateway's YCharts path on this fabric, with Bloomberg NAMED as the SITEZ read this project does not claim (brief VII.4) | FWD-8 |
+| A8 | one long-history answer and one market-data answer, each naming its substrate and its cost; the market-data half is exercised through Bloomberg (its standing read on this fabric) or the Gateway's YCharts path, and names which (v0.6, ruling B8) | FWD-8 |
 | A9 | two sessions (admitted, not admitted) with their tool lists, one refusal transcript, one removal with its timestamp | FWD-9 |
 | A10 | the next property added as one catalog entry plus a tool, timed; a planted unclassified tool is REFUSED | FWD-10 |
 | A11 | every tool that ships carries its catalog entry and classification; the count of tools without either is zero, denominator printed | C2 |
