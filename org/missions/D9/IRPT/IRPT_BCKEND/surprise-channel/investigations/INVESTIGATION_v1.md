@@ -13237,3 +13237,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No cell is cut. If a future contract version routes either operation, the pin CONSUMER_SMOKE_ENTRIES and the operation-map coverage test fail loudly and the pair is added then."
 }
 ```
+
+## IRPT_BCKEND-W94-S1 -- ReplayTransport records carry an ELEVENTH key, `location`, that the real Transport does not, so IB-yr-291 AC1 (ten-key ledger, 7 records) and AC3 (ledger equal to tx.evidence, off-shape raises) cannot both be met as written.
+
+```json
+{
+  "id": "IRPT_BCKEND-W94-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~94",
+  "surfaced_at": "2026-09-30T15:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "ReplayTransport records carry an ELEVENTH key, `location`, that the real Transport does not, so IB-yr-291 AC1 (ten-key ledger, 7 records) and AC3 (ledger equal to tx.evidence, off-shape raises) cannot both be met as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "transport.py:476-480 (real Transport._record) builds ten keys; transport.py:588-597 (ReplayTransport, the offline transport the checks and the suite use) builds eleven, adding `\"location\": fixture.get(\"location\", \"\")`. Both at worktree base 64a37ccbd5.",
+      "With the strict validation the order specifies (key set == ten keys, else JobRefused VENDOR_LEDGER_SHAPE before the receipt put): check_291_receipt_ledger.py -> JobRefused VENDOR_LEDGER_SHAPE (rc=1) on the first replay record; check_291_dup_control.py -> FAIL 'suite printed no RESULT block' (the same refusal inside run_offline_suite.py, so AC2 goes RED, not green); pytest test node 1 fails the same way, control node 2 passes. Patch: deliverables/0.9.0_WK_IRPT_BCKEND~94/candidate_strict_validate.patch.",
+      "Probe over all 7 replay records: symmetric difference from the ten-key set is exactly ['location'] on every one (7 of 7).",
+      "Variant that drops exactly the key `location` before validating (candidate_strip_location.patch): AC1 PASS (7 records, 0 off-shape), AC2 PASS (dup 0, first 7), and the off-shape `cookie` control still raises; but a test asserting receipt ledger == tx.evidence fails on the `location` key, so AC3's literal 'equal to tx.evidence' needs the issuer to say projected evidence."
+    ]
+  },
+  "spec_asserts": "The order: transport records are 'ten keys ... no header value, no cookie, no body'; the receipt ledger is validated against exactly those ten keys and equals tx.evidence; the issuer's base run read 7 records for the OVERVIEW replay.",
+  "world_is": "MEASURED: the 7 replay records have 11 keys each (location is the eleventh). The order's shape is the real transport's; the replay the criteria run against is not the same shape. transport.py, run_offline_suite.py and the check scripts are read-only to this worker, so the divergence cannot be closed inside the grant. Refusal clause applied: job.py and the test were NOT committed in either variant; nothing was weakened to pass.",
+  "notes": "Issuer choices: (a) authorize transport.py ReplayTransport to drop `location` (or move it out of the record); (b) amend the order to let job.py drop the named replay-only key `location` and AC3 to compare to the projected evidence (candidate_strip_location.patch is ready); (c) add `location` to the shape constant, which would then diverge from the real transport's ten keys."
+}
+```
