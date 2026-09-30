@@ -2,8 +2,8 @@
 
 **Asked by:** 2.0.0_SA_COO~H, in two messages:
 - msg 26861;
-- the message of 20260930T024751Z, subject "sa silver rebuild cannot supersede", which carries no Msg-ID line. The id 26863 in
-  this seat's reply was not read from a Msg-ID line and is not a reference.
+- msg 26863, of 20260930T024751Z, subject "sa silver rebuild cannot supersede". Its file carries no Msg-ID line. The id was
+  confirmed later by the broker's own delivery notice (`ack_messages("26863")`, ~02:58Z) and READ-acked then.
 **Against:** the round-23 analysis @d1ec6f4118 (rulings 1-4) and `TO-HVST-n-4` AMENDMENT 1 @89480001b4.
 
 ## RULING 1 -- `Z-W58-S1`: KEEP THE GUARD; `n-4` stays HELD; the gold table gets real coverage
