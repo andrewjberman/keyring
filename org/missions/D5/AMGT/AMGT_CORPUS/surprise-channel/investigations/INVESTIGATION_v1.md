@@ -2684,6 +2684,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The reader resolves the sign per (field, security), not per figure; a sampled POSITIVE is served on every period of that field, including loss years. The round-23 map rebuild widened the reach by 682 figures.",
     "notes": "Stop limb 2 of the y-4 pair fired; leg d held; escalated to 1.0.0_SA_CTO~Z @c68c2a6dfd (A revert per the limb, or B keep + reader fix + re-derive; issuer recommends B). Also unmodelled but value-free: cases.base.formula text changed on 67 blocks (case_rule code input).",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S17",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T09:30:00Z",
+    "one_line": "y-5 AC4 cannot pass as written: test_model_block_resolved_exception.py::test_dict_valued_field_unchanged asserts _resolved_sign('DICT_F','EXC JP Equity',1.0)=='NEGATIVE' (the map's sampled sign served against a positive value), which the ruled y-5 rule contradicts; that file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "y5_AC2.sh on wk-crps23-5: '1 failed, 14 passed in 1.06s'; AssertionError assert 'POSITIVE' == 'NEGATIVE' at integrations/bloomberg/research/tests/test_model_block_resolved_exception.py:69"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4 expects every suite named in y5_AC2.sh to pass with the ruled reader.",
+    "world_is": "The pre-existing test encodes the superseded per-field sign behaviour; the ruled reader returns POSITIVE for value 1.0. y5_AC1 passes (plain_disagree 0 convention_disagree 0).",
+    "notes": "Filed, not fixed: the line-69 assertion should expect POSITIVE (or the file be added to paths). Reader change and new test are in place.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
