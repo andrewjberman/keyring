@@ -260,3 +260,29 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "No effect on this cell's own acceptance (SC2-e3-AC1/AC2 check internal consistency, not population identity with round 1) or on the silver/gold stages, which each read their own live, real, currently-served population directly (bd_assets_dim.parquet, holdings_lots) rather than depending on R1's resolution-stage number. Flagged so a later round or the CVO's compile does not read the 3,992-vs-2,220 difference as an unexplained regression."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-W4-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~4",
+  "surfaced_at": "2026-09-30T03:10:00Z",
+  "one_line": "TO-SC-e9's own text asserts the contract is already v0.2.0 with C-FIELD identifier_namespace in {TICKER, CUSIP} (\"the contract v0.2.0 (SC-e-1, which rides the field) gives C-FIELD identifier_namespace...\"), but org/standards/MDPF_SECCLASS_CONTRACT.json at this worktree's HEAD is still v0.1.0, has no identifier_namespace field at all, and classified_by carries only [seed, scheduled] (not the four-value [seed, scheduled, constituents, legacy] the round-2 label check and standing rulings already assume) -- SC-e-1's own commit has not landed on this branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (SC-e-1 is a separate worker slot's cell in this same round; its commit lands via the normal drain, not this cell)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log --oneline -- org/standards/MDPF_SECCLASS_CONTRACT.json on wk-MDPF_SECCLASS-4 @8aa241c9b1: one commit only, b9680cfe86 (the original L4 PRD, contract_version 0.1.0) -- no SC-e-1 amendment commit present",
+      "python -c \"json.load(open('org/standards/MDPF_SECCLASS_CONTRACT.json'))['contract_version']\" -> '0.1.0'; ['fields'].keys() -> ['instrument_kind', 'classified_by']; ['classified_by']['values'] -> ['seed', 'scheduled']",
+      "org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e1.contract-and-legacy-label.md:33 states the amendment as a fact of this round, and the round-2 evidence checker (R2_CHECKS/r2_evidence.py check_label) already REQUIRES classified_by_values sorted == ['constituents','legacy','scheduled','seed']"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The contract is v0.2.0 with identifier_namespace already a C-FIELD member, on this branch, right now.",
+  "world_is": "The contract file this worktree can read is v0.1.0 with two fields (instrument_kind, classified_by) and classified_by's two-value enum -- SC-e-1's amendment is a sibling worker's cell in the same round, not yet merged into this worktree's history.",
+  "notes": "No effect on this cell's own build: SC-e-9's bounds never grant a write to org/standards/MDPF_SECCLASS_CONTRACT.json, and the planner/tests/census/half all carry identifier_namespace as a plain data attribute on the planned rows themselves, independent of whether the contract JSON file has been amended yet. Named so the round-3 compile does not assume the contract file already reflects SC-e-1's text merely because a sibling task order describes it that way."
+}
+```
