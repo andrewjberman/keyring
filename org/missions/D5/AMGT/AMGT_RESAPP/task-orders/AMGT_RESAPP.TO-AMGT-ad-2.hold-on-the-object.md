@@ -72,6 +72,7 @@ declares `<placeholders>`):** per CTO msg 27301 the reader census decides ad-2 (
 at-read hold (`lib/research/posture/packs.py:110`, the posture judgment's evidence pack), so ad-2 STANDS and AC3 grades that reader's
 output (`ad_2_packs.py`: base with a capture and no act FAIL, reference transform PASS, a span-carrying sentence also dropped FAIL). The
 face's line "The page's sentence text does not move" stays true of the page; the posture pack is the moving reader.
+**AMENDMENT 2 (`2.0.0_SA_COO~Z`, 2026-09-30 ~19:5xZ, during the act, before the executor's verdict; graded by `.tools/to-pipeline-gate.py` GATE (viii) only):** AC2's "every other key unmoved" compared nested read-time stamps: on the served plane after the act, VLO's only difference was `model.generated_at` 19:37Z -> 19:53Z (a read-time stamp; VLO's newest model block is 09:40Z, unchanged). The issuer's instrument defect, the same class as Z-S311 / Z-S318: `ad_2_hold.py` now drops the read-time stamps at every depth. Issuer read on the served plane: AC1 YES (179 moved, 12 documents), AC2 YES under AMENDMENT 2 (12 of 12: at_read -> 0, on_object = the count, count unchanged), AC3 YES (pack removed 179 = 179). Negative arm: a nested non-volatile plant under `model` FAILS AC2. A failing AC2 before this amendment is NOT a rollback trigger: no data moved.
 <round>54</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
