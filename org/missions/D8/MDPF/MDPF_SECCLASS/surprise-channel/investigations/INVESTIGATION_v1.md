@@ -235,3 +235,29 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not a cell defect: TO-SC-k1 named 'each firm's own latest holdings source, where one exists'. The IR Holdings producer's per-firm symbol sets (a ticker-keyed read at all three firms) are the nearest held source for the enrichment caller."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-30T05:20:00Z",
+  "one_line": "The issuer's drain of the MDPF_SECCLASS thread (@ae7aa281b0, SC-t-1) moved data/black_diamond/scripts/gold/lib/etf_classifier.py onto etf-classifications and removed its private _ticker_map/_name_map, which IRPT_BCKEND's Holdings producer (holdings_snapshot.py canonical_classifier/_classifier_basis) reads -- CLOUD's investor_reporting suite now reads 30 failed / 16 errors, and a Holdings package re-mint from CLOUD would fail.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (IRPT_BCKEND IB-mr-291: Holdings moves to canonical-first with a declared bd-securities fallback module of its own and stops importing the BD library)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r27_suite_whole.py data/assets/scripts/gold/investor_reporting/tests at CLOUD @874ab56b33: SUITE-BROKEN rc=1 (30 failed, 268 passed, 16 errors); at CLOUD @6c0317e55c before the thread drain it read SUITE-WHOLE 314 passed",
+      "holdings_snapshot.py:828-919 reads clf._ticker_map / clf._name_map of the BD library; data/black_diamond/scripts/gold/lib/etf_classifier.py at CLOUD no longer defines them (SC-t-1, drained @ae7aa281b0)",
+      "served Holdings are unaffected: the standalone packages were minted 2026-09-29 16:21Z from the pre-thread library (IB-mr-222 Part 1); no Holdings re-mint has run since"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A cell's drain keeps every other suite whole (the issuer runs the drain's hygiene).",
+  "world_is": "The thread's drain re-ran only the thread's own tests; the IRPT Holdings producer also imported the BD library, so the drain broke another project's suite on CLOUD unnoticed until 05:2xZ.",
+  "notes": "The issuer's miss: the drain-time hygiene did not include suites that import a changed shared module. The narrowed release cell IB-mr-291 removes the cross-project import."
+}
+```
