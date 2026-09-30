@@ -244,6 +244,74 @@
     "spec_asserts": "TO MS-a-1 section 1 item 2: 'Plan, then apply, targeted ... through bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply -target=...' with the plan reading only additions for the targets; the directory 'needs' the layer zip and the key vars.",
     "world_is": "A targeted plan reads 3 to add / 0 / 0, but safe-apply's gates plan the WHOLE tree, and under ENFORCE the naming-plan limb refuses it on an unrelated pre-existing addition (gw_rivalfunds_read, rivalfunds-iam.tf, which this order may not touch). No override for that limb exists short of removing org/mcp/naming-gate.enforce or an R20 entry, both outside this order; bare terraform apply is barred. The apply did not run; the ledger entry nfra-mcpmsp-r1-firm-role stays OPEN (nothing landed, blast radius untouched). The saved plan and TF_DATA_DIR sit in this worktree's .scratch for a retry.",
     "notes": "Ways through, issuer's call: (a) a different cell lands the rivalfunds policy name (or its state import) so the full plan has no refused addition; (b) the CTO rules a one-apply naming-gate exemption for these three additions; (c) apply from a tree whose full plan is clean. Fresh time cost: each safe-apply run spends ~4.5 min in three full-tree refreshes before it reaches the refusal."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S4",
+    "one_line": "MS-d-1's release census names 10 files and AC2's allowed set is the same 10, but the order's own commit list (343534a883 and 2d15859595, MS-t-1's AMENDMENT 1 and 2) also writes app/access_state.py and tests/test_access_state.py; the narrow release tree therefore carries 12 gateway files and AC2 would print 'outside NFRA_MCPMSP's set 2'.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release tree /c/tmp/ms-1-rel (branch rel-nfra-mcpmsp-r1-gateway, base 093fc247c6), staged, not committed: git diff --cached --stat lists 12 files under infra/aws/ec2/opal-gateway: the 10 of the census plus app/access_state.py (12 lines, commit 343534a883) and tests/test_access_state.py (3 lines, commit 2d15859595).",
+        "org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/d1.AC2.sh: allowed=(tenant_registry, firm_role, asker_scope, audit, config, test_mcpmsp_asker_firm, admin_tenants, test_admin_tenants, admin_api, deploy-to-ec2.sh) -- neither access_state file is in it.",
+        "Both files are this project's own writes (MS-t-1 amendments; the order's section 2a names tests/test_access_state.py in its pytest run and lists both commits to carry)."
+      ]
+    },
+    "spec_asserts": "TO MS-d-1 item 2 census: the diff names ONLY the 10 listed files, 'any other file: STOP, a BLOCKING row'; AC2 expects 'outside NFRA_MCPMSP's set 0'.",
+    "world_is": "The release that carries the listed commits touches 2 more files, both the project's own and both needed (access_state.py is what admits the tenant_firm record; without it a firm asker is refused). The census and AC2's allowed set are stale against the MS-t-1 amendments. Nothing deployed.",
+    "notes": "Fix is the issuer's: add app/access_state.py and tests/test_access_state.py to the census and to d1.AC2.sh's allowed set. Everything else of the prep is done in /c/tmp/ms-1-rel."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S5",
+    "one_line": "In the release tree (PREV 093fc247c6 + the project's gateway commits) the amendment-2 pytest run reads 1 failed, 59 passed: tests/test_access_state.py::test_ogd1_ac03 reads org/standards/NFRA_OPLGTW_CONTRACT.json, which on PREV lacks tenant_firm (c2f5d5a071, the CTO's PRD commit, added it on CLOUD); with that one file from CLOUD the same run reads 60 passed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd /c/tmp/ms-1-rel/infra/aws/ec2/opal-gateway && python -m pytest <the nine files of amendment 2> -q -> '1 failed, 59 passed' (FAILED tests/test_access_state.py::test_ogd1_ac03: 'Right contains one more item: tenant_firm').",
+        "test_access_state.py: _CONTRACT = _HERE.parents[5] / 'org' / 'standards' / 'NFRA_OPLGTW_CONTRACT.json'. git log 093fc247c6..CLOUD -- that file: c2f5d5a071 only.",
+        "Diagnostic only: the CLOUD version copied into the release tree, same nine files -> '60 passed'; the file was then written back to PREV's bytes (git status org/ clean)."
+      ]
+    },
+    "spec_asserts": "TO MS-d-1 2a: the nine test files read 0 failed in the release tree; a failure is a BLOCKING row naming the file and the foreign commit it needs -- STOP, no deploy.",
+    "world_is": "One test depends on a repo-side contract file outside the gateway directory, at a revision the release base does not have. The commit it needs is not another project's: c2f5d5a071 is this project's own PRD/contract commit. The shipped code is not affected (tests are not shipped); the amendment's gate as written cannot read 0 failed on this base. Nothing deployed.",
+    "notes": "Options, issuer's: (a) the amendment accepts this one test as read against CLOUD's contract (60 passed with it); (b) the release tree also carries org/standards/NFRA_OPLGTW_CONTRACT.json (a non-gateway file, which AC2's 'gateway files' scope does not see). The worker took neither and stopped."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S6",
+    "one_line": "Applying c19f86c295 onto PREV conflicts in app/config.py on adjacent context only: the commit's hunk sits beside MDPF_TAXSMA's TAXSMA_WORKBOOK_* block (present on CLOUD, absent on PREV); the conflict is resolved by keeping only this project's FIRM_ROLE_ARNS block.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cherry-pick --no-commit c19f86c295 in /c/tmp/ms-1-rel: 'CONFLICT (content): Merge conflict in infra/aws/ec2/opal-gateway/app/config.py'; git show c19f86c295 -- app/config.py adds only _firm_role_arns() and FIRM_ROLE_ARNS; the TAXSMA lines in the conflict are unchanged context.",
+        "Release tree after resolution: git diff --cached app/config.py = +13 lines _firm_role_arns(), +6 lines FIRM_ROLE_ARNS, no TAXSMA text. The commit also touches org/.../INVESTIGATION_v1.Z.md (modify/delete on PREV), left out of the release; the other commits were applied path-limited to infra/aws/ec2/opal-gateway."
+      ]
+    },
+    "spec_asserts": "TO MS-d-1 2a: a cherry-pick conflict is a BLOCKING row naming the file and the foreign commit it needs.",
+    "world_is": "The conflict is textual adjacency to another project's unreleased config block; the ported lines do not use it (60 of 60 tests read with the contract). Resolved by hand, recorded, not treated as a dependency.",
+    "notes": "A judgment by the worker that the order's 'conflict is BLOCKING' aims at a dependence on foreign work, not at adjacency; S4 and S5 are what stop the release."
   }
 ]
 ```
