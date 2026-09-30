@@ -7223,3 +7223,65 @@ fanout:
   egress: none (Opal AWS only)
   no_promote: true
 ```
+
+## 63. ROUND 55 -- THE FIRST POSTURE BATCH SINCE THE HOLD, READ FROM ITS OWN OUTPUT; FWD-18 READ ON THE PAGE. Two cells, two orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 54 ANALYSIS** (`ledger/ROUND_ANALYSIS.round54.md` @`ece6cb1f3b`, msg 27421;
+round 54 CLOSED). Rulings carried: a comparison check's volatile set is MEASURED by two live pre-act reads and dropped by PATH (ruling 1);
+the posture batch's next run is READ, never assumed (ruling 5). NOT cells: Z-S322 (the CTO's spine backlog), Brookfield BN CA (CORPUS),
+the v63 limb (retired). No outcome is added.
+
+### 63a. THE TWO ITEMS
+
+| s.4 item | lands in |
+|---|---|
+| 1 the posture batch run, then its diff read | `AMGT-ae-1` (WORLD, `0.7.0_AE_CloudOps~A`, a pair) -- **and a vendor call: Andrew's per-use word** |
+| 2 the FWD-18 page sweep | `AMGT-ae-2` (LOCAL read, worker-light, direct act) |
+
+### 63b. MEASUREMENTS THE CUT RESTS ON (22:5x-23:1xZ)
+
+1. **Item 1, the targets.** `posture/v1/` holds 35 subjects. **12** have the subject or its comparable among the names whose D-1 now
+   holds sentences (all 12 are the ad-2 names as subjects; BABA's comparable HD is one too). ASML, HAL and PBR are classed ABSENT
+   documents (verdict `absent`, no packs). Two live /posture reads 3 s apart differ on **0 paths** for all 12 (the volatile set is empty).
+2. **Item 1, the vendor.** The batch's posture stage is `lib/research/posture/judge.py`, and it CALLS ANTHROPIC (one message per name,
+   `claude-opus-5`, ~$0.11 each at the prior run: ~$1.3 for 12). CARD 5's "yes do it" (2026-09-18) covered rk-22's run. CLAUDE.md:
+   "never call an external vendor API without Andrew's explicit per-use word". So ae-1's GO waits on Andrew's word for these 12 calls.
+3. **Item 1, the key.** The judge writes `posture/v1/<key>/<as_of>.json`. The act re-runs each target AT ITS PRIOR OBJECT'S `as_of`,
+   so M-1, R-1 and the universe are exactly the inputs the prior run read, and only D-1 differs (the diff is attributable). That
+   OVERWRITES the key; `opal-data-harvest` is versioned (`Status: Enabled`), so the rollback is the prior VersionId, which `pre` records.
+   `management_posture_batch.py posture --force` has no key filter and would call Anthropic for all 35, so the act uses the judge's own
+   per-key CLI (`python -m lib.research.posture.judge --security-key K --as-of D --write-pool`) for exactly the 12.
+4. **Item 1, the pack rule.** The prior packs' `drafted_sentences` were counted from D-1 documents since rebuilt (BABA 38 in the pack vs
+   36 in the pre-ad-2 D-1), so "pre minus held" is the wrong rule. The check compares each pack with its name's LIVE D-1 sections.
+5. **Item 2.** On the grader's own render of the deployed function (22:5xZ), ASML's page carries `data-driver-chart="SERVED"`,
+   `data-driver-chart-source="filing"`, `data-driver-chart-points="3"`; AMD's (the control) carries no filing chart.
+
+### 63c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ae-1` | THE POSTURE BATCH OVER THE 12 HELD NAMES | `0.7.0_AE_CloudOps~A` | seat order | WORLD | 12 `posture/v1/<key>/<as_of>.json` (overwrite, versioned), deliverables, the ledger |
+| `AMGT-ae-2` | FWD-18 READ ON THE PAGE | `~196` | worker-light, direct act | LOCAL | its deliverables only |
+
+### 63d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's two items, one cell each.
+- **(ii) Same grain.** One batch over one target set; one page read.
+- **(iii) Intent.** One axis: what the stores hold is what the page and the judgment read.
+- **(iv) What a cell does NOT move.** ae-1 moves no D-1, no M-1/R-1, no posture object outside the 12, and runs no management stage (no
+  Lusha, no Bright Data); ae-2 moves nothing.
+
+### 63e. EDGES AND FAN-OUT
+
+```
+ae-1, ae-2 -> (none)
+fanout:
+  cap: 8
+  orders_total: 2
+  chains_total: 2
+  wave_0: [ae-2 ~196 (worker-light)]
+  wave_1: [ae-1 0.7.0_AE_CloudOps~A]   # after Andrew's per-use word on the 12 Anthropic calls + both halves
+  no_s3_deletes: true
+  egress: ae-1 only -- 12 Anthropic messages, on Andrew's per-use word; ae-2 none
+  no_promote: true
+```
