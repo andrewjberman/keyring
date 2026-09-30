@@ -937,6 +937,30 @@
       ]
     },
     "notes": "Not fixed here: it would need a revision scheme that orders by input-set completeness, which is a contract change for G1 and trade_schedule."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-09-30T20:52Z",
+    "one_line": "Gateway deploys from different seats have no mutual exclusion: NFRA_MCPINDEX's 2e2254156e (cut on 288fa78c93 before 14:36Z) deployed at 14:41Z over ETFS_RIVALS' 4ce7946426 (deployed 14:37Z) and removed /rivalfunds; each seat's base guard was read BEFORE the other's deploy landed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2.0.0_SA_COO~MI msg 27204: 'my MX-r-6 deploy (14:41:23Z, 2e2254156e on 288fa78c93) OVERWROTE ~RV's 4ce7946 (14:36:48Z) -- /rivalfunds routes gone'; 'My GO's base guard was void: the base moved to 4ce7946 at 14:36:48Z before the deploy.'",
+        "Host read-back SSM 0d95b020 (worker ~5, ~14:50Z): /rivalfunds 404, host server.py sha256 82fd0421... == 2e2254156e's, 0 rivalfunds routes.",
+        "Restore under 1.0.0_SA_CTO~O Plan A (msgs 27225/27228): 4ce7946426 redeployed 15:23:02Z by this seat, host == ref 80/80 (SSM 41de73dc).",
+        "infra/aws/ec2/safe-ec2-deploy.sh takes no cross-seat lock; the base guard (EC2_MANIFEST deployed_commit + host hash) is a read, not a hold."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A deploy-only gateway ref is verified against the live base immediately before upload, so no seat's deploy can silently remove another seat's released files (COO half gate 1, CTO half condition 3).",
+    "world_is": "The guard is a point-in-time read; between a seat's guard and its upload, another seat's deploy can land. Two such deploys four minutes apart did exactly that on 2026-09-30; the second removed /rivalfunds for 42 minutes until Plan A restored it.",
+    "notes": "INERT today: every current gateway releaser was told to base on the live ref and re-read the base immediately before upload (msgs 27202/27203, 27333: next base 42c52ed4d9). The structural fix (a deploy lease in safe-ec2-deploy.sh, or the ledger's open entry for opal-gateway treated as a lock) is CTO-class infra, owner 1.0.0_SA_CTO~Z; carried in this seat's round-1 drain-end read."
   }
 ]
 ```
