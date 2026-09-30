@@ -3586,6 +3586,51 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Served /timeline read taken with no rebuild: ['bbg'] 265 days and ['bbg','wsj'] 8, equal to baseline (q1_served_read.txt)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~73",
+      "surfaced_at": "2026-09-30T08:40Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W73-S1",
+      "one_line": "The declared-set score cannot come from chatter_daily.mention_score (it sums every publisher's articles), so the gold branch now reads the per-article article_security_mention snapshot for the score and chatter_daily only for coverage; the two are separate gold snapshots.",
+      "spec_asserts": "Order clause: 'The score counts only articles from publishers in the declared set. A found-only article is never scored.' on the gold branch, which today ranks the chatter_daily mention_score series.",
+      "world_is": "chatter_daily.mention_score is the sum of signal_weight over ALL publishers' rows for the (security, day) and carries no per-publisher split (publication_gold.daily_rows: mention_score += signal_weight over every day_row), so a declared-set-only figure is not derivable from it. gold_declared_mention_scores reads article_security_mention (columns publisher, signal_weight, published_utc) through pool_reader._gold_latest_snapshot_rows, a private helper of the same adapter. The served newest snapshots are different builds (mention part 20260930T062354Z, chatter_daily part 20260930T072527Z), so a day's coverage and its declared score can come from different builds.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py daily_rows: mention_score sums signal_weight over day_rows of every publisher; publishers_distinct is a count, not codes",
+          "lib/research/metrics/chatter_axis.py gold_declared_mention_scores and declared_set_scores (this worktree, uncommitted at row time)",
+          "S3 listing of amgt/harvest/gold/article_security_mention/ and chatter_daily/ read 2026-09-30: newest parts 20260930T062354Z and 20260930T072527Z"
+        ]
+      },
+      "notes": "Not fixed here; whether one build should stamp both tables (or chatter_daily carry per-publisher scores) is the issuer's call. The declared-set score reads no chatter_daily column."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~73",
+      "surfaced_at": "2026-09-30T08:40Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W73-S2",
+      "one_line": "'HOLD with an empty_reason, prior generation stays served' cannot be an EMPTY generation (EMPTY commits a pointer and clears the earlier membership), so the floor HOLD is a FAILED marker beside the prior pointer that also carries empty_reason, population and footer.",
+      "spec_asserts": "Order contract: 'Below [the floor of 10 eligible names] the generation HOLDs with an empty_reason, and the prior generation stays served.'",
+      "world_is": "generation_writer.build_pointer refuses an EMPTY state without empty_reason but an EMPTY pointer, once put, makes the earlier membership unreadable ('the earlier membership is NO LONGER readable through it', chatter_axis.py docstring); only STATE_FAILED leaves the prior pointer current. build_generation also nulls empty_reason on FAILED. The hold now builds STATE_FAILED with reason_code BELOW_ELIGIBLE_FLOOR and attaches empty_reason {reason, count, denominator, floor, eligible} through a new hold_reason argument; default_write_generation copies empty_reason/population/footer onto the _FAILED marker.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/metrics/generation_writer.py build_pointer / build_generation / default_write_generation (this worktree)",
+          "lib/research/metrics/tests/test_q4_rank_declared_set.py::test_d_nine_eligible_names_hold_with_an_empty_reason_and_keep_the_prior_generation: prior items byte-equal after the hold, 2 markers added carrying empty_reason BELOW_ELIGIBLE_FLOOR"
+        ]
+      },
+      "notes": "A reader that reads only the pointer will not see the hold reason; it is on the marker beside the pointer. Whether a served page should surface it is a downstream cell."
     }
   ]
 ```
