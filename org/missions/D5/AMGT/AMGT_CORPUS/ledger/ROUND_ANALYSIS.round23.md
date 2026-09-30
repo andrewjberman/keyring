@@ -29,6 +29,18 @@ is NOT closed.**
    - It went to `4.0.0_SA_CRO~Z` for research this tick, and this seat rules the tick it lands.
    - Until then, the two names stay excluded from every CORPUS pass, and every census prints them as EXCLUDED with `Z-S64` beside
      its denominator, never silently absent.
+   - **RULED ~10:5xZ, on the research** (`4.0.0_SA_CRO~Z`, `RESEARCH_SLASH_SECURITY_KEY_20260930.md` @`c5ebbb2356`, msg 27106): **option (c),
+     finish `C-SLASH-SAFE-KEY` (AMGT-rk-76).**
+     - The identity keeps its slash (`crosswalk.py:109-116`, the verbatim root, which also covers BRK/B).
+     - Every PATH is built through `crosswalk.slash_safe_key`, which is reversible (`BP-SLASH-_LN_Equity`); `opal_naming.key()`
+       already refuses the raw form.
+     - (a) re-opens the identity rule for every share class. (b) is 32 split sites in 19 files and unenforceable.
+     - **Order:**
+       1. round-24 cell 4 routes the ~10 raw WRITER sites AND their READERS through the encoder. That includes the scoped API's
+          pool reads, which today key the raw form on purpose (`_read_drafting_document`).
+       2. then ONE served window, under a pair: copy the 30 raw-slash objects to their encoded keys (packs 2, model_block 12, peers
+          14, posture 2), and deploy the readers.
+     - The raw objects are KEPT; a delete is Andrew's act. No reader ever serves between the two forms.
 3. **Before signing, a derive or rebuild pair lists every INPUT of the producer, not only the path it intends to move** (the CVO's
    item 4 and this seat's y-4 AMENDMENT 1). That means:
    - diff the producer's reachable code against the commit that BUILT the served predecessor;
@@ -61,7 +73,9 @@ is NOT closed.**
 | 2 | **TSM same-currency anchor: stored-source census** | LOCAL read | The output is the anchor's source, or the stated limit written on the figure (ruling 5). |
 | 3 | **The `r-1` acceptance read** at the 13:00Z fire | SERVED read | It reads the scheduled fire's own output, never an ad-hoc run. |
 
-**Fan-out:** 3, independent. **NOT cells:** the slash-key migration (ruling 2 waits on the CRO research).
+| 4 | **`C-SLASH-SAFE-KEY` finished in code** (ruling 2): the ~10 raw writer sites and their readers (the research's section 2 table, plus the scoped API's pool reads) build every path through `slash_safe_key` | LOCAL | The AC builds every path for `BP/_LN_Equity` AND `BRK/B_US_Equity` and asserts the encoded form. A planted raw-slash key refuses at `opal_naming.key()`. The cell names every consumer; AMGT_RESAPP's files are among them. |
+
+**Fan-out:** 4, independent. **NOT cells:** the 30-object move (round 25, ONE served window with the API deploy, under a pair).
 
 ## 5. ACTS ONLY ANDREW CAN DO (cited)
 
