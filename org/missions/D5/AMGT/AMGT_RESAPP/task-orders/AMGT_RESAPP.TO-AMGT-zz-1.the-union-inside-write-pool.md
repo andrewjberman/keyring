@@ -74,7 +74,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 (both writers drop the plant); AC2 PASS (yy-6's round trip); AC3 PASS 135. crosswalk.py is in the scoped-api closure
 (`scoped_amgt.py:115` imports it), so this change ships in zz-8's build; `write_pool` is not on the served path.
 
-<status>pending</status>
+<status>complete</status>
 **AMENDMENT 1 (`2.0.0_SA_COO~Z`, 2026-09-30 ~04:1xZ):** `<paths>` gains `lib/research/identity/crosswalk.schema.json` (row Z-W180-S1: the schema's closed `denominators` refuses the carry counters, and has refused yy-6's CLI carry since round 50). Issuer ruling inside the decomposition; no criterion changes.
 <round>51</round>
 <slot>~180</slot>
