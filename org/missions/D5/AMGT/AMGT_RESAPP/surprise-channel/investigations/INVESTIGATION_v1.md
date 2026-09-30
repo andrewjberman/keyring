@@ -15977,6 +15977,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "zz-5 AC3: the api suite reads N passed and 0 failed.",
   "world_is": "It does, once the tree carries zz-4's restamp; the one failure was the stamp, not zz-5's code.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Also measured: read_rankings per axis in-process, zz-5 tree vs CLOUD: 4.9 vs 2.6 s, 27.1 vs 22.7 s, 10.0 vs 10.6 s, 23.8 vs 24.3 s -- the prior-generation walk adds no material latency beyond noise; the served timing is read at zz-8."
+},
+{
+  "id": "AMGT_RESAPP-Z-W182-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~182",
+  "surfaced_at": "2026-09-30T04:40:00Z",
+  "one_line": "portal exportCompare.harness.cjs (DEV 29c8226a) reads EXPORT-COMPARE NOT OK on 96 of 96 names against the deployed export while the COO's data-attribute grader sweep.py --served reads 96 of 96 equal: the harness's case-line pattern predates the served base-case label and its absence read does not scan the thesis windows or the header posture line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "exportCompare.harness.cjs as shipped over 96 served captures (.scratch/runexport.py, 0 of 96 OK): CASES page 288 rich 192 missing 96; ABSENCES page 2408 rich 2478 extra 70; FIGURES missing 1.",
+      "portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs artifactCases() matches '(Upside|Base|Downside) case|Historical-multiple reference'; the served and printed base-case line is \"Opal's historical-multiple reference: ABSENT|SERVED -- ...\" (yy-4, CodeSha pVa+sgzj); 96 of 96 rich exports carry that label and 0 carry a line starting 'Base case'. Widening the pattern in a scratch copy moves CASES to 288 == 288 and the harness to OK on 63 of 96.",
+      "The residual 33 names are exactly the 33 with a SERVED posture: on ZURN_SW_Equity the rich prints 'ABSENT -- no call was made: <reason>' while the page carries the reason on data-header-posture / data-posture-reason of a <p>, which pageAbsences() reads only on a <div>; on BA_US_Equity the rich's 'Description: ABSENT' line has its page carrier in the thesis window (data-header-description=ABSENT), and combinedHtml holds the five tab renders only.",
+      "sweep.py --live --served --require-cases over the same 96 keys: OK 96, NOT_OK 0; FWD-30 GRADE equal 96 of 96, values equal 96 of 96; 19125 value facts compared, 0 differ."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order names the round-45 sweep.py --served as the FWD-30 grader and round 46 graded FWD-30 with exportCompare.harness.cjs (EXPORT-COMPARE OK 95 of 95).",
+  "world_is": "At portal DEV 29c8226a exportCompare.harness.cjs cannot read the current served export or the current page as the same facts (a label it does not know, an absence carrier it does not scan), so it reports a divergence that the data-attribute grader does not find. This pass graded FWD-30 on sweep.py and reports the harness reading as a second reading.",
+  "notes": "The harness is DSGN_AMGTV1's re-anchored artifact (AV-v-4, AV-v-7, AV-s-1 comments); this worker did not edit it. Not a served-surface defect. Owner of any re-anchor: the seat that owns the portal harness; the FWD-30 grade does not depend on it."
+},
+{
+  "id": "AMGT_RESAPP-Z-W182-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~182",
+  "surfaced_at": "2026-09-30T04:41:00Z",
+  "one_line": "PRD FWD-22 (Stat tiles with a tooltip carrying mnemonic and full-precision value) and FWD-23 (a 'cites N passages' affordance) describe interfaces the portal DEV page no longer has: DSGN_AMGTV1 replaced the seven Stat tiles with four header cards and moved each sentence's evidence into card windows, so both clauses read unmet as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Round-51 FWD evidence at portal 29c8226a over 96 renders: data-stat-tile 0, tooltip carriers (data-stat-tooltip or title=) 0, 4 header cards per page; 'cites N passage' text 0 and <details> 0 across the thesis renders and windows, with 210 sentences and 268 inline passage nodes on the 12 drafted names.",
+      "portal/src/pages/SecurityAnalysis/components/HeaderCards.tsx lines 1-10: 'the identity header's FOUR CARDS (DSGN_AMGTV1 AV-t-2), replacing the seven Stat tiles. Andrew: \"never more than four cards\" ... A vendor mnemonic sits in code and never on the face.'",
+      "Round 46 (0.9.0_WK_AMGT_RESAPP~167, portal 8fa7abde) graded FWD-22 met and FWD-23 unmeasurable; the served route is unchanged for both (header_figures and drafted passages still served on the same names)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD ENDPOINT FWD-22 DONE WHEN: price, market cap, net debt, enterprise value, beta and short interest render as Stat tiles with units and tabular numerals, and each tile's tooltip carries the mnemonic and full-precision value verbatim; FWD-23 DONE WHEN: a sentence shows its PASS face and a 'cites N passages' affordance.",
+  "world_is": "The page renders four cards whose windows list the figures as label and value rows (no tile, no tooltip, mnemonic on a data attribute only); each drafted sentence sits with its passage list inline in a card window (no 'cites N passages' text, no disclosure). The clause text and the page design disagree; this pass graded the clause as written and recorded FWD-22 met -> unmet and FWD-23 unmeasurable -> unmet.",
+  "notes": "The choice between amending the two clauses to the page Andrew directed (cards, windows) and restoring the tile and disclosure forms is the CTO's at the round-51 analysis; this worker states the disagreement and does not adjudicate it. FWD-21, FWD-27 and FWD-29 (computed-DOM counts) remain unmeasurable without a browser capture."
 }
 ]
 ```
