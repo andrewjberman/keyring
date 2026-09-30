@@ -673,3 +673,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Owner of the fix: the issuer (extend <paths> with the two older test files, or an L10 cell); the required edit is to their expected string and their stub's condition match."
 }
 ```
+
+
+## MDPF_SECCLASS-W11-S2 -- correction to W11-S1: S4/contract assertions resolved by amendment 1; constituents-plan test failure is pre-existing on CLOUD
+
+```json
+{
+  "id": "MDPF_SECCLASS-W11-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~11",
+  "surfaced_at": "2026-09-30T21:00:00Z",
+  "one_line": "Correction to MDPF_SECCLASS-W11-S1 (amendment 1 resolves its four S4 assertions and two contract assertions; test_seed_etf_constituents.py::test_positioning_universe_plan_unchanged is pre-existing on CLOUD at line 202): recorded as a new row because the surprise-row gate refuses an in-place edit of W11-S1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Amendment 1 (2.0.0_SA_COO~M, b4df4b3630) resolution of W11-S1: the four S4-string assertions in test_classified_by_v2.py and test_set_instrument_kind.py now pin 'attribute_exists(ticker) AND attribute_not_exists(<attr>)' and their stubs refuse on it (an already-set row still raises RowAlreadyLabelled / KindAlreadySet); the two contract assertions read contract_version and classified_by values from org/standards/MDPF_SECCLASS_CONTRACT.json at HEAD (the version check is now a floor of 0.2.0 and the values check a superset of the original four with a definition for every listed value, because the order forbids typing the version or values). python -m pytest test_classified_by_v2.py test_set_instrument_kind.py -q -p no:cacheprovider -> 24 passed; AC1 over four files -> 33 passed. test_set_instrument_kind.py's stub also still refuses seed-etf-constituents.py's kind-only condition 'attribute_not_exists(instrument_kind)', which is not an S4 script and is unchanged.",
+      "PRE-EXISTING on CLOUD, not granted, left alone: infra/aws/lambda/v2_portal/yang_pipeline/tests/test_seed_etf_constituents.py::test_positioning_universe_plan_unchanged fails at line 202 (assert [i['ticker'] for i in table.batched] == ['JPM'] -> AssertionError: assert [] == ['JPM']). Reproduced on CLOUD's UNMODIFIED script and test: git archive of infra/aws/lambda/v2_portal at 05f0a0b5af (the parent of this order's build commit cf24f07493) extracted to .scratch/base, python -m pytest test_seed_etf_constituents.py -q -p no:cacheprovider -> 1 failed, 7 passed, same line 202, same assertion. The script writes conditional puts where the test expects table.batched, so the failure does not come from SC-e-14's PRE-READ count edit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 to MDPF_SECCLASS.TO-SC-e14: record the failing test and line of test_seed_etf_constituents.py::test_positioning_universe_plan_unchanged as pre-existing in row W11-S1.",
+  "world_is": "Row W11-S1 cannot be edited in place: .tools/surprise-row-gate.py refuses a mutated existing row ('Corrections are NEW items citing the old id'), so the record lives in this new row citing MDPF_SECCLASS-W11-S1, which stays exactly as committed. The constituents-plan test failure is open and unowned; its repair is outside this order's grant.",
+  "notes": "Owner of the remaining failure: whoever owns seed-etf-constituents.py and its test (a separate cell). W11-S1's S4 and contract assertions are resolved by amendment 1."
+}
+```
