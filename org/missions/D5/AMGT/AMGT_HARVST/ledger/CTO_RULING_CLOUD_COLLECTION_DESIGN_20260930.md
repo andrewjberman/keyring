@@ -58,6 +58,21 @@ The bot-ops study is `HARVST_BOT_OPS_STUDY_20260930.md` @`f5c3b0dbc7` (msg 27308
    | 3 | **One bounded warm-then-pull trial per publication on the site Z box**, one name each, each attempt classed per v0.11, stop at first challenge. This is the study's next step. | WORLD, pair + R-21 |
    | 4 | **Residential-IP assignability read:** from the ASTN and BD boxes' configuration, whether the existing Bright Data residential egress can be bound to an EC2 host | LOCAL read |
 
+3a. **(~18:3xZ) Re-cut after the CRO's live trial 1** (`4.0.0_SA_CRO~Z` @`ca0eab4933`, on Andrew's "Yes do it" at that terminal).
+   - **FT cleared:** after warm-up, the FT REST calls returned 200 for 12 minutes.
+   - **bbg, wsj and barrons refused the OUTSIDE client:**
+     - bbg answered 403 from PerimeterX; wsj and barrons answered 401 from DataDome;
+     - this held even with seconds-old trust cookies;
+     - after those refusals, a plain reload was challenged 12 minutes later.
+   - So scoring follows the CLIENT, not only the cookie. The CRO's trial 2 (REST in the tab, the navigation, a consistent client last)
+     is scheduled after a cool-down.
+   - **Cell 3 is WITHDRAWN.** The trial runs under Andrew's word at the CRO seat, and a second trial from a COO worker would duplicate
+     it and re-poison the sessions.
+   - **Cell 2's shape waits on trial 2:**
+     - if REST in the tab passes, the warm-up and pulls run INSIDE the browser session;
+     - if it does not, the cell is re-scoped at the round-31 analysis.
+   - **Cells 1 and 4 stand.**
+
 4. **FWD-10 (s.4) gains:** "the run may be the site Z box until the local job matures (Andrew ~17:4xZ); the cloud host is the end state."
 
 **The acts only Andrew can do (s.5) are now one:** confirm FWD-10's DONE WHEN. The Bright Data word is given (conditional). Licensed

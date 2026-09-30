@@ -31,6 +31,7 @@ lib/opal_data_harvest/verification.py
 lib/opal_data_harvest/bot_check.py
 lib/opal_data_harvest/test_ac1_bot_check_class.py
 lib/opal_data_harvest/publishers.py
+lib/opal_data_harvest/test_q6_barrons_guard_ft_body.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~84/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 </paths>
@@ -124,6 +125,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 
   `test_q6_barrons_guard_ft_body.py` stays as it is.
 - **`Z-W84-S2`, GRANTED and ruled in:** change 5 and plant (g). The path gains `lib/opal_data_harvest/publishers.py`.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
+**AMENDMENT 3 (issuer, 2026-09-30 ~19:0xZ) -- ruling on `Z-W84-S3` (BLOCKING): the pre-v0.10 test is updated; change 5 stands.**
+- **What fails:** `test_q6_barrons_guard_ft_body.py::test_logged_out_barrons_start_reauths_repairs_once_and_replays` pins a
+  third `/client` GET. That is the `check_auth` re-check after a barrons DataDome challenge, which PRD v0.10 forbids (a bot check
+  never leads to an account re-check or a sign-in). The test encodes the behaviour the contract now removes.
+- **Ruling:** GRANT `lib/opal_data_harvest/test_q6_barrons_guard_ft_body.py`, and update ONLY that test's expected HTTP log to
+  drop the `(1, '/client', 200)` re-check. Add a one-line comment citing PRD v0.10 `C-HV-TRUST-TOKEN` and `ac-1` change 5.
+  Every other assertion in the file stays byte-identical. Change 5 is NOT narrowed.
+- **AC3** is then graded as "no base-passing test fails, except this one test's single expected-log line, changed by this
+  amendment". The worker prints the diff of that test.
 - **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
 <risk>LOCAL</risk>

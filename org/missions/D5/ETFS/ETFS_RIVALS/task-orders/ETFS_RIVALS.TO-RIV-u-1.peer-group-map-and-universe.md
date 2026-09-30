@@ -217,7 +217,8 @@ base before the cut (every one FAILS at the base, as a build or live check must)
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~1 @7fe00140a6 merged @22d912baaa; AC1-AC3 PASS + 97 package tests re-run by the issuer; rows W1-S6 (the page is still one-fund; RIV-p-2 replaces _page_fund) and W1-S7 (map fund_id is the ticker; join canonical_shape on fund_ticker).</completion_note>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

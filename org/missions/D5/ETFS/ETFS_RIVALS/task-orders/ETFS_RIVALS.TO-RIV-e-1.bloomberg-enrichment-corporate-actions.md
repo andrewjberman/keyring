@@ -210,7 +210,8 @@ base before the cut (every one FAILS at the base, as a build or live check must)
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-09-30 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~3 @c70a943c70 merged @6140b8a4d7; AC1/AC2 PASS + package suite (91) re-run by the issuer. G3 import 4780 records + 43 status rows; rows W3-S6..S8 (W3-S8: 34.5% unmapped income-like types is ruled at RIV-g-4's spawn).</completion_note>
 <round>2</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

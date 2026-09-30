@@ -70,6 +70,20 @@ relative to that root.
 4. `collector_issuer.py`: the bronze stem gains `-<requested_date>-` (row W1-S2); keep round 1's c-1 tests passing (update their key expectations).
 5. `integrations/bloomberg/pipeline/scheduled_daily_pull.cmd`: `:rivalfunds_bbg_leg` right after the `:prune` label line, gated, as the cell says (CRLF preserved; ASCII only; `%PY_AWS%`; measure whether that interpreter has pywin32 and record the result in your report).
 
+## 1c. ISSUER AMENDMENT 1 (2026-09-30 ~18:3xZ, 2.0.0_SA_COO~RV) -- rules rows ETFS_RIVALS-Z-W2-S2 and -W2-S4 (the first pass's own findings)
+
+Your branch already carries the first pass (commits 695e59f854 + 3b3527a027): AC1-AC3 PASSED there. Two defects it found are the
+issuer's, and both are fixed in THIS order:
+1. **Exit codes (row W2-S2).** 80-83 are the price leg's `RC_PRICE` codes (`scheduled_daily_pull.cmd` :328, "Its codes (80-83)
+   are DISJOINT..."). Renumber: `RC_RIVBBG` **90** landed / **91** Bloomberg unreachable / **92** partial / **93** nothing written;
+   `RC_RIVENR` **94**-**97** (same meanings). The measured vehicle uses no code in 90-99. Update every mention in the leg and the
+   leg's comment block, and say they are disjoint from 0/1/9/20/30/40/50, 60-63, 70-73 and 80-83.
+2. **Capture ordering (row W2-S4).** `silver_issuer._capture_id` must order captures by CAPTURE TIME in BOTH key formats: the old
+   `basg-<ts>-<sha12>` and the new `basg-<requested_date>-<ts>-<sha12>` (`<ts>` = `YYYYMMDDTHHMMSSZ`). A new-format capture taken
+   later must win over an old-format capture of the same report date. `silver_issuer.py` and `tests/test_s1_*.py` are now in your
+   `<paths>`. The silver object name may change for new-format captures; an existing old-format silver object is never rewritten.
+Re-run AC1-AC3 literally. AC1 now also asserts the ordering, and AC3 now asserts 90-97.
+
 ## 2. THE RULINGS THAT REACH EVERY CELL (inlined verbatim from the decomposition)
 
 ### Round 2
@@ -197,6 +211,8 @@ OpenAI call; any alert, alarm, SNS or monitor; any file another cell of this rou
 data/etfs/scripts/rivalfunds/collector_bloomberg.py
 data/etfs/scripts/rivalfunds/silver_bloomberg.py
 data/etfs/scripts/rivalfunds/collector_issuer.py
+data/etfs/scripts/rivalfunds/silver_issuer.py
+data/etfs/scripts/rivalfunds/tests/test_s1_*.py
 data/etfs/scripts/rivalfunds/tests/test_b1_*.py
 data/etfs/scripts/rivalfunds/tests/test_c1_*.py
 integrations/bloomberg/pipeline/scheduled_daily_pull.cmd
@@ -207,7 +223,7 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 
 - **AC1** -- two real captures import into bronze + sidecars with the requested date in the key; marker; rerun no-op; issuer key fixed (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/b-1.AC1.py`)
 - **AC2** -- Bloomberg silver holds every row of every fund; columns kept; idempotent (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/b-1.AC2.py`)
-- **AC3** -- the vehicle leg is added gated OFF with no existing line changed (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/b-1.AC3.py`)
+- **AC3** -- the vehicle leg is added gated OFF with no existing line changed, codes 90-97 (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/b-1.AC3.py`)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-b-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/b-1.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
@@ -233,7 +249,8 @@ base before the cut (every one FAILS at the base, as a build or live check must)
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>in_progress</status>
+<reopen_note>2026-09-30 ~18:3xZ, 2.0.0_SA_COO~RV: first pass AC1-AC3 PASS (@3b3527a027, NOT merged); reopened for ISSUER AMENDMENT 1 (section 1c) on the worker's own rows W2-S2 (exit codes 80-83 collide with the price leg) and W2-S4 (the new issuer key breaks silver_issuer._capture_id ordering).</reopen_note>
 <round>2</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
