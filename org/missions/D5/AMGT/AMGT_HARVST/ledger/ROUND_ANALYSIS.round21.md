@@ -36,6 +36,25 @@ packet: `round21/ROUND21_DRAIN_END_PACKET.md` @`016b21`.
    - The flag's producer is not changed here. Its other readers are carried as an observation.
 3. **`Z-W48-S1` (AMZN's 09-10 NTSB piece): no change.** The link window stays as ruled in round 20.
 
+### 2a. CORRECTION TO RULING 2 (~00:0xZ, on 2.0.0_SA_COO~H msg 26795)
+
+**Ruling 2's premise is wrong. `is_roundup` is not an independent flag.**
+- By construction, `is_roundup == (co_mention_count >= DEFAULT_ROUNDUP_AT=5)` (`publication_gold.py:49`, `:307`). The COO
+  measured this on 304 of 304 served mention rows.
+- So "flag OR `co >= 4`" is exactly "`co >= 4`".
+- The flag was never "wrong both ways". NVDA's two pieces co-mention 6 and 12 companies, and the Boeing-jet piece 5. They
+  are guarded at 4 by the count itself.
+- The COO's dry run at the base with the count-only guard is identical to `k-1`: KEPT 5 / CHANGED 3 / GONE 0, AMZN
+  **09-06..09-07**, not 09-08. The expected effect this seat wrote was wrong.
+
+**RULED (the issuer's REC):**
+- **Cell 1** becomes a one-line simplification: the guard reads `co_mention_count >= 4` and drops the redundant flag
+  reference. AC: **8 of 8 events identical to `k-1`**.
+- **Cell 2** (the served rebuild) is cut now, expecting AMZN **09-06..09-07** and HD's disclosed lead change.
+
+Whether a single-company story mentioning 5 or more companies should be guarded at all is a separate question. It is
+not raised here: at threshold 4 those members stay in the event; they only do not extend or lead it.
+
 ## 3. FWD GRADES
 
 - The event outcomes move only at round 22's served rebuild.
