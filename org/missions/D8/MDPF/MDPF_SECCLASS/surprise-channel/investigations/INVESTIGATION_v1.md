@@ -262,3 +262,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Found while wiring this cell's own analogous COT caller (SC-e-4) with the identical pattern copied from BD's file; caught only because this cell's own copy failed loudly under its own new test (test_e18_scheduled_caller.py) before the index was corrected to parents[4] here. Not fixed in BD's file: data/black_diamond/scripts/gold/E_18.detect_new_securities.py is outside this order's <paths> write grant."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-W6-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~6",
+  "surfaced_at": "2026-09-30T04:20:00Z",
+  "one_line": "SC-e-7's Build step 2 names infra/aws/terraform/bd-pipeline/iam.tf as the file carrying the E_18 principal's bd-securities PutItem to remove, but that grant does not live there -- it is infra/aws/terraform/shared-infra/main.tf's aws_iam_policy.bd_securities_access (unconditional PutItem/UpdateItem/BatchWriteItem/Scan/GetItem on BOTH bd-securities and etf-classifications), attached to bd-exporter-ec2-role AND partners-lambda-role, a file outside this cell's <paths> write grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (a follow-on task order scoped to infra/aws/terraform/shared-infra/main.tf must edit aws_iam_policy.bd_securities_access -- drop bd-securities from its Action/Resource pair and, per this row's grounding, note that DynamoDB IAM condition keys cannot express attribute_not_exists -- and must give its own half, since the same policy is also attached to partners-lambda-role, an unrelated BD lambda)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find/Grep 'PutItem|dynamodb:' across infra/aws/terraform/bd-pipeline/iam.tf (2026-09-30, this worktree HEAD before this cell's edit): the only dynamodb Action present is dynamodb:Scan on bd-securities (Sid AdviChainBdSecuritiesScan, a07/etf_classifier control-import read, unrelated to E_18) -- zero PutItem grants of any kind in this file",
+      "infra/aws/terraform/shared-infra/main.tf:395-421 (this worktree HEAD): resource aws_iam_policy.bd_securities_access grants ['dynamodb:Scan','dynamodb:GetItem','dynamodb:PutItem','dynamodb:UpdateItem','dynamodb:BatchWriteItem'] on [aws_dynamodb_table.bd_securities.arn, 'arn:aws:dynamodb:us-east-1:313476888478:table/etf-classifications'], no Condition block; attached via aws_iam_role_policy_attachment.ec2_bd_securities (role='bd-exporter-ec2-role') and .lambda_bd_securities (role='partners-lambda-role')",
+      "infra/aws/terraform/bd-pipeline/iam.tf:340-358 (aws_iam_role.bd_exporter, name='bd-exporter-ec2-role'): the exact role name shared-infra/main.tf's ec2_bd_securities attachment names -- confirming the LIVE bd-securities PutItem for BD's E_18 production principal is carried by the shared-infra policy, not by anything in bd-pipeline/iam.tf",
+      "infra/aws/terraform/partners-api/iam.tf:9-33: aws_iam_role.partners_lambda (name='partners-lambda-role') is a separate BD partners-API lambda, not an E_18 caller -- the shared policy's second attachment is to an unrelated consumer, so editing it in place has a second blast-radius surface"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e7 Build step 2, verbatim: 'In infra/aws/terraform/bd-pipeline/iam.tf, add PutItem on etf-classifications ... Remove the bd-securities PutItem.'",
+  "world_is": "bd-pipeline/iam.tf carries no bd-securities PutItem to remove; the actual live, unconditional PutItem (plus UpdateItem/BatchWriteItem/Scan/GetItem) on bd-securities for the exact same production principal (bd-exporter-ec2-role) is granted by a DIFFERENT file, infra/aws/terraform/shared-infra/main.tf, which this order's <paths> does not include. This cell's evidence JSON (R2_E18_IAM_20260930.json putitem_bd_securities=false) is accurate for bd-pipeline/iam.tf alone and is NOT a true statement of the principal's overall live grants.",
+  "notes": "This cell still adds a genuine least-privilege PutItem-on-etf-classifications grant to bd-pipeline/iam.tf (aws_iam_role_policy.bd_exporter_e18_etf_classifications_put) per the letter of step 2's first half, and documents this gap inline in that file's comment plus in the cell's NEVER_WIDEN half (NEVER_WIDEN_HALF_REQUEST_SECCLASS_E18_IAM_20260930.md, SURPRISE / gap section) so the issuer does not sign off 'bd-securities PutItem removed' on the strength of this commit alone."
+}
+```
