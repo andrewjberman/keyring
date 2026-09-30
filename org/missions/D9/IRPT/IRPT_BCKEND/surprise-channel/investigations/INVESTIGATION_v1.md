@@ -12949,3 +12949,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: performance-report's response conformance is not gradable in process; it is graded where the deployed environment exists (IB-rtb-1). INERT: a test classification, nothing at runtime reads it. Recorded so the outcome is not read as a pass of the envelope."
 }
 ```
+
+## IRPT_BCKEND-S229 -- RE-SEAT of S226 to 2.0.0_SA_COO~Y (Andrew-direct: the owner of YCharts is COO~Y)
+
+```json
+{
+  "id": "IRPT_BCKEND-S229",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-30T04:42:00Z",
+  "one_line": "RE-SEAT of IRPT_BCKEND-S226 (ARMED, disarm_owner 2.0.0_SA_COO~P): on Andrew's word the owner of YCharts is 2.0.0_SA_COO~Y, so S226's disarm_owner is now 2.0.0_SA_COO~Y. The resident stays STOPPED per CTO ruling 103150 until the auth cause (S151/S225) is fixed and the retained message REQ-86f1ce70 is handled on purpose.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Andrew-direct 2026-09-30 ~04:3xZ, verbatim: \"the owner of YCharts is COO~Y as it has always been.\" Record: org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260930_043xZ_YCHARTS_OWNER_IS_COO_Y.md.",
+      "CTO ruling 103150: leave the resident stopped; restart only when the auth cause is fixed, the retained message is deleted or re-offered under a new per-use word from Andrew, and the restart is under a ledger with root and member shas read back.",
+      "State at hand-over, last measured 03:53Z by SSM: irpt-analysis-resident inactive since 03:50:34Z; irpt-generation 1 visible / 0 in flight; irpt-generation-dlq 1/0 (baseline). Not re-measured since."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S226: this seat holds the disarm of the stopped resident.",
+  "world_is": "Ownership moves to 2.0.0_SA_COO~Y by Andrew's word; nothing in the world moves with it. The resident is stopped, the retained message is unconsumed, and any Analysis submission would sit unconsumed. This seat's earlier YCharts acts (st5 install, W25 principal, the stop) are committed and their ledgers are CLOSED.",
+  "notes": "Filed as a new row because an ARMED row is not edited in place (surprise-row gate). This seat takes no further YCharts or resident act; if a restart needs an operator on the host, that is asked of 1.0.0_SA_CTO, not assumed."
+}
+```
