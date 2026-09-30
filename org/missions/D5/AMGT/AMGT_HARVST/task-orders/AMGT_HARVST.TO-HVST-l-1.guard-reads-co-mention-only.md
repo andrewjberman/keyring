@@ -67,7 +67,7 @@ No change to the `is_roundup` producer, no gold write, no deploy, no change to a
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>22</round>
 <slot>~51</slot>
 <fabric>site-z</fabric>
