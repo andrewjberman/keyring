@@ -3575,6 +3575,30 @@ carries none.
     },
     "spec_asserts": "AC2 names only tests/test_schwab_transactions.py; the cell moves only the pins its dataset moves.",
     "world_is": "These failures pre-exist the cell and are unrelated to dim_transaction; not touched."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S63",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T10:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W19-S2"
+    ],
+    "one_line": "RULES Z-W19-S2 (BLOCKING, ARMED) at the MX-s-15 drain (@46587d5134): DISARMED by MX-r-6 AMENDED A1 -- step 0 adds dim_transaction and its 15 served fields to org/standards/NFRA_OPLGTW_CONTRACT.json and fixes the acceptance harness default before the release cut; the ANNOUNCE names the contract change for the CTO's G-A and the never-widen halves; no grant is created or changed (B2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/NFRA_MCPINDEX.TO-MX-r-6.schwab-enable-release.md AMENDED A1, this commit.",
+        "Nothing is deployed before MX-r-6 PHASE B, so the red acceptance suite and the dataset_invalid answer cannot reach the served host first."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "The hazard (a release shipping a declared-but-uncontracted dataset and a red acceptance suite) is removed by step 0 of the only cell that can ship it.",
+    "notes": "The CTO is asked separately whether r6.J1's transaction question may use a grant naming dim_transaction; by default it is graded as a correct refusal."
   }
 ]
 ```

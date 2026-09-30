@@ -27,6 +27,22 @@ cut at the LIVE deployed commit, the census, the rollback tree, and the DEPLOY-O
 Schwab enable procedure is `docs/architecture/NFRA_INTEGRATIONS_STANDARD.md:101,170` (env + IAM + deploy), and its
 rollback is `infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md:233-276`.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-30 ~10:0xZ) -- on row Z-W19-S2 (BLOCKING, ARMED, issuer-owned), ruled by row Z-S63.**
+- **A 7th surface.** `org/standards/NFRA_OPLGTW_CONTRACT.json` lists the datasets and fields the gateway serves and a
+  grant may carry. It names only the three dims, so the running gateway answers `dataset_invalid` for `dim_transaction`
+  and `tests/acceptance/test_local_acceptance.py` regresses from 14 passed to 8 failed (`KeyError` at
+  `tests/acceptance/conftest.py:289`).
+- **STEP 0, before the release cut, and it may start before MX-q-3 drains:** add `dim_transaction` to the contract's
+  `datasets`, its served fields to `fields` (exactly MX-s-15's 15 served columns, `SCHEMA_MX-s-15.md`), and any
+  `additive_fields` entry the schema needs. Fix the acceptance harness's dataset default the way MX-s-15 fixed
+  `tests/test_schwab_wiring.py`. `tests/acceptance/test_local_acceptance.py` passes 14 of 14 again. Commit it on your branch.
+- **The ANNOUNCE names the contract change** beside the census, because it widens what a grant may name. No grant is
+  created or changed (B2): existing grants name the three dims explicitly and stay as they are.
+- **Paths granted in addition:** `org/standards/NFRA_OPLGTW_CONTRACT.json`, `infra/aws/ec2/opal-gateway/tests/acceptance/`
+  (already inside `infra/aws/ec2/opal-gateway/**`).
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
+  finds `<placeholders>NONE</placeholders>`).
+
 ### PHASE A -- no deploy, no apply
 1. Read the deployed commit from the host's artifact, by content (MX-r-5 left 093fc247c6). Cut the release there and
    cherry-pick MX-s-15's and MX-q-3's gateway commits. The issuer's GO names whether MX-t-10 rides too.
@@ -68,6 +84,7 @@ rollback is `infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md:233-276
 infra/aws/ec2/EC2_MANIFEST.json
 infra/aws/ec2/opal-gateway/**
 infra/aws/terraform/opal-gateway/schwab_reader_iam.tf
+org/standards/NFRA_OPLGTW_CONTRACT.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-r5-schwab-enable.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~19/**
