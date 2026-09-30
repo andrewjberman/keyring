@@ -42,9 +42,40 @@ comp-adversary: RUN at L5 -- the adversary is a run that spends pages past its p
 The exact argv, the 10-name security file and the object caps are in the halves. A refusal is recorded and never retried.
 A publisher's refusal ends that publisher's jobs, not the other's. Rollback is forward only.
 
+## 1a. PHASE A0 (AMENDMENT 3) -- LOCAL, BEFORE THE PAIR: a 402 keeps its body and gets ONE fresh-session retry
+
+**Measured at CLOUD `da63b88ccd`:** a 402 raises `transport.AccountUnavailable` (~:341). The worker ends the job
+`account_or_harvester_unavailable` with a 3600 s publisher cooldown (~:648), and KEEPS NO BODY. Only `RequestRejected` keeps
+one (`_keep_rejected_body`, ~:373). The cooldown would also skip any retry within the hour.
+
+**The change** (CTO msg 27212: "on 402/401 retry ONCE with a fresh session and keep the body. Only a 402 that persists is a
+finding"):
+- A 402 response's body is kept, exactly as `RequestRejected` keeps one: capped, credentials redacted, under the runtime
+  `rejected_bodies/`.
+- Inside the SAME job, the worker then makes ONE fresh sign-in through the token-first seam (`sessions.refresh`,
+  credentials from Secrets) and ONE retry of the request.
+- The job ends `account_or_harvester_unavailable`, with the cooldown, only if the retry also returns 402. Both bodies are
+  kept, and the run record carries the two attempts.
+- A 401 keeps `ab-1`'s contract, unchanged.
+- No other status changes.
+
+**Proof, phase A0, run literally from the worktree root (it is not one of the order's two criteria; it is printed into the
+deliverables and graded by the issuer before the pair is signed):**
+- `python -m pytest lib/opal_data_harvest/test_ab3_account_402_fresh_session.py -rA --tb=line` covers four cases:
+  - a 402 then a 200 after the fresh sign-in means the job concludes, the body is kept, and 1 sign-in is made;
+  - 402 twice means `account_or_harvester_unavailable`, 2 bodies kept, and 1 sign-in;
+  - a 401 is unchanged;
+  - a mutant restoring the base fails.
+- `python -m pytest lib/opal_data_harvest/ -rA --tb=line`: no test that passed at `da63b88ccd` fails.
+- No network: sockets are blocked in the tests.
+- Commit, and report to the issuer. The issuer merges phase A0; then the pair is signed against the merged code.
+
 ## 2. SURFACES
 
 <paths>
+lib/opal_data_harvest/worker.py
+lib/opal_data_harvest/transport.py
+lib/opal_data_harvest/test_ab3_account_402_fresh_session.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~83/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 </paths>
@@ -122,6 +153,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   The halves name every argv and the per-name security files (built from `~46/securities.universe.json`). AC1 counts 11 new
   run records and 32 jobs (30 + 2).
 - **`<paths>`:** unchanged. **Criteria:** the same two invocations.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
+**AMENDMENT 3 (issuer, 2026-09-30 ~15:4xZ) -- PHASE A0 (LOCAL) added; two premises corrected by measurement.**
+- **402 handling.** Measured at `da63b88ccd`: a 402 keeps no body and sets a 1 h cooldown, so the CTO's "retry ONCE with a fresh
+  session and keep the body" cannot run through the collector. Phase A0 (section 1a) builds it in the collector. The paths
+  are GRANTED: `worker.py`, `transport.py` and the new test.
+- **ft's kept 403 body.** Section 1 and AMENDMENT 1 said "read ft's kept 403 body first". The runtime has NO
+  `rejected_bodies/` folder: `q-6` F1 built the keeper, and ft has not run since. So there is no body to read before the run.
+  The ft job runs token-first, and a refusal's body is kept by the run itself and classified in AC2.
+- **The order of acts:** phase A0 (LOCAL, merged by the issuer), then the pair is signed against the merged code, then phase A
+  (the collection), then phase B (the schedule, re-signed).
 - **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
 <risk>WORLD</risk>

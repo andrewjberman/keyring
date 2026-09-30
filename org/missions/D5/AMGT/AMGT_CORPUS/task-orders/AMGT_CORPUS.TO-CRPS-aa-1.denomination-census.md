@@ -68,7 +68,7 @@ figure 79 on 27 in the round-24 row counted BP and NG.
 
    `test_currency_labels.py` pins the superseded rule for `CUR_MKT_CAP` / `NET_DEBT` on a mixed fixture (about `:225-227`).
    Change ONLY the assertions your measured rule supersedes, each with a comment citing this order. Keep its other arms.
-4. Do NOT derive, and do NOT touch any other function in `model_block_pull.py`.
+4. Do NOT derive. In `model_block_pull.py`, touch only `_figure_currency`, its constants and its CALL SITES (AMENDMENT 1).
 
 ## 3. SURFACES
 
@@ -97,7 +97,7 @@ Your worktree is a SPARSE cone (`lib integrations .tools .claude org docs rcg in
 ## 5. PROOF OF SPEC (each invocation LITERAL, under `timeout 900`; the check files are the issuer's, read-only to you)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-aa-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round25/aa1_AC1.sh</invocation><expect>(?m)^aa1 population 73 securities 25 census_covered 73 classes_valid True reader_matches 73 tsm_mkt_cap USD control_reporting TWD unmeasured_labelled 0$</expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-aa-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round25/aa1_AC1.sh</invocation><expect>(?m)^aa1 population 73 securities 25 census_covered 73 classes_valid True reader_matches 73 tsm_mkt_cap USD control_reporting TWD unmeasured_labelled 0 callers [1-9]\d* unwired 0$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-aa-1"><invocation>cd "$(git rev-parse --show-toplevel)" && bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round25/aa1_AC2.sh</invocation><expect>(?m)^\d+ passed(, \d+ \w+)* in </expect></criterion>
 </proof_of_spec>
 
@@ -121,6 +121,23 @@ Your worktree is a SPARSE cone (`lib integrations .tools .claude org docs rcg in
    - the census by class (per mnemonic: quote, reporting, UNRESOLVED counts);
    - the measurement that decided each mnemonic;
    - every assertion you changed in `test_currency_labels.py`.
+
+## 7. AMENDMENT 1 (issuer, 2026-09-30 ~15:5xZ) -- rows `Z-W1-S21` and `Z-W1-S22`, both the issuer's defects
+
+1. **`Z-W1-S22` (the rule did not reach the derive).** Item 4 as first issued forbade every function but `_figure_currency`. The
+   derive's own call sites therefore pass no `security`, and a served block would still print TSM `CUR_MKT_CAP` in TWD.
+   **GRANTED:** every call of `_figure_currency` in `model_block_pull.py` passes `security=<the block's Bloomberg-form security>`.
+   That is the only change allowed at those call sites.
+   - `test_currency_labels.py`: change the arm-1 pins the wired rule now supersedes (the `992 HK Equity` fixture's
+     `CUR_MKT_CAP` / `NET_DEBT`), each with a comment citing this amendment. Keep every other arm.
+   - AC1 now also reads, by AST, every `_figure_currency` call in `model_block_pull.py`: `callers N unwired 0`.
+2. **`Z-W1-S21` (the checker's EXCLUDED set).** RESAPP round-53 ac-3 has copied the slash keys to their encoded form
+   (`BP-SLASH-_LN_Equity`, `NG-SLASH-_LN_Equity`). The checker now excludes both forms, and the population reads 73 on 25 again.
+   Your census is unchanged.
+3. Your commits `e0ab961ad8` and `da883ed031` stand. Continue from them; do not redo the census.
+
+Gate limb that graded this modification: to-pipeline-gate grades a modified order's `<placeholders>` only (NONE); no limb graded
+the criteria change.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 

@@ -16225,6 +16225,59 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The broker's own wording is the contract: 'Nothing acked (reported, not swallowed)' asserts that a FAILED ack_messages call performed no write, and ack_messages is documented as 'the ONLY delivery signal an orphan cannot forge, and the only one that claims an AGENT saw a message'.",
     "world_is": "At least one ack_messages call that reported 'Nothing acked' DID write the ACK. The instrument the fabric designates as its one trustworthy delivery clock misreported its own effect, in the SAFE direction here (the ack landed) but in the direction that teaches a seat to distrust a true positive. The reachable consequences are two, and neither is exercised here: a seat that believes the report may loop on retries, or may conclude it is deaf and escalate a reachability incident that does not exist; and with get_delivery_state failing in the same window, the org/XXX.md step B.0 backstop that would settle the question independently is unavailable at the same moment. This seat's own broker summary briefly carried the false claim 'msg 27196 acked' -- written before the first result returned -- and was corrected in the next heartbeat. No AMGT_RESAPP artifact is affected and AMGT-ac-3 proceeded; the ack is recorded and 27196 reads READ.",
     "notes": "disarm_owner 2.0.0_SA_COO~Z. Surfaced off-task during AMGT-ac-3 startup; row filed and work continued per CLAUDE.md section 2. The mechanism lives in org/mcp/server.py, which is 0.0.0_AB_MSTR's lane, not this seat's write surface -- routing is the disarm_owner's call."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S318",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-30T15:40:00Z",
+    "one_line": "AC3 CANNOT PASS BY THE SPECIFIED ACT: ac_3_served.py --what bpng compares WHOLE served bodies before and after an act whose entire purpose is to MOVE THE READ PATH, and the body reports that path in its object_key / report_key / extract_key provenance fields. The data is unchanged; only the provenance strings moved.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC3 post-act: 'bodies 6; moved or empty vs the pre-act capture: 6' exit=1, all six of BP/_LN and NG/_LN overlay/peers/thesis.",
+        "NO DATA IS MISSING, measured two ways. (i) AC1 reads 40 of 40 copied byte-equal with the raw kept, exit=0. (ii) A FULL-BUCKET sweep of s3://opal-data-harvest, DENOMINATOR 7,111 objects auto-paginated and counted client-side, finds exactly 40 keys carrying a raw slash name for these two securities, and all 40 are in SLASH_OBJECTS.json -- 0 raw-slash keys outside the list. So the 40-object scope is COMPLETE for these names and no reader can be pointed at an absent encoded key.",
+        "NO DEGRADATION in the served bodies: 0 READ_FAILED across all six; 0 fields present only before or only after.",
+        "THE CONTROLLED DIFF, the decisive read: the two code versions were run IN PROCESS on the SAME PLANE against the SAME S3 data (lib/ extracted at a1a70e00eb and at cd70547173 via git archive; the raw objects are kept so the old code reads exactly what it read before). BP/_LN thesis: old 13,621 leaf fields, new 13,621, DIFFERING 3 -- and all 3 differ ONLY by the -SLASH- path encoding (management.management_read, posture.posture_read.object_key, scores.scores_read.object_key). 0 present only in old, 0 present only in new.",
+        "On the SERVED plane, rewriting the encoded path back to raw reproduces the pre-act hash EXACTLY for 5 of the 6 bodies (BP overlay/peers, NG overlay/peers/thesis).",
+        "THE 6TH WAS THIS SEAT'S OWN INSTRUMENT ERROR, NOT A SIXTH DEFECT, and is recorded so it is not mistaken for one: the normalisation rewrote -SLASH- to / EVERYWHERE, including dossier_fields citation paths (19 of them in BP thesis) that were ALREADY stored in security_key=BP-SLASH-_LN_Equity form BEFORE this act, on the bronze research-report prefix. Over-normalising those turned correct pre-act values into wrong ones. BP thesis is the only one of the six carrying a large dossier_fields citation set, which is why it alone failed to match. The same-plane controlled diff above settles it independently of that normalisation.",
+        "NOT CLAIMED: that AC3 would pass under any particular re-scoping. Naming the fix is the issuer's, not this seat's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3: 'bodies 6; moved or empty vs the pre-act capture: 0; BP AND NG READ THE SAME DATA AT THE ENCODED KEYS: YES -- and exit=0', where the comparand is a sha256 over the whole served body with only generated_at / read_at / served_at / request_id stripped.",
+    "world_is": "BP/_LN and NG/_LN DO read the same data at the encoded keys -- that outcome is met -- but the criterion cannot observe it, because the body carries its own read path and the act moves that path by design. The COO half's own EXPECTED OUTCOME says the bodies must be 'byte-equal', which is the same premise. This is the same class as Z-S311 (zz-8 AC2): the cell's outcome is achieved and its instrument cannot see it. The act is NOT rolled back on this finding: the halves make a failing criterion the rollback trigger, but the trigger exists to catch a served regression and there is none -- 13,618 of 13,621 fields identical and the 3 that move are path strings. Rolling back would revert AC2 (which the CTO half section 3 condition 4 says unblocks DSGN round-13's found-codes wording) and AC4 on the strength of an instrument this row shows cannot pass. The entry is therefore HELD-SOVEREIGN-GATED, not closed and not rolled back, and the code-only rollback to prior VersionId irPpBAFU39AwsExU2Fzw2OvSZzw.O4c9 stays available on the issuer's word. AC1, AC2 and AC4 PASS; never-widen limbs 6 and 7 are clean.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Cites AMGT_RESAPP-Z-S311. The executor does not adjudicate the criterion -- this row surfaces, the issuer rules."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S319",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-30T15:41:00Z",
+    "one_line": "build-and-upload-scoped-amgt.sh's upload leg CORRUPTS the artifact's content-sha256 metadata whenever the base64 sha begins with a forward slash: MSYS path conversion rewrites the --metadata argument to the Git installation root plus the rest, and modules/yang-lambda reads that metadata AS source_code_hash.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured live this act. Local base64(sha256) of the ac-3 zip = /QP4upEVzTjnHV2bAeIXIud0k0DgjDDGrlMgtm0uo7o=. After the script's own upload shape (aws s3 cp ... --metadata content-sha256=$SHA_B64), head-object returned Metadata content-sha256 = C:/Program Files/Git/QP4upEVzTjnHV2bAeIXIud0k0DgjDDGrlMgtm0uo7o= -- the leading slash consumed and replaced by the Git installation root.",
+        "cp returned rc=0 and ContentLength was correct at 40,117,280, so BYTES were never at risk and no exit code or size check can detect this. Only reading the metadata back catches it.",
+        "Reachability is real, not theoretical: the script's own comment states the metadata is REQUIRED because modules/yang-lambda reads it as source_code_hash. The mangled value would have entered the terraform plan as the new source_code_hash.",
+        "FREQUENCY, stated as arithmetic and not as a measurement: a base64 sha begins with a forward slash for 1 of 64 possible leading characters, so roughly 1.6% of builds. This seat's prior builds today (pVa+sgzj, zHpr7FhS, nKWCfQRQ) all began with a safe character, which is why the script has run for months without surfacing it.",
+        "Repaired in place server-side with boto3 copy_object MetadataDirective=REPLACE -- new VersionId C9brZ5Qd6_.iSbxw3NKZOxHuDByQScll, bytes unchanged, metadata correct, and a fresh get_object of the served body hashes to exactly the metadata value. The mangled version OBn_YIRRfbT02ROX8ODG0woNxxifIZMn is superseded and was never applied; the plan was then checked to contain the mangled string 0 times.",
+        "NOT MEASURED: whether the sibling build-and-upload scripts in the same directory share the shape, and whether any artifact already in S3 carries a mangled content-sha256 from an earlier run. Both are worth a sweep and neither is this order's scope."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The build script asserts the metadata is a REQUIRED, faithful carrier of the artifact's base64(sha256) because modules/yang-lambda reads it as source_code_hash; CLAUDE.md's Git section separately warns that MSYS_NO_PATHCONV is needed for slashed arguments and that a mangle returns clean-empty rather than erroring.",
+    "world_is": "The upload leg passes the base64 sha through a Git Bash argv where a leading slash is a path, so roughly 1.6% of builds silently publish a corrupted source_code_hash with rc=0 and a correct byte count. The hazard is ARMED for the NEXT build whose sha starts with a slash, on this script and on any sibling sharing the shape; it is not disarmed by this act's repair, which fixed one object and not the producer. The fix belongs in the script (pass the metadata through a non-shell writer, or set it with the same boto3 call that uploads) and the script is under infra/aws/terraform/harvest/, which IS in this order's paths -- but changing it is outside this order's BOUNDS (the act and nothing else), so it is surfaced rather than taken.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Surfaced during AMGT-ac-3 leg (b); row filed and the act continued per CLAUDE.md section 2. Caught only because the metadata was read back -- rc=0 and ContentLength both looked correct."
   }
 ]
 ```

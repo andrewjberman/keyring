@@ -105,6 +105,24 @@ Your worktree is a SPARSE cone (`lib integrations .tools .claude org docs rcg in
    - each family added, with its ground;
    - what stays UNRESOLVED and why.
 
+## 7. AMENDMENT 1 (issuer, 2026-09-30 ~16:0xZ) -- rows `Z-W3-S10` and `Z-W3-S11`, both the issuer's instrument
+
+1. **`Z-W3-S10`:** RESAPP round-53 ac-3 copied the slash keys to encoded form at 15:14:55Z (`BP-SLASH-_LN_Equity`,
+   `NG-SLASH-_LN_Equity`). The checker now EXCLUDES an identity in either form and counts it once. It reads `keys 98 excluded 2
+   measured_before 49` again, with no pointer figure among the 49.
+   **Re-cut your table to that population:** `before_total 49`, and the two identities in `excluded`.
+   - Drop the BP `PE_RATIO` class; the BP/NG unit pass is `CRPS-aa-4`.
+   - Drop the BP `PROF_MARGIN` pointer breakdown.
+   - Your families R1, R2 and R4 stand unchanged.
+   - `remaining_after` is the checker's projection over the same 98 keys.
+2. **`Z-W3-S11`:** both sides of the checker now count a figure as not measured when its unit is `UNRESOLVED` or the
+   `SEE field_map` pointer. The criterion text is unchanged.
+3. Your commit `a05ead8252` stands. Continue from it: update the table (JSON and MD), re-run AC1 and AC2, and refresh the
+   instance.
+
+Gate limb that graded this modification: to-pipeline-gate grades a modified order's `<placeholders>` only (NONE); no limb graded
+the criteria change.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-24 analysis ruling 3 and enrichment item 3 @`0cdf1b748d` (msg 27200). Dry-run at base CLOUD `98781013e0`
@@ -114,6 +132,9 @@ Your worktree is a SPARSE cone (`lib integrations .tools .claude org docs rcg in
 - aa3_AC2 FAIL as expected (no tests ran).
 
 Write set disjoint from aa-1: aa-1 owns `model_block_pull.py`; aa-3 owns `build_unit_map.py`.
+**AMENDMENT 1 (issuer, record face, ~15:5xZ, row `Z-W1-S21`):** RESAPP round-53 ac-3 copied the slash keys to `-SLASH-` form.
+`aa3_check.py` now excludes an identity in either form, counted once; the base still reads `aa3 keys 98 excluded 2
+measured_before 49 ... projected_after 49`. The criterion text and the worker's scope are unchanged.
 <risk>LOCAL</risk>
 <status>pending</status>
 <round>25</round>

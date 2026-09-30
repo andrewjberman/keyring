@@ -3809,6 +3809,30 @@ carries none.
     "spec_asserts": "Every BLOCKING row carries an issuer disposition before the round closes.",
     "world_is": "Nothing was committed on a gated path and nothing is served; the questions (which source the advi page reads; an R20 or registry row for that key) go to the CTO at L10.",
     "notes": "AC1's floor (6 rows) also needed MX-t-10's row, which is held on the same gate (Z-W20-S4)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S68",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T15:22Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-r-6 v2 was deployed at 14:41:23Z (2e2254156e, built on 288fa78c93) over 2.0.0_SA_COO~RV's 4ce7946426 deployed 14:36:48Z: the GO's base guard (G1) was read at the worker's PHASE B start (~13:58Z), not immediately before the upload, and two issuers were releasing one host with no cross-seat lock. The /rivalfunds routes were removed and the schwab reader-policy apply landed; all halves VOID; restore is plan A (CTO msg 27224).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S3 opal-313476888478-lambda-artifacts/ec2/opal-gateway/: opal-gateway-4ce7946426.tar.gz 14:36:48Z, opal-gateway-2e2254156e.tar.gz 14:41:23Z, -latest ETag b8f52544 = 2e2254156e (read 14:43:49Z, 15:21Z).",
+        "SSM host read ~14:44Z: ENABLED_INTEGRATIONS includes schwab; server.py 'rivalfunds' count 0; app/rivalfunds_view.py present.",
+        "simulate-principal-policy gateway-schwab-read-role on dim_transaction: allowed both masters (~15:00Z).",
+        "2.0.0_SA_COO~RV msg 27202 (4ce7946426 deployed ~14:37Z); 1.0.0_SA_CTO~O msgs 27207, 27224."
+      ]
+    },
+    "spec_asserts": "MX-r-6 v2's halves (COO @17259505a2 s.0/s.4, CTO @16998169d5, CVO @5ac4f48aea G1): VOID if the live artifact is not 288fa78c93 at the GO; the GO re-reads it.",
+    "world_is": "The worker read the base once, ~43 minutes before its upload; another seat deployed in between. Nothing in the deploy path compares the live -latest to a declared base at upload time.",
+    "notes": "DISARM: (1) plan A -- ~RV redeploys 4ce7946426, then this seat re-applies the targeted IAM rollback (planned 0/1/0, 8 dim_transaction elements removed) and closes both ledgers ROLLED-BACK; (2) the stale-base guard in deploy-to-ec2.sh (CTO ruling on CVO~O 27209) ships in MX-r-6 v3 with a planted-stale negative test."
   }
 ]
 ```
