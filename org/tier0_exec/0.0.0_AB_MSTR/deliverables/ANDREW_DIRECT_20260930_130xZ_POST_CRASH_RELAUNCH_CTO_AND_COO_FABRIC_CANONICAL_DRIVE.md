@@ -24,3 +24,11 @@
 
 Related: `ANDREW_DIRECT_20260928_173xZ_RELAUNCH_CTO_COO_DYPM_CANONICAL_DRIVE_D_CLOSER_CRO_UIWALK.md` (the
 2026-09-28 relaunch this one restores).
+
+## Follow-up word, same terminal, 2026-09-30 ~13:1xZ (verbatim)
+
+> I brought back CRO and CVO already, we're good for now. You can push to CLOUD, sure.
+
+Scope: `4.0.0_SA_CRO` and `3.0.0_SA_CVO` were relaunched by Andrew himself (Andrew-launched sessions, presumptively
+reserved per LD-0305); no further relaunch is asked. The push of local `CLOUD` to `origin/CLOUD` is authorized; the
+measured landing hash is in LD-0613 Progress 37 and the agentbus message to site Z.
