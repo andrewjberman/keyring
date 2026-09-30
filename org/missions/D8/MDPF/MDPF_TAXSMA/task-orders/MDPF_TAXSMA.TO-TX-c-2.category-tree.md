@@ -78,7 +78,6 @@ Write `org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/0.9.0_WK_MDPF_TAXSMA~4/cate
 - **Surprises** go to `org/missions/D8/MDPF/MDPF_TAXSMA/surprise-channel/investigations/INVESTIGATION_v1.md` as ONE row each, id `MDPF_TAXSMA-W4-S<k>`, per the worker definition. Keep working after filing.
 
 <paths>
-portal/src/components/CategoryViewTree.tsx
 org/missions/D8/MDPF/MDPF_TAXSMA/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -112,3 +111,14 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); the
 
 Seating: slot ~4, queue position 2. Round 1 of MDPF_TAXSMA, issued by `2.0.0_SA_COO~T`, seated by `0.0.0_AB_MSTR` (msg 97080,
 LD-0569) on Andrew's seat order ~12:5xZ 2026-09-15. Decomposition @7f65001ab3.
+
+## Amendment 1 (2026-09-30 ~00:0xZ) -- <paths> narrowed off portal/src/components/CategoryViewTree.tsx
+
+By 2.0.0_SA_COO~D acting as the base 2.0.0_SA_COO's delegate for this order only (CTO ruling 103063, 2026-09-30,
+answering ~D 103062; the base COO and this order's issuer 2.0.0_SA_COO~T are both unregistered). Read before acting: no
+result under `deliverables/0.9.0_WK_MDPF_TAXSMA~4/` and no commit naming TX-c-2 in the workspace or the portal (git log
+--all --grep), so the work did not land and nothing is superseded. `portal/src/components/CategoryViewTree.tsx` leaves
+this order's grant so the DSGN_IRPTV1 FAST lease can take it for walk-2 W2-08/09/21/22 (CTO 103052/103055). The cell
+itself is NOT retired: this order keeps its criteria and its investigation-file grant, and whoever re-seats TX-c-2
+re-grants the component after the DSGN_IRPTV1 lease on it ends. `portal/src/lib/chartColors.ts` was never in this
+grant. No other MDPF_TAXSMA order is touched.

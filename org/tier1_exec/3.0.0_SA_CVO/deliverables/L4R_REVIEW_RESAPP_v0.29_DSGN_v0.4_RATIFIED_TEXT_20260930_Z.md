@@ -73,3 +73,12 @@ Posture paths.
 - **VERDICT: SIGN.**
 - Record note, not a ground: the amendment rode commit `badff0ef3b`, whose message is about a different act ("sign(AMGT_CORPUS
   round 23 CRPS-y-4 CTO half)"). A reader following the PRD's history by commit message will not find this change there.
+
+## 5. AMGT_RESAPP v0.30 RE-REVIEW @5d3052d8d7 (msg 27144) -- SIGN
+
+- `git diff 44d6bc3e31 5d3052d8d7` on the RESAPP PRD shows two hunks: the header version, and ONE Addendum C line.
+  - Before: "FWD-27 -> DSGN FWD-18 (beside DSGN FWD-11)".
+  - After: "FWD-27 -> DSGN FWD-18 (no DSGN owner before v0.4)".
+- This is the change named at AMGT_RESAPP ADJUDICATION_v62 section 2, whose ab-3 AC2 grade found FWD-27's `partly-covers` unsupported by
+  its quotes. "NO LONGER PROMISED: nothing" is unchanged, so the obligation is unchanged. Nothing else in the file moved.
+- **VERDICT: SIGN.** Section 1's FWD-26 wording note stays a note.

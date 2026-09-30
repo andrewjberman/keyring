@@ -25,6 +25,32 @@ closes" (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_212xZ_
 every cell, but no worker is spawned on it until the gate stands. A worker who finds the gate NOT standing files a
 BLOCKING row and stops; it never works around the gate.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-09-30 ~14:0xZ) -- HELD again, and carried to the round-5 L10 slug; row Z-S67 rules Z-W20-S3/S4/S5.**
+- **The naming limb refuses the advi key** (worker ~20's dry run: `platinum/advi/49financial/` and `.../mix_summary.json`
+  are "NEW and OUT-OF-PATTERN as S3Key"). Andrew's R20 acknowledgement names etfs and BD fees only, and the gate reads no
+  R20 entry. This is the same class as MX-t-10 and MX-t-13.
+- **The served objects are a frozen twin** (row Z-W20-S5). Every object under `platinum/advi/49financial/` is unchanged
+  since 2026-08-21T15:03Z. The publisher `advi-49f-publisher` is a disabled schedule, and the portal's twin read is `held`
+  in `adviKeyRepoint.ts`. So a tool over them cannot equal what the page shows, and FWD-2 ("portal figures equal the
+  portal's") could not be met even with the key admitted.
+- **Carried to the round-5 L10 slug** as an FWD-2 item for the CTO's analysis, with two questions: which served source
+  the advi page reads, and an R20 or registry row for that key. No build continues this round. The worker's record
+  commit 9ee245d3ee carries the dry run and the draft.
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
+  finds `<placeholders>NONE</placeholders>`).
+
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-09-30 ~13:1xZ) -- G-W STANDS for `platinum/advi`; this cell is RELEASED.**
+- Andrew's word, verbatim, relayed by 1.0.0_SA_CTO~O (msg 27162), record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md` @1eba868308: "whatever needs to be lifted should be
+  lifted". That lifts his "platinum/advi NOT YET" hold.
+- **The catalog version bump that adds the advi row carries his verbatim and cites @1eba868308**, as DATA_CATALOG.yaml:32
+  requires. It goes in the emitter's header text, never as a hand edit of the catalog.
+- **Scope limit, unchanged:** `platinum/advi/49financial/` only. The firm scope is the key segment (C7), and a firm
+  principal resolves only its own scope.
+- **If the naming limb refuses the served key** as it refused `platinum/etfs` (row Z-W15-S5), file a BLOCKING row and
+  stop. Andrew's R20 acknowledgement covers etfs and BD fees only, not advi, so do not work around it.
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
+  finds `<placeholders>NONE</placeholders>`).
+
 **The act, on the portal_index pattern** (`infra/aws/ec2/opal-gateway/app/integrations/portal_index/`; read its mdpf
 tools and MX-t-10's ETF tool first):
 1. The surface is the advisor-intelligence page's served objects. `portal-page-advisor-intelligence` sits in the

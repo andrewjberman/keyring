@@ -12318,3 +12318,1356 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "NOT a replay request; nothing was retried and the window's cap is spent. This is ARMED because it is not window-local: every future Analysis window produces zero reports until the session path is repaired, so it blocks the four carried report arms (Multi-Comp, Target Weight, the first certified 49financial, Inflection) indefinitely rather than for one cap. Two reads would locate it, neither inside a walk window and neither ~Y's to make: (1) why the resident holds no usable vendor session at job start on inrij6hL -- whether the 15:00Z build, the r3 apply, or the session store is responsible; (2) whether one admitted refresh per request is the right allowance when the first act already needs one. If the answer to (2) is no, the fix is a contract change in resident_worker.refresh_session and belongs to 1.0.0_SA_CTO, not to a walk."
 }
 ```
+
+## ~Y worker row -- IB-yr-231: BOUNDS says the generate suite is read-only, <paths> grants test_resident_worker.py
+
+```json
+{
+  "id": "IRPT_BCKEND-W83-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~83",
+  "surfaced_at": "2026-09-29T19:39:00Z",
+  "one_line": "TO-IB-yr-231 BOUNDS calls the generate test suite READ-ONLY while the same order's <paths> grant tests/test_resident_worker.py; I read <paths> as the write grant and added one test there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-yr-231.name-the-eviction-and-the-job-attention.md BOUNDS: 'The check in R23_CHECKS/ and the generate test suite are READ-ONLY' vs its <paths> block listing infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py",
+      "commit 7fc1a123f0 on wk-IRPT_BCKEND-83 adds test_eviction_and_attention_lines_name_a_real_verdict_and_job (19 lines, additive, no existing test edited); the suite ran 40 passed, 8 skipped afterwards (39 passed, 8 skipped before)",
+      "reason for the added test: the R23 check's 'job=' assertion also passes when the job id is printed as the '?' fallback token; the added test asserts no '=?' and a real verdict name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BOUNDS: the generate test suite is read-only; <paths>: test_resident_worker.py is writable.",
+  "world_is": "The two clauses of one order conflict; the <paths> block is the lane gate's write grant, so the edit was admitted, and it is additive only. The issuer may revert that one test if the BOUNDS wording was intended.",
+  "notes": "No behaviour or criterion affected; AC1-AC3 pass without the added test."
+}
+```
+
+## IRPT_BCKEND-W86-S1 -- The inf raw files (bronze/{positions,transactions,performance}/<date>.jsonl.gz) are writte
+
+```json
+{
+  "id": "IRPT_BCKEND-W86-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~86",
+  "surfaced_at": "2026-09-29T22:58:00Z",
+  "one_line": "The inf raw files (bronze/{positions,transactions,performance}/<date>.jsonl.gz) are written by the GOLD chain on inf-gold-layer-runner, not by inf-bronze-runner; since 2026-09-28 that chain dies at step 3 INF_API_SILVER_REPS with ModuleNotFoundError: No module named lib.silver_ids because lib/silver_ids.py was never deployed to any code/ prefix.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (cut a deploy order for lib/silver_ids.py to the prefix/path the gold runner imports as lib.silver_ids, or revert the inline coerce_silver_ids; the daily chain fails identically every day until then -- 09-28 and 09-29 both failed at the same step)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/diagnostic/chain_logs/chain_full_20260928_113305.log: 'ModuleNotFoundError: No module named lib.silver_ids' (from _orion_api_silver_lib.py line 284), 'CHAIN chain:full FAILED at INF_API_SILVER_REPS (exit=1)' 2026-09-28T11:34:43Z; same at chain_full_20260929_113302.log lines 201/206",
+      "s3://opal-data-inf/diagnostic/chain_logs/chain_full_20260927_113304.log: SILVER_REPS done, PULL_TXN/PERF/POSITIONS_DAILY done and wrote bronze/{transactions,performance,positions}/2026-09-27.jsonl.gz (11:42-11:51Z)",
+      "HeadObject code/silver/_orion_api_silver_lib.py LastModified 2026-09-28T07:17:53Z (byte-equal to repo); HeadObject code/gold/lib/silver_ids.py, code/lib/silver_ids.py, code/silver/lib/silver_ids.py all 404; repo lib/silver_ids.py at git 8cd218cd05",
+      "data/inf/scripts/gold/orion-gold-dispatch.sh:348 (CHAIN_PULL order), :545 (synced prefixes), :996 (chain aborts at first failed step); data/inf/scripts/silver/_orion_api_silver_lib.py:284 (the import)",
+      "deliverable org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~86/ON_INSTANCE_DIAGNOSIS.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IRPT_BCKEND.TO-IB-pr-243 (and rows S216 / WK~81): inf-bronze-runner i-083ad9ae297f88e9f writes the raw Orion jsonl.gz files and, though recovered to running by inf-ec2-retry-launch at 2026-09-28T11:15:55Z, wrote none.",
+  "world_is": "The bronze runner did run on 09-28 (sentinel bronze/orion-api/2026-09-28/_BRONZE_COMPLETE.json completed 11:17:59Z, overall success). The raw jsonl.gz files belong to the gold chain, which aborted at its 3rd step on a half-landed deploy (dependent file deployed 09-28T07:17:53Z without its new lib/silver_ids.py). The chain fails daily, so no raw file exists for 09-28 or 09-29 and rate_limit_state_{transactions,performance}.json stay stamped 09-27.",
+  "notes": "The launch failure and retry-launch recovery are a red herring: 09-27 shows the identical Server.InternalError-then-recover pattern on both runners and all raw files landed. Read-only work; nothing was deployed or replayed. Not established: where the runner's own 'lib' package lives on disk."
+}
+```
+
+
+## IRPT_BCKEND-W86-S2 -- On 2026-09-29 inf-bronze-runner stopped 4 seconds after launch with an EMPTY stop reason, 
+
+```json
+{
+  "id": "IRPT_BCKEND-W86-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~86",
+  "surfaced_at": "2026-09-29T22:58:30Z",
+  "one_line": "On 2026-09-29 inf-bronze-runner stopped 4 seconds after launch with an EMPTY stop reason, inf-ec2-launch-monitor treated it as a normal shutdown (Suppressed normal shutdown) so inf-ec2-retry-launch was never invoked for it, and the bronze run for 09-29 never happened (no _BRONZE_COMPLETE.json, mode marker left in place).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the launch-monitor/retry chain classifies only a non-empty Server.InternalError reason as a launch failure; an empty reason on a start that never reached the fetch script needs an owner)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/inf-ec2-launch-monitor 2026-09-29T11:15:22.173Z: 'Instance i-083ad9ae297f88e9f (inf-bronze-runner) stopped; reason=' then 'Suppressed normal shutdown'; /aws/lambda/inf-ec2-retry-launch 2026-09-29 window shows only the gold runner i-0ed5afded2ebd4ed4 as a retry target",
+      "EC2 describe-instances i-083ad9ae297f88e9f: State stopped, StateTransitionReason Server.InternalError, LaunchTime 2026-09-29T11:15:18Z",
+      "s3://opal-data-inf/orion/bronze-trigger-mode.json LastModified 2026-09-29T11:15:18Z still present (infra/aws/ec2/inf-bronze-runner/inf-bronze-fetch.sh:62 deletes it only when the fetch script runs); s3://opal-data-inf/bronze/orion-api/2026-09-29/ has no _BRONZE_COMPLETE.json and no _markers/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "inf-ec2-launch-monitor hands every Server.InternalError launch failure of an inf runner to inf-ec2-retry-launch, which recovers it (as on 09-27 and 09-28).",
+  "world_is": "For 09-29 the stop event carried an empty reason in the monitor's log, the monitor suppressed it as a normal shutdown, and the instance remains stopped with the 09-29 bronze run not executed. The gold chain's failure (row W86-S1) is independent of this.",
+  "notes": "Found off-task while reading the 09-28 window; not the 09-28 cause. Nothing was started or retried by this worker (read-only bound)."
+}
+```
+
+
+## IRPT_BCKEND-W88-S1 -- IB-yr-242 AC1: adding the catalogue GET to generate/entry.py ROUTES and to routes.json raises EntryError in th
+
+```json
+{
+  "id": "IRPT_BCKEND-W88-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~88",
+  "surfaced_at": "2026-09-29T23:40:00Z",
+  "one_line": "IB-yr-242 AC1: adding the catalogue GET to generate/entry.py ROUTES and to routes.json raises EntryError in the DEPLOYED boundary (reports/generate_installed.build_boundary copies ROUTES) and breaks 9 existing tests, all outside the order's <paths>, so the route registration is HELD.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py:337-341 @3f8c1aa2e0: routes = dict(generate_entry.ROUTES) then served.Entry(operations={analysis-requests, analysis-input-upload}); served.py:643-648 raises EntryError for a route whose operation the Entry does not serve. Measured: with the key in ROUTES, reports/tests/test_generate_installed.py went 13 passed -> 4 failed, 9 passed.",
+      "Measured on the same worktree with the route in ROUTES + routes.json vs reverted, each test file run alone: test_unguarded_census 6 failed -> 7 failed (test_every_published_route_resolves_to_a_real_entry_point asserts len(table) == 17); _contracts/test_upload_contract 8 passed -> 1 failed (denominators 17); _contracts/test_owned_request_contracts 3 passed -> 1 failed; _contracts/tests/test_seam_paired 33 failed -> 34 failed (a new comparison-catalogue case: no responses/comparison-catalogue.response.schema.json). test_guarded_entries stays 32 passed both ways. test_unguarded_census 6 and test_seam_paired 33 failures pre-exist at CLOUD 3f8c1aa2e0.",
+      "Held patches: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~88/held_route_registration_routes_json.patch (the routes.json row) and org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~88/entry_full_with_route.patch (entry.py incl. the ROUTES key). Files a complete registration needs and this order does not grant: reports/generate_installed.py (add the catalogue operation in build_boundary, declared_routes follows), docs/contracts/investor-reporting/v1/responses/comparison-catalogue.response.schema.json, routes.json _denominator/_denominators 17->18, _authz/tests/test_unguarded_census.py and _contracts/test_upload_contract.py and test_owned_request_contracts.py count pins, seam-paired fixtures."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IRPT_BCKEND.TO-IB-yr-242 build step 2: register the GET in the entry's ROUTES and in the published routes.json, and test_unguarded_census checks them against each other; <paths> is the whole grant.",
+  "world_is": "generate_entry.ROUTES is not the deployed boundary's only consumer: the installed Entry (reports/generate_installed.py) reuses it wholesale with its own operation table, and the published route file has response-schema, denominator and count pins in files this order does not name. Registering the route inside the grant leaves the deployed boundary failing at its first call after the next rebuild. The module, schema, entry compute and tests are committed; the two registrations are held, so AC1 is unmet and the order stays open.",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "notes": "INERT as committed: the key is not in ROUTES, so nothing served changes. It becomes harmful only if the held patch is applied without the reports/generate_installed.py change. Fix is an issuer amendment widening <paths> to the files listed, then applying the held patch."
+}
+```
+
+
+## IRPT_BCKEND-W88-S2 -- IB-yr-242: the etf-classifications half of the catalogue has no read the served role is known to hold (a Dynam
+
+```json
+{
+  "id": "IRPT_BCKEND-W88-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~88",
+  "surfaced_at": "2026-09-29T23:41:00Z",
+  "one_line": "IB-yr-242: the etf-classifications half of the catalogue has no read the served role is known to hold (a DynamoDB table, not a file), so it is an injected port left unwired and every non-model ticker is served verbatim until the rebuild wires it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/positioning_chain.py:68,253-262 @3f8c1aa2e0: ETF_CLASSIFICATIONS_TABLE = 'etf-classifications', read by a dynamodb scan over boto3; infra/aws/terraform/yang-pipeline/etf-classifications.tf declares the table (hash key ticker; fields asset_class, sub_asset_class, name).",
+      "infra/aws/terraform/investor-reporting/ carries no reference to etf-classifications (only the narrative, holdings and intake roles hold dynamodb grants, on other tables), so an irpt-ycharts-generate read of it is a new boto3 call plus a new IAM grant; the order preflight says that is a refusal and a row, not a silent assumption."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order preflight comp-iam: etf-classifications is read by the same account the estate already grants; no new boto3 call is introduced by this cell.",
+  "world_is": "The estate grants the table to other roles, not to irpt-ycharts-generate. comparison_catalogue.py takes the read as an injected callable (read_classifications) defaulting to no names; entry_for_ticker and build_catalogue name from the model catalogue and from a wired reader, else carry the ticker verbatim. Until a reader is wired and the role granted dynamodb:Scan on the table, production serves the 4 model entries only and 100 percent of ticker entries take the verbatim path, not the measured 4 in 5.",
+  "notes": "INERT: nothing breaks, the degrade is the ruled behaviour. The wiring and the grant belong to the rebuild (2.0.0_SA_COO~P); this worker made no AWS call."
+}
+```
+
+## IRPT_BCKEND-S219 -- re-minted by the issuer from worker row IRPT_BCKEND-W61-S2 (unmerged branch wk-IRPT_BCKEND-61 @b1cbe6a302); survives the supersession of IB-pr-192
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S219",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-28T21:10:00Z",
+  "one_line": "IB-pr-192 AC2 (live seam): a Since-inception read spans every twr_daily partition from the account's first day, and two of the live table's 559 partitions -- date=2024-07-08 (the engine's very first day) and date=2025-01-09 -- carry schema_version 1.2 like every neighbour but are entirely missing the bmv/emv/cf_net/cf_gross columns, so EngineSource._read's existing 'engine table schema changed' guard (f49_engine.py:134, unchanged by this order) fires on any full-history read that touches either date, including the control account's SI range (first OK 2024-11-07 through today, which spans 2025-01-09). AC2 FAILs as EnginePerformanceRefused against the live table for this reason; AC1's synthetic fixture (uniform columns) passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.4.0_DS_ClientPlatform",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/f49_engine.py:134 @c4599c3b8b -- `if not needed <= set(frame.columns): raise EnginePerformanceRefused(\"engine table schema changed\")`, needed = {account_id, business_date, r_net, status, bmv, emv, cf_net}, unmodified by this order",
+      "live read this session (boto3, read-only) of gold/advi/canonical/twr_daily/date=2024-07-08/data.parquet and date=2025-01-09/data.parquet via the registry address (opal_naming.lookup('49financial')): both frames carry schema_version=='1.2' and columns {_ingested_at, account_id, business_date, flow_boundary, flow_convention, gross_leg_vintage, r_gross, r_net, schema_version, source_pipeline, status} -- bmv/emv/cf_net/cf_gross entirely absent; the immediate neighbours date=2024-07-09, date=2025-01-08, date=2025-01-10 read in the same session carry the full column set at the same schema_version",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r19/p19_2_ac2_live_seam.py run this session against the control account (first OK 2024-11-07, independently read): 'FAIL: Since-inception refused as EnginePerformanceRefused (first OK 2024-11-07)'",
+      "the account's own SI range (2024-11-07..today) does not reach date=2024-07-08, but does reach date=2025-01-09 -- narrowing the read to the account's first-observed day instead of the engine's earliest partition would not avoid this failure"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-192 AC2: a Since-inception request for the control account answers period SI with a finite value above -1, read against the real engine table.",
+  "world_is": "Two specific partitions in the live twr_daily table are missing four columns the producer's own schema declares (schema_version 1.2, same as fully-populated neighbours) -- a producer-side data-quality gap outside this order's <paths> (data/assets/scripts/gold/runners_49f is the writer lane, owned per CLAUDE.md rule 13 by DS). Loosening f49_engine.py's schema guard to tolerate it would weaken a check built to catch exactly this shape of drift, which the refusal clause forbids; the guard is left as-is and AC2 is recorded FAIL against the live table.",
+  "notes": "Re-minted as IRPT_BCKEND-S219 by 2.0.0_SA_COO~P (a seat row on the main index carries no W); worker id was IRPT_BCKEND-W61-S2, the id the IB-pr-192 supersession cites. Un-parks when a 0.4.0_DS_ClientPlatform lane backfills or re-writes the two partitions with the full column set (or the producer confirms bmv/emv/cf_net were never populated by design for those two runs, in which case the remedy is a schema_version bump the guard can key on). Not fixed by this order: no path here reaches the writer lane. AC1 (fixture) is unaffected and PASSes. re-minted from W61-S2, surfaced by 0.9.0_WK_IRPT_BCKEND~61 at 2026-09-28T21:10Z (CTO ruling 103314: a seat re-mint is a seat row; surfaced_by is the minting seat)."
+}
+```
+
+
+## IRPT_BCKEND-S220 -- the guard census is 6-red at HEAD: 3 of 17 published routes reach an unguarded handler (the three export routes) and the census's own mutant controls are red
+
+```json
+{
+  "id": "IRPT_BCKEND-S220",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T00:50:00Z",
+  "one_line": "The guard census reads 6 failed / 2 passed at CLOUD HEAD and says BLOCKED: 3 of 17 published routes reach an unguarded handler -- the three export routes on irpt-export-render -- and its own mutant control nodes are red too, so the suite currently cannot distinguish a real regression from its present state. Found in an issuer preflight for the round-26 catalogue route, not by looking for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider _authz/tests/test_unguarded_census.py run in the MAIN worktree at CLOUD HEAD from infra/aws/lambda/investor-reporting: 6 failed, 2 passed. Captured stdout of test_the_whole_file_census_is_zero: \"WHOLE FILE: BLOCKED: 3 of 17 route(s) reach an unguarded handler: ['GET /api/scoped/investor-reporting/export/{exportId}', 'GET /api/scoped/investor-reporting/export/{exportId}/download', 'POST /api/scoped/investor-reporting/export']\"; the verdict dict reads {'guarded': 14, 'routes': 17}. DENOMINATOR 17 of 17 published routes, printed by the suite itself.",
+      "The three route_keys resolve in docs/contracts/investor-reporting/v1/routes.json to handler irpt-export-render, operations submit-export / export-receipt / export-download, all status DECLARED.",
+      "test_every_published_route_resolves_to_a_real_entry_point PASSES at HEAD (it fails only when the round-26 catalogue route is added), so these three are NOT declared-without-an-entry: they resolve to a real entry point that the census reads as unguarded. The separate failure test_every_entry_carries_the_published_route_table_it_serves reads '3 of 17 in-lane published route(s) are declared by NO entry'.",
+      "The suite's OWN falsifiers are among the failures: test_the_census_fires_when_one_handler_is_unregistered[0], [3] and [7] all fail 'assert [GET /api/sc...rting/export] == []', i.e. the mutant arm cannot show the census firing on an injected break because the unmutated baseline is already non-empty.",
+      "test_the_whole_file_census_is_zero's own docstring states the file previously read ZERO over the whole published file and that it has twice asserted a gap rather than tolerating it ('3 of 11' for irpt-status before W2-S19, '1 of 12' for irpt-holdings before W2-S30), so the current 3 of 17 is a REGRESSION against that recorded zero, not an unbuilt state."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The guard census over the published route file reads ZERO unguarded routes, and its mutant arm shows the census firing when one handler is unregistered (test_unguarded_census.py's own docstring, which records the whole file at zero).",
+  "world_is": "MEASURED: the census reads 3 of 17 published routes reaching a handler that does not carry the mark guard() sets (__irpt_guarded__), all three on irpt-export-render, and 3 of 17 declared by no entry; 6 of 8 nodes in the suite fail, the three mutant-control nodes among them. ABSENT, and deliberately not claimed: whether an unauthorized request actually reaches export data in production. This lane measured the CENSUS's reading, not a live request -- a handler can be authorized by another path and simply not carry the mark, and ABSENT is not EXERCISED-AGAINST. The hazard is ARMED because that possibility is not excluded, not because it is established.",
+  "notes": "OFF-TASK for this lane: surfaced while preflighting the round-26 catalogue route registration (the issuer measuring its own grant after IB-yr-242's mis-cut, R25 amendment 1). Not ~Y's to disarm -- irpt-export-render is 2.0.0_SA_COO~P's export lane, and CLAUDE.md forbids converting this into a gate on another seat, so it is a row and a message, not a stop. SECOND, SEPARATE FINDING IN THE SAME PREFLIGHT, recorded here rather than as its own row because it shares the instrument: _contracts/tests/test_seam_paired.py reads 33 failed / 25 passed at CLOUD HEAD in the MAIN worktree, cwd-independent (same 33 from investor-reporting/, from _contracts/ and from _contracts/tests/), and its test_control_* nodes are among the failures. CONSEQUENCE FOR EVERY SEAT: neither suite is usable as a pass/fail oracle at HEAD, so a cell graded 'the seam suite passes' cannot be graded that way, and a red there is not evidence of the cell that ran it. Round 26 therefore grades the catalogue route on SINGLE NODE IDS and on a before/after DELTA against these printed baselines (39 -> 45 over four suites; per file 0 -> 4 in reports/tests/test_generate_installed.py, 6 -> 7 in the census, 33 -> 34 in the seam), never on a file being green. Un-arms when ~P's lane either guards the three export handlers or records why the mark is absent by design."
+}
+```
+
+
+## IRPT_BCKEND-S221 -- the discriminating read on S220: the unguarded-route verdict is an instrument artifact (an unmarked dispatcher in front of a marked handler), so the authorization reading is DISMISSED -- the two red suites are not
+
+```json
+{
+  "id": "IRPT_BCKEND-S221",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T01:15:00Z",
+  "one_line": "THE DISCRIMINATING READ ON S220, and it lands against S220's own worst reading: the census's '3 of 17 unguarded' is an instrument artifact, not an unguarded served path. export/entry.py's module-level lambda_handler is a plain dispatcher carrying no mark, while the _http_handler it delegates every non-async event to IS marked; the census resolves the module attribute, so it reads the wrapper. Cause named by 2.0.0_SA_COO~P (103075) and verified here by import rather than on its report.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Independent read, not ~P's report: imported export/entry.py and printed the marks -- module lambda_handler __irpt_guarded__ = ABSENT, _http_handler present = True with __irpt_guarded__ = True. infra/aws/lambda/investor-reporting/export/entry.py:386 reads `_http_handler = _entry.lambda_entry(ENTRY)`; :389-395 lambda_handler returns run_async_submit(event) if _async.is_async_event(event) else _http_handler(event, context). So EVERY non-async event reaches the marked handler.",
+      "The async arm's reach, read at its predicate rather than inferred: export/submit_async.py:33 MARKER = 'irpt_export_async_submit' and :52-53 is_async_event(event) returns True only when event.get(MARKER) is a dict -- a TOP-LEVEL key. The module's own docstring (:21-22) states the marked event is reachable only by a direct lambda:Invoke because API Gateway wraps every HTTP request in its own event shape, so a browser body cannot set a top-level key.",
+      "S220's four census failures and the three mutant-control failures are unchanged by this read: the suite still reads 6 failed / 2 passed at HEAD. What changed is what the number MEANS."
+    ]
+  },
+  "dismissal_reason": "Scoped to S220's AUTHORIZATION reading only, and dismissed on a measured cause rather than on absence of evidence: the census resolves export/entry.py's module-level lambda_handler, which is an unmarked dispatcher, while the _http_handler it delegates every non-async event to carries the mark (verified here by import, printing ABSENT on the module attribute and True on _http_handler). The async arm requires a TOP-LEVEL marker key that API Gateway's event shape cannot carry (submit_async.py:52-53 against its own :21-22 docstring), so its only reach is a direct lambda:Invoke. The verdict therefore reports WHERE THE MARK SITS, not whether a request is authorized. NOT dismissed by this: the census is still 6-red with its mutant controls among the failures, test_seam_paired.py is still 33 of 58 red, and the residual lambda:Invoke surface on irpt-export-render is an IAM question this lane did not measure. S220 itself stays ARMED until 2.0.0_SA_COO~P, its disarm_owner, clears it.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "spec_asserts": "S220 as filed: 3 of 17 published routes reach a handler the census cannot prove is guarded, and whether an unauthorized request reaches export data was left ABSENT and unexcluded, which is why the hazard was ARMED.",
+  "world_is": "The HTTP path IS guarded. The census reads a module attribute that is a dispatcher, so its verdict is about where the mark sits, not about whether a request is authorized. The residual surface is a direct lambda:Invoke carrying the top-level marker, which is an IAM question about who holds invoke on irpt-export-render, NOT a route-authorization gap -- a different axis from the one the census grades, and not measured here. DISMISSED_WITH_REASON is scoped to the authorization reading of S220 ONLY. Two things it does NOT dismiss: the census remains 6-red and its mutant controls remain red, so it is still not a usable pass/fail oracle at HEAD; and _contracts/tests/test_seam_paired.py remains 33 of 58 red, untouched by this read. Both stand as recorded in S220.",
+  "notes": "S220's ARMED standing is 2.0.0_SA_COO~P's to clear, not this lane's -- a row's disarm_owner disarms it, and this row is the evidence for that act, not the act. ~P has declined to assign the mark by hand (served.py:1052), which is right: the fix is the census resolving through the dispatcher, in ~P's export lane and ~P's own round. NOT ABSORBED INTO ROUND 26: ~Y's round 26 was issued at 6c0317e55c with one cell, IB-yr-261, and a second issuance into a round the gate keys by ROUND is the exact error R25 amendment 1 records. The census cell belongs to ~P. WHAT THIS LANE CARRIES FORWARD REGARDLESS: TO-IB-yr-261 names ONE node id for the seam suite and measures the census as a drain-time DELTA against the printed baseline of 6, never as a green. That cut is unaffected by this dismissal, because a 33-red suite and a 6-red census are equally unusable as oracles whether their redness means a defect or an instrument artifact."
+}
+```
+
+## IRPT_BCKEND-S222 -- DISARM RECORD for IRPT_BCKEND-S220 (issuer act; S221 is the evidence)
+
+```json
+{
+  "id": "IRPT_BCKEND-S222",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-30T01:15:00Z",
+  "one_line": "DISARM RECORD for IRPT_BCKEND-S220 (ARMED, disarm_owner 2.0.0_SA_COO~P): the unauthorized-reach reading is dismissed on IRPT_BCKEND-S221's import evidence, which this seat re-measured independently. S220's hazard is DISARMED as of this row; the census being 6-red and test_seam_paired.py 33 of 58 red are NOT disarmed by it and go to a ~P cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "import of infra/aws/lambda/investor-reporting/export/entry.py by this seat, 2026-09-30 ~00:5xZ: module lambda_handler __irpt_guarded__ False (a plain dispatcher, entry.py:389-395); _http_handler __irpt_guarded__ True (entry.py:386, lambda_entry(ENTRY)).",
+      "export/entry.py:358-365: the three route keys are declared in ROUTES on the guarded Entry; export/handler.py:359 (@enforcer.guard SUBMIT_OPERATION) and export/download.py:129 (@enforcer.guard DOWNLOAD_OPERATION) wrap the operations themselves.",
+      "export/submit_async.py:52-53: is_async_event needs a top-level key MARKER; the module docstring (lines 21-22) states an API Gateway event cannot carry it, so that branch is reachable by a direct lambda:Invoke only. This seat read the code and did NOT test a live request or the invoke grants."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard S220 names (an unauthorized request reaching export data through a handler without the mark) does not fire on the HTTP path: every HTTP event reaches the marked _http_handler. The census reads the module dispatcher, so its 3-of-17 is an instrument reading.",
+  "spec_asserts": "IRPT_BCKEND-S220: the guard census reads zero unguarded routes and its mutant arm fires when one handler is unregistered.",
+  "world_is": "The census reads 3 of 17 at the dispatcher; the served HTTP path is guarded. ABSENT, not claimed: a live unauthorized request (ABSENT is not EXERCISED-AGAINST) and the direct-invoke grant set. STILL OPEN and not disarmed: the census and its mutant controls are red at HEAD, and test_seam_paired.py reads 33 failed of 58; neither suite is a usable oracle until a ~P cell makes the census resolve through the dispatcher.",
+  "notes": "Filed as a new row because an ARMED row is not edited in place (surprise-row gate). Evidence pair: S221 (2.0.0_SA_COO~Y, @90fad5dbd4) and this seat's import read."
+}
+```
+
+
+## IRPT_BCKEND-W89-S1 -- Y26-1-AC3 cannot pass inside this order's grant: the seam control resolves refs and fixtures by a convention no published response schema uses, and needs two...
+
+```json
+{
+  "id": "IRPT_BCKEND-W89-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~89",
+  "surfaced_at": "2026-09-30T01:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Y26-1-AC3 cannot pass inside this order's grant: the seam control resolves refs and fixtures by a convention no published response schema uses, and needs two files outside <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider _contracts/tests/test_seam_paired.py::test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[comparison-catalogue] from infra/aws/lambda/investor-reporting after parts 1-5 landed: 1 failed, AssertionError: no valid fixture for l://irpt/contracts/v1/ComparisonCatalogue (the node now EXISTS; before this order it was rc=5 no tests ran).",
+      "test_seam_paired.py:567-575 _document_of() strips 3 leading chars and the 12-char '.schema.json' suffix from a data $ref, assuming the form '../<Name>.schema.json'; every published response schema uses 'opal://irpt/contracts/v1/<Name>.schema.json', so the name reads 'l://irpt/contracts/v1/<Name>' -- the same failure the 17 sibling control nodes print (measured: 17 failed of 17 under -k control_a at HEAD).",
+      "test_seam_paired.py:532-550 _document_fixture() reads only _contracts/fixtures/<Name>.valid.json and .invalid.json; no ComparisonCatalogue fixture exists there (25 fixture files listed, none a catalogue), and _contracts/fixtures/ is not in this order's <paths>.",
+      "test_seam_paired.py:265-288 _response_validator() registers only docs/contracts/investor-reporting/v1/*.schema.json (non-recursive) under the key '../<file>'; ComparisonCatalogue.schema.json lives in infra/aws/lambda/investor-reporting/_contracts/, not in v1/, and v1/ComparisonCatalogue.schema.json is not in <paths>."
+    ]
+  },
+  "spec_asserts": "A conforming fixture written for the response schema under this order's <paths> makes the [comparison-catalogue] control node pass (order text: 'plus whatever conforming fixture the seam suite needs for its node (AC3 is how you know)').",
+  "world_is": "MEASURED: the response schema, the routes.json row and both wiring sites are landed and AC1 and AC2 pass; AC3 fails with the sibling-identical message. Passing it needs, at minimum, _contracts/fixtures/ComparisonCatalogue.valid.json (wrapper {_fixture,_source,_expect containing 'accepts',instance}) and a v1/ComparisonCatalogue.schema.json, AND the suite's ref convention to be reconciled with the published opal:// convention (the suite is 33-of-58 red at HEAD, row IRPT_BCKEND-S220). READ from the test source, NOT RUN: whether those three additions alone turn the node green. Nothing weakened or edited to force it. The grant, not the worker, is the defect (order text: a needed file outside <paths> is a refusal and a row).",
+  "notes": "Refusal on Y26-1-AC3 only. Owner of the remedy: 2.0.0_SA_COO~Y (grant) and whichever seat owns _contracts/tests/test_seam_paired.py's ref convention; the response schema kept the published opal:// convention on purpose rather than bending to the suite's broken reading."
+}
+```
+
+
+## IRPT_BCKEND-W89-S2 -- The census's 7th failure after IB-yr-261 is a stale count pin, not a route with no real entry point: test_unguarded_census.py asserts 17 routes at lines 99,...
+
+```json
+{
+  "id": "IRPT_BCKEND-W89-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~89",
+  "surfaced_at": "2026-09-30T01:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The census's 7th failure after IB-yr-261 is a stale count pin, not a route with no real entry point: test_unguarded_census.py asserts 17 routes at lines 99, 114 and 141 and the published file now holds 18.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider _authz/tests/test_unguarded_census.py from infra/aws/lambda/investor-reporting after parts 1-5: 7 failed / 1 passed (baseline 6 / 2). The new failure is test_every_published_route_resolves_to_a_real_entry_point: 'assert 18 == 17' at test_unguarded_census.py:99, captured stdout 'routes with a declared handler: 18'.",
+      "The same run prints 'published routes handled by this order's six functions: 18 of 18 in the file' and the verdicts read guarded 15 of 18 with the unguarded three still the export routes: the new GET resolved to a real, guarded entry point (before: guarded 14 of 17).",
+      "Pins at _authz/tests/test_unguarded_census.py:99 (len(table) == 17), :114 (verdict['routes'] == 17) and :141 (whole['routes'] == 17); the file is outside this order's <paths>, so they were left alone."
+    ]
+  },
+  "spec_asserts": "Order text: 'A 7th failure means the route resolves to no real entry point.'",
+  "world_is": "MEASURED: the 7th failure is the literal 17 in three assertions and the route does resolve (18 of 18). Lines 114 and 141 sit in tests that already fail at baseline on the unguarded-export finding, so they will fail on the count next once that finding is disarmed. INERT: a loud tripwire on the next route addition, no silent harm.",
+  "notes": "For the issuer's drain evidence: census 6 -> 7 is the pin, and the seam file 33 -> 34 is the one new [comparison-catalogue] node (AC3's), both as predicted in row IRPT_BCKEND-S220's notes."
+}
+```
+
+
+## IRPT_BCKEND-S223 -- round 26 landed a dangling published $ref (1 of 18), and the drain check that passed it graded the pointer's shape instead of following it
+
+```json
+{
+  "id": "IRPT_BCKEND-S223",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T01:55:00Z",
+  "one_line": "IB-yr-261 published a response schema whose $ref does not resolve: responses/comparison-catalogue.response.schema.json refs opal://irpt/contracts/v1/ComparisonCatalogue.schema.json, and that file is not among the 23 published top-level schemas -- the contract exists only under the lambda's _contracts/. 1 dangling ref of 18 response schemas, and it is the one this lane just landed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Census over docs/contracts/investor-reporting/v1 at CLOUD @73f53c499d: 18 response schemas scanned, 23 published top-level schemas, DANGLING refs = 1 -- comparison-catalogue.response.schema.json -> opal://irpt/contracts/v1/ComparisonCatalogue.schema.json. The other 17 of 18 resolve.",
+      "docs/contracts/investor-reporting/v1/ComparisonCatalogue.schema.json does not exist (ls errors); infra/aws/lambda/investor-reporting/_contracts/ComparisonCatalogue.schema.json does exist, 3322 bytes, delivered by round 25's IB-yr-242. The published set and the lambda's bundled set are different locations and only the published one is what a $ref of this form names.",
+      "The test that exists to catch precisely this, _contracts/tests/test_seam_paired.py::test_every_declared_route_has_a_response_contract_whose_refs_resolve, is among the 33 nodes red at HEAD for the opal:// parsing cause (S220, W89-S1), so it could not have reported this. That is what a broken oracle costs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "R26 amendment 1's drain-time substitute for the void AC3: 'the catalogue row names responses/comparison-catalogue.response.schema.json; that file exists, is valid JSON ... and its refs are opal://... like 18 of 18 published response schemas' -- read as evidence that the contract half of the cell was MET.",
+  "world_is": "The substitute check verified the ref's CONVENTION and never verified its REFERENT. The string is correctly shaped and points at nothing. So R26 amendment 1 overstated its own evidence: the route is served and guarded (that part was measured three ways), but its published contract half is incomplete. INERT: the only reader that resolves a ref of this form is the seam suite, which cannot resolve ANY ref today. ABSENT and deliberately not claimed: whether a consumer build (portal / FNTEND) resolves published refs at build time -- if it does, this is louder than INERT and FNTEND owns that read. Nothing at lambda runtime resolves it: the function bundles _contracts/.",
+  "notes": "ISSUER DEFECT, third in three rounds and a NEW kind again: R25 under-granted, R26 cut an un-meetable criterion, and R26's drain then accepted a check that graded the shape of a pointer instead of following it. The transferable rule: A REFERENCE IS NOT VERIFIED UNTIL IT IS RESOLVED -- a census of ref PREFIXES (18 of 18 opal://) says nothing about whether the targets exist, and the two reads look identical in a report. REMEDY, already cut: round 27 cell IB-yr-271 publishes ComparisonCatalogue.schema.json to the v1 directory so the landed ref resolves, alongside the parser fix that makes the resolve-refs test able to report again. Publishing a MISSING contract a landed route already references is completing round 26; it is NOT the 'bend a published schema to satisfy the test' move CTO 103081 forbids, and that cell's control is narrowed to 'no EXISTING published schema is MODIFIED' so the distinction is machine-checked rather than promised."
+}
+```
+
+
+## IRPT_BCKEND-S224 -- S194's off-window measurement: cause (a) refuted at the recipe's own guard, cause (b) weakened by the catalogue's live_proven evidence, and a third cause named -- all four section scopes are saved_asset_securities_only
+
+```json
+{
+  "id": "IRPT_BCKEND-S224",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T02:05:00Z",
+  "one_line": "S194's own next step, run off-window with no vendor call: cause (a) 'the resident's prepared comparisons were empty' is REFUTED by the recipe's own guard -- the COMPARISON template's bounds are min 1 max 1 and generation_body RAISES on any other count, so a body with no comparison could not have been built. Cause (b) is weakened by the catalogue's own live_proven evidence for this exact security. A THIRD candidate the row never named now fits the symptom: the body sets all four section scopes to saved_asset_securities_only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CAUSE (a) REFUTED AT TWO INDEPENDENT SITES, read at CLOUD HEAD: ycharts/generate/recipe.py:754-761 (generation_body) and :716-722 (report_security_ids) both do `if not (bounds['min'] <= len(comparisons) <= bounds['max']): raise RecipeRefused(...)`, where bounds is template['comparison_securities']. templates.json's three templates carry {min 0, max 0} for OVERVIEW, {min 1, max 1} for COMPARISON and {min 2, max 5} for MULTI. So a COMPARISON body with zero comparisons RAISES rather than degrading; W21 Y1's body must have carried exactly one, with a real vendor_id in secondarySecurity (:810-815).",
+      "CAUSE (b) WEAKENED, on the catalogue's own record rather than on argument: the entry for the very security this report chose -- key opal_long_term, security_id P:1728413, label 'Opal Long-Term' -- carries live_proven true with evidence 'Comparison 14141824, 31 pages'. The vendor has honoured secondarySecurity for THIS security in a real 31-page Comparison.",
+      "A FOURTH candidate considered and REFUTED in the same read: the comparison is not mistyped. All four catalogue entries carry security_type 'model_portfolio' (and each candidate block repeats it), and recipe.py:815 passes c.get('security_type', 'security') -- so the default is never reached for a catalogue entry.",
+      "THE THIRD CANDIDATE, read off the served body: recipe.py:793-796 sets fund_chart_securities_choice, scatter_plot_securities_choice, comp_table_securities_choice and timeseries_table_securities_choice all to 'saved_asset_securities_only', and :865-868 repeat the same four in the modal as fundChartSecuritiesChoice, scatterPlotSecuritiesChoice, compTableSecuritiesChoice, timeseriesTableSecuritiesChoice. If the chosen comparison is not among the account's SAVED ASSET SECURITIES, every chart and table section renders the primary portfolio alone WHILE secondarySecurity is correctly populated -- which is S194's symptom verbatim: the Portfolio Comparison pages show only the client portfolio."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S194: 'Two causes remain open: (a) the resident's prepared comparisons were empty at generation (composition -> recipe_inputs); (b) the vendor ignored secondarySecurity.' -- a two-member domain.",
+  "world_is": "The domain was not MECE: (a) is refuted by the producer's own refusal path, (b) is weakened by the catalogue's live_proven evidence for this security, and a third member existed that neither names -- a correctly populated comparison that no SECTION is scoped to render. MEASURED: the guard, the bounds, the four section-scope fields, the catalogue's security_type and its live_proven evidence, all read from source at HEAD. INFERRED, not measured, and labelled so: that 'saved_asset_securities_only' actually excludes a model portfolio passed as secondarySecurity. That is a vendor-behaviour claim and this lane has made no vendor call -- confirming it needs either the W21 Y1 HAR, a read of the vendor's own meaning for the field in docs/briefs/sources/INVESTOR_REPORTING_YCHARTS_HAR_EVIDENCE_20260910.json, or one live run under Andrew's word. ABSENT is not EXERCISED-AGAINST.",
+  "notes": "Fired as this tick's act precisely because it needed NOTHING from anyone: S194 named an off-window measurement as its next step, and it had been sitting behind the ~P rebuild in my own head when it was never behind it at all. The rebuild gates the four report arms and S218 step 2; it does not gate reading the producer that built the body. WHAT CHANGES FOR THE REMEDY: if the third candidate holds, the fix is a BODY FIELD on ~Y's Analysis surface, not a certifier change and not a vendor escalation -- a different cell from the one S194's two-cause framing implied. S194 STAYS ARMED and keeps this lane as its disarm_owner: nothing here shows a live Comparison printing its comparison, which is the only thing that disarms it. Its second half also stands on its own -- certification must refuse a Comparison whose PDF prints none of the chosen models -- and that is true under every one of the three causes, so it is the half worth cutting first. Round 27 is already issued for this lane (@a00a7fda7d, ONE ISSUANCE per round), so both halves are ENRICHMENT ITEMS for round 28 rather than a second issuance into 27."
+}
+```
+
+## IRPT_BCKEND-W90-S1 -- The seam suite's red is NOT one cause: after the opal:// parser fix 24 of 59 nodes are still red for six independent causes, and Y27-1-AC1 (0 failed) cannot be met inside this order's <paths>.
+
+```json
+{
+  "id": "IRPT_BCKEND-W90-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~90",
+  "surfaced_at": "2026-09-30T02:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The seam suite's red is not one cause: after the opal:// parser fix 24 of 59 nodes are still red for six independent causes, and Y27-1-AC1 (0 failed) cannot be met inside this order's <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Base in the ~90 worktree at a00a7fda7d: python -m pytest -q -p no:cacheprovider _contracts/tests/test_seam_paired.py from infra/aws/lambda/investor-reporting -> 34 failed, 25 passed (59 collected; the order's dry-run read 33/25 of 58).",
+      "After my fix (opal:// ref resolution at 4 sites, ComparisonCatalogue published + fixture pair, zero-count unprojected_grant supplied where a response contract requires it): 24 failed, 35 passed, 59 collected. The parser cause is gone -- 10 nodes moved to green, including [comparison-catalogue] -- but 24 stay red.",
+      "CAUSE A, 13 nodes, consumer-side drift in the primary checkout's portal fixture (portal/ is a gitlink, read from C:/Users/AndrewBerman/Desktop/ajb_workspace/portal): test_the_consumer_fixture_source_is_named_and_non_empty (12 entries, test pins 11), test_the_operation_map_covers_the_consumers_own_denominator (smoke keys now include hashed keys, EXP-1, REQ-0001, analysis), and all 11 test_paired_consumer_request_through_the_real_dispatcher[*] (flat slug /api/scoped/investor-reporting/<op> absent from the smoke). This is the counterpart's fixture changing shape, not a ref parser; no grant of mine reaches it.",
+      "CAUSE B, 1 node: test_every_schema_carries_v1_and_contract_version pins len(names) == 11 over every *.schema.json in v1 and then requires properties.contract_version.const == 'v1' of each; v1 now holds 24 top-level schemas and 11 of them (AnalysisSubmissionRequest, AnalysisUploadRequest, AnalysisUploadResult, DirectoryContext, DirectoryPage, OwnedAnalysisRequest, OwnedAnalysisRequestHistory, RequestComposition, SelectedAccounts, SelectionRequest, and the ComparisonCatalogue published here) carry no properties.contract_version by their own design (measured by a scan of properties.contract_version); BoundaryRefusal has it but no x-contract-version. A stale denominator and a stale predicate.",
+      "CAUSE C, 1 node: test_every_declared_route_has_a_response_contract_whose_refs_resolve asserts 'data' is in required for every response contract; export-receipt and submit-export require [contract_version, operation, firm_id, unprojected_grant] and no 'data' (assertion ('submit-export','data')). Whether the contract or the test is right is a ruling, not a parser matter.",
+      "CAUSE D, 6 control nodes: no fixture pair exists for AnalysisUploadResult, OwnedAnalysisRequest, OwnedAnalysisRequestHistory, SelectedAccounts or PublicStatusEnvelope (status-job, status-summary), so 'no valid fixture for <Doc>'. The 12 pairs cover 12 documents; the v1 contract now needs 17. Only the ComparisonCatalogue pair is in this order's <paths>.",
+      "CAUSE E, 1 control node: [resolve-scope] declares data as oneOf [ResolvedScope, DirectoryContext] and _document_of asserts exactly one document name ({'DirectoryContext','ResolvedScope'}). Choosing which document the control exercises is a design decision the order does not make.",
+      "CAUSE F, 2 nodes: [analysis-requests] control and test_control_the_envelope_refuses_a_wrong_shaped_firm_id build the envelope's status/data from StatusEnvelope.valid.json, but the response contracts now $ref PublicStatusEnvelope, which forbids internal_correlation_id ('Additional properties are not allowed'). Needs a PublicStatusEnvelope fixture, same gap as D."
+    ]
+  },
+  "spec_asserts": "The order: 'ONE cause' for 33 of 58 red nodes, and Y27-1-AC1 expects 0 failed after 'the parser learns opal://'.",
+  "world_is": "MEASURED: one cause accounts for the 10 nodes that moved (parser) and one more (unprojected_grant) for the remainder of the controls' first error; six further causes, A-F above, account for the 24 still red. I did not weaken any assertion, widen any grant or edit any published schema to reach green. INERT: the suite is a test; nothing at runtime reads it, and the same nodes were red before this order. REFUSED by the order's own clause: AC1 cannot pass as written for reasons no grant fixes (causes A, D need files outside <paths>; B, C, E are decisions).",
+  "notes": "ISSUER DEFECT, fourth in four rounds: the cut measured 'red' and inferred 'one cause' without following the first failure of each node past the first assertion. The transferable rule is that a suite red for a parsing cause has never yet been executed past the parse, so the nodes it hides are unmeasured, not green-pending. Suggested next cut: ONE order per cause, causes D and A first, since they need files (fixtures; portal fixture read) this order was not granted."
+}
+```
+
+
+## IRPT_BCKEND-W90-S2 -- Y27-1-AC2 passes on its output, but the control it exercises is red for a second reason with the mutation removed, so the falsifier's pass proves the opal:// fix and NOT that the analysis-requests control is green.
+
+```json
+{
+  "id": "IRPT_BCKEND-W90-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~90",
+  "surfaced_at": "2026-09-30T02:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Y27-1-AC2 passes on its output, but the control it exercises is red for a second reason with the mutation removed, so the falsifier's pass proves the opal:// fix and NOT that the analysis-requests control is green.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 as written: 1 failed, 'POSITIVE CONTROL FAILED for analysis-requests: 12345 is not one of [RECEIVED, PARSED, NEEDS_CORRECTION, READY, SUBMITTING, GENERATED, RELEASED, FAILED]' -- names the stage enum, not 'no valid fixture'. The fixture was reverted (git diff of AnalysisRequest.valid.json is empty).",
+      "The same node WITHOUT the mutation fails: 'POSITIVE CONTROL FAILED for analysis-requests: Additional properties are not allowed (internal_correlation_id was unexpected)' -- cause F of row IRPT_BCKEND-W90-S1. jsonschema's best_match ranked the enum error above the additional-properties error, so the mutation is visible; a mutation on a field ranked lower would not have been.",
+      "Without my _add_required_grant addition the same mutated run named \"'unprojected_grant' is a required property\" and not the enum, i.e. AC2 depends on that second test-file change as well as on the ref parser. Every response contract but comparison-catalogue requires unprojected_grant; the test supplies the schema's own zero-count grant, read from the contract's required list."
+    ]
+  },
+  "spec_asserts": "The order: after the fix the mutated node 'must fail naming the stage enum violation'; and the ruling: 'the suite green with its test_control_* nodes still able to fail'.",
+  "world_is": "MEASURED: the control can still fail for the right reason (AC2 met), and it cannot yet pass (cause F). Both are true at once, and only the first is what AC2 grades. INERT.",
+  "notes": "For the L9 grader: read AC2 together with W90-S1 cause F. The collected total moved 58 -> 59 in this worktree at base (the order's dry-run counted 58); my changes add no test node and remove none."
+}
+```
+
+
+## IRPT_BCKEND-W90-S3 -- the order's <owned_cells> names IB-yr-272 but no criterion references it
+
+```json
+{
+  "id": "IRPT_BCKEND-W90-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~90",
+  "surfaced_at": "2026-09-30T02:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order declares <owned_cells>IB-yr-271,IB-yr-272 but all three criteria carry cell_refs=IB-yr-271, so no criterion discharges IB-yr-272 and proof-of-spec-check cannot return rc 0 for this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> Y27-1-AC1,Y27-1-AC2,Y27-1-AC3 -> INVALID rc=1; the ONLY remaining violation is 'alignment: declared cell IB-yr-272 is named in the TO's <owned_cells> but NO criterion references it'. The other schema and match violations were fixed in the instance.",
+      "The TO file: <criterion id=Y27-1-AC1|AC2|AC3 cell_refs=\"IB-yr-271\">; <owned_cells>IB-yr-271,IB-yr-272</owned_cells>. The census cell's result (6 failed / 2 passed) is recorded under compiler_tools in the instance instead."
+    ]
+  },
+  "spec_asserts": "The order: cell IB-yr-272 is 'yours' (build step 5) with target 6 failed / 2 passed.",
+  "world_is": "MEASURED: the cell was built and reads 6 failed / 2 passed, but no criterion grades it, so the mechanical proof cannot close over it. I did not edit the order's criteria (outside my grant to amend). INERT."
+}
+```
+
+
+## IRPT_BCKEND-S225 -- S218 step 2 answered: outcome 1, a pre-job session rejection -- one eviction on the FIRST vendor call, code CAPTURE_FAILED:AUTH_FAILED, and S151 is the same mechanism
+
+```json
+{
+  "id": "IRPT_BCKEND-S225",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T03:40:00Z",
+  "one_line": "S218 STEP 2 IS ANSWERED, and it is outcome 1 of the four armed before the run: a PRE-JOB SESSION REJECTION. One eviction line, on the job's FIRST vendor call, 7 seconds after the resident claimed it -- and the code is CAPTURE_FAILED:AUTH_FAILED, which the arms file did not anticipate and which ties S218 to S151's W6 sighting as one mechanism.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the resident's session establishment is ~P's surface)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE WINDOW: Andrew 2026-09-30 ~03:02Z verbatim 'yeah Yes run it' (~P 103121); W25 opened 03:30:34Z, cap 1, closes 04:30:34Z, both never-widen halves at HEAD on blob f3273476 (~P 103132). One body, one login, one K4, one K5, no retry, exactly as armed.",
+      "PRECONDITIONS re-read at fire time, not inherited: irpt-generation 0/0; DLQ 1; resident cold -- the journal shows POLL handled=0 every 20s from 03:34:18Z to 03:35:58Z inclusive.",
+      "THE WALK: 03:34:40Z LOGGED_IN 200; 03:35:55Z PASSWORD_DELETED (~P's credoff); 03:35:59Z K4 POST 200 RESOLVING; 03:36:01Z NORMALIZED (2s); 03:36:06Z K5 POST 200 QUEUED, REQ-86f1ce7062356bc5c109ce12; 03:36:08Z state SUBMITTING, outbox SENT, detail {\"operation\":\"session_refresh\"}.",
+      "THE ORACLE, which exists only because IB-yr-231 is live on st5 (~Y proved the running bytes at sha 8d1f5431, pid 307882): 03:36:03Z IRPT_RESIDENT_RESOLVE state=READY; 03:36:03Z IRPT_RESIDENT_POLL handled=1 (the CLAIM); 03:36:10Z IRPT_RESIDENT_EVICTION verdict=EVICTED job=REQ-86f1ce7062356bc5c109ce12; 03:36:28Z IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:AUTH_FAILED; 03:36:53Z onward POLL handled=0. EXACTLY ONE eviction line in the span, 7 seconds after the claim and 2 seconds after the job's first recorded vendor operation.",
+      "DLQ re-read after the run: 1, unchanged from its baseline of 1 -- no growth, so no BLOCKING row on that axis. The generation queue read 0 visible / 1 not-visible, the retained message in flight."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "S218 as filed: jobs die SESSION_REFRESH_ALREADY_USED, which resident_worker.py's single refresh path makes a DOUBLE eviction rather than a stale session -- with four outcomes armed before the run and no reading chosen between them.",
+  "world_is": "OUTCOME 1 OF THE FOUR, and the other three are excluded by the same read. NOT 'evictions on later calls only' -- there are no later eviction lines. NOT 'evictions on essentially every call' -- there is exactly one. NOT 'no eviction and the job reaches READY' -- the job never reached the vendor's work at all. So: THE RESIDENT HELD NO USABLE SESSION WHEN IT CLAIMED THE JOB. Its very first vendor act was a session_refresh, and that act was evicted. The one-use refresh is therefore spent on establishing a session the resident should already have had, which is why a second eviction later has nothing left and reads as SESSION_REFRESH_ALREADY_USED. NEW, and beyond what the arms file anticipated: the failure code is CAPTURE_FAILED:AUTH_FAILED. The capture is failing on AUTHENTICATION, not on expiry. That is the same shape S151 recorded at W6 -- 'the host YCharts session capture failed within ~2 s' -- so S151 and S218 are ONE mechanism seen twice, three days apart, and last tick I said I had no read tying them. Now there is one.",
+  "notes": "REMEDY, per the row the arms file bound to this outcome BEFORE the run rather than after: the CTO's original 102967 shape -- ESTABLISH AND VERIFY A SESSION BEFORE CLAIMING, outside any request's allowance. With one refinement the read forces: establishing-before-claiming only helps if the capture can succeed, and AUTH_FAILED says it cannot today, so the auth failure is upstream of the sequencing and must be fixed first or the new shape simply fails earlier. S218 GRADUATES from UNDER_INVESTIGATION -- the question it was opened to answer is answered -- but stays ARMED, because nothing is remedied and no job can still reach the vendor. disarm_owner remains 2.0.0_SA_COO~P: the resident's session establishment is its surface, not ~Y's. THE FOUR REPORT ARMS (Multi-Comp, Y2 Target Weight, the first certified 49financial, a certified Inflection) STAY BLOCKED, and now for a NAMED cause rather than an open question. WINDOW ACCOUNTING: one body posted, one K4 and one K5, no retry by this lane. The resident's own retained_for_retry is its behaviour, not a second submission. The window closes 04:30:34Z and this lane fires nothing further in it."
+}
+```
+
+## IRPT_BCKEND-S226 -- the resident is stopped to bound vendor attempts (ARMED, disarm_owner 2.0.0_SA_COO~P)
+
+```json
+{
+  "id": "IRPT_BCKEND-S226",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-30T03:56:00Z",
+  "one_line": "The resident is STOPPED (irpt-analysis-resident, 03:50:34Z, by 2.0.0_SA_COO~P) to bound YCharts login attempts: the W25 job's message was retained after CAPTURE_FAILED:AUTH_FAILED and re-offers 900 s after receive, so any restart makes another vendor attempt outside Andrew's one-window word. ARMED until the CTO rules the restart policy.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-generation attributes read 03:48Z: VisibilityTimeout 900, RedrivePolicy maxReceiveCount 5 to irpt-generation-dlq; ApproximateNumberOfMessagesNotVisible 1 after the resident's retained_for_retry at 03:36:28Z (journal, SSM read-only).",
+      "SSM read-back 03:53Z: irpt-analysis-resident.service active=inactive sub=dead, InactiveEnterTimestamp 2026-09-30 03:50:34 UTC; the last journal lines are POLL handled=0, so no redelivery was consumed. Queue 03:53Z: 1 visible, 0 in flight; DLQ 1 visible, 0 in flight (baseline unchanged).",
+      "S225 (2.0.0_SA_COO~Y, @040313abdc): one EVICTION verdict=EVICTED on the first vendor call, then retained_for_retry code=CAPTURE_FAILED:AUTH_FAILED for job REQ-86f1ce7062356bc5c109ce12."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W25 packet W25-4: if the resident misbehaves the window closes; Andrew's word (@d821060b8b) covers ONE window, no retry.",
+  "world_is": "The window's one body ended non-terminal at the job level (state SUBMITTING, message retained). Left running, the resident would re-receive it (up to 5 receives, then a DLQ message) and attempt a YCharts capture each time. Stopped instead. NOT claimed: that a redelivery would in fact reach the vendor (the capture may refuse before any call); ABSENT is not EXERCISED-AGAINST. A restart is the un-park act; it consumes the retained message.",
+  "notes": "Also recorded here: K1 was deleted at 03:45:34Z on ~Y's 'fired and graded' before ~Y's hold arrived; the packet says delete after terminal. Restart, or discarding the retained message, is a CTO ruling asked at 03:54Z (msg to 1.0.0_SA_CTO)."
+}
+```
+
+
+## IRPT_BCKEND-S228 -- the seam suite went green while losing two operations from its population -- the count said growth, the node ids said 6 removed and 9 added
+
+```json
+{
+  "id": "IRPT_BCKEND-S228",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T04:05:00Z",
+  "one_line": "The contract seam suite went from 24 failed to 62 passed, and in the same change its POPULATION lost two producer operations: submit-correction and export-preview are no longer exercised by any node. The node count read 59 -> 62 and looked like growth; the node IDS read 6 removed and 9 added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (the issuer that accepted the green; disarmed by either restoring the pairs or recording why the two need none)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer diff of COLLECTED NODE IDS, not counts, between CLOUD HEAD and wk-IRPT_BCKEND-91 (pytest --collect-only -q, CR-stripped, sorted, comm): HEAD 59 nodes, branch 62 nodes, 6 REMOVED and 9 ADDED.",
+      "REMOVED, all six: test_paired_consumer_request_through_the_real_dispatcher[export-preview] and [submit-correction]; test_negative_mismatched_contract_version[export-preview] and [submit-correction]; test_negative_wrong_firm_is_refused_with_zero_protected_bytes[export-preview] and [submit-correction].",
+      "ADDED, all nine: the same three test families parametrized on export-download, status-job and status-summary.",
+      "DISCLOSED BY THE WORKER, not hidden: 0.9.0_WK_IRPT_BCKEND~91's report states 'OPERATIONS is now the consumer's 12 operations. It dropped submit-correction and export-preview, which the portal no longer names. It gained status-summary, status-job and export-download.' The cell is graded MET on all three criteria, issuer-verified: 62 passed / 0 failed / 62 collected, AC2's falsifier now genuinely discriminates (unmutated PASSES, mutated fails naming the stage enum), AC3 empty."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-yr-281's own face: 'a green suite with fewer nodes than 58 is a different claim from a green suite with 58, and the issuer grades that difference' -- written against a COUNT.",
+  "world_is": "The count was the wrong instrument and the order said so in the wrong units. 59 -> 62 satisfies 'not fewer' and hides a swap: two operations left the population while three joined. MEASURED: submit-correction and export-preview are exercised by ZERO nodes of this suite on the branch. The mechanism is sound rather than sloppy -- OPERATIONS is derived from the CONSUMER's fixture, so an operation the portal no longer names has no pair to test. But the consequence is that two PRODUCER routes now have no consumer pairing and the suite is SILENT about them rather than RED. NOT MEASURED, and not claimed: whether the producer still serves those two routes, and whether the portal dropping them was intended or is itself drift. Row IRPT_BCKEND-W91-S1 records the inverse direction (three operations the portal names that routes.json says no consumer operation names).",
+  "notes": "WHY THIS IS NOT BOOKKEEPING: submit-correction is the operation family round 24's correction words belong to, and IB-yr-282 is working on correction words in this very round. Losing its pairing from the seam suite while a live cell touches that surface removes the check most likely to catch a mistake there. THE LESSON, and it is the same one five times over: a DENOMINATOR is not a POPULATION. I graded round 27's suite on 'fewer nodes' and got the units wrong; the right instrument is the set of node ids, and the diff cost one command. Silence replacing redness is what every defect this session has had in common. DISARM: either the two pairs are restored (if the producer still serves those routes), or it is recorded why an unpaired producer route needs no node -- and in that case the suite should say so out loud rather than by omission. Mine, because I accepted the green. Cut in round 29, not as a rider on IB-yr-282."
+}
+```
+
+## IRPT_BCKEND-W91-S1 -- routes.json still says no consumer operation names status-summary, status-job or export-download, but the consumer's smoke fixture now carries all three
+
+```json
+{
+  "id": "IRPT_BCKEND-W91-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~91",
+  "surfaced_at": "2026-09-30T03:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "routes.json says NO CONSUMER OPERATION names GET /status, GET /status/{jobId} and GET /export/{exportId}/download, but the consumer's smoke fixture (12 entries) now keys all three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json @cc08e7db74: status-summary, status-job and export-download each carry consumer_operation null and a consumer_operation_absent_reason beginning 'NO CONSUMER OPERATION names this route'.",
+      "portal/src/pages/InvestorReporting/fixtures/smoke/default.json (primary checkout, mtime 2026-09-26): 12 keys, including /api/scoped/investor-reporting/status, /status/REQ-0001 and /export/EXP-1/download.",
+      "The seam test now resolves every consumer key to a producer operation through routes.json templates: 12 of 12 resolve, one key per operation (test_the_operation_map_covers_the_consumers_own_denominator passes)."
+    ]
+  },
+  "spec_asserts": "routes.json: three DECLARED routes have consumer_operation null because the counterpart has no operation for them.",
+  "world_is": "MEASURED: the counterpart's fixture is keyed by concrete route paths and names all three routes. The published note is stale; the contract file is read-only to this lane (docs/contracts/investor-reporting/v1/ is outside the order's write grant) so it was not edited. The 13 portal-derived seam nodes were fixed by moving the TEST; nothing was refused, because the portal moved TOWARD the contract (it now sends the paths routes.json publishes). Owner of the stale note: IRPT_BCKEND (publisher of routes.json). INERT: nothing reads consumer_operation to gate."
+}
+```
+
+
+## IRPT_BCKEND-W91-S2 -- the seam suite's declared_entry_point derives the wrong module path for four installed handlers, so four DECLARED routes grade as a dispatcher refusal and the handler is never called
+
+```json
+{
+  "id": "IRPT_BCKEND-W91-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~91",
+  "surfaced_at": "2026-09-30T03:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "analysis-requests, analysis-report, status-summary and status-job read BLOCKED-BY-W2-S16 (ROUTE_NO_HANDLER) in the paired suite because declared_entry_point looks for generate_installed.py / status_installed.py in source_dir, where they are not; the handler is never called.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_seam_paired.py declared_entry_point('irpt-ycharts-generate') -> ycharts/generate/generate_installed.py, isfile False; declared_entry_point('irpt-status') -> ops/status_installed.py, isfile False.",
+      "lambda-source-map.json: both files are STAGED into the zips from infra/aws/lambda/investor-reporting/reports/ (staged_from packaged_as generate_installed.py / status_installed.py); reports/generate_installed.py and reports/status_installed.py exist at HEAD.",
+      "pytest -s output: analysis-requests, analysis-report, status-summary, status-job all print 'the dispatcher refused with ROUTE_NO_HANDLER ... no handler entry point was supplied for a DECLARED route'. The test file's own docstring names this exact failure ('a WRONG-OBJECT error that every assertion passed through, because a missing handler has a legitimate refusal code')."
+    ]
+  },
+  "spec_asserts": "The suite's arm (b): each operation's REAL deployed handler is imported by path and its response is graded; BLOCKED-BY-W2-S16 means 'a response came back and does not conform'.",
+  "world_is": "MEASURED: for four of twelve operations no response came back and no handler ran; the outcome is recorded as BLOCKED-BY-W2-S16, which a later reader will take as a handler defect. ARMED because the mis-read is what any future cell citing the suite's census will read. Not fixed here: it is not one of the order's six causes and the order forbids fixing a neighbouring defect. The fix is in the same file (resolve the module from staged_from when source_dir does not hold it); disarm owner is the issuer of the next round."
+}
+```
+
+
+## IRPT_BCKEND-W91-S3 -- performance-report is DEPLOYED-ONLY in the paired suite: its installed runtime needs IRPT_REQUESTS_TABLE and builds DynamoDB and S3 ports at first call
+
+```json
+{
+  "id": "IRPT_BCKEND-W91-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~91",
+  "surfaced_at": "2026-09-30T03:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Once the paired test reached the performance handler it stopped on KeyError IRPT_REQUESTS_TABLE (performance/runtime.py builds boto3 DynamoDB and S3 ports at first call); classify_operation now records that as DEPLOYED-ONLY.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "performance/runtime.py _build(): os.environ['IRPT_REQUESTS_TABLE'] and ['IRPT_PERFORMANCE_MAPPING_AS_OF'] then boto3.resource('dynamodb').Table(...) and boto3.client('s3'); reached through _authz/served.py installed_entry at the first call.",
+      "Before this order the node never got that far (it failed at the flat-slug assertion), so this was unmeasured, not green.",
+      "Test change: classify_operation admits ONLY a KeyError on an IRPT_-prefixed name absent from os.environ as DEPLOYED-ONLY; no variable is invented (supplying a table name would send the call to a real AWS endpoint, which the order forbids). Also: performance/authorization.py does a bare 'from repository import digest' that the zip stages flat from reports/; the test now appends that staging directory (read from lambda-source-map.json staged_from) to sys.path."
+    ]
+  },
+  "spec_asserts": "The suite grades performance-report's response against its response contract.",
+  "world_is": "MEASURED: performance-report's response conformance is not gradable in process; it is graded where the deployed environment exists (IB-rtb-1). INERT: a test classification, nothing at runtime reads it. Recorded so the outcome is not read as a pass of the envelope."
+}
+```
+
+## IRPT_BCKEND-S229 -- RE-SEAT of S226 to 2.0.0_SA_COO~Y (Andrew-direct: the owner of YCharts is COO~Y)
+
+```json
+{
+  "id": "IRPT_BCKEND-S229",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-30T04:42:00Z",
+  "one_line": "RE-SEAT of IRPT_BCKEND-S226 (ARMED, disarm_owner 2.0.0_SA_COO~P): on Andrew's word the owner of YCharts is 2.0.0_SA_COO~Y, so S226's disarm_owner is now 2.0.0_SA_COO~Y. The resident stays STOPPED per CTO ruling 103150 until the auth cause (S151/S225) is fixed and the retained message REQ-86f1ce70 is handled on purpose.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Andrew-direct 2026-09-30 ~04:3xZ, verbatim: \"the owner of YCharts is COO~Y as it has always been.\" Record: org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260930_043xZ_YCHARTS_OWNER_IS_COO_Y.md.",
+      "CTO ruling 103150: leave the resident stopped; restart only when the auth cause is fixed, the retained message is deleted or re-offered under a new per-use word from Andrew, and the restart is under a ledger with root and member shas read back.",
+      "State at hand-over, last measured 03:53Z by SSM: irpt-analysis-resident inactive since 03:50:34Z; irpt-generation 1 visible / 0 in flight; irpt-generation-dlq 1/0 (baseline). Not re-measured since."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S226: this seat holds the disarm of the stopped resident.",
+  "world_is": "Ownership moves to 2.0.0_SA_COO~Y by Andrew's word; nothing in the world moves with it. The resident is stopped, the retained message is unconsumed, and any Analysis submission would sit unconsumed. This seat's earlier YCharts acts (st5 install, W25 principal, the stop) are committed and their ledgers are CLOSED.",
+  "notes": "Filed as a new row because an ARMED row is not edited in place (surprise-row gate). This seat takes no further YCharts or resident act; if a restart needs an operator on the host, that is asked of 1.0.0_SA_CTO, not assumed."
+}
+```
+
+
+## IRPT_BCKEND-S230 -- the YCharts credential authenticates right now (probe rc=0, authenticated true) -- S225's AUTH_FAILED was not a standing auth break, and never the report shape
+
+```json
+{
+  "id": "IRPT_BCKEND-S230",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T05:00:00Z",
+  "one_line": "The YCharts credential AUTHENTICATES right now: a capture on the canonical host wrapper returned rc=0 with receipt {ok: true, task: probe, authenticated: true}. So S225's CAPTURE_FAILED:AUTH_FAILED was NOT a standing auth break, and it was never the report shape either -- capture runs before any body exists. Andrew-direct asked exactly this.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (Andrew-direct 2026-09-30 ~04:3xZ: 'the owner of YCharts is COO~Y as it has always been')",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIVE RUN on the canonical wrapper /opt/investor-reporting-ycharts/run-ycharts-session.sh at 2026-09-30T04:58:12Z, output retained to a 0600 host file and printed REDACTED: rc=0, 8471 bytes stdout, orchestrator lines 'task=probe headless=1 max_reacquisitions=1 otp_branch=ABSENT' and 'exit rc=0'. Receipt: 1 line, keys ['ok','record','result','task'], {ok: True, task: 'probe', failure_class: None, authenticated: True}.",
+      "IT IS NOT THE SHAPE, structurally: host_capture.run_capture() must return a session BEFORE any report body is built; recipe.generation_body() (the three variants) is sent only afterwards. Tonight's job died at 03:36:10Z with its body never sent.",
+      "WHY THE REASON WAS INVISIBLE: 'AUTH_FAILED' is ycharts_session.js:163's AuthError failure class, and host_capture.failure_code() keeps only failure_class -- its own comment says 'never its message or record'. Host census: NO /var/log/ycharts*, no /tmp/ycharts*, so the wrapper leaves no log. The one thing needed to tell a wrong credential from MFA from a changed page is discarded by design.",
+      "HOST CENSUS with denominators: 17 run-ycharts-session.sh on the host, exactly ONE secret-ids.env and it is at /opt/investor-reporting-ycharts/, not inside any resident package root. Since host_capture.py:120 refuses unless secret-ids.env sits beside the wrapper, the 16 in-package copies are decoration and only the canonical one can run."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S225's remedy line: 'the auth failure is upstream of the sequencing and must be fixed first or the new shape simply fails earlier' -- written as if the credential itself were broken.",
+  "world_is": "The credential is fine. A probe authenticates on the first attempt with no OTP branch taken. So S225's remedy is mis-aimed: there is no auth to fix. MEASURED: authentication succeeds, task=probe, max_reacquisitions=1. NOT MEASURED, and explicitly not claimed: that a FULL session capture for a job succeeds. My run was task=probe, which is a different task from the one the resident drives, so a probe authenticating does not prove the resident's capture would. The three live candidates for 03:36 are therefore (a) the max_reacquisitions=1 budget being spent, since the job's FIRST recorded operation was session_refresh, (b) a lease conflict on YC_LEASE_*, and (c) a task-specific failure the probe does not exercise. None is excluded yet.",
+  "notes": "MY OWN FIRST ATTEMPT WAS AIMED AT THE WRONG FILE and I am recording it because it nearly became a finding: I ran st5's in-package wrapper copy, got 'secret-ids.env absent ... refusing to guess secret names' with rc=2, and briefly read that as an st5 packaging gap. It is not -- the file lives only beside the canonical wrapper, by design, and my own earlier directory read had printed the secret keys from a DIFFERENT root in the same loop, which is what misled me. An instrument pointed at a decorative copy produces a confident wrong answer. NEXT, on Andrew's direct ask for an ad-hoc three-variant proof: the question is now the SUBMISSION, not the login. Drive one body per variant (OVERVIEW 0 comparisons, COMPARISON exactly 1, MULTI 2-5, per templates.json's comparison_securities bounds) through a captured session and read whether an export is generated. That needs a session task rather than a probe, and it is the first test that would exercise recipe.generation_body against the vendor at all. ARMED because a broken-looking remedy is now known mis-aimed while four report arms still wait on it."
+}
+```
+
+
+## IRPT_BCKEND-S231 -- a job cannot outlive its window: the walk deletes its principal and the resident resolves it, so REQ-86f1ce70 refuses ACTOR_NOT_FOUND forever
+
+```json
+{
+  "id": "IRPT_BCKEND-S231",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T05:20:00Z",
+  "one_line": "A job cannot outlive its window. The walk deletes its ui-walk principal at window close, and the resident resolves each job's RECORDED principal before doing anything, so REQ-86f1ce70 now refuses CurrentAuthorityRefused/ACTOR_NOT_FOUND on every poll and can never complete. Restarting the resident proved the restart, not the job.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (YCharts and the Analysis journey are this lane's per Andrew-direct 2026-09-30 ~04:3xZ)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Resident restarted under ledger irpt-resident-restart-3variant-20260930 (legs V1 and D1 closed with shas read back per CTO 103150): started 05:13:31Z, unit active, pid 313525 on the gated st5 root whose resident_worker.py sha256 8d1f5431... EQUALS CLOUD HEAD.",
+      "Its FIRST poll, 05:13:32Z: 'IRPT_RESIDENT_POLL retained_for_retry class=CurrentAuthorityRefused code=ACTOR_NOT_FOUND'. One second after start, so nothing else intervened.",
+      "CAUSE AT SOURCE: ycharts/generate/current_authority.py:86 refuses ACTOR_NOT_FOUND when `user is None` -- the projected profile row for the accepted record's owner.principal_id. The principal was irpt-uiwalk-1790739020@opal.test, and 2.0.0_SA_COO~P deleted it (K1) at 03:45:34Z, consistent read no Item (~P 103147, which named the early delete as its own deviation).",
+      "IT COSTS NO VENDOR CALL: the refusal happens in the authority decision on the accepted record, before any session capture or report POST. So the message may keep cycling harmlessly; it burns no YCharts login. DLQ re-read after the restart: 1, unchanged from baseline.",
+      "~P's stated reason for the early delete is refuted by this read: 103147 said 'The job does not need K1 (the resident runs as the recorded principal)'. The resident RESOLVES the recorded principal, and that resolution is exactly what fails once the principal is gone."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The W25 packet's own sequence: a ui-walk principal is minted per window and deleted at window close, with the job expected to complete inside the window.",
+  "world_is": "MEASURED: principal lifetime is WINDOW-scoped while job lifetime is QUEUE-scoped, and the two are not reconciled anywhere. A job that does not reach a terminal state inside its window becomes permanently unrunnable -- not failed, not refused to a user, just retrying a refusal until it DLQs. This is structural, not specific to tonight: every window has this property, and tonight is simply the first time a job outlived one. NOT MEASURED, and not claimed: how many earlier jobs died this way. W21's and W22's reports completed inside their windows, and W24's two failures were vendor-side, so no prior instance is established.",
+  "notes": "WHAT IT MEANS FOR ANDREW'S AD-HOC THREE-VARIANT ASK (Andrew-direct ~04:4xZ, 'prove an automated ycharts submission for each of the three variants right now'): the blocker is not auth (S230: a probe authenticates, rc=0) and not the body shape (never sent). It is that THERE IS NO LIVE PRINCIPAL TO SUBMIT AS. REQ-86f1ce70 cannot be revived, and the three variants need three fresh jobs accepted under a principal that still exists when the resident picks them up. TWO WAYS FORWARD, and the choice is a real fork rather than a detail: (a) mint a principal whose lifetime outlives the queue -- i.e. stop deleting it at window close, or delete it only once every job it accepted is terminal; (b) keep window-scoped principals and make the resident refuse a job whose window has closed with a NAMED, user-visible refusal instead of retrying an unresolvable authority until the DLQ. They are not exclusive and (b) is the smaller cell. Neither is cut yet: under CTO 103159 I run the base invocation before issuing a criterion, and the base here is a live window, whose non-application clause 103159 names -- so the cell states its discriminator instead. Round 29."
+}
+```
+
+## IRPT_BCKEND-W92-S1 -- The order's premise that the served dict can take top-level `actions` and `public_reason_code` is refused by the published contract: AnalysisUploadResult is closed (additionalProperties false), so the correction vocabulary was placed on the finding items instead.
+
+```json
+{
+  "id": "IRPT_BCKEND-W92-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~92",
+  "surfaced_at": "2026-09-30T04:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order's premise that the served dict can take top-level `actions` and `public_reason_code` is refused by the published contract: AnalysisUploadResult is closed (additionalProperties false), so the correction vocabulary was placed on the finding items instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json is additionalProperties:false and lists no actions/public_reason_code; measured: a NEEDS_CORRECTION answer with those two keys added -> is_valid False, \"Additional properties are not allowed ('actions', 'public_reason_code' were unexpected)\"; the same answer without them -> True.",
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_upload_template_lane_contract.py validates the REAL served NEEDS_CORRECTION answer against that schema, so a top-level key would turn a neighbouring lane's test red; the contract file and that test are outside this order's <paths>.",
+      "The schema's own `findings` description already lists `actions` as a finding field and its items are open objects, so intake/uploads.py::_answer now shapes each finding whose code is in the words table: actions=[\"CORRECT\"] (was [\"REPLACE_FILE\"], which blames the file) and description=<the envelope's words>."
+    ]
+  },
+  "spec_asserts": "The order: the dict at intake/uploads.py:313-320 carries no `actions` and no `public_reason_code` key; make the correction vocabulary reach THAT dict.",
+  "world_is": "MEASURED: the vocabulary reaches the dict, on the finding items, not at its top level. ARMED because the portal reads these findings and was not checked here (no portal in this grant): if it renders only known action strings, RESOLVE_RETRY_EXHAUSTED now shows no action where it showed REPLACE_FILE. A top-level answer would need the contract, the wire type portal/src/pages/InvestorReporting/contracts/wire/AnalysisUploadResult.ts and their pinned hashes to move together.",
+  "notes": "Disarm = read how the portal renders a finding's `actions`/`description` for RESOLVE_RETRY_EXHAUSTED, or a CTO ruling to widen the contract."
+}
+```
+
+## IRPT_BCKEND-W92-S2 -- The envelope's CORRECTION_WORDS cannot be imported by intake/uploads.py: ops/status.py is not staged into irpt-ycharts-generate, the function that ships uploads.py, so the words are a literal copy locked by a test.
+
+```json
+{
+  "id": "IRPT_BCKEND-W92-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~92",
+  "surfaced_at": "2026-09-30T04:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The envelope's CORRECTION_WORDS cannot be imported by intake/uploads.py: ops/status.py is not staged into irpt-ycharts-generate, the function that ships uploads.py, so the words are a literal copy locked by a test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json: intake/uploads.py appears only under functions/irpt-ycharts-generate/staged_from[70]; no function's staged_from carries ops/status.py, and that function's staged ops members number one (owned_requests.py) of 79.",
+      "intake/tests/test_correction_words.py::test_correction_words_are_the_envelopes_words asserts uploads.CORRECTION_WORDS == status.CORRECTION_WORDS, so a drift in either copy turns a test red."
+    ]
+  },
+  "spec_asserts": "The order: the same words the envelope declares.",
+  "world_is": "MEASURED: same words by equality test, not by shared import. INERT while that test runs; the source map is outside this order's <paths>.",
+  "notes": "A shared home for the words (a module staged into both) would remove the copy."
+}
+```
+
+## IRPT_BCKEND-W92-S3 -- Y28-2-AC1's premise that `-k correction` currently selects nothing is wrong: it selects 7 tests at base, so the selected count does not evidence the added test.
+
+```json
+{
+  "id": "IRPT_BCKEND-W92-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~92",
+  "surfaced_at": "2026-09-30T04:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Y28-2-AC1's premise that `-k correction` currently selects nothing is wrong: it selects 7 tests at base, so the selected count does not evidence the added test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q -p no:cacheprovider intake/tests/ -k correction at this worktree with my four new tests: 11 passed, 243 deselected; --collect-only lists 7 from before (test_deferred_resolution::test_a_correction_supersedes_..., and six under test_parse.py::TestCorrections) plus my 4. Base = 11 - 4 = 7."
+    ]
+  },
+  "spec_asserts": "The order: at base `-k correction` selects nothing, so the added test is what makes the number real.",
+  "world_is": "MEASURED: base selects 7, now 11. The 4 new tests are in intake/tests/test_correction_words.py; the criterion cannot tell them from the 7 by count alone."
+}
+```
+
+## IRPT_BCKEND-W92-S4 -- The absent-bundle fix is proven against a doubled store error (NoSuchKey/NoSuchVersion) on the report blob read; the live cause of S213 (RPT-2e21b52e) was not read back.
+
+```json
+{
+  "id": "IRPT_BCKEND-W92-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~92",
+  "surfaced_at": "2026-09-30T04:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The absent-bundle fix is proven against a doubled store error (NoSuchKey/NoSuchVersion) on the report blob read; the live cause of S213 (RPT-2e21b52e) was not read back.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ops/owned_report.py: the retained-bytes read `self.reports.get(...)` -> repository.S3ReportBlobs.get -> client.get_object raises a botocore ClientError whose class name is in no table, so _authz/errors.py::reason_for returned the default UNEXPECTED; it now raises ReportBundleAbsent (AnalysisUnavailable subclass) carrying public_reason_code NOT_READY, which reason_for reads first and BOUNDARY_REASONS admits.",
+      "ops/tests/test_owned_report.py: the test fails the report blob alone (composition reads still work) and asserts the reason the boundary would serve is NOT_READY, not UNEXPECTED; against the unmodified owned_report.py the same two parametrized cases fail with the raw store error. 20 passed before, 23 after.",
+      "Not covered: an absent COMPOSITION artifact (read in requests._materialize, owned_requests.py, outside <paths>) and any store error whose code is not NoSuchKey/NoSuchVersion/404/NotFound."
+    ]
+  },
+  "spec_asserts": "The order: the absent-bundle case escapes the named refusals and lands on UNEXPECTED; name it.",
+  "world_is": "MEASURED offline only; no AWS call was allowed. If the live failure is another exception class, the answer stays UNEXPECTED. ARMED until the route is read back on RPT-2e21b52e.",
+  "notes": "Disarm = read GET .../analysis/RPT-2e21b52e.../sections after deploy and expect NOT_READY."
+}
+```
+
+
+## IRPT_BCKEND-S232 -- Opal already has a first-class service-principal pattern (userType service, allowedFirmIds) and a live svc- account since July -- IRPT Analysis diverged to per-window day passes, which is S231's cause
+
+```json
+{
+  "id": "IRPT_BCKEND-S232",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T06:35:00Z",
+  "one_line": "Opal already has a first-class SERVICE-PRINCIPAL pattern -- a `service` userType with firmId null and an allowedFirmIds scope -- used by at least three services, plus a live svc- account since July. IRPT Analysis diverged to minting and deleting a principal PER WINDOW, which is the direct cause of S231's permanently unrunnable jobs.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (the identity model for job submission is an architecture call above this lane)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ANDREW-DIRECT 2026-09-30 ~06:3xZ, verbatim, BEFORE this measurement: 'in my opinion the whole failure here is trying to get clever with a day pass. We have a long-lived token, just use it. I don't understand why there are four resources and only 1 at best is doing their job correctly. The pattern we use is always the same. Its an EC2 crawler crawls for long lived trust token, and Lambda hits REST API using that trust token to do whatever the job is.' And: 'Was there an architectural choice backing the day pass idea? i dont understand why we'd diverge to that'.",
+      "THE PATTERN EXISTS AND IS FIRST-CLASS: infra/aws/lambda/ticket_center/tests/test_authz_matrix.py:74-77 carries a `userType: \"service\"` class with `firmId: \"null\"` and an `allowedFirmIds` scope that is either \"ALL\" or a single firm, for svc-ticket-form and svc-analyst-intake; :77 is a negative control proving the marker is what grants it. So service identity is a MODELLED class, not an improvisation.",
+      "AND A LIVE LONG-LIVED ACCOUNT ALREADY EXISTS: opal-users-v2 holds USER#svc-bbgtml@opalinvest.com, 'BBGTML Data Refresh Service' (ticket_center/tests/test_directory_resolution.py:39-40), firm opal-capital, status active, created 2026-07-15 by 0.7.0_AE_CloudOps. It has persisted 2.5 months.",
+      "A LONG-LIVED WALKER ALSO EXISTED AND WAS TURNED OFF: USER#usr_opal_ui_walker (opal-ui-walker@opal.test), opal-capital, admin, userType Dev, created 2026-09-26 by '4.0.0_SA_CRO ui-walker (Andrew-direct 20260926)' -- status DISABLED. So the estate had a durable walker and the per-window day pass grew up beside it.",
+      "USERS CENSUS, denominator printed and single-page (LastEvaluatedKey ABSENT): 80 rows scanned, 51 PROFILE rows; opal-capital holds 13 active user-role and 5 active admin/Dev accounts.",
+      "THE DECISION RECORD FOR THE DAY PASS covers a DIFFERENT job: IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_WALK_PRINCIPAL_20260926.md is authorised by Andrew's 'have an agent do those walks and record HAR' -- a BROWSER WALK, where a bounded throwaway login is a reasonable posture. I found NO record deciding that backend JOB SUBMISSION should use the same mechanism."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The W22-W26 window packets, which each mint and delete a ui-walk principal as the identity a submitted Analysis job is accepted under.",
+  "world_is": "A UI-walk credential's lifetime is a browser session; a queued job's lifetime is until it is terminal. Binding the second to the first is what strands jobs (S231: two of them, three days apart). MEASURED: the service-principal class, the live svc- account, the disabled durable walker, and the absence of any record deciding the reuse. NOT MEASURED, and not claimed: whether the `service` userType as ticket_center models it is accepted by the IRPT authorizer and by current_authority.decide() unchanged. That is the first thing the remedy must establish, and it is a code read plus one test, not a guess.",
+  "notes": "REMEDY, and it is Andrew's own pattern rather than an invention: ONE long-lived service principal for IRPT Analysis job submission -- created once, never deleted, scoped by allowedFirmIds -- following svc-bbgtml's precedent and ticket_center's `service` userType. Jobs then resolve their owner forever and S231's whole failure class disappears rather than being patched per window. THE DAY PASS KEEPS ITS REAL JOB: a bounded throwaway login is right for a UI walk, which is what it was signed for. This row does not retire it there. WHY THE CTO AND NOT THIS LANE: the identity a served job is accepted under is an architecture decision that reaches the authorizer, the edge and every window packet, so it is above a workstream issuer even though the symptom is mine. W26 IS HELD, NOT CANCELLED: both halves are signed and the solo gate passes, but opening it would mint exactly the day pass Andrew questioned, minutes after he questioned it. The three-variant proof he asked for is unchanged in value and should run under whichever identity the CTO rules for."
+}
+```
+
+
+## IRPT_BCKEND-S233 -- two YCharts sessions in one estate: the gateway already runs the shared-credential REST pattern while IRPT Analysis duplicates the capture and replays the web app's wizard state
+
+```json
+{
+  "id": "IRPT_BCKEND-S233",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T06:55:00Z",
+  "one_line": "There are TWO YCharts sessions in this estate. The opalgateway already runs Andrew's stated pattern -- a shared credential at ycharts/credentials driving real YCharts REST endpoints, with a freshness check -- while IRPT Analysis maintains a SECOND capture, its own resident and its own day-pass principal, and posts the vendor web app's INTERNAL WIZARD STATE instead of calling REST.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (which credential and which call shape the Analysis journey uses is an architecture call, as 103196 ruled for the Opal-side identity)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ANDREW-DIRECT 2026-09-30 ~06:3xZ, verbatim: 'The pattern we use is always the same. Its an EC2 crawler crawls for long lived trust token, and Lambda hits REST API using that trust token to do whatever the job is.' And: 'I don't understand why there are four resources and only 1 at best is doing their job correctly.'",
+      "THE PATTERN IS ALREADY RUNNING: the opalgateway exposes ycharts_search (GET /search/suggest/main), ycharts_snapshot_metrics (GET /indices/table_data), ycharts_fund_series (GET /charts/fund_data.json), ycharts_time_series (GET /charts/general_data.json) and ycharts_risk_return_scatter (POST /charts/scatter_plot_data.json) -- real YCharts REST endpoints. ycharts_freshness exists to 'Check the shared YCharts session is live (one cheap authenticated GET)' and names the credential store: 'refresh ycharts/credentials from a fresh HAR'.",
+      "IRPT ANALYSIS RUNS A SECOND ONE: its own host capture (/opt/investor-reporting-ycharts/run-ycharts-session.sh) writing its own secret (YC_SESSION_SECRET_ID, per the host's secret-ids.env), consumed by its own EC2 resident. Two independent sessions against one vendor account.",
+      "AND IT IS NOT A REST CALL: recipe.generation_body() builds the vendor WEB APP's own state object -- generationModalsState with currentWizardStepIndex, coverPageInfo, comparisonSecurities, secondarySecurity, fundChartSecuritiesChoice (recipe.py:793-796 and :822-870). That is the browser wizard's internal shape replayed server-side, not a documented API payload.",
+      "THE LIMIT, MEASURED: every REST verb the gateway exposes is a DATA endpoint -- search, snapshot metrics, fund series, time series, scatter. NONE generates a report or a PDF. So the rendered export plausibly has no REST equivalent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Analysis journey's design as built: a dedicated capture, a dedicated resident and a per-window principal, as though no YCharts access existed in the estate.",
+  "world_is": "YCharts access existed and still does, shared, with its own freshness instrument. The Analysis journey duplicated the credential layer rather than using it. NOT MEASURED, and this is the hinge: whether YCharts publishes ANY report/export endpoint. Establishing it is a vendor probe and needs Andrew's per-use word, so the duplication may be PARTLY forced -- a rendered PDF with no REST equivalent genuinely needs the web-app path. NOT CLAIMED: that the shared gateway credential carries the entitlements the Analysis journey needs, or that one account can hold both sessions without eviction. S225's double-eviction reading makes the second question live rather than rhetorical -- two sessions on one vendor account is itself a candidate cause for an eviction, and nobody has tested that.",
+  "notes": "THE SHAPE IF THE LIMIT HOLDS: shared session plus REST for DATA, with browser automation confined to the ONE act that has no REST equivalent (the rendered export), instead of a parallel session, principal and worker for the whole journey. Recommendation, not a ruling. WHY IT IS ARMED: two sessions on one vendor account is a plausible contributor to the eviction family S218/S225/S230 has been chasing all night, and that possibility was never on the table because nobody had noticed there were two. It is not established -- it is newly askable. I ALSO OWE A CORRECTION HERE: earlier tonight I told Andrew the vendor side 'follows your pattern'. It captures a token like the pattern and then does neither of the pattern's other two halves -- it does not share the estate's credential and it does not call REST. The CTO (103196) is what prompted me to check the layer I had waved at."
+}
+```
+
+
+## IRPT_BCKEND-S234 -- S228 disarmed by record: v1 never routed submit-correction or export-preview, so there is no producer pair to restore
+
+```json
+{
+  "id": "IRPT_BCKEND-S234",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T14:05:00Z",
+  "one_line": "S228 DISARMED by record: the two operations the seam suite stopped exercising (submit-correction, export-preview) were NEVER routed by contract v1, so there is no producer pair to restore; the population did not lose two producer operations, it stopped naming two consumer-only entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (S228's own disarm clause: restore the pairs or record why the two need none; this row is the record)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "_contracts/tests/test_seam_paired.py:70-76 at CLOUD HEAD a7a6d286f2, the suite's own re-cut comment: 'The two operations the consumer named then and v1 never routed (submit-correction, export-preview) are no longer in its fixture, so they are no longer in this table; the three routes it now names that v1 has always declared (status-summary, status-job, export-download) are.'",
+      "The OPERATIONS table at :78-91 holds 12 entries, every one a route contract v1 declares; CONSUMER_SMOKE_ENTRIES = 12 is a PIN checked against the consumer's own fixture by test_the_operation_map_covers_the_consumers_own_denominator, so a drift in either direction fails there rather than being absorbed.",
+      "S228's own evidence: the six REMOVED nodes were all parametrised on export-preview and submit-correction; the worker's report said the portal no longer names them. Read against the comment above, the removal is the consumer catching up with the producer, not the producer losing coverage."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Contract v1 never routed submit-correction or export-preview (test_seam_paired.py:70-76 at HEAD a7a6d286f2); a producer operation that does not exist cannot lose its pairing, so there is no pair to restore and S228 is disarmed by this record under its own disarm clause.",
+  "spec_asserts": "S228: 'two PRODUCER operations now have no consumer pairing and the suite is silent about them rather than red' -- written as though v1 served the two.",
+  "world_is": "MEASURED at HEAD: contract v1 routes neither submit-correction nor export-preview (the suite's comment and its 12-entry table, both read at :70-91). A producer operation that does not exist cannot lose a pairing. The correction-words family S228 worried about (round 24) lands on the upload answer at intake/uploads.py (IB-yr-282, complete), which the analysis-requests pair exercises; export-preview has no producer at all. S228 stays in the file as the reason this check was worth making: a count that reads growth can hide a swap, and the swap was benign this time.",
+  "notes": "No cell is cut. If a future contract version routes either operation, the pin CONSUMER_SMOKE_ENTRIES and the operation-map coverage test fail loudly and the pair is added then."
+}
+```
+
+
+## IRPT_BCKEND-W93-S1 -- the build's literal "asset_class_basis CANONICAL" / "class source" node fields cannot be served: the published contract is additionalProperties:false with a fixed enum, and it sits outside this cell's write grant
+
+```json
+{
+  "id": "IRPT_BCKEND-W93-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~93",
+  "surfaced_at": "2026-09-30T06:10:00Z",
+  "one_line": "IB-mr-291's Build step 2 says a canonical-table hit is served with asset_class_basis CANONICAL and a class source of etf-classifications, but docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json is additionalProperties:false on every node and asset_class_basis's enum has no CANONICAL member -- serving either would make validate_snapshot refuse every canonically-classified node, and that contract file is outside this cell's <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json @571d032b98 -- properties.nodes.items.additionalProperties == False; properties.nodes.items.properties.asset_class_basis.enum == ['TABLE','NAME_ALIAS','NAME_PATTERN','TICKER_SHAPE','NONE'] (read via python json.load, no 'class_source' key present anywhere in the schema).",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:2698-2701 @571d032b98 -- validate_snapshot() loads this exact contract and runs jsonschema's validator over every node with no key filter beyond stripping '_'-prefixed keys, so an extra or out-of-enum node field fails a real build's own validation, not just a future one.",
+      "IRPT_BCKEND.TO-IB-m29-291.holdings-narrowed-canonical-release.md <paths> block lists data/assets/scripts/gold/investor_reporting/, .tools/safe_deploy_core.py, infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf, the two org/tier1_exec deliverable paths and this investigation file -- docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json is not named, and CLAUDE.md s.1 forbids widening a task order's write grant."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build step 2: 'A ticker the table holds: its asset_class and sub_asset_class are served exactly as the row holds them, with no fold, asset_class_basis CANONICAL and a class source of etf-classifications.'",
+  "world_is": "The published node schema this runner validates against forbids both: additionalProperties:false rejects a new 'class_source' key on any node, and asset_class_basis's enum has no 'CANONICAL' member to serve. Editing that schema is a real fix but is outside this cell's <paths> and would widen the order.",
+  "notes": "RESOLUTION TAKEN, not blocking: a canonical-table hit is served with the EXISTING contract-legal basis value TABLE (already the value a fallback ticker-table hit uses -- both are, definitionally, a direct ticker-table lookup), no fold, exactly as instructed otherwise. class_source (etf-classifications / bd-securities-fallback) is tracked ONLY in this runner's own census (annotate_classification's new by_class_source key and the R29_NARROWED_CENSUS_20260930.json deliverable's per-ticker 'placed' entries) -- never merged onto a served node. AC1 (whole suite green, including validate_snapshot calls) and AC2 (PHYS/GLD/VXX read from the table, class_source recorded) are both met under this resolution; AC3's half names this row so the issuer can choose to open a contract-widening PRD addendum for the literal CANONICAL enum member and node field if it wants one on the wire. Disarmed same-turn: hazard_standing INERT because the resolution is already built and the whole suite passes under it -- nothing is left broken for a later turn to trip on."
+}
+```
+
+
+## IRPT_BCKEND-W93-S2 -- the LGIC naming limb refuses the order's own 'bd' spellings in a NEW module
+
+```json
+{
+  "id": "IRPT_BCKEND-W93-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~93",
+  "surfaced_at": "2026-09-30T08:40:00Z",
+  "one_line": "The LGIC naming limb (ENFORCE) refused the first commit of IB-mr-291: the order's own names (the module file bd_securities_fallback.py, its 'bd-securities' table default, and the served label 'bd-securities-fallback') are NEW hand-kept carriers of the refused firm alias 'bd'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh at 571d032b98 + the staged set printed: NAMING REFUSE 4 graded -- .tools/safe_deploy_core.py:463 (the new closure path), bd_securities_fallback.py:72 and :77 (the two 'bd-securities' defaults), holdings_snapshot.py:834 ('bd-securities-fallback'); each 'hand-kept carrier of bd outside every permitted context: read it through lookup(49financial)'.",
+      "lib/opal_naming.py lookup('49financial') @571d032b98 -- aliases carries spelling 'bd' on planes serving-route and tree-token, so the alias is readable from the registry; .tools/naming-gate.py judge() @1312 refuses a NEW literal carrier and skips a literal that resolves to a tracked path at HEAD (a citation)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build step 1 and 2: a file named bd_securities_fallback.py that reads the table bd-securities, and a served class source bd-securities-fallback, all as literals.",
+  "world_is": "Every literal spelling of the alias 'bd' in a NEW file is refused at commit under LGIC_ENFORCE. The values are unchanged; only how they are spelled changed: LEGACY_TABLE in the module and FALLBACK_CLASS_SOURCE in holdings_snapshot.py are read from the naming registry (the 49financial scope's serving-route alias), which yields the byte-identical strings 'bd-securities' and 'bd-securities-fallback'. The module keeps the order's file name; it lands in its own first commit so the closure entry in .tools/safe_deploy_core.py (a path literal) resolves to a tracked path at HEAD and is graded as a citation in the second commit.",
+  "notes": "RESOLUTION TAKEN, not blocking: no test weakened; suite 319 passed and the census unchanged after the change. Cost: the fallback module now imports lib/opal_naming at load, which the Holdings closure already carries (holdings_snapshot imports it at module level)."
+}
+```
+
+
+## IRPT_BCKEND-S235 -- the Schwab silver positions for trading day 2026-09-29 had not landed by 13:3xZ on 09-30 (four hours past the measured ~09:46Z landing), so the 49F holdings-performance scheduled fire refused ABSENT and the 49F re-switch ledger's A1 leg cannot close on a scheduled partition today
+
+```json
+{
+  "id": "IRPT_BCKEND-S235",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-30T13:40:00Z",
+  "one_line": "opal-data-assets schwab/08335338/silver/dim_position/date=2026-09-29/ is ABSENT at 2026-09-30 13:3xZ; every earlier trading day's partition landed the next calendar morning at ~09:46Z (date=2026-09-28 at 09-29 09:46:44Z, 09-25 at 09-26 09:46:37Z, 09-24 at 09-25 09:46:39Z). The 11:30Z scheduled fire of irpt-holdings-performance-lambda (RequestId 666abcf2-b8f0-4b77-a655-190a2901b2ee) computed date=2026-09-29 and refused: '2026-09-29 ABSENT: no schwab/08335338/silver/dim_position/date=2026-09-29/'. The 49F holdings gold's newest partition stays date=2026-09-28 (written ad hoc 09-29 14:45Z), so no SCHEDULED fire has yet produced a partition since the r3 re-switch and ledger irpt-adapter-holdings-gold-49f-r3-20260929 leg A1 stays OPEN (past its 8 h window).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (placement: the Schwab silver conversion's owner is not named in this channel; data/assets/scripts/silver/schwab_conversion.py is the producer, its trigger and lane are the AE ingest per the 49-schwab-conv skill; ~P holds only the blocked A1 leg)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 opal-data-assets prefix schwab/08335338/silver/dim_position/date=2026-09-2 at 13:3xZ 09-30: 6 objects, dates 09-21..09-25 and 09-28, LastModified 09-22 09:46:37Z, 09-23 09:46:42Z, 09-24 09:46:40Z, 09-25 09:46:39Z, 09-26 09:46:37Z, 09-29 09:46:44Z; no date=2026-09-29",
+      "CloudWatch /aws/lambda/irpt-holdings-performance-lambda 2026-09-30 11:30:11Z: 'computing date=2026-09-29 upload=True' then '2026-09-29 ABSENT: no schwab/08335338/silver/dim_position/date=2026-09-29/ -- the day-t holdings partition is not present, so no day-t price exists'; REPORT Duration 779.98 ms",
+      "lib/trading_calendar.py at 13:35Z: expected_last_trading_day(2026-09-30) = 2026-09-30, prev_trading_day = 2026-09-29 (a trading day; the handler's target), so the absence is not a calendar artifact",
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf comment block: the declared silver lands the NEXT CALENDAR DAY at ~09:46 UTC, measured 2026-09-29 from the live objects; the 07:30 America/New_York fire is placed 1h44m past that worst case",
+      "comp-freshness artifact s3://opal-data-assets/schwab/08335338/silver/dim_position/: PASS at 27.9 h against a DEFAULT 48 h daily threshold (no cadence config entry for this prefix), so the freshness gate does not see a 4-hour miss on a feed that lands at a fixed hour",
+      "s3api list-objects-v2 opal-data-49financial prefix irpt/49financial/gold/holdings_performance_daily/: 558 partitions, newest date=2026-09-28 LastModified 2026-09-29T14:45:04Z (ad hoc), date=2026-09-22..25 all rewritten 09-29 09:25Z (the S205 re-emit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The 49F Schwab silver for trading day T lands at ~09:46Z on T+1 (schedule.tf's measured basis), so the 07:30 ET scheduled fire of the holdings-performance producer always finds day T's partition; the r3 ledger's A1 leg closes on a scheduled partition after the first fire following the re-switch.",
+  "world_is": "For T = 2026-09-29 the silver had not landed 3h44m after its usual hour, the fire refused correctly (no guess, no stale read), and the served 49F gold is unchanged. Nothing is broken on the producer's side; the upstream silver landing is late or missed and its cause is not read here (off-task for this seat). NOT MEASURED: whether the Schwab source files for 09-29 reached OneDrive/S3 (the 49-schwab-conv ingest's input) and whether the conversion ran and failed or never ran. NOT CLAIMED: staleness under the freshness gate (it reads PASS); the claim is a departure from the feed's own measured hour.",
+  "notes": "Filed off-task and left as a row, no halt-and-investigate. A1 of irpt-adapter-holdings-gold-49f-r3-20260929 waits for the next scheduled fire that finds its silver (tomorrow 11:30Z computes 09-30 if the 09-30 silver lands, and 09-29 is then a gap the producer's day math never revisits -- the second thing the owner should know). The freshness config gap (no cadence entry; default 48 h) is a finding for comp-freshness's owner, not a monitor to build."
+}
+```
+
+
+## IRPT_BCKEND-S236 -- the two twr_daily gap partitions have ZERO OK rows, so the producer's own path cannot emit bmv/emv/cf_net/cf_gross; the two dates are two different classes (series-first vs a non-trading day)
+
+```json
+{
+  "id": "IRPT_BCKEND-S236",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~S",
+  "surfaced_at": "2026-09-30T15:26:40Z",
+  "one_line": "TO-IB-pr-263's refusal clause is met: the four columns were NEVER populated for these two runs BY DESIGN and the producer's own path cannot emit them. Both gap partitions carry ZERO OK rows (date=2024-07-08: 4,074 of 4,074 REFUSED-NO-BMV; date=2025-01-09: 4,808 of 4,808 NO-PRIOR-TRADING-DAY), and c02_twr_engine.daily_returns attaches bmv/emv/cf_net/cf_gross ONLY on the OK branch, so pd.DataFrame(rows) unions no such key and the column set is 11, not 15. Exercised at the DEPLOYED bytes on the real inputs: both dates re-emit 11 columns with byte-identical row counts and status censuses. No S3 write was made. The two dates are TWO DIFFERENT CLASSES with different remedies: date=2024-07-08 is the series' first partition (D-1 = 2024-07-05 is a real NYSE trading day, but canonical_valuation holds no partition before 2024-07-08, so no BMV exists anywhere in the estate); date=2025-01-09 is NOT A TRADING DAY AT ALL (NYSE closure for the national day of mourning for President Carter), so a twr_daily partition exists for a closed market and there is no return to compute.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO -- the order's own refusal clause routes the remedy ('a schema_version bump the guard can key on, which the CTO rules') to the CTO. This lane cannot rule it: the engine's SCHEMA_VERSION block (c02_twr_engine.py:40-49) makes an emission-contract change a CTO-gated act (1.0.0_SA_CTO 85212 ruling (A)), and widening daily_returns so refusal rows carry the four keys as NULL is exactly such a change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIVE READ 2026-09-30 (boto3 GetObject; bucket from lib.opal_naming.lookup('49financial')['bucket'] = opal-data-49financial, never typed): gold/advi/canonical/twr_daily/date=2024-07-08/data.parquet = 4,074 rows, 11 columns, status census {'REFUSED-NO-BMV': 4074}; date=2025-01-09 = 4,808 rows, 11 columns, status census {'NO-PRIOR-TRADING-DAY': 4808}. The three neighbours date=2024-07-09 / 2025-01-08 / 2025-01-10 carry 15 columns and 3,516 / 4,096 / 4,091 OK rows respectively.",
+      "THE PARTITION MANIFESTS name the cause themselves: date=2024-07-08 bmv_source = 'ABSENT-PRIOR-PARTITION-NOT-PRESENT -- looked for .../canonical_valuation/date=None/data.parquet; D-1 is date=None'; date=2025-01-09 bmv_source = 'ABSENT-NO-PRIOR-TRADING-DAY -- dim_calendar has no prior trading day for date=2025-01-09; rows emit NO-PRIOR-TRADING-DAY (correct at a series' first partition, not a gap)'.",
+      "PRODUCER EXERCISED, not inferred. comp-pipescript deployed --pipeline advi: '[advi:gold] c02_twr_engine.py MATCH' (working-tree bytes == the deployed object), so the source read IS the running producer. Ran 'python c02_twr_engine.py --date <d> --canonical-local <mirror> --calendar-local <mirror> --local-out <out>' (no --upload: ZERO S3 writes) for both dates against a mirror of the real live inputs (canonical_valuation, flow_ledger, dim_calendar, dim_account at date=D). rc=0 both. Printed 'EMIT: rows=4074 cols=11' and 'EMIT: rows=4808 cols=11' -- the same row counts and the same status censuses as live -- and the emitted local parquet carries ['_ingested_at','account_id','business_date','date','flow_boundary','flow_convention','gross_leg_vintage','r_gross','r_net','schema_version','source_pipeline','status'], with no bmv/emv/cf_net/cf_gross.",
+      "MECHANISM, in the producer's own source: data/assets/scripts/gold/runners_49f/c02_twr_engine.py:275 -- \"'bmv': float(bmv), 'emv': float(emv),\" (with cf_net/cf_gross on :276) appears in exactly ONE rows.append(), the OK branch at :273-276. Every refusal branch (:224, :232, :253, :257) appends a dict WITHOUT those keys. 'out = pd.DataFrame(rows)' at :277 unions the keys present, so a partition with zero OK rows structurally has no such column. Not a drop; never derivable.",
+      "ALREADY ON THE RECORD, verbatim: data/assets/scripts/gold/runners_49f/chain_49f_entrypoint.py:321 -- 'the emitted partition structurally lacks bmv/emv/cf_net/cf_gross. The columns were never dropped; they were never derivable.' GLD-b-3 at :370 -- 'this is CORRECT and permanent at a series' first partition. c02 will emit NO-PRIOR-TRADING-DAY, which is not a defect and must never be fixed.' GLD-a-4 at :393 -- 'This remedy makes BMV available WHERE IT EXISTS; it must never manufacture one, and it must never convert a correct refusal into a chain abort.'",
+      "TRADING CALENDAR RESOLVED at the one frontier (CLAUDE.md NEVER: resolve the calendar before calling anything broken). lib/trading_calendar.py, calendar_source = NYSE/pandas_market_calendars: is_trading_day('2025-01-09') = False (the US market closure for the national day of mourning for President Carter); is_trading_day('2024-07-08') = True with prev_trading_day = 2024-07-05, itself a trading day.",
+      "THE ESTATE HAS NO D-1 FOR 2024-07-08: s3 list of gold/advi/canonical/canonical_valuation/ = 560 partitions, first = 2024-07-08 (no 2024-07-05, nothing earlier). The a04-built dim_calendar at date=2024-07-08 carries prev_trading_day = None on its own first row, which .astype(str) renders as the literal string 'None' -- which is why c02 took the ABSENT-PRIOR-PARTITION branch and emitted REFUSED-NO-BMV rather than NO-PRIOR-TRADING-DAY. The a04 dim_calendar at date=2025-01-09 has 538 rows and NO self-row for 2025-01-09; its window runs 2025-01-08 then 2025-01-10, with 01-10's prev = 01-08, skipping the closure correctly.",
+      "DENOMINATOR, swept rather than taken from the cut (Rule 24 (i)): all 560 twr_daily partitions' manifests read (0 unreadable). Partitions with ZERO OK rows = 2 of 560, exactly date=2024-07-08 and date=2025-01-09 -- the issuer's census is confirmed and nothing else in the table is in this state. Partitions sitting on a NON-TRADING day = 1 of 560, exactly date=2025-01-09.",
+      "THE READER GUARD, measured: infra/aws/lambda/investor-reporting/performance/f49_engine.py:124-126 requires {account_id, business_date, r_net, status, bmv, emv, cf_net} and raises EnginePerformanceRefused('engine table schema changed') otherwise. Note cf_gross is NOT in that set -- the guard keys on three of the four columns the order names.",
+      "BASE CHECK at the cut, unchanged after this work: 'python .../checks/r26/p26_3_ac1_twr_daily_gap_filled.py .' prints \"P26-3-AC1 FAIL: date=2024-07-08 missing columns ['bmv', 'cf_gross', 'cf_net', 'emv'] (has 11 columns, 4074 rows)\". Workspace HEAD at this write: 17ad3ea043."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-263 WORKER FACE: 'Fill the four columns on exactly those two partitions BY THE PRODUCER'S OWN PATH ... Re-emit the two days through the runner as it emits any day ... so the rows are the producer's arithmetic, not a hand-typed patch.' Its refusal clause: 'If the producer cannot emit a single historical day, or if it turns out the four columns were NEVER populated for those two runs by design, do not improvise: write the reason in a surprise row ... and stop -- the remedy is then a schema_version bump the guard can key on, which the CTO rules.'",
+  "world_is": "The SECOND limb of the refusal clause is the true one. The producer CAN emit both historical days (rc=0, correct row counts) -- it simply cannot emit the four columns, because on these two dates it has no OK row to attach them to, and manufacturing a BMV to create one is forbidden by the engine's own REFUSE-not-fabricate guard and by GLD-a-4 / GLD-b-3. Re-emitting through the runner would rewrite both partitions with equivalent 11-column content, moving nothing and burning the two ETags for no gain. So: no S3 write was made, no deploy ledger was opened (there is no deploy to ledger), and both P26-3-AC1 and P26-3-AC2 stay FAIL by the clause rather than by an unattempted act.",
+  "notes": "FOR THE CTO'S RULING, the two dates are NOT one remedy (Rule 24 (iv) -- name which values one remedy does not move). (a) date=2024-07-08 is the series' first partition and is CORRECT AND PERMANENT: GLD-b-3 says this state must never be fixed. The one thing arguably wrong there is the STATUS VOCABULARY -- the rows read REFUSED-NO-BMV, which c02:205-217 defines as a wiring/data-availability state and as 'the population Andrew's ratified acceptance requires to reach ZERO', when the truthful state is NO-PRIOR-TRADING-DAY ('correct at a series' first partition, not a gap'). 4,074 rows therefore sit permanently in a bucket that is specified to reach zero, because dim_calendar's null prev renders as the string 'None' and c02's own prev_map (deliberately untouched per GLD-b-1) tests it as truthy. That is a real, separate, NON-BLOCKING finding about the status field, not about the four columns. (b) date=2025-01-09 is a different class entirely: a twr_daily partition (and a canonical_valuation partition) exist for a day the NYSE was CLOSED. No return is computable on a closed market, so the four columns are meaningless there by construction; the live question is why a non-trading day produces a partition at all, which is upstream of this engine. NEITHER is fixed by a re-emit. The order's own proposed remedy -- a schema_version bump the guard can key on -- addresses the READER, which is the right layer: the guard at f49_engine.py:124-126 would then refuse on a version it understands rather than on an absent column, and a full-history read could skip or tolerate the two days deliberately. A second option the CTO may prefer: widen daily_returns so EVERY row carries the four keys (null on the refusal branches), making the column set invariant across partitions -- that is an emission-contract change and rides on schema_version per c02:40-49, so it is the CTO's to rule and not this lane's to take. Filed and stopped per the clause; nothing was improvised and no parquet was hand-written."
+}
+```
+
+
+## IRPT_BCKEND-W96-S1 -- allowedFirmIds of an unspecified type fails closed in allowed_firm_ids()
+
+```json
+{
+  "id": "IRPT_BCKEND-W96-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~96",
+  "surfaced_at": "2026-09-30T15:00:00Z",
+  "one_line": "allowed_firm_ids() fails closed on an allowedFirmIds value that is neither a string nor a list/set: the order named only the string and list forms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py allowed_firm_ids(): a DynamoDB SS/NS set is accepted as an iterable, and any other type (number, map, bool) yields an empty list, so decide() refuses every data_firm with ACTOR_FIRM_NOT_ALLOWED. TO-IB-yr-293 says only 'comma-separated string is split ... a list is taken as-is'; canonical_profile_reads decodes DynamoDB L to list and SS to set, so a non-string non-list value is reachable."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-yr-293 part 2: the helper returns None for absent/ALL, else a split string or a list as-is; no other value type is specified.",
+  "world_is": "A restriction attribute the reader cannot interpret restricts everything (fail closed) rather than reading as unrestricted. Not exercised by the checks; no live row carries such a value (no row carries the attribute yet). Reversible by editing the one else-branch if the CTO wants a different rule."
+}
+```
+
+
+## IRPT_BCKEND-W95-S1 -- AC2's fixture echoes one cookie on request and response yet expects cookies_scrubbed == 1; the scrub counts a (name, value) cookie once per entry
+
+```json
+{
+  "id": "IRPT_BCKEND-W95-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~95",
+  "surfaced_at": "2026-09-30T15:00:00Z",
+  "one_line": "check_292_har_scrub.py's planted HAR puts the same cookie in request.cookies and response.cookies yet expects cookies_scrubbed == 1; a per-object count gives 2, so har_scrub counts a (name, value) cookie once per entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y/R29_checks/check_292_har_scrub.py har(): cookies list is appended once and reused as list(cookies) in BOTH request and response; main() asserts cookies_scrubbed == 1.",
+      "First run of the check against a per-object count: census cookies_scrubbed 2, headers_scrubbed 3, residual_hits 0, planted value 0 occurrences in output -- FAIL only on the count."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-yr-292 part 2: every cookies[].value is replaced; the census returns cookies_scrubbed; AC2 expects cookies_scrubbed == 1 on a fixture holding two cookies[] objects.",
+  "world_is": "Both objects are the same cookie echoed on request and response of one entry. har_scrub.scrub replaces BOTH values (0 residual hits) but counts distinct (name, value) cookies once per entry, so the census reads 1. Headers are still counted per occurrence. The check script was not edited; the choice is the worker's reading of the ambiguous count and the issuer may prefer per-object counting with the fixture corrected.",
+  "notes": "Redaction is identical under either count; only the cookies_scrubbed integer differs."
+}
+```
+
+
+## IRPT_BCKEND-W94-S1 -- ReplayTransport records carry an ELEVENTH key, `location`, that the real Transport does not, so IB-yr-291 AC1 (ten-key ledger, 7 records) and AC3 (ledger equal to tx.evidence, off-shape raises) cannot both be met as written.
+
+```json
+{
+  "id": "IRPT_BCKEND-W94-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~94",
+  "surfaced_at": "2026-09-30T15:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "ReplayTransport records carry an ELEVENTH key, `location`, that the real Transport does not, so IB-yr-291 AC1 (ten-key ledger, 7 records) and AC3 (ledger equal to tx.evidence, off-shape raises) cannot both be met as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "transport.py:476-480 (real Transport._record) builds ten keys; transport.py:588-597 (ReplayTransport, the offline transport the checks and the suite use) builds eleven, adding `\"location\": fixture.get(\"location\", \"\")`. Both at worktree base 64a37ccbd5.",
+      "With the strict validation the order specifies (key set == ten keys, else JobRefused VENDOR_LEDGER_SHAPE before the receipt put): check_291_receipt_ledger.py -> JobRefused VENDOR_LEDGER_SHAPE (rc=1) on the first replay record; check_291_dup_control.py -> FAIL 'suite printed no RESULT block' (the same refusal inside run_offline_suite.py, so AC2 goes RED, not green); pytest test node 1 fails the same way, control node 2 passes. Patch: deliverables/0.9.0_WK_IRPT_BCKEND~94/candidate_strict_validate.patch.",
+      "Probe over all 7 replay records: symmetric difference from the ten-key set is exactly ['location'] on every one (7 of 7).",
+      "Variant that drops exactly the key `location` before validating (candidate_strip_location.patch): AC1 PASS (7 records, 0 off-shape), AC2 PASS (dup 0, first 7), and the off-shape `cookie` control still raises; but a test asserting receipt ledger == tx.evidence fails on the `location` key, so AC3's literal 'equal to tx.evidence' needs the issuer to say projected evidence."
+    ]
+  },
+  "spec_asserts": "The order: transport records are 'ten keys ... no header value, no cookie, no body'; the receipt ledger is validated against exactly those ten keys and equals tx.evidence; the issuer's base run read 7 records for the OVERVIEW replay.",
+  "world_is": "MEASURED: the 7 replay records have 11 keys each (location is the eleventh). The order's shape is the real transport's; the replay the criteria run against is not the same shape. transport.py, run_offline_suite.py and the check scripts are read-only to this worker, so the divergence cannot be closed inside the grant. Refusal clause applied: job.py and the test were NOT committed in either variant; nothing was weakened to pass.",
+  "notes": "Issuer choices: (a) authorize transport.py ReplayTransport to drop `location` (or move it out of the record); (b) amend the order to let job.py drop the named replay-only key `location` and AC3 to compare to the projected evidence (candidate_strip_location.patch is ready); (c) add `location` to the shape constant, which would then diverge from the real transport's ten keys."
+}
+```
+
+
+## IRPT_BCKEND-S237 -- the skipped closed day orphans its flow_ledger, so 44 served 2025-01-10 returns render client cash as performance (up to +91 pp)
+
+```json
+{
+  "id": "IRPT_BCKEND-S237",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~S",
+  "surfaced_at": "2026-09-30T16:21:30Z",
+  "one_line": "SERVED DEFECT, found while grounding S236: on 2025-01-10 the 49F twr_daily gold renders client CASH FLOWS as PERFORMANCE for 44 accounts, because the flows settled on 2025-01-09 -- a day the NYSE was CLOSED -- and NOTHING consumes that day's flow_ledger. dim_calendar correctly skips the closed day (2025-01-10's prev_trading_day is 2025-01-08), so c02 takes BMV from 01-08; the 01-09 settlements ARE inside 01-10's EMV; and c02_twr_engine.py:460 reads flow_ledger at date=D ONLY, so the 01-09 CF is in neither the BMV baseline nor the CF term. Worked example, served today: account 0093614544 took a $1,125,000.00 EXTERNAL deposit on 2025-01-09; its served 2025-01-10 row reads status OK, bmv $1,995,191.90, emv $3,114,480.00, cf_net $0.00, r_net +56.10% for one day. Measured error across the affected population: max +91.13 pp, median 1.34 pp, 22 accounts over 1 pp, 13 over 10 pp, out of 4,091 OK returns served that day.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (issuer of the 49F cells and of the sibling row S236; the METHOD choice may need 1.0.0_SA_CTO because every candidate remedy changes what c02 reads or what the chain emits). NOT disarmed this turn: the served rows are wrong now, and no act this lane can take under its own grant corrects them -- a re-emit of 2025-01-10 requires a ruling on WHICH remedy, and this lane holds no open task order on this table.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE DECISIVE READ (live, boto3; bucket from lib.opal_naming.lookup('49financial')['bucket']). Account 0093614544: canonical_valuation fair_value 2025-01-08 $1,995,191.90 -> 2025-01-09 $3,120,191.90 -> 2025-01-10 $3,114,480.00. flow_ledger date=2025-01-09 holds exactly 1 row for it, final_class EXTERNAL, signed_amount $1,125,000.00. flow_ledger date=2025-01-10 holds 10 rows for it, all INTERNAL, signed_amount sum $0.00. The SERVED twr_daily date=2025-01-10 row reads status=OK, bmv=$1,995,191.90, emv=$3,114,480.00, cf_net=$0.00, cf_gross=$0.00, r_net=r_gross=0.5609927045112804. A $1.125M deposit is being served as a 56.1% one-day return.",
+      "THE MECHANISM, in the producer's own source: c02_twr_engine.py:460 reads 'canonical/flow_ledger/date={args.date}/data.parquet' -- date D ONLY, never D-1. :456-457 builds prev_map from a04's dim_calendar, and that calendar CORRECTLY omits 2025-01-09 (538 rows, no self-row; 2025-01-10's prev_trading_day = 2025-01-08). :465-486 therefore loads BMV from date=2025-01-08. So for the single date whose prev is NOT the immediately preceding partition, the skipped day's flow_ledger is read by NO run: 2025-01-09's own c02 run emitted 4,808 of 4,808 NO-PRIOR-TRADING-DAY (zero OK rows, so zero returns and no CF consumed), and 2025-01-10's run reads only its own date's ledger.",
+      "POPULATION, computed with c02's OWN account-grain filter (final_class EXTERNAL, or INTERNAL whose resolution_provenance is in {pair-match, text-counterpart}; in-kind legs valued from in_kind_signed_value per :365-368): flow_ledger date=2025-01-09 yields orphaned CF for 46 accounts, net $1,199,021.69, absolute $2,890,299.37. 44 of those 46 carry a SERVED status=OK return on 2025-01-10; the other 2 are not OK rows that day.",
+      "MEASURED SERVED ERROR on 2025-01-10, counterfactual = c02's own EOD form r = (EMV - CF)/BMV - 1 with the skipped day's CF folded into the window (NOT a vendor-official figure): max +91.13 pp (0063952925, bmv $109,729, orphan_cf $100,000, served +91.17% vs +0.03%), median 1.34 pp, 22 accounts over 1 pp, 13 accounts over 10 pp. Both signs occur: 0027256463 serves -87.05% against -0.11% on a -$17,000 withdrawal, and 0036184450 serves -32.41% against -0.80% on -$750,000. Denominator: 4,091 OK returns served in twr_daily date=2025-01-10.",
+      "SCOPE, swept not assumed (Rule 24 (i)). Every date= partition under s3://opal-data-49financial/gold/advi/ read: 26,078 keys, 23 date-partitioned tables. EXACTLY ONE non-NYSE-trading-day partition exists in each of the 18 CHAIN tables (canonical/*, dimensions/*, reference/ref_txn_classification), and it is 2025-01-09 in every one of them -- 560 or 561 partitions each. EXCLUDED from that claim, and named so the denominator is honest: reference/bd_legacy_{holdings,nna,performance} are calendar-day-partitioned legacy snapshots (2,424-2,425 partitions, 756-757 non-trading days each) and are not chain output; three more tables hold a single undated partition. So the chain fired on a closed market EXACTLY ONCE in 560 trading days, and 2025-01-10 is the ONLY date whose prev_trading_day skips an existing partition.",
+      "THE CLOSED DAY IS REAL, NOT FABRICATED DATA -- which is why this is a wiring defect and not a data-quality one. canonical_valuation 2025-01-09 carries business_date 2025-01-09 on all 4,808 rows and its fair_value is IDENTICAL to 2025-01-08 on 4,717 of 4,801 common accounts (98.3%); the 84 that differ move by $3,116,562.14 absolute, with the large deltas at round figures ($1,125,000.00, -$750,008.50, $250,000.00) and a median |delta| of $49.26. That is a custodian book moving on a BANK business day while the NYSE was shut for the national day of mourning for President Carter -- settlements plus accruals, exactly as expected.",
+      "CALENDAR RESOLVED at the one frontier: lib/trading_calendar.py, calendar_source NYSE/pandas_market_calendars -- is_trading_day('2025-01-09') = False, prev_trading_day('2025-01-10') = 2025-01-08. The a04 dim_calendar agrees. NOTHING here is a calendar defect: the calendar is right, and the defect exists BECAUSE the data plane carries a day the calendar correctly refuses to count.",
+      "PROVENANCE: found while grounding row IRPT_BCKEND-S236 for TO-IB-pr-263 (superseded @ed0be5b557). S236 named 2025-01-09 as a non-trading day and said the question of why a partition exists there was 'upstream of this engine'; it did NOT measure the consequence. This row measures it. Workspace HEAD at this write: be66b80ccd."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "c02_twr_engine's ratified form (module docstring :7-13, POLICY_BLOCK flow_timing EOD): r(t) = [EMV(t) - CF(t)] / BMV(t) - 1, where CF is the external capital that entered or left between the BMV date and the EMV date. The GROSS/NET pair and the geometric linking both rest on CF being complete over the window -- the module's own :327-334 states the failure mode verbatim, from the in-kind defect: a flow that reaches the return as ZERO FLOW while its value lands in ending market value 'was then rendered as PERFORMANCE'.",
+  "world_is": "For the window (2025-01-08, 2025-01-10] the CF term is INCOMPLETE by construction. The window spans two calendar days because the calendar correctly skips the closed one, but c02 reads a SINGLE day's flow_ledger, so every external flow that settled on 2025-01-09 is omitted from CF while its value is present in EMV. 44 served returns carry the resulting error, up to 91 percentage points in a single day. The same shape is NOT present at the other gap date: for date=2024-07-08 the flows are inside the 2024-07-09 run's BMV baseline, so nothing is orphaned there -- which is why this row is about 2025-01-09 alone.",
+  "notes": "OPEN QUESTION THAT DECIDES THE BLAST RADIUS, and I did not resolve it: does the error propagate into PERIOD returns? link_geometric (:286-291) refuses a window containing any non-OK subperiod -- and 2025-01-09's partition is 4,808 of 4,808 non-OK. So IF the caller loads twr_daily by partition listing, every period spanning the date is UNCOMPUTABLE and the harm stops at the daily grain (a protective accident). IF the caller enumerates trading days from dim_calendar instead, 2025-01-09 is never loaded, the hole is invisible, and the +56% flows straight into every period return spanning it. NOT MEASURED here: which shape the live callers (perfrp_emit_core, perfrp_rollup, parity_period_returns, c04_validation_battery, holdings_performance.py) take, and whether any of those period returns is served to a client today. That read is the first thing the disarm owner should do. CANDIDATE REMEDIES, none taken (all change what the chain reads or emits, so all are the owner's): (1) have c02 read flow_ledger for EVERY date in (prev_trading_day, D] rather than date=D alone -- correct in general and fixes any future skipped day, but it changes the producer's read contract; (2) re-emit 2025-01-10 alone with the 01-09 CF folded in -- narrow, but leaves the mechanism live for the next market closure; (3) delete or never emit chain partitions for non-trading days -- but the custodian book genuinely moved that day, so this DISCARDS $2.89M of real flow rather than accounting for it, and it would still need (1) to place those flows somewhere. I recommend (1) with a re-emit of 2025-01-10; (3) alone is the one that looks tidy and loses data. NOT A MONITOR: this is a finding with an owner, not an alarm to build (CLAUDE.md standing moratorium)."
+}
+```
+
+
+## IRPT_BCKEND-S238 -- CTO condition 4 fired: the new service principal read an inflection directory entry through the API; allowedFirmIds is enforced at the job (resident) only; the W27 window waits for the CTO's re-read
+
+```json
+{
+  "id": "IRPT_BCKEND-S238",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T16:31:00Z",
+  "one_line": "CTO half condition 4 FIRED: under the new svc-irpt-analysis principal (allowedFirmIds cottonwood), one API read of an INFLECTION resource SUCCEEDED -- GET directory/search?selected_tenant=inflection&limit=1 served 1 inflection directory entry (HTTP 200). The API admits ANY selected firm for this principal; allowedFirmIds is enforced only inside the resident since IB-yr-293. The W27 window WAITS for the CTO's re-read.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (the CTO half's own clause: a success on condition 4 is a BLOCKING row, the packet's claim is corrected, and the window waits for the CTO's re-read; the API-side enforcement surface _authz/served.py selected_tenant is P's under CONTRACT row 21)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Ledger irpt-svc-analysis-principal-20260930 leg N1, 16:2xZ: POST /auth/login 200 as svc-irpt-analysis@opalinvest.com (token never printed); GET /api/scoped/investor-reporting/directory/search?selected_tenant=inflection&q=&limit=1 -> HTTP 200, response keys contract_version/data/firm_id/operation/unprojected_grant, firm_id fir_b6b200b4395e94aaa604d5fa, 1 entry served (counts only logged; no entry content kept). The same read on cottonwood: HTTP 200, firm_id fir_0fe2a06331f1b4a68133fcb2, 1 entry.",
+      "status-summary on selected_tenant=inflection resolved the same inflection firm_id and answered NOT_FOUND (no job) -- the tenant was ADMITTED, the resource was absent; the directory read is the discriminator.",
+      "No vendor call was made: Opal's own API over CloudFront only. Log: org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/SVC_PRINCIPAL_NEGCONTROL_20260930.json.",
+      "Resident-side enforcement is LANDED: IB-yr-293 @784ac650d0 -- decide() refuses ACTOR_FIRM_NOT_ALLOWED for a data_firm outside the row's allowedFirmIds (5 of 5 cases on CLOUD). The API side (_scope/resolve.py classify_principal -> FIRM_OPERATIONS on the SELECTED firm; _authz/served.py selected_tenant) reads no allowedFirmIds -- exactly the packet's own W27-2 limit (2) sentence, now EXERCISED rather than read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W27 packet W27-2: 'the only thing keeping this principal off inflection or 49financial data is that no job for those firms is submitted under it' (a policy limit). CTO half condition 4: 'If it succeeds, that is a BLOCKING row, the packet's claim is corrected, and the window waits for my re-read.'",
+  "world_is": "MEASURED: the principal can READ another firm's directory population through the API today (1 entry of inflection served), and could SUBMIT an Analysis upload for inflection at K4 (the API admits the selected tenant); the resident would then refuse the JOB at decide() with ACTOR_FIRM_NOT_ALLOWED (293), so no vendor call and no report could be produced for a non-cottonwood firm -- but the upload, the normalized input and the request row would exist. CORRECTION TO THE PACKET'S CLAIM: 'recorded, not enforced' is now HALF-enforced -- enforced at the job (resident), not at the API. The window's three bodies are cottonwood and are unaffected; what the CTO re-reads is whether a resident-only mechanism plus an API-side convention is enough to open, or whether the API half (P's surface) is a precondition.",
+  "notes": "Retirement path stands: disable, never delete (svc_principal.py disable). Secret readers: walker only, 24 of 24 roles explicitDeny (leg S1)."
+}
+```
+
+
+## IRPT_BCKEND-S239 -- it DOES propagate: the period oracle links neutral BY VALUE, so every window spanning 2025-01-10 carries S237's inflation
+
+```json
+{
+  "id": "IRPT_BCKEND-S239",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~S",
+  "surfaced_at": "2026-09-30T16:40:10Z",
+  "one_line": "ANSWERS the open question S237 left as the disarm owner's first act: the error DOES propagate into period returns -- it does not stop at the daily grain. parity_period_returns.py decides neutrality BY VALUE (r_net.isna()) and not by status, so the 4,808 NO-PRIOR-TRADING-DAY rows of 2025-01-09 link x1.0 as neutral and are EXCLUDED from the product, while the 2025-01-10 row -- status OK, r_net +0.5609927045112804 -- is live and links at 1.5610. So every QTD / YTD / 1Y / SI window spanning 2025-01-10 carries the full inflation for each of the 44 affected accounts. S237's hoped-for protective accident (c02's own link_geometric refuses a window containing a non-OK subperiod) does NOT apply here, because this module deliberately mirrors C_01's neutral-day law instead.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P -- same owner as S237, which this row answers rather than opens. It raises that row's urgency: the population is not 44 daily cells but 44 accounts' every period return spanning 2025-01-10, on the module that is OUR side of the Black Diamond parity comparison.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/runners_49f/parity_period_returns.py:373-388, read at HEAD (the CODE, not the docstring): '# NEUTRAL BY VALUE: a day with no return carries no return information, whatever its status' then 'neutral = obs[\"r_net\"].isna()', 'live = obs[~neutral]', and '# Geometric link. A neutral day contributes x1.0 by construction -- it is EXCLUDED from the product and COUNTED in days_neutral'. Neutrality is therefore a VALUE test on r_net, never a status test.",
+      "CONSEQUENCE, applied to the S237 population: twr_daily date=2025-01-09 carries r_net NULL on all 4,808 rows (status NO-PRIOR-TRADING-DAY), so every one links x1.0 -- counted in days_neutral, contributing nothing. twr_daily date=2025-01-10 carries status OK with r_net 0.5609927045112804 for account 0093614544 (measured live, S237), which is NOT null, so it is in `live` and multiplies the product by 1.5610. Nothing in the module's path inspects `status` to refuse the window.",
+      "THE PROTECTIVE ACCIDENT S237 HOPED FOR IS ABSENT HERE, and the file says why it is absent by design: parity_period_returns.py:80-86, 'A NEUTRAL DAY IS COUNTED, NEVER COMPOUNDED (C_01's own law, mirrored) ... A day carrying no return information links NEUTRAL (x1.0) and is COUNTED in days_neutral.' c02_twr_engine.link_geometric:286-291 does the opposite ('if (w[\"status\"] != \"OK\").any(): return None, \"UNCOMPUTABLE-SUBPERIOD-HOLE\"'). Two linkers, two laws; the period oracle uses the permissive one.",
+      "WHY THIS MODULE MATTERS PARTICULARLY: its own docstring :1-16 names it 'OUR side of the BD parity comparison, at the RULED period grain' for the Andrew-ruled periods QTD / YTD / 1Y / SI (D2 PRD s.9 Q2, ADVI_BDPARITY.P2-CENSUS ruling 2). An inflated 49F period return is exactly the number that gets compared against Black Diamond's own time-weighted return, so the defect lands on the parity read as an apparent OUR-SIDE outperformance.",
+      "A SECOND, SMALLER THING FOUND IN THE SAME READ (non-blocking, and it does NOT affect the arithmetic): parity_period_returns.py:82-84 enumerates 'twr_daily.status is one of OK / UNCOMPUTABLE-ZERO-BMV / NO-PRIOR-BALANCE-ACCOUNT-ABSENT (measured date=2026-08-28: 6436 / 924 / 10 of 7370)'. That is a SINGLE-DATE census presented as the closed vocabulary; it omits NO-PRIOR-TRADING-DAY, REFUSED-NO-BMV and UNCOMPUTABLE-NEGATIVE-BMV, all three of which exist in the live table (S236 measured the first two at 4,808 and 4,074 rows). The code is safe from it precisely BECAUSE neutrality is by value, but the comment is a Rule 24 (i) trap for the next reader -- a denominator narrower in TIME than the sentence beside it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S237 (this channel, @58a8c9e489) stated the open question as: 'does the error propagate into PERIOD returns? ... IF the caller loads twr_daily by partition listing, every period spanning the date is UNCOMPUTABLE and the harm stops at the daily grain (a protective accident). IF the caller enumerates trading days from dim_calendar, 2025-01-09 is never loaded, the hole is invisible, and the +56% flows straight into every period return spanning it. NOT MEASURED here: which shape the live callers take.'",
+  "world_is": "Neither branch as written. parity_period_returns LOADS the 2025-01-09 rows and then makes them harmless by a THIRD mechanism -- value-based neutrality -- which discards the status hole without refusing the window. The result is the bad branch's outcome (full propagation) reached by a path the question did not anticipate. The question's two-branch framing was itself the defect in my earlier reasoning: I assumed loading the non-OK rows would protect the window, because c02's own linker behaves that way, and the period module deliberately does not.",
+  "notes": "MINTED AS S238 AND RENUMBERED TO S239 BEFORE ANY COMMIT: 2.0.0_SA_COO~Y committed its own IRPT_BCKEND-S238 while this row was being written, so two allocators took one id -- the exact hazard the id grammar names (schema investigation_item.schema.json, 'measured 2026-09-04: two allocators minted one S34'). Nothing at HEAD was touched: the working diff was 31 insertions / 0 deletions before and after the renumber, so ~Y's row is byte-identical and only this uncommitted block moved. WORTH THE GATE OWNER'S ATTENTION: .tools/surprise-row-gate.py did NOT catch the duplicate. Its line read '0 new row(s) of 531 total checked (530 pre-existing, NOT re-graded)' -- this row was classified PRE-EXISTING because an id equal to it already existed at HEAD, so a colliding row is invisible to the gate by construction and would land ungraded rather than be refused. The seat-side discipline (re-read the max id immediately before writing) does not close it, because the race is between the read and the commit. SCOPE STILL NOT MEASURED, and deliberately not measured by this lane. (1) The other four twr_daily readers -- perfrp_emit_core.py, perfrp_rollup.py, c04_validation_battery.py, holdings_performance.py -- are NOT read for this question. I opened perfrp_rollup.py only far enough to see its r_net mentions concern a frontier state where r_net is null on 100% of rows (:33, :65), which is a different subject; I am not reporting a verdict on a file I did not read for this purpose (ABSENT != EXERCISED-AGAINST). (2) FIRM SCOPE: the same engine exists at data/inf/scripts/gold/runners_inf/c02_twr_engine.py and data/cot/scripts/gold/runners_cot/c02_twr_engine.py -- a REPO fact, stated without reading either firm's data, because a 49F-lane seat reading another firm's bucket is the wrong shape (CLAUDE.md section 5, C-FIRM). Whether Inflection's or Cottonwood's chains carry a non-trading-day partition, and so whether this defect class reaches them, is UNMEASURED and belongs to whoever owns those trees. It is worth one sweep by that owner: the mechanism is in the shared engine's date=D-only flow read, not in anything 49F-specific."
+}
+```
+## IRPT_BCKEND-W97-S1 -- The order's lambda invoke line uses --cli-binary-format, which the .tools/aws shim's CLI (v1) rejects
+
+```json
+{
+  "id": "IRPT_BCKEND-W97-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~97",
+  "surfaced_at": "2026-09-30T16:15:00Z",
+  "one_line": "The order's lambda invoke line uses --cli-binary-format, which the .tools/aws shim's CLI (v1) rejects",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`.tools/aws lambda invoke ... --cli-binary-format raw-in-base64-out ...` printed 'Unknown options: --cli-binary-format' and rc=255 (AWS CLI v1 usage banner) in worktree wk-irpt-p-97 at 2026-09-30T~14:52Z.",
+      "The same invoke without the flag (v1 takes the raw JSON payload as given) returned StatusCode 200 and the trigger body recorded in deliverables/0.9.0_WK_IRPT_BCKEND~97/trigger_invoke.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order names a v2-style invoke invocation as the way to fire the ONE ad-hoc full run.",
+  "world_is": "The shim resolves to AWS CLI v1, which has no --cli-binary-format flag; the payload argument is passed without it. The first attempt exited before any request, so no invoke was made; the run used exactly one invoke.",
+  "notes": "Later order text that copies this invocation will fail the same way; drop the flag."
+}
+```
+
+
+## IRPT_BCKEND-W97-S2 -- safe-deploy.sh refused the worker serial with a HALT-GATE on unacked inbox messages; the order's aws s3 cp fallback was used
+
+```json
+{
+  "id": "IRPT_BCKEND-W97-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~97",
+  "surfaced_at": "2026-09-30T16:15:00Z",
+  "one_line": "safe-deploy.sh refused the worker serial with a HALT-GATE on unacked inbox messages; the order's aws s3 cp fallback was used",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`bash .tools/safe-deploy.sh --author 0.9.0_WK_IRPT_BCKEND~97 data/inf/scripts/silver/_orion_api_silver_lib.py` -> 'HALT-GATE: blocked. Review the message(s) above, then re-run with HALT_ACK=1.' rc=1; message text and the fallback recorded in RESOLUTION_READINGS.json key safe_deploy_refusal.",
+      "Fallback aws s3 cp to s3://opal-data-inf/code/silver/_orion_api_silver_lib.py, then sha256 of the S3 body ed85e079a550... equals the committed file (P26-1-AC1 verifies)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order expects safe-deploy to deploy under the worker's serial (with aws s3 cp as the stated fallback if it refuses).",
+  "world_is": "safe-deploy halts on the ROSTER-level unacked messages (RED deploy-ledger notices for several other slugs and a 1.0.0_SA_CTO RE 103053) that a worker has no way to act on; HALT_ACK=1 was not used because overriding a gate is outside the grant. No comp-pipescript MATCH line was produced for the lib.",
+  "notes": "A worker deploy through safe-deploy will hit this gate whenever the fabric has unacked RED notices. The ledger leg D1 carries the sha256 proof instead of a TOOL-03 line."
+}
+```
+
+
+## IRPT_BCKEND-W97-S3 -- With the ship, the INF gold chain now passes the raw writers and dies at step 33 INF_C_01 on the NNA partition coverage guard
+
+```json
+{
+  "id": "IRPT_BCKEND-W97-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~97",
+  "surfaced_at": "2026-09-30T16:15:00Z",
+  "one_line": "With the ship, the INF gold chain now passes the raw writers and dies at step 33 INF_C_01 on the NNA partition coverage guard",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (route the NNA coverage excusal decision for accounts 866/769/1096 to its owner; the guard says an account losing its history is a DECISION recorded in lib/nna_coverage_excusals.json)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/telemetry/inf-gold-layer-runner/status.json run chain_full_20260930_145412 status=failed, errors: 'INF_C_01 failed with exit=1', steps_done at fail: 32 of 65 (INF_API_SILVER_REPS ok, INF_API_PULL_POSITIONS_DAILY ok, INF_B_00..INF_C_00 ok, INF_C_01 fail).",
+      "diagnostic/chain_logs/chain_full_20260930_145328.log: 'NNA PARTITION COVERAGE REGRESSION -- 3 account(s), 3 (partition, account) row(s), carrying $40,000.00 GROSS (signed net $0.00) of SERVED NNA are about to be DROPPED ... account 866 -20,000; 769 10,000; 1096 10,000 dropped from partition 2026-09-24' (nna_coverage_guard.py:385 raised from INF_C_01.canonical_nna.py:918).",
+      "The guard names its own remedy: record the excusal in lib/nna_coverage_excusals.json with a reason and who decided; 'Do not disable this guard.' This worker did not touch it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's premise: once the silver_ids import resolves, the chain reaches the raw writers (true) and the drain ends the chain-broken state.",
+  "world_is": "The chain is no longer dead at step 3, but the FULL chain still ends failed at step 33, so INF_C_02..INF_D_11 (the rest of the served gold) did not run this run and will not on the next scheduled run while the guard holds. The guard is protecting served NNA and is correct to refuse until a decision is recorded; that decision is not this cell's.",
+  "notes": "Chain steps after INF_C_01 are unreached today. P26-1-AC2 does not require them and passes."
+}
+```
+
+
+## IRPT_BCKEND-W97-S4 -- The run's raw writers landed only today's transactions and positions: PULL_PERF timed out at 600s and 09-28/09-29 positions did not backfill
+
+```json
+{
+  "id": "IRPT_BCKEND-W97-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~97",
+  "surfaced_at": "2026-09-30T16:15:00Z",
+  "one_line": "The run's raw writers landed only today's transactions and positions: PULL_PERF timed out at 600s and 09-28/09-29 positions did not backfill",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Same run chain_full_20260930_145412: 'INF_API_PULL_PERF pull tolerated (exit=124)' after 600s (status.json errors, steps_done INF_API_PULL_PERF warn 600); bronze/performance/2026-09-30.jsonl.gz HeadObject 404.",
+      "HeadObject 2026-09-30T~16:08Z: bronze/positions/2026-09-28.jsonl.gz 404, bronze/positions/2026-09-29.jsonl.gz 404; bronze/positions/2026-09-30.jsonl.gz 200 (2,309,545 bytes, 2026-09-30T15:18:55Z); bronze/transactions/2026-09-30.jsonl.gz 200 (41,420,455 bytes, 15:03:57Z); bronze/transactions/2026-09-28.jsonl.gz 404."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order expects the raw writers to reach today's files and asks whether 09-28/09-29 positions landed.",
+  "world_is": "The daily pull is a snapshot of the run day: the two missed days did not backfill (the order's predicted finding). Separately the performance pull hit its 600s cap and is tolerated by design, so no performance raw file exists for 09-28..09-30 from this path.",
+  "notes": "Recorded as the after_run finding the order asked for; not a failure of this cell. The perf endpoint hang is the known 'Orion perf endpoint' behaviour cited in the dispatch's own comment (orion-gold-dispatch.sh ~700-706)."
+}
+```
+
+
+## IRPT_BCKEND-W94-S2 -- The whole ycharts/generate/tests directory collected by one pytest run fails 3 tests on a `fixtures` module-name collision (AttributeError TENANT/OWNERSHIP), including the new test_receipt_ledger.py; each file run alone passes.
+
+```json
+{
+  "id": "IRPT_BCKEND-W94-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~94",
+  "surfaced_at": "2026-09-30T15:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The whole ycharts/generate/tests directory collected by one pytest run fails 3 tests on a `fixtures` module-name collision (AttributeError TENANT/OWNERSHIP), including the new test_receipt_ledger.py; each file run alone passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cd infra/aws/lambda/investor-reporting && python -m pytest -q -p no:cacheprovider ycharts/generate/tests -> 3 failed, 303 passed, 30 skipped: test_receipt_ledger.py x2 and test_comparison_catalogue.py x1, each AttributeError: module 'fixtures' has no attribute TENANT/OWNERSHIP (sibling test dirs put their own fixtures.py first on sys.path).",
+      "Run alone: test_receipt_ledger.py 2 passed; test_comparison_catalogue.py 7 passed; run_offline_suite.py prints RESULT-END with every v* flag true. test_read_back_poll.py errors alone (No module named extract) -- not touched by this order."
+    ]
+  },
+  "spec_asserts": "The order's AC3 runs test_receipt_ledger.py by itself; it does not claim the directory passes as one collection.",
+  "world_is": "MEASURED: the three-failure whole-directory result is a collection-order interaction between fixtures modules, not a fault of the ledger change; the named criterion invocations are unaffected. Not fixed (outside the grant).",
+  "notes": "An owner of the ycharts tests may want per-file invocation recorded as the suite's convention."
+}
+```

@@ -7071,3 +7071,155 @@ fanout:
   ledger page surfaces (FWD-6, FWD-12) go to DSGN_AMGTV1 (ruling 1). The CTO's PRD addendum follows ab-3's mapping (ruling 4).
 - **AMENDMENT (issuer, ~07:3xZ, before any spawn; CTO msg 27014):** ab-1's splice records its provenance (analysis key + VersionId) in the
   document; Z-S313's rebuild regression is a DEFECT (row Z-S314, ARMED) carried to round 53 as its own cell.
+
+## 61. ROUND 53 -- FWD-30'S GRADER READS THE DISPLAYED FIGURE, A D-1 REGENERATION KEEPS ITS SERVED SENTENCES, THE SLASH-KEY WINDOW, AND THE STORE DOCSTRING. Four cells, four orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 52 ANALYSIS** (`ledger/ROUND_ANALYSIS.round52.md` @`5d3052d8d7`, msg 27145;
+round 52 CLOSED). Rulings carried: FWD-30's grader reads the displayed figure and is graded again only on that grader (ruling 2);
+Z-S314 stays ARMED until the regeneration keeps every served sentence (ruling 3); the next scoped-API build IS the slash-key window --
+ONE pair, legs (a) copy the 30 raw-slash objects to encoded keys, (b) deploy the build at a pinned HEAD carrying CORPUS z-4's readers and
+HARVST q-5's 91b74a9047 -- and nothing deploys from HEAD before it (ruling 4). No outcome is added.
+
+### 61a. THE FOUR ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 FWD-30's grader reads the displayed figure | `AMGT-ac-1` (LOCAL, worker) |
+| 2 Z-S314: regeneration keeps served sentences | `AMGT-ac-2` (LOCAL, worker) |
+| 3 the slash-key window | `AMGT-ac-3` (WORLD, `0.7.0_AE_CloudOps~A`), after CORPUS round-24 cell 4 drains and COO~X supplies the list |
+| 4 Z-S315: the harvest.store docstring | `AMGT-ac-4` (LOCAL, worker-light) |
+
+### 61b. MEASUREMENTS THE CUT RESTS ON
+
+1. **Item 1:** the grader's `_PageReader` reads HEADER values from `<li data-card-figure-mnemonic=...>`; DSGN r12 nests a hover tooltip
+   (`role="tooltip" data-figure-tooltip data-full-value`) inside it, and the cell text read is figure + tooltip. `ac_1_plant.py` on a real
+   ASML render: a tooltip plant changes the read at the base (the defect); a visible-figure control moves PX_LAST (the control works).
+   The round-52 close sweep: 131 of 32,057 facts differ, all HEADER (PX_LAST 95, EQY_BETA 35, CURR_ENTP_VAL 1).
+2. **Item 2:** `ac_2_keep.py` (ASML, the in-memory `--rebuild-pool` transform vs the stored D-1): company_description 6 -> 1,
+   investment_thesis 1 -> 0, risks 2 -> 0 (8 served sentences lost).
+3. **Item 3:** keys containing `BP/_LN` or `NG/_LN` in opal-data-harvest: 40 (peers 14, derived/model_block 12, raw/bloomberg 4, scores 4,
+   filings 2); 87 `-SLASH-` encoded objects already exist; the CTO names 30 in scope -- COO~X supplies the list and before-state, which
+   the issuer writes to `round53/SLASH_OBJECTS.json` before the GO. BP's routes serve today through the URL-quoted raw key (full peers);
+   through `-SLASH-` peers read thin. `/timeline` series entries (273 on AMZN) lack `publishers_found_codes` at the base.
+4. **Item 4:** the ~:2175 docstring says "the first [harvest.store] is unavailable in the deployed package"; store.py is packaged and
+   /thesis loads it (dynamic probe True).
+5. **The base for ac-3:** CodeSha256 `nKWCfQRQ3/lL6cJxgYG3dZr0tcVdOBheeMMNaoWQE+w=` (ab-6, 11:43:22Z).
+
+### 61c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ac-1` | FWD-30'S GRADER READS THE DISPLAYED FIGURE | `~190` | worker | LOCAL | `deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py` |
+| `AMGT-ac-2` | A D-1 REGENERATION KEEPS ITS SERVED SENTENCES | `~191` | worker | LOCAL | `lib/research/filings/drafting_build.py`, `lib/research/drafting/`, their tests |
+| `AMGT-ac-4` | THE STORE DOCSTRING | `~192` | worker-light | LOCAL | `lib/research/api/scoped_amgt.py` (one docstring clause) |
+| `AMGT-ac-3` | THE SLASH-KEY WINDOW: COPY + DEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | 30 object copies (raw kept), the artifact, ONE safe-apply (code only), deliverables, the ledger |
+
+### 61d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's four items, one cell each.
+- **(ii) Same grain.** One grader read, one producer rule, one act, one clause.
+- **(iii) Intent.** One axis: what is graded and served is what a person sees and what the stores hold, at their real keys.
+- **(iv) What a cell does NOT move.** ac-1 moves no product file and no non-HEADER read; ac-2 moves no served D-1 object (no live rebuild);
+  ac-4 moves no code line; ac-3 moves exactly its pair's radius (30 copies, raw kept; the function's code).
+
+### 61e. EDGES AND FAN-OUT
+
+```
+ac-4 -> ac-3   (scoped_amgt.py is in the build; the docstring rides it)
+CORPUS round-24 cell 4 drained + COO~X's list -> ac-3   (every reader routed before the window)
+ac-1, ac-2 -> (none)
+fanout:
+  cap: 8
+  orders_total: 4
+  chains_total: 3                      # {ac-4 -> ac-3}, {ac-1}, {ac-2}
+  wave_0: [ac-1 ~190, ac-2 ~191, ac-4 ~192]
+  wave_1: [ac-3]                       # a seat order: after ac-4 merges, CORPUS cell 4 drains, the list is written, both halves committed
+  no_s3_deletes: true
+  egress: none (Opal AWS only); ac-3's build pip-downloads its pinned wheels
+  no_promote: true
+```
+
+## 62. ROUND 54 -- THE D-1 NO-SPAN CENSUS AND ITS HOLD ON THE OBJECT, THE BUILD-SCRIPT READ-BACK, AND FWD-30'S UNRESOLVED FIGURE. Four cells, four orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 53 ANALYSIS** (`ledger/ROUND_ANALYSIS.round53.md` @`d379533291`, msg 27275;
+round 53 CLOSED). Rulings carried: "show the positive arm before the cut" binds this cut by reading (ruling 1: every check below was run
+on a simulated correct post-state and PASSED, as well as FAILING at the base); Z-S319's head-object sha limb stays on every build pair until
+ad-3 lands (ruling 2). No outcome is added.
+
+### 62a. THE FOUR ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 the census of non-verbatim D-1 sentences | `AMGT-ad-1` (LOCAL, worker): the census IS the dry-run of the transform item 2 executes |
+| 2 the compliance act | `AMGT-ad-2` (WORLD, `0.7.0_AE_CloudOps~A`), after ad-1 drains and both halves are committed |
+| 3 the Z-S319 repair | `AMGT-ad-3` (WORLD by the L6 floor for an infrastructure path; worker-light) |
+| 4 the FWD-30 re-run after CORPUS round 25 | `AMGT-ad-4` (LOCAL, worker-light): re-scoped by measurement, 62b.3 |
+
+### 62b. MEASUREMENTS THE CUT RESTS ON (16:4x-17:1xZ)
+
+1. **Item 1.** Population `crosswalk/v1/2026-09-29.json`: MEASURED 237; stored D-1 documents 12 (the unscoped `drafting/v1/` listing is
+   the same 12, so the domain holds); all 12 carry no-span sentences in their stored sections, **179** in all (ASML 8, BABA 2, BA 21,
+   COST 24, HAL 7, HD 16, INTU 14, KMB 21, NU 19, PBR 13, SAP 8, VLO 26). "No span" is read by the DEPLOYED adapter's own gate
+   (`scoped_amgt.py` ~:1833: no non-blank `quoted_spans` string); `quote_method none-found` gives the same 179.
+2. **Item 2 -- the served page already shows none of the 179.** The deployed adapter HOLDS a no-span sentence AT READ: ASML's /thesis
+   serves `held_no_span_at_read` 8, `held_no_span_on_object` 0, basis `READ_GATE_ONLY_OBJECT_FIELD_ABSENT`. Moving the sentences to the
+   object's `held_no_span` therefore leaves the page's sentence text unchanged; the served delta is the hold's accounting only
+   (at_read -> 0, on_object -> the count, basis -> `READ_GATE_PLUS_OBJECT`; the count is unchanged). The stored objects are the act's
+   whole write set. Asked of the CTO at issuance whether the pair still earns its cost (msg below); ad-2's GO waits on that answer.
+2a. **THE READER CENSUS (CTO msg 27301: ad-2 drops only if every reader goes through the at-read hold) -- ad-2 STANDS.** Every code
+   reference to `drafting/v1` / `DRAFTING_PREFIX` / `_drafting_pool_key` / `_read_drafting_document` outside tests, fixtures and records
+   (a Grep over *.py/*.ts/*.tsx/*.js/*.cjs/*.sh/*.tf/*.json/*.yaml, 169 files, 6 of them product): `scoped_amgt._read_drafting_document`
+   has ONE caller (:1807, the /thesis drafting block, gated at read) and every adapter consumer -- /thesis, the header's description
+   source (:3488), the rich export FWD-30 grades -- reads that gated block; `analyze.py:1638` and `drafting_build.py` are the WRITERS;
+   `HeaderBrief.tsx:46` is a comment; `scoped-amgt-api.tf:130` is the adapter's read grant. **ONE reader takes the stored text WITHOUT
+   the hold: `lib/research/posture/packs.py:110` `build_pack`**, which puts every `sections[].sentences` entry into the posture judgment's
+   evidence pack as a `drafted_sentence` (read by `posture/judge.py`, run by `integrations/bloomberg/research/management_posture_batch.py`).
+   So the act's expected diff is the sentences, and the pack is the served delta to verify: `ad_2_packs.py` (AMENDMENT 1, AC3) builds
+   the pack from the pre-act bytes and from the live object and requires it to lose EXACTLY the no-span sentences (base with a capture
+   and no act: removed 0 -> FAIL; reference transform -> PASS; one span-carrying sentence also dropped -> FAIL). The served posture
+   (`posture/v1`, read by `read_posture` without re-reading D-1) moves only when that batch next runs; the pack's `S:<section>:<n>` ids
+   renumber within a section at that run.
+3. **Item 4 -- CORPUS round 25 did not resolve TSM's gap.** COO~X msg 27279: the re-derive landed (TSM `CUR_MKT_CAP` now USD). The TSM-only
+   served sweep after it (17:0xZ, `--diff`): still NOT_OK on `('HEADER', 'CURR_ENTP_VAL')` -- page "unit not resolved -- raw figure
+   71,993,494.73", export "71993494.73205896 UNRESOLVED-ON-TSM ...". Both sides state the unit unresolved and the digits agree; the grader
+   reads the page's leading words as the value. A re-run alone cannot move it, so ad-4 is the GRADER's reading rule (the issuer's own
+   instrument, as ac-1): equal only when BOTH sides say unresolved AND the raw digits agree. CURR_ENTP_VAL's unit stays CORPUS's.
+4. **Item 3.** `infra/aws/terraform/harvest/`: `build-and-upload-chatter-axis.sh` (:36-55) carries the fixed shape; the other three pass
+   the metadata bare (`-scoped-amgt.sh:742`, `-print-deps-layer.sh:79`, `build-and-upload.sh:29`, the last on bare `aws`). The check's
+   harness (a bash wrapper exec'ing a NATIVE python stub, the real shim's boundary) REPRODUCES the mangle without the guard
+   (`C:/Program Files/Git/HmoIi0wOY...`) and passes with it.
+
+### 62c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ad-1` | THE NO-SPAN CENSUS = THE HOLD TRANSFORM'S DRY-RUN | `~193` | worker | LOCAL | `lib/research/filings/drafting_build.py`, its tests, the census file |
+| `AMGT-ad-3` | ONE VERIFIED UPLOAD FOR EVERY HARVEST BUILD SCRIPT | `~194` | worker-light | WORLD (floor) | `infra/aws/terraform/harvest/upload_verified.sh` (new) + the four `build-and-upload*.sh` |
+| `AMGT-ad-4` | FWD-30'S GRADER READS AN UNRESOLVED FIGURE'S RAW DIGITS | `~195` | worker-light | LOCAL | `deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py` |
+| `AMGT-ad-2` | THE HOLD ON THE OBJECT: 12 STORED D-1 DOCUMENTS | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the 12 `drafting/v1/*.json` objects, deliverables, the ledger |
+
+### 62d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's four items, one cell each; item 1's census and item 2's act share ONE rule (the transform), so the census
+  cannot name a sentence the act does not move.
+- **(ii) Same grain.** One producer rule, one act over one prefix, one upload helper, one grader reading.
+- **(iii) Intent.** One axis: the stores, the artifacts and the grade say what the page and the function actually carry.
+- **(iv) What a cell does NOT move.** ad-1 writes nothing to S3; ad-2 moves no span-carrying sentence, no other key, and no served sentence
+  text; ad-3 moves no build's bytes (only how the metadata travels and is verified); ad-4 moves no product file and grades a
+  one-side-resolved figure as a difference.
+
+### 62e. EDGES AND FAN-OUT
+
+```
+ad-1 -> ad-2   (the act runs ad-1's transform; its census names the write set)
+ad-1, ad-3, ad-4 -> (none)
+fanout:
+  cap: 8
+  orders_total: 4
+  chains_total: 3                      # {ad-1 -> ad-2}, {ad-3}, {ad-4}
+  wave_0: [ad-1 ~193, ad-3 ~194 (worker-light), ad-4 ~195 (worker-light)]
+  wave_1: [ad-2]                       # a seat order: after ad-1 drains, both halves committed, and the CTO's answer on 62b.2
+  no_s3_deletes: true
+  egress: none (Opal AWS only)
+  no_promote: true
+```

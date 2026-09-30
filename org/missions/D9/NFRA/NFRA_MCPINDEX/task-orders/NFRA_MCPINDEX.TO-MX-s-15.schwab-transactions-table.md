@@ -93,7 +93,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Reinstatement ruling B4 and round-5 order item 2. Dry-run at base: s15.AC1 FAIL
 (0 of 6), s15.AC2 FAIL (file absent). Chain head of MX-r-6.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @46587d5134 by 2.0.0_SA_COO~MI, 2026-09-30 ~10:0xZ: s15.AC1 PASS (6 of 6 surfaces), s15.AC2 PASS (4 of 4 named tests, 0 failed), instance VALID. Key form date=YYYY-MM-DD/data.parquet, newest 2026-09-28 on both masters; grain None (paging refuses). Existing grants do NOT cover dim_transaction (ENTITLEMENT_MX-s-15.md). Row Z-W19-S2 (BLOCKING: the OPLGTW contract and tests/acceptance) is ruled by Z-S63 into MX-r-6 A1. Was: pending.</status>
 <round>5</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

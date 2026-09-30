@@ -5,10 +5,10 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.2",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
  "status": "DRAFT"
 }
 ```
@@ -140,6 +140,108 @@ approved it.
                     is missing or failed, the page tells him what
          SOURCE     brief Part III ("nothing publishes past a failed
                     guardrail"); Part V H7; ANDREW_DIRECT item 10
+
+  ===== ADDENDUM A, v0.3, 2026-09-30 -- peer groups, the IDVZ group ========
+  From docs/briefs/etfs-rivals-idvz-expansion-20260930.md (midstream) and the
+  endpoint addendum ENDPOINT_FORWARD_RIVALFUNDS_ADDENDUM_A_PEER_GROUPS_IDVZ_20260930.md,
+  DONE WHEN confirmed by Andrew with one change to FWD-1 ("fwd 1 should include
+  idvz and pfoe right as the two opal etfs, with their respective peer groups.
+  otherwise, yes, all of these are fine"). The lines below SUPERSEDE FWD-1, 2,
+  3, 5, 6 and 7 above; FWD-4, 8 and 9 stand as above.
+
+  FWD-1  (AMENDED) Andrew opens each of the two Opal ETFs' peer groups on
+         the live page and reads it, the Opal fund included, on one plane
+         DONE WHEN  EXERCISED -- one live trace per Opal ETF: Andrew selects
+                    IDVZ and reads IDVZ and its peers (TXUE, BIDD, CGIC, INEQ,
+                    SCHY) side by side, then selects PFOE and reads PFOE and its
+                    peers (WCMG, GQGU, TSEL, BASG, ETFT, PCLG) the same way:
+                    trade schedules, style reads and the FWD-6/7 views; in each
+                    group he follows one rival's trade back to the holdings
+                    reports it was inferred from and to where they came from
+         ACCEPT     every step shows real published holdings; a step fed by
+                    sample data fails the outcome
+         SOURCE     brief O1; Andrew point 3 and his FWD-1 confirmation
+  FWD-2  (AMENDED: every fund in every group) Andrew sees how much real
+         history each fund has, and never mistakes an old report for a fresh one
+         DONE WHEN  EXERCISED -- for every fund in both groups, Andrew reads
+                    which days carry a genuinely new report, which repeat an
+                    older one, and which are gaps, back up to two years or the
+                    fund's own start
+         ACCEPT     as before; a fund that is in two groups is shown once, with
+                    one history
+         SOURCE     brief O2, IV.1
+  FWD-3  (AMENDED: the source is chosen per fund) Fresh holdings arrive every
+         trading morning with nobody downloading anything, from each fund's
+         chosen source
+         DONE WHEN  EXERCISED -- over several consecutive trading days, every
+                    fund is collected each morning by its own source policy:
+                    the IDVZ group from Bloomberg, the PFOE group from each
+                    fund's own site with Bloomberg as the fallback; the page
+                    names the source per fund and day
+         ACCEPT     Andrew does nothing by hand; a fund's policy is a setting,
+                    not code; a day a source fails says so plainly
+         SOURCE     brief O2, IV.1-IV.2; Andrew "bbg is better for this group"
+  FWD-5  (AMENDED: income and corporate actions) Andrew reads each fund's
+         trade schedule: what the manager actually bought and sold, and when
+         DONE WHEN  EXERCISED -- for every fund Andrew reads its trades
+                    (entries, adds, trims, exits) with shares, window, estimated
+                    price and size and confidence; on a fund and window that
+                    contain a dividend, a split and a cash/currency line, none
+                    of the three appears as a trade, and a purchase funded from
+                    income reads as a trade labelled as income-funded
+         ACCEPT     dividend and interest income, their currency conversion,
+                    splits, bonus issues, spinoffs, stock dividends and rights
+                    issues never read as a manager's decision; cash and
+                    currency lines are the cash cross-check, not positions
+         SOURCE     brief O3, IV.3; Andrew "did we already account for
+                    dividend/interest income? That should be covered"
+  FWD-6  (AMENDED: by sector and security) Andrew sees where each manager's
+         trading helped or hurt, by sector and by security
+         DONE WHEN  EXERCISED -- for one fund and period Andrew reads which
+                    trades and trade clusters out- or under-performed afterwards,
+                    summarised by sector and by security, each with its window
+                    and denominator, including positions since sold
+         ACCEPT     a holding with a missing price or sector is counted as
+                    missing, never left out
+         SOURCE     brief O5; Andrew view 1
+  FWD-7  (AMENDED: projections and the wildcard) Andrew uses the AI to form
+         views about a manager's behaviour, and can check them later
+         DONE WHEN  EXERCISED -- for one fund Andrew reads (a) its projected
+                    trading by sector and security if the observed trends
+                    persist, each with what would contradict it, and (b) a short,
+                    labelled wildcard section in which every item cites its rows
+                    and says what would disprove it; a later account grades the
+                    earlier projection against trades inferred after it
+         ACCEPT     nothing invents a return, a trade or a motive; a later
+                    grading cannot rewrite the earlier account
+         SOURCE     brief O6, O7; Andrew views 2 and 3
+  FWD-10 (NEW) Andrew sees whether each manager trades with discretion or by
+         system, and why
+         DONE WHEN  EXERCISED -- Andrew reads each fund's style read with its
+                    evidence (timing concentration, breadth of the book touched,
+                    trade size), and the group's index fund (SCHY) reads as
+                    systematic on that same evidence
+         ACCEPT     a count of trades alone is never the evidence; a label is
+                    shown only after the control reads correctly
+         SOURCE     brief O4, IV.3; Andrew "at a 20bps tolerance it's
+                    immediately clear who is discretionary and who is
+                    systematic"
+  FWD-11 (NEW) Andrew compares an Opal fund with its rivals on the same
+         measures
+         DONE WHEN  EXERCISED -- Andrew reads IDVZ against its peers and PFOE
+                    against its peers on the style read, the trading results and
+                    the projections, computed by the same rules
+         ACCEPT     Opal's own fund has no separate method and no special
+                    treatment
+         SOURCE     brief O8; Andrew point 3
+  FWD-12 (NEW) Opal adds a peer group without a new pipeline
+         DONE WHEN  EXERCISED -- a third group is added as a mapping entry
+                    (the Opal fund, its rivals, each fund's source policy) and
+                    flows through collection, the tables, the page and the
+                    archive with no code change
+         ACCEPT     a fund rivalling two Opal funds is stored once; adding a
+                    group changes a mapping, not code
+         SOURCE     brief O9, IV.4
 ```
 
 ## CONTRACTS
@@ -261,6 +363,93 @@ S5 tables beyond `canonical_shape` and `trade_schedule` enter only when a cell n
 **C-NO-NOTIFIER.** No alert, monitor or freshness checker is built (the standing moratorium). A failed guardrail is carried by the
 page itself.
 
+**C-PEER-GROUPS (Addendum A; Andrew points 1-3).**
+- The universe is a set of peer groups, one per Opal fund, each containing the Opal fund itself:
+  - IDVZ: IDVZ, TXUE, BIDD, CGIC, INEQ, SCHY;
+  - PFOE: PFOE, WCMG, GQGU, TSEL, BASG, ETFT, PCLG.
+- **Storage stays flat, keyed by fund; grouping is a mapping** (`peer_group_map`, below). A fund in two groups is stored once. A new
+  group is a mapping entry, never code (FWD-12).
+- **Source policy is per fund**, a field of the mapping (supersedes C-SOURCE-POLICY's single rule):
+  - `bloomberg_primary`: the IDVZ group;
+  - `issuer_first`: the PFOE group, as C-SOURCE-POLICY states.
+
+**C-HOME-PRODUCER (one writer per fund's holdings).** IDVZ and PFOE are already pulled by
+`integrations/bloomberg/pipeline/etf_constituents_pull.py`.
+- The first Addendum-A cell MEASURES that producer's output against FWD-2/3's grain: daily, share counts, and history depth.
+- If it meets the grain, this pipeline READS it into silver as a named source.
+- If not, the fund joins this pipeline's Bloomberg request.
+- **(v0.4, Andrew-direct 2026-09-30 ~20:2xZ: "we're leaving the existing pull alone")** The Positioning pull is NOT modified. It
+  keeps landing IDVZ and PFOE, and its derived scalars, for its own consumers.
+  - Where RIV-m-1 measured it short of the grain (both funds: JOIN_BLOOMBERG), this pipeline lands its own copy.
+  - **This pipeline READS ONLY its own landing.** No ETFS_RIVALS reader reads `bbg/*/constituents/`, and no reader outside it reads
+    this pipeline's landing as a substitute for the Positioning pull's.
+  - The two landings serve different consumers, and each has one writer.
+  - This v0.4 line replaces v0.3's "the old pull stops writing" and "never two producers of one fund's holdings" on his word.
+
+**C-INCOME-CLEAN (Addendum A FWD-5; Andrew: "did we already account for dividend/interest income? That should be covered").**
+- Before any residual reads as a trade, trade inference:
+  1. excludes cash and currency lines from the position set;
+  2. applies corporate actions from `corporate_actions` (splits, bonus issues, spinoffs, stock dividends, rights issues);
+  3. reconciles income: dividend and interest receipts and their currency conversion.
+- What is removed is RECORDED in `flow_reconciliation`, never discarded.
+- A purchase whose funding the cash cross-check attributes to income is a trade, labelled `income_funded`.
+
+**C-GOLD-MODEL (Andrew-direct 2026-09-30 ~15:5xZ: "establish in detail what the gold table structure is, and how that table
+structure feeds these served insight deliverables").**
+
+Every gold table's home is `address('rivalfunds','etfs','gold','<table>', 'date=<D>')`, and all 14 below were generated by the
+builder at v0.3. Every table:
+- is Parquet, never-overwrite, one revision per write;
+- carries `revision`, `produced_at`, `producer_version` and `input_manifest` (the upstream revisions read);
+- **carries its claim** on every derived value (`claim` in {MEASURED, INFERRED}, with `confidence` on INFERRED values;
+  CLAUDE.md "a value must carry its claim").
+**No table is built without a named consumer in the lineage matrix** (`C-ONE-SIGNAL`).
+
+**The tables:**
+
+| # | table | grain (one row per) | key | columns | claim | producer / trigger |
+|---|---|---|---|---|---|---|
+| G0 | `peer_group_map` | group x fund x mapping version | (group_id, fund_id, map_version) | group_id, home_fund_id, fund_id, ticker, role {home, rival, index_control}, source_policy {bloomberg_primary, issuer_first}, effective_from, map_version | MEASURED (a declared mapping) | a mapping change under a pair; read by every stage |
+| G1 | `canonical_shape` | fund x report date x position | (fund_id, report_date, position_id) | as C-SHAPES, plus is_cash_line, source_used {issuer, bloomberg, home_producer}, corporate_action_adjusted | MEASURED (published holdings) | on silver's batch-complete marker |
+| G2 | `holdings_coverage` | fund x expected report date x source | (fund_id, expected_date, source) | actual_report_date, status {new, repeat, gap, periodic}, row_count, weight_sum, selected, selection_reason | MEASURED | after G1 |
+| G3 | `corporate_actions` | security x event | (security_id, event_type, ex_date) | event_type {cash_div, interest, split, bonus, spinoff, stock_div, rights}, ratio, amount, currency, pay_date, source (DVD_HIST_ALL), as_of | MEASURED | scripted Bloomberg enrichment (R-21) |
+| G4 | `security_market` | security x trading date | (security_id, date) | px_close, total_return_index, currency, gics_sector, gics_industry_group, source, as_of | MEASURED | scripted Bloomberg enrichment (R-21) |
+| G5 | `trade_schedule` | fund x security x trade window | (fund_id, security_id, window_end) | window_start, window_end, action {entry, add, trim, exit}, shares_delta, flow_factor_f, discretionary_shares, residual_pct_prior, est_price, price_band_lo, price_band_hi, est_notional_base, income_funded, corporate_action_ref, confidence | INFERRED | after G1 and G3 (C-TRADE-SCHEDULE, C-INCOME-CLEAN) |
+| G6 | `flow_reconciliation` | fund x trade window | (fund_id, window_end) | flow_factor_f, cash_line_delta_base, income_received_base, fx_conversion_base, corporate_action_count, income_funded_trade_count, unexplained_residual_base | MEASURED inputs, INFERRED residual | with G5 |
+| G7 | `trade_outcomes` | trade x horizon | (fund_id, security_id, window_end, horizon_td) | horizon_td {21, 63, 126}, fwd_security_tr, fwd_benchmark_tr (the fund's own holdings-weighted book), excess_tr, outcome {helped, hurt, flat}, price_coverage {full, partial, missing} | MEASURED returns, INFERRED attribution | after G5 and G4 |
+| G8 | `outcome_rollup` | fund x period x axis x bucket | (fund_id, period, axis {sector, security}, bucket) | n_trades, n_missing, hit_rate, mean_excess, sum_notional_base, window, denominator | INFERRED | after G7 |
+| G9 | `style_read` | fund x research window | (fund_id, window_end) | timing_concentration (share of trade notional in the top 4 weeks), reconstitution_share, breadth (share of the book touched), median_trade_size_pct, trade_count (context only), label {discretionary, systematic, undetermined}, control_passed | INFERRED | after G5; the label shows only when control_passed |
+| G10 | `trend_projection` | fund x axis x bucket x horizon | (fund_id, axis, bucket, horizon) | trailing_net_flow_base (3 windows), direction {accumulating, reducing, flat}, persistence, projected_direction, falsifier (deterministic template), confidence | INFERRED | after G5 |
+| G11 | `peer_comparison` | group x fund x measure x period | (group_id, fund_id, measure, period) | value, rank_in_group, group_median, is_home | INFERRED (from G8-G10) | after G8-G10 |
+| G12 | `research_hypotheses` | fund x analysis run x item | (fund_id, run_id, item_id) | kind {projection_note, wildcard, process_account}, text, cited_rows (table, key, revision), invalidation, model_version, prompt_version | INFERRED (AI) | the analysis step, after G8-G11 |
+| G13 | `hypothesis_grades` | hypothesis x grading run | (fund_id, run_id, item_id, graded_at) | graded_against_window, verdict {held, broke, undetermined}, evidence_rows | INFERRED; append-only, never rewrites G12 | a later analysis run |
+
+**The lineage matrix (every served insight -> the tables it reads -> what is deterministic, and what is AI):**
+
+| served insight | outcome | reads (tables and columns) | deterministic | AI (the prompt reads ONLY these) |
+|---|---|---|---|---|
+| peer-group page, both groups | FWD-1, FWD-11 | G0 (members, roles); G11; the header from G1 | group layout, ranks, home fund highlighted | none |
+| history and freshness | FWD-2 | G2 status per fund-day | new/repeat/gap calendar | none |
+| source per fund per day | FWD-3 | G0.source_policy; G2.selected and selection_reason; G1.source_used | the source badge | none |
+| master shape side by side | FWD-4 | G1 | the position tables | none |
+| trade schedule | FWD-5 | G5; G6 (income, cash, corporate actions); G3.event_type | trade list, income-funded label, excluded-event count | P1 (activity summary) reads G5, G6 |
+| helped or hurt, by sector and security | FWD-6 | G7, G8; G4 for price coverage | rollups with window and denominator; missing counted | P2 reads G8, G7 |
+| projected trading | FWD-7a | G10 | direction, persistence, falsifier | P3 reads G10, G9, G5 (explains, never calculates) |
+| wildcard | FWD-7b | G12 (kind = wildcard), with G5-G11 as its citable rows | the citation check (every figure matches its cited row) | P4 reads G5-G11 and writes G12 |
+| later grading | FWD-7 | G12, G13, newer G5 | the grading window | P3/P4 grade into G13 |
+| style read | FWD-10 | G9 with control_passed | metrics and the label gate | P3 may explain G9 |
+| home vs rivals | FWD-11 | G11 (is_home) with G8, G9, G10 | the same measures for all funds | P4 reads G11 |
+| rebuild and no-duplicate rerun | FWD-8 | every table's input_manifest and revision | the replay | none |
+| guardrails | FWD-9 | G2, G1, G12 citations | the C-GUARDRAILS checks | none |
+
+- **The prompts are the supporting spec's P0-P4** (`GOLD_TABLES_AND_PROMPTS.md` S7), each restricted to the tables its row names.
+- **An AI figure that does not match its cited row fails the analysis-grounding guardrail** (C-AI-GROUNDING).
+- **Horizons (21/63/126 trading days), the 4-week timing window and the 3-window trend are starting values.** A named cell re-sets
+  each from the first real data, never silently.
+- The spec's S5 tables not listed here (`fund_snapshot`, `holdings_changes`, `allocation_changes`, `holding_performance`,
+  `performance_rankings`, `manager_behavior`) are NOT built until a served insight names them (C-ONE-SIGNAL). `trade_outcomes`,
+  `style_read` and `trend_projection` are this model's narrower versions of `decision_evaluation` and `manager_behavior`.
+
 ## THE THREAD (FWD-1) -- round 1 builds it end to end, for BASG
 
 One person: Andrew. One journey, live, for **BASG** (the brief's O1 candidate; its issuer archive has daily history since
@@ -320,6 +509,13 @@ the `/sprint` precedent files.
 
 ## PROVENANCE AND AMENDMENT HISTORY
 
+- v0.3 (2026-09-30, `1.0.0_SA_CTO~Z`): **Addendum A.**
+  - The ENDPOINT gains the peer groups: FWD-1/2/3/5/6/7 amended, FWD-10/11/12 new. Andrew confirmed it via `4.0.0_SA_CRO~Z`
+    (msg 27241, record @`2bc18b60a5`), with FWD-1 covering both Opal ETFs.
+  - CONTRACTS gain C-PEER-GROUPS, C-HOME-PRODUCER, C-INCOME-CLEAN and **C-GOLD-MODEL** (Andrew-direct ~15:5xZ, record @`fdc881a489`).
+  - The endpoint lines landed @`5bababb75b`; that commit's message named C-GOLD-MODEL, which it did not yet carry. The
+    contracts land in the next commit.
+  - This is an ENDPOINT and CONTRACTS change, so the ratified half re-opens to `3.0.0_SA_CVO~Z`.
 - v0.2 (2026-09-30, `1.0.0_SA_CTO~Z`), on `3.0.0_SA_CVO~Z`'s ratified-text REFUSE @`2506e39cee`:
   - C-SHAPES gains the classification bullet (Opal asset/sub-asset class and the GICS hierarchy as separate fields,
     Andrew's L1 point 3);

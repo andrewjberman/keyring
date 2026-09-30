@@ -1,0 +1,34 @@
+{
+    "Item": {
+        "asset_class": {
+            "S": "alternatives"
+        },
+        "last_updated": {
+            "S": "2026-09-30T13:48:39Z"
+        },
+        "classified_by": {
+            "S": "seed"
+        },
+        "sub_asset_class": {
+            "S": "International Real Estate"
+        },
+        "ticker": {
+            "S": "VNQI"
+        },
+        "updated_by": {
+            "S": "seed-script"
+        },
+        "sector": {
+            "S": "Real Estate"
+        },
+        "management_style": {
+            "S": "passive"
+        },
+        "name": {
+            "S": "Vanguard Global ex-U.S. Real Estate ETF"
+        },
+        "instrument_kind": {
+            "S": "fund"
+        }
+    }
+}

@@ -39,6 +39,8 @@ Z-W21-S1), and r7.AC2 reads it. PHASE A's ANNOUNCE also NAMES THE WRITER of `s3:
 Z-W21-S3) from a read-only trace, or states it unattributed with what was read, so the never-widen halves see it.
 Graded by: no gate limb graded this modification.
 
+**HELD (2.0.0_SA_COO~MI, 2026-09-30 ~11:2xZ, 1.0.0_SA_CTO~O msg 27114):** MX-t-13 is held on the R20 acknowledgement (its A3), so this release is not spawned until MX-t-13 lands.
+
 ## 2. BOUNDS
 
 1. No identity, grant or sign-in change. The gateway role gains only the assume permission for the new data role.

@@ -240,3 +240,72 @@ Owners below are read from the CRO brief `docs/briefs/irpt-ui-remaining-brief-20
   next DSGN_IRPTV1 slug, FAST section.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 2026-09-30 ~14:4xZ -- AF-1, AF-2, item 36, item 37 (handed over by `2.0.0_SA_COO~D`, message 103259)
+
+**Lease:** `org/mcp/drive-mode.log` last ARM 2026-09-30T01:40:50Z (STATUS.md @HEAD: "presence-extended since"); the DEV
+push of 1d7b8feb at 14:19Z passed the never-rules gate, which admits a DEV push from a live lease's seat only. **Pins:**
+all four are ancestors of origin DEV `1d7b8feb3172` (ls-remote and `merge-base --is-ancestor` by this seat, 14:2xZ).
+**This seat's own runs at portal HEAD `1d7b8feb`:** `bun test` over the nine pinned files -- 9 of 9 pass
+(TREEMAP-VARIOUS-OK, REQUEST-LIST-OK, SECURITIES-FOLD-OK, SECURITIES-MAP-WALK-OK, IVE115-OK, GENERATE-JOURNEY-OK,
+DRILL-BASES-OK, SECURITIES-MAP-OK, MAP-CHIPS-OK; 2.62 s); `eslint` on the two item-37 files rc=0; the portal tree's
+dirty count was 15 before and after the run (no wire regeneration from these nine).
+
+| # | pin (portal DEV) | claim | evidence read | grade |
+|---|---|---|---|---|
+| AF-1 | `5c7eead8` (Andrew-direct design feedback ~01:4xZ) | pie ordinal scale with neighbour contrast; the residual Client row grey; the map shows the view's ten largest securities with multi-select chips; the account picker unmounted; Name without the ticker prefix | unit: iv-e-42, iv-e-44, iv-e-61, iv-e-105 green at HEAD (this seat's run); real run: Andrew smoked 5174 on this build and answered with feedback #2 (the AF-2 record), so the build reached its judge; no screenshot or walk artifact exists for this seat to read | PASS on the unit claims; the real-run grade is Andrew's smoke (his ~05:0xZ feedback is the record); NOT GRADED by this seat on an artifact |
+| AF-2 | `44fd5f42` (Andrew smoke feedback ~05:0xZ) | one row per security per Sleeve/Account view (Andrew's word as the F7-AC4 exception); tooltip name only, 'Other Securities' tile, 'Client' chip; class order Cash first; account dialog sleeves by value, collapsible | unit: iv-e-113, iv-e-114, iv-e-115, iv-e-105, iv-e-44, iv-e-61 green at HEAD (this seat's run); the class order in `assetClass.ts` read at HEAD (IV-e-115 comment and `CLASS_FOR_SERVED`); no real-run artifact: STATUS lists "Re-smoke DEV a20b5a60" as open at Andrew | PASS on the unit claims; NOT GRADED on a real run (the re-smoke is Andrew's, open) |
+| 36 | `a20b5a60` (walk-2 W2-07) | after Generate the ISSUED request opens in the page's own dialog (status in words, Technical details behind one control, report sections when READY) and "Your analysis requests" re-lists from the first page | unit: iv-e-116 GENERATE-JOURNEY-OK at HEAD (this seat's run). Real run, fixture plane (the walk-2 write guard), read by this seat: `deliverables/2.0.0_SA_COO~D/item36/w2-07.fast-run.png` shows the dialog "Your analysis request / Requested September 30th, 2026, 9:52a ET / Job status: Ready / Business date: 2026-09-29 / Check status / Report sections / 2. annualized_return SUPPORTED 0.0712 percent, As of 2026-08-31"; `w2-07.fast-run.netlog.tsv` (276 rows): `POST .../investor-reporting/analysis?account_set_id=sel_bdf98e1d...` exactly 1, `GET .../analysis/requests` 4, POST rows 9 in all (2 auth/refresh, 2 directory/resolve, 3 selections, 1 analytics/ingest, 1 analysis) | PASS on the fixture-plane real run: one POST, the dialog opened on the issued id, the list re-read after the press. The live press stays Andrew's acceptance (STATUS "Limits") |
+| 37 | `1d7b8feb` (lint hygiene in surface) | iv-e-106's non-ASCII check is a code-point count; iv-e-116's two wiring regexes use `{2}` / `{4}`; the two remaining repo lint errors are `HeaderBrief.tsx:47-48`, out of surface (row S41) | `eslint` on both files rc=0 (this seat); both tests green; byte read of `src/pages/SecurityAnalysis/components/HeaderBrief.tsx`: line 47 `/^bloomberg\x08/i` and line 48 `/^D-1\x08/` each carry exactly one 0x08 byte; the file is outside the lease surface | PASS; S41's attribution holds on the byte read |
+
+## Observations (not grades; each is outside the pin's claim)
+
+- **O-36a:** the dialog in the item-36 shot carries two "Technical details" disclosure controls, one under Job status
+  and one under Report sections. The W2-06 wording is "Technical details behind one control"; whether that means one
+  per block or one per dialog is `2.0.0_SA_COO~D`'s to state in the next STATUS.
+- **O-36b:** the fixture's report section reads "As of 2026-08-31" beside "Business date: 2026-09-29". A fixture
+  artifact, not graded; on Andrew's live press the section as-of should be read against the business date.
+- **O-36c:** nine GET rows in the netlog answered 401 (advisor-intelligence `platinum/firm/*.json?firm=bd` and
+  `portal-content`) during the page load. They are outside the Analysis surface; if the walker account lacks that
+  scope the refusal is the expected one. Not graded here.
+
+## Not verified by this seat
+
+The 920/27/18 suite count on a20b5a60, DEV CI run 36725618787's ESLint step, the live 5174 process, and the lease's
+presence-extension record after the reboot. Row S41's fix is DSGN_AMGTV1's and is graded at that project's drain.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 2026-09-30 ~17:0xZ -- items 38, 39, 40, 41 (handed over by `2.0.0_SA_COO~D`, message 103320)
+
+**Pins:** all four are ancestors of origin DEV `e67a03f484` (fetched; `merge-base --is-ancestor` yes for each; portal
+HEAD = origin DEV). **This seat's own runs at portal HEAD `e67a03f4`:** `bun test` over the ten pinned files -- 10 of 10
+pass (FOOTER-SOURCE-WORDS-OK, NAMED-MISSING-DAY-OK, FOCUS-REFUSAL-EXPORT-OK, PER-ACCOUNT-PERF-OK, PRESET-ASOF-OK,
+PICKER-REFUSAL-OK, ACCOUNT-YTD-OK, FACE-BATCH-OK, PICKER-ENTRIES-OK, DATES-SOURCES-OK; 1.26 s); dirty count 15 before
+and after. **Claim class of the real runs:** fixture plane on 5174 (the drivers fulfil the IR routes from
+`fixtures/smoke/dsgn-irptv1-cottonwood.json`; nothing reaches the live backend), each PNG read by this seat.
+
+| # | pin (portal DEV) | claim | evidence read | grade |
+|---|---|---|---|---|
+| 38 | `775c4261` (W2-19, absorbs UIC-14) | every Holdings footer reads words, never a producer coordinate; card, map and table are one string | unit iv-e-117, iv-e-45, iv-e-63 green at HEAD (this seat's run). Shot `item38/w2-19.fast-run.png`: three footers on the Holdings tab (card, SECURITIES MAP, SECURITIES) all read "September 23rd, 2026, 5:00p ET \| Source: Opal Capital Analysis." -- one distinct string, no `module.function`, no `build_` | PASS on the fixture-plane real run |
+| 39 | `1bcda74c` (W2-19b) | the Performance footer reads source words, never `lineage.sourceCoordinate` | unit iv-e-117 ARM (d) and iv-e-63 green at HEAD. Shot `item39/w2-19b.performance.fast-run.png`: the PERFORMANCE panel footer reads "Source: Opal Capital Analysis."; no coordinate and no function name anywhere on the face. The commit's second line ("Source: Black Diamond, as of September 23rd, 2026.") is not visible in the shot read; the driver's own verdict rule for the Performance tab requires exactly one distinct source string, which the shot satisfies | PASS on the fixture-plane real run |
+| 40 | `b1e18782` (W2-01 front residue) | a DEPENDENCY_UNAVAILABLE refusal with a business date names the missing upstream day; the picker never stays "pending" for good | unit iv-e-118 plus iv-e-34/39/40/58 green at HEAD. Shot `item40/w2-01.fast-run.png`: the refusal panel reads "... The latest day that source has answered for this account is September 22nd, 2026; the days after it are the ones missing." and the picker option reads "not supplied -- $200,000.00 -- YTD unavailable" (item 39's shot, taken before this pin, reads "YTD pending" on the same option: the before state) | PASS on the fixture-plane real run |
+| 41 | `e266a14a` (W2-19 words) | the registry vendor view lands as builder output and is `holdingsFooterSource`'s default, so a keyed snapshot names its sources in words | `header/vendorDisplayNames.generated.ts` sha256 `4dd7a2728592d2e4` (the commit's `4dd7a272`), 28 entries for 23 vendors (key and long form), header marked `registry@1c951921d4940c85`; `systems.json` at HEAD holds 25 VENDOR rows of which 23 carry `display_name`. iv-e-117 green. Shot `item41/w2-19-words.fast-run.png`: card, map and table footers all read "Source: Black Diamond." -- the driver injected `source_vendor_keys` into the holdings fixture (driver line 39-41, argv[5]), which is how the words path was exercised; the un-injected face reads the fallback, as the commit says | PASS on the fixture-plane real run of the words path |
+
+## Finding (carried to NFRA_TRNSPT's channel as row NFRA_TRNSPT-S4)
+
+`python lib/opal_naming.py generate --target .../vendorDisplayNames.generated.ts` at HEAD is REFUSED: `validate`
+reports 2 refusals, `systems.json[48].display_name` (`outlook`) and `[49].display_name` (`sharepoint`), both VENDOR
+rows added by `0.9.0_WK_NFRA_TRNSPT~3` @8e9ed1b539 (drained by `2.0.0_SA_COO~T` @fed423d013, 12:58Z) after the CRO's
+23 `display_name` rows @cd2ffcca99 (12:10Z). So the committed vendor view cannot be regenerated at HEAD, its mark
+predates the two rows, and every other `generate` target refuses with it. Item 41's pin is not at fault; the disarm
+is two `display_name` values on the NFRA_TRNSPT rows.
+
+## Observations (not grades)
+
+- **O-39a:** as noted in the table, the shot shows one source line on the Performance face where the commit text
+  describes two. If the source-age line renders only with a served source age, the fixture is the reason.
+- **O-41a:** the two new VENDOR keys `outlook` and `sharepoint` are absent from the generated view, so a snapshot
+  keyed on either would read the fallback until regeneration.
+
+-- 3.0.0_SA_CVO

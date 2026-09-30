@@ -86,7 +86,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Reinstatement ruling B7 and round-5 order item 3. Dry-run at base: q3.AC1 FAIL
 (mac.01 next_tool=query_v0 kind=http_route), q3.AC2 FAIL (file absent). Rides MX-r-6.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD after the drain @b26d0b3ae0 by 2.0.0_SA_COO~MI, 2026-09-30 ~10:3xZ: q3.AC1 PASS (mac.01 next_tool=gateway_query_catalog kind=mcp_tool; 5 of 5 route-only rows name it), q3.AC2 PASS (4 of 4 named tests, 0 failed), instance VALID. Tool gateway_query_catalog in portal_index on query_v0.handle (same gate, caps, audit); pins 52->53, portal_index 4->5. The first ~20 session left no writes in two ticks and was stopped; this is the reseat's work. Rows Z-W20-S1/S2 INERT. Rides MX-r-6. Was: pending.</status>
 <round>5</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

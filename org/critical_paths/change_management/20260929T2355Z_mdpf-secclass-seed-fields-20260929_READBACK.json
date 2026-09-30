@@ -1,0 +1,103 @@
+{
+ "class_moves_on_existing_rows": [],
+ "classified_by": {
+  "<absent>": 238,
+  "seed": 137
+ },
+ "industry_rows": [
+  "WMT"
+ ],
+ "instrument_kind": {
+  "<absent>": 229,
+  "fund": 135,
+  "single_security": 11
+ },
+ "new_rows": 31,
+ "new_tickers": [
+  "ACSG",
+  "BBY",
+  "BE",
+  "BSCN",
+  "BX",
+  "CSCO",
+  "DFAC",
+  "DG",
+  "ED",
+  "EVNT",
+  "EXPD",
+  "GARP",
+  "GEV",
+  "IBND",
+  "IXJ",
+  "JMUB",
+  "JPEM",
+  "JPMI",
+  "LDUR",
+  "LNVGY",
+  "MDY",
+  "META",
+  "MRSIX",
+  "PHYS",
+  "SCHB",
+  "SHV",
+  "SMDV",
+  "SPLG",
+  "STIP",
+  "SYLD",
+  "WMT"
+ ],
+ "probe": {
+  "AAPL": {
+   "asset_class": "equity",
+   "classified_by": null,
+   "industry": null,
+   "instrument_kind": null,
+   "sub_asset_class": "Information Technology"
+  },
+  "BNDX": {
+   "asset_class": "fixed_income",
+   "classified_by": "seed",
+   "industry": null,
+   "instrument_kind": "fund",
+   "sub_asset_class": "Intermediate"
+  },
+  "GLD": {
+   "asset_class": "commodities",
+   "classified_by": "seed",
+   "industry": null,
+   "instrument_kind": "fund",
+   "sub_asset_class": "Metals"
+  },
+  "META": {
+   "asset_class": "equity",
+   "classified_by": null,
+   "industry": null,
+   "instrument_kind": "single_security",
+   "sub_asset_class": "Communication Services"
+  },
+  "PHYS": {
+   "asset_class": "commodities",
+   "classified_by": "seed",
+   "industry": null,
+   "instrument_kind": "fund",
+   "sub_asset_class": "Metals"
+  },
+  "VXX": {
+   "asset_class": "structured",
+   "classified_by": "seed",
+   "industry": null,
+   "instrument_kind": "fund",
+   "sub_asset_class": "Hedge"
+  },
+  "WMT": {
+   "asset_class": "equity",
+   "classified_by": "seed",
+   "industry": "Consumer Staples Distribution & Retail",
+   "instrument_kind": "single_security",
+   "sub_asset_class": "US Large Cap"
+  }
+ },
+ "removed_rows": 0,
+ "rows_after": 375,
+ "rows_before": 344
+}

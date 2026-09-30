@@ -5026,3 +5026,30 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "1.0.0_SA_CTO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S20",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-30T17:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Part D as written cannot supply OG-t-2's <tid>/<oid> inputs: the owner-gate header carries sub but no oid or tid, so ADMIN_PRINCIPAL and the two WRITE_CAPABLE_PRINCIPALS are read at call 3 from the Entra admin center by Andrew, kept off-repo.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/round3/E1_G-HDR_READ.md@c8b42c8913 line 22: OWNER-HEADER-CLAIMS keys=email,exp,family_name,given_name,iss,name,picture,sub (1 line of 552671 journal lines); oid ABSENT.",
+      "infra/aws/ec2/opal-gateway/app/admin_api.py:34-37 (HEAD 3103954a36): /api/admin/whoami returns oid ABSENT when the header lacks it, and has no tid field.",
+      "infra/aws/ec2/opal-gateway/app/config.py:274-281: MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS exact-match principal.key <tid>/<oid>.",
+      "1.0.0_SA_CTO~O msg 27304: call 3 = Part D only, reading ADMIN_PRINCIPAL for OG-t-2 with the value kept out of the repo."
+    ]
+  },
+  "spec_asserts": "ledger/ROUND_ANALYSIS.round1.md R-1 and R-3(c): Part D records which identity claims the owner's sign-in carries (oid, or sub), and the admin principal's value comes from the Part D record; TO-OG-t-2:25-28 requires ADMIN_PRINCIPAL and WRITE_CAPABLE_PRINCIPALS as <tid>/<oid> pairs.",
+  "world_is": "The header branch gives sub only, which is not an Entra object id and cannot key principal.key. The Part D record for OG-t-2 is therefore Andrew's read of Tenant ID and three Object IDs (andrew@ admin; alyssa@ and opalbloomberg@ write-capable, the same three people as today's email rosters, so no roster widens) in the Entra admin center at call 3, written outside the repository.",
+  "notes": "Issuer disposition: the Part D record lands at deliverables/2.0.0_SA_COO~O/PART_D_RECORD_20260930.md carrying the source, the UTC read time and the sha256 of the off-repo value file, never a value. OG-t-2's PHASE A blast-radius pre-read still grades every delta. MX-r-6 v3 holds its GO for this read-back (msg 27304).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

@@ -1,0 +1,46 @@
+{
+  "project_code": "NFRA_TRNSPT",
+  "macro_code": "NFRA",
+  "directive": "D9",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "created": "2026-09-30",
+  "registered_under_tree": "2026-09-30",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "NFRA_OPLGTW",
+    "IRPT_BCKEND",
+    "OPAL_ALTRESEARCH",
+    "LGIC_NAMING",
+    "LGIC_CANON",
+    "OPAL_TICKET_VNEXT"
+  ],
+  "name": "The Opal communications database: Teams transcripts, market updates, and investment feedback, with a draft commentary service",
+  "description": "One private database (bucket opal-data-transcripts) for Opal's investment communications, kept as received in bronze and typed, de-duplicated and PII-wiped in silver, so analytics and a draft-commentary service can be built on it. Transcripts of the four regular meetings arrive on their own (Teams via the Opal gateway); market updates (PowerPoint) are kept exactly as received; investment feedback that Manav sends a client with a YCharts report attached is pulled daily from Andrew's mailbox through the gateway. A commentary Lambda, triggered when an Analysis report is READY, slices gold examples in Python and makes one Kimi K3 call to draft commentary that lands as an Opal-internal Ticket Center ticket. Two named readers of the raw tier. More outcomes will follow this start (Andrew 2026-09-30).",
+  "brief_ref": "docs/briefs/nfra-trnspt-opal-transcript-database-brief-20260929.md@4206994dd3; docs/briefs/nfra-trnspt-commentary-ingestion-expansion-brief-v3-20260930.md@7d7ff17def",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_TRNSPT_20260930.md@3d825e1a26",
+  "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_06xxZ_TRNSPT_DONE_WHEN_CONFIRMED_PAGEFILE_APPROVED_KIMI_STANDING_WORD.md@6a861c4e18",
+  "andrew_direct_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_001xZ_TRNSPT_THIS_FABRIC_EDICT_STAYS_IN_COO_STARTUP.md@a37f03a470",
+  "placement_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_001xZ_TRNSPT_THIS_FABRIC_EDICT_STAYS_IN_COO_STARTUP.md@a37f03a470",
+  "prds": [
+    "org/missions/D9/NFRA/NFRA_TRNSPT/prd/NFRA_TRNSPT_PRD.md"
+  ],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO"
+  },
+  "coo_lane": "2.0.0_SA_COO~T",
+  "workstreams": {
+    "transcripts": "FWD-1..FWD-5 (Teams meeting transcripts); write surface: the transcripts source, silver and gold tables, and the pull job",
+    "communications": "FWD-6..FWD-11 (market updates, investment feedback, the commentary drafter and its ticket); write surface: the market_update and analysis_commentary tables and the commentary Lambda"
+  },
+  "blocking": "Round 1 EXECUTING. Owned elsewhere and asked through the CTO's relay at L6: S04 transcript tools + a headless transcripts route, S05 stored-sign-in lifetime, S12 the three mail tools + a headless mail route (NFRA_OPLGTW, site Z); laptop worktrees wt-gw-f2/f3/int carry uncommitted mail-tool work by un-relaunched seats (row NFRA_TRNSPT-S1). Hops 1-2 of FWD-1 are exercised only after those land and TR-i-1 is applied under halves; hops 3-6 are exercised this round on the held Monday meeting. Round 2 asks: the IRPT READY hook (S18), the D7 ticket work (S20), the Kimi first call on Andrew's word after C-WIPE-GATE.",
+  "fabric_ruling": "laptop: Andrew-direct 2026-09-30 (\"This fabric will own TRNSPT\"); D9 is LAPTOP as a whole since 2026-09-10 (DIRECTIVES.yaml), so no per-project exception exists or is needed. The gateway project NFRA_OPLGTW stays on site Z as a dependency.",
+  "phase": "L6 ISSUED 2026-09-30 by 2.0.0_SA_COO~T: round 1 = the FWD-1 transcripts thread (TR-t-2, TR-t-1, TR-i-1 desired-only, TR-t-3, TR-t-4, TR-t-5) and the FWD-7 communications thread in test (TR-g-1, TR-b-1, TR-a-1, TR-w-1, TR-k-1, TR-q-1); 12 cells, 4 chains, 4 workers, cap 8. Decomposition decompositions/NFRA_TRNSPT_DECOMP.md. L4 PRD v0.1 @3a6e3dad13 ADMITTED (CVO half @12880e7f00; brief half auto).",
+  "last_updated": "2026-09-30"
+}

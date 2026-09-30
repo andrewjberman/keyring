@@ -74,7 +74,7 @@ any row.
 One criterion: the seam (a real put) is the close run's, under the operator's credentials; a second fixture check
 would add nothing the named tests do not.
 
-<status>staged</status>
+<status>complete</status>
 <round>1</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

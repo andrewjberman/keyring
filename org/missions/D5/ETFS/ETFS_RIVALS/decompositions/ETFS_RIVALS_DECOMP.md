@@ -1,348 +1,386 @@
-# ETFS_RIVALS -- DECOMPOSITION, ROUND 1, THE THREAD (FWD-1 for BASG, H1-H7 crossed once)
+# ETFS_RIVALS -- DECOMPOSITION, ROUND 2 (ENRICHMENT): peer groups, the Bloomberg channel, income-clean trades
 
 ```json
 {
  "project": "ETFS_RIVALS",
- "round": 1,
- "prd_ref": "org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md@808f1eb302 (v0.2, L4-R ADMITTED; bytes of @01e5499ae7 moved from D4)",
- "prd_version": "v0.2",
+ "round": 2,
+ "prd_ref": "org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md@cbf0cfd6b0 (v0.3: Addendum A + C-GOLD-MODEL; endpoint @5bababb75b)",
+ "prd_version": "v0.3",
  "author": "2.0.0_SA_COO~RV",
  "cells": 9,
  "chains": 4,
  "join_cells": 1,
- "frozen": true
+ "frozen": true,
+ "revision": "2.4 at L5 before issuance: home_producer policy value, collector_issuer to b-1 only (2.4); 2.3: m-1 history limb compares to the fund's available history (2.3); G4 security_market moved to round 3 with its consumer FWD-6 (2.1); the vehicle file has ONE writer, RIV-b-1 (2.2)",
+ "round1_decomposition": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.round1.md (bytes of @7926f5194c)"
 }
 ```
 
-**Input:** PRD v0.2 THE THREAD (items 1-7) and SURFACE MANIFEST. **Output of this round:** one live BASG journey, issuer
-site -> bronze -> silver -> `canonical_shape` -> `trade_schedule` -> the day's page at platinum -> `/rivalfunds`, fired
-from AWS. Enrichment (the other five funds, Bloomberg, AI, FWD-2..9) is the PRD's ENRICHMENT BACKLOG and is NOT cut here.
+**Issuer:** `2.0.0_SA_COO~RV`, 2026-09-30 ~16:3xZ.
+
+**Source:** `1.0.0_SA_CTO~Z` msg 27247: *"cut round 2 from C-GOLD-MODEL. The first cell is C-HOME-PRODUCER's measurement; no table is
+built without its row in the lineage matrix."* Andrew confirmed Addendum A's DONE WHEN lines. The round-1 drain-end read is
+`deliverables/2.0.0_SA_COO~RV/round1/DRAIN_END_READ_ROUND1.md` @`4cdb8e59a4`.
+
+**Input state:**
+- Round 1 is 9 of 9 terminal; the BASG thread is live from AWS.
+- The five stage Lambdas, the 07:00 and 09:00 ET schedules, the bucket's EventBridge notification and the marker rules are
+  applied.
+- The gateway serves `/rivalfunds` from deploy-only ref `4ce7946426`.
+
+**Output of this round:** every fund in both peer groups flows through the pipeline, except GQGU (its issuer adapter is
+round 3):
+- the Bloomberg channel for the IDVZ group, plus the Bloomberg-carried PFOE funds;
+- the peer-group map;
+- the multi-source master shape;
+- coverage per fund-day;
+- corporate actions (G3);
+- the income-clean trade schedule with its flow reconciliation;
+- the page grouped by Opal fund.
+
+Served lineage rows: FWD-1 (group layout), FWD-2, FWD-3, FWD-4, FWD-5. FWD-6, -7, -10 and -11 (G7-G13 and the AI prompts) are
+NOT cut here; each needs a table this round builds.
 
 ## Rulings reaching every cell
 
-- **Addresses and names are builder output only** (CLAUDE.md rule 30; PRD C-HOMES, C-NAMES). Code calls
-  `lib/opal_naming.py address(source, scope, tier, table, partition, object=None)` and
-  `name(system, scope, function, kind, qualifier=None)`; a literal `s3://opal-data-etfs/...` or resource name typed in
-  product code is a defect. Measured at this cut, all resolve with 0 refusals:
-  - `address('issuer-site','etfs','bronze','holdings','date=<D>')` -> `s3://opal-data-etfs/issuer-site/etfs/bronze/holdings/date=<D>`
-  - `address('issuer-site','etfs','silver','holdings','date=<D>')` -> `s3://opal-data-etfs/issuer-site/etfs/silver/holdings/date=<D>`
-  - `address('rivalfunds','etfs','gold','canonical_shape','date=<D>')`, `...'trade_schedule'...` -> `s3://opal-data-etfs/rivalfunds/etfs/gold/<table>/date=<D>`
-  - `address('rivalfunds','etfs','platinum','page','date=<D>')` -> `s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=<D>`
-  - `address('rivalfunds','etfs','state','<stage>','date=<D>')` -> `s3://opal-data-etfs/rivalfunds/etfs/state/<stage>/date=<D>`
-  - names (all `grade()` CONFORMANT): `etfs-rivalfunds-daily` (schedule/rule), `etfs-rivalfunds-daily-lambda`,
-    `etfs-rivalfunds-fetch-holdings-lambda`, `rivalfunds-build-silver-lambda` (new, `name('rivalfunds',None,'build-silver','lambda')`),
-    `rivalfunds-build-canonical-shape-lambda`, `rivalfunds-publish-page-lambda`.
-  - NOT conformant, never used: `name('etfs',None,'rivalfunds','role','lambda')` grades OUT-OF-PATTERN; a role name is
-    taken from a `name()` call that grades CONFORMANT or the cell files a row.
-- **Partition dates:** bronze `date=` is the ACQUISITION date (spec S2); silver and gold `date=` are the REPORT date; the
-  page `date=` is the publish day. An undated payload stays in bronze with a status and never acquires a guessed report
-  date (C-SHAPES).
-- **The stage entry contract** (so the infra cell wraps what the stage cells export, without an edge on file contents):
-  every stage module exposes `handler_entry(event: dict, context=None) -> dict`, event
-  `{"date": "YYYY-MM-DD", "mode": "daily"|"backfill"|"replay", "batch_id": str, "sink": "s3"|"local:<dir>"}` (plus
-  `start`/`end` for `backfill`, and optional `start`/`end` for `replay`, default everything under the input prefix), returning
-  `{"status": "OK"|"PARTIAL"|"FAILED"|"SKIPPED", "batch_id", "outputs": [<uri>...], "marker": <uri>|null, "detail"}`.
-  A `local:<dir>` sink mirrors `s3://<bucket>/<key>` as `<dir>/<bucket>/<key>` so every test runs without a served write.
-- **Batch-complete markers** (C-TRIGGERS): a stage writes `address('rivalfunds','etfs','state','<stage>','date=<D>', '<batch_id>.json')`
-  only when its batch is whole; the next stage is idempotent on `batch_id`. Stage names, in order: `fetch-holdings`,
-  `build-silver`, `build-canonical-shape`, `build-trade-schedule`, `publish-page` (the two gold stages run in one
-  Lambda, `rivalfunds-build-canonical-shape-lambda`, each writing its own marker). The marker API is RIV-c-1's
-  `markers.write_marker(stage, date, batch_id, sink, payload=None) -> uri`, `markers.read_markers(stage, date, sink) -> list[dict]`,
-  `markers.has_marker(stage, date, sink) -> bool`.
-- **Universe in round 1: BASG only.** The BASG issuer file carries other Brown Advisory funds; silver keeps every row,
-  gold filters `fund_ticker == 'BASG'`.
-- **Real data, never a fixture, on the seam** (FWD-1 ACCEPT). The captured BASG archive on this box,
-  `C:\Users\Opal Bloomberg\Desktop\ajb_workspace\.runtime\amgt-reconn-daily-census-20260929\basg\` (324 issuer `.txt`
-  files 2025-06-13..2026-09-28, each with a `.json` probe sidecar; gitignored, device-local), is the real neighbour for
-  the silver and gold cells. The live issuer URL is
-  `https://brownadvisory.filepoint.live/assets/data/SEI_Brown_Tradedate_Holdings_<MMDDYYYY>.txt` (pipe-delimited,
-  utf-8-sig; header `date|fund_id|fund_name|fund_cusip|fund_ticker|security_group|security_type|security_number|security_cusip|security_sedol|security_isin|security_ticker|security_description|quantity|market_value|notional_value|percent_of_market_value|percent_of_net_assets`).
-- **No vendor call in round 1.** No Bloomberg (R-21 scripted legs are enrichment), no OpenAI (FWD-7 is enrichment). No
-  alert, monitor or notifier (C-NO-NOTIFIER).
-- **Classification in round 1:** `asset_class` from the source's `security_group`/`security_type` (Cash/Currency -> the
-  vocabulary's cash values via `etf_positioning_gold.is_cash_sentinel`/`classify(is_cash, None)`; common stock ->
-  Equity); equity `sub_asset_class` and every GICS level are NULL with status `UNRESOLVED` and source `none (GICS is
-  Bloomberg enrichment)`. Row `ETFS_RIVALS-Z-S1` (the vocabulary's sector-valued sub-asset class vs C-SHAPES) binds the
-  enrichment round, not this one.
-
-## Cross-project sequencing
-
-- ETFS_RIVALS is not listed in `org/missions/SEQUENCE.yaml` (sequence-check 2026-09-30: unsequenced; no cap ruled; 6
-  COO lanes live on site Z).
-- `etfs-netassets-daily` (ETFS_INGEST) is never read, extended or migrated (C-SEPARATE-PIPELINE).
-- `ETFS_GUARDRAIL`'s armed gates (comp-schedule G-1..: etfs-reports-monthly-run) touch `etfs-reports-*`, not this
-  pipeline's prefixes or names.
+- **Round 1's rulings stand**, verbatim in `ETFS_RIVALS_DECOMP.round1.md` "Rulings reaching every cell": builder-only addresses
+  and names, partition dates, the stage entry contract, batch-complete markers, real data on the seam, and classification.
+  The rulings below amend or add to them.
+- **Builder output, measured at this cut with 0 refusals:**
+  - Bloomberg bronze and silver:
+    `address('bloomberg','etfs','bronze','holdings','date=<D>')` -> `s3://opal-data-etfs/bloomberg/etfs/bronze/holdings/date=<D>`, and
+    the same for `silver`.
+  - All 14 gold tables: `address('rivalfunds','etfs','gold','<table>','date=<D>')` for `peer_group_map`, `canonical_shape`,
+    `holdings_coverage`, `corporate_actions`, `security_market`, `trade_schedule`, `flow_reconciliation`, and the
+    unbuilt G7-G13.
+  - Lambda name `rivalfunds-fetch-bloomberg-lambda` grades CONFORMANT. It is NOT used this round: the Bloomberg channel runs
+    on the terminal machine (below).
+- **State-tier tables are snake case** (round-1 amendment `746558e232`, row W3-S5). A new stage `<s>` writes
+  `address('rivalfunds','etfs','state', homes.state_table(<s>), ...)`. New stage names this round:
+  - `fetch-bloomberg`
+  - `build-bloomberg-silver`
+  - `pull-enrichment`
+  - `build-peer-group-map`
+  - `build-coverage`
+  - `build-flow-reconciliation`
+  - **The issuer registers all six in `homes.STAGES` in the issuance commit.** Three wave-1 cells would otherwise each edit
+    that one tuple. No cell edits `homes.py` this round.
+- **The universe is the peer-group map, never a hard-coded ticker** (C-PEER-GROUPS). Round 1's `fund_ticker == 'BASG'` filter
+  is replaced by `universe.funds(...)` from RIV-u-1. Storage stays flat, keyed by fund. Grouping is the map's and the page's
+  (Andrew-direct 2026-09-30: *"Flat is honestly fine, we'll just have a lambda control the grouping for the output"*).
+- **The two groups, from the PRD (C-PEER-GROUPS):**
+  - IDVZ: IDVZ (home), TXUE, BIDD, CGIC, INEQ, SCHY (`index_control`); `source_policy` `bloomberg_primary`.
+  - PFOE: PFOE (home), WCMG, GQGU, TSEL, BASG, ETFT, PCLG; `source_policy` `issuer_first`.
+  - A home fund's source is set by RIV-m-1's verdict (C-HOME-PRODUCER). Until then the map records it as
+    `home_producer_pending` and no stage reads a home fund.
+- **The Bloomberg channel runs ON THE TERMINAL MACHINE, never in AWS** (C-VENDOR R-21: scripted only, never an agent-turn
+  call). Its daily form is a NEW isolated leg of `integrations/bloomberg/pipeline/scheduled_daily_pull.cmd` (the 08:03 ET
+  vehicle):
+  - it has its own rc variable and disjoint exit codes **80-83**;
+  - it is **gated OFF by default** behind `RIVALFUNDS_BBG_LEG=1`, because the vehicle runs the working tree and a merge
+    would otherwise go live the next morning;
+  - RIV-d-3 turns it on under the pair.
+  - It lands Bloomberg bronze plus a sidecar in S3. From there the AWS stages fire on markers, as in round 1.
+- **Backfill is QA-class and IMPORTS the existing captures; it never re-pulls them** (C-SOURCE-POLICY: *"A backfill is QA-class
+  data landing"*). The device-local Excel BQL census captures are real Bloomberg responses from a scripted pull. Each
+  lands as bronze with provenance `capture_origin = census:<script>@<at>`:
+  - `.runtime/etfs-rivals-idvz-20260930/daily/` (503 files, IDVZ group);
+  - `.runtime/amgt-reconn-daily-census-20260929/` (441 dated files, PFOE group).
+  - Days after each capture set's last date come from the live daily leg.
+- **The daily event date (rules row W1-S1).** A daily event's `date` is the ACT day, and the collector fetches the report
+  for `prev_trading_day(date)`. Markers partition by the event `date`. Silver and gold partition by REPORT date, as round
+  1 ruled.
+- **Bronze object keys carry the requested date (rules row W1-S2):**
+  `<fund_or_batch>-<requested_date>-<ts>-<sha256[:12]>.<ext>`, for both the issuer and the Bloomberg collectors. The
+  same-second collision becomes impossible by construction.
+- **No OpenAI this round.** No prompt is cut; P1-P4 need G7-G12, which are not built. No alert, monitor or notifier.
+- **Classification** keeps round 1's rule. The GICS hierarchy stays UNRESOLVED, because its source G4 is round 3.
+  `sub_asset_class` stays UNRESOLVED for equities until the CTO rules row `ETFS_RIVALS-Z-S1` (still open).
 
 ## 1. THE DOMAIN, BY SUBTRACTION
 
-Domain = the PRD's THE THREAD items 1-7 (H1-H7 for BASG), printed denominator 7.
+Domain = the lineage matrix rows whose tables this round can build without a round-3 table, plus the PRD's C-HOME-PRODUCER
+cell and the round-1 rows ruled into this round. Printed denominator: **5 lineage rows + 1 contract + 2 rows = 8**.
 
-| hop | PRD thread item | cell(s) | residue |
+| item | source | cell(s) | residue |
 |---|---|---|---|
-| H1 homes | 1 | RIV-c-1 (homes module; registry already landed @d451070fb1) | 0 |
-| H2 backfill into issuer bronze | 2 | RIV-c-1 (collector code), RIV-d-2 (the served backfill landing) | 0 |
-| H3 silver | 3 | RIV-s-1 | 0 |
-| H4 gold | 4 | RIV-g-1 (`canonical_shape`), RIV-g-2 (`trade_schedule`) | 0 |
-| H5 page + serving | 5 | RIV-p-1 (render, platinum write), RIV-w-1 (gateway routes + grant), RIV-d-2 (deploy) | 0 |
-| H7 guardrails | 6 | RIV-p-1 | 0 |
-| H6 daily + AWS reachability | 7 | RIV-r-1 (first test), RIV-d-1 (schedule, triggers, wrappers), RIV-d-2 (apply + live fire) | 0 |
+| FWD-1 group layout (G0, G1 header) | lineage row 1, without G11 | RIV-u-1, RIV-p-2 | 0; G11 (ranks) is round 3 |
+| FWD-2 history and freshness (G2) | lineage row 2 | RIV-h-1, RIV-p-2 | 0 |
+| FWD-3 source per fund per day (G0, G2, G1) | lineage row 3 | RIV-b-1, RIV-u-1, RIV-g-3, RIV-h-1, RIV-p-2, RIV-d-3 | 0; GQGU's issuer adapter is round 3 |
+| FWD-4 master shape side by side (G1) | lineage row 4 | RIV-g-3, RIV-p-2 | 0 |
+| FWD-5 trade schedule, income-clean (G5, G6, G3) | lineage row 5 | RIV-e-1, RIV-g-4, RIV-p-2 | 0; P1 is round 3 (no OpenAI) |
+| C-HOME-PRODUCER, the first cell | contract | RIV-m-1 | 0 |
+| W1-S1 daily event date semantics | round-1 row | ruling above | 0 |
+| W1-S2 bronze key has no requested date | round-1 row | RIV-b-1 | 0 |
 
-7 of 7 hops owned; residue 0. Manifest surfaces with no round-1 cell, by subtraction from the SURFACE MANIFEST: the
-Bloomberg morning-vehicle leg (READS Bloomberg; enrichment FWD-3), OpenAI (enrichment FWD-7), the identity layer's
-`add_security` registration (Bloomberg-backed; enrichment). Each is in the PRD's ENRICHMENT BACKLOG.
+**NOT this round, by subtraction:**
+- G4 `security_market` (prices, total return, GICS). Its only lineage consumer is FWD-6, and the census captures carry no
+  price or GICS field, so it could only be tested live. It belongs with its consumer. (Revision 2.1 at L5, before issuance.)
+- FWD-6 (G7, G8, G4 coverage), FWD-7 (G10, G12, G13, P3, P4), FWD-10 (G9), FWD-11 (G11): round 3, which reads this round's
+  G1-G6.
+- FWD-8 (the rebuild) and FWD-9 (the guardrails exercised, thresholds from real data, row W1-S5).
+- GQGU's issuer adapter, and the other four PFOE issuers' daily adapters. Bloomberg covers them as the fallback.
+- The identity layer's CUSIP coverage (row W1-S4). Bloomberg-form identifiers resolve through the existing crosswalk.
+- The gateway deploy lock and the untagged deploy refs (rows W5-S14/S15): CTO-class, carried in the drain-end read.
 
 ## 2. THE RECTANGLE -- 9 cells
 
-Status vocabulary (Rule 24 (i)): `NOT-EVALUATED` | `ABSENT` (measured: nothing in the tree) | `PARTIAL` (measured:
-something exists and does not meet the cell) | `PRESENT` (measured: meets the cell). Every status below is measured at
-the cut (2026-09-30 ~06:45Z).
+Status is measured at the cut (2026-09-30 ~16:2xZ).
 
-| cell | hop | status (evidence) | risk floor |
-|---|---|---|---|
-| `RIV-c-1` | H1+H2 | ABSENT (`data/etfs/scripts/rivalfunds/` does not exist) | LOCAL |
-| `RIV-s-1` | H3 | ABSENT (same) | LOCAL |
-| `RIV-g-1` | H4a | ABSENT (same) | LOCAL |
-| `RIV-g-2` | H4b | ABSENT (same; method proven in `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/trade_inference_probe.py`) | LOCAL |
-| `RIV-p-1` | H5+H7 | ABSENT (same) | LOCAL |
-| `RIV-w-1` | H5 serving | ABSENT (`infra/aws/ec2/opal-gateway/app/rivalfunds_view.py` does not exist) | WORLD (infra path; nothing applied) |
-| `RIV-d-1` | H6 | ABSENT (`infra/aws/terraform/etfs-rivalfunds/` does not exist; `opal-data-etfs` carries no `aws_s3_bucket_notification` in any `*.tf`) | WORLD (infra path; plan only) |
-| `RIV-r-1` | H6 first test | NOT-EVALUATED (brief IV.1: none of the six fetched from AWS) | WORLD |
-| `RIV-d-2` | H2/H5/H6 live | ABSENT (nothing deployed; no page exists) | WORLD |
+| cell | serves | status (evidence) | risk | class |
+|---|---|---|---|---|
+| `RIV-m-1` | C-HOME-PRODUCER | NOT-EVALUATED (`etf_constituents_pull.py` lands `bbg/<as-of>/constituents/`; capture-forward only; `FUNDS = ["DIVZ","IDVZ","PFDE","PFOE"]`) | WORLD (reads S3) | worker-light |
+| `RIV-u-1` | FWD-1, FWD-3, FWD-12 | ABSENT (no `peer_group_map`; round-1 gold filters `fund_ticker == 'BASG'`) | LOCAL | worker |
+| `RIV-b-1` | FWD-3 | ABSENT (no Bloomberg collector; `bloomberg/etfs/` has 0 objects) | LOCAL | worker |
+| `RIV-e-1` | FWD-5 (G3) | ABSENT (the method is proven in CRO~Z's `dividend_history_pull.py`; 738 securities, 0 errors) | LOCAL | worker |
+| `RIV-g-3` | FWD-3, FWD-4 | PARTIAL (`gold_canonical_shape.py` serves BASG from issuer silver only) | LOCAL | worker |
+| `RIV-h-1` | FWD-2, FWD-3 | ABSENT | LOCAL | worker |
+| `RIV-g-4` | FWD-5 | PARTIAL (`gold_trade_schedule.py`: flow model, 0.2% floor, BASG only; cash lines not excluded; no corporate actions; no G6) | LOCAL | worker |
+| `RIV-p-2` | FWD-1 layout, FWD-2, FWD-3, FWD-4, FWD-5 views | PARTIAL (`publish_page.py` renders one fund) | LOCAL | worker |
+| `RIV-d-3` | the live join | ABSENT | WORLD | worker |
 
-## 3. THE CELLS -- 9 (round 1)
+## 3. THE CELLS -- 9 (round 2)
 
-### `RIV-c-1` -- package core + the issuer collector, BASG adapter (H1, H2 code)
+### `RIV-m-1` -- measure the home producer against FWD-2/3's grain (C-HOME-PRODUCER)
 
-Build the package `data/etfs/scripts/rivalfunds/` core and the issuer collector:
-- `__init__.py`; `homes.py` -- every address and name this pipeline uses, each computed by `address()`/`name()` at import
-  (the list in the rulings above), raising on a builder refusal; `markers.py` -- write/read a batch-complete marker at the
-  state address, idempotent on `batch_id` (a second write of the same batch is a no-op returning the existing marker);
-  `sinks.py` -- `s3` and `local:<dir>` sinks with read-back on put (the bytes read back equal the bytes written, else raise).
-- `collector_issuer.py` + `adapters/basg.py` -- `handler_entry` for stage `fetch-holdings`. `daily`: fetch BASG's file for
-  T-1, `prev_trading_day(<today in America/New_York>)` (`lib/trading_calendar.py`), land the raw bytes unchanged in issuer bronze at
-  `address('issuer-site','etfs','bronze','holdings','date=<acq>', 'basg-<ts>-<sha256[:12]>.txt')` with a JSON sidecar
-  beside it (capture time UTC, requested date, URL, HTTP status, sha256, byte length, `claimed_report_date` = the file's
-  internal `date` column value for BASG rows, `date_evidence` = `internal-date-column`, `status`). `backfill`: the same for
-  every trading day in `[start, end]`, one file per day, a 404 recorded as status `NOT-PUBLISHED` in a sidecar and not a
-  failure. A file whose internal date for BASG rows does not equal the requested date, or that has no BASG rows, lands with
-  status `DATE-MISMATCH` / `NO-FUND-ROWS` and NO report date (`report_date` is set only on status `OK`). The sidecar also
-  carries `runtime` = the `AWS_LAMBDA_FUNCTION_NAME` environment value, else `local`. The landing act is one public function
-  both modes call: `land_bronze(raw: bytes, requested_date: str, source_url: str, sink: str, captured_at: str | None = None)
-  -> dict` (the sidecar, with `bronze_uri` and `status`), the bronze `date=` taken from `captured_at` (default now, UTC).
-  Write the stage marker when the batch is whole. Retry: 3 attempts, backoff; timeout 30 s per request.
-- tests in `data/etfs/scripts/rivalfunds/tests/test_c1_*.py`.
+Read-only. For IDVZ and PFOE, measure what `integrations/bloomberg/pipeline/etf_constituents_pull.py` and its inputs actually
+provide. That is every `s3://opal-data-etfs/bbg/<as-of>/constituents/` run, plus the Pathfinder silver for PFOE and the
+TrueShares route for IDVZ that the script names. For each home fund, per trading day since the first run:
+- (a) is there a holdings list dated that day;
+- (b) does every position carry a share count;
+- (c) how many trading days of history exist.
 
-### `RIV-s-1` -- bronze to typed silver, the BASG issuer shape (H3)
+Print the denominators: runs listed over every page, and trading days in the window from `lib/trading_calendar.py`.
+Write `deliverables/0.9.0_WK_ETFS_RIVALS~4/m1_home_producer.json`, one object per fund:
+- `daily_days`, `days_in_window`, `share_count_rows`, `total_rows`, `first_date`, `last_date`;
+- `history_reference_date` and `history_reference_source`: the date FWD-2's history must reach.
+  - For a fund in CRO~Z's census, it is that fund's first Bloomberg report date, read from
+    `.runtime/etfs-rivals-idvz-20260930/census_summary.json` (IDVZ: 2024-12-27).
+  - Where no census measured the fund (PFOE), it is `last_date` minus two years (FWD-2's cap).
+- `meets_grain` (true only if (a) holds on 95% or more of trading days AND (b) on 100% of rows AND (c) `first_date` is on or
+  before `history_reference_date`). A capture-forward producer can never backfill, so (c) is the decisive limb.
+- `verdict` in {`READ`, `JOIN_BLOOMBERG`};
+- the evidence keys.
 
-`data/etfs/scripts/rivalfunds/silver_issuer.py`, `handler_entry` for stage `build-silver`: read the issuer bronze objects
-of a batch (the `fetch-holdings` marker's outputs) or, in `replay`, every bronze object under the issuer bronze prefix for a
-date range; parse pipe-delimited utf-8-sig; type every source column (dates, decimals as float64, identifiers as strings
-with leading zeros kept); keep EVERY source row and column (all Brown funds, cash and currency lines), plus lineage columns
-(`bronze_uri`, `sha256`, `captured_at`, `parser_version`); dedupe ACROSS captures only: when two captures carry the same
-report date, the latest capture's rows win whole and the other capture's are dropped (count recorded); rows within one
-capture are never dropped; a replay of bronze already in silver adds nothing; write Parquet to
-`address('issuer-site','etfs','silver','holdings','date=<report_date>', 'basg-<capture_id>.parquet')`; skip bronze whose
-sidecar status is not OK (counted in `detail.skipped_not_ok`, never given a date); write the marker. Tests `tests/test_s1_*.py`. Consumes RIV-c-1's
-bronze layout and sidecar.
+Nothing is written to S3 and no producer is changed.
 
-### `RIV-g-1` -- gold `canonical_shape` for BASG (H4a)
+### `RIV-u-1` -- the peer-group map (G0) and the universe module
 
-`data/etfs/scripts/rivalfunds/gold_canonical_shape.py`, `handler_entry` for stage `build-canonical-shape` (first half):
-coalesce the issuer silver of a report date (in `replay`, every silver report date) into the master shape of spec S4
-(`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/GOLD_TABLES_AND_PROMPTS.md` S4): grain one
-disclosed position per fund x report date x dataset revision, unique on (`fund_id`, `snapshot_id`, `position_id`); the
-S4 families fund, position identity, economic position, instrument, Opal classification, GICS hierarchy (SEPARATE
-fields, C-SHAPES v0.2), provider classifications, dates and lineage, research quality, and `extra_attributes` (a
-source-namespaced map keeping every source field that has no canonical column). Identity through
-`lib/research/identity/crosswalk.resolve()` tried on CUSIP, then ISIN, then SEDOL, then ticker; a miss keeps the position
-with `resolution_status = UNRESOLVED` and the raw identifier, never a guessed key. Cash, currency and unidentified
-positions stay as rows. Classification per the round-1 ruling above. Filter `fund_ticker == 'BASG'`. Columns the checks
-read by name (more S4 columns are welcome): `fund_id, fund_ticker, report_date, snapshot_id, position_id, security_id,
-raw_identifier, resolution_status, quantity, market_value, weight, position_type` (`cash` for cash and currency lines),
-`asset_class, sub_asset_class, sub_asset_class_status, gics_sector, gics_industry_group, gics_industry, gics_sub_industry,
-gics_status, extra_attributes` (a JSON string), `source_channel, bronze_uri, sha256`. Write
-`address('rivalfunds','etfs','gold','canonical_shape','date=<report_date>', 'holdings-<revision>.parquet')`. Tests
-`tests/test_g1_*.py`. Consumes RIV-s-1's silver.
+- **`data/etfs/scripts/rivalfunds/peer_groups.json`:** the declared mapping, one entry per (group, fund):
+  - `group_id`, `home_fund_id`, `fund_id`, `ticker`;
+  - `role` in {`home`, `rival`, `index_control`};
+  - `source_policy` in {`bloomberg_primary`, `issuer_first`, `home_producer`, `home_producer_pending`};
+  - `effective_from`, `map_version`.
+  - The two groups are as the rulings state. A fund in two groups appears once per group, with one `fund_id`.
+- **`universe.py`:**
+  - `groups()`, `funds(group_id=None, source_policy=None)`, `policy(fund_id)`, `role(fund_id, group_id)`;
+  - it refuses a malformed map: duplicate (group, fund), an unknown enum value, or a group with no `home`.
+- **`gold_peer_group_map.py`:** `handler_entry` for stage `build-peer-group-map`. It writes G0 to
+  `address('rivalfunds','etfs','gold','peer_group_map','date=<D>', 'map-<map_version>.parquet')`, never-overwrite, with the
+  C-GOLD-MODEL provenance columns.
+- **Round-1 stages read the universe:**
+  - `gold_canonical_shape.py`, `gold_trade_schedule.py` and `publish_page.py` replace the `BASG` literal with `universe.funds()`;
+  - `collector_issuer.py` is NOT touched here. Its adapter table already limits it to BASG, and RIV-b-1 owns that file this
+    wave (the W1-S2 key fix).
+  - Behaviour for BASG is unchanged, and round 1's AC checks still pass.
 
-### `RIV-g-2` -- gold `trade_schedule` for BASG (H4b, the foundation)
+### `RIV-b-1` -- the Bloomberg holdings channel: collector, silver, the vehicle leg (gated off)
 
-`data/etfs/scripts/rivalfunds/gold_trade_schedule.py`, `handler_entry` for stage `build-trade-schedule` (fired by the
-`build-canonical-shape` marker, or in `replay` over every `canonical_shape` date), with the inference as a pure public
-function `infer_trades(canonical: DataFrame) -> DataFrame` over `canonical_shape` rows of one fund: for each pair of
-consecutive GENUINELY dated BASG reports in `canonical_shape`, over non-cash positions keyed by `security_id` when RESOLVED,
-else by the raw CUSIP with confidence `UNRESOLVED` (C-TRADE-SCHEDULE, spec S5 `trade_schedule`): flow factor `f` = median of
-`q_t / q_{t-1}` over positions held on both dates; discretionary shares `q_t - f*q_{t-1}`; a trade is a residual of at
-least 0.2% of prior shares, plus every entry and exit; action `entry|add|trim|exit`; window `(prior_report_date,
-report_date]`, `date` = window end, window length in trading days; estimated price = issuer implied close
-(`market_value / quantity`) of the report carrying the position (the prior report for an exit), band `null` with reason
-`bloomberg-band-enrichment`; notional = discretionary shares x price; weights before/after; confidence class
-`CLEAN|FLOW-WINDOW|STALE-WIDENED|ID-CHANGE|CORP-ACTION|UNRESOLVED`; columns at least `fund_ticker, security_key, action,
-window_start, window_end, shares_before, shares_after, flow_factor, discretionary_shares, est_price, est_notional,
-weight_before, weight_after, window_trading_days, confidence`; `corporate_actions_applied = none-available-round-1`,
-`dividends_applied = none-available-round-1`. Never placed on a day finer than its window. A pair of positions that exit
-and enter on the same window with equal quantity x price within 1% is flagged `ID-CHANGE` rather than two trades. Write
-`address('rivalfunds','etfs','gold','trade_schedule','date=<report_date>', 'trades-<revision>.parquet')` and the stage
-marker. Tests `tests/test_g2_*.py`. Consumes RIV-g-1's `canonical_shape`.
+- **`collector_bloomberg.py`:** `handler_entry` for stage `fetch-bloomberg`, run on the terminal machine. The request is ONE
+  multi-fund dated Excel BQL query per trading day, the method of CRO~Z's
+  `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/bbg_daily_coverage_census_multi.py`, which is
+  the only proven Bloomberg holdings route. Three modes:
+  - `daily`: the date is `prev_trading_day(<act day>)`. Funds are `universe.funds(source_policy='bloomberg_primary')` plus every
+    `issuer_first` fund with no issuer bronze for that report date. GQGU is excluded: Bloomberg does not carry it, and the
+    sidecar records `NO-BLOOMBERG-ROUTE`.
+  - `backfill`: the same over `[start, end]`.
+  - `import`: lands existing capture files (`{requested_date, at, query, anchor, rows}`) as bronze with
+    `capture_origin = census:<file>@<at>`. The `at` becomes `captured_at`.
+- **Landing:** the raw response bytes go unchanged to `address('bloomberg','etfs','bronze','holdings','date=<acq>', '<batch>-<requested_date>-<ts>-<sha12>.json')`
+  with a sidecar. The sidecar carries:
+  - `captured_at`, `requested_date`, `funds`, `query`, `row_count` per fund, `sha256`, `status`;
+  - `claimed_report_date` per fund (the modal report date of that fund's rows);
+  - `capture_origin`.
+  - Also here: the issuer collector's key gains `-<requested_date>-` (row W1-S2).
+  - The fetch-bloomberg marker is written when the batch is whole.
+- **`silver_bloomberg.py`:** `handler_entry` for stage `build-bloomberg-silver`. It types every row of every fund into
+  `address('bloomberg','etfs','silver','holdings','date=<report_date>', ...)`, keeping every column. It is idempotent on `batch_id`,
+  and the latest capture wins per (fund, report date), as round-1 silver does.
+- **The vehicle leg:** `scheduled_daily_pull.cmd` gains `:rivalfunds_bbg_leg`, placed immediately after the `:prune`
+  label. Every existing path reaches `:prune`, so NO existing line changes: the file at `2e38c030f4`, its last change, stays
+  a line-for-line subsequence of the new file.
+  - It is gated by `RIVALFUNDS_BBG_LEG=1`, which is absent by default: a skip line in the log, rc not set.
+  - It has its own `RC_RIVBBG`, exit codes 80 (landed), 81 (Bloomberg unreachable), 82 (partial), 83 (nothing written).
+  - It then invokes `data/etfs/scripts/rivalfunds/enrichment_bloomberg.py` in daily mode, IF that file exists (RIV-e-1
+    builds it), with its own `RC_RIVENR` and codes 84-87 (the same meanings). An absent file is a logged skip, as
+    `:cons_missing` does.
+  - It never touches `%RC%`, `%RC_ETF%` or `%RC_CONS%`.
+- **Tests:**
+  - the real IDVZ-group captures for 2026-09-29 and 2026-09-28 through `import`, to a local sink, then silver;
+  - one planted malformed capture.
 
-### `RIV-p-1` -- the day's page and the pre-publish guardrails (H5 render, H7)
+### `RIV-e-1` -- Bloomberg enrichment: `corporate_actions` (G3)
 
-`data/etfs/scripts/rivalfunds/publish_page.py`, `guardrails.py`, `render.py`, `handler_entry` for stage `publish-page`:
-render ONE self-contained HTML page (inline CSS and inline SVG only; no external script) for the publish day: it LEADS
-with BASG's most recent trades (C-ONE-SIGNAL), newest window first; each trade row opens a trace panel showing the two
-reports it was inferred from (the position's row in each `canonical_shape` snapshot: date, quantity, market value, weight)
-and, for each report, the issuer file URL, bronze key and sha256. Below: the latest report's holdings (cash and unresolved
-visible) and a data-status block naming source, report dates and the round-1 absences (no GICS, no Bloomberg band, no
-dividends). Before any write, run the six C-GUARDRAILS checks (report-date freshness, content repeat, completeness,
-identity coverage, analysis grounding, render and read-back); round 1 has no AI text, so analysis grounding returns
-`NOT-APPLICABLE` with that reason; thresholds are read from `guardrails_config.json`, every value marked `PROVISIONAL`
-(C-GUARDRAILS: the real thresholds come from a named enrichment cell). A failed check publishes the page with BASG marked
-`data-status="not-updated"`, the failing check named, and NO trades table; it never renders failed figures as normal. The
-event key `plant_failure: "<check>"` forces that check to fail (the H7 exercise). Sections carry `id="trades"` and
-`id="holdings"`; each trace panel carries `class="trace"`. The manifest carries `checks` (`[{check, status, reason}]`,
-names `report_date_freshness, content_repeat, completeness, identity_coverage, analysis_grounding, render_readback`),
-`readback`, `revisions` and `runtime` (as the sidecar's). Write
-`index.html` and `manifest.json` (inputs with URIs and hashes, check results) to
-`address('rivalfunds','etfs','platinum','page','date=<day>', ...)` with read-back; a rerun that changes the bytes keeps
-the prior object under `revisions/<utc-ts>/` and records it in the manifest, never a silent overwrite. Tests
-`tests/test_p1_*.py`. Consumes RIV-g-2's `trade_schedule` and RIV-g-1's `canonical_shape`.
+- **`enrichment_bloomberg.py`:** `handler_entry` for stage `pull-enrichment`, on the terminal machine. It is scripted via
+  `integrations/bloomberg/mcp/blp_client.py`, the shared client CRO~Z's `dividend_history_pull.py` used.
+  - **For every security in G1 across the universe:** `DVD_HIST_ALL` over the history window lands G3 `corporate_actions`
+    (C-GOLD-MODEL columns). `event_type` maps Bloomberg's dividend types:
+    - Final/Interim/Special/Regular Cash -> `cash_div`;
+    - Stock Split -> `split`;
+    - Stock Dividend -> `stock_div`;
+    - Spinoff -> `spinoff`;
+    - Bonus -> `bonus`;
+    - Rights Issue -> `rights`;
+    - an unmapped type -> carried with `event_type = unmapped:<raw>`, never dropped.
+  - `NOT_APPLICABLE_TO_REF_DATA` is recorded as a status row, not an error.
+- **An `import` mode** reads CRO~Z's existing `.runtime/etfs-rivals-idvz-20260930/dividends.json` (738 securities) as QA-class
+  G3 input, with provenance.
+- **The vehicle does NOT change in this cell.** RIV-b-1's leg invokes `enrichment_bloomberg.py` (daily mode) when the file
+  exists, with codes 84-87. One writer of the vehicle file per round: two cells inserting at the same point guarantee a merge
+  conflict.
+- **Tests:** a real slice of `dividends.json`, with at least one of each share-changing type present. The mapping must be
+  total over the raw types in that file.
 
-### `RIV-w-1` -- the gateway routes and read grant (H5 serving)
+### `RIV-g-3` -- `canonical_shape` v2: every fund, every source, per the map's policy
 
-`infra/aws/ec2/opal-gateway/app/rivalfunds_view.py` (new), modelled on `sprint_view.py`: `is_rivalfunds_path(path)`,
-`rivalfunds_page` (`/rivalfunds` -> the newest published day), `rivalfunds_day` (`/rivalfunds/{day}`, day
-`YYYY-MM-DD`), `rivalfunds_archive` (`/rivalfunds/archive`, a delimiter listing of the platinum `page/` prefix whose
-`CommonPrefixes` are `date=YYYY-MM-DD/`), reading `index.html` with the 2 MB cap; module-level `_s3()`, `_viewer(request)`,
-`_list_days()` and `_location() -> (bucket, key_prefix)` as `/sprint` shapes them; bucket and prefix never typed: the
-gateway host carries no `lib/`, so `app/gen_rivalfunds_location.py` (new) writes `app/rivalfunds_location.json` from
-`address('rivalfunds','etfs','platinum','page', ...)` and the module reads that file; viewers = any signed-in account (C-SERVING;
-`identity.get_user_email` non-empty), each view audit-logged like `/sprint`. `infra/aws/terraform/opal-gateway/rivalfunds-iam.tf`
-(new): one `aws_iam_role_policy` on `aws_iam_role.gw` whose document is `file()` of
-`infra/aws/terraform/opal-gateway/rivalfunds-iam.policy.json` (new, written by the same generator from `address()`):
-`s3:GetObject` on the page prefix `/*` only; `s3:ListBucket` on the bucket with `s3:prefix` limited to the page prefix;
-no Put, no Delete, nothing else in the bucket. Tests
-`infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py` (new). The route lines in `server.py` and any `config.py`
-entry are HOOKUPS, added by the COO at the merge; the cell's report names them.
+- `gold_canonical_shape.py` coalesces issuer silver, Bloomberg silver and (when m-1's verdict is `READ`) the home producer.
+- Per fund and report date it takes ONE source, the one `holdings_coverage`'s selection rule names:
+  - `bloomberg_primary`: Bloomberg;
+  - `issuer_first`: the issuer if present for that report date, else Bloomberg.
+- G1 gains three columns:
+  - `source_used` in {`issuer`, `bloomberg`, `home_producer`};
+  - `is_cash_line`: the vocabulary's cash sentinel, plus Bloomberg `* Curncy` securities, plus TXUE's `9996651D`-class cash
+    lines, as CRO~Z's census names them;
+  - `corporate_action_adjusted`: false in G1. G5 applies the actions; G1 stays as published.
+- The GICS hierarchy stays UNRESOLVED, as in round 1. G4 `security_market`, its only source, is round 3 with FWD-6.
+- A Bloomberg row's `position_id` is its Bloomberg security id; an issuer row's is as in round 1.
+- Round 1's BASG output is unchanged apart from the new columns.
 
-### `RIV-d-1` -- the daily run: Lambdas, schedule, triggers, sweep (H6 code, plan only)
+### `RIV-h-1` -- `holdings_coverage` (G2)
 
-`infra/aws/terraform/etfs-rivalfunds/` (new stack, pattern `infra/aws/terraform/etfs-netassets/netassets-lambda.tf` and
-`infra/aws/terraform/cot-pipeline/s3-notifications.tf`): five zip Lambdas named per the rulings, each wrapping one stage's
-`handler_entry` (wrappers `infra/aws/lambda/etfs-pipeline/<lambda-name>/lambda_function.py`, one import and one call each),
-packaged by `infra/aws/lambda/etfs-pipeline/rivalfunds_package.py` (Python, so the check runs it portably; it stages `data/etfs/scripts/rivalfunds/`,
-`lib/opal_naming.py`, `lib/trading_calendar.py`, `lib/research/identity/` and `infra/logic/registry/` into a build
-directory `<tree root>/.runtime/rivalfunds-build/` (gitignored; the `.tf` reaches it as `${path.module}/../../../../.runtime/rivalfunds-build`)
-that `archive_file` zips) with
-the existing pandas-pyarrow-requests layer; every name and prefix the `.tf` files use comes from
-`generated.auto.tfvars.json`, and every role policy is `policies/<lambda-name>.json`, both written by
-`infra/aws/terraform/etfs-rivalfunds/gen_policies.py --out <dir>` from `address()`/`name()` (rule 30: no `.tf` types the
-bucket or a resource name); one IAM role per Lambda (role names from a CONFORMANT `name()` call) with
-Put/Get only under the eight builder prefixes it needs and Get on `opal-data-harvest/crosswalk/v1/*` for the build stage;
-an EventBridge Scheduler schedule `etfs-rivalfunds-daily` at 07:00 America/New_York Mon-Fri invoking the fetch Lambda; a
-second schedule (qualifier from `name()`) at 09:00 America/New_York Mon-Fri invoking `etfs-rivalfunds-daily-lambda`, the
-sweep; `aws_s3_bucket_notification` on `opal-data-etfs` with `eventbridge = true` and nothing else (the bucket's ONE
-notification owner, C-TRIGGERS; the live configuration is empty); EventBridge rules on Object Created under the state
-prefix of each stage invoking the next stage. The sweep, `data/etfs/scripts/rivalfunds/sweep.py` `handler_entry`: for the
-day, run any stage whose input marker has no output marker, in order, then publish; idempotent; public
-`run_sweep(date, sink, runners: dict[stage, callable(event) -> result])` so the runners are injectable, and `handler_entry`
-binding the real stage modules. No alarm, no SNS (C-NO-NOTIFIER).
-`terraform plan` only; nothing is applied in this cell. `ci/lambda-source-map.json` entries are HOOKUPS added at the merge.
-The backend is `s3` bucket `opal-313476888478-terraform-state` key `etfs-rivalfunds/tfstate` (the `etfs-netassets` pattern);
-the check plans against a local throwaway state through a temporary `backend_override.tf`.
+- `gold_holdings_coverage.py`: `handler_entry` for stage `build-coverage`. One row per fund x expected report date (every
+  trading day in the window) x source seen.
+- `status` in {`new` (a report dated this day, differing from the prior), `repeat` (a report dated earlier re-published),
+  `gap` (nothing), `periodic` (the fund reports on a non-daily cadence, measured, not assumed)}.
+- Also: `row_count`, `weight_sum`, `selected` (the one source G1 used) and `selection_reason`.
+- The keying rule is the MODAL report date of a fund's rows. A lingering 0%-weight line with an older date never makes a
+  fresh day `repeat`; CRO~Z measured TXUE `9996651D`, INEQ `SUNB` and SCHY `CCH LN`.
 
-### `RIV-r-1` -- AWS reachability of BASG's issuer site (H6 first test)
+### `RIV-g-4` -- `trade_schedule` v2, income-clean, with `flow_reconciliation` (G6)
 
-From an Opal AWS host, one read-only HTTPS GET of BASG's issuer file for the last trading day, recording status code, bytes,
-elapsed time and the first line; and the same GET for `https://brownadvisory.filepoint.live/` root. Instrument: `aws ssm
-send-command` with `AWS-RunShellScript` on the opal-gateway instance (read its instance id from
-`infra/aws/ec2/EC2_MANIFEST.json`), a single `curl -sS -o /tmp/basg.txt -w ...` plus `head -1 /tmp/basg.txt` and
-`rm /tmp/basg.txt`; nothing else runs on the host. Result recorded as JSON under the cell's deliverables. A non-200 or a
-bot-challenge body is a finding (a row), not a retry loop.
+For every fund in the universe (C-TRADE-SCHEDULE, C-INCOME-CLEAN), before any residual reads as a trade:
+1. exclude `is_cash_line` positions from the position set;
+2. apply G3's share-changing actions (`split`, `bonus`, `stock_div`, `spinoff`, `rights`) whose ex-date falls in the window,
+   adjusting `q_{t-1}`;
+3. reconcile income: `cash_div` and `interest` receipts in the window, with their currency conversion, against the cash
+   lines' delta.
 
-### `RIV-d-2` -- the live thread (join): apply, deploy, backfill, fire, read (H2, H5, H6 live)
+Then the flow factor, discretionary shares and the 0.2% floor apply, as round 1. Each trade gains:
+- `income_funded`: true when the cash cross-check attributes the purchase's funding to income received in the same window;
+- `corporate_action_ref`.
 
-Spawned only after RIV-c-1..RIV-p-1, RIV-w-1, RIV-d-1 and RIV-r-1 are merged with their hookups, in a fresh worktree from
-the merged HEAD. Under a NEVER-2 ledger entry opened first (`.tools/deploy_ledger.py open`, entry and sentinel both
-committed) and the never-widen pair signed by 1.0.0_SA_CTO~Z and 2.0.0_SA_COO~RV (blast radius: new objects under the eight
-builder prefixes only; the bucket's notification configuration from empty to EventBridge-only; five new Lambdas, their
-roles and two schedules; the gateway read policy; the gateway code with the three `/rivalfunds` routes; rollback per key in
-the entry). Acts, in order: `safe-apply` the `etfs-rivalfunds` stack and the gateway policy; deploy the gateway through
-`infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`; invoke
-`etfs-rivalfunds-fetch-holdings-lambda` with `mode=backfill` 2025-06-13..the last trading day (QA-class landing, PRD
-C-SOURCE-POLICY), let the markers drive silver, gold and the page (or invoke the sweep); read back the day's page; close
-the ledger. Records under the cell's deliverables. The scheduled 07:00 fire of the next trading day is the acceptance and
-is read at the close, never waited on.
+G6 `flow_reconciliation` is written per fund x window, with the C-GOLD-MODEL columns. What was removed is RECORDED there,
+never discarded. An ID change or a corporate action never reads as an entry plus an exit.
+
+### `RIV-p-2` -- the page v2: grouped by Opal fund
+
+`publish_page.py` / `render.py` render one section per peer group from G0, with the home fund first and marked. Per fund:
+- the history calendar from G2 (new/repeat/gap/periodic per day, over the window);
+- the source badge per day from G2 `selected` and G1 `source_used`;
+- the latest trades from G5, with the `income_funded` label and the excluded-event count from G6
+  (cash lines, corporate actions, income).
+
+The trade-first lead and the six guardrails stand. Guardrails are evaluated per fund: a failing fund is marked
+`not updated` with its reason, and the others publish.
+
+### `RIV-d-3` -- the live join: deploy, enable, backfill, fire, read (WORLD)
+
+Under a NEVER-2 ledger entry opened and committed first, and a never-widen pair signed by `1.0.0_SA_CTO~Z` and this seat:
+1. Update the five Lambdas' code in place (`safe-apply`; the plan is `source_code_hash` updates only). Wire new stages into
+   the existing Lambdas and the sweep. A new function needs a builder name and its own plan line in the pair.
+2. Write G0 at `map_version` 1, with each home fund's `source_policy` set from RIV-m-1's verdict.
+3. Import both capture sets as Bloomberg bronze. Silver, G1, G2, G3 (import), G5/G6 and the page follow by marker or
+   sweep.
+4. Enable the vehicle legs (`RIVALFUNDS_BBG_LEG=1` in the vehicle's environment, the one line the pair names).
+5. Read the day's page back.
+
+The next trading day's 08:03 leg plus the 09:00 sweep is the acceptance, read at the close. It is never waited on.
 
 ## 4. PLACEMENT AXIS
 
-Every cell executes on the site-Z fabric (this box, `C:\Users\Opal Bloomberg\Desktop\ajb_workspace`), per the project
-row's `fabric_ruling`. AWS acts (RIV-r-1, RIV-d-1's plan, RIV-d-2) run from here through the `.tools/aws` shim.
+- Package code: `data/etfs/scripts/rivalfunds/`, as in round 1.
+- The terminal-machine legs: `integrations/bloomberg/pipeline/scheduled_daily_pull.cmd`. That is the vehicle file; its four
+  existing legs (models, L1 ETF, constituents, price) are never edited.
+- Their entry points are `data/etfs/scripts/rivalfunds/collector_bloomberg.py` and `enrichment_bloomberg.py`, run by
+  `%PY_AWS%`, the interpreter with blpapi, boto3 and pyarrow. Excel BQL additionally needs pywin32 in that interpreter; RIV-b-1
+  measures it.
+- Nothing new in Terraform except RIV-d-3's in-place code update.
 
 ## 5. DEPENDENCY EDGES AND CHAINS
 
-Edges (consumer <- producer, keyed to the producer's task order reading `complete` with a VALID instance):
-- `RIV-s-1` <- `RIV-c-1` (bronze layout + sidecar)
-- `RIV-g-1` <- `RIV-s-1` (silver)
-- `RIV-g-2` <- `RIV-g-1` (`canonical_shape`)
-- `RIV-p-1` <- `RIV-g-2` (`trade_schedule`)
-- `RIV-d-2` <- `RIV-p-1`, `RIV-w-1`, `RIV-d-1`, `RIV-r-1` (the join: it deploys what they built and reads the reach test)
+```
+~4  RIV-m-1 ─────────────────────────────────────────────────────┐
+~1  RIV-u-1 ──┐                                                 │
+~2  RIV-b-1 ───┼──> ~1 RIV-g-3 ──> ~1 RIV-h-1 ──┐              ├──> ~5 RIV-d-3 (join)
+~3  RIV-e-1 ───┘            └──────> ~3 RIV-g-4 ─┴──> ~1 RIV-p-2 ┘
+```
 
-Chains before the join, M = 4: A = c-1 -> s-1 -> g-1 -> g-2 -> p-1; B = w-1; C = d-1; D = r-1. The join `RIV-d-2` runs
-after all four. RIV-d-1 wraps the stage modules through the fixed entry contract, not through their file contents, so it
-carries no edge on chain A; its plan packages whatever is merged at the time and RIV-d-2 re-packages at apply.
+- **Wave 1 spawns 4 slots:** `~1` u-1, `~2` b-1, `~3` e-1, `~4` m-1.
+- **g-3** is handed to `~1` once u-1, b-1 and e-1 are MERGED. The issuer syncs CLOUD into `~1` first.
+- **h-1** follows on `~1`. **g-4** goes to `~3` once g-3 is merged.
+- **p-2** goes to `~1` once h-1 and g-4 are merged.
+- **d-3** takes slot `~5`, cut from the merged HEAD, after every other cell is merged and the pair is signed.
+- Fan-out: 4, cap 8.
 
-## 6. BATTERY DISPOSITION (a thread round)
+## 6. BATTERY DISPOSITION
 
-- **`comp-adversary` -- DECLARED-NOT-APPLICABLE:** thread round; the lens runs on the enrichment round that touches its
-  surface.
-- **`comp-schedule` -- RUN at the cut (2026-09-30 ~06:40Z), denominator printed by the tool:** 39 gates armed over five
-  carriers (C1 sentinel 23, C2 deploy-ledger 20, C3 moratoria 12, C4 scope-guard 21 not decidable, C5 project-blocking 334
-  not decidable). None names `opal-data-etfs`'s rivalfunds prefixes, the five names, or `opal-gateway`; the ETFS gates in
-  view are `ETFS_GUARDRAIL`'s `etfs-reports-monthly-run` reads. The shared tree's `.open_deploys/` holds no entry
-  matching gateway/etfs/rival (23 entries listed). Blindness: 50 linked worktrees were NOT read; RIV-d-2 reads every
-  worktree's `.open_deploys/` before acting (NEVER-2). The standing notifier moratorium binds RIV-d-1: no alarm or SNS.
-- **`comp-iam` -- RUN, because the thread touches IAM (RIV-w-1's gateway policy, RIV-d-1's Lambda roles), and its
-  instrument is the cells' own:** RIV-w-1's `simulate-custom-policy` (page prefix ALLOWED; bronze prefix and another
-  product's key DENIED) and RIV-d-1's simulation of each role's policy (its own prefixes ALLOWED; the bucket's tier-first
-  `bronze/` root and `opal-data-assets` DENIED). Blindness: the lens sees the new policies and the named resources, not the
-  rest of the account; the gateway role's existing statements are unchanged by this round.
+- **comp-schedule** (RUN at L5): no gate names `bloomberg/etfs/`, the new stage names, or `scheduled_daily_pull.cmd`'s new
+  labels. The 08:03 vehicle's four legs are live. The new legs are gated off until d-3. The notifier moratorium binds.
+- **comp-iam** (RUN at L5): nothing changes IAM this round, except that a new stage writing a new gold prefix needs its
+  Lambda role's PutObject widened.
+  - The round-1 policies grant only the round-1 prefixes, so RIV-d-3's plan carries the role-policy updates for G0, G2, G3 and G6.
+  - The terminal machine's writer is its existing AWS identity. The `bbg/` legs already write `opal-data-etfs`, and
+    `bloomberg/etfs/` is a NEW prefix under that bucket, so RIV-d-3 measures it with the IAM simulator before the first
+    landing.
+- **comp-adversary:** DECLARED on RIV-g-4. The income-clean rule is the round's highest-consequence inference. Its checks
+  plant a split, a dividend and a cash-line delta.
+- **The vendor gate** (C-VENDOR): every Bloomberg call is a script on the terminal machine (R-21). No worker invokes
+  Bloomberg interactively. RIV-b-1 and RIV-e-1 are tested on captures only; the live pulls start at RIV-d-3's enable.
 
-## 7. RULE 24 FOUR-POSTULATE RECORD
+## 7. RULE 24 FOUR-POSTULATE RECORD (new or amended enums this round)
 
-- **(i) MECE over a declared domain:** domain = PRD THE THREAD items 1-7, denominator 7, subtraction in section 1 leaves 0.
-  Falsification of the domain: the SURFACE MANIFEST was read unscoped; the three surfaces it holds with no round-1 cell
-  (Bloomberg leg, OpenAI, `add_security`) are each an ENRICHMENT BACKLOG item by the PRD's own text, so the domain is the
-  round's, not narrower than the sentence beside it. Cells are disjoint by write set (section 8 table).
-- **(ii) Same grain:** every cell is one hop adapter (a stage module, a route module, a stack, a probe, or the live join).
-- **(iii) Intent coherence:** one axis, "what round 1 must build or exercise so FWD-1's journey runs once, live".
-- **(iv) State coherence:** the status vocabulary `NOT-EVALUATED|ABSENT|PARTIAL|PRESENT` is measured per cell; the
-  remedy of any one cell does NOT move another cell's status (the join RIV-d-2 moves only live state, never a build
-  cell's), and none of them moves FWD-2..FWD-9 (enrichment).
+- **`source_policy` {`bloomberg_primary`, `issuer_first`, `home_producer`, `home_producer_pending`}.**
+  - (i) MECE over the map's funds: every fund has exactly one policy.
+  - `home_producer_pending` is a transitional member with ONE exit, RIV-m-1's verdict. `READ` gives `home_producer`, and
+    `JOIN_BLOOMBERG` gives `bloomberg_primary`. It is never read by a stage (subtraction: 12 funds, 10 with a policy, 2 homes
+    pending).
+  - (ii) Same grain: per fund. (iii) One intent: which source a fund is collected from. (iv) Remedy: a change of policy
+    moves `selected` in G2 and `source_used` in G1, NOT history already written.
+- **`holdings_coverage.status` {`new`, `repeat`, `gap`, `periodic`}.**
+  - (i) Over fund x expected trading day: a report dated that day that differs from the prior is `new`; one dated earlier
+    is `repeat`; none is `gap`; `periodic` covers funds whose measured cadence is not daily.
+  - A day that is `gap` for a periodic fund reads `periodic`, so the members are disjoint.
+  - (ii) Same grain. (iii) One intent. (iv) A late-arriving report moves `gap` to `new` on a re-run, never the reverse.
+- **G3 `event_type`:** the PRD's enum plus `unmapped:<raw>`, which keeps (i) total over Bloomberg's raw types.
 
 ## 8. GATES, WRITE SETS AND THE CLOSE RUN
 
-| cell | writes (disjoint) |
-|---|---|
-| RIV-c-1 | `data/etfs/scripts/rivalfunds/{__init__,homes,markers,sinks,collector_issuer}.py`, `data/etfs/scripts/rivalfunds/adapters/`, `data/etfs/scripts/rivalfunds/tests/test_c1_*.py` |
-| RIV-s-1 | `data/etfs/scripts/rivalfunds/silver_issuer.py`, `tests/test_s1_*.py` |
-| RIV-g-1 | `data/etfs/scripts/rivalfunds/gold_canonical_shape.py`, `tests/test_g1_*.py` |
-| RIV-g-2 | `data/etfs/scripts/rivalfunds/gold_trade_schedule.py`, `tests/test_g2_*.py` |
-| RIV-p-1 | `data/etfs/scripts/rivalfunds/{publish_page,guardrails,render}.py`, `data/etfs/scripts/rivalfunds/guardrails_config.json`, `tests/test_p1_*.py` |
-| RIV-w-1 | `infra/aws/ec2/opal-gateway/app/{rivalfunds_view.py,gen_rivalfunds_location.py,rivalfunds_location.json}`, `infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py`, `infra/aws/terraform/opal-gateway/rivalfunds-iam.{tf,policy.json}` |
-| RIV-d-1 | `infra/aws/terraform/etfs-rivalfunds/`, `infra/aws/lambda/etfs-pipeline/{etfs-rivalfunds-*,rivalfunds-*}/`, `infra/aws/lambda/etfs-pipeline/rivalfunds_package.py`, `data/etfs/scripts/rivalfunds/sweep.py`, `tests/test_d1_*.py` |
-| RIV-r-1 | its deliverables folder only |
-| RIV-d-2 | `org/critical_paths/change_management/`, `org/critical_paths/.open_deploys/etfs-rivalfunds-thread-r1.json`, `infra/aws/ec2/EC2_MANIFEST.json` (the deploy wrapper's record), its deliverables folder |
-
-Hookups at the merge (the COO's, one commit): `server.py` import, guard branch and four `Route` lines for `/rivalfunds`;
-any `config.py` entry RIV-w-1 names; `ci/lambda-source-map.json` entries RIV-d-1 names.
-
-The close run (the COO's one real run of FWD-1): a signed-in read of `/rivalfunds` for BASG on the live gateway, the
-newest trade opened and traced to its two reports and the issuer file, screenshot committed under
-`deliverables/2.0.0_SA_COO/`; then Andrew's own trace is FWD-1's DONE WHEN.
+- Each order's `<paths>` is its write set, disjoint across concurrent orders:
+  - `peer_groups.json` and `universe.py`: u-1 only;
+  - the vehicle file: b-1 only (e-1's script is invoked from b-1's leg).
+- **Build orders carry at most three mechanical criteria.** Repo-wide hygiene (py_compile, ruff, the package suite) runs at
+  the drain.
+- **The close run** (the issuer's, after d-3):
+  - the served page lists both groups;
+  - G2 for IDVZ's group reads the census counts: SCHY 501/501, INEQ 498/501, and so on, within the imported window;
+  - G5 for IDVZ excludes the cash lines, with an excluded count greater than 0 and the IDVZ ratio near CRO~Z's 32/683;
+  - the next 08:03 leg lands exit 80.
 
 ## 9. WHAT THIS DECOMPOSITION DOES NOT CLAIM
 
-- It does not claim BASG's issuer site answers from AWS (RIV-r-1 measures it; a refusal re-shapes RIV-d-2 at the recut).
-- It does not claim the crosswalk resolves BASG's ~35 holdings; unresolved positions are carried and counted.
-- It does not claim trade dates finer than the window, a Bloomberg price band, dividends or corporate actions in round 1.
-- It does not claim the provisional guardrail thresholds are right; the named enrichment cell sets them from real days.
-- It does not claim the other five funds, the Bloomberg fallback, the AI analyses or FWD-2..FWD-9.
+- It does not claim which home-producer verdict RIV-m-1 returns.
+- It does not claim that Bloomberg's Excel BQL runs unattended day over day. Andrew: *"just need to run the tests and see how
+  it goes day over day"*. The close run reads one morning.
+- It does not claim the causes of CGIC's breadth or INEQ's churn (CRO~Z's open checks).
+- It does not claim issuer publication times, or GQGU coverage.
+- It does not claim any FWD-6, -7, -10 or -11 value.

@@ -110,6 +110,16 @@ SITE_FIELDS = ("helper", "helper_body_sha256", "arg_index", "enclosing_function"
 TF_LOCAL_KIND = "tf_local"
 TF_LOCAL_FIELDS = ("kind", "local_name", "occurrences", "reference_count")
 TF_LOCAL_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_-]*$")
+# The third read_context kind: an R20 DECLARED EXCEPTION (infra/logic/02_DOCTRINE.md R20; Andrew "yes thats fine on
+# naming exception", 2026-09-30 ~13:0xZ at 1.0.0_SA_CTO~O, relayed 103235; landed by laptop 1.0.0_SA_CTO). The register
+# entry (06_CONFORMANCE_LEDGER.md section 6 row, e.g. X11) is the departure's record; this entry lets the gate HONOUR it.
+# It is the ONLY waiver kind that reaches a NEW literal, because a declared exception is exactly the case where a new
+# read of a legacy key is the ruled behaviour. It still authorizes ONE literal in ONE file at a declared occurrence
+# count, and it advances or closes no remediation. as_of_cutoff is a date or the word PERMANENT (R20 permanent/conditional).
+R20_KIND = "r20_exception"
+R20_FIELDS = ("kind", "register_ref", "occurrences")
+R20_REGISTER_RE = re.compile(r"^[A-Z]{1,3}[0-9]{1,4}$")  # a conformance-ledger row id: X11, X12
+R20_PERMANENT = "PERMANENT"
 NAMING_MODULE_NAMES = {"opal_naming"}
 # A call whose string argument is a numeric spelling, never a name: float("inf") is not the firm inf.
 EXEMPT_CALLS = {"float"}
@@ -1121,8 +1131,31 @@ def load_legacy_reads():
                         % (raw.get("id"), missing or "-", extra or "-")))
             continue
         rc = raw.get("read_context")
+        if isinstance(rc, dict) and rc.get("kind") == R20_KIND:
+            # R20 DECLARED EXCEPTION: fields exactly R20_FIELDS, a ledger row id, a count, a date or PERMANENT cutoff,
+            # and the same authority read as every other entry (a pinned record carrying this entry's id).
+            occ, reg = rc.get("occurrences"), rc.get("register_ref")
+            if sorted(rc) != sorted(R20_FIELDS):
+                bad.append((raw, "entry %r r20_exception read_context is not exactly %s" % (raw.get("id"), list(R20_FIELDS))))
+                continue
+            if (not isinstance(reg, str) or not R20_REGISTER_RE.match(reg)
+                    or not isinstance(occ, int) or isinstance(occ, bool) or occ < 1):
+                bad.append((raw, "entry %r r20_exception read_context is malformed (register_ref a ledger row id like X11,"
+                                 " occurrences an int >= 1)" % raw.get("id")))
+                continue
+            cutoff = raw.get("as_of_cutoff")
+            if cutoff != R20_PERMANENT and not _cutoff_parses(cutoff):
+                bad.append((raw, "entry %r as_of_cutoff must be a YYYY-MM-DD date or PERMANENT" % raw.get("id")))
+                continue
+            ok_auth, why_auth = authority_ok(raw.get("authority"), raw.get("id"))
+            if not ok_auth:
+                bad.append((raw, "entry %r authority refused: %s" % (raw.get("id"), why_auth)))
+                continue
+            keys.setdefault((raw["file"], raw["literal"]), []).append(raw)
+            good.append(raw)
+            continue
         if isinstance(rc, dict) and "kind" in rc:
-            # tf_local is the ONLY named kind; any other kind value refuses the entry.
+            # tf_local is the ONLY other named kind; any other kind value refuses the entry.
             if rc.get("kind") != TF_LOCAL_KIND or sorted(rc) != sorted(TF_LOCAL_FIELDS):
                 bad.append((raw, "entry %r read_context kind %r is not exactly %s"
                             % (raw.get("id"), rc.get("kind"), list(TF_LOCAL_FIELDS))))
@@ -1169,6 +1202,17 @@ def load_legacy_reads():
                  "duplicate authority for this file and literal: both entries dropped, ambiguity is never"
                  " resolved by order") for (dup_file, dup_lit) in sorted(dup)]
     return good, bad
+
+
+def _cutoff_parses(value):
+    """True only for a YYYY-MM-DD string. The R20 kind also admits the word PERMANENT, checked by its caller."""
+    if not isinstance(value, str):
+        return False
+    try:
+        datetime.datetime.strptime(value, "%Y-%m-%d")
+    except ValueError:
+        return False
+    return True
 
 
 def _expired(entry, now):
@@ -1362,6 +1406,25 @@ def tf_local_ok(entry, post_text):
                   % (name, ano, refs))
 
 
+def r20_exception_ok(entry, post_text):
+    """(True, note) only when the file text carries the literal EXACTLY `occurrences` times.
+
+    NOTE: THE R20 KIND GRADES NAMING, NOT ACCESS. The register row and Andrew's acknowledgement say the departure is
+    read-only; a gate cannot prove that from bytes (the N2 refinement: a write-verb denylist is insufficient), so it
+    does not pretend to. What it CAN hold is the count: a second occurrence, in any file type, is a new site the
+    register did not declare and it refuses by count. Any file type is admitted because the declared exception is
+    about a key, not a language.
+    """
+    if not isinstance(post_text, str):
+        return False, "r20_exception: no post-image text to count in"
+    want, occ = entry["literal"], entry["read_context"]["occurrences"]
+    total = post_text.count(want)
+    if total != occ:
+        return False, ("r20_exception: the literal occurs %d time(s) in the file text, declared %d: an undeclared"
+                       " occurrence is not covered by register entry %s" % (total, occ, entry["read_context"]["register_ref"]))
+    return True, ("%d occurrence(s) as declared by register entry %s" % (total, entry["read_context"]["register_ref"]))
+
+
 def waivers_for(path, post_text, now=None):
     """{literal: (entry, note)} for this file: the waivers that are IN FORCE and RECOGNIZED here.
 
@@ -1378,8 +1441,16 @@ def waivers_for(path, post_text, now=None):
     for entry in good:
         if entry["file"] != path:
             continue
-        if _expired(entry, now):
+        is_r20 = entry["read_context"].get("kind") == R20_KIND
+        if not (is_r20 and entry.get("as_of_cutoff") == R20_PERMANENT) and _expired(entry, now):
             denied[entry["literal"]] = "expired: cutoff %s inclusive UTC" % entry.get("as_of_cutoff")
+            continue
+        if is_r20:
+            ok, note = r20_exception_ok(entry, post_text)
+            if ok:
+                out[entry["literal"]] = (entry, note)
+            else:
+                denied[entry["literal"]] = note
             continue
         is_tf_kind = entry["read_context"].get("kind") == TF_LOCAL_KIND
         if path.endswith(".tf"):
@@ -1414,10 +1485,23 @@ def judge(nm, path, lit, pre_text, waivers=None):
     carr_txt = ""
     if carr:
         carr_txt = "; hand-kept carrier of %r outside every permitted context: read it through lookup(%r)" % (carr[0], carr[1])
+    # THE ONE CONSUMPTION POINT OF THE R20 DECLARED EXCEPTION. It sits ABOVE the NEW branches on purpose: a declared
+    # exception is the one case where a NEW read of a legacy key is the ruled behaviour, and it is admitted only from a
+    # HEAD-committed entry whose pinned record carries its id (authority_ok) and whose count holds (r20_exception_ok).
+    r20_hit = (waivers or {}).get(lit.value)
+    if r20_hit and isinstance(r20_hit[0], dict) and r20_hit[0].get("read_context", {}).get("kind") == R20_KIND:
+        e = r20_hit[0]
+        return ("DECLARED-EXCEPTION", "R20 %s" % e["read_context"]["register_ref"],
+                "%s literal graded as %s is a DECLARED EXCEPTION under R20 register entry %s (waiver %s, owner %s, cutoff %s):"
+                " %s. The register row carries the departure; this diff moves no key: WARN%s"
+                % ("NEW" if new else "EXISTING", typ or "hand-kept carrier", e["read_context"]["register_ref"], e["id"],
+                   e["owner"], e.get("as_of_cutoff"), r20_hit[1], carr_txt), "WARN")
+    r20_denial = (waivers or {}).get("__denied__", {}).get(lit.value)
+    new_deny_txt = "; a waiver entry exists for this literal and was NOT applied: %s" % r20_denial if (new and r20_denial) else ""
     if typ is None:
         canon = "lookup(%r)" % carr[1]
         if new:
-            return "REFUSE", canon, "NEW hand-kept carrier (context rule)%s" % carr_txt, "REFUSE"
+            return "REFUSE", canon, "NEW hand-kept carrier (context rule)%s%s" % (carr_txt, new_deny_txt), "REFUSE"
         return "OUT-OF-PATTERN", canon, "EXISTING hand-kept carrier (context rule): WARN%s" % carr_txt, "WARN"
     verdict, canon, defect = nm.grade(typ, graded_as)
     if verdict == "RAISE":
@@ -1436,13 +1520,13 @@ def judge(nm, path, lit, pre_text, waivers=None):
                         why + "; the same literal is already carried at HEAD in %s, so this copy mints nothing: WARN%s"
                         % (where, carr_txt), "WARN")
         if new and carr:
-            return "REFUSE", "lookup(%r)" % carr[1], why + carr_txt, "REFUSE"
+            return "REFUSE", "lookup(%r)" % carr[1], why + carr_txt + new_deny_txt, "REFUSE"
         return "RAISE", "(rule or registry defect)", why + carr_txt, "WARN"
     if verdict == "NOT-GRADED":
         return "NOT-GRADED", "-", "%s is outside the grade's domain (G1.2)" % typ, "PASS"
     rem = nm.remediation_of(typ, graded_as) if verdict == "OUT-OF-PATTERN" and not new else None
     if new and verdict in ("OUT-OF-PATTERN", "ALIAS"):
-        return "REFUSE", canon, "NEW and %s as %s: REFUSE%s" % (verdict, typ, carr_txt), "REFUSE"
+        return "REFUSE", canon, "NEW and %s as %s: REFUSE%s%s" % (verdict, typ, carr_txt, new_deny_txt), "REFUSE"
     if rem:
         # THE ONE CONSUMPTION POINT OF THE LEGACY-READ WAIVER (IRPT-M-LEGACY-READ-02). It sits BELOW
         # the NEW branch above, which is why a NEW or CHANGED literal can never reach it -- that
@@ -1573,7 +1657,7 @@ def grade_file(nm, f, post_from_index):
                 lit.permitted = True  # the packaged name of a tracked source: a citation (R-11), not a mint
     else:
         lits = yaml_literals(added)
-    waivers = waivers_for(path, post_text) if path.endswith((".py", ".tf")) else {}
+    waivers = waivers_for(path, post_text) if isinstance(post_text, str) else {}
     seen = set()
     for lit in lits:
         if lit.permitted or any(lo <= lit.line <= hi for lo, hi in gen_ranges):

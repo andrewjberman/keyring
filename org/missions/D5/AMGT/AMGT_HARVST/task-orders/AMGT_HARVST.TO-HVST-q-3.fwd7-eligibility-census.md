@@ -63,7 +63,7 @@ Run it only after `HVST-q-1` drains. The dispatch comes then, so the census coun
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>27</round>
 <slot>~72</slot>
 <fabric>site-z</fabric>

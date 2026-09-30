@@ -2684,6 +2684,358 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The reader resolves the sign per (field, security), not per figure; a sampled POSITIVE is served on every period of that field, including loss years. The round-23 map rebuild widened the reach by 682 figures.",
     "notes": "Stop limb 2 of the y-4 pair fired; leg d held; escalated to 1.0.0_SA_CTO~Z @c68c2a6dfd (A revert per the limb, or B keep + reader fix + re-derive; issuer recommends B). Also unmodelled but value-free: cases.base.formula text changed on 67 blocks (case_rule code input).",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S17",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T09:30:00Z",
+    "one_line": "y-5 AC4 cannot pass as written: test_model_block_resolved_exception.py::test_dict_valued_field_unchanged asserts _resolved_sign('DICT_F','EXC JP Equity',1.0)=='NEGATIVE' (the map's sampled sign served against a positive value), which the ruled y-5 rule contradicts; that file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "y5_AC2.sh on wk-crps23-5: '1 failed, 14 passed in 1.06s'; AssertionError assert 'POSITIVE' == 'NEGATIVE' at integrations/bloomberg/research/tests/test_model_block_resolved_exception.py:69"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4 expects every suite named in y5_AC2.sh to pass with the ruled reader.",
+    "world_is": "The pre-existing test encodes the superseded per-field sign behaviour; the ruled reader returns POSITIVE for value 1.0. y5_AC1 passes (plain_disagree 0 convention_disagree 0).",
+    "notes": "Filed, not fixed: the line-69 assertion should expect POSITIVE (or the file be added to paths). Reader change and new test are in place.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S69",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-30T11:45:00Z",
+    "one_line": "model_block header market figures take the REPORTING currency label: TSM_US_Equity CUR_MKT_CAP 2339877750964.95 is served with currency TWD (basis 'reporting (EQY_FUND_CRNCY)') while currencies.quote is USD, converted false, and the raw refdata carries CRNCY USD with the same value -- a USD figure labelled TWD. The same labelling rule places CUR_MKT_CAP / NET_DEBT / CURR_ENTP_VAL on 79 header figures across 27 mixed-currency securities; only TSM CUR_MKT_CAP is measured wrong, the other 78 are the rule's reach, unmeasured per figure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/derived/model_block/TSM_US_Equity/20260930T084113Z/model_block.json figures[5]: mnemonic CUR_MKT_CAP, value 2339877750964.9497, unit 'ABSOLUTE (full currency units)', currency 'TWD', currency_basis 'reporting (EQY_FUND_CRNCY)'; currencies {quote USD, reporting TWD, mixed true, converted false}.",
+        "Worker census org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/TSM_ANCHOR_SOURCES_ROUND24.md (merged 92f1403d25): TSM refdata 20260925T043112Z carries CRNCY USD and CUR_MKT_CAP 2.3399e12 in the listing currency.",
+        "Issuer census 11:4xZ over the newest model_block of each of 100 securities (769 objects): 31 mixed-currency blocks; header figures labelled reporting-currency by basis 'reporting (EQY_FUND_CRNCY)': CUR_MKT_CAP 27, NET_DEBT 27, CURR_ENTP_VAL 25 (79 on 27 securities); 4 more securities carry no reporting currency ('UNSTATED')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A served figure's currency label states the currency its value is denominated in.",
+    "world_is": "The header currency rule labels CUR_MKT_CAP, NET_DEBT and CURR_ENTP_VAL with the reporting currency (EQY_FUND_CRNCY) and converts nothing; for TSM the value is the USD listing-currency figure, so the label is wrong. Value-free: no figure value moves, no unit moves.",
+    "notes": "Surfaced by 0.9.0_WK_AMGT_CORPUS~2 in the CRPS-z-2 census (it declined the figure as an anchor) and confirmed on the served object by the issuer. Enrichment candidate for the round-24 analysis: the per-field currency denomination of these three header fields on the 27 securities, then the label rule. Not an anchor source for Z-W2-S16.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S19",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T10:30:00Z",
+    "one_line": "CRPS-z-1's premise 'about 199 of the 602 are per-share names outside their band' does not match the census: 37 figures are per-share outside the 0-2000 band (BEST_BPS 12, BOOK_VAL_PER_SH 11, REVENUE_PER_SH 11, BEST_EPS 3); 402 are per-share names whose sampled value is an exact ZERO (IS_DIV_PER_SHR 177, EQY_DPS 177, BEST_DPS 48) and 48 more are a zero BEST_DIV_YLD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "UNRESOLVED_CLASSES_ROUND24.json (deliverables/0.9.0_WK_AMGT_CORPUS~1): 17 classes summing to 602 over 98 keys; the census read the newest model_block per key from S3 and grouped by mnemonic x reason_class x security.",
+        "Reasons: 354 'sampled magnitude 0.0 does not discriminate (a zero value every sampled year reads identically to no coverage)' + 48 for BEST_DPS; 48 BEST_DIV_YLD 'does not discriminate percent vs decimal (zero or non-numeric)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "About 199 of the 602 are per-share names outside their band; the rest carry other reasons (order section 1).",
+    "world_is": "The bulk of the 602 (450 figures on 18 names) is the zero-sample class, not the outside-the-band class; those names are dividend non-payers whose latest fiscal row reads 0.0.",
+    "notes": "Closed by FAMILIES 1-2 on the FIELD_BASIS definition (a zero has no scale), not by the band; the family is a separate step (unit_from_basis_zero) so classify_unit's magnitude reading of a zero is unchanged. The issuer should confirm at the round-24 analysis that a field-basis rule for a zero is the intended reading of 'a stated rule'.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+{
+    "id": "AMGT_CORPUS-Z-W1-S20",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T10:30:00Z",
+    "one_line": "test_build_unit_map_families.py::test_ratio_outside_the_band_stays_unresolved_and_band_is_not_widened pins classify_unit('IS_DIV_PER_SHR', 0.0, ..., header) == UNRESOLVED (line 88), so the zero-dividend families could not land inside classify_unit without breaking a builder suite the order requires green; that file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First run of z1_AC2.sh with the zero rule inside classify_unit: '1 failed, 37 passed' at integrations/bloomberg/research/tests/test_build_unit_map_families.py:88 (assert classify_unit('IS_DIV_PER_SHR', 0.0, 'S', header)[1] == 'UNRESOLVED').",
+        "After moving the rule to build_unit_map.unit_from_basis_zero, called from build_entries: z1_AC2.sh '38 passed'; the whole research tests dir '182 passed'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2: the family tests pass with the builder's suites; the classifier carries each change (order section 1 item 2).",
+    "world_is": "The round-23 test encodes the prior ruling that a zero magnitude does not discriminate; a zero-value family in classify_unit contradicts it. The two grounds (magnitude vs field basis) are now separate functions.",
+    "notes": "Filed, not fixed: if the issuer wants the rule inside classify_unit, line 88 must change and the file be added to paths. The served figure's unit is identical either way.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S6",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:00:00Z",
+    "one_line": "lib/research/peers/universe.py builds its model-block pool index by taking the raw store segment as the identity (model_block_pool_index: k[len(PREFIX):].rsplit('/', 2)[0], :318), and lib/research/corpus/dossier.py reads derived/model_block/<raw security_key>/ (:927, :966); both are outside CRPS-z-4's <paths> and the z4 census does not name them, so after the round-25 move to encoded segments the peers engine's pool-first read misses BP/_LN and NG/_LN and dossier lists an empty raw prefix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/peers/universe.py:312-318 (index key = raw segment) and :331-332 (index.get(security_key)); lib/research/corpus/dossier.py:927 and :966 (base = MODEL_BLOCK_POOL_PREFIX + raw security_key + '/'); worker branch wk-crps24-4: engine._load_model_block now reads pool_index by the raw identity, unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-z-4: every per-security path, writers and readers, is built through slash_safe_key so no reader serves between the two forms at the round-25 move.",
+    "world_is": "Two reader files that touch derived/model_block/ per security sit outside the order's <paths>: peers/universe.py (index keyed by the stored segment, no decode) and corpus/dossier.py (raw key interpolation). Slash-free keys are unaffected; the two raw-slash names (BP/_LN, NG/_LN, BRK/B where live) are.",
+    "notes": "Filed, not fixed (outside paths). Fix for round 25 alongside the move: universe.model_block_pool_index decodes a slash-free segment with crosswalk.security_key_from_slash_safe (keep a raw-slash segment as found), and dossier.py builds base with crosswalk.slash_safe_key. lib/research/filings/fetch.py:472 pool_key is a label only (never dereferenced), left raw.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:00:00Z",
+    "one_line": "The z4 census reads 24 functions but under-reports the per-security path sites: it matches string literals only, so module-constant sites (scoped_amgt read_pool_object/_read_model_block_pool/read_model_block_versions/ledger read, enrich.management_key, engine.pool_key, judge.pool_key, run_scores _latest_model_block/_latest_peer_set/pool_key) were invisible to it; the worker routed those constant-based sites through slash_safe_key beyond the census list, and marked 10 census functions that build no path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "z4_check.py TEMPLATE matches literals under ast.Constant; constants like MODEL_BLOCK_POOL_PREFIX/PEERS_PREFIX/MANAGEMENT_PREFIX/POSTURE_PREFIX/SCORES_PREFIX are module-level names so their users never match; worker diff on wk-crps24-4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's census of 24 is the population of raw per-security path builders.",
+    "world_is": "The census is a literal-based lower bound; AC1 reaching raw 0 does not prove no raw per-security path remains (see AMGT_CORPUS-Z-W4-S6 for two out-of-path readers it never saw).",
+    "notes": "Recorded so the drain reviewer reads AC1 as a floor. The 10 markers (24 census functions = 14 routed + 10 marked) are in enrich.py (4), engine.py (3: resolve_subject, run_batch, main), run_scores._robustness_record, crosswalk._record_for and model_block_pull._model_block_keys_in_store, each with its reason on the marker line.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:30:00Z",
+    "one_line": "Running the integrations/bloomberg/research suite in a worktree rewrites the tracked file integrations/bloomberg/research/field_map.json (1013 insertions, 110 deletions after one full run), a file outside this order's paths; the worker restored it byte-for-byte from HEAD before committing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --stat after 'pytest integrations/bloomberg/research' (170 passed): field_map.json | 1123 +++--; restored with 'git show HEAD:<path>' and git status then clean for that path"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The repo-wide suites the issuer runs at the drain leave the tree clean.",
+    "world_is": "At least one test in integrations/bloomberg/research/tests writes the tracked field_map.json as a side effect, so a drain that runs the suite before its commit gate carries an unowned 1123-line diff.",
+    "notes": "Filed, not fixed (outside paths). The AC2 suites named by z4_AC2.sh do not trigger it.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S9",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:50:00Z",
+    "one_line": "CORRECTION to AMGT_CORPUS-Z-W4-S8: the writer of integrations/bloomberg/research/field_map.json was this worker's own new test (test_model_block_pull_stage_derive_key), not the pre-existing integrations/bloomberg/research suite; model_block_pull.stage_derive calls _ensure_unit_map, which WRITES the tracked field_map.json for any security the map does not list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test_slash_safe_key_sites.py -k 'not stage_derive': git status clean; -k stage_derive: field_map.json modified; the pre-existing suite alone: 170 passed with no field_map.json change once the new test was not in the run"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A unit test of stage_derive's derived key leaves the tree clean.",
+    "world_is": "stage_derive has a tracked-file write side effect for an unmapped security (model_block_pull.py:854 via _ensure_unit_map); the test now stubs _ensure_unit_map, so the tree stays clean. S8's premise (that the existing suite mutates field_map.json) is withdrawn.",
+    "notes": "S8 is not edited (a row is never edited); this row supersedes its attribution. Re-verified: after the fix the AC2 suites and the bloomberg suite leave git status clean for field_map.json.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T15:39:00Z",
+    "id": "AMGT_CORPUS-Z-W1-S21",
+    "one_line": "AC1 cannot pass as written: the checker aa1_check.py measures the population as 79 figures on 27 securities, not 73 on 25, because S3 holds BP-SLASH-_LN_Equity and NG-SLASH-_LN_Equity beside BP/_LN_Equity and NG/_LN_Equity and the checker excludes only the slash forms.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round25/aa1_AC1.sh -> 'aa1 population 79 securities 27 census_covered 73 classes_valid True reader_matches 73 tsm_mkt_cap USD control_reporting TWD unmeasured_labelled 0' (expected 'population 73 securities 25 census_covered 73 ...')",
+        "s3 list of derived/model_block/BP and /NG (prefix) shows BOTH BP-SLASH-_LN_Equity/<stamp>/model_block.json and BP/_LN_Equity/<stamp>/model_block.json (6 stamps each, likewise NG); aa1_check.py:26 EXCLUDED = {'BP/_LN_Equity','NG/_LN_Equity'} matches only the second family",
+        "the 6 extra figures are the BP-SLASH- and NG-SLASH- CUR_MKT_CAP, NET_DEBT, CURR_ENTP_VAL blocks (mixed true, reporting basis)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The population is 73 figures on 25 securities: the newest block of every key except BP/_LN_Equity and NG/_LN_Equity (Z-S64), and the checker prints 'population 73 securities 25'.",
+    "world_is": "The checker's exclusion list names only the slash key forms; the -SLASH- twin keys of the same two securities are read as population, so the printed population is 79 on 27 whatever the census says. All other AC1 fields match: census_covered 73, classes_valid True, reader_matches 73, tsm_mkt_cap USD, control_reporting TWD, unmeasured_labelled 0. The census deliberately covers exactly the ordered 73 (adding the 6 twin figures would make classes_valid False only if the twins were later excluded).",
+    "notes": "Fix is the issuer's: add 'BP-SLASH-_LN_Equity' and 'NG-SLASH-_LN_Equity' to EXCLUDED (then AC1 reads 73 on 25 with this census unchanged), or order the twins into the census. The worker did not edit the issuer's check.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T15:39:00Z",
+    "id": "AMGT_CORPUS-Z-W1-S22",
+    "one_line": "model_block_pull's callers of _figure_currency (lines 1016, 1097, 1256, 1298 before this edit) pass no security, so the round-25 label rule is INERT in the served derive until they pass security=; the order forbids touching those functions, so no test_currency_labels.py assertion was superseded and none was changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp Grep _figure_currency integrations/bloomberg/research -> 4 call sites, each _figure_currency(mnemonic, quote_ccy, reporting_ccy), none passes security",
+        "AC2 bash aa1_AC2.sh -> '13 passed in 0.68s' (test_figure_currency_round25.py + test_currency_labels.py unchanged)",
+        "census: 41 of 73 figures are UNRESOLVED, so once wired the derive prints NO currency on 41 figures (CUR_MKT_CAP 8, NET_DEBT 20, CURR_ENTP_VAL 13) and Lenovo's 992 HK CUR_MKT_CAP flips from USD to HKD, which arm 1 of test_currency_labels.py (about :225-227, the CUR_MKT_CAP/NET_DEBT pins on the Lenovo fixture) then supersedes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The served figure's currency label follows the measured census once _figure_currency has the rule.",
+    "world_is": "The rule exists and is tested through _figure_currency directly, but stage_derive's four call sites still call it with three arguments, so a re-derive today would serve the same TSM CUR_MKT_CAP labelled TWD. test_currency_labels.py's Lenovo arm (992 HK Equity, in the census) will need its CUR_MKT_CAP/NET_DEBT pins changed in the same commit that wires security=.",
+    "notes": "Wiring is a small edit to four call sites in other functions of model_block_pull.py plus the test_currency_labels.py arm-1 assertions; both belong in one issuer-cut cell. The issuer decides whether a wired rule that prints no currency on 41 figures is what the reader should see before the remaining 41 are decided.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T15:39:00Z",
+    "id": "AMGT_CORPUS-Z-W1-S23",
+    "one_line": "The market cap on the GBp-quoted names is denominated in GBP (the major unit), a currency neither label in the two-class vocabulary states: on the 3 GBp names that report in USD or EUR (AZN, HSBA, ULVR) the round-25 rule prints no currency for CUR_MKT_CAP, and RIO's ratio of 1.367 is unexplained.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "census DENOMINATION_CENSUS_ROUND25.json: AZN/HSBA/ULVR CUR_MKT_CAP / (PX_LAST/100 x EQY_SH_OUT_REAL) = 1.00000 (value in GBP); reporting USD/USD/EUR, quote GBp",
+        "RIO_LN_Equity ratio = 1.36700 against a block-implied reporting-per-GBP factor of 1.3452; a dual-listed share count and a USD value are both candidate causes and the block measures neither, so RIO is UNRESOLVED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A figure is either quote-currency or reporting-currency denominated (the two-class label).",
+    "world_is": "For a GBp quote the quote label GBp names the pence subunit, so a value in pounds is neither 'quote (CRNCY)' nor the reporting currency; the label vocabulary needs a third state (quote currency, major unit) before these can be labelled honestly, or the derive keeps printing no currency for them.",
+    "notes": "Decision needed only if the issuer wants these three labelled; the census holds the ratio evidence.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T16:20:00Z",
+    "id": "AMGT_CORPUS-Z-W1-S24",
+    "one_line": "AMENDMENT 1 grants changing the arm-1 pins of test_currency_labels.py, but the wired rule also breaks arm 3 (test_missing_reporting_ccy_is_unstated), which pins the same 992 HK fixture's CUR_MKT_CAP / NET_DEBT; AC2 cannot pass without changing it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest integrations/bloomberg/research/tests/test_currency_labels.py after wiring security= at the four call sites: arm 3 failed with 'HKD' is None on CUR_MKT_CAP (992 HK census class quote), the same fixture and figures arm 1 pins",
+        "test_currency_labels.py arm 3 now pins CUR_MKT_CAP HKD/quote and NET_DEBT None/UNMEASURED with an AMENDMENT 1 comment; its UNSTATED pin is kept for the remaining currency-sensitive fields (SALES_REV_TURN, IS_EPS); 5 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1 item 1: change the arm-1 pins the wired rule supersedes (the 992 HK Equity fixture's CUR_MKT_CAP / NET_DEBT); keep every other arm.",
+    "world_is": "The wired rule also supersedes those two pins in arm 3, which uses the same 992 HK fixture with EQY_FUND_CRNCY absent. Only the CUR_MKT_CAP and NET_DEBT assertions of arm 3 were changed; every other arm-3 assertion is unchanged.",
+    "notes": "The change is the minimum the same wired rule forces; the issuer may read it as inside the amendment's intent or ask for it to be reverted.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S70",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-30T16:30Z",
+    "one_line": "proof-of-spec-check's artifact-resolution limb accepts a pin to ANY earlier commit that carries the path, not the commit that carried the GRADED content: CRPS-aa-3's instance pinned UNRESOLVED_CLASSES_ROUND25.json to a05ead8252 (before_total 59, the pre-amendment table) while the graded table (before_total 49) came from e6bbc97527, and the checker read VALID (rc=0).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-crps25-3 @d7220c0b25: `git show a05ead8252:<table>` reads before_total 59 remaining_after 31; `git show e6bbc97527:<table>` and HEAD read before_total 49 remaining_after 11; the instance row reads commit_or_etag a05ead8252; `proof-of-spec-check.py <instance> AC1,AC2 --governing-order <order>` reads VALID (rc=0).",
+        "The first post-commit run at e6bbc97527 had flagged the same rows as PENDING-THIS-COMMIT that PREDATE the instance's commit; its remedy text ('pin the row to the commit that carried it') admits any commit that carried the path."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An instance's artifact pin names the commit whose bytes were graded, so a VALID instance cannot point a reader at a superseded version.",
+    "world_is": "The limb resolves a pin by path presence at the commit (present, not touched later is flagged; present at an older commit is accepted), so an older version with different content passes. A content check (`git show <pin>:<path>` equal to the bytes at the instance's commit) would refuse it.",
+    "notes": "Caught at the issuer's re-grade by reading the pinned bytes, not by the checker. The aa-3 instance is being re-pinned to e6bbc97527 by a continuation. The limb's owner decides the fix; the issuer re-grades every pin by content meanwhile.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S10",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-30T15:50:00Z",
+    "one_line": "CRPS-aa-3 AC1's expectation is the literal population 'keys 98 ... measured_before 49'; the live served population is 100 slash-free keys and 59 UNRESOLVED figures, because the RESAPP ac-3 copy leg (LastModified 2026-09-30T15:14:55Z) added BP-SLASH-_LN_Equity and NG-SLASH-_LN_Equity as slash-free keys, so AC1 cannot print its expected line while those copies stand.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash aa3_AC1.sh (run at HEAD of wk-crps25-3 with the table absent): 'aa3 keys 100 excluded 2 measured_before 59 table_total 0 classes 0 dispositions_complete False projected_after 31 table_remaining -1 consistent False'",
+        "S3 list_objects_v2 derived/model_block/BP-SLASH-_LN_Equity/ and NG-SLASH-_LN_Equity/: LastModified 2026-09-30T15:14:55Z..57Z; BP/_LN_Equity objects 2026-09-16..19",
+        "census of the newest block per slash-free key: 59 = 49 (6861 JP 26, 939 HK 10, BBSE3 10, BA 2, TSM 1) + 10 BP/ LN Equity PE_RATIO on BP-SLASH-_LN_Equity; NG-SLASH- adds 0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order and the issuer's dry-run (base CLOUD 98781013e0) state 98 keys / 49 UNRESOLVED, 2 EXCLUDED, and AC1's expect regex pins keys 98 and measured_before 49.",
+    "world_is": "100 keys / 59 UNRESOLVED / 2 EXCLUDED at 15:44Z. The table was written to the LIVE census (denominator_keys 100, before_total 59, a ninth class BP/ LN Equity PE_RATIO stays_unresolved) so the checker's own consistency test (table_total == measured, remaining == projected, denominator == keys) reads True; only the regex's literal 98 and 49 miss.",
+    "notes": "Filed, not fixed: the served population is the deploy's, not this order's. The order's 49 are the table's first eight classes. If the copies are removed or the regex amended to the live counts, AC1 prints its line with no change to the table beyond denominator_keys/before_total/the BP class.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S11",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-30T15:52:00Z",
+    "one_line": "aa3_check.py's projected_after counts every figure whose reader answer starts 'UNRESOLVED' OR 'SEE field_map', but measured_before counts only 'UNRESOLVED': the 375 pointer-unit figures on the two slash-copy keys make the two sides different populations (10 BP PROF_MARGIN figures are in projected_after 31 and in no before count).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aa3_check.py lines: measured = startswith('UNRESOLVED'); projected = startswith(('UNRESOLVED','SEE field_map'))",
+        "census of the two copy keys: 375 figures whose served unit reads 'SEE field_map.json ...'; after the temp rebuild BP/ LN Equity PROF_MARGIN x10 still reads 'UNRESOLVED-ON-BP/ LN Equity: disagrees with the shared MEASURED unit PERCENT: measured DECIMAL'",
+        "projection reproduced in .scratch/aa3/project.py: 59 census figures -> 21 remain, plus the 10 PROF_MARGIN -> 31, the checker's projected_after"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "remaining_after is the UNRESOLVED count the builder leaves out of before_total.",
+    "world_is": "table remaining_after is 31 = 21 stays_unresolved figures (BBSE3 10, BP PE_RATIO 10, TSM 1) + 10 BP PROF_MARGIN pointer figures listed under remaining_after_breakdown, because the checker requires remaining == projected; before_total (59) does not contain them.",
+    "notes": "Filed, not fixed (the check files are the issuer's). BP/NG is CRPS-aa-4's pass.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S71",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-30T19:20:00Z",
+    "one_line": "After RESAPP r53 ac-3 moved the slash-key objects, lib/research/corpus/dossier.py still reads model blocks at the RAW key (`:927`, `:966`: MODEL_BLOCK_POOL_PREFIX + security_key, no slash_safe_key), so BP/_LN and NG/_LN dossiers stay built from the kept 2026-09-25 raw-key blocks: aa-4 re-derived both on the encoded keys and write_one wrote 0 (inputs unchanged).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "dossier.current_inputs('BP/_LN_Equity') names derived/model_block/BP/_LN_Equity/20260925T200039Z/model_block.json; NG names .../NG/_LN_Equity/20260925T200133Z/...; the newest encoded blocks are 20260930T190146Z / 190147Z.",
+        "d25.py write (D25_KEYS BP/NG) at 19:0xZ: 'LEG-D names 2 wrote 0 unchanged 2 errors 0'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every per-security reader goes through slash_safe_key before the slash-key objects move (Z-W4-S6, supplied to RESAPP r53 as a precondition @7e569c4d1d s.2).",
+    "world_is": "The move landed with dossier.py's two model-block readers still on the raw key; the kept raw copies make them read stale blocks silently (no error, no absence).",
+    "notes": "Fix: route dossier.py :927/:966 through slash_safe_key (or decode both forms), then write_one BP/NG. Surfaced at aa-4 leg d; ask to CTO~Z in AA4_DEVIATIONS_ROUND25.md. Same class: peers/universe.py (Z-W4-S6 names it) -- not re-measured here.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

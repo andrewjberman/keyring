@@ -1,0 +1,99 @@
+{
+  "_what": "MDPF_SECCLASS data contract: the two enumerations the PRD closes as data (PRD CONTRACTS C-FIELD and C-WRITER). The canonical table is DynamoDB etf-classifications; its existing columns (ticker, asset_class, sub_asset_class, sector, name, management_style) are POSN_ASTTAX's and are not restated here.",
+  "contract_version": "0.3.0",
+  "project": "MDPF_SECCLASS",
+  "prd": "org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md",
+  "fields": {
+    "instrument_kind": {
+      "serves": "FWD-8",
+      "type": "string",
+      "values": ["fund", "single_security"],
+      "domain": "every row of etf-classifications, one row per ticker",
+      "definitions": {
+        "fund": "a pooled or exchange-traded product classified by the ETF classes: an ETF, an ETN (e.g. VXX), a mutual fund, or a closed-end fund",
+        "single_security": "one issuer's own instrument: a company's common or preferred stock, or a single bond"
+      },
+      "absent": "a row without instrument_kind is not defaulted to either value; a reader shows the instrument's kind as unknown by name (brief Part III, 'Nothing silently folds')",
+      "ordering_use": "a holdings table places every single_security row after the last fund class; the key is produced and served by the backend, never re-derived in the portal (Andrew-direct 2026-09-29 ~19:5xZ, server side)",
+      "rule24_record": {
+        "domain_declared": "the rows of etf-classifications (tickers), the population FWD-8's ACCEPT reads",
+        "mece_by_subtraction": "every row is either pooled/exchange-traded under the ETF classes (fund) or one issuer's instrument (single_security); the remainder after subtracting both is cash and cash-equivalent lines, which are not rows of this table (cash rows are classified by the holdings producers' cash rule, PRD v0.20 rulings of IRPT_BCKEND) -- an unforeseen member reads as absent, never forced",
+        "same_grain": "one value per ticker",
+        "intent_coherence": "one axis: what kind of instrument the ticker is; no ordering, class or vendor meaning is carried in it",
+        "state_coherence": "setting instrument_kind moves no asset_class or sub_asset_class value; the ordering of a table moves only through the served key",
+        "token_census": "word-boundary census of instrument_kind, 2026-09-29 ~20:1xZ, native Grep: infra/aws/lambda/v2_portal 0 hits, data/**/*.py 0 hits, portal/src 0 hits -- no collision"
+      }
+    },
+    "identifier_namespace": {
+      "serves": "FWD-2, FWD-7 (E9, CTO RULING 103140)",
+      "type": "string",
+      "values": ["TICKER", "CUSIP"],
+      "domain": "every row of etf-classifications, one row per ticker",
+      "definitions": {
+        "TICKER": "the row's ticker column holds an ordinary exchange ticker symbol -- the pre-existing shape of every row before E9, and the default reading for any row where identifier_namespace is absent",
+        "CUSIP": "the row's ticker column holds a CUSIP-prefixed key, `\"CUSIP:<9 chars>\"` (the literal 9-character CUSIP), for a security with no exchange ticker (e.g. a bond); the table gains no new column -- the existing ticker attribute carries the prefixed string"
+      },
+      "absent": "a row without identifier_namespace reads as TICKER (CTO RULING 103140); the value is never inferred from the ticker column's own shape (e.g. a leading \"CUSIP:\" substring) -- it is a stated attribute, not a derived one, so a row's identifier_namespace and its ticker's shape are two carriers that must agree by construction of the writer, never by a reader re-parsing the key",
+      "rule24_record": {
+        "domain_declared": "the rows of etf-classifications (tickers), the population E9's CUSIP-keyed write touches",
+        "mece_by_subtraction": "every row's ticker column holds either an ordinary exchange ticker (TICKER) or a CUSIP-prefixed key (CUSIP); the remainder after subtracting both is empty over this field's own domain -- an absent value reads TICKER, never forced to CUSIP by inference",
+        "same_grain": "one value per ticker (row)",
+        "intent_coherence": "one axis: which identifier scheme keys the row; no class, ordering or vendor meaning is carried in it",
+        "state_coherence": "setting identifier_namespace moves no asset_class, sub_asset_class or classified_by value; a CUSIP row's full identifier lives in the one ticker column, never split across two attributes",
+        "token_census": "word-boundary census of identifier_namespace, 2026-09-30 ~03:2xZ, native/comp-find: infra/aws/lambda/v2_portal 0 hits, data 0 hits, portal/src 8 hits -- ALL in IRPT_BCKEND's own wire contract (portal/src/pages/InvestorReporting/contracts/wire/AnalysisRequest.ts, adapt.ts, fixtures/tests), whose identifier_namespace enum is wider (TICKER|CUSIP|ISIN|CASH|MODEL|UNMATCHED) and is a DIFFERENT schema (IRPT's own normalized-holdings wire, not etf-classifications) -- same token name, disjoint domain; flagged as row MDPF_SECCLASS-W5-S2, not a write-path collision"
+      }
+    },
+    "classified_by": {
+      "serves": "FWD-3, FWD-7, FWD-4",
+      "type": "string",
+      "values": ["seed", "scheduled", "constituents", "legacy", "model"],
+      "domain": "every row of etf-classifications",
+      "definitions": {
+        "seed": "written by the seed path from infra/aws/lambda/v2_portal/_shared/etf_classification.py (the one place a person adds or corrects a row)",
+        "scheduled": "written by the scheduled classification of FWD-7 for a ticker that had NO row; the write is conditional on the row's absence, so it never overwrites a seed or constituents row",
+        "constituents": "written by infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py for a constituent ticker of Opal's own ETFs that had NO row (or carried no label); the write is conditional on the row's absence or its lacking a label, so it never overwrites a seed, scheduled or already-labelled row",
+        "legacy": "not written by any path: a missing label reads as legacy. It means the row predates this contract and its provenance was not recorded -- it is not a claim about which seeder wrote it, and it never overwrites or is written to an existing attribute; it is produced by ONE additive conditional label update (label-legacy-classified-by.py) on rows carrying no classified_by attribute",
+        "model": "written by infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py (SC-e-10), which sends the Kimi K3 model a security's NAME and TICKER only, for a ticker that had NO row; the write is conditional on the row's absence (attribute_not_exists(ticker)), exactly like scheduled and constituents, so it never overwrites a seed, scheduled, constituents or already-labelled row -- and a seed row always wins over it on the same precedence rule below"
+      },
+      "precedence": "a seed row always wins: a correction to a scheduled, constituents or model row is made by adding the ticker to the seed source, and the next seed run replaces the row with classified_by = seed. scheduled, constituents and model each write ONLY where no row exists (attribute_not_exists(classified_by)), so none of the three overwrites another or a seed row. A row with no classified_by attribute reads as legacy until the one label update sets it; legacy therefore loses to seed and to a future scheduled/constituents/model write (attribute_not_exists still holds against a row that never received a label), and wins against nothing -- it is the read-time default for an absent attribute, not a write that competes for the row.",
+      "estate_note": "the estate's per-firm classifiers already write a free-text classified_by into their own tables (bd-securities: seed_from_yang, gpt-5.4-mini, gpt-4o-mini, auto-detected); those tables and their writers retire under FWD-5/FWD-4; on etf-classifications the field takes only the five values above",
+      "rule24_record": {
+        "domain_declared": "the writers of etf-classifications rows (and, for rows with no writer of record, the read-time label)",
+        "mece_by_subtraction": "a row is written by the seed path, the scheduled classification, the constituents path, the model path, or -- for a row with none of the four's attribute set -- it reads legacy; any other writer is a copy that FWD-4's census reports",
+        "same_grain": "one writer (or read-time label) per row",
+        "intent_coherence": "one axis: which of the four sanctioned write paths wrote the row, or that none did (legacy)",
+        "state_coherence": "classified_by moves no class value on its own; a seed run over a scheduled, constituents, model or legacy row changes both classified_by and, where they differ, the class values; the legacy label update (SET classified_by = legacy on attribute_not_exists(classified_by)) moves no other attribute on any row; a model write sets classification_confidence and low_confidence alongside it (never on a seed, scheduled, constituents or legacy row) but moves no OTHER row's classified_by, class or confidence values -- it is additive on its own conditional-put row only"
+      }
+    },
+    "classification_confidence": {
+      "serves": "FWD-7 (SC-e-10), the standing word's 'flag if Kimi has lower confidence'",
+      "type": "number",
+      "domain": "every row written by the model path (classified_by = model)",
+      "range": "0 to 1 inclusive, the Kimi K3 model's own self-reported confidence for that row's asset_class/sub_asset_class",
+      "absent": "present ONLY on a model row; a seed, scheduled, constituents or legacy row carries no classification_confidence attribute -- it is never defaulted or backfilled onto a row a different path wrote",
+      "rule24_record": {
+        "domain_declared": "the rows of etf-classifications written by the model path, the population classify-residual-model.py's write touches",
+        "mece_by_subtraction": "a model row carries a confidence in [0, 1]; every other classified_by value carries no confidence attribute at all -- the remainder after subtracting the model rows from the table's full row set is exactly the rows with no classification_confidence, by construction of the writer",
+        "same_grain": "one value per ticker (row), set once at the row's single conditional-put write",
+        "intent_coherence": "one axis: how confident the model was in ITS OWN classification of that row; no ordering, class or vendor meaning is carried in it",
+        "state_coherence": "classification_confidence moves no asset_class, sub_asset_class or classified_by value; a later seed correction of a model row replaces classified_by = seed and drops classification_confidence entirely (the field belongs to the model write, not to the row across writers)",
+        "token_census": "word-boundary census of classification_confidence, 2026-09-30, native Grep: infra/aws/lambda/v2_portal 0 hits outside this cell's own new files, data/**/*.py 0 hits, portal/src 0 hits -- no collision"
+      }
+    },
+    "low_confidence": {
+      "serves": "FWD-7 (SC-e-10), the standing word's 'a flag if Kimi has lower confidence' (no human review; a low-confidence result is flagged, not held back)",
+      "type": "boolean",
+      "domain": "every row written by the model path (classified_by = model)",
+      "definition": "true when that row's classification_confidence is strictly below 0.80 at write time; false otherwise. Andrew's standing word requires the flag to exist, never a withheld write -- a flagged row is written exactly like any other model row, distinguished only by this attribute",
+      "absent": "present ONLY on a model row; a seed, scheduled, constituents or legacy row carries no low_confidence attribute -- it is never defaulted or backfilled onto a row a different path wrote",
+      "rule24_record": {
+        "domain_declared": "the rows of etf-classifications written by the model path, the population classify-residual-model.py's write touches",
+        "mece_by_subtraction": "a model row is either low_confidence = true (below 0.80) or false (0.80 or above); every other classified_by value carries no low_confidence attribute at all -- the remainder after subtracting the model rows is exactly the rows with no low_confidence, by construction of the writer",
+        "same_grain": "one value per ticker (row), derived once from that same row's own classification_confidence at write time",
+        "intent_coherence": "one axis: whether THIS row's own model confidence cleared the 0.80 bar; no ordering, class or vendor meaning is carried in it",
+        "state_coherence": "low_confidence moves no asset_class, sub_asset_class, classified_by or classification_confidence value -- it is a read-only derived flag of the row's own confidence, never itself a write input; a later seed correction of a model row replaces classified_by = seed and drops low_confidence entirely, same as classification_confidence",
+        "token_census": "word-boundary census of low_confidence, 2026-09-30, native Grep: infra/aws/lambda/v2_portal 0 hits outside this cell's own new files, data/**/*.py 0 hits, portal/src 0 hits -- no collision"
+      }
+    }
+  }
+}

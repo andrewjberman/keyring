@@ -1,0 +1,3156 @@
+{
+ "items": [
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "1299",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Information Technology",
+   "ticker": "2317",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "TPG Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "2602335D",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Information Technology",
+   "ticker": "8035",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "8306",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "8316",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "8766",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "939",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Communication Services",
+   "ticker": "9433",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Information Technology",
+   "ticker": "992",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Apple Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "AAPL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "AbbVie Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "ABBV",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Abbott Laboratories",
+   "sub_asset_class": "Health Care",
+   "ticker": "ABT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares MSCI ACWI ETF",
+   "sector": "Global",
+   "sub_asset_class": "Global",
+   "ticker": "ACWI",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Information Technology",
+   "ticker": "ADBE",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Archer-Daniels-Midland Co",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "ADM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "American Electric Power Co Inc",
+   "sub_asset_class": "Utilities",
+   "ticker": "AEP",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "iShares Core U.S. Aggregate Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Intermediate",
+   "ticker": "AGG",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Materials",
+   "ticker": "AI",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "American International Group Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "AIG",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Assurant Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "AIZ",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Applied Materials Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "AMAT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Advanced Micro Devices Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "AMD",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Ameriprise Financial Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "AMP",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "America Movil SAB de CV",
+   "sub_asset_class": "Communication Services",
+   "ticker": "AMX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Communication Services",
+   "ticker": "AMXB",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Amazon.com Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "AMZN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Arista Networks Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "ANET",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "ASML Holding NV",
+   "sub_asset_class": "Information Technology",
+   "ticker": "ASML",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Atmos Energy Corp",
+   "sub_asset_class": "Utilities",
+   "ticker": "ATO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Broadcom Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "AVGO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "AstraZeneca PLC",
+   "sub_asset_class": "Health Care",
+   "ticker": "AZN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Boeing Co",
+   "sub_asset_class": "Industrials",
+   "ticker": "BA",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "BABA",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Bank of America Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "BAC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "BATS",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "BBSE3",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "BB Seguridade Participacoes SA",
+   "sub_asset_class": "Financials",
+   "ticker": "BBSEY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Franklin Templeton Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "BEN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "State Street SPDR Bloomberg 1-3 Month T-Bill ETF",
+   "sector": "Government",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "BIL",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "SPDR Bloomberg 3-12 Month T-Bill ETF",
+   "sector": "Government",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "BILS",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Brookfield Infrastructure Corp",
+   "sub_asset_class": "Utilities",
+   "ticker": "BIPC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Intermediate-Term Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Intermediate",
+   "ticker": "BIV",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Booking Holdings Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "BKNG",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Bank Rakyat Indonesia Persero",
+   "sub_asset_class": "Financials",
+   "ticker": "BKRKY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Brookfield Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "BN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Total Bond Market ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Intermediate",
+   "ticker": "BND",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Total International Bond ETF",
+   "sector": "International",
+   "sub_asset_class": "Intermediate",
+   "ticker": "BNDX",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "BNP",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "BNP Paribas SA",
+   "sub_asset_class": "Financials",
+   "ticker": "BNPQY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Bank of New York Mellon Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "BNY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "BP PLC",
+   "sub_asset_class": "Energy",
+   "ticker": "BP",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Invesco BulletShares 2026 Corporate Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Short Duration",
+   "ticker": "BSCQ",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Invesco BulletShares 2027 Corporate Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Short Duration",
+   "ticker": "BSCR",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Invesco BulletShares 2026 High Yield Corp Bond ETF",
+   "sector": "High Yield",
+   "sub_asset_class": "High Yield",
+   "ticker": "BSJQ",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "British American Tobacco PLC",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "BTI",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Bunzl PLC",
+   "sub_asset_class": "Industrials",
+   "ticker": "BZLFY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Citigroup Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "C",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Cash & Cash Equivalents",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "CASH",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-03-25T18:35:57.301749+00:00",
+   "name": "U.S. Dollar Cash",
+   "sub_asset_class": "Cash",
+   "ticker": "CASH_USD",
+   "updated_by": "canonical_si_seed"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Information Technology",
+   "ticker": "CDNS",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "CELH",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Cigna Corp",
+   "sub_asset_class": "Health Care",
+   "ticker": "CI",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "China Construction Bank Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "CICHY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Ciena Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "CIEN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Cincinnati Financial Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "CINF",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Global X 1-3 Month T-Bill ETF",
+   "sector": "Government",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "CLIP",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "CLX",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "CME Group Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "CME",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Cummins Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "CMI",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Centene Corp",
+   "sub_asset_class": "Health Care",
+   "ticker": "CNC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Canadian National Railway Co",
+   "sub_asset_class": "Industrials",
+   "ticker": "CNI",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Industrials",
+   "ticker": "CNR",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "COST",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Pacer US Cash Cows 100 ETF",
+   "sector": "US Factor",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "COWZ",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Copa Holdings SA",
+   "sub_asset_class": "Industrials",
+   "ticker": "CPA",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Chevron Corp",
+   "sub_asset_class": "Energy",
+   "ticker": "CVX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Delta Air Lines Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "DAL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "commodities",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Invesco DB Commodity Index Tracking Fund",
+   "sector": "Commodities",
+   "sub_asset_class": "Commodities",
+   "ticker": "DBC",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Deckers Outdoor Corp",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "DECK",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Dell Technologies Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "DELL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Dimensional Core Fixed Income ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Intermediate",
+   "ticker": "DFCF",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Dimensional Short-Duration Fixed Income ETF",
+   "sector": "Ultra Short",
+   "sub_asset_class": "Short Duration",
+   "ticker": "DFSD",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "iShares Core Dividend Growth ETF",
+   "sector": "US Dividend",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "DGRO",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Opal Dividend Income ETF",
+   "sector": "US Dividend",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "DIVZ",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "DTE Energy Co",
+   "sub_asset_class": "Utilities",
+   "ticker": "DTE",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "iShares Select Dividend ETF",
+   "sector": "US Dividend",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "DVY",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "eBay Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "EBAY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "EchoStar Corp",
+   "sub_asset_class": "Communication Services",
+   "ticker": "ECHO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares MSCI Emerging Markets ETF",
+   "sector": "Emerging Markets",
+   "sub_asset_class": "EM",
+   "ticker": "EEM",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares MSCI EAFE ETF",
+   "sector": "International Developed",
+   "sub_asset_class": "Developed",
+   "ticker": "EFA",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Estee Lauder Cos Inc",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "EL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares JP Morgan USD Emerging Markets Bond ETF",
+   "sector": "International",
+   "sub_asset_class": "International",
+   "ticker": "EMB",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Enbridge Inc",
+   "sub_asset_class": "Energy",
+   "ticker": "ENB",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Utilities",
+   "ticker": "ENEL",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Enel SpA",
+   "sub_asset_class": "Utilities",
+   "ticker": "ENLAY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Eversource Energy",
+   "sub_asset_class": "Utilities",
+   "ticker": "ES",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Entergy Corp",
+   "sub_asset_class": "Utilities",
+   "ticker": "ETR",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares MSCI Japan ETF",
+   "sector": "Japan",
+   "sub_asset_class": "Developed",
+   "ticker": "EWJ",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Ford Motor Co",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "F",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "active",
+   "name": "Fidelity Total Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Intermediate",
+   "ticker": "FBND",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Freeport-McMoRan Inc",
+   "sub_asset_class": "Materials",
+   "ticker": "FCX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "FedEx Corp",
+   "sub_asset_class": "Industrials",
+   "ticker": "FDX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Ferrovial NV",
+   "sub_asset_class": "Industrials",
+   "ticker": "FER",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Comfort Systems USA Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "FIX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Flex Ltd",
+   "sub_asset_class": "Information Technology",
+   "ticker": "FLEX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares Floating Rate Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Intermediate",
+   "ticker": "FLOT",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Fortinet Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "FTNT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "First American Treasury Obligations Fund",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "FXFXX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Globe Life Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "GL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "commodities",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "SPDR Gold Shares",
+   "sector": "Gold",
+   "sub_asset_class": "Metals",
+   "ticker": "GLD",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Corning Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "GLW",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "General Motors Co",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "GM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Alphabet Inc",
+   "sub_asset_class": "Communication Services",
+   "ticker": "GOOG",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Alphabet Inc",
+   "sub_asset_class": "Communication Services",
+   "ticker": "GOOGL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares US Treasury Bond ETF",
+   "sector": "Government",
+   "sub_asset_class": "Intermediate",
+   "ticker": "GOVT",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "GPN",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Goldman Sachs Group Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "GS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "commodities",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares S&P GSCI Commodity-Indexed Trust",
+   "sector": "Commodities",
+   "sub_asset_class": "Commodities",
+   "ticker": "GSG",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "GSK PLC",
+   "sub_asset_class": "Health Care",
+   "ticker": "GSK",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Energy",
+   "ticker": "HAL",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Home Depot Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "HD",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Industrials",
+   "ticker": "HEI",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Hermes International SCA",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "HESAY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "HSBA",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "HSBC Holdings PLC",
+   "sub_asset_class": "Financials",
+   "ticker": "HSBC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Hershey Co",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "HSY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Howmet Aerospace Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "HWM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares iBoxx High Yield Corporate Bond ETF",
+   "sector": "High Yield",
+   "sub_asset_class": "High Yield",
+   "ticker": "HYG",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares Core International Aggregate Bond ETF",
+   "sector": "International",
+   "sub_asset_class": "International",
+   "ticker": "IAGG",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "commodities",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares Gold Trust",
+   "sector": "Gold",
+   "sub_asset_class": "Metals",
+   "ticker": "IAU",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Iberdrola SA",
+   "sub_asset_class": "Utilities",
+   "ticker": "IBDRY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Utilities",
+   "ticker": "IBE",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares Treasury Bill ETF",
+   "sector": "Government",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "IBIL",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "ICICI Bank Ltd",
+   "sub_asset_class": "Financials",
+   "ticker": "IBN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "iShares iBonds Dec 2028 Term Treasury ETF",
+   "sector": "Government",
+   "sub_asset_class": "Intermediate",
+   "ticker": "IBTF",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "ICICIBC",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "iShares Ultra Short Duration Bond Active ETF",
+   "sector": "Ultra Short",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "ICSH",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "International Container Terminal Services Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "ICT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Opal International Dividend Income ETF",
+   "sector": "International Developed",
+   "sub_asset_class": "Developed",
+   "ticker": "IDVZ",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "IDEXX Laboratories Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "IDXX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares 7-10 Year Treasury Bond ETF",
+   "sector": "Government",
+   "sub_asset_class": "Intermediate",
+   "ticker": "IEF",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "iShares Core MSCI EAFE ETF",
+   "sector": "International Developed",
+   "sub_asset_class": "Developed",
+   "ticker": "IEFA",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "iShares Core MSCI Emerging Markets ETF",
+   "sector": "Emerging Markets",
+   "sub_asset_class": "EM",
+   "ticker": "IEMG",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "iShares Core S&P Mid-Cap ETF",
+   "sector": "US Mid Cap",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "IJH",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares Core S&P Small-Cap ETF",
+   "sector": "US Small Cap",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "IJR",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "IMB",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Imperial Brands PLC",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "IMBBY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Incyte Corp",
+   "sub_asset_class": "Health Care",
+   "ticker": "INCY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "iShares MSCI India ETF",
+   "sector": "India",
+   "sub_asset_class": "EM",
+   "ticker": "INDA",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Intel Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "INTC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Intuit Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "INTU",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "iShares MSCI International Quality Factor ETF",
+   "sector": "International Developed",
+   "sub_asset_class": "Developed",
+   "ticker": "IQLT",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Intesa Sanpaolo SpA",
+   "sub_asset_class": "Financials",
+   "ticker": "ISNPY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "ISP",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Intuitive Surgical Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "ISRG",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares Core S&P 500 ETF",
+   "sector": "US Large Cap",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "IVV",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "iShares Russell 2000 ETF",
+   "sector": "US Small Cap",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "IWM",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares Russell Mid-Cap ETF",
+   "sector": "US Mid Cap",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "IWR",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Janus Henderson AAA CLO ETF",
+   "sector": "Ultra Short",
+   "sub_asset_class": "Structured Credit",
+   "ticker": "JAAA",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "JB Hunt Transport Services Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "JBHT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Jabil Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "JBL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "JD.com Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "JD",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "structured",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "JPMorgan Equity Premium Income ETF",
+   "sector": "US Dividend",
+   "sub_asset_class": "Options Income",
+   "ticker": "JEPI",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Johnson & Johnson",
+   "sub_asset_class": "Health Care",
+   "ticker": "JNJ",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "SPDR Bloomberg High Yield Bond ETF",
+   "sector": "High Yield",
+   "sub_asset_class": "High Yield",
+   "ticker": "JNK",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "JPMorgan Chase & Co.",
+   "sub_asset_class": "Financials",
+   "ticker": "JPM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "JPMorgan Ultra-Short Income ETF",
+   "sector": "Ultra Short",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "JPST",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Kimberly-Clark de Mexico SAB de CV",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "KCDMY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Keysight Technologies Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "KEYS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Koninklijke KPN NV",
+   "sub_asset_class": "Communication Services",
+   "ticker": "KKPNY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "KMB",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Coca-Cola Co",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "KO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Coca-Cola Femsa SAB de CV",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "KOF",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "KOFUBL",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Communication Services",
+   "ticker": "KPN",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Lumentum Holdings Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "LITE",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Eli Lilly & Co",
+   "sub_asset_class": "Health Care",
+   "ticker": "LLY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Lockheed Martin Corp",
+   "sub_asset_class": "Industrials",
+   "ticker": "LMT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Pimco Senior Loan Active ETF",
+   "sector": "Ultra Short",
+   "sub_asset_class": "Structured Credit",
+   "ticker": "LONZ",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares iBoxx Investment Grade Corporate Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Long Duration",
+   "ticker": "LQD",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Lam Research Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "LRCX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Southwest Airlines Co",
+   "sub_asset_class": "Industrials",
+   "ticker": "LUV",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Mastercard Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "MA",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Marriott International Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "MAR",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "iShares MSCI China ETF",
+   "sector": "China",
+   "sub_asset_class": "EM",
+   "ticker": "MCHI",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "MercadoLibre Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "MELI",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Manila Electric Co",
+   "sub_asset_class": "Utilities",
+   "ticker": "MER",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "PIMCO Enhanced Short Maturity Active ETF",
+   "sector": "Ultra Short",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "MINT",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "ML",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Monster Beverage Corp",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "MNST",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Altria Group Inc",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "MO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "MPLX LP",
+   "sub_asset_class": "Energy",
+   "ticker": "MPLX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Monolithic Power Systems Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "MPWR",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Merck & Co Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "MRK",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Marvell Technology Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "MRVL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "MSCI",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Microsoft Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "MSFT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Micron Technology Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "MU",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares National Muni Bond ETF",
+   "sector": "Municipal",
+   "sub_asset_class": "Municipal",
+   "ticker": "MUB",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "NextEra Energy Inc",
+   "sub_asset_class": "Utilities",
+   "ticker": "NEE",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Newmont Corp",
+   "sub_asset_class": "Materials",
+   "ticker": "NEM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "NESN",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Netflix Inc",
+   "sub_asset_class": "Communication Services",
+   "ticker": "NFLX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Utilities",
+   "ticker": "NG",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "NKE",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Nokia Oyj",
+   "sub_asset_class": "Information Technology",
+   "ticker": "NOK",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Information Technology",
+   "ticker": "NOKIA",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Health Care",
+   "ticker": "NOVN",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "ServiceNow Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "NOW",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Nestle SA",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "NSRGY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Northern Trust Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "NTRS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "NU Holdings Ltd",
+   "sub_asset_class": "Financials",
+   "ticker": "NU",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "NVIDIA Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "NVDA",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Novartis AG",
+   "sub_asset_class": "Health Care",
+   "ticker": "NVS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "US Treasury 12 Month Bill ETF",
+   "sector": "Government",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "OBIL",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Grupo Aeroportuario del Centro Norte SAB de CV",
+   "sub_asset_class": "Industrials",
+   "ticker": "OMAB",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Communication Services",
+   "ticker": "ORA",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Orange SA",
+   "sub_asset_class": "Communication Services",
+   "ticker": "ORANY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Petroleo Brasileiro SA",
+   "sub_asset_class": "Energy",
+   "ticker": "PBR",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "PG&E Corp",
+   "sub_asset_class": "Utilities",
+   "ticker": "PCG",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Polen High Yield ETF",
+   "sector": "High Yield",
+   "sub_asset_class": "High Yield",
+   "ticker": "PCHI",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "Invesco Emerging Markets Sovereign Debt ETF",
+   "sector": "International",
+   "sub_asset_class": "International",
+   "ticker": "PCY",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "commodities",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF",
+   "sector": "Commodities",
+   "sub_asset_class": "Commodities",
+   "ticker": "PDBC",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Pathfinder Disciplined US Equities ETF",
+   "sector": "Active US",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "PFDE",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Pathfinder Focused Opportunities ETF",
+   "sector": "Active US",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "PFOE",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Palantir Technologies Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "PLTR",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Philip Morris International Inc",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "PM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Industrials",
+   "ticker": "PWR",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "structured",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "TrueShares Quarterly Bear Hedge ETF",
+   "sector": "Structured",
+   "sub_asset_class": "Hedge",
+   "ticker": "QBER",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "QUALCOMM Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "QCOM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Invesco QQQ Trust",
+   "sector": "US Growth",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "QQQ",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Invesco Nasdaq 100 ETF",
+   "sector": "US Growth",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "QQQM",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "iShares MSCI USA Quality Factor ETF",
+   "sector": "US Factor",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "QUAL",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "QXO Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "QXO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Reckitt Benckiser Group PLC",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "RBGLD",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Regeneron Pharmaceuticals Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "REGN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Roche Holding AG",
+   "sub_asset_class": "Health Care",
+   "ticker": "RHHBY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Rio Tinto PLC",
+   "sub_asset_class": "Materials",
+   "ticker": "RIO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "RKT",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "RMS",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Health Care",
+   "ticker": "ROG",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Ross Stores Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "ROST",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Raytheon Technologies Corp",
+   "sub_asset_class": "Industrials",
+   "ticker": "RTX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Utilities",
+   "ticker": "RWE",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "State Street U.S. Government MMKT",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "SALXX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Health Care",
+   "ticker": "SAN",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Information Technology",
+   "ticker": "SAP",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Schwab US Dividend Equity ETF",
+   "sector": "US Dividend",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "SCHD",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Schwab Short-Term US Treasury ETF",
+   "sector": "Government",
+   "sub_asset_class": "Short Duration",
+   "ticker": "SCHO",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Schwab US TIPS ETF",
+   "sector": "TIPS",
+   "sub_asset_class": "TIPS",
+   "ticker": "SCHP",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Charles Schwab Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "SCHW",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Schwab US Aggregate Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Intermediate",
+   "ticker": "SCHZ",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares 0-3 Month Treasury Bond ETF",
+   "sector": "Government",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "SGOV",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Information Technology",
+   "ticker": "SHOP",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares 1-3 Year Treasury Bond ETF",
+   "sector": "Government",
+   "sub_asset_class": "Short Duration",
+   "ticker": "SHY",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "SPDR Bloomberg Short Term High Yield Bond ETF",
+   "sector": "High Yield",
+   "sub_asset_class": "High Yield",
+   "ticker": "SJNK",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Energy",
+   "ticker": "SLB",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "commodities",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares Silver Trust",
+   "sector": "Silver",
+   "sub_asset_class": "Metals",
+   "ticker": "SLV",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Sandisk Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "SNDK",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Information Technology",
+   "ticker": "SNPS",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Sanofi",
+   "sub_asset_class": "Health Care",
+   "ticker": "SNY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "SPDR Portfolio Developed World ex-US ETF",
+   "sector": "International Developed",
+   "sub_asset_class": "Developed",
+   "ticker": "SPDW",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "SPDR Portfolio High Yield Bond ETF",
+   "sector": "High Yield",
+   "sub_asset_class": "High Yield",
+   "ticker": "SPHY",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Invesco S&P 500 Momentum ETF",
+   "sector": "US Factor",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "SPMO",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Spotify Technology SA",
+   "sub_asset_class": "Communication Services",
+   "ticker": "SPOT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "SPDR Portfolio S&P 600 Small Cap ETF",
+   "sector": "US Small Cap",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "SPSM",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "SPDR S&P 500 ETF Trust",
+   "sector": "US Large Cap",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "SPY",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "SPDR Portfolio S&P 500 ETF",
+   "sector": "US Large Cap",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "SPYM",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Utilities",
+   "ticker": "SSE",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Communication Services",
+   "ticker": "ST",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Steel Dynamics Inc",
+   "sub_asset_class": "Materials",
+   "ticker": "STLD",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "State Street Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "STT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Seagate Technology Holdings PLC",
+   "sub_asset_class": "Information Technology",
+   "ticker": "STX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "AT&T Inc",
+   "sub_asset_class": "Communication Services",
+   "ticker": "T",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "US Treasury 3 Month Bill ETF",
+   "sector": "Government",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "TBIL",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "iShares Treasury Floating Rate Bond ETF",
+   "sector": "Government",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "TFLO",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares TIPS Bond ETF",
+   "sector": "TIPS",
+   "sub_asset_class": "TIPS",
+   "ticker": "TIP",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The TJX Cos Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "TJX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Tokio Marine Holdings Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "TKOMY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "iShares 20+ Year Treasury Bond ETF",
+   "sector": "Government",
+   "sub_asset_class": "Long Duration",
+   "ticker": "TLT",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Travelers Cos Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "TRV",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Tesla Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "TSLA",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Taiwan Semiconductor Manufacturing Co Ltd ADR",
+   "sub_asset_class": "Information Technology",
+   "ticker": "TSM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "TotalEnergies SE",
+   "sub_asset_class": "Energy",
+   "ticker": "TTE",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Texas Instruments Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "TXN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "United Airlines Holdings Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "UAL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Uber Technologies Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "UBER",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "UBS Group AG",
+   "sub_asset_class": "Financials",
+   "ticker": "UBS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "UBSG",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Universal Health Services Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "UHS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Unilever PLC",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "UL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "ULVR",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "UnitedHealth Group Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "UNH",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Union Pacific Corp",
+   "sub_asset_class": "Industrials",
+   "ticker": "UNP",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Universal Music Group NV",
+   "sub_asset_class": "Communication Services",
+   "ticker": "UNVGY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "United Parcel Service Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "UPS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "commodities",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "United States Oil Fund",
+   "sector": "Oil",
+   "sub_asset_class": "Oil",
+   "ticker": "USO",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "US Treasury 10 Year Note ETF",
+   "sector": "Government",
+   "sub_asset_class": "Intermediate",
+   "ticker": "UTEN",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "US Treasury 2 Year Note ETF",
+   "sector": "Government",
+   "sub_asset_class": "Short Duration",
+   "ticker": "UTWO",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "structured",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "ProShares Ultra VIX Short-Term Futures ETF",
+   "sector": "Volatility",
+   "sub_asset_class": "Hedge",
+   "ticker": "UVXY",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Visa Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "V",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Small-Cap ETF",
+   "sector": "US Small Cap",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "VB",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Intermediate-Term Corporate Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Intermediate",
+   "ticker": "VCIT",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Long-Term Corporate Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Long Duration",
+   "ticker": "VCLT",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Short-Term Corporate Bond ETF",
+   "sector": "Investment Grade",
+   "sub_asset_class": "Short Duration",
+   "ticker": "VCSH",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Vanguard FTSE Developed Markets ETF",
+   "sector": "International Developed",
+   "sub_asset_class": "Developed",
+   "ticker": "VEA",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Intermediate-Term Treasury ETF",
+   "sector": "Government",
+   "sub_asset_class": "Intermediate",
+   "ticker": "VGIT",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Long-Term Treasury ETF",
+   "sector": "Government",
+   "sub_asset_class": "Long Duration",
+   "ticker": "VGLT",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Short-Term Treasury ETF",
+   "sector": "Government",
+   "sub_asset_class": "Short Duration",
+   "ticker": "VGSH",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "Vanguard Information Technology ETF",
+   "sector": "Technology",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VGT",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Telefonica Brasil SA",
+   "sub_asset_class": "Communication Services",
+   "ticker": "VIV",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Communication Services",
+   "ticker": "VIVT3",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "structured",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "ProShares VIX Short-Term Futures ETF",
+   "sector": "Volatility",
+   "sub_asset_class": "Hedge",
+   "ticker": "VIXY",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Valero Energy Corp",
+   "sub_asset_class": "Energy",
+   "ticker": "VLO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Janus Henderson Short Duration Income ETF",
+   "sector": "Ultra Short",
+   "sub_asset_class": "Short Duration",
+   "ticker": "VNLA",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "alternatives",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Real Estate ETF",
+   "sector": "Real Estate",
+   "sub_asset_class": "Real Estate",
+   "ticker": "VNQ",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Mid-Cap ETF",
+   "sector": "US Mid Cap",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "VO",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard S&P 500 ETF",
+   "sector": "US Large Cap",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VOO",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Vanguard FTSE All-World ex-US Small-Cap ETF",
+   "sector": "International Developed",
+   "sub_asset_class": "International",
+   "ticker": "VSS",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "Vanguard Short-Term Tax-Exempt Bond ETF",
+   "sector": "",
+   "sub_asset_class": "Short Duration",
+   "ticker": "VTES",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Total Stock Market ETF",
+   "sector": "US Large Cap",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VTI",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Short-Term Inflation-Protected Securities ETF",
+   "sector": "TIPS",
+   "sub_asset_class": "TIPS",
+   "ticker": "VTIP",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Value ETF",
+   "sector": "US Value",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VTV",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T17:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Growth ETF",
+   "sector": "US Growth",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VUG",
+   "updated_by": "1.0.0_SA_CTO~X vug-naming-fix (prior: name=VUG, seed-script 2026-02-19)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "active",
+   "name": "Vanguard Ultra-Short Bond ETF",
+   "sector": "Ultra Short",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "VUSB",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard FTSE Emerging Markets ETF",
+   "sector": "Emerging Markets",
+   "sub_asset_class": "EM",
+   "ticker": "VWO",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Emerging Markets Government Bond ETF",
+   "sector": "International",
+   "sub_asset_class": "International",
+   "ticker": "VWOB",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "passive",
+   "name": "Vanguard Total International Stock ETF",
+   "sector": "International Developed",
+   "sub_asset_class": "Developed",
+   "ticker": "VXUS",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "structured",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "iPath Series B S&P 500 VIX Short-Term Futures ETN",
+   "sector": "Volatility",
+   "sub_asset_class": "Hedge",
+   "ticker": "VXX",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Verizon Communications Inc",
+   "sub_asset_class": "Communication Services",
+   "ticker": "VZ",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "WALMEX*",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Workday Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "WDAY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Western Digital Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "WDC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Waste Management Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "WM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Wal-Mart de Mexico SAB de CV",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "WMMVY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "fixed_income",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "management_style": "passive",
+   "name": "US Treasury 6 Month Bill ETF",
+   "sector": "Government",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "XBIL",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "Energy Select Sector SPDR Fund",
+   "sector": "Energy",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "XLE",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "Financial Select Sector SPDR Fund",
+   "sector": "Financials",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "XLF",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T18:05:00Z",
+   "management_style": "unknown",
+   "name": "Technology Select Sector SPDR Fund",
+   "sector": "Technology",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "XLK",
+   "updated_by": "1.0.0_SA_CTO~X placeholder-name-sweep (prior: name=ticker, seed-script)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-18T19:10:00Z",
+   "name": "State Street Utilities Select Sector SPDR ETF",
+   "sector": "Utilities",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "XLU",
+   "updated_by": "1.0.0_SA_CTO~X attr-restore-from-_shared (put_item drop casualty, Andrew chase-down)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "ExxonMobil Holdings Corp",
+   "sub_asset_class": "Energy",
+   "ticker": "XOM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Health Care",
+   "ticker": "ZTS",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  {
+   "asset_class": "equity",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Financials",
+   "ticker": "ZURN",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  }
+ ],
+ "rows": 344,
+ "table": "etf-classifications"
+}

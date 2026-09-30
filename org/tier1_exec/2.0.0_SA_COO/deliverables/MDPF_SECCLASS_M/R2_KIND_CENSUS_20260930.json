@@ -1,0 +1,839 @@
+{
+  "table_rows_at_build": 2309,
+  "source_named": "ETF constituents feed: served artifact s3://opal-data-portal-v2/platinum/etfs/positioning_data.json, read via infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py load_constituents()/instrument_kind_for() (also wired as set-instrument-kind.py --source constituents). Coverage: 157 of the 2,309 live etf-classifications tickers overlap this feed (156 with a determinate kind: 154 single_security + 2 fund; 1, CASH, is a cash-residual line the feed itself leaves absent by design, never defaulted).",
+  "rows_absent_kind": 2163,
+  "would_set": 156,
+  "defaulted": 0,
+  "from_bd_securities": 1970,
+  "rows": [
+    {
+      "ticker": "AMP",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "FXFXX",
+      "instrument_kind": "fund",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ETR",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ABBV",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "NVDA",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ECHO",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "INCY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "CNI",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "HESAY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "CINF",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BNY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "FTNT",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "UNH",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BA",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "KCDMY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "PM",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "KOF",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "PCG",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "PWR",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "CMI",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "CNC",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "CME",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "TSLA",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "EBAY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "VLO",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "IDXX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "T",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "KKPNY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "XOM",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BN",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "TSM",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ASML",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "VZ",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "DAL",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "UL",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ROST",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "FCX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "INTC",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "REGN",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "IBN",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "JNJ",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MO",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "SALXX",
+      "instrument_kind": "fund",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "NEE",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ADM",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "IMBBY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "CIEN",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BNPQY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "UBER",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BTI",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "SNDK",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "FIX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "FER",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "NSRGY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ICT",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MRK",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "F",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "AMZN",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "LRCX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "AZN",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "UPS",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "WDC",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "KEYS",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "FLEX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MNST",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "IBDRY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "GLW",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "QCOM",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ORANY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "GM",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "NOW",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BAC",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "PBR",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "LUV",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MELI",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "HWM",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "UNVGY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "2602335D",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MAR",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "STLD",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "QXO",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BKRKY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "RBGLD",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "DECK",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "GL",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "PLTR",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "VIV",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "SPOT",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "DELL",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "C",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MPLX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ATO",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "OMAB",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "WDAY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "RHHBY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "NU",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ISRG",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "FDX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BIPC",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "AVGO",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "EL",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "HSBC",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "STT",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "UAL",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "NTRS",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "GOOGL",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "SNY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "GOOG",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "UNP",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "WMMVY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ENB",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "TKOMY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "TTE",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "AMAT",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "NOK",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "KO",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "AMD",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "GSK",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "AMX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "AAPL",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ISNPY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "TRV",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "AIG",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BP",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "TJX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "TXN",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "RTX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MA",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "CVX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "JPM",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "CICHY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BKNG",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MPWR",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ANET",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MU",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ES",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "NEM",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ABT",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "LLY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BEN",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "AEP",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BZLFY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "JBHT",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "GS",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "BBSEY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MSFT",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "LMT",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "CPA",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "V",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "MRVL",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "LITE",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "STX",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "WM",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "ENLAY",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "AIZ",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    },
+    {
+      "ticker": "RIO",
+      "instrument_kind": "single_security",
+      "source": "etf-constituents-feed"
+    }
+  ],
+  "unresolved_no_source": {
+    "count": 36,
+    "tickers": [
+      "NESN",
+      "RWE",
+      "UBSG",
+      "8035",
+      "NOKIA",
+      "939",
+      "SSE",
+      "1299",
+      "MER",
+      "ISP",
+      "ZURN",
+      "KPN",
+      "NG",
+      "ICICIBC",
+      "992",
+      "ENEL",
+      "BBSE3",
+      "AMXB",
+      "RMS",
+      "KOFUBL",
+      "ULVR",
+      "HSBA",
+      "NOVN",
+      "WALMEX*",
+      "8316",
+      "2317",
+      "9433",
+      "IMB",
+      "IBE",
+      "CNR",
+      "8766",
+      "VIVT3",
+      "BNP",
+      "ROG",
+      "8306",
+      "BATS"
+    ],
+    "note": "foreign-listed / ADR tickers on etf-classifications scheduled rows with no row in either the ETF constituents feed or the per-firm securities classifier table; no candidate source named for them in this build."
+  },
+  "cash_residual_absent_by_design": {
+    "count": 1,
+    "tickers": [
+      "CASH"
+    ],
+    "note": "a derived NAV-residual line, not a security; instrument_kind absent by contract, never defaulted (mirrors etf_classification.py CASH_USD rule)."
+  }
+}

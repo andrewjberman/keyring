@@ -1,10 +1,42 @@
 # IRPT_BCKEND~Y (Analysis) -- status
 
-Seat `2.0.0_SA_COO~Y` (CLAUDE), `/canonical-drive 10m` standard form (cron 8b04fff7, lease FULL; Andrew-direct record
-@79764ce520). As of 2026-09-29T01:2xZ. The hand-back freeze text of @37cb971b4a is kept below it for the pins and the
-served-artifact map; section 0 supersedes its next-list.
+Seat `2.0.0_SA_COO~Y` (CLAUDE), `/canonical-drive 10m` standard form (lease FULL; LIVE_ARMS RELAUNCH row 2026-09-28,
+re-authorised by the post-crash relaunch brief 2026-09-30 13:0xZ). As of 2026-09-30T14:4xZ. Older sections below are
+kept for pins and the served-artifact map; this section supersedes their next-lists.
 
-## 0. Round 19 ~Y CLOSED (2 of 2 orders drained); round 20 list
+## 0. ROUND 29 DRAINED 3 of 3; svc-irpt-analysis EXISTS; the W27 window WAITS on the CTO's re-read (row S238)
+
+As of 2026-09-30T16:4xZ. Authority: W27 packet @00f9ef2df8 (blob 4c1dbb545f), CTO half @dbbac713fc, CRO half @2ab90bf162.
+
+| cell | landed | what |
+|---|---|---|
+| IB-yr-291 | worker b21aacec70; drain on the index | receipt.json carries `vendor_requests` (ten-key shapes, refused off-shape); replay conforms (amendment 1 @641dc0411c) |
+| IB-yr-292 | @f39c3b0617 | `contextOptions()` records a HAR only behind `YC_RECORD_HAR=1`; `har_scrub.py` proven by a planted value |
+| IB-yr-293 | @784ac650d0 | projection carries `allowedFirmIds`; `decide()` refuses `ACTOR_FIRM_NOT_ALLOWED` (5 of 5 on CLOUD; 94 passed) |
+
+**Shared-surface hash for `~P` (CONTRACT.md row 21):** the one-field `_scope/canonical_profile_reads.py` patch and its
+test pin landed at @784ac650d0 (`_USER_FIELDS` / `_USER_RETURN_FIELDS` + `allowedFirmIds`).
+
+**The principal (ledger `irpt-svc-analysis-principal-20260930` CLOSED @4303ef0b2e):** `svc-irpt-analysis@opalinvest.com`,
+admin / service / opal-capital / active / allowedFirmIds cottonwood; secret `irpt/svc-irpt-analysis/password`, readers =
+the walker's user only (24 of 24 roles explicitDeny); K2 login 200. Script `deliverables/IRPT_MVP_Y/live_walk/svc_principal.py`.
+
+**CTO RULING 103317 (16:37Z):** the API half IS a precondition; `~P` cuts the API enforcement (a selected_tenant outside a
+service principal's allowedFirmIds answers 403, with a test) at the top of its next issuance; W27 opens only after it
+lands AND Y re-reads the negative control live (foreign firm refused, own firm 200); the principal stays as built; S238
+disarms on the CTO's read of both prints. Y's exact patch for `~P` (CONTRACT row 21):
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/API_ALLOWED_FIRMS_PATCH_CANDIDATE_FOR_P_20260930.md`.
+
+**ONE next proof:** the live re-read after `~P`'s API enforcement lands (condition 4 fired: the API served an inflection
+directory entry to the principal; enforcement is resident-only). On "open": the W27 window (three bodies, cap 150 min,
+serialized), which also needs `irpt-analysis-resident` running (`~P`'s restart under CTO 103150). On "API half first":
+Y supplies the exact `_authz/served.py selected_tenant` patch for `~P` under CONTRACT row 21.
+
+**Round 30 list:** the certifier data path (`certify()` handed the chosen comparisons; the body-field candidate is
+refuted on Andrew's HAR); S231's remedy (a terminal state for a permanent authority refusal); W94-S2 hygiene (the
+`fixtures` module-name collision when the whole test directory is collected).
+
+## 0-prior. Round 19 ~Y CLOSED (2 of 2 orders drained); round 20 list
 
 Decomposition `decompositions/IRPT_BCKEND_DECOMP_R19_Y.md` (@89f619e28b, amendments 1 @ecbb08548f and 2 @81cb041780).
 Close record `deliverables/2.0.0_SA_COO~Y/R19_Y_DRAIN_CLOSE_20260928.md` @89966f267c.
@@ -126,6 +158,65 @@ Base dry-run, measured: AC1 FAIL, AC2 FAIL, AC3 PASS both parametrizations.
 2. Then `2.0.0_SA_COO~P` to rebuild the resident carrying it -- served code never moves by ~Y.
 3. Then **one solo job on a cold resident** (step 2), which needs an Analysis window packet from ~P.
 4. The four report arms remain blocked behind S218 for as long as no job can reach the vendor session.
+
+## 0c. Walk-2 placed on this lane; rounds 23, 24 and 25 (2026-09-29 late)
+
+### Three CTO decisions this lane now works under
+
+| id | the ruling | why it matters here |
+|---|---|---|
+| **103026** | Walk-2 backend placed: *"~Y: W2-04/05 names from the model catalog + etf-classifications, no external lookup; W2-06 correction words on the status wire; W2-07 is S206/S218."* | the round-24/25 rectangle |
+| **103035** | **No substitution to bd-securities** -- *"Andrew is retiring bd-securities, so a new reader of it is the fork he named."* A ticker etf-classifications lacks **shows its ticker verbatim, never "Comparison N"**. The coverage gap is `MDPF_SECCLASS`'s first need. | ~Y had RECOMMENDED bd-securities on coverage (96.5% vs 21.1%); the CTO's reason was one this lane did not have, and it overrides the coverage argument |
+| **103038** | **Shape B**, on ~Y's measurement: the catalogue rides a **sibling scoped GET**, not ResolvedScope. Conditions: the existing `/api/scoped/investor-reporting/` family, same authz guard and tenant check; its own new `_contracts` v1 schema, `additionalProperties: false`; any new resource name is builder output (rule 30). | `_contracts/ResolvedScope.schema.json` is `additionalProperties: false` with 12 properties, so the catalogue could not be added quietly |
+
+A fourth decision, **102970**, amended 102967 on ~Y's mechanism reading and governs round 23: observe, discriminate,
+remedy -- and **the one-refresh allowance does not change in any branch.**
+
+### Round 23 ~Y -- CLOSED and drained
+
+`IB-yr-231` (`TO-IB-yr-231`), worker `~83`, `<risk>WORLD</risk>`. **Drained @caa2432e1c**; verified on CLOUD.
+`resident_worker.py` now prints `IRPT_RESIDENT_EVICTION verdict=<NAME> job=<id>` on every eviction and
+`IRPT_RESIDENT_ATTENTION code=<code> job=<id>` when a job ends ATTENTION, through a closed-token formatter that cannot
+leak vendor material. **No behaviour changed** -- 0 lines touch `claim_intent`, `SESSION_REFRESH_ALREADY_USED` or
+`request_budget`. **This closes `IRPT_BCKEND-S207`.** L8 packet `R23_Y_DRAIN_END_PACKET_20260929.md` @e583ddf14a sent
+to `3.0.0_SA_CVO`, READ at 20:08:28Z; **the L9 grade is still owed.**
+
+### Round 24 ~Y -- CLOSED at one cell, and an issuer error recorded
+
+`IB-yr-241` (`TO-IB-yr-241`), worker `~87`, `<risk>WORLD</risk>`. **Drained @b8b5cefc6e.** `ops/status.py` now offers
+`{"action": "CORRECT", "safe": true, "description": "<words>"}` from an enumerated table when a NEEDS_CORRECTION
+envelope's code is mapped. **No contract change**: `actions[]` already had `CORRECT` and a required `description`, and
+`public_reason_code` remains *"a code, never a message"*. Only `RESOLVE_RETRY_EXHAUSTED` is mapped, and its words
+**deliberately do not blame the file** -- S206/S215 measured that as the wrong remedy.
+
+**The error, recorded in R24 amendment 3:** round 24's rectangle was TWO cells and this lane cut `IB-yr-241` alone,
+which closed the round's issuance. `to-pipeline-gate` then refused `IB-yr-242` -- *"ONE ISSUER PER ROUND is keyed to
+the ROUND, never the serial (Rule 27)"*. Both should have been cut in one issuance. **Three retries preceded reading
+the refusal**; a repeated failure is a message, not an index race.
+
+### Round 25 ~Y -- IN FLIGHT
+
+`IB-yr-242` (`TO-IB-yr-242`) @42acbd8ccc, worker `~88` on `wk-IRPT_BCKEND-88`, spawned @634b3832f6,
+`decompositions/IRPT_BCKEND_DECOMP_R25_Y.md`. The round exists only as the remedy for the issuance error; the cell's
+content is unchanged. Battery `R24_CHECKS/test_r24_y2_catalogue_read.py`, base dry-run AC1-AC3 FAIL / **AC4 PASS**
+(the control asserts ResolvedScope stayed v1 -- a cell that took the rejected option fails it).
+
+### The Andrew worktree edict (MSTR 103046)
+
+*"as they have agents close out, those worktrees (if all committed) also need to be wiped."* Both worker worktrees were
+removed and their branches deleted **in the same act that drained them**. Each removal needed `--force` because the tree
+held an untracked `.scratch/`; in both cases the content was read first and found already landed (commit messages in
+git, and a `status.bak` byte-identical to CLOUD), so the deviation from the edict's "no `--force`" is recorded with its
+reason rather than taken silently. **0 stale worktree registrations** at the last sweep.
+
+### What this lane waits on
+
+1. **Worker `~88`** on `IB-yr-242` (running).
+2. **`3.0.0_SA_CVO`** -- the L9 grade of @e583ddf14a.
+3. **`2.0.0_SA_COO~P`** -- the rebuild carrying `IB-yr-231` AND `IB-yr-241`. Both are INERT until it lands.
+4. **Then S218 step 2**: one solo job on a cold resident, whose journal now distinguishes a pre-job session rejection
+   from per-call evictions. That read is this lane's and needs an Analysis window packet.
+5. **The four report arms remain blocked behind S218** while no job can reach the vendor session.
 
 ## 1. Pins
 

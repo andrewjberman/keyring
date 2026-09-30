@@ -75,6 +75,8 @@ SERVED route (ruling 5). Base: AC1 FAIL (6501 READ_FAILED), AC2 FAIL (no pack_sh
 COO half is written after ab-1/2/4/5 land, against the landed code, the build-only content diff at the pin, and the then-live base.
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-30 ~12:1xZ):** landed; entry `amgt-resapp-ab6-one-build-20260930` CLOSED (@106ac8a471), instance VALID rc=0. Content diff at the pin a1a70e00eb: 344 files, 342 IDENTICAL, 2 CHANGED (the halves' two). CodeSha zHpr7FhS -> `nKWCfQRQ3/lL6cJxgYG3dZr0tcVdOBheeMMNaoWQE+w=` (11:43:22Z); D-1 `drafting/v1/ASML_NA_Equity.json` xUdeA0xU -> qHYfgew8 (11:49:20Z; the prior version re-verified present). The issuer re-measured on the SERVED route: AC1 YES (6501 every field ABSENT with its reason), AC2 YES (pack_shape AZN/ADBE pdf, AMD ABSENT), AC3 YES (ASML chart SERVED, source filing, 3 points), AC4 YES. Limbs 5-7 clean per AE~A. Sequenced after CORPUS y-4 leg v per the CTO half (msgs 27093, 27105).
+<status>complete</status>
 <round>52</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>

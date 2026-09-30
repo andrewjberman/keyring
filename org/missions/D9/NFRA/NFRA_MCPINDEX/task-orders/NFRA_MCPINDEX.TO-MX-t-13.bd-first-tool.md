@@ -32,6 +32,26 @@ tool the record's `Question to tool` section names, over exactly its `Read fence
 - Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
   finds `<placeholders>NONE</placeholders>`).
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-09-30 ~11:0xZ) -- on row Z-W21-S9 (BLOCKING), ruled by row Z-S64.**
+- The naming limb refuses the literals `opal-data-bd`, `silver/fees/` and `49financial` in the integration and
+  `blackdiamond_reader_iam.tf`. `lookup('49financial')` resolves to a bucket that holds no fees, so the builder cannot
+  name this legacy surface. The surface is under the live ADVI_FIRMBKTS remediation (`infra/logic/registry/remediations.json`).
+- The lawful route is the LEGACY-READ waiver (`.tools/naming-gate.py:99-110,942-1180`, carrier
+  `org/standards/NAMING_LEGACY_READS.json`). Its authority is a ruling record at a full pin, asked of 1.0.0_SA_CTO~O.
+- **This continuation, before that ruling:**
+  - Restructure so each literal is legal under the waiver's syntax. In Python, every occurrence of each literal is a
+    DIRECT argument of calls to ONE named read helper; no module constant, f-string or variable carries it. In
+    Terraform, each literal is the value of exactly ONE `locals` entry, referenced N times.
+  - Keep t13.AC1/AC2 passing. Draft the carrier entries (fields exactly `id, file, literal, remediation, purpose,
+    authority, as_of_cutoff, owner, read_context`; a helper site's `helper_body_sha256`; a tf site's kind `tf_local`)
+    in `deliverables/0.9.0_WK_NFRA_MCPINDEX~21/LEGACY_READS_DRAFT_MX-t-13.json`, with `authority` left for the ruling.
+  - Report and stop.
+- The issuer writes the carrier entries once the CTO's record is at HEAD, and continues you to commit.
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
+  finds `<placeholders>NONE</placeholders>`).
+
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-09-30 ~11:2xZ) -- HELD on R20, on 1.0.0_SA_CTO~O's ruling msg 27114.** The naming gate marks a literal NEW when it is absent from the file's HEAD pre-image (`.tools/naming-gate.py:1413`) and refuses a NEW OUT-OF-PATTERN/ALIAS literal before the LEGACY-READ lookup (:1444-1449, "a NEW or CHANGED literal can never reach it"). So no waiver entry can admit this cell's literals. The cell joins B3: both go to Andrew as ONE R20 acknowledgement (CLAUDE.md rule 30). The built cell stays UNCOMMITTED and frozen in `wk-mcpindex-r5-21` (branch wk-nfra_mcpindex-5-21 @4a9462b79a; AC1/AC2 PASS on the uncommitted tree; draft carrier LEGACY_READS_DRAFT_MX-t-13.json no longer needed). The A2 restructure stops. On Andrew's word the issuer continues ~21 to commit it as-is and MX-r-7 follows. Graded by: no gate limb graded this modification.
+
 **The act:**
 1. A new integration `blackdiamond` at `infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/`, registered in
    `app/integrations/registry.py` like the dormant schwab factory (:51-55). It stays DORMANT: it is not added to
