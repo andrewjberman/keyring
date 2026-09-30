@@ -1,4 +1,4 @@
-# AMGT_RESAPP task order -- `AMGT-ac-3` -- THE SLASH-KEY WINDOW: COPY THE 30 OBJECTS TO ENCODED KEYS, THEN DEPLOY THE BUILD
+# AMGT_RESAPP task order -- `AMGT-ac-3` -- THE SLASH-KEY WINDOW: COPY THE 40 OBJECTS TO ENCODED KEYS, THEN DEPLOY THE BUILD
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
@@ -11,7 +11,7 @@
 <placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- no cron, alarm, monitor or cadence.
-comp-iam: RUN by the issuer at the cut -- the function's reads stand as simulated in round 51 (crosswalk GetObject ALLOWED; ListBucket and the ranking Query NOT-DECIDABLE, exercised live); the new encoded keys sit under the same prefixes the function already reads. BLIND: the 30 CopyObject calls run under the executor's credentials, not simulated; the plan must show NO IAM change.
+comp-iam: RUN by the issuer at the cut -- the function's reads stand as simulated in round 51 (crosswalk GetObject ALLOWED; ListBucket and the ranking Query NOT-DECIDABLE, exercised live); the new encoded keys sit under the same prefixes the function already reads. BLIND: the 40 CopyObject calls run under the executor's credentials, not simulated; the plan must show NO IAM change.
 comp-adversary: RUN by the issuer at the cut -- AC1, AC2, AC4 FAIL at the base; AC3 is the executor's own pre/post body control (save then compare, byte-equal at the base).
 EGRESS CLASS, declared: NONE for the acts; the build pip-downloads its pinned wheels.
 </preflight>
@@ -19,7 +19,7 @@ EGRESS CLASS, declared: NONE for the acts; the build pip-downloads its pinned wh
 ## 1. THE ACT -- `AMGT-ac-3` (round 53, decomposition s.61)
 
 ONE act, ONE NEVER-2 entry, ONE never-widen pair (CTO round-52 ruling 4), in two legs, in this order:
-(a) **COPY** the 30 raw-slash objects listed in `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round53/SLASH_OBJECTS.json`
+(a) **COPY** the 40 raw-slash objects (AMENDMENT 1, CTO msg 27160: the ruling's 30 plus scores 4, filings 2, raw/bloomberg 4) listed in `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round53/SLASH_OBJECTS.json`
     (each `raw_key` -> its `encoded_key`, byte-equal; the raw objects are KEPT -- a copy, never a move or a delete);
 (b) **DEPLOY** `opal-amgt-scoped-api` built from a checkout at the PIN the issuer's GO names (HEAD at that time), carrying CORPUS z-4's
     slash-safe readers, HARVST q-5's `91b74a9047` (`/timeline` `publishers_found_codes`) and AMGT-ac-4's docstring.
@@ -37,7 +37,7 @@ trigger named in the halves.
 
 ## 2. BOUNDS
 
-1. The act and nothing else: 30 CopyObject calls (no delete, no overwrite of an existing encoded key whose bytes differ -- STOP), one
+1. The act and nothing else: 40 CopyObject calls (no delete, no overwrite of an existing encoded key whose bytes differ -- STOP), one
    artifact, one apply of the function's code. A plan beyond the code, a packaged file beyond the halves' list, or a gate refusal is a
    REFUSAL.
 2. Standing: no S3 delete, no vendor call, no key hunting, no push of shared branches, no portal promote.
@@ -55,7 +55,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 600)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-ac-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round53/checks/ac_3_copies.py; echo "exit=$?"</invocation><expect>objects 30; raw kept and encoded byte-equal: 30; THE RAW-SLASH OBJECTS READ AT THEIR ENCODED KEYS, BYTE-EQUAL, RAW KEPT: YES -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-ac-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round53/checks/ac_3_copies.py; echo "exit=$?"</invocation><expect>objects 40; raw kept and encoded byte-equal: 40; THE RAW-SLASH OBJECTS READ AT THEIR ENCODED KEYS, BYTE-EQUAL, RAW KEPT: YES -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-ac-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round53/checks/ac_3_served.py --what codes; echo "exit=$?"</invocation><expect>every AMZN /timeline series entry carries publishers_found_codes; /TIMELINE SERVES PUBLISHERS_FOUND_CODES: YES -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-ac-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round53/checks/ac_3_served.py --what bpng --dir org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/ac3-pre; echo "exit=$?"</invocation><expect>bodies 6; moved or empty vs the pre-act capture: 0; BP AND NG READ THE SAME DATA AT THE ENCODED KEYS: YES -- and exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="AMGT-ac-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round53/checks/ac_3_served.py --what code; echo "exit=$?"</invocation><expect>deployed CodeSha256 differs from nKWCfQRQ3/lL6cJxgYG3dZr0tcVdOBheeMMNaoWQE+w=; THE ONE BUILD LANDED: YES -- and exit=0</expect></criterion>
@@ -66,7 +66,7 @@ landing itself.
 
 ## 5. WHEN YOU ARE DONE
 
-Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/AMGT_RESAPP.TO-AMGT-ac-3.the-slash-key-window.proof_of_spec.json`. Report once: the 30 copy receipts, the content-diff summary, the prior and new VersionId and CodeSha, the verdict counts, the commit hashes, and any row. The `<status>` flip is the issuer's.
+Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/AMGT_RESAPP.TO-AMGT-ac-3.the-slash-key-window.proof_of_spec.json`. Report once: the 40 copy receipts, the content-diff summary, the prior and new VersionId and CodeSha, the verdict counts, the commit hashes, and any row. The `<status>` flip is the issuer's.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
@@ -75,6 +75,7 @@ list + before-state (written by the issuer to round53/SLASH_OBJECTS.json). Base:
 AC3 PASS as a save-then-compare control, AC4 FAIL (nKWCfQRQ). The COO half is written against the pin, the list and the then-live base.
 
 <status>pending</status>
+**AMENDMENT 1 (`2.0.0_SA_COO~Z`, ~13:1xZ, before any GO):** scope 40 objects, not 30 (COO~X's full listing, msg 27153 @7e569c4d1d; CTO msg 27160: the pair covers all 40, the 10 extra classes' READERS named and shown slash-safe in the COO half's census before signing). `round53/SLASH_OBJECTS.json` written from the supply with each raw sha256 read live (sizes equal to the supply's); `ac_3_copies.py` requires 40.
 <round>53</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
