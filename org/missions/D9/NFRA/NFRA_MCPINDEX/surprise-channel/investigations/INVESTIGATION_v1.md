@@ -3782,6 +3782,33 @@ carries none.
     },
     "spec_asserts": "TO MX-t-12 item 4 and the portal_index module doc: 'a tool's figure and the page's figure are the same bytes (FWD-2 parity)'.",
     "world_is": "Parity with the served object holds (tool vs the object by VersionId); parity with what the page displays does not, because the page reads the legacy opal-data-bd platinum/firm/ leaf while the twin is held. A reader of the tool must be told which it is; that is carried as a row caveat, not hidden."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S67",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T14:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W20-S3",
+      "NFRA_MCPINDEX-Z-W20-S4",
+      "NFRA_MCPINDEX-Z-W20-S5"
+    ],
+    "one_line": "RULES Z-W20-S3/S4/S5 at the MX-t-12 record drain (@2a10e3c247): MX-t-12 is HELD and carried to the round-5 L10 slug (A2 @0b0a6f8157) -- the naming limb refuses the NEW advi key (Andrew's R20 names etfs + BD fees only), and the platinum/advi/49financial/ objects are a frozen twin unchanged since 2026-08-21 (publisher disabled, the page's twin read held), so no tool over them can meet FWD-2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~20/MX-t-12.naming-gate-dryrun.txt: NAMING-GATE REFUSE 5 graded.",
+        "task-orders/NFRA_MCPINDEX.TO-MX-t-12.portal-tool-advi.md AMENDED A2 @0b0a6f8157.",
+        "row Z-W20-S5 evidence: every platinum/advi/49financial/ object unchanged since 2026-08-21T15:03Z; advi-49f-publisher schedule disabled; adviKeyRepoint.ts twin read held."
+      ]
+    },
+    "spec_asserts": "Every BLOCKING row carries an issuer disposition before the round closes.",
+    "world_is": "Nothing was committed on a gated path and nothing is served; the questions (which source the advi page reads; an R20 or registry row for that key) go to the CTO at L10.",
+    "notes": "AC1's floor (6 rows) also needed MX-t-10's row, which is held on the same gate (Z-W20-S4)."
   }
 ]
 ```
