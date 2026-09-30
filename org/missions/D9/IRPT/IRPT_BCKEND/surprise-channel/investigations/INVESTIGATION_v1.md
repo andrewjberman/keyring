@@ -13441,3 +13441,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Issuer choices: (a) authorize transport.py ReplayTransport to drop `location` (or move it out of the record); (b) amend the order to let job.py drop the named replay-only key `location` and AC3 to compare to the projected evidence (candidate_strip_location.patch is ready); (c) add `location` to the shape constant, which would then diverge from the real transport's ten keys."
 }
 ```
+
+## IRPT_BCKEND-W94-S2 -- The whole ycharts/generate/tests directory collected by one pytest run fails 3 tests on a `fixtures` module-name collision (AttributeError TENANT/OWNERSHIP), including the new test_receipt_ledger.py; each file run alone passes.
+
+```json
+{
+  "id": "IRPT_BCKEND-W94-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~94",
+  "surfaced_at": "2026-09-30T15:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The whole ycharts/generate/tests directory collected by one pytest run fails 3 tests on a `fixtures` module-name collision (AttributeError TENANT/OWNERSHIP), including the new test_receipt_ledger.py; each file run alone passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cd infra/aws/lambda/investor-reporting && python -m pytest -q -p no:cacheprovider ycharts/generate/tests -> 3 failed, 303 passed, 30 skipped: test_receipt_ledger.py x2 and test_comparison_catalogue.py x1, each AttributeError: module 'fixtures' has no attribute TENANT/OWNERSHIP (sibling test dirs put their own fixtures.py first on sys.path).",
+      "Run alone: test_receipt_ledger.py 2 passed; test_comparison_catalogue.py 7 passed; run_offline_suite.py prints RESULT-END with every v* flag true. test_read_back_poll.py errors alone (No module named extract) -- not touched by this order."
+    ]
+  },
+  "spec_asserts": "The order's AC3 runs test_receipt_ledger.py by itself; it does not claim the directory passes as one collection.",
+  "world_is": "MEASURED: the three-failure whole-directory result is a collection-order interaction between fixtures modules, not a fault of the ledger change; the named criterion invocations are unaffected. Not fixed (outside the grant).",
+  "notes": "An owner of the ycharts tests may want per-file invocation recorded as the suite's convention."
+}
+```
