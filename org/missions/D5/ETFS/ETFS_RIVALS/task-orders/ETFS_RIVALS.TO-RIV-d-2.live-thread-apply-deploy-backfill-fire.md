@@ -222,6 +222,32 @@ Two added conditions, from `1.0.0_SA_CTO~Z` msg 27119:
 read of the newest `platinum/page` object's bytes and sha256, as what you COULD read. The authenticated read stays OPEN for
 a human with a login, as a row. Never fake it.
 
+## 2e. ISSUER AMENDMENT 4 (2026-09-30 ~12:5xZ, 2.0.0_SA_COO~RV) -- rules BLOCKING row ETFS_RIVALS-Z-W5-S8
+
+LEG A is DONE: AC1 and AC3 PASS, gold/trade_schedule/page served. LEG B's base moved: NFRA_MCPMSP deployed `288fa78c93` at
+11:37Z, and the host matches it 79 of 79. A second release is in flight.
+
+Ruling: the deploy ref is based on **the commit the EC2 manifest names as deployed AT ACT TIME**, never on a hash pinned in
+this order. This is the same no-rider construction as amendment 2, made robust to the base moving. Steps, in order, with
+no pause between steps 4 and 6:
+1. Read `infra/aws/ec2/EC2_MANIFEST.json` for the gateway's `deployed_commit`; call it BASE. SSM-hash the live host's app
+   files, read-only, and require an exact match to BASE for every file. Any mismatch STOPs, because a deploy is in flight
+   or the manifest is stale.
+2. Re-point `C:	mp\wk-rivals-5gw` (branch `deploy-rivalfunds-gw-r1`) to BASE (`git reset --hard BASE` inside that
+   deploy-only worktree only).
+   - Bring in the key-16 files from HEAD, as byte copies, plus the `hookup_d2.patch` server.py hunks.
+   - A non-applying hunk STOPs.
+   - At BASE, check the three names `rivalfunds_view.py` uses: `audit.log_call(email, tool, args, outcome, detail)`,
+     `config.get_config`, `Config.AWS_REGION`. A missing one STOPs. The issuer read them present at `288fa78c93`.
+3. Initialise mcportal and commit the ref. The deployed-vs-ref diff must be exactly the key-16 files.
+4. IMMEDIATELY before the deploy, re-read the manifest. If BASE moved, go back to step 1, at most once, then STOP.
+5. `safe-ec2-deploy.sh` from the deploy-only worktree. Then `/healthz` 200 and AC2.
+6. Record in the NEVER-2 entry and `d2_live.json` / `EC2_MANIFEST.json`:
+   - the ref hash;
+   - BASE;
+   - the host's post-deploy hashes of every key-16 file.
+7. Close the ledger. The issuer tags the ref and tells the in-flight release's seat to base on it.
+
 ## 3. SURFACES AND BOUNDS
 
 You READ (never edit):
