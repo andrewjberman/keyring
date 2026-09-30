@@ -2342,3 +2342,41 @@ raised by `verification.py` ~:21 without the response, so `ac-1` change 3 keeps 
 - any challenge handler (his 09-15 sequencing);
 - batches 2+;
 - a licensed-route probe.
+
+## 44. ROUND 31 -- L5 DECOMPOSITION v3.11, over the round-30 analysis (`ledger/ROUND_ANALYSIS.round30.md` @6adebef352)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~20:2xZ.
+- Round 30 is CLOSED, 2 of 9 FWDs REALIZED; FWD-3 moved (covered-vs-found is live on the served route).
+- **Bound by** the CTO cloud ruling section 0 and `4.0.0_SA_CRO~Z`'s bot-ops playbook @`7bcc258369`: NO traffic to bbg, wsj
+  or barrons from the site Z box before the 05:00 ET first light.
+- Series **`ad`**; slots **`~87`..`~89`**.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 the token store: wsj and barrons bundles into Secrets; ft's bundle expiry; the sa check's `{user_id}` (`Z-W85-S2`) | `HVST-ad-1` | LOCAL A0, then WORLD (Secrets writes), pair | `~87` | A0 now; the pair on the merged code |
+| 2 sa batch 1: 10 resolved `sa_symbol` names, measured-first, stop at the first challenge, never a sign-in | `HVST-ad-2` | LOCAL A0 (`--no-sign-in`), then WORLD, pair + R-21 | `~88` | A0 now; the pair on the merged code; the act finishes before 08:00Z 10-01 |
+| 3 the residential-IP assignability read | `HVST-ad-3` | LOCAL read | `~89` | now |
+
+**Fan-out: 3 of 3 cut, in 3 independent chains.** The WORLD phases run one at a time. N = 3 slots; cap 8.
+
+**Write sets:**
+
+| order | owns |
+|---|---|
+| `ad-1` | `credentials.py`, `sa_rest_fetch.py` (the collector's sa consumer), its test |
+| `ad-2` | `__main__.py`, `sessions.py`, `worker.py`, its test |
+| `ad-3` | its deliverables only |
+
+The first two are disjoint, so the A0 phases run in parallel.
+
+**Premises re-measured at the cut** (ruling 4):
+- the bundles to store are 2 (`wsj.dpapi`, `barrons.dpapi`);
+- the resolved universe has 89 rows, all with `sa_symbol`, and the first 10 are named in `ad-2`;
+- there is NO `--no-sign-in` switch in `__main__.py` today.
+
+**NOT cells:**
+- bbg, wsj and barrons (the playbook's first light at 05:00 ET is `2.0.0_SA_COO~H`'s own act on Andrew's word, per cloud
+  ruling section 0 item 3b);
+- the warm-up in the harvester (waits on first light);
+- sa batches 2+;
+- the cloud host (phase 2).

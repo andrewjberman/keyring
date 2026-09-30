@@ -160,6 +160,11 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v3.10",
       "note": "L5 recut, 2026-09-30, 2.0.0_SA_COO~H. Round 30: three orders HVST-ac-1..ac-3 over ROUND_ANALYSIS.round29.md @d0bc0a79f0; section 43."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.11",
+      "note": "L5 recut, 2026-09-30, 2.0.0_SA_COO~H. Round 31: three orders HVST-ad-1..ad-3 over ROUND_ANALYSIS.round30.md @6adebef352; section 44."
     }
   ],
   "leads": [
