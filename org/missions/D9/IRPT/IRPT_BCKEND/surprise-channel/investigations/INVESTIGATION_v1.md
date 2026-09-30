@@ -12779,3 +12779,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the cell was built and reads 6 failed / 2 passed, but no criterion grades it, so the mechanical proof cannot close over it. I did not edit the order's criteria (outside my grant to amend). INERT."
 }
 ```
+
+
+## IRPT_BCKEND-S225 -- S218 step 2 answered: outcome 1, a pre-job session rejection -- one eviction on the FIRST vendor call, code CAPTURE_FAILED:AUTH_FAILED, and S151 is the same mechanism
+
+```json
+{
+  "id": "IRPT_BCKEND-S225",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T03:40:00Z",
+  "one_line": "S218 STEP 2 IS ANSWERED, and it is outcome 1 of the four armed before the run: a PRE-JOB SESSION REJECTION. One eviction line, on the job's FIRST vendor call, 7 seconds after the resident claimed it -- and the code is CAPTURE_FAILED:AUTH_FAILED, which the arms file did not anticipate and which ties S218 to S151's W6 sighting as one mechanism.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the resident's session establishment is ~P's surface)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE WINDOW: Andrew 2026-09-30 ~03:02Z verbatim 'yeah Yes run it' (~P 103121); W25 opened 03:30:34Z, cap 1, closes 04:30:34Z, both never-widen halves at HEAD on blob f3273476 (~P 103132). One body, one login, one K4, one K5, no retry, exactly as armed.",
+      "PRECONDITIONS re-read at fire time, not inherited: irpt-generation 0/0; DLQ 1; resident cold -- the journal shows POLL handled=0 every 20s from 03:34:18Z to 03:35:58Z inclusive.",
+      "THE WALK: 03:34:40Z LOGGED_IN 200; 03:35:55Z PASSWORD_DELETED (~P's credoff); 03:35:59Z K4 POST 200 RESOLVING; 03:36:01Z NORMALIZED (2s); 03:36:06Z K5 POST 200 QUEUED, REQ-86f1ce7062356bc5c109ce12; 03:36:08Z state SUBMITTING, outbox SENT, detail {\"operation\":\"session_refresh\"}.",
+      "THE ORACLE, which exists only because IB-yr-231 is live on st5 (~Y proved the running bytes at sha 8d1f5431, pid 307882): 03:36:03Z IRPT_RESIDENT_RESOLVE state=READY; 03:36:03Z IRPT_RESIDENT_POLL handled=1 (the CLAIM); 03:36:10Z IRPT_RESIDENT_EVICTION verdict=EVICTED job=REQ-86f1ce7062356bc5c109ce12; 03:36:28Z IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:AUTH_FAILED; 03:36:53Z onward POLL handled=0. EXACTLY ONE eviction line in the span, 7 seconds after the claim and 2 seconds after the job's first recorded vendor operation.",
+      "DLQ re-read after the run: 1, unchanged from its baseline of 1 -- no growth, so no BLOCKING row on that axis. The generation queue read 0 visible / 1 not-visible, the retained message in flight."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "S218 as filed: jobs die SESSION_REFRESH_ALREADY_USED, which resident_worker.py's single refresh path makes a DOUBLE eviction rather than a stale session -- with four outcomes armed before the run and no reading chosen between them.",
+  "world_is": "OUTCOME 1 OF THE FOUR, and the other three are excluded by the same read. NOT 'evictions on later calls only' -- there are no later eviction lines. NOT 'evictions on essentially every call' -- there is exactly one. NOT 'no eviction and the job reaches READY' -- the job never reached the vendor's work at all. So: THE RESIDENT HELD NO USABLE SESSION WHEN IT CLAIMED THE JOB. Its very first vendor act was a session_refresh, and that act was evicted. The one-use refresh is therefore spent on establishing a session the resident should already have had, which is why a second eviction later has nothing left and reads as SESSION_REFRESH_ALREADY_USED. NEW, and beyond what the arms file anticipated: the failure code is CAPTURE_FAILED:AUTH_FAILED. The capture is failing on AUTHENTICATION, not on expiry. That is the same shape S151 recorded at W6 -- 'the host YCharts session capture failed within ~2 s' -- so S151 and S218 are ONE mechanism seen twice, three days apart, and last tick I said I had no read tying them. Now there is one.",
+  "notes": "REMEDY, per the row the arms file bound to this outcome BEFORE the run rather than after: the CTO's original 102967 shape -- ESTABLISH AND VERIFY A SESSION BEFORE CLAIMING, outside any request's allowance. With one refinement the read forces: establishing-before-claiming only helps if the capture can succeed, and AUTH_FAILED says it cannot today, so the auth failure is upstream of the sequencing and must be fixed first or the new shape simply fails earlier. S218 GRADUATES from UNDER_INVESTIGATION -- the question it was opened to answer is answered -- but stays ARMED, because nothing is remedied and no job can still reach the vendor. disarm_owner remains 2.0.0_SA_COO~P: the resident's session establishment is its surface, not ~Y's. THE FOUR REPORT ARMS (Multi-Comp, Y2 Target Weight, the first certified 49financial, a certified Inflection) STAY BLOCKED, and now for a NAMED cause rather than an open question. WINDOW ACCOUNTING: one body posted, one K4 and one K5, no retry by this lane. The resident's own retained_for_retry is its behaviour, not a second submission. The window closes 04:30:34Z and this lane fires nothing further in it."
+}
+```
