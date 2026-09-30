@@ -19,6 +19,7 @@ directory an engagement's artifacts live in.
 
 | Recon ID | Date | Target | Artifacts | Evidence basis | Produced under | Status |
 |---|---|---|---|---|---|---|
+| **RCN-0019** | 2026-09-29 | **Site Z disk exhaustion and forced crash** — chronology, SentinelMonitor lock stall, collateral and joint reclamation recommendations | Incident brief, debugger findings, reclamation review, sanitized evidence summary, Andrew-direct record | Local Windows events, kernel/service dumps with approved Microsoft symbols, full-volume metadata census, retained transcripts, git/SQLite/Kuzu reads | `4.0.0_SA_CRO~Z` | **DELIVERED research; remediation proposed only.** Raw dumps/captures retained locally; no destructive CRO operation |
 | **RCN-0001** | 2026-07-21 | **Black Diamond** (SS&C/Advent) — Cottonwood Capital Advisors tenant | 3 (teardown, roadmap, build spec) | 8 HAR captures + 4 CSV exports | `0.4.0_DS_ClientPlatform~Z` | **DELIVERED** — downstream build HELD at CTO registration |
 | **RCN-0002** | 2026-07-22 | **Orion Advisor Solutions** — Opal-accessible tenant | 2 (teardown, BD×Orion structural comparison) | 2 HARs (1 truncated) + public API docs + Eclipse OpenAPI | `4.0.0_SA_CRO` | **DELIVERED** |
 | **RCN-0003** | 2026-07-23 | **arxiv.org** — CS paper harvest surface (NFRA_AKPIPE) | 1 (teardown + build spec) | 3 HARs (2 md5-identical) + 1 sample paper; HTML bodies [BODY-NOT-CAPTURED] | `4.0.0_SA_CRO` | **DELIVERED** — build HELD at CTO program registration |
@@ -974,6 +975,85 @@ efficiency number. RAVC: keep its three evidence rules, delete the rest.
 **Status: DELIVERED -- proposals only; nothing dispatched; no law, gate, skill or memory edited. Repo, git, read-only
 broker and audit-log reads only; no AWS, no vendor.**
 
+
+## RCN-0019 ? Site Z crash and disk investigation, 2026-09-29
+
+**Produced under:** `4.0.0_SA_CRO~Z`, Codex. **Commission:** Andrew-direct through
+MSTR~Z and this terminal; authority record
+`deliverables/ANDREW_DIRECT_20260929_SITE_Z_CRASH_INVESTIGATION.md`.
+**Package:** [incident brief](deliverables/SITE_Z_CRASH_20260929/README.md),
+debugger findings, joint reclamation review and sanitized evidence summary.
+
+**Finding:** disk writes failed by 10:30:59 ET during worktree creation. The dump
+strongly supports a SentinelMonitor 26.1.2.177 reentrant-lock deadlock from about
+10:47:23, with 1,070 matching blocked thread stacks and propagation through a
+Bloomberg-held GUI resource. Andrew forced E2 capture at 11:34:55; reboot at
+11:39:54. Disk exhaustion as the driver trigger remains unproved. An earlier
+08:28 Sentinel Agent crash is separately preserved. Python stdlib removal and
+PATH instability predate the crash; the September 28 successful PATH repair was
+followed by recurrence, including a measured/reported September 29 MSI repair
+interval. Subsequent MSTR intervention is attributed explicitly.
+
+**Measured substrate:** 473.705 GiB volume, 235.756 GiB logical registered-worktree
+contents; census has access/reparse/hardlink limitations and a corrected shallow
+file aggregation caveat. Damaged CRPS14-5 checkout: 145 missing / 35 zeroed files.
+Main workspace/portal git fsck passed, broker SQLite integrity passed, Kuzu opened
+read-only with known counts; these are bounded checks, not universal integrity.
+MSTR contributes candidate checkout reclamation; exact proposal discrepancies
+and execution-time preservation conditions are exposed in the package.
+
+**Status:** delivered research and recommended owners; no new project registered,
+no task orders or remediation dispatched. Microsoft symbol downloads were
+explicitly approved; no dump upload. Raw dumps, event exports, transcript excerpts
+and census remain on this device in their original locations and ignored
+`.runtime/crash-investigation-20260929/`, not committed. SHA-256 fingerprints and
+selected findings are committed. CRO deleted no dump/worktree/branch, repaired no
+Python installation and stopped no unrelated process.
+
+
+### RCN-0019 downstream correction ? 2026-09-29 13:01 ET, CRO~Z
+
+MSTR message 26623 and its EXECUTED record supersede the original reclamation
+proposal. Under Andrew's relayed 12:29 go excluding recent AMGT/NFRA worktrees,
+MSTR removed 33 checkouts (44.67 GiB summed logical sizes), skipped one, and
+reports excluding 70 recent checkouts. CRO independently verified 33/33 removed
+paths absent, 33/33 HEADs reachable, 5/5 named detached pins correct and 14/14
+scratch archive directories present. Archived contents were not byte-compared.
+Fresh C: free space at 13:01:40 is 54,703,968,256 bytes (50.95 GiB).
+
+The count discrepancy was 104 original candidates minus 2 newly LIVE; the
+classification time was approximately 12:18-12:28, not the future12:30-12:45
+labels. Both are corrected in the package's execution addendum. The final
+33-checkout scope is distinct from either proposal. Remaining driver, damaged
+checkout, messaging and prevention findings stand. CRO executed no deletion.
+
+
+### RCN-0019 downstream addendum ? 2026-09-29 13:35 ET, CRO~Z
+
+MSTR message26625 reports a second pass on Andrew's subsequent "go48" for
+eligible recent AMGT/NFRA checkouts. CRO independently verified38removed paths
+absent and38HEADs reachable and ancestral to currentCLOUD;37archive directories
+present. Pass2 logical total67.14GiB; combined passes71checkouts/111.81GiB.
+Fresh free space13:35:20:131,521,900,544bytes (122.49GiB). The70-row manifest has
+38OK,21NOT-DRAINED,7UNTRACKED,2BIG-SCRATCH,2LIVE-NOW. Message26627 reconciles the
+approved48 as38removed plus10skipped; CRO matched all10names/verdicts and retained
+paths. Removal rows ran13:21:13-13:31:17; MSTR reports husk cleanup~13:33.
+Its initial~13:25approval estimate was wrong; receipt clock was not recorded,
+but MSTR says receipt preceded dry run/removal. Exact approval time remains unknown.
+
+Volsnap24/35 at12:10:18/55 (records565644/565645) independently confirm post-reboot
+shadow-storage growth failure and aborted copies. They do not identify the writer
+behind12:20-12:31space loss. MSTR's reported storage maximum/copy timestamp remain
+attributed; CRO's non-elevated CIM query failed initialization. No destructive
+CRO action. Driver, damaged-checkout, delivery and prevention findings remain open.
+
+## RCN-0020 — AMGT_RECONN holdings sources and historical backfill, 2026-09-29
+
+**Author:** 4.0.0_SA_CRO~Z. **Commission:** Andrew-direct; all six tickers confirmed, daily preferred and weekly/quarterly accepted, history capped at two years or available fund life. **Artifact:** [source assessment and implementation proposal](../4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/README.md), with the verbatim instruction alongside.
+
+**Evidence:** current issuer full portfolios retrieved for WCMG, GQGU, TSEL, BASG, ETFT and PCLG; 23 dated BASG/GQGU samples reaching June/July 2025 with matching internal dates; full periodic portfolio reports identified for remaining funds. Bloomberg refdata healthy; seven of seven BQL requests (six funds and IBM control) refused authorization; index members worked on SPX as a positive control and were inapplicable to the ETF securities. Fundsmith CSV returned only ten rows versus 29 in the full embedded array; SEI net-asset weights are the correct portfolio denominator.
+
+**Conclusion:** issuer-first capture is viable; shared ingestion with five parser families, daily archive sampling supports BASG/GQGU backfill, remaining daily historical coverage unproved with periodic disclosures as fallback. Source feasibility assessment only; no collector deployed, no subscription purchased, no peer dispatched. Raw captures and probe scripts remain locally in ignored `.runtime/amgt-reconn-sources-20260929/`; no raw Bloomberg data committed.
 ## RCN-0019 -- Portal total-return correctness and provenance (Inflection question)
 
 **Date:** 2026-09-28. **Produced under:** `4.0.0_SA_CRO~I`. **Commissioned:** Andrew-direct at the Codex

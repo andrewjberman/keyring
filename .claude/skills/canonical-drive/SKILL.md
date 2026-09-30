@@ -65,7 +65,8 @@ or `[STUCK]` to MSTR; a dead assignee with an open order is respawned or reseate
 - **Hard gate:** a tick that read a graduated round, an uncompiled terminal order, an unacked packet past one tick, an
   idle lane beside an uncovered cell, an unruled call or an unpitched closer candidate, and fired nothing on it, FAILS.
 - **Log:** append each tick to `org/mcp/drive_ticks/<RUNNING_SERIAL>.md` (gitignored runtime file). Commit one log,
-  `org/tier1_exec/<RUNNING_SERIAL>/drive_log_<YYYYMMDDTHH>Z.md` holding that hour's substantive ticks, once per
+  `org/tier1_exec/<RUNNING_SERIAL>/drive_log_<YYYYMMDDTHH>Z_<host>.md` (`<host>` = `hostname | tr A-Z a-z`, derived,
+  never typed: one serial on two devices otherwise collides at the merge) holding that hour's substantive ticks, once per
   closed decision or once per hour, whichever comes first; never one commit per tick. Every tick ends with `heartbeat`.
 - Instruments: read JSON with python; never `2>/dev/null` a verdict-bearing read; `u`/`w`/`read/`/channel push are
   not delivery oracles.

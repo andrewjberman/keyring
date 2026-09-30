@@ -1,9 +1,9 @@
 ---
 name: self-drive
-description: Drive ONE scope of the directive register to completion on a self-ending loop: `/self-drive D4`, `/self-drive <CODE>`, `/self-drive sitez directives`. Each tick runs /open-calls restricted to the scope and closes every call the same tick -- on this seat's own rec by default, after CRO pattern research for a DESIGN fork, by CVO verdict for a GOVERNANCE fork -- spawning any needed seat that is not live; persists until the register reads the scope done, then turns itself off; delta-driven log. While armed, the scope is the only work. Operator-initiated; NOT /drive.
+description: Drive ONE scope of the directive register to completion on a self-ending loop: `/self-drive D4`, `/self-drive <CODE>`, `/self-drive sitez directives`. Each tick closes every open call in scope the same tick -- on this seat's own rec by default, after CRO pattern research for a DESIGN fork, by CVO verdict for a GOVERNANCE fork -- spawning any needed seat that is not live; persists until the register reads the scope done, then turns itself off; delta-driven log. While armed, the scope is the only work. Operator-initiated; NOT /drive.
 ---
 
-# /self-drive — drive a DIRECTIVES.yaml scope to DONE: open-calls -> CVO adjudicates -> proceed, on a loop that ends itself
+# /self-drive — drive a DIRECTIVES.yaml scope to DONE: the driver closes every open call each tick, then proceeds, on a loop that ends itself
 
 **Authority (Andrew-direct 2026-08-24 ~20:0xZ, `1.0.0_SA_CTO~Z` terminal, three words, VERBATIM):**
 1. *"[30m] <Run /open-calls, pitching the calls with your recs to CVO to adjudicate, then proceed. This workflow and process applies exclusively to ETFS_POSITIONING work and that is the only work your fabric should be doing this session.>"*
@@ -93,71 +93,50 @@ roster row's liveness stamp and its summary have DIFFERENT vintages and the row 
 read LIVE 13 s ago beside a 29.5 h-old summary. COST: one call per tick. NON-APPLICATION: none -- an empty inbox
 pays one call and prints `0 unread`.
 
-## ⛔ CALL ROUTING — SUPERSEDES STEPS 1-2 WHEREVER THEY DIFFER (Andrew-direct 2026-09-17 ~13:0xZ)
+## Step 1 — CLOSE EVERY OPEN CALL THIS TICK (the CALL ROUTING -- the ONLY procedure)
 
-VERBATIM: *"if there is an open-call (of any kind) you use your recommendation. If the call specifically is a design fork,
-then you reach out to CRO agent to do research on past patterns and provide more information and then make the call with
-that info. If it is a governance fork, then reach out to CVO agent to adjudicate. If you need a new agent, you spawn them."*
-Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_130xZ_SELF_DRIVE_CALL_ROUTING_REC_CRO_DESIGN_CVO_GOVERNANCE_SPAWN.md`.
+**Andrew-direct 2026-09-17 ~13:0xZ, VERBATIM:** *"if there is an open-call (of any kind) you use your recommendation. If the call
+specifically is a design fork, then you reach out to CRO agent to do research on past patterns and provide more information and then
+make the call with that info. If it is a governance fork, then reach out to CVO agent to adjudicate. If you need a new agent, you spawn
+them."* Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_130xZ_SELF_DRIVE_CALL_ROUTING_REC_CRO_DESIGN_CVO_GOVERNANCE_SPAWN.md`.
 Given the day he measured ~15h of no work because a driver parked a seat call at another seat.
+
+**Andrew-direct 2026-08-27 ~22:2xZ, VERBATIM (the over-reservation defect):** *"something that has been happening a lot lately is the
+issue whereby somehow every single open call falls under 'reserved' versus adjudicable which needs to be assessed better because it
+renders the skill useless if it cant get calls adjudicated... make it definitive on moving things forward. In almost every single case i
+have ever seen i agreed with the rec outright. I think having CVO come in to help should make it absolutley clear."*
+
+**Andrew-direct 2026-09-29 ~02:2xZ, VERBATIM:** *"none of this shoul dbe waiting on me because you have /self-drive running part of which
+is resolving open calls"* (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260929_022xZ_NOTHING_WAITS_ON_ANDREW_SELF_DRIVE_RESOLVES_CALLS.md`).
+
+**Find the calls** from the driver's own record: the scope's inbox mail, slugs and packets, its own logs' open items, and project
+`blocking` fields in scope. **Do not run `/open-calls` inside a tick:** that skill's question is "what waits on Andrew", and asking it
+frames every call as his.
+
+**Close each one the SAME tick, by this table and nothing else:**
 
 | the call is... | who closes it | how |
 |---|---|---|
-| **any open call** (the DEFAULT) | the DRIVER | decide on your own REC the SAME tick; record rec, ruling, reason |
-| a **DESIGN FORK** (which technical design, architecture or pattern) | the DRIVER, after research | ask this fabric's CRO (`4.0.0_SA_CRO` / `4.0.0_SA_CRO~Z`) to research past patterns in the estate; decide the tick the research lands |
+| **any open call** (the DEFAULT) | the DRIVER | decide on your own REC; record rec, ruling, reason; route it |
+| a **DESIGN FORK** (which technical design, architecture or pattern) | the DRIVER, after research | ask this fabric's CRO (`4.0.0_SA_CRO` / `4.0.0_SA_CRO~Z`) for past patterns; rule the tick the research lands |
 | a **GOVERNANCE FORK** (process, authority, lane, gate, law, record, who may act) | this fabric's CVO (`3.0.0_SA_CVO` / `3.0.0_SA_CVO~Z`) | pitch with your REC; execute the verdict |
 
-- **A needed agent that is not live is SPAWNED by the driver**, same tick: `.tools/spawn-agent.ps1 -Model claude-opus-5 -Effort high <serial> "<direction>"`, then confirm it registered. Never "CVO DARK -- held", never a spawn ask parked at another seat.
-- **No RESERVED class for calls.** CLAUDE.md's NEVER lines and hard stops are LAW, not calls: an act they bind still goes through its law's mechanism (never-widen sign-off, vendor-egress word). This routing never repeals one.
+- **There is no RESERVED class of call, and no decision is ever listed for Andrew.** A NEVER-class law line binds the ACT a ruling
+  leads to, never whether the driver may decide: the ruling simply does not spend what the law reserves (for example "resume under the
+  vendor use he already worded, no new vendor leg", or "leave ABSENT, no pull"). A surfaced-before call, a "feels sovereign" call, a
+  scope or methodology question: the driver rules.
+- **THE ONE THING LISTED FOR ANDREW is an ACT only he can perform, and each entry carries its citation** (the 08-27 citation test,
+  so the list cannot grow into a new reserved class): his signature or second approval on a never-widen half (CLAUDE.md NEVER-1),
+  his login or MFA code, a vendor use no word of his names (CLAUDE.md "NEVER call an external vendor API without Andrew's explicit
+  per-use word"), spend, contracts or entitlements beyond his grants, lifting a hold he set BY NAME (quote the hold). The entry
+  names the act and its citation, never a question. **An entry with no citation is a call, and the driver rules it.**
+- **A needed agent that is not live is SPAWNED by the driver** (or asked of this fabric's MSTR where the driver does not hold the
+  spawn primitive), the same tick. A dark CVO or CRO never holds a call: the driver spawns it and meanwhile keeps every other call moving.
 - **Waiting on CRO research or a CVO verdict never idles the loop**; the rest of the scope keeps moving.
-- Steps 1-2's classification and pitch mechanics below still apply to GOVERNANCE forks only.
-
-## Step 1 — `/open-calls`, restricted to the scope
-
-Run the `/open-calls` sweep exactly as that skill specifies (own record only, verify each candidate is still open, card format), **filtered to calls whose project is in the scope.** Then classify each open call on ONE axis — *who may close it*:
-
-**⛔ RESTRUCTURED 2026-08-27 ~22:2xZ, ANDREW-DIRECT AT THE BASE CTO TERMINAL — THE OVER-RESERVATION
-DEFECT (his words, VERBATIM: "something that has been happening a lot lately is the issue whereby
-somehow every single open call falls under 'reserved' versus adjudicable which needs to be assessed
-better because it renders the skill useless if it cant get calls adjudicated... make it definitive
-on moving things forward. In almost every single case i have ever seen i agreed with the rec
-outright. I think having CVO come in to help should make it absolutley clear."). THE LEAK, measured
-on the skill's own runs: the old RESERVED hook "anything a ruling explicitly carried 'to Andrew'"
-catches EVERY card ever surfaced to him — surfacing a call once made it RESERVED forever, the class
-devoured the queue, and ticks classified zero adjudicable while he approved every rec outright.**
-
-| value | definition | disposition |
-|---|---|---|
-| **ADJUDICABLE — THE DEFAULT** | every open call in scope, unless the RESERVED test below passes | **PITCHED to the fabric's CVO with the driver's REC** (§2) |
-| **RESERVED — the CITED exception** | ONLY a call whose closure a **NEVER-class LAW LINE or a VERBATIM STANDING ANDREW HOLD names by decision class**, with the citation ON THE CARD: served-output never-widen (NEVER#1/#3), vendor egress beyond his stated word, spend / contracts / entitlements, a hold-lift he named BY NAME. **"A ruling once carried it to Andrew" / "he was asked before" / "it feels sovereign" are NOT reservations — that a call was SURFACED to him does not reserve its CLASS.** No citation line on the card = ADJUDICABLE by definition. | Pitched to CVO **AS A RESERVED CLAIM** for validation (§2); stays a card at Andrew meanwhile |
-
-**Three mechanics that make it definitive:**
-1. **The citation IS the test.** A RESERVED card carries the law line or the verbatim hold it rests
-   on, quoted. The driver who cannot produce the quote has classified the call ADJUDICABLE.
-2. **CVO VALIDATES THE RESERVATIONS — his "CVO come in to help" mechanism.** Every tick's pitch
-   carries BOTH lists: the ADJUDICABLE cards for verdicts, and the RESERVED cards **for
-   classification review**. A RESERVED whose citation CVO reads as not naming the decision class is
-   RE-CLASSED ADJUDICABLE and adjudicated in the same reply. Over-reservation cannot survive a tick,
-   because a second seat reads every citation.
-3. **THE ALL-RESERVED TELL:** a tick that classifies EVERY call RESERVED is PRESUMPTIVELY
-   MISCLASSIFIED — re-run the citation test before printing, and say in the tick output that the
-   tell fired. The measured base rate (he agreed with the rec outright in almost every case) says a
-   uniformly-RESERVED queue is an instrument artifact, not a sovereign workload.
-
-*Rule-24 record for this enum (updated with the restructure):* axis = closure authority; grain = one
-call; intent = one (who may close it); MECE — RESERVED is enumerated by CITATION (a NEVER law line
-or a verbatim standing hold, quoted on the card), ADJUDICABLE is the remainder and the DEFAULT;
-state frame — both move on a verdict; the classification itself is now CVO-checked per tick, so a
-misclassification is a one-tick state, never a standing one. His word (1) delegates ADJUDICABLE to
-CVO; nothing here lifts a NEVER — it stops calls from being COSTUMED as NEVERs.
-
-**Zero calls in scope:** print `No open calls in scope <selector> (tick N).` and continue to §3 (verdicts may still be pending) — do NOT message the CVO an empty pitch.
-
-## Step 2 — Pitch to the fabric's CVO lane
-
-`send_message` to THIS fabric's CVO: site Z → `3.0.0_SA_CVO~Z`; laptop → `3.0.0_SA_CVO`. Subject `[SELF-DRIVE <scope> tick N] <k> call(s) for adjudication + <r> reserved claim(s) for review`. Body = BOTH lists (the 2026-08-27 restructure): the ADJUDICABLE cards VERBATIM (call on top, divider, REC beneath, the one-sentence why, what each call gates, the citation for any prior Andrew anchor) **and the RESERVED cards with their quoted citations, marked FOR CLASSIFICATION REVIEW — CVO confirms each citation names the decision class, or RE-CLASSES the call ADJUDICABLE and adjudicates it in the same reply.** RAVC: this is a REQUEST — ack expected, verdict expected by MCP; the driver validates the verdict cites its grounding (Rule 22 — a verdict resting on a causal claim cites `file:line @ commit` or a tool + output) before acting on it. A CVO re-class is executed like any verdict; the tick output states the re-class count so over-reservation is visible the tick it happens.
-
-**CVO lane dark** (not LIVE on the broker, no fresh heartbeat): the pitch is NOT sent into a dead inbox. Route the spawn ask to THIS fabric's MSTR same-turn (a seating obligation, not a discovery), print `CVO DARK — <k> call(s) held, spawn asked`, and carry the calls to the next tick. Never proceed on an absent verdict. **The held calls are ALSO appended to the verdict ledger as `state: HELD` rows** (§3.2's ledger, `org/ref/DRIVE_PAIR_PROTOCOL.md`) — a respawned CVO reads its backlog from the artifact, never from a scrolled message.
+- **Governance pitch mechanics** (governance forks only): `send_message` to this fabric's CVO, subject
+  `[SELF-DRIVE <scope> tick N] <k> governance call(s)`, each card = the call, a divider, the REC, the one-sentence why, what it gates.
+  RAVC: ack and verdict expected by MCP; the driver checks the verdict cites its grounding (Rule 22) before acting on it.
+- **Zero calls in scope:** print `No open calls in scope <selector> (tick N).` and continue.
 
 ## Step 3 — Proceed on verdicts received since the last tick
 
@@ -165,7 +144,7 @@ For each CVO verdict that arrived (inbox, READ-acked -- read by the 0.8 measurem
 1. **Record it** — a CVO adjudication is an exec ruling, not an Andrew-direct word: write it into the project JSON (`phase` prefix + `blocking`) and the tick log, citing the message id and the verdict's grounding. Never paraphrase the verdict's operative sentence.
 2. **Land it in the verdict ledger, THEN broadcast.** Append the row to `org/{tier}/{driver_base_serial}/drive_pairs/<scope>/VERDICTS.jsonl` (schema + consumed-field contract: `org/ref/DRIVE_PAIR_PROTOCOL.md`; committed with the tick log) — the paired /drive consumes it by cursor, and an `unblocks: NONE` row is legal and honest. Then **broadcast** to the seats it binds (COO of this fabric for cells/TOs; MSTR for seats/register; the PRD author for amendments) — by serial, never "you". The ledger is the record; the broadcast is the courtesy — the message scrolls, the artifact persists.
 3. **Execute the driver's OWN acts** — amend the PRD the same turn; route the cell input to COO; ask MSTR for a seat when a class is declared dark; strike a superseded card. **Never cut a TO, never dispatch a seat, never apply.** Those stay with COO / the executors under Rule 27.
-4. A verdict the driver believes wrong is NOT re-litigated in the loop: it is executed AND surfaced to Andrew as a RESERVED card with the disagreement stated in one line (CVO independence; escalation runs upward, never sideways).
+4. A verdict the driver believes wrong is NOT re-litigated in the loop: it is executed, and the disagreement is written in one line in the tick log (CVO independence). It is not carded at Andrew.
 
 ## Step 4 — The completion test (BUILT IN; the loop ends itself)
 
@@ -174,7 +153,7 @@ For each CVO verdict that arrived (inbox, READ-acked -- read by the 0.8 measurem
 - **Project scope:** DONE iff that project's JSON reads `status: complete`.
 - **Empty member set** (D1 / D3 / D5 / D7 on 2026-08-24): the test is **UNMEASURABLE** — print `UNMEASURABLE: <D> has no member projects; the loop cannot end until the register names them` and route the member-set gap to MSTR as a call. Loud, never a silent completion.
 - **Andrew's stand-down word** on the scope is the other terminal condition (record + broadcast, then §5 close).
-- **HELD-AT-STOP — the branch for a stop-condition the loop cannot reach (CVO~Z 4895, ARMED against the skill on tick 1; disarm = this branch).** A member can be STRUCTURALLY UNREACHABLE by the driver's own acts: `status` not `complete`, no `dep_stage`, no active TO, no seat, blocked on a deliverable outside the loop's scope, or its very membership a question RESERVED to Andrew. **The driver may NOT resolve that by editing the member set it is measured against** — a stop-condition satisfiable by shrinking its own denominator is not a stop-condition, and the driver is the party that benefits. Instead, each tick classifies every member `REACHABLE | UNREACHABLE(<reason>)`, prints both counts, and surfaces each UNREACHABLE member ONCE as a RESERVED card to Andrew (the scope question is his). **When every REACHABLE member is `complete` and only UNREACHABLE members remain, the loop reaches the terminal `HELD-AT-STOP`: it writes the final log naming the unreachable members and the open card, `CronDelete`s itself, appends `HELD-AT-STOP` (not DONE) to the arming record, pushes one line, and stops.** His word then either closes the directive (DONE) or names the seat/act that makes the member reachable — at which point `/self-drive <scope>` is re-armed on that word. **A loop that runs forever against a member it cannot move is exactly the standing-loop debt his word (3) forbids; a loop that quietly narrows its own scope is worse.**
+- **HELD-AT-STOP — the branch for a stop-condition the loop cannot reach (CVO~Z 4895, ARMED against the skill on tick 1; disarm = this branch).** A member can be STRUCTURALLY UNREACHABLE by the driver's own acts: `status` not `complete`, no `dep_stage`, no active TO, no seat, blocked on a deliverable outside the loop's scope, or its very membership a question RESERVED to Andrew. **The driver may NOT resolve that by editing the member set it is measured against** — a stop-condition satisfiable by shrinking its own denominator is not a stop-condition, and the driver is the party that benefits. Instead, each tick classifies every member `REACHABLE | UNREACHABLE(<reason>)`, prints both counts, and names in the tick log, once, the ACT that would make each UNREACHABLE member reachable; only an act on Step 1's cited act list is listed for Andrew. **When every REACHABLE member is `complete` and only UNREACHABLE members remain, the loop reaches the terminal `HELD-AT-STOP`: it writes the final log naming the unreachable members and the open card, `CronDelete`s itself, appends `HELD-AT-STOP` (not DONE) to the arming record, pushes one line, and stops.** His word then either closes the directive (DONE) or names the seat/act that makes the member reachable — at which point `/self-drive <scope>` is re-armed on that word. **A loop that runs forever against a member it cannot move is exactly the standing-loop debt his word (3) forbids; a loop that quietly narrows its own scope is worse.**
 
 On DONE: write the final log (§5, `state: DONE`), `CronDelete` the job, append DONE to the arming record, `PushNotification` one line, stop. **A loop that outlives its scope is the debt class the NEVERs describe; a loop that ends early on a declared-not-read DONE is the false-outage class. Read the register.**
 
@@ -195,7 +174,7 @@ driver's own author line **ONLY when one of these holds:**
   one log per closed decision or per hour).
 **A quiet tick commits NOTHING.** It appends its line to `org/mcp/drive_ticks/<RUNNING_SERIAL>.md`, the
 gitignored runtime file, and the next committed log carries those lines. The tick counter still
-advances in scratchpad state; the next written log names the ticks it covers. Contents, always: ticks covered; calls pitched (ids, RECs); verdicts received (ids, operative sentences, grounding); acts taken (hashes, receipts); scope state — projects × `status` × `dep_stage` × open TOs (denominators printed); the completion test result; RESERVED cards still at Andrew; `state: ARMED | DONE | STOPPED-BY-OPERATOR`. A `## Compiler Tools` section per the session-log standard.
+advances in scratchpad state; the next written log names the ticks it covers. Contents, always: ticks covered; calls pitched (ids, RECs); verdicts received (ids, operative sentences, grounding); acts taken (hashes, receipts); scope state — projects × `status` × `dep_stage` × open TOs (denominators printed); the completion test result; acts listed for Andrew, each with its citation; `state: ARMED | DONE | STOPPED-BY-OPERATOR`. A `## Compiler Tools` section per the session-log standard.
 
 ⛔ **THE MOVEMENT CURSOR IS DERIVED FROM THE COMMIT, NEVER FROM THE LOG'S FILENAME** (found by
 `2.0.0_SA_COO` @91892, `/drive` D2 tick 3, on its own machinery). A log filename is **typed by the
@@ -219,7 +198,7 @@ you added is temporal info ... when I explicitly say it is not an incident repor
 to stop writing to XXX.md"*. `org/XXX.md` is startup protocol; whether a loop is armed is session state. A cron is
 session-only, and his premise is not, so the carrier is a committed file of its own:
 - **On ARM:** write `org/{tier}/{base_serial}/deliverables/ANDREW_DIRECT_<YYYYMMDD>_<HHxx>Z_SELF_DRIVE_<SCOPE>.md` carrying his
-  words verbatim and an **ARM TERMS** table: scope, cadence, adjudication terms and RESERVED list, `paired_with` (§0.6),
+  words verbatim and an **ARM TERMS** table: scope, cadence, call routing (Step 1) and the cited act list, `paired_with` (§0.6),
   STOP-CONDITION (§4 or his stand-down). Commit it before tick 1 (§0.5). A re-arm of the same scope on a new word is a new record.
 - **On DONE / HELD-AT-STOP / stand-down:** APPEND the stop, with his words if it is his, to that same record, and write the
   final log. **The appended stop covers BOTH halves: the paired peer reads it and stands itself down.**
@@ -236,20 +215,21 @@ While a scope is armed, **it is the only work the driver's fabric does** (his wo
 ```
 SELF-DRIVE <scope> — tick N (<UTC>)   state: ARMED   cadence: 30m   job: <id>
 SCOPE: <k> directive(s) -> <m> project(s) [...]   device: <fabric>   open TOs: <n>
-OPEN CALLS IN SCOPE: <k_adj> adjudicable (pitched to <CVO serial>, msg <id>) · <k_res> RESERVED (at Andrew, listed below)
+OPEN CALLS IN SCOPE: <k> ruled by the driver · <d> design forks at CRO research · <g> governance forks at <CVO serial> (msg <id>)
+ACTS ONLY ANDREW CAN DO: <a> (each with its citation, listed below; decisions are never listed)
 VERDICTS SINCE LAST TICK: <v> — <one line each: id, operative sentence, act taken + hash/receipt>
 COMPLETION TEST: NOT DONE — <m_done> of <m> projects complete; [UNMEASURABLE: ...]
 LOG: <written|next at tick N+1>
 ```
-Then the `/open-calls` cards (ADJUDICABLE first, then RESERVED), or the zero-line.
+Then one line per ruling (call, REC, ruling), then the cited act list, or the zero-line.
 
 ## Guards, stated once
 
 - **Never armed at launch; never re-armed off memory or a log** — only off the §5 arming record or a fresh operator word.
 - **Never write to `org/XXX.md`** — no arming, stopping, status or dated history, even though earlier versions of this skill did.
 - **Never a dispatch on a timer; never a TO; never an apply** — the driver acts in its own lane only.
-- **Never pitch a RESERVED call to CVO** — a NEVER is not adjudicable.
-- **Never proceed on an absent or ungrounded verdict.**
+- **Never list a decision for Andrew** — only an act only he can perform, with its citation (Step 1).
+- **Never proceed on an ungrounded verdict**; a governance fork waiting on the CVO holds only itself, never the rest of the scope.
 - **Never declare DONE** — read it, with the denominator printed.
 - **Never cross a fabric** — the device guard refuses the other fabric's scope.
 - **A stale register is a finding, not a scope:** `directives-check` prints per-row freshness; a row flagged `MEMBERS-STALE?` or `NO-MEMBERS` is surfaced in the tick, and the driver routes the register fix to MSTR rather than driving the stale set silently.

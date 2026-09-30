@@ -2203,6 +2203,1196 @@ carries none.
     "disarm_owner": "2.0.0_SA_COO~O",
     "disposition": "UNDER_INVESTIGATION",
     "notes": "WHY THIS ROW EXISTS AT ALL, which is a process point about me rather than about fees: I measured all of the above on 2026-09-28 during MX-s-10 step 3 and wrote it only into ANNOUNCE_MX-s-10.md, an MX-s-10 deliverable. MX-s-10 is now SUPERSEDED-for-round, so the finding would have died with the cell it was discovered in. CLAUDE.md section 2 says an off-task finding gets a ROW and the work continues; an announce is not a channel row and does not survive its order. Filed late, and the lateness is the lesson. NOT FIXED, and deliberately not: the one-line repair is the same insertion MX-s-4 made, and opal-bd-fees-download.json sits in infra/aws/ssm/ which is this lane's surface -- but no order covers this producer, and CLAUDE.md forbids implementing a gate or monitor unbidden even where proposing is legal. An honest exit is not an alarm (the issuer ruled exactly that for MX-s-4), so the fix is legal in principle and wants a cell, not a rider. The fees schedule was also left ALONE under MX-s-10's own preflight, which removes its leg only once its caller census reads 0 -- and that census reads 1. ONE THING UNMEASURED: whether the four remaining BD download documents (allocation, realized, transaction, unrealized) also lack an exit. Z-S17 measured their shutdown ORDERING, not their exit honesty, and those two are different properties."
+  },
+  {
+      "id": "NFRA_MCPINDEX-Z-W10-S1",
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~10",
+      "surfaced_at": "2026-09-28T22:10Z",
+      "one_line": "MX-d-3 ranking fixed 2 of the 3 dataset misses (Q05, Q07); Q22 (an index ask matching no keyword) and the 3 false positives Q09, Q13, Q25 are not ranking defects and stay MISS at 23 of 27.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~MI",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "run_routing.py before the fix: MISSES Q05, Q07, Q09, Q13, Q22, Q25, ROUTING 21 of 27; after the fix: MISSES Q09, Q13, Q22, Q25, ROUTING 23 of 27 (Q05 and Q07 route first to json/benchmarks/model_portfolio_benchmarks.json).",
+              "app/refs/DATA_CATALOG.yaml carries no S&P/SPX/index-name vocabulary on any channel that holds a row: the only hit is the example ask 'where did the SPX close?' on bloomberg_standing_read, a channel with 0 rows. mkt.01 is reached by no keyword an S&P ask contains (Q22 -> candidates=0).",
+              "Q09 ('holdings'), Q13 ('inflection') and Q25 ('value') are asks whose expected answer is NOT_CATALOGUED but each contains one channel keyword, so the channel's rows are still returned; the routed tool changes with ranking (Q25 moved from correlation_data to tier1-snapshot) but the ask still routes to a dataset."
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO MX-d-3 act 2: fix the RANKING inside opal_discover so that a dataset ask ranks its dataset first, without editing the catalog (bound 1), the harness or the question set; row Z-W2-S8 names three miss signatures (one common word selects a whole channel, unranked channel, an index ask matches no keyword).",
+      "world_is": "Ranking reaches only the 'unranked channel' signature (Q05, Q07). The 'index ask matches no keyword' signature (Q22) needs the ask to select a candidate at all, and no catalog text or keyword links an S&P ask to mkt.01; the honest repairs are a catalog keyword (out of bounds for this order) or an in-code index-name vocabulary (which this worker judged to be special-casing words, so did not add). The 'one common word selects a whole channel' signature (Q09, Q13, Q25) is a PRECISION defect (a weak channel-keyword-only match should return no dataset), which reordering candidates cannot cure; a threshold rule would be a recall risk and was not attempted inside a ranking cell. AC2 (2 of 3 dataset asks first) and AC1 (>=21) both pass.",
+      "notes": "Suggested next cells, for the issuer to place: (a) a catalog keyword or index-name row for market-returns asks (catalog owner); (b) a rule that a channel-keyword-only match with zero own-text overlap is returned as a weak candidate or not at all, graded against the harness for recall loss."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W9-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~9",
+    "surfaced_at": "2026-09-28T22:00Z",
+    "one_line": "A tracked file outside the MX-s-13 redaction set carries the live BD password value on 2 lines.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured by a byte-count of the value taken from HEAD run-daily-downloads.sh across all git ls-files at the worktree: 1 file matched, 2 occurrences, lines 3408 and 3412; the other 43 bd-exporter files and every other tracked file read 0."
+      ]
+    },
+    "spec_asserts": "MX-s-13 names 7 files as the complete redaction set for the live BD password (Z-S31).",
+    "world_is": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/CARRIER_CENSUS.md lines 3408 and 3412 each contain the value the 7-file set carried. Not edited: outside <paths>. No content quoted.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W9-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~9",
+    "surfaced_at": "2026-09-28T22:00Z",
+    "one_line": "extended-backfill.sh: no second literal credential found where the order says the CTO measured one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Line-by-line masked-shape read of every assignment and BD_/PASS line of extended-backfill.sh (lines 15,16,17,22,23,25,37-39,43-45): no credential-shaped literal; the CTO's literal may be a username on line 15 or a since-fixed line -- unresolved by me."
+      ]
+    },
+    "spec_asserts": "MX-s-13 edit 1: extended-backfill.sh carries a DIFFERENT literal elsewhere than the BD_PASSWORD line.",
+    "world_is": "In src/stepwise/extended-backfill.sh the BD_PASSWORD line 16 is already a :? refusal; line 15 is BD_USERNAME (a username, left as ordered); no line holds the redacted value, and a shape scan for mixed letter/digit/symbol tokens of 8+ chars found 0. File left unedited; AC1 reads 0 literals over 44 files.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W13-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~13",
+    "surfaced_at": "2026-09-28T17:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The worktree's portal/ is an empty gitlink directory, so the emitter refused ('accessor index is EMPTY -- portal/src/api not readable'); I extracted portal/src/api at the pinned gitlink into it to run step 4.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "WORLD (this worktree): `ls -la portal` shows an empty directory; `git ls-tree HEAD portal` = 160000 commit c3dd9ca96a3718afcde829ea9b010041d925f883.",
+        "CODE: workflows/atom_decomposition/emit_catalog_v02.py:369 PORTAL_API = <root>/portal/src/api and :462 refuses when the accessor index is empty; the first run printed 'EMIT REFUSED: accessor index is EMPTY'.",
+        "ACT: `git archive c3dd9ca96a3718afcde829ea9b010041d925f883 src/api` from the shared ajb_workspace/portal repo (read-only; that commit exists there, whose HEAD is 92a2576) piped to tar into <worktree>/portal. Content sits inside the gitlink directory, so it is not part of any commit of this branch."
+      ]
+    },
+    "spec_asserts": "The order (step 4) says to run the emitter in the worktree and treats the portal submodule as present; the order's paths do not name portal/.",
+    "world_is": "A worker worktree carries no portal checkout, so step 4 and AC3 cannot run as cut. I read the pinned gitlink's src/api only (23 files), not a rebuild of the tree. The catalog was therefore emitted against portal c3dd9ca96a, not the shared tree's 92a2576; the accessors list is the only portal input, and AC3 reproduced the committed catalog with 0 differing lines outside the stamp, so no accessor drift shows at this pin.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "notes": "Any worker cell whose invocation runs the emitter needs portal/src/api at cut time; the issuer may want that in the preflight."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W13-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~13",
+    "surfaced_at": "2026-09-28T17:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "validate_catalog_v02.py (step 5) makes live S3 reads, against this order's 'No AWS' bound, and then crashes writing its report because catalog_v02/ does not exist in the tree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: workflows/atom_decomposition/validate_catalog_v02.py docstring: concrete keys -> s3api head-object, family rows -> s3 ls the prefix; READ-ONLY; results -> catalog_v02/validation_report.json.",
+        "RUN (rc=1): printed per-key KEY-OK/FAMILY-OK lines and 'SUMMARY: {rows: 36, concrete_ok: 26, concrete_missing: 0, family_ok: 9, family_mismatch_or_error: 1}', then FileNotFoundError on workflows/atom_decomposition/catalog_v02/validation_report.json. git status after the run shows no change to that path, so nothing needed restoring.",
+        "MEASURED separately with catalog_gate.load_catalog on the new DATA_CATALOG.yaml: loads, 48 rows_by_key, no refusal of the new portal_datasets section."
+      ]
+    },
+    "spec_asserts": "Order bounds 3: 'No AWS'; step 5: check that validate_catalog_v02.py still accepts the catalog, and restore validation_report.json if it rewrites it.",
+    "world_is": "The validator's 36 rows are the channels: rows, which this change did not touch (the catalog diff is only the two stamp lines plus the silver_datasets/portal_datasets sections), so its summary says nothing about the new section either way. One row was reported family_mismatch_or_error; I did not identify it and did not rerun (a rerun is more S3 reads). It is unmeasured whether that predates this change; the channels rows are byte-identical, so it is not caused by it. The validator does check the new key, by a different route: main() runs validate_silver_entries() first (validate_catalog_v02.py:103-105, the emitter's own validate_entry over catalog_entries/*.yaml) and refuses before any S3 call on an invalid entry; it did not refuse, so the three s3_key entries are accepted. It does not read the catalog's portal_datasets section itself.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W13-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~13",
+    "surfaced_at": "2026-09-28T18:10:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "BLOCKING: the commit's naming limb (LGIC_ENFORCE DEC-6) refuses the 6 new lines that carry the exact keys the order requires in s3_key, so MX-x-2's work sits in the worktree uncommitted.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash .tools/safe-commit.sh ... -- <8 paths> printed 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' and 'NAMING-GATE: REFUSE 6 graded'.",
+        "The 6 refused lines are the added s3_key values: DATA_CATALOG.yaml:1336, :1356, :1376 and the three catalog_entries/portal_mdpf_*.yaml files (:18, :20, :20). Each reads 'EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it'; the gate proposes mdpf/{scope}/platinum/{scope}/<file>.json.",
+        "CODE .tools/naming-gate.py:1-20 (DEC-6 matrix): an EXISTING out-of-pattern key in a live-remediation surface is REFUSED unless the diff removes it; prose (a string with whitespace) is not graded. safe-commit.sh:721 turns ENFORCE on from the org/mcp/naming-gate.enforce file, and its refusal has no worker-side override (a --force bypasses only contamination checks).",
+        "The key is not chosen by this worker: the order (step 1) requires s3_key to be the key the portal_index fence pins, and test_portal_index.py pins platinum/mdpf/{scope}/<file>.json. The same string already sits, ungraded, on unchanged lines (the channels: rows, and the producer prose)."
+      ]
+    },
+    "spec_asserts": "Order step 6: 'Run AC1-AC3. Commit under your serial.' and bound 3: REFUSE a criterion you cannot meet, reporting it with its measurement. Step 1: s3_key is the exact key the entry describes.",
+    "world_is": "AC1, AC2 and AC3 all PASS (proof instance VALID, rc 0), but the change cannot be committed by a worker: the naming limb refuses the one new field the order asks for, because its value is a live-remediation key (MDPF_CANON) the platform has not migrated. The change is complete and unstaged in worktree C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r3-13 on branch wk-nfra_mcpindex-3-13 (8 files). The proof instance and its deliverables folder are also uncommitted, so its PENDING-THIS-COMMIT rows are unresolved. Nothing was bypassed, hand-encoded or reworded to slip the gate. The way through is the gate's owner or the issuer's: an R20 register entry or a ruling on MDPF_CANON that lets this field carry the key, or the issuer committing the staged set under an approved path; that is not this worker's call.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T20:58Z",
+    "one_line": "TO MX-s-12 step 4: .tools/safe-apply.sh refuses the worker (halt-gate exit 3, fail-closed) because the session-keyed serial file resolves the shared session id to the issuer serial 2.0.0_SA_COO~MI, a two-letter lane the gate rejects; the graded 0-add/0-change/5-destroy fees-leg plan is NOT applied.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Command: HALT_ACK=1 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/bd-pipeline apply -input=false -no-color <saved plan> run from the worker worktree with OPAL_AGENT_SERIAL=0.9.0_WK_NFRA_MCPINDEX~8 exported. Output: 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed) ... Resolved serial: 2.0.0_SA_COO~MI', APPLY_RC=3. Terraform was never invoked; nothing was applied.",
+        ".tools/halt-gate-check.sh:68-109 halt_gate_resolve_serial reads ONLY org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial (this checkout, then the shared checkout) and the orphan-cleaned marker; it does NOT read OPAL_AGENT_SERIAL. The worker shares the issuer's CLAUDE_CODE_SESSION_ID, so it resolves as the issuer. The worker worktree has no org/mcp/sessions directory (ls: cannot access).",
+        ".tools/halt-gate-check.sh:71-74 says the sanctioned remedy: 'an issuer may provision a worker's serial inside the worker's worktree, so parallel workers of one session each resolve as themselves'. That file is org/mcp/sessions/<sid>.serial, outside this order's <paths>, so the worker did not write it (order: a path needed but not granted is a BLOCKING row, never an override).",
+        "The plan itself is graded and clean (step 4 G3): 'Plan: 0 to add, 0 to change, 5 to destroy' = aws_cloudwatch_event_rule.bd_fees_pipeline, aws_cloudwatch_event_target.bd_fees_pipeline_target, aws_lambda_permission.eventbridge_fees, module.fees_trigger.aws_cloudwatch_log_group.lambda, module.fees_trigger.aws_lambda_function.this. Zero mentions of aws_instance, bd-49f-fees-runner, its session-chain rule, bd-silver-merge, or any asset-dim resource. Saved plan and text are in the worker scratch dir, outside the repo."
+      ]
+    },
+    "spec_asserts": "TO MX-s-12 step 4: apply the retirement with .tools/safe-apply.sh, never a bare apply, and after apply run terraform plan -detailed-exitcode = 0.",
+    "world_is": "safe-apply cannot name this worker as its principal, so the apply is not executed. The fees leg (bd-fees-pipeline-trigger cron(15 22), bd-fees-trigger) is still live in AWS and would fire at 22:15Z on top of the asset-dim fire; the repo edits and file deletions are committed on the worker branch only. AC2 asserts only the asset-dim rule so it is unaffected.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm is one of: (a) the issuer writes org/mcp/sessions/<sid>.serial inside the worker worktree naming 0.9.0_WK_NFRA_MCPINDEX~8 and the worker re-runs safe-apply against a fresh plan (the worker will re-plan, the saved plan is not trusted after time passes); or (b) the issuer applies from the worker branch. The order forbids step 4 between 22:05Z and 22:40Z, so the window is now until 22:05Z or after 22:40Z; if unapplied before 22:15Z the fees Playwright leg fires once more, which is the state it has been in for 95 days and harmless to data (bronze/fees is written by the REST runner)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T21:17Z",
+    "one_line": "Z-W8-S1 disarmed: the issuer 2.0.0_SA_COO~MI wrote the gitignored worktree serial file naming the worker, safe-apply then passed, and the graded 0/0/5 fees-leg retirement applied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+      "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer message 21:05Z: wrote org/mcp/sessions/3f54aa89-ef8a-46dc-b108-5c18de99298f.serial in the worker worktree naming 0.9.0_WK_NFRA_MCPINDEX~8; the worker read the file back: contents equal the worker serial. The file is gitignored and not committed.",
+        "Re-plan (worker scratch plan2.txt) read exactly 'Plan: 0 to add, 0 to change, 5 to destroy', the same five resources as the plan graded before the block. safe-apply.sh: 'Apply complete! Resources: 0 added, 0 changed, 5 destroyed.' APPLY_RC=0; the halt gate resolved the worker (scanning the issuer inbox, 191 pending messages, HALT_ACK=1).",
+        "Post-apply terraform plan -detailed-exitcode: 'no differences', rc 0. events describe-rule bd-fees-pipeline-trigger: does not exist. AC2 PASS exit 0."
+      ]
+    },
+    "spec_asserts": "TO MX-s-12 step 4: retire the fees schedule leg through safe-apply and reach plan -detailed-exitcode 0.",
+    "world_is": "Step 4 is met as written; the block in Z-W8-S1 was a provisioning gap (no worker-local serial file), removed by the issuer, not a defect in the plan.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The gap is reusable knowledge for the issuer: a worker whose order includes a safe-apply needs the worktree serial file provisioned at spawn. Z-W8-S1 is not edited; this row records its disarm in prose. The structured `adjudicates` field is refused to a worker (surprise-row-gate A-1: it is 3.0.0_SA_CVO's field), so the CVO is asked to disposition NFRA_MCPINDEX-Z-W8-S1 by naming it in an adjudicating row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S48",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:09Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S42"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S42. The BD asset dimension is now current by its SCHEDULED producer, not by ad-hoc pulls: MX-s-12 made the ported REST document v4 the served version, and the first scheduled weekday fire (22:10Z) ran it and rewrote the dim with DELTA=0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-s-12 (drained 2033d10e73): the SSM document opal-bd-asset-dim-download is v4 as both DefaultVersion and LatestVersion (worker describe-document); s10.AC1 PASS -- the served document has rest-pull 4, builder 4, playwright 0, BD_PASSWORD 0 (issuer re-run 2026-09-28 ~22:4xZ).",
+        "The scheduled fire: rule bd-asset-dim-pipeline-trigger 22:10:00Z -> bd-asset-dim-trigger -> ssm 16d855de-b971-4d4c-bf8c-bc9f8503c6d3, requested 22:11:06Z, Status Success; s10.AC3 PASS (runs at/after slot 1, success 1, dim rewritten after = yes), issuer re-run.",
+        "Served dim silver/bd_assets_dim.parquet VersionId qcSdLjLW0d1QbDZ1w9lg6SRPjwF7ou92 (22:11:33Z): issuer-measured against the G1 version kittUyy.WHGfmKRaAag.p4TqGFycZ3eA -- 12,141 = 12,141 unique ids, id-set sha256 prefix b38a8b0a5dd07053 equal, 0 added, 0 removed, non-null cusip 10,957 = 10,957, 0 cusip changes of any kind."
+      ]
+    },
+    "spec_asserts": "Z-S42 (ARMED): the dim is current only through one-off REST pulls; the scheduled run still executes the Playwright download that BD's MFA broke. CLAUDE.md: production pipelines MUST be scheduled.",
+    "world_is": "The scheduled chain EventBridge -> Lambda -> SSM runs the REST pull + union rebuild. Tonight's acceptance fire succeeded and the served dim is byte-set-identical on ids and cusips to the G1 baseline (only built_at moved). The judgment half (s10.J1) is open for 3.0.0_SA_CVO~O at L9.",
+    "notes": "Disarm owner of Z-S42 was 2.0.0_SA_COO~O, the issuer at the time; the issuer is now 2.0.0_SA_COO~MI (placement @094c84f299). The trigger runs the document at $LATEST, not DEFAULT: tonight both are v4 (worker ~8 recorded it in the proof instance), so a future update-document that creates a $LATEST without setting DEFAULT would change what the schedule runs."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S49",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:09Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S47"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S47. The BD fees Playwright leg that failed 69 of 121 runs while SSM read Success no longer runs: MX-s-12 destroyed its schedule through Terraform (bd-fees-pipeline-trigger rule, target, Lambda permission, bd-fees-trigger Lambda and its log group -- 5 destroys, 0 add, 0 change).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker ~8 safe-apply ~21:14Z: 'Apply complete! Resources: 0 added, 0 changed, 5 destroyed.'; post-apply terraform plan -detailed-exitcode: no differences, rc 0 (commit 03527b9e7a, drained 2033d10e73).",
+        "Live reads after the apply (worker): bd-fees-pipeline-trigger does not exist; bd-49f-fees-session-daily still ENABLED cron(20 22 ? * MON-FRI *); bd-49f-fees-runner still Active -- bronze/fees stays current through the REST runner."
+      ]
+    },
+    "spec_asserts": "Z-S47 (ARMED): opal-bd-fees-download has no exit on its failure branch, so SSM reports Success on every failed run (69 of 121).",
+    "world_is": "The leg that ran that document is gone; nothing triggers opal-bd-fees-download (it stays registered, inert, not Terraform-managed). Whether the OTHER BD SSM documents share the defect is MX-m-1 (a), in flight.",
+    "notes": "Disarm owner of Z-S47 was 2.0.0_SA_COO~O; the issuer is now 2.0.0_SA_COO~MI."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W11-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~11",
+    "surfaced_at": "2026-09-28T22:53Z",
+    "one_line": "A bare `aws ssm get-document --name <doc>` returns the DEFAULT version, not the $LATEST that every run executes: 2 of the 7 BD documents differ in logic (allocation v3 vs v4, transaction v1 vs v2), and the default versions are the ones WITHOUT an exit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED 2026-09-28 by list-document-versions and get-document run twice per document, once bare and once with --document-version $LATEST, over the 7 BD documents (denominator 7). Content differs on 3 of 7: allocation (default v3, $LATEST v4), transaction (default v1, $LATEST v2), and fees (both v1, bytes differ only in non-ASCII comment characters -- not a logic difference). The other 4 read equal.",
+        "THE DIFFERENCE IS THE PROPERTY UNDER MEASURE. Default allocation v3 and default transaction v1 end their download and merge steps in `|| true` / `|| echo WARNING` and contain no exit statement; $LATEST v4 and v2 capture DOWNLOAD_RC and MERGE_RC and end `exit 1`. Runs use DocumentVersion $LATEST (list-commands, field DocumentVersion). All 21 allocation runs and all 21 transaction runs in the retention window read SSM Status Failed with a log that records failure, which matches $LATEST and contradicts what the default version would predict.",
+        "A census of exit honesty that reads the documents with the bare verb would have graded allocation and transaction as silent-failure documents like fees, and would have been wrong on the population it names."
+      ]
+    },
+    "spec_asserts": "MX-m-1 (a): 'read its content (aws ssm get-document). Name the failure branch and whether it ends in a non-zero exit.' The verb as written returns the default version.",
+    "world_is": "The default version and the executed version differ on allocation and transaction, and the executed one is the honest one. This measure used --document-version $LATEST and recorded the version numbers beside each finding.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT FIXED. Nothing is changed: the fix, if any, is either a note in the census recipe (always pass --document-version) or promoting v4/v2 to default so the two views agree. Neither is this cell's. Item 5's census should name the version it read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W11-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~11",
+    "surfaced_at": "2026-09-28T22:53Z",
+    "one_line": "The daily BD transaction merge does NOT join bd_assets_dim on the EC2 run path: in 10 of 10 runs (of 21 in the SSM retention window) that processed a new file, the log says '[enrich] bd_assets_dim unavailable; skipping cusip join', and all 10 wrote a 0-row partition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: 21 transaction-download logs (S3 versions pinned by VersionId, one per SSM run, dates 2026-08-31 to 2026-09-28 UTC). 11 logs say 'No new files to process'; 10 say 'Found 1 new files' and each of those 10 carries the same '[enrich] bd_assets_dim unavailable; skipping cusip join' line and 'OK: TRANSACTIONS_DAILY_<date>.xlsx -> silver/transactions/<date>.parquet (0 rows)'. 10 of 10; 0 of 10 carry an '[enrich] cusip: N/M non-null' line.",
+        "THE ONLY OBJECT WRITTEN TO silver/transactions/ AFTER the MX-s-6 dim version (pdoQY5Waj63_, 2026-09-28T06:22:06Z) is silver/transactions/2026-09-28.parquet, VersionId fgzzqFZOaFvMw0_B7vCk3ZdnQ1Wx3Kkz, 2026-09-28T21:54:42Z, 34,882 bytes, 0 rows, 73 columns, no cusip column (pyarrow metadata num_rows=0). 1 object of 2,405 versions under the prefix.",
+        "THE DEPLOYED SCRIPT (s3://opal-data-bd/scripts/merge-daily-incremental.py, latest version MF9tYCkR4uu_S0xMVcE4yu1ZPYUNonRm, 2026-06-29, 43,492 bytes) is NOT the repo file (59,077 bytes). Its load_bd_assets_dim prints 'load failed: <err>' on an exception and returns None SILENTLY only when `boto3 is None` (deployed lines 97-98), or the dim is empty. No 'load failed' line appears in any of the 10 logs, so a silent path is the one taken. That boto3 is not importable on the host is INFERRED, not measured: no command was run on the instance.",
+        "THE dim CONTENT ITSELF IS NOT THE PROBLEM: the cusip mapping is identical across the 4 dim versions that carry the 12,141-asset universe (pdoQ, bSQW, kitt, qcSd: 0 changed of 12,141 common asset_ids on each pair compared), and the 42 deltas versus the predecessor (4dfwF, 10,937 asset_ids) are all value-to-other-value changes, with 1,204 asset_ids added."
+      ]
+    },
+    "spec_asserts": "MX-m-1 (b) states that merge-daily-incremental.py:57 joins silver/bd_assets_dim.parquet for cusip enrichment on every daily run.",
+    "world_is": "On the run path the SSM document uses, the join is skipped on every run that processes a file. The repo's :57 constant is a real join, in a file the EC2 documents do not run. No silver transaction row written after the dim rewrite carries any dim-derived cusip, because none was written with rows at all.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "WHY ARMED: the day the forwardfill file carries rows, the enrichment stays off on this path and cusip lands null (or whatever the file carried) with a WARN-shaped log line and rc 0. The answer to the MX-m-1 (b) count is 0 of 0 and it is a zero with a named cause, not evidence the 42 deltas propagate. NOT FIXED: no cell covers the deploy of the repo script or the host's Python environment."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W11-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~11",
+    "surfaced_at": "2026-09-28T22:53Z",
+    "one_line": "The portal submodule is an empty directory in this worktree, so the served-page arm of the (d) reader census could only be measured over infra/aws/lambda and the repo's gold scripts, not over portal source.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`ls portal` in the worktree prints nothing and `comp-find ... -- portal/src` returns 'pathspec(s) do not exist'. The first-party reader census therefore covers every file in the worktree corpus (43,870 files scanned in corpus=all) including the Lambda sources under infra/aws/lambda/v2_portal, and excludes the portal repository.",
+        "Within that population the only code that names gold/canonical/lots_unrealized or lots_realized is B_02 (producer), B_03 and C_05 (readers), lib/s3_layout.py (key builders), and gold_freshness_config.yaml (a declared artifact)."
+      ]
+    },
+    "spec_asserts": "MX-m-1 (d): 'Find every reader in the repo with comp-find, and print the denominator. Name the LIVE ones: a scheduled job, a Lambda or a served page.'",
+    "world_is": "The repo is not fully present in a worker worktree: the portal gitlink is not checked out. A served page that reads these keys directly from portal code would not appear.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: served pages in this estate read through the v2_portal Lambdas, which were searched. The exclusion is stated in the (d) record rather than hidden."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S50",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W11-S1"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W11-S1 as an instrument trap, not a live hazard: every BD trigger runs its SSM document at $LATEST, so a read of the DEFAULT version (a bare get-document) is the wrong object. Standing issuer rule for this project's cells: read and grade BD SSM documents at --document-version $LATEST, and record DefaultVersion and LatestVersion beside the finding.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W11-S1 (worker ~11): allocation default v3 vs $LATEST v4 and transaction default v1 vs $LATEST v2 differ in logic; the executed $LATEST versions carry the honest exit, the defaults do not (org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (a)).",
+        "MX-s-12's acceptance run ssm 16d855de reads DocumentVersion $LATEST (worker ~8 proof); asset-dim is v4 as both DefaultVersion and LatestVersion, so the one document this project deploys is not split."
+      ]
+    },
+    "spec_asserts": "Z-W11-S1 (ARMED): a reader grading a BD document by `get-document` without a version reads a version the schedule never runs.",
+    "world_is": "No run executes a default version; what runs is honest on the four daily Playwright documents (SSM Failed on failure). The hazard is a mis-read by a seat, which this rule and the round-3 battery's practice close. Aligning DEFAULT to $LATEST on allocation/transaction is carried to the round-3 L10 enrichment list, not acted on here (those documents are the dead Playwright legs, see Z-S51).",
+    "notes": "No other seat's cell in flight reads those two documents."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S51",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W11-S2"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W11-S2 by placement, not repair: the daily BD transaction merge skips the bd_assets_dim cusip join on the EC2 path and wrote 0-row partitions on 10 of 10 file-processing runs. That is a PRE-EXISTING state of the transaction feed (its Playwright download fails 21 of 21), not one this round created or can worsen; the repair is a DS-lane silver cell routed to the round-3 L10 analysis with the measurement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W11-S2 (worker ~11): '[enrich] bd_assets_dim unavailable; skipping cusip join' in 10 of 10 runs of 21 in SSM retention that processed a file; all 10 wrote a 0-row partition (org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (b)).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~11/MEASURE_BATCH_ROUND3.md (a): opal-bd-transaction-download (and allocation, realized, unrealized) SSM Failed on 21 of 21 runs -- the Playwright portal leg BD's MFA broke, the same class Z-S42 had for asset-dim."
+      ]
+    },
+    "spec_asserts": "Z-W11-S2 (ARMED): the dim MX-s-6/MX-s-12 keep current is joined into silver transactions daily (merge-daily-incremental.py:57), so dim cusip changes reach silver.",
+    "world_is": "The join is skipped on the path that runs, and the transaction feed itself produces no rows while its download fails. The dim's currency does not reach silver transactions today. The question the analysis must place: is BD transaction data flowing by any other producer (a REST runner, as fees has), and if not, the transaction leg needs the MX-s-10/MX-s-12 port. Both are DS/AE-lane cells, not this round's cut.",
+    "notes": "Routed as a candidate enrichment item, with Z-W11-S1's DEFAULT/$LATEST alignment, to 1.0.0_SA_CTO~O through the round-3 slug. No served output moves by this row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W8-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~8",
+    "surfaced_at": "2026-09-28T23:28Z",
+    "one_line": "MX-i-4 census: 4 LIVE readers of opal/bd/credentials remain on bd-exporter-ec2-role (the allocation, realized, transaction and unrealized SSM documents), so the grant cannot be removed; each reads the secret daily and then fails at the portal login.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live grant side: 16 policies on bd-exporter-ec2-role scanned (15 inline + 1 attached); the ONLY grant of opal/bd/credentials-* is inline AdditionalPermissions stmt 0 (5 Resource elements). The role is held by instance profile bd-exporter-profile on bd-allocations i-0800437d1dbb0b5cc, bd-transactions i-00c7568bc510f7423, bd-assets and bd-fees (both stopped).",
+        "Live readers, each with an ENABLED trigger and a run in the last 24h: opal-bd-allocation-download (bd-allocation-pipeline-trigger cron(0 22), 21 of 21 Failed, latest 22:00:04Z), opal-bd-realized-download (bd-realized-pipeline-trigger cron(45 21), 21 of 21 Failed), opal-bd-transaction-download (bd-transaction-pipeline-trigger cron(53 21), 21 of 21 Failed), opal-bd-unrealized-download (bd-unrealized-pipeline-trigger cron(38 21), 21 of 21 Failed). Each document line 22 runs 'aws secretsmanager get-secret-value --secret-id opal/bd/credentials'.",
+        "The read succeeds: the latest run output of all 4 contains 'Fetching credentials from Secrets Manager...' with no AccessDenied, then 'Phase 1: Login' and a Playwright TimeoutError waiting on bd3.bdreporting.com. Failed status is downstream of the read. Removing the Resource element would move the failure point to the read step.",
+        "Not readers: opal-bd-asset-dim-download v4 (REST), advi-49f-chain-dispatch, opal-bd-49f-session-fetch, opal-cot-bd-session-fetch. DEAD: opal-bd-fees-download (its trigger was deleted by the MX-s-12 apply; last run 2026-09-25), force-alloc-download and force-txn-download (not registered live, get-document rc 254). Full census: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~8/CENSUS_MX-i-4.md.",
+        "AC1 (i4.AC1.sh) reads 'statements read 4; resources naming opal/bd/credentials: 1 -- RESULT: FAIL -- exit=1'; AC2 reads PASS. Nothing was changed, no ledger opened, no plan or apply run (order step 3)."
+      ]
+    },
+    "spec_asserts": "TO MX-i-4 preflight and cell text: the Playwright portal legs that read opal/bd/credentials are the ones MX-s-12 retires or ports, so a census after MX-s-12's acceptance would read 0 live readers.",
+    "world_is": "MX-s-12 retired only the fees schedule leg and ported only asset-dim. The allocation, realized, transaction and unrealized documents (MX-m-1 measured 21 of 21 Failed each) still run on daily schedules, read the portal login secret every run and then time out at the portal login. The condition for removing the grant is not met.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED because the four schedules fire again tonight and every weekday: a daily automated login attempt against the Black Diamond portal with the live password, failing on the MFA timeout, for as long as the four triggers stand. Disarm is a decision on those four documents (retire the four trigger rules or port off the portal login), which is not this order's. Once the four triggers are gone, MX-i-4 can be re-run: the census is repeatable from the CENSUS file's method, and the one-element removal is the one change the plan should show (0 add, 1 change, 0 destroy). The secret is untouched."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S52",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-28T23:36Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W8-S3"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W8-S3 by placement: the four BD Playwright daily legs (allocation, realized, transaction, unrealized) still read opal/bd/credentials and log in to the BD portal every weekday, failing 21 of 21 at the MFA-broken login -- a standing state since 2026-06-23, which this round neither created nor can worsen. MX-i-4 is superseded (the grant stays while live readers exist) and the retire-or-port of those four legs is carried to the round-3 L10 analysis as the one cell that unblocks both MX-i-4 and the transaction feed (Z-S51).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~8/CENSUS_MX-i-4.md: 16 policies read on bd-exporter-ec2-role; only inline AdditionalPermissions grants the secret; 4 LIVE readers (each document's line 22 fetches it; triggers ENABLED at 21:38/21:45/21:53/22:00Z weekdays; 21 of 21 Failed each, the latest runs reaching 'Phase 1: Login' then a Playwright TimeoutError, no AccessDenied).",
+        "MX-s-10/MX-s-12 is the precedent for the port: the asset-dim leg moved off the portal login to the REST pull on the 49F session and passed its scheduled acceptance DELTA=0 at 22:11Z today."
+      ]
+    },
+    "spec_asserts": "Z-W8-S3 (BLOCKING, ARMED): MX-i-4's removal cannot proceed while 4 live documents read the secret; each weekday they make an automated portal login with the live password that fails.",
+    "world_is": "Refusing AC1 was correct (order step 3). Nothing about the grant or the logins changed this round. Whether 5 failed logins per weekday risk an account lockout on the BD portal is UNMEASURED and is named here for the analysis, not assumed either way.",
+    "notes": "Routed to 1.0.0_SA_CTO~O with the round-3 slug: one candidate cell per leg or one batched port on the MX-s-12 pattern, after which MX-i-4 re-runs unchanged."
+  },
+  {
+      "id": "NFRA_MCPINDEX-Z-W10-S2",
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~10",
+      "surfaced_at": "2026-09-29T01:50Z",
+      "one_line": "MX-r-4 PHASE B step 8 cannot start from the pin's release tree: safe-ec2-deploy.sh's HALT-GATE admits a worker only while a non-terminal task order issued_to it is at HEAD of the calling tree, and mx-rel4 (HEAD 3371f18803, cut at d287ffb346) carries none; exit 3, before any upload.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~MI",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "safe-ec2-deploy.sh run from /c/tmp/mx-rel4 at 2026-09-29 ~01:4xZ, twice: 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', DEPLOY-EXIT=3, both times after 'OK: Pre-deployment checks passed' and before any S3 upload or SSM call. First run resolved serial 2.0.0_SA_COO~MI (the shared root's session serial file); after provisioning the worker's own serial file (gitignored org/mcp/sessions/<session-id>.serial, the mechanism halt-gate-check.sh's own comment names) it resolved 0.9.0_WK_NFRA_MCPINDEX~10 and was refused for the reason quoted: a spine-v3 worker is admitted only while a NON-TERMINAL task order under <CODE> is issued_to it at HEAD of the calling tree.",
+              "Precedent for the workaround: commit 54e26d66a0 (NFRA_OPALAI OA-r-1) is a DEPLOY-ONLY commit, CLOUD tree with infra/aws/ec2/opal-gateway replaced by the release commit's, never merged, 'so the halt gate finds the worker's task order at HEAD'. That route changes the deployed commit hash, and both never-widen halves and G-A were signed on hash 3371f18803.",
+              "State at the block: nothing uploaded (latest artifact still 402043 B, LastModified 2026-09-29T00:44:48Z), no SSM deploy command, host .env still 'ycharts opal_portal globgrph'. Ledger nfra-mcpindex-r3-gateway-enable is OPEN (entry+sentinel committed a05831a52b, L4 closed, L1-L3 open, 4 h window)."
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO MX-r-4 step 8 and the signed GO: deploy from the RELEASE worktree /c/tmp/mx-rel4 with ITS scripts, `bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`, on pin 3371f18803; the issuer measured N1 (HEAD 3371f18803, mcportal a3bff71, 0 status lines) as the guard.",
+      "world_is": "The wrapper's halt gate refuses the pin's own tree for a worker, so the act as written cannot run. The two ways forward are the issuer's and the signers' to choose, not the worker's: (a) a DEPLOY-ONLY commit on top of 3371f18803 that adds the task order (as OA-r-1 did), whose gateway directory equals the pin's, at the cost of a new deployed hash and a delta re-sign; (b) the issuer runs the deploy from a tree where the gate admits it. HALT_GATE_REPO_ROOT is set unconditionally at safe-ec2-deploy.sh:57 and the gate was not overridden.",
+      "notes": "MX-r-3 and OG-s-1 ran this wrapper from their release trees; what admitted them is not recorded in this file set (not measured here). Nothing was deployed, so nothing is half-landed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S53",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T03:03Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W9-S1"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W9-S1: the live BD value at org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/CARRIER_CENSUS.md :3408/:3412 is replaced by the Secrets Manager placeholder at HEAD, under the CTO ruling @8ed938b2d7 (the redaction set is 8 files) and MX-s-13 A1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker ~9 commit 8e59257146, drained 720eb2de32: 2 lines changed in that file, value count 2 -> 0 (worker count-only check); row LGIC_ENFORCE-Z-W9-S1 filed in LGIC_ENFORCE's channel.",
+        "Issuer shape scan on CLOUD: 0 literals in the file after the detector's escaped-quote fix, with positive control 1/1 on the pre-redaction bytes @3c9a7dce69 (5498ce662d)."
+      ]
+    },
+    "spec_asserts": "Z-W9-S1 (ARMED): the live value sits in a tracked file outside the 7-file set.",
+    "world_is": "At HEAD the 8-file set carries 0 literals by shape; the CVO's fingerprint scan (MX-s-13 J1, L8) is the oracle. History is not scrubbed and the credential is not rotated -- both Andrew's (rotation LATER; no scrub), so Z-S29/Z-S31 stay open on rotation.",
+    "notes": "Issuer disarm owed since the A1 grade; recorded at the round-3 close."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T05:58Z",
+    "one_line": "MX-d-4 leaves the order silent on WHICH member of a family row the opal-internal principal resolves: the worker chose `global` (the catalog's own member key), for both next_tool args and the served_written_at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Order item 1 names {scope: global} for mp.01 only as an example and item 2 says 'HEAD the member the principal resolves'; an opal-internal principal has no firm segment. app/integrations/opal_discover/integration.py _family_member(): the member is `global` when the catalog's rows_by_key holds that member key of the same row, else the family is unresolved (args_missing + served_written_at absent, error_class family_member_unresolved). A firm principal resolves its own firm segment from its already-substituted key.",
+        "Tests test_served_written_at_absent_with_error_class and test_next_tool_names_purpose_built_tool_else_http_route pin both branches on a synthetic catalog."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order names next_tool mdpf_get_aum_metrics {scope: global} for mp.01 and a HEAD of 'the member the principal resolves'.",
+    "world_is": "Read literally, `global` is the only member all three mp.* family rows share with an opal-internal principal; the worker generalised it to any family axis. A different opal-internal member choice (a firm) would change served_written_at's HEAD target, not its claim.",
+    "notes": "Filed as a form-level surprise (the order did not say); the choice follows the AC1 expectation."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T05:58Z",
+    "one_line": "R-14 makes discover() do live S3 HEADs by default, so every caller that does not inject `head` (the MX-v-6 routing harness's plain run, AC2, any in-process probe) now reaches S3 on the caller's own AWS credentials; the order's declared egress ('one S3 HEAD per servable row') covers it, but the harness is READ-ONLY and is unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "d4.AC3.sh plain run of tests/routing/run_routing.py: rc=0 ROUTING 23 of 27, with HEADs issued for each servable match; d4.AC2.sh: 9 of 9 servable rows carried served_written_at measured on this box (credentials present).",
+        "The HEAD client uses connect_timeout 3 s, read_timeout 5 s, max_attempts 1, so with no credentials or network the field reads absent with error_class and the answer is still returned (never an exception); that failure arm is pinned by test_served_written_at_absent_with_error_class with an injected raising head."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order item 3: 'The HEAD is injectable, so a test needs no network.' Preflight: EGRESS CLASS NONE beyond Opal's own AWS.",
+    "world_is": "The default (non-injected) path reaches S3. Nothing was deployed and no gateway integration is enabled here; the routing harness's 27 questions each issue up to a handful of HEADs on a run.",
+    "notes": "For the analysis: a harness that must stay offline needs an injected head, which is the harness owner's edit, not this cell's."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T04:00Z",
+    "one_line": "The emitter refused in the worker worktree because the portal submodule directory is empty; the portal api sources were read from the pinned gitlink commit into the empty directory, untracked, to emit the catalog.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python workflows/atom_decomposition/emit_catalog_v02.py in worktree wk-mcpindex-r4-15 at 120ff9b27f printed: EMIT REFUSED: accessor index is EMPTY -- portal/src/api not readable (the portal submodule must be present); `ls -la portal` was an empty directory.",
+        "Workaround, no git state touched: `git -C <main workspace>/portal archive c3dd9ca96a3718afcde829ea9b010041d925f883 src/api | tar -x -C portal` (c3dd9ca96a is this worktree's own gitlink, `git ls-tree HEAD portal`). Re-emit with NO new entry changed only the built_at_git_head vintage lines (58924e1530 to 120ff9b27f), 2 lines: the emitter reproduces the committed catalog at that pin.",
+        "The extracted files are untracked contents of the gitlink path and are not committed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "TO MX-t-9 item 2: the catalog is re-emitted through the emitter in the worker worktree.",
+    "world_is": "The emitter needs portal/src/api, and a worker worktree carries the portal gitlink as an empty directory, so any cell that re-emits the catalog needs the same read of the pinned commit. The pinned commit was resolvable from the main workspace's portal repository.",
+    "notes": "The built_at_git_head line of the committed catalog now names 120ff9b27f (the vintage is git HEAD by the emitter's own contract)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T04:00Z",
+    "one_line": "The new tool mdpf_get_model_benchmarks is not named in app/data_entitlement.py INDEX_TOOLS, so data_entitlement.classify returns None for it and it is denied to every principal once portal_index is enabled; the file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/data_entitlement.py:113-116 (INDEX_TOOLS) names the three mdpf tools and the two opal_discover tools; TOOL_CLASSES is built from that set and classify() returns None for any other name (its docstring: 'denied to everyone until it is').",
+        "Measured in the worker's test: data_entitlement.classify('mdpf_get_model_benchmarks') is None while classify of the three mdpf tools is 'legacy' (tests/test_portal_index.py test_portal_tools_register_dormant_with_class prints it under -rP; that test no longer asserts it for the fourth tool).",
+        "The tool itself is complete: 11 of 11 tests in tests/test_portal_index.py pass, the in-process read of the served object equals it (EQUALITY_MX-t-9.md)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-9: 'Classify it SAFE, like the others' (destructive_ops SAFE is done in the module) and the tool answers at r5.J1.",
+    "world_is": "There are two classifications: destructive_ops (SAFE, in the module) and data_entitlement (a name set in a separate file that MX-t-9 does not own). Left alone, the release at MX-r-5 enables portal_index and the fourth tool is refused for every caller, so r5.J1 cannot read it. The one-line fix is adding the name to INDEX_TOOLS, in a cell whose paths include app/data_entitlement.py (MX-t-8 item 10 did the same for the first three); the existing tests/test_data_entitlement_guard.py may pin the set and need the same edit.",
+    "notes": "Two tests in tests/test_data_entitlement_guard.py (ogz1_ac05 KeyError 'unclassified', ogz1_ac08 route set) fail in this worktree; both concern registry report keys and server routes, not this cell's names, and were not baselined here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T06:26Z",
+    "one_line": "The MX-d-5 weak-match rule ('one plain lower-case single-word keyword is not a link') costs recall on real asks the 27-question harness does not hold: any dataset ask whose only channel link is one such word, e.g. 'what are the rates', now answers NOT_CATALOGUED unless a row's entity slug is in the ask.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integration.py _channel_selected(): weak = exactly one distinct keyword hit and it fullmatches [a-z]+. Harness before/after: 23 of 27 -> 27 of 27, dataset asks routed first 3 of 3 (d5.AC3), so the harness sees no recall loss; it holds only 3 dataset asks (Q05 ST, Q07 INT, Q22 S&P), all matched by an upper-case or multi-word keyword.",
+        "channel keywords that are plain single lower-case words and so are weak alone (measured from the catalog): e.g. rates, yield, fed, macro, treasury, inflation, factor, tilt, value, growth, quality, size, regime, momentum, volatility, news, peer, valuation, holdings, positioning, exposure."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order item 2: answer NOT_CATALOGUED when the ask's only link to a channel is ONE common word, grade recall on the harness's positive asks (AC3).",
+    "world_is": "The rule is exactly as ruled and passes AC1-AC3, but 'common word' is operationalised as 'a plain lower-case single-word keyword', which also silences a lone 'rates' or 'inflation'. The harness cannot measure that: 3 dataset asks of 27.",
+    "notes": "For the analysis: a recall set of real single-word dataset asks, or a corroboration test (a second ask word found in a candidate row's own text), would grade it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T06:26Z",
+    "one_line": "Regenerating the catalog needed portal/src/api extracted read-only from the pinned gitlink (Z-W13-S1 again), and the emitter has NO authored home for channel keywords: v0.1 channel fragments are re-emitted from the catalog's own current content, so MX-d-5 added an authored EXTRA_CHANNEL_KEYWORDS map to emit_catalog_v02.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "emit_catalog_v02.py before the change: 'EMIT REFUSED: accessor index is EMPTY -- portal/src/api not readable'; worktree portal/ is an empty gitlink dir. Fixed as Z-W13-S1 did: git archive of c3dd9ca96a src/api from the main checkout's portal into portal/ (untracked inside the gitlink path, not committed).",
+        "A baseline emitter run with no edit changed only the two build-stamp lines; with EXTRA_CHANNEL_KEYWORDS the diff is those 2 lines plus 6 keywords on market_regime_trending (S&P, S&P 500, SPX, stock market, equity index, equity indices)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order item 1: add the keywords 'through the emitter's source, never a hand edit of DATA_CATALOG.yaml'.",
+    "world_is": "The emitter had no source to add to for a channel's keywords, so the authored map is new emitter code (in the order's <paths>). A later emitter run keeps the keywords because the map is authored, and also because they are now in the re-read catalog.",
+    "notes": "The keywords sit on channel market_regime_trending, whose 2 rows are mkt.01 and mkt.02; keywords are a channel field, there is no row-level keyword."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W16-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~16",
+    "surfaced_at": "2026-09-29T06:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-i-5 PHASE A: none of the 4 BD Playwright documents proves DEAD on the ruled predicate -- each one's merge step (step 4) still writes into silver/<leg>/ and its manifest after LAST_NON_FAILING 2026-06-22; only the download step is dead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DEAD_PROOF_MX-i-5.md in org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~16/ (per-step table; S3 list-object-versions of forwardfill_v2/<leg>/, silver/<leg>/ and the 4 silver/incremental_*manifest.json keys, read 2026-09-29 ~05:30-06:30Z; the silver objects were read BY VersionId for num_rows via pyarrow).",
+        "Download step: 21 of 21 retained SSM runs per document Failed at $LATEST; 70 of 70 log objects dated after 2026-06-22 record failure per leg, and in every one of them Download exit code = 1 and Merge exit code = 0 (70 of 70 x 4 legs).",
+        "Merge step, objects written INSIDE the leg's own window (rule minute to +45 min) after 2026-06-22: silver allocations 9 (last 2026-07-03T22:00Z), realized 35 (35 of 35 read have rows>0, last 2026-09-28T21:46Z, 11,298 rows), transactions 35 (11 of 35 rows>0, last rows>0 2026-07-17; the 24 since are 0-row 34,882 B, last 2026-09-28T21:54Z), unrealized 277 (2 of 106 read rows>0, last 2026-07-02T21:41Z; 104 are 0-row 8,016 B rewrites of six stale partitions 2026-07-03..07-09, daily to 2026-09-28T21:40Z). Manifest writes in own window: 4 / 31 / 31 / 50, last 2026-07-03 / 09-28 / 09-28 / 09-28.",
+        "Input consumed by the merge from ANOTHER producer: forwardfill_v2/<leg>/ objects written 00:00-01:30Z (bd-49f-session-daily chain), 0 written in any leg's own window since LAST_NON_FAILING (0 of 47 / 180 / 788 / 47)."
+      ]
+    },
+    "spec_asserts": "MX-i-5 step 1 and R-15: each of the 4 legs is proven dead at two grains, the leg's own output prefix shows 0 objects since LAST_NON_FAILING, so all 4 rules are disabled (AC2 4 to change, AC3 OUTPUT_SINCE 0 x4). Issuer ruling of 2026-09-29 ~06:2xZ: dead is proven per DOCUMENT across EVERY step.",
+    "world_is": "The download step is dead in all 4; every document also runs a merge step (step 4) that succeeds (Merge exit code 0 in 70 of 70 runs per leg) and writes silver/<leg>/ partitions and its manifest. The attribution to the leg is INFERRED from time of day (the bronze producer lands at 00:00-01:30Z, the leg fires 21:38-22:00Z), not from a principal: no S3 data-event trail was read. By the ruled predicate all 4 read LIVE. Row-bearing own-window silver writes: realized through 2026-09-28; transaction through 2026-07-17; allocation and unrealized through 2026-07-02 (allocation has no own-window write of any kind after 2026-07-03T22:00:50Z). Nothing was changed: no Terraform edit, no plan.",
+    "notes": "Which of the 4 the issuer treats as disarmable on the 0-row-only evidence (allocation, unrealized) is the issuer's ruling, not measured here. The daily failed login and secret read stay live until that ruling, which is why the row is ARMED."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S54",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T06:52Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W16-S1"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W16-S1 by ruling: no BD daily document is dead (each merge step writes silver), so none is disabled (MX-i-5 superseded, 0 rules changed). The daily failed portal logins that Z-W8-S3 names are removed by STRIPPING the Playwright step and the credential read from all 4 documents while keeping each merge (MX-s-14 A2), under one never-widen ask.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~16/DEAD_PROOF_MX-i-5.md (drained 09c0663ca1): the download step is dead in 4 of 4 (70 of 70 logs since 2026-06-22 exit 1); the merge step succeeds 70 of 70 and writes silver/<leg>/ (realized 35 of 35 row-bearing).",
+        "1.0.0_SA_CTO~O confirmed the per-document reading for the transaction leg (msg 26471); MX-s-14 A1's merge-only test run cdb144c8 Success, 0 vendor calls."
+      ]
+    },
+    "spec_asserts": "Z-W16-S1 (ARMED): the 4 legs cannot be disabled because each one's merge is live; the order's premise does not hold.",
+    "world_is": "Nothing was applied. The hazard, the daily failed logins and the secret read, stands until MX-s-14 PHASE B publishes the stripped documents under its never-widen halves. That act is sequenced this round.",
+    "notes": "MX-i-4 (least privilege on opal/bd/credentials) can re-run after MX-s-14 PHASE B removes the 4 readers."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T05:40Z",
+    "one_line": "The platinum/etfs catalog row has no certified rectangle behind it: it is an AUTHORED row (a channel block and one artifact row written in the emitter), so its semantics are worker-authored and not CVO-certified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/emit_catalog_v02.py builds every EMISSION_MAP row from resolved certified substrates; the ETF page is not among PROGRAM_UNITS' certified runs (only json/positioning is), so no view carries platinum/etfs. The emitter's own capital_markets channel is the precedent for an authored channel block.",
+        "The new AUTHORED_CHANNELS / AUTHORED_ARTIFACTS blocks cite each field to a live get-object read (VersionId yBqGKuVXd0Fc3LLZDBV8ojJ_ONfgTbUY) or to data/etfs/scripts/gold/etf_positioning_publisher.py and portal/src/api/portal-proxy.ts, and the row's semantics_provenance says WORKER-AUTHORED, NOT a CVO-certified rectangle.",
+        "Also edited: the pos.01 row's disambiguation (a mutual L-1 pair with the new row); nothing else in an existing row changed (git diff of the catalog: the header and version lines, the new channel, the new portal_datasets entry and that one disambiguation line)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 item 1: 'add the catalog row with its verdict, keywords and caveats, through the emitter's source'.",
+    "world_is": "The verdict (serve-with-caveat, ruled on Andrew's word @dc75ddbe32), the firm (opal-internal: the key carries no scope segment, so a firm principal cannot be scoped by key) and the caveats are the worker's reading of the object and the producer's own docstring, not a certified cell. If the CVO wants the ETF page certified like the others, that is a program-unit run, and the authored block would then be replaced by the lifted row.",
+    "notes": "The channel keywords are ETF, ETF holdings, ETF positioning, the four tickers and other multi-word or upper-case forms; ETFs (mixed case, one word) is also present and may be read by MX-d-5's weak-match rule as a plain single-word keyword. MX-d-5's rule is not in this worktree, so d5.AC2 was graded here only on the pre-rule matcher (first match is the ETF row)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T05:40Z",
+    "one_line": "Baseline: test_ogz1_ac05 and test_ogz1_ac08 fail on CLOUD a6c17f4bcf itself; test_portal_grant's two asker tests fail when run after other gateway test files, on the same baseline.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git archive a6c17f4bcf infra/aws/ec2/opal-gateway extracted to the worker scratch (no edit of mine in it): `python -m pytest tests/test_data_entitlement_guard.py` reads `2 failed, 10 passed`, FAILED test_ogz1_ac05 (KeyError 'unclassified') and test_ogz1_ac08 (route-set assertion, the extra routes '/', '/api/admin', '/assets/{path:path}').",
+        "The same command in the worker tree with this cell's edits reads the same two failures and no others in that file, so the cell did not cause them.",
+        "test_portal_grant.py::test_asker_portal_scope_admits_granted_channel and ::test_asker_portal_scope_refuses_other_channel fail in a combined run (test_opal_discover then test_portal_grant) on the pristine extraction AND on the worker tree, and pass 7 of 7 when the file runs alone in the worker tree: an order dependence at baseline. On the pristine extraction the file alone shows two admin tests failing, which is an artifact of the extraction (it carries no workflows/ directory)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 A2: 'baseline test_ogz1_ac05/ac08 on CLOUD and report whether they also fail there'.",
+    "world_is": "Both fail on CLOUD at a6c17f4bcf. They were not fixed (the order says not to unless the cell caused them). ac05 expects a registry report key 'unclassified' that the report does not carry; ac08 pins a route set that lacks three routes the server now has."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-29T06:10Z",
+    "one_line": "BLOCKING: the naming limb (LGIC_ENFORCE DEC-6, ENFORCE) refuses the MX-t-10 commit because the served key of the ETF object is a NEW out-of-pattern S3 literal in three files inside the order's paths; the finished work is uncommitted in the worktree and preserved as a patch.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... on the MX-t-10 paths printed: ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged. NAMING REFUSE infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:402 (the ETF object's key) -> etfs/{scope}/platinum/positioning_data.json, why: NEW and OUT-OF-PATTERN as S3Key: REFUSE; the same for workflows/atom_decomposition/emit_catalog_v02.py:54 (the prefix) and :70 (the key); and emit_catalog_v02.py:54 also flags the pre-existing mdpf prefix, 'EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it', because the widening edits that same line. NAMING-GATE: REFUSE 4 graded.",
+        ".tools/naming-gate.py header: 'NEW and OUT-OF-PATTERN -> REFUSE'; NOT graded are prose, comments, docstrings, */tests/* and the record trees org/ and docs/; a string is NEW when absent from the file's pre-image at HEAD. The catalog must name the served key (the gate indexes rows by it), so there is no conformant spelling of it: the canonical form the grader prints, etfs/{scope}/platinum/positioning_data.json, is not where the object is served.",
+        "CLAUDE.md rule 30: a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; a deliberate departure is an R20 register entry Andrew acknowledges. Both are outside this order's paths, and no assembled-string or comment-marker workaround was used.",
+        "Every criterion is met on the worktree: AC1 5 of 5 PASS exit=0 and AC2 16 passed, 0 failed PASS exit=0 (invocations run before the commit attempt); the proof instance checks VALID rc=0; the equality read holds (EQUALITY_MX-t-10.md)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 A1: 'Andrew widened the catalog to platinum/etfs; the catalog version bump carries his verbatim ... through the emitter's header text', and item 5: 'Run AC1 and AC2, and commit'.",
+    "world_is": "The widening Andrew gave cannot be written into the catalog under the naming limb as it stands: any commit that adds the first literal of an out-of-pattern legacy S3 key is refused, and the catalog exists to carry exactly such literals. The mdpf keys got in before the limb was enforced (they grade EXISTING and only warn). The candidate is complete and uncommitted: 5 modified files and 1 new one under infra/aws/ec2/opal-gateway and workflows/atom_decomposition, all in this worktree, and preserved verbatim as deliverables/0.9.0_WK_NFRA_MCPINDEX~15/MX-t-10.candidate.uncommitted.patch (a record file, so never graded, and not a substitute for the commit).",
+    "notes": "Ways forward, all the issuer's or the CTO's: (a) an R20 register entry (or a registry row) that names platinum/etfs/positioning_data.json as a served legacy address, after which the same commit passes; (b) a ruling that the emitter's ALLOWED_PREFIXES and the generated catalog are exempt from S3Key grading; (c) the issuer lands the candidate through a route the limb admits. The worker used none of them and did not touch the limb, the enforce file or any registry."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S55",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T07:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W15-S2"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W15-S2 in source: app/data_entitlement.py INDEX_TOOLS now names mdpf_get_model_benchmarks (worker ~15 commit 5a450314de, drained 18517e64cc), so classify() no longer denies MX-t-9's tool to every principal. The served gateway carries neither the tool nor the entitlement until MX-r-5 releases both together, so the hazard never reached a caller.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/data_entitlement.py:115 on CLOUD @18517e64cc names mdpf_get_model_benchmarks (native Grep read).",
+        "Issuer re-grade on CLOUD @18517e64cc: t9.AC1 PASS, t9.AC2 PASS (round4/checks)."
+      ]
+    },
+    "spec_asserts": "Z-W15-S2 (ARMED): the new portal_index tool is absent from INDEX_TOOLS, so the entitlement layer denies it.",
+    "world_is": "Fixed on CLOUD, not yet served. MX-r-5 ships the tool and its entitlement in one release (no ETF tool, per 1.0.0_SA_CTO~O msg 26487); r5.J1 grades the live call.",
+    "notes": "The MX-t-10 ETF patch stays uncommitted and byte-frozen pending the LGIC ruling on Z-W15-S5."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T04:20Z",
+    "one_line": "MX-s-14 step 1 names a build-time pin `_transaction_rest_pin.py`, but a generated pin needs a target in lib/opal_naming.py (VIEWS, TARGET_REGISTRY_KEYS, BLOCKS), and lib/ is outside this cell's <paths>; the module was built on the existing generated asset-dim pin instead.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_naming.py:69-78 VIEWS lists the generated carriers, and only `_asset_dim_rest_pin.py` is a BD pin; :99-117 TARGET_REGISTRY_KEYS and :812-820 BLOCKS carry one row/one renderer each for it. `python lib/opal_naming.py generate --help` takes only --out and --target, with no way to name a new block, so a `_transaction_rest_pin.py` cannot be rendered without a lib/opal_naming.py edit.",
+        "TO MX-s-14 <paths> (worker face lines 66-76): `_transaction_rest_pin.py` is granted, `lib/opal_naming.py` and `infra/logic/registry/` are not; CLAUDE.md rule 30: a builder refusal is a registry row to add, never a hand-typed workaround.",
+        "comp-pipescript deployed --firm bd at 2026-09-29 ~04:1xZ: `[BRONZE] _asset_dim_rest_pin.py MATCH` (the pin the instance already reads)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-s-14 step 1: the module's names are resolved at BUILD time (the MX-s-11 pin), written to data/black_diamond/scripts/bronze/_transaction_rest_pin.py, with no lib.opal_naming import at run time.",
+    "world_is": "No generator target exists for a transaction pin and this cell cannot add one. pull_bd_transaction_rest.py therefore loads scope/vendor/bucket from the already-published generated `_asset_dim_rest_pin.py` (staged beside it by the document) and carries two legacy literals, the forwardfill prefix and `TXN_DAILY_` stem, copied from download-daily-transaction.ts and merge-daily-incremental.py; no pin file was hand-typed. A lib/opal_naming.py target (with its registry row) is the DS/LGIC lane's commit; the module's PIN block is the only line to swap after it.",
+    "notes": "Naming gate is WARN today (LGIC_ENFORCE); the departure is stated in the module docstring."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T04:21Z",
+    "one_line": "MX-s-14 step 3 (the one ad-hoc test run, and step 1's discovery read) cannot start: the instance stages the module from s3://opal-data-bd/code/bronze/, publishing it there is the DS lane's safe-deploy, and that lane is not this worker's; stopped after steps 1-2 as instructed, with no vendor call made.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLAUDE.md rule 13: DS owns commit->QA-deploy for data/*/scripts/{gold,silver,bronze}/*.py including `aws s3 cp`; enforced by .tools/safe-deploy.sh.",
+        "TO MX-s-14 step 2: 'Publishing the module and its closure to where the instance reads is the DS lane's safe-deploy, the MX-s-11 pattern'; precedent MX-s-10 PHASE A step 1 ('file a BLOCKING row naming it').",
+        "comp-pipescript deployed --firm bd at ~04:1xZ lists no pull_bd_transaction_rest.py (the asset-dim pin is MATCH); the edited document stages `code/bronze/pull_bd_transaction_rest.py` and `code/bronze/_asset_dim_rest_pin.py`.",
+        "Vendor calls made by this worker: 0 (the session secret is the instance role's; the module was exercised offline against synthetic workbooks only)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-s-14 step 3: run the edited commands once via ssm send-command and record the bronze object's row count, date range and the vendor call count; step 1: record the one discovery read of the export template.",
+    "world_is": "The commands stage a module that is not published. The unblock is one DS-lane publish of exactly one object, `code/bronze/pull_bd_transaction_rest.py` (this branch's bytes), beside the existing `_asset_dim_rest_pin.py` already MATCH; then the step-3 run can be re-issued. Not measured: the template's dateRangeType and stored window (the module keeps the persisted template's own window, as the Playwright leg did, and refuses loudly if the roster has 0 or more than 1 name match); whether the instance role may write the module's `staging/mx-s-14/` test prefix.",
+    "notes": "The module has a --stage flag that lands the test object under staging/mx-s-14/transactions/ so the test moves nothing the silver merge reads."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T04:22Z",
+    "one_line": "The bronze prefix this port must reproduce already holds a second family of names: 98 TRANSACTIONS_DAILY_* keys (2026-06-24..2026-09-29, the latest two 4.3 KB stubs) beside the 97 TXN_DAILY_* keys the Playwright leg wrote (last 2026-06-18), so the port writes a TXN_DAILY_ key next to another producer's TRANSACTIONS_DAILY_ key for the same day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "`aws s3 ls s3://opal-data-bd/forwardfill_v2/transactions/` at 2026-09-29: 196 lines = 98 TRANSACTIONS_DAILY_*, 97 TXN_DAILY_*, 1 `_complete/` prefix; TXN_DAILY_ ends 2026-06-18 (LastModified 2026-06-19), TRANSACTIONS_DAILY_ begins 2026-06-24 (LastModified 2026-07-06) and runs to 2026-09-29; 09-28 and 09-29 are 4356 and 4355 bytes.",
+        "data/cot/scripts/bronze/cot_bronze_ingest.py:9 and :348 name that pattern (`forwardfill_v2/{table}/{TABLE}_DAILY_{date}.xlsx`, `TRANSACTIONS_DAILY_{run_date}.xlsx`) as its landing key; that the objects in opal-data-bd are its writes is INFERRED from the name, not measured (its BD_S3_BUCKET default is opal-data-cot).",
+        "data/black_diamond/scripts/silver/merge-daily-incremental.py:182-216: the merge lists every .xlsx under the prefix, keys its skip on the object's ETag, and already documents 'the historical TXN_DAILY_* -> TRANSACTIONS_DAILY_* rename'; it dedups on transaction_id against 30 days of silver partitions."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-s-14 step 1 and bound 1: the pull writes the SAME bronze key(s) the Playwright leg wrote, so the downstream merge is unchanged, and there is one producer before and after.",
+    "world_is": "The Playwright key (TXN_DAILY_<date>) is what the module writes, as ordered. Whether the merge's transaction_id dedup makes a second same-day file harmless, and whether the TRANSACTIONS_DAILY_ producer is the cot ingest or another 49F path, are not measured here; the count of silver rows a TXN_DAILY_ landing would add on top of a TRANSACTIONS_DAILY_ file for the same date is the number the issuer needs before PHASE B.",
+    "notes": "Nothing was written by this worker; the test run's --stage flag keeps the test object out of the merge's prefix."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T06:50Z",
+    "one_line": "Rows Z-W17-S1 (pin target needs lib/opal_naming.py) and Z-W17-S2 (DS-lane publish of the module) LAPSE: MX-s-14 amendment A1 drops the new REST module, and pull_bd_transaction_rest.py is removed from this branch in a git rm commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment A1 of TO MX-s-14 (2.0.0_SA_COO~MI, CLOUD @a56cbfd460, confirmed by 1.0.0_SA_CTO~O): 'Drop step 1 (the new module) ... Rows Z-W17-S1 and Z-W17-S2 lapse with it'; a new REST pull writing TXN_DAILY_ would be a second writer beside bd-49f-session-daily's TRANSACTIONS_DAILY_ (this worker's row Z-W17-S3).",
+        "Issuer message to this worker: remove pull_bd_transaction_rest.py from the branch in a commit so the drain carries no unused writer. Module lifetime on the branch: added 16d142659d, removed in this branch's next commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rows Z-W17-S1 and Z-W17-S2 (both BLOCKING, INERT) asserted a pin target and a DS-lane publish were owed for the new REST module.",
+    "world_is": "Neither is owed: no module is published or used. The pin target (S1) and the publish (S2) are not needed; the module named superseded in ANNOUNCE_MX-s-14.md. The step-3 test ran instead as the edited command list, merge only, with 0 vendor calls.",
+    "notes": "S1 and S2 stay in the file (append-only); this row is their lapse record. Their disarm_owner stays 2.0.0_SA_COO~MI to disposition."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T07:10Z",
+    "one_line": "Stripping the dead download from opal-bd-allocation-download makes its success branch reachable for the first time since 2026-06-23: on a merge rc 0 the document invokes the bd-price-update Lambda (async), which has not been invoked by this document in 70 of 70 dated runs; the edited document keeps that invoke.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Served opal-bd-allocation-download $LATEST (version 4), read live 2026-09-29: after the merge it runs `if [ $DOWNLOAD_RC -ne 0 ] || [ $MERGE_RC -ne 0 ]; ... exit 1`, and only past that `aws lambda invoke --function-name bd-price-update --invocation-type Event`. logs/allocation-download-2026-09-28.log: `ERROR: Pipeline failed (download_rc=1 merge_rc=0) - skipping bd-price-update`.",
+        "DEAD_PROOF_MX-i-5.md (worker ~16): allocation download dead 70 of 70 dated logs since 2026-06-23, so the invoke has been skipped on every one of them.",
+        "infra/aws/lambda/bd-pipeline/bd-allocation-trigger/lambda_function.py docstring: 'SSM doc invokes bd-price-update Lambda after download completes'.",
+        "The PHASE A test of the edited list ran WITHOUT that invoke (removed from the test command list only), so no downstream Lambda was fired by this worker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2: apply the transaction strip identically to the allocation document, keeping the merge, the log upload, the shutdown-before-exit and the honest exit on the merge's rc.",
+    "world_is": "The allocation document has one step after the merge that the other three lack: the bd-price-update invoke, gated on both rcs. With the download gone the gate reads the merge rc alone, so the first PHASE B fire calls bd-price-update. What that Lambda does with a daily call after a 3-month gap is NOT measured here. The issuer decides before PHASE B: keep the invoke (as the edited file does) or strip it.",
+    "notes": "Whether bd-price-update is also invoked by another path (its own schedule or the bronze-complete rule) is not measured."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T07:11Z",
+    "one_line": "The A1 transaction test ran on i-0e6f6dc014fdcf1cd (bd-assets), but bd-transactions-trigger targets i-00c7568bc510f7423 (bd-transactions); the merge-only run was repeated on the right instance and both read rc 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration EC2_INSTANCE_ID, 2026-09-29: bd-transactions-trigger i-00c7568bc510f7423; bd-allocation-trigger, bd-realized-trigger and bd-unrealized-trigger all i-0800437d1dbb0b5cc. ec2 describe-instances: all three instances share bd-exporter-profile, t3.medium, Names bd-transactions / bd-allocations / bd-assets.",
+        "A1 test command cdb144c8-b4de-4ef1-b5d8-4c36509ca6fc ran on i-0e6f6dc014fdcf1cd (the asset-dim instance): Success rc 0, wrote silver/transactions/2026-09-29.parquet (0 rows). Repeat command e3047e12-0cce-4098-8e96-93e429c918d1 on i-00c7568bc510f7423: Success rc 0, `Previously processed: 195 files`, `No new files to process`.",
+        "The second run overwrote logs/transaction-download-2026-09-29.log (S3 versioning holds the first)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A1 step 3: one ad-hoc run of the edited command list, merge only, as the test.",
+    "world_is": "The instance for that run was chosen from the asset-dim precedent, not from the trigger. Both instances carry the same profile and the merge downloads its script from S3, so the result is the same; the repeat on the trigger's own instance is the one the announcement cites. No vendor call was made by either run.",
+    "notes": "The repeat is a second merge-only run for the transaction document (0 vendor calls, 0 new files)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W17-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~17",
+    "surfaced_at": "2026-09-29T07:30Z",
+    "one_line": "safe-commit REFUSED the three A2 documents (opal-bd-allocation/realized/unrealized-download.json, lane CLOUD_OPS_OR_ETL): this branch's copy of the MX-s-14 order predates amendment A2 and its <paths> do not grant them; the edits are in the worktree, uncommitted, and copied under the deliverables folder.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit -- <the 3 documents + deliverables + channel>, 2026-09-29 ~07:2xZ: `ERROR: owned-paths lane violation(s) detected (block mode)`, one VIOLATION line per document, lane=CLOUD_OPS_OR_ETL; `safe-commit did NOT commit (rc=1)`; nothing was committed in that call.",
+        "The order at this branch's HEAD carries 0 references to opal-bd-allocation-download.json in its <paths>; the order at CLOUD @1d62ade62e carries 3 (git show CLOUD:<order> | grep -c => 3; the branch file => 0). A2 was committed on CLOUD after this branch was cut, and this worker may not merge CLOUD (issuer message: the branch cannot fast-forward, and workers never merge).",
+        "sha256 (first 16) of the three edited documents in the worktree: allocation 559048c8290150fc, realized 570538ea79ddfe59, unrealized b33bb4201627f2d8; copies under deliverables/0.9.0_WK_NFRA_MCPINDEX~17/edited_documents/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2: apply the transaction edit to the allocation, realized and unrealized documents; the granted paths are the order's <paths> (the lane gate admits exactly those).",
+    "world_is": "The gate reads the order at the branch's HEAD, which lacks the A2 grant, so the three repo files cannot be committed by this worker. Not worked around: no override, no order edit. Carrier so the edit is not lost: the byte-identical copies in the deliverables folder (a granted path), committed. Unblock, the issuer's choice: bring the A2 order text onto this branch (a CLOUD merge by the issuer) and this worker recommits the three files, or copy the three files from edited_documents/ at the drain.",
+    "notes": "The A2 tests ran from the edited command lists (built from the working-tree files) and are recorded in ANNOUNCE_MX-s-14.md."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S56",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T07:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W17-S5",
+      "NFRA_MCPINDEX-Z-W17-S7"
+    ],
+    "one_line": "RULES NFRA_MCPINDEX-Z-W17-S5: the allocation document KEEPS its bd-price-update invoke. The strip restores a served state measured before 2026-06-21 (2 invocations a day) rather than creating a new one, and the MX-s-14 never-widen ask names the invoke as an effect of the allocation write, so the halves cover it. It also DISARMS Z-W17-S7: CLOUD was merged into wk-nfra_mcpindex-4-17 at 61a12e0af2, so the A2 paths are at the worker's HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch AWS/Lambda Invocations for bd-price-update, weekly sums from 2026-05-31: 10, 10, 10, then 1 in the week of 2026-06-21, and 5-6 a week since (17 weekly datapoints).",
+        "Hourly: 2026-06-10 and 06-11 read 2 invocations each in the 22:00Z hour, the allocation document's 21:45Z fire plus one other caller; 2026-09-24 and 09-25 read 1 each, in the 00:00Z hour.",
+        "infra/aws/ssm/opal-bd-allocation-download.json runCommand lines 44-54 invoke bd-price-update only when both the download and the merge succeed. Download dead since 2026-06-22 (DEAD_PROOF_MX-i-5.md), so the invoke went dark then."
+      ]
+    },
+    "spec_asserts": "Z-W17-S5 (ARMED): the strip reactivates a dormant bd-price-update invoke whose effect after a 3-month gap is unmeasured.",
+    "world_is": "The invoke is the second of the two daily calls that ran until 2026-06-21. Keeping it restores that cadence, and the other caller still fires daily. The PHASE B never-widen ask names bd-price-update as a covered effect; rollback is the same document re-publish (allocation v4 content).",
+    "notes": "The Lambda was last modified 2026-04-06 and is unchanged across the gap. Its idempotence on a second same-day call was served behaviour before 2026-06-21; it is not re-measured here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S57",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T08:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Drain 789d4bb967 recorded wk-nfra_mcpindex-4-14 (ed61b070e4) as merged while its tree carried neither ANNOUNCE_MX-r-5.md nor rows Z-W14-S5..S8, and safe-merge exited 0. Cause 1 (measured): the issuer's channel resolver found rows by a regex on '{\"id\":' as the first key; the worker wrote 'id' after other keys, so the resolver read 0 incoming rows. Cause 2 (inferred, not measured): the new ANNOUNCE file was staged by the no-commit merge and gone at --continue (1 staged path), with a peer commit 5ae4dea2ba landing inside the window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show ed61b070e4:<channel> holds 122 rows incl. Z-W14-S5..S8 (id key at line 2783, after surfaced_at and disposition); HEAD after the drain held 132 rows with W14-S1..S4 only.",
+        "safe-merge log: first phase 1 conflicted path; --continue 'grading the MERGED index -- 1 staged path(s)'; git ls-tree HEAD shows 0 ANNOUNCE_MX-r-5.md.",
+        "A census of all 21 NFRA_MCPINDEX branches: this is the only branch whose rows are missing on CLOUD (every other merged branch 0 missing)."
+      ]
+    },
+    "spec_asserts": "A safe-merge drain that exits 0 with the branch as a parent carries the branch's content.",
+    "world_is": "It carried a subset. Because the branch now reads as merged by ancestry, a re-merge carries nothing, so the bytes return only by a forward commit. The resolver now parses every row object with raw_decode, whatever the key order, and was checked equal to the JSON id list on HEAD (132) and ed61b070e4 (122). Worker ~14 recommits the carrier under MX-r-5 A2 (d4a68b0b24).",
+    "notes": "After each channel drain, the issuer diffs branch ids against CLOUD ids (0 missing) and the branch's non-channel paths against the merge tree."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T07:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-d-4 makes opal_discover HEAD S3 objects, but the integration's own SPEC and docstrings still say it reads no S3 object and egresses nowhere (hosts no-egress.invalid): the release would ship a stale egress declaration for the CTO's G-A to read against.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "release 510bf69089, app/integrations/opal_discover/integration.py: SPEC.hosts = (\"no-egress.invalid\",), SPEC.description ends 'Reads no S3 object and egresses nowhere.', the module docstring's 'READS, NEVER FETCHES ... this family reads NO S3 object' block stands; _s3_head() (MX-d-4, commit 2984d17cc3) builds a boto3 s3 client and calls head_object on the catalog bucket opal-data-portal-v2 for each servable row.",
+        "Reach of the HEAD, measured on the release tree's catalog with the opal-internal principal: 24 servable rows, every HEAD key under json/ (21) or platinum/ (3), none outside the gateway role's read scope (json/* and platinum/*, per the MX-r-4 announcement's get-role-policy read). app/integrations/base.py treats `hosts` as documentation plus a non-empty check (lines 68 and 207); I found no run-time host check on a boto3 call."
+      ]
+    },
+    "spec_asserts": "MX-d-4 preflight: EGRESS CLASS NONE beyond Opal's own AWS (one S3 HEAD per servable row); the SPEC still declares no egress (G2 egress minimal, hosts).",
+    "world_is": "The declaration and the behaviour disagree. Behaviour is inside Opal's own AWS and the granted IAM scope; only the declared host list and the description text are stale. Correcting SPEC.hosts to the S3 host is a code change to a listed census file that is not in any of the cherry-picked commits, so the release does NOT carry it.",
+    "notes": "For the G-A read of MX-r-5: the delta is one new tool (mdpf_get_model_benchmarks) AND opal_discover's new S3 HEAD. Owner of the fix is the issuer's to place (an MX-d-4 amendment, then a re-cut of the pin)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T07:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "tests/test_entitlement_admin.py::test_ogz2_ac08 fails on any tree carrying MX-t-9 (its per-integration pin and its == 51 count name three portal_index tools, not four), on CLOUD and on the release; the live tree already fails 4 tests in the three files run, so the release adds exactly this one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release tree /c/tmp/mx-rel5 (510bf69089), tests test_opal_discover, test_portal_index, test_tool_classification_composition, test_entitlement_admin, test_data_entitlement_guard: 49 passed, 5 failed = test_portal_tools_catalog_refs_resolve, test_ogz2_ac06, test_ogz2_ac08, test_ogz1_ac05, test_ogz1_ac08. Rollback tree /c/tmp/mx-rb5 (4248b70b39, the live tree), test_portal_index, test_entitlement_admin, test_data_entitlement_guard: 24 passed, 4 failed = the same set minus test_ogz2_ac08.",
+        "test_ogz2_ac08 assertion: ('portal_index', ['mdpf_get_model_benchmarks'], []) is one more item in the pin diff; the file pins portal_index to 3 tools and `len(registered_tool_names) == 51`. `git show CLOUD:infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py` names mdpf_get_model_benchmarks 0 times. tests/ is not in the shipped artifact (app, deploy, requirements.txt, identity_tool_allowlist.txt, dashboard), so the deploy is unaffected."
+      ]
+    },
+    "spec_asserts": "MX-t-9 / 5a450314de: the fourth tool is entitled and registered; PHASE B reads the tool count gain exactly that tool.",
+    "world_is": "The pin file was not updated with the new tool (51 -> 52). The order's census names exactly the 7 gateway files and this test file is not among them, so the release does not carry a fix. The 4 other failures are already present on the live tree (a source-file glob outside the shipped tree; three data-entitlement assertions).",
+    "notes": "PHASE B's host read expects 52 tools (51 live + mdpf_get_model_benchmarks)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T07:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The order's premise for the live deployed commit is refuted by the host: it serves 4248b70b39 (NFRA_OPLGTW OG-x-3, 2026-09-29T05:22Z), not 0bce8d322a / gateway tree 3371f18803; the release is cut at 4248b70b39.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM AWS-RunShellScript on i-07dccb1615503ac99, sha256 of every file under app, deploy, dashboard, requirements.txt, identity_tool_allowlist.txt in /opt/opal-gateway: 79 files, compared per file with the artifact s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/opal-gateway-latest.tar.gz (406162 bytes, LastModified 2026-09-29T05:21:55Z, md5 a59f391592ae00f6725f4bbe2df2a6f8, identical to the opal-gateway-4248b70b39 key): 79 of 79 identical, 0 only-host, 0 only-artifact.",
+        "A rebuild from a clean tree at 4248b70b39 (build-only mirror of deploy-to-ec2.sh:78-91, mcportal a3bff71ffa) equals that artifact 79 of 79 (67 of 67 .py). Artifact keys since round 3: 0bce8d322a (02:45Z), 7c7ebe14d3 (03:24Z), 4248b70b39 (05:21Z); CLOUD's EC2_MANIFEST.json services.opal-gateway.deployed_commit already reads 4248b70b39."
+      ]
+    },
+    "spec_asserts": "Order step 1 and the round-3 notes: the live deployed commit is 0bce8d322a / gateway tree 3371f18803.",
+    "world_is": "Two NFRA_OPLGTW releases landed after that pin. The 5 commits this release carries are applied on 4248b70b39, whose tree already holds the other projects' released gateway work.",
+    "notes": "Confirmed by content on the host, not by the manifest."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T07:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Both release-branch commits (510bf69089 rel, b9e5c64437 dep) were made under the audited GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~14 on the MX-r-4 A1/A2 precedent; the MX-r-5 order restates the path grant and the pattern but not the override itself.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh in /c/tmp/mx-rel5, first attempt with no override: refused, 'WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path' for the 7 gateway files (the release tree has no order at HEAD). With the override the commit landed: 510bf69089 (rel) and, in /c/tmp/mx-dep5, b9e5c64437 (dep-only). The override is logged in org/git-author-override-audit.log.",
+        "MX-r-4 A1/A2 (the order's named precedent) authorize the audited override 'for exactly the release-branch commit(s)' and for the one deploy-only commit, naming each use; this order's issuer notes grant opal-gateway/** 'ONLY on the never-merged dep- and rel- branches (the MX-r-4 A2 pattern)'."
+      ]
+    },
+    "spec_asserts": "MX-r-5 issuer notes: opal-gateway/** granted on the rel- and dep- branches, the MX-r-4 A2 pattern.",
+    "world_is": "Two uses, one per branch, each carrying only the gateway directory; neither branch is merged or pushed. The issuer confirms or refuses the reading before PHASE B.",
+    "notes": "Uses: 2 of 2 needed; none on the worker branch."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T08:40Z",
+    "one_line": "MX-r-5 A2 step 6 asks that the census 'is still 7 files', but A2 step 3 puts test_entitlement_admin.py on the rel- and dep- branches, so the git census over infra/aws/ec2/opal-gateway is now 8 files; the shipped artifact still differs from live in exactly 4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git diff --stat 4248b70b39 0001c9bb53 -- infra/aws/ec2/opal-gateway`: 8 files, 551 insertions, 49 deletions; the 7 of the first pin plus tests/test_entitlement_admin.py (+3 -2). The dep tree (ca48cd5482) has the same gateway tree object d2debddbd3e3977b0ed1ef0db00a4afd457be394.",
+        "Artifacts rebuilt without upload from the release tree and from live: 75 of 79 files identical, the same 4 differ (data_entitlement.py, opal_discover/integration.py, portal_index/integration.py, DATA_CATALOG.yaml); tests/ is not in the artifact."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2 step 6: re-prove that the census is still 7 files.",
+    "world_is": "Both A2 edits were carried as ruled; one of them is a test file that was not in the first census. The count of files in the git census is 8, and the count of shipped files that differ is 4 (unchanged). The reading of 'census' as the git diff is the worker's; the issuer states which count the CTO's G-A reads.",
+    "notes": "Filed as a form-level departure from the order's letter, not a defect in the release."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S58",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T08:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W14-S5",
+      "NFRA_MCPINDEX-Z-W14-S9"
+    ],
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-W14-S5: opal_discover now declares its one S3 HEAD per servable row in its docstring, SPEC description and SPEC.hosts (worker ~14 commit 33d2dd2fbf, drained 8837c8397f, carried in rel 0001c9bb53). The declaration matches the behaviour before G-A reads it. RULES NFRA_MCPINDEX-Z-W14-S9: the census G-A reads is the 4 SHIPPED files; the git census is 8 because 4 test files do not ship.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff CLOUD...wk-nfra_mcpindex-4-14 includes app/integrations/opal_discover/integration.py; after the drain it is byte-equal to the branch (git diff --quiet HEAD branch -- path).",
+        "NEVER_WIDEN_ASK_MX-r-5_20260929.md @528a77ff63 section 2 names 4 shipped and 4 unshipped files; the artifact rebuilt from the dep tree differs from live in exactly those 4 of 79 files."
+      ]
+    },
+    "spec_asserts": "Z-W14-S5 (ARMED): the SPEC says opal_discover reads no S3, while it HEADs S3 once per servable row.",
+    "world_is": "Fixed in the release before the G-A ask (msg 26517). Served behaviour is unchanged by the declaration; SPEC.hosts is documentation plus a non-empty check.",
+    "notes": "G-A and both never-widen halves are asked on rel 0001c9bb53 / tree d2debddbd3 (msgs 26517, 26518)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T09:25Z",
+    "one_line": "Another seat released on the shared gateway host between MX-r-5's PHASE A read and the GO: NFRA_OPLGTW OG-x-4 deployed 63264dfb22 at 2026-09-29T08:43:49Z, so the live tree was no longer 4248b70b39; the PHASE B Step 0 (R1) content read caught it before any act, and the release was re-cut on 63264dfb22.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PHASE A read (this worker, before 07:53Z): host sha256 of 79 files equal to the opal-gateway-latest.tar.gz artifact (LastModified 2026-09-29T05:21:55Z, md5 a59f391592ae00f6725f4bbe2df2a6f8), which equals the 4248b70b39 key. PHASE B Step 0 (after the GO): -latest LastModified 2026-09-29T08:43:27Z, 407136 bytes, md5 6509913cec5963c8caf197c28e82e851; the host's 79 files equal it 79 of 79 and equal the 4248b70b39 artifact 78 of 79 (app/integrations/schwab/engine.py differs).",
+        "63264dfb22 = NFRA_OPLGTW OG-x-4 (0.9.0_WK_NFRA_OPLGTW~11), deployed_at 2026-09-29T08:43:49Z per CLOUD's EC2_MANIFEST.json: 4248b70b39 plus schwab/engine.py and 2 test files (git diff --stat 4248b70b39 63264dfb22 -- infra/aws/ec2/opal-gateway: 3 files, +196 -60). Deploying the first pin (dep ca48cd5482, base 4248b70b39) would have replaced that engine.py with the older one.",
+        "Nothing was done at the halt: no ledger, no upload, no deploy. The re-cut (Option 1, issuer ruling): rel-nfra-mcpindex-r4-gateway-b a7e15b2220 from 63264dfb22, dep-nfra-mcpindex-r4-gateway-b 093fc247c6, gateway tree object 2e839aeec903d6c7bc65cfba60017e4e5e925614 in both."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The CTO half of the never-widen ask: at GO re-read live = 4248b70b39, else re-cut; the pin, the rollback proof and the G-A were all cut against 4248b70b39.",
+    "world_is": "The shared host moved once between the PHASE A read and the GO (another project's narrow release, itself sanctioned). R1 held: the mismatch was read by content before any act. The signed hash (0001c9bb53 / tree d2debddbd3) is not the one that will deploy; the re-cut carries the same 8 files, blob-identical, on the new base.",
+    "notes": "For the record: the gap between a PHASE A pin and its GO is the window in which a second releaser can land; an R1 content read at GO is what closed it here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T10:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "safe-ec2-deploy.sh's halt gate refused the MX-r-5 deploy (exit 1, before any build or upload) on 208 pending inbox items with 0 STOP lines; the worker read them and re-ran with HALT_ACK=1, which the MX-r-4 precedent allows only when the gate reads 0 STOP.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/c/tmp/mx-dep6-deploy.haltgate-refusal.log: 'HALT-GATE: 208 pending message(s)' then 'blocked ... re-run with HALT_ACK=1', DEPLOY-EXIT=1. The 208 items: the ten most frequent sender labels account for 202 (141 deploy_ledger.py gate-bypass scan, ~53 days old; 16, 13, 10, 3, 2, 2, 2, 2 deploy_ledger.py on-behalf-of or HELD-STALE nudges for other seats; 11 from 4.0.0_SA_CRO~W), the other 6 were not tabulated, and the log tail shows an AMGT mail header and a RED for ledger irpt-status-dates-rebuild3-20260928 open 23.1h; 0 lines containing STOP; 0 naming opal-gateway or nfra-mcpindex.",
+        "Run 2 with HALT_ACK=1: 'HALT_ACK set -- messages acknowledged. Proceeding.' DEPLOY-EXIT=0. The issuer's R3 (112 worktrees, 0 live gateway acts) was the GO's own guard."
+      ]
+    },
+    "spec_asserts": "MX-r-5 Phase B step 2: deploy from /c/tmp/mx-dep6 with `bash infra/aws/ec2/safe-ec2-deploy.sh ...`, with no ack named.",
+    "world_is": "The halt gate needs an ack whenever the base inbox is non-empty; it was non-empty with unrelated mail. The ack was given by the worker on the precedent, not named in the GO.",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "notes": "For the next release order: name HALT_ACK=1 in the deploy step, as the MX-r-4 rollback command does."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W14-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~14",
+    "surfaced_at": "2026-09-29T10:35Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The PHASE B instruction 'git merge --ff-only CLOUD first' could not be followed: the wk branch already held its own ledger-open commit 4d0a2f7f61 (the NEVER-2 entry and sentinel, required before the act), so CLOUD was merged with a plain `git merge` (merge commit 9c24662a4b), never a rebase.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git merge --ff-only CLOUD` at the manifest step: 'Not possible to fast-forward, aborting' (wk branch 4d0a2f7f61 ahead of CLOUD's merge base, CLOUD ahead of the branch by other seats' drives). `git merge CLOUD --no-edit` -> merge commit 9c24662a4b, 0 conflicts; no rebase, no history rewrite.",
+        "The first ff-only merge, before the ledger opened, succeeded (branch = CLOUD e468d94221)."
+      ]
+    },
+    "spec_asserts": "MX-r-5 PHASE B: commit on the wk branch after `git merge --ff-only CLOUD`.",
+    "world_is": "The ledger entry must be committed before the deploy act and CLOUD moved during the deploy, so a fast-forward at commit time was impossible; the merge commit carries CLOUD's newer files.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S59",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T10:47Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W14-S10",
+      "NFRA_MCPINDEX-Z-W14-S11",
+      "NFRA_MCPINDEX-Z-W14-S12"
+    ],
+    "one_line": "RULES the MX-r-5 PHASE B departures: S11 CONFIRMED (HALT_ACK=1 after reading 208 items with 0 STOP lines is the MX-r-4 precedent the GO relied on); S12 CONFIRMED (a plain no-conflict merge of CLOUD into the worker's own branch is not a rebase and moves nothing shared); S10 recorded (a concurrent release on the shared host was caught by R1, re-cut, re-signed, and 2.0.0_SA_COO~O now messages before its next gateway release, msg 26532).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r5.AC1/AC2 PASS on the issuer's CLOUD re-run after drain 49c02a6eff; the host serves 093fc247c6 with 52 tools.",
+        "deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-5_20260929.md sections 8-10 record the halt, the re-cut and the re-signed GO."
+      ]
+    },
+    "spec_asserts": "The GO named no HALT_ACK and said merge --ff-only.",
+    "world_is": "Both departures are within the precedent and moved nothing shared. The release is live and verified.",
+    "notes": "The close run (CLOSE_RUN_MX-r-5_ISSUER.md) reproduces Z-W14-S3 on the live host: 1 of 3 phrasings of the benchmark ask routes to mdpf_get_model_benchmarks. That is an L8 item for the round-4 analysis."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S60",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T14:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W15-S5",
+      "NFRA_MCPINDEX-Z-W17-S1",
+      "NFRA_MCPINDEX-Z-W17-S2"
+    ],
+    "one_line": "RULES three BLOCKING rows that had no issuer row: Z-W17-S1 and Z-W17-S2 LAPSE with the new REST module that MX-s-14 A1 dropped (task order :65, 'Rows Z-W17-S1 and Z-W17-S2 lapse with it'); Z-W15-S5 is ROUTED, not ruled here: the naming-limb refusal of the platinum/etfs key needs an LGIC registry row or an R20 entry, outside this decomposition, and is with the LGIC owner (1.0.0_SA_CTO~O msgs 26487/26493). MX-t-10 holds; its candidate stays byte-frozen in wk-mcpindex-r4-15.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/NFRA_MCPINDEX.TO-MX-s-14.bd-transaction-rest-port.md:56-65 (AMENDED A1): drop step 1, leave the module unused, rows Z-W17-S1/S2 lapse.",
+        "git log --since 2026-09-29T11:00Z -- infra/logic/registry/ .tools/naming-gate.py: 0 commits at 14:30Z, so the refusal still stands.",
+        "git -C wk-mcpindex-r4-15 status --porcelain: 5 modified gateway/catalog files plus 1 new catalog entry, uncommitted, at 13:5xZ."
+      ]
+    },
+    "spec_asserts": "Every BLOCKING row carries an issuer disposition before the round closes.",
+    "world_is": "Two of the three are moot under the amended order. The third is blocked on a registry act outside this lane; MX-t-10 is ruled at the round-4 close (complete or carried to round 5).",
+    "notes": "If the registry row lands before the 22:00Z close tick, continue a fresh ~15 on the frozen worktree and re-run t10.AC1/AC2 before committing."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S61",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-29T22:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-14 acceptance fires ran clean but did not exercise the silver WRITE: all 4 scheduled fires (21:39/21:46/21:53/22:00Z) read SSM Success on the new versions (v3/v3/v3/v5) with merge exit 0, and each merge logged 0 new files. Ledger L5/L9 stay OPEN under an external hold; the write arm is proven by the next scheduled fire that finds a new input.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm list-commands since 21:30Z: 32844c37 unrealized, 34d92792 realized, a6fd0313 transaction, 0116fad0 allocation -- Success each; describe-document Default==Latest 3/3/3/5.",
+        "s3://opal-data-bd/logs/<leg>-download-2026-09-29.log: 'No new ... files to process', 'Merge exit code: 0' on all 4 (previously processed 74/144/195/131).",
+        "forwardfill_v2 newest: realized 2026-09-29.xlsx landed 00:07:57Z and silver/realized/2026-09-29.parquet was written 07:02:56Z; silver/transactions/2026-09-29.parquet 06:37:01Z; unrealized and allocations inputs newest 2026-09-25 (weekly, landed 2026-09-27 00:1xZ)."
+      ]
+    },
+    "spec_asserts": "Ledger L5/L9 proof = SSM Success on the new version, the merge log line, and the silver partition written by tonight's scheduled fires.",
+    "world_is": "Today's realized/transactions inputs had already been merged at 06:37Z and 07:02Z, before the 08:25Z publish -- by timing, worker ~17's pre-publish runs (INFERRED, not attributed by a log); unrealized/allocations inputs are weekly. So tonight's fires had nothing to write. ABSENT is not EXERCISED: the write arm on the stripped documents is unproven.",
+    "notes": "Issuer ruling: do NOT fire an ad-hoc run -- it would consume the next input and destroy the scheduled discriminator, which is how tonight's was lost. Re-read 2026-09-30 after the 21:46/21:53Z fires (realized, transaction: expect 'Found 1 new' and a silver/<leg>/2026-09-30 partition written by the fire); unrealized L5 and allocation L9 at the 2026-10-05 21:38/22:00Z fires. MX-s-14 is ruled at the round-4 close: complete once written, or its residual legs carried into round 5."
   }
 ]
 ```

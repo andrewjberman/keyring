@@ -1775,6 +1775,1550 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "No task order in this project names which securities/alias source is the CURRENT one to build or re-derive gold against; five prior ACs across ~4/~5/~6/~13 cite the same static ~4/securities.json path by name as a working example invocation.",
       "world_is": "The static file is 49/55 security_keys short of the universe the newest landed gold snapshot actually covers, and the module built to replace it (`universe_securities.py`, 2b) is live and correctly resolves all 55. The static path is not wrong to have existed, but citing it as if it were still the build's current input would be.",
       "notes": "Not a code defect; no producer changed. Filed so a later cell does not copy the ~4/securities.json invocation shape out of the prior ACs' examples and silently narrow its own measurement to 6 of 55 securities. DISARM (COO's): either retire/relabel the ~4/securities.json file's citations as historical-only, or land a committed securities.json built from a pinned `universe_securities.build()` run so later cells have one CURRENT, reproducible alias source to cite instead of a live call each time."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W34-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~34",
+      "surfaced_at": "2026-09-28T13:00:00Z",
+      "one_line": "HVST-z-3's premise that all 8 dotted-string sites are silent no-ops is true of ONE site only (test_verification.py:18, the patch.dict variant, and its test is skipped): the other 7 resolved to the SAME module object the code under test uses, and test_worker.py:51 works by the stdlib-singleton coincidence -- so 7 of 8 sites were never a miss, and the class's live cost was 1 no-op on a quarantined test.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED in-process under real pytest collection, deliverables/0.9.0_WK_AMGT_HARVST~34/scripts/ac1_per_site_negative_control.py: string target read through the code-under-test's module gives the mock for posture x4 (crosswalk.resolve x3, engine.peers x1), scoped_amgt watchlist.store.star, retrieval_provenance harvest.store._default_client -- because those tests import lib.research.* absolutely AND the code under test does too (membership.py:161, comparable.py:179, scoped_amgt.py:3224, __main__.py:182), so pytest's rootdir naming (posture.tests.test_posture, api.tests.test_scoped_amgt) never enters the identity.",
+          "test_verification.py:18: code under test lives in `opal_data_harvest.verification` (repair.__module__), the string target imports `lib.opal_data_harvest.verification`, and the two REGISTRY dicts are NOT the same object -> the patch.dict was a no-op (demonstrated: after patch, cut.REGISTRY still read the unpatched value). The test carrying it is @unittest.skip (HVST-x-1 item 3 QUARANTINE), so no passing test depended on it.",
+          "test_worker.py:51: lib.opal_data_harvest.transport is NOT opal_data_harvest.transport (False), but `.time` is the same stdlib object (True); control on the same split with a non-singleton name (transport.retry_seconds) does NOT reach the code under test's module (False)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Z-W26-S1 / HVST-z-3 section 1: a dotted-string patch target silently no-ops when pytest imports the test under a different module name, and the 8 listed sites are that defect.",
+      "world_is": "The split is real only where the TEST FILE is loaded under a rootdir-derived name AND the code under test is reached through the test's own relative import (the opal_data_harvest tests: worker, verification). Where the test imports absolute lib.* names (posture, scoped_amgt) or the code under test imports lib.* absolutely (the __main__ store import), string and object are the same module and the patch always took effect. All 8 sites were re-targeted with patch.object / monkeypatch.setattr on the module object the test file imports (per-site fix chosen; no lib/__init__.py and no import-mode change, which was not proved harmless across the estate). AC3's census now reads 0 of 309 files.",
+      "notes": "Not a defect and no hold. Filed so the three earlier rows are not read as 8 live no-ops. No behaviour was newly exposed: the AC2 suites read 78 passed, 1 skipped before and after, collected 79 both times. The patch.dict fix on the skipped test cannot be exercised through pytest (quarantined); it is proved by AC1's direct patch.dict read-through."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W31-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~31",
+      "surfaced_at": "2026-09-28T21:00:00Z",
+      "one_line": "The two timeline routes are now handled by scoped_amgt.handler but are NOT mounted at the gateway: infra/aws/terraform/harvest/scoped-amgt-api.tf has 0 occurrences of `timeline`, so a browser call still 404s at API Gateway until a terraform cell adds them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED this cell: `cat infra/aws/terraform/harvest/scoped-amgt-api.tf | grep -c timeline` -> 0 (worktree wk-hvst-r11b-31 cut from CLOUD @943f0910c1). The mount list `scoped_amgt_routes` there is the 16-route set `scoped_amgt_route_table()` returns.",
+          "lib/research/api/tests/test_scoped_amgt_mount.py diffs that terraform list against `scoped_amgt_route_table()` in BOTH directions, so adding the two timeline routes to the table would turn that test red; this cell's <paths> do not reach infra/. I therefore declared the two routes as data in `scoped_amgt.TIMELINE_ROUTES` and left `scoped_amgt_route_table()` at 16, and a test pins that they are absent from the mounted table.",
+          "MEASURED in-process: `scoped_amgt.handler` serves GET /api/scoped/amgt/security/992_HK_Equity/timeline (HTTP 200, 267 dense days, 4 events) and .../timeline/day/2026-05-22 (HTTP 200, 3 articles) from real landed gold (AC1). Handled is not mounted: the gateway route set is single-segment with no {proxy+}, and `timeline/day/{date}` is also a new path shape (two extra segments after the key)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Task order HVST-z-0 section 1: 'You are wiring the missing path. The panel calls GET .../timeline and GET .../timeline/day/<date>', with the order's paths limited to scoped_amgt.py, its tests and this project's deliverables/surprise channel.",
+      "world_is": "The handler half of the path is wired and proven against real gold; the gateway half (terraform route_key entries, and the test_scoped_amgt_mount.py denominator that must move with them) is untouched, so the panel still cannot reach either route from a browser. `day/{date}` needs a route_key with two segments after {security_key}.",
+      "notes": "DISARM IS THE ISSUER'S: cut a terraform cell that adds both route_keys to scoped-amgt-api.tf AND moves scoped_amgt_route_table() from 16 to 18 (fold TIMELINE_ROUTES into it) in one commit, so the mount test stays green in both directions. Deploy needs Andrew's word per the order's section 5. Until then FWD-5's walk cannot run."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W31-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~31",
+      "surfaced_at": "2026-09-28T21:00:00Z",
+      "one_line": "The day route takes ~15.8s per call from this box because the headline join scans EVERY source's whole silver `article` table (publication_gold._iter_latest_articles) and the range route ~5.4s; against the 29s API Gateway ceiling this leaves little headroom as silver grows.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED this cell, in-process from the site-Z box: handler GET .../security/992_HK_Equity/timeline -> HTTP 200 in 5.4s; GET .../timeline/day/2026-05-22 -> HTTP 200 in 15.8s. `publication_gold._headline_by_article_key()` alone read 120 article rows in 15.6s (measured separately).",
+          "The 29s figure is `timeout = 29` / `timeout_milliseconds = 29000` in infra/aws/terraform/harvest/scoped-amgt-api.tf (lines 266 and 358), the API Gateway HTTP API integration ceiling that file's own comment cites.",
+          "The loader uses the producer's own reader for the join because the silver `article` table is the only place headline and published_precision live (publication_gold._headline_by_article_key docstring). The newest-snapshot gold reads are one part each; the cost is the silver scan, which is `store.silver_latest` reading every part-*.parquet for every publisher. In-region Lambda-to-S3 will be faster than this box, which is UNMEASURED here."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Task order HVST-z-0 section 2: the day route delegates to timeline_api with an `article_loader`, and says nothing about latency.",
+      "world_is": "The day route is correct and serves 3 of 3 real articles for the busiest Lenovo day, but every call rescans all silver articles; from this box that is 15.8s of a 29s ceiling.",
+      "notes": "No producer or timeline_api change was made (out of paths). DISARM (issuer's): once the terraform mount cell runs, time the day route from the deployed Lambda; if it approaches the ceiling, cut a cell that reads only the silver parts of the publishers named on the day's mention rows, or lands headline and published_precision onto the mention gold row at build time."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S34",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-28T21:45Z",
+      "one_line": "DISARM RECORD for AMGT_HARVST-Z-W31-S1 and AMGT_HARVST-Z-W31-S2 (both ARMED on this seat by HVST-z-0): neither hazard is reachable today because the gateway mounts no timeline route, so no browser and no ruling-3 pre-push measurement can observe the handler; the remedy is placed as ONE round-12 cell owned by this seat -- mount both route_keys and move scoped_amgt_route_table() 16->18 in one commit, deploy under a ledger entry, then time the day route in-region against the 29s ceiling.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by this seat at shared HEAD d4bcedef5c (after the z-0 drain @4350d5af00): infra/aws/terraform/harvest/scoped-amgt-api.tf carries 0 occurrences of 'timeline' over 390 lines; scoped_amgt.scoped_amgt_route_table() returns 16 routes with 0 timeline entries; scoped_amgt.TIMELINE_ROUTES declares the two routes as data only.",
+          "So the handler is wired but UNMOUNTED: a browser call 404s at API Gateway, which is the honest state and not a silent one. Andrew's ruling 3 (ANDREW_DIRECT_20260928_1805Z_OPEN_CALLS_FOUR_RULINGS.md) pre-authorises the portal DEV push of 92a2576254 only after 0.0.0_AB_MSTR~Z measures the timeline routes answering for Lenovo on the served backend; that measurement reads 404 until the mount lands, so the push cannot go early on a false reading.",
+          "Z-W31-S2's latency (day route 15.8s, range 5.4s, measured in-process from the site-Z box) is unobservable by any user until the mount; the 29s ceiling is scoped-amgt-api.tf:266 (timeout = 29) and :358 (timeout_milliseconds = 29000), read at the same HEAD."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Z-W31-S1 and Z-W31-S2 name this seat as disarm_owner; the channel rule is that an ARMED hazard is disarmed same-turn by its disarm_owner.",
+      "world_is": "Round 11 is frozen after its one issuance, so the remedy cannot be cut into it. It is placed instead: the round-11 drain-end packet carries it as the first item for the round-12 cut -- one cell whose paths are scoped-amgt-api.tf, scoped_amgt.py and test_scoped_amgt_mount.py, whose criteria are (1) the mount test green in both directions at 18 routes, (2) both routes answering 200 for 992_HK_Equity through the deployed gateway with the deploy ledgered under NEVER-2, and (3) the day route timed from the deployed Lambda with its margin to 29s printed. If (3) leaves under ~9s of margin, the next cell narrows the silver headline scan to the publishers on the day's mention rows, which is Z-W31-S2's own proposed remedy.",
+      "notes": "This row disarms by SPECIFICATION, not by remedy: the remedy is not yet applied and this row does not claim it is. The two predecessor rows keep reading ARMED forever by construction (append-only), so read their live state through _latest_dispositions and the CVO's fold, never through their own hazard_standing field."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S35",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-28T22:40Z",
+      "one_line": "The round-11 analysis's cell 1 (mount both timeline routes + ledgered deploy) cannot by itself make either route answer: the deployed opal-amgt-scoped-api package carries NO pyarrow and NO lib.opal_naming, and its only layer (opal-amgt-print-deps:1) carries numpy 2.2.6 but NO pyarrow -- so after a mount-and-redeploy both timeline routes would fail at `import pyarrow` inside their function-scope loaders. The deploy cell must also make the package import the gold readers.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by this seat (read-only S3 GET + lambda get-layer-version, 2026-09-28 ~22:3xZ): s3://opal-313476888478-lambda-artifacts/research/opal-amgt-scoped-api.zip (VersionId 0XDw5hJWOYgx3P8CSA42oAlkLuTlupkS, 857637 B, 203 members) carries lib/research/harvest/publication_gold.py 1 and store.py 1, but pyarrow/ 0, numpy/ 0, lib/opal_naming 0, and lib/research/harvest/timeline_api.py 0.",
+          "Layer opal-amgt-print-deps:1 (the function's only layer; runtime python3.11 x86_64): 1340 members, 121743633 B unzipped, python/numpy/ 271 (numpy 2.2.6), python/pyarrow/ 0.",
+          "publication_gold.py:37-38 import pyarrow at MODULE scope; HVST-z-0's loaders import publication_gold at FUNCTION scope (scoped_amgt.py, merged @4350d5af00), so the other 16 routes are unaffected and the two timeline routes are the ones that would fail.",
+          "The estate's working pattern is the chatter-axis Lambda (infra/aws/terraform/harvest/lambda_src/build_zip.py:40-53): pyarrow+numpy vendored into the zip from an owned layer, lib.opal_naming and its registry JSONs added to the closure roots, unzipped total printed against the 250 MiB ceiling. That build is cp312; the scoped API is python3.11 with numpy 2.2.6 already in its layer, so its wheels cannot be copied across as-is."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "ROUND_ANALYSIS.round11.md s.4 cell 1: mount both route keys + table 16->18 + a ledgered deploy + both routes timed from the deployed Lambda 'unlocks ruling 3's push and FWD-5/FWD-6's walk'.",
+      "world_is": "A mount plus a code-only redeploy gives two mounted routes that answer an import failure, not data. The package must carry a python3.11 pyarrow build that imports alongside the layer's numpy 2.2.6, plus lib.opal_naming and its registry data, inside Lambda's 250 MiB unzipped ceiling (layer alone is 121.7 MB).",
+      "notes": "DISARM (issuer's, same turn): round 12 cuts the deploy cell HVST-a-2 to include making the package import the gold readers, with the wheel source (a sha256-pinned wheel, which is egress to PyPI as in AMGT-tt-2's half, or an owned layer) and the unzipped total against 250 MiB carded on the never-widen halves the CTO signs; a-2's AC1 invokes the deployed Lambda and FAILS on a 200-less timeline route, so an import failure cannot pass silently. No runtime change is admitted without the CTO's word."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S36",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "4.0.0_SA_CRO~Z",
+      "surfaced_at": "2026-09-28T23:20Z",
+      "one_line": "HVST-a-2's preflight premise is false on BOTH planes: opal-amgt-scoped-api-role reads NO amgt/harvest/gold/ prefix, live or in Terraform at HEAD, so the timeline loaders (chatter_daily / chatter_event / article_security_mention) would be refused S3 reads after the mount + package deploy -- the 404 becomes an AccessDenied, not data.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by this seat 2026-09-28 ~23:3xZ, read-only: `iam list-role-policies` on opal-amgt-scoped-api-role = ONE inline policy opal-amgt-scoped-api-grants (4 statements) + AWSLambdaBasicExecutionRole; its opal-data-harvest resources number 22, and NONE is amgt/harvest/gold/* (the only amgt/ prefix is amgt/harvest/state/filing_attempt/*; the rest are publication-links/v1, publications/v1, universe/v1, crosswalk/v1, drafting/v1, peers/v1, management/v1, posture/v1, derived/model_block, packs, scores/v1, the {source}/harvest/{bronze,silver} prefixes, bright-data bronze, and the bucket ARN).",
+          "MEASURED at shared HEAD 846c1b2b34: infra/aws/terraform/harvest/scoped-amgt-api.tf carries 'amgt/harvest' only at :125 and :181, both filing_attempt; no gold prefix is DESIRED either.",
+          "The premise, verbatim in org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-a-2.package-and-deploy-the-timeline-routes.md <preflight>, comp-iam line: 'the function's existing role already reads opal-data-harvest gold (the RESAPP chatter routes)'.",
+          "Found while researching DSGN_AMGTV1 (Andrew-direct 2026-09-28 ~22:3xZ); the gold keys the timeline needs were read by a research agent of this seat under its own credentials, not the Lambda's."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-a-2 preflight: the role already reads opal-data-harvest gold, so mount (HVST-a-1) + package with pyarrow (Z-S35) makes both timeline routes answer with real data.",
+      "world_is": "The role has no gold read on the live or the desired plane. After HVST-a-1 + HVST-a-2 as written, the loaders reach S3 and are refused; a third change (a gold read grant in scoped-amgt-api.tf, safe-applied) is needed before either route can serve data.",
+      "notes": "Disarm is the issuer's (the order is 2.0.0_SA_COO~H's): amend HVST-a-2 to carry the grant, or cut it. This seat does not edit the order or the TF. Not verified: whether the RESAPP chatter routes read gold through some other principal -- the premise cites them; this row says only that THIS role holds no such grant."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W36-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~36",
+      "surfaced_at": "2026-09-28T23:48Z",
+      "one_line": "The ruled plurality rule moves ONE of the two Boeing leads over the landed data (2026-09-08), not both: BA_US_Equity 2026-08-26 is two tier-A articles in two unrelated stories, a 1-1 tie, and the ruling's own tie clause (earliest story) keeps the FAA headline as lead.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED read-only over the landed newest article_security_mention snapshot (263 rows) and 120 silver headlines: deliverables/0.9.0_WK_AMGT_HARVST~36/ac1_output.txt, BA_US_Equity 2026-08-26 block: story 1 tier-A=1 (bbg 'FAA Orders Inspections of Some Boeing Dreamliners for Gaps'), story 2 tier-A=1 (sa 'Boeing Wisk breaks ground on California vertiport for air-taxi tests'), lead unchanged, moved False. Moved events: 1 of 8 (BA 2026-09-08 only).",
+          "The round-11 L9 finding read that day as 'wrong' (two unrelated stories, one lead); the ruling's rule is a plurality with a tie to the earliest, which cannot pick a side when the stories are 1-1. Events are not split (ruling: do not split), so the day still carries one lead over two stories."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Order HVST-a-3 s.1: the finding that the old rule is 'wrong on both Boeing days'; AC1(c) pins only 2026-09-08 as moved.",
+      "world_is": "Under the CTO's ruled rule only 2026-09-08 moves; 2026-08-26 cannot move under it. Whether a 1-1 unrelated-story day should be a split event, or lead differently, is the un-ruled question the order names as not this cell's."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W35-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~35",
+      "surfaced_at": "2026-09-28T23:10Z",
+      "one_line": "Mounting the two timeline routes (16->18) turns two tests OUTSIDE HVST-a-1's <paths> red: test_slash_safe_security_route.py::test_route_table_still_has_sixteen_entries and test_generation_and_pool_routes.py::test_19_the_route_set_did_not_move_and_the_retired_table_is_not_named both pin len(scoped_amgt_route_table()) == 16; AC2 reads 2 failed, 254 passed of 256 collected.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED in worktree wk-hvst-r12-35 (branch wk-AMGT_HARVST-35): base run of `python -m pytest lib/research/api/tests/ -rA --tb=line` before any edit = 256 passed, 0 failed (256 collected; the order states 255). After the four in-scope edits the same command = 2 failed, 254 passed, 256 collected; AC1 = PASS (0 failure(s)) at 18/18/==18.",
+          "FAILED lib/research/api/tests/test_slash_safe_security_route.py::test_route_table_still_has_sixteen_entries -- AssertionError: 18 of 16 routes in scoped_amgt_route_table() (assert len(routes) == 16 at :153).",
+          "FAILED lib/research/api/tests/test_generation_and_pool_routes.py::test_19_the_route_set_did_not_move_and_the_retired_table_is_not_named -- assert len(routes) == 16 at :663.",
+          "Neither file is in HVST-a-1's <paths> (which name test_scoped_amgt_mount.py and test_timeline_routes.py only); the worker did not edit them. test_scoped_amgt_mount.py's own two literal-16 asserts (:128,:129) ARE in scope and were moved to 18 with the terraform count."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-a-1 s.1 step 4 and AC2: 'Change no other assertion' and 'the api suite passes ... a pre-existing failure elsewhere is reported ... never repaired'; the cut assumed the only tests pinning the table size were test_scoped_amgt_mount.py and test_timeline_routes.py.",
+      "world_is": "Two further tests pin the table length at 16 and fail once the table returns 18; they are not pre-existing failures but a direct consequence of the mount, and outside the write grant. Left as is, the api suite is red on CLOUD after this branch drains. Remedy for the issuer: amend HVST-a-1's <paths> to add the two test files and move each len == 16 to 18 (test_19 also enumerates the AMGT-rk-6 leaves; the two timeline leaves need no new leaf count), or accept the red suite until a-2.",
+      "notes": "Worker leaves the TO status open: AC2 FAIL is the recorded output. No terraform, AWS, deploy or push was run."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W35-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~35",
+      "surfaced_at": "2026-09-29T00:10Z",
+      "one_line": "RESOLUTION of AMGT_HARVST-Z-W35-S1: the issuer's AMENDMENT 1 to HVST-a-1 (CLOUD @15caf6ed3b) added the two out-of-scope tests to <paths>; their pinned table length moved 16->18 and the api suite reads 256 passed of 256 collected.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED in worktree wk-hvst-r12-35 after merging CLOUD: `python -m pytest lib/research/api/tests/ -rA --tb=line` = 256 passed, 256 collected, rc 0; test_route_table_still_has_sixteen_entries and test_19_the_route_set_did_not_move_and_the_retired_table_is_not_named both PASSED.",
+          "Edits: test_slash_safe_security_route.py assert, its message and the section comment 16->18; test_generation_and_pool_routes.py assert at :663 16->18; nothing else in either file. Instance: deliverables/0.9.0_WK_AMGT_HARVST~35/AMGT_HARVST.TO-HVST-a-1.mount-the-two-timeline-routes.proof_of_spec.json."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Z-W35-S1 world_is: two tests pin the table length at 16 and fail once the table returns 18; remedy is an issuer amendment of <paths> (issuer ruling relayed to the worker, AMENDMENT 1 @15caf6ed3b).",
+      "world_is": "The remedy landed and was applied as bound 4 allows; Z-W35-S1's ARMED standing is spent by this. The row Z-W35-S1 itself is left as filed (append-only); the issuer's disposition row carries its close.",
+      "notes": "Filed as a NEW row because the gate refuses an in-place edit of Z-W35-S1 (content hash mutation); the issuer asked for a resolution note on the row and this is that note in the only form the channel admits."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W37-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~37",
+      "surfaced_at": "2026-09-28T23:50Z",
+      "one_line": "The `bloomberg/session` the order told AC1 to ride is NOT the session the producer used for the 12 stored 403s: it was captured 2026-09-11T05:13Z (426.5 h old at the call), carries 63 cookies, and its _px3/_px2 expired 4.1 min after capture -- while the producer's DPAPI vault session was captured 2026-09-26T22:07Z with 155 cookies. So AC1's one live 403 is evidence about the PARKED session and the endpoint, not a replay of the producer's own refusal.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by AC1 at 2026-09-28T23:44Z: org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~37/ac1_capture.json session_captured_at=2026-09-11T05:13:28Z, session_age_hours=426.52, cookie_count=63; px_cookies _px3/_px2 expires 2026-09-11T05:17:35Z.",
+          "MEASURED by AC2 (ac2_output.txt section 4) from the main tree's secrets/bbg.dpapi: vault bundle captured_at=2026-09-26T22:07:12Z, cookies=155, http_updated_at=2026-09-27T23:02:38Z; the 09-15 session (bbg-search-contract/session-after.dpapi) captured_at=2026-09-15T03:42:10Z, cookies=173. Three different sessions on the same account.",
+          "The order's own text (section 0 clause 2) names the parked session as the transport's designed session; the decomp's hypothesis list treats 'session-age' as a live axis, which a 426 h session cannot test in the producer's regime."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AC1's one call on the parked session would show the same refusal the producer's 403s show, so its status/body classification is the diagnostic observation of Z-S32.",
+      "world_is": "The parked session is 17 days older than the producer's and its PX cookies were dead 4 min after capture. Its 403 does not vary session age against the producer's regime; what it does show is that a session with no live PX trust, a different cookie set and a different capture path gets the SAME 535-byte PX block JSON on the same path. AC2 therefore rules session age out from the STORED events and vault ages, not from the live call.",
+      "notes": "Filed, not chased. Nothing here is armed: AC1 wrote no bronze/silver/gold and the parked secret was only read. COST of the lesson: compare the captured_at of the session a diagnostic rides against the session of the evidence it is set beside before reading the two as one population."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W37-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~37",
+      "surfaced_at": "2026-09-28T23:52Z",
+      "one_line": "The order's AC1/AC2 ask whether the live 403 is 'byte-identical in structure to the stored 535-byte bodies', but NO producer 403 body is stored anywhere: events.jsonl carries a byte COUNT only (12 of 12 search/query 403s and the one article 403 read 535). The only stored 403 bodies are 4 browser-context HTML pages (13,928 B, 'Are you a robot?', PX appId PX8FCGYgk4) from the 09-15 contract probes, a different response class.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by AC2 section 5 (ac2_output.txt): 12 of 12 search/query 403 events and 1 of 1 article 403 event carry bytes=535 and no body; the four bbg-*.dpapi / bbg-search-contract/response-*.dpapi files that hold a 403 body decrypt to 13,928-byte HTML (3 distinct sha256, appId PX8FCGYgk4).",
+          "The live AC1 403 is application/json, 535 B, PX keys altBlockScript/appId/blockScript/customLogo/firstPartyEnabled/hostUrl/jsClientSrc/uuid/vid, appId PX8FCGYgk4, served by Varnish/Fastly -- matching the stored pages' PX tenant and the stored producer bodies' LENGTH only."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The stored 535-byte 403 bodies exist to compare against and the live body's structure can be set beside them.",
+      "world_is": "Only the length (14 of 14 non-200 www.bloomberg.com responses, 13 stored + live) is comparable; structural identity is NOT MEASURABLE. AC2 reports the length match and the appId match, and no more.",
+      "notes": "Filed, not chased. Now that the live body is retained in ac1_capture.json (a refusal page, no credential), the NEXT producer 403 can be compared to it -- the worker's transport does not persist 403 bodies, so that would need the producer to keep them; that is a proposal only, not implemented here."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S37",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-29T00:25Z",
+      "one_line": "safe-merge.sh's --continue foreign-path guard whitelists whatever the INDEX holds when the merge conflicts, not what the MERGE staged: a peer that stages between the pre-merge clean-index check (:208) and the state snapshot (:248) has its files committed under the draining seat's name. It happened: this seat's drain merge 2751f0be77 (HVST-a-3) landed 0.7.0_AE_CloudOps~A's NEVER-2 entry + sentinel for AMGT_RESAPP uu-4.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: 2751f0be77 vs its first parent adds 12 paths; its second parent (the worker branch) vs the merge-base adds 10. The 2 extra are org/critical_paths/.open_deploys/amgt-resapp-uu4-scoped-amgt-adjusted-base-20260928.json and change_management/20260928T2357Z_amgt-resapp-uu4-scoped-amgt-adjusted-base-20260928_deploy_completion.md (author in the entry: 0.7.0_AE_CloudOps~A, opened 2026-09-28T23:57:25Z); neither parent carries either file.",
+          "The same check over this seat's other four drain merges (4350d5af00, 03e86f2909, 180989c8a8, 2dd09b20b9): landed == branch in every case, 0 foreign.",
+          "safe-merge.sh:208 refuses a dirty index BEFORE `git merge --no-commit`; :248 writes $STATE from `git diff --cached --name-only` AFTER the merge conflicts; :172-190 (--continue) refuses only paths absent from $STATE. A path a peer stages inside the merge's own run time is therefore recorded as the merge's own."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "safe-merge.sh :171-175: '--continue ... compare against what the MERGE staged when it conflicted. A path staged now that the merge did not put there is another seat's work' -- refused.",
+      "world_is": "$STATE is an index snapshot, not the merge's contribution, so the guard is blind to anything staged during the merge itself -- the busiest window on a contended tree. The swept content is byte-unchanged and committed (the entry reads back from HEAD, which NEVER-2 wants); the harm is authorship and the owner's own commit finding nothing to stage. Owner told: msg to 0.7.0_AE_CloudOps~A 2026-09-29T00:19:55Z.",
+      "notes": "DISARM (this seat, same turn, by PROCEDURE): before any --continue, compare `git diff --cached --name-only` against `git diff --name-only $(git merge-base HEAD MERGE_HEAD) MERGE_HEAD` plus the conflicted paths, and unstage nothing that is not ours without its owner. TOOL FIX, proposed to the script's authoring lane (2.0.0_SA_COO base; no base session live): write $STATE from the merge's OWN contribution (merge-base..MERGE_HEAD names + --diff-filter=U), never from the index snapshot. Proposing is legal; this seat does not implement it (CLAUDE.md section 2(a))."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W37-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~37",
+      "surfaced_at": "2026-09-29T00:27Z",
+      "one_line": "STOP RULE HIT DURING RUNNER DEVELOPMENT, NOT DURING A CAPTURE: a test of a re-authentication guard called the real SessionManager.refresh('sa'), the guard was not loaded, and the producer's credentialed login ran -- headed Chrome, the stored seeking-alpha credential submitted, two press-and-hold attempts, three metered Kimi vision calls, exit 1, no session saved. No w-2 capture invocation has been made; HVST-w-2 is stopped and stays pending.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: .scratch/auth/20260929T002023Z-sa-33f4b866/run.log in worktree wk-hvst-r12-37 (untracked): '[sa-harvest 20:20:29] cred=seeking-alpha ... headless=False ... kimi=kimi-k3'; 'clicked header sign-in button'; 'login submitted; waiting 8s'; step 2 state=BOT_WALL; two 'adaptive press-and-hold ... releasing anyway' lines; steps 0-2 '(kimi)', steps 3-4 'cache hit ... no Kimi call'; traceback ends in a Playwright TimeoutError on the disabled Sign in button; auth-evidence.json exit_code 1, bundle_present false, network_auth_corroborated false.",
+          "MEASURED that nothing in the shared runtime moved: secrets/sa.dpapi mtime 2026-09-25 22:18 EDT, progress.sqlite3 and events.jsonl mtime 2026-09-27 19:03 EDT, all older than the incident (2026-09-28 20:20-20:22 EDT); no .scratch/secrets directory exists.",
+          "CAUSE, two links: (1) my guard was a sitecustomize.py in deliverables/.../scripts/guard, meant to replace SessionManager.refresh/repair_verification inside the producer subprocess via PYTHONPATH; I passed PYTHONPATH from Git Bash as a POSIX-style path joined by ';', which Windows Python did not resolve, so the guard never installed (the check printed the unpatched name 'refresh'). (2) The same one-line command then called SessionManager(...).refresh('sa') unconditionally as the probe, so the failure of the guard WAS the forbidden act. Check and act were one call.",
+          "Ledger: org/missions/D5/AMGT/AMGT_HARVST/ledger/VENDOR_CALLS_0.9.0_WK_AMGT_HARVST_37.md '## INCIDENT 1' (same commit)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-w-2 clause 3: 'YOU DO NOT RE-AUTHENTICATE. EVER.' A guard test would exercise the guard against a stub and never reach the producer's real recovery path.",
+      "world_is": "The test reached the real recovery path: a credentialed sign-in submission and two press-and-hold interactions against seekingalpha.com from this IP, and three metered Kimi vision calls (spend not measured here). No capture, no upload and no S3 write happened, and the MAIN tree's session vault and outbox are untouched. The effect on the vendor account (a flagged or locked login) is unobservable from this seat.",
+      "notes": "BLOCKING for HVST-w-2 only: this seat stopped, made no producer invocation, wrote no proof instance and left the order pending. THE QUESTION FOR 2.0.0_SA_COO~H (and Andrew, whose word the breach touches): may the capped capture proceed, and if so on what guard? A SAFE guard design for a continuation: install it by an ABSOLUTE Windows-form PYTHONPATH, verify installation by reading the patched attribute in the CHILD interpreter and refuse to invoke the producer unless it reads patched, and test the refusal only against a stub class, never against the real SessionManager. ALSO NOT DONE and unmeasured: the Kimi spend and any account-side signal. COST OF THE LESSON: never put the forbidden act inside the probe of the thing that is supposed to prevent it; and never chain the check and the act in one command. NON-APPLICATION: a guard whose target is a stub. Also filed in this commit: nothing else; the 25-of-89 premise mismatch (config now resolves sa_symbol for 89 of 89) was found by reading and is NOT filed as its own row here."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S38",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.7.0_AE_CloudOps~A",
+      "surfaced_at": "2026-09-29T01:03:00Z",
+      "one_line": "HVST-a-2 cannot build as its halves are written: bound (D) admits no wheel that is not sha256-pinned AND named on the halves, and neither half names a pyarrow version or sha256 -- and at the measured 131.2 MiB headroom the version DECIDES stop limb 2, because the numpy-2 requirement and the 250 MiB budget pull in opposite directions.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "THE BUDGET, measured 2026-09-29 ~01:0xZ with AWS reads only (get-function-configuration, get-layer-version, the layer's presigned Location; no third-party egress): the function is python3.11 x86_64 with ONE layer, opal-amgt-print-deps:1, zipped 39,040,327 B. Taking both halves' own figure of 121,743,633 B unzipped for that layer and measuring the uu-4-only package at 2,867,013 B unzipped over 205 members, headroom against 250 MiB (262,144,000 B) = 137,533,354 B = 131.2 MiB.",
+          "THE FOOTPRINT, measured from the very layer the a-2 order cites as the estate's working pattern (pyiceberg-nessie-deps:3, 75,131,609 B zipped, CompatibleRuntimes ['python3.12'], 4139 members): pyarrow 131,208,457 B = 125.1 MiB as a top-level tree; 125.3 MiB counting its dist-info; 113.7 MiB after pruning include/, tests/ and .h/.hpp/.cc/.cpp/.pyx/.pxd/.pxi as build_zip.py does -- a 11.6 MiB saving. So a full unpack leaves 5.8 MiB spare and a pruned copy 17.5 MiB.",
+          "THE VERSION IS LOAD-BEARING, TWO WAYS. (i) The COO half requires 'a version that imports against the layer's numpy 2.2.6'. The estate's own pin in infra/aws/terraform/harvest/lambda_src/build_zip.py:40-53 is pyarrow 15.0.2 + numpy 1.26.4, cp312, taken FROM a layer and sha256-verified -- explicitly 'never PyPI'. pyarrow 15.0.2 predates numpy 2 and does not satisfy the half's own numpy-2 clause. (ii) numpy-2-capable pyarrow is a later, LARGER line, so the constraint that makes the half's clause satisfiable is the one that pushes limb 2 toward a breach. With only 5.8 MiB of full-unpack spare at the 15.0.2 proxy size, the version is the difference between CLEAR and STOP.",
+          "THE MECHANISMS DISAGREE. The a-2 COO half names 'the build script's EXISTING VENDOR_PINS pip-download (build-and-upload-scoped-amgt.sh:129), the path that already vendors jsonschema' -- i.e. PyPI, unpacked whole. The pattern the a-2 ORDER cites for the same reader (build_zip.py) fetches from an owned layer, verifies a pinned sha256 before a byte is used, and copies ONLY the pyarrow/numpy members, excluding headers, C++ sources and test trees, precisely because it 'prints the unzipped total against Lambda's 250 MiB ceiling and refuses past it'. The half names the source that is easier and omits the pruning that makes the budget work.",
+          "A UNIT AMBIGUITY THAT FLIPS THE VERDICT: both halves write 250 MiB (262,144,000 B) while AWS documents the ceiling as 250 MB. On 250 MB decimal, headroom is 250,000,000 - 121,743,633 - 2,867,013 = 125,389,354 B = 119.6 MiB, and the FULL unpack at 125.3 MiB BREACHES while the pruned copy at 113.7 MiB still fits. So the full-unpack arm passes or fails on which unit the ceiling is read in.",
+          "BEGIN-CONDITIONS OTHERWISE HOLD, verified by content: HVST-a-1 reads complete at its single status tag and its drain 180989c8a8 is an ancestor of HEAD; scoped-amgt-api.tf at HEAD carries the timeline route keys (4 mentions) and carries the gold grant 0 times, so the one IAM statement is genuinely this act's own edit as the CTO half states; all four never-widen halves match HEAD by blob, once the uu-4 CTO half is read at the corrected pin f92bc63665 rather than the GO's original 875f82fd58 (blob 4a3dcf143a vs HEAD 76b96f1cfa; 875f82fd58 is an ancestor of f92bc63665, so a re-sign, not a divergence)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-a-2 packages pyarrow through the build script's existing VENDOR_PINS pip-download as a sha256-pinned cp311 manylinux2014_x86_64 wheel, in a version that imports against the layer's numpy 2.2.6, and the unzipped total of package plus every layer stays under 250 MiB.",
+      "world_is": "No version and no sha256 is named on either half, so bound (D) ('none is admitted otherwise') admits nothing and the executing seat cannot pick one -- the issuer notes themselves place the wheel source on halves the CTO signs because it is an infra call. Measured, the two clauses are in tension: the numpy-2 clause excludes the estate's own 15.0.2, and the numpy-2-capable line is larger than the 5.8 MiB of full-unpack spare that 15.0.2's footprint leaves. The pruning that resolves it is in the pattern the order cites but not in the mechanism the half names. Nothing was built, nothing was uploaded and no build-script edit was made.",
+      "disarm_owner": "2.0.0_SA_COO~H -- the issuer of HVST-a-2 and the signer of its COO half. It names the cp311 manylinux2014_x86_64 pyarrow version and sha256 and says whether the build prunes include/tests/headers/sources as build_zip.py does; 1.0.0_SA_CTO~Z re-reads limb 2 against whichever unit the 250 ceiling is in. This lane does not choose the pin.",
+      "notes": "Filed without halting; asked COO~H in one message (20260929T010326Z) and told 2.0.0_SA_COO~Z that uu-4 is gated here rather than on it (20260929T010345Z), since the CTO ruled one combined build. NO NEVER-2 entry was opened for the combined act: the order requires it committed BEFORE the build, and opening it now would start its window against an act that cannot start, which is how an entry ages into a false RED. The earlier uu-4-only entry stays CLOSED. The worktree /c/tmp/ae-a-uu4 (branch ae-a-uu4-r46) is held with its portal at the local-only DEV 8fa7abde so the combined act can start immediately once the pin lands."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S39",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.7.0_AE_CloudOps~A",
+      "surfaced_at": "2026-09-29T01:38:00Z",
+      "one_line": "The ONE IAM grant a-2's halves name (s3:GetObject on amgt/harvest/gold/*) cannot satisfy a-2.AC1: both timeline loaders reach S3 through paginated list_objects_v2, and the role's only ListBucket statement is conditioned on a prefix set that contains neither the gold prefix nor the silver article prefixes -- so both routes answer AccessDenied, not data. Held BEFORE the upload.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "THE RANGE ROUTE'S LIST: scoped_amgt._timeline_snapshot_rows (in the built artifact) calls publication_gold._latest_gold_snapshot_rows(table), which at publication_gold.py:653 does client.get_paginator('list_objects_v2').paginate(Bucket=store.HARVEST_BUCKET, Prefix=store.table_prefix('amgt','gold',table)) and only then get_object on the newest key. Resolved live: the three prefixes are amgt/harvest/gold/chatter_daily/, amgt/harvest/gold/chatter_event/ and amgt/harvest/gold/article_security_mention/, bucket opal-data-harvest.",
+          "THE DAY ROUTE'S SECOND LIST: scoped_amgt._timeline_article_loader joins headlines via _timeline_silver_articles -> publication_gold._iter_latest_articles -> store.silver_latest, whose body also paginates list_objects_v2. Resolved live over SOURCE_FOR_PUBLISHER {sa, bbg, barrons, wsj, ft}: barrons/harvest/silver/article/, bloomberg/harvest/silver/article/, ft/harvest/silver/article/, seeking-alpha/harvest/silver/article/, wsj/harvest/silver/article/.",
+          "THE GRANT AS NAMED: a-2 COO half s.1 item 3 and CTO half s.2 name ONE statement, s3:GetObject on arn:aws:s3:::opal-data-harvest/amgt/harvest/gold/*, and a-2's bound 1 admits 'no IAM change beyond the ONE read-only gold grant'. GetObject authorises the object read, never the bucket-level list.",
+          "THE ONLY LISTBUCKET STATEMENT IS CONDITIONED AWAY FROM BOTH: infra/aws/terraform/harvest/scoped-amgt-api.tf's inline policy opal-amgt-scoped-api-grants (resource aws_iam_role_policy.scoped_amgt_api_grants at :193) carries Sid ListOnlyThePoolPrefixesTheAdapterReads with Condition StringLike s3:prefix = local.scoped_amgt_pool_prefixes. That list is publication-links/v1/, publications/v1/, universe/v1/, crosswalk/v1/, drafting/v1/, peers/v1/, management/v1/, posture/v1/, derived/model_block/, packs/ and amgt/harvest/state/filing_attempt/. It contains NO amgt/harvest/gold/ and NO */harvest/silver/article/.",
+          "PRE-APPLY IAM READ ON THE APPLIED PLANE, this session: role opal-amgt-scoped-api-role carries 1 inline policy (opal-amgt-scoped-api-grants) and 1 attached (AWSLambdaBasicExecutionRole); 25 resources across its inline statements, of which 0 are under amgt/harvest/gold/. That reproduces AMENDMENT 1's own figures exactly, so the disagreement is about ACTIONS, not about which role or which plane.",
+          "NOTHING IRREVERSIBLE HAS HAPPENED. The build is CLEAR (rc=0; deployed 203 -> fresh 331 members with every mover named by one of the four halves; 4 planted-mutation controls FIRED; size 253,105,932 B = 96.6% of 262,144,000 with 9,038,068 B spare) and the artifact was NOT uploaded, no terraform plan was run, and no IAM or route edit was made. The function still runs CodeSha256 vBSCqd71wGn1GNOpaWGKr+KdI6t+zo3QVovzEd9Mrew= and the artifact key's newest version is still 0XDw5hJWOYgx3P8CSA42oAlkLuTlupkS."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Adding ONE read-only statement, s3:GetObject on arn:aws:s3:::opal-data-harvest/amgt/harvest/gold/*, removes the third reason the timeline cannot answer, and a-2.AC1 then reads HTTP 200 WITH DATA on both routes for 992_HK_Equity.",
+      "world_is": "Both loaders LIST before they GET, and s3:ListBucket is a bucket-level action the GetObject grant does not confer. The role's single ListBucket statement is prefix-conditioned onto a set that excludes both the gold prefix and the five silver article prefixes, so with the named grant applied the range route is denied at its gold list and the day route is denied again at its silver join. AC1 would FAIL 200-with-data and fire the combined rollback -- a production apply that moves CodeSha256 twice for a result predictable before the upload. This is AMENDMENT 1's own class (row Z-S36, an IAM claim that was an inference rather than a read) one limb deeper: that amendment corrected the ACTION on the object and did not reach the bucket-level action the same call needs.",
+      "disarm_owner": "2.0.0_SA_COO~H -- the issuer of HVST-a-2 and signer of its COO half, with 1.0.0_SA_CTO~Z re-reading the radius. Either the grant becomes s3:GetObject + s3:ListBucket with amgt/harvest/gold/ and the five <source>/harvest/silver/article/ prefixes added to the existing condition, or the cell is a round-13 redesign. This lane does not widen IAM: a-2's bound 1 admits one grant and no other.",
+      "notes": "Held BEFORE the upload rather than discovering it at AC1, so no artifact version and no CodeSha256 move was spent on it. Asked COO~H in one message (20260929T013801Z). The combined NEVER-2 entry amgt-combined-uu4-a2-scoped-amgt-timeline-and-adjusted-base-20260929 stays OPEN with legs SHA, SIZE and CLOSURE proven and the irreversible legs untouched; its window is 8h from 01:15Z. The build-script change (act 1) is committed and re-runnable: pyarrow==16.1.0 in VENDOR_PINS with its sha256 printed before unpack, lib.opal_naming in the closure roots, the 8 registry data members, build_zip.py's prune set, two admitted native wheels, and the stop-limb-2 size gate."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W37-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~37",
+      "surfaced_at": "2026-09-29T02:56Z",
+      "one_line": "The resumed w-2 capture reached seekingalpha.com ONCE and got HTTP 402 (351 B) on the account check /api/v3/account/1btfwdu/info, where the last sa run (09-26 09:44Z, CALL 1 of ledger ~22) got HTTP 200 (5,149 B). The producer classed it account_or_harvester_unavailable and set a 3600 s sa cooldown to 03:49:20Z, so the other 4 jobs were suppressed, 0 listing pages and 0 articles were fetched, and the capture stopped at the first suppression. Cause of the 402 is NOT MEASURED.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: events.jsonl (main tree runtime) row {'event':'http','publisher':'sa','path':'/api/v3/account/1btfwdu/info','status':402,'bytes':351,'at':'2026-09-29T02:49:20.98Z'}; the same path returned 200 / 5,149 B on 2026-09-26 (org/missions/D5/AMGT/AMGT_HARVST/ledger/VENDOR_CALLS_0.9.0_WK_AMGT_HARVST_22.md CALL 1). Guards were installed and verified in the runner's own process (11 of 11 entry points IS_GUARD=True, w2_ac1_output.txt); guard trips 0, re-auth 0, verification repairs 0, browsers 0, Moonshot calls 0 (w2_ac7_output.txt).",
+          "MEASURED: progress.sqlite3 cooldown row for sa now (until 1790653760.98 = 2026-09-29T03:49:20Z, reason account_or_harvester_unavailable, the producer's own 3600 s cooldown); plan cursor advanced 8 -> 13 (5 jobs consumed: BP attempted, BA/BTI/BZLFF/CDNS cooldown-suppressed); the four suppressed jobs never read their known_ids.",
+          "AC2 (upload-harvest) then read a sa outbox with 0 pending rows and every sa delta was +0 (w2_ac2_output.txt); AC4 has 0 skips to present (w2_ac4_output.txt)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-w-2: the saved sa session that served 4 requests on 09-26 still serves; up to 25 jobs capture new sa articles behind --new-only.",
+      "world_is": "The first request of the resumed capture, the account check, returned HTTP 402 (a payment/entitlement status). Whether that is the subscription, the saved session, the 00:21Z incident's submitted sign-in from this IP, or a Seeking Alpha-side change is unmeasured; the last 200 was 2026-09-26 09:45Z and the 00:21Z incident sits between it and the 402 (02:49Z), so the data cannot separate them. sa capture is unreachable until an account-holder looks; the cooldown itself clears at 03:49Z without action.",
+      "notes": "A zero is an acceptable outcome (order clause 3) and the run stopped at the first suppression rather than waiting out the cooldown (the criterion's timeout is 1800 s; the cooldown is 3600 s) or retrying, which the word does not allow. What an account-holder can read that this seat cannot: whether the Seeking Alpha subscription is active and whether the account shows the 00:21Z sign-in. NON-APPLICATION: nothing in the producer or the estate was changed."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W37-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~37",
+      "surfaced_at": "2026-09-29T02:57Z",
+      "one_line": "HVST-w-2's premise 'the sa-symbol ceiling HVST-v-2 measured: 25 of 89 resolved securities carry a usable sa_symbol' is stale at this HEAD: lib/opal_data_harvest/config.json now names symbol_resolution_source SA_SYMBOLS_MERGED_89_20260927.json and the runner read 89 of 89 securities WITH an sa_symbol (0 without), so the 25-job cap is a cap on jobs, not a ceiling on resolvable securities, and no job is 'skipped for a missing sa_symbol'.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by AC1 (w2_ac1_output.txt): 'universe: 89 securities, 89 with an sa_symbol (0 without)'; the plan's next 25 jobs all carry a symbol (BP, BA, BTI, BZLFF, CDNS, CNI, CELH, ...).",
+          "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-w-2.capture-capped-new-only.md clause 0.1 states the 25-of-89 ceiling; lib/opal_data_harvest/config.json symbol_resolution_source = org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/SA_SYMBOLS_MERGED_89_20260927.json."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Only 25 of 89 securities carry a usable sa_symbol, so 25 jobs is the ceiling and the rest would be skipped for a missing symbol.",
+      "world_is": "All 89 resolve at this HEAD. The cap (5 x 5 jobs) still bounds the capture; the missing-symbol bucket of AC1 reads 0 of N.",
+      "notes": "No effect on this cell's outcome (the capture stopped on the 402, row Z-W37-S4). Filed so a later cut does not size a capture against 25."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W39-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~39",
+      "surfaced_at": "2026-09-29T04:05Z",
+      "one_line": "lib/research/harvest/timeline_api.py get_timeline_event (route 3) keys an event by first_day and recomputes event_id as publication_gold._event_id(security_key, first_day, last_day); once event_id carries the story (HVST-b-1) that recomputed id matches NO chatter_event.event_id, and two events on one first_day cannot both be served (the loop returns the first match). timeline_api.py is outside HVST-b-1's paths and was not changed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: lib/research/harvest/timeline_api.py:378 `event_id = publication_gold._event_id(security_key, match[\"first_day\"], match[\"last_day\"])` and the match loop at :368-370 (`if fd == day: match = erow; break`), at 8dbea345c9.",
+          "MEASURED: HVST-b-1 _event_id(security_key, first_day, last_day, story_key=None) keeps the three-argument form yielding the OLD day-only id, so nothing crashes and lib/research/harvest/tests (153 passed) stays green; the served body's event_id would differ from the stored chatter_event.event_id (the stored one hashes the lead article_key too). The route already reads the stored row (`match`), which carries event_id and lead_article_key."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "test_timeline_api.py:213 and timeline_api.py:378 assert the served event_id equals _event_id(security, first_day, last_day), one event per first_day.",
+      "world_is": "After HVST-b-2 serves story-carrying ids, route 3 would print an id no stored row has, and a day with two qualifying stories would show only the first. Nothing is wrong until HVST-b-2 serves the rebuilt table; a cell owning timeline_api.py should read event_id off the matched row and key the route by (first_day, event_id) or lead_article_key.",
+      "notes": "Filed, not fixed: the path is outside this order's write grant. On the round's 7 in-memory events no first_day carries two events (AC1), so the served day has no collision yet; the wrong id would still be served."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W39-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~39",
+      "surfaced_at": "2026-09-29T04:06Z",
+      "one_line": "A security's own name cannot be read off headline FREQUENCY alone: NVDA_US_Equity has 4 tier-A headlines in the landed data, 3 of them the 06-01 PC story, so 'pc' is carried by 3 of 4 (75%) and a frequency-only name detector dropped it as the company name, deleting the NVDA 06-01 event (AC1 read 6 events, NVDA gone). The shipped rule also requires a stem on >= 3 distinct days, under which NVDA's name ('nvidia', 2 days) is NOT dropped and NVDA is never split.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: the first in-memory build at this cell (name = stem in >= 3 of every 4 titled tier-A headlines, sample >= 4) returned 6 events, NVDA 06-01 absent; the build with the distinct-days floor (_STORY_NAME_MIN_DAYS = 3) returned 7 with NVDA 06-01 kept (ac1_output.txt). Per-security tier-A counts printed at the cell: NVDA A=4, BA A=24, 992_HK A=12, COST A=12, HD A=9.",
+          "This is the fit-to-cases hazard the issuer's note names: the distinct-days floor and the _STORY_CLASSES earnings table (needed for 992 02-12 and HD 08-18, whose pairs share no token beyond the company name) were both added after reading the 8 served events; the lower token floor (3 -> 2, for 'pc') likewise. All three are stated in publication_gold.py's block comment as failure modes (c)-(e)."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-b-1 face section 1: NVDA 06-01's 'only shared token (nvidia) is dropped as ubiquitous, pc is below the 3-character floor'.",
+      "world_is": "With three same-day headlines out of four, 'pc' is as frequent as the name; the name is only separable by spread over days, and a security with a single burst has too few days to show it, so its headlines are linked on the name (never split). Thin securities (under 4 titled tier-A headlines) are likewise never split.",
+      "notes": "A single-burst security's unrelated same-day stories will not be separated by this rule; round-13's served rows are the first test on more than one such security."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S40",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-29T05:01:34Z",
+      "one_line": "HVST-b-1's merged one-story rule would REGRESS a served lead the round-12 L9 graded right: rebuilt in memory at CLOUD 21cea628b4, BA_US_Equity 2026-09-08 leads with 'Everything to Know About the Boeing Jet That Overshot a Miami Runway' again (served today: 'Boeing Delivers 51 Jets in August...'), because the runway headline over-merges into the deliveries story on the generic token 'jet' and the lead is the story's earliest tier-A article. b-1's STOP limb guarded the six one-company events only, so its criteria passed.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED by the issuer, read-only, at CLOUD 21cea628b4: publication_gold.event_rows over the newest mention snapshot (263 rows) + silver headlines (120) yields 7 events; per served event the rebuilt lead is SAME on 6 of the 7 kept, MOVED on BA 09-08 (deliveries -> runway); articles_total 4->3 there and 3->2 on 992_HK 05-22 (tier-B dropped).",
+          "The worker disclosed the over-merge itself (HVST-b-1 report: 'BA 09-08's Barrons runway headline joins the deliveries pair on \"jet\"'); the round-12 L9 (ADJUDICATION_v20.md @19dfdd2579) read BA 09-08's tier-A stories as unrelated and graded its deliveries lead as naming the burst (7 of 8).",
+          "Under the C-HV-EVENT-SPINE round-12 addendum a runway story of 1 tier-A article does not qualify on its own, so the correct outcome is the deliveries story alone as the event, leading with the deliveries headline."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-b-1 AC1 STOP limb: the six one-company events keep span and tier-A membership (6/6) -- PASS; nothing guarded the LEADS the round-12 L9 graded right.",
+      "world_is": "A b-2 rebuild on the merged rule would ship a timeline whose BA 09-08 lead names the minority story, undoing round 12's graded fix on the served page. b-2 is HELD: the issuer will not sign its pair over a known served regression.",
+      "notes": "DISARM (issuer, same turn): HVST-b-1 is REOPENED by AMENDMENT 1 with a criterion that no lead the round-12 L9 graded as naming its burst regresses (7 kept events: rebuilt lead == served lead), and the same worker is continued to fix the over-merge by a mechanism it states; b-2's pair is written only after that lands. The criterion gap is the issuer's: the STOP limb covered membership, not the outcome the previous round graded."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~40",
+      "surfaced_at": "2026-09-29T09:00:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W40-S1",
+      "one_line": "Planted-fixture mechanism test (HVST-c-1 AC2): a 6-article, 3-day, 4-publisher one-story burst that is a security's ONLY coverage forms 0 events, because the rule's security-name step strips the story's own words (quantum, battery, plant) as the name and the paraphrased headlines then share no term.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~40/ac2_output.txt, section FIXTURE variant 1 (rc 0): event_rows on the fixture returns 0 events; _security_name_tokens over its 5 tier-A headlines on 3 days returns ['batter','plant','quantu','zorbex']; _security_stories splits it into 4 stories, [wsj-1, ft-5], [bbg-2], [wsj-3], [bbg-4]; no single-publisher story qualifies.",
+          "lib/research/harvest/publication_gold.py (CLOUD 278c53f472) _security_name_tokens and the HVST-b-1 comment block, failure mode (d)/(e): the name is inferred from a stem carried by 3 of 4 tier-A headlines on >= 3 days, a test a security whose only coverage is one multi-day story passes with the story's own words.",
+          "Variant 2 of the same fixture (the same six articles among six unrelated tier-A headlines on other days) strips only 'zorbex' and forms the story, so the loss is specific to a security with no other coverage. A FIXTURE, not a held-out grade; the harvest holds no such security in its newest snapshot (0 story-level bursts of >= 5 articles over >= 2 days)."
+        ]
+      },
+      "spec_asserts": "HVST-c-1 face section 1: 'A planted fixture of the larger shape (5+ articles over 2+ days) MAY be run as a MECHANISM test' -- read as the rule forming the fixture's story as one event.",
+      "world_is": "On the rule as landed, the larger shape is not formed for a security whose coverage is one burst (a newly covered name's first story), so the only mechanism test of that shape reads a recall failure. Whether real data reaches this case is unmeasured: the harvest has none today.",
+      "notes": "Not fixed here (cell writes no code). Enrichment candidate for the next round; the fixture script is ac2_burst_shape_census.py."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~40",
+      "surfaced_at": "2026-09-29T09:00:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W40-S2",
+      "one_line": "Planted-fixture mechanism test (HVST-c-1 AC2, variant 2): the rule groups the 6-article, 3-day story as one story but the event covers only the two qualifying days (4 articles, 09-10..09-11); the third day's tier-A ft article and tier-B sa article are left out because that day has one tier-A publisher.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~40/ac2_output.txt, FIXTURE variant 2: stories include the 6-article group [wsj-1, bbg-2, wsj-3, bbg-4, ft-5, sa-6]; event_rows returns 1 event 2026-09-10..2026-09-11 articles=4 (A=4 B=0) days=2, members wsj-1, bbg-2, wsj-3, bbg-4.",
+          "lib/research/harvest/publication_gold.py event_rows docstring: an event's span is the merged run of QUALIFYING days (>= 2 articles and >= 2 tier-A publishers that day); only articles inside [first_day, last_day] are members, so a story's tail day with one tier-A publisher is outside the span by construction."
+        ]
+      },
+      "spec_asserts": "HVST-c-1 face section 1(b): burst-shape verdict read as the rule's story becoming one event over the burst's whole span.",
+      "world_is": "The rule's event boundary follows qualifying days, not the story: a trailing day of one publisher is dropped from the event and its articles appear in no event. By design in the rule's text; recorded because a real burst's tail would read as a smaller event.",
+      "notes": "INERT: it is the ruled behaviour (section 1b), no defect claimed."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~40",
+      "surfaced_at": "2026-09-29T09:00:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W40-S3",
+      "one_line": "HVST-c-1 AC2 names 'merged run (the qualifying merge, gap <= 1 day)' without saying whether a run is of any tier-A/B day, of qualifying days, or of one story; the three readings give 12, 1 and 6 bursts exceeding 3 articles or 1 day, so the worker printed all three and took the STORY-level one for the verdict line.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~40/ac2_output.txt sections (I) A/B-day runs: 12 exceed (2 held-out, several unrelated stories chained), (II) story-blind qualifying-day runs: 1 exceeds, (III) story-level runs: 6 exceed (0 held-out); story-level larger shape (>= 5 articles over >= 2 days): 0, A/B-day larger shape: 3 (all in-sample).",
+          "The verdict line 'larger burst shape: UNEXERCISED' is read on (III), the rule's own unit (an event is one story); on (I) the same census would read EXERCISED (3 bursts, 0 held-out) -- either way 0 held-out."
+        ]
+      },
+      "spec_asserts": "HVST-c-1 AC2 expectation: 'the distribution of tier-A/B articles per (security, day) and per merged run (the qualifying merge, gap <= 1 day)'.",
+      "world_is": "The order did not fix the unit of a merged run; the verdict reads differently on the loosest unit (EXERCISED) and the rule's unit (UNEXERCISED). No reading yields a held-out burst. Also added beyond the order: AC1's tier-A-less same-security cluster supplement (6 clusters, all tier-B, none a story by the rule) and AC4's part 3 listing of all held-out tier-A/B rows.",
+      "notes": "Stated for the L9 read of AC4 and the round-14 analysis; no code or served state touched."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~41",
+      "surfaced_at": "2026-09-29T08:56:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W41-S1",
+      "one_line": "HVST-d-1 AC2 (d): with the 'Amazon' alias the AMZN crash coverage forms ONE event of 3 articles on 2026-09-07 only, led by barrons 'Scene of Fatal Amazon Plane Crash', not the 6-article, 09-06..09-10 burst the ruling pictures; bbg's 09-06 first report and its 09-10 NTSB piece are outside it.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~41/ac2_output.txt (d): 1 NEW event, AMZN_US_Equity 2026-09-07..2026-09-07 days=1 articles=3 A=2 B=1 pubs=3, tier-A publishers barrons and wsj, lead barrons:WP-BAR-0001904504; members barrons 1904504 (A), wsj 59813697 (A), bbg TL0J5YKJH6V500 (B).",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~41/ac2_output.txt (e): AMZN stories (4): [TKNDM8T96OSI00], [TKQWO4KK3NYB00], [TKYJAAVTTCZL00, WP-BAR-0001904504, 59813697, TL0J5YKJH6V500, WP-BAR-0001904706], [TL4E5FKJH6V400]. bbg TKYJAAVTTCZL00 (09-06, tier A, 'Amazon Cargo Plane Overshoots Runway in Miami, Killing Five') is in the crash story but its day has ONE tier-A publisher, so it is outside the merged qualifying span (row Z-W40-S2's mechanism); bbg TL4E5FKJH6V400 (09-10, tier A) is a story of its own, and barrons 1904706 (09-08, tier B, Boeing headline) is in the story but outside the span.",
+          "lib/research/harvest/publication_gold.py event_rows: an event is the qualifying days' merged run of ONE story; only articles inside [first_day, last_day] are members. The name-detection step strips only 'amazon' from AMZN's six tier-A headlines (the burst SURVIVES it: Z-W40-S1 does not bite here), so the narrowness comes from the span rule and from the 09-10 headline sharing 'crash' and 'fatal' with the story but being kept out by the tight-cluster refusal, not from the alias."
+        ]
+      },
+      "spec_asserts": "HVST-d-1 AC2 (d) expected 'every NEW event (expected: AMZN's crash burst)'; ROUND_ANALYSIS.round14 s.2 pictures the crash articles as one burst of tier A/B articles.",
+      "world_is": "The alias change makes the crash coverage reach tier A and yields ONE AMZN event, but a narrow one: 3 of the 6 crash-pattern articles, one day, and a lead that is not the first report. HVST-d-2 will serve exactly this event if it builds from securities.universe.json.",
+      "notes": "ARMED because the d-2 never-widen pair must name this event as the expected outcome (both branches), and a reader of the served event sees a smaller story than the coverage. Not fixed here (the order forbids a tier-rule or one-story-rule change). Scripts: ac2_rebuild_in_memory.py."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~41",
+      "surfaced_at": "2026-09-29T08:57:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W41-S2",
+      "one_line": "HVST-d-1 AC2 (a): the 'Amazon' alias moves EXISTING served rows beyond tier: the matcher sums every alias independently, so mention_count of AMZN rows jumps (crash article 2 -> 10), and AMZN joins the co-mention list of 27 existing pairs across 14 securities (BA, COST, HD, 992_HK, NVDA, ...), including all 5 securities behind the 7 served events.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~41/ac2_output.txt (a): 'existing pairs whose CO-MENTION list moves under the alias change = 27, across securities [992_HK, AAPL, BAC, BA, COST, HD, INTC, JNJ, MU, NOVN_SW, NVDA, TSLA, ULVR_LN, UL_US]'; 8 existing AMZN pairs change tier/flags/count (mention_count 1->2, 1->4, 2->8, 2->5, 2->10, 2->5, 2->7, 1->2).",
+          "lib/research/harvest/publication_gold.py _match_counts: 'every alias independently, summed', so 'Amazon' also matches inside 'Amazon.com' and 'Amazon.com Inc'; the same overlap already exists for 'Apple Inc' + 'Apple'.",
+          "The move is on the same 263 served rows plus 12 new ones (275); the mention comparison in ac2 is over signal_tier, the two flags, mention_count, blocks_hit and match_forms, and co_mentioned_securities is reported separately, so a served-row diff at HVST-d-2 will show co-mention/is_roundup changes on rows whose tier did not move."
+        ]
+      },
+      "spec_asserts": "HVST-d-1 face section 1: the rebuild's effect is read as new matches and tier moves on Amazon's own rows.",
+      "world_is": "The alias change is not confined to AMZN rows: the co_mentioned_securities and co_mention_count columns of 27 already-served pairs of other securities change, so HVST-d-2's served diff is wider than AMZN's row delta; whether any is_roundup flag flips is not printed here.",
+      "notes": "ARMED for HVST-d-2's never-widen pair: its blast radius has to name co_mention columns of other securities, not only AMZN. Not fixed here."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~41",
+      "surfaced_at": "2026-09-29T09:31:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W41-S3",
+      "one_line": "HVST-d-2 pair reads: the COO half s.4.2 counts AMZN 161 and TSM 215 daily cells 'moved' over the whole new range, but only 156 and 210 are cells that MOVED on days <= 2026-09-24; the other 5 each are extension cells (2026-09-25..29), so the count is not an ALIAS-only figure.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~41/d2_ac1_output.txt (d): 'daily: moved cells by security (days <= 2026-09-24): {AMZN_US_Equity: 156, TSM_US_Equity: 210} ; extension cells (2026-09-25..2026-09-29) for all 191 securities: 955' -- 156 + 5 = 161 and 210 + 5 = 215, the figures the COO half names.",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round15/NEVER_WIDEN_HALF_COO_D2.md s.4.2: 'AMZN_US_Equity 161 cells ... TSM_US_Equity 215 cells' listed under ALIAS, and 'DRIFT, range extension: 955 new rows' listed separately, so the 5 extension cells of each are in both lists."
+        ]
+      },
+      "spec_asserts": "COO half s.4.2 (and CTO half s.1): ALIAS = AMZN 161 cells, TSM 215 cells; DRIFT range extension = 955 rows; read as disjoint sets.",
+      "world_is": "The two lists overlap by 5 AMZN cells and 5 TSM cells. AC1's check adds the extension days to its moved count to reproduce 161 and 215 (156 + 5, 210 + 5), and the served rows moved exactly as the halves name: no cell outside AMZN and TSM moved on any day <= 2026-09-24, and 955 extension rows landed.",
+      "notes": "INERT: a counting convention in the halves, no served row differs from what they name. Recorded because a reader who takes 161 as ALIAS-only would look for 5 alias cells that are extension cells."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~42",
+      "surfaced_at": "2026-09-29T11:35:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W42-S1",
+      "one_line": "HVST-e-2: the AC1 act ran at 11:22Z under a command the worker meant as a dry run, and its stdout was cut at 60 lines by a pipe to head; the act itself was the sanctioned one and landed inside the pair.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~42/e2_ac1_output.txt (header states what was captured and what was cut)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~42/e2_ac1_post_act_verify_output.txt: AC1-POST-ACT PASS; mention parts 4 -> 5, daily 5 -> 6, event 7 -> 7, 0 OUTSIDE THE PAIR",
+          "S3 written keys: amgt/harvest/gold/article_security_mention/date=2026-09-29/part-20260929T112204Z.parquet ETag=b8118b05d3160c7c31b4955c22732afe; amgt/harvest/gold/chatter_daily/date=2026-09-29/part-20260929T112222Z.parquet ETag=06025a62eb771b336f33fe097d50c61c"
+        ]
+      },
+      "spec_asserts": "TO HVST-e-2 s.2/s.3: one build-mention then one build-daily, each once, AC1 prints (a)-(e) in order; the halves cover exactly that act at as-of 2026-09-29 or 2026-09-30.",
+      "world_is": "The worker patched a --dry-run flag into the AC1 script, the patch did not apply (its anchor string did not match), and the script was run anyway piped through head -60. The full act ran (a pre-put in-memory prediction inside the pair had passed first, as the script always does), both puts landed once each, and the pipe cut the printed output after step (d); steps (e) and the S3 key list were not captured from that run.",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "INERT: no second put is possible from the script (a re-run stops at step (a) because the BEFORE state changed) and nothing was deleted. Recovery of the record: the captured output is saved verbatim as e2_ac1_output.txt, and ac1_post_act_verify.py re-reads (c), (d), (e) from S3 into e2_ac1_post_act_verify_output.txt. Not recoverable from S3 now: a BEFORE listing of the ETags of the OLDER prior parts (the newest-before ETags equal the COO half s.3; the 09-24 mention/daily and 09-29T062617Z event ETags equal the round-15 d-2 script's recorded BEFORE_EXPECT)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~42",
+      "surfaced_at": "2026-09-29T11:36:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W42-S2",
+      "one_line": "HVST-e-2: AC1's literal invocation is write-once, so a verifier re-running it after the act reads the STOP branch of step (a), not the pass output.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~42/scripts/ac1_rebuild_two_tables.py step (a): compares S3 to the COO half s.3 BEFORE state and stops before any put when it differs",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~42/e2_ac1_post_act_verify_output.txt: newest mention part is 20260929T112204Z, not the s.3 part 20260929T092419Z"
+        ]
+      },
+      "spec_asserts": "TO HVST-e-2 AC1 (a): BEFORE expected as at the cut in section 2; if different, STOP before the first put. The criterion invocation is the one script.",
+      "world_is": "After the act the S3 state no longer equals the cut, so the same invocation prints the STOP branch and rc 1. That is the designed behaviour of (a), not a defect. The instance therefore records the act's own output for AC1 and cites ac1_post_act_verify.py (read-only, re-runnable) for the AFTER, moved-rows and prior-parts checks.",
+      "notes": "INERT. Grader note for L9: re-run ac1_post_act_verify.py, not the write-once script."
+    },
+    {
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~44",
+      "surfaced_at": "2026-09-29T12:20:00Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W44-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "one_line": "HVST-f-2: bounding the name stems by the matched aliases stops a story's words being read as the name, and also stops a brand or ticker stem that is in no alias being stripped; served events unmoved 8 of 8, 0 of 29 securities' stems changed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~44/scripts/ac2_served_events_unmoved.py: name stems old vs new identical for all 29 securities with tier-A/B rows in the served snapshot (275 rows, 56 securities)",
+          "lib/research/harvest/publication_gold.py _security_name_tokens: a stem is a name only if it is also a stem of a matched alias (_alias_stems)"
+        ]
+      },
+      "spec_asserts": "TO HVST-f-2 section 1: read the security's name from the stems of its own matched aliases instead of, or bounding, the inference from headline frequency; the criteria grade the outcome.",
+      "world_is": "The mechanism chosen bounds the frequency inference by the alias stems (intersection). A security named in its headlines by a ticker or brand in no alias (round-16 census: UPS, Google) no longer has that word stripped when its sample passes the frequency test, so that word becomes a linking term; no served security is in that state today (0 of 29 changed), and the round-16 ruling already places the ticker/brand under-count in its own per-security census.",
+      "notes": "INERT. Rows with no match_forms keep the old inference (a hand-built row or one predating the column); every real mention row carries the column (275 of 275)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W43-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~43",
+      "surfaced_at": "2026-09-29T12:28:15Z",
+      "one_line": "HVST-f-1: no English dictionary is installed or in the estate, so AC1's 'every form that is an English dictionary word flagged' is met by a proxy, not a dictionary.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/scripts/_common.py: CURATED_WORDS, flags(), corpus_lowercase_counts()",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/ac1_output.txt: the English-dictionary flag line and the CURATED list line"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO HVST-f-1 AC1: every form of 3 characters or fewer and every form that is an English dictionary word flagged.",
+      "world_is": "Python 3.11.9 here has no nltk, wordfreq, english_words or spell-checker; /usr/share/dict is absent; no words file exists in the repo (a glob for *words*/*wordlist*/*english*/*dictionary*/*stopwords* found only proof files and two DS_MarketIntelligence stopword lists). The DICT-WORD flag is the union of sklearn ENGLISH_STOP_WORDS (318 function words), a 43-word curated list I authored (printed by AC1), and 'the form appears in ordinary lower case in the 120 articles'. A form without the flag is not certified a non-word.",
+      "notes": "INERT. The short (<=3 characters) flag is exact; only the dictionary flag is a proxy. The CVO text read (AC4) is the check on any form the proxy passed."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W43-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~43",
+      "surfaced_at": "2026-09-29T12:28:15Z",
+      "one_line": "HVST-f-1: class T2 (ticker root with the share-class suffix removed) generates 0 forms, because no ticker in the 191 carries a share-class suffix.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/ac1_output.txt: '== CLASS T2 ...' block, forms generated=0",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/scripts/_common.py: ticker_forms()"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO HVST-f-1 AC1: per form class, ticker root; ticker with exchange stripped; brand or short name.",
+      "world_is": "All 191 tickers are 'ROOT EXCHANGE' with no /X or .X class suffix (the two slash cases are trailing-slash tickers 'BP/' and 'NG/' on London lines, which T1 strips). T2 therefore equals T1 for every security and generates 0 forms; the class is printed with 0 of 191 and its reason rather than dropped.",
+      "notes": "INERT. The universe has no dual-class name such as BRK/B, so a ticker-root rule and an exchange-stripped rule are the same set here."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W43-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~43",
+      "surfaced_at": "2026-09-29T12:28:15Z",
+      "one_line": "HVST-f-1: the served matcher is case-insensitive, so a one-letter ticker counts lower-case words: form 'T' (AT&T) adds 131 spans, 128 of them the lower-case 't' of contractions such as don't.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py:_span_pattern (re.I) and :_alias_pattern",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/ac2_output.txt: form='T' sample, 128 lowercase hits in ac1_output.txt flags"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO HVST-f-1 clause 2: match with the SERVED matcher, publication_gold._match_counts (one span, one count, word-bounded).",
+      "world_is": "publication_gold._span_pattern compiles with re.I and (?<!\\w)...(?!\\w) bounds, and an apostrophe is a non-word character, so the t after the apostrophe in don't is a word-bounded match of 'T'. The census reports it as the served matcher would count it; AC2 prints the samples. The same holds for 'V' ('V-8'), 'F', 'C', 'NOW' and 'COST'. This cell measured with the served matcher as ordered and did not build a case-sensitive variant.",
+      "notes": "INERT. Fact for the round-17 analysis; it recommends no rule."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W45-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~45",
+      "surfaced_at": "2026-09-29T14:40:00Z",
+      "one_line": "HVST-g-1: limb (a) over the pool's 250 names refuses the ruling's own whole-brand entry UBS, because a keyless coverage row named 'UBS' is another of the 250 names.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/scripts/ac3_rebuildable_and_file.py output: 'whole-brand entry REFUSED in code: {\"brand\": \"UBS\", \"reason\": \"limb_a_other_security_brand:#name240\", \"security_key\": \"UBS_US_Equity\"}'",
+          "lib/research/harvest/universe_securities.py brand_refusal() and securities_from_universe() forms_by_key (indexes all 250 names, keyed or not)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/ac2_output.txt: per FORM 'ticker UBS spans=7 pairs=5' and no whole_brand UBS row"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO section 1 (issuer's reading): limb (a) refuses a brand that is an alias or company name of ANY OTHER of the pool's 250 names; ruling 2 (ROUND_ANALYSIS.round17.md @c296f4ba12) lists UBS among the whole-brand names to admit.",
+      "world_is": "Names row 240 of universe/v1/2026-09-16.json is {security_key: None, ticker: None, name: 'UBS', source: 'coverage', resolution: 'UNRESOLVED'}, so its company name is 'UBS'. Applied as written, limb (a) refuses UBS_US_Equity -> 'UBS' (reason limb_a_other_security_brand:#name240), so 6 of the 7 ruled brands are admitted (7 of the file's 8 entries; ASML is listed for both its listings). The loss is small: UBS_US_Equity's exact-case ticker form UBS is still admitted (T1), and all 7 added UBS spans in AC2 are that upper-case form. Only a lower-case or mixed-case 'Ubs' would have been added. The one-line alternative is to index only names that carry a security_key in universe_securities.securities_from_universe (forms_by_key), which would admit UBS; the worker did not choose it because the issuer's text says 250.",
+      "notes": "INERT. For 2.0.0_SA_COO~H: decide before HVST-g-2 whether limb (a) reads all 250 names (as built) or the 191 keyed ones. HVST-g-2 builds from securities.universe.json, so a change here means regenerating that file with the module's own CLI."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W45-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~45",
+      "surfaced_at": "2026-09-29T14:40:00Z",
+      "one_line": "HVST-g-1: the whole-brand alias ASML also enters the listing_hit query identifiers, so 148 chatter_daily cells (74 each for ASML_NA and ASML_US) move data_status/publishers_covered, a movement no mention row explains.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/ac2_output.txt (b): ASML_NA_Equity and ASML_US_Equity cells=216 with columns data_status and publishers_covered; columns moved data_status=148 publishers_covered=148",
+          "lib/research/harvest/publication_gold.py _listing_hit_query_identifiers (aliases only, plus sa_symbol for an sa row) and _listing_hit_security_match",
+          "scratch check at this cell: publisher_coverage(all 60 listing_hit rows) old vs new securities differs for ASML_NA_Equity and ASML_US_Equity only"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO section 2 AC2(b): chatter_daily -- per security the cells that move; section 3: no tier or event-rule change. The order names an alias-rule change, not a coverage change.",
+      "world_is": "publication_gold._listing_hit_query_identifiers builds its identifier set from _security_aliases(security), i.e. from `aliases`, so any whole-brand alias joins the publisher-coverage match. The sa listing_hit rows carry search_query 'ASML' (a symbol), which no ASML alias matched before; with 'ASML' now an alias, publisher_coverage(60 listing rows) gives ASML_NA_Equity and ASML_US_Equity {'sa': (2026-07-15, 2026-09-26)} where the old aliases gave {} for both. That moves data_status DENIED -> PARTIAL and publishers_covered for those days. The exact-case ticker_aliases are NOT in that identifier set, so tickers cause no such move. No other security's coverage changed (publisher_coverage old vs new differs for these two keys only).",
+      "notes": "INERT. It is the alias rule working through a second reader of `aliases`. For 2.0.0_SA_COO~H: HVST-g-2's never-widen pair should name these 148 daily cells, since they move for a reason other than a mention."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W45-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~45",
+      "surfaced_at": "2026-09-29T14:40:00Z",
+      "one_line": "HVST-g-1: exact-case tickers are a new securities-file field, `ticker_aliases`; a producer running code from before this cell ignores it silently and builds the old mention set with no error.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py _span_pattern(aliases, exact=()) and _security_exact_aliases",
+          "lib/research/harvest/tests/test_alias_rule_round18.py::test_the_matcher_is_byte_identical_to_the_old_one_without_exact_forms",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/securities.universe.json: ticker_aliases present on 191 of 191 securities, 182 non-empty"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO section 1 ruling 1: a ticker needs its own case rule because the served matcher is case-insensitive; clause 3: write the securities file with universe_securities' own CLI.",
+      "world_is": "The matcher takes ONE alias list, all case-insensitive, so a case-sensitive ticker cannot ride in `aliases`. The cell carries them in a separate field `ticker_aliases` (list, may be empty) that publication_gold._span_pattern reads. A securities file with the field, read by a matcher without it, drops every ticker form and every rule-admitted count without any failure; the reverse (old file, new code) reads no field and matches exactly as before (the pattern is byte-identical when there are no exact forms; test_the_matcher_is_byte_identical_to_the_old_one_without_exact_forms). Whole-brand names ride in `aliases` and survive either way.",
+      "notes": "INERT. HVST-g-2's rebuild must run the worktree code at the drain's HEAD, not a copy from before this cell."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W45-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~45",
+      "surfaced_at": "2026-09-29T19:50:00Z",
+      "one_line": "HVST-g-2: g2_before_state.json (the AC1 BEFORE record) was overwritten by a re-run of the dry step AFTER the puts and restored from the verbatim pre-put output; no S3 object was touched.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/g2_pre_put_dry_output.txt: the untouched pre-put record (rc 0, 19:24Z), from which the JSON was rebuilt field by field",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/g2_ac1_output.txt is byte-identical (cmp) to a fresh AC1 run over the restored g2_before_state.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~45/scripts/g2_pre_put_dry.py: no argparse, so any argument (a --help probe) runs the whole dry step and rewrites the JSON"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO section 1 clause 5: the pre-put dry step records the BEFORE state to a g2_* file, written once before the first put; post-act verification is a separate read-only script.",
+      "world_is": "After the three puts this worker ran `g2_pre_put_dry.py --help` as a syntax probe; the script has no argument parser, so it re-ran and rewrote g2_before_state.json with the AFTER state (its stdout went to /dev/null; the dry-step verdict would have printed STOP). The worker rebuilt the JSON from g2_pre_put_dry_output.txt, which is the verbatim pre-put output and was not touched. The restored file carries the original recorded_utc (2026-09-29T19:24:42.232530+00:00, taken from the AC1 output). It is a reconstruction, not the original bytes; the .txt is the primary record.",
+      "notes": "INERT. Read-only against S3 both times: no put, no delete. Reader of the BEFORE record should take g2_pre_put_dry_output.txt as the primary evidence."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S41",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-29T19:50Z",
+      "one_line": "The g-2 never-widen pair named reader 1 at CodeSha256 CtIvirvM... (both halves, read ~19:0xZ and ~19:1xZ), but opal-amgt-scoped-api was redeployed to lg6NJ2JL... at 19:18:58Z by AMGT_RESAPP ww-1 (0.7.0_AE_CloudOps~A), eight minutes before g-2's puts (19:26-19:27Z): two projects moved one served surface (/timeline) in the same window, and the pair's reader measurement was stale when the act ran.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round18/NEVER_WIDEN_HALF_COO_G2.md section 2 and ledger/NEVER_WIDEN_ROUND18_G2_CTO_HALF.md section 1: CodeSha256 CtIvirvMTG47vvgBGmouk3GrTNKPjPIPx/6ovB+EAOM=, LastModified 2026-09-29T09:56:25Z",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round18/close_run_round18.out.txt line 1: deployed CodeSha256=lg6NJ2JLYbTc9ZtlDaA9nckuNSOaZZmsYKzDjRPbB3s= LastModified=2026-09-29T19:18:58Z",
+          "CLOUD 79d4c7abeb (0.7.0_AE_CloudOps~A): AMGT_RESAPP round 48 AMGT-ww-1 redeploy LANDED; NEVER-2 entry opened f298c2313c (18:54Z)",
+          "close_run_round18.out.txt: under the NEW code, 4 of 4 securities (ASML_NA, DELL, BA, FDX) serve HTTP 200 with series == newest landed chatter_daily on 272 of 272 days each (0 field mismatches) and events == newest landed chatter_event"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "COO half section 2 / CTO half section 1: reader 1 is the scoped API at CodeSha256 CtIvirvM..., which serves the newest daily part as series and the newest event part as events; the blast radius was signed against that reader.",
+      "world_is": "Reader 1 changed code under the signed pair (RESAPP ww-1's own signed act, a different project's pair). The HARVST half did not name a condition on reader 1 staying fixed, and the ww-1 pair presumably did not name the HARVST gold puts. Measured after both acts: the new code still serves the newest landed parts, equal field by field on the four securities read, so the user-visible outcome is the one the HARVST pair signed.",
+      "notes": "INERT: the close run is the exercised read of the combined state. Lesson for the next SERVED pair on this surface: read the reader's CodeSha256 again in the pre-put dry step and STOP on a change, the same way the ETags are re-read."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S42",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-29T22:40:00Z",
+      "one_line": "ROUND_ANALYSIS.round19.md s.2 ruling 2 and s.4 item 1 treat Z-W39-S1 as a SERVED defect ('the page's event window reads through this route') and cut a redeploy with 'all 8 served events answer 200 by their stored ids'; measured at the round-20 cut, the event route answers NO user: unwired in the adapter, unmounted at the gateway, and never called by the page.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deployed opal-amgt-scoped-api (CodeSha256 uv0oTSMa...) invoked with GET /api/scoped/amgt/security/BA_US_Equity/timeline/event/2026-09-08 -> 404 {refused: true, reason: 'no /api/scoped/amgt route for GET .../timeline/event/2026-09-08'}",
+          "apigatewayv2 get-routes 7k3ed8px20, every page: 108 routes; timeline routes = GET .../{security_key}/timeline and GET .../{security_key}/timeline/day/{date}; no event route",
+          "lib/research/api/scoped_amgt.py:4101 'THE EVENT ROUTE (.../timeline/event/<first_day>, get_timeline_event) IS NOT WIRED HERE'; lib/research/api/tests/test_timeline_routes.py::test_timeline_route_post_and_event_route_are_not_wired",
+          "portal/src/pages/SecurityAnalysis/components/TimelinePanel.tsx:127,130 build only the /timeline and /timeline/day URLs",
+          "issuer read at the cut: 8 of 8 served chatter_event rows carry a stored event_id != publication_gold._event_id(security_key, first_day, last_day) -- the code defect is real"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "ROUND_ANALYSIS.round19.md s.2 ruling 2: 'This is a served correctness defect, and the page's event window reads through this route'; s.4 item 1: deployed under a never-widen pair (a redeploy), AC 'all 8 served events answer 200 by their stored ids ... every other route is byte-equal'.",
+      "world_is": "The defect sits in unreached code. A redeploy alone cannot make the 8 events answer 200: the adapter would have to WIRE the route (scoped_amgt.py route table, which test_scoped_amgt_mount.py diffs against the tf) and the gateway would have to MOUNT it (scoped-amgt-api.tf, a terraform act) -- a NEW served surface no page calls. The issuer cut the code fix LOCAL (HVST-j-1, correct under either reading) and HELD the served half pending the CTO's ruling on whether the route is to be mounted at all.",
+      "notes": "INERT: nothing served is wrong today because nothing serves the route. Carded to 1.0.0_SA_CTO~Z at the round-20 issuance with a REC: mount only when DSGN_AMGTV1's page needs an event window by id; until then the fix stays unwired."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S43",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-29T22:45:00Z",
+      "one_line": "DISARM of AMGT_HARVST-Z-S37 (ARMED, disarm_owner 2.0.0_SA_COO~H): the resolving commit is ccf2a27c6b by 0.0.0_AB_MSTR~Z -- safe-merge.sh's conflict state now records only the paths the MERGE could stage (HEAD..MERGE_HEAD plus unmerged paths); any other staged path is WARNed, left out of the state, and refused on --continue.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git merge-base --is-ancestor ccf2a27c6b HEAD = true at CLOUD (issuer read, 22:4xZ); ccf2a27c6b touches .tools/safe-merge.sh only (20 lines), subject 'the conflict state is what the MERGE could stage, not what the shared index holds -- disarms AMGT_HARVST-Z-S37 / AMGT_CORPUS-Z-S59'",
+          "0.0.0_AB_MSTR~Z msg 26755 and 1.0.0_SA_CTO~Z msg 26757 (both acked): scratch-repo test with a negative control in the commit body; one named residual (a peer path that also differs between the two sides)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Row Z-S37: the --continue foreign-path guard whitelists whatever the INDEX holds when the merge conflicts, so a peer staging in that window is committed under the draining seat's name.",
+      "world_is": "Fixed at the tool: the state snapshot is now the merge's own candidate set, so a peer's staged path is refused rather than whitelisted. The residual the fixer names (a peer path that ALSO differs between the two merge sides) stays inside the merge's candidate set by construction and is not closed by this fix.",
+      "notes": "Z-S37 is DISARMED by this row; its remaining residual is the tool owner's (0.0.0_AB_MSTR~Z), not this project's. Not exercised on this project's own drain yet: the next conflicted drain of this project is the first live run of the fixed path."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W47-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~47",
+      "surfaced_at": "2026-09-29T23:10:00Z",
+      "one_line": "lib/research/api/scoped_amgt.py:4101 still describes the unwired event route as `.../timeline/event/<first_day>`; HVST-j-1 keyed the route by the stored event_id, and that file is outside the cell's paths.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/api/scoped_amgt.py:4101 (comp-find at 58fbe48402) reads `THE EVENT ROUTE (`.../timeline/event/<first_day>`, `get_timeline_event`) IS NOT WIRED HERE`",
+          "lib/research/harvest/timeline_api.py get_timeline_event(security_key, event_id, ...) after HVST-j-1; test_timeline_route_post_and_event_route_are_not_wired passes unchanged (221 passed)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-j-1 item 1: update the route comment's path to .../timeline/event/{event_id}; write surface is timeline_api.py, harvest tests, deliverables folder, and this channel.",
+      "world_is": "timeline_api.py's own route comment is updated, but the wiring-section comment in scoped_amgt.py (outside <paths>) still names <first_day>. Comment only; no behaviour depends on it and the route stays unwired and unmounted.",
+      "notes": "Left as is; any later mount cell that touches scoped_amgt.py should correct the comment and TIMELINE_ROUTES together."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W48-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~48",
+      "surfaced_at": "2026-09-29T23:10:00Z",
+      "one_line": "Row Z-W41-S1 and the round-20 cell treat the AMZN plane-crash coverage as a 6-article 2026-09-06..09-10 burst of ONE story; under the served story test (publication_gold._security_stories) it is 5 articles on 09-06..09-08 plus a separate 1-article story on 09-10, so no span rule that reuses the story test can join the 09-10 piece.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~48/j2_ac1_output.txt section (c), from scripts/j2_ac1_story_span_census.py run 2026-09-29 over served mention part-20260929T192610Z: AMZN tier A/B rows=10, stories=4; story 2 = 5 rows 2026-09-06..09-08 (bbg 09-06 A, barrons 09-07 A, wsj 09-07 A, bbg 09-07 B, barrons 09-08 B); story 3 = 1 row 2026-09-10 (bbg 'Amazon Jet Tried to Abort Landing Before Fatal Crash, NTSB Says')",
+          "the candidate at both gap 1 (EVENT_MAX_GAP_DAYS) and gap 0 yields the same AMZN event: 472a1836a7be span 09-06..09-08, 5 articles; the 09-10 piece is in no event under either",
+          "lib/research/harvest/publication_gold.py _security_stories: two tier-A articles link only within window = max_gap_days + 1 = 2 days (linked(): abs(days[i]-days[j]) > window -> False). The 09-10 bbg piece is 3 days from the nearest other tier-A article (09-07 barrons/wsj) although it shares terms with them (crash, fatal, jet, ntsb after 'amazon' is dropped; measured with _story_tokens), so it is its own story on the DAY WINDOW, not on words"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "ROUND_ANALYSIS.round19.md s.2 ruling 3 / row Z-W41-S1: the AMZN coverage is a 6-article 2026-09-06..09-10 burst of one story, split by the served span rule into a 3-article 09-07-only event; the census asks what a same-story-consecutive-days span rule changes.",
+      "world_is": "Two things are conflated in the row. The served SPAN rule is what cuts 09-06 (1 article, one publisher, not a qualifying day) and 09-08 (tier B only) off the 09-07 event: the candidate recovers both, giving 5 articles 09-06..09-08. The served STORY test is what cuts 09-10 off, through its 2-day link window between tier-A articles (not through headline words, which the 09-10 piece shares with the 09-07 pieces): bbg's 09-10 piece is its own 1-article story, which no span rule reusing the story test can join. The 6-article burst exists only if the story test is also changed, which this cell may not do (standing clause 1). The census makes no verdict on either change.",
+      "notes": "INERT: measurement only, nothing served is affected. For the CTO at round 20's analysis: ruling on the span rule alone yields the 5-article event; a 6-article event needs a ruling on the story test's link window as well."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W50-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~50",
+      "surfaced_at": "2026-09-29T23:40:00Z",
+      "one_line": "The order says HD's served event is led by a barrons article; the NEWEST served chatter_event part (part-20260929T192706Z) leads HD with bbg:TJX9W8T96OSJ00 (2026-08-18 only) -- the barrons lead is in the three parts up to 20260924T134754Z.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~50/k2_ac1_output.txt section (c), from scripts/k2_ac1_updated_time_census.py run 2026-09-29: 8 chatter_event parts scanned; HD lead is barrons:WP-BAR-0001875805 in part-20260922T215254Z, part-20260923T021336Z, part-20260924T134754Z (event 2026-08-17..2026-08-20, 7 articles); from part-20260928T210944Z through part-20260929T192706Z (the newest) HD's one event is 2026-08-18..2026-08-18, 2 articles, lead bbg:TJX9W8T96OSJ00 'Home Depot Results Beat Estimates, Overcoming Housing Slump' (published_utc 2026-08-18 10:03:19.783Z)",
+          "the barrons article barrons:WP-BAR-0001875805 ('Home Depot Stock Rises as Earnings Defy Housing Slump', published_utc 2026-08-17 16:24Z) is still a tier A HD row in the newest article_security_mention snapshot but is in no served HD event today"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "ROUND_ANALYSIS.round20.md s.2 ruling 3 and the order s.1: HD's served event is led by a barrons article stored at published_utc 2026-08-17 16:24Z; choosing the earliest published_utc promotes it.",
+      "world_is": "That was true of the served parts through 2026-09-24. The served events since part-20260928T210944Z carry HD as a one-day, two-article event led by bbg (earliest published_utc among its members, 2026-08-18). The census (c) therefore prints both: the newest snapshot's lead with every time value, and the barrons article that led the earlier parts with every time value. Neither has an updated or modified time in silver or bronze (barrons: published, published_utc, published_date_utc, fetched_at, first_discovered_at, run_stamp only). The census records no ruling on which lead the CTO means.",
+      "notes": "INERT: measurement only. The question the CTO put (does silver carry an updated time?) is answered independently of which HD lead is meant: barrons, bbg and ft carry none; wsj carries one on 11 of 26 and sa on 5 of 46."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:20:00Z",
+      "one_line": "BLOCKING: HVST-k-1 AC2 (b) cannot hold as written -- NVDA_US_Equity's served 2026-06-01 event has ONLY guarded members (wsj co_mention_count 3, two sa is_roundup True), so the ruled guard (a guarded member never leads, the span is set by the non-roundup members) leaves it no span and no lead: it is GONE, and 4 of the 5 j-2-kept events are row-equal, not 5.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/k1_ac2_output.txt sections (a) and (b): 'GONE 39c0b3d69453 NVDA_US_Equity' with members GUARDED(co_mention=3), GUARDED(is_roundup), GUARDED(is_roundup); '(b) 4 of 5 j-2-kept events row-equal ... FAILS'",
+          "lib/research/harvest/publication_gold.py _story_runs (this branch): a story with no non-guarded row returns [] -- the literal reading of ruling 2 ('The span is set by the non-roundup members. The lead is chosen among the non-roundup members')",
+          "deliverables/0.9.0_WK_AMGT_HARVST~48/j2_census_result.json counts KEPT=5 (j-2's candidate had no guard, so it kept NVDA's all-roundup event)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-k-1 s.1 ruling 2 and s.2 AC2(b): a guarded member never extends the span and never leads; AND the 5 events j-2 kept (992_HK 02-12, 992_HK 05-22, BA, COST, NVDA) are row-equal to the served rows.",
+      "world_is": "The two statements cannot both hold for NVDA. Its three members are all guarded, so under the guard as stated it has no span and no lead and forms no event; the alternative that keeps it (a run with no non-roundup member falls back to the unguarded span and lead) is a different rule from the ruled one, and the cell did not choose it. Implemented as written; the other four are row-equal (992_HK 02-12 keeps its wsj lead and its co=3 sa member as a guarded MEMBER).",
+      "notes": "Informational, in k1_ac2_output.txt: with the guard columns stripped the same rows give NVDA 2026-06-01..2026-06-01, 3 members. For the CTO's round-21 analysis: rule the all-guarded run (no event, or the fallback). If the rebuild lands as written in round 22, the served NVDA event disappears.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:20:00Z",
+      "one_line": "BLOCKING: HVST-k-1 AC2 (c) cannot hold for AMZN_US_Equity -- j-2's candidate (span 2026-09-06..09-08, lead bbg 'Amazon Cargo Plane Overshoots Runway') had no guard, but bbg 09-06 has co_mention_count 3 and barrons 09-08 is is_roundup True, so under the ruled guard neither extends the span and the lead cannot be the bbg article: the event is 2026-09-07..09-07 with 5 members, lead barrons 'Scene of Fatal Amazon Plane Crash in Miami', event_id unchanged from the served one.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/k1_ac2_output.txt section (c): 'AMZN ... j-2 candidate 472a1836a7be span 2026-09-06..2026-09-08 members=5 ... new-rule c9e34b38e4ba span 2026-09-07..2026-09-07 members=5 ... NOT EQUAL; members only in either: []; lead differs bbg:TKYJAAVTTCZL00 (j-2) vs barrons:WP-BAR-0001904504 (new rule); lead guard status in j-2: GUARDED(co_mention=3)'",
+          "mention part-20260929T192610Z rows: bbg:TKYJAAVTTCZL00 (2026-09-06, tier A) is_roundup False co_mention_count 3; barrons:WP-BAR-0001904706 (2026-09-08, tier B) is_roundup True co_mention_count 5",
+          "the member SET is identical (5 of 5); only the span (09-06..09-08 vs 09-07..09-07) and the lead differ"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-k-1 s.2 AC2(c): 992_HK_Equity's and AMZN_US_Equity's changed events equal j-2's candidate events (span, member set, lead).",
+      "world_is": "992_HK's changed event is equal (2026-08-13..08-14, 3 members, lead wsj Lenovo Posts Record Revenue). AMZN's is not: the guard and j-2's candidate disagree on the same five articles. The guard (co_mention_count >= 3 OR is_roundup) marks the 09-06 lead-candidate and the 09-08 piece, so the ruled rule puts the span on the three 09-07 core articles. The event grows 3 -> 5 members but its span and event_id do not move. Implemented as written.",
+      "notes": "The ruling read j-2's AMZN event as the intended result, but j-2 ran without the guard. For the CTO: either the guard is right and AMZN's event is the 09-07 one (the 09-06 report is a member, not the lead), or the threshold is wrong for a crash report that names Boeing and one other security.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:20:00Z",
+      "one_line": "HVST-k-1 AC2 (c) says both changed events are read from j2_census_result.json, but that file carries the AMZN candidate only (span and article count, no member set, no lead) and nothing for 992_HK_Equity; the comparison object was recomputed by importing j-2's own candidate function and cross-checked to j2_ac1_output.txt and the json.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~48/j2_census_result.json keys: amzn_candidate (span, articles), amzn_current, baseline_equal, candidate_events, counts, ids_unique, merged_candidate_events, new, served_event_key, served_events, served_mention_key -- no 992_HK, no members, no lead",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/scripts/k1_ac2_dry_rebuild.py (c): j2.candidate_event_rows over today's inputs; 992_HK matched to j2_ac1_output.txt 'CHANGED event 8be45608d81b 992_HK_Equity span 2026-08-13..2026-08-14 ... articles=3'; AMZN matched to both the text and the json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-k-1 s.2 AC2(c): equality read from j2_census_result.json.",
+      "world_is": "The json is too thin for the stated comparison; the same comparison object is available by calling j-2's script (read-only import) and both j-2 outputs agree with it.",
+      "notes": "No effect on the verdict; recorded so the criterion's source is honest."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:20:00Z",
+      "one_line": "Two existing tests asserted the pre-ruling per-day rule and were updated to the ruled rule inside the cell's own tests/ path: test_only_coverage_multi_day_story_keeps_its_words_and_forms_its_event (event span 09-10..09-11 with 4 members became 09-10..09-12 with 6) and test_without_match_forms_the_story_words_are_still_read_as_the_name (no event became one thin 2-member event 09-10..09-12).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/tests/test_publication_gold_name_detection.py (this branch): both assertions now carry a HVST-k-1 comment; the suite was 203 passed, 2 failed after the rule change and before the two edits, those two being the only failures, and is 212 passed after (205 + 7 new)",
+          "lib/research/harvest/publication_gold.py _story_runs: the run is judged whole and spans every consecutive story-day, including a day that never qualified alone"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-k-1 AC1: the harvest suite passes with new tests named; the cell does not say existing tests may change.",
+      "world_is": "Two existing assertions were the superseded rule's own consequences (a non-qualifying last day cut off the event; fragments never met the per-day bar). Changing them is the ruling applied: the story test, the thresholds and the link window are untouched.",
+      "notes": "The second test's arm (no alias evidence) now yields a thin event rather than none; the name-stripping behaviour it protects is unchanged (its names assertions still hold)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W49-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~49",
+      "surfaced_at": "2026-09-30T00:50:00Z",
+      "one_line": "OBSERVATION: AMENDMENT 1 (guard threshold 4, RULED by 1.0.0_SA_CTO~Z msg 26783, ROUND_ANALYSIS.round20.md s.2a @168acda05e; amendment c4f2fedc94) landed at 85fe787f17 with EVENT_GUARD_CO_MENTIONS = 4; the literal AC2 re-run is PASS (KEPT 5, CHANGED 3, MERGED 0, GONE 0 of 8; (b) 5/5, (c) 2/2, (d) 1/1, (e) 8/8), which is the disarm test for rows Z-W49-S1 (NVDA all-guarded) and Z-W49-S2 (AMZN lead and span). S1 and S2 are not edited.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py@85fe787f17: EVENT_GUARD_CO_MENTIONS = 4 (git show 85fe787f17:lib/research/harvest/publication_gold.py)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/k1_ac2_output.txt@85fe787f17: 'COUNTS of 8 served: KEPT=5 CHANGED=3 MERGED=0 GONE=0'; '(b) 5 of 5 ... HOLDS'; AMZN new-rule db2286aabb9f span 2026-09-06..2026-09-07 members=5 lead bbg 'Amazon Cargo Plane Overshoots Runway in Miami, Killing Five'; HD ends 2026-08-18 with '6 Big Takeaways' GUARDED(co_mention=4); 'AC2 RESULT: PASS'; a second run byte-identical",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~49/k1_ac1_after.txt@85fe787f17: collected 212, 212 passed; guard test asserts co 4 guarded and co 3 NOT guarded",
+          "the issuer's own read-only measurement at 4 (KEPT 5, CHANGED 3, GONE 0) matches the worker's run"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Rows Z-W49-S1 and Z-W49-S2 (BLOCKING, INERT) stood open at the ruled threshold 3; AMENDMENT 1 says they disarm on the constant landing at 4 with the re-run as the test.",
+      "world_is": "The constant is 4 at 85fe787f17 and the re-run passes AC2 (b)-(e) and AC1, so the condition AMENDMENT 1 names for the disarm is met on this branch (LOCAL, unmerged).",
+      "notes": "The disarm is the CTO's ruling; this row records its test result. Served chatter_event is untouched (round 22).",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W54-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~54",
+      "surfaced_at": "2026-09-30T01:25:59Z",
+      "one_line": "OBSERVATION: HVST-m-2 AC2 asks for the rank correlation between the page's served chatter rank and a rank recomputed from the graded chatter_daily part; the served TRENDING x CHATTER list holds 2 rows (BA, HD, both score 0), so the correlation is NOT MEASURABLE HERE (n=2 common companies, fewer than 3) and the script prints that instead of a number.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~54/m2_ac2_stdout.txt: 'served TRENDING rank vs recomputed graded 30-day-window rank: NOT MEASURABLE HERE (n=2 companies in common ...)'; served generation 20260929T100015Z-d09ee37a8f3b row_count=2, CHATTER_AXIS_SOURCE='legacy'; recomputed graded window set 36 companies, overlap 2 of 36",
+          "the same file also prints the correlation that IS measurable: raw-count window measure vs graded window measure over 36 companies = 0.8302, and the passing-mention list (6 companies)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-m-2 AC2 expects the two rankings printed side by side with their rank correlation.",
+      "world_is": "The served list under CHATTER_AXIS_SOURCE=legacy carries 2 ranked names with as-of-day score 0 (legacy pool counts), against 36 names with graded window signal, so a served-vs-recomputed correlation has n=2. The worker printed NOT MEASURABLE HERE for it and added the raw-vs-graded correlation over all 36 as the measurable comparison; nothing is graded.",
+      "notes": "Measured, not graded; the CTO reads it at L10. BREAKOUT x CHATTER read ABSENT for 2026-09-30 (no generation pointer) and is recorded in the same output.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W53-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~53",
+      "surfaced_at": "2026-09-30T01:30:00Z",
+      "one_line": "HVST-m-1 AC1 asks for the listing objects 'linked from the article's discovery record'; no article record (bronze or silver, any publisher) carries a listing object key, so the link was measured as a reader-built join on (search_query, search_page, search_rank).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~53/m1_ac1_output.txt: 'articles whose own record (silver row) names a listing object explicitly ... 0 of N silver rows' for all five publishers",
+          "lib/opal_data_harvest/publishers.py _discovery() (this branch): the dict carries retrieval_rung, search_query, search_rank, search_page, first_discovered_at, discovered_for and no listing key"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Order AC1 expect: 'the listing pages that found them (listing objects linked from the article's discovery record, and how many articles have no linked listing object)'.",
+      "world_is": "0 of 120 silver article rows (barrons 15, bbg 19, ft 14, sa 46, wsj 26) name a listing object. The discovery record holds rung, query, rank, page, first_discovered_at, discovered_for only. Store holds listing pages for wsj (2 objects) and sa (2) only; barrons, bbg, ft hold none (0 objects, 0 listing_hit rows). Derived join reaches wsj 11 of 26 articles (1 listing object) and sa 2 of 46 (1 listing object); its article_id cross-check agrees for sa 2 of 2 and cannot apply to wsj (listing article_id is null).",
+      "notes": "INERT: measurement only. The recorded-link basis is printed beside the derived one so neither reads as the other; per-publisher figures are in m1_ac1_output.txt."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W53-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~53",
+      "surfaced_at": "2026-09-30T01:30:00Z",
+      "one_line": "HVST-m-1 FWD-1 premise: 104 of 126 bronze article objects carry received-form 'normalised_record' (a record the collector rebuilt), 16 'as_received', 6 unlabelled; the byte-exact match is against the stored bytes, and the publisher's original response is not in the store for the 104.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~53/m1_ac1_output.txt: per-publisher 'by received-form label' lines and the two NOT MEASURABLE HERE lines",
+          "object metadata received-form read by HEAD/GET on s3://opal-data-harvest/ on 2026-09-30"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "FWD-1: every article can be re-opened and matches 'what was received, byte for byte'; the order compares against the hash recorded at ingest.",
+      "world_is": "All 126 article objects (barrons 15, bbg 19, ft 14, sa 52, wsj 26) match their recorded document-sha256 (126 of 126). By label: normalised_record barrons 15, bbg 19, ft 14, sa 41, wsj 15 (104); as_received sa 5, wsj 11 html (16); unlabelled sa 6. The recorded hash is of the normalised record's bytes, so a match shows the store is intact, not that it equals the publisher's response; response_sha256 inside the record is the only trace of the response.",
+      "notes": "INERT: the measurement is printed with the label split so the reader can weigh it. No grade."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W53-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~53",
+      "surfaced_at": "2026-09-30T01:30:00Z",
+      "one_line": "Six seeking-alpha bronze article objects (article_hash partitions dated 20260911T04xxxxZ) carry no received-form label and have no silver row pointing at them; they are JSON:API documents and hash-match.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~53/m1_ac2_output.txt (sa: '6 JSON bronze have NO silver row') and m1_ac3_output.txt (sa: '6 of 52')",
+          "m1_ac1_output.txt sa: 'unlabelled: matched = 6'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Order AC2/AC3 measure each bronze article against 'the silver row built from it' and its discovery record.",
+      "world_is": "sa bronze article objects 52; silver rows 46; the 6 unmatched are the legacy unlabelled objects. They re-read clean (recorded hash matches) but no silver row and no discovery record for them exists anywhere in the store, so the FWD-2 named fields read SENT-AND-LOST (no silver row) for them and FWD-3 has no LIST/SEARCH statement for them.",
+      "notes": "INERT: counted inside the denominators (sa bronze 52, silver 46) and printed, not excluded."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W53-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~53",
+      "surfaced_at": "2026-09-30T01:30:00Z",
+      "one_line": "Silver rows carry discovered_for = ['992_HK_Equity'] on seeking-alpha articles whose titles are not about Lenovo (for example the 2026-09-23 partition rows sa:4429803 'The AES (AES) Investor Presentation - Slideshow', sa:4411320 'Barrick Gold: A Solid Year ...').",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~53/m1_ac2_output.txt QUERY section lines for sa:4429803, sa:4411819, sa:4411320",
+          "silver sa part-20260923T002631Z: search_query LNVGY, search_rank 8, search_page 2, discovered_for ['992_HK_Equity']"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Order AC2 query: 'one query by company and date (the validation security, one date) returning its rows from silver'.",
+      "world_is": "The company query (partition date=2026-09-23, discovered_for contains 992_HK_Equity) returns 14 rows: wsj 11, sa 3, barrons/bbg/ft 0. The 3 sa rows are SA symbol-listing backfill hits from search_query LNVGY at ranks/pages recorded on the rows; their titles name other companies. The query returns them because discovered_for is the only company carrier in silver (no company column).",
+      "notes": "INERT: printed as returned; whether these belong to the security is not judged here."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W55-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~55",
+      "surfaced_at": "2026-09-30T01:31Z",
+      "one_line": "OBSERVATION: HVST-m-3 was told to search the repo for the undelivered-article inventory (manifest, file list, upload ledger); none is tracked, and the only inventory is the gitignored desktop progress.sqlite3 under the main workspace runtime, now 120 bodies / 121 links (field map A said 83 / 84), so AC1 reads it mode=ro from a path derived by git worktree list.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~55/m3_ac1_output.txt: article_objects 120, article_links 121, upload_outbox 241 all pending, record files present 120 of 120; every one of 120 matched to bronze by article_hash and to silver by article_key, 0 not in store, 0 duplicates",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~9/AMGT_HARVST.TO-HVST-h-9.desktop-outbox-upload-into-the-new-grammar.proof_of_spec.json: names .runtime/opal-data-harvest/progress.sqlite3 as the desktop runtime, gitignored and absent from a worktree"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-m-3 section 1: 'Search the repo for that inventory: an import manifest, a file list, an upload ledger.'; AC1 expects counts at the field-map reading (83 bodies / 84 links).",
+      "world_is": "No inventory is tracked in the repo; the readable inventory is the gitignored progress.sqlite3 in the main workspace runtime (120 / 121 now, grown by the runs of 2026-09-22 to 2026-09-26), whose legacy upload_outbox still reads pending because upload-legacy never marks it, so pending is not an undelivered signal.",
+      "notes": "Measured only; no grade. The desktop file is machine-local, so a second machine would read NOT MEASURABLE HERE.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W55-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~55",
+      "surfaced_at": "2026-09-30T01:40Z",
+      "one_line": "OBSERVATION: the <expect> of HVST-m-3 AC1 and AC2 is prose, and proof-of-spec-check searches each expect as a regex against output_evidence, so the TO's own text can never match; the instance records a worker-written regex on the deciding line instead.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/proof-of-spec-check.py conditional_checks: re.search(expect, output_evidence, S|M), a non-match on a PASS row is a VIOLATION; run with the TO's verbatim expect it printed 'output_evidence does NOT match expect' for AC1 and AC2, and printed VALID (rc=0) once expect was the regex on the deciding line",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~50/AMGT_HARVST.TO-HVST-k-2.updated-time-census.proof_of_spec.json: the prior worker also recorded an expect that is not the TO's prose"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-m-3 section 2: each criterion's <expect> is a descriptive sentence naming what the output shows; the worker records output against it.",
+      "world_is": "The checker treats the instance expect as a regex; the prose contains unescaped parentheses and cannot match, so the worker's instance carries its own regex on the printed deciding line (AC1 'INVENTORY ARTICLES NOT IN THE STORE ...: n of N'; AC2 'SHORT OF THE FLOOR ...: n of N'); the criterion_verbatim field carries the TO's text unchanged.",
+      "notes": "Form only. The deciding lines are printed by the scripts, not synthesised.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W59-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~59",
+      "surfaced_at": "2026-09-30T02:30Z",
+      "one_line": "OBSERVATION: the collector's plan command takes no listing size as input, and only 3 of 955 (name, publisher) page figures could be MEASURED from a stored listing.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/__main__.py:104-135: planned_listing_pages = max_listing_pages[publisher] (fallback 25), no listing-size term",
+          "S3 LIST of <source>/harvest/bronze/news_listing/: sa 2 objects (page 1 of LNVGY and ASML, meta.page.totalPages 9 and 26), wsj 2 objects (Lenovo Group pages 1-2, no total in the HTML), bbg 0, ft 0, barrons 0",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~59/n5_backfill_plan.json: figures_measured 3, figures_default 952"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-5 section 1: pages per publisher per name 'from the listing sizes the collector already knows'.",
+      "world_is": "The collector plans a flat cap of 25 pages per publisher. Stored listing sizes exist only for Seeking Alpha Lenovo (9 pages) and ASML (26 pages, capped to 25); the plan refines to min(cap, stored totalPages) for those 3 rows (Lenovo, ASML NA, ASML US matched by the shared SA symbol) and prints the 25-page DEFAULT for the other 952, each marked DEFAULT.",
+      "notes": "Form only. The cap-only grand total (23875) is printed beside the refined one (23859); the refinement is worker-written in the script, not collector code.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W59-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~59",
+      "surfaced_at": "2026-09-30T02:30Z",
+      "one_line": "OBSERVATION: 190 of 191 covered names carry no sa_symbol, so the Seeking Alpha leg the plan prices at 25 pages each would refuse at run time.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py:366-369: seeking_alpha raises ContractUnavailable('Security lacks a resolved Seeking Alpha symbol') when sa_symbol is absent",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~46/securities.universe.json: 191 records, keys aliases/company/composite_figi/key/security_key/ticker/ticker_aliases, no sa_symbol; only ~10's lenovo.security.json adds LNVGY",
+          "n5_backfill_plan.json: sa_symbol_resolved true for 1 of 191"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-5 section 1: the plan covers all 191 names with the Seeking Alpha leg waiting on renewal.",
+      "world_is": "The plan command prints sa pages for names whose SA leg cannot start until a symbol is resolved; the SA subtotal (4759 pages) is a ceiling for 1 resolvable name, and the plan marks sa_symbol_resolved per name.",
+      "notes": "Measured only. No symbol resolution was attempted by this cell.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W56-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~56",
+      "surfaced_at": "2026-09-30T02:40Z",
+      "one_line": "OBSERVATION: harvest_grammar.py, the one bronze writer, is outside HVST-n-1's <paths>, so the received-hash rides the store's put and the listing link rides the outbox record, not bronze metadata.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/harvest_grammar.py@aed290b548: put_article_bronze(publisher_code, article_id, body, ext, fetched_at, received_form, client) takes no metadata argument and hard-codes metadata={'received-form': received_form}",
+          "lib/opal_data_harvest/test_harvest_grammar.py@aed290b548 test_one_writer_for_both_channels: fake_put(publisher_code, article_id, body, ext, fetched_at, client=None) has no extra parameter, so any new keyword passed by uploads.py breaks it (same constraint as row AMGT_HARVST-Z-W1-S1)",
+          "lib/research/harvest/store.py bronze_put now adds received-sha256 to every as_received put; lib/opal_data_harvest/worker.py writes listing_bronze_key into the outbox record and discovery; lib/opal_data_harvest/uploads.py hands that discovery to silver_from_bronze.article_rows"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-1 section 1 items 1-2: each response body is stored as received with its own recorded hash, and every stored article links the listing object that found it (a field naming that listing object's key).",
+      "world_is": "The received hash is a bronze metadata key written by store.bronze_put itself (as_received puts only), and the rebuild is kept beside the received bytes as a local sibling file with its own hash rather than as a second bronze object (a second object under the article_hash partition would count as a second article to fetch_key_exists, check_as_received and silver_from_bronze consumers). The listing link is a field on the durable outbox record and on the discovery dict, not on the bronze object; the silver column that persists it is silver_from_bronze.article_rows, which is HVST-n-2's file and today reads only the four search_* keys, first_discovered_at, retrieval_rung and discovered_for from discovery.",
+      "notes": "Not graded. Whether the link belongs in bronze metadata is a call for the issuer: it needs put_article_bronze to accept extra metadata and test_harvest_grammar's fake_put to change, both outside this order.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W56-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~56",
+      "surfaced_at": "2026-09-30T02:40Z",
+      "one_line": "OBSERVATION: the raw-bytes capture, listing link and run record sit on the harvest_grammar path; a run without harvest_grammar still keeps only the normalised record, and a second same-day run with a harvest client reads listings from the bucket.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py@aed290b548 run_job: _write_harvest_raw and _write_harvest_listings are both gated on config harvest_grammar (default False, ruling 4 of AMGT-rk-85); the run record added by HVST-n-1 is written by Worker.run for every mode",
+          "lib/opal_data_harvest/publishers.py get_listing_bronze branch: with harvest_dedupe on, a listing already held for today's date partition is read from bronze and never re-fetched, so a same-day second run with --harvest-grammar cannot discover an article first published after the first run's listing",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~56/scripts/n1_ac2_counting_stub.py: the held/new proof runs harvest_grammar on with no harvest client, so held keys are skipped through the local articles table (known_ids / known_urls) and listings are fetched on both runs"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-1 AC2: two same-day runs, held keys fetch 0, a planted new key fetches exactly 1; section 1: the collector stores each response as received going forward.",
+      "world_is": "The going-forward capture is real only for a run started with --harvest-grammar; a legacy run (flag absent) still writes only the normalised record through Catalog.store, exactly as before, so a scheduled collection that omits the flag keeps producing normalised_record objects. Separately, with the flag and a harvest client the same-day listing is served from bronze, so the planted-new-key case in AC2 is exercised on the local-state path (new_only), not on the bucket-authority path.",
+      "notes": "ARMED only if the scheduled collection is started without --harvest-grammar: the going-forward claim would then be false for it. Config today: config.json has no harvest_grammar key and recurring_schedule_enabled is false. Disarm by the issuer choosing whether harvest_grammar becomes the default; this order did not change that default.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W58-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~58",
+      "surfaced_at": "2026-09-30T02:27Z",
+      "one_line": "OBSERVATION: the producer's own gold branch does not compute a rank on this window -- it HOLDs (FAILED / INCOMPLETE_GOLD_INPUT, 0 of 191 security windows resolved, 0 rows for both movements), so the 'gold rank' HVST-n-4's flip pair is to name does not exist as a published list.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~58/n3_ac2_output.txt: 'GOLD-AS-RUN TRENDING_CHATTER rows=0 state=FAILED reason_code=INCOMPLETE_GOLD_INPUT ... RESOLVED 0 of 191 security windows'; read-state totals no_coverage 5675 + partial 55 over 191 x 30 = 5730 day-reads; 'gold chatter_daily on 2026-09-29: 191 rows; data_status {DENIED: 191}'",
+          "lib/research/metrics/chatter_axis.py:628-637 (unresolved = any name with a nonzero read state; failure_reason HOLD) and :662-665 (raw_scores emptied for both movements); infra/aws/terraform/harvest/chatter-axis-schedule.tf header comment already states the HOLD until 2b populates the table"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-3 section 1 item 2: 'The rank the producer's own gold branch computes on the same window and as-of, set beside legacy's ... the expected diff the flip's pair will name.'",
+      "world_is": "Run in memory on as_of 2026-09-29 (write_fn=None), the gold branch returns FAILED with zero rows for TRENDING and BREAKOUT because every one of the 191 windows carries a no_coverage or partial day; a flip of CHATTER_AXIS_SOURCE to gold would stop the daily generation writes (a _FAILED marker only). With the guard lifted by a pass-through wrapper (counterfactual, labelled) gold scores 36 names, all with as-of-day value 0, so TRENDING rank is the key tie-break.",
+      "notes": "Measured only; no grade. HVST-n-4 (WORLD flip) depends on this cell's numbers; the CTO half @c069b2d753 signed LEGACY for this reason. Disarm: HVST-n-4 is not to flip while the guard resolves 0 of 191.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W58-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~58",
+      "surfaced_at": "2026-09-30T02:27Z",
+      "one_line": "OBSERVATION: BREAKOUT x CHATTER reads ABSENT at the route's default date (2026-09-30 UTC) but EMPTY (a committed, successful empty generation) at the TO's as-of 2026-09-29; the two are different states behind the same page.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~58/n3_ac1_output.txt: 'DEFAULT-DATE READ BREAKOUT ... ranking_status=ABSENT as_of_date=2026-09-30' and 'PINNED as_of=2026-09-29 READ BREAKOUT ... ranking_status=EMPTY state=EMPTY generation_id=20260929T100015Z-25147d66b259 ... NO_SIGNAL_IN_WINDOW 189 of 191'",
+          "lib/research/api/scoped_amgt.py:562-582 (_find_latest_served_pointer accepts only a COMPLETE pointer, so an EMPTY one is never promoted to a later date)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-3 section 1: 'BREAKOUT x CHATTER is absent' at as-of 2026-09-29.",
+      "world_is": "At as-of 2026-09-29 BREAKOUT holds a committed EMPTY generation (0 rows, empty_reason NO_SIGNAL_IN_WINDOW 189 of 191); it reads ABSENT only when the requested date has no pointer of its own (today, after UTC rolled to 2026-09-30, before the 2026-09-30 fire).",
+      "notes": "Form only; both reads are printed by AC1. Not a defect of the producer.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W58-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~58",
+      "surfaced_at": "2026-09-30T02:27Z",
+      "one_line": "OBSERVATION: the <expect> of HVST-n-3 AC1 and AC2 is prose and proof-of-spec-check matches it as a regex, so the instance carries a worker-written regex on each script's printed deciding line; criterion_verbatim carries the TO's text unchanged.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md AMGT_HARVST-Z-W55-S2: the identical form finding on HVST-m-3; .tools/proof-of-spec-check.py conditional_checks re.search(expect, output_evidence)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-3 section 2: each criterion's <expect> is a descriptive sentence naming what the output shows.",
+      "world_is": "The checker treats the instance expect as a regex; the instance records a regex on the deciding line printed by each script (AC1 'DENOMINATORS: names_read=250 covered=191 ...'; AC2 'DENOMINATORS: covered=191 legacy_signal=2 ...').",
+      "notes": "Form only, a repeat of Z-W55-S2.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W60-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~60",
+      "surfaced_at": "2026-09-30T02:32Z",
+      "one_line": "OBSERVATION: the named AC1 day 992_HK_Equity 2026-09-23 is not a day with articles now (0 articles served, ~1.3 s, no silver read); the profile adds 992_HK_Equity 2026-08-13 (2 articles) as an extra day.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~60/n6_ac1_profile.json: deployed opal-amgt-scoped-api /timeline/day/2026-09-23 for 992_HK_Equity, 3 invokes, REPORT Duration 1349/1204/1315 ms, articles=[] (body sha256 32b5257d...), while AMZN 2026-09-07 and HD 2026-08-18 (3 articles each) took 5309-6489 ms and 4996-5012 ms",
+          "newest article_security_mention snapshot (304 rows): 992_HK_Equity has 32 rows, latest UTC day 2026-09-15, none on 2026-09-23 (the round-22 span end); the empty-day path returns before any silver read (scoped_amgt._timeline_article_loader: if not mine: return [])"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-6 AC1 expect: 'the deployed /timeline/day timed for 3 days with articles (992_HK_Equity 2026-09-23, AMZN_US_Equity 2026-09-07, HD_US_Equity 2026-08-18)'.",
+      "world_is": "992_HK_Equity 2026-09-23 has a chatter_daily row (PARTIAL, publishers_covered_codes [wsj]) and zero mention rows, so it is the no-article path: two gold reads and no silver. AC1 and AC2 time it as named AND add 992_HK_Equity 2026-08-13 (2 articles, keys sa:4632421 and wsj:6d60459e-...) as a fourth day, labelled EXTRA in every output.",
+      "notes": "Measured only. The empty day is itself a data point: about 1.3 s deployed is the price of the two gold reads alone.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W60-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~60",
+      "surfaced_at": "2026-09-30T02:33Z",
+      "one_line": "OBSERVATION: the local COLD figure is bounded by ~2 s of process and client start-up that OLD and NEW share, and by the laptop-to-S3 distance the Lambda does not have, so the cold ratio (1.8x-2.9x over two runs) understates the in-region gain; the warm figure is the one the fix moves most (46x-61x over two runs).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~60/n6_ac2_new_path_timing.json: NEW cold on AMZN 2026-09-07 is 3.78 s of which the chatter_daily step is ~2.2 s (first boto3 client, TLS, first parquet decode) in BOTH paths (OLD cold 1.9 s in the same step); OLD silver step 7.7-8.1 s for 109 GETs / 4.9 MB, NEW silver step ~2.1 s cold for 47-63 GETs / 3.0-3.5 MB and 0.05 s warm for 0 GETs",
+          "opal-amgt-scoped-api REPORT durations 5.0-6.5 s deployed for 3-article days against 8.2-9.3 s OLD locally: the same 109 GETs cost less in region, so the local silver step overstates the Lambda's"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-6 preflight (comp-adversary): 'AC2 times the new code path against the same S3 reads the function makes, cold and warm.'",
+      "world_is": "The local run makes the same LIST and GET calls but from a laptop, so per-call latency is higher than in region; COLD is a fresh interpreter (rep 1) and WARM is reps 2-3 of the same process, where the fix keeps decoded silver parts and the newest gold snapshot per (key, ETag). A deployed container reaches the WARM figure after its first request per publisher part; the first hit on a day the container has not seen reads ~35-60 objects (~0.5-2.0 s locally). Only a post-redeploy Invoke measures the in-region figure.",
+      "notes": "Measured only. The redeploy and its own before/after Invokes are the later paired act, not this cell.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W63-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~63",
+      "surfaced_at": "2026-09-30T04:05Z",
+      "one_line": "OBSERVATION: a fourth newest-wins reader over silver, silver_from_bronze.rows_by_company_mention (lib/opal_data_harvest/silver_from_bronze.py:404-407), still breaks a fetched_at tie toward the row seen first; it is outside HVST-o-3's paths and takes rows with no part name, so it cannot apply the run_stamp rule as it stands.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~63/o3_ac2_output.txt section (1): census over 345 .py files under lib/, 30 production hits, 4 distinct newest-wins readers; three (store.silver_latest, publication_gold._iter_latest_articles by delegation, publication_gold._latest_articles_for_keys) now share store.supersedes, the fourth is silver_from_bronze.py:406 `row[\"fetched_at\"] > held[\"fetched_at\"]`",
+          "git grep at 65aa9251bc: rows_by_company_mention has no production caller in lib/; its callers are lib/opal_data_harvest/test_silver_from_bronze.py:782,790 and the round-24 script org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~57/scripts/n2_ac3_query_by_company.py:62 (which passes `silver_all`)",
+          "served silver, all 8 (source, table) pairs read: 0 record keys with a tied newest fetched_at across parts, so no served answer differs today"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-o-3 ruling: 'in EVERY reader that picks the newest silver row per record key, ties on fetched_at go to the row from the part with the LATER run_stamp ... A reader outside your paths is a row, not an edit.'",
+      "world_is": "rows_by_company_mention is a pure function over silver rows already read; its `>` keeps the first row of a tie in the order the caller supplies. To apply the run_stamp rule its caller must pass each row's part key (or the rows sorted by run_stamp, ascending, with the comparison made `>=`). The function is not a reader of S3 and nothing served calls it today.",
+      "notes": "Form only. A later cell that wires the function into a served path should carry the part key with each row and call store.supersedes.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W61-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~61",
+      "surfaced_at": "2026-09-30T04:20Z",
+      "one_line": "OBSERVATION: fixing coverage does not by itself lift the producer's gold-branch guard -- a name resolves only when ALL FIVE publishers have a successful job reaching EVERY day of its 30-day window; PARTIAL days never resolve.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~61/o1_ac2_output.txt (PLANTED CONTROL block)",
+          "lib/research/coverage/pool_reader.py gold_window_read + _GOLD_DAY_STATE_MAP @65aa9251bc; lib/research/metrics/chatter_axis.py compute_chatter_axis 'unresolved = [key for key in identities'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-o-1 ruling: 'The guard is right and is NOT changed; the fix is in the coverage the gold table records' -- read as the route by which the gold branch stops failing INCOMPLETE_GOLD_INPUT.",
+      "world_is": "chatter_axis.compute_chatter_axis counts a name unresolved when pool_reader.gold_window_read reports any nonzero state, and gold_window_read maps PARTIAL to 'partial' and DENIED to 'no_coverage'. In the o1_ac2 planted control (synthetic run records, in memory) five publishers reaching all 30 days give RESOLVED 191 of 191 and TRENDING COMPLETE, while the SAME records from 'sa' alone give 5730 PARTIAL name-days and RESOLVED 0 of 191 (FAILED / INCOMPLETE_GOLD_INPUT).",
+      "notes": "Measured only, on a labelled synthetic control. The real run records found are zero (S3 and local), so the estate itself is unchanged by this cell.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W61-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~61",
+      "surfaced_at": "2026-09-30T04:20Z",
+      "one_line": "OBSERVATION: a listing with no parseable published date records a reached span of the fetch date only (basis stop_bound), so a live single-page run covers one day per such publisher.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_o1_run_record_reach.py test_an_undated_listing_records_the_stop_bound_and_says_so and test_a_dated_listing_records_the_oldest_hit_through_the_fetch_date (fixtures only)",
+          "lib/opal_data_harvest/worker.py reach_span @this branch"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-o-1 ruling: 'when no dated listing is reached, the span is the bound the job stopped at, recorded as such.'",
+      "world_is": "In the recorded n-1 fixtures the bbg listing hits carry no published field, so worker.reach_span returns start == end == the fetch date with basis 'stop_bound'; sa fixtures carry publishOn and return the oldest hit date through the fetch date (basis 'listing_dates'). A live-mode job stops after page 1 and a backfill job has no such bound recorded unless its listing hits are dated. I did not read the live bbg/ft/wsj/barrons hit fields.",
+      "notes": "Fixture-only observation; whether live listings for each publisher carry a date field is for the o-5 run to show.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W61-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~61",
+      "surfaced_at": "2026-09-30T04:30Z",
+      "one_line": "OBSERVATION: a collection ran on the main tree at 04:08Z while this cell was executing, so AC2's local-runtime-root count moved from 0 to 1 between two runs; the one record is pre-change and adds no coverage.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/run_records/20260930T040818Z-run-25c129af.json: retrieval_mode backfill, one job (barrons, 992_HK_Equity, status request_rejected, keys_fetched 0), no reached_span key; file mtime Sep 30 00:09 local",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~61/o1_ac2_output.txt (final run: local run records=1, with_reached_span=0) against the first run (directory absent)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-o-1 issuer note: 'No collection has run since n-1 merged: the Scheduled Task is Disabled, and run records are local-only until this cell persists them.'",
+      "world_is": "A run record from a backfill collection (barrons/992_HK_Equity, request_rejected) exists in the main tree's local runtime root, written 2026-09-30 04:09Z. It predates the reached_span field and its only job is not successful, so BEFORE and AFTER are unchanged (0 name-days moved). The AC2 output therefore reports 1 local record, not 0; it is the only version committed.",
+      "notes": "Measured only. Who started the collection is not known to this cell.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W65-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~65",
+      "surfaced_at": "2026-09-30T04:14Z",
+      "one_line": "The signed command runs ONE job per invocation (config.json jobs_per_run=1, no --max-jobs), so 'run 1' touched barrons only; bbg, ft, wsj got no job, o-5.AC1 FAILs on its jobs-set check, and a literal same-command 'repeat' would run the NEXT job (bbg), not repeat barrons.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/config.json:7 \"jobs_per_run\": 1; lib/opal_data_harvest/worker.py Worker.run: count = max_jobs if max_jobs is not None else config.get('jobs_per_run', 1); jobs = [(security, publisher)...] walked from a cursor persisted per plan (state key 'cursor:<hash>')",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_run1.txt: 1 job_finished event (barrons) and 1 run_record; run record jobs=1",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_AC1.txt: 'FAIL: run 1 jobs [(barrons, 992_HK_Equity)] != [barrons, bbg, ft, wsj]'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "NEVER_WIDEN_HALF_COO_O5.md s.1 and o-5.AC1.py: one run of the printed command covers barrons, bbg, ft and wsj for 992_HK_Equity, and the same command repeated the same day reads counts.fetched == 0.",
+      "world_is": "One invocation runs jobs_per_run=1 job. The catalog cursor for this plan now stands at 1, so the next literal invocation would run (bbg, 992_HK_Equity) and fetch, not repeat barrons; --max-jobs 4 would cover the four publishers but is not the signed command (the pair signed the literal command twice and names 'a third run' NOT COVERED). Run 2 was therefore NOT executed by this worker. No object moved, none was added on any of the five roots (AC1: moved=0 removed=0 new=0 on all five).",
+      "notes": "Decision needed from the issuer and a re-sign: whether the pair is re-cut with --max-jobs 4 (or jobs_per_run raised), and whether the barrons cooldown from S2 is honoured first.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W65-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~65",
+      "surfaced_at": "2026-09-30T04:14Z",
+      "one_line": "barrons answered run 1 with a publisher verification challenge: the collector's own scripted reauth succeeded, the retry was rejected, job status request_rejected, 0 articles, 900 s cooldown set; Branch B recorded, not retried.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/runs/20260930T040818Z-barrons-cfedbf8fb4.json: status request_rejected, detail 'Publisher verification challenge from www.barrons.com', auth_refreshes 1, retry_at 1790742262.886 (about 900 s after 04:09:22Z)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_run1.txt: reauth_started, reauth_succeeded (network_auth_corroborated true), retry_after_reauth, job_finished request_rejected"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "NEVER_WIDEN_HALF_COO_O5.md s.4 Branch B: a challenge, denial or failure is recorded in the job status, that publisher gets zero article objects, no retry loop and no login.",
+      "world_is": "Branch B fired on barrons as the pair describes. The 'reauth' events are the collector's own scripted session refresh inside its run (no agent login, no agent HTTP, no browser opened by this worker). Zero article objects, zero listing objects landed.",
+      "notes": "Measured only.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```

@@ -701,6 +701,13 @@ contract defect.
   Microsoft event with 0 tier-A articles. FWD-6's ACCEPT asks for "bursts of real coverage about the company"; this
   rule keeps exactly the 8 the L9 graded real.)*
 - Each event carries its lead headline and its articles.
+- *(L10 addendum, round 12, `1.0.0_SA_CTO~Z`, `ROUND_ANALYSIS.round12.md`):* **an event is ONE STORY, not one day.** The
+  qualifying rule above (tier-A articles from >= 2 publishers, merged across gaps <= 1 day) applies to each story the
+  grouper forms, so a day whose tier-A stories are about unrelated company events yields one event per qualifying story, or
+  none. The lead is the story's own earliest tier-A headline. `event_id` carries the story so two events on one day never
+  collide. **Calendar words (month and day names) never link two headlines.** Evidence: `3.0.0_SA_CVO~Z` L9 round 12
+  (`ADJUDICATION_v20.md` @`19dfdd2579`): 6 of 8 served events are one company event; BA 08-26 is two unrelated stories whose
+  tie no lead rule can break, and BA 09-08's deliveries pair linked on the single token "august".
 
 **`C-HV-GOLD-REBUILDABLE`.** Gold is built from silver only. A rebuild from the same silver reproduces identical rows.
 

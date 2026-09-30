@@ -94,7 +94,7 @@ wire the event route. It does not grade FWD-5 -- that walk needs Andrew's word f
    how easily a worker tidies someone else's component.
 
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~31</slot>
 <fabric>site-z</fabric>

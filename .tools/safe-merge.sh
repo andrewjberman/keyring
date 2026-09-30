@@ -34,8 +34,11 @@
 #         bash .tools/safe-merge.sh --abort                     # give up, restore the tree
 #         bash .tools/safe-merge.sh --self-test
 #
+#         bash .tools/safe-merge.sh --verify-merge <commit>      # read-only tree check of a landed merge
+#
 # EXIT CODES: 0 merged | 1 refused, merge aborted | 2 usage/precondition, nothing done
 #             4 CONFLICT, THE MERGE IS OPEN AND YOURS TO RESOLVE (nothing landed)
+#             5 COMMITTED BUT THE BRANCH WAS NOT CARRIED (tree check, see _verify_merge_tree)
 #
 # Owner 2.0.0_SA_COO (the drain is the COO's limb). Lane .tools/ (ANY).
 set -uo pipefail
@@ -94,6 +97,11 @@ if [ "${1:-}" = "--self-test" ]; then
       "grep -q 'merge aborted; tree restored and conflict state cleared' '$0'"
   chk "the state file is resolved via --git-path (a linked worktree keeps its own)" \
       "grep -q 'git rev-parse --git-path safe-merge-conflict' '$0'"
+  # REGRESSION ARM (1.0.0_SA_CTO~Z 2026-09-29): "MERGED" was printed on merges whose tree equals ^1.
+  chk "the commit path reads the TREE before reporting MERGED (exit 5 when the branch was not carried)" \
+      "grep -q '_verify_merge_tree HEAD' '$0' && grep -q 'COMMITTED BUT THE BRANCH WAS NOT CARRIED' '$0'"
+  chk "--verify-merge refuses a non-merge commit" \
+      "! bash '$0' --verify-merge \"\$(git rev-list --no-merges -n 1 HEAD)\" >/dev/null 2>&1"
   echo "DENOMINATOR: $((n-fails)) of $n arm(s) passed"
   echo "  STOP: BLIND SPOT, STATED: every arm above is a REFUSAL or a structural check. This"
   echo "     self-test has NO GREEN MERGE ARM -- a version of this script that refused"
@@ -118,6 +126,55 @@ STATE="$(git rev-parse --git-path safe-merge-conflict 2>/dev/null || echo '')"
 [ -n "$STATE" ] || { echo "safe-merge: cannot resolve the git dir" >&2; exit 2; }
 
 _merge_open() { [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null || echo /nonexistent)" ]; }
+
+# ---------------------------------------------------------------- post-commit TREE check
+# ⛔ 1.0.0_SA_CTO~Z 2026-09-29 (DSGN_AMGTV1 round-2 DRAIN_END_READ s.3 @e724da66a2): under shared-tree
+# lock contention this script printed "MERGED and committed" on 0e98284fa2 and 8e0a9b6400, whose TREE
+# equals their first parent -- the worker's two files were never carried -- and ef21ed3f77 swept another
+# seat's staged deploy-ledger files. A peer's act reset or re-staged the SHARED index while the grade and
+# the commit hooks ran. Every parent-based read is green on such a merge, and the branch now reads as an
+# ancestor: a re-run is a no-op and /cleanup would delete its worktree as "merged". ONLY THE TREE TELLS.
+# NEED    = files the branch changed (merge-base..^2) that the first parent did not already carry.
+# DROPPED = NEED files the merge commit did not change. All of NEED dropped -> rc 5 (not carried).
+#           Some dropped -> WARN only: a PICK-ours conflict resolution is legitimate.
+# FOREIGN = files the merge commit changed that the branch never touched -> WARN only: a drain may
+#           legitimately carry task-order status closes in the merge commit (/dispatch Step 5).
+_verify_merge_tree() {
+  local m="$1" mb bfiles need landed dropped foreign nn nd
+  git rev-parse -q --verify "$m^2" >/dev/null 2>&1 || { echo "safe-merge: $m is not a merge commit -- nothing to verify" >&2; return 2; }
+  mb="$(git merge-base "$m^1" "$m^2" 2>/dev/null)" || { echo "safe-merge: no merge-base for $m -- tree check could not run" >&2; return 2; }
+  bfiles="$(git diff --name-only "$mb" "$m^2" | LC_ALL=C sort)"
+  need="$(LC_ALL=C comm -12 <(printf '%s\n' "$bfiles" | sed '/^$/d') <(git diff --name-only "$m^1" "$m^2" | LC_ALL=C sort))"
+  landed="$(git diff --name-only "$m^1" "$m" | LC_ALL=C sort)"
+  dropped="$(LC_ALL=C comm -23 <(printf '%s\n' "$need" | sed '/^$/d') <(printf '%s\n' "$landed" | sed '/^$/d'))"
+  foreign="$(LC_ALL=C comm -23 <(printf '%s\n' "$landed" | sed '/^$/d') <(printf '%s\n' "$bfiles" | sed '/^$/d'))"
+  nn="$(printf '%s\n' "$need" | sed '/^$/d' | wc -l | tr -d ' ')"
+  nd="$(printf '%s\n' "$dropped" | sed '/^$/d' | wc -l | tr -d ' ')"
+  echo "safe-merge: tree check $(git rev-parse --short "$m"): branch needed ${nn} file(s), dropped ${nd}, foreign $(printf '%s\n' "$foreign" | sed '/^$/d' | wc -l | tr -d ' ')"
+  if [ -n "$foreign" ]; then
+    echo "safe-merge: WARN -- the merge commit carries file(s) the branch never touched (a status close is expected; anything else is another seat's staged work riding this commit):" >&2
+    printf '%s\n' "$foreign" | sed '/^$/d; s/^/              /' >&2
+  fi
+  if [ "$nn" -gt 0 ] && [ "$nd" -eq "$nn" ]; then
+    echo "safe-merge: *** COMMITTED BUT THE BRANCH WAS NOT CARRIED -- the tree check found none of its ${nn} needed file(s) in the merge. ***" >&2
+    echo "            The branch now reads as MERGED (an ancestor), so re-running safe-merge is a no-op." >&2
+    echo "            Land its content from the branch tip, then commit it under your serial:" >&2
+    printf '%s\n' "$dropped" | sed '/^$/d; s/^/              /' >&2
+    echo "                git checkout $(git rev-parse --short "$m^2") -- <the files above>" >&2
+    return 5
+  fi
+  if [ "$nd" -gt 0 ]; then
+    echo "safe-merge: WARN -- ${nd} of ${nn} needed file(s) kept the first parent's version (fine for a PICK-ours resolution; otherwise it is lost work):" >&2
+    printf '%s\n' "$dropped" | sed '/^$/d; s/^/              /' >&2
+  fi
+  return 0
+}
+
+if [ "${1:-}" = "--verify-merge" ]; then
+  [ -n "${2:-}" ] || { echo "safe-merge: usage: safe-merge.sh --verify-merge <commit>" >&2; exit 2; }
+  _vrc=0; _verify_merge_tree "$2" || _vrc=$?
+  exit "$_vrc"
+fi
 
 # ---------------------------------------------------------------- --abort
 if [ "${1:-}" = "--abort" ]; then
@@ -245,7 +302,25 @@ if ! git merge --no-commit --no-ff "$BRANCH"; then
   # and row gate unreachable on the ONLY path a concurrent drain actually takes. Keep the
   # merge OPEN, record what the merge staged so --continue can tell it from a foreign seat's
   # work, and hand the conflict back.
-  git diff --cached --name-only > "$STATE" 2>/dev/null || true
+  # ⛔ THE STATE IS WHAT THE MERGE COULD STAGE, NOT WHAT THE INDEX HOLDS (AMGT_HARVST-Z-S37,
+  # AMGT_CORPUS-Z-S59). The index is shared: a peer that stages between the clean-index check
+  # above and this snapshot used to be recorded as the merge's own, and --continue then committed
+  # its files under the draining seat's name (2751f0be77 carried 0.7.0_AE_CloudOps~A's NEVER-2
+  # entry). A merge can only stage a path whose two sides differ, so bound the snapshot by
+  # `HEAD..MERGE_HEAD` and name anything outside it now, while nothing has landed.
+  # File-based set arithmetic, NO pipe into `grep -q`: under this script's `set -o pipefail`,
+  # `printf <2000+ paths> | grep -Fxq` SIGPIPEs the writer on an early match and the pipeline
+  # reads FALSE -- the first version of this block (ccf2a27c6b) flagged 680 of a merge's own
+  # paths as foreign on the first real drain it met.
+  git diff --name-only HEAD MERGE_HEAD 2>/dev/null | LC_ALL=C sort -u > "$STATE.mine" || true
+  git diff --cached --name-only 2>/dev/null | LC_ALL=C sort -u > "$STATE.cached" || true
+  LC_ALL=C comm -12 "$STATE.cached" "$STATE.mine" > "$STATE"
+  _PEERS="$(LC_ALL=C comm -23 "$STATE.cached" "$STATE.mine")"
+  if [ -n "$_PEERS" ]; then
+    echo "safe-merge: WARN -- path(s) staged in the shared index that THIS MERGE could not have staged (another seat's; left OUT of the conflict state, so --continue will refuse them until unstaged):" >&2
+    printf '%s\n' "$_PEERS" | sed 's/^/              /' >&2
+  fi
+  rm -f "$STATE.mine" "$STATE.cached" 2>/dev/null || true
   git diff --name-only --diff-filter=U >> "$STATE" 2>/dev/null || true
   echo "$BRANCH" > "$STATE.branch" 2>/dev/null || true
   echo "safe-merge: *** CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED. ***" >&2
@@ -331,6 +406,19 @@ if [ -z "${OPAL_AGENT_SERIAL:-}" ]; then
   exit 2
 fi
 _AUTH="${OPAL_AGENT_SERIAL} <${OPAL_AGENT_SERIAL}@opal.agent>"
+# LAST FOREIGN SWEEP BEFORE THE COMMIT (DSGN_AMGTV1 round 7: 6fcaa52f79 carried 14 of 2.0.0_SA_COO~X's staged files).
+# The clean-index check above runs BEFORE the merge; the grade takes minutes, and a peer's safe-commit that passed its
+# own merge check just before this merge opened stages into the shared index inside that window. A merge can only
+# stage paths whose sides differ, so anything else staged now is a peer's: unstage it (working copy untouched; its
+# owner re-commits) and name it. The post-commit tree check still reports any path that slips in during the hooks.
+git diff --name-only HEAD MERGE_HEAD 2>/dev/null | LC_ALL=C sort -u > "$STATE.own" || true
+_LATE="$(git diff --cached --name-only 2>/dev/null | LC_ALL=C sort -u | LC_ALL=C comm -23 - "$STATE.own")"
+rm -f "$STATE.own" 2>/dev/null || true
+if [ -n "$_LATE" ]; then
+  echo "safe-merge: WARN -- unstaging $(printf '%s\n' "$_LATE" | wc -l | tr -d ' ') path(s) another seat staged into this merge's index (outside HEAD..MERGE_HEAD; working copies kept; their owner re-commits):" >&2
+  printf '%s\n' "$_LATE" | sed 's/^/              /' >&2
+  while IFS= read -r _p; do [ -n "$_p" ] && git restore --staged -- "$_p" 2>/dev/null; done <<< "$_LATE"
+fi
 echo "safe-merge: committing the merge as ${OPAL_AGENT_SERIAL}"
 if ! git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then
   echo "safe-merge: *** COMMIT REFUSED DOWNSTREAM after this script's grade PASSED. ***" >&2
@@ -341,5 +429,12 @@ if ! git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then
   exit 1
 fi
 rm -f "$STATE" "$STATE.branch" 2>/dev/null || true
+# The commit's hooks are the longest window a peer has to reset the shared index under this merge.
+# Read the TREE now, before reporting anything (see _verify_merge_tree).
+_vrc=0; _verify_merge_tree HEAD || _vrc=$?
+if [ "$_vrc" -eq 5 ]; then
+  echo "safe-merge: NOT MERGED -- commit $(git rev-parse --short HEAD) landed WITHOUT the branch's content (exit 5)." >&2
+  exit 5
+fi
 echo "safe-merge: MERGED and committed -- $(git rev-parse --short HEAD)"
 echo "safe-merge: remember the drain's remaining steps -- remove the worktree and its branch explicitly."

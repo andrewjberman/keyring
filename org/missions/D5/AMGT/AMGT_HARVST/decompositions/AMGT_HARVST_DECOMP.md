@@ -1691,3 +1691,449 @@ sentence that summarises it -- including when a trusted seat wrote the summary.*
 find all six carried and the census over those seven columns closes clause (i). **A criterion that states its
 mapping before counting is correct whether the mapping holds or not** -- which is exactly why it was the right
 shape while the question was open.
+
+## 24. ROUND 12 -- L5 DECOMPOSITION v2.1, over the round-11 analysis (`ledger/ROUND_ANALYSIS.round11.md` @91276ffa94)
+
+**Issuer `2.0.0_SA_COO~H`** (re-seated from `~Y`, record @63854377ef), 2026-09-28 ~22:5xZ. Round 11 CLOSED; the
+analysis's section 4 lists five items and asks for ONE issuance. Series **`a`** (spent: h, r, s, t, u, v, w, x, y, z
+over 32 orders; `ls task-orders/ | cut -d. -f2` census). The three vendor cells keep their drafted ids `w-2`, `w-4`,
+`w-5` (s.20.5), so the analysis's names resolve. Slots MAX+1 over 34: `~35` `~36` `~37` `~38`; the deploy is a SEAT.
+
+### 24.1 THE FIVE ITEMS -> SEVEN ORDERS, and each split is a measurement, not a preference
+
+| analysis item | order(s) | class | slot |
+|---|---|---|---|
+| 1 mount + ledgered deploy + timing | `HVST-a-1` declare the mount (tf list, precondition 16->18, route table 16->18) | WORLD by the L6 floor (tf path); runs no terraform | `~35` |
+| | `HVST-a-2` PACKAGE AND DEPLOY, under a never-widen pair + NEVER-2 entry | WORLD | `0.7.0_AE_CloudOps~R` |
+| 2 the lead names the plurality story | `HVST-a-3` the rule, proved in memory over landed data | LOCAL | `~36` |
+| | `HVST-a-4` the served rebuild, under a fresh pair, carrying the round's JUDGMENT | SERVED | `~36` (continued) |
+| 3 `w-5` bbg diagnostic | `HVST-w-5` ONE call pair through the estate's transport, NOT the producer's repair path | WORLD | `~37` |
+| 5 `w-2` capture, capped | `HVST-w-2` sa only, 25 jobs max in invocations of 5, `--new-only`, carrying `s.20.6`'s JUDGMENT | WORLD | `~37` (continued) |
+| 4 `w-4` ft/barrons diagnostic | `HVST-w-4` answered WITHOUT a vendor call | LOCAL | `~38` |
+
+1. **Item 1 is two orders because the deploy cannot work as listed (row `Z-S35`, filed at this cut).** The deployed
+   `opal-amgt-scoped-api` package carries pyarrow 0 and `lib/opal_naming` 0, and its only layer
+   (`opal-amgt-print-deps:1`, numpy 2.2.6, 121.7 MB unzipped) carries pyarrow 0 -- so a mount plus a code-only
+   redeploy would answer an import failure on both timeline routes. The packaging choice (wheel source, 250 MiB
+   budget) is an infra call on halves the CTO signs, so it rides the deploy seat's order, not a worker's.
+2. **Item 2 is two orders because NEVER-1 reads the expected outcome from the producer's OWN rule at signing**, and
+   the rule does not exist until `a-3` merges (the `y-1` -> `z-1` pattern of rounds 10-11).
+3. **Item 4 carries no vendor call.** The rows gold reads are keyed by `article_key` (`publication_gold.py:714-718`,
+   `:584`, `:621`); the sqlite `articles` table has a composite primary key (`worker.py:32-33`), so `Z-S31`'s premise
+   is false and the one duplicate is one ft story naming two securities. One Opal S3 read settles the rest; the
+   barrons half is a local test flake. Andrew's word is a permission and is not spent where no vendor byte is needed.
+4. **Item 3 routes around the producer.** A bbg 403 inside `run` opens a headed Chrome press-and-hold and can call the
+   metered Kimi vision API (`verification.py:84,114-132,123-125`); `AuthExpired` fires the credentialed login
+   (`worker.py:285-293`). None is covered by the word. The estate's `bloomberg_rest_fetch.check/.search` return the
+   raw responses on the parked session without any of them. The decomp's s.20.5 starting hypothesis (the drain never
+   fell) is withdrawn: 8 of 8 traced holds, AND the one success, show the same non-draining trace.
+
+### 24.2 FAN-OUT, derived
+
+Edges: `a-1 -> a-2` (the deploy applies the declared mount); `a-3 -> a-4` (the rebuild runs the merged rule);
+`w-5 -> w-2` (one runner, shared ledger and session vault, the analysis's order). `w-4` has no edge.
+**M = 4 chains; N = 4 worker slots + 1 seat; cap 8 not pressed.** Write sets are disjoint: `a-1` owns the tf and the
+api route table/tests; `a-2` owns the build script and the ledger; `a-3` owns `publication_gold.py` and its event
+tests; the rest write only their deliverables, the channel, and (`w-5`/`w-2`) one ledger file.
+
+### 24.3 PAIRS OWED, and by whom
+
+- `a-2`: COO half `deliverables/2.0.0_SA_COO_H/round12/NEVER_WIDEN_HALF_COO_A2.md`, written after `a-1` merges and a
+  `--build-only` closure diff exists; it cards the RESAPP routes the same artifact serves. CTO half by
+  `1.0.0_SA_CTO~Z`. The seat is spawned by this seat after both are committed.
+- `a-4`: COO half `deliverables/2.0.0_SA_COO_H/round12/NEVER_WIDEN_HALF_COO_A4.md`, written after `a-3` merges,
+  stating whether `a-2` has made the table user-visible by then. CTO half by `1.0.0_SA_CTO~Z`.
+
+### 24.4 CHECKS DRY-RUN AT THE BASE (report 2 C4)
+
+`a-1.AC1` base: FAIL as expected (7 failures; its first draft read 18 at a base of 16 off quoted comment text and was
+fixed before the cut). `a-2.AC1` base: FAIL as expected (6; the first draft passed the ceiling arm vacuously on a 404
+and was fixed). `a-2.AC2` base: FAIL as expected on its 2 build arms; rollback-target and 3 RESAPP controls PASS.
+`a-1.AC2` and `a-3.AC2` are suite controls, PASS at the base (255; 12). The `a-3`/`a-4`/`w-*` scripts are
+worker-written as in every prior round of this project, each criterion stating its base expectation.
+
+## 25. ROUND 13 -- L5 DECOMPOSITION v2.2, over the round-12 analysis (`ledger/ROUND_ANALYSIS.round12.md` @094cc1f110)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~03:3xZ. Round 12 CLOSED (7 of 7; the timeline serves on the deployed API).
+Series **`b`** (spent: h, r, s, t, u, v, w, x, y, z, a over 39 orders). Slot MAX+1 over 38: **`~39`**.
+
+### 25.1 THE LIST -> TWO ORDERS, ONE CHAIN
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 one story per event + calendar tokens out of the link vocabulary (the `C-HV-EVENT-SPINE` round-12 addendum), STOP limb: none of the six one-company events lost or split | `HVST-b-1` the rule, proved in memory | LOCAL | `~39` |
+| | `HVST-b-2` the served rebuild under a never-widen pair, carrying the round's JUDGMENT | SERVED | `~39` (continued) |
+| 2 `Z-S37` (`safe-merge --continue` whitelists the index snapshot) | **not a cell** | -- | -- |
+
+1. **Item 1 is two orders for the round-12 reason:** NEVER-1 reads the expected outcome from the producer's own rule at
+   signing, and the rule exists only after `b-1` merges.
+2. **Item 2 is not a cell:** the analysis makes it "a cell only if this project owns a write surface for it", and
+   `.tools/safe-merge.sh` is not this project's (its authoring lane is `2.0.0_SA_COO` base; the fix is proposed on row
+   `Z-S37`). This seat's disarm stands as a procedure: the pre-`--continue` foreign-path diff, run on every drain since.
+3. **The STOP limb's population is the L9's, not mine:** `ADJUDICATION_v20.md` @`19dfdd2579` graded 6 of 8 served events as
+   one company event (992_HK x3, COST 09-14, HD 08-18, NVDA 06-01). Both orders check SPAN and TIER-A MEMBERSHIP, never the
+   id, because the addendum moves every id ("`event_id` carries the story").
+4. **User-visible:** since round 12 the deployed timeline serves the newest `chatter_event` part, so `b-2` is the first
+   rebuild of this table a user sees.
+
+### 25.2 FAN-OUT
+
+`b-1 -> b-2` is one chain (the rebuild runs the merged rule). **M = 1, N = 1, cap 8 not pressed.** Write set: `b-1` owns
+`publication_gold.py` and its event tests; `b-2` writes only its deliverables and the channel.
+
+### 25.3 NOT CELLS
+
+The Seeking Alpha 402 (`Z-W37-S4`) is the account holder's to read; the portal push of `92a2576254` is under Andrew's
+hold (~20:3xZ). Neither waits on this round.
+
+## 26. ROUND 14 -- L5 DECOMPOSITION v2.3, over the round-13 analysis (`ledger/ROUND_ANALYSIS.round13.md` @f1de5ca7ce)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~07:0xZ. Round 13 CLOSED (2 of 2; the CVO graded 7 of 7 served events one story,
+read IN-SAMPLE). Series **`c`** (spent: h, r, s, t, u, v, w, x, y, z, a, b over 41 orders). Slot MAX+1 over 39: **`~40`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the held-out read of the one-story rule + the burst-shape census (no new vendor leg) | `HVST-c-1` | LOCAL | `~40` |
+
+**Measured at the cut (CLOUD `f1de5ca7ce`), so the order states its base rather than predicting it:** 130 of 263
+mention rows over 50 of 55 securities are held-out (44 tier A/B); the rule forms **0 events** on them; the newest mention
+is 2026-09-15 (no capture postdates the rule); 1 (security, day) carries more than 3 tier-A/B articles (BA 09-08, in-
+sample); the largest served event is 3 articles over 1 day. **So the held-out event set is empty and a precision grade is
+impossible here;** the order adds a RECALL arm (held-out near-miss stories laid out for L9) inside the ruling's intent.
+**Fan-out: 1 of 1 chain, N = 1.** NOT cells: the event route (`Z-W39-S1`, ruled not cut), the portal push (Andrew's hold),
+the Seeking Alpha 402 (the account holder), a further bbg diagnostic (its own word), `Z-S37` (the tool's authoring lane).
+
+## 27. ROUND 15 -- L5 DECOMPOSITION v2.4, over the round-14 analysis (`ledger/ROUND_ANALYSIS.round14.md` @f00c9a0c43)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~08:4xZ. Round 14 CLOSED (1 of 1; 0 held-out events, round 13 stays IN-SAMPLE).
+Series **`d`** (spent: h, r, s, t, u, v, w, x, y, z, a, b, c over 42 orders). Slot MAX+1 over 40: **`~41`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1a common-name aliases: universe census of non-suffix tails, `.com` at minimum, `Z-W40-S1` read first, proved in memory | `HVST-d-1` | LOCAL | `~41` |
+| 1b rebuild mention + daily + event under a never-widen pair; false-hit sample and new-event judgment at L9 | `HVST-d-2` | SERVED | `~41` (continued) |
+
+**Split for the NEVER-1 reason of rounds 12-13:** the pair reads its expected diff from `d-1`'s merged rule. **Measured at
+the cut (CLOUD `b907d17f1c`):** the served mention (263 rows, 55 securities) and daily (50,997 rows) parts were built on
+09-24 by `2.0.0_SA_COO~Y` from `universe_securities.build()` over pool `universe/v1/2026-09-16.json` (191 securities, sa
+join off) -- not from the `~4` 6-security file -- so both cells pin that input; 1 of 191 alias sets carries a dot tail
+(AMZN); silver grew 118 -> 120 articles since, so `d-1` attributes every moved row ALIAS or DRIFT. **Issuer widening, carded
+to the CTO:** `chatter_daily` joins the radius because `build_daily` reads the newest mention part and `/timeline` serves it.
+**Fan-out: 1 of 1 chain (d-1 -> d-2, one worker), N = 1.** NOT cells: the event route (`Z-W39-S1`), the portal push
+(Andrew's hold), the Seeking Alpha 402 (the account holder), `Z-S37` (the tool's authoring lane).
+
+## 28. ROUND 16 -- L5 DECOMPOSITION v2.5, over the round-15 analysis (`ledger/ROUND_ANALYSIS.round15.md` @ce26d1244b)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~10:3xZ. Round 15 CLOSED (2 of 2; the CVO read 12 of 12 new matches as the company
+and the AMZN 09-07 event as one own-company story, a sample of one). Series **`e`** (spent: h, r, s, t, u, v, w, x, y, z,
+a, b, c, d over 44 orders). Slot MAX+1 over 41: **`~42`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1a one text span, one count: the matcher change, proved in memory | `HVST-e-1` | LOCAL | `~42` |
+| 1b rebuild mention + daily under a never-widen pair, events measured; one-count-per-mention judgment at L9 | `HVST-e-2` | SERVED | `~42` (continued) |
+
+**Measured at the cut (CLOUD `c13ec03ca8`), a prototype span count over 120 silver articles:** `mention_count` moves on 14
+of 275 rows across 6 securities (AMZN 8, UPS 2, GOOGL, GOOG, DAL, FDX 1 each); **8 rows move tier C -> D** (tier C is
+`mention_count >= 2`); title, lead and blocks_hit move on 0 rows, so A/B and events are expected not to move. **The
+ruling's premise ("does not touch tier") is corrected here for C/D and carded to the CTO;** the ruling is unchanged.
+**Fan-out: 1 of 1 chain (e-1 -> e-2, one worker), N = 1.** NOT cells: held-out reads (no new data), the event route
+(`Z-W39-S1`), the portal push (Andrew's hold), `Z-W40-S1` (not in this analysis's list).
+
+## 29. ROUND 17 -- L5 DECOMPOSITION v2.6, over the round-16 analysis (`ledger/ROUND_ANALYSIS.round16.md` @f424435829)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~12:1xZ. Round 16 CLOSED (2 of 2; the double count is gone, 8 = 8 = 8 on the
+crash report; `Z-W41-S2` graduates). Series **`f`** (spent: h, r, s, t, u, v, w, x, y, z, a, b, c, d, e over 46 orders).
+Slots MAX+1 over 42: **`~43`, `~44`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 ticker and brand census: added mentions per form, a printed sample for the text read at L9 | `HVST-f-1` | LOCAL | `~43` |
+| 2 a security's first burst survives name detection (`Z-W40-S1`); fixture mechanism test + served events unmoved | `HVST-f-2` | LOCAL | `~44` |
+
+**Measured at the cut (CLOUD `9ebf76b6da`):** 191 securities, 120 silver articles, 8 served events; the served event part
+equals `event_rows` over the served mention part (`e-2` AC2). `f-2` points at `match_forms` (the aliases that hit, carried
+on every mention row) as a non-inferred name source; the worker chooses the mechanism. A moved served event stops `f-2` at
+BLOCKING (a pair and its own cell follow). **Fan-out: 2 of 2 chains, independent, N = 2, cap 8.** NOT cells: the event
+route (`Z-W39-S1`), the portal push (Andrew's hold), new held-out reads (the Seeking Alpha 402).
+
+## 30. ROUND 18 -- L5 DECOMPOSITION v2.7, over the round-17 analysis (`ledger/ROUND_ANALYSIS.round17.md` @c296f4ba12)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~14:1xZ. Round 17 CLOSED (2 of 2; `Z-W40-S1` graduated; the census read hit by hit,
+tickers 172/240, short names 61/291). Series **`g`** (spent: h, r, s, t, u, v, w, x, y, z, a, b, c, d, e, f over 48 orders).
+Slot MAX+1 over 44: **`~45`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the alias rule: case-sensitive tickers 2+ chars with a refusal list; the whole-brand list; the parent-brand refusal in code | `HVST-g-1` | LOCAL | `~45` |
+| 2 the served rebuild on the new rule (mention, daily, event) under a never-widen pair | `HVST-g-2` | SERVED | `~45` (continued) |
+
+**Measured at the cut (CLOUD `f1c482d24f`):** served parts 5 / 6 / 7 (mention 275, daily 51,952, event 8). `KO_US_Equity`
+carries the alias `Coca-Cola`, so the ruled listed-brand check refuses `KOF`. **Walmart Inc. is in neither the 191 nor
+the pool's 250 names**, so that check cannot refuse the planted `WALMEX*` -> `Walmart` entry the same ruling requires.
+**Issuer's ruling:** the refusal is TWO limbs in code: (a) any other pool name's alias or company name; (b) an explicit
+parent-brand refusal list in `whole_brand_aliases.json`, starting with `Walmart` and citing the census. Carded to the CTO.
+`g-2` AC1 is a post-act read, with the act and its dry pre-check as standing clauses (round 16 `Z-W42-S1`/`S2`).
+**Fan-out: 1 of 1 chain (g-1 -> g-2, one worker), N = 1, cap 8.** NOT cells: a brand-to-parent source, the event route
+(`Z-W39-S1`), the portal push (Andrew's hold), new held-out reads (the Seeking Alpha 402).
+
+## 31. ROUND 19 -- L5 DECOMPOSITION v2.8, over the round-18 analysis (`ledger/ROUND_ANALYSIS.round18.md` @d11fd4d089)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~20:3xZ. Round 18 CLOSED: 2 of 2; the alias rule is served; the CVO read the rule
+179 of 179 correct; ASML's DENIED->PARTIAL was ruled correct. Series **`i`** (spent: h, r, s, t, u, v, w, x, y, z, a, b, c,
+d, e, f, g over 50 orders; census from `ls task-orders/`). Slot MAX+1 over 45 is **`~46`**; the deploy is a SEAT.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 2 the whole-brand list agrees with its refusal limb (`UBS` off; test: no entry refused by limb (a)) | `HVST-i-1` | LOCAL | `~46` |
+| 1 a PARTIAL day names its publisher -- the rule and both routes, proved in memory | `HVST-i-2` | LOCAL | `~46` (continued) |
+| 1 -- the served `chatter_daily` rebuild carrying the codes, under a never-widen pair | `HVST-i-3` | SERVED | `~46` (continued) |
+| 1 -- the scoped-API redeploy so both routes serve the codes, under a pair + NEVER-2 entry | `HVST-i-4` | WORLD | `0.7.0_AE_CloudOps~A` |
+
+**Item 1 is three orders, by the round-12 pattern (s.24.1), and each split is a measurement:**
+1. **`i-2` before `i-3`:** NEVER-1 reads the expected outcome from the producer's own rule at signing, and that rule
+   does not exist until `i-2` merges.
+2. **`i-4` is a seat order:** `timeline_api.py` is packaged into `opal-amgt-scoped-api`. The deployed function at the cut
+   (`lg6NJ2JL...`, RESAPP ww-1, 19:18:58Z) serves neither `publishers_covered` nor any codes. That was measured:
+   `round19/checks/i-4.AC1.base.txt` records 272 of 272 ASML_NA days lacking both fields. The analysis's "the served
+   `/timeline` and `timeline_day` carry both" is reached only by a deploy.
+
+The analysis orders `UBS` first ("cell 1 depends on cell 2"), so the securities file `i-3` builds from carries the
+list fix.
+
+**Widened inside the decomposition (issuer's ruling):**
+- `i-1`'s in-memory proof covers daily and event as well as mention, because row `Z-W45-S2` measured that `aliases`
+  reach `data_status`.
+- `i-3`'s dry step re-reads the scoped API's CodeSha256 beside the ETags (row `Z-S41`).
+
+**Fan-out: 1 of 1 chain (`i-1 -> i-2 -> i-3 -> i-4`); N = 1 worker slot + 1 seat; cap 8 not pressed.** Edges:
+- `i-1 -> i-2`: one worker, and `i-2`'s build uses `i-1`'s securities file.
+- `i-2 -> i-3`: the rebuild runs the merged rule.
+- `i-3 -> i-4`: AC1 of `i-4` compares the served codes to the LANDED column, which exists only after `i-3`.
+
+Write sets are disjoint:
+- `i-1` owns `whole_brand_aliases.json` and the tests.
+- `i-2` owns `publication_gold.py`, `timeline_api.py` and the tests.
+- `i-3` writes only its deliverables and the channel.
+- `i-4` owns the tf dir and the change-management ledger.
+
+**Pairs owed:**
+- `i-3`: COO half `deliverables/2.0.0_SA_COO_H/round19/NEVER_WIDEN_HALF_COO_I3.md`, written after `i-2` merges; CTO half
+  by `1.0.0_SA_CTO~Z`.
+- `i-4`: COO half `.../round19/NEVER_WIDEN_HALF_COO_I4.md`, written after `i-3` lands, from a `--build-only` closure
+  diff carded by project; CTO half by `1.0.0_SA_CTO~Z`.
+
+**Checks dry-run at the base (report 2 C4):**
+- `i-4.AC1`: FAIL as expected (6).
+- `i-4.AC2`: FAIL as expected on its 2 build arms; the rollback target and 3 RESAPP controls PASS.
+- `i-1`, `i-2` and `i-3` scripts are worker-written, as in every prior round of this project, and each criterion states
+  its base expectation.
+
+**NOT cells** (analysis s.4):
+- the tier rule for passing mentions;
+- a brand-to-parent source;
+- the event route (`Z-W39-S1`);
+- the portal push (Andrew's hold);
+- new held-out reads (the Seeking Alpha 402).
+
+## 32. ROUND 20 -- L5 DECOMPOSITION v2.9, over the round-19 analysis (`ledger/ROUND_ANALYSIS.round19.md` @a251f02116)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~22:4xZ. Round 19 CLOSED: 4 of 4. Publisher codes are served end to end, the
+"covered" wording is ruled in DSGN, and `Z-W45-S1`/`S2` graduated. Series **`j`**; slots MAX+1 over 46 are **`~47`**
+and **`~48`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the event route serves the stored event by its stored id (`Z-W39-S1`) -- THE CODE | `HVST-j-1` | LOCAL | `~47` |
+| 1 -- wiring + mount + redeploy so the route answers users | NOT CUT: HELD for the CTO (row `Z-S42`) | -- | -- |
+| 2 the story-span census (`Z-W41-S1`), measurement only | `HVST-j-2` | LOCAL | `~48` |
+
+**Why item 1's served half is held, not cut (row `Z-S42`, measured at the cut):**
+- The event route answers no user: the deployed function returns `404 no /api/scoped/amgt route`.
+- The gateway's 108 routes carry only `/timeline` and `/timeline/day`.
+- The adapter states the route "IS NOT WIRED", and a test asserts it.
+- The page builds only the two mounted URLs.
+
+So the analysis's AC ("all 8 served events answer 200 by their stored ids" after a redeploy) cannot be met by a
+redeploy. It needs an adapter wiring plus a terraform mount: a NEW served surface that no page calls. That is the
+CTO's call, carded with a REC (mount only when DSGN_AMGTV1's page needs an event window by id).
+
+The code defect is real (8 of 8 stored ids differ from the recomputed id) and the fix is right under either answer, so
+`j-1` is cut now, unwired.
+
+**Fan-out: 2 of 2 chains (`j-1`; `j-2`), independent; N = 2 worker slots; cap 8 not pressed.** Write sets are
+disjoint: `j-1` owns `timeline_api.py` and its tests; `j-2` writes only its deliverables and the channel.
+
+**Checks at the base:**
+- `j-1` AC1: the named tests FAIL by construction. AC2 (b) FAILS (the old route is `first_day`-keyed and its id is
+  recomputed; issuer read 8 of 8 differ).
+- `j-2` AC1 (a) must reproduce the served event part (8 events, ETag `c146a325...`).
+- The scripts are worker-written, as in every prior round.
+
+**NOT cells** (analysis s.4 plus this cut):
+- the page wording (DSGN_AMGTV1);
+- `Z-S37` (the tool's owner, PARKED on MSTR~Z);
+- a field rename;
+- the event route's wiring, mount and deploy (HELD, `Z-S42`).
+
+## 33. ROUND 21 -- L5 DECOMPOSITION v3.0, over the round-20 analysis (`ledger/ROUND_ANALYSIS.round20.md` @4b8bd40242)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-29 ~23:1xZ. Round 20 CLOSED: 2 of 2; `Z-W39-S1` and `Z-S37` graduated. The span rule
+is ADOPTED with a roundup guard, the link window is unchanged, and the lead question waits on a census. Series **`k`**;
+slots MAX+1 over 48 are **`~49`** and **`~50`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the span rule plus the roundup guard, in code, dry-rebuilt (HD ends 08-18; 992 HK and AMZN equal `j-2`'s) | `HVST-k-1` | LOCAL | `~49` |
+| 2 the updated-time census over the 120 silver articles (plus the bronze they point to), HD's barrons lead by name | `HVST-k-2` | LOCAL | `~50` |
+
+**Fan-out: 2 of 2 chains, independent; N = 2 worker slots; cap 8 not pressed.** Write sets are disjoint: `k-1` owns
+`publication_gold.py` and its tests; `k-2` writes only its deliverables and the channel.
+
+**Widened inside the decomposition (issuer's ruling):**
+- `k-1` AC2 (b) requires the 5 events `j-2` KEPT to stay row-equal, so the rule change is bounded on the untouched
+  events as well as the three it moves.
+- `k-2` reads bronze through silver's own keys where silver lacks a time field. It is still Opal S3 only, with no fetch.
+
+**Round 22** is the SERVED `chatter_event` rebuild under a never-widen pair, cut after the CTO rules the lead question on
+`k-2`.
+
+**Checks at the base:**
+- `k-1` AC1: the named tests FAIL.
+- `k-1` AC2 (c) and (d): FAIL (the served rule is per-day).
+- `k-2` is a census with no FAIL arm.
+- The scripts are worker-written.
+
+**NOT cells:**
+- the link window (ruling 4);
+- the event route mount (HELD);
+- the roundup flag's producer.
+
+## 34. ROUND 22 -- L5 DECOMPOSITION v3.1, over the round-21 analysis (`ledger/ROUND_ANALYSIS.round21.md` @63c272600a, corrected @3100474cde)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~00:0xZ. Round 21 CLOSED: 2 of 2. The span rule plus the guard at 4 is merged.
+The retitled-preview lead is ACCEPTED and DISCLOSED. Series **`l`**; slots **`~51`** and **`~52`**.
+
+**Before the cut the issuer measured analysis ruling 2's premise FALSE:**
+- `is_roundup` IS `co_mention_count >= 5` by construction (`DEFAULT_ROUNDUP_AT`; 304 of 304 rows).
+- So "the guard reads `co_mention >= 4` only" is outcome-identical to `k-1` (dry run: KEPT 5 / CHANGED 3 / GONE 0; AMZN
+  09-06..09-07, not 09-08).
+- Carded (msg 26795). The CTO corrected s.2a @`3100474cde`: cell 1 is a one-line simplification with AC "8 of 8
+  identical", and cell 2 is cut NOW.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the guard reads `co_mention_count >= 4` only -- a simplification, 8 of 8 events identical to `k-1` | `HVST-l-1` | LOCAL | `~51` (`worker-light`) |
+| 2 the served `chatter_event` rebuild on the span rule, under a never-widen pair naming HD's lead change and AMZN's span | `HVST-l-2` | SERVED | `~52` |
+
+**Fan-out: 2 of 2 chains, independent; N = 2 worker slots; cap 8 not pressed.** `l-1` cannot move an outcome, so `l-2`
+does not wait on it. `l-2` builds from the rule at `88dbe4af64`. Write sets are disjoint: `l-1` owns
+`publication_gold.py` and its tests; `l-2` writes only its deliverables and the channel.
+
+**Pair owed:** `l-2`'s COO half `deliverables/2.0.0_SA_COO_H/round22/NEVER_WIDEN_HALF_COO_L2.md` (signed this tick) and
+its CTO half.
+
+**NOT cells:**
+- the `is_roundup` producer;
+- the link window;
+- the event route mount (HELD).
+
+## 35. ROUND 23 -- L5 DECOMPOSITION v3.2, over the round-22 analysis (`ledger/ROUND_ANALYSIS.round22.md` @9d7bd0e4f9)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~01:1xZ. Round 22 CLOSED: 2 of 2, AC4 MET 3 of 3, and `Z-W41-S1` graduated. The
+event work is done for the served half. **Finding (analysis ruling 3):** seven of nine FWDs have gone ungraded since
+round 10. Round 23 re-reads them from the served store. Series **`m`**; slots **`~53`**, **`~54`** and **`~55`**.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 FWD-1/2/3: re-readable byte-exact, every sent field kept, how each article was found | `HVST-m-1` | LOCAL (read-only over the served store) | `~53` |
+| 2 FWD-4/7: the strength carriers per pair (grade re-derived from stored text), and the page's rank against a rank recomputed from the graded daily table | `HVST-m-2` | LOCAL (read-only) | `~54` |
+| 3 FWD-8/9: undelivered desktop articles, and article history since 2026-01-01 per covered security | `HVST-m-3` | LOCAL (read-only) | `~55` |
+
+**Fan-out: 3 of 3 chains, independent; N = 3 worker slots; cap 8 not pressed.** Each cell writes only its own
+deliverables folder and the channel. Each carries at most 3 criteria, each quotes its FWDs' DONE WHEN lines verbatim,
+and each prints what this machine cannot see as NOT MEASURABLE HERE rather than estimating it.
+
+**The adversaries, named in each preflight:**
+- A pass rate over a filtered population.
+- A grade "re-derived" by the producer itself.
+- FWD-9's history read off the daily table's ROW range, which covers every day by construction, instead of off the
+  ARTICLES.
+
+**NOT cells:**
+- events;
+- the link window;
+- the event route mount;
+- the Seeking Alpha capture (until the account reads 200).
+
+## 36. ROUND 24 -- L5 DECOMPOSITION v3.3, over the round-23 analysis (`ledger/ROUND_ANALYSIS.round23.md` @d1ec6f4118)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~02:0xZ. Round 23 CLOSED. The seven FWDs are graded: **FWD-4 and FWD-8 REALIZED**;
+FWD-1/2/3/7/9 NOT REALIZED with named gaps; 2 of 9 REALIZED. Series **`n`**; slots **`~56`..`~60`** plus the seat
+`0.7.0_AE_CloudOps~A`.
+
+| analysis item | order | class | slot |
+|---|---|---|---|
+| 1 the collector keeps received bytes, links the listing object, rank+page for all, a run record (FWD-1/3) | `HVST-n-1` | LOCAL | `~56` |
+| 2 sa's 5 missing fields + 6 missing rows in silver; query-by-company over the mention join (FWD-2) | `HVST-n-2` | LOCAL (a served silver rebuild, if AC2 shows rows move, is a follow-on paired order) | `~57` |
+| 3 why the served rank holds 2 rows; the `gold` rank's expected diff (FWD-7) | `HVST-n-3` | LOCAL read | `~58` |
+| 4 the `CHATTER_AXIS_SOURCE=gold` flip (FWD-7) | `HVST-n-4` | WORLD, under a pair and a NEVER-2 entry | `0.7.0_AE_CloudOps~A` (after `n-3`) |
+| 5 the backfill plan for all 191 covered names, before any run (FWD-9) | `HVST-n-5` | LOCAL | `~59` |
+| 6 `/timeline/day`: profile, then fix in code (FWD-5 latency; routed from DSGN r7 ruling 2) | `HVST-n-6` | LOCAL (the redeploy is a follow-on paired WORLD seat order) | `~60` |
+
+**Fan-out: 5 of 5 chains start now (`n-1`, `n-2`, `n-3`, `n-5`, `n-6`); `n-4` follows `n-3`; N = 5 worker slots + 1 seat;
+cap 8 not pressed.**
+
+**Write sets are disjoint:**
+- `n-1` owns named collector files (not `silver_from_bronze.py`) and `store.py`.
+- `n-2` owns `silver_from_bronze.py` and its test.
+- `n-6` owns `timeline_api.py`, `publication_gold.py`, the timeline loaders in `scoped_amgt.py` and their tests.
+- `n-3` and `n-5` write only their deliverables.
+
+**The two follow-ons, `n-2`'s served silver rebuild and `n-6`'s redeploy,** are the `i-2` -> `i-4` pattern. Each is cut
+after its code merges, with its expected diff read from the merged code at signing.
+
+**`n-4`'s checks are issuer-written after `n-3` drains,** because their content IS `n-3`'s measurement. They are
+dry-run at the base before the dispatch. This is the one recorded departure from "every check a file at the cut".
+
+**NOT cells:**
+- re-fetching the 104 rebuilt originals;
+- the backfill run (until `n-5`'s plan is read);
+- events.
+
+## 37. ROUND 25 -- L5 DECOMPOSITION v3.4, over the round-24 analysis (`ledger/ROUND_ANALYSIS.round24.md` @6c5b4339a1)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~03:4xZ.
+- Round 24 is CLOSED, built but not served. 2 of 9 FWDs are REALIZED.
+- Rulings: `ledger/CTO_RULING_ROUND24_N4_HOLD_GRAMMAR_FLAG_SILVER_TIE_20260930.md` @5998e71f23, with ruling 2 amended
+  @e49bbdb3d2 on this seat's card (msg 26880).
+- Series **`o`**; slots **`~61`..`~65`**.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 `chatter_daily` coverage from run records (FWD-7) | `HVST-o-1` | LOCAL (a served rebuild on this rule is a later paired order) | `~61` | now |
+| 2 the scheduled run passes `--harvest-grammar` (FWD-1/3) | `HVST-o-2` | LOCAL, NO pair (amended ruling 2: the task is Disabled, 0 triggers; re-arming it is Andrew's) | `~62` | now |
+| 3 `silver_latest` tie-break on `run_stamp`, in EVERY newest-wins silver reader (FWD-2) | `HVST-o-3` | LOCAL | `~63` | now |
+| 4 the paired served sa silver rebuild (FWD-2) | `HVST-o-4` | WORLD, under a pair | `~64` | after `o-3` drains and both halves are committed; issuer-written checks |
+| 5 Lenovo's backfill on barrons/bbg/ft/wsj; the repeat fetches 0 (FWD-9, then 3) | `HVST-o-5` | WORLD, under a pair; R-21 scripted egress | `~65` | after both halves are committed; issuer-written checks with the BEFORE snapshot |
+
+**Fan-out: 4 of 4 chains start now (`o-1`, `o-2`, `o-3`, `o-5`). `o-4` follows `o-3`. N = 5 worker slots; cap 8.**
+- `o-1`, `o-2` and `o-3` are spawned now.
+- `o-5`'s worker is spawned when its pair is committed.
+
+**Write sets:**
+- `o-1` owns `worker.py`'s run-record code, and in `publication_gold.py` the coverage functions (`publisher_coverage`,
+  `daily_rows` coverage, `build_daily`).
+- `o-3` owns `store.py`, and in `publication_gold.py` the silver readers (`_iter_latest_articles`,
+  `_latest_articles_for_keys`).
+- `publication_gold.py` is therefore named by both, split at the function boundary each face states. A drain conflict
+  there is resolved by the issuer at the merge.
+- `o-2` owns `run-local.ps1` and `README.md`.
+- `o-4` and `o-5` write only their deliverables and the served objects their halves name.
+
+**NOT cells:**
+- `n-6`'s redeploy: it rides AMGT_RESAPP r51's one build (ruling 1, routed to `2.0.0_SA_COO~Z`).
+- Re-arming the Scheduled Task (Andrew's).
+- The portal DEV promotion (Andrew's, through the integrator).
+- The other 190 names' backfill (next round, on the Lenovo run's actual pages).
+- The `CHATTER_AXIS_SOURCE` flip, which is re-cut when gold resolves a gradable pair.

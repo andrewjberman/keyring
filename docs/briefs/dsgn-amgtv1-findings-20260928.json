@@ -1,0 +1,907 @@
+{
+ "schema_version": "1.0",
+ "claim_field": "Each finding carries cause.claim = measured | inferred. 'measured' = seen on a screenshot and, where cited, a source line, an AWS read or a payload read; 'inferred' = the named cause is not yet checked in code.",
+ "source": {
+  "reviewer": "Andrew Berman (voice memo 'AMGT WALK_3557.m4a' + 12 snapshots AMGT_walk_v1, 2026-09-28 ~21:3xZ; Andrew-direct at the 4.0.0_SA_CRO~Z terminal ~22:3xZ)",
+  "compiled_by": "4.0.0_SA_CRO~Z",
+  "transcript": "docs/briefs/dsgn-amgtv1-walk-memo-transcript-20260928.md (sections M0-M15 cited as memo_ref)",
+  "walk": "/ui-walk 20260928T225654Z on localhost:5174 (route /security-analysis; 8 lead-panel states; 992 HK, PBR US, VLO US x 5 tabs; 33 screenshots, 31 unique check findings, 0 guard aborts, 3 API issues (timeline 404 x3)); output tmp/ui-walk/20260928T225654Z/ (gitignored)",
+  "build_observed": "localhost:5174 dev build; the shared portal working copy read DEV 92a25762 at 22:4xZ -- the running bundle's commit was not recorded"
+ },
+ "outcomes": {
+  "O1": "CANDIDATE THREAD: a PM scans today's Trending x Price list by company name and classification, opens one name, and reads its header as four cards and its Thesis as three cards, each opening a modal -- one journey on one screen family.",
+  "O2": "A PM identifies every ranked security by company name, asset class, sub-asset class and sector, and sees how far it moved in rank since the last run, in the Positioning Holdings Breakdown pattern.",
+  "O3": "A PM reads how names moved over time in a chart that stays legible at ten or more names, labelled by name.",
+  "O4": "A PM reads a selected security's headline figures as four stable cards (Price, Financials, Market features, Trading technicals), each opening a modal, every figure in the security's own currency.",
+  "O5": "A PM reads a security's timeline spine: dated publications, events and headlines with a keyword cloud, led by Opal Data Harvest and supplemented by the News Scanner.",
+  "O6": "A PM reads the Thesis as Investment thesis / Risks / Recommendation cards beneath the principal chart, each opening a modal with its evidence, and can tell where each citation came from and whose recommendation it is.",
+  "O7": "A PM sees who runs the company on Exec Management for every covered name, with the source named, even when the filing's officer section is empty.",
+  "O8": "A PM reads Peers as a clean comparable table with readable tickers and the absent columns disclosed once, without internal strings.",
+  "O9": "A PM reads the Model sheet with plain line names, and each refused line says in one sentence whether the data or the display is missing.",
+  "O10": "A PM reads Posture as a verdict card with reason cards, or a designed empty state when there is no call -- never a paragraph of machine reasoning.",
+  "O11": "A reviewer cannot tell the page from /market or /positioning: shared footer (timestamp | Source), shared dialog, shared panel states and shared chart palette, legend and tooltip, with no raw codes on the face."
+ },
+ "coverage": {
+  "finding_count": 42,
+  "by_outcome": {
+   "O2": [
+    "AMV-01",
+    "AMV-02",
+    "AMV-03",
+    "AMV-04",
+    "AMV-09",
+    "AMV-10",
+    "AMV-11"
+   ],
+   "O3": [
+    "AMV-05",
+    "AMV-06"
+   ],
+   "O11": [
+    "AMV-07",
+    "AMV-08",
+    "AMV-15",
+    "AMV-17",
+    "AMV-27",
+    "AMV-39",
+    "AMV-40",
+    "AMV-41",
+    "AMV-42"
+   ],
+   "O4": [
+    "AMV-12",
+    "AMV-13",
+    "AMV-14"
+   ],
+   "O5": [
+    "AMV-16",
+    "AMV-18",
+    "AMV-19"
+   ],
+   "O6": [
+    "AMV-20",
+    "AMV-21",
+    "AMV-22",
+    "AMV-23",
+    "AMV-24",
+    "AMV-25"
+   ],
+   "O7": [
+    "AMV-26",
+    "AMV-28"
+   ],
+   "O8": [
+    "AMV-29",
+    "AMV-30",
+    "AMV-31",
+    "AMV-32"
+   ],
+   "O9": [
+    "AMV-33",
+    "AMV-34",
+    "AMV-35",
+    "AMV-36"
+   ],
+   "O10": [
+    "AMV-37",
+    "AMV-38"
+   ]
+  }
+ },
+ "coverage_rule": "Every AMV id must appear in the DSGN_AMGTV1 PRD with its FWD and criterion, or be named there as routed to its owner project. Check: python docs/briefs/irpt-ui-review-coverage-check.py --register docs/briefs/dsgn-amgtv1-findings-20260928.json <file>",
+ "walk_check_map": {
+  "rule": "Every walk check hit kept maps to one register finding (skill /ui-walk step 3). 31 unique hits, 0 dropped.",
+  "UIW-20260928T225654Z-001,004,006,008 raw-code (producer partition names)": "AMV-07",
+  "UIW-20260928T225654Z-005 raw-code + 007 design:tinted-status (Breakout x Chatter EMPTY block)": "AMV-08",
+  "UIW-20260928T225654Z-009 raw-code 'bloomberg CIE_DES'": "AMV-15",
+  "UIW-20260928T225654Z-010 design:tinted-status (timeline error block)": "AMV-17",
+  "UIW-20260928T225654Z-011..014,016,018,019,021,023,028 raw-code (Model row mnemonics)": "AMV-34",
+  "UIW-20260928T225654Z-015,017,020,022,024,029 raw-code (Model NOT-YET-BUILT refusals)": "AMV-33",
+  "UIW-20260928T225654Z-027 raw-code 'ABSENT (ZERO_OFFICERS)'": "AMV-26",
+  "UIW-20260928T225654Z-030,031 raw-code (S3 paths in Posture evidence coverage)": "AMV-38",
+  "UIW-20260928T225654Z-002 design:bands": "AMV-39",
+  "UIW-20260928T225654Z-003 design:contrast": "AMV-41",
+  "UIW-20260928T225654Z-025 format:money, 026 format:dates": "AMV-40",
+  "api_issues x3 (timeline 404)": "AMV-16"
+ },
+ "findings": [
+  {
+   "id": "AMV-01",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\trending_price_list.png",
+   "surface": "lead-panel:list",
+   "observed": "Ranked rows show Bloomberg identifiers only (992 HK, BP/ LN, 2317 TT, WALMEX* MM) with no company name.",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14",
+   "memo_ref": "M2, M4, M6",
+   "cause": {
+    "claim": "measured",
+    "text": "The ranking rows carry ticker, security_key, rank, score and dates and no name, sector or class; RankedList renders the bare ticker.",
+    "evidence": "portal/src/pages/SecurityAnalysis/components/RankedList.tsx:246; opal-harvest-security-metrics generation 20260926T110728Z-df5d006844da field list (agent read)"
+   },
+   "acceptance": "Every ranked row shows the company name beside its ticker; a name the classifier lacks shows an explicit absent mark, never a blank."
+  },
+  {
+   "id": "AMV-02",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\trending_price_list.png",
+   "surface": "lead-panel:classification",
+   "observed": "No asset class, sub-asset class or sector on any row; Andrew asks for the ETF-classifier taxonomy as the stable key the frontend relies on.",
+   "outcome": "O2",
+   "owner_project": "D4 POSN (etf-classifications writer)",
+   "owner_seat": "POSN issuer (not looked up)",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "memo_ref": "M2, M6, M14",
+   "cause": {
+    "claim": "measured",
+    "text": "etf-classifications (285 rows, key ticker) holds 6 of the 32 names on the 09-25 Trending x Price list (BA, HD, INTU, NU, PBR, VLO); non-US names are absent; no portal route reads the table; the lead-panel API role has no grant on it.",
+    "evidence": "DynamoDB full scan 285/285; infra/aws/terraform/harvest/scoped-amgt-api.tf:199-215"
+   },
+   "acceptance": "Every name in a served lead-panel generation joins to one classifier row (asset class, sub-asset class, sector) server-side, and the row carries it."
+  },
+  {
+   "id": "AMV-03",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\trending_price_list.png",
+   "surface": "lead-panel:list",
+   "observed": "The list is sparse text (ticker plus one caption line); Andrew wants the Positioning Holdings Breakdown fixture: rank, rank change, name, ticker, period delta, asset class, sub-asset class.",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14",
+   "memo_ref": "M4, M6, M14",
+   "cause": {
+    "claim": "measured",
+    "text": "Holdings Breakdown is inline JSX in HoldingsTab (not a component) and always regroups rows by asset class, which would break producer order.",
+    "evidence": "portal/src/pages/Positioning/tabs/HoldingsTab.tsx:1283-1970, :1525-1572"
+   },
+   "acceptance": "The lead-panel list renders through a shared classified-security table extracted from Holdings Breakdown, producer order kept, and /positioning renders identically before and after the extraction."
+  },
+  {
+   "id": "AMV-04",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\trending_chatter_list.png",
+   "surface": "lead-panel:list",
+   "observed": "No indication of how a name's rank moved since the last run (Andrew: a day-over-day plus or minus).",
+   "outcome": "O2",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "AMGT_RESAPP issuer (2.0.0_SA_COO~Z per the 09-24 brief; not re-read)",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "memo_ref": "M4",
+   "cause": {
+    "claim": "inferred",
+    "text": "No prev_rank / rank_change field exists; prior complete generations (09-23, 09-24, 09-25) exist to compute it server-side (the page never ranks, amgt-lead-panel.ts:21-23).",
+    "evidence": "agent read of generation pointers"
+   },
+   "acceptance": "Each row carries rank_change against the previous complete generation (NEW when absent before), computed by the API and rendered as a signed figure."
+  },
+  {
+   "id": "AMV-05",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\trending_chatter_chart.png",
+   "surface": "lead-panel:chart",
+   "observed": "Rotated x-axis date ticks overlap the axis line; every date is labelled.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C11",
+   "memo_ref": "M3",
+   "cause": {
+    "claim": "measured",
+    "text": "RankedChart sets interval={0} angle={-35}; the estate's Factor Tilts series thins ticks with interval='preserveStartEnd' minTickGap={50}.",
+    "evidence": "RankedChart.tsx:218-225; components/ModelTiltTimeSeriesView.tsx:357-358"
+   },
+   "acceptance": "At 1440 px no two tick labels overlap and none crosses the axis line, on all four chart states."
+  },
+  {
+   "id": "AMV-06",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\breakout_price_chart.png",
+   "surface": "lead-panel:chart",
+   "observed": "Overlaid rank lines for 5 names are hard to follow and will not scale to 10+; legend repeats as a second 'N point(s)' line; hand colours.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C6",
+   "memo_ref": "M2, M5",
+   "cause": {
+    "claim": "measured",
+    "text": "Five hard-coded colours cycle, default Recharts legend plus a separate point-count legend, hand-styled tooltip, series capped at RANK_SERIES_TOP_N.",
+    "evidence": "RankedChart.tsx:70-76, :239-252; LeadPanel.tsx:324"
+   },
+   "acceptance": "The chart uses the shared palette, ChartLegend and DataTooltip, one legend, and stays readable with ten series (fork F1 settles the form)."
+  },
+  {
+   "id": "AMV-07",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\trending_chatter_list.png",
+   "surface": "lead-panel:footer",
+   "observed": "Footer prints producer strings ('Served by the producer partition TRENDING_CHATTER (movement dimension: MEASURED)', generation ids, coverage vintage, 'this list is older than the date requested, shown as such rather than silently').",
+   "outcome": "O11",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "known",
+   "known_ref": "docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md O7",
+   "design_rule": "C12",
+   "memo_ref": "M4",
+   "cause": {
+    "claim": "measured",
+    "text": "The footer is PanelFooter content='' plus a generation caption, not the canonical 'timestamp | Source: X.'",
+    "evidence": "LeadPanel.tsx:128-139, :434-442; GenerationCaption.tsx:32-46; PanelFooter.tsx:107-116"
+   },
+   "acceptance": "The lead-panel footer reads '<timestamp> | Source: <source>.' and the generation facts sit behind a helpText affordance."
+  },
+  {
+   "id": "AMV-08",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\007-lead-Breakout-Chatter-Chart.png",
+   "surface": "lead-panel:empty-state",
+   "observed": "Breakout x Chatter: list says 'The committed ranking for BREAKOUT_CHATTER is EMPTY. NO_SIGNAL_IN_WINDOW for 189 of 191 candidate(s)'; chart says 'No rank history has been requested for this combination yet.' Two explanations of one state.",
+   "outcome": "O11",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C12",
+   "memo_ref": "M1",
+   "cause": {
+    "claim": "measured",
+    "text": "With an empty list the chart asks for no tickers, the query never runs (enabled: tickers.length > 0), and the chart falls to its 'not requested' branch.",
+    "evidence": "LeadPanel.tsx:324-325; useLeadPanelApi.ts:67; RankedChart.tsx:137-142; RankedList.tsx:187-199"
+   },
+   "acceptance": "List and chart show the same designed EMPTY state, in plain words, for an empty generation."
+  },
+  {
+   "id": "AMV-09",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\006-lead-Breakout-Chatter-List.png",
+   "surface": "lead-panel:data",
+   "observed": "Breakout x Chatter is empty on 09-26/27/28 (189 of 191 candidates no signal). Andrew classed it a data issue, not frontend.",
+   "outcome": "O2",
+   "owner_project": "AMGT_HARVST",
+   "owner_seat": "2.0.0_SA_COO~H",
+   "status": "known",
+   "known_ref": "NEVER_WIDEN_H03_2A_CTO_HALF.md (gold cutover refused)",
+   "design_rule": null,
+   "memo_ref": "M1",
+   "cause": {
+    "claim": "measured",
+    "text": "The chatter producer runs CHATTER_AXIS_SOURCE=legacy; the switch to the gold source was refused at the half.",
+    "evidence": "org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_H03_2A_CTO_HALF.md:74,114"
+   },
+   "acceptance": "Routed, not built here: the frontend renders whatever state the generation carries."
+  },
+  {
+   "id": "AMV-10",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\trending_chatter_list.png",
+   "surface": "lead-panel:data",
+   "observed": "Trending x Chatter ranks BA US #1 and HD US #2 at 'chatter 0/100 (0 mentions)'; Andrew: 'there is data for Boeing and Home Depot, and we're really just showing nothing'.",
+   "outcome": "O2",
+   "owner_project": "AMGT_HARVST",
+   "owner_seat": "2.0.0_SA_COO~H",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "memo_ref": "M4",
+   "cause": {
+    "claim": "inferred",
+    "text": "Same legacy chatter source as AMV-09; a rank over a zero score is not a signal.",
+    "evidence": null
+   },
+   "acceptance": "A name with zero mentions is not presented as a ranked leader; the list states the window's coverage instead."
+  },
+  {
+   "id": "AMV-11",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\008-lead-Breakout-Price-List.png",
+   "surface": "lead-panel:list",
+   "observed": "Breakout x Price shows 992 HK '+0.13% (2026-08-26 -> 2026-09-25)' while Trending x Price shows '+21.60%' for the same name and window: two quantities in one visual form.",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C2",
+   "memo_ref": "M2",
+   "cause": {
+    "claim": "inferred",
+    "text": "The breakout score is not a price change but renders in the price-change caption shape.",
+    "evidence": null
+   },
+   "acceptance": "Each subject's score carries its own label and unit; the breakout figure is never printed as a period percent change."
+  },
+  {
+   "id": "AMV-12",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\security_leadpanel.png",
+   "surface": "security-header",
+   "observed": "Selected-security header is 'text everywhere': 7 tiles, a description, a machine posture paragraph, a timeline error, a news block, two ranking blocks and a generation footnote.",
+   "outcome": "O4",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "known",
+   "known_ref": "docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md O2",
+   "design_rule": "C14",
+   "memo_ref": "M7",
+   "cause": {
+    "claim": "measured",
+    "text": "SecurityOverlay renders seven flat page-local StatTiles plus HeaderBrief blocks.",
+    "evidence": "SecurityOverlay.tsx:155-167, :269-281, :313-317"
+   },
+   "acceptance": "The header shows four cards (Price, Financials, Market features, Trading technicals) each leading with one figure and opening a HeroDialog modal with the rest."
+  },
+  {
+   "id": "AMV-13",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\010-992-HK-overlay.png",
+   "surface": "security-header:figures",
+   "observed": "992 HK: Price 'HKD 36.58' but Market Cap '$454B' and EV '$65.14B' (EV below market cap with net debt $4.15B); PBR US: Market Cap '$129B', EV '$985B'. Local-currency values print with a dollar sign.",
+   "outcome": "O4",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C2",
+   "memo_ref": "M7",
+   "cause": {
+    "claim": "measured",
+    "text": "StatTile hard-codes '$' for currency-abs and currency-millions and SecurityOverlay passes the currency only to Price; the payload carries no currency per figure (EQY_FUND_CRNCY REFUSED for PBR).",
+    "evidence": "StatTile.tsx:54-61; SecurityOverlay.tsx:278; constants.ts:111-113"
+   },
+   "acceptance": "Every money figure in the header prints its own currency code; a figure whose currency is not carried is marked, never given '$'."
+  },
+  {
+   "id": "AMV-14",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\010-992-HK-overlay.png",
+   "surface": "security-header:figures",
+   "observed": "Unit words print as suffixes (PRICE, ABSOLUTE, MILLIONS, RATIO); Short Interest reads 'not carried on this payload' for PBR and 992 HK.",
+   "outcome": "O4",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C2",
+   "memo_ref": "M7",
+   "cause": {
+    "claim": "measured",
+    "text": "StatTile prints the unit text's first word; the tile reads SI_PERCENT_EQUITY_FLOAT, which PBR lacks while it carries SHORT_INT_RATIO (1.25).",
+    "evidence": "StatTile.tsx:87; constants.ts:115"
+   },
+   "acceptance": "No unit word prints beside a figure; short interest falls back to days-to-cover with its own label when the percent field is absent."
+  },
+  {
+   "id": "AMV-15",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\010-992-HK-overlay.png",
+   "surface": "security-header:strings",
+   "observed": "'BLOOMBERG SESSION: NOT REPORTED', 'crosswalk vintage 2026-09-25', 'from bloomberg CIE_DES', and a MACHINE posture paragraph citing R-1, U-1, AMGT-s-1, F2/G-24.",
+   "outcome": "O11",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "known",
+   "known_ref": "docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md O2",
+   "design_rule": "C14",
+   "memo_ref": "M7, M11",
+   "cause": {
+    "claim": "measured",
+    "text": "The session state is hard-coded UNKNOWN server-side; the other strings are rendered provenance.",
+    "evidence": "lib/research/api/scoped_amgt.py:2004; SecurityOverlay.tsx:241, :247-249"
+   },
+   "acceptance": "The header face carries no internal id, mnemonic or vintage string; provenance sits in the card modals' footers."
+  },
+  {
+   "id": "AMV-16",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\010-992-HK-overlay.png",
+   "surface": "timeline",
+   "observed": "'The timeline could not be loaded' on 3 of 3 walked names; the panel prints the raw 404 body with the whole route list of another function.",
+   "outcome": "O5",
+   "owner_project": "AMGT_HARVST",
+   "owner_seat": "2.0.0_SA_COO~H",
+   "status": "known",
+   "known_ref": "HVST-a-1, HVST-a-2, AMGT_HARVST-Z-S35, AMGT_HARVST-Z-S36",
+   "design_rule": null,
+   "memo_ref": "M8",
+   "cause": {
+    "claim": "measured",
+    "text": "Three stacked causes: the two timeline routes are not mounted on the gateway (falls to opal-portal-data-proxy's $default); the deployed Lambda predates the handler and lacks pyarrow; the role has no amgt/harvest/gold/ read, live or in TF.",
+    "evidence": "walk api_issues 3/3 HTTP 404; scoped-amgt-api.tf:314-336,:346; lambda last-modified 2026-09-26T23:35Z; live role policy (22 harvest resources, no gold); row AMGT_HARVST-Z-S36 @f9acd618b1"
+   },
+   "acceptance": "Both timeline routes answer READY with data for a covered name (992_HK_Equity has 21 article days in gold)."
+  },
+  {
+   "id": "AMV-17",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\010-992-HK-overlay.png",
+   "surface": "timeline:error-state",
+   "observed": "The error state dumps the API error JSON and ~40 route paths on the face.",
+   "outcome": "O11",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C12",
+   "memo_ref": "M8",
+   "cause": {
+    "claim": "measured",
+    "text": "TimelinePanel's failed-call banner prints the cause text verbatim.",
+    "evidence": "TimelinePanel.tsx:387-407"
+   },
+   "acceptance": "A failed timeline read renders the shared PanelError (danger icon, navy sentence, retry) with the cause behind a detail affordance."
+  },
+  {
+   "id": "AMV-18",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\security_leadpanel.png",
+   "surface": "timeline:design",
+   "observed": "No timeline spine exists to judge; Andrew wants a per-security spine with keywords (word cloud), headlines, led by Opal Data Harvest publications, News Scanner second, after the harvest backfill.",
+   "outcome": "O5",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "memo_ref": "M8, M15",
+   "cause": {
+    "claim": "measured",
+    "text": "TopicCloud is presentational ({keyword, sentiment, count, size?} + onKeywordClick) and reusable as is; no per-security keyword source exists; scanner articles carry no ticker or ISIN (0 identifier fields of 18 across 756 items); gold carries security_key.",
+    "evidence": "components/market-performance/TopicCloud.tsx:44-90,:139; opal-news-articles attribute census; amgt/harvest/gold/ tables"
+   },
+   "acceptance": "A covered name's timeline shows dated events with source, headline and a keyword cloud from its own articles, each event type labelled by source."
+  },
+  {
+   "id": "AMV-19",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\010-992-HK-overlay.png",
+   "surface": "timeline:data",
+   "observed": "Header news reads 'No publisher item in the pool for this name' for 992 HK while harvest gold holds 21 article days and a 2026-02-12 event for it.",
+   "outcome": "O5",
+   "owner_project": "AMGT_HARVST",
+   "owner_seat": "2.0.0_SA_COO~H",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "memo_ref": "M15",
+   "cause": {
+    "claim": "measured",
+    "text": "The header news reads the older publication-links/v1 store, not gold; gold's newest article is 2026-09-15, 50,996 of 50,997 chatter_daily rows carry the retired status DENIED, and the 2026 backfill (FWD-9) last graded NOT REALIZED.",
+    "evidence": "pool_reader.py:74-75; scoped_amgt.py:3191-3218; ROUND_ANALYSIS.round7.md:51; AMGT_HARVST_PRD.md:283-304"
+   },
+   "acceptance": "The header news and the timeline read one store, and a name with gold coverage never reads 'none'."
+  },
+  {
+   "id": "AMV-20",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\019-PBR-US-Thesis-expanded.png",
+   "surface": "thesis",
+   "observed": "PBR Thesis expanded is 4,178 px tall at 1440 wide: every sentence carries a MACHINE chip, a PASS badge and a 'CITES N PASSAGES' <details> drop-down.",
+   "outcome": "O6",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "known",
+   "known_ref": "docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md O1, O3",
+   "design_rule": "C14",
+   "memo_ref": "M9",
+   "cause": {
+    "claim": "measured",
+    "text": "One <details> per sentence and a hand-rolled pillar card.",
+    "evidence": "ThesisTab.tsx:95, :160"
+   },
+   "acceptance": "Thesis shows three cards (Investment thesis, Risks, Recommendation) beneath the principal chart; each opens a HeroDialog where sentences and their passages live; no <details> on the tab face."
+  },
+  {
+   "id": "AMV-21",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\thesis_pbr.png",
+   "surface": "thesis:recommendation",
+   "observed": "The RECOMMENDATION headline is a PFIC tax-status sentence (PBR) or a management demand quote (VLO); Andrew: 'I would love to know how we come to that conclusion'.",
+   "outcome": "O6",
+   "owner_project": "AMGT_CORPUS",
+   "owner_seat": "AMGT_CORPUS issuer (not looked up)",
+   "status": "new",
+   "known_ref": "AMGT_CORPUS FWD-10, FWD-15",
+   "design_rule": null,
+   "memo_ref": "M9",
+   "cause": {
+    "claim": "measured",
+    "text": "drafting_build maps the filing's 'guidance' items into the 'recommendation' section and ThesisTab promotes sentence one to the headline; the team's own view ('Maintain in IDVZ', with last_stated_position) sits in the AMGT_CORPUS dossier, which no route serves (0 'dossier' references in scoped_amgt.py or portal/src).",
+    "evidence": "drafting_build.py:66-72; ThesisTab.tsx:251-268; research-dossier/security_key=PBR_US_Equity/as_of=2026-09-28"
+   },
+   "acceptance": "The Recommendation card leads with the team's stated position and its date and source; filing guidance is labelled 'Company guidance'."
+  },
+  {
+   "id": "AMV-22",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\thesis_pbr.png",
+   "surface": "thesis:citations",
+   "observed": "Citations read 'P0034 -- ACCESSION 000129281426002168 -- ITEM 3.D. RISK FACTORS / PARAGRAPH 35'; Andrew likes them but cannot tell where they came from.",
+   "outcome": "O6",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14",
+   "memo_ref": "M9",
+   "cause": {
+    "claim": "measured",
+    "text": "The subtitle and passage lines carry the accession string rather than the document's name and date.",
+    "evidence": "ThesisTab.tsx:71-85"
+   },
+   "acceptance": "Every citation names the document (company, form, filing date) and section in words, with a link to the filing; the accession number is secondary."
+  },
+  {
+   "id": "AMV-23",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\018-PBR-US-Thesis.png",
+   "surface": "thesis:description",
+   "observed": "Thesis says 'Description: ABSENT -- no served D-1 company_description sentence ...' while the header shows Bloomberg's company description for the same name.",
+   "outcome": "O6",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "memo_ref": "M9",
+   "cause": {
+    "claim": "measured",
+    "text": "ThesisTab checks only the drafted company_description; the same payload carries CIE_DES and /overlay serves the description.",
+    "evidence": "ThesisTab.tsx:211-242"
+   },
+   "acceptance": "Thesis shows a company description whenever any served source carries one, labelled by source."
+  },
+  {
+   "id": "AMV-24",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\thesis_pbr.png",
+   "surface": "thesis:chart",
+   "observed": "'The chart: ABSENT -- the thesis driver ...' with a paragraph of series-matching detail where the principal chart should sit.",
+   "outcome": "O6",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "AMGT_RESAPP issuer (2.0.0_SA_COO~Z per the 09-24 brief; not re-read)",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C12",
+   "memo_ref": "M9",
+   "cause": {
+    "claim": "measured",
+    "text": "The drafted driver is not among the model block's fiscal series; the empty text lists probe counts.",
+    "evidence": "ThesisDriverChart.tsx:73-75"
+   },
+   "acceptance": "An absent principal chart renders the shared EMPTY state in one plain sentence."
+  },
+  {
+   "id": "AMV-25",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\011-992-HK-Thesis.png",
+   "surface": "thesis:coverage",
+   "observed": "992 HK Thesis: subtitle 'read from none', body 'No drafted prose for this name yet.'",
+   "outcome": "O6",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "AMGT_RESAPP issuer (2.0.0_SA_COO~Z per the 09-24 brief; not re-read)",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C12",
+   "memo_ref": "M9",
+   "cause": {
+    "claim": "measured",
+    "text": "No drafting object for 992 HK.",
+    "evidence": null
+   },
+   "acceptance": "A name with no drafted thesis shows the designed EMPTY state with what would fill it."
+  },
+  {
+   "id": "AMV-26",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\execmgmt_pbr.png",
+   "surface": "exec-management",
+   "observed": "PBR: 'Exec Management: ABSENT (ZERO_OFFICERS)'; 992 HK: 'ABSENT (NO_OBJECT)'. Andrew wants a fallback chain: Lusha, then Bloomberg, then Claude web search or Bright Data SERP.",
+   "outcome": "O7",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "AMGT_RESAPP issuer (2.0.0_SA_COO~Z per the 09-24 brief; not re-read)",
+   "status": "new",
+   "known_ref": "AMGT_CORPUS FWD-11",
+   "design_rule": null,
+   "memo_ref": "M10",
+   "cause": {
+    "claim": "measured",
+    "text": "PBR's management object (2026-09-18) predates the Bloomberg fallback and was never re-run; the built chain is filing -> Bloomberg COMPANY_EXEC_OFFICERS -> Lusha (enrich only, needs a declared domain; 4 in domains.json) -> SERP on the CEO name only; the dossier holds a cited management passage no route serves.",
+    "evidence": "enrich.py:608-711; management/v1/PBR_US_Equity/2026-09-18.json (fallback: null)"
+   },
+   "acceptance": "Every covered name shows its officers or a named-source empty state; the source of each roster is on its card. Vendor calls stay on Andrew's per-use word."
+  },
+  {
+   "id": "AMV-27",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\execmgmt_pbr.png",
+   "surface": "exec-management:strings",
+   "observed": "Raw 'roster_status UNRESOLVED-SOURCE; roster_reason ... source_accession ...' line on the face.",
+   "outcome": "O11",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14",
+   "memo_ref": "M10",
+   "cause": {
+    "claim": "measured",
+    "text": "A debug line prints raw field names.",
+    "evidence": "ExecManagementTab.tsx:222-227"
+   },
+   "acceptance": "No field name prints on the Exec Management face."
+  },
+  {
+   "id": "AMV-28",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\028-VLO-US-Exec-Management.png",
+   "surface": "exec-management:parse",
+   "observed": "VLO: one officer named 'Senior Vice' with role 'President and Chief Financial Officer 45'; ages appended to roles ('President 60'); role start and tenure ABSENT for 5 of 5, printed in large type.",
+   "outcome": "O7",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "AMGT_RESAPP issuer (2.0.0_SA_COO~Z per the 09-24 brief; not re-read)",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "memo_ref": "M10",
+   "cause": {
+    "claim": "inferred",
+    "text": "The 10-K officer parser splits a name/title boundary wrongly and leaves the age column in the role.",
+    "evidence": null
+   },
+   "acceptance": "Officer name, title and age render in their own columns for VLO's five officers; ABSENT cells use the shared absent mark at body size."
+  },
+  {
+   "id": "AMV-29",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\peers_pbr.png",
+   "surface": "peers:absent-columns",
+   "observed": "'5 present / 12 absent of 17 declared CSC column(s)' plus a 12-line absent list under the table.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "known",
+   "known_ref": "docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md O5",
+   "design_rule": "C14",
+   "memo_ref": "M11",
+   "cause": {
+    "claim": "measured",
+    "text": "The 12 columns are missing from the scanner registry; the payload carries derivable_from hints.",
+    "evidence": "PeersTab.tsx:183; cscTable.ts"
+   },
+   "acceptance": "Absent columns collapse to one labelled disclosure; the sentence counting declared columns leaves the face."
+  },
+  {
+   "id": "AMV-30",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\peers_pbr.png",
+   "surface": "peers:identifiers",
+   "observed": "Tickers print as scanner codes (268236, B09N7M, *ENB, BFZ7XB); 'identity crosswalk/v1 @ 2026-09-25' on every tab.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14",
+   "memo_ref": "M11",
+   "cause": {
+    "claim": "measured",
+    "text": "All 12 PBR members are identity UNRESOLVED; the builder puts member.ticker in the second column; IdentityLine prints the crosswalk vintage on all five tabs.",
+    "evidence": "cscTable.ts:149-158; IdentityLine.tsx:71-74"
+   },
+   "acceptance": "Peers show exchange tickers or names only; an unresolved code is labelled as such; no crosswalk vintage on any tab face."
+  },
+  {
+   "id": "AMV-31",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\peers_pbr.png",
+   "surface": "peers:data",
+   "observed": "PBR's peer set includes Petrobras itself (common and preferred) and both China Shenhua share classes; the subject row's own price, EV and P/E read '--'.",
+   "outcome": "O8",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "AMGT_RESAPP issuer (2.0.0_SA_COO~Z per the 09-24 brief; not re-read)",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "memo_ref": "M11",
+   "cause": {
+    "claim": "measured",
+    "text": "No same-issuer dedupe in the peers engine.",
+    "evidence": null
+   },
+   "acceptance": "The subject's issuer never appears as its own peer and one issuer appears once."
+  },
+  {
+   "id": "AMV-32",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\014-992-HK-Peers-expanded.png",
+   "surface": "peers:currency",
+   "observed": "992 HK subject row: 'Mkt Cap (USD mm) 456,119', the HKD figure labelled USD.",
+   "outcome": "O8",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "AMGT_RESAPP issuer (2.0.0_SA_COO~Z per the 09-24 brief; not re-read)",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C2",
+   "memo_ref": "M11",
+   "cause": {
+    "claim": "inferred",
+    "text": "Same missing per-figure currency as AMV-13.",
+    "evidence": null
+   },
+   "acceptance": "The Peers subject row's market cap is in the column's stated currency."
+  },
+  {
+   "id": "AMV-33",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\model_pbr.png",
+   "surface": "model:refused",
+   "observed": "Rows read 'REFUSED -- NET_INCOME: unit/sign convention is NOT-YET-BUILT, not MEASURED'; Andrew asks whether it is a backend data issue or a missing frontend adapter.",
+   "outcome": "O9",
+   "owner_project": "AMGT_CORPUS",
+   "owner_seat": "AMGT_CORPUS issuer (not looked up)",
+   "status": "new",
+   "known_ref": "AMGT_CORPUS FWD-12 (likely owner; no task order exists)",
+   "design_rule": null,
+   "memo_ref": "M12",
+   "cause": {
+    "claim": "measured",
+    "text": "BACKEND-DATA: PBR 282 checked figures, 144 PASS, 138 REFUSE, all NOT-YET-BUILT; field_map.json was never re-run for the 22 mnemonics TO-CRPS-e-2 added; no open task order in either project.",
+    "evidence": "integrations/bloomberg/research/field_map.json; model_block_pull.py:684-700; checkface/run_checks.py:54-55; rules/figure.py:105"
+   },
+   "acceptance": "Routed: the unit map covers every pulled mnemonic. Frontend: a refused row is one line saying the figure is not yet measured, with a count of measured rows."
+  },
+  {
+   "id": "AMV-34",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\015-992-HK-Model.png",
+   "surface": "model:layout",
+   "observed": "Row labels are Bloomberg mnemonics (SALES_REV_TURN, IS_OPER_INC, CF_FREE_CASH_FLOW); a PROVISIONAL chip under every cell (992 HK, VLO); the 2024-2025 columns clip at 1440 px.",
+   "outcome": "O9",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "known",
+   "known_ref": "docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md O4",
+   "design_rule": "C13",
+   "memo_ref": "M12",
+   "cause": {
+    "claim": "measured",
+    "text": "Screenshot measurement; mnemonic labels on the face.",
+    "evidence": null
+   },
+   "acceptance": "Every line reads as a plain name; provisional status is one header note, not a chip per cell; all fiscal columns fit or scroll inside the panel at 1440 px."
+  },
+  {
+   "id": "AMV-35",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\model_pbr.png",
+   "surface": "model:scores",
+   "observed": "ROBUSTNESS / PEERS V / DIVERGENCE D read 'not read'.",
+   "outcome": "O9",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C12",
+   "memo_ref": "M12",
+   "cause": {
+    "claim": "measured",
+    "text": "FRONTEND-ADAPTER: ModelTab reads field.value / field.reason but the payload serves state ABSENT_SOURCE with absent_reason (robustness 'n=1 of 6 measured'; Peers V suppressed; Divergence 'no model_fcf producer').",
+    "evidence": "ModelTab.tsx:261-275; types.ts:961-965"
+   },
+   "acceptance": "Each score tile shows its served state and reason."
+  },
+  {
+   "id": "AMV-36",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\model_pbr.png",
+   "surface": "model:provenance",
+   "observed": "Subtitle 'Adam's Model sheet, served from the model block -- nothing estimated in its place'; Andrew: the port should be qualified.",
+   "outcome": "O9",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "memo_ref": "M12",
+   "cause": {
+    "claim": "measured",
+    "text": "Provenance prose in the subtitle.",
+    "evidence": "ModelTab.tsx:416"
+   },
+   "acceptance": "The Model panel's footer names the sheet, its author and vintage in the canonical footer."
+  },
+  {
+   "id": "AMV-37",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\posture_pbr.png",
+   "surface": "posture:empty",
+   "observed": "PBR and 992 HK Posture: 'ABSENT' headline over a paragraph of machine reasoning; 'no UI of any kind'.",
+   "outcome": "O10",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "AMGT_RESAPP issuer (2.0.0_SA_COO~Z per the 09-24 brief; not re-read)",
+   "status": "known",
+   "known_ref": "docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md O6",
+   "design_rule": "C12",
+   "memo_ref": "M13",
+   "cause": {
+    "claim": "measured",
+    "text": "The posture object is a stale 09-16 'absent' verdict; its stated reasons are now false (PBR's model block landed 09-26; a 12-member peer set exists); the producer is hand-run with no schedule.",
+    "evidence": "posture/v1/PBR_US_Equity/2026-09-16.json; posture/judge.py; PostureTab.tsx:78"
+   },
+   "acceptance": "No posture call renders a designed EMPTY state with its as-of date; a call renders a verdict card and numbered reason cards opening modals."
+  },
+  {
+   "id": "AMV-38",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\033-VLO-US-Posture-expanded.png",
+   "surface": "posture:call",
+   "observed": "VLO: 'BETTER than Williams Companies, Inc.' as the headline while reason 5 says the comparable pack is essentially empty; S3 paths, run ids and the model name on the face; 9 of 20 cites unresolved.",
+   "outcome": "O10",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "AMGT_RESAPP issuer (2.0.0_SA_COO~Z per the 09-24 brief; not re-read)",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14",
+   "memo_ref": "M13",
+   "cause": {
+    "claim": "measured",
+    "text": "Screenshot; raw evidence-coverage lines render verbatim.",
+    "evidence": null
+   },
+   "acceptance": "A verdict whose comparable pack is empty is marked as such on the verdict card; no storage path or run id on the face."
+  },
+  {
+   "id": "AMV-39",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\010-992-HK-overlay.png",
+   "surface": "page:bands",
+   "observed": "Security mode shows two dark bands: the identity header and each tab's PanelHeader.",
+   "outcome": "O11",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "known",
+   "known_ref": "docs/briefs/amgt-resapp-frontend-pattern-brief-20260924.md F1 (resolved: identity header is the one band)",
+   "design_rule": "C3",
+   "memo_ref": "M13",
+   "cause": {
+    "claim": "measured",
+    "text": "PanelHeader is always band-coloured; walk check design:bands on 9 steps.",
+    "evidence": "Panel.tsx:64-69; PanelHeader (agent read); walk findings.json"
+   },
+   "acceptance": "One band per mode, measured by the walk's design:bands check reading zero hits."
+  },
+  {
+   "id": "AMV-40",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\017-PBR-US-overlay.png",
+   "surface": "page:formats",
+   "observed": "Mixed formats on one page: '2026-09-22' and 'September 22nd, 2026'; 'USD 1,234' and '$1,234'.",
+   "outcome": "O11",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C2",
+   "memo_ref": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Walk checks format:dates and format:money.",
+    "evidence": "walk findings.json"
+   },
+   "acceptance": "One date format and one money format across the page."
+  },
+  {
+   "id": "AMV-41",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\tmp\\ui-walk\\20260928T225654Z\\shots\\003-lead-Trending-Chatter-Chart.png",
+   "surface": "page:contrast",
+   "observed": "The chart's 'rank' axis label measures under 3:1 contrast.",
+   "outcome": "O11",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C9",
+   "memo_ref": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Walk check design:contrast.",
+    "evidence": "walk findings.json"
+   },
+   "acceptance": "No chart text under 4.5:1 on its ground."
+  },
+  {
+   "id": "AMV-42",
+   "screenshot": "C:\\Users\\Opal Bloomberg\\OneDrive - Opal Capital\\Pictures\\Screenshots\\AMGT_walk_v1\\posture_pbr.png",
+   "surface": "page:architecture",
+   "observed": "Andrew: 'I like to think of everything as cards and modals ... we should not invent the wheel. We should reuse the fixtures we've already developed.'",
+   "outcome": "O11",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "unseated -- 1.0.0_SA_CTO~Z seats DSGN_AMGTV1 at L3",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14",
+   "memo_ref": "M13, M14",
+   "cause": {
+    "claim": "measured",
+    "text": "The page uses page-local StatTile, hand-rolled pillar cards, <details> drop-downs and a hand-built chart; the estate has HeroDialog (Philosophy), the SentimentGauge card row, Regime/RSI modal layouts, ModelTiltTimeSeriesView, ChartLegend, DataTooltip, PanelFooter/SmartPanelFooter, TopicCloud.",
+    "evidence": "PhilosophyPillars.tsx:183-292; HeroGraphic.tsx:121-192; SentimentGauge.tsx:121-175; MarketRegimeModal.tsx:475-727; RSIModal.tsx:292-400"
+   },
+   "acceptance": "Every card, modal, chart and footer on the page is an estate fixture or a shared extraction of one; the page defines no chart, dialog or footer of its own."
+  }
+ ]
+}

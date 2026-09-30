@@ -1,12 +1,13 @@
 {
   "prd": "NFRA_MCPORTAL_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "87b310f4c20d62ca9f994dd8b1929b1d55530590",
+  "prd_version": "v0.3",
+  "prd_pin": "963fff9f5adb9418c328167c7119f8a171540361",
   "half": "ratified-text",
-  "half_hash": "b82799cb3b83902ba407e1538bbf87968244a885602607f92f05d4ef0789a691",
+  "half_hash": "d0863d03a203206aba1b88793da695e789283090d9b41d660494c9c2aae51cca",
   "endpoint_hash": "9c502f2da284170d99ab192fdf803cf73dd7c4f467d2111ccca391bc233ff3f0",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_MCPORTAL_PRD_v0.2_RATIFIED_TEXT_SIGNOFF_REVIEW_20260924.md@b3e20eb3c0",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_L4R_RESIGN_MCPORTAL_v0_3_OPLGTW_v1_1_20260928.md@7940709bef",
   "signed_by": "3.0.0_SA_CVO~O",
-  "signed_at": "2026-09-24T21:43:03Z"
+  "signed_at": "2026-09-28T20:36:48Z",
+  "reason": "G-C4 sub/exp follow the measured ALB header (E1 @c8b42c8913)"
 }

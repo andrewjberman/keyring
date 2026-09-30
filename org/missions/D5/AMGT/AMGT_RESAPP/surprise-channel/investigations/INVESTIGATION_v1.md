@@ -14993,6 +14993,990 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "world_is": "It is not comparable across runs. Two captures of the same deployment hours apart produced different digests at identical byte lengths on 4 of 4 keys, while three captures minutes apart produced identical digests. Limb 5 as written is unaffected -- it grades a BEFORE/AFTER pair captured inside one act, and tt-2's pair is internally controlled -- but any future limb that compares a pdf digest to one recorded in an earlier round's ledger would read a difference that is not the product moving.",
   "disarm_owner": "2.0.0_SA_COO~Z -- the issuer, to route whether a cross-round pdf digest comparison is ever relied on, and if so to name the length-stable varying component (a per-render id or a date rendered as glyphs are the two candidates this row did not distinguish).",
   "notes": "Filed while executing AMGT-tt-2 L2; I did not halt. tt-2's limb 5 is graded on its own before/after pair with an instrument control in each capture, which is the grading the half specifies. This row claims no defect in the product and none in rs-2's close, whose L7 verdict rested on its own internally-controlled pair exactly as this one does."
+},
+{
+  "id": "AMGT_RESAPP-Z-S292",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-28T20:18:00Z",
+  "one_line": "AMGT_HARVST's LOCAL-only portal commit 92a25762 mounts TimelinePanel in HeaderBrief.tsx; RESAPP's exportCompare.harness.cjs loads HeaderBrief and cannot resolve TimelinePanel's '@/api/api-client' alias, so every FWD-30 export-compare on a tree carrying 92a25762 reads CAPTURE_FAILED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer close-run of round 45 on the shared tree (portal DEV @92a25762, 1 ahead of origin/DEV, 22 behind), read_at 2026-09-28T20:13:49Z: 38 of the first 38 names CAPTURE_FAILED 'harness printed no FIGURES line (rc=1)'; stopped by the issuer.",
+      "node exportCompare.harness.cjs on 1299_HK_Equity at portal 92a25762: Error: Cannot find module '@/api/api-client', from TimelinePanel.tsx:39 via the harness load() at exportCompare.harness.cjs:151, which resolves only STUBS, relative paths and node_modules -- never the '@/' alias.",
+      "The same fixture and rich export at the PUBLISHED gitlink c3dd9ca9 (origin/DEV, no TimelinePanel.tsx): FIGURES 182/182, ABSENCES 17/17, CASES 3/3, missing 0, rc=0.",
+      "92a25762 is LOCAL-only (not an ancestor of origin/DEV); its DEV push is pre-authorised by Andrew's ruling 3 of 2026-09-28 ~18:05Z once HARVST's timeline routes answer."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "RESAPP's FWD-30 instrument (round45/checks/sweep.py + exportCompare.harness.cjs) measures the page as it stands on portal DEV.",
+  "world_is": "The harness transpiles page sources itself and resolves no '@/' alias, so any new header mount that imports through '@/' breaks it for every name. It fails LOUD (CAPTURE_FAILED, sweep rc=1), never as a false OK. Round 45's close-run was therefore read at the published gitlink c3dd9ca9 in an isolated worktree. Once 92a25762 publishes, the published page itself carries the mount and FWD-30 cannot be measured until the harness resolves '@/' (or stubs TimelinePanel with the timeline's exclusion from the three sets stated).",
+  "disarm_owner": "2.0.0_SA_COO~Z -- the issuer cuts the harness fix as a round-46 cell ahead of the full FWD-1..FWD-31 pass; the HARVST push stays as authorised.",
+  "notes": "Filed without halting; the close-run proceeded on the published tree. No gate is placed on 92a25762's push: Andrew's word stands verbatim."
+},
+{
+  "id": "AMGT_RESAPP-Z-S293",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-28T21:55:00Z",
+  "one_line": "The team's 'served-and-cited' cases are the SECTION HEADINGS: over all 95 live-library dossiers, 34 of 34 non-absent base/upside/downside values read exactly 'Base Case' / 'Upside Case' / 'Downside Case' at locator 0, and 0 carry content -- so FWD-12 limb 3's data half is NOT met and round-46 cell 5 (render the team's cited cases) has nothing to render.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Census 2026-09-28 ~21:5xZ, lib.research.corpus.dossier.read_dossier over the 95 folders of the LIVE research library (library.list_folders), keys via crosswalk.harvester_key + scoped_amgt.resolve_identity: base absent 61 / heading_only 34 / content 0; upside 61 / 34 / 0; downside 61 / 34 / 0; read failures 0. heading_only = value matching ^\\s*<name>\\s+case\\s*:?\\s*$ (case-insensitive).",
+      "AZN_LN_Equity (s3://opal-data-harvest/amgt/harvest/gold/research-dossier/security_key=AZN_LN_Equity/as_of=2026-09-28.4a041c4ddec87ed7.json): fields.cases.base = {value: 'Base Case', citation: {locator: 0, passage: 'Base Case', report_key: ...ASTRAZENECA Research Pack 2026 06 17_v1.pdf}}.",
+      "Producer: lib/research/corpus/dossier.py:701-704 fills fields.cases from _resolve_section_field(case_name.upper() + ' CASE', ...), whose value is the resolved section's text; the measured value is the heading line itself.",
+      "The claim it corrects: 1.0.0_SA_CTO~Z @bfc179c2ea ('cases.base / cases.upside / cases.downside each read SERVED-AND-CITED 34 ... FWD-12 LIMB 3's DATA HALF IS MET'), carried into ROUND_ANALYSIS.round45.md s.4 item 5. That census counted non-null values; it did not read them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "34 of 95 dossiers serve the team's own base/upside/downside cases, cited, so what remains of FWD-12 limb 3 is the page render (FWD-24), a round-46 cell.",
+  "world_is": "The 34 carry only the heading string of the section, cited to locator 0; no dossier carries a team case's content. A render cell would print 'Base Case' as the team's base case. The defect is in AMGT_CORPUS's section extraction, not in AMGT_RESAPP's served path.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- round-46 cell 5 is NOT cut on this measurement (decomposition s.54) and the routing of the extraction fix goes to 1.0.0_SA_CTO~Z; AMGT_CORPUS's issuer owns the extraction surface.",
+  "notes": "Filed at the round-46 cut; I did not halt the other cells."
+},
+{
+  "id": "AMGT_RESAPP-Z-S294",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-28T21:30:00Z",
+  "one_line": "round45/checks/tt-1.AC2.sh (the planted control 'THE VERDICT COUNTS A DROPPED ABSENCE') passes on ANY harness rc=1, so on a tree where the harness crashes (Z-S292) it reads 'YES on 2 of 2' with empty ABSENCES/EXPORT-COMPARE fields -- a control that passes on a blind instrument.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Shared tree (portal DEV @92a25762), 2026-09-28 ~20:0xZ: 'RKT_LN_Equity: harness rc=1;  ; ' and 'AMD_US_Equity: harness rc=1;  ; ' then 'THE VERDICT COUNTS A DROPPED ABSENCE: YES on 2 of 2', exit=0.",
+      "Published tree C:/tmp/r45pub/portal @c3dd9ca9, same two pinned exports: 'ABSENCES page=33 rich=32 same=32 missing=1 extra=0 ; EXPORT-COMPARE NOT OK' (RKT) and 'page=31 rich=30 same=30 missing=1 ... NOT OK' (AMD) -- the control's claim holds, for the right reason, only there.",
+      "The issuer cited the shared-tree run in round45/close-run/PROVENANCE.md @2b3f58e826 and corrected that line in place."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The planted control distinguishes a verdict that counts a dropped absence from one that does not.",
+  "world_is": "It distinguishes rc=1 from rc=0 only; a crash reads as the control firing. The round-46 control (uu-2 AC2) requires the tokens 'missing=1' and 'EXPORT-COMPARE NOT OK' on both exports.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- the issuer; round 46's uu-2 AC2 is the tightened control.",
+  "notes": "The round-45 close-run result stands on the published-tree run; nothing graded in round 45 rested on the crash except the issuer's own first citation."
+},
+{
+  "id": "AMGT_RESAPP-Z-S295",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-29T00:19:00Z",
+  "one_line": "uu-4's closure diff HITS stop limbs 1 and 3 and the redeploy was REFUSED before the upload: both never-widen halves measured their delta from scoped_amgt.py @78f11f5a02, but the DEPLOYED artifact is OLDER than that commit (its scoped_amgt.py is f3de463222), so the apply would also have shipped AMGT_HARVST's timeline mount -- 2 files and 9 scoped_amgt constructs neither half names.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BASELINE BY CONTENT, 2026-09-29T00:0xZ: the object at artifact VersionId 0XDw5hJWOYgx3P8CSA42oAlkLuTlupkS is 857637 B and its sha256(b64) vBSCqd71wGn1GNOpaWGKr+KdI6t+zo3QVovzEd9Mrew= equals BOTH its own content-sha256 metadata AND the live Lambda CodeSha256, and its length equals the live CodeSize -- so those are the bytes that are running. A bogus VersionId was refused as the negative control.",
+      "CLOSURE DIFF, denominator on both sides: deployed 203 members, fresh --build-only 205 (build rc=0, 50 of 50 required modules, missing [], 3 of 3 isolated-runtime arms OK). added 2, removed 0, CHANGED 3, same 200. ADDED lib/research/api/case_rule.py (licensed) and lib/research/harvest/timeline_api.py (NOT NAMED). CHANGED lib/research/api/scoped_amgt.py + lib/research/print/render_pack.py (licensed) and lib/research/harvest/publication_gold.py (NOT NAMED).",
+      "LIMB 1 HIT: 2 of the 5 moved files lie beyond the three the halves name. LIMB 3 HIT: in scoped_amgt.py, 9 constructs moved beyond _model_cases -- `handler` plus 8 ADDED functions _serve_timeline, _timeline_article_loader, _timeline_daily_loader, _timeline_event_loader, _timeline_response, _timeline_silver_articles, _timeline_snapshot_rows, _timeline_split (101 functions deployed -> 109 fresh).",
+      "LIMBS 2 and 4 CLEAR on planted-mutation-controlled extractors that FIRED: build_pack byte-identical f64c8ba3ec9dc6a4 on both artifacts; render_pack.py 32 functions both sides with exactly _model_case_line changed and its module-level statements identical (28 = 28).",
+      "PROVENANCE, by content not by filename: the deployed scoped_amgt.py member sha256[:16] 6ae14c3e128ec065 EQUALS git f3de463222 (AMGT_RESAPP round-40 drain-join). 78f11f5a02 ('feat(AMGT_HARVST HVST-z-0, 0.9.0_WK_AMGT_HARVST~31): wire the two timeline routes into scoped_amgt.handler') is fa3681de4c22912c, a DIFFERENT and LATER state; HEAD/b56fef3032 (uu-3) is d4e638a513060f4f, which equals the fresh member. So 78f11f5a02 lies STRICTLY BETWEEN the deployed artifact and HEAD.",
+      "timeline_api.py was introduced by bc360c2b7b (AMGT_HARVST HVST-w-3, 'the timeline's three routes -- range, day, event'); publication_gold.py was last moved by 12bbaa0e27 (AMGT_HARVST HVST-y-1, publisher count over TIER-A only). Both were already present at the uu-3 drain 65461f9916 and at the CTO half's own pin 4b8c8e402c.",
+      "NEITHER HALF NAMES ANY OF IT: over both half documents the token counts are timeline 0, timeline_api 0, publication_gold 0, _serve_timeline 0, handler 0. Positive control on the same instrument: case_rule reads 1 hit in the CTO half, so the grep discriminates.",
+      "WORLD MEASURED UNTOUCHED after the refusal: 37 versions of research/opal-amgt-scoped-api.zip exist and the newest is still 0XDw5hJWOYgx3P8CSA42oAlkLuTlupkS dated 2026-09-26T23:13:40Z (round-45 tt-2's, not this session's); live CodeSha256 still vBSCqd71wGn1GNOpaWGKr+KdI6t+zo3QVovzEd9Mrew= at LastModified 2026-09-26T23:35:04Z. No S3 write, no terraform plan, no apply."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Both uu-4 never-widen halves assert the act's blast radius is the CASES property alone: limb 1 admits exactly lib/research/api/case_rule.py (added), lib/research/api/scoped_amgt.py and lib/research/print/render_pack.py, and limb 3 admits in scoped_amgt.py only _model_cases and the new import. The CTO half measures the expected served move by running the landed adapter against the 'pre-uu-3 adapter (scoped_amgt.py @78f11f5a02)'.",
+  "world_is": "78f11f5a02 is not the deployed coordinate -- it is newer than the running artifact, whose scoped_amgt.py is f3de463222. The halves therefore bound the delta uu-3 INTRODUCED, not the delta the APPLY SHIPS. The apply's true delta is f3de463222 -> HEAD, which additionally carries AMGT_HARVST's timeline mount: a new packaged module (timeline_api.py), a changed publication_gold.py, 8 new _timeline_* functions and a changed `handler` -- i.e. new live routes on /api/scoped/amgt/*. The CASES expectation (48 SERVED->SERVED, 22 ABSENT->SERVED, 0 SERVED->ABSENT, M=70) is NOT disturbed by this row: it was measured on the rule, and the rule is unchanged. What is unbounded is everything ELSE the same artifact carries. Note also AMGT_HARVST row Z-S36 (f9acd618b1) reports opal-amgt-scoped-api-role holds no amgt/harvest/gold/ read, so the timeline routes may answer AccessDenied rather than data once mounted -- untested through this artifact either way.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- the issuer. Either both halves are re-signed naming AMGT_HARVST's timeline mount in the blast radius (with 1.0.0_SA_CTO~Z re-reading limbs 1 and 3 against the DEPLOYED baseline f3de463222, not 78f11f5a02), or uu-4 is re-cut on an artifact whose closure excludes it. This lane does not adjudicate which.",
+  "notes": "Filed without halting other work; the refusal is the order's own BOUNDS item 2 ('a closure diff that hits a stop limb is a REFUSAL: print it, stop, report'), so no upload and no safe-apply were run. The NEVER-2 entry amgt-resapp-uu4-scoped-amgt-adjusted-base-20260928 was opened and committed before the build as the order requires, and is CLOSED with every leg carrying an explicit NOT-EXECUTED proof rather than left OPEN to blare, because the deploy is zero-landed and measured so. SECOND, SEPARABLE FINDING: deploy_ledger.py `open` STAGES its two carriers into the SHARED git index, so a concurrent seat's commit absorbs them -- mine landed inside 2751f0be77, a 2.0.0_SA_COO~H AMGT_HARVST drain, and my own safe-commit then read 'no changes added to commit'. The entry is intact and byte-identical at HEAD, but its provenance is another seat's commit and safe-commit's contamination guard cannot see it, because the guard only governs what the CALLER stages."
+},
+{
+  "id": "AMGT_RESAPP-Z-W167-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~167",
+  "surfaced_at": "2026-09-29T03:16:11Z",
+  "one_line": "shell.harness.cjs and posture.harness.cjs cannot load the page at portal 8fa7abde: TimelinePanel.tsx:39 requires '@/api/api-client' and neither harness stubs it (only exportCompare got the stub in uu-2); shell.harness.cjs also has a second, older break.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 2026-09-29 ~02:34Z in the nested portal worktree at 8fa7abde, each under timeout 120: `node src/pages/SecurityAnalysis/__harness__/shell.harness.cjs` rc=1 and `.../posture.harness.cjs` rc=1, both 'Error: Cannot find module @/api/api-client' with the require stack ending at src/pages/SecurityAnalysis/components/TimelinePanel.tsx:39 (shell.harness.cjs:202, posture.harness.cjs:281).",
+      "Same run, controls: tabs.harness.cjs rc=0 CHECKS-OK 20 of 20; drafting 8 of 8; errorEmpty 12 of 12; posturePattern 13 of 13; exportCompare.harness.cjs loads the page with --fixture (uu-2's TimelinePanel SOURCE_STUB, portal 9125df0b) and read OK on 95 of 95 served captures.",
+      "Scratch copies outside the repository, same source with a TimelinePanel stub added: posture.harness.cjs then reads CHECKS-OK 32 of 32; shell.harness.cjs then fails on a second defect, 'Cannot find module @/components/HelperTip' from tabs/PeersTab.tsx:7, and after that stub on 'Element type is invalid ... got: undefined' (a stale component stub) -- so shell.harness.cjs is broken beyond the TimelinePanel mount."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The uu-2 fix (Z-S292) makes 'the export-compare harness load a header that mounts HARVST's TimelinePanel'; the PRD fences for FWD-21, FWD-22 and FWD-29 name the shell/tabs/posture harnesses as instruments ('the drafting, tabs and posture harnesses green').",
+  "world_is": "Only exportCompare.harness.cjs carries the TimelinePanel stub. shell.harness.cjs and posture.harness.cjs, as shipped at portal 8fa7abde, throw at module load, so the shell harness (the only static instrument for the Security-mode header/Refresh limb of FWD-27 and the identity-header band count of FWD-21) returns no reading. FWD-21/FWD-27/FWD-29 are recorded unmeasurable in FWD_EVIDENCE_ROUND46.json regardless (they need a browser); this row records that the static instrument that would have answered their partial limbs is also down.",
+  "notes": "Filed without halting. Not a worker-lane fix: the harness files are outside this order's paths. The owner of the harness set decides whether to stub TimelinePanel in each harness or add an '@/' resolver to the shared loader."
+},
+{
+  "id": "AMGT_RESAPP-Z-W167-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~167",
+  "surfaced_at": "2026-09-29T03:16:11Z",
+  "one_line": "leadPanelPattern.harness.cjs reads CHECKS-WRONG-WAY on 3 of 15 checks at portal 8fa7abde (source_caption_wraps, disclosure_own_line, caption_facts_unchanged), with captionSlice null -- the harness predates the rm-5 change to the Source caption.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 2026-09-29 ~02:34Z in the nested portal worktree at 8fa7abde: `node src/pages/SecurityAnalysis/__harness__/leadPanelPattern.harness.cjs` rc=1; 12 of 15 checks true; 'CHECKS-WRONG-WAY source_caption_wraps,disclosure_own_line,caption_facts_unchanged'; the JSON carries captionSlice null and generationLine '' while sourceFooterOccurrences is 1 and source_footer is true.",
+      "git log on components/GenerationCaption.tsx and LeadPanel.tsx: da76356a 'rm-5 ... the provenance disclosure, two limbs -- dated typed where it rides, the Source caption never clipped' is newer than the harness's own cell (bf1b6149 rl-8, drained ae760a39). The three failing checks are all read off `sourceCaptionSlice`, which finds no `data-source-caption` block, so they fail together."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-27 ('the generation and resolution lines sit in a Source: footer') and FWD-29 name the Lead Panel's own harness as an instrument; rl-8's harness was left green at its drain.",
+  "world_is": "The harness no longer matches the component's caption markup: 3 of its 15 checks fail as one cause. The Source-footer check itself (source_footer) still reads true, so the limb 'lines sit in a Source: footer' is answered by the harness while the three caption-structure checks are not.",
+  "notes": "Filed without halting; outside this order's paths. Recorded in the FWD-27 row of FWD_EVIDENCE_ROUND46.json."
+},
+{
+  "id": "AMGT_RESAPP-Z-W167-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~167",
+  "surfaced_at": "2026-09-29T03:16:11Z",
+  "one_line": "The order names 'FWD-12 limb 3 / FWD-24' as the team's cited cases (known heading-only, Z-S293), but in the AMGT_RESAPP PRD FWD-12 carries no limb 3 and FWD-24 is the Model-sheet fence: the cases obligation is the sibling project AMGT_CORPUS's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "prd/AMGT_RESAPP_PRD.md ENDPOINT fence: FWD-12 DONE WHEN = 'EXERCISED -- one input has actually been re-run by itself while the others stayed where they were' (no limb enumeration); FWD-24 DONE WHEN = 'the fiscal table renders as a white heatmap panel with tabular numerals; a REFUSED row renders one status icon and one navy sentence spanning the row; ABSENT rows fold into a single footnote naming them'. Read at 496b42d725 (last PRD change; HEAD 5151500c41).",
+      "Row AMGT_RESAPP-Z-S293 (INVESTIGATION_v1.md:15022): the census it reports is over the dossier store (lib.research.corpus.dossier.read_dossier, 34 of 34 non-absent case values are section headings) and its own text says 'FWD-12 limb 3' -- ROUND_ANALYSIS.round45.md s.3 carries the same pairing ('FWD-24 stays the open half of FWD-12 limb 3'). Those are AMGT_CORPUS outcome numbers."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says: 'FWD-12 limb 3 / FWD-24: the team's cited cases are known heading-only (row Z-S293) -- measure and say so, do not re-derive it.'",
+  "world_is": "RESAPP FWD-12 and FWD-24 are different fences from the ones the sentence names, so the sentence cannot be applied to them as written. I measured RESAPP's FWD-12 and FWD-24 as their fences read, and recorded the Z-S293 fact (team cases are headings, nothing renders them) by citation in both rows, not re-derived. The RESAPP page renders the model block's own Base/Upside/Downside case lines (70 Base SERVED of 95); nothing on the page renders the dossier's team cases.",
+  "notes": "Filed without halting. The numbering collision (two projects' FWD-12 and FWD-24 read as one) is the issuer's to resolve at the round-46 analysis; this lane adjudicates nothing."
+},
+{
+  "id": "AMGT_RESAPP-Z-W169-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~169",
+  "surfaced_at": "2026-09-29T06:26:06Z",
+  "one_line": "Behind the two loader gaps the order names, shell.harness.cjs and tabs.harness.cjs each carried a further check reading the wrong way that the order does not name (shell: stat_tiles, tooltip_carries_provenance; tabs: thesis_sentences_and_one_chart); AC1 (rc=0) cannot pass without them, so each was read against the page and brought to the current contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "shell.harness.cjs after the loader stubs: 'CHECKS-WRONG-WAY stat_tiles,tooltip_carries_provenance' (stat_tiles 0, expected 7). Page: portal bdf07b6b (DSGN_AMGTV1 AV-t-2) 'four header cards replace the seven Stat tiles' -- HeaderCards.tsx renders 4 data-header-card buttons; the mnemonic and value moved from the tile hover tooltip into the card window (HeaderCardDetail: data-card-figure-mnemonic, '$162B' for CUR_MKT_CAP).",
+      "tabs.harness.cjs after the HeroGraphic stub: 'CHECKS-WRONG-WAY thesis_sentences_and_one_chart' (face counts of data-drafted-sentence no longer equal the bundle's sentences). Page: portal c69bd91a (DSGN_AMGTV1 AV-t-3) folds every drafted sentence into the three card windows (ThesisCards.tsx: 'every drafted sentence of the bundle is reachable in exactly one window'); the face carries the chart and three closed cards.",
+      "Both are case (a): an old page contract a later ratified cell changed. No page is wrong; no check deleted or made vacuous. Fixed at portal 7b009ea9 (branch wk-AMGT_RESAPP-169-portal)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order names, for shell, 'Cannot find module @/api/api-client ... shell also has a second, older break behind it' and, for tabs, 'Cannot find module @/ui/components/graphic/HeroGraphic'; only leadPanelPattern's four checks are named as reading the wrong way.",
+  "world_is": "Once each harness loads, shell reads 2 of 10 checks the wrong way and tabs reads 1 of 20 the wrong way, all three from the page's Sept-28/29 DSGN_AMGTV1 redesign (AV-t-2, AV-t-3). Shell also needed four more stubs it never carried (HeroGraphic, HelperTip, PanelFooter, Segmented). The order's AC1 counts 'load and pass', so these were in scope of the cell's intent and were handled by its (a)/(b) rule.",
+  "notes": "Filed without halting. The check names stat_tiles and tooltip_carries_provenance became header_cards and card_window_carries_provenance; no other file references them (census read before renaming; only shell.harness.cjs, the rl-2 order text and its session log, and DSGN t-2.AC1.cjs, which reads the page, not this harness)."
+},
+{
+  "id": "AMGT_RESAPP-Z-W169-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~169",
+  "surfaced_at": "2026-09-29T06:26:06Z",
+  "one_line": "The cause of leadPanelPattern's four wrong-way checks is not (only) round 38's rm-5 change as the order says: three read wrong through a caption-slice boundary that rm-2's PanelFooter class change (4aa49151) broke, and rows_rendered through AV-t-1's row-lead markup (abcec1b2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Caption markup as rendered: data-source-caption='generation' and 'disclosure' are sibling blocks, each 'whitespace-normal break-words' (rm-5 da76356a's contract, which the harness already encodes), the generation line carries id, as_of and requested_as_of. What broke is the harness's slice end: it searched for '<div class=\"text-right flex-shrink-0\">', which PanelFooter renders as 'text-right min-w-0' since 4aa49151 (rm-2), so captionSlice was null and source_caption_wraps, disclosure_own_line and caption_facts_unchanged failed together.",
+      "rows_rendered: RankedList.tsx now renders <div data-row-lead ...> before the class, and moves the ticker to data-row-ticker when a name is served (abcec1b2, DSGN_AMGTV1 AV-t-1); the harness's regex required '<div class=\"text-sm font-bold ...'. Case (a) for all four; the page is right. Fixed at portal 7b009ea9."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says leadPanelPattern 'predates round 38's rm-5 change to the lead panel's Source caption' as the cause of the four wrong-way checks.",
+  "world_is": "After the fix: 15 CHECK lines, CHECKS-WRONG-WAY none, rc=0. The caption slice and the row read were each stale against a different, later change than rm-5.",
+  "notes": "Filed without halting."
+},
+{
+  "id": "AMGT_RESAPP-Z-S296",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-29T08:05:00Z",
+  "one_line": "vv-4 REFUSED before the upload on three limb hits. The real one: the dossier closure this act newly packages carries lib/research/corpus/extract.py, whose MODULE SCOPE imports fitz, openpyxl and lxml, none packaged -- and both halves admit that closure only on the condition it carries no fitz/pymupdf. The other two are a two-line helper and a closure hop the halves' file list does not spell out.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BASELINE BY CONTENT: the object at artifact VersionId zEAUAvUPYonOJyIkysKta_cLelXMDsMA is 39,987,023 B and hashes to CtIvirvMTG47vvgBGmouk3GrTNKPjPIPx/6ovB+EAOM=, equal to BOTH its own content-sha256 metadata AND the live CodeSha256, with its length equal to CodeSize; a bogus VersionId was refused as the negative control. That is the baseline the order names and the code this lane landed at 01:58Z.",
+      "CLOSURE DIFF, denominator both sides: deployed 331 members, fresh 343. added 12, removed 0, CHANGED 4, same 327 (sums to 343 of 343). All FOUR changed files are named by the halves: lib/research/api/case_rule.py, lib/research/api/scoped_amgt.py, lib/research/print/render_pack.py and lib/research/harvest/publication_gold.py (the latter by COO AMENDMENT 1 / CTO s.3.1).",
+      "LIMB 1b HIT, THE REAL FINDING: lib/research/corpus/extract.py is ADDED by this act -- it is absent from the deployed 331 and present in the fresh 343 -- and its module scope carries, at lines 56-59 of the PACKAGED bytes, 'import fitz', 'import openpyxl', 'from openpyxl.worksheet.formula import ArrayFormula' and 'from lxml import etree'. None of fitz, openpyxl or lxml is a packaged member (0 fitz/pymupdf members in the 343). Both halves' limb 1 admits the dossier read's closure ON THE CONDITION that it carries no fitz/pymupdf.",
+      "SEVERITY, MEASURED NOT ASSUMED, and it is LATENT rather than a cold-start FATAL: dossier.py's TRUE module scope (direct children of Module only) is __future__, argparse, datetime, hashlib, json, re, sys plus lib.research.corpus.gold and lib.research.harvest.store -- no extract, no fitz. The line 'from lib.research.corpus import extract' sits at line 307 INSIDE _section_block_items (lines 300-343), so it is DEFERRED, which the build's own closure walk also labels '(deferred)'. read_dossier does not statically reach _section_block_items: of the 5 dossier.py functions it transitively calls, 0 import extract. I CORRECTED MYSELF HERE -- my first pass labelled the import 'MODULE SCOPE' because the walk descended into a top-level function; the build's own label disagreed and the build was right.",
+      "A BOUND ON THAT SEVERITY CLAIM: the reach walk is name-based and cannot follow a call through a variable, a dict or getattr, so 'read_dossier does not reach it' is weaker than 'cannot reach it'. I do not claim the stronger form.",
+      "WHY NO EXISTING GATE CATCHES IT: the build's own verify prints 'missing []' at both module and function scope, but its closure roots are lib.research and lib.opal_data_harvest only, so a THIRD-PARTY module-scope import is structurally invisible to it. The build was otherwise clean -- rc=0, 343 entries, 62 of 62 required modules, 15 of 15 data members, 8 of 8 vendored packages, 3 of 3 isolated-runtime arms OK, SIZE 253,443,474 B = 96.7% of 262,144,000 with 8,700,526 B spare. The halves' fitz clause is the only instrument that saw this.",
+      "LIMB 3 HIT, a naming gap: scoped_amgt.py goes 109 -> 111 functions. CHANGED _model_cases and read_thesis_bundle, ADDED _team_cases -- all three admitted -- plus ADDED _team_case_absent_all, which the halves do not name. It is two lines, returns {name: {status: ABSENT, reason}} over _TEAM_CASE_NAMES, and is called by _team_cases and nothing else.",
+      "LIMB 1a HIT, which I believe is my grader's narrowness and not a widening: lib/research/peers/__init__.py and lib/research/peers/taxonomy.py are added. The build's own walk shows the edge -- lib/research/corpus/sector_template.py imports lib.research.peers.taxonomy at top level -- so both sit INSIDE 'the dossier read's own import closure' the halves admit, one hop beyond the lib/research/corpus/ prefix my grader keyed on. Both carry only __future__ at module scope and 0 unpackaged imports.",
+      "LIMB 2 CLEAR: build_pack byte-identical f64c8ba3ec9d on both artifacts, on an extractor whose planted-mutation control FIRED (the limb-3 control FIRED too). Limbs 4, 5 and 6 were never reached because nothing was uploaded, planned or applied.",
+      "WORLD MEASURED UNTOUCHED: live CodeSha256 still CtIvirvMTG47vvgBGmouk3GrTNKPjPIPx/6ovB+EAOM= and the artifact key's newest of 38 versions is still zEAUAvUPYonOJyIkysKta_cLelXMDsMA, dated 2026-09-29T01:52:56Z -- the combined uu-4 + a-2 act's upload, not this session's. No S3 write, no terraform plan, no safe-apply, and the one pool-prefix TF edit was never made."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Limb 1 admits case_rule.py, scoped_amgt.py, render_pack.py, publication_gold.py and the dossier read's own import closure, the last on the condition that it carries no fitz/pymupdf; limb 3 admits, in scoped_amgt.py, only _model_cases, _team_cases and read_thesis_bundle.",
+  "world_is": "The dossier closure the build resolves is wider than the halves' picture of it in two ways. It reaches extract.py, which imports fitz, openpyxl and lxml at module scope with none packaged -- the one thing limb 1 expressly forbids -- and it reaches lib/research/peers/ through sector_template.py, one hop past the corpus prefix. And _team_cases arrives with a two-line helper the half did not name. Only the fitz item is a real hazard, and it is latent: the import is deferred inside _section_block_items and read_dossier does not statically reach it, so no route is known to raise today. Nothing was deployed, so nothing is at risk right now; the risk is that a later path into _section_block_items would raise ModuleNotFoundError where a served answer is expected.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- the issuer, with 1.0.0_SA_CTO~Z re-reading limb 1. Three separable decisions: (a) the fitz item -- exclude extract.py from the packaged closure, or make dossier.py's deferred import guarded, or admit it explicitly as unreached with the reason on the half; (b) limb 3 -- name _team_case_absent_all, as AMENDMENT 2 named scoped_amgt_route_table in round 46; (c) limb 1a -- confirm that 'the dossier read's own import closure' extends to lib/research/peers/ reached via sector_template.py, which is my reading. This lane does not widen a signed scope on its own reading.",
+  "notes": "Filed without halting other work; the refusal is the order's own BOUNDS item 2. The NEVER-2 entry amgt-resapp-vv4-scoped-amgt-basis-formula-and-team-cases-20260929 was opened and committed before the build as the order requires (7d747bd8da, verified to read back byte-identically) and is CLOSED with all 10 legs carrying explicit NOT-EXECUTED proofs rather than left OPEN to blare a half-landed deploy that does not exist. The worktree /c/tmp/ae-a-vv4 (branch ae-a-vv4-r47, cut fc1e7bc8fd) is held with its portal at the required local DEV f1a90a9b so a re-cut starts immediately. Third consecutive round where the gradeable limbs caught a widening the halves did not name, and the second where the cause is the import closure reaching further than the authors pictured."
+},
+{
+  "id": "AMGT_RESAPP-Z-S297",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-29T09:10:00Z",
+  "one_line": "vv-4 AC2 reads 84 of 95 AFTER the apply, but a controlled experiment holding the DEPLOYED CODE IDENTICAL and moving only the portal shows the cause is page-side: at f1a90a9b the page yields cit_page=0 on 11 names where 8fa7abde yields cit_page=N, and cit_rich is byte-identical in both arms. The halves' rollback trigger does not fire on this act, and there is currently NO portal vintage at which AC2 can pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 AFTER THE APPLY, from the worktree portal at the required cut f1a90a9b: 'served over 95 of 95 folders: OK 84, NOT_OK 11, CAPTURE_FAILED 0'; 'cases over 95 of 95 compared names: page=285 rich=285 same=285 missing=0 extra=0'; 'served: absences missing=0 on 95 of 95 names; EXPORT-COMPARE OK on 84 of 95; sweep rc=1'. So the CASES axis and the ABSENCES arm both PASS; only the EXPORT-COMPARE arm fails.",
+      "ONE CAUSE, NOT ELEVEN: all 11 carry the identical signature 'CITES+ABSENCES differ' with FIGURES agreeing exactly (e.g. BA_US_Equity fig page/rich/same/missing/extra = 175/175/175/0/0), CITES page=0 rich=N same=0 missing=0 extra=N, and ABSENCES extra=1. missing=0 on every axis, so the export is a SUPERSET and the page is under-rendering -- nothing the page shows is absent from the export.",
+      "THE PAGE NEVER RENDERS CITES IN THIS HARNESS AT f1a90a9b: cit_page is 0 for ALL 95 names, the 84 passing ones included. What separates the 11 is cit_rich: 0 for 83 of the 84 passing (VLO_US_Equity is the one exception) and NONZERO for all 11 failing. So the failure is cit_extra = cit_rich - 0.",
+      "THE CONTROLLED EXPERIMENT, which is what settles causation: the same 11 names were swept twice against the SAME deployed code (CodeSha256 0SpJvook75ZSmkZ4xsBw7H03RdPS2CmZFJBXfdseXo0=), moving ONLY the portal. At f1a90a9b: cit_page 0, cit_rich N, cit_extra N, NOT_OK on all 11. At 8fa7abde (round 46's close vintage): cit_page N, cit_rich N, cit_extra 0 -- the cites AGREE. cit_rich is IDENTICAL across both arms on 0 of 11 differing. Since the deployed bytes are fixed and only the portal moved, the change is in the PAGE (or in the harness's reading of it), not in this act's served output.",
+      "A FIRST HYPOTHESIS WAS FALSIFIED AND IS RECORDED AS SUCH: I expected the 11 to be the team_cases-SERVED names. They are not -- only 3 of the 11 carry team_cases SERVED (ASML_NA, INTU_US, SAP_GY), while AZN_LN_Equity carries all three SERVED and PASSES. team_cases is not the discriminator.",
+      "THE BIND: neither portal vintage gives a clean 95 of 95 today. At f1a90a9b AC2 fails on CITES (this row). At 8fa7abde the same sweep fails on a different arm -- 'cases over 11 of 11 compared names: page=33 rich=22 same=22 missing=11' -- which is expected, because that page predates vv-1's labelled case line. So AC2 as written cannot pass at either vintage until the page-side citation rendering is restored.",
+      "WHAT IS NOT IN DOUBT: the deploy itself verifies. AC1 exit=0 (CodeSha256 moved to 0SpJvook..., LastUpdateStatus Successful). AC3 exit=0 -- 95 of 95 reads, formula as ruled 70 of 70, team_cases as the dossier holds them 95 of 95 with 84 cases SERVED (= 28 x 3, the halves' predicted 28 names). Stop limb 5 CLEAR (4 of 4 pdfs unchanged on content stream, raw sha and byte size). Stop limb 6 CLEAR (8,119 JSON paths across 4 captures, 0 differing). Limb 4 CLEAR (plan 0 add / 2 change / 0 destroy, 0 resources outside the named two). 0-diff replan."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "vv-4 AC2 re-runs FWD-30 on the served plane so the page and the export must agree after the deploy, and a criterion that fails after the apply is the ROLLBACK trigger named in the halves.",
+  "world_is": "AC2 fails, but not because of this act. Holding the deployed code fixed and moving only the portal flips the CITES arm from agreeing to failing, and the export side does not move at all. The rollback trigger is written for a criterion that fails BECAUSE of the act; rolling back here would revert a deploy that AC1, AC3 and stop limbs 4, 5 and 6 all pass, to fix a page the deploy never touched. So this lane did NOT roll back and did not treat the trigger as fired. Separately, the portal at f1a90a9b -- the very cut the order told the lane to use -- renders no citations for 11 names where the previous cut rendered N, which is a page-side regression that belongs to whoever owns vv-3 and DSGN_AMGTV1 AV-t-4, the two changes f1a90a9b merges.",
+  "disarm_owner": "2.0.0_SA_COO~Z -- the issuer, who owns both vv-4 and vv-3. Two things to rule: whether vv-4 AC2 is satisfied as exonerated (or re-cut against a portal vintage where the page renders cites), and whether the f1a90a9b citation regression is a vv-3 / AV-t-4 defect to route. This lane does not grade a criterion it was not given the authority to re-scope, and does not roll back an act a controlled experiment clears.",
+  "notes": "The NEVER-2 entry amgt-resapp-vv4-reissue-basis-formula-and-team-cases-20260929 is HELD-SOVEREIGN-GATED, not closed and not left OPEN: every apply leg (A1, IAMPREFIX, the tf-lambda apply) carries proof and only the VAC2 verify leg is open, which is exactly the state `hold` is for -- it reads KNOWN-HELD rather than a false RED and stays visible in check. AC2's FIRST run was a separate, instrument-only failure of mine and is recorded so no one reads it as evidence: the freshly cloned worktree portal had no node_modules, so the harness died on 'Cannot find module typescript' with 95 CAPTURE_FAILED and 0 names compared. I lent it the shared portal's installed dependencies after measuring that ZERO lockfile or manifest paths changed between f1a90a9b and the shared portal HEAD, so the dependency set is provably identical and the worktree kept the required source cut."
+},
+{
+  "id": "AMGT_RESAPP-Z-S298",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-29T09:12:00Z",
+  "one_line": "The vv-4 pool-prefix grant is APPLIED but cannot be COMMITTED: the naming gate refuses 'amgt/harvest/gold/research-dossier/' in ENFORCE mode as NEW and OUT-OF-PATTERN, wanting research_dossier -- a form that holds ZERO objects. DESIRED and APPLIED now disagree on that one line, and the remedy is a registry row outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE REFUSAL, verbatim: '[naming-gate] NAMING REFUSE infra/aws/terraform/harvest/scoped-amgt-api.tf:218 amgt/harvest/gold/research-dossier/ -> amgt/harvest/gold/research_dossier/' with 'why: NEW and OUT-OF-PATTERN as S3Key: REFUSE' and 'NAMING-GATE: REFUSE 1 graded'. safe-commit aborted and unstaged the file (LGIC_ENFORCE DEC-6, ENFORCE mode).",
+      "THE WORLD DISAGREES WITH THE CANONICAL FORM: s3 list under amgt/harvest/gold/ returns 10 common prefixes; 'amgt/harvest/gold/research-dossier/' holds live objects (e.g. security_key=1299_HK_Equity/as_of=2026-09-28...json) and 'amgt/harvest/gold/research_dossier/' returns KeyCount=0. Granting the canonical form would grant an empty prefix and the dossier read would be AccessDenied, failing AC3 -- which instead PASSED 95 of 95 with the applied hyphen grant.",
+      "THE GRADER AND THE GATE AGREE, AND I CORRECTED MYSELF ON THIS: lib.opal_naming.grade(lit,'S3Key') returns OUT-OF-PATTERN with canonical research_dossier for the hyphen form and CONFORMANT for the underscore form. address() and key() are PASS-THROUGH on the table segment -- they render whatever the caller hands them -- so the fact that the store's address was 'from the builder' (COO~X's interface-published message) carries no blessing of the hyphen. My first reading, that the gate contradicted the builder, was wrong.",
+      "THE DRIFT IS A FAMILY, NOT THIS ONE NAME. Grading all ten live gold prefixes: article_security_mention, candidate_universe, chatter_daily and chatter_event are CONFORMANT; research-backlog, research-continuation, research-dossier, research-fund-form, research-model-typecast and research-sector-template are all OUT-OF-PATTERN. DENOMINATOR: 6 of 10, and all six are AMGT_CORPUS's research-* store.",
+      "NO IN-LANE PATH EXISTS. DEC-6's matrix makes NEW and OUT-OF-PATTERN an unconditional REFUSE, and 'a string is NEW when it is absent from the file's pre-image at HEAD' -- so a prefix that has existed in the world since 2026-09-26 reads as NEW the first time it is DECLARED. Every exemption the gate offers (waivers_for, legacy_read_ok, tf_local_ok, a live remediation in a surface remediations.json) applies to an EXISTING literal and needs a row under infra/logic/registry/, which is NOT in this order's <paths>. A census of the six hyphen names across infra/logic/registry/*.json returns 0 mentions in 7 files, so no row exists to extend.",
+      "THE RESULTING DRIFT, stated plainly: the grant IS applied and read back on the APPLIED plane (one inline policy unchanged, resources 33 -> 34, amgt/harvest/gold/ 3 -> 4, research-dossier appearing exactly twice across the GetObject and ListBucket limbs), while infra/aws/terraform/harvest/scoped-amgt-api.tf carries the line UNCOMMITTED in the shared worktree. A terraform plan from a clean checkout of HEAD would therefore want to REMOVE the grant."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 30: every S3 address is builder output, a builder REFUSAL is a missing registry row to add under infra/logic/registry/ and never a hand-typed workaround, and a deliberate departure is an R20 register entry Andrew acknowledges. The commit-time naming gate grades names.",
+  "world_is": "The rule's own remedy is unavailable to this lane: the registry is outside the order's write surface and an R20 departure needs Andrew's word. The only two moves inside the lane would be to type the canonical name -- which rule 30 forbids as a hand-typed workaround AND which would grant an empty prefix and break the read -- or to stand the gate down via NAMING_GATE_ENFORCE / org/mcp/naming-gate.enforce, which is implementing a bypass on a gate the law put in ENFORCE and is not this lane's to do. So the line stays applied and uncommitted, and is reported rather than worked around. Rule 30's own non-application clause fits the underlying cause: existing pipelines reach conformance through their own migration project (R19), never as a rider on someone else's deploy.",
+  "disarm_owner": "1.0.0_SA_CTO~Z for the routing, with 2.0.0_SA_COO~Z as this act's issuer. Three candidate dispositions, none of them this lane's to pick: a registry remediation row admitting the six existing research-* prefixes; an R20 register entry Andrew acknowledges; or AMGT_CORPUS migrating its store to the canonical underscore form under R19, after which this grant is re-typed to match. Until one lands, the one TF line cannot be committed.",
+  "notes": "Raised without halting: the apply itself is complete and verified, and this row is about the RECORD, not the world. Nothing was bypassed and the gate was not stood down. The row is filed in org/, which the naming gate excludes from its declaration domain, so filing it is not itself blocked."
+},
+{
+  "id": "AMGT_RESAPP-Z-S299",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-09-29T09:50:00Z",
+  "one_line": "CORRECTING MY OWN VERDICT on Z-S298 (self-drive tick 24, msg 26550): I said the grant's literal 's3://opal-data-harvest/amgt/harvest/gold/research-dossier/' was 'carried at HEAD' and so minted nothing, citing lib/research/corpus/tests/test_backlog.py:217. The naming gate's _carried_at_head excludes */tests/* by design (naming-gate.py:791-812, LD-0611-ARM-01), and dossier.py carries only the table name, not the address. By the gate's own definition, the literal IS new. The gate-edit branch of my verdict was built on a carrier the gate does not count; its else-branch (roll back) is the right one, and 1.0.0_SA_CTO~Z took it (e1e4ae43d4).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/naming-gate.py:791-812 _carried_at_head: a hit counts only if it is in the declaration tree, has a graded extension, is not the gate itself, and '\"/tests/\" not in \"/\" + hit' -- 'never the gate's own bytes or a fixture under */tests/*'.",
+      "git grep at HEAD for 'research-dossier' over lib and infra: lib/research/corpus/dossier.py (5 lines: the docstring, TABLE = \"research-dossier\", ARTIFACT = \"research-dossier\", a description) and lib/research/corpus/tests/test_backlog.py (5 lines, including the full s3 URI at :217 and :231). The only carrier of the full address literal is the tests file.",
+      "My verdict msg 26550 cited test_backlog.py:217 as the HEAD carrier and proposed extending _carried_at_head to naming-gate.py:1419. 1.0.0_SA_CTO~Z's reply msg 26553 identified the tests exclusion and executed the verdict's else-branch (roll back), record org/tier1_exec/1.0.0_SA_CTO/drive_pairs/AMGT_DSGN_AMGTV1/VERDICTS.jsonl @e1e4ae43d4."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "3.0.0_SA_CVO~Z's verdict (msg 26550) asserts the grant literal is already carried at HEAD, so a one-branch gate edit lets it commit as EXISTING under Rule 30.",
+  "world_is": "The literal's only HEAD carrier is a */tests/* fixture, which the gate excludes by design. Extending _carried_at_head to the OUT-OF-PATTERN branch would still read it NEW. The rollback is the lawful path; re-landing is R20 (Andrew's act) or R19 (AMGT_CORPUS round 12).",
+  "disarm_owner": "N/A -- INERT: the verdict's else-branch was executed, so nothing acted on the wrong premise. The correction stands so the ruling's record is not read as grounded on a valid carrier.",
+  "notes": "The transferable part: when citing a file as evidence that a GATE will accept something, check the gate's own admissibility filter for that file, not only that the bytes exist. A carrier the instrument does not count is not a carrier. Cost: reading the helper's filter, 20 lines."
+},
+{
+  "id": "AMGT_RESAPP-Z-S300",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-29T11:40:00Z",
+  "one_line": "Round 48 cell 2 (the served company name): 59 of the 95 research-library names have no etf-classifications row, and the only stored name source for them, the model block's NAME figure, is ALL-CAPS ('ADVANCED MICRO DEVICES', 'ALPHABET INC-CL A', 'RECKITT BENCKISER GROUP PLC'). Andrew-direct 2026-08-25 requires the table's names 'properly capitalized (no all caps)', and the table's writer rejects title-casing. So ww-3 writes those 59 rows with their classification and WITHHOLDS the name; ww-2 serves them as name_state ABSENT with a reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "etf-classifications scan 2026-09-29 ~11:0xZ: 285 items; 36 of the 95 library bare tickers held (all 36 the same company as the block's NAME; ICT differs only by abbreviation), 59 absent, 0 bare-ticker collisions among the 95.",
+      "Stored blocks round46/checks/fixtures/blocks: NAME = 'ADVANCED MICRO DEVICES', 'ALPHABET INC-CL A', 'RECKITT BENCKISER GROUP PLC'; GICS_SECTOR_NAME mixed-case on all three.",
+      "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py docstring: Andrew-direct 2026-08-25 'properly capitalized (no all caps)'; the NAME-CORRECTIONS comment rejects title-casing as lossy; clean_name never falls back to the ticker.",
+      "resolve_identity for the library names carries no company name (security_key, display_ticker, bloomberg only)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-47 analysis s.4 row 2: the served company name and classification on list rows, joined server-side from etf-classifications.",
+  "world_is": "The classification can be served for all 95 names after ww-3. The name can be served for 36; for 59 there is no properly-capitalised source in Opal's stores. A source would be Bloomberg's mixed-case long company name (a vendor pull needing Andrew's per-use word) or a literal name map (59 rows someone writes).",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): ww-3 withholds the 59 names rather than write all-caps or the ticker; the name source is an enrichment item for the CTO's round-48 analysis.",
+  "notes": "No wait is created: rows land classified and the page shows ABSENT names honestly. Cost of the check that found it: reading three stored blocks."
+},
+{
+  "id": "AMGT_RESAPP-Z-S301",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-29T11:40:00Z",
+  "one_line": "The shared tree carries an UNCOMMITTED 19-line edit to seed-etf-constituents.py (the CASH line renamed 'Cash & Cash Equivalents' and CASH&OTHER dropped; batch writes drop empty-string values because the sub-asset-class-index GSI refuses ''), mtime 2026-09-29 05:42Z, author unknown. Round 48's ww-3 edits the same file on a worker branch, so the drain merge will refuse while that edit stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat on the shared tree: seed-etf-constituents.py 13 insertions, 6 deletions; last commit on the file b3d830094c (1.0.0_SA_CTO~Z, 2026-08-25).",
+      "ls --full-time: 2026-09-29 01:42:34 -0400."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker branch drains into the shared tree with safe-merge.",
+  "world_is": "git refuses a merge that would overwrite an uncommitted change, so no work is lost; the drain stops on this file until the edit is committed by its author or the drain is resolved by the issuer.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer, at the ww-3 drain): read the working-tree diff again; if it still stands, ask 0.0.0_AB_MSTR~Z to name its owner before merging. Never stash or discard it.",
+  "notes": "The worker's order carries the empty-string rule as a requirement of its own write, so ww-3 does not depend on the uncommitted edit."
+},
+{
+  "id": "AMGT_RESAPP-Z-W171-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~171",
+  "surfaced_at": "2026-09-29T12:10:00Z",
+  "one_line": "AC2 (api-suite.sh) cannot run in the sparse-cone worktree: 268 of the suite's tests error at collection/setup with FileNotFoundError on infra/logic/registry/systems.json, a path outside the cone (lib, integrations, .tools, org, docs, rcg), so the criterion's '308 passed' is unreachable here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "In C:/tmp/r48-171 (branch wk-AMGT_RESAPP-171 @9ebf76b6da): api-suite.sh -> '2 errors during collection' exit=2 (test_team_cases.py via lib/research/corpus/gold.py:20 naming.lookup, test_timeline_routes.py via lib/research/harvest/store.py:34), both FileNotFoundError 'C:\tmp\r48-171\\infra\\logic\registry\\systems.json' (lib/opal_naming.py:145).",
+      "With those two files ignored: '24 passed, 268 errors' over lib/research/api/tests + lib/research/print/tests, every error the same FileNotFoundError; git ls-tree -d HEAD infra/logic/registry shows the tree exists at HEAD, git sparse-checkout list = .tools docs integrations lib org rcg.",
+      "AC1 (ww-2.AC1.py) is unaffected and passes: 'ranking rows read: 2 ... LIST ROWS CARRY THE SERVED NAME AND CLASSIFICATION: YES' exit=0. The new test file lib/research/api/tests/test_list_rows_classification.py (7 tests) is among the 24 passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 runs api-suite.sh in the worker's worktree and reports N passed, 0 failed (308 at the cut).",
+  "world_is": "The sparse cone omits infra/logic/registry, which lib/opal_naming.py reads at import/setup; the suite can only be run in a tree carrying infra/logic (the shared tree, or a worktree whose cone adds it). The worker did not disable sparse-checkout, per its order.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): run api-suite.sh at the drain in a tree carrying infra/logic/registry, or widen the cone to include infra/logic for the api-suite cells."
+},
+{
+  "id": "AMGT_RESAPP-Z-W171-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~171",
+  "surfaced_at": "2026-09-29T12:40:00Z",
+  "one_line": "Follow-up to AMGT_RESAPP-Z-W171-S1: the issuer widened the cone to infra/logic (ruling by 2.0.0_SA_COO~Z, this session), which removes S1's cause (registry now present; the commit gate's naming limb can read it). AC2 still cannot pass in this cone: 'exit=1, 5 failed, 287 passed, 23 errors', every failure a FileNotFoundError on a path outside the cone (infra/aws/terraform/harvest/scoped-amgt-api.tf x5; portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json x23).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "api-suite.sh re-run in C:/tmp/r48-171 after infra/logic/registry/systems.json appeared (test -f -> present): 5 failed, 287 passed, 23 errors, exit=1 (was 2 collection errors + 268 errors).",
+      "The 5 failures are all in lib/research/api/tests/test_scoped_amgt_mount.py (reads infra/aws/terraform/harvest/scoped-amgt-api.tf); the 23 errors are the print tests' fixture read of portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json. git ls-tree HEAD shows infra/aws/terraform/harvest exists at HEAD; the worker's order says infra/ and portal/ are absent by design.",
+      "None of the 28 touches code this cell changed: the 7 new tests pass and AC1 passes (ranking rows read: 2 ... YES, exit=0)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 runs api-suite.sh in the worker's worktree and reports N passed, 0 failed (308 at the cut); the issuer ruled S1's cause resolved by widening the cone to infra/logic.",
+  "world_is": "S1's cause (infra/logic/registry) is resolved by that widening and the commit gate now reads the registry. The suite also reads infra/aws/terraform/harvest and portal/.../__harness__ fixtures, which the cone still omits, so AC2 stays FAIL as an instrument absence. The channel schema has no RESOLVED disposition; S1 stays UNDER_INVESTIGATION for the CVO to grade.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): run api-suite.sh at the drain in a tree carrying infra/aws/terraform/harvest and portal/src/pages/SecurityAnalysis/__harness__, or add those two paths to the cone for slot ~171 and have the worker re-run AC2."
+},
+{
+  "id": "AMGT_RESAPP-Z-S302",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-29T13:30:00Z",
+  "one_line": "etf-classifications is keyed on the BARE ticker, so a key means one company per table even where two exchanges share the token. The manual one-time script data/black_diamond/scripts/classification/seed_bd_securities.py:51 scans the whole table and copies it into bd-securities with an overwriting put. If it is re-run after ww-3's write, 24 of the 59 new keys already exist in bd-securities and would be overwritten, and 6 of those mean a different company there: AI (C3.ai), ML (MoneyLion), ORA (Ormat), RKT (Rocket Cos), SAN (Banco Santander ADR), ST (Sensata).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read-only census 2026-09-29 ~13:2xZ (a subagent of 2.0.0_SA_COO~Z): 9 code readers of etf-classifications; seed_bd_securities.py:51 full scan + overwriting put_item into bd-securities; manual, described as one-time; no scheduler found.",
+      "bd-securities live read: 24 of the 59 keys present; 6 are a different company from the AMGT library name.",
+      "No scheduled production reader's served output moves: yang positioning 0/62, holdings attribution 0/56, positioning publisher 1/167 (PWR, same company, name still the issuer's), satellites 0/25 and 0/25."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ww-3's never-widen COO half: the write moves only the 59 created keys of etf-classifications.",
+  "world_is": "The write moves only those keys, and no scheduled reader changes. The hazard is a latent SECOND-ORDER copy: a manual re-run of seed_bd_securities.py would carry six foreign-company rows into bd-securities over the names BD holds there.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): named in the ww-3 COO half and put to 1.0.0_SA_CTO~Z with the pair; the script's own guard (skip a row whose updated_by marks the amgt-library universe, or refuse an overwrite) is the BD script owner's change, asked through that owner's round if the CTO routes it.",
+  "notes": "INERT because nothing schedules the script and this act does not run it. The underlying design fact (bare-ticker keys across exchanges) predates this round."
+},
+{
+  "id": "AMGT_RESAPP-Z-S303",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-29T19:30:00Z",
+  "one_line": "ww-1 AC2 exits 1 on ONE arm only: 1 of 96 research-library folders, 'Hitachi 6501 JP', resolves to a harvester_key but to NO security_key, so AC2 counts it a read failure and its 'failed 0' clause cannot be met. The failure is produced ENTIRELY IN THE LOCAL HARNESS before any Lambda call (vv-4.AC3.py:39-40 invokes the deployed route only `if key`), so neither the ww-1 artifact nor its two grants can cause it or cure it. Every substantive AC2 arm passes at full strength: formula as ruled 70 of 70, team_cases as the dossier holds them 95 of 95 names, 102 cases SERVED.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "vv-4.AC3.py true exit=1, measured WITHOUT a pipe (an earlier read of this criterion took $? after '| tail', which is tail's status, not the script's, and read a false 0). Printed: 'reads OK 95 of 96 (failed 1); base SERVED 70, formula as ruled 70 of 70; team_cases as the dossier holds them 95 of 95 names, 102 case(s) SERVED' and 'READ-FAILED None {no_identity: Hitachi 6501 JP}'.",
+      "The script's own rule, vv-4.AC3.py:71-72: ok = n_fail == 0 and n_base and n_formula == n_base and n_team_ok == n_read and n_team_served > 0; return 0 if ok else 1. n_fail==1 is the ONLY false conjunct.",
+      "Causal isolation, read at vv-4.AC3.py:39-40: key = sa.resolve_identity(crosswalk.harvester_key(folder, pilots)[0]).get('security_key'); the deployed function is invoked only `if key`, else (None, {'no_identity': folder}). For this folder the Lambda is NEVER called, so the deployed bytes and the two new grants are not in its causal path.",
+      "Direct diagnostic over the whole population, 2026-09-29 ~19:28Z: 96 folders, EXACTLY 1 with no security_key. folder='Hitachi 6501 JP' -> harvester_key='security-d7abbd8922c03d67' -> security_key=None. Folder mtime AND ctime both 2026-09-29T12:54:45Z.",
+      "AC1 PASS (true exit=0, no pipe): CodeSha256 moved CtIvirvM...EAOM= -> lg6NJ2JL...B3s=, LastUpdateStatus Successful. AC3 PASS (true exit=0, re-run without a pipe): rankings rows 2 name SERVED 2, line_names 25, 'SERVES THE NAMES AND THE WORDS: YES'.",
+      "Never-widen limbs 5 and 6 HOLD on OUTPUT: 9 of 9 captured route artifacts byte-equal pre- vs post-apply (full sha256, not a truncated digest), with the positive control that the function's CodeSha256 DID move between the two captures."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ww-1 COO never-widen half, EXPECTED OUTCOME arm 1, measured 96 names with 0 read failures at ~13:1xZ; the task order's AC2 expectation reads 'reads OK N of N (failed 0)'.",
+  "world_is": "96 folders, 95 read OK, 1 read failure. The folder for the failing name was created 2026-09-29T12:54:45Z, i.e. BEFORE the half's ~13:1xZ measurement, so this is not a population that grew after the half was written; the name has a research-library folder but no registration in the identity store this seat can see from site Z. Whether the half's 0-failure read differed because the identity store held the name then, or because that measurement ran on another device whose OneDrive or crosswalk state differed, is NOT settled by this seat's evidence and is not this cell's surface.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer, round 48): the ROLLBACK named in both halves is the issuer's to call, and this seat has NOT rolled back -- the failing arm is causally isolated from the act (above), so a rollback would remove grants that are serving team_cases for 95 of 96 names and would not move the failing number by one. The issuer rules whether AC2's 'failed 0' clause is met at a population the act does not control, or is re-cut against the identified population; registering 'Hitachi 6501 JP' in the identity store is the AMGT_CORPUS / identity owner's act, not this lane's.",
+  "notes": "INERT: nothing is degrading and no served output moved (limbs 5 and 6 byte-equal). The deploy is fully landed, not half-landed: both resources applied, re-plan 0-diff, AC1 and AC3 PASS. NEVER-2 entry amgt-resapp-ww1-redeploy-research-dossier-restart-20260929 is deliberately left OPEN at leg V1 so it BLARES to the COO rather than reading closed on a criterion this seat did not grade."
+},
+{
+  "id": "AMGT_RESAPP-Z-S304",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-09-29T19:35:00Z",
+  "one_line": "Two signed never-widen acts overlapped on one served surface: AMGT_HARVST g-2 put new chatter_daily/event/mention parts at 19:26-19:27Z while ww-1's NEVER-2 entry sat at leg V1, whose limb 5 reads /timeline byte-equal to a pre-apply capture (18:57Z) as the rollback trigger. AMD, BA and GOOGL are in g-2's moved 50, so their /timeline moves on DATA alone and would have read as a deploy ROLLBACK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 newest parts: chatter_daily part-20260929T192649Z (LastModified 19:26:55Z), chatter_event part-20260929T192706Z, article_security_mention part-20260929T192610Z.",
+      "g-2 moved-50 list (CTO~Z's AC2 rerun, cmp-identical to deliverables/2.0.0_SA_COO_H/round18/g2_signing_ac2_rerun.txt lines 562-611): AMD 121 cells, BA 32, GOOGL 1; 1299_HK absent.",
+      "ww-1 captures (deliverables/0.7.0_AE_CloudOps~A/ww1-captures): pre-apply 18:57:01Z, post-apply 19:21:10Z (before g-2, so its 9-of-9 byte-equal read is valid), post-g2 19:37:28Z: AMD timeline bf78f92eeb2acc86 -> e44c96037e8a, BA 803e12846a89c037 -> ebb9ee32ddfa, GOOGL cf1c63d3f41f524c -> dde9bdb41d98 (moved); AMD print 0a2bdf35fb1d54f6 and BA print 481422cab86a5a1f unchanged.",
+      "lib/research/print/render_pack.py carries no chatter/timeline/mention reader (Grep: 0 code hits), so /print is independent of g-2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each never-widen half names its own blast radius; ww-1 V1 limb 5: /timeline and /print byte-equal to the pre-apply capture, either moving is a ROLLBACK.",
+  "world_is": "The halves were each correct alone; neither named the other act in its window. CTO~Z ruled (msgs 26678/26679, ~19:36Z): an AMD/BA/GOOGL /timeline move is not a rollback by itself and is attributed against g-2's section (b); 1299_HK /timeline and all four /print stay byte-equal. The post-g2 capture bears that out.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer of ww-1): record the attribution in the entry's V1 leg and close it on the valid 19:21Z post-apply read plus the post-g2 attribution.",
+  "notes": "Class lesson for later pairs: a sign-off reads the OTHER open NEVER-2 entries whose surface overlaps its writes. CTO~Z's p-5 half (@9e1da13005) sequences its merge after ww-1 V1 for this reason."
+},
+{
+  "id": "AMGT_RESAPP-Z-S305",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-29T20:30:00Z",
+  "one_line": "FWD-30's no-regression arm (round47/checks/vv-4.AC2.sh) read at round-48 close: EXPORT-COMPARE OK on 62 of 96 (NOT_OK 33, CAPTURE_FAILED 1), against 95 of 95 at round 45's close. Every NOT_OK is ABSENCES only (figures, cites and cases equal on all 95), and the differing lines sit on the posture/call, company-description and thesis-driver absences -- sections the page changed today in DSGN_AMGTV1 rounds 3-4, and none that round 47/48 changed on the export side.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer run 20:12:47Z, 96 folders: OK 62, NOT_OK 33, CAPTURE_FAILED 1 (the no_identity folder, TypeError on key None -- the Z-S303 name). Reasons: 'ABSENCES differ' 32, 'FIGURES+ABSENCES differ' 1. fig_extra/cit_missing/cit_extra 0 on all 95; cases page=285 rich=285 same=285.",
+      "The instrument never reads the deployed function's export: sweep.py rebuild() calls the LOCAL scoped_amgt.handler at HEAD with every reader stubbed from the capture, and compare() renders the page from portal HEAD (09bd04b1). The deployed bytes reach it only through the captured /thesis payload.",
+      "Differing lines, harness setDiff dumped (a temp copy, deleted): ASML page-missing 'ABSENT: no call was made: the research team's posture pack gives no reason for this call', rich-extra the comparable-null call reason and 'ABSENT: no served D-1 company_description sentence passing the describes-the-business test'; BABA rich-extra the description line and 'ABSENT: the thesis driver is ...'; BBSE3 the same posture/comparable pair.",
+      "Page side since round 45 (portal src/pages/SecurityAnalysis): DSGN_AMGTV1 AV-w-5 'posture evidence in words' a538d0b7, AV-e-1 'plain sentences on the Thesis panel and the header description' eea64485, AV-r-1 'machine strings off the face' cb25695b, AV-r-3 harness 'parity keys on data' 060afb45, AV-w-3 '... three bound harnesses re-anchored' 9912c1ac. Export side since round 45 (lib/research/print, scoped_amgt, peers): only uu-3, vv-1, vv-2, ww-2, ww-4 (case rule, words, team cases, rankings) and HARVST's timeline wiring -- none emits a posture, description or thesis-driver absence."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ww-1's ISSUER NOTES: FWD-30's served sweep (vv-4.AC2.sh) is read by the issuer at close as the no-regression arm; round 45 closed it at 95 of 95 OK, absences missing=0.",
+  "world_is": "62 of 96 OK. Attribution by construction and by line content points at the PAGE side (DSGN_AMGTV1 rounds 3-4 wording changes the export-compare harness still keys on), not at the ww-1 deploy; this is the round-47 hazard 'two projects write FWD-30's instruments' (packet s.5 item 2) recurring. Not proven by a controlled run: a re-run with portal at a pre-round-3 commit would settle it and was not run here.",
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): carried in the round-48 drain-end packet to 3.0.0_SA_CVO~Z and to 1.0.0_SA_CTO~Z's round-48 analysis; the fix (which side's absence wording FWD-30 keys on, and one writer for the harness) is a CTO WHAT across AMGT_RESAPP and DSGN_AMGTV1; the page/harness write surface is 2.0.0_SA_COO~D's.",
+  "notes": "No served output regressed that a reader sees: the page and the export each still state every absence; they state three of them differently. The CAPTURE_FAILED row is the Z-S303 folder."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~173",
+  "surfaced_at": "2026-09-29T22:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W173-S1",
+  "one_line": "The page carries NO data attribute for a figure's VALUE or for the identity line (sector, country, currency), so FWD-30's page reader keys FIGURES on line + year (HEADER mnemonic, FISCAL mnemonic + year) and the three identity mnemonics are dropped from the export side.",
+  "spec_asserts": "AMGT-xx-1 item 1: a figure is keyed 'as line + year + value' from data-model-row / data-model-cell / data-card-figure-*; where the page has no attribute for a fact the worker files a row and grades the class on what the attributes carry.",
+  "world_is": "ModelTab.tsx:126 renders `<td data-model-cell>` with the value only as text (no value attribute, no year attribute; the year is the sheet's <th> column header); HeaderCards.tsx:107-109 (data-card-figure-*) carries the mnemonic and state, never the value; SecurityOverlay's IdentityHeader prints 'Information Technology -- US' as a bare <div class='text-xs'> and the price currency inside the tile text, with no attribute, while the export's Header table carries GICS_SECTOR_NAME, CNTRY_OF_DOMICILE, CRNCY rows. A wrong VALUE on either side therefore reads equal; a missing identity-line row reads equal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "page_render.cjs over the served capture of AMD_US_Equity, portal DEV ea248519 (src/pages/SecurityAnalysis): data-card-figure-mnemonic set = 7 SERVED mnemonics (PX_LAST, CUR_MKT_CAP, VOLUME_AVG_30D, NET_DEBT, CURR_ENTP_VAL, EQY_BETA, SI_PERCENT_EQUITY_FLOAT); the export's Header table = those 7 + CNTRY_OF_DOMICILE, CRNCY, GICS_SECTOR_NAME (script diff run 2026-09-29T21:5xZ, all three names identical).",
+      "Grade on this key over the live library, served plane: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py --served --live --require-cases: OK 95 of 96 (the one NOT_OK is S5), FIGURES equal on all 95; the price/figure text plant AC3 (a) moves nothing, by construction."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): asks DSGN_AMGTV1 for the attribute through its round; until then the class is graded on what the attributes carry",
+  "notes": "Ask for DSGN_AMGTV1: `data-model-cell-value` (the served value as served) on the cell, `data-card-figure-value` on the header figure, and an attribute on the identity line's three scalars. Nothing under portal/ was edited."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~173",
+  "surfaced_at": "2026-09-29T22:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W173-S2",
+  "one_line": "Three absences state their served REASON only in visible words (peers absent column, description absence, posture no-call), so ABSENCES keys them on identity alone: (PEERS_COLUMN, column), (DESCRIPTION, ABSENT), (POSTURE_NO_CALL).",
+  "spec_asserts": "AMGT-xx-1 item 1: an absence is keyed 'as its section + served reason code or field' from the page's data attributes, never from visible text.",
+  "world_is": "PeersTab: `<li data-absent-column='Shares'>Shares: ABSENT -- <reason></li>` -- the attribute is the column name, the reason is text. HeaderBrief: `<p data-header-description='ABSENT'>Description: ABSENT -- <reason></p>` -- status only. PostureTab ServedPosture: `data-posture-verdict='absent'` with the reason inside the sentence `postureVerdictSentence + ': ' + plainReason(reason)` and no reason attribute (only the NOT-SERVED branch carries data-posture-reason). A page that rewords or changes one of these three reasons cannot move the grade; the export's reason can drift from the page's unseen.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Rendered ASML_NA_Equity / BABA_US_Equity / AMD_US_Equity from their served captures (portal DEV ea248519 (src/pages/SecurityAnalysis)): data-absent-column x12 with the reason only in the li text; data-header-description='ABSENT' x1 (thesis window) with the reason in the p text; ASML posture status SERVED, data-posture-verdict='absent', data-posture-verdict-word='ABSENT', no data-posture-reason.",
+      "The export side states all three in the same words the round-48 wording failures compared (row Z-S305): rich 'Shares: ABSENT -- ...', 'Description: ABSENT -- ...', 'ABSENT -- no call was made: ...'."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): asks DSGN_AMGTV1 for the attribute through its round; until then the class is graded on what the attributes carry",
+  "notes": "Ask for DSGN_AMGTV1: `data-absent-reason` on the peers li, `data-header-description-reason` on the description line, `data-posture-no-call-reason` on the posture verdict tile. Once they land the three keys gain their reason with no other change to the grade."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~173",
+  "surfaced_at": "2026-09-29T22:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W173-S3",
+  "one_line": "A SERVED case's VALUE and currency ride no data attribute, so CASES keys a served case on (name, SERVED, formula) and an absent one on (name, ABSENT, served reason).",
+  "spec_asserts": "AMGT-xx-1 item 1: CASES read from data-model-case-status / data-model-case-reason.",
+  "world_is": "ModelTab.tsx:287-295: `<p data-model-case=name data-model-case-status=status data-model-case-formula=formula data-model-case-reason=reason>` and the served value + currency (`652.73 USD`) only as text. Two pages that print different numbers for the same case read equal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ASML_NA_Equity served capture rendered at portal DEV ea248519 (src/pages/SecurityAnalysis): Base case data-model-case-status='SERVED' data-model-case-formula='Bloomberg consensus EPS (FY1, BEST_EPS) x adjusted trailing-...' with the number in the p text only; 288 page case keys over 96 folders, 285 equal the export's (the 3 unequal are S5's refused pack)."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): asks DSGN_AMGTV1 for the attribute through its round; until then the class is graded on what the attributes carry",
+  "notes": "Ask for DSGN_AMGTV1: `data-model-case-value` and `data-model-case-currency`."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~173",
+  "surfaced_at": "2026-09-29T22:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W173-S4",
+  "one_line": "The thesis-driver chart's absence has no shared key: the page's data-driver-chart-reason is the served reason, the export's 'The chart: ABSENT -- the thesis driver is \"<series>\"' names the series; and the export states it on an UNDRAFTED thesis (AMD) whose page renders no chart element. Not graded.",
+  "spec_asserts": "C-EXPORT-ADDS-NOTHING (render_pack.py:686-892): nothing in the export that is not on the page; FWD-30 'absence by absence'.",
+  "world_is": "ThesisDriverChart.tsx renders `<div data-driver-chart='ABSENT' data-driver-chart-reason=<served reason> data-driver-chart-probed=<n>>` only when the thesis is drafted; render_pack._thesis_driver_chart_markdown writes 'The chart: ABSENT' (+ the series in words) on every name. On AMD_US_Equity the page has no data-driver-chart element at all, the export has the line; on ASML and BABA both state an absence but of different content (reason vs series). Also carried by the page with no export counterpart, so not compared: data-posture-cite's data-cite-resolved flag (BABA: 13 of 17 resolved), data-posture-absent-source / data-posture-missing-sources (evidence-coverage absences), data-team-case-* (research-team Base case).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First run of this reader with the chart as a graded class: AMD_US_Equity NOT_OK 'ABSENCES differ', rich-only ('DRIVER_CHART','ABSENT'); ASML and BABA OK only once the MODEL_NOTE reader skipped the chart line (script run 2026-09-29T21:57Z, --diff).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py keeps the class out of both sides and says so in its docstring."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): a decision whether the export's chart-absence line for an undrafted thesis is an export defect (an ask of the export's owner) or the page should carry an attribute; carried to the CTO's round-49 analysis",
+  "notes": "This is the one place the attribute grade is deliberately looser than the harness it replaces, which matched the bare line only when a series named it (word match, failing on ASML and BABA)."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~173",
+  "surfaced_at": "2026-09-29T22:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W173-S5",
+  "one_line": "At 2026-09-29T22:01Z the served FWD-30 grade on the attribute key is 95 of 96 identified names; the one NOT_OK is 6501_JP_Equity, whose identity now RESOLVES (so it is graded, not 'unidentified') while the deployed print route REFUSES it, leaving the export side a 173-byte refusal body.",
+  "spec_asserts": "AMGT-xx-1 item 4: a folder whose identity does not resolve (today Hitachi 6501 JP) is COUNTED as unidentified and printed.",
+  "world_is": "sa.resolve_identity now returns security_key '6501_JP_Equity' for that folder; the deployed print?format=rich answers `{\"refused\": true, \"reason\": \"no printable pack for '6501_JP_Equity': identity MEASURED, landed display form None -- the renderer is never handed a form this module made up\"}` while the page renders a full Security Analysis (page keys: 3 CASES, ABSENCES for description, exec, posture). The 'unidentified' path is exercised by a folder that resolves to nothing (`NOT A REAL FOLDER XYZ`: 'UNIDENTIFIED ... not graded', 'unidentified 1 of 2 folders', rc 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Full served sweep, 96 folders, read_at 2026-09-29T21:58:53Z: 'served over 96 of 96 folders: OK 95, NOT_OK 1, CAPTURE_FAILED 0'; 'FWD-30 GRADE: equal 95 of 96 identified names; unidentified 0 of 96 folders; keyed on: data-attributes'; 6501_JP_Equity 'ABSENCES+CASES differ'.",
+      ".scratch cache of the capture (worktree C:/tmp/r49-173): 6501_JP_Equity.rich.md = 173 bytes, the refusal JSON above."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): the display form for 6501 JP is the crosswalk's (AMGT_CORPUS / identity); the grade reads 95 of 96 until that lands",
+  "notes": "Round 48's reading of the same folder was a TypeError on key None (row Z-S303); the identity has resolved since."
+},
+{
+  "id": "AMGT_RESAPP-Z-W175-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~175",
+  "surfaced_at": "2026-09-29T21:30:00Z",
+  "one_line": "AMGT-xx-3: the walked INTU officer section points to Item 1 of its OWN 10-K, not the proxy, and the proxy names only NAMED executive officers (5), so the proxy gain is the NEO list; the pointer population is 2 of 96.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "INTU 10-K 0000896878-26-000037 officer_section.text (silver filing_source): 'Certain information required by this Item 10 regarding executive officers is set forth in Item 1 of Part I of this report under the heading Information about our Executive Officers.' -- the directors and the Item 408(b) policy are the proxy references; the officers pointer is to Part I Item 1, which the persisted object does not hold.",
+      "python -m lib.research.management.proxy_officers --security-key INTU_US_Equity --show: SERVED, DEF 14A 000089687825000057, 5 officers under the proxy heading 'Named Executive Officers' (Goodarzi, Aujla, Balazs, Notarainni, Tessel); HAL DEF 14A 000004501226000033 likewise 5 under 'Our 2025 Named Executive Officers'. source.section_heading carries the heading on each result.",
+      "python -m lib.research.management.proxy_officers --census: identified 96; officer section points elsewhere 2 (HAL, INTU); gained 2 of 2. CAT is RESOLVED from its own 10-K (table-paren) and is not a pointer name today."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-xx-3 cell text: when the officer section points elsewhere ('incorporated by reference' to the proxy), the company's latest DEF 14A holds the executive-officer section; INTU's 10-K lists no officers.",
+  "world_is": "The proxy read serves the proxy's NAMED executive officers, which for a company whose 10-K Item 1 lists more executive officers than the NEOs is a subset of the executive-officer roster, not the roster. The result is labelled by source.section_heading so a consumer can reject it; the module does not claim the list is complete.",
+  "notes": "INERT: nothing is served or persisted by this order. The serving round should decide whether a NEO-headed list may be shown as 'executive officers' on Exec Management or must carry the NEO label."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T22:10:00Z",
+  "one_line": "AMGT-yy-2: the cut's '15 pillars over 4 names' counts AMD_US's ABSENT pillars field ({absent, value:None}, 2 keys) as 2 pillars; the real count is 13, and yy_thesis.py --what fields cannot read 15 of 15 on any payload.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read_dossier(key)['document']['fields']['thesis_pillars'] measured live: AZN_LN list of 5, IMB_LN list of 6, ADBE_US list of 2, AMD_US dict {'absent': 'no class A report for this security', 'value': None}. Real pillars 5+6+0+2 = 13.",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round50/checks/yy_thesis.py:57,64: want_p = fields.get('thesis_pillars') or [] takes the AMD dict as a truthy value of len 2 (held 15); the served pillars are 13, so AC1 prints 'pillars 13 of 15', 'BAD AMD_US_Equity: pillars 0 of 2' and 'PASSES ...: NO', exit=1. Serving the dict verbatim as thesis_pillars would instead crash the checker at line 68 (str has no .get).",
+      "The same checker with only want_p made list-only (copy in the worker's .scratch, not committed) reads on the built payload: 'plane local: pillars 13 of 13 over 4 names', '/THESIS PASSES THE DOSSIER'S FIELDS: YES', exit=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order AMGT-yy-2 s.1: 'On the four names the dossier holds 15 pillars; /thesis serves 0', and AC1 expects 'pillars 15 of 15 over 4 names'; thesis_pillars is 'every dossier pillar, in order, as the dossier holds it'.",
+  "world_is": "The dossier holds 13 pillars on those four names. For AMD_US it holds an absent-field object where a list would be. The built adapter serves thesis_pillars [] plus dossier_fields.thesis_pillars_absent {status ABSENT, reason: the dossier's own text} so an empty list is never read as 'the report had none'; that sibling key is an addition the order did not name.",
+  "notes": "The issuer decides whether to amend AC1's checker/expectation (13, list-only want_p) or to rule the absent-pillars shape. The build itself is complete and AC2 passes (337 passed, 0 failed)."
+},
+{
+  "id": "AMGT_RESAPP-Z-W179-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~179",
+  "surfaced_at": "2026-09-29T22:20:00Z",
+  "one_line": "AMGT-yy-6: 'counted as carried in denominators' and AC3's 'digest in == digest out' cannot both hold for a plain build; resolved by a plain-build NO-OP that returns the served document when the union records equal the served records.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python yy_crosswalk.py --arm roundtrip before the NO-OP: 'records in 237 out 256' then, after retiring the keyless UNRESOLVED twins on carried records, records equal but denominators/identity_universe/research_universe differ (the plain build has no universe input: 158 records carried, 'carried': 158 stamped, identity_universe and research_universe absent). After: 'records in 237 out 237; digest in 68a788347ec2 out 68a788347ec2'.",
+      "lib/research/identity/crosswalk.py build_crosswalk: the NO-OP fires only when identity_universe is None AND research_folders is None AND result records == served records; main --write-pool always supplies the universe, so the CLI write path never takes it and always stamps denominators['carried'] when it carries. Tests: lib/research/identity/tests/test_crosswalk_served_union.py (16 arms; suite 135 passed)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-yy-6 cell text: a carried record is counted in the document's denominators as carried; AC3: build at the served as_of with served = the served pool gives the same count and the same serialised digest.",
+  "world_is": "For a plain build (no universe/research input) the union always carries every universe-side record and would stamp 'carried' and drop identity_universe, so digest equality is only reachable by returning the served document. The plain-build NO-OP does that; consequence: AC1(a) and AC2 pass through the NO-OP in plain mode (the carry itself is exercised by the unit arms with research_folders supplied, and by AC1(b) where retire makes the records differ), and a plain build that only changes doc-level inputs (coverage_vintage) is not reflected.",
+  "notes": "INERT: no write_pool call, nothing served or persisted by this order. The issuer may prefer inheriting doc-level fields from served instead of the NO-OP; that is a cut-level choice."
+},
+{
+  "id": "AMGT_RESAPP-Z-W176-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~176",
+  "surfaced_at": "2026-09-29T23:45:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMGT-yy-1: on 6 of 96 names the export states a header figure's unit as UNRESOLVED (\"does not discriminate absolute vs millions\") while the page prints a scaled magnitude (JPY 24.15T), so the value grade compares those figures' DIGITS but cannot compare their SCALE.",
+  "spec_asserts": "AMGT-yy-1 cell: a FIGURE fact's value is compared against the served figure the export states, normalised for unit and precision.",
+  "world_is": "For 6501_JP, 9433_JP, 8316_JP, 8035_JP, 8766_JP and TSM_US the export's Header row carries `<number> UNRESOLVED-ON-<name>: sampled magnitude <n> does not discriminate absolute vs millions` in place of a unit word (CURR_ENTP_VAL on five, NET_DEBT on 8316), so no unit scale exists to normalise the page's K/M/B/T against. Read as MILLIONS the export equals the page on all six; read as ABSOLUTE the page overstates by 10^6. sweep.py's values_agree therefore accepts the page's magnitude at any power-of-1000 scale for an UNRESOLVED unit and counts it (`digits compared, scale unchecked (export unit UNRESOLVED)=6` on the 96-name served run); a page that misstated only the SCALE of one of these six would read equal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served sweep over the live library, 96 folders, read_at 2026-09-29T23:37:00Z, worktree C:/tmp/r50-176: with the UNRESOLVED case read as a difference the grade was equal 79 of 96, the 17 being 11 GBp price prefixes (fixed in the number reader) and these 6 (--diff lines '(HEADER, CURR_ENTP_VAL) value differs: page=[JPY 24.15T] export=24154022.783025 UNRESOLVED-ON-6501 JP Equity ...').",
+      "After the reader change: 'FWD-30 GRADE: equal 96 of 96 identified names; values equal 96 of 96; ... digits compared, scale unchecked (export unit UNRESOLVED)=6' (.scratch/full2.log, not committed).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py values_agree carries the rule and names this row."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Z (issuer): either the export's owner resolves the unit for these six (the reader then compares scale too), or the grade's blind spot on their scale is accepted by the CTO at the round-50 analysis",
+  "notes": "ARMED only in the sense that the scale of six figures is not graded; nothing is served or written by this order."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T23:00:00Z",
+  "one_line": "AMGT-yy-3: the proxy-derived M-1 object carries fields management.schema.json (additionalProperties false) does not declare, and officer source 'proxy' where the schema enum is filing|bloomberg; the schema is outside this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/management/management.schema.json: top-level additionalProperties false; officer.source enum ['filing','bloomberg']; roster_source enum ['FILING','BLOOMBERG_FALLBACK',null]. The planned object (proxy_officers --persist --dry-run) adds officer_set, officer_set_label, source_form, source_url, retrieved_at, document_sha256 and writes officers with source 'proxy'.",
+      "enrich.write_document (the pool writer the object goes through) does not call enrich.validate, so the write is not refused; only a validating reader (enrich.validate in the reproject commands, test_reproject_public_profile.py) would reject the object.",
+      "read_management serves the object because roster_status is RESOLVED and it takes the last branch; roster_source reads null (the officers' source is not 'filing')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order AMGT-yy-3 s.1: the object carries officer_set, officer_set_label, source_form, source_accession, source_url, retrieved_at, document_sha256 and is written through the roster batch's own pool writer.",
+  "world_is": "The schema would REFUSE that object if validated. The order's paths exclude the schema, so it is unchanged; a proxy object under management/v1/ fails any later enrich.validate on it (reproject commands) until the schema declares the new fields and the 'proxy' source.",
+  "notes": "The issuer/CTO decides whether yy-5 persists before or after a schema amendment; nothing is written by this order."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T23:01:00Z",
+  "one_line": "AMGT-yy-3: rk-77's pinned test test_resolved_block_gains_only_roster_source failed when read_management gained three null keys; its exclusion list was widened, and importing fetch.py prints a fitz line to stdout that broke the checker's one-JSON read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "api-suite.sh after the pass-through: '1 failed, 339 passed' -- lib/research/api/tests/test_fallback_roster_served.py::test_resolved_block_gains_only_roster_source, 'every other key equals the pinned pre-change block' (it excluded only roster_source and roster_source_basis). With _NEW_KEYS adding officer_set, officer_set_label, source_form and an assertion they read None on a filing roster: 340 passed, 0 failed.",
+      "yy_neo.py --plane plan first read 'plan stdout is not one JSON object': `python -c 'import lib.research.management.proxy_officers'` prints 'warning: The `fitz` API is deprecated ...' to STDOUT at import. The module's imports of fetch and roster now run under redirect_stdout(sys.stderr); after it AC1 reads YES."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order AMGT-yy-3 s.1 item 2: 'Nothing else in its output moves'; --dry-run prints ONE object on stdout.",
+  "world_is": "Three new null keys DO move the RESOLVED block's key set, so a test that pins the block against a pre-change copy had to name them; and the estate's import chain writes a non-JSON line to stdout.",
+  "notes": "Both edits are inside the order's paths; the new keys are the ones the order names."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T23:40:00Z",
+  "one_line": "AMGT-yy-3 AMENDMENT 1: after widening management.schema.json, the planned proxy object still failed enrich.validate on a second gap -- its ceo_profile block carried 7 of 13 required keys; proxy_officers.py now builds the full block via ceo_search.ceo_profile(None, None, None).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_the_planned_proxy_object_validates_against_management_schema after the schema widening: \"ceo_profile: 'search' is a required property\" (also triage, found_not_read, counts, cost, generated_at). The first-pass build_neo_document hand-wrote a partial ceo_profile block.",
+      "After the fix (proxy_officers.py builds the block with ceo_search.ceo_profile(None, None, None), which returns before any search when ceo is None, then sets status NOT_SEARCHED / reason_code STEP_NOT_CONFIGURED / the same reason string): lib/research/management/tests 117 passed; yy_neo.py --plane plan (the CLOUD 9d412c9e42 copy) prints 'validates against management.schema.json' for INTU_US_Equity and HAL_US_Equity."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 s.2 names the schema gap as the only one: 'the planned proxy object FAILS it' on the extra top-level fields and the officer source.",
+  "world_is": "A second, code-side gap sat behind the first: the planned object's ceo_profile block was schema-incomplete, visible only once the first was cleared. The fix is inside proxy_officers.py (in paths); ceo_profile's values (NOT_SEARCHED, STEP_NOT_CONFIGURED) are unchanged, only its missing keys are filled with the block's own defaults.",
+  "notes": "The worktree does not fast-forward to CLOUD (diverged), so the amended checker yy_neo.py was read from CLOUD 9d412c9e42 and run from .scratch/ (uncommitted); the worktree's own copy of the checker is the pre-amendment one."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T23:55:00Z",
+  "one_line": "AMGT-yy-3 AMENDMENT 1: safe-commit REFUSED lib/research/management/management.schema.json (lane gate: no non-terminal order at the worktree's HEAD names it in <paths>); the worktree HEAD carries the pre-amendment order and does not fast-forward to CLOUD 9d412c9e42, so the schema widening is uncommitted in C:/tmp/r50-177.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/r50-177 merge --ff-only CLOUD: 'fatal: Not possible to fast-forward, aborting.' (merge-base 80432a6294); the order instructed no merge in that case.",
+      "bash .tools/safe-commit.sh ... -- lib/research/management/management.schema.json ...: 'VIOLATION: lib/research/management/management.schema.json -- lane=BASE_EXEC ... WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The amended order (schema in <paths>) exists only at CLOUD 9d412c9e42.",
+      "The widened schema is on disk in the worktree (git diff shows 13 lines) and management tests pass 117 with it; proxy_officers.py, the tests and this channel file are committed without it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1: management.schema.json joins <paths>; the worker widens it and commits with the order's own safe-commit.",
+  "world_is": "The lane gate reads the order at the worktree's HEAD, which is the pre-amendment order, so the one file the amendment adds cannot be committed from this worktree until the amended order reaches its HEAD.",
+  "notes": "The issuer merges CLOUD into wk-AMGT_RESAPP-177 (or grants the path another way); the worker then commits the already-written schema diff and re-pins the instance. Nothing else is outstanding."
+},
+{
+  "id": "AMGT_RESAPP-Z-S306",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-30T02:05:00Z",
+  "one_line": "AMGT-yy-5: the scoped-api build REFUSED again on the _harvest_prefixes.py REGISTRY_HASH stamp (a RECURRENCE of Z-S256, 4th occurrence) because unrelated registry admissions moved the hash to 54d1865c; test_harvest_prefixes.py::test_ii_registry_hash_matches is RED on CLOUD HEAD for every seat; and A RESTAMP IS NOT A SAFE UNBLOCK -- the stamp guard is the only thing preventing a HEAD build from packaging changed registry files (see Z-S307).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build-and-upload-scoped-amgt.sh at CLOUD 48a5b4a1cf: 'FAIL: lib/research/api/_harvest_prefixes.py DRIFTS from fresh lib.opal_naming output (registry hash 54d1865c...)', committed stamp 3118e82e. The script prints both versions and ALL FOUR prefix constants are byte-identical; only the REGISTRY_HASH line and its comment differ.",
+      "registry_hash() covers infra/logic/registry/ + org/standards/NAMING_SCHEMA.json (gen_harvest_prefixes.py:94, naming.registry_hash()). Four commits move it after yy-3's drain: 01646908e1 (opal_naming), de56cfd02f and 6dcd6df254 (scopes.json), 73896b6c42 (scopes.json + systems.json). All four are ancestors of 48a5b4a1cf and NONE is a descendant of 50cc86edd6, so they arrive through merges touching no lib/ file -- which is why the COO half's lib/-only admissibility condition cannot see them.",
+      "python -m pytest lib/research/api/tests/test_harvest_prefixes.py: TRUE exit 1, '1 failed, 4 passed', test_ii_registry_hash_matches AssertionError 3118e82e... != 54d1865c.... This is red on the trunk right now, for every seat, not only inside this build.",
+      "A census of REGISTRY_HASH over the repo returns 21 hits whose only assertion site is that test, and tests are EXCLUDED from the package -- so the stamp has NO packaged reader and the drift is provenance-only at runtime.",
+      "THIS CELL DID NOT WRITE THE PATH. It built at 50cc86edd6 instead, which the COO half itself admits, after verifying in a sparse worktree there that gen_harvest_prefixes.py --check exits 0 at stamp 3118e82e. Controls: all four hash inputs clean in the working tree; the harvest terraform tree and the lambda seed dir byte-identical between 50cc86edd6 and HEAD."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The COO half: 'Build commit: CLOUD at or after 50cc86edd6 with lib/ unchanged from it', and the order BOUNDS 1: 'a gate refusal is a REFUSAL'.",
+  "world_is": "The build's admissibility depends on infra/logic/registry/ as well as lib/, and a registry admission by any seat in the fabric re-blocks this build without touching one lib/ file. The condition as written cannot see that class of change. The restamp that has unblocked it three times before is a lib/** write no AE lane holds, and -- newly measured here -- it would ALSO remove the only barrier to packaging changed registry files (Z-S307), so it is not a safe unblock on its own.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z, which holds lib/** through BASE_EXEC and restamped at 19a22f2f51, 9e983b5ea2 and 63ecfe1e20. Two durable options for the issuer, neither this cell's to take: (a) restamp AND re-grade the closure, since restamping alone lets a HEAD build package the changed registry files; (b) state the build commit as a PIN in future halves rather than an at-or-after range, which is what this cell did by hand. The red trunk test is the same fix."
+},
+{
+  "id": "AMGT_RESAPP-Z-S307",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-30T02:05:00Z",
+  "one_line": "AMGT-yy-5: BOTH never-widen halves assert lib/opal_naming.py 'sits OUTSIDE the adapter's vendored closure' and would be confirmed ABSENT from the package. IT IS PACKAGED, together with six infra/logic/registry/*.json files and org/standards/NAMING_SCHEMA.json -- so the half's own absence control would have passed VACUOUSLY while three CHANGED files rode into a HEAD build.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The build's own closure walk: 'CLOSURE+ lib/opal_naming.py <- lib/research/corpus/gold.py imports lib.opal_naming (top-level)'. Confirmed at source: lib/research/corpus/gold.py:16 'import lib.opal_naming as naming'.",
+      "The same build reports the registry as DATA MEMBERS: 'DATA+ infra/logic/registry/{exemptions,remediations,resources,reporting_policies}.json opened by lib/opal_naming.py REGISTRY_DIR (REPO-relative), read by lookup()/key() at store import' and 'DATA+ org/standards/NAMING_SCHEMA.json opened by lib/opal_naming.py SCHEMA_PATH'.",
+      "Entry-by-entry content diff of the built zip against the DEPLOYED artifact uq53Z5kc (whose identity was closed by content first: base64(sha256) Um3BOJ+j... EQUALS the live CodeSha256): probes read lib/opal_naming.py in-deployed, in-new, IDENTICAL; infra/logic/registry/scopes.json in-deployed, in-new, IDENTICAL; org/standards/NAMING_SCHEMA.json in-deployed, in-new, IDENTICAL.",
+      "Therefore the halves' INTENT was met, but by a different control than the one they name: not absence, but IDENTITY of the packaged copy. Building at 48a5b4a1cf as first attempted would have packaged the CHANGED opal_naming.py (@01646908e1) and the CHANGED scopes.json and systems.json (@73896b6c42) -- three files beyond the halves' nine, i.e. limb 2 -- and an 'is it absent' check would have returned the reassuring answer for all three."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "COO half, THE CLOSURE: 'lib/opal_naming.py ... scoped_amgt.py:120/:193/:2087 record that lib.opal_naming sits OUTSIDE the adapter's vendored closure and is never imported at runtime; the content diff at the build confirms it is absent from the package.' The CTO half re-measured the closure and did not correct it.",
+  "world_is": "opal_naming.py IS in the closure via gold.py's top-level import, and the registry JSONs plus NAMING_SCHEMA.json ride as data members. The adapter may never call opal_naming on the request path -- that part of the claim is untested here -- but the PACKAGING claim is false, and it is the packaging claim the limb-2 control rests on. A control phrased as ABSENCE cannot detect a CHANGED file that is present; only an identity or content comparison can.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. No act changed here: the closure this cell shipped is exactly the halves' nine and the three probes read IDENTICAL. The correction is to the halves' TEXT and to the shape of the control future halves write -- 'absent from the package' should read 'identical to the deployed copy' for any file that is packaged transitively. Pairs with Z-S306: the stamp guard is currently the only thing that stops a HEAD build from carrying these three, which makes an isolated restamp unsafe."
+},
+{
+  "id": "AMGT_RESAPP-Z-S308",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-30T02:05:00Z",
+  "one_line": "NEVER-2 hygiene, found during this cell's pre-act sentinel sweep: FOUR AMGT open-deploy sentinels sit on undrained worker branches for acts that are world-done, so a shared-tree read of .open_deploys reads 'no AMGT sentinel open' while four are open somewhere.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Union of `git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/` across every live worktree, per-tree denominator printed, 32 trees swept: the SHARED tree carries 16 rows and NO AMGT row, agreeing with the COO half's 'No AMGT sentinel open at signing'.",
+      "Four AMGT sentinels appear on other trees' HEADs: amgt-resapp-ww1-redeploy-research-dossier-restart-20260929.json (oa-s45-redrain, wk-crps14-5r, wk-hvst-r18-45), amgt-resapp-xx4-series-name-redeploy-20260929.json (wk-crps16-1, wk-hvst-r20-47, wk-hvst-r20-48), amgt-harvst-i4-scoped-api-publisher-codes-20260929.json (r49-175), amgt-corpus-r17-hitachi-model-block.json (r50-177, wk-crps17-1, wk-hvst-r22-51, wk-hvst-r22-52) plus amgt-corpus-r10-dossier-rewrite.json (wk-mcpindex-r4-15).",
+      "THEY ARE WORLD-DONE, MEASURED, NOT ASSUMED: xx-4's change_management record in the shared tree reads 'Status: CLOSED -- nothing stranded -- closed 20260929T223247Z', and xx-4's act is the very one that produced the Um3BOJ+j base this cell started from. ww-1 likewise has two completion records in the shared tree.",
+      "So the open sentinels are stale BRANCH state, not half-landed deploys, and NEVER-2's rule applies: world-done -> close SUPERSEDED, never re-execute."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER-2: a deploy entry sits on the worker's branch until the drain, so a shared-tree read of .open_deploys/ is not evidence; before acting on any open entry, measure the ARTIFACT.",
+  "world_is": "The drains that merged these rounds' work did not carry the sentinel removals, so the OPEN state is stranded on branches that are no longer worked. Nothing is at risk right now -- the entries' acts all completed and their completion records are on the trunk -- but `deploy_ledger.py check --red` run in any of those worktrees would blare on a finished deploy, and a future seat reading only the shared tree gets a clean answer it did not earn.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. This cell did not touch another round's sentinels: its own entry (amgt-resapp-yy5-one-build-20260930) was opened AND COMMITTED to the shared trunk before the build and CLOSED with all three legs proven, so it strands nothing. Filed because the sweep that NEVER-2 requires surfaced it, not because it blocked this act."
+},
+{
+  "id": "AMGT_RESAPP-Z-S309",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T03:40:00Z",
+  "one_line": "Round-51 cell 3 (the export resolves per-security units) cannot move the six names: the export already prints the model block's per-security unit, and for the six that unit is UNRESOLVED in field_map.json itself ('sampled magnitude ... does not discriminate absolute vs millions'), so the resolution is a unit-map discriminator (AMGT_CORPUS's artifact), and the page's K/M/B/T scale on those facts is a claim the unit map refuses.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integrations/bloomberg/research/field_map.json at HEAD (last written 6077a2d939, AMGT_CORPUS round 17): the value-bearing facts of the six carry per-security UNRESOLVED-ON units -- SALES_REV_TURN (6501, 8316), CURR_ENTP_VAL (6501, 9433, 8035, 8766, TSM), NET_DEBT (8316), BEST_SALES scalar exception (6501) -- each 'sampled magnitude N does not discriminate absolute vs millions'.",
+      "model_block_pull._resolved_unit (:713) returns that per-security text (dict units) or the CRPS-u-1 scalar exception (:690-710); AMGT_CORPUS round 19 u-1 is complete, so the exception is already visible.",
+      "The served sweep at the base (zz-8.AC2.sh): values equal 6 of 6, 'scale unchecked (export unit UNRESOLVED)=6' -- the sweep counts a fact only when the PAGE text carries a K/M/B/T scale (sweep.py:435), i.e. the page states a scale the export and the unit map refuse to claim."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-50 ruling 3: the export resolves each header figure's unit from the model block's per-security unit (after CORPUS u-1), and FWD-30 is REALIZED when the six read values-equal with units resolved.",
+  "world_is": "The export already reads the per-security unit and prints UNRESOLVED where it is unresolved; nothing inside RESAPP's export surface can resolve it. Resolution needs a unit-map discriminator that does not rest on magnitude alone (a cross-field consistency read, e.g. an EV or revenue figure against a resolved per-share figure times shares), which is build_unit_map.py / field_map.json, AMGT_CORPUS's artifact; and 'never scaled silently' is broken on the PAGE (DSGN_AMGTV1), not the export.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Ruled at the cut: cell 3 is NOT cut in RESAPP round 51 (no RESAPP-owned write moves the six); the re-home (CORPUS unit-map discriminator; DSGN page scale) is asked of 1.0.0_SA_CTO~Z as one decision, since it moves where FWD-30's last hold is served. Cell 8 carries cells 5 and 6 only."
+},
+{
+ "id": "AMGT_RESAPP-Z-W185-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~185",
+ "surfaced_at": "2026-09-30T04:00:00Z",
+ "one_line": "The shared point-verification gate (verify_points_against_excerpt, ADDENDUM 2 A2.3) lets the LAST-located period's block run to the excerpt's end, so in a columnar table the last column verifies ANY equal whole number below its header, including a value from a different column.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/filings/analyze.py _period_blocks (:1029): the last located label's block ends at text_len; test lib/research/filings/tests/test_reverify_dry_run.py::test_a_header_run_the_points_do_not_cover_is_still_column_aligned: a lone '2024' point (the only located label) with value 1111 (the 2022 column's number) verified with span [27,32].",
+   "My columnar fallback (_columnar_verify) is ordinal-aligned and rejects a wrong-column value, but it runs only for points the standard gate HELD; the standard gate's acceptance of the last block is unchanged (not in cell zz-6's scope, ruled A2.3 text)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Cell AMGT-zz-6: a point whose value is NOT found in the excerpt must stay unspanned; ADDENDUM 2 A2.3: a point verifies only inside the block carrying ITS OWN period label.",
+ "world_is": "For the last-located period the block is the rest of the excerpt, so 'its own block' is not bounded; a wrong-column value present anywhere below the header still verifies. ASML_NA_Equity's three points are correct (each equals its own column, checked by hand against the excerpt), so zz-6's result is unaffected; the cause of the ORIGINAL missing spans was the columnar shape (earlier years' blocks are just their header line), fixed in _columnar_verify.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z. Not fixed here: tightening _period_blocks or verify_points_against_excerpt changes a ruled gate other filings' stored objects rest on."
+},
+{
+  "id": "AMGT_RESAPP-Z-W180-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~180",
+  "surfaced_at": "2026-09-30T04:20:00Z",
+  "one_line": "AMGT-zz-1 AC1 cannot pass inside its <paths>: crosswalk.schema.json denominators has additionalProperties:false and does not admit `carried` or `retired_from_served`, so ANY write_pool that carries a served record (the cell's own required counter) is refused at write-time validation; the schema is not in the order's <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.schema.json@77712167dc properties.denominators: additionalProperties false; properties listed are input_names, records, MEASURED, UNRESOLVED, with_association_keys, association_conventions, registered, enriched, resolved_folders, retired_unresolved_by_enrich, superseded_unresolved_registrations, folders_in_records, research_folders_live, universe_*; no `carried`, no `retired_from_served`; last touched 856cc1f005 (CRPS-f-1).",
+      "crosswalk.py build_crosswalk (round 50 yy-6, ~:929-930) already writes denominators['carried'] and ['retired_from_served'] when served= carries or retires, so the crosswalk CLI's own `--write-pool` was already refused whenever it carried a record -- the union has been unreachable behind the write-time validator since yy-6.",
+      "AC1 as issued, real schema: both writers print 'REFUSED: crosswalk document fails lib/research/identity/crosswalk.schema.json at $['denominators']: Additional propertie...', 'planted kept: False', 'EVERY CROSSWALK WRITER KEEPS A SERVED RECORD: NO', exit=1.",
+      "Same check with AMGT_CROSSWALK_SCHEMA_PATH pointed at a scratch copy of the schema that adds ONLY those two optional integer denominators: both writers 'planted kept: True; served+planted records dropped: 0', 'EVERY CROSSWALK WRITER KEEPS A SERVED RECORD: YES', exit=0. So the only missing piece is the two schema properties."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-zz-1: carried records are counted in the written document's denominators as carried, the payload is the serialised document including them, and the write validates -- AC1 expects YES/exit=0 with the repo's schema.",
+  "world_is": "The schema refuses the counter the cell requires. write_pool, add_security and the tests are done and pass (135 -> 141 with six new arms that validate against a temp schema copy); AC1 stays FAIL until crosswalk.schema.json admits denominators.carried and denominators.retired_from_served (optional integer, minimum 1, present only when n > 0, matching the schema's own pattern) -- a two-property, CRLF-preserving edit to a file outside this order's <paths>.",
+  "notes": "Not rescued: no schema edit, no validator loosening, no dropping of the counter. Ask of the issuer: add the schema file to zz-1's <paths> (or cut a follow-on order) and re-run AC1. Until then any real write_pool that carries a record refuses loudly (nothing put) rather than writing an unvalidated document."
+},
+{
+  "id": "AMGT_RESAPP-Z-W180-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~180",
+  "surfaced_at": "2026-09-30T05:10:00Z",
+  "one_line": "DISPOSITIONS AMGT_RESAPP-Z-W180-S1 as RESOLVED BY AMENDMENT 1 (4c5ece565e, merged 52c492ff9e): crosswalk.schema.json now admits denominators.carried and denominators.retired_from_served as optional non-negative integers, the tests' temp-schema workaround is dropped, and AC1 reads YES exit=0 against the repo schema.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.schema.json (this worker's branch, after the schema commit): properties.denominators.properties gains exactly `carried` and `retired_from_served`, each {type integer, minimum 0}; additionalProperties false is unchanged and no other property moves (diff is +10 lines, both new properties, CRLF preserved).",
+      "AC1 on the repo schema from C:/tmp/r51-180: 'A add_security._mint_pool planted kept: True; served+planted records dropped: 0', 'B crosswalk build + write_pool planted kept: True; served+planted records dropped: 0', 'EVERY CROSSWALK WRITER KEEPS A SERVED RECORD: YES', exit=0 (S1 recorded the same run as NO/exit=1 before the schema edit).",
+      "AC2 roundtrip: records in 237 out 237, digest 68a788347ec2 in and out, YES exit=0. AC3: 141 passed, 2 subtests passed, exit=0 with tests/test_write_pool_union.py validating against the repo schema (no ENV_CROSSWALK_SCHEMA override, no tempfile copy)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT_RESAPP-Z-W180-S1 stands ARMED with disarm_owner 2.0.0_SA_COO~Z: the schema refuses the carried/retired_from_served counters, so any carrying write_pool is refused.",
+  "world_is": "The refusal no longer exists at this branch's HEAD: the schema admits both counters and a carrying write validates. The hazard remains present on the trunk until this branch drains; S1's row is untouched (append-only).",
+  "notes": "Filed at the issuer's instruction (AMENDMENT 1 ruling: disposition Z-W180-S1 as resolved, do not delete it). This worker judges the row's form only; the adjudication of S1 is the CVO's via the `adjudicates` carrier, not carried here. Note the schema minimum is 0 (the ruling said non-negative), while S1 proposed minimum 1; write_pool emits the counter only when n > 0 either way."
+},
+{
+  "id": "AMGT_RESAPP-Z-W184-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~184",
+  "surfaced_at": "2026-09-30T04:00:00Z",
+  "one_line": "AC3's api-suite reads 1 failed / 349 passed on a tree where zz-5 is complete: test_harvest_prefixes.py::test_ii_registry_hash_matches fails because the generated lib/research/api/_harvest_prefixes.py carries REGISTRY_HASH 54d1865c8a65 while naming.registry_hash() now reads 3118e82e9c47 (registry moved after the last regeneration); the fix is a regeneration outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "api-suite.sh at wk-AMGT_RESAPP-184 (base 6c61d0ce73 plus zz-5 edits): '1 failed, 349 passed in 44.86s', exit=1; FAILED lib/research/api/tests/test_harvest_prefixes.py::test_ii_registry_hash_matches -- assert '3118e82e9c47...' == '54d1865c8a65...' (hp.REGISTRY_HASH vs naming.registry_hash()).",
+      "test_ii compares hp.REGISTRY_HASH with naming.registry_hash() only -- neither reads scoped_amgt.py or any file zz-5 edited (read at test_harvest_prefixes.py:58-59), so the failure is independent of zz-5 by construction (not re-measured on an unedited tree); the other 4 tests of that file pass (the four constants match fresh opal_naming output, arm i).",
+      "git log on infra/logic/registry: 73896b6c42 regenerated 'the 11 CLOUD targets at registry@54d1865c8a65cfb2'; later registry commits 6dcd6df254 and de56cfd02f moved the registry hash, so _harvest_prefixes.py (a GENERATED module, outside this order's <paths>) is stale by design of its drift test."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC3: pytest reports N passed and 0 failed over lib/research/api/tests and lib/research/print/tests.",
+  "world_is": "0 failed is unreachable from this order's write grant: the failing test's remedy is regenerating lib/research/api/_harvest_prefixes.py against the current registry hash, a path this order does not name. zz-5's own 10 new tests and the 293+ existing api tests pass; AC3 is recorded FAIL, not rescued.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z (the fix is a regeneration by whoever owns _harvest_prefixes.py, then AC3 re-runs green). Also noted: read_rankings now walks up to 14 calendar days of pointer GetItems per axis for the prior generation (zz_5_rows --what moved took 66s of the 120s bound over four axes)."
+},
+{
+  "id": "AMGT_RESAPP-Z-S310",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T04:40:00Z",
+  "one_line": "Resolves AMGT_RESAPP-Z-W184-S1: zz-5's AC3 failure (test_harvest_prefixes::test_ii_registry_hash_matches) was the REGISTRY_HASH stamp drift that AMGT-zz-4 scoped and restamped; with CLOUD synced into wk-AMGT_RESAPP-184 (bde4f0dc02, carrying zz-4's drain @b113807360) the api suite reads 351 passed, 0 failed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash deliverables/2.0.0_SA_COO~Z/round48/checks/api-suite.sh run by the issuer in C:/tmp/r51-184 after the sync: '351 passed in 46.35s', exit 0.",
+      "zz-4 drained @b113807360: zz_4_stamp.py reads --check rc=0, four constants byte-equal."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "zz-5 AC3: the api suite reads N passed and 0 failed.",
+  "world_is": "It does, once the tree carries zz-4's restamp; the one failure was the stamp, not zz-5's code.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Also measured: read_rankings per axis in-process, zz-5 tree vs CLOUD: 4.9 vs 2.6 s, 27.1 vs 22.7 s, 10.0 vs 10.6 s, 23.8 vs 24.3 s -- the prior-generation walk adds no material latency beyond noise; the served timing is read at zz-8."
 }
 ]
 ```

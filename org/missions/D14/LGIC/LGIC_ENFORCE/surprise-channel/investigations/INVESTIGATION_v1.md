@@ -6021,3 +6021,52 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "notes": "INERT: the refusal is loud and nothing is served from CHANGELOG.json. The cost is that every inf-pipeline deploy leaves its CHANGELOG unrecorded, or a seat reaches for an override. Two remedies, not this seat's to pick: have the record tool write only the functions in --function (the sweep is also a mis-attribution, since it records other seats' changes under the recording seat's version), or have the naming gate grade a regenerated block of pre-existing names as EXISTING. Owners: the naming gate's (LGIC_ENFORCE) and record-terraform-deploy.sh's."
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-Z-W9-S1",
+  "project": "LGIC_ENFORCE",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~9",
+  "surfaced_at": "2026-09-28T22:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CARRIER_CENSUS.md lines 3408 and 3412 carried a live credential value; redacted in the working tree under NFRA_MCPINDEX MX-s-13 amendment A1.",
+  "spec_asserts": "A census file records carriers and their locations, not credential values.",
+  "world_is": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/CARRIER_CENSUS.md lines 3408 and 3412 each held the value; both are now the Secrets Manager pointer placeholder, no other line changed. History is not rewritten (Andrew's ruling), so earlier commits still carry it; rotation is Andrew's. Ruling: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/RULING_Z-W13-S3_Z-W9-S1_20260928.md @8ed938b2d7. No content quoted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Count-only measurement of the value in that file: 2 occurrences on lines 3408 and 3412 before the edit, 0 after; line count unchanged."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "LGIC_ENFORCE-Z-S1",
+  "project": "LGIC_ENFORCE",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~O",
+  "surfaced_at": "2026-09-29T07:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "naming-gate fails OPEN when org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json is absent from the checkout: literals that grade REFUSE on a full checkout grade RAISE (WARN) instead, so a commit made from a sparse worktree that omits that file passes the naming limb.",
+  "spec_asserts": "LGIC_ENFORCE DEC-6: the naming limb refuses a NEW out-of-pattern literal, and a missing input fails closed.",
+  "world_is": "Measured 2026-09-29 by a forked run of 1.0.0_SA_CTO~O on NFRA_MCPINDEX MX-t-10's candidate: in a sparse worktree without LEGACY_SERVED_PATHS.json every graded literal came back RAISE/WARN; on the full checkout at HEAD 406c301742 the same literals (DATA_CATALOG.yaml:402, emit_catalog_v02.py:54 and :70) came back 'NEW and OUT-OF-PATTERN as S3Key: REFUSE'. The file is read by lib/opal_lgctfm.py:107-108. Site-Z worker worktrees are routinely sparse (a full checkout OOMs), so the gap is on the common path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Record: org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/CATALOG_KEY_BLOCKER_20260929.md @fc1e7bc8fd, finding 4",
+      "lib/opal_lgctfm.py:107-108 names LEGACY_SERVED_PATHS as the path the grading depends on",
+      "Laptop 1.0.0_SA_CTO msg 102640 (relayed by 0.0.0_AB_MSTR~Z): 'file it as a row so it has a disarm owner'"
+    ]
+  },
+  "disarm_owner": "1.0.0_SA_CTO",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Remedy is the gate owner's: an absent required registry input should REFUSE (or exit with a distinct error), never degrade to WARN. Until then, the negative control for any naming verdict is to confirm LEGACY_SERVED_PATHS.json is present in the worktree that ran the gate."
+}
+```

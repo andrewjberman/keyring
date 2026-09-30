@@ -4,8 +4,10 @@ Adjudicator: `3.0.0_SA_CVO~O`, on `0.0.0_AB_MSTR~Z`'s ask (file 20260928T172853Z
 2026-09-28 ~17:5xZ. State doc: `org/tier0_exec/0.0.0_AB_MSTR/deliverables/mstrZ_S19_POSTPURGE_DRAIN_STATE_AND_PROPOSAL_20260928.md`
 @f10abae456.
 
-**Totals: SUPERSEDE 17, LAND 3 (one of them records only), HOLD 4.** None is to be `git merge`d; each LAND is by
-cherry-pick (state doc section 3).
+**Totals: SUPERSEDE 17, LAND 5 (three of them records only), HOLD 2.** None is to be `git merge`d; each LAND is by
+cherry-pick (state doc section 3). AMENDED ~20:3xZ: the two closer branches moved from HOLD to LAND (records only) on
+Andrew's ruling 1(a), `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_1805Z_OPEN_CALLS_FOUR_RULINGS.md`
+@f830afd195 (the original totals were SUPERSEDE 17, LAND 3, HOLD 4).
 
 ## Method (read-only; it ran against local `CLOUD` @f2a7ff8252, the pre-rewrite trunk)
 
@@ -64,12 +66,12 @@ Nothing unique to these branches is left.
 | `closer/amgt-r-20260923` | 12 commits, `4.0.0_SA_CRO~Z`: `deliverables/AMGT_COO_SPLIT_PROPOSAL_20260923/` and `AMGT_R_CLOSER_20260923/` (reviews, measurements, their scripts). 0% on trunk | 20 of 21 files are absent on the trunk and 1 differs; resolve that one at the pick |
 | `wk-amgt-14-50` | **RECORDS ONLY:** `change_management/20260919T1433Z_amgt-rk49-lusha-enrich_deploy_completion.md`, the worker's proof/session-log deliverables and its surprise row | The CODE (`lib/research/management/*`) is SUPERSEDED: TO-AMGT-rk-49 is WITHDRAWN (@85a05bd6ab). **Do not land `.open_deploys/amgt-rk49-lusha-enrich.json` in an OPEN state:** read the tip's ledger first (an AC3 live write was attempted, and the ledger records it). Re-append the surprise row instead of picking the shared channel file |
 
-## HOLD (4)
+## HOLD (2 standing; the first two rows were RELEASED to LAND in place)
 
 | branch | why, and who releases it |
 |---|---|
-| `closer/amgt-experience-z-20260923` | Pre-marked. Its standing instruction is: do not merge the tip without explicit word. **Andrew** |
-| `closer/amgt-h-y-20260923` | 23 commits of CODE and docs (Price caller migration, daily-score retention), 13% on trunk, including a merge from the retired SITEZ trunk. Whether later AMGT work superseded it is a code judgement, not a verifier's. **Its owner `2.0.0_SA_COO~Y`**, or Andrew if that seat stays down |
+| `closer/amgt-experience-z-20260923` | **RELEASED -> LAND, RECORDS ONLY** (Andrew ruling 1(a), record @f830afd195). Cherry-pick the record files; the CODE retires. Was HOLD: do not merge the tip without explicit word; the ruling is that word, for the records only |
+| `closer/amgt-h-y-20260923` | **RELEASED -> LAND, RECORDS ONLY** (same ruling). The CODE retires: 1.0.0_SA_CTO~Z's diff read found one file absent from the trunk, `lib/research/api/tests/test_corpus_thesis_join.py`, and it fails 4 of 4 on the trunk (`KeyError: 'corpus'`). Was HOLD pending `2.0.0_SA_COO~Y` or Andrew |
 | `wk-NFRA_OPALAI-1` | OA-t-1 (product files moved into opal_ai; gitlink advance). The order was superseded today (@4ce47993e4) pending **Andrew's G-ACCT / G-AUTH / G-PUSH**. Its content must not land before that cutover; the round-2 re-cut starts from it |
 | `wk-NFRA_OPALAI-3` | OA-t-3 (runtime setup; hook removal). Same gates, same reason |
 

@@ -50,16 +50,36 @@ VALIDATE="$REPO_ROOT/.tools/owned-paths-validate.py"
 NESTED_PREFIX=""
 SUPERPROJECT="$(git rev-parse --show-superproject-working-tree 2>/dev/null || true)"
 _NESTED_MAIN_WT=""
+_IS_SUBMODULE=""
 if [ -z "$SUPERPROJECT" ]; then
     # A LINKED WORKTREE of the nested repo (not its main/registered checkout) has no
     # superproject relationship of its OWN -- `--show-superproject-working-tree` only
-    # answers for the repo's registered (main) worktree. `git worktree list` always
-    # lists the main worktree first, from ANY worktree sharing that repo's commondir,
-    # so ask that one instead of guessing.
-    _NESTED_MAIN_WT="$(git worktree list --porcelain 2>/dev/null | awk '/^worktree /{print $2; exit}')"
-    if [ -n "$_NESTED_MAIN_WT" ]; then
-        SUPERPROJECT="$(_git_x -C "$_NESTED_MAIN_WT" rev-parse --show-superproject-working-tree 2>/dev/null || true)"
-    fi
+    # answers for the repo's registered (main) worktree. OA-e-11 (row NFRA_OPALAI-Z-S17):
+    # the superproject is resolved from the COMMON GITDIR of the committing worktree,
+    # NEVER from the first `git worktree list` entry -- for a submodule that entry is
+    # the GITDIR (<super>/.git/modules/<name>), which has no superproject, so a linked
+    # worktree outside every parent worktree used to skip the lane check and land.
+    # A submodule's common gitdir sits under .git/modules/ (or .git/worktrees/<wt>/modules/
+    # when the parent itself is a linked worktree) and carries core.worktree = the nested
+    # MAIN checkout; ask THAT checkout for the superproject.
+    _GCD_RAW="$(git rev-parse --git-common-dir 2>/dev/null || true)"
+    _GCD_ABS=""
+    [ -n "$_GCD_RAW" ] && _GCD_ABS="$(cd "$_GCD_RAW" 2>/dev/null && pwd || true)"
+    case "$_GCD_ABS" in
+        */.git/modules/*|*/.git/worktrees/*/modules/*)
+            _IS_SUBMODULE=1
+            _CW="$(git config --file "$_GCD_ABS/config" core.worktree 2>/dev/null || true)"
+            if [ -n "$_CW" ]; then
+                _CW_ABS="$(cd "$_GCD_ABS" 2>/dev/null && cd "$_CW" 2>/dev/null && pwd || true)"
+                if [ -n "$_CW_ABS" ]; then
+                    SUPERPROJECT="$(_git_x -C "$_CW_ABS" rev-parse --show-superproject-working-tree 2>/dev/null || true)"
+                    if [ -n "$SUPERPROJECT" ]; then
+                        _NESTED_MAIN_WT="$(_git_x -C "$_CW_ABS" rev-parse --show-toplevel 2>/dev/null || true)"
+                    fi
+                fi
+            fi
+            ;;
+    esac
 fi
 if [ -n "$SUPERPROJECT" ]; then
     _PREFIX_BASE="${_NESTED_MAIN_WT:-$REPO_ROOT}"
@@ -182,6 +202,17 @@ if [ -n "$OVERRIDE" ]; then
     echo "${ISO_TS} OVERRIDE  ${AGENT:-UNKNOWN}  ${N_FILES}  (--author-override ${OVERRIDE} applied)" \
         >> "$AUDIT_LOG" 2>/dev/null || true
     exit 0
+fi
+
+# ---------------------------------------------------------------------------
+# FAIL CLOSED (OA-e-11): a commit in a SUBMODULE whose superproject did not resolve
+# is refused in EVERY mode -- never a skipped lane check.
+# ---------------------------------------------------------------------------
+if [ -n "${_IS_SUBMODULE}${SUPERPROJECT}" ] && [ -z "$NESTED_PREFIX" ]; then
+    echo "ERROR: owned-paths: this repo is a submodule (common gitdir ${_GCD_ABS:-unknown}) but its superproject could not be resolved -- refusing the commit (fail closed; the lane check is never skipped). Check core.worktree in the submodule's gitdir config." >&2
+    echo "${ISO_TS} BLOCK  ${AGENT:-UNKNOWN}  ${N_FILES}  (submodule superproject unresolved -- fail closed)" \
+        >> "$AUDIT_LOG" 2>/dev/null || true
+    exit 1
 fi
 
 # ---------------------------------------------------------------------------

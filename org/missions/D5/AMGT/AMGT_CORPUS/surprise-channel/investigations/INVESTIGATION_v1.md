@@ -1688,6 +1688,980 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "No served surface reads the selections; they are labelled rule outputs in an evidence file. AC4's workbook half remains ungradeable for a different, now-measured reason: the layout, not the reader.",
     "disarm_owner": "2.0.0_SA_COO~X",
     "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's). Round-8 input: a template-aware reader (find the Base-case section by its title, then read the value block beneath it, cited by coordinate) or a ruling that AC4's workbook half is answered by the cases the team WROTE in prose (34 served-and-cited per correction A2 @2dae84b5a9) rather than by the one-pager."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S49",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-28T21:17:00Z",
+    "one_line": "LIFT of AMGT_CORPUS-Z-S46 by its owner, and Z-S45's own close condition MEASURED MET: the hold on continuation --write is spent (the /2 write ran 2026-09-26 under the signed pair), both readers serve the current-method /2 object on 95 of 95 resolved names, and the dossier rewrite that bakes it in has landed on 95 of 95. Closing adjudication of Z-S45 is the CVO's at L8.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~X/evidence/r7_actB_gate_fast.txt (before step 2, 20:12:59Z) and evidence/r7_actB_V1_pick_census_after.txt (after, 21:16:09Z): 'continuation_pick names 95 current_method_available 95 stale_pick 0 errors 0 method amgt-corpus-continuation/2', through continuation.read_latest and substrate._continuation_member.",
+        "evidence/r7_step2_after.txt: 'partitions 95 objects 468' (373 before, evidence/r7_step2_before.txt), 'read_dossier serves the last write 95 of 95', 95 objects dated 2026-09-28, max 1 per partition.",
+        "Change entry org/critical_paths/change_management/20260928T2016Z_amgt-corpus-r7-dossier-rewrite_deploy_completion.md CLOSED, legs B2 and V1 proven."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S46: Z-S45 closes when both readers pick the current-method object and a /2 rewrite serves /2 on every resolved name.",
+    "world_is": "Both readers pick /2 on 95 of 95; every dossier was rewritten on 2026-09-28 from the /2 continuation. The split Z-S45 feared (49 /2, 46 /1) is 0 on the served plane.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's observation, evidence-cited; not a REMEDIATION row (the CVO's). Step 2 ran as three resumable runs of the same dossier.write_one over the same 95 keys (serial 8, thread 12, process 75; the last read 'unchanged 20'), recorded on leg B2."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W5-S2",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+    "surfaced_at": "2026-09-28T22:35Z",
+    "one_line": "The sparse worker cone omits infra/, so every lib.research.corpus CLI dies at import (lib/opal_naming.py reads infra/logic/registry/systems.json) and safe-commit's naming limb (ENFORCE) refuses the commit of any .json; CRPS-i-5's instruments ran only through a scratch wrapper that repoints REGISTRY_DIR at a copy from git HEAD, and its work is finished but UNCOMMITTED.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd /c/tmp/wk-crps7-5 && python -m lib.research.corpus.ingest --verify -> FileNotFoundError on <worktree>/infra/logic/registry/systems.json (lib/opal_naming.py line 150, _read_json), rc 1, 0.25 s.",
+        "git ls-tree -r --name-only HEAD infra/logic/registry lists 7 files (exemptions, remediations, reporting_policies, resources, scopes, systems, tiers); git sparse-checkout list: .tools docs integrations lib org rcg.",
+        "Workaround for READS only: .scratch/i5/run.py sets lib.opal_naming.REGISTRY_DIR to .scratch/i5/reg (7 files from git show HEAD:infra/logic/registry/<f>.json) and runs the module unchanged; ingest --verify then printed 'objects 356 files 356 match 356 mismatch 0'.",
+        "COMMIT BLOCK: bash .tools/safe-commit.sh --author ... -F .scratch/i5/msg.txt -- <5 paths> -> 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' with 'NAMING ERROR the registry is refused by validate (1 refusal(s)): registry.file: unreadable: FileNotFoundError ... infra\\logic\\registry\\systems.json' (.tools/safe-commit.sh lines 712-737, org/mcp/naming-gate.enforce present). The limb grades staged .json files; the two deliverables and the instance are .json."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: read-only instruments in a sparse cone of lib, integrations, .tools, org, docs, rcg, and a commit of the two evidence files plus the instance through safe-commit.sh.",
+    "world_is": "The project's CLIs and the commit's naming gate both need infra/logic/registry, which the cone omits; the reads could be repointed from git objects, the commit cannot without writing into infra/, which is outside the order's <paths>. I stopped there: all five files are complete in the worktree, UNCOMMITTED, and proof-of-spec-check printed VALID rc 0 on the instance.",
+    "notes": "Unblock is the issuer's: add infra/logic/registry to the worker cone (7 small files) or commit the five paths from the issuer's seat. Files ready: deliverables/0.9.0_WK_AMGT_CORPUS~5/{FWD_EVIDENCE_ROUND7.json,FWD_EVIDENCE_ROUND7.md,AMGT_CORPUS.TO-CRPS-i-5...proof_of_spec.json}, this channel file, and the TO with <status>complete</status>."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W5-S3",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+    "surfaced_at": "2026-09-28T22:20Z",
+    "one_line": "Every served dossier case value is the section heading, not the case: 102 of 102 populated upside/base/downside slots (34 names) read value 'Upside Case' / 'Base Case' / 'Downside Case', cited to a passage that is the same heading text, locator 0; no case body is carried.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Latest dossier per folder read through dossier.read_dossier for 95 of 95 folders (all as_of 2026-09-28); fields.cases census: 34 names with at least one case present, 102 case slots, heading_only 102 (value.strip().lower() in {'upside case','base case','downside case'}).",
+        "AZN_LN_Equity fields.cases.base = {\"citation\": {\"locator\": 0, \"passage\": \"Base Case\", \"report_id\": \"0a5233696e05484c\", \"report_key\": \".../ASTRAZENECA Research Pack 2026 06 17_v1.pdf\"}, \"value\": \"Base Case\"}.",
+        "lib/research/corpus/dossier.py:234-274 _section_block_items ends a block at the next section lead or standalone heading, so a heading followed directly by another heading yields the heading alone (mechanism inferred from the code, not traced per document)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD FWD-12: 'the team's Upside/Base/Downside cases render as the team's, cited, in the slot that is ABSENT today' (ACCEPT: the team's own cases are readable).",
+    "world_is": "The slot is populated and cited for 34 names, but the value is the heading label; the case content under it is not carried. My FWD-12 row reads met on the clause's literal words and names this finding; whether the outcome is met is L9's call.",
+    "notes": "Related: Z-W2-S11 (rule-output read as the team's Base case) and its 'the cases the team WROTE in prose (34 served-and-cited)' figure, which is this same 34 and counts headings. Consumers in infra/ and the portal were not searched (outside the cone), so hazard_standing INERT is unproven for a downstream reader."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S50",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-28T22:30:00Z",
+    "one_line": "to-check --all reports 13 AMGT_CORPUS orders PENDING; on the LAST <status> tag only 1 of 39 was open (TO-CRPS-i-5, since drained). The tool reads the FIRST <status> element, and CORPUS orders append their flips, so 12 completed orders read as open.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/to-check.py --all | grep AMGT_CORPUS -> 'Project: AMGT_CORPUS (13 PENDING)', incl. TO-CRPS-f-3 and TO-CRPS-h-2.",
+        "grep -o '<status>[a-z_-]*' on TO-CRPS-f-3 and TO-CRPS-h-2 -> '<status> <status>pending <status>complete' on each: the last element reads complete.",
+        "Last-tag census over org/missions/D5/AMGT/AMGT_CORPUS/task-orders/*.md at ~22:3xZ: 1 of 39 open (TO-CRPS-i-5); at ~22:4xZ: 0 of 39.",
+        ".tools/to-check.py:113-120 _extract_status_tag uses re.search (first match) on the masked text."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "org/XXX.md Step 1b-B.1: `to-check.py --all --assignee` is the read of the work a seat holds.",
+    "world_is": "On a project whose orders append status flips, the read overstates open work 13 to 1; a driver or a COO taking it at face value would re-drive completed orders.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Found by the /self-drive tick 1 scope read, off-task for CORPUS; filed and not investigated further. The tool is shared, so the fix is not CORPUS's code; the COO's own census reads the last tag."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S51",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-28T23:50:00Z",
+    "one_line": "The Base-case rule this project's model-block derive computes moved under it: AMGT_RESAPP's worker @b56fef3032 (18:36Z today) made lib/research/api/case_rule.py the ONE rule (adjusted P/E) and model_block_pull._compute_cases delegates to it. Over the 97 block keys, cases-report now reads SERVED 69 vs round 7's 49 (21 ABSENT->SERVED, 1 SERVED->ABSENT: CAT_US, act A's re-mint) and 48 of 48 served-in-both at a different ratio. The stored blocks still carry the round-7 values; any derive now would move them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~X/evidence/r8_base_cases_report_all_20260928T234706Z.log (read-only cases-report, 97 of 97 keys, HEAD e3fd90cb63): served 69; against deliverables/2.0.0_SA_COO~X/evidence/r7_cases_report_all_20260926T184758Z.log: transitions ABSENT->ABSENT 27, SERVED->SERVED 48, ABSENT->SERVED 21, SERVED->ABSENT 1 (CAT_US_Equity, reason 'no adjusted P/E history on the landed block').",
+        "git show --stat b56fef3032 (0.9.0_WK_AMGT_RESAPP~166): model_block_pull.py 263 lines changed, lib/research/api/case_rule.py new (256), scoped_amgt._model_cases computes from the stored block's figures by the same function.",
+        "Six keys now read 'no adjusted P/E history': 6861_JP, BZLFY_US, CAT_US, CSL_AU, PBR_US, TSM_US."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S47 / round-7 analysis s.5 item 3: the derive's stamp selection loses PE_RATIO history for 6861_JP and CSL_AU; fixing selection unblocks their re-mint.",
+    "world_is": "The rule no longer reads PE_RATIO; its inputs are adjusted EPS and PX_LAST per closed year. The population missing history is six keys under the new rule, and a re-mint of ANY key moves its served ratio (48 of 48 would move).",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's observation. Not armed: this seat runs every CORPUS derive, and decomposition v8.0 s.8 holds any derive this round. Cell CRPS-j-3 re-grounded on the new rule (stamp selection for the six). Whether the served blocks should be re-derived under AMGT_RESAPP's rule is a served change on another project's rule; raised at the round-8 packet, not taken as a rider."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S52",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-28T23:51:00Z",
+    "one_line": "CORRECTION of AMGT_CORPUS-Z-W2-S11's worked example (asked by 1.0.0_SA_CTO~Z, round-7 analysis s.3): the row says 8306_JP_Equity's 'Model NEW VERSION' column K 'is genuinely empty of numbers' below the K43 'Base Case' title; its own producer's rows read below K43 = [2028, 2108.7834, 1.3782161070420165]. The column is not empty; the row's conclusion (0 of 42 plausible selections) does not rest on this example.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_AMGT_CORPUS~2/CASE_EVIDENCE_ROUND7.json workbook.rows, security_key 8306_JP_Equity, sheet 'Model NEW VERSION', cell K43 label 'Base Case': below [2028, 2108.7834, 1.3782161070420165], right [].",
+        "Z-W2-S11 grounding evidence item 2 (the direct read): 'column K below K43 is genuinely empty of numbers'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W2-S11: 8306_JP's K column is empty below the Base Case title.",
+    "world_is": "The producer's own capture carries numbers under K43 (2028, 2108.7834, 1.378...); the example contradicts the row's producer. The row's grade (i-3 AC4 workbook half NOT MET, CVO ADJUDICATION_v10) is unaffected.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's correction, appended (the original row stands, append-only). Not a cell (round-7 analysis s.5 'NOT cells')."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S6",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-29T00:20:00Z",
+    "one_line": "CRPS-j-3's premise fails on the real landed raw: over every refdata+histdata stamp of the six ABSENT keys (6861_JP, BZLFY_US, CAT_US, CSL_AU, PBR_US, TSM_US; 18 stamps) NO stamp carries a single IS_COMP_EPS_ADJUSTED fiscal_year_line_item figure, so the built stamp-census reads newest_carries 0 older_carries 0 none_carries 6 sum 6 and the new selection moves nothing (AC3 newly_served 0).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m integrations.bloomberg.research.model_block_pull stamp-census --securities <the six> (j3_AC2.sh, HEAD of wk-crps8-3): 'stamp_census keys 6 newest_carries 0 older_carries 0 none_carries 6 sum 6'; every per-key line 'newest_carries no carrying none'.",
+        "Read-only per-stamp diagnostic (.scratch/j3/diag.py, _cases_report_figures over each stamp of _stamps_with_raw_pair): adjusted-EPS fiscal years [] on all 18 stamps; PX_LAST fiscal years present on the newest stamp of every key (10 years each) but empty on the middle stamp of BZLFY_US, PBR_US; BEST_EPS absent on the oldest stamp of 6861_JP, CAT_US, CSL_AU, BZLFY_US, PBR_US, TSM_US.",
+        "j3_AC3.sh: 'newly_served 0' and 'j3 keys_read 97 of 97 unserved_vs_base 0 of 69 ratio_moved_vs_base 0'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-j-3 / Z-S47 / Z-S51: an older landed stamp may carry, for 6861_JP and CSL_AU at least, the history the current rule needs; selecting it would move keys ABSENT -> SERVED.",
+    "world_is": "Under the adjusted-EPS rule (case_rule.py) the landed raw of all six keys carries no IS_COMP_EPS_ADJUSTED at any stamp, so the six stay ABSENT whatever stamp is read. The older stamps Z-S47 found carried PE_RATIO-era history, not adjusted EPS. The fix for these six is not stamp selection; it is a new pull of the adjusted-EPS field (vendor, not this cell) or a rule change. The selection is built, tested (8 offline tests) and inert on the real population.",
+    "notes": "Owner's read: raised at the round-8 packet. Not armed: the selection changes nothing today (AC3 bound 0/0). Divergence noted, not a defect: cases-report and the selection's carry test read BEST_EPS from the landed bestdata only (no Seeking Alpha fallback), so derive on a key whose EPS the SA fallback fills would test the newest stamp as lacking EPS and could select an older stamp that carries a landed BEST_EPS; none of the six or 97 keys moved (AC3)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S9",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T00:43:49Z",
+    "one_line": "CRPS-j-1 premise fails on the stored extractions: the 34 names with a case lead carry Upside/Base/Downside Case as three consecutive ROW LABELS of a scenario table (pdf class A, page 0), never a prose case; with the ruled block end the served rewrite gives Downside the whole numeric table and Upside/Base ABSENT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read-only survey of all 95 resolved names via dossier._picked_reports (scratch .scratch/j1/survey.py, survey2.py, HEAD 5cf660114f): 102 case leads = 34 names x 3, ALL pdf class A; docx 31 picks and pdf class B 35 picks carry 0 case leads and 0 'upside/base/downside case' phrases in their text (1 class-B pdf, UBER_US_Equity line 596, mentions 'base' in an unrelated sentence).",
+        "ADBE_US_Equity pdf lines 350-352 = 'Upside Case','Base Case','Downside Case' (bold, page 0), then 353-367 '2026E'...'2030E' x3 (column headers), then 368+ 'EPS' 24.16 27.86 ... 'Multiple' 16.0x ... : the three cases are table row labels; the same pattern appears at a second table (8035_JP lines 863-865). The block ended after one line because the next line is the sibling case lead.",
+        "After the ruled change (body = text after the heading up to the next section lead of any name): dossier --case-census reads 'case_census names 95 slots 285 body 34 heading_only 68 absent 183 sum 285'; all 34 body slots are DOWNSIDE, each a 794-1485 character run of table cells ('2026E 2027E ... EPS 24.16 27.86 ...') covering all three cases' numbers up to the RECOMMENDATION lead; upside and base of those 34 names are heading_only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-j-1: the team writes its case under the Upside/Base/Downside heading; the value should be the team's text beneath its own heading, up to the next case or section lead.",
+    "world_is": "In the stored extractions no name carries prose under a case heading: the heading is a scenario-table row label. The ruled block end is implemented as written and satisfies AC1 and AC2 (body 34), but the one served body per name (Downside) is the entire scenario table's cells, not the team's Downside case, and Upside/Base are absent. Served as-is after the issuer's rewrite this would render a numeric dump as the team's Downside case.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Not disarmed by the worker: a table-aware case block (or a body that requires prose) is a new ruling, not a rider. AC3 (JUDGMENT, 3.0.0_SA_CVO~Z) is the place this reads; the issuer may hold the served rewrite until a ruling. The measured place the model-figure cases live is the stored Model block (AMGT_RESAPP cases rule), not the report text."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S10",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T00:43:49Z",
+    "one_line": "CRPS-j-1 rule 4 read literally ('write nothing only when method_version EQUALS METHOD_VERSION') would break test_dossier_newest.py::test_write_one_unchanged_against_the_last_write_not_the_greatest_hash, whose seeded documents carry no method_version; write_one treats an ABSENT method_version as inputs-only, a PRESENT different one as changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First run of the corpus tests after the literal edit: 1 failed, 31 passed (test_dossier_newest.py::test_write_one_unchanged_against_the_last_write_not_the_greatest_hash: AttributeError put_object, i.e. write_one tried to write). The test file is unmodified; with the absent-method carve-out 371 passed in tests/.",
+        "lib/research/corpus/dossier.py build() stamps method_version on every document it writes, so a real stored object always carries one and the carve-out never fires on served data."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-j-1 rule 4 and bound 4: the no-op compares the method too; existing dossier tests keep passing unmodified.",
+    "world_is": "The two statements conflict for one existing test whose fixture omits method_version; I kept the test unmodified and let an absent method_version stay inputs-only, so a stored object with no method_version is never treated as a different method.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Behaviour differs from the literal rule only for an object with no method_version, none of which exist in the served table."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S53",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T00:58:00Z",
+    "one_line": "DISARM BY HOLD of AMGT_CORPUS-Z-W1-S9 by its owner: this seat runs NO dossier --write (the round-8 served rewrite included) until a case rule reads the scenario table by case. The writer census is this seat alone (the Z-S46 census stands: dossier --write runs only in this seat's drain acts; no scheduled producer writes the table).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Chain A merged at c858a00330 (worker tip 8945d6b4cb): dossier --case-census reads 'case_census names 95 slots 285 body 34 heading_only 68 absent 183 sum 285'; all 34 body slots DOWNSIDE, each the whole table's cells.",
+        "The served table is untouched: no dossier --write has run since round 7's rewrite (objects 468; METHOD_VERSION is now /2 in code, every stored object /1, so read_dossier's fallback serves the /1 objects exactly as before).",
+        "Issuer's direct read of ADBE_US_Equity and ZTS_US_Equity page 0: after the three case labels, 15 year headers (2026E-2030E x3) then rows EPS, Multiple, Price, Return of 15 values each -- values 1-5 Upside, 6-10 Base, 11-15 Downside (ADBE Multiple 16.0x / 9.0x / 6.0x, Price 2026 416 / 233 / 143)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v8.0 s.5: chain A VALID -> the pair -> dossier --write --workers N over 95 names.",
+    "world_is": "Chain A is VALID and merged; the rewrite it enables would serve a numeric dump as the Downside case. Held. The team's case numbers are present and positionally readable by case; a table-aware rule is the round-8 packet's lead enrichment candidate.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's disarm, evidence-cited. Not a REMEDIATION row (the CVO's). Lifts when a case rule reads the table by case and its census shows each case's own values."
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T01:20:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "id": "AMGT_CORPUS-Z-W1-S11",
+    "one_line": "CRPS-k-1: two shapes of the real scenario tables are not in the order's text -- a lone currency-symbol line after each value (AZN, BP, ML and 7 more), and a date + page-number footer line pair after the last row (8 names) -- and each is read as the table's own, not as a row.",
+    "spec_asserts": "Order s.1 rule 1: each metric row is a non-numeric label line followed by exactly 3k value lines; the table ends at the first line that is neither, or at the next section lead. Rule 3: the unit is the symbol the row values carry.",
+    "world_is": "In the stored extractions the currency symbol (U+00A3, $, U+20AC) is its OWN line after each EPS/Price value (30 lines per table), which a literal count would read as 6k lines. And 8 names (AZN, BP, CPA, ML, ORA, SAP, SHOP, TTE) have no assumptions paragraph after the Return row: the next lines are a date ('2026-03-09') then a page number ('2'), i.e. a non-numeric label with 1 value, which the literal rule reads as a row with the wrong count and makes the table unreadable. Built: a lone symbol line is the preceding value's unit and is not counted; a date-shaped line (d-d-d with - / or _) ends the table like any line that is not a row. No other rule was changed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Survey of the 34 names' extractions, scratch .scratch/k1/dump.py + probe.py at wk-crps9-1: AZN_LN_Equity lines after 'EPS' = '9.08','U+00A3','10.24','U+00A3',...; date footers '2026-03-09' (8 names) and '7_13_2026' (ADBE, after the assumptions text).",
+        "Without the footer stop dossier --case-census would read 14 of the 34 names as unreadable; with it 6 (see Z-W1-S12), each a genuine 14-value EPS row."
+      ]
+    },
+    "notes": "Two small departures from the literal reading, both needed for the 34 real tables to be readable; the issuer may re-rule the footer shape."
+  },
+  {
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T01:20:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "id": "AMGT_CORPUS-Z-W1-S12",
+    "one_line": "CRPS-k-1: 6 of the 34 scenario tables are unreadable on the ruled 3 x k count -- the EPS row carries 14 values (the Base group has 4, not 5) -- so those names serve all three cases ABSENT with the reason.",
+    "spec_asserts": "Order s.1 rule 4: a row whose value count is not 3k makes the whole table unreadable for that name; each case is served ABSENT with the reason.",
+    "world_is": "Names: 8035_JP_Equity, BZLFY_US_Equity, HEI_US_Equity, SNPS_US_Equity, TSM_US_Equity, V_US_Equity. In each, the extraction's EPS row has 14 value lines (one Base-group value is missing from the pdf text layer, e.g. HEI Base EPS 6.03 6.80 7.73 8.99), so the served case is ABSENT with 'row EPS carries 14 values, expected 3 x 5'. The census counts these 18 slots as absent (state 'absent'), so heading_only stays 0. Also: the census reads ORA_FP_Equity's unit as $ because its EBITDA/Price values carry $ as the team wrote them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "dossier --case-census at wk-crps9-1: 'case_census names 95 slots 285 body 84 heading_only 0 absent 201 sum 285 ordering_held 28 ordering_violated 0 ordering_na 67 unit_carried 10'; 34 names carry a table, 28 read, 6 unreadable; 84 = 28 x 3.",
+        "Scratch .scratch/k1/probe.py: the six read ('EPS', 14) and no rows."
+      ]
+    },
+    "notes": "Not fixable by the worker: the missing value is absent from the extraction, not misparsed; recovering them is an extraction change (a different cell)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S54",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T02:30:00Z",
+    "one_line": "LIFT of AMGT_CORPUS-Z-S53 by its owner, and Z-W1-S9's close condition MEASURED MET: the dossier rewrite ran under the signed pair (COO b98e09953e, CTO 9ffd945889) with the table-aware case rule (CRPS-k-1 @19458b6130); every served case is its own columns of the team's scenario table with unit and page citation, and no served case is a heading or a table dump. Closing adjudication is the CVO's at L9 (AC3).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~X/evidence/r9_dossier_rewrite.log: 'names 95 written 95 existed 0', rc 0, 0 ERROR.",
+        "deliverables/2.0.0_SA_COO~X/evidence/r9_rewrite_after.txt: objects 563, serves the last write 95 of 95, dossier_pick current_method_available 95 stale_pick 0, case_census body 84 heading_only 0 absent 201 ordering_violated 0 unit_carried 10.",
+        "deliverables/2.0.0_SA_COO~X/evidence/r9_real_run_read_dossier.txt: ADBE_US_Equity Price 2026 416 / 233 / 143 (unit null); AZN_LN_Equity 227.08 / 131.91 / 45.24 (unit U+00A3); citation page 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S53: the hold lifts when a case rule reads the table by case and its census shows each case's own values.",
+    "world_is": "Met on the served table. 6 of 34 tables stay ABSENT with the 3k-count reason (Z-W1-S12); the model-block re-derive's follow-on will write one more dossier object per name under the k-2 pair.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's lift, evidence-cited; not a REMEDIATION row."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S55",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-29T02:40:00Z",
+    "one_line": "model_block_pull cases-report given the underscore key form (AMD_US_Equity) does not refuse: it prints 'base ABSENT ... no consensus EPS on the landed block' for every name (0 of 97 served); the Bloomberg form (AMD US Equity) reads 69 of 97 served. A wrong-shape key returns a real-looking verdict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m integrations.bloomberg.research.model_block_pull cases-report --securities AMD_US_Equity -> 'cases AMD_US_Equity base ABSENT ratio none cause none reason no consensus EPS on the landed block' / 'cases_report served 0 refused 1'.",
+        "Same command with --securities \"AMD US Equity\" -> 'base SERVED ratio 0.659087854343919' / 'cases_report served 1 refused 0'.",
+        "Batched over the 97 keys of checks/round8/model_block_keys_97.txt (underscore form, as the file carries them): served 0; with underscores replaced by spaces: served 69, line-for-line equal to evidence/r9_k2_expected_cases_report_20260929T021453Z.log."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "cases-report reads each key's landed block and reports the rule's verdict; a key it cannot resolve is refused, not graded.",
+    "world_is": "An unresolvable key form is graded ABSENT with a data reason, indistinguishable from a real 'no consensus EPS' verdict.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Found by the CTO while re-measuring the k-2 expected outcome for its never-widen half; filed, not investigated. The remedy is a refusal on a key that resolves to no landed stamp, or normalising the key form at the parse."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-29T05:00:00Z",
+    "one_line": "CRPS-l-4 premise differs: the underscore key does not fail to resolve a stamp; security_key() maps both forms to the same sec_key so the stamp resolves, and the failure is that the landed refdata/histdata are keyed by the Bloomberg string, so the underscore string indexes an empty block.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/research/model_block_pull.py security_key = security.replace(' ','_') (identity on the underscore form); _cases_report_figures reads ref.get(security, {}) / hist.get(security, []) / best['1FY'].get(security) by the raw input string -> empty figures for AMD_US_Equity.",
+        "Refusal built on the observed condition (no stamp, or an empty figure set) at branch wk-crps10-3; the REFUSE text says 'no landed raw stamp' as ruled although the measured cause is 'string is no key in the landed raw'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order says the underscore form resolves to no (or the wrong) landed raw stamp.",
+    "world_is": "The stamp resolves; the landed block holds no entry under the underscore string, so figures are empty. Refusal keys on that.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S12",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-29T05:00:00Z",
+    "one_line": "CRPS-l-2 census: two of the 22 paired names carry a team unit symbol that disagrees with the listing currency (ORA_FP and SAP_GY: team_unit $, listing EUR), so the 0.94 / 0.90 ratios pair figures whose units the served data itself contradicts; units are printed, never converted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m lib.research.corpus.base_census (worktree wk-crps10-2, branch base f59d76dee8) -> 'base ORA_FP_Equity team 19.2400 rule 20.4867 ratio 0.9391 year 2026E rule_status SERVED team_unit $ listing EUR' and 'base SAP_GY_Equity team 144.2800 rule 159.6087 ratio 0.9040 year 2026E rule_status SERVED team_unit $ listing EUR'; ML_FP_Equity carries team_unit \u20ac listing EUR."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census pairs the team Base Price with the rule Base per name and prints each unit without converting.",
+    "world_is": "For ORA and SAP the team's own unit symbol is a dollar sign on a EUR-listed name; the pairing is arithmetically valid but the two figures may not be in one currency, which the census does not judge.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Filed, not investigated; whether the dollar sign is the team's currency (ADR-style estimate) or an extraction slip is outside this cell."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S13",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T05:30:00Z",
+    "one_line": "CRPS-l-1 (unit_as_written + currency, METHOD_VERSION /3) breaks 3 tests in files outside its <paths>: test_dossier_case_body.py::test_method_version_is_bumped_to_2 (pins /2), test_dossier_case_body.py::test_case_census_prints_per_name_states_and_the_exact_summary_line (pins the census final line without the two new columns), and test_dossier_case_layouts.py::test_a_round_9_k5_table_is_unchanged (reads base['unit'], the key l-1 replaces). Not edited: the write grant excludes them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PYTHONPATH=. python -m pytest lib/research/corpus/tests/test_dossier_case_unit.py test_dossier_case_table.py test_dossier_case_body.py test_dossier_case_layouts.py -q -> '3 failed, 34 passed'; the three named above, each failing on a value l-1's ruling changes on purpose (METHOD_VERSION literal, census line, the retired `unit` key).",
+        "Order CRPS-l-1 <paths> lists test_dossier_case_table.py only among existing tests; the l-1 bound names the METHOD_VERSION bump and the census line."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-l-1 bounds: bump METHOD_VERSION to /3; the census keeps its line and appends two columns; unit is replaced by unit_as_written; test_dossier_case_table.py may change where it pins the old unit key or census line.",
+    "world_is": "Three further tests pin those same values in two files the order does not grant; the corpus suite is red on them until the issuer (or a later order) updates them: body.py line 158 -> /3, body.py line 130-131 -> the line with 'currency_set 0 currency_null 2'-style tail, layouts.py line 125 -> base['unit_as_written'].",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Filed, not fixed. A drain that runs the whole lib/research/corpus/tests directory reads 3 failures until these are updated."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S56",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T06:50:00Z",
+    "one_line": "DISARM of AMGT_CORPUS-Z-W1-S13 by its owner: the three tests that pinned what CRPS-l-1 changed on purpose were updated under the issuer's AMENDMENT 2 (the order's <paths> widened by the issuer), and the corpus suite reads green; the red suite never reached CLOUD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment commit b40840e09a (order CRPS-l-1: <paths> gains tests/test_dossier_case_body.py and tests/test_dossier_case_layouts.py; rule 8).",
+        "Worker commit 6eaa7545ea updated test_method_version_is_bumped_to_2 (to /3), test_case_census_prints_per_name_states_and_the_exact_summary_line and test_a_round_9_k5_table_is_unchanged; issuer re-grade at 75dd5905ad: lib/research/corpus/tests 409 passed.",
+        "Chain A merged at 5b0b728ab1 with the suite green."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W1-S13: three tests outside CRPS-l-1's grant fail on its intended change; the suite is red until the issuer acts.",
+    "world_is": "The issuer granted the paths and ruled the update; the suite is green on the merged trunk.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's disarm, evidence-cited; the worker's refusal to edit outside its grant was correct."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S14",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T08:00:00Z",
+    "one_line": "CRPS-m-2's ruled METHOD_VERSION bump to /4 breaks 2 tests in files outside its <paths>: test_dossier_case_unit.py::test_method_version_is_3 and test_dossier_case_body.py::test_method_version_is_bumped_to_2 (each pins /3). Not edited: the write grant excludes them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PYTHONPATH=. python -m pytest lib/research/corpus/tests -q at wk-crps11-1 -> '2 failed, 436 passed'; the two failures are lib/research/corpus/tests/test_dossier_case_unit.py:110 and lib/research/corpus/tests/test_dossier_case_body.py:159, each asserting METHOD_VERSION == 'amgt-corpus-dossier/3'.",
+        "Order CRPS-m-2 <paths> lists test_dossier_case_layouts.py among existing tests (which does not pin the version); bound 5 of the cell rules the bump to /4."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-m-2 ruling 5: bump METHOD_VERSION to amgt-corpus-dossier/4; test_dossier_case_layouts.py may change only where it pins an ABSENT reason on a name now placed or the old METHOD_VERSION.",
+    "world_is": "The two tests that pin the version literal sit in test_dossier_case_unit.py and test_dossier_case_body.py, neither in this order's <paths>; the corpus suite reads red on them until the issuer widens the paths or updates them. test_dossier_case_layouts.py needed no change: it pins neither the version nor a reason on a placed name when no word reader is passed.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Filed, not fixed. Same class as Z-W1-S13 (disarmed by Z-S56 through a path amendment)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S57",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T08:32:00Z",
+    "one_line": "DISARM of AMGT_CORPUS-Z-W1-S14 by its owner: the two method-version tests the ruled /4 bump turned red were updated under the issuer's AMENDMENT 1 to CRPS-m-2 (e119939999); the corpus suite reads 438 passed on the merged trunk (b274848977).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment commit e119939999: CRPS-m-2 <paths> gains tests/test_dossier_case_unit.py and tests/test_dossier_case_body.py; rule 7.",
+        "Worker commit 1cfd1e6737: both tests assert amgt-corpus-dossier/4; issuer re-grade at 1cfd1e6737: lib/research/corpus/tests 438 passed.",
+        "Chain merged at b274848977."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W1-S14: the /4 bump turns two tests outside the grant red.",
+    "world_is": "Granted and updated; the suite is green on the trunk.",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "notes": "Owner's disarm, evidence-cited; same class as Z-W1-S13 / Z-S56 in round 10. A METHOD_VERSION bump ruled at a cut should grant the tests that pin the old version in the same order (a cutting lesson)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S15",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T12:52:00Z",
+    "one_line": "CRPS-o-1 bounds the worker to read-only instruments with NO write anywhere, yet the FWD-9 negative-control arm's only instrument writes a 308 MB library copy to system temp, and the listed read-only mode --code-census itself wrote two positive-control files to system temp. The negative-control arm was not run; FWD-9 is recorded unmeasurable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m lib.research.corpus.readonly_proof --code-census printed 'positive_control_path C:/Users/OPALBL~1/AppData/Local/Temp/amgt_corpus_census_ovik1op9/positive_control.py left_for_operator_cleanup True' and the same for positive_control_test_file_path (rc 0).",
+        "Round 7's record of the --negative-control arm (FWD_EVIDENCE_ROUND7.json FWD-9) names an ACL-restored 308.6 MB copy under the system temp dir (amgt_corpus_ro_copy_<stamp>) left for operator cleanup; lib/research/corpus/readonly_proof.py:418-464 (copytree, copyfile, open for write) is that arm."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order CRPS-o-1 section 4: read-only instruments only, NO write anywhere but the two deliverable files; the section-1 list of read-only CLI modes includes --code-census and omits --negative-control.",
+    "world_is": "--code-census writes two files to system temp (outside the repo and the library) by design; --negative-control writes a 308.6 MB copy there. The census arm was run and read clear (0 of 51 write-like calls reach the library); the negative-control arm was not run.",
+    "notes": "Filed, not fixed. The two temp files from this run (amgt_corpus_census_ovik1op9) remain for operator cleanup; the library itself was not touched."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S16",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T12:53:00Z",
+    "one_line": "One of 159 served thesis pillars carries a lead with an empty paragraph: ML_FP_Equity's 'Nearing turn in cycle' has text '' and a citation passage that runs into the next 'RISKS AND CONSDIERATIONS' heading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PYTHONPATH=. python .scratch/o1/p_an.py over read_dossier() for 95 securities: F10 pillars {'absent': 49, 'list': 46} pillars 159 incomplete_citation 1 no_terms 0; the one is ML_FP_Equity, thesis_pillars length 1, {pillar 'Nearing turn in cycle', terms ['Nearing turn in cycle'], text '', citation locator 1 in 'Michelin Research Pack Template 2026 05 28_v1.pdf'}.",
+        "Dossier object s3://opal-data-harvest/amgt/harvest/gold/research_dossier/security_key=ML_FP_Equity/ (method amgt-corpus-dossier/4)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-10 (PRD ADDENDUM): the pack's pillars exist in the served substrate as lead phrase + paragraph + citation, each openable to the passage it came from.",
+    "world_is": "158 of 159 pillars carry lead, paragraph, citation and terms; ML_FP_Equity's single pillar carries the lead and citation with an empty paragraph, and its citation passage begins mid-sentence and reaches the RISKS heading (a PDF pack where the pillar's body was not separated from the next section).",
+    "notes": "Filed, not fixed; the writer (dossier.py pillar reader) is outside this order's paths. It grades no fence by itself: the field is cited and reason-bearing under FWD-13 (its text is empty, not absent)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S58",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T13:02:00Z",
+    "one_line": "A new library folder, 'Hitachi 6501 JP' (one file, Hitachi_Investment_Memo_2026_09_28_1.docx, synced 12:56:19Z), arrived six minutes after CRPS-o-1's run: the library reads 96 folders / 357 files, and FWD-4's population is no longer empty -- induction_request.run() reads unresolved_in_universe 1 of 96 and picks NONE ('no report states a ticker in the (Ticker: ...) form').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "13:00Z at CLOUD 2a693d47b3: PYTHONPATH=. python .scratch/r13real/p_ind.py (induction_request.run() with DELIVERABLES_DIR redirected to scratch) printed 'backlog_folders 96 / unresolved_in_universe 1 of 96 / candidate Hitachi 6501 JP | NO_EVIDENCE / picked NONE Hitachi 6501 JP: no report states a ticker in the (Ticker: ...) form / vendor_calls 0 / s3_writes 0 / poison_positive_control raised 4 of 4'.",
+        "python -m lib.research.corpus.library --census: placeholders 0 of 357; os.listdir of the OneDrive library root shows the folder with one 42194-byte .docx, mtime 12:56:16Z, ctime 12:56:19Z.",
+        "FWD_EVIDENCE_ROUND13.json run_at 2026-09-29T12:50:00Z, FWD-4 denominator '0 of 95 backlog folders are UNRESOLVED'; ingest --verify at 12:59:43Z still reads 'objects 356 files 356 match 356 mismatch 0' (the unresolved folder is outside the resolved folder list FWD-1 scans)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD_EVIDENCE_ROUND13 FWD-4 (12:50Z): the fence's population, one backlog name the universe carries UNRESOLVED, is empty (0 of 95), so the act can only print 'picked NONE'.",
+    "world_is": "From 12:56Z the population holds one organic name, Hitachi 6501 JP. The act runs on it and refuses to pick it for want of a (Ticker: ...) line: the organic arm now exists and reads NO_EVIDENCE; the WILL-ADD and REFUSES-ambiguous limbs are still unobserved, so the planted-folder act the row names still stands.",
+    "notes": "For the round-13 analysis, not a cell of this round. FWD-1, FWD-3 and FWD-19 denominators moved by one folder / one file after the run; FWD-1's fence scans the resolved folder list, so its 356 of 356 still reads. Ingesting or inducting Hitachi is the scheduled producer's and AMGT_RESAPP's (the induction act's executing seat), never this row's."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-29T19:30:00Z",
+    "one_line": "CRPS-p-3's scratch drive could not run typed._run_write on the package's StubS3Client (head_object returns no LastModified, which _run_write reads at typed.py:639), so the typed stage was driven through its own typed.record + store.silver_append; and dossier.build has no clock parameter, so the as_of dates were set by replacing dossier.datetime.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/typed.py:639 fetched_at = head['LastModified']; lib/research/corpus/substrate.py StubS3Client.head_object returns {'Metadata','ContentLength'} only.",
+        "lib/research/corpus/dossier.py:1202 as_of = datetime.datetime.now(datetime.timezone.utc).date().isoformat() -- no injection parameter; lib/research/corpus/tests/test_fwd17_scratch_drive.py names both seams in its module docstring.",
+        "PYTHONPATH=. python -m pytest -q -s lib/research/corpus/tests/test_fwd17_scratch_drive.py printed the fwd17 line all True / 0 and '1 passed'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order CRPS-p-3 section 1: drive the real stage functions with one StubS3Client through to dossier.write_one; freeze or inject the clock only through a seam the code already has.",
+    "world_is": "extract, ingest, backlog, continuation and dossier run as written against StubS3Client; typed._run_write does not (its KeyError on head['LastModified']), so the test lands the same row with typed.record and store.silver_append (the pattern substrate._add_synthetic_report uses). The only clock seam dossier offers is its module-level datetime attribute; the test replaces it under monkeypatch. Both are stated in the test's docstring.",
+    "notes": "Filed, not fixed; nothing under lib/ is edited by this order. typed --write itself (the CLI limb) is therefore not exercised by this drive. sector_template, fund_form and typecast were not driven (no workbook or fund token in the scratch reports); the dossier reads them absent."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S17",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T19:10:00Z",
+    "one_line": "CRPS-p-1's AC2/AC3 measure temp_new_entries against the SHARED system temp dir, and a writer outside this worktree left amgt_corpus_census_* entries there during three of four AC2 runs (1, 2 and 1 new entries) before the fourth read 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "At 2026-09-29 14:48:50, 14:51:57, 14:55:21 and 14:58:48 (-0400) new directories amgt_corpus_census_u8i1jbur, _985osidp, _18s97wci, _2el8x1ku appeared in the system temp dir, about 3.3 minutes apart; none came from this worktree, whose readonly_proof.py removes its census scratch (pytest test_readonly_proof_bound.py: 4 passed; p1_AC3.sh: 'p1 code_census rc 0 library_write_calls 0 temp_new_entries 0').",
+        "Sibling worktrees /c/tmp/wk-crps14-2, -3, -5 and -5r hold readonly_proof.py without the fix (grep -c scratch_removed: 0 each), and test_readonly_proof_tristate.py:81 runs readonly_proof.main(['--code-census']), which under the old code leaves its plant directory. No entry appeared in the 100 s idle poll from 15:03:13; the AC2 run at 15:05-15:08 then read 'p1 negative_control rc 0 ingest_rc 0 put_performed 0 temp_new_entries 0'.",
+        "The system temp dir also holds 93 pre-existing amgt_corpus* entries (censuses and 308 MB copies from earlier rounds); outside this order's paths, so not removed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-p-1 AC2/AC3: 'temp_new_entries 0' means the arm under test left nothing in the system temp dir.",
+    "world_is": "The counter is global to the temp dir, so it also counts entries written concurrently by other processes running the un-fixed code from sibling worktrees; the attribution to those worktrees is inferred from cadence and code state, not from a process trace. The final AC2 run read 0 only in a quiet window.",
+    "notes": "Filed, not fixed. Fix path is the drain: once this branch merges, every worktree's readonly_proof census arm removes its scratch. A re-run of AC2 or AC3 that reads a non-zero temp_new_entries while sibling workers are live should be read against this row before it is read against the arm.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W5-S4",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+    "surfaced_at": "2026-09-29T19:00Z",
+    "one_line": "The order says continuation objects are keyed '<inputs_sha16>.json, which excludes METHOD_VERSION'; the code includes it, so the METHOD_VERSION bump to /3 moves ML_FP's key (b0b6466fe3e0738e -> d0a6bae5095e31fd) and a rebuilt ML_FP document does NOT collide with its stored /2 object.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/continuation.py _inputs_sha16 = sha256(canonical({'method_version': METHOD_VERSION, 'inputs': inputs}))[:16]; write_one names the object '<that>.json'.",
+        "Read-only S3 list of amgt/harvest/gold/research-continuation/security_key=ML_FP_Equity/: 66f02efbf864ae95.json (method /1, 2026-09-24), b0b6466fe3e0738e.json (method /2, 2026-09-26); both carry inputs equal to current_inputs; computed _inputs_sha16 under /2 = b0b6466fe3e0738e (matches the stored key), under /3 = d0a6bae5095e31fd (no stored object).",
+        "Consequence for the drain: writing the /3 document creates a THIRD object beside /1 and /2; read_latest prefers the current METHOD_VERSION (_select_stored) so the /3 object is served once written. Keying was not changed by CRPS-p-5."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO CRPS-p-5 item 5: continuation objects are keyed '<inputs_sha16>.json', which excludes METHOD_VERSION.",
+    "world_is": "The key hashes METHOD_VERSION together with the inputs; the bump alone gives ML_FP a fresh key, so the never-overwrite gold_put does not refuse the rebuilt document.",
+    "notes": "For the issuer's drain pair: the served move for ML_FP (and every name, since the bump moves every key) is a write of new objects, not an overwrite; disarm_owner 2.0.0_SA_COO~X."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W5-S5",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+    "surfaced_at": "2026-09-29T19:00Z",
+    "one_line": "ML_FP's source paragraph for 'Nearing turn in cycle' is EMPTY (the next line is the RISKS AND CONSDIERATIONS heading), so CRPS-p-5 serves thesis_pillars ABSENT; but the same INVESTMENT THESIS block carries five period-led pillars (e.g. 'Irreplaceable brand and pricing power.') the PDF pillar reader never sees.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Extract extract.v2.json of 362ec404b3d2eba8 (Michelin Research Pack Template 2026 05 28_v1.pdf): section_leads INVESTMENT THESIS line_index 674, RISKS AND CONSDIERATIONS 690; lines 675-688 are five bold-first period-led pillars ('Irreplaceable brand and pricing power.', 'Mix shift to premium.', 'FCF Generation.', 'Beyond tires.', 'EV-agnostic positioning.') each with body text; line 689 'Nearing turn in cycle:' is all-bold with lead_prefix 'Nearing turn in cycle:' and line 690 is the next heading.",
+        "_pdf_pillars_raw accepts a lead only when it ends in ':' (rules a/b/c), so lines 675-688 precede the first accepted lead and are dropped; before this order the served pillar list was the single empty 'Nearing turn in cycle'; after it the field is ABSENT with reason (AC2: 'ML_FP_Equity ABSENT reason every pillar lead ... empty paragraph in the source')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO CRPS-p-5: if the source paragraph is empty the pillar is served ABSENT with that reason; ML_FP's INVESTMENT THESIS block is read as its pillars.",
+    "world_is": "The order's branch (empty source -> ABSENT) is built and correct for the one colon-led lead, but the pack's real pillars are period-led and the PDF reader has no rule for them, so ML_FP serves no pillars while its source states five with paragraphs. Not fixed: widening the lead grammar is outside this order.",
+    "notes": "Candidate for the round-14 analysis: a period-led bold-first lead rule (bold_first true, lead_prefix ends '.') in _pdf_pillars_raw; would need a census of other PDF packs for false leads before landing."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W5-S6",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+    "surfaced_at": "2026-09-29T19:45Z",
+    "one_line": "Amendment 1 lists the ML_FP period leads WITH the trailing period ('Mix shift to premium.'); the served pillar lead drops the period, as the colon-led leads drop the colon, so the served strings are 'Mix shift to premium' etc.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/continuation.py _pdf_pillars_raw rule (d): lead_txt = lead_prefix.rstrip('.').strip(); rule (a)/(b)/(c) lead_txt never carries the ':' either.",
+        "Read-only census over 95 resolved names (before = CLOUD 294e28bcbe code, after = this branch): thesis_pillars byte-identical for 94, differs for ML_FP_Equity only; its five leads as built: 'Irreplaceable brand and pricing power', 'Mix shift to premium', 'FCF Generation', 'Beyond tires', 'EV-agnostic positioning'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 1 section 7 item 1: the period-led leads are accepted 'exactly as it accepts one ending in :'; the leads are named with their period in the amendment text.",
+    "world_is": "The served `pillar` string has the period stripped (the colon precedent); the citation passage still contains the period-bearing text because the probe is a substring of the page.",
+    "notes": "If the issuer wants the period kept in the served lead, it is a one-line change (lead_txt = lead_prefix.strip()) plus a METHOD_VERSION-free test edit; nothing downstream reads the lead's punctuation."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S59",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T20:12:00Z",
+    "one_line": "The round-14 p-5 drain merge 34bbf74213 (safe-merge --continue after an append-only channel conflict) landed 6 files of 4.0.0_SA_CRO~Z (org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/*) that CRO~Z had staged in the shared index during the resolve window; they are attributed to 2.0.0_SA_COO~X in that commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --name-only 34bbf74213^1 34bbf74213 lists 12 paths; git diff --name-only 34bbf74213^1...wk-crps14-5r lists 6 (the branch's). The other 6 are AMGT_RECONN_SOURCES_20260929/{ANDREW_DIRECT.md,BBG_EXCEL_ACCESS_VERIFIED.md,BBG_GUIDES_FOLLOWUP.md,README.md,scripts/bbg_excel_holdings_probe.py,scripts/bbg_excel_probe_queries.json}.",
+        "git log on that folder: 0b02df6e14 (CRO~Z 15:38:14 local), 34bbf74213 (this merge 16:04:26 local), f3222cd4cf (CRO~Z 16:05:54 local). The index read 0 staged paths after the merge; CRO~Z's content is whole at HEAD.",
+        "safe-merge --continue printed the 6 foreign paths in its output and still reported 'MERGED and committed'; --verify-merge 34bbf74213 prints the same 6."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-merge.sh header: '--continue ... adds the check the one-shot path gets free from its pre-merge index guard: a path staged that the MERGE did not stage is another seat's work riding the drain.'",
+    "world_is": "The check names the foreign paths but did not stop the commit in this run; a concurrent seat's staged files rode the merge commit under the merging seat's author.",
+    "notes": "Nothing lost and nothing reverted (history on CLOUD is not rewritten). The hazard is authorship and a mixed commit, not content. The owner of safe-merge.sh is not this seat; this row reports the observed behaviour. Mitigation for this seat: re-check the index immediately before --continue.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S60",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T20:42:00Z",
+    "one_line": "DISARM of AMGT_CORPUS-Z-W5-S5 by its owner: the five period-led ML_FP pillars the PDF reader missed are now read (order CRPS-p-5 AMENDMENT 1) and SERVED -- read_dossier ML_FP_Equity returns 5 pillars with text; ML_FP no longer serves ABSENT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment commit af9e934ae2 (reader accepts a bold_first lead ending in '.' inside the thesis block); worker tip a53f4c4bfc re-graded VALID by the issuer (AC2 'p5 ML_FP_Equity pillars 5 empty_text 0 | IMB_LN_Equity pillars 6 empty_text 0 | ADBE_US_Equity pillars 2 empty_text 0'); merged 34bbf74213 under pair COO 69e88e71ad / CTO 9e1da13005.",
+        "Change entry amgt-corpus-r14-continuation-v3 CLOSED, 4 of 4 legs: continuation --write 95/95 (225 -> 320), dossier --write 95/95 (95 -> 190).",
+        "20:39:25Z read_dossier ML_FP_Equity: pillars 5 empty_text 0, leads 'Irreplaceable brand and pricing power', 'Mix shift to premium', 'FCF Generation', 'Beyond tires', 'EV-agnostic positioning'; field diff new vs prior object over 95 of 95 names: thesis_pillars changed on ML_FP_Equity only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-W5-S5: ML_FP serves thesis_pillars ABSENT although its source states five pillars the PDF reader never sees.",
+    "world_is": "ML_FP's served dossier carries the five source pillars; 'Nearing turn in cycle' (no body) is dropped by the empty-text rule.",
+    "notes": "Z-W5-S6 (the served lead drops the trailing period, as colon leads drop the colon) stands INERT; no change ruled.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S5",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-29T21:00Z",
+    "one_line": "CRPS-p-4's population sweep enumerated 95 research_dossier partitions but read_dossier accepts 93: BP-SLASH-_LN_Equity and NG-SLASH-_LN_Equity raise SlashSafeKeyError when the partition name is passed as a key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S3 list of s3://opal-data-harvest/amgt/harvest/gold/research_dossier/ CommonPrefixes 20:56Z = 95 security_key= partitions; python lib.research.corpus.dossier.read_dossier('BP-SLASH-_LN_Equity') -> SlashSafeKeyError, same for NG-SLASH-_LN_Equity (sweep output .scratch/p4/sweep.json rows dossier_read FAIL).",
+        "The real keys carry a slash (BP/_LN_Equity, NG/_LN_Equity per capture_lib._filename_slug's note); the two names were measured 0 times in the FWD-10/11/12/15/16/18 population counts, so those denominators read 93 of 95."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order CRPS-p-4 asks for the population each fence names with its denominator; the dossier store holds 95 names.",
+    "world_is": "93 of 95 partitions were measurable with the key taken from the partition name; the 2 slash-safe names need their slash form (BP/_LN_Equity, NG/_LN_Equity) and were not re-read. Neither is one of the four named names and the served-plane counts are 0 for every measured name, so no state moves.",
+    "notes": "Not re-run in the slash form: the read is by the slash-form key through resolve_identity, outside this cell's four named names."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S61",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T22:20:00Z",
+    "one_line": "The round-15 analysis's standing contract ('every folder with no crosswalk row is registered through add_security') is wider than the producer it schedules: induction_run registers only EFFECTIVELY-EVIDENCED folders (a report's '(Ticker: ...)' line), so a folder whose only identity evidence is its own name -- Hitachi 6501 JP, registered by hand in round 15 -- reads NO_EVIDENCE and would not be registered by the daily trigger.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/induction_run.py module docstring: run() 'collects every EFFECTIVELY-EVIDENCED row ... NO call when empty'; Z-S58 (13:00Z): induction_request.run() on the live library read 'candidate Hitachi 6501 JP | NO_EVIDENCE / picked NONE ... no report states a ticker in the (Ticker: ...) form'.",
+        "Round 15 q-2 needed add_security --folder 'Hitachi 6501 JP' --bloomberg '6501 JP' (the id from the folder name, then MEASURED by the call; CTO half 411236c2b7 AGREED the identity) because --folder alone found no ONE PAGER workbook (dry-run 21:43:19Z, UNRESOLVED, 0 calls)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS.round15.md s.2: 'A daily trigger runs induction_run over the live library: every folder with no crosswalk row is registered through add_security's scripted path (R-21), and ambiguous names are REFUSED, not picked.'",
+    "world_is": "The scheduled producer registers the EVIDENCED subset only; a name-token-only folder stays UNRESOLVED until a manual act or a rule change.",
+    "notes": "Round 16's cell CRPS-r-1 schedules the producer as ruled and tells the worker not to widen it. Widening the population rule to a folder-name token confirmed by the call (the round-15 q-2 shape) is an identity-rule change for 1.0.0_SA_CTO~Z (and CVO~Z's calls-not-picks ruling), not the issuer's.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S62",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T22:40:00Z",
+    "one_line": "DISARM of AMGT_CORPUS-Z-S59 by its owner: .tools/safe-merge.sh fixed at ccf2a27c6b (0.0.0_AB_MSTR~Z) -- a conflicted merge now records only HEAD..MERGE_HEAD plus unmerged paths; any other staged path is WARNed and refused on --continue.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Commit ccf2a27c6b (0.0.0_AB_MSTR~Z), relayed by msg 26756 (MSTR~Z) and msg 26758 (1.0.0_SA_CTO~Z: 'cite it as the resolving commit ... for AMGT_CORPUS Z-S59'); its body carries a scratch-repo test with a negative control and names one residual (a peer path that also differs between the sides).",
+        "Z-S59's case: merge 34bbf74213 carried 6 concurrently-staged 4.0.0_SA_CRO~Z paths through --continue; content was intact, authorship mixed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-S59: safe-merge --continue named 6 foreign staged paths and still committed them.",
+    "world_is": "At ccf2a27c6b the --continue path refuses a staged path the merge did not record; the fix is LOCAL on CLOUD (push held on Andrew).",
+    "notes": "The residual named in ccf2a27c6b's body (a peer path that also differs between the two sides) stays with the tool's owner.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S63",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T22:52:00Z",
+    "one_line": "A scheduled induction fire with a non-empty population appends its registration rows to lib/research/identity/registrations.json IN THE PINNED CHECKOUT (the task's WorkingDirectory), not in CLOUD's copy; the pool crosswalk carries the new names, but CLOUD's registrations.json does not, so a later crosswalk build from CLOUD inputs (crosswalk --write-pool, add_security, build_universe) would publish a record set WITHOUT them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/identity/crosswalk.py: REGISTRATIONS_PATH_DEFAULT = 'lib/research/identity/registrations.json' (relative; read and appended relative to the process cwd unless AMGT_REGISTRATIONS_PATH is set); add_security --write-pool appends the row and builds the pool document from it (round 15: registrations.json 70 -> 71 in the tree it ran from, committed 7581890b07).",
+        "lib/research/corpus/schedule_induction.ps1 @bb2f3dbb18: New-ScheduledTaskAction ... -WorkingDirectory <repo parent>/opal-pinned/<task>/<sha12> (a detached checkout); the action sets only OPAL_INDUCTION_FIRE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS.round15.md s.2: the daily trigger registers every new EVIDENCED folder through add_security's scripted path, from a pinned commit.",
+    "world_is": "Branch 1 (population 0, today) writes nothing, so the hazard is dormant; branch 2 would fork the registration ledger between the pinned checkout and CLOUD.",
+    "notes": "Named in the round-16 pair's COO half for the CTO half to grade. Candidate remedies (the CTO's call): point AMGT_REGISTRATIONS_PATH at one durable shared location in the task action, or carry the pinned checkout's registrations delta back to CLOUD as a committed act after each non-empty fire. Disarm owner is this seat until ruled.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S64",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T23:35:00Z",
+    "one_line": "The model-block writer (integrations/bloomberg/research/model_block_pull.py) puts slash tickers under a LITERAL '/' key -- derived/model_block/BP/_LN_Equity/... (6 objects) -- and never through crosswalk.slash_safe_key, so BP/ LN and NG/ LN sit outside C-SLASH-SAFE-KEY on this surface; 0 objects exist under the slash-safe form BP-SLASH-_LN_Equity.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer's own S3 list 2026-09-29 ~23:3xZ, bucket opal-data-harvest: derived/model_block/BP/_LN_Equity/ 6 objects; derived/model_block/BP-SLASH-_LN_Equity/ 0; derived/model_block/IMB_LN_Equity/ 9 (control).",
+        "CRPS-s-1 census (0.9.0_WK_AMGT_CORPUS~1, merged 01682baecd): 'the producer does not call slash_safe_key; no -SLASH- key exists' across 618 objects / 99 prefixes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "lib/research/identity/crosswalk.py C-SLASH-SAFE-KEY: 'An entity id sits in a partition, minted by the crosswalk' (security_key_partition / slash_safe_key).",
+    "world_is": "The dossier and the corpus write the slash-safe partition; the model-block producer writes the raw '/' key. Readers of the model block work today because they read the same raw form.",
+    "notes": "Not this project's writer (integrations/bloomberg/research/, AMGT_RESAPP's model-block producer). Carried to the round-17 analysis for routing; no served read is broken today.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S65",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T23:40:00Z",
+    "one_line": "Hitachi's model-block derive (build_unit_map additive merge) changed SHARED field-level entries in integrations/bloomberg/research/field_map.json beyond adding Hitachi: 4 fields' unit_status/sign_status flip MEASURED -> 'UNRESOLVED-ON-6501 JP Equity: sampled magnitude 11962163.4 does not discriminate absolute vs millions', and 1 field's unit/sign changes SHAPE from a scalar ('MILLIONS'/'POSITIVE') to a per-security dict; the pair's condition 3 (only 6501 keys added, 0 changed) fails, so the delta is WITHHELD uncommitted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-crps17-1 after derive 20260929T232834Z: element-wise diff vs HEAD -- securities 98 -> 99 (+6501 only); fields 66: 37 measured_on lists gain Hitachi, 5 'finding' strings recomputed, 4 unit_status + 4 sign_status MEASURED -> UNRESOLVED-ON-6501, 1 unit + 1 sign scalar -> dict (evidence/r17_after.txt, evidence/r17_field_map_withheld.diff, 2445 lines).",
+        "Runtime readers of field_map.json: lib/research/provenance/render_print.py, lib/research/provenance/validate.py, lib/research/checkface/run_checks.py (+ the producer and its tests)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Pair NEVER_WIDEN_ROUND17_HITACHI_MODEL_BLOCK COO half + CTO half c58e96e867 condition 3: 'the field_map.json diff against CLOUD HEAD adds only 6501 keys (0 changed, 0 removed)'; build_unit_map docstring: additive merge, never overwrite a MEASURED entry.",
+    "world_is": "The merge preserves every per-security MEASURED entry but recomputes field-level aggregates (status, finding, scalar-vs-dict unit), so one new name with an ambiguous magnitude degrades 4 shared fields' status for all 98 names.",
+    "notes": "Served state now: Hitachi's model block is served (census 96/96); field_map.json on CLOUD is unchanged. Entry amgt-corpus-r17-hitachi-model-block leg F is OPEN pending the CTO's ruling: commit the delta as the producer wrote it, commit only Hitachi's per-security entries (leaving aggregates), or leave Hitachi's units out of the map. The shared tree's field_map.json also carries a peer's uncommitted edit (CTO condition 2).",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S66",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-29T23:59:00Z",
+    "one_line": "AMGT_RESAPP yy-6 (6a940b02b8) makes crosswalk.main --write-pool UNION-FIRST over the served pool, but the other crosswalk/v1 writer, add_security (build at add_security.py:366, put at :401), still builds WITHOUT served=, so Z-S63's fork survives on the path the scheduled induction fire uses and on every later CLOUD-side registration: a pinned-checkout fire's names are dropped by the next add_security put from CLOUD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git grep 'write_pool(|build_crosswalk(' over lib/ integrations/ .tools/ (tests excluded): 14 call sites; the crosswalk/v1 key is built by exactly 2 -- crosswalk.py:1416/1436/1453 (main; yy-6 passes served=_read_pool_latest()[0] under --write-pool) and add_security.py:366/401 (no served=). git grep 'served=' on add_security.py and build_universe.py: 0 hits. The other 11 sites write filings/management/peers/scores/universe keys.",
+        "induction_run --fire calls add_security.main (--batch ... --write-pool) -- lib/research/corpus/induction_run.py module docstring (amendment 3)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NEVER_WIDEN_ROUND16_R1_CTO_HALF.md: the invariant 'in the ONE function every pool write passes through (crosswalk.write_pool, or build_crosswalk beneath it)'; ROUND_ANALYSIS.round16.md ruling 1: this project re-signs r-1 once that cell drains.",
+    "world_is": "The union lives in crosswalk.main's call, not inside build_crosswalk/write_pool, so it reaches 1 of the 2 crosswalk writers.",
+    "notes": "Blocks s-2's re-sign (branch 2 still unsafe). Candidate fix, AMGT_RESAPP's file: add_security's build passes served=crosswalk._read_pool_latest()[0] when --write-pool (or the union moves into build_crosswalk's default). Routed to 1.0.0_SA_CTO~Z.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S67",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-30T01:15:00Z",
+    "one_line": "This seat's round-18 issuance (14 paths staged by safe-commit) was swept into 2.0.0_SA_COO~D's drain merge 6fcaa52f79 (safe-merge, 21:11:43 local) -- the reverse of Z-S59: a staged index at the moment another seat's merge commits rides that merge under its author, and the to-pipeline-gate never graded the three orders.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show --stat 6fcaa52f79: 16 files, 14 of them AMGT_CORPUS round-18 issuance paths (decompositions/AMGT_CORPUS_DECOMP.md + .round17.md, TO-CRPS-t-1/t-2/t-3, checks/round18/*); msg 26831 (COO~D) confirms 'swept 14 files you had staged ... bytes as staged'.",
+        "This seat's safe-commit call printed no committed line; the index read 0 staged paths afterwards; ccf2a27c6b (the Z-S59 fix) guards the --continue path of a conflicted merge."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md 14b / safe-merge.sh: a drain merge carries only the branch's paths; a path staged that the MERGE did not stage is another seat's work.",
+    "world_is": "Either safe-merge's pre-merge index guard ran before this seat's safe-commit staged, and the merge commit then took the index, or the guard does not cover the one-shot path's commit step. The race window is between the guard and the commit.",
+    "notes": "Bytes are intact and the orders are live; the issuance is re-stated by ISSUANCE_ROUND18.md with the fanout line. Tool owner 0.0.0_AB_MSTR~Z (safe-merge; ccf2a27c6b covered the --continue path).",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S13",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T00:20:00Z",
+    "one_line": "A per-security exception under a SCALAR shared field (e.g. BEST_SALES, shared unit 'MILLIONS', 6501 UNRESOLVED) is invisible to the readers: model_block_pull._resolved_unit/_resolved_sign return the shared scalar for ANY security, so the served figure for 6501 reads MEASURED 'MILLIONS' although its own map entry says the magnitude did not discriminate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/research/model_block_pull.py:684-718 @48a5b4a1cf: _resolved_unit returns entry['unit'] when it is not a dict, with no read of per_security_detail[security]; committed field_map.json @ead621d685 BEST_SALES: unit 'MILLIONS' scalar, per_security_detail['6501 JP Equity'].unit_status 'UNRESOLVED-ON-6501 JP Equity: sampled magnitude 11962163.4 does not discriminate absolute vs millions'.",
+        "CRPS-t-2 rule (ruling 2: a shared field's type never changes) makes the scalar form permanent for such fields, so the exception can only be read from per_security_detail[<security>]['exception'] (build_unit_map.py, this order); no reader consults it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ruling round17 s.2 ruling 2 / CRPS-t-2: an unmeasurable name is recorded as a per-security exception and the shared field is untouched; a value must carry its claim (CLAUDE.md section 4).",
+    "world_is": "The writer now records the exception; the producer's _resolved_unit/_resolved_sign (outside this order's paths) do not read it, so the same 6501 figure the pre-t-2 map served as 'MILLIONS' (committed at ead621d685 in the same shape) is still served with the shared MEASURED label.",
+    "notes": "Candidate fix, model_block_pull.py's file (not in CRPS-t-2 paths): _resolved_unit/_resolved_sign check per_security_detail[security] for an 'exception' (or non-MEASURED unit_status) key and return the UNRESOLVED-ON text. Scope today: fields with a scalar unit and a 6501 exception in the committed map (BEST_SALES; CURR_ENTP_VAL and SALES_REV_TURN are already dict-form and carry the UNRESOLVED text in the unit dict).",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S14",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T00:20:00Z",
+    "one_line": "build_unit_map's own CLI (main --securities) and model_block_pull._ensure_unit_map feed build_entries different headers: the CLI passes the raw header (CIE_DES_BULK as a row-dict list, no BEST_ forecast values), the producer pre-joins CIE_DES_BULK and merges the FY1 bestdata row, so the CLI replay reproduces 209 of the 214 committed Hitachi additions; 5 measured_on entries (BEST_DPS, BEST_EBITDA, BEST_EPS, BEST_PE_RATIO, CIE_DES_BULK) come out as exceptions instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "t2_replay.py output at HEAD of wk-crps18-2: 'hitachi_reproduced 209 of 214'; the 5 missing paths are /fields[mnemonic=X]/measured_on[+\"6501 JP Equity\"] for BEST_DPS, BEST_EBITDA, BEST_EPS, BEST_PE_RATIO, CIE_DES_BULK (0 extra paths).",
+        "model_block_pull.py:790-830 @48a5b4a1cf (_ensure_unit_map: _bulk_text_value join and bestdata FY1 merge before build_entries) versus build_unit_map.py main/load_raw_for_key (header = refdata top-level dict as landed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "build_unit_map.py docstring: the CLI is the builder's own entry point for a named run; C-UNIT-MAP-MEASURED: the map is built for every name.",
+    "world_is": "Only the producer path yields MEASURED for the 5 mnemonics; a CLI run (--securities / --population crosswalk) records them UNRESOLVED (exception-marked), so the two builders disagree on the same raw.",
+    "notes": "Not widened here (the order's ruling is the exception shape). Candidate fix: main() applies the producer's header preparation (join CIE_DES_BULK, merge bestdata FY1) before build_entries."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S18",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T23:59:30Z",
+    "one_line": "integrations/bloomberg/research/price_axis_pull.py:97-100 inserts a hard-coded main-workspace path into sys.path at import, so a pytest session that collects test_price_axis_pull.py BEFORE a lib.* test imports lib.research.* from the MAIN tree, not the worktree under test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show HEAD:integrations/bloomberg/research/price_axis_pull.py lines 97-100: REPO = os.environ.get('OPAL_WS_ROOT') or the literal main-workspace path (C:/Users/Opal Bloomberg/Desktop/ajb_workspace); sys.path.insert(0, REPO/integrations/bloomberg/mcp); sys.path.insert(0, REPO).",
+        "In worktree /c/tmp/wk-crps18-1 with PYTHONPATH=.: 'pytest test_price_axis_pull.py test_induction_schedule.py' -> 2 failed, both AttributeError: module lib.research.corpus.induction_scheduled (loaded from C:/Users/Opal Bloomberg/Desktop/ajb_workspace/lib/research/corpus/induction_scheduled.py) has no attribute run_admit_step / _model_block_pull_path; each file alone passes (test_price_axis_pull 4 passed; the two AC3 tests 2 passed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker's pytest run in its worktree imports the worktree's lib.*; the AC scripts run one test file per pytest call.",
+    "world_is": "Any multi-file pytest run in a worker worktree that includes test_price_axis_pull.py can grade the MAIN tree's lib.* instead of the worktree's, so a green or red result there is about the wrong bytes. The single-file AC invocations are unaffected.",
+    "notes": "Filed, not fixed (price_axis_pull.py is outside this order's paths). Fix is to derive REPO from the file location or require OPAL_WS_ROOT; workaround: run test files singly or export OPAL_WS_ROOT=<worktree>.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S9",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-30T02:00:00Z",
+    "one_line": "The one reader of derived/model_block/ that builds a non-raw key is the render_pack.py main() CLI (security_key() maps '/' to '-'), so it reads BP and NG as ABSENT; no served surface reaches it, and the TO expected an ABSENT to carry one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/print/render_pack.py:148 security_key(): security.replace(' ', '_').replace('/', '-'); :1043 main() passes it to scoped_amgt.read_model_block; live read-only: 'BP/_LN_Equity' -> 'BP-_LN_Equity' -> None, NG likewise (MODEL_BLOCK_READERS_ROUND18.json row 19 of 20).",
+        "git grep render_pack over lib/ integrations/ infra/ (tests excluded): no caller of main(); the served print route scoped_amgt.py:4480 reads with the resolved raw key. The other 18 store readers read BP and NG OK (dossier, peers, scores, scoped_amgt routes, seed-etf-constituents)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO CRPS-t-3 item 3: for any ABSENT reader, name the served surface (an API route or page) that shows it.",
+    "world_is": "The single ABSENT reader is a hand-run CLI with no caller; no API route or page shows it. Served routes /versions and /thesis for BP and NG return 200, SERVED, 6 versions.",
+    "notes": "The CLI's read key is a local-filesystem form (its own docstring says never an S3 key). Whether to fix it or leave it is the issuer's and CTO's call; this worker changed no code."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S15",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T03:35:00Z",
+    "one_line": "For 6501_JP_Equity /thesis serves no dossier_fields block at all, so pillars, management, fund of record and last stated position carry no per-field ABSENT reason; only model.team_cases carries one ('no research dossier for this name').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read-only lambda:Invoke of opal-amgt-scoped-api /thesis for 96 keys (CodeSha256 pVa+sgzj8XNZ9uvJqCOwRNCJn0IZhUklnWZh6JbO7B0=, 2026-09-30T03:20Z) via capture_lib._invoke: 95 of 96 names carry dossier_fields with a status or a *_absent reason on every element; 6501_JP_Equity returns 200 with dossier_fields absent and model.team_cases reasons 'no research dossier for this name' (census in org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/FWD_EVIDENCE_ROUND20.json)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-10 and FWD-11 fences: a name whose pack carries none reads ABSENT with its reason.",
+    "world_is": "1 of 96 names (a name with no dossier at all) has the reason only on the cases block; the pillar and management elements are keyless, so a render keyed on dossier_fields has no reason to show for it.",
+    "notes": "Filed, not fixed (read-only order). Counted as not carrying in the FWD-10/11/15/18 numerators.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S16",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T04:10:00Z",
+    "one_line": "CRPS-w-3: TSM US Equity CURR_ENTP_VAL cannot be discriminated against CUR_MKT_CAP because the two are in different currencies (CRNCY USD, EQY_FUND_CRNCY TWD); the discriminator refuses a cross-currency ratio and leaves it UNRESOLVED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read-only S3 read of the landed raw for TSM_US_Equity (stamp 20260925T043112Z): CRNCY USD, EQY_FUND_CRNCY TWD, CUR_MKT_CAP 2339877750964.95, CURR_ENTP_VAL 71993494.73. As millions the EV is 7.2e13 (30.8x the USD market cap), as absolute 3.1e-5x: in no band either way, and the two currencies differ, so the ratio is not a unit read.",
+        "build_unit_map.discriminate_facts returns UNRESOLVED for that fact with the reason; check w3_check.py line 'FACT TSM US Equity | CURR_ENTP_VAL | UNRESOLVED | ...'. The same read resolves the four JP names and the SAP GY control as MILLIONS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO CRPS-w-3: a cross-field read of enterprise value against price x shares or market cap decides the unit, and a name the read cannot decide stays UNRESOLVED.",
+    "world_is": "TSM is an ADR: market cap is in USD, the fundamentals (enterprise value) are in TWD. Deciding it needs an FX rate or a TWD-denominated anchor the raw does not carry; the worker added a currency guard (CRNCY must equal EQY_FUND_CRNCY) and did not invent a rate. Also: REVENUE_PER_SH is unmeasured by classify_unit on 6501 and 8316 (2332, 2687 exceed its 2000 per-share band), so the per-share x shares read is skipped for those names and their SALES_REV_TURN resolves on the market-cap read alone.",
+    "notes": "Filed, not fixed. An ADR name stays UNRESOLVED for the four large-number fields until the issuer supplies a same-currency anchor.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

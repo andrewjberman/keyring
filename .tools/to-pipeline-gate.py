@@ -2648,6 +2648,13 @@ def check_prd_signoff(root, rel):
         else:
             notes.append("%s: L4-R sign-offs OK for %s at %s (%s)" % (
                 rel, rp, r["prd_version"], ", ".join("%s=%s" % (h, r["halves"][h]["by"]) for h in lib.HALVES)))
+        # Andrew-direct 2026-09-28 ~18:05Z ruling 4: L4-R stays ENDPOINT-bound, but a ratified half whose own
+        # text moved since signing is SAID, never admitted silently. A WARN, not a refusal.
+        for h in lib.HALVES:
+            st = r["halves"][h]
+            if st["state"] == "SIGNED" and "text CHANGED since signed" in str(st["detail"]):
+                notes.append("%s: WARN -- %s %s half: %s (signed by %s, %s); admitted by ENDPOINT hash, the "
+                             "changed text is unreviewed" % (rel, rp, h, st["detail"], st["by"], st["file"]))
     return v, notes
 
 

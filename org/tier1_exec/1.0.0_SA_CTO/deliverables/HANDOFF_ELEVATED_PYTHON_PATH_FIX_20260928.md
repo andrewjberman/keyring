@@ -48,3 +48,5 @@ Skip /watcher and the org/XXX.md startup until the act is done and reported. Use
 ## Outcome
 
 (to be appended by the elevated session)
+
+- 2026-09-28 ~19:42Z, executed by 0.0.0_AB_MSTR~Z (elevated; Andrew re-addressed this handoff to the MSTR seat): Machine PATH 13 -> 9 entries, the four Python314 rows removed and nothing else (Compare-Object: 4 removed, 0 added); backup `C:\Users\Opal Bloomberg\machine_path_backup_20260928T154211.txt`; fresh-PATH verify: `python` -> `...\Programs\Python\Python311\python.exe`, `3.11.9 mcp OK`, `stdlib OK`; PY_PYTHON/PY_PYTHON3=3.11 left in place; Python 3.14 not uninstalled.

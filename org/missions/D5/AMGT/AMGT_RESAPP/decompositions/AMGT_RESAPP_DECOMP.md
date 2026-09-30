@@ -6466,3 +6466,522 @@ fanout:
   Not on s.6's list; carried to the CTO's round-45 analysis.
 - Raw float repr in served values (e.g. "537.6961078500001 USD"), recorded by the CVO at round 44, not held against the grade.
 - The portal promote; FWD-7's route coverage; the span write; the wiring class; ACCEPT (carded); Z-S287 (resolver).
+
+
+## 54. ROUND 46 -- THE HARNESS THAT LOADS THE TIMELINE MOUNT, THE BASE CASE ON THE ADJUSTED BASIS, ITS REDEPLOY, AND THE FIRST FULL OUTCOME PASS. Four orders over the round-45 analysis's five items
+
+**Cut by `2.0.0_SA_COO~Z`** (post-reboot, post-S19 rewrite; every hash here is post-rewrite) on `1.0.0_SA_CTO~Z`'s **ROUND 45
+ANALYSIS** (`ledger/ROUND_ANALYSIS.round45.md` @`2356891712`, s.4 five items; round 45 CLOSED), with s.2 item 2 answered by
+Andrew (~21:3xZ, record @`c027b4726f`, CTO msg 26218: the Base case is ADJUSTED EPS x ADJUSTED P/E, rebuilt from served data, no
+vendor pull) and item 5 struck by the CTO on measurement (msg 26234, row Z-S293). The ratified-text half reads ADMITTED at v0.28;
+no outcome is added, so no half re-opens.
+
+### 54a. THE FIVE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 the full FWD-1..FWD-31 outcome pass, carrying the judgment criterion with each Base-case input's basis beside its ratio | `AMGT-uu-1` |
+| 2 the export-compare harness loads a header that mounts HARVST's `TimelinePanel` (Z-S292) | `AMGT-uu-2` |
+| 3 `consensus_eps` carries `basis` | `AMGT-uu-3` (one cell with item 4 and Andrew's ruling: one write surface, one sign-off) + `AMGT-uu-4` (served) |
+| 4 served values print as values, not raw float repr | `AMGT-uu-3` |
+| 5 FWD-24 cited cases + the stale reason | **NOT CUT.** The 34 "cited" cases are section headings, 34 of 34, 0 content (row Z-S293 @`c21e3f4fbc`); the extraction is AMGT_CORPUS's and enters at its round-7 analysis (CTO msg 26234). The upside/downside reason stays: both sites serve upside/downside only, which Andrew's ruling did not settle, and PRD `:1271` quotes it. |
+
+### 54b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The harness crash.** On the shared tree (portal DEV @`92a25762`, HARVST's LOCAL-only timeline commit) `exportCompare.harness.cjs`
+   fails `Cannot find module '@/api/api-client'` for every name (38 of 38 before the issuer stopped the close run); on the published
+   gitlink `c3dd9ca9` the same fixture reads 4 of 4 sets clean. `load()` (`:144-152`) has no `@/` mapping.
+2. **The planted control was blind to that crash** (row Z-S294): `tt-1.AC2.sh` accepts any rc=1. uu-2 AC2 requires the tokens.
+3. **The adjusted P/E is computable from every stored block.** AMD's block carries 10 fiscal-year `PX_LAST` and 10
+   `IS_COMP_EPS_ADJUSTED` rows (and 8 `PE_RATIO`); `BEST_EPS` forecast figures carry their own `basis` object. Median over the
+   closed years of (PX_LAST_y / f) / IS_COMP_EPS_ADJUSTED_y: AMD 55.63 (the CVO's adjusted-implied 55.6), GOOGL 27.01, RKT 17.63
+   once the GBp minor unit (f = 100) is divided out -- without it RKT reads 1762.6. Adjusted Base: AMD 415.64 USD (~0.66 of
+   price, the CVO's proxy), GOOGL 511.61 USD, RKT 5941.78 GBp.
+4. **Served today:** 48 of 95 live names serve a SERVED base; 0 of 48 carry either basis (uu-4 AC3 base read).
+5. **The Base case is served AS LANDED** (`scoped_amgt._model_cases`, `:2971-2998`) from stored blocks
+   (`derived/model_block/<key>/<stamp>/model_block.json`). Issuer's choice: the adapter computes at serve time from the stored
+   figures by ONE function the producer also calls -- one Lambda redeploy, no S3 write over ~95 keys.
+
+### 54c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-uu-2` | THE EXPORT-COMPARE HARNESS LOADS A HEADER THAT MOUNTS THE TIMELINE PANEL | `~166` | worker | LOCAL | `portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs` |
+| `AMGT-uu-3` | THE BASE CASE ON THE ADJUSTED BASIS, EACH INPUT CARRYING ITS BASIS, THE VALUE PRINTED AS A VALUE | `~166` | worker | SERVED | `integrations/bloomberg/research/model_block_pull.py` (+tests), `lib/research/api/*.py` (+tests), `lib/research/print/render_pack.py` (+tests), `portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx` |
+| `AMGT-uu-4` | THE REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (apply only), its deliverables, the ledger |
+| `AMGT-uu-1` | THE FULL FWD-1..FWD-31 OUTCOME PASS + THE BASE-CASE BASIS TABLE | `~167` | worker | LOCAL | its deliverables only |
+
+### 54d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's five items; four land in exactly one cell each (3 and 4 share uu-3 by write surface), item 5 is struck
+  by measurement with the CTO's approval (54a). Nothing in s.4 is left unplaced.
+- **(ii) Same grain.** One instrument repair, one build, one deploy, one measurement.
+- **(iii) Intent.** One axis: the served page states its numbers on a stated basis, and the instrument that says so can see.
+- **(iv) What a cell does NOT move.** uu-2 moves no page file; uu-3 moves no S3 object, no pdf path, no posture path, and not the
+  upside/downside objects; uu-4 moves exactly its sign-off pair's radius; uu-1 writes only its deliverables.
+
+### 54e. EDGES AND FAN-OUT
+
+```
+uu-2 -> uu-3   (uu-3's AC2 runs the harness uu-2 repairs; both touch the portal on one slot)
+uu-3 -> uu-4   (the code the deploy serves; never-widen halves written after uu-3 lands)
+uu-4 -> uu-1   (the pass measures the served state after the redeploy)
+fanout:
+  cap: 2                               # site Z contention, as round 45
+  orders_total: 4
+  chains_total: 1
+  wave_0: [uu-2, uu-3]                 # ONE worker, slot ~166, queued in that order (continued, never respawned)
+  wave_1: [uu-4]                       # a seat order: after uu-3 merges and both never-widen halves are committed
+  wave_2: [uu-1]                       # slot ~167, worktree cut after uu-4's verification
+  portal_ref: DEV                      # local portal DEV at the cut: 92a25762 (carries the mount uu-2 must load)
+  no_vite_per_worker: true             # port 5174 is Andrew's walk build (record @c027b4726f)
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: uu-4's build pip-downloads its pinned wheels (declared); uu-1 reads Opal's own deployed function (GET routes)
+  route_change: none
+  no_promote: true
+```
+
+### 54f. CARRIED
+
+- FWD-30 is MET on the served export (round 45) but not REALIZED: the page side is portal DEV only (rounds 40-46 unpromoted) and
+  tt-2's limb-7 branches 1 and 2 were UNEXERCISED. uu-1 grades it with the rest.
+- GOOGL's FY1 `BEST_EPS` (1.75x its last adjusted year) stays ungraded by name (the analysis's s.2; no vendor ask).
+- The portal PROD promote (gated on Andrew's word); Z-S290's template change is applied in this round's faces (no order tells a
+  worker to commit the gitlink).
+
+
+## 55. ROUND 47 -- THE FORMULA THAT CLAIMS ONLY WHAT ITS INPUTS CARRY, THE TEAM'S CASES IN THE PAYLOAD, THE FOUR HARNESSES, AND THE REDEPLOY. Five orders: the round-46 analysis's three items plus one thread-breaking cell found at the cut
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 46 ANALYSIS** (`ledger/ROUND_ANALYSIS.round46.md` @`0e405cc330`, s.4
+three items; round 46 CLOSED). The Base-case ANCHOR (ruling 2) is not a cell: `4.0.0_SA_CRO~Z` is researching it and the CTO rules on
+the tick it lands -- it LANDED during the cut (CTO_RULING_RESAPP_BASE_CASE_ANCHOR_20260929.md): ruling 2 (relabel) joins vv-1; ruling 1
+(the team's Base leads on the page) is DSGN_AMGTV1's. No outcome is added, so no L4-R half re-opens.
+
+### 55a. THE THREE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 the formula string names each input's own basis (ruling 1) | `AMGT-vv-1` (build; widened at the cut by the CTO's anchor ruling 2 -- the rule's value relabelled "Historical-multiple reference", msg 20260929T050711Z) + `AMGT-vv-4` (served) |
+| 2 the scoped API carries the team's cases (ruling 3) | `AMGT-vv-2` (build; an external dependency on AMGT_CORPUS) + `AMGT-vv-4` (served, with ONE read grant) |
+| 3 the harness breaks (Z-W167-S1, -S2) | `AMGT-vv-3` (widened at the cut to the fourth harness measured the same way) |
+| -- found AT the cut: FWD-30's instrument blind to DSGN_AMGTV1's redesigned page | `AMGT-vv-5` (thread-breaking, FIRST) |
+
+### 55b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The formula** lives in one constant, `case_rule.BASE_FORMULA` (`:70`, used `:245`); the page and the export print the served
+   text. Pinned served values before the change: AMD 415.64057358490567, GOOGL 511.6099296044653, RKT 5941.776539489737.
+2. **The dossier cases now carry content:** 28 of 95 live names (base/upside/downside each), 67 absent, 0 read failures; case keys
+   `{value, unit, citation, absent}`; `value` is the pack's case table as written (e.g. ASML: EPS/Multiple/Price/Return by year),
+   `unit` null on the example. AMGT_CORPUS's open `CRPS-l-1` ("the case unit carries its claim") changes the unit fields.
+3. **The Lambda cannot import `read_dossier` today:** `dossier.py` imports `extract` at module level and `extract.py:56` imports
+   `fitz`; the package carries pyarrow (a-2) but not PyMuPDF. Re-implementing the dossier's pick rule is refused (one rule);
+   the import deferral is AMGT_CORPUS's surface (asked, msg 20260929T045710Z).
+4. **The grant:** `local.scoped_amgt_pool_prefixes` holds 29 entries; `amgt/harvest/gold/research-dossier/` is not one.
+5. **FWD-30's instrument at portal DEV 5fac7a37 (DSGN_AMGTV1 merged `abcec1b2`..`5fac7a37` after round 46):** `exportCompare`
+   fails to load (`ThesisCards.tsx:29` imports `@/ui/components/graphic/HeroGraphic`); stubbed in a scratch worktree only, the served
+   fixture reads FIGURES 176/182, extra = header|PX_LAST, CUR_MKT_CAP, NET_DEBT, CURR_ENTP_VAL, VOLUME_AVG_30D, EQY_BETA --
+   which `HeaderCards.tsx` SHOWS under `data-card-figure-mnemonic`, while `pageFigures()` reads `data-stat-tile` only. An
+   instrument gap: EXPORT-COMPARE NOT OK at DEV until the harness reads the cards.
+6. **The harnesses at portal DEV 8fa7abde:** `shell`, `posture` -> `Cannot find module '@/api/api-client'`; `tabs` ->
+   `'@/ui/components/graphic/HeroGraphic'`; `leadPanelPattern` loads, 15 checks, 4 wrong-way (rows_rendered, source_caption_wraps,
+   disclosure_own_line, caption_facts_unchanged).
+
+### 55c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-vv-1` | THE RULE'S VALUE IS A "HISTORICAL-MULTIPLE REFERENCE" WHOSE FORMULA NAMES EACH INPUT AS ITS BASIS OBJECT DOES | `~168` | worker | SERVED | `case_rule.py`, `scoped_amgt.py` (the no-cases branch's label), `render_pack.py`, `ModelTab.tsx`, `exportCompare.harness.cjs` + tests |
+| `AMGT-vv-2` | THE SCOPED API CARRIES THE TEAM'S CASES, CITED, BESIDE THE RULE'S BASE | `~170` | worker | SERVED | `lib/research/api/scoped_amgt.py`, `lib/research/api/*.py` + tests |
+| `AMGT-vv-3` | THE FOUR PAGE HARNESSES RUN AGAIN, NONE BLINDED | `~169` | worker | LOCAL | four `portal/.../__harness__/*.harness.cjs` |
+| `AMGT-vv-5` | FWD-30'S HARNESS READS THE REDESIGNED PAGE | `~168` (first) | worker | LOCAL | `exportCompare.harness.cjs` |
+| `AMGT-vv-4` | THE REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (one pool-prefix entry + apply), its deliverables, the ledger |
+
+vv-1 and vv-2 BOTH write `scoped_amgt.py` (vv-1: the label on `_model_cases`'s no-cases branch; vv-2: `_team_cases`), so vv-2 is
+spawned only after vv-1 drains -- a file edge, not a data edge, stated so the spawn order is never parallel.
+
+### 55d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's three items; each lands in exactly one build cell; items 1 and 2 share the one served act (vv-4).
+  The anchor is excluded by the analysis itself.
+- **(ii) Same grain.** One text change, one payload, one instrument repair, one deploy.
+- **(iii) Intent.** One axis: the served page claims exactly what its sources carry, and the instruments that say so can see.
+- **(iv) What a cell does NOT move.** vv-1 moves no number; vv-2 moves no page/export text and not the rule's Base; vv-3 moves no page
+  file; vv-4 moves exactly its pair's radius (the code + ONE read prefix).
+
+### 55e. EDGES AND FAN-OUT
+
+```
+vv-5 -> vv-1   (same worker, same file: exportCompare.harness.cjs; thread-breaking first)
+vv-5 -> vv-4   (vv-4's AC2 runs FWD-30 through this harness)
+vv-1 -> vv-4   (the served text)
+vv-2 -> vv-4   (the served payload + the grant)
+EXTERNAL: AMGT_CORPUS CRPS-l-1 + dossier.py import deferral -> vv-2 (spawned only then)
+fanout:
+  cap: 3
+  orders_total: 5
+  chains_total: 2                      # {vv-5 -> vv-1 -> vv-2 -> vv-4} (vv-2 by file edge), {vv-3}
+  wave_0: [vv-5, vv-3]                 # slots ~168, ~169, now; ~168 continues with vv-1
+  wave_1: [vv-2]                       # slot ~170, when the external dependency lands
+  wave_2: [vv-4]                       # a seat order: after vv-1 and vv-2 merge and both never-widen halves are committed
+  portal_ref: DEV                      # local portal DEV 5fac7a37 at the cut (DSGN_AMGTV1's merges on top of 8fa7abde)
+  no_vite_per_worker: true             # 5174 is Andrew's walk build
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: vv-4's build pip-downloads its pinned wheels (declared); checks read Opal's own S3 and deployed function (read-only)
+  route_change: none
+  no_promote: true
+```
+
+### 55f. CARRIED
+
+- The Base-case ANCHOR: ruled during the cut (the team's Base leads; the rule is a labelled reference); the relabel is in vv-1, the
+  page order is DSGN_AMGTV1's; a forward-P/E-history anchor is recorded as an option needing a Bloomberg pull no word has named.
+- FWD-30 held from REALIZED by the page half (DEV only; Andrew's hold on pushes and merges).
+- The team-case RENDER is DSGN_AMGTV1's (fork F5), under CTO msg 26430's unit rule.
+
+## 56. ROUND 48 -- THE RE-LAND ON THE CANONICAL PREFIX, THE SERVED COMPANY NAME AND CLASSIFICATION, AND THE EXPORT'S WORDING FROM ONE SOURCE. Three cells, four orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 47 ANALYSIS** (`ledger/ROUND_ANALYSIS.round47.md` @`657b9283a2`, s.4
+three items; round 47 CLOSED). Rulings carried: one writer per artifact (`exportCompare.harness.cjs` = DSGN_AMGTV1;
+`render_pack.py` = AMGT_RESAPP); a change to the other project's artifact is asked through that project's round. No outcome is
+added, so no L4-R half re-opens.
+
+### 56a. THE THREE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 re-land vv-4 on `amgt/harvest/gold/research_dossier/` (fresh pair, STOP limb 6 kept) | `AMGT-ww-1` (seat order, WORLD): the ONE redeploy of the round |
+| 2 the served company name and classification on list rows | `AMGT-ww-2` (the server-side join) + `AMGT-ww-3` (the table's own writer moves the library's missing rows, under a pair naming both branches) + `AMGT-ww-1` (served, with ONE DynamoDB read grant) |
+| 3 the export's wording from ONE source (`W4-S1` (b)) | `AMGT-ww-4` (the served definition, read by `render_pack`) + `AMGT-ww-1` (served). The page's switch to the served definition is DSGN_AMGTV1's, asked through its round |
+
+### 56b. MEASUREMENTS THE CUT RESTS ON
+
+1. **AMGT_CORPUS r12 is drained** (`d0141a6a76`, CRPS-n-1 complete): `research_dossier/` holds 95 objects, the legacy
+   `research-dossier/` 846 untouched; `read_dossier('AMD_US_Equity')` reads `.../research_dossier/security_key=AMD_US_Equity/...`.
+   The deployed function is the rolled-back `CtIvirvM...EAOM=`; its pool-prefix list holds 29 entries.
+2. **etf-classifications** (key `ticker`, the BARE ticker): 285 items; of the 95 library bare tickers 36 are held (36 of 36 the
+   same company), 59 absent, 0 collisions among the 95; `sector` is unset on all 36; `sub_asset_class` = the GICS sector for a
+   constituent equity (Andrew's ruling 2026-08-25, the writer's own comment). Ranking rows carry `ticker` as `"BA US"`.
+3. **The table's writer** is `seed-etf-constituents.py` (universe = the served ETF positioning artifact); it preserves an
+   existing row's name by default and never writes the ticker as a name. Both POSN projects read `status: closed`, so no owning
+   round is open; the AMGT universe is added to the writer by this round (analysis s.4 row 2: "POSN's writer moves the AMGT rows").
+   The shared tree holds an uncommitted edit to that file (row `Z-S301`).
+4. **No clean name for 59 names:** the stored block's NAME is all-caps; Andrew-direct 2026-08-25 forbids all-caps names in this
+   table. The 59 rows land with their classification and a WITHHELD name (row `Z-S300`).
+5. **The page's words:** `modelSheet.ts` `LINE_NAMES` (25 entries) and `ModelTab.tsx` `formulaInWords` (a five-step regex chain).
+   `render_pack` prints mnemonics: `_figures_table` (`:445-452`, a "Mnemonic" column), and the raw formula in `_model_case_line`.
+
+### 56c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ww-2` | LIST ROWS CARRY THE SERVED COMPANY NAME AND CLASSIFICATION, JOINED SERVER-SIDE | `~171` | worker | SERVED | `lib/research/api/scoped_amgt.py`, `lib/research/api/*.py` + tests |
+| `AMGT-ww-4` | THE EXPORT'S WORDS COME FROM ONE SERVED DEFINITION | `~171` (after ww-2) | worker | SERVED | `lib/research/api/scoped_amgt.py`, `lib/research/print/render_pack.py` + tests |
+| `AMGT-ww-3` | THE TABLE'S OWN WRITER GAINS THE RESEARCH LIBRARY AS A UNIVERSE | `~172` | worker | WORLD | `infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py` + its test |
+| `AMGT-ww-1` | THE REDEPLOY ON THE CANONICAL PREFIX | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `infra/aws/terraform/harvest/**` (the prefix entry typed as builder output, ONE DynamoDB read grant, the apply), its deliverables, the ledger |
+
+ww-3's real write is the ISSUER's act at its drain, under a never-widen pair (COO + CTO halves) naming both branches: CREATE a
+row the table does not hold, PRESERVE a row it holds.
+
+### 56d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's three items; each lands in one build cell (item 2 in two, split by write surface: code vs. the
+  table's writer); the one served act is shared.
+- **(ii) Same grain.** One join, one table move, one definition, one deploy.
+- **(iii) Intent.** One axis: the served page and export name things in words from one source.
+- **(iv) What a cell does NOT move.** ww-2 moves no table row and no page file; ww-3 moves no existing row (36 byte-unchanged) and
+  the positioning universe's plan is unchanged; ww-4 moves no number and no page file; ww-1 moves exactly its pair's radius.
+
+### 56e. EDGES AND FAN-OUT
+
+```
+ww-2 -> ww-4   (same worker, same file: scoped_amgt.py -- a file edge)
+ww-2 -> ww-1   (the served join + its read grant)
+ww-4 -> ww-1   (the served definition)
+ww-3 -> (none) (the table write is the issuer's act at its drain; ww-1's AC3 reads SERVED names from the 36 already held)
+EXTERNAL: AMGT_CORPUS CRPS-n-1 -> ww-1 -- MET at the cut (d0141a6a76; 95 under research_dossier/)
+fanout:
+  cap: 3
+  orders_total: 4
+  chains_total: 2                      # {ww-2 -> ww-4 -> ww-1}, {ww-3}
+  wave_0: [ww-2, ww-3]                 # slots ~171, ~172, now; ~171 continues with ww-4
+  wave_1: [ww-4]                       # slot ~171 after ww-2 drains
+  wave_2: [ww-1]                       # a seat order: after ww-2 and ww-4 merge and both never-widen halves are committed
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: ww-1's build pip-downloads its pinned wheels (declared); checks read Opal's own S3, DynamoDB and deployed function (read-only)
+  route_change: none (payload fields only)
+  no_promote: true
+```
+
+### 56f. CARRIED
+
+- The 59 withheld names (`Z-S300`): a mixed-case source is an enrichment item for the round-48 analysis.
+- The page reading the served line names and formula words: asked of DSGN_AMGTV1 through its round at ww-4's drain.
+- FWD-30 held from REALIZED by the page half until DSGN_AMGTV1's harness cell (`Z-S297`) lands.
+
+## 57. ROUND 49 -- FWD-30'S ONE GRADER KEYED ON DATA ATTRIBUTES, THE SERVED NAME ON THE RANK-HISTORY SERIES, AND OFFICERS FROM THE PROXY. Three cells, four orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 48 ANALYSIS** (`ledger/ROUND_ANALYSIS.round48.md` @`1dfd5c0970`, s.4 three
+items; round 48 CLOSED; msg 26707). Rulings carried: FWD-30 has ONE grader, `round45/checks/sweep.py`, AMGT_RESAPP's, keyed on the
+page's data attributes and never its wording (ruling 1); the `reason` field names CASES (ruling 2); where an absence has no attribute,
+RESAPP asks DSGN_AMGTV1 through DSGN's round, never by a page edit; `exportCompare.harness.cjs` is DSGN's page-side check, not the
+grade. No outcome is added, so no L4-R half re-opens.
+
+### 57a. THE THREE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 FWD-30's grader keys on data attributes and names CASES | `AMGT-xx-1` (LOCAL, worker; the full 96-folder served sweep is the issuer's real run at the drain) |
+| 2 the served company name on the rank-history series (DSGN FWD-3 labels) | `AMGT-xx-2` (the join, worker) + `AMGT-xx-4` (the redeploy, seat order, under a never-widen pair written after xx-2 lands) |
+| 3 officers from the proxy when the 10-K's officer section is absent (DSGN FWD-7), LOCAL first cut | `AMGT-xx-3` (worker; SPAWN HELD on the egress call, 57b.4) |
+
+### 57b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The grader today.** `sweep.py --served` compares the DEPLOYED rich body captured beside the page (`print?format=rich`)
+   against `exportCompare.harness.cjs` rendering the captured fixture, and matches absence lines by their WORDS. Round 48 close:
+   62 of 96 OK, every NOT_OK ABSENCES only (row Z-S305). CORRECTION to Z-S305's second evidence line: with `--served` the
+   export side IS the deployed body, not a local rebuild; the CVO's controlled run (v58) is what proves the page side.
+   `--only KEY,...` exists; a worker's invocation is bounded at 120 s, so AC1 grades three named names (17 s at the base).
+2. **The page's attributes on DEV** (CTO read): `data-model-row`, `data-model-cell`, `data-model-refused`,
+   `data-model-case-status`, `data-model-case-reason`, `data-cite-resolved`, `data-posture-*`, `data-exec-officer`.
+   Portal DEV at the cut `ea248519` (DSGN_AMGTV1 round 5 merging).
+3. **The rank-history route.** `GET /api/scoped/amgt/lead-panel/timeseries/<movement>/<subject>?tickers=` ->
+   `scoped_amgt.read_rank_series` (`:885`); its `series` carry `ticker` and `points`, no name. `RankedChart.tsx` already labels a
+   line with `series.name` when served (`seriesLabel`, `:112`). ww-2's `_classification_for_ticker` (`:588`) is the join, and its
+   `dynamodb:GetItem` on `etf-classifications` is GRANTED since ww-1 -- so xx-4 moves code only, no IAM.
+4. **Officers.** `roster.py` marks an officer section that points elsewhere (INTU, HAL, CAT named in its header) UNRESOLVED-SOURCE
+   with `section_refers_to` = the filing's pointer sentence. The walked no-officer name is `INTU_US_Equity` (10-K
+   0000896878-26-000037; DSGN round 4 close walk). The filings path `lib/research/filings/fetch.py` reads EDGAR live
+   (`data.sec.gov`, `www.sec.gov`); its own egress cite is Andrew-direct 2026-09-15 ~05:42Z "The whole sitez fabric has free
+   egress this session". EDGAR is egress off Opal infrastructure, which CLAUDE.md Agent Autonomy excludes; the session grant is not
+   today's. **xx-3 is cut for coverage and its SPAWN IS HELD** until the call is ruled (put to 1.0.0_SA_CTO~Z, whose arm pitches a
+   reserved call to 3.0.0_SA_CVO~Z).
+
+### 57c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-xx-1` | FWD-30'S ONE GRADER KEYS ON THE PAGE'S DATA ATTRIBUTES AND NAMES CASES | `~173` | worker | LOCAL | `deliverables/2.0.0_SA_COO~Z/round45/checks/**` (sweep.py + a page-facts reader beside it) |
+| `AMGT-xx-2` | THE RANK-HISTORY SERIES CARRY THE SERVED COMPANY NAME | `~174` | worker | SERVED | `lib/research/api/scoped_amgt.py` + `lib/research/api/tests/**` |
+| `AMGT-xx-3` | OFFICERS FROM THE PROXY WHEN THE ANNUAL REPORT'S OFFICER SECTION POINTS ELSEWHERE | `~175` (HELD) | worker | LOCAL | `lib/research/management/proxy_officers.py` + `lib/research/management/tests/**` |
+| `AMGT-xx-4` | THE REDEPLOY CARRYING THE SERIES NAME | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the artifact, ONE safe-apply (code only), its deliverables, the ledger |
+
+Write sets are disjoint: xx-1 writes no product file; xx-2 writes the adapter; xx-3 writes a new module; xx-4 writes no source.
+
+### 57d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's three items; each lands in one build cell; the one served act (xx-4) serves item 2 only.
+- **(ii) Same grain.** One grader, one join, one reader, one deploy.
+- **(iii) Intent.** One axis: what the page and the export say is graded and served from the served data, not from wording.
+- **(iv) What a cell does NOT move.** xx-1 moves no product file and no page file; xx-2 moves no ranked value, rank, point or date
+  (the series gain three keys); xx-3 moves nothing served (serving is round 50's, under a pair); xx-4 moves exactly its pair's radius.
+
+### 57e. EDGES AND FAN-OUT
+
+```
+xx-2 -> xx-4   (the served join)
+xx-1 -> (none) (LOCAL; its full-population real run is the issuer's at the drain)
+xx-3 -> (none) (LOCAL first cut; spawn HELD on the egress call)
+fanout:
+  cap: 3
+  orders_total: 4
+  chains_total: 3                      # {xx-2 -> xx-4}, {xx-1}, {xx-3}
+  wave_0: [xx-1 ~173, xx-2 ~174]       # now
+  wave_0_held: [xx-3 ~175]             # spawns on the egress ruling
+  wave_1: [xx-4]                       # a seat order: after xx-2 merges and both never-widen halves are committed
+  portal_ref: ea248519                 # portal DEV HEAD at the cut, for xx-1's page render and the api suite's harness reads
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  no_vendor_call: true
+  egress: xx-3 reads EDGAR (HELD); xx-4's build pip-downloads its pinned wheels (declared); checks read Opal's own S3, DynamoDB and deployed function
+  route_change: none (payload fields only)
+  no_promote: true
+```
+
+### 57f. CARRIED
+
+- Hitachi 6501 JP's crosswalk row: AMGT_CORPUS round 15 (ruling 3). FWD-30's denominator is 95 identified names beside 96 folders.
+- An absence with no data attribute: asked of DSGN_AMGTV1 through its round when xx-1 names one.
+- Serving xx-3's officers: round 50, under a pair.
+
+## 58. ROUND 50 -- FWD-30 COMPARES VALUES, /THESIS PASSES THE DOSSIER, THE PROXY'S OFFICERS SERVED AS NAMED EXECUTIVE OFFICERS, THE BASE CASE NAMES ITS OWNER, AND THE CROSSWALK NEVER DROPS A SERVED RECORD. Five cells, six orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 49 ANALYSIS** (`ledger/ROUND_ANALYSIS.round49.md` @`c95a9a16a4` + cell 5
+@`61ed59c609`, msgs 26767 / 26773; round 49 CLOSED). Rulings carried: FWD-30's grader compares VALUES, the attribute picking the fact
+(ruling 1); every served move on `opal-amgt-scoped-api` this round rides ONE build, ONE pair, ONE NEVER-2 entry, and every half names
+its base CodeSha256, re-read at the cut and before the build (ruling 2); the proxy's officers are served as NAMED EXECUTIVE OFFICERS,
+never as the whole roster (ruling 3); the crosswalk invariant is RESAPP's (`crosswalk.py`, one writer per artifact; CORPUS round-16
+ruling 1). No outcome is added, so no L4-R half re-opens.
+
+### 58a. THE FIVE ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 FWD-30's grader compares values | `AMGT-yy-1` (LOCAL, worker) |
+| 2 /thesis passes the dossier's served fields (CORPUS FWD-10/11/12/15/16/18 render halves) | `AMGT-yy-2` (SERVED build) + `AMGT-yy-5` |
+| 3 the proxy's officers served and labelled | `AMGT-yy-3` (SERVED build: the scripted persist + the adapter pass-through) + `AMGT-yy-5` (the persist run + the deploy) |
+| 4 the Historical-multiple reference names its owner | `AMGT-yy-4` (SERVED build) + `AMGT-yy-5` |
+| 5 the crosswalk never drops a served record | `AMGT-yy-6` (LOCAL, worker) |
+
+### 58b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The value blindness, reproduced at the base** (AMD_US_Equity, the served capture): the page's `IS_EPS` row's first
+   `data-model-cell` reads `-0.6`; planting `999.99` there reads verdict OK; planting it on the export's `| IS_EPS |` line reads OK.
+2. **/thesis today** (in-process and deployed): `dossier_fields` absent; pillars 0 of 15 over the four p-4 names (AZN_LN, IMB_LN,
+   AMD_US, ADBE_US). The dossier (`read_dossier(key)["document"]["fields"]`) holds `thesis_pillars` (list, each with a citation
+   and `terms`), `management`, `fund_of_record`, `last_stated_position` (each `{value, citation}` or `{absent, value: None}`).
+3. **The base label** is `case_rule.BASE_LABEL = "Historical-multiple reference"` (`case_rule.py:76`), read at `scoped_amgt.py:3081`
+   and `:3095`.
+4. **Management** is served from the M-1 pool object `management/v1/{key}/{as_of}.json` (`read_management`, `scoped_amgt.py:2736`),
+   the Bloomberg-fallback precedent (`management/bloomberg_fallback.py`) already writes into it. The proxy officers ride the SAME
+   object (no new prefix, no IAM), labelled; EDGAR only through `fetch.py` from committed code (R-21 @`b390c36444`).
+5. **The crosswalk fork, measured:** the plain `build_crosswalk()` on CLOUD REFUSES ("ENRICH row names security_key
+   'BZLFY_US_Equity', which matches no coverage record"); the served pool (`crosswalk/v1/2026-09-29.json`, 237 records) HOLDS
+   `BZLFY_US_Equity`. A union-first build is the invariant.
+6. **The base for the deploy:** CodeSha256 `Um3BOJ+jcVc3B79VuFCn4RyD5VYu+IzCpe3BQOP/p7A=` (xx-4, 22:29:10Z); no AMGT sentinel open.
+
+### 58c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-yy-1` | FWD-30'S GRADER COMPARES VALUES | `~176` | worker | LOCAL | `deliverables/2.0.0_SA_COO~Z/round45/checks/**` |
+| `AMGT-yy-2` | /THESIS PASSES THE DOSSIER'S SERVED FIELDS | `~177` | worker | SERVED | `lib/research/api/scoped_amgt.py` + `lib/research/api/tests/**` |
+| `AMGT-yy-3` | THE PROXY'S OFFICERS SERVED AS NAMED EXECUTIVE OFFICERS | `~177` (after yy-2) | worker | SERVED | `lib/research/management/proxy_officers.py`, `lib/research/management/tests/**`, `lib/research/api/scoped_amgt.py` + api tests |
+| `AMGT-yy-4` | THE BASE CASE NAMES ITS OWNER | `~178` | worker | SERVED | `lib/research/api/case_rule.py`, `lib/research/print/render_pack.py`, their tests |
+| `AMGT-yy-6` | THE CROSSWALK NEVER DROPS A SERVED RECORD | `~179` | worker | LOCAL | `lib/research/identity/crosswalk.py` + `lib/research/identity/tests/**` |
+| `AMGT-yy-5` | THE ONE BUILD: DEPLOY + THE NEO PERSIST | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the artifact, ONE safe-apply (code only), TWO M-1 object writes (HAL, INTU), deliverables, the ledger |
+
+### 58d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's five items; each lands in one build cell; the one served act (yy-5) serves items 2-4 together.
+- **(ii) Same grain.** One grader, one pass-through, one labelled roster, one label, one invariant, one act.
+- **(iii) Intent.** One axis: what the page and export show is the served data, graded by value, never dropped.
+- **(iv) What a cell does NOT move.** yy-1 moves no product file; yy-2 moves no existing /thesis field (adds `dossier_fields`);
+  yy-3 moves no RESOLVED roster (only names whose section points elsewhere gain an NEO set); yy-4 moves the label's words only;
+  yy-6 moves no served crosswalk byte (the round trip is digest-equal); yy-5 moves exactly its pair's radius.
+
+### 58e. EDGES AND FAN-OUT
+
+```
+yy-2 -> yy-3   (same worker, same file: scoped_amgt.py -- a file edge)
+yy-2 -> yy-5, yy-3 -> yy-5, yy-4 -> yy-5   (the ONE build carries all three; ruling 2)
+yy-4 ~ yy-1    (no edge: yy-1's rich_facts must take the base line's label from the SERVED payload, never a literal, so yy-4's words
+                do not move the grade)
+yy-1, yy-6 -> (none)
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 3                      # {yy-2 -> yy-3, yy-4 -> yy-5}, {yy-1}, {yy-6}
+  wave_0: [yy-1 ~176, yy-2 ~177, yy-4 ~178, yy-6 ~179]
+  wave_1: [yy-3 ~177]                  # after yy-2 drains (file edge)
+  wave_2: [yy-5]                       # a seat order: after yy-2, yy-3, yy-4 merge and both never-widen halves are committed
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  egress: yy-3 and yy-5's persist read EDGAR through fetch.py (R-21, scripted); yy-5's build pip-downloads its pinned wheels
+  route_change: none (payload fields only)
+  no_promote: true
+```
+
+### 58f. CARRIED
+
+- Hitachi's model block: AMGT_CORPUS round 17 (ruling 4). The page's rendering of the dossier fields, NEOs and the label:
+  DSGN_AMGTV1. Values with no page attribute (Z-W173-S1..S4): DSGN asks, already sent 22:21Z.
+
+## 59. ROUND 51 -- THE UNION AT THE CHOKE POINT, THE DERIVED ROOT, THE SCOPED STAMP AND ITS CONTENT DIFF, NAMES AND PLACES MOVED ON THE LEAD LISTS, THE DRIVER CHART'S SERIES, THE FWD RE-GRADE, AND THE ONE BUILD. Seven cells, seven orders (cell 3 re-homed at the cut)
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 50 ANALYSIS** (`ledger/ROUND_ANALYSIS.round50.md` @`debbec1907`, msg 26859;
+round 50 CLOSED). Rulings carried: the union goes INTO `write_pool`, first (ruling 1); `price_axis_pull.py` derives its root (ruling 2);
+the build prints its packaged-file content diff against the deployed artifact and `REGISTRY_HASH` is scoped, restamped with the four
+constants unchanged (ruling 4); names and places moved on the lead lists, and the driver chart's series (ruling 5); the FWD-1..31
+re-grade, read-only (ruling 6); ONE build and apply under one pair and one NEVER-2 entry (enrichment item 8). No outcome is added, so
+no L4-R half re-opens.
+
+### 59a. THE EIGHT ITEMS AND WHERE EACH LANDS
+
+| s.4 item | lands in |
+|---|---|
+| 1 the union inside `write_pool` | `AMGT-zz-1` (LOCAL, worker) |
+| 2 `price_axis_pull.py` derives its root | `AMGT-zz-2` (LOCAL, worker-light) |
+| 3 the export resolves per-security units | **NOT CUT -- row `Z-S309`**; re-home asked of `1.0.0_SA_CTO~Z` (59b.3) |
+| 4 content diff + scoped `REGISTRY_HASH` + restamp | `AMGT-zz-4` (WORLD by path floor, worker; no apply) |
+| 5 lead-list names + places moved | `AMGT-zz-5` (SERVED build, worker) + `AMGT-zz-8` |
+| 6 the thesis driver's chart series | `AMGT-zz-6` (SERVED build, worker) + `AMGT-zz-8` (ASML's real rewrite) |
+| 7 FWD-1..31 re-grade | `AMGT-zz-7` (LOCAL read, worker) |
+| 8 ONE build and apply carrying 5 and 6 | `AMGT-zz-8` (WORLD, `0.7.0_AE_CloudOps~A`), plus AMGT_HARVST n-6 as a NAMED, NON-INERT rider (CTO msg 26878) |
+
+### 59b. MEASUREMENTS THE CUT RESTS ON
+
+1. **The choke point** (`round51/checks/zz_choke.py`): a fake S3 seeded with the served pool plus a planted record; both
+   `crosswalk/v1` writers (`add_security._mint_pool` and `build_crosswalk` + `write_pool`) DROP the plant at the base.
+2. **The root** (`price_axis_pull.py:97`): `REPO = os.environ.get("OPAL_WS_ROOT") or r"C:\Users\Opal Bloomberg\Desktop\ajb_workspace"`;
+   `:98` puts `REPO/integrations/bloomberg/mcp` on `sys.path` at import; `:136`/`:143` build deliverable paths from `REPO`;
+   `_REPO_SELF` (`:107-109`) already derives the tree from `__file__`. The two bound suites read 9 passed at the base.
+3. **Cell 3, measured and not cut.** `field_map.json` (last written by AMGT_CORPUS @`6077a2d939`) carries per-security UNRESOLVED-ON units
+   on the six names' value-bearing facts ("sampled magnitude N does not discriminate absolute vs millions": SALES_REV_TURN 6501/8316,
+   CURR_ENTP_VAL 6501/9433/8035/8766/TSM, NET_DEBT 8316, BEST_SALES 6501). `_resolved_unit` returns exactly that and CORPUS u-1 is
+   complete, so the export already prints the model block's per-security unit. No RESAPP write moves the six; the resolution is a
+   unit-map discriminator (AMGT_CORPUS's artifact), and the page's K/M/B/T on those facts is DSGN_AMGTV1's. Row `Z-S309`; the served
+   instrument `round51/checks/zz-8.AC2.sh` (base: values equal 6 of 6, scale unchecked 6) stays the FWD-30 grade for whoever lands it.
+4. **The stamp:** `REGISTRY_HASH` `3118e82e...` vs a fresh `54d1865c...`; `--check` RED at HEAD while the four constants are byte-equal
+   (`zz_4_stamp.py`). The build script runs `--check` under `set -e` (`:123`), so `--build-only` exits 1 at the base before packaging.
+   The deployed artifact (`pVa+sgzj`, 40.1 MB, 344 files) packages `lib/opal_naming.py` (Z-S307) -- the content-diff check's control.
+5. **Lead lists:** 66 rows over the four axes, 16 named, no `name_source`, no `places_moved` (`zz_5_rows.py`, served `zz_8_served.py`);
+   the adapter already imports `crosswalk` (`scoped_amgt.py:115`), so the name fallback needs no new closure member.
+6. **Driver chart:** ASML's stored analysis holds 3 points and resolution 'cited' but reads ABSENT (the filing branch needs >= 2 points
+   with a `span`); `analyze.reverify_stored_thesis_driver` (`:1349`) rewrites the stored object unconditionally, so the worker adds
+   `dry_run` and the REAL rewrite is zz-8's act under the pair. The other 10 driver names hold 0 points: carried (59f).
+7. **The rider** (CTO msg 26878; HARVST round-24 ruling 1): HARVST n-6's `/timeline/day` read path (`timeline_api.py`, drained
+   @`150b717373`) ships in zz-8's build. The pair's expected diff names `/timeline/day` latency moving with bodies byte-equal;
+   `round51/checks/zz_8_timeline.py` re-runs n-6's OLD == DEPLOYED body check on the deployed function (a bound: PASS at the base).
+8. **Closure note for zz-8's halves:** `crosswalk.py` is packaged (the adapter imports it), so zz-1's `write_pool` change ships in the
+   one build; zz-4's content diff names it. `write_pool` is not on the adapter's served path.
+
+### 59c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-zz-1` | THE UNION INSIDE `write_pool` | `~180` | worker | LOCAL | `lib/research/identity/crosswalk.py`, `add_security.py`, `lib/research/identity/tests/**` |
+| `AMGT-zz-2` | `price_axis_pull.py` DERIVES ITS ROOT | `~181` | worker-light | LOCAL | `integrations/bloomberg/research/price_axis_pull.py`, `integrations/bloomberg/research/tests/test_price_axis_pull.py` |
+| `AMGT-zz-7` | THE FWD-1..31 RE-GRADE | `~182` | worker | LOCAL | its deliverables only |
+| `AMGT-zz-4` | CONTENT DIFF + SCOPED STAMP + RESTAMP | `~183` | worker | WORLD (path floor; no apply) | `infra/aws/terraform/harvest/{gen_harvest_prefixes.py,content_diff.py,build-and-upload-scoped-amgt.sh}`, `lib/research/api/_harvest_prefixes.py`, `lib/research/api/tests/test_harvest_prefixes.py` |
+| `AMGT-zz-5` | LEAD-LIST NAMES + PLACES MOVED | `~184` | worker | SERVED | `lib/research/api/scoped_amgt.py` + `lib/research/api/tests/**` |
+| `AMGT-zz-6` | THE DRIVER CHART'S SERIES | `~185` | worker | SERVED | `lib/research/filings/analyze.py` + `lib/research/filings/tests/**` |
+| `AMGT-zz-8` | THE ONE BUILD: DEPLOY + ASML'S REWRITE + THE HARVST n-6 RIDER | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the artifact, ONE safe-apply (code only), ONE analysis-object rewrite (ASML), deliverables, the ledger |
+
+### 59d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = s.4's eight items; seven land in one cell each, item 3 is placed by subtraction on a measured row (59b.3).
+- **(ii) Same grain.** One writer invariant, one derived root, one stamp + one printout, one row shape, one series, one pass, one act.
+- **(iii) Intent.** One axis: what is served is what the tree says, and each claim about it is measured against the deployed state.
+- **(iv) What a cell does NOT move.** zz-1 moves no served crosswalk byte (the round trip stays digest-equal); zz-2 moves no computed
+  rank; zz-4 moves none of the four constants and uploads nothing; zz-5 moves no rank, score or existing name; zz-6 writes no
+  object; zz-7 moves no file outside its deliverables; zz-8 moves exactly its pair's radius.
+
+### 59e. EDGES AND FAN-OUT
+
+```
+zz-5 -> zz-8, zz-6 -> zz-8, zz-4 -> zz-8   (the one build carries 5 and 6; its half cites zz-4's printout; zz-1's crosswalk.py rides it)
+zz-1 -> zz-8   (packaging edge only: crosswalk.py is in the closure, so zz-1 drains before the build)
+zz-7 -> (none)  graded at pVa+sgzj, BEFORE zz-8 moves the base
+zz-2 -> (none)
+fanout:
+  cap: 8
+  orders_total: 7
+  chains_total: 3                      # {zz-1, zz-4, zz-5, zz-6 -> zz-8}, {zz-2}, {zz-7}
+  wave_0: [zz-1 ~180, zz-2 ~181, zz-7 ~182, zz-4 ~183, zz-5 ~184, zz-6 ~185]
+  wave_1: [zz-8]                       # a seat order: after zz-1/4/5/6 merge, zz-7 graded, and both never-widen halves committed
+  no_vite_per_worker: true
+  no_s3_deletes: true
+  egress: none in wave 0 (Opal AWS reads only); zz-8's build pip-downloads its pinned wheels
+  route_change: none (payload fields only)
+  no_promote: true
+```
+
+### 59f. CARRIED
+
+- Cell 3 (the six UNRESOLVED units): row `Z-S309`, re-home asked of `1.0.0_SA_CTO~Z` (AMGT_CORPUS unit-map discriminator; DSGN page
+  scale). The 10 zero-point driver names: a fresh extraction, AMGT_CORPUS's producer. The NEVER-2 sentinel-read law text: the CVO's
+  governance fork (ruling 7). The page rendering of names and places moved: DSGN_AMGTV1.

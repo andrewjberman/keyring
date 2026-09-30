@@ -1,12 +1,13 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v1.0",
-  "prd_pin": "2d2fb1f9059740702f192ebd426047efeced9eca",
+  "prd_version": "v1.1",
+  "prd_pin": "c80b5c85b61b9a272bb9a8857e72f7c5557a7f15",
   "half": "ratified-text",
-  "half_hash": "4104520f8e79c624b6e627da2d0fa7d4659f11a9b947e868bcee6f1ff3dedaa3",
+  "half_hash": "26a16e9281a367a6b7767cf2da0035c7611d0dfe0f4eca6a95e9a25e90f7b6c8",
   "endpoint_hash": "615c40cb397ea82c8a565051774ab0f58a82b8ad02bf296d899c1164d8a8dccf",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_OPLGTW_PRD_v1.0_RATIFIED_TEXT_REVIEW_20260927.md@cc775d6f86",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_L4R_RESIGN_MCPORTAL_v0_3_OPLGTW_v1_1_20260928.md@7940709bef",
   "signed_by": "3.0.0_SA_CVO~O",
-  "signed_at": "2026-09-27T14:07:33Z"
+  "signed_at": "2026-09-28T20:48:47Z",
+  "reason": "R-5 wording @c80b5c85b6 writes in the migrated-client reading this review signed under; wording only, ENDPOINT unchanged"
 }

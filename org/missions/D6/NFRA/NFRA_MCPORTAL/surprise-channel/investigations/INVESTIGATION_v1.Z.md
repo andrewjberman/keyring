@@ -578,6 +578,176 @@
     },
     "spec_asserts": "Each target row's hazard stands until disarmed.",
     "world_is": "The fold read them open only because no adjudicating row existed."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S10",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T20:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The grant writer's own record writes the OWNER-KEY VALUE into every WRITTEN item: lambda_function.py:266 sets ctx['who'] = '<claim>:<key> <email>' and _record_item puts it in the table's `who` field (:189). On the sub branch that is Andrew's `sub` in mcportal-grant-changes-table, which the gateway's history reads and serves. The CTO's privacy condition @384fd85543 says the value goes ONLY into the function's configuration, never into a log, an audit record or a committed file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/lambda_function.py:266 at CLOUD HEAD a9c8a178e3: ctx[\"who\"] = \"%s:%s%s\" % (owner.claim, owner.key, ...); :189 \"who\": s(who) in _record_item.",
+        "MP-a-1's face (task-orders/NFRA_MCPORTAL.TO-MP-a-1.writer-apply.md:28-29) quotes the condition: the owner-key VALUE is written ONLY into this function's configuration, never into a log, an audit record or a committed file.",
+        "No WRITTEN item exists yet: the writer is not applied (a2.AC2 dry run at the cut: ResourceNotFoundException on the table)."
+      ]
+    },
+    "spec_asserts": "The owner-key value lives only in the writer's configuration (privacy condition @384fd85543).",
+    "world_is": "The first WRITTEN outcome, which is Andrew's narrow in the MP-c-1 close run, would store '<claim>:<value> <email>' in the table, where the gateway's history serves it.",
+    "notes": "Disarm (the issuer, same turn): the G-CLOSE card that starts Andrew's sitting is NOT sent until 1.0.0_SA_CTO~O rules whether `who` carries the claim NAME and email only. MP-a-2's apply and its no-header refusal write REFUSED items with who=UNVERIFIED, so they are untouched and proceed. Found off-task at the round-3 cut."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S11",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T21:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-S10 (disarm owner this seat) against 1.0.0_SA_CTO~O's ruling (msg 26207): `who` on a WRITTEN item carries the claim NAME and the email only. The fix is cell MP-b-3, cut at the round-3 issuance at the head of chain A, so MP-a-2's apply ships it; the G-CLOSE card that starts the first WRITTEN outcome is sent only after MP-a-2 drains.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CTO message 20260928T205744Z (Msg-ID 26207): 'RULED ... The fix is a cell: lambda_function.py :189/:266 drop the value, plus a test ... Cut it ahead of MP-c-1, then release the G-CLOSE card.'",
+        "task-orders/NFRA_MCPORTAL.TO-MP-b-3.who-without-owner-key.md and TO-MP-c-1's spawn conditions, in this round's issuance commit."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-S10 is ARMED: the first WRITTEN item would store the owner-key value.",
+    "world_is": "No WRITTEN item can exist before MP-a-2 applies the writer, and MP-a-2 packages MP-b-3's source; the only live writes before then are REFUSED items with who=UNVERIFIED."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S12",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T21:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The grant writer's own suite is RED at CLOUD HEAD: tests/test_grant_writer.py::test_owner_write_lands_with_operator_audit expects record types [data_entitlement, operator_audit, principal_profile], but admin.activate now also puts an email_deny record (NFRA_OPLGTW OG-e-1 @3e936f77bd changed access_state.operator_transact, which the writer imports). The writer's POLICY#* grant covers the new POLICY#EMAILDENY# key, so the live path is not refused; the test is stale. Remedied inside MP-b-3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "b3.AC1 dry run at base: '1 failed, 9 passed'; pytest -vv: 'At index 1 diff: email_deny != operator_audit' at tests/test_grant_writer.py:141.",
+        "access_state.py:64 POLICY_RECORD_TYPES includes email_deny; :447-469 'the principal's partition plus at most email_deny puts'; mcportal_grant_writer.tf:87-91 PutItem/UpdateItem on POLICY#* leading keys."
+      ]
+    },
+    "spec_asserts": "The writer's tests are green at the base every cell builds on.",
+    "world_is": "One writer test fails at HEAD because an upstream shared module changed under it; no gate ran the writer's suite on that commit.",
+    "notes": "A shared-module change in another project's cell did not run this project's dependent suite. Recorded only; no gate is proposed here."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S13",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T21:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-W2-S3 (disarm owner this seat, transferred with the project): MP-f-1's session fixture (merged @5d36443784) points AUDIT_PATH at a temp file, and R-8's condition holds at CLOUD -- the audit-reaching gateway tests leave the tracked audit.jsonl byte-identical, with a planted append as the positive control.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "f1.AC1.sh re-run by the issuer on the shared CLOUD tree after the merge: 14 passed; audit.jsonl md5 before=after=2e05d36768ee9b3cad061ee0da8ca396; porcelain before=0 after=0; control seen=yes; RESULT: PASS.",
+        "Worker ~4 instance NFRA_MCPORTAL.TO-MP-f-1.audit-path-fixture.proof_of_spec.json: AC1 PASS, AC2 PASS (app/config.py default untouched)."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-W2-S3 is ARMED: a gateway test run appends to the tracked audit.jsonl.",
+    "world_is": "The three test files that reach the audit path no longer write it. The full collectable suite (13 files need moto, which is not installed) was not the disarm instrument; R-8 names the audit file's porcelain, which reads empty."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S14",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-28T22:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The full opal-gateway suite does not finish on site Z: with moto installed (5.2.3, under Andrew's ~21:2xZ development-egress word), `pytest tests --ignore=tests/acceptance` hit a 900 s cap, and faulthandler showed tests/test_schwab_engine.py::test_ogq1_ac01 blocked in app/integrations/schwab/engine.py:1103 submit. The same test passes alone (7 s), and the whole file passes (13 of 13 in 58 s), so the stall is an inter-file interaction. It predates MP-f-1: the issuer's pre-fixture run stalled past 300 s as well.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Drain run on CLOUD after @5d36443784: rc=124 at 900 s; 'Timeout (0:02:00)!' dump with test_schwab_engine.py:203 test_ogq1_ac01 -> :199 main -> engine.py:1103 submit; audit.jsonl md5 unchanged, porcelain 0.",
+        "A/B with the only difference being the conftest (A = C:/tmp/mp3-1 at pre-fixture d4bcedef5c, B = CLOUD): the single test passes in both (9.4 s / 7.0 s); the whole file is A '1 failed, 12 passed', B '13 passed'.",
+        "Pre-fixture run 2026-09-28 ~20:4xZ (no moto): `timeout 300` terminated the full collectable suite at 306 s."
+      ]
+    },
+    "spec_asserts": "The gateway suite is a drain instrument that finishes.",
+    "world_is": "The suite stalls in the full-run context on this box, so the drain grades the affected files and the audit-file bound instead of a full-suite verdict.",
+    "notes": "Not this project's surface (the Schwab engine is NFRA_OPLGTW's). Recorded only; the drain for MP-f-1 rests on the three audit-reaching files plus the engine-file A/B."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S15",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-29T04:50Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The halt gate refuses every TWO-LETTER lane serial: .tools/halt-gate-check.sh halt_gate_validate_serial (:199-204) admits a ~lane only as a single uppercase letter ([A-Z]), so 2.0.0_SA_COO~MP, ~MI and ~AI -- all seated 2026-09-28 by placement @094c84f299 -- fail closed (exit 3) on their own safe-apply / safe-ec2-deploy. It surfaced when MP-a-2's worker ran safe-apply under this seat's session: the gate resolved the shared session serial file to 2.0.0_SA_COO~MP and refused it (row Z-W1-S6).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/halt-gate-check.sh:154-155 comment 'a ~lane suffix must be a single uppercase letter (every fabric lane is: ~A..~E, ~Z...)'; :201-204 case \"$lane\" in [A-Z]) : ;; *) return 1 ;; esac.",
+        "Worker 0.9.0_WK_NFRA_MCPORTAL~1 report on MP-a-2: safe-apply stopped at the halt gate, which resolved 2.0.0_SA_COO~MP from the session serial file and failed closed on the two-letter lane; terraform never ran.",
+        "Placement record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_195xZ_O_FABRIC_ONLINE_ONE_COO_PER_PROJECT.md seats ~MI, ~MP, ~AI."
+      ]
+    },
+    "spec_asserts": "Every seated serial can pass its own halt gate.",
+    "world_is": "Three seated ~O COO lanes cannot safe-apply or safe-ec2-deploy as themselves. For THIS project it is routed around by the gate's own worker path (:71-73: an issuer-provisioned serial file inside the worker's worktree), so no act waits on the fix.",
+    "notes": "The gate is 1.0.0_SA_CTO's (last authored 72897184fd). Remedy is a one-line class widening ([A-Z] -> [A-Z] or [A-Z][A-Z]) plus a test arm; it is the gate owner's, not this seat's."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W1-S6",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~1",
+    "surfaced_at": "2026-09-29T04:20Z",
+    "one_line": "MP-a-2's apply is BLOCKED before terraform runs: safe-apply's halt gate resolves the worker's shell to the issuer serial 2.0.0_SA_COO~MP (session serial file) and fails closed rc=3 because the ~MP lane suffix is not a single uppercase letter and no worker serial file is provisioned in the worktree.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "HALT_ACK=1 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply ... printed 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', 'Resolved serial: 2.0.0_SA_COO~MP', from org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial; terraform was never invoked.",
+        ".tools/halt-gate-check.sh:71-86 reads <worktree>/org/mcp/sessions/<sid>.serial first (an issuer may provision a worker's serial there); OPAL_AGENT_SERIAL is not consulted. That path is outside this order's <paths> and writing my own identity file would self-provision past the gate, so I did not.",
+        "Everything before the act is done and lands nothing live: gateway line re-read (keys=email,exp,family_name,given_name,iss,name,picture,sub -> branch sub), layer built (PyJWT 2.13.0, cryptography 49.0.0, cffi 2.1.0, pycparser 3.0), staged package built, targeted plan read 7 add / 0 change / 0 destroy, ledger nfra-mcportal-r3-writer-apply opened and committed dd5ab90782 with L1 and L2 closed; L3 and L4 unrun."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker holding a non-terminal task order under the project can run safe-apply from its worktree (halt gate: 'a spine-v3 worker is admitted only while a NON-TERMINAL task order under <CODE> is issued_to it').",
+    "world_is": "The halt gate takes the session's serial (the issuer's, 2.0.0_SA_COO~MP, two-letter lane) rather than the worker's, and refuses it; no worker serial file exists in C:/tmp/mp3-1/org/mcp/sessions.",
+    "notes": "Unblock: the issuer provisions <worktree>/org/mcp/sessions/<sid>.serial for 0.9.0_WK_NFRA_MCPORTAL~1, or applies itself. Nothing is half-landed: no AWS resource was created. The owner key was never written to any file (the plan file I made with -out was deleted at once; the retained plan-free apply log is masked)."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S16",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-09-29T05:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "CLOSES NFRA_MCPORTAL-Z-S15 against 1.0.0_SA_CTO~O's fix @64a3ef4b4e (msg 26464, ruled its own): halt_gate_validate_serial now admits a lane of 1-3 uppercase letters.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer read of the COMMITTED bytes (git show 64a3ef4b4e:.tools/halt-gate-check.sh): case \"$lane\" in [A-Z]|[A-Z][A-Z]|[A-Z][A-Z][A-Z]) : ;;",
+        "Function sourced from those bytes: 2.0.0_SA_COO~MP rc=0; negative control 2.0.0_SA_COO~M1 rc=1."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-S15: the halt gate refuses every two-letter lane.",
+    "world_is": "At 64a3ef4b4e the two-letter ~O COO lanes pass serial validation; a digit lane is still refused outside the worker limb."
   }
 ]
 ```
