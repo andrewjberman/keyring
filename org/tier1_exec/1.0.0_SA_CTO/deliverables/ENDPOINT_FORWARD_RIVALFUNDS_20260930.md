@@ -1,6 +1,12 @@
 # ENDPOINT (step 2, /endpoint --forward) -- rivalfunds (rival ETF holdings) -- `1.0.0_SA_CTO~Z`, 2026-09-30 ~04:2xZ
 
 **Brief:** `docs/briefs/etf-holdings-research-20260929.md`, revision 2 (September 29 ~23:5x ET), 20,570 B, read to EOF.
+**AMENDED ~04:4xZ to brief revision 3** (@2a1f275a78, CRO~Z msg 26910), on Andrew's reply to the nine outcomes: *"Yeah this is
+pretty good but i have one idea that may be foundatinal ... We need to reverse engineer their actual trades ... a gold table for
+each active etf that is effectively their trade schedule ... one really, really clear signal on competitive intelligence"*.
+Outcomes amended in place, with ids unchanged because none had landed: FWD-1 (the thread leads with trades), FWD-5 (the trade
+schedule is the foundation), FWD-6 and FWD-7 (built on the trade schedule). FWD-2, 3, 4, 8 and 9 are unchanged. The DONE WHEN
+lines are still unconfirmed.
 **Author:** 4.0.0_SA_CRO~Z (msg 26900). **Andrew's rulings:** `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/ANDREW_DIRECT.md`
 (12,243 B, read to EOF), including the 14-item gap-pass rulings and *"S9 looks fine, add the registry row and send to CTO"*.
 
@@ -14,12 +20,13 @@ number vacant, and nothing is ever renumbered.
 ---
 
 ```
-  FWD-1  Andrew opens one rival fund's day on the live page and traces a change
-         back to what the fund itself published
+  FWD-1  Andrew opens one rival fund's day on the live page, reads what it
+         traded, and traces a trade back to what the fund itself published
          DONE WHEN  EXERCISED -- one live trace: Andrew opens the rival-funds
-                    page on the Opal site, picks BASG, reads its latest real
-                    holdings report against the prior one, and follows one
-                    highlighted holding back to the fund's own published file
+                    page on the Opal site, picks BASG, reads its most recent
+                    trades first, and follows one trade back through the two
+                    holdings reports it was inferred from to the fund's own
+                    published files
          ACCEPT     every step Andrew takes shows real holdings the fund
                     published; the page he reads is the one kept for that day,
                     and the list of past days shows it; a step fed by made-up
@@ -66,22 +73,26 @@ number vacant, and nothing is ever renumbered.
          SOURCE     brief O4, Part III (cash and unidentified visible);
                     ANDREW_DIRECT item 14 and L1 direction point 1
 
-  FWD-5  Andrew can tell a manager's real trading from changes caused by
-         price moves, fund inflows and outflows, or reporting quirks
-         DONE WHEN  EXERCISED -- for one fund and a period Andrew picks, he
-                    reads what was added, exited, increased and reduced, and
-                    which of those changes market moves or fund flows could
-                    explain on their own
-         ACCEPT     a change that only looks like a trade because prices moved
-                    or the reporting changed is shown as such, and a period
-                    between two reports is never presented as daily trades
-         SOURCE     brief O5, Part III ("a changed source basis cannot silently
-                    become a trade")
+  FWD-5  Andrew reads each rival fund's trade schedule: what the manager
+         actually bought and sold, and when
+         DONE WHEN  EXERCISED -- for each of the six funds Andrew reads its
+                    trades (entries, adds, trims and exits) with the shares
+                    traded, the window they happened in, an estimated price and
+                    size, and how sure the inference is
+         ACCEPT     a price move, a dividend, a change of identifier or the
+                    fund simply growing or shrinking never shows up as a trade;
+                    a trade too small to tell from noise is not shown as one;
+                    where reports are days apart the trade is placed in that
+                    wider window, never invented on a single day
+         SOURCE     brief rev 3 O5 (the foundation); ANDREW_DIRECT "reverse
+                    engineer their actual trades ... a gold table for each
+                    active etf that is effectively their trade schedule";
+                    trade floor 0.2% and dividends from Bloomberg (same file)
 
   FWD-6  Andrew sees where a manager's holdings and choices helped or hurt
          DONE WHEN  EXERCISED -- Andrew reads, for one fund and period, its
                     best and worst holdings by return and by contribution, and
-                    how its recent additions and reductions have done since,
+                    how the trades in its trade schedule have done since,
                     including positions it has since sold
          ACCEPT     every ranking says what it ranks, over what window and out
                     of how many holdings; a holding with a missing price is
@@ -91,15 +102,16 @@ number vacant, and nothing is ever renumbered.
 
   FWD-7  Andrew uses the AI to form views about a manager's behaviour, and
          can later check those views against what the manager actually did
-         DONE WHEN  EXERCISED -- one AI account of a fund's tilts is saved, and
-                    a later account grades it against holdings disclosed after
-                    it was written
+         DONE WHEN  EXERCISED -- one AI account of a fund's process, built
+                    from its trade schedule, is saved, and a later account
+                    grades it against trades inferred after it was written
          ACCEPT     every claim in the AI account points to the figures it came
                     from, separates what was seen from what is guessed, and
                     says what would prove it wrong; a later grading cannot
                     rewrite what the earlier account said
-         SOURCE     brief O7, Part III (the AI does not manufacture returns or
-                    intent); ANDREW_DIRECT L1 direction point 3
+         SOURCE     brief rev 3 O7 (starting from the trade schedule), Part III
+                    (the AI does not manufacture returns or intent; one clear
+                    signal, not a data dump); ANDREW_DIRECT L1 direction point 3
 
   FWD-8  An Opal researcher can rebuild the research from the kept raw files
          and add a new fund without changing what anything means
@@ -137,6 +149,10 @@ number vacant, and nothing is ever renumbered.
   - the unattended-Excel validation for the Bloomberg leg (brief IV.3);
   - issuer publication times (item 12, several days of observation);
   - AWS reachability of the six sites (item 11, the first test).
+
+- **One clear signal, not a data dump** (brief rev 3 Part III): the page leads with what each rival traded, and a table no reader
+  or analysis consumes is not built. This is a PRD constraint on the table set, not an outcome.
+- **Dividends** come from Bloomberg's per-holding dividend calendar, an enrichment input under the vendor question above.
 
 ## PROVENANCE
 
