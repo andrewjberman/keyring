@@ -91,3 +91,4 @@ The rewrite's expected diff is measured: 95 of 95 pack_shape-only, 0 other moves
 <round>22</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
