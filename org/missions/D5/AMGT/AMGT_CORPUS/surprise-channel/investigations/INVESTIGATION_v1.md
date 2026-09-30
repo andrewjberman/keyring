@@ -2619,6 +2619,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "TO CRPS-t-3 item 3: for any ABSENT reader, name the served surface (an API route or page) that shows it.",
     "world_is": "The single ABSENT reader is a hand-run CLI with no caller; no API route or page shows it. Served routes /versions and /thesis for BP and NG return 200, SERVED, 6 versions.",
     "notes": "The CLI's read key is a local-filesystem form (its own docstring says never an S3 key). Whether to fix it or leave it is the issuer's and CTO's call; this worker changed no code."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S15",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T03:35:00Z",
+    "one_line": "For 6501_JP_Equity /thesis serves no dossier_fields block at all, so pillars, management, fund of record and last stated position carry no per-field ABSENT reason; only model.team_cases carries one ('no research dossier for this name').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read-only lambda:Invoke of opal-amgt-scoped-api /thesis for 96 keys (CodeSha256 pVa+sgzj8XNZ9uvJqCOwRNCJn0IZhUklnWZh6JbO7B0=, 2026-09-30T03:20Z) via capture_lib._invoke: 95 of 96 names carry dossier_fields with a status or a *_absent reason on every element; 6501_JP_Equity returns 200 with dossier_fields absent and model.team_cases reasons 'no research dossier for this name' (census in org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/FWD_EVIDENCE_ROUND20.json)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-10 and FWD-11 fences: a name whose pack carries none reads ABSENT with its reason.",
+    "world_is": "1 of 96 names (a name with no dossier at all) has the reason only on the cases block; the pillar and management elements are keyless, so a render keyed on dossier_fields has no reason to show for it.",
+    "notes": "Filed, not fixed (read-only order). Counted as not carrying in the FWD-10/11/15/18 numerators.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
