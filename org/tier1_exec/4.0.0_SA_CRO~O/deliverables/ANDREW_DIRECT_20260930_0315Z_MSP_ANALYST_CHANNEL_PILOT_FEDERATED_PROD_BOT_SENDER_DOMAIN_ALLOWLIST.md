@@ -62,3 +62,15 @@ Reading aid:
 - The check is enforced at the gateway as well as at the agent.
 - NOT read as given: authorization for the one-time domain-to-tenant lookup against a Microsoft endpoint. The quote
   does not name it; vendor egress needs his explicit per-use word, so it stays unauthorized until he says so.
+
+## 7. Andrew, verbatim, same channel, 2026-09-30 ~03:28Z (unprompted)
+
+> "The truth of the matter is, it is probably easier to just run MCP on our server for all clients, rather than
+> building a separate server per client, that would be annoying, better to just handle their channels and etc at some
+> central control plane and use the one server."
+
+Reading aid:
+- Direction: ONE MCP server for all client firms, with channels and the rest handled at a central control plane; NOT a
+  separate server per client. This departs from the primer's section 4 drawing, which showed a gateway per firm.
+- Andrew's wording is "probably"; recorded as his stated direction, not a final design.
+- Not decided here: how firm isolation holds inside one server (CRO~O proposal pending in the discussion).
