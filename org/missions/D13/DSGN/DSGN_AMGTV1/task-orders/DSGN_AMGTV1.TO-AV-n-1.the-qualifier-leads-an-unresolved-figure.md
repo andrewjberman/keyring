@@ -84,7 +84,7 @@ Report once: what changed and where, the output line of every criterion, the por
 scratch r11-green-a by an issuer-spawned helper agent) 3 of 3; ALL 16 of 16; tsc rc=0; round-10 units.cjs is superseded on its
 display form by ruling 1.
 
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~40</slot>
 <fabric>site-z</fabric>
