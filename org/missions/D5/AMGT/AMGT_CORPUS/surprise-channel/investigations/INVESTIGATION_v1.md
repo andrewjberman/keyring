@@ -2705,6 +2705,50 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The pre-existing test encodes the superseded per-field sign behaviour; the ruled reader returns POSITIVE for value 1.0. y5_AC1 passes (plain_disagree 0 convention_disagree 0).",
     "notes": "Filed, not fixed: the line-69 assertion should expect POSITIVE (or the file be added to paths). Reader change and new test are in place.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+{
+    "id": "AMGT_CORPUS-Z-W1-S19",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T10:30:00Z",
+    "one_line": "CRPS-z-1's premise 'about 199 of the 602 are per-share names outside their band' does not match the census: 37 figures are per-share outside the 0-2000 band (BEST_BPS 12, BOOK_VAL_PER_SH 11, REVENUE_PER_SH 11, BEST_EPS 3); 402 are per-share names whose sampled value is an exact ZERO (IS_DIV_PER_SHR 177, EQY_DPS 177, BEST_DPS 48) and 48 more are a zero BEST_DIV_YLD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "UNRESOLVED_CLASSES_ROUND24.json (deliverables/0.9.0_WK_AMGT_CORPUS~1): 17 classes summing to 602 over 98 keys; the census read the newest model_block per key from S3 and grouped by mnemonic x reason_class x security.",
+        "Reasons: 354 'sampled magnitude 0.0 does not discriminate (a zero value every sampled year reads identically to no coverage)' + 48 for BEST_DPS; 48 BEST_DIV_YLD 'does not discriminate percent vs decimal (zero or non-numeric)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "About 199 of the 602 are per-share names outside their band; the rest carry other reasons (order section 1).",
+    "world_is": "The bulk of the 602 (450 figures on 18 names) is the zero-sample class, not the outside-the-band class; those names are dividend non-payers whose latest fiscal row reads 0.0.",
+    "notes": "Closed by FAMILIES 1-2 on the FIELD_BASIS definition (a zero has no scale), not by the band; the family is a separate step (unit_from_basis_zero) so classify_unit's magnitude reading of a zero is unchanged. The issuer should confirm at the round-24 analysis that a field-basis rule for a zero is the intended reading of 'a stated rule'.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+{
+    "id": "AMGT_CORPUS-Z-W1-S20",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T10:30:00Z",
+    "one_line": "test_build_unit_map_families.py::test_ratio_outside_the_band_stays_unresolved_and_band_is_not_widened pins classify_unit('IS_DIV_PER_SHR', 0.0, ..., header) == UNRESOLVED (line 88), so the zero-dividend families could not land inside classify_unit without breaking a builder suite the order requires green; that file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First run of z1_AC2.sh with the zero rule inside classify_unit: '1 failed, 37 passed' at integrations/bloomberg/research/tests/test_build_unit_map_families.py:88 (assert classify_unit('IS_DIV_PER_SHR', 0.0, 'S', header)[1] == 'UNRESOLVED').",
+        "After moving the rule to build_unit_map.unit_from_basis_zero, called from build_entries: z1_AC2.sh '38 passed'; the whole research tests dir '182 passed'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2: the family tests pass with the builder's suites; the classifier carries each change (order section 1 item 2).",
+    "world_is": "The round-23 test encodes the prior ruling that a zero magnitude does not discriminate; a zero-value family in classify_unit contradicts it. The two grounds (magnitude vs field basis) are now separate functions.",
+    "notes": "Filed, not fixed: if the issuer wants the rule inside classify_unit, line 88 must change and the file be added to paths. The served figure's unit is identical either way.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
