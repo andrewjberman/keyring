@@ -2640,6 +2640,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "1 of 96 names (a name with no dossier at all) has the reason only on the cases block; the pillar and management elements are keyless, so a render keyed on dossier_fields has no reason to show for it.",
     "notes": "Filed, not fixed (read-only order). Counted as not carrying in the FWD-10/11/15/18 numerators.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S16",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T04:10:00Z",
+    "one_line": "CRPS-w-3: TSM US Equity CURR_ENTP_VAL cannot be discriminated against CUR_MKT_CAP because the two are in different currencies (CRNCY USD, EQY_FUND_CRNCY TWD); the discriminator refuses a cross-currency ratio and leaves it UNRESOLVED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read-only S3 read of the landed raw for TSM_US_Equity (stamp 20260925T043112Z): CRNCY USD, EQY_FUND_CRNCY TWD, CUR_MKT_CAP 2339877750964.95, CURR_ENTP_VAL 71993494.73. As millions the EV is 7.2e13 (30.8x the USD market cap), as absolute 3.1e-5x: in no band either way, and the two currencies differ, so the ratio is not a unit read.",
+        "build_unit_map.discriminate_facts returns UNRESOLVED for that fact with the reason; check w3_check.py line 'FACT TSM US Equity | CURR_ENTP_VAL | UNRESOLVED | ...'. The same read resolves the four JP names and the SAP GY control as MILLIONS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO CRPS-w-3: a cross-field read of enterprise value against price x shares or market cap decides the unit, and a name the read cannot decide stays UNRESOLVED.",
+    "world_is": "TSM is an ADR: market cap is in USD, the fundamentals (enterprise value) are in TWD. Deciding it needs an FX rate or a TWD-denominated anchor the raw does not carry; the worker added a currency guard (CRNCY must equal EQY_FUND_CRNCY) and did not invent a rate. Also: REVENUE_PER_SH is unmeasured by classify_unit on 6501 and 8316 (2332, 2687 exceed its 2000 per-share band), so the per-share x shares read is skipped for those names and their SALES_REV_TURN resolves on the market-cap read alone.",
+    "notes": "Filed, not fixed. An ADR name stays UNRESOLVED for the four large-number fields until the issuer supplies a same-currency anchor.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

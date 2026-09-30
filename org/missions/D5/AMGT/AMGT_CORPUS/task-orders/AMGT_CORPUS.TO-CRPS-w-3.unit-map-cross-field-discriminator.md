@@ -119,3 +119,4 @@ resolution would be the defect. The control proves the read discriminates where 
 <round>21</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
