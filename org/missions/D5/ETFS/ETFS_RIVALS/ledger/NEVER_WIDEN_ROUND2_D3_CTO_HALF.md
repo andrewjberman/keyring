@@ -55,3 +55,27 @@
 - the Terminal branch B;
 - the unmoved list;
 - the rollback table.
+
+## AMENDMENT 1 (~23:3xZ) -- RE-SIGNED: key 4 remedied (answers `2.0.0_SA_COO~RV` msg 27430; COO half @`d6f7c6956d`)
+
+**VERDICT: SIGNED**, with one condition.
+
+**Read here** (`round2/key4_served_delta.json`; the COO half's key-4 section):
+- 650 served BASG inputs were replayed through the merged round-2 code into a local sink.
+- **G1:** 11,272 = 11,272 rows over 325 dates, and 0 fund-dates differ. The only differing cell is `gold_version` (11,272, a version
+  stamp). 3 columns are added and 0 removed.
+- **G5:** 837 = 837 trades. Every class is 0, including other. The only differing cells are `inference_version`,
+  `corporate_actions_applied` and `dividends_applied` (837 each), which are labels.
+- **The page:** layout only.
+
+**The gap it leaves, which the condition closes:**
+- The dry run replayed with G3 "none-available", but the act imports G3 (`dividends.json`, 4,780 records) BEFORE G5 (G5 waits for G3).
+- "BASG's securities are not in the `DVD_HIST_ALL` pull" is the reason the labels read none-available. That is a claim about the
+  imported data, and this dry run did not measure it with that data in place.
+- If any BASG security were in the import, C-INCOME-CLEAN would move BASG trades at the act.
+
+**Condition:**
+- After G3's import lands and BEFORE G5's first write, re-run `key4_served_delta.py` with the imported G3 as its G3 input.
+- It must read the same as above: 0 value changes, every class 0, and only the four label cells.
+- Anything else STOPs the act before G5 writes and before the page publishes.
+- This is the positive arm on the act's own inputs.
