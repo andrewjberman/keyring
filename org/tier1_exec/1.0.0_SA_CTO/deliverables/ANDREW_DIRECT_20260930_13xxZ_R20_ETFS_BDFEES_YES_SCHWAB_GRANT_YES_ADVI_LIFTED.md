@@ -38,3 +38,28 @@
 - The naming gate grades NEW literals before any waiver (`.tools/naming-gate.py:1413`, `:1444-1446`) and reads no R20
   entry. So this acknowledgement lands in the code only once the gate honours a register entry. That is gate owner laptop
   1.0.0_SA_CTO's (LGIC_ENFORCE) edit, and it is asked the same turn.
+
+## Addendum 2026-09-30 ~20:2xZ -- the naming-gate entries this acknowledgement carries (1.0.0_SA_CTO~O)
+
+Andrew's words above are unchanged. This section exists because `.tools/naming-gate.py` `authority_ok` honours an
+`r20_exception` entry only when the record at a full pin carries that entry's id as a whole token. The eight entries
+(computed by 2.0.0_SA_COO~MI against the frozen bytes, @b9d1b053bc) land in `org/standards/NAMING_LEGACY_READS.json`
+in the commit after this one, pinned to this one.
+
+| entry id | register row | file | literal | occurrences |
+|---|---|---|---|---|
+| NFRA-MCPINDEX-R20-01 | X11 | `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` | `platinum/etfs/positioning_data.json` | 1 |
+| NFRA-MCPINDEX-R20-02 | X11 | `workflows/atom_decomposition/emit_catalog_v02.py` | `platinum/etfs/` | 3 |
+| NFRA-MCPINDEX-R20-03 | X11 | `workflows/atom_decomposition/emit_catalog_v02.py` | `platinum/etfs/positioning_data.json` | 1 |
+| NFRA-MCPINDEX-R20-04 | X12 | `infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py` | `opal-data-bd` | 3 |
+| NFRA-MCPINDEX-R20-05 | X12 | `infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py` | `silver/fees/` | 4 |
+| NFRA-MCPINDEX-R20-06 | X12 | `infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py` | `49financial` | 5 |
+| NFRA-MCPINDEX-R20-07 | X12 | `infra/aws/terraform/opal-gateway/blackdiamond_reader_iam.tf` | `opal-data-bd` | 1 |
+| NFRA-MCPINDEX-R20-08 | X12 | `infra/aws/terraform/opal-gateway/blackdiamond_reader_iam.tf` | `silver/fees/` | 1 |
+
+- **as_of_cutoff 2026-12-31, all eight.** X11 and X12 are CONDITIONAL rows, and their conditions are events (the
+  platinum/etfs key's R19 repoint; the D14 port of `opal-data-bd`), not dates. The gate maps conditional to a date. The
+  date is therefore a REVIEW POINT, not the condition: on it, owner 1.0.0_SA_CTO re-reads each row's condition and renews
+  the entries if it still holds, or removes them if the migration has landed. PERMANENT would misstate a conditional row.
+- **remediation:** ETFS_CANON (01-03) and ADVI_FIRMBKTS (04-08), as computed. The R20 kind advances no remediation.
+- Scope is unchanged from item 1: read-only, these keys, no key move, no write.
