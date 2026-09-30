@@ -13176,3 +13176,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "REMEDY, and it is Andrew's own pattern rather than an invention: ONE long-lived service principal for IRPT Analysis job submission -- created once, never deleted, scoped by allowedFirmIds -- following svc-bbgtml's precedent and ticket_center's `service` userType. Jobs then resolve their owner forever and S231's whole failure class disappears rather than being patched per window. THE DAY PASS KEEPS ITS REAL JOB: a bounded throwaway login is right for a UI walk, which is what it was signed for. This row does not retire it there. WHY THE CTO AND NOT THIS LANE: the identity a served job is accepted under is an architecture decision that reaches the authorizer, the edge and every window packet, so it is above a workstream issuer even though the symptom is mine. W26 IS HELD, NOT CANCELLED: both halves are signed and the solo gate passes, but opening it would mint exactly the day pass Andrew questioned, minutes after he questioned it. The three-variant proof he asked for is unchanged in value and should run under whichever identity the CTO rules for."
 }
 ```
+
+
+## IRPT_BCKEND-S233 -- two YCharts sessions in one estate: the gateway already runs the shared-credential REST pattern while IRPT Analysis duplicates the capture and replays the web app's wizard state
+
+```json
+{
+  "id": "IRPT_BCKEND-S233",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T06:55:00Z",
+  "one_line": "There are TWO YCharts sessions in this estate. The opalgateway already runs Andrew's stated pattern -- a shared credential at ycharts/credentials driving real YCharts REST endpoints, with a freshness check -- while IRPT Analysis maintains a SECOND capture, its own resident and its own day-pass principal, and posts the vendor web app's INTERNAL WIZARD STATE instead of calling REST.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (which credential and which call shape the Analysis journey uses is an architecture call, as 103196 ruled for the Opal-side identity)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ANDREW-DIRECT 2026-09-30 ~06:3xZ, verbatim: 'The pattern we use is always the same. Its an EC2 crawler crawls for long lived trust token, and Lambda hits REST API using that trust token to do whatever the job is.' And: 'I don't understand why there are four resources and only 1 at best is doing their job correctly.'",
+      "THE PATTERN IS ALREADY RUNNING: the opalgateway exposes ycharts_search (GET /search/suggest/main), ycharts_snapshot_metrics (GET /indices/table_data), ycharts_fund_series (GET /charts/fund_data.json), ycharts_time_series (GET /charts/general_data.json) and ycharts_risk_return_scatter (POST /charts/scatter_plot_data.json) -- real YCharts REST endpoints. ycharts_freshness exists to 'Check the shared YCharts session is live (one cheap authenticated GET)' and names the credential store: 'refresh ycharts/credentials from a fresh HAR'.",
+      "IRPT ANALYSIS RUNS A SECOND ONE: its own host capture (/opt/investor-reporting-ycharts/run-ycharts-session.sh) writing its own secret (YC_SESSION_SECRET_ID, per the host's secret-ids.env), consumed by its own EC2 resident. Two independent sessions against one vendor account.",
+      "AND IT IS NOT A REST CALL: recipe.generation_body() builds the vendor WEB APP's own state object -- generationModalsState with currentWizardStepIndex, coverPageInfo, comparisonSecurities, secondarySecurity, fundChartSecuritiesChoice (recipe.py:793-796 and :822-870). That is the browser wizard's internal shape replayed server-side, not a documented API payload.",
+      "THE LIMIT, MEASURED: every REST verb the gateway exposes is a DATA endpoint -- search, snapshot metrics, fund series, time series, scatter. NONE generates a report or a PDF. So the rendered export plausibly has no REST equivalent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Analysis journey's design as built: a dedicated capture, a dedicated resident and a per-window principal, as though no YCharts access existed in the estate.",
+  "world_is": "YCharts access existed and still does, shared, with its own freshness instrument. The Analysis journey duplicated the credential layer rather than using it. NOT MEASURED, and this is the hinge: whether YCharts publishes ANY report/export endpoint. Establishing it is a vendor probe and needs Andrew's per-use word, so the duplication may be PARTLY forced -- a rendered PDF with no REST equivalent genuinely needs the web-app path. NOT CLAIMED: that the shared gateway credential carries the entitlements the Analysis journey needs, or that one account can hold both sessions without eviction. S225's double-eviction reading makes the second question live rather than rhetorical -- two sessions on one vendor account is itself a candidate cause for an eviction, and nobody has tested that.",
+  "notes": "THE SHAPE IF THE LIMIT HOLDS: shared session plus REST for DATA, with browser automation confined to the ONE act that has no REST equivalent (the rendered export), instead of a parallel session, principal and worker for the whole journey. Recommendation, not a ruling. WHY IT IS ARMED: two sessions on one vendor account is a plausible contributor to the eviction family S218/S225/S230 has been chasing all night, and that possibility was never on the table because nobody had noticed there were two. It is not established -- it is newly askable. I ALSO OWE A CORRECTION HERE: earlier tonight I told Andrew the vendor side 'follows your pattern'. It captures a token like the pattern and then does neither of the pattern's other two halves -- it does not share the estate's credential and it does not call REST. The CTO (103196) is what prompted me to check the layer I had waved at."
+}
+```
