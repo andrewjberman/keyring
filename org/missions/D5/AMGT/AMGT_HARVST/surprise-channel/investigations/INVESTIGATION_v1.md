@@ -3780,6 +3780,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Instance expect differs from the TO text only by regex escaping; the check scripts were not edited."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S45",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-30T09:30Z",
+      "one_line": "HVST-q-1's bbg refusal was walked into by re-fetching the ONE known-rejected key: with today's listings served from same-day cache the job made no listing request, its first and only live request re-fetched bbg:NM5NLQ6K50XZ01 (p-2's accepted limit: rejected keys are re-fetched every run) -> 403 -> the contracted press-and-hold repair saw no checkmark in 12s -> request_rejected.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-p-2's accepted limit: a rejected article is re-fetched one GET per run because a short body may later unlock; o-5 completed bbg on Lenovo the same day.",
+      "world_is": "events.jsonl 2026-09-30: 08:41:15Z GET www.bloomberg.com/article/api/story/id/NM5NLQ6K50XZ01 -> 403; 08:41:34Z login.bloomberg.com/user-info 200; verification_started; 08:42:14Z 'adaptive press-and-hold: no checkmark or peak detected within 12s'; 08:42:22Z job_finished request_rejected (runs/20260930T084110Z-bbg-4bb3c44cfa.json: 'Browser verification repair did not restore HTTP access (403)'). No bbg /nemo-next/api/search/query request in that job (o-5's runs at 04:40Z-04:54Z made 4, all 200).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "runtime root events.jsonl, the bbg lines of 2026-09-30",
+          "runs/20260930T084110Z-bbg-4bb3c44cfa.json status request_rejected"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Issuer row, answering the CTO's round-27 question (msg 27057). Carried to round 28 beside the cached-listing reach fix: whether a known-rejected key should be held (not re-fetched) within a day, since its re-fetch is what exposed the job to bbg's challenge."
     }
   ]
 ```
