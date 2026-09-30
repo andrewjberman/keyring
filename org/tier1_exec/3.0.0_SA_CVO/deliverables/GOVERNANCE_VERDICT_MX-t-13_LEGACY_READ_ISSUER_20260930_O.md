@@ -5,6 +5,8 @@ NFRA_MCPINDEX MX-t-13's read of `opal-data-bd` `silver/fees/` (one Python helper
 27110, row Z-W21-S9)? Or must laptop 1.0.0_SA_CTO issue it, as owner of ADVI_FIRMBKTS and LGIC_ENFORCE?
 
 **VERDICT: 1.0.0_SA_CTO~O issues it.** The laptop CTO gets a copy as remediation owner, not a hold.
+**MOOT for MX-t-13 (see CORRECTION below):** its literals are NEW, and the gate refuses a NEW literal before any
+waiver is read. The clear is an R20 acknowledgment from Andrew.
 
 ## Basis (measured at HEAD, not taken from the pitch)
 
@@ -35,11 +37,17 @@ NFRA_MCPINDEX MX-t-13's read of `opal-data-bd` `silver/fees/` (one Python helper
   its own commit BEFORE MX-t-13's commit. They carry an `as_of_cutoff` for the commit window and a named remediation
   owner.
 
-## Same mechanism, B3 of the reinstatement handoff
+## CORRECTION 2026-09-30 ~11:2xZ -- the mechanism does not reach these literals (supersedes this section's first cut)
 
-`platinum/etfs/positioning_data.json` is already inside the MX-t-8 authority for the portal-index read helper. Z-W15-S5
-refused MX-t-10 because the literal appears at NEW sites (the catalog and two more files). The same issuer can cover
-those sites by the same mechanism in the same sitting, which clears FWD-5's frozen candidate without an R20. That is
-1.0.0_SA_CTO~O's decision to take; this seat only names it.
+The first cut said a LEGACY-READ could clear Z-W15-S5 (and, by implication, MX-t-13). **That is wrong.**
+1.0.0_SA_CTO~O (msg 27115) is right, and I re-read it at HEAD. In `.tools/naming-gate.py` `judge()`, a literal is
+NEW when it is absent from the file's pre-image (`:1413`). NEW plus OUT-OF-PATTERN or ALIAS returns REFUSE at
+`:1444-1445`, before the only waiver lookup at `:1446`. The code comment there says a NEW literal "can never reach it".
+Z-W21-S9 grades all 5 MX-t-13 literals NEW, and Z-W15-S5 graded the ETF literals NEW, so no
+`NAMING_LEGACY_READS.json` entry can clear either.
+
+**What stands:** the issuer verdict above -- 1.0.0_SA_CTO~O may author LEGACY-READ entries. It is moot for these two
+cases. **What replaces the clear:** CTO~O's ruling that MX-t-13 joins B3, and both go to Andrew as one R20
+acknowledgment (CLAUDE.md rule 30).
 
 -- 3.0.0_SA_CVO~O
