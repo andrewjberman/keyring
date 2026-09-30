@@ -661,3 +661,102 @@ forward from round 5.
   - p-2 adds a served count's words and changes a time's format;
   - p-3 changes two lines' words;
   - p-4 moves one sidebar entry.
+
+## v10 -- ROUND 10 (issuer, 2026-09-30 ~05:xZ), over PRD v0.3 @abfad1355c (ADMITTED)
+
+**Rectangle:** the round-9 analysis's enrichment list.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round9.md` @d229d699f3 section 4, items 1-4, one cell per item, with rulings 1
+  (the house date form, covering the whole page), 2 (CORPUS's six outcomes: `dossier_fields`; the team's cases, with Opal's rule
+  cases labelled) and 3 (no K/M/B/T on an UNRESOLVED unit).
+- **Cell ids:** `AV-o-1`..`AV-o-4`. Letters e, p, q, r, s, t, u, v, w are on disk, so round 10 takes `o`.
+- **NOT cells:**
+  - the names on 22 of 22 rows and the driver series (AMGT_RESAPP r51 cells 5-6);
+  - the `/timeline/day` latency (RESAPP r51 `zz-8` as HARVST `n-6`);
+  - 6501's empty dossier block's per-field reasons (CORPUS ruling 2: AMGT_RESAPP's producer ask). The page shows the one served
+    reason.
+- **The issuer's placements:**
+  - (a) The header "posture line" (ruling 2) reads the `/overlay`, which does not carry `dossier_fields`. o-2 reads it through the
+    page's existing `useThesisBundle` hook, the same `/thesis` query the tabs already make; this is no new route.
+  - (b) Cells 2 and 3 have disjoint write sets, so they get separate workers (the analysis left the call to the COO).
+  - (c) o-1 writes every page file o-2, o-3 and o-4 write, so it is a QUEUED chain. It starts on the post-drain DEV (cut rule
+    (a)).
+- **Portal base:** site-Z local DEV `b6634ba0` (clean). **Walker:** unchanged.
+- **Fixtures:** `deliverables/2.0.0_SA_COO~D/round10/fixtures/` = the round-9 set, carried unchanged (25 files), plus 12 SERVED
+  captures made at the cut by `round10/capture_r10.py`.
+  - The captures are read-only `lambda:Invoke`s of `opal-amgt-scoped-api`, CodeSha256 `pVa+sgzj8XNZ9uvJqCOwRNCJn0IZhUklnWZh6JbO7B0=`,
+    LastModified 2026-09-30T01:46:54Z. Each file carries a `_capture_note`.
+  - `/thesis` for IMB LN, AZN LN, 6501 JP and TSM US; `/overlay` for IMB, AZN, 6501, 9433, 8316, 8035, 8766 JP and TSM US.
+  - Four more `/thesis` captures (9433, 8316, 8035, 8766) were read and not kept, since no check reads them.
+  - ISSUER VARIANTS are built in memory inside the checks, each labelled there.
+- **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-o-2` | 2 + ruling 2 | `dossier_fields` rendered: the pillars (in order, with terms and the report's file name) on the Thesis tab, or the empty block's reason; the management passage on Exec Management; fund of record + last stated position on the Posture tab and the header posture line; no storage path on the face; types in `types.ts` TYPES ONLY, components INLINE | CORPUS FWD-10, 11, 15, 16, 18 | `SA/types.ts`, `SA/tabs/ThesisTab.tsx`, `SA/tabs/ExecManagementTab.tsx`, `SA/tabs/PostureTab.tsx`, `SA/components/SecurityOverlay.tsx` | ~36 | LOCAL |
+| `AV-o-3` | 3 + ruling 2 | the team's Base, Upside and Downside each rendered as written, or one plain sentence; every rule-case line headed "Opal's ..." (the served label, prefixed where it lacks it, or "Opal's rule-based <case>"); no bare "<Name> case:" and no "not in the pack yet" | CORPUS FWD-12 | `SA/tabs/ModelTab.tsx` | ~37 | LOCAL |
+| `AV-o-4` | 4 + ruling 3 | `formatStatValue(value, format, currency, unit)`: an UNRESOLVED unit shows unscaled, grouped, "(unit not resolved)"; a measured unit unchanged; `HeaderCards` passes the unit and exports `headerCardFigureDisplay` | RESAPP FWD-30 | `SA/components/StatTile.tsx`, `SA/components/HeaderCards.tsx` | ~38 | LOCAL |
+| `AV-o-1` | 1 + ruling 1 | ONE helper `dateWords.ts` (`longDate`, `longStamp`, over `formatPanelTimestamp`); every date a person reads in the long form, the ISO on a `data-` attribute; the bare-date "Dated" paths drop "Dated" | FWD-11 | `SA/dateWords.ts` (new), `postureCites.ts`, 12 components, 5 tabs, 6 harnesses (loader lines; one re-anchor) | ~39 QUEUED | LOCAL |
+
+**Edges and chains:**
+- There is no data edge.
+- Write sets:
+  - o-2, o-3 and o-4 are pairwise disjoint.
+  - o-1 overlaps all three (`types.ts` excepted), so it runs on its own chain after o-2, o-3 and o-4 drain.
+- M = 4 chains, N = 3 now, K = 1 queued (o-1), cap 8.
+- The surprise channel is shared append-only.
+
+**Checks (`round10/checks/`, dry-run at base b6634ba0; `_load.cjs`, `bound.cjs`, `census.cjs`, `walkvoid.sh` copied forward;
+`surfaces.cjs` renders every walked surface: lead lists + footers, the lead chart, 8 headers, the timeline + 992 HK's day, and 4 tabs
+x 8 names = 45 surfaces):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| dates.cjs | 1 of 3 (224 visible ISO dates on 44 of 45 surfaces; the long-form arm fails; the data- control passes at base by design) | 3 of 3 (0 over 45; 162 data- attributes keep the ISO) |
+| dossier.cjs | 0 of 4 (no consumer of `dossier_fields`) | 4 of 4 (13 pillars in order with their reports) |
+| cases.cjs | 0 of 3 (AZN's team Upside / Downside unrendered; "Upside case: not in the pack yet") | 3 of 3 (60 team table cells; 9 rule lines "Opal's ...") |
+| units.cjs | 0 of 3 (the unresolved EV scaled; no display helper) | 3 of 3 (6 unresolved figures unscaled; 50 measured unchanged) |
+
+- **Green arms:**
+  - Scratch `C:/tmp/cood-r10a-root/portal` branch `r10-green-a` carries o-2, o-3 and o-4 (issuer).
+  - Scratch `C:/tmp/cood-r10b-root/portal` branch `r10-green-b` carries o-1, built by an issuer-spawned helper agent to this check.
+  - `r10-green-b` was merged over `r10-green-a` (3 import-line conflicts resolved) = the drain state.
+  - On it: dates 3/3, dossier 4/4, cases 3/3, units 3/3; round-9 grain / strength / oneform / sidebar 3/3 each; ALL 16 of 16
+    harnesses; portal `tsc -b` rc=0.
+- **Bounds, base and green:**
+  - Q2 (o-2) 8 of 8, Q3 (o-3) 3 of 3, Q4 (o-4) 3 of 3, Q1 (o-1) 16 of 16, each green at base and on the green arm.
+  - o-2's first green arm put its blocks in a new shared module and exported value helpers from `types.ts`. That turned drafting,
+    execFallback, execText and execPattern RED: their loaders resolve only the modules they name, and `../types` for type positions
+    only.
+  - Rebuilt INLINE with types-only `types.ts`, 16 of 16 were green with no harness grant; the face says so.
+  - o-1 NECESSARILY breaks six harnesses: five cannot resolve `../dateWords` or its `../../lib/dateUtils` import, and tabs'
+    `peers_csc_table_absent_marked` is anchored on the ISO universe vintage. Each is granted with its exact lines.
+
+**Cut rules applied:**
+- **(a) Queue-aware bases.** No check compares against a base snapshot. o-1 is queued: its slot is provisioned on the post-drain
+  DEV, and its face says so (BOUNDS 4).
+- **(b) Bounds run against a green build.** Every harness a required change NECESSARILY breaks is granted with its exact change
+  on that cell's face (o-1 only), and was proven green on the combined drain state.
+
+**Battery:**
+- comp-schedule and comp-iam: DECLARED-NOT-APPLICABLE (no AWS in the cells; the cut's captures were read-only invokes by the
+  issuer).
+- comp-adversary: the checks above.
+- Blind spots:
+  - static markup with the estate chrome stubbed, so layout, chart ticks and tooltips and the lazily opened card windows are the
+    walk's (o-4's window rows are graded through `headerCardFigureDisplay`);
+  - a `precision` / date shape the fixtures do not carry is reached only by labelled variants.
+- The issuer's close walk:
+  - signed-out control first;
+  - then the usual four names plus IMB LN, AZN LN and one planted JP name (6501);
+  - IMB's Thesis / Exec Management / Posture tabs and header (o-2), AZN's Model tab (o-3), 6501's and IMB's header cards (o-4), and
+    every date on the walked surfaces (o-1).
+
+**Rule 24:**
+- (i) MECE over the analysis's four items by subtraction: 4 placed; the NOT-cells named with their reasons.
+- (ii) One cell per write set; o-1 queued behind the three it overlaps.
+- (iii) One intent per cell.
+- (iv) No cell moves a served value, a figure, a verdict, a count or an order:
+  - o-1 moves only how a date reads;
+  - o-2 adds served text;
+  - o-3 adds served tables and changes the rule lines' heads;
+  - o-4 stops a scale the unit never claimed and leaves every measured figure byte-identical.
