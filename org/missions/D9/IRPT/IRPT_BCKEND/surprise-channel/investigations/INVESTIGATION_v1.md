@@ -12521,3 +12521,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "OFF-TASK for this lane: surfaced while preflighting the round-26 catalogue route registration (the issuer measuring its own grant after IB-yr-242's mis-cut, R25 amendment 1). Not ~Y's to disarm -- irpt-export-render is 2.0.0_SA_COO~P's export lane, and CLAUDE.md forbids converting this into a gate on another seat, so it is a row and a message, not a stop. SECOND, SEPARATE FINDING IN THE SAME PREFLIGHT, recorded here rather than as its own row because it shares the instrument: _contracts/tests/test_seam_paired.py reads 33 failed / 25 passed at CLOUD HEAD in the MAIN worktree, cwd-independent (same 33 from investor-reporting/, from _contracts/ and from _contracts/tests/), and its test_control_* nodes are among the failures. CONSEQUENCE FOR EVERY SEAT: neither suite is usable as a pass/fail oracle at HEAD, so a cell graded 'the seam suite passes' cannot be graded that way, and a red there is not evidence of the cell that ran it. Round 26 therefore grades the catalogue route on SINGLE NODE IDS and on a before/after DELTA against these printed baselines (39 -> 45 over four suites; per file 0 -> 4 in reports/tests/test_generate_installed.py, 6 -> 7 in the census, 33 -> 34 in the seam), never on a file being green. Un-arms when ~P's lane either guards the three export handlers or records why the mark is absent by design."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W89-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~89",
+  "surfaced_at": "2026-09-30T01:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Y26-1-AC3 cannot pass inside this order's grant: the seam control resolves refs and fixtures by a convention no published response schema uses, and needs two files outside <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider _contracts/tests/test_seam_paired.py::test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[comparison-catalogue] from infra/aws/lambda/investor-reporting after parts 1-5 landed: 1 failed, AssertionError: no valid fixture for l://irpt/contracts/v1/ComparisonCatalogue (the node now EXISTS; before this order it was rc=5 no tests ran).",
+      "test_seam_paired.py:567-575 _document_of() strips 3 leading chars and the 12-char '.schema.json' suffix from a data $ref, assuming the form '../<Name>.schema.json'; every published response schema uses 'opal://irpt/contracts/v1/<Name>.schema.json', so the name reads 'l://irpt/contracts/v1/<Name>' -- the same failure the 17 sibling control nodes print (measured: 17 failed of 17 under -k control_a at HEAD).",
+      "test_seam_paired.py:532-550 _document_fixture() reads only _contracts/fixtures/<Name>.valid.json and .invalid.json; no ComparisonCatalogue fixture exists there (25 fixture files listed, none a catalogue), and _contracts/fixtures/ is not in this order's <paths>.",
+      "test_seam_paired.py:265-288 _response_validator() registers only docs/contracts/investor-reporting/v1/*.schema.json (non-recursive) under the key '../<file>'; ComparisonCatalogue.schema.json lives in infra/aws/lambda/investor-reporting/_contracts/, not in v1/, and v1/ComparisonCatalogue.schema.json is not in <paths>."
+    ]
+  },
+  "spec_asserts": "A conforming fixture written for the response schema under this order's <paths> makes the [comparison-catalogue] control node pass (order text: 'plus whatever conforming fixture the seam suite needs for its node (AC3 is how you know)').",
+  "world_is": "MEASURED: the response schema, the routes.json row and both wiring sites are landed and AC1 and AC2 pass; AC3 fails with the sibling-identical message. Passing it needs, at minimum, _contracts/fixtures/ComparisonCatalogue.valid.json (wrapper {_fixture,_source,_expect containing 'accepts',instance}) and a v1/ComparisonCatalogue.schema.json, AND the suite's ref convention to be reconciled with the published opal:// convention (the suite is 33-of-58 red at HEAD, row IRPT_BCKEND-S220). READ from the test source, NOT RUN: whether those three additions alone turn the node green. Nothing weakened or edited to force it. The grant, not the worker, is the defect (order text: a needed file outside <paths> is a refusal and a row).",
+  "notes": "Refusal on Y26-1-AC3 only. Owner of the remedy: 2.0.0_SA_COO~Y (grant) and whichever seat owns _contracts/tests/test_seam_paired.py's ref convention; the response schema kept the published opal:// convention on purpose rather than bending to the suite's broken reading."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W89-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~89",
+  "surfaced_at": "2026-09-30T01:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The census's 7th failure after IB-yr-261 is a stale count pin, not a route with no real entry point: test_unguarded_census.py asserts 17 routes at lines 99, 114 and 141 and the published file now holds 18.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider _authz/tests/test_unguarded_census.py from infra/aws/lambda/investor-reporting after parts 1-5: 7 failed / 1 passed (baseline 6 / 2). The new failure is test_every_published_route_resolves_to_a_real_entry_point: 'assert 18 == 17' at test_unguarded_census.py:99, captured stdout 'routes with a declared handler: 18'.",
+      "The same run prints 'published routes handled by this order's six functions: 18 of 18 in the file' and the verdicts read guarded 15 of 18 with the unguarded three still the export routes: the new GET resolved to a real, guarded entry point (before: guarded 14 of 17).",
+      "Pins at _authz/tests/test_unguarded_census.py:99 (len(table) == 17), :114 (verdict['routes'] == 17) and :141 (whole['routes'] == 17); the file is outside this order's <paths>, so they were left alone."
+    ]
+  },
+  "spec_asserts": "Order text: 'A 7th failure means the route resolves to no real entry point.'",
+  "world_is": "MEASURED: the 7th failure is the literal 17 in three assertions and the route does resolve (18 of 18). Lines 114 and 141 sit in tests that already fail at baseline on the unguarded-export finding, so they will fail on the count next once that finding is disarmed. INERT: a loud tripwire on the next route addition, no silent harm.",
+  "notes": "For the issuer's drain evidence: census 6 -> 7 is the pin, and the seam file 33 -> 34 is the one new [comparison-catalogue] node (AC3's), both as predicted in row IRPT_BCKEND-S220's notes."
+}
+```
