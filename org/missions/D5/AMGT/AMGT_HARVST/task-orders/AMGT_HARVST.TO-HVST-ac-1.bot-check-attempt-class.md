@@ -30,6 +30,7 @@ lib/opal_data_harvest/worker.py
 lib/opal_data_harvest/verification.py
 lib/opal_data_harvest/bot_check.py
 lib/opal_data_harvest/test_ac1_bot_check_class.py
+lib/opal_data_harvest/publishers.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~84/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 </paths>
@@ -62,7 +63,11 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 4. **(AMENDMENT 1, PRD v0.11) Every refusal keeps a bounded body; a body-less refusal is `unclassified`, never expiry.**
    Every refusal path keeps its capped, redacted body. A refusal that still has NO body classes `unclassified`: it never marks
    a token expired and never starts a sign-in.
-5. **The expiry branch still fires.** A 401 or 403 whose kept body says the session is invalid (not a bot signature),
+5. **(AMENDMENT 2) No account re-check after a bot check.** `publishers.py` ~:455 calls `check_auth()` after ANY
+   `RequestRejected`. After a refusal that classes `bot_check` or `unclassified`, it does NOT: that is one more request into a
+   challenged publisher, and an `AuthExpired` from it would reach a sign-in (row `Z-W84-S2`; the wsj batch-1 record shows the
+   extra `/client` auth_check after the 401). Other rejections keep the re-check.
+6. **The expiry branch still fires.** A 401 or 403 whose kept body says the session is invalid (not a bot signature),
    persisting after backoff, still marks expiry as in v0.9.
 
 ## 2. PROOF OF SPEC (each invocation LITERAL; timeout 600). THREE mechanical
@@ -83,7 +88,9 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   - (d) the repair-failed path keeps its body;
   - (e) a body with no signature keeps its prior class;
   - (f) (AMENDMENT 1) a planted body-less persistent 403 classes `unclassified`, marks no token expired, and makes 0 sign-in
-    calls.
+    calls;
+  - (g) (AMENDMENT 2) a `bot_check` rejection inside the publisher listing path makes 0 `check_auth` calls, while a
+    non-bot rejection still makes 1.
 - **AC2:** replay the two kept batch-1 bodies (read-only) through the classifier. Print, per body:
   - the class and signature as DERIVED from the rule, never typed from the file name;
   - the record shape the new code writes.
@@ -107,6 +114,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   renumbered 5.
 - AC1 adds plant (f): a body-less persistent 403.
 - **Paths and invocations:** unchanged.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
+**AMENDMENT 2 (issuer, 2026-09-30 ~18:3xZ, before merge) -- rulings on `Z-W84-S1` and `Z-W84-S2`.**
+- **`Z-W84-S1`, ACCEPTED as built:**
+  - with no repair run, a bot check ends the job `bot_check`;
+  - after a contracted repair it stays `request_rejected`, with the class and signature carried on the job;
+  - either way, no expiry and 0 sign-ins.
+
+  `test_q6_barrons_guard_ft_body.py` stays as it is.
+- **`Z-W84-S2`, GRANTED and ruled in:** change 5 and plant (g). The path gains `lib/opal_data_harvest/publishers.py`.
 - **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
 <risk>LOCAL</risk>
