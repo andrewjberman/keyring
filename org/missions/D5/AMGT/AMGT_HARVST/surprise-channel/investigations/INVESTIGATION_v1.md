@@ -3936,6 +3936,94 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Cites AMGT_HARVST-Z-W78-S1: its cause is fixed and proven; graduation is the CVO L9 transfer, not a worker act."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S1",
+      "one_line": "The order says the wsj backfill stop needs `_stop_paging` to read `_hit_date`; it already does. The wsj backfill's hits were bare {url} dicts, so `_hit_date` widening alone would not have moved the stop. The dow_jones loop now carries each wsj item's dates onto its hit.",
+      "spec_asserts": "Order section 1 change 1: `_stop_paging` reads `_hit_date` too, so a wsj backfill stops older_than_bound on a page whose hits all predate the floor.",
+      "world_is": "publishers.py `_stop_paging` (~:184) already read `_hit_date` at base 123befacf8; the wsj/barrons loop (`dow_jones`, ~:708) built `hits = [{\"url\": u} for u in urls]`, dropping every listing date. Adding timestamp/printPublicationDate to `_HIT_DATE_KEYS` changed the live reach (worker.fold_listing_reach reads full silver rows) but left the backfill stop undated. Fix inside publishers.py (an order path): `DowJones._parse_dates` (wsj only, empty for barrons) and `discover()` records `page_dates`; the loop builds each hit as {url, timestamp, printPublicationDate}. Barrons and every other publisher's hits are unchanged. AC1 (b)/(c) and their mutants (base keys; hits carried without dates) prove it.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py DowJones._parse_dates and the dow_jones hits line",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1_ac1_output.txt: test_ab1b_mutant_undated_hits_carried_without_dates_fails PASSED"
+        ]
+      },
+      "notes": "The paging change the issuer ruled on Z-W76-S1 is real but took this second edit to take effect. Issuer to confirm the wider edit is inside the ruling."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S2",
+      "one_line": "A live wsj reached_span ends at the FETCH date, not the newest hit date: `reach_span` (unchanged by this cell) runs from the oldest dated hit through the newest fetch date. AC1 (a) asserts that reading.",
+      "spec_asserts": "AC1 (a): a live wsj page's hits yield a reached_span equal to their own date bounds, basis listing_dates.",
+      "world_is": "worker.reach_span (o-1) sets end = max(fetch_dates) whenever a live page was fetched; only a cache-only job takes end from the hits (from_cache). Replay of the recorded wsj page wsj_p1_e513433c8e6841d6.html (20 hits, 2025-11-20 .. 2026-09-23): reached_span = {start 2025-11-20, end 2026-09-30 (the fetch day), basis listing_dates}. The start is the oldest hit; the end is not the newest hit (2026-09-23). reach_span was not edited: the order names no change to it.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1_ac2_output.txt: wsj reached_span {start 2025-11-20, end 2026-09-30, basis listing_dates}",
+          "lib/opal_data_harvest/worker.py reach_span (:136-157)"
+        ]
+      },
+      "notes": "If 'their own date bounds' means end = newest hit date, reach_span needs a ruling and a further cell; the cell as cut does not change it."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S3",
+      "one_line": "events.jsonl alone does not record a body rejection: the seed derives it by joining each bbg job_finished event to the job's result file (runs/<name>.json), because the events carry only http and job_finished lines.",
+      "spec_asserts": "Order section 1 change 3: `failed_days` and `last_failed_day` are derived from the key's recorded body rejections in the runtime events.jsonl.",
+      "world_is": "The runtime events.jsonl has three http events for bbg:NM5NLQ6K50XZ01 (200 04:45, 200 04:54, 403 08:41 on 2026-09-30) and no rejection event. The rejections are in the result files each job_finished event names: jobs 20260930T044003Z-bbg-c268841b7e and 20260930T045332Z-bbg-301ffc37d9 list the key in fetched_keys, not in accepted, with one rejected entry short_or_partial_body (a 1:1 join by count, unambiguous). The 403 job (084110Z, request_rejected, no_outcome_recorded) is not a body rejection and adds no day. Result: 1 failed day (2026-09-30), state held, same as the order's note. The run_records' keys_rejected are empty for this key (they predate p-2).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/ab1_ac2_output.txt: evidence lines and derived row",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~81/scripts/ab1_seed_hold.py body_rejection_evidence"
+        ]
+      },
+      "notes": "The join is by counting and holds only where unambiguous; a job with mixed rejection kinds derives no row. Later collector runs record fetch_outcomes, which the script reads first."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~81",
+      "surfaced_at": "2026-09-30T13:15Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W81-S4",
+      "one_line": "`_hit_date` now reads timestamp/printPublicationDate for EVERY publisher; the recorded sa and bbg listing pages carry neither, ft hits are url-only, but no barrons listing page is recorded to check.",
+      "spec_asserts": "Order section 1 change 1: nothing else changes for any other publisher's hits.",
+      "world_is": "Measured over the runtime harvest_listing/ pages: 3 bbg pages (30 hits: dated only by publishedAt) and 2 sa pages (40 hits: publishOn) carry no timestamp or printPublicationDate; ft hits are {url}. No barrons page is recorded there (wsj: 5 pages), so a barrons item carrying `timestamp` cannot be excluded: its live reach (worker.fold_listing_reach, silver rows) would then gain dates. The barrons backfill stop is unchanged (its hits stay {url}).",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "runtime harvest_listing/ bbg_p1_*.json, bbg_p2_*.json, sa_p1_*.json, wsj_p*.html (read-only scan)",
+          "lib/opal_data_harvest/publishers.py DowJones._parse_dates returns {} unless pub == wsj"
+        ]
+      },
+      "notes": "INERT: a barrons date read only widens reach to what the page showed."
     }
   ]
 ```
