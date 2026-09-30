@@ -12404,3 +12404,59 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Found off-task while reading the 09-28 window; not the 09-28 cause. Nothing was started or retried by this worker (read-only bound)."
 }
 ```
+
+
+## IRPT_BCKEND-W88-S1 -- IB-yr-242 AC1: adding the catalogue GET to generate/entry.py ROUTES and to routes.json raises EntryError in th
+
+```json
+{
+  "id": "IRPT_BCKEND-W88-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~88",
+  "surfaced_at": "2026-09-29T23:40:00Z",
+  "one_line": "IB-yr-242 AC1: adding the catalogue GET to generate/entry.py ROUTES and to routes.json raises EntryError in the DEPLOYED boundary (reports/generate_installed.build_boundary copies ROUTES) and breaks 9 existing tests, all outside the order's <paths>, so the route registration is HELD.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py:337-341 @3f8c1aa2e0: routes = dict(generate_entry.ROUTES) then served.Entry(operations={analysis-requests, analysis-input-upload}); served.py:643-648 raises EntryError for a route whose operation the Entry does not serve. Measured: with the key in ROUTES, reports/tests/test_generate_installed.py went 13 passed -> 4 failed, 9 passed.",
+      "Measured on the same worktree with the route in ROUTES + routes.json vs reverted, each test file run alone: test_unguarded_census 6 failed -> 7 failed (test_every_published_route_resolves_to_a_real_entry_point asserts len(table) == 17); _contracts/test_upload_contract 8 passed -> 1 failed (denominators 17); _contracts/test_owned_request_contracts 3 passed -> 1 failed; _contracts/tests/test_seam_paired 33 failed -> 34 failed (a new comparison-catalogue case: no responses/comparison-catalogue.response.schema.json). test_guarded_entries stays 32 passed both ways. test_unguarded_census 6 and test_seam_paired 33 failures pre-exist at CLOUD 3f8c1aa2e0.",
+      "Held patches: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~88/held_route_registration_routes_json.patch (the routes.json row) and org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~88/entry_full_with_route.patch (entry.py incl. the ROUTES key). Files a complete registration needs and this order does not grant: reports/generate_installed.py (add the catalogue operation in build_boundary, declared_routes follows), docs/contracts/investor-reporting/v1/responses/comparison-catalogue.response.schema.json, routes.json _denominator/_denominators 17->18, _authz/tests/test_unguarded_census.py and _contracts/test_upload_contract.py and test_owned_request_contracts.py count pins, seam-paired fixtures."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IRPT_BCKEND.TO-IB-yr-242 build step 2: register the GET in the entry's ROUTES and in the published routes.json, and test_unguarded_census checks them against each other; <paths> is the whole grant.",
+  "world_is": "generate_entry.ROUTES is not the deployed boundary's only consumer: the installed Entry (reports/generate_installed.py) reuses it wholesale with its own operation table, and the published route file has response-schema, denominator and count pins in files this order does not name. Registering the route inside the grant leaves the deployed boundary failing at its first call after the next rebuild. The module, schema, entry compute and tests are committed; the two registrations are held, so AC1 is unmet and the order stays open.",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "notes": "INERT as committed: the key is not in ROUTES, so nothing served changes. It becomes harmful only if the held patch is applied without the reports/generate_installed.py change. Fix is an issuer amendment widening <paths> to the files listed, then applying the held patch."
+}
+```
+
+
+## IRPT_BCKEND-W88-S2 -- IB-yr-242: the etf-classifications half of the catalogue has no read the served role is known to hold (a Dynam
+
+```json
+{
+  "id": "IRPT_BCKEND-W88-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~88",
+  "surfaced_at": "2026-09-29T23:41:00Z",
+  "one_line": "IB-yr-242: the etf-classifications half of the catalogue has no read the served role is known to hold (a DynamoDB table, not a file), so it is an injected port left unwired and every non-model ticker is served verbatim until the rebuild wires it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/positioning_chain.py:68,253-262 @3f8c1aa2e0: ETF_CLASSIFICATIONS_TABLE = 'etf-classifications', read by a dynamodb scan over boto3; infra/aws/terraform/yang-pipeline/etf-classifications.tf declares the table (hash key ticker; fields asset_class, sub_asset_class, name).",
+      "infra/aws/terraform/investor-reporting/ carries no reference to etf-classifications (only the narrative, holdings and intake roles hold dynamodb grants, on other tables), so an irpt-ycharts-generate read of it is a new boto3 call plus a new IAM grant; the order preflight says that is a refusal and a row, not a silent assumption."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order preflight comp-iam: etf-classifications is read by the same account the estate already grants; no new boto3 call is introduced by this cell.",
+  "world_is": "The estate grants the table to other roles, not to irpt-ycharts-generate. comparison_catalogue.py takes the read as an injected callable (read_classifications) defaulting to no names; entry_for_ticker and build_catalogue name from the model catalogue and from a wired reader, else carry the ticker verbatim. Until a reader is wired and the role granted dynamodb:Scan on the table, production serves the 4 model entries only and 100 percent of ticker entries take the verbatim path, not the measured 4 in 5.",
+  "notes": "INERT: nothing breaks, the degrade is the ruled behaviour. The wiring and the grant belong to the rebuild (2.0.0_SA_COO~P); this worker made no AWS call."
+}
+```
