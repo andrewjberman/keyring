@@ -3489,6 +3489,142 @@ carries none.
     "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
     "world_is": "S1's hazard (a bd_ name refused at registration) cannot occur once the order names blackdiamond_. S3's hazard (a stale fees leg served) cannot reach a caller before MX-r-7, which now carries the writer's attribution into the halves; the tool's as_of also shows staleness to the caller.",
     "notes": "The analysis record's other findings (empty 09-28/09-29 transaction workbooks, no proceeds/gain column in silver/realized, bd_assets_dim last_seen_trade_date 2026-04-13) do not touch the first tool's fence and go to the round-5 L10 slug."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:32Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S4",
+    "hazard_standing": "INERT",
+    "one_line": "The record's scope rule says a call is refused when the principal's firm is not 49financial; an Opal-internal principal has no firm, so the tool reads that rule as 'Opal-internal sees every firm (PRD sec.10.8), a firm principal only its own', and admits Opal-internal with scope=49financial.",
+    "spec_asserts": "MX-t-13 act item 3 and the record's Scope rule: 'a principal resolves only its own firm ... the call is refused when the principal's firm is not 49financial; a cottonwood, inflection, demo, global or master-shaped value is refused, never translated.'",
+    "world_is": "query_v0._principal resolves an Opal-internal email to (opal-internal, '') -- no firm -- and a firm email to ('firm', <firm>). Read literally, the record's rule refuses every internal principal. The catalog row this cell emits is firm_scope_rule firm-scoped, whose definition (catalog_entries/README.md) is 'a firm principal sees only its own firm's rows; Opal staff see every firm'. blackdiamond.integration.check_scope admits (opal-internal, '') and ('firm','49financial') for scope 49financial and refuses every other scope value and every other principal; test_mx_t13_scope_fenced covers 12 refused scope values and 7 refused principals.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py check_scope (worktree wk-mcpindex-r5-21, uncommitted: row S9).",
+        "infra/aws/ec2/opal-gateway/app/query_v0.py _principal (:82-91) read 2026-09-30.",
+        "workflows/atom_decomposition/catalog_entries/README.md firm_scope_rule section."
+      ]
+    },
+    "notes": "INERT: the narrower literal reading (refuse internal principals) would make the tool unusable to the Opal staff who grade it; if the issuer wants it, only check_scope changes. The integration is dormant until MX-r-7."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:32Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S5",
+    "hazard_standing": "INERT",
+    "one_line": "The naming builder has no `secret` kind, so the ExternalId secret of the new read role is hand-typed on its sibling's pattern (opal/mcp/opal-gateway-blackdiamond-reader-external-id), a departure CLAUDE.md rule 30 sends to a registry row or an R20 entry.",
+    "spec_asserts": "CLAUDE.md rule 30: every resource name is lib/opal_naming.py name() output; a builder refusal is a missing registry row.",
+    "world_is": "name('gateway', None, 'blackdiamond-reader-external-id', 'secret') raises 'kind secret is neither a NAMING_SCHEMA.json kind nor a cadence' (run 2026-09-30). The role and the assume policy names ARE builder output (gateway-blackdiamond-read-role, gateway-assume-blackdiamond-reader-policy). The existing Schwab ExternalId secret (opal/mcp/opal-gateway-schwab-reader-external-ids) is hand-typed the same way. NFRA_MCPINDEX owns no write path into infra/logic/registry/, so the gap is named here and not fixed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_naming.py name() run 2026-09-30 at a73e9cf57e (kind 'secret' refused).",
+        "infra/aws/terraform/opal-gateway/blackdiamond_reader_iam.tf header NAMES paragraph (worktree wk-mcpindex-r5-21, uncommitted: row S9).",
+        "infra/aws/terraform/opal-gateway/schwab_reader_iam.tf locals schwab_external_ids_secret_name."
+      ]
+    },
+    "notes": "INERT until MX-r-7 applies the file; the secret name is one local, renamed in one line if a kind is added or the apply is reworded."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:32Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S6",
+    "hazard_standing": "INERT",
+    "one_line": "Before any change, the gateway suite at CLOUD a73e9cf57e already fails: test_entitlement_admin.py::test_ogz2_ac06 (a file whose tool-count pin this cell moves) and 10 more, plus 35 StreamableHTTP errors.",
+    "spec_asserts": "MX-t-13 act item 4: move the pinned tool-count tests only if your change moves them; run the named tests.",
+    "world_is": "Full gateway suite from a clean git-archive of HEAD (run 2026-09-30): 11 failed, 383 passed, 35 errors, 34 subtests passed. With this cell's edits: 8 failed, 390 passed, 35 errors. The failure sets differ by three tests (test_oga3_ac01, test_ogo1_ac07, test_ogq1_ac07 failed at base only, so they are load-sensitive) and no test fails with the change that passed at base. test_ogz2_ac06 fails at base and after ('expected profile + grant + operator_audit puts, got 4'). test_ogz2_ac08, the pin test this cell moves (52 to 53, and a blackdiamond entry in the per-integration pins), passes.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tests run from .scratch/base (git archive HEAD) and from the worktree, 2026-09-30; failing-id lists diffed: base-only 3, change-only 0.",
+        "infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py lines 339-362 in the worktree (uncommitted: row S9)."
+      ]
+    },
+    "notes": "INERT: no path in this cell's paths causes them; the StreamableHTTP errors are a once-per-process session-manager limit of the acceptance harness."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:32Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S7",
+    "hazard_standing": "INERT",
+    "one_line": "emit_catalog_v02.py cannot run in a worker's sparse worktree: it needs portal/src/api (an empty, uninitialised submodule directory) and org/tier0_utility/.../refs/census (outside the cone), and without them it rewrites census_ref on rows it does not own.",
+    "spec_asserts": "MX-t-13 act item 4: the catalog row is added through catalog_entries/ and the emitter, never a hand edit of DATA_CATALOG.yaml.",
+    "world_is": "First run: 'EMIT REFUSED: accessor index is EMPTY'. After extracting portal/src/api at the worktree's gitlink 3e2233de92 from the shared tree's portal repo with read-only `git archive` (the files sit in the ignored submodule directory and are not committed) the emitter ran but regenerated census_ref as 'NONE -- uncensused (L-14)' on rows that carry a census file today; widening the sparse cone to org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census made a no-change re-emit reproduce HEAD byte for byte except the two built_at_git_head lines. I also ran `git checkout --` once on DATA_CATALOG.yaml to discard that first wrong regeneration (my own emitter output, nothing else in the file), which the worker rules forbid; the file was re-emitted immediately after.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "emit_catalog_v02.py :380 PORTAL_API and CENSUS_DIR, read 2026-09-30.",
+        "no-change re-emit diff at a73e9cf57e: 2 lines (built_at_git_head), 2026-09-30."
+      ]
+    },
+    "notes": "INERT for this cell; a later worker re-emitting the catalog needs the same two inputs or will silently lose census_ref on existing rows."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:32Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S8",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-7 must set two environment variables for the gateway to use the read role (BLACKDIAMOND_READER_ROLE_ARN, BLACKDIAMOND_READER_EXTERNAL_ID), and the reused Schwab role adapter words its failures as 'the Schwab reader role'.",
+    "spec_asserts": "MX-t-13 act item 2: the tool reads only through the fenced role; enablement is MX-r-7's.",
+    "world_is": "Nothing in the repository's IaC sets SCHWAB_READER_ROLE_ARN/SCHWAB_READER_EXTERNAL_ID (comp-find, 5 hits, all code and tests), so the Schwab wiring is an enablement act outside this tree; the Black Diamond integration follows it. Unset or mis-named, role_config raises RoleConfigError at the first call and the tool answers an error, never a fallback to instance credentials (test_mx_t13_scope_fenced arm g). The tool reuses schwab.aws_roles.AssumedRole, whose STS-failure text names the Schwab reader role, so an assume failure of the BD role reads as a Schwab one in logs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'SCHWAB_READER_EXTERNAL_ID' infra 2026-09-30: 5 hits, DEF 1 (aws_roles.py:79), TEST 4.",
+        "infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py role_config and BlackDiamondIntegration._s3 (worktree wk-mcpindex-r5-21, uncommitted: row S9)."
+      ]
+    },
+    "notes": "INERT: fails loud. The release cell sets the two variables from the applied role and the secret this cell's terraform file creates."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:51Z",
+    "class": "BLOCKING",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S9",
+    "hazard_standing": "INERT",
+    "one_line": "MX-t-13's commit is REFUSED by the naming gate in ENFORCE mode: the order's read fence is the live hand-kept address opal-data-bd silver/fees/ (and scope 49financial), 5 literals refused, and the only lawful departure (a waiver entry at HEAD, R20) is outside the order's paths; the whole cell sits built and tested but uncommitted in the worktree.",
+    "spec_asserts": "MX-t-13 act items 1-2 and the record's Read fence: the tool reads exactly s3://opal-data-bd/silver/fees/ and the role Allows exactly that prefix; CLAUDE.md rule 30: every address is lib/opal_naming.py address() output; a deliberate departure is an R20 register entry Andrew acknowledges.",
+    "world_is": "bash .tools/safe-commit.sh over the cell's 14 files aborts 'BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)', NAMING-GATE: REFUSE 9 graded (2026-09-30, two attempts; the first also refused a tf interpolation, fixed since). The 5 remaining REFUSE verdicts: integration.py:51 opal-data-bd (NEW and ALIAS as S3_BUCKET, 'read it through lookup(49financial)'); integration.py:52 silver/fees/ (NEW and OUT-OF-PATTERN as S3Key, the builder shape is {source}/{scope}/silver/fees/); integration.py:56 49financial (hand-kept carrier, context rule); blackdiamond_reader_iam.tf:30 opal-data-bd; blackdiamond_reader_iam.tf:41 silver/fees/. lookup('49financial') yields opal-data-49financial, and that bucket holds NO silver/fees/ (list-objects-v2 prefix silver/fees/ returned no Contents; its top-level prefixes are _campaign/, _code/, gold/, irpt/; read 2026-09-30): the live data is at the legacy alias (the record's R19 migration gap), so following the gate's pointer would read an empty bucket. The waiver carrier the gate honours is read from COMMITTED HEAD only (.tools/naming-gate.py load_legacy_reads: a self-grant in the graded commit is impossible) and needs an authority; no waiver exists for these literals. The role name, both policy names and the tool name are CONFORMANT. State of the cell in the worktree (uncommitted): integration, registry line, SAFE and INDEX_TOOLS entries, pins 52 to 53, catalog source file plus emitter change plus re-emitted DATA_CATALOG.yaml, blackdiamond_reader_iam.tf (terraform validate Success on a scratch copy), tests/test_blackdiamond.py, EQUALITY_MX-t-13.md (tool and served object equal at VersionId ktHEUzzqCOa7Xp_YAl9UkEXPDRq1Dsuh), the proof instance (proof-of-spec-check rc 0). t13.AC1 PASS and t13.AC2 PASS (4 of 4) run in the worktree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/naming-gate.enforce present (safe-commit.sh :745) and the commit aborted with the verdict lines above, 2026-09-30.",
+        ".tools/naming-gate.py load_legacy_reads (:1084-1100): the waiver carrier is read from HEAD, never the index or disk.",
+        "aws s3api list-objects-v2 --bucket opal-data-49financial --prefix silver/fees/ -> no Contents (read-only, 2026-09-30).",
+        "infra/logic/registry/scopes.json scopes[0] aliases: spelling opal-data-bd, planes [bucket], lookup false, graded ALIAS of opal-data-49financial."
+      ]
+    },
+    "notes": "INERT: nothing is armed; the cell is stopped. TWO ways forward, the issuer's or the CTO's to choose: (A) land the R20 waiver entries (Andrew-acknowledged) for the five file+literal pairs in a commit BEFORE the cell's commit, then re-run the same safe-commit command from the worktree; or (B) rule that the integration takes bucket, prefix and scope from gateway configuration (env set by MX-r-7, like the role ARN) so the code holds no address, which still leaves the two terraform literals needing (A). The worker has not chosen, has not bypassed the gate, and has not redesigned the fence."
   }
 ]
 ```
