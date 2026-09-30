@@ -96,13 +96,21 @@ def preread():
     return row is None and index_count() == 0 and st == "ResourceNotFoundException"
 
 
-def policy_for(walker_arn):
+def policy_for(walker_arn, secret_arn):
+    """Both statements name the secret's own ARN (never `*`): explicit on both sides, and simulable."""
     return json.dumps({"Version": "2012-10-17", "Statement": [
         {"Sid": "WalkerReadsByExplicitArn", "Effect": "Allow", "Principal": {"AWS": walker_arn},
-         "Action": ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"], "Resource": "*"},
+         "Action": ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"], "Resource": secret_arn},
         {"Sid": "NobodyElseReadsTheValue", "Effect": "Deny", "Principal": "*",
-         "Action": "secretsmanager:GetSecretValue", "Resource": "*",
+         "Action": "secretsmanager:GetSecretValue", "Resource": secret_arn,
          "Condition": {"ArnNotEquals": {"aws:PrincipalArn": walker_arn}}}]})
+
+
+def repolicy(walker_arn):
+    st, arn, _ = secret_state()
+    _sm().put_resource_policy(SecretId=SECRET, ResourcePolicy=policy_for(walker_arn, arn), BlockPublicPolicy=True)
+    print("OK: resource policy re-put naming %s explicitly; Allow %s; Deny GetSecretValue for every other PrincipalArn"
+          % (arn, walker_arn))
 
 
 def create(walker_arn):
@@ -117,7 +125,7 @@ def create(walker_arn):
         Tags=[{"Key": "Purpose", "Value": "InvestorReporting"}, {"Key": "System", "Value": "IRPT-Analysis"},
               {"Key": "Ledger", "Value": "irpt-svc-analysis-principal-20260930"}])
     del password
-    _sm().put_resource_policy(SecretId=SECRET, ResourcePolicy=policy_for(walker_arn), BlockPublicPolicy=True)
+    _sm().put_resource_policy(SecretId=SECRET, ResourcePolicy=policy_for(walker_arn, created["ARN"]), BlockPublicPolicy=True)
     print("OK: secret created %s (value not printed); resource policy put: Allow %s; Deny GetSecretValue for every "
           "other PrincipalArn" % (created["ARN"], walker_arn))
     now = _now()
@@ -208,6 +216,26 @@ def negcontrol(out):
             print("READ selected_tenant=%s: HTTP %d; ok %s; reason %s -> %s"
                   % (firm, s2, ok, reason, "ADMITTED" if s2 == 200 and ok else "REFUSED"))
             results[firm] = {"status": s2, "ok": ok, "reason": reason}
+        # A RESOURCE read (CTO condition 4): the selected firm's directory population, ONE entry at most; the
+        # log keeps counts and codes only -- never a directory entry (names are the firm's data).
+        for firm in ("inflection", "cottonwood"):
+            s3, resp = _call("GET", "/api/scoped/investor-reporting/directory/search?selected_tenant=" + firm
+                             + "&q=&limit=1", None, h, log)
+            data = resp.get("data") if isinstance(resp, dict) else None
+            entries = data.get("entries") if isinstance(data, dict) else (data if isinstance(data, list) else None)
+            n = len(entries) if isinstance(entries, list) else None
+            reason = None
+            if isinstance(resp, dict):
+                st = resp.get("status") if isinstance(resp.get("status"), dict) else {}
+                reason = st.get("public_reason_code") or resp.get("reason") or resp.get("error")
+            ok = isinstance(resp, dict) and resp.get("ok")
+            log[-1]["response"] = {"ok": ok, "reason": reason, "entries_returned": n,
+                                   "firm_id": resp.get("firm_id") if isinstance(resp, dict) else None,
+                                   "keys": sorted(resp) if isinstance(resp, dict) else None}
+            verdict = "ADMITTED (a resource of %s was served)" % firm if (s3 == 200 and ok and n) else "REFUSED or EMPTY"
+            print("DIRECTORY selected_tenant=%s: HTTP %d; ok %s; entries %s; reason %s -> %s"
+                  % (firm, s3, ok, n, reason, verdict))
+            results["directory_" + firm] = {"status": s3, "ok": ok, "entries": n, "reason": reason}
         del token
     json.dump({"principal": EMAIL, "at": _now(), "results": results, "calls": log},
               open(out, "w", encoding="utf-8", newline="\n"), indent=1)
@@ -225,7 +253,8 @@ def disable():
 
 if __name__ == "__main__":
     a = sys.argv[1:]
-    if not a or a[0] not in ("preread", "create", "readback", "census", "negcontrol", "disable"):
+    if not a or a[0] not in ("preread", "create", "readback", "census", "negcontrol", "disable", "repolicy"):
         raise SystemExit(__doc__)
     {"preread": lambda: preread(), "create": lambda: create(a[1]), "readback": readback,
-     "census": lambda: census(a[1:]), "negcontrol": lambda: negcontrol(a[1]), "disable": disable}[a[0]]()
+     "census": lambda: census(a[1:]), "negcontrol": lambda: negcontrol(a[1]), "disable": disable,
+     "repolicy": lambda: repolicy(a[1])}[a[0]]()

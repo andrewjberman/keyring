@@ -13475,3 +13475,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "OPEN QUESTION THAT DECIDES THE BLAST RADIUS, and I did not resolve it: does the error propagate into PERIOD returns? link_geometric (:286-291) refuses a window containing any non-OK subperiod -- and 2025-01-09's partition is 4,808 of 4,808 non-OK. So IF the caller loads twr_daily by partition listing, every period spanning the date is UNCOMPUTABLE and the harm stops at the daily grain (a protective accident). IF the caller enumerates trading days from dim_calendar instead, 2025-01-09 is never loaded, the hole is invisible, and the +56% flows straight into every period return spanning it. NOT MEASURED here: which shape the live callers (perfrp_emit_core, perfrp_rollup, parity_period_returns, c04_validation_battery, holdings_performance.py) take, and whether any of those period returns is served to a client today. That read is the first thing the disarm owner should do. CANDIDATE REMEDIES, none taken (all change what the chain reads or emits, so all are the owner's): (1) have c02 read flow_ledger for EVERY date in (prev_trading_day, D] rather than date=D alone -- correct in general and fixes any future skipped day, but it changes the producer's read contract; (2) re-emit 2025-01-10 alone with the 01-09 CF folded in -- narrow, but leaves the mechanism live for the next market closure; (3) delete or never emit chain partitions for non-trading days -- but the custodian book genuinely moved that day, so this DISCARDS $2.89M of real flow rather than accounting for it, and it would still need (1) to place those flows somewhere. I recommend (1) with a re-emit of 2025-01-10; (3) alone is the one that looks tidy and loses data. NOT A MONITOR: this is a finding with an owner, not an alarm to build (CLAUDE.md standing moratorium)."
 }
 ```
+
+
+## IRPT_BCKEND-S238 -- CTO condition 4 fired: the new service principal read an inflection directory entry through the API; allowedFirmIds is enforced at the job (resident) only; the W27 window waits for the CTO's re-read
+
+```json
+{
+  "id": "IRPT_BCKEND-S238",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T16:31:00Z",
+  "one_line": "CTO half condition 4 FIRED: under the new svc-irpt-analysis principal (allowedFirmIds cottonwood), one API read of an INFLECTION resource SUCCEEDED -- GET directory/search?selected_tenant=inflection&limit=1 served 1 inflection directory entry (HTTP 200). The API admits ANY selected firm for this principal; allowedFirmIds is enforced only inside the resident since IB-yr-293. The W27 window WAITS for the CTO's re-read.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (the CTO half's own clause: a success on condition 4 is a BLOCKING row, the packet's claim is corrected, and the window waits for the CTO's re-read; the API-side enforcement surface _authz/served.py selected_tenant is P's under CONTRACT row 21)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Ledger irpt-svc-analysis-principal-20260930 leg N1, 16:2xZ: POST /auth/login 200 as svc-irpt-analysis@opalinvest.com (token never printed); GET /api/scoped/investor-reporting/directory/search?selected_tenant=inflection&q=&limit=1 -> HTTP 200, response keys contract_version/data/firm_id/operation/unprojected_grant, firm_id fir_b6b200b4395e94aaa604d5fa, 1 entry served (counts only logged; no entry content kept). The same read on cottonwood: HTTP 200, firm_id fir_0fe2a06331f1b4a68133fcb2, 1 entry.",
+      "status-summary on selected_tenant=inflection resolved the same inflection firm_id and answered NOT_FOUND (no job) -- the tenant was ADMITTED, the resource was absent; the directory read is the discriminator.",
+      "No vendor call was made: Opal's own API over CloudFront only. Log: org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/SVC_PRINCIPAL_NEGCONTROL_20260930.json.",
+      "Resident-side enforcement is LANDED: IB-yr-293 @784ac650d0 -- decide() refuses ACTOR_FIRM_NOT_ALLOWED for a data_firm outside the row's allowedFirmIds (5 of 5 cases on CLOUD). The API side (_scope/resolve.py classify_principal -> FIRM_OPERATIONS on the SELECTED firm; _authz/served.py selected_tenant) reads no allowedFirmIds -- exactly the packet's own W27-2 limit (2) sentence, now EXERCISED rather than read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W27 packet W27-2: 'the only thing keeping this principal off inflection or 49financial data is that no job for those firms is submitted under it' (a policy limit). CTO half condition 4: 'If it succeeds, that is a BLOCKING row, the packet's claim is corrected, and the window waits for my re-read.'",
+  "world_is": "MEASURED: the principal can READ another firm's directory population through the API today (1 entry of inflection served), and could SUBMIT an Analysis upload for inflection at K4 (the API admits the selected tenant); the resident would then refuse the JOB at decide() with ACTOR_FIRM_NOT_ALLOWED (293), so no vendor call and no report could be produced for a non-cottonwood firm -- but the upload, the normalized input and the request row would exist. CORRECTION TO THE PACKET'S CLAIM: 'recorded, not enforced' is now HALF-enforced -- enforced at the job (resident), not at the API. The window's three bodies are cottonwood and are unaffected; what the CTO re-reads is whether a resident-only mechanism plus an API-side convention is enough to open, or whether the API half (P's surface) is a precondition.",
+  "notes": "Retirement path stands: disable, never delete (svc_principal.py disable). Secret readers: walker only, 24 of 24 roles explicitDeny (leg S1)."
+}
+```
