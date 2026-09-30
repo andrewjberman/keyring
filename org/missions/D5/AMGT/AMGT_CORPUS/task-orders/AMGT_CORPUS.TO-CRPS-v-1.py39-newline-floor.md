@@ -91,3 +91,5 @@ AST branch. The census root is widened to the defect's own root (decomposition s
 <round>20</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+
+<status>complete</status>
