@@ -68,7 +68,7 @@ carrier clause unmeasured and FWD-7's rank unexercised. Risk is LOCAL: it reads 
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>23</round>
 <slot>~54</slot>
 <fabric>site-z</fabric>
