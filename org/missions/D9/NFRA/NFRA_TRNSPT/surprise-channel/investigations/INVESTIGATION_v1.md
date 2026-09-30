@@ -81,6 +81,115 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "spec_asserts": "Every generated target is byte-identical to what the registry at HEAD produces (LGIC_ENFORCE: per-view registry hashes, 39cbad4214).",
   "world_is": "The 12 targets carry the pre-merge registry hash; the site Z registry change landed without a laptop regenerate, and no gate refused the merge.",
   "notes": "Blast radius per CTO placement 2026-09-29 step 1: a restamp moves blob hashes that signed IRPT packets pin; the issuer names TR-g-1's drain to ~P and ~M first. Whether a merge-time gate should regenerate is the CTO's, not this project's."
+},
+{
+  "id": "NFRA_TRNSPT-W4-S1",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+  "surfaced_at": "2026-09-30T15:15:00Z",
+  "one_line": "Both public name-list fetches Andrew's word covers were refused by the hosts' bot protection, so names/given_names.txt and names/surnames.txt do not exist and TR1-a1-AC1/AC2 cannot pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2026-09-30T15:00:59Z curl -L -A Mozilla/5.0 https://www.ssa.gov/oact/babynames/names.zip -> HTTP 403 'Access Denied' (399-byte HTML, Akamai reference #18.e537c517.1790780459.2aa1f01); python requests retry at ~15:01Z -> 403 again",
+      "2026-09-30T15:01:00Z same client https://www2.census.gov/topics/genealogy/2010surnames/names.zip -> HTTP 200 with a 247-byte 'Request Rejected ... support ID 13427891564882941819' HTML page, not a zip (starts b'<htm'); python requests retry -> same body",
+      "sha256 of the SSA refusal body 4903db40d959d09244de08efa4c5004cc1306b46d9b9b6c2af3f9f896ee71091; of the Census refusal body adcd2c1213a905d5c1481b523a3f0f1c789c1f9885d1f31f410d86ec5cdb91d0 (neither is committed; no archive was obtained)",
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R1_CHECKS/r1_assets_check.py -> ASSETS-BAD name dictionary entries=0 (< 50000)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ONE fetch each of the SSA names.zip and Census 2010 surnames names.zip yields the archives to distil into the name dictionary (>= 50,000 entries); 'if a fetch fails, stop on that file and file a surprise row: never substitute a hand-typed list'.",
+  "world_is": "Both hosts refuse a non-browser client (SSA 403, Census a 200 rejection page); the worker used its one bounded retry per host and stopped; no name file was written and none was hand-typed. The other five assets, README, lock (name_dictionary_entries 0) and tests are committed; the size and Will/Grant tests fail honestly.",
+  "notes": "Unblock is the issuer's or Andrew's: a browser-mediated download placed for the worker, a different public mirror Andrew names (egress word is per-use), or an operator-run fetch; then the worker re-runs pin.py-style pinning and AC1/AC2. The tests were not weakened."
+},
+{
+  "id": "NFRA_TRNSPT-W4-S2",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+  "surfaced_at": "2026-09-30T15:16:00Z",
+  "one_line": "The task order asks for a null-address row for Yang's unmeasured 49financial address inside authors.json's authors list, but the issuer's r1_assets_check.py calls a['address'].lower() on every authors row and would raise on null.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R1_CHECKS/r1_assets_check.py: addrs = {a[\"address\"].lower() for a in authors[\"authors\"]}",
+      "task order build item 1 and 'Measured at the cut': carry a null row with claim: absent"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "authors.json {\"authors\":[{name,address,role,claim,basis}]} carries Yang's unmeasured 49financial row with address null and claim absent, and the issuer's check accepts the file.",
+  "world_is": "A null address inside authors[] makes the issuer's check raise AttributeError; the worker put the null/absent row under a separate top-level key 'unmeasured' in authors.json so the checker and the wipe's read of authors[] stay total.",
+  "notes": "If the issuer prefers the row inside authors[], the checker needs a None guard; the wipe (TR-w-1) should read both keys."
+},
+{
+  "id": "NFRA_TRNSPT-W4-S3",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+  "surfaced_at": "2026-09-30T15:35:00Z",
+  "one_line": "The commit-time naming gate (LGIC_ENFORCE) REFUSES the two ordered data assets authors.json and client_domains.json as NEW hand-kept carriers of the firm tokens 49financial, 49f, inflection and cottonwood, so they cannot be committed within this order's grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... at 2026-09-30 ~15:2xZ: 'NAMING-GATE: REFUSE 5 graded' -- data/transcripts/assets/authors.json:12 manav.shah@49financial.com -> lookup('49financial'); client_domains.json:4 49financial.com, :5 49f -> lookup('49financial'); :12 inflection -> lookup('inflection'); :19 cottonwood -> lookup('cottonwood'); commit aborted",
+      ".tools/naming-gate.py header: a firm token outside registry files, builder-call arguments and generated blocks is a hand-kept carrier and a NEW one is refused; the waiver kind is an R20 declared exception (a register entry outside this order's paths)",
+      "infra/logic/registry/scopes.json:44 already carries email_domain '49financial.com' on the 49financial scope, so the domain table overlaps the registry"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build items 1-2: authors.json and client_domains.json carry the measured addresses, domains and firm keys (49f, inflection, cottonwood) as versioned data assets committed under data/transcripts/assets/.",
+  "world_is": "The gate grades JSON string values; the two files hold exactly those tokens by design. The worker did NOT obfuscate the strings to slip past the gate. Committed subset: allowlist, model_aliases, README, lock (pinning only what is committed), tests, rows, proof. authors.json and client_domains.json sit UNCOMMITTED in the worktree (copies in .scratch/held); the lock on disk is re-pinned over all six for the release.",
+  "notes": "Unblock is the CTO's/issuer's: an R20 declared exception for the two files (register row plus a read_context entry), or a ruling that the client-domain and firm-key data are read from the registry (lookup) so the file carries none. Either way the order's paths may need to widen."
+},
+{
+  "id": "NFRA_TRNSPT-W4-S4",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+  "surfaced_at": "2026-09-30T15:50:00Z",
+  "one_line": "safe-commit's missions-tree check refuses every org/missions commit from this worktree with INDEX-DRIFT org/projects/NFRA_TRNSPT.json (index PRD vs tree EXECUTING) because the worktree branch predates CLOUD 17ad3ea043, the issuer's index fix.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... (2026-09-30 ~15:4xZ): 'BLOCKED: missions-tree-check ... [INDEX-DRIFT] org/projects/NFRA_TRNSPT.json: dep_stage: index=PRD tree=EXECUTING'; all other gates (commit-gate, naming-gate PASS 0 graded, surprise-row-gate, to-pipeline-gate) passed on the subset",
+      "git merge-base --is-ancestor 17ad3ea043 HEAD -> rc 1 (HEAD daee98b79f); git show --stat 17ad3ea043: org/projects/NFRA_TRNSPT.json only, 2 insertions 2 deletions, authored by 2.0.0_SA_COO~T"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker commits its deliverables on its worktree branch with safe-commit.sh (order notes and standing worker rules: never merge, never widen the grant).",
+  "world_is": "The order's own base lacks the issuer's index fix, org/projects/NFRA_TRNSPT.json is outside this order's grant and merging CLOUD is forbidden to a worker, so nothing could be committed; all work sits uncommitted in the worktree and the ROW ITSELF is uncommitted.",
+  "notes": "Unblock: the issuer/integrator merges CLOUD 17ad3ea043 into wk-NFRA_TRNSPT-4 (sibling ~3 records the same remedy in its row W3-S1) or tells the worker to; then the worker commits the prepared set (msg in .scratch/msg.txt) after re-checking naming-gate on the two firm-token assets (W4-S3)."
+},
+{
+  "id": "NFRA_TRNSPT-W4-S5",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+  "surfaced_at": "2026-09-30T16:40:00Z",
+  "one_line": "The issuer's three rulings on W4-S1, W4-S3 and W4-S4 were applied as amended: CLOUD merged (17ad3ea043 in), client_domains.json retired with the table read from registry email_domain, authors.json reshaped with no firm token, name lists vendored from the PyPI sdist names 0.3.0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~T",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer message to 0.9.0_WK_NFRA_TRNSPT~4 (amended order face, 2026-09-30): RULING 1 merge CLOUD; RULING 2 retire client_domains.json, authors.json shape with firm_domain_rule; RULING 3 pip download names, one fetch",
+      "git merge --no-edit CLOUD twice: 17ad3ea043 in HEAD; infra/logic/registry/scopes.json already carries email_domain on the three FIRM rows (49financial.com, inflectionwealth.com, cottonwoodmail.com) plus demo.test; issuer's recut r1_assets_check.py printed 'ASSETS-PINNED n=5 names=93962 registry_domains=4' rc=0",
+      "pip download names --no-deps --no-binary :all: -> names-0.3.0.tar.gz sha256 726e46254f2ed03f1ffb5d941dae3bc67c35123941c29becd02d48d0caa2a671; surnames.txt 88799 lines + given_names.txt 5163 lines = 93962 (dist.all.last, dist.female.first, dist.male.first)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The original order face named authors.json and client_domains.json as carriers of firm tokens and a SSA/Census name-list fetch.",
+  "world_is": "The amended face replaced all three; W4-S1, W4-S3 and W4-S4 stand as written and are superseded by these applied rulings. W4-S2 is moot (Yang's second address is covered by firm_domain_rule)."
 }
 ]
 ```
