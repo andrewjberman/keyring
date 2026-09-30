@@ -658,6 +658,70 @@
     "spec_asserts": "Row W5-S16: the gateway serves 404 on /rivalfunds after the 2e2254156e overwrite; ARMED until redeployed.",
     "world_is": "The overwrite is reverted: the host runs the signed ref again, so W5-S16's hazard is disarmed; W5-S16 itself is unedited history.",
     "notes": "Supersedes ETFS_RIVALS-Z-W5-S16 (the gate forbids editing a row in place). The issuer dispositions S16."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "one_line": "Real DVD_HIST_ALL dates are not all dates: 191 records carry the literal string 'Payable Date =' and 13 carry 'Record Date =' in place of a date, so a date32 column cannot hold them as given.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".runtime/etfs-rivals-idvz-20260930/dividends.json (device-local, gitignored): per-field scan of all 4780 records, non-ISO values: ('Payable Date', 'Payable Date =') x191, ('Record Date', 'Record Date =') x13.",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py rows_from_responses and _date(); tests/test_e1_enrichment_bloomberg.py::test_rows_ratio_amount_and_status_rows."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-GOLD-MODEL G3 lists ex_date and pay_date as dates and the cell says nothing of a non-date value in a date field.",
+    "world_is": "In dividends.json (738 securities, 4780 records) Ex-Date and Declared Date parse on every record; Payable Date is 'Payable Date =' on 191 records and Record Date is 'Record Date =' on 13. enrichment_bloomberg.py types such a cell NULL and keeps the original text in G3 column date_anomalies, so nothing is lost.",
+    "notes": "date_anomalies is a column added beyond the C-GOLD-MODEL list; a consumer reading pay_date NULL should read date_anomalies before treating the payable date as absent."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S7",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "one_line": "The cell's cash drop (every non-cash security) and CRO~Z's pull script's CASHLIKE regex disagree on one identifier shape, so a security G1 keeps can be one dividends.json never requested.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Replayed the regex over the ids of the newest .runtime/etfs-rivals-idvz-20260930/daily capture: 30 matches = 29 Curncy + '9996651D US Equity'.",
+        "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/dividend_history_pull.py CASHLIKE; e-1.AC2.py cash = endswith Curncy.",
+        ".runtime/etfs-rivals-idvz-20260930/dividends.json (device-local, gitignored): no key starting '99966'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell and AC2: cash/currency securities are dropped and every other security sits in exactly one batch; dividends.json is the DVD_HIST_ALL pull of the universe.",
+    "world_is": "AC2 treats only '... Curncy' as cash (473 ids in the newest IDVZ capture -> 444 planned, 29 dropped). dividend_history_pull.py CASHLIKE also drops 'CASH|MONEY|MMF' substrings and '^\\d{7}[A-Z]? US Equity$', which matches '9996651D US Equity' in that capture; dividends.json has no key for it. The plan keeps it (AC2 requires it); the import cannot carry it.",
+    "notes": "Plan mode drops only ' Curncy'; the daily leg will ask Bloomberg about '9996651D US Equity' once G1 carries it. Whether it is a cash line is the issuer's call."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S8",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "one_line": "Of 4780 real dividend records, 1649 (34.5%) carry a type the cell does not map and are kept as unmapped:<raw>; the largest are Daily Accrual 1315, Interest on Capital 197, Income 60.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Counter over map_event_type of every record in .runtime/etfs-rivals-idvz-20260930/dividends.json (device-local, gitignored) run at this cut (cash_div 3032 + share-changing 99 + unmapped 1649 = 4780).",
+        "org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md:409 G3 event_type enum {cash_div, interest, split, bonus, spinoff, stock_div, rights}."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The cell maps cash dividends, splits, stock dividends, spinoffs, bonus and rights, and carries any other type as unmapped:<raw>; C-GOLD-MODEL's event_type enum also lists interest.",
+    "world_is": "Mapped: cash_div 3032, split 60, stock_div 18, spinoff 12, bonus 6, rights 3. Unmapped, 13 raw types, 1649 rows: Daily Accrual 1315, Interest on Capital 197, Income 60, Return of Capital 31, Memorial 10, Omitted 10, Partnership Dist 8, Distribution 8, Cancelled 6, Warrant 1, Capital Gains 1, Discontinued 1, Return Prem. 1. No raw type maps to interest.",
+    "notes": "G6 income reconciliation (RIV-g-4) will read these as unmapped, not as cash_div or interest; any wider mapping is a decision for the issuer or CTO, not this cell."
   }
 ]
 ```
