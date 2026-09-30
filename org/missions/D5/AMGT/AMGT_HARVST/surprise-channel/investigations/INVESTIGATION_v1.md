@@ -3540,6 +3540,69 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Instance expect field differs from the TO text only by regex escaping; the check scripts were not edited."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W75-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~75",
+      "surfaced_at": "2026-09-30T08:55Z",
+      "one_line": "The order's B2 change ('one repair after one reauth') cannot replay at all inside the existing range(2) attempt loop, so the loop bound went from 2 to 3 attempts (MAX_ATTEMPTS).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "TO section 1: within ONE job the contracted repair may run once after a reauth; the number of attempts is bounded and there is no loop; nothing else about the repair changes.",
+      "world_is": "worker.py's `for attempt in range(2)`: attempt 0 is the reauth, so a repair at attempt 1 is followed by no attempt to replay the challenged search -- the repair would run and its result be discarded. A third attempt is required. Bounded by construction: the AuthExpired branch and repair_permitted each fire at most once per job, so no path reaches a fourth attempt (AC1 test_repair_after_reauth_stops_after_one_repair_when_the_challenge_repeats: 3 attempts, 1 repair, 1 reauth).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py MAX_ATTEMPTS = 3 and repair_permitted(); AC1 output org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~75/q6_ac1_output.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The repair after a reauth is allowed for barrons only (REPAIR_AFTER_REAUTH); bbg keeps the base guard (test_bbg_challenge_after_a_reauth_is_still_not_repaired), because the finding and the ledger evidence are barrons-only."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W75-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~75",
+      "surfaced_at": "2026-09-30T08:55Z",
+      "one_line": "The order's line references for the base behaviour (worker.py ~:393 and :426, transport.py:95) are the p-4 vintage; at HEAD 0cfb3406bf the guard is worker.py:431 (base) and the RequestRejected handler is :464.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "TO section 1: worker.py ~:393 `if attempt or publisher not in {\"bbg\",\"barrons\"}: raise`; the 403 body is never kept (transport.py:95, worker.py:426).",
+      "world_is": "The same code sits at other lines at the cut's HEAD (git show 0cfb3406bf:lib/opal_data_harvest/worker.py: guard at 431, `except RequestRejected` at 464); the behaviour the order describes is unchanged, only the citations drifted.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git diff --stat ff4405d3d5 HEAD -- lib/opal_data_harvest is empty, so the drift is against p-4's own vintage (81fd5632c2), not a later edit"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "No effect on the change; recorded because a path being elsewhere is a row."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W75-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~75",
+      "surfaced_at": "2026-09-30T08:55Z",
+      "one_line": "AC3's <expect> '0 failed' is not a string a clean pytest run prints (it prints 'N passed'), so the literal invocation alone cannot match it; the counts line comes from a compare script over the base and after runs.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AC3: invocation `python -m pytest lib/opal_data_harvest/ -rA --tb=line`, expect '0 failed', and 'prints the base and after counts'.",
+      "world_is": "pytest prints '223 passed, 1 skipped' with no '0 failed' when nothing fails. The instance's AC3 output_evidence therefore carries the pytest tail plus the output of scripts/q6_ac3_compare.py (base 207 passed / after 223 passed / '0 failed'), the same shape p-2's AC3 used.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~75/q6_ac3_after_output.txt (tail: 223 passed, 1 skipped); org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~75/q6_ac3_compare_output.txt (last line: 0 failed)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Same class as AMGT_HARVST-Z-W68-S1 (an <expect> that the literal invocation does not print)."
     }
   ]
 ```
