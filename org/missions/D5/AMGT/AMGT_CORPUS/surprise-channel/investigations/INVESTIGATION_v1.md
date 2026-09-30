@@ -2705,6 +2705,157 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The pre-existing test encodes the superseded per-field sign behaviour; the ruled reader returns POSITIVE for value 1.0. y5_AC1 passes (plain_disagree 0 convention_disagree 0).",
     "notes": "Filed, not fixed: the line-69 assertion should expect POSITIVE (or the file be added to paths). Reader change and new test are in place.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S69",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-30T11:45:00Z",
+    "one_line": "model_block header market figures take the REPORTING currency label: TSM_US_Equity CUR_MKT_CAP 2339877750964.95 is served with currency TWD (basis 'reporting (EQY_FUND_CRNCY)') while currencies.quote is USD, converted false, and the raw refdata carries CRNCY USD with the same value -- a USD figure labelled TWD. The same labelling rule places CUR_MKT_CAP / NET_DEBT / CURR_ENTP_VAL on 79 header figures across 27 mixed-currency securities; only TSM CUR_MKT_CAP is measured wrong, the other 78 are the rule's reach, unmeasured per figure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/derived/model_block/TSM_US_Equity/20260930T084113Z/model_block.json figures[5]: mnemonic CUR_MKT_CAP, value 2339877750964.9497, unit 'ABSOLUTE (full currency units)', currency 'TWD', currency_basis 'reporting (EQY_FUND_CRNCY)'; currencies {quote USD, reporting TWD, mixed true, converted false}.",
+        "Worker census org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/TSM_ANCHOR_SOURCES_ROUND24.md (merged 92f1403d25): TSM refdata 20260925T043112Z carries CRNCY USD and CUR_MKT_CAP 2.3399e12 in the listing currency.",
+        "Issuer census 11:4xZ over the newest model_block of each of 100 securities (769 objects): 31 mixed-currency blocks; header figures labelled reporting-currency by basis 'reporting (EQY_FUND_CRNCY)': CUR_MKT_CAP 27, NET_DEBT 27, CURR_ENTP_VAL 25 (79 on 27 securities); 4 more securities carry no reporting currency ('UNSTATED')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A served figure's currency label states the currency its value is denominated in.",
+    "world_is": "The header currency rule labels CUR_MKT_CAP, NET_DEBT and CURR_ENTP_VAL with the reporting currency (EQY_FUND_CRNCY) and converts nothing; for TSM the value is the USD listing-currency figure, so the label is wrong. Value-free: no figure value moves, no unit moves.",
+    "notes": "Surfaced by 0.9.0_WK_AMGT_CORPUS~2 in the CRPS-z-2 census (it declined the figure as an anchor) and confirmed on the served object by the issuer. Enrichment candidate for the round-24 analysis: the per-field currency denomination of these three header fields on the 27 securities, then the label rule. Not an anchor source for Z-W2-S16.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S19",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T10:30:00Z",
+    "one_line": "CRPS-z-1's premise 'about 199 of the 602 are per-share names outside their band' does not match the census: 37 figures are per-share outside the 0-2000 band (BEST_BPS 12, BOOK_VAL_PER_SH 11, REVENUE_PER_SH 11, BEST_EPS 3); 402 are per-share names whose sampled value is an exact ZERO (IS_DIV_PER_SHR 177, EQY_DPS 177, BEST_DPS 48) and 48 more are a zero BEST_DIV_YLD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "UNRESOLVED_CLASSES_ROUND24.json (deliverables/0.9.0_WK_AMGT_CORPUS~1): 17 classes summing to 602 over 98 keys; the census read the newest model_block per key from S3 and grouped by mnemonic x reason_class x security.",
+        "Reasons: 354 'sampled magnitude 0.0 does not discriminate (a zero value every sampled year reads identically to no coverage)' + 48 for BEST_DPS; 48 BEST_DIV_YLD 'does not discriminate percent vs decimal (zero or non-numeric)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "About 199 of the 602 are per-share names outside their band; the rest carry other reasons (order section 1).",
+    "world_is": "The bulk of the 602 (450 figures on 18 names) is the zero-sample class, not the outside-the-band class; those names are dividend non-payers whose latest fiscal row reads 0.0.",
+    "notes": "Closed by FAMILIES 1-2 on the FIELD_BASIS definition (a zero has no scale), not by the band; the family is a separate step (unit_from_basis_zero) so classify_unit's magnitude reading of a zero is unchanged. The issuer should confirm at the round-24 analysis that a field-basis rule for a zero is the intended reading of 'a stated rule'.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+{
+    "id": "AMGT_CORPUS-Z-W1-S20",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T10:30:00Z",
+    "one_line": "test_build_unit_map_families.py::test_ratio_outside_the_band_stays_unresolved_and_band_is_not_widened pins classify_unit('IS_DIV_PER_SHR', 0.0, ..., header) == UNRESOLVED (line 88), so the zero-dividend families could not land inside classify_unit without breaking a builder suite the order requires green; that file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First run of z1_AC2.sh with the zero rule inside classify_unit: '1 failed, 37 passed' at integrations/bloomberg/research/tests/test_build_unit_map_families.py:88 (assert classify_unit('IS_DIV_PER_SHR', 0.0, 'S', header)[1] == 'UNRESOLVED').",
+        "After moving the rule to build_unit_map.unit_from_basis_zero, called from build_entries: z1_AC2.sh '38 passed'; the whole research tests dir '182 passed'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2: the family tests pass with the builder's suites; the classifier carries each change (order section 1 item 2).",
+    "world_is": "The round-23 test encodes the prior ruling that a zero magnitude does not discriminate; a zero-value family in classify_unit contradicts it. The two grounds (magnitude vs field basis) are now separate functions.",
+    "notes": "Filed, not fixed: if the issuer wants the rule inside classify_unit, line 88 must change and the file be added to paths. The served figure's unit is identical either way.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S6",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:00:00Z",
+    "one_line": "lib/research/peers/universe.py builds its model-block pool index by taking the raw store segment as the identity (model_block_pool_index: k[len(PREFIX):].rsplit('/', 2)[0], :318), and lib/research/corpus/dossier.py reads derived/model_block/<raw security_key>/ (:927, :966); both are outside CRPS-z-4's <paths> and the z4 census does not name them, so after the round-25 move to encoded segments the peers engine's pool-first read misses BP/_LN and NG/_LN and dossier lists an empty raw prefix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/peers/universe.py:312-318 (index key = raw segment) and :331-332 (index.get(security_key)); lib/research/corpus/dossier.py:927 and :966 (base = MODEL_BLOCK_POOL_PREFIX + raw security_key + '/'); worker branch wk-crps24-4: engine._load_model_block now reads pool_index by the raw identity, unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-z-4: every per-security path, writers and readers, is built through slash_safe_key so no reader serves between the two forms at the round-25 move.",
+    "world_is": "Two reader files that touch derived/model_block/ per security sit outside the order's <paths>: peers/universe.py (index keyed by the stored segment, no decode) and corpus/dossier.py (raw key interpolation). Slash-free keys are unaffected; the two raw-slash names (BP/_LN, NG/_LN, BRK/B where live) are.",
+    "notes": "Filed, not fixed (outside paths). Fix for round 25 alongside the move: universe.model_block_pool_index decodes a slash-free segment with crosswalk.security_key_from_slash_safe (keep a raw-slash segment as found), and dossier.py builds base with crosswalk.slash_safe_key. lib/research/filings/fetch.py:472 pool_key is a label only (never dereferenced), left raw.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:00:00Z",
+    "one_line": "The z4 census reads 24 functions but under-reports the per-security path sites: it matches string literals only, so module-constant sites (scoped_amgt read_pool_object/_read_model_block_pool/read_model_block_versions/ledger read, enrich.management_key, engine.pool_key, judge.pool_key, run_scores _latest_model_block/_latest_peer_set/pool_key) were invisible to it; the worker routed those constant-based sites through slash_safe_key beyond the census list, and marked 10 census functions that build no path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "z4_check.py TEMPLATE matches literals under ast.Constant; constants like MODEL_BLOCK_POOL_PREFIX/PEERS_PREFIX/MANAGEMENT_PREFIX/POSTURE_PREFIX/SCORES_PREFIX are module-level names so their users never match; worker diff on wk-crps24-4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's census of 24 is the population of raw per-security path builders.",
+    "world_is": "The census is a literal-based lower bound; AC1 reaching raw 0 does not prove no raw per-security path remains (see AMGT_CORPUS-Z-W4-S6 for two out-of-path readers it never saw).",
+    "notes": "Recorded so the drain reviewer reads AC1 as a floor. The 10 markers (24 census functions = 14 routed + 10 marked) are in enrich.py (4), engine.py (3: resolve_subject, run_batch, main), run_scores._robustness_record, crosswalk._record_for and model_block_pull._model_block_keys_in_store, each with its reason on the marker line.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S8",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:30:00Z",
+    "one_line": "Running the integrations/bloomberg/research suite in a worktree rewrites the tracked file integrations/bloomberg/research/field_map.json (1013 insertions, 110 deletions after one full run), a file outside this order's paths; the worker restored it byte-for-byte from HEAD before committing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --stat after 'pytest integrations/bloomberg/research' (170 passed): field_map.json | 1123 +++--; restored with 'git show HEAD:<path>' and git status then clean for that path"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The repo-wide suites the issuer runs at the drain leave the tree clean.",
+    "world_is": "At least one test in integrations/bloomberg/research/tests writes the tracked field_map.json as a side effect, so a drain that runs the suite before its commit gate carries an unowned 1123-line diff.",
+    "notes": "Filed, not fixed (outside paths). The AC2 suites named by z4_AC2.sh do not trigger it.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S9",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:50:00Z",
+    "one_line": "CORRECTION to AMGT_CORPUS-Z-W4-S8: the writer of integrations/bloomberg/research/field_map.json was this worker's own new test (test_model_block_pull_stage_derive_key), not the pre-existing integrations/bloomberg/research suite; model_block_pull.stage_derive calls _ensure_unit_map, which WRITES the tracked field_map.json for any security the map does not list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test_slash_safe_key_sites.py -k 'not stage_derive': git status clean; -k stage_derive: field_map.json modified; the pre-existing suite alone: 170 passed with no field_map.json change once the new test was not in the run"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A unit test of stage_derive's derived key leaves the tree clean.",
+    "world_is": "stage_derive has a tracked-file write side effect for an unmapped security (model_block_pull.py:854 via _ensure_unit_map); the test now stubs _ensure_unit_map, so the tree stays clean. S8's premise (that the existing suite mutates field_map.json) is withdrawn.",
+    "notes": "S8 is not edited (a row is never edited); this row supersedes its attribution. Re-verified: after the fix the AC2 suites and the bloomberg suite leave git status clean for field_map.json.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

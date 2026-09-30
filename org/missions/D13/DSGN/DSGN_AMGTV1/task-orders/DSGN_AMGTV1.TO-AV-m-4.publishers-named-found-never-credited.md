@@ -49,6 +49,16 @@ in a data attribute or in code, never in visible text.
 claim, never drop it; only a harness named in `<paths>` may be edited. With the shared module above, the issuer's helper measured no
 harness change.
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D, 2026-09-30, on row DSGN_AMGTV1-Z-W47-S1): one harness grant.** The issuer's helper measured
+the shared-module form against shell and posture only; `__harness__/timelineFourStates.harness.cjs` has its OWN `source()` loader,
+whose `load(name)` resolves `../dateWords` and the date utils but not `./publisherNames`, so it throws "Cannot find module
+'./publisherNames'" once TimelinePanel.tsx imports the module (AC2 3 of 4). The harness is granted in `<paths>` for ONE line: in
+`function source(rel)`'s `load(name)`, after the line
+`    if (name === '../dateWords') return source('src/pages/SecurityAnalysis/dateWords.ts');` add
+`    if (name === './publisherNames') return source('src/pages/SecurityAnalysis/components/publisherNames.ts');`.
+Nothing else in that harness moves. Then re-run AC1-AC3, re-write the proof instance, flip `<status>` to `complete`, and append a
+row resolving DSGN_AMGTV1-Z-W47-S1 (id DSGN_AMGTV1-Z-W47-S2, citing the harness line).
+
 ## 2. BOUNDS
 
 1. No server, no fetch, no network, no install, no push, no deploy. REFUSE, do not rescue.
@@ -62,6 +72,7 @@ harness change.
 portal/src/pages/SecurityAnalysis/components/publisherNames.ts
 portal/src/pages/SecurityAnalysis/components/TimelinePanel.tsx
 portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx
+portal/src/pages/SecurityAnalysis/__harness__/timelineFourStates.harness.cjs
 org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~47/
 org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -101,7 +112,7 @@ Report once: what changed and where, the output line of every criterion, the por
 as this cell: placed here so the chains' write sets stay disjoint). Base 846ecc6c: publishers.cjs 0 of 3; green r12-green-c
 @1227560a 3 of 3 (shell RED in that form); the publisherNames.ts form measured by the helper with no harness change.
 
-<status>pending</status>
+<status>complete</status>
 <round>12</round>
 <slot>~47</slot>
 <fabric>site-z</fabric>

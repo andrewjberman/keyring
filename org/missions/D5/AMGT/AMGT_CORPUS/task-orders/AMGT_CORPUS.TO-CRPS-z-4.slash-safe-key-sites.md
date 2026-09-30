@@ -133,3 +133,4 @@ which the research named.
 <round>24</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
