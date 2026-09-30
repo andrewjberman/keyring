@@ -12664,3 +12664,90 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "ISSUER DEFECT, third in three rounds and a NEW kind again: R25 under-granted, R26 cut an un-meetable criterion, and R26's drain then accepted a check that graded the shape of a pointer instead of following it. The transferable rule: A REFERENCE IS NOT VERIFIED UNTIL IT IS RESOLVED -- a census of ref PREFIXES (18 of 18 opal://) says nothing about whether the targets exist, and the two reads look identical in a report. REMEDY, already cut: round 27 cell IB-yr-271 publishes ComparisonCatalogue.schema.json to the v1 directory so the landed ref resolves, alongside the parser fix that makes the resolve-refs test able to report again. Publishing a MISSING contract a landed route already references is completing round 26; it is NOT the 'bend a published schema to satisfy the test' move CTO 103081 forbids, and that cell's control is narrowed to 'no EXISTING published schema is MODIFIED' so the distinction is machine-checked rather than promised."
 }
 ```
+
+
+## IRPT_BCKEND-W90-S1 -- The seam suite's red is NOT one cause: after the opal:// parser fix 24 of 59 nodes are still red for six independent causes, and Y27-1-AC1 (0 failed) cannot be met inside this order's <paths>.
+
+```json
+{
+  "id": "IRPT_BCKEND-W90-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~90",
+  "surfaced_at": "2026-09-30T02:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The seam suite's red is not one cause: after the opal:// parser fix 24 of 59 nodes are still red for six independent causes, and Y27-1-AC1 (0 failed) cannot be met inside this order's <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Base in the ~90 worktree at a00a7fda7d: python -m pytest -q -p no:cacheprovider _contracts/tests/test_seam_paired.py from infra/aws/lambda/investor-reporting -> 34 failed, 25 passed (59 collected; the order's dry-run read 33/25 of 58).",
+      "After my fix (opal:// ref resolution at 4 sites, ComparisonCatalogue published + fixture pair, zero-count unprojected_grant supplied where a response contract requires it): 24 failed, 35 passed, 59 collected. The parser cause is gone -- 10 nodes moved to green, including [comparison-catalogue] -- but 24 stay red.",
+      "CAUSE A, 13 nodes, consumer-side drift in the primary checkout's portal fixture (portal/ is a gitlink, read from C:/Users/AndrewBerman/Desktop/ajb_workspace/portal): test_the_consumer_fixture_source_is_named_and_non_empty (12 entries, test pins 11), test_the_operation_map_covers_the_consumers_own_denominator (smoke keys now include hashed keys, EXP-1, REQ-0001, analysis), and all 11 test_paired_consumer_request_through_the_real_dispatcher[*] (flat slug /api/scoped/investor-reporting/<op> absent from the smoke). This is the counterpart's fixture changing shape, not a ref parser; no grant of mine reaches it.",
+      "CAUSE B, 1 node: test_every_schema_carries_v1_and_contract_version pins len(names) == 11 over every *.schema.json in v1 and then requires properties.contract_version.const == 'v1' of each; v1 now holds 24 top-level schemas and 11 of them (AnalysisSubmissionRequest, AnalysisUploadRequest, AnalysisUploadResult, DirectoryContext, DirectoryPage, OwnedAnalysisRequest, OwnedAnalysisRequestHistory, RequestComposition, SelectedAccounts, SelectionRequest, and the ComparisonCatalogue published here) carry no properties.contract_version by their own design (measured by a scan of properties.contract_version); BoundaryRefusal has it but no x-contract-version. A stale denominator and a stale predicate.",
+      "CAUSE C, 1 node: test_every_declared_route_has_a_response_contract_whose_refs_resolve asserts 'data' is in required for every response contract; export-receipt and submit-export require [contract_version, operation, firm_id, unprojected_grant] and no 'data' (assertion ('submit-export','data')). Whether the contract or the test is right is a ruling, not a parser matter.",
+      "CAUSE D, 6 control nodes: no fixture pair exists for AnalysisUploadResult, OwnedAnalysisRequest, OwnedAnalysisRequestHistory, SelectedAccounts or PublicStatusEnvelope (status-job, status-summary), so 'no valid fixture for <Doc>'. The 12 pairs cover 12 documents; the v1 contract now needs 17. Only the ComparisonCatalogue pair is in this order's <paths>.",
+      "CAUSE E, 1 control node: [resolve-scope] declares data as oneOf [ResolvedScope, DirectoryContext] and _document_of asserts exactly one document name ({'DirectoryContext','ResolvedScope'}). Choosing which document the control exercises is a design decision the order does not make.",
+      "CAUSE F, 2 nodes: [analysis-requests] control and test_control_the_envelope_refuses_a_wrong_shaped_firm_id build the envelope's status/data from StatusEnvelope.valid.json, but the response contracts now $ref PublicStatusEnvelope, which forbids internal_correlation_id ('Additional properties are not allowed'). Needs a PublicStatusEnvelope fixture, same gap as D."
+    ]
+  },
+  "spec_asserts": "The order: 'ONE cause' for 33 of 58 red nodes, and Y27-1-AC1 expects 0 failed after 'the parser learns opal://'.",
+  "world_is": "MEASURED: one cause accounts for the 10 nodes that moved (parser) and one more (unprojected_grant) for the remainder of the controls' first error; six further causes, A-F above, account for the 24 still red. I did not weaken any assertion, widen any grant or edit any published schema to reach green. INERT: the suite is a test; nothing at runtime reads it, and the same nodes were red before this order. REFUSED by the order's own clause: AC1 cannot pass as written for reasons no grant fixes (causes A, D need files outside <paths>; B, C, E are decisions).",
+  "notes": "ISSUER DEFECT, fourth in four rounds: the cut measured 'red' and inferred 'one cause' without following the first failure of each node past the first assertion. The transferable rule is that a suite red for a parsing cause has never yet been executed past the parse, so the nodes it hides are unmeasured, not green-pending. Suggested next cut: ONE order per cause, causes D and A first, since they need files (fixtures; portal fixture read) this order was not granted."
+}
+```
+
+
+## IRPT_BCKEND-W90-S2 -- Y27-1-AC2 passes on its output, but the control it exercises is red for a second reason with the mutation removed, so the falsifier's pass proves the opal:// fix and NOT that the analysis-requests control is green.
+
+```json
+{
+  "id": "IRPT_BCKEND-W90-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~90",
+  "surfaced_at": "2026-09-30T02:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Y27-1-AC2 passes on its output, but the control it exercises is red for a second reason with the mutation removed, so the falsifier's pass proves the opal:// fix and NOT that the analysis-requests control is green.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 as written: 1 failed, 'POSITIVE CONTROL FAILED for analysis-requests: 12345 is not one of [RECEIVED, PARSED, NEEDS_CORRECTION, READY, SUBMITTING, GENERATED, RELEASED, FAILED]' -- names the stage enum, not 'no valid fixture'. The fixture was reverted (git diff of AnalysisRequest.valid.json is empty).",
+      "The same node WITHOUT the mutation fails: 'POSITIVE CONTROL FAILED for analysis-requests: Additional properties are not allowed (internal_correlation_id was unexpected)' -- cause F of row IRPT_BCKEND-W90-S1. jsonschema's best_match ranked the enum error above the additional-properties error, so the mutation is visible; a mutation on a field ranked lower would not have been.",
+      "Without my _add_required_grant addition the same mutated run named \"'unprojected_grant' is a required property\" and not the enum, i.e. AC2 depends on that second test-file change as well as on the ref parser. Every response contract but comparison-catalogue requires unprojected_grant; the test supplies the schema's own zero-count grant, read from the contract's required list."
+    ]
+  },
+  "spec_asserts": "The order: after the fix the mutated node 'must fail naming the stage enum violation'; and the ruling: 'the suite green with its test_control_* nodes still able to fail'.",
+  "world_is": "MEASURED: the control can still fail for the right reason (AC2 met), and it cannot yet pass (cause F). Both are true at once, and only the first is what AC2 grades. INERT.",
+  "notes": "For the L9 grader: read AC2 together with W90-S1 cause F. The collected total moved 58 -> 59 in this worktree at base (the order's dry-run counted 58); my changes add no test node and remove none."
+}
+```
+
+
+## IRPT_BCKEND-W90-S3 -- the order's <owned_cells> names IB-yr-272 but no criterion references it
+
+```json
+{
+  "id": "IRPT_BCKEND-W90-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~90",
+  "surfaced_at": "2026-09-30T02:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order declares <owned_cells>IB-yr-271,IB-yr-272 but all three criteria carry cell_refs=IB-yr-271, so no criterion discharges IB-yr-272 and proof-of-spec-check cannot return rc 0 for this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> Y27-1-AC1,Y27-1-AC2,Y27-1-AC3 -> INVALID rc=1; the ONLY remaining violation is 'alignment: declared cell IB-yr-272 is named in the TO's <owned_cells> but NO criterion references it'. The other schema and match violations were fixed in the instance.",
+      "The TO file: <criterion id=Y27-1-AC1|AC2|AC3 cell_refs=\"IB-yr-271\">; <owned_cells>IB-yr-271,IB-yr-272</owned_cells>. The census cell's result (6 failed / 2 passed) is recorded under compiler_tools in the instance instead."
+    ]
+  },
+  "spec_asserts": "The order: cell IB-yr-272 is 'yours' (build step 5) with target 6 failed / 2 passed.",
+  "world_is": "MEASURED: the cell was built and reads 6 failed / 2 passed, but no criterion grades it, so the mechanical proof cannot close over it. I did not edit the order's criteria (outside my grant to amend). INERT."
+}
+```
