@@ -3959,6 +3959,66 @@ carries none.
       },
       "spec_asserts": "A6 asks for a release on the live ref and a deploy-only tree whose gateway tree object equals the release's.",
       "world_is": "Done as ordered; the overrides and the dropped-file set are recorded for the L8 reading."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+      "surfaced_at": "2026-09-30T18:55Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "id": "NFRA_MCPINDEX-Z-W19-S20",
+      "one_line": "r6.AC1 reads slug nfra-mcpindex-r5-schwab-enable, so at v3 it passes on v2's CLOSED ROLLED-BACK entry file and never reads the v3 ledger (nfra-mcpindex-r5-schwab-enable-v3).",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round5/checks/r6.AC1.sh: SLUG=nfra-mcpindex-r5-schwab-enable; entry count = ls-tree of change_management grepped for '_${SLUG}_deploy_completion.md$'; the v3 file is 20260930T1815Z_nfra-mcpindex-r5-schwab-enable-v3_deploy_completion.md and does not match that anchor.",
+              "Measured at 9a9bccc871 (18:5xZ): 'entry files at HEAD=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR: 16 of 16 sentinel(s) scanned -- RESULT: PASS -- exit=0'. The 1 entry is v2's 20260930T1358Z file. The v3 ledger is closed and its sentinel is absent at HEAD (git ls-tree .open_deploys/ | grep -c schwab-enable = 0), read directly."
+          ]
+      },
+      "spec_asserts": "r6.AC1 grades the deploy's NEVER-2 entry (slug nfra-mcpindex-r5-schwab-enable) as committed, sentinel gone, not listed OPEN/HELD.",
+      "world_is": "AC1 PASSes, but on the v2 entry; the v3 slug's closure is proven by the direct reads named here, not by the script."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+      "surfaced_at": "2026-09-30T18:55Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "id": "NFRA_MCPINDEX-Z-W19-S21",
+      "one_line": "safe-ec2-deploy.sh's own manifest rewrite (jq | tr) re-encoded the non-ASCII characters of 10 EC2_MANIFEST.json lines as mojibake in its commit e159e023f0 on the deploy-only branch, so that commit was not ported.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "git -C /c/tmp/mx-dep9 diff HEAD~1 HEAD -- infra/aws/ec2/EC2_MANIFEST.json (e159e023f0): 10 insertions, 10 deletions; 4 of the 10 changed lines are _last_updated and the opal-gateway deployed_commit/deployed_at/deployed_by, the rest are _ec2_host_note, notes and purpose lines whose em dash changed from the JSON escape \u00e2\u20ac\u201d to the literal mojibake '\u00e2\u20ac\u201d'.",
+              "The manifest commit on wk-nfra_mcpindex-5-19 (3a67e6fcf2) edits only the opal-gateway block fields and _last_updated against CLOUD's file: git diff CLOUD -- infra/aws/ec2/EC2_MANIFEST.json shows 6 lines changed. The deploy-only tree is throwaway."
+          ]
+      },
+      "spec_asserts": "The wrapper records the deploy in EC2_MANIFEST.json by a bookkeeping commit.",
+      "world_is": "The wrapper's manifest commit carries an encoding side effect on unrelated rows; the branch's commit records only the gateway fields."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+      "surfaced_at": "2026-09-30T18:55Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "id": "NFRA_MCPINDEX-Z-W19-S22",
+      "one_line": "The v3 NEVER-2 sentinel org/critical_paths/.open_deploys/nfra-mcpindex-r5-schwab-enable-v3.json is not among the order's <paths> (only ...-schwab-enable.json), and the commit that opened and the commit that closed it were admitted.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "Order <paths> (read at CLOUD): org/critical_paths/.open_deploys/nfra-mcpindex-r5-schwab-enable.json and org/critical_paths/change_management/; the v3 slug was named by the issuer's GO (binding item 1).",
+              "safe-commit b26fc665ef (open) and 9a9bccc871 (close) staged the -v3.json sentinel and the ledger .md and were accepted with no refusal."
+          ]
+      },
+      "spec_asserts": "<paths> IS the write grant; the lane gate admits exactly the paths the order names.",
+      "world_is": "The v3 sentinel path was written outside the named grant and admitted; the ledger and sentinel for the slug the GO named are committed and closed."
   }
 ]
 ```
