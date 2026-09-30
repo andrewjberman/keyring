@@ -3599,6 +3599,46 @@ carries none.
     "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
     "world_is": "The hazard (a release shipping a declared-but-uncontracted dataset and a red acceptance suite) is removed by step 0 of the only cell that can ship it.",
     "notes": "The CTO is asked separately whether r6.J1's transaction question may use a grant naming dim_transaction; by default it is graded as a correct refusal."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W20-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~20",
+    "surfaced_at": "2026-09-30T09:54Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Changing discover's fallback next_tool moved six test expectations in tests/test_opal_discover.py beyond the :283 the order names (lines 104-105, 124, 127, 285, 301 at CLOUD 4e1b871ba7); all six were updated to the new tool in the same file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tests/test_opal_discover.py at 4e1b871ba7 asserts name == query_v0 / kind == http_route / 'not an MCP tool' at lines 104-105, 124, 127, 283-285 and 301; all of them follow from cell step 3 (a row with no purpose-built tool names the new tool, kind mcp_tool).",
+        "After the edit: tests/test_opal_discover.py passes in full (run with test_portal_index, test_entitlement_admin, test_tool_classification_composition, test_min_tier_gate, test_query_v0_tool: 58 passed, 3 failed, the 3 being pre-existing, row Z-W20-S2)."
+      ]
+    },
+    "spec_asserts": "Step 3: update the expectation at tests/test_opal_discover.py:283.",
+    "world_is": "The same fallback is asserted at six further places in that file (one also asserts the answer sentence 'HTTP route (POST /query/v0)', which the change removes); leaving them would have failed the file. All are inside the order's <paths>."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W20-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~20",
+    "surfaced_at": "2026-09-30T09:54Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Three gateway tests fail with and without this cell, where the order names one: test_entitlement_admin.py::test_ogz2_ac06 (named) plus test_data_entitlement_guard.py::test_ogz1_ac05 and ::test_ogz1_ac08 (not named); the same two guard failures are recorded in row Z-W19-S4.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run from infra/aws/ec2/opal-gateway against a git-archive copy of HEAD 4e1b871ba7 (no cell edits): tests/test_data_entitlement_guard.py 2 failed 10 passed (test_ogz1_ac05, test_ogz1_ac08); with the cell the same two fail and nothing else in that file.",
+        "Failure texts: test_ogz1_ac05 KeyError: 'unclassified' at :627 (registry report); test_ogz1_ac08 route-table set mismatch (extra '/', '/api/admin', '/assets/{path:path}'). test_entitlement_admin.py::test_ogz2_ac06 fails in the scratch copy on a FileNotFoundError in the archive (sparse) and in the worktree as the order says; it is not moved by this cell."
+      ]
+    },
+    "spec_asserts": "Bounds 3: the pre-existing failure at the cut is tests/test_entitlement_admin.py::test_ogz2_ac06.",
+    "world_is": "Two more pre-existing failures in tests/test_data_entitlement_guard.py, outside this cell's paths, unchanged by it; test_ogz2_ac08 (the tool-count pin this cell moves) passes at 53."
   }
 ]
 ```
