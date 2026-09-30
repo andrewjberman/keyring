@@ -100,12 +100,13 @@ Use point-in-time classifications where available. A classification obtained tod
 
 ## S5 — Proposed downstream gold tables (O2, O5, O6, O7, O8)
 
-Keep tables shared across the universe with `fund_id` as a filter/key; per-ETF views or exports provide Andrew's per-fund lens without six divergent schemas. All tables carry dataset revision, input snapshot references, quality/coverage and calculation version.
+**Revision 3 -- signal first.** `trade_schedule` is the foundation; `decision_evaluation` and `manager_behavior` are built on it, and the served page and prompts lead with it. The remaining tables are built only when a page view or a prompt consumes them (Andrew: one clear signal, not a data dump). Keep tables shared across the universe with `fund_id` as a filter/key; per-ETF views or exports provide Andrew's per-fund lens without six divergent schemas. All tables carry dataset revision, input snapshot references, quality/coverage and calculation version.
 
 | Table | Grain and date basis | Main research content |
 |---|---|---|
 | `holdings_coverage` | Fund × expected report date × source; `date` = expected report date | Availability, actual report date, stale/missing/periodic status, row counts, weight coverage, selected source and selection reason |
 | `fund_snapshot` | Fund × actual report date; `date` = report date | Holdings count, cash/exposure totals, net assets/shares, top-ten concentration, identity/classification coverage, largest weights and source/completeness status |
+| **`trade_schedule`** (revision 3, the foundation) | Fund × security × trade window (prior report date, report date]; `date` = window end; the per-ETF view is a `fund_id` filter or partition | Action (entry / add / trim / exit), shares before and after, **flow factor** of the window, **discretionary shares** = `q_t - f * q_{t-1}`, estimated price (issuer implied close; Bloomberg day range as the band), estimated notional, weight before/after, window length in trading days, identity and corporate-action adjustments applied, cash-reconciliation residual of the window, confidence class (CLEAN / FLOW-WINDOW / STALE-WIDENED / ID-CHANGE / CORP-ACTION / UNRESOLVED). Method in S6; feasibility in `TRADE_INFERENCE_FEASIBILITY.md` |
 | `holdings_changes` | Fund × union of positions across a comparable observation pair; `date` = interval end | Entry/exit/retain, initial/final quantity and weight, percentage-point weight delta, observed interval, corporate-action and flow adjustment availability, estimated active residual and confidence/category |
 | `allocation_changes` | Fund × observation interval × axis × category; `date` = interval end | Asset/subasset/GICS/country exposure, weight deltas, price-drift component where computable, residual active tilt, unknown-category weight; separate classification-change effect |
 | `holding_performance` | Fund × security × explicit evaluation window × metric/method; `date` = window end | Total return, beginning/ending/average observed weight, estimated contribution, currency, price coverage, benchmark comparison, whether entry/exit occurred inside the window |
@@ -118,6 +119,8 @@ Keep tables shared across the universe with `fund_id` as a filter/key; per-ETF v
 These define desired information, not a requirement to calculate unsupported metrics. Where adjacent dates are unavailable, an interval-change record carries the real endpoints and duration. Classification categories include an explicit unknown/unmapped bucket so missing tags do not vanish from allocation totals. Rankings return the available eligible holdings when fewer than ten exist; missing outcomes are never scored as zero.
 
 ## S6 — Quantitative definitions and limits (O5, O6)
+
+**Trade schedule method (revision 3).** For each fund and each pair of consecutive genuinely dated reports, over securities matched by resolved identity with corporate actions applied: the window's flow factor `f` is the median of `q_t / q_{t-1}` (in-kind creations and redemptions scale positions pro rata); a security's discretionary shares are `q_t - f * q_{t-1}`; a trade is a residual of at least 0.2% of prior shares (Andrew: *"Trades can be 0.2% or more"*) and more than whole-share rounding (probe: 5 shares), plus every entry and exit. **Dividends** come from Bloomberg's per-holding dividend calendar (`DVD_HIST_ALL`): record-date shares times amount enter the cash cross-check on the pay date, stock and special share dividends are applied as corporate actions before the residual, and evaluation uses total return. Measured on BASG and GQGU, position ratios sit within a few millionths of `f` (`TRADE_INFERENCE_FEASIBILITY.md`). The trade date is a window until the per-issuer booking convention (T or T+1) is measured against price action. A carried-forward report opens no window. Cash is a cross-check (change in cash against net trade notional, dividends, expenses and basket cash), never the driver. Where a future source has weights but no quantities, the weight-drift estimate below is the fallback, and its rows carry a lower confidence class.
 
 **Observed changes are not trade records.** Exact fills, timing, execution prices, cashflows and intent are absent. Start with reported quantity and weight deltas. Normalize splits and identifier transitions on a consistent basis where corporate-action data exists; flag unexplained quantity changes rather than declare buys/sells. If ETF shares outstanding are comparable, quantities per ETF share help separate proportional fund growth from position changes. Non-proportional in-kind baskets can still confound this; flow adjustment does not certify manager intent.
 
@@ -141,7 +144,7 @@ All prompt inputs identify `fund_id`, analysis time, requested window, actual co
 
 ### P1 — Daily/interval activity and tilts
 
-Inputs: `fund_snapshot`, `holdings_changes`, `allocation_changes`, selected `canonical_shape` rows, `holdings_coverage` for the current and prior genuine observations.
+Inputs: `trade_schedule` (primary), `fund_snapshot`, `holdings_changes`, `allocation_changes`, selected `canonical_shape` rows, `holdings_coverage` for the current and prior genuine observations.
 
 > Explain what changed in this ETF between the supplied observation dates. Identify the most consequential additions, exits, increases and reductions; concentration/cash changes; and sector, industry and subasset tilts. Distinguish observed quantity changes, passive valuation effects, available flow/corporate-action adjustments and unexplained residuals. State whether this is a daily comparison or a longer interval. For every suspected trading pattern, give the strongest alternative explanation and the evidence that would discriminate it. End with questions worth researching, each tied to a specific data gap or portfolio change.
 
@@ -149,7 +152,7 @@ Output fields: `covered_interval`, `observed_changes[]`, `tilts[]`, `inferred_ac
 
 ### P2 — Where positioning and decisions helped or hurt
 
-Inputs: `holding_performance`, `performance_rankings`, `decision_evaluation`, relevant changes and coverage.
+Inputs: `trade_schedule` (primary: did each trade work), `holding_performance`, `performance_rankings`, `decision_evaluation`, relevant changes and coverage.
 
 > Assess where this manager's disclosed positioning appears to have helped or hurt over the supplied evaluation windows. Discuss top/bottom return names and top/bottom estimated contributors separately, showing why portfolio weights can make those rankings differ. Assess additions and reductions under the exact counterfactual and benchmark specified in the inputs, including exited names. Include evidence inconsistent with a simple success/failure story. Distinguish retrospective reconstruction from actionable evaluation, incomplete horizons from completed outcomes, and estimated contribution from realized fund P&L. Do not credit a decision with a return that preceded the permissible evaluation boundary.
 
@@ -157,7 +160,7 @@ Output fields: `helped[]`, `hurt[]`, `return_vs_contribution[]`, `decision_evide
 
 ### P3 — Manager behavior and prospective portfolio direction
 
-Inputs: `manager_behavior`, longitudinal changes/allocations, decision evaluations, peer comparison, prior frozen hypotheses and coverage.
+Inputs: `trade_schedule` (primary: the process its trades reveal), `manager_behavior`, longitudinal changes/allocations, decision evaluations, peer comparison, prior frozen hypotheses and coverage.
 
 > Describe repeatable behavior supported by the observed holdings history: accumulation/reduction, concentration, sector rotation, response to gains/losses, and similarity to or divergence from peers. Distinguish recurrence from a single event and identify counterexamples. Propose conditional hypotheses about the manager's next portfolio direction if the measured behavior persists. Specify the intended future observation window, what portfolio evidence would support each hypothesis, what would invalidate it, and alternative explanations. State confidence qualitatively with an evidence-based rationale; do not manufacture calibrated probabilities. Predict possible portfolio behavior, not certain market outcomes. Compare previous frozen hypotheses with new observations without rewriting their original claims or horizons.
 

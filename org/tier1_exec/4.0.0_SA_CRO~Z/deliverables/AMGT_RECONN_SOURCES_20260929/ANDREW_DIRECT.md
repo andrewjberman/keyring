@@ -105,3 +105,23 @@ Recorded September 30, 2026, approximately 00:2x ET (04:2x UTC); Claude Code ter
 > I like it, lets call this ETFS_RIVALS
 
 The project code is `ETFS_RIVALS`. Registering it (L3) is 1.0.0_SA_CTO's; this seat records the name and relays it. The product and resource token stays `rivalfunds` (`etfs-rivalfunds-daily`, `/rivalfunds`); a project code is never a system token.
+
+## Trade schedule as the foundation of the analysis, verbatim
+
+Recorded September 30, 2026, approximately 00:3x ET (04:3x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, in reply to the CTO's nine-outcome endpoint. Exact receipt timestamp not exposed.
+
+> Yeah this is pretty good but i have one idea that may be foundatinal for the AI Analysis. We need to reverse engineer their actual trades. What I'm thinking is, if we have their changing values at market close each day, and we also track all the performance of the individual securities every single day, cross-referencing that with the portfolios, couldn't we assess more or less when and where they made trades (i say approximately because not sure how well cash is tracked)? If we can engineer a shape for this, then we can have a gold table for each active etf that is effectively their trade schedule. THe premise here is that the whole point of doing this is not to throw a huge amont of data at research team; that is useless. It is to get one really, really clear signal on competitive intelligence and reverse engineering the other funds processes and activity.
+
+The DONE WHEN lines are not yet confirmed by this word ("pretty good but"). Feasibility measured the same hour: `TRADE_INFERENCE_FEASIBILITY.md`.
+
+## Trade floor and dividends, verbatim
+
+Recorded September 30, 2026, approximately 00:2x-00:3x ET; Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, three consecutive messages. Exact receipt timestamps not exposed.
+
+> Trades can be 0.2% or more, not 0.5%.
+
+> Also probably need to account for dividends on thes
+
+> bbg should have dividend calendar for the holdings
+
+Applied: the trade floor is 0.2% of prior shares (probe re-run; `TRADE_INFERENCE_FEASIBILITY.md`), and dividends enter the method from Bloomberg's per-holding dividend calendar (S6).

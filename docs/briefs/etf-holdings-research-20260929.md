@@ -1,6 +1,6 @@
 # Rival funds: daily holdings, canonical shape, served research page
 
-L1 BRIEF | NEW | Author: 4.0.0_SA_CRO~Z | September 29, 2026 | **Revision 2, September 29 ~23:5x ET**, folding Andrew's rulings on the 14-item gap pass (verbatim in the linked `ANDREW_DIRECT.md`)
+L1 BRIEF | NEW | Author: 4.0.0_SA_CRO~Z | September 29, 2026 | **Revision 3, September 30 ~00:4x ET**: rev 2 folded Andrew's 14 gap-pass rulings; rev 3 makes the reverse-engineered trade schedule the foundation (O5) and one clear signal the bar (Part III). Verbatim in the linked `ANDREW_DIRECT.md`
 
 Andrew's direction is a lightweight research product, **rivalfunds**, over six rival active ETFs: WCMG, GQGU, TSEL, BASG, ETFT and PCLG. Collect every fund's disclosed holdings daily, backfill up to two years (bounded by each ETF's own history), coalesce every source shape into one Opal-defined master table, compute change and performance tables from it, and serve a daily research page with chart views and AI analyses at `mcp.opalinvest.dev/rivalfunds`, archived by day. Less frequent disclosures are acceptable where daily history does not exist; they stay identifiable as such.
 
@@ -26,9 +26,9 @@ The issuer collection fires at 7:00 AM ET from AWS and captures each fund indepe
 
 Bronze and silver keep each channel's own shape, one per source. Gold's `canonical_shape` is the accrual table that coalesces every shape into one Opal-defined master shape: every disclosed position with quantities, weights, values, identifiers, cash, instrument details, Opal asset/subasset classes and GICS hierarchy, with provenance and dates. Unknown fields stay unknown; a raw field survives even before it has a canonical column. See S2-S4.
 
-### O5 — Andrew distinguishes portfolio tilts and likely trading from mechanical changes
+### O5 — Andrew reads each rival fund's reverse-engineered trade schedule (the foundation, revision 3)
 
-Andrew can examine additions, exits, increases, reductions, concentration, sector/industry deltas and peer overlap. He can distinguish changes potentially explained by market prices, FX, fund share issuance/redemption, corporate actions, source changes or reporting gaps from residual activity consistent with manager trading. He chooses actual observation intervals rather than receive invented daily transactions. See S5.
+Andrew opens, for each fund, its **trade schedule**: every entry, add, trim and exit, with the shares traded, the window in which the trade happened, an estimated price and notional, and how confident the inference is. It is reconstructed from daily share quantities after removing the pro-rata scaling that fund inflows and outflows apply to every position, and after applying identifier changes and corporate actions. It is not a set of weight deltas, and a price move never appears as a trade. Where reports are stale, a trade is placed in the wider window, never invented on a daily grid. Measured on the captured archives at Andrew's 0.2% trade floor: flows explain 92.54% of BASG's and 89.52% of GQGU's position-days (position ratios within a few millionths of the flow factor), leaving 834 and 1,266 discretionary trade events. Dividends are accounted for from Bloomberg's dividend calendar: cash cross-check, stock dividends as corporate actions, total returns (`TRADE_INFERENCE_FEASIBILITY.md`). Every analysis in O6 and O7 is built on this table. See S5 and S6.
 
 ### O6 — Andrew evaluates where a manager's positioning and observable decisions helped or hurt
 
@@ -36,7 +36,7 @@ Andrew can inspect top-ten and bottom-ten holdings by security return and by est
 
 ### O7 — Andrew uses AI to form and revisit evidence-based hypotheses about manager behavior
 
-Andrew can ask how a manager is tilting, what repeatable behavior the disclosed changes suggest, where past choices helped or hurt, and what direction could follow if that behavior continues. The response cites versioned table rows, separates observation from inference, offers alternatives and states what would invalidate each forecast. Saved hypotheses are later graded against new holdings without hindsight rewriting. See S7.
+Starting from the trade schedule (O5), Andrew can ask what each manager is actually doing, what repeatable process its trades reveal (timing, sizing, add-on-weakness or momentum, rotation), how a manager is tilting, what repeatable behavior the disclosed changes suggest, where past choices helped or hurt, and what direction could follow if that behavior continues. The response cites versioned table rows, separates observation from inference, offers alternatives and states what would invalidate each forecast. Saved hypotheses are later graded against new holdings without hindsight rewriting. See S7.
 
 ### O8 — An Opal researcher can reproduce and extend the research without changing its meaning
 
@@ -54,6 +54,7 @@ The distinction between *securities held inside an ETF* and *clients holding ETF
 
 ## PART III — THE QUALITATIVE BAR
 
+- **One clear signal, not a data dump** (Andrew, revision 3: *"the whole point of doing this is not to throw a huge amont of data at research team ... It is to get one really, really clear signal on competitive intelligence"*). The page leads with what each rival actually traded and what that says about its process. Every other table exists only to feed or check that signal. A table no reader or analysis consumes is not built.
 - Andrew can substantiate a claimed portfolio change by opening the underlying observations, and sees when the evidence permits only an interval-level inference.
 - A stale Bloomberg answer cannot masquerade as a fresh disclosure or create a false no-trade day. A changed source basis cannot silently become a trade.
 - **Nothing publishes past a failed guardrail** (Andrew, item 10). The pre-publish checks in S9 run before the served file is written; a failed check publishes a page that states what failed, or publishes nothing, never a quietly wrong page.
@@ -120,7 +121,7 @@ Andrew named these explicitly so no hop is left unowned (item 8). They are requi
 - **H1 — Homes.** The registry change is landed (IV.5); every address and name is builder output. Bronze and silver keep one shape per channel and source; gold is the one master shape.
 - **H2 — Backfill through both channels, ad hoc, from the outset** (item 7). Issuer archives for GQGU and BASG; Bloomberg Excel BQL for WCMG, TSEL, ETFT and PCLG; raw responses land in bronze with requested and report dates. A backfill is QA-class data landing, not production evidence.
 - **H3 — Bronze to silver.** Silver is typed, deduplicated Parquet, every source column and row kept, fired by the bronze batch-complete marker. It also processes bronze that landed before it existed (the H2 backfill), by replay.
-- **H4 — Silver to gold.** `canonical_shape` coalesces every silver shape; the S5 tables derive from it. Prices, total returns, GICS and benchmarks come from Bloomberg (item 13), resolved through the identity layer.
+- **H4 — Silver to gold.** `canonical_shape` coalesces every silver shape; `trade_schedule` is derived from it for every fund, and the analysis tables derive from those two. Prices, total returns, GICS and benchmarks come from Bloomberg (item 13), resolved through the identity layer.
 - **H5 — Gold to served page.** A publisher renders the day's page (charts plus OpenAI analyses from computed tables), writes it to the platinum day prefix with read-back, and the gateway serves `/rivalfunds`, `/rivalfunds/<day>` and `/rivalfunds/archive`.
 - **H6 — Daily run.** `etfs-rivalfunds-daily` fires the issuer collector at 7:00 AM ET from AWS; the 8:03 AM ET Bloomberg leg covers funds still uncovered that Bloomberg carries; the chain runs through the page. Scheduled, never success-of-upstream alone.
 - **H7 — Pre-publish guardrails** (item 10). The S9 checks run before H5 writes the served file.
