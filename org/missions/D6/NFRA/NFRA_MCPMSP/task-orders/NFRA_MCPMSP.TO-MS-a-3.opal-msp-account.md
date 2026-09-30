@@ -114,7 +114,7 @@ WinRM (`Invoke-Command -ComputerName localhost`), not enabled, and mislabelled t
 the launcher's `Start-Process -Credential` route with an explicit CANNOT-RUN-AS-ACCOUNT outcome. The issuer's own
 shell measured "Access is denied" on every run-as launch, so AC2's real run is Andrew's. Graded by: no gate limb.
 
-<status>staged</status>
+<status>complete</status>
 <round>1</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
