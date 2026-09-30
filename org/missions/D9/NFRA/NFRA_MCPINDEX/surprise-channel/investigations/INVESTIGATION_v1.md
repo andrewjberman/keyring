@@ -3833,6 +3833,386 @@ carries none.
     "spec_asserts": "MX-r-6 v2's halves (COO @17259505a2 s.0/s.4, CTO @16998169d5, CVO @5ac4f48aea G1): VOID if the live artifact is not 288fa78c93 at the GO; the GO re-reads it.",
     "world_is": "The worker read the base once, ~43 minutes before its upload; another seat deployed in between. Nothing in the deploy path compares the live -latest to a declared base at upload time.",
     "notes": "DISARM: (1) plan A -- ~RV redeploys 4ce7946426, then this seat re-applies the targeted IAM rollback (planned 0/1/0, 8 dim_transaction elements removed) and closes both ledgers ROLLED-BACK; (2) the stale-base guard in deploy-to-ec2.sh (CTO ruling on CVO~O 27209) ships in MX-r-6 v3 with a planted-stale negative test."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 step 0: adding dim_transaction to the contract turned 4 gateway tests red outside the named acceptance file (test_schwab_catalog ac08/ac10/ac17, test_schwab_query ogq2_ac02); their pins were moved inside the granted infra/aws/ec2/opal-gateway/** paths.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run per file from infra/aws/ec2/opal-gateway: with the contract edit and no test edit, 4 failed 60 passed over wiring+semantics+transactions+catalog+query; with the pre-edit contract (git show HEAD: copy), test_schwab_catalog+test_schwab_query 43 passed.",
+        "test_schwab_catalog.py asserted snapshot files == world.contract.datasets, but the fixture world seeds and closes over the three dims only; now compares against _SEEDED_DIMS (contract datasets minus dim_transaction). test_schwab_query.py test_ogq2_ac02 used dim_transaction as its 'unknown dataset' probe (INVALID_REQUEST expected); now probes dim_unknown.",
+        "After: 64 passed over the five schwab test files; tests/acceptance/test_local_acceptance.py 14 passed (run in separate processes; one combined process errors 14 on 'StreamableHTTPSessionManager .run() can only be called once')."
+      ]
+    },
+    "spec_asserts": "AMENDED A1 step 0 names the contract edit and the acceptance harness default; it does not name test_schwab_catalog.py or test_schwab_query.py.",
+    "world_is": "Both files pinned the contract's three-dataset shape; the contract edit moves those pins, exactly as MX-s-15 moved test_schwab_wiring and test_schwab_semantics."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 step 0: the acceptance harness dataset default (tests/acceptance/conftest.py / test_local_acceptance.py, datasets=de.DATASETS) was NOT edited; adding dim_transaction to the contract alone takes the file 8 failed -> 14 passed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tests/acceptance/test_local_acceptance.py before: 8 failed, 6 passed (KeyError 'dim_transaction' at conftest.py _fields); after the contract edit only: 14 passed, 0 failed, rc=0.",
+        "The KeyError came from _fields(dataset) = contract.raw['fields'][dataset] on de.DATASETS' fourth member; once the contract carries it, the de.DATASETS default is correct and a wiring-style filter would be a no-op."
+      ]
+    },
+    "spec_asserts": "AMENDED A1 step 0: fix the acceptance harness's dataset default the way MX-s-15 fixed tests/test_schwab_wiring.py.",
+    "world_is": "That fix (filter de.DATASETS to the contract's fields) was a workaround for the contract lacking the dataset; with the contract amended it is unnecessary, so the harness is left as committed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "one_line": "MX-r-6 PHASE A: adding `schwab` to ENABLED_INTEGRATIONS registers 5 tools, but the host has NONE of the six inputs the Schwab service needs at its first call (contract path and file, two role ARNs, two ExternalIds, the account_ref secret id) and the deploy path ships none of them; every schwab call would fail closed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Host read, SSM 28a12bb3-2fa0-4da0-9aca-04f50b71f144 (read-only, key NAMES only): /opt/opal-gateway/.env carries 27 keys, 0 begin SCHWAB_ and 0 begin NFRA_OPLGTW; find over /opt /home /tmp for NFRA_OPLGTW_CONTRACT* returns nothing; /opt/opal-gateway/org does not exist. Deliverable probes/ host read in deliverables/0.9.0_WK_NFRA_MCPINDEX~19.",
+        "Code path: integration.py:1040-1041 build_default_service() (first Schwab call) -> catalog.load_contract() reads NFRA_OPLGTW_CONTRACT_PATH, else default_contract_path() = Path(catalog.py).parents[7]/org/standards/... which is None when the file has fewer than 8 parents (the host path /opt/opal-gateway/app/integrations/schwab/catalog.py has 6) ; then aws_roles.role_configs() needs SCHWAB_READER_ROLE_ARN, SCHWAB_CATALOG_ROLE_ARN, SCHWAB_READER_EXTERNAL_ID, SCHWAB_CATALOG_EXTERNAL_ID (aws_roles.py:78-79); account_ref.py:56 needs SCHWAB_ACCOUNT_REF_SECRET_ID.",
+        "Measured in-process on the release artifact extracted at host-like depth (C:/tmp/hs-rel/opal-gateway, 7 parents): load_contract(environ={}) -> ContractUnavailable 'no contract path: set NFRA_OPLGTW_CONTRACT_PATH'; role_configs(..., {}) -> RoleConfigError 'SCHWAB_READER_ROLE_ARN is not set to an IAM role ARN'. Same on the live artifact. Files: deliverables/0.9.0_WK_NFRA_MCPINDEX~19/probes/tools_release_6ids_MX-r-6.json.",
+        "Shipping: the artifact's tar roots are app deploy requirements.txt identity_tool_allowlist.txt dashboard (deploy-to-ec2.sh:86-90), so org/standards/NFRA_OPLGTW_CONTRACT.json is NOT in it (79 of 79 live files, none under org/standards). The .env is rewritten wholesale by the printf at deploy-to-ec2.sh:197 and names none of the six. The only prior host use of the contract was a hand-staged copy in s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/bench/ (OG-x-4's bench)."
+      ]
+    },
+    "spec_asserts": "The order's step 2 changes exactly one value on line 197 (`schwab` added, 6 ids) and step 8/AC2 expect the enable to land with the reader role allowed; A1 asks the census to establish how the contract ships.",
+    "world_is": "Enabling as written registers schwab_get_access, schwab_list_files, schwab_describe_dataset, schwab_query and schwab_prepare_download, and every call by an admitted principal errors (ContractUnavailable / RoleConfigError); r6.J1's Schwab position question could not be answered. Making it work needs a deploy-script change beyond line 197 (the contract file into the artifact or onto the host, plus the five env values: the ExternalIds are in secret opal/mcp/opal-gateway-schwab-reader-external-ids, which the gateway role reads by resource policy) that the order does not grant. NOT done here; the release is cut exactly as ordered.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "one_line": "MX-r-6 PHASE A step 3: a whole-directory terraform plan of infra/aws/terraform/opal-gateway cannot be confined to gateway-schwab-read-role's policy: from CLOUD's TF it also creates another project's policy and changes another seat's Lambda hash; from the live-base tree it destroys 5 resources. The saved plan is a targeted one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Plan A, run from the release tree (base 093fc247c6 TF + MX-s-15's schwab_reader_iam.tf), /c/tmp/mx-r6-plan.txt: 'Plan: 0 to add, 2 to change, 5 to destroy' -- destroys aws_eip.gw, aws_eip_association.gw, aws_iam_role.inf_firm_reader, aws_iam_role_policy.gw_assume_inf_firm_reader, aws_iam_role_policy.inf_firm_reader (state holds resources whose .tf landed on CLOUD after 093fc247c6: 062e036d54 eip.tf, a2c8413931 mcpmsp_firm_roles.tf); so a plan from the release tree is not the apply tree.",
+        "Plan B, run from the worker tree whose TF dir equals CLOUD's (git diff HEAD CLOUD -- infra/aws/terraform/opal-gateway is empty), /c/tmp/mx-r6-plan-cloudtf.txt: 'Plan: 1 to add, 2 to change, 0 to destroy' -- adds aws_iam_role_policy.gw_rivalfunds_read (gateway-rivalfunds-read-policy; ETFS_RIVALS d70267f372 / b9447adc2f, not applied), changes schwab_data_read_policy (the wanted change) and aws_lambda_function.mcportal_grant_writer source_code_hash.",
+        "The Lambda's state hash MOVED between my two plans (Plan A read OiLZPOdS..., Plan B read s+PDoMXp...; last_modified 2026-09-30T10:44:58Z): another seat applied that function during this cell. Its planned hash comes from the untracked .build/staged directory (mcportal_grant_writer.tf:39-43) which this worktree copied from the shared tree, so the delta is a build-input artifact, not a change this release makes.",
+        "Plan C, targeted: terraform plan -target=aws_iam_role_policy.schwab_data_read_policy, saved /c/tmp/mx-r6-schwab-read-targeted.tfplan, render deliverables/0.9.0_WK_NFRA_MCPINDEX~19/PLAN_MX-r-6_targeted.txt: 'Plan: 0 to add, 1 to change, 0 to destroy'; the only diff lines are 8 added list elements, every one a dim_transaction prefix or ARN for masters 08242234 and 08335338 (NotResource, StringNotLike s3:prefix, Resource, StringLike s3:prefix), 0 removed."
+      ]
+    },
+    "spec_asserts": "The order: the plan must change ONLY gateway-schwab-read-role's policy; any other planned change is a BLOCKING row and the worker does not proceed.",
+    "world_is": "Only the targeted plan meets that; an untargeted apply from CLOUD would also create gateway-rivalfunds-read-policy (another project's act) and re-point another seat's Lambda. The release, rollback and deploy-only trees are built; no apply was made. The apply-form is the issuer's and the CTO's call (targeted saved plan vs waiting on the other two changes).",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The mcportal grant-writer Lambda bundles its own copy of NFRA_OPLGTW_CONTRACT.json, which does not list dim_transaction; step 0's contract edit widens what a grant may name only once that package is rebuilt and applied.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mcportal_grant_writer.tf:20-33 (PACKAGING): build_package.py stages lambda_function.py plus the import closure of app.access_state and ops.schwab_entitlement_admin and 'the data file those modules load at its repo-relative path (org/standards/...)' into .build/staged, which archive_file zips.",
+        "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged/org/standards/NFRA_OPLGTW_CONTRACT.json exists in the staged build copied at this cell and holds 0 occurrences of dim_transaction.",
+        "ops/schwab_entitlement_admin.py:166-169 approves a requested column only if it is in the contract's fields[dataset]."
+      ]
+    },
+    "spec_asserts": "A2 carries 'widen one existing Schwab grant to dim_transaction through the grant admin tool' to Andrew's list.",
+    "world_is": "That future act needs the grant-writer package rebuilt from the amended contract and applied, in addition to this release; not done here and not in this order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 PHASE A record: two audited overrides of the commit author lane on the never-merged rel-/dep- branches, two trees carry files beyond the gateway dir, and the worker branch carries the identical line-197 edit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release commit ac77acf9e8 (branch rel-nfra-mcpindex-r5-schwab-enable, /c/tmp/mx-rel7) and deploy-only commit abee4587f7 (dep-nfra-mcpindex-r5-schwab-enable, /c/tmp/mx-dep7) were made under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~19, the MX-r-4 A1/A2 and MX-r-5 A2 precedent (Z-W14-S8); two uses.",
+        "The release commit also carries infra/aws/terraform/opal-gateway/schwab_reader_iam.tf (MX-s-15's two lines) and org/standards/NFRA_OPLGTW_CONTRACT.json (step 0), because the gateway tests read the contract at parents[5] and the plan needs the .tf; the census of the gateway dir is 17 files, 505 insertions, 41 deletions; the deploy-only commit changes only the gateway dir.",
+        "The identical one-line edit of deploy-to-ec2.sh:197 is committed on the worker branch (blob bb6c19ef04 in all three trees), so a later CLOUD release does not revert the enable (MX-r-4 A1)."
+      ]
+    },
+    "spec_asserts": "The order grants the audited override for rel-/dep- branches by reference to the MX-r-4/MX-r-5 precedent.",
+    "world_is": "Used exactly there and nowhere else; recorded for the L8 reading."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The deploy-only tree (CLOUD 0440cd4e4d with the gateway dir replaced) drops 42 files of other projects' unreleased gateway work that CLOUD carries; none ships, and each rides that project's own release.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --name-status 0440cd4e4d abee4587f7 in /c/tmp/mx-dep7: 42 files, all under infra/aws/ec2/opal-gateway, 17 deleted (for example app/admin_tenants.py, app/firm_role.py, app/rivalfunds_view.py, app/tenant_registry.py, app/taxsma_workbook.py) and 25 modified (for example app/server.py, app/tools.py, app/config.py, app/tier.py, app/oauth_as.py, app/refs/DATA_CATALOG.yaml).",
+        "Release vs LIVE artifact: 72 of 79 identical; the 7 that differ are app/data_entitlement.py, app/destructive_ops.py, app/integrations/opal_discover/integration.py, app/integrations/portal_index/integration.py, app/integrations/schwab/datasets.json, app/integrations/schwab/query.py, app/schwab_audit.py."
+      ]
+    },
+    "spec_asserts": "R-8: every gateway release is NARROW, cut at the deployed commit plus this project's own changes.",
+    "world_is": "The narrow cut holds; a release cut from CLOUD instead would also ship the MCPMSP, ETFS_RIVALS and NFRA_OPALAI gateway commits."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T12:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 A3 (S7 delta): the Schwab loaders read each ExternalId as an env VALUE and name no ExternalId-source key, so A3's 'no secret value in .env' needed a small code addition: aws_roles.environ_with_external_ids resolves an unset SCHWAB_*_EXTERNAL_ID from the secret named by the new env key SCHWAB_EXTERNAL_IDS_SECRET_ID.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Code at the live base 093fc247c6 and in the release: aws_roles.py:78-79 ROLE_ARN_VAR / EXTERNAL_ID_VAR name SCHWAB_READER_EXTERNAL_ID and SCHWAB_CATALOG_EXTERNAL_ID; role_config() (aws_roles.py:132-134) refuses a missing or malformed value; no loader reads a secret for them. Only SCHWAB_ACCOUNT_REF_SECRET_ID (account_ref.py:56) is a secret-id key.",
+        "The alternative the deploy script's own pattern allows (fetch the secret on the box and printf the VALUE into .env, as FERNET_KEY and the bearers are) puts an ExternalId VALUE in .env, which A3 bars; it was not taken.",
+        "Change, release 9def06ff2f (deploy-only 0d3e953c76): aws_roles.py +40 lines (constants EXTERNAL_IDS_SECRET_VAR / EXTERNAL_ID_FIELD = data_read, catalog_read; environ_with_external_ids, a COPY of the environment, env value wins, nothing written to os.environ, error text carries no value) and integration.py build_default_service passes that copy to role_configs (1 line). The secret is read once at service construction through base.SecretsCredential, the Gateway role's resource-policy grant (schwab_reader_iam.tf:112-126). tests/test_schwab_host_inputs.py: 7 passed.",
+        "Proof: probes/inprocess_schwab_host_inputs_MX-r-6_A3.txt in deliverables/0.9.0_WK_NFRA_MCPINDEX~19: with the release's .env shape and the operator's read credentials build_default_service() returns a SchwabService; without the keys it raises ContractUnavailable."
+      ]
+    },
+    "spec_asserts": "A3: the release also ships the host .env keys the service's own loaders name (contract path, two reader-role ARNs, the ExternalId source, the account_ref secret id), taking the key names from the code; no secret VALUE in the repo, artifact or .env.",
+    "world_is": "The code names no ExternalId-source key, so one was added (SCHWAB_EXTERNAL_IDS_SECRET_ID) with the 40-line resolver above, on the never-merged rel-/dep- branches only. If the issuer would rather have the on-box value route, the .env printf line and aws_roles.py are the two places to change; nothing is deployed.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T12:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 A3 record: the contract ships as a byte copy in the gateway's own deploy/ root (artifact 79 -> 80 files), cut from the release tree's contract (base 093fc247c6 + dim_transaction), which is OLDER than CLOUD's org/standards copy; a later release cut from CLOUD must refresh the copy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Why a copy inside infra/aws/ec2/opal-gateway: the deploy-only tree is CLOUD with only the gateway dir replaced, and CLOUD's org/standards/NFRA_OPLGTW_CONTRACT.json lacks step 0's dim_transaction (it drains later); the gateway tree object (c8e4449bcf57e3357371dbf9bb41c3b6b1cb45ad, release = deploy-only) then fully determines the artifact, and the tar roots need no change.",
+        "git diff CLOUD 093fc247c6 -- org/standards/NFRA_OPLGTW_CONTRACT.json: 2 insertions, 3 deletions (CLOUD carries the tenant_firm POLICY row text of NFRA_MCPMSP C2, absent at the live base). The shipped copy equals the release tree's org/standards file (cmp, tests/test_schwab_host_inputs.py::test_shipped_contract_equals_the_standard).",
+        "Also observed (no cause found, not caused by this delta): tests/test_portal_index.py::test_portal_tools_catalog_refs_resolve failed in the release tree and on the live tree in PHASE A and passes in this run; the other 3 of the PHASE A 4 still fail (test_ogz2_ac06, test_ogz1_ac05, test_ogz1_ac08), on the live tree too."
+      ]
+    },
+    "spec_asserts": "A3 allows the contract file into the artifact 'or onto the host by the deploy script'.",
+    "world_is": "Shipped as a copy in deploy/, byte-equal to the release tree's contract. The test that pins the copy to org/standards lives on the never-merged rel-/dep- branches and would fail against CLOUD's newer contract, which is the signal to refresh the copy at the next release cut."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T13:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S14",
+    "one_line": "MX-r-6 PHASE A re-cut on the moved live base (A4): two more audited overrides on the never-merged rel-b/dep-b branches, and the deploy-only tree still drops 37 gateway-dir files of other projects' unreleased work relative to CLOUD.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live gateway read BY CONTENT 2026-09-30T12:27Z and again 13:00Z: S3 key opal-gateway-288fa78c93.tar.gz == -latest (ETag be161c825e92471afe31c9f6ba4f3758, 415525 bytes), host file hashes 82 of 82 equal to it (SSM e29a6f89-425b-4e34-bc30-caea722ea8b2, e6782853-9cfc-4515-b75e-341fbf3151fa), CLOUD manifest deployed_commit 288fa78c93e1c57be0ad7b8d6371c69145a69856 (11:37:34Z).",
+        "Release 63d6094823 (branch rel-nfra-mcpindex-r5-schwab-enable-b, /c/tmp/mx-rel8) and deploy-only 2e2254156e (dep-nfra-mcpindex-r5-schwab-enable-b, /c/tmp/mx-dep8, on CLOUD 6caac02338) were committed under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~19 (Z-W14-S8 precedent; uses 5 and 6 counting Z-W19-S10's two and S12's A3 pair).",
+        "The deploy-only commit differs from CLOUD 6caac02338 in 37 files, 0 outside infra/aws/ec2/opal-gateway: 12 deleted (rivalfunds x4 + its test, taxsma_workbook + test, onhost_bench x2, test_auth_hardening, test_dcr_idle_lifetime, test_login_retire, test_tier_principal), 23 modified (app/config.py, guard.py, integrations/base.py, schwab/aws_roles.py, schwab/integration.py, oauth_as.py, ratelimit.py, server.py, tier.py, token_broker.py, tools.py, refs/DATA_CATALOG.yaml [2-line provenance stamp], deploy-to-ec2.sh, runbook, tests), 2 added (the contract copy, test_schwab_host_inputs.py). Each is another project's unreleased gateway work (NFRA_OPLGTW OG-t-1/u-1/u-2/x-2/i-3, ETFS_RIVALS RIV-w-1, MDPF_TAXSMA TX-g-1) or NFRA_MCPMSP's already-live files being equal to live rather than to CLOUD; none is shipped by this release.",
+        "Every one of the 13 files NFRA_MCPMSP changed from 093fc247c6 to 288fa78c93 is byte-equal to live in the release tree except deploy-to-ec2.sh (MCPMSP's printf line kept, ours added) and org/standards/NFRA_OPLGTW_CONTRACT.json (MCPMSP's tenant_firm lines kept, step 0 added)."
+      ]
+    },
+    "spec_asserts": "A4 asks for a release re-cut on the live commit read by content, with MCPMSP's lines kept and ours added.",
+    "world_is": "Done as ordered; the only off-order acts are the audited overrides and the 37-file gap, recorded for the L8 reading."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T13:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S15",
+    "one_line": "A3's host-input edits (aws_roles.py, schwab/integration.py, deploy/NFRA_OPLGTW_CONTRACT.json) are written against the live-base copies; CLOUD's copies of the first two carry unreleased NFRA_OPLGTW work, so a later CLOUD release of this delta merges against them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --name-status 6caac02338 2e2254156e lists app/integrations/schwab/aws_roles.py and app/integrations/schwab/integration.py as modified; git log 6caac02338 for those paths names NFRA_OPLGTW.TO-OG-i-3 (0.9.0_WK_NFRA_OPLGTW~1, the person-named Schwab role rename) and NFRA_OPLGTW OG-x-2 (0.9.0_WK_NFRA_OPLGTW~11, the streaming Schwab CSV export) as the last commits, neither in the live tree.",
+        "The A3 edits to those two files applied cleanly on the live base (git apply --3way, 0 conflicts); on CLOUD they will conflict or need a re-merge when OG-i-3 and OG-x-2 are released.",
+        "deploy/NFRA_OPLGTW_CONTRACT.json was regenerated as a byte copy of THIS release tree's org/standards contract (MCPMSP's tenant_firm text plus step 0); CLOUD's org/standards contract still lacks step 0 (it drains later), so test_schwab_host_inputs.py::test_shipped_contract_equals_the_standard passes in the release tree and would fail in the deploy-only tree, whose org/standards is CLOUD's (the Z-W19-S13 signal, unchanged)."
+      ]
+    },
+    "spec_asserts": "A3/A4 ask the release to carry the Schwab host inputs and the deploy-only tree to ship the gateway dir only.",
+    "world_is": "Shipped as ordered; the merge cost lands on whoever releases OG-i-3/OG-x-2 or drains this branch, recorded so it is not a surprise then."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S16",
+    "one_line": "The live host carries one file the live artifact does not: deploy/NFRA_OPLGTW_CONTRACT.json, left by the rolled-back v2 deploy (a tar extract never deletes), byte-equal to the v3 release's copy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM ab7a521f-2a22-48e2-a960-21c5f90dc392 (2026-09-30T16:14:59Z) on i-07dccb1615503ac99: 87 hashed host files against the 86 of the downloaded -latest artifact (421088 bytes); 86 of 86 identical, 0 differ, 1 only-host = deploy/NFRA_OPLGTW_CONTRACT.json (sha256 a86f7e667cfc3ec8b0eebfe155a02e11e94e52ddb39fcfa82d3505fddd4fa4ad).",
+        "The v3 deploy-only artifact's copy of that file has the same sha256, so a v3 deploy overwrites it with identical bytes; PHASE B's host-equals-artifact read should expect 87 host files now (86 + this one) and 87 of 87 after.",
+        "It is inert today: the live .env names no NFRA_OPLGTW_CONTRACT_PATH (0 of 28 key names) and schwab is not enabled."
+      ]
+    },
+    "spec_asserts": "A6 says the rollback restored 4ce7946426 (the host 80/80 at RV's read).",
+    "world_is": "The host runs 4ce7946426's code; the artifact-vs-host comparison is 86 of 86 plus one stale contract copy that the rollback could not remove."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S17",
+    "one_line": "ETFS_RIVALS' app/tests/test_rivalfunds_view.py fails at the live ref itself: it needs infra/logic/registry/systems.json to carry a 'rivalfunds' key, which the tree at 4ce7946426 does not.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In the release tree /c/tmp/mx-rel9 (a5e73b6e72) `python -m pytest app/tests/test_rivalfunds_view.py` (MOCK_GRAPH=1): 3 failed, 1 passed, 7 errors, each `ValueError: source 'rivalfunds' is not a systems.json key`.",
+        "The same command in the rollback tree /c/tmp/mx-rb9 (4ce7946426, a sparse tree without infra/logic): 3 failed, 1 passed, 7 errors, `FileNotFoundError ... infra/logic/registry/systems.json`; the release's copy of the test and of app/rivalfunds_view.py are byte-equal to 4ce7946426 (preservation proof), so this release adds no failing test.",
+        "The test ships inside the artifact (app/tests/) but is never run on the host; it is another project's suite."
+      ]
+    },
+    "spec_asserts": "The release's test list names the Schwab, portal_index, discover, MCPMSP and acceptance suites.",
+    "world_is": "ETFS_RIVALS' own test is red against the registry at its own deployed ref; not run for criteria and not ours to fix."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S18",
+    "one_line": "The stale-base guard protects only a deploy that runs a deploy-to-ec2.sh carrying it: a seat deploying from a tree cut before this release runs the old script and is unguarded, and the first read after this release has no git-ref metadata to read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (f1c302fbd3 on wk-nfra_mcpindex-5-19, a5e73b6e72 on the release) reads the live ref from S3: the git-ref object metadata on -latest, else the one opal-gateway-<sha>.tar.gz key sharing -latest's ETag, else it refuses. The live -latest (15:22:18Z, written by the pre-guard script) has no git-ref metadata, so the first read is the key-match fallback and resolves to 4ce7946426 (the 4ce7946426 key and -latest share ETag and size 421088, list-objects-v2 at 2026-09-30T16:13Z).",
+        "An older tree's script (the one v2 used) uploads without the metadata and without the check; nothing on the S3 plane refuses its PutObject, and infra/aws/ec2/safe-ec2-deploy.sh (outside this order's <paths>) passes its environment through but does not itself require DEPLOY_BASE_REF.",
+        "tests/test_deploy_base_guard.py: 6 of 6 pass; removing the upload-time call fails 2 of 6 (mutation run), so the upload-time read is what the tests grade."
+      ]
+    },
+    "spec_asserts": "A6: the guard ships in this release and refuses on a live-ref mismatch with no upload.",
+    "world_is": "The guard is in place for every deploy made from this release forward; coverage of older trees needs either the wrapper to require DEPLOY_BASE_REF or an S3-side condition, both outside this order."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S19",
+    "one_line": "A6 re-cut record: three more audited overrides (rel-c, dep-c) and the deploy-only tree on CLOUD d4fe6127ee drops 8 gateway files of other projects' unreleased work and changes 23 more relative to CLOUD.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release a5e73b6e72 (rel-nfra-mcpindex-r5-schwab-enable-c, /c/tmp/mx-rel9) and deploy-only 42c52ed4d9 (dep-nfra-mcpindex-r5-schwab-enable-c, /c/tmp/mx-dep9) were committed under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~19 (Z-W14-S8 precedent).",
+        "git diff --name-status d4fe6127ee 42c52ed4d9: 34 files, 0 outside infra/aws/ec2/opal-gateway: 8 D (app/taxsma_workbook.py, tests/test_taxsma_workbook.py, tests/test_tier_principal.py, tests/test_auth_hardening.py, tests/test_dcr_idle_lifetime.py, tests/test_login_retire.py, tests/acceptance/onhost_bench.py, tests/acceptance/test_onhost_bench_grader.py), 23 M, 3 A (the contract copy, test_schwab_host_inputs.py, test_deploy_base_guard.py). Each D and M is other projects' unreleased gateway work that CLOUD holds and the live ref does not; none is shipped.",
+        "Gateway tree object: a3893da22ad839edb26e9537ac13d7347b02396d in both the release and the deploy-only commit."
+      ]
+    },
+    "spec_asserts": "A6 asks for a release on the live ref and a deploy-only tree whose gateway tree object equals the release's.",
+    "world_is": "Done as ordered; the overrides and the dropped-file set are recorded for the L8 reading."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T18:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S20",
+    "one_line": "r6.AC1 reads slug nfra-mcpindex-r5-schwab-enable, so at v3 it passes on v2's CLOSED ROLLED-BACK entry file and never reads the v3 ledger (nfra-mcpindex-r5-schwab-enable-v3).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round5/checks/r6.AC1.sh: SLUG=nfra-mcpindex-r5-schwab-enable; entry count = ls-tree of change_management grepped for '_${SLUG}_deploy_completion.md$'; the v3 file is 20260930T1815Z_nfra-mcpindex-r5-schwab-enable-v3_deploy_completion.md and does not match that anchor.",
+        "Measured at 9a9bccc871 (18:5xZ): 'entry files at HEAD=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR: 16 of 16 sentinel(s) scanned -- RESULT: PASS -- exit=0'. The 1 entry is v2's 20260930T1358Z file. The v3 ledger is closed and its sentinel is absent at HEAD (git ls-tree .open_deploys/ | grep -c schwab-enable = 0), read directly."
+      ]
+    },
+    "spec_asserts": "r6.AC1 grades the deploy's NEVER-2 entry (slug nfra-mcpindex-r5-schwab-enable) as committed, sentinel gone, not listed OPEN/HELD.",
+    "world_is": "AC1 PASSes, but on the v2 entry; the v3 slug's closure is proven by the direct reads named here, not by the script."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T18:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S21",
+    "one_line": "safe-ec2-deploy.sh's own manifest rewrite (jq | tr) re-encoded the non-ASCII characters of 10 EC2_MANIFEST.json lines as mojibake in its commit e159e023f0 on the deploy-only branch, so that commit was not ported.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C /c/tmp/mx-dep9 diff HEAD~1 HEAD -- infra/aws/ec2/EC2_MANIFEST.json (e159e023f0): 10 insertions, 10 deletions; 4 of the 10 changed lines are _last_updated and the opal-gateway deployed_commit/deployed_at/deployed_by, the rest are _ec2_host_note, notes and purpose lines whose em dash changed from the JSON escape â€” to the literal mojibake 'â€”'.",
+        "The manifest commit on wk-nfra_mcpindex-5-19 (3a67e6fcf2) edits only the opal-gateway block fields and _last_updated against CLOUD's file: git diff CLOUD -- infra/aws/ec2/EC2_MANIFEST.json shows 6 lines changed. The deploy-only tree is throwaway."
+      ]
+    },
+    "spec_asserts": "The wrapper records the deploy in EC2_MANIFEST.json by a bookkeeping commit.",
+    "world_is": "The wrapper's manifest commit carries an encoding side effect on unrelated rows; the branch's commit records only the gateway fields."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T18:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S22",
+    "one_line": "The v3 NEVER-2 sentinel org/critical_paths/.open_deploys/nfra-mcpindex-r5-schwab-enable-v3.json is not among the order's <paths> (only ...-schwab-enable.json), and the commit that opened and the commit that closed it were admitted.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Order <paths> (read at CLOUD): org/critical_paths/.open_deploys/nfra-mcpindex-r5-schwab-enable.json and org/critical_paths/change_management/; the v3 slug was named by the issuer's GO (binding item 1).",
+        "safe-commit b26fc665ef (open) and 9a9bccc871 (close) staged the -v3.json sentinel and the ledger .md and were accepted with no refusal."
+      ]
+    },
+    "spec_asserts": "<paths> IS the write grant; the lane gate admits exactly the paths the order names.",
+    "world_is": "The v3 sentinel path was written outside the named grant and admitted; the ledger and sentinel for the slug the GO named are committed and closed."
   }
 ]
 ```
