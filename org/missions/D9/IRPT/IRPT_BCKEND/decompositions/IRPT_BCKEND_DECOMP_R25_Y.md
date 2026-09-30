@@ -46,3 +46,38 @@ A cell that put the catalogue on ResolvedScope -- the option 103038 rejected -- 
 
 Edges: none; `IB-yr-242` is a single independent cell. **fanout: 1 of 1 chains, cap 8.** Slot `~88`, measured per S197
 (highest author 87, order 87, branch 84).
+
+
+## Amendment 1 (2026-09-30 ~00:0xZ) -- AC1 is NOT MET for a MEASURED reason; the route becomes its own cell, and the issuer's grant was too narrow
+
+**Worker `~88` refused the route registration and was RIGHT to.** It delivered AC2, AC3 and AC4 (issuer-graded:
+1 failed, 3 passed) and left AC1 red rather than weakening the test. Drained @589a553074.
+
+**What it measured, and what the issuer verified independently.** `reports/generate_installed.py:337` does
+`routes = dict(generate_entry.ROUTES)` while `:341` passes `operations={generate_entry.OPERATION: compute,
+UPLOAD_OPERATION: upload}`. So a NEW key in `generate_entry.ROUTES` becomes a route the DEPLOYED boundary has no
+operation for, raising `EntryError` -- **which would fail every request to `irpt-ycharts-generate`, including the
+analysis POST, after ~P's next rebuild.** The worker measured `test_generate_installed` going 13 passed -> 4 failed with
+the route registered; with it held, the issuer re-ran that suite on its branch and read **13 passed**. It also names 5
+further failures from the 17-route count/denominator pins and a response-schema pin.
+
+**This is an ISSUER defect, not a worker shortfall.** `IB-yr-242`'s `<paths>` granted `entry.py` and `routes.json` but
+NOT `reports/generate_installed.py`, a `responses/comparison-catalogue.response.schema.json`, or the test pins that
+count routes. I specified "register the GET" without tracing the deployed boundary that copies `ROUTES` into a
+different `Entry`. **A cell whose grant cannot contain its own change is a mis-cut cell**, and the order's own refusal
+clause is what turned that into a held patch instead of a broken production function.
+
+**Ruling.** The delivered half STANDS and is inert: `comparison_catalogue.py`, the closed v1
+`ComparisonCatalogue.schema.json`, a guarded compute, and 7 passing tests -- with **no route, so nothing served
+changes**. `AC1` is recorded **NOT MET**, not dropped. The route registration becomes **its own cell in a later
+round**, with a grant that includes the deployed boundary, the response schema and the route-count pins, and with the
+worker's two ready-to-apply patches (`held_route_registration_routes_json.patch`, `entry_full_with_route.patch`, both
+committed in its deliverables) as its starting point. `TO-IB-yr-242` stays `staged`, correctly, because its cell is
+not complete.
+
+**And a second finding that bears on a CTO ruling.** Row `IRPT_BCKEND-W88-S2`: etf-classifications is a DynamoDB table
+and the worker found **no IAM grant for `irpt-ycharts-generate`** on it. Reading it would need a new boto3 call plus a
+new grant -- which this order told the worker to refuse and file. **So until a reader is wired, the catalogue serves
+the 4 model-catalogue entries only and EVERY ticker entry takes the verbatim path.** That is material to CTO 103035,
+which chose etf-classifications as the source over bd-securities; the ruling stands, but its "names" half cannot work
+at all yet. Routed to `1.0.0_SA_CTO` and `2.0.0_SA_COO~P`.
