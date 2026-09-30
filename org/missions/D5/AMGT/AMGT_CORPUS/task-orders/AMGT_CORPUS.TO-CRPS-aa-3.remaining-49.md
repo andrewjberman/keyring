@@ -114,6 +114,9 @@ Your worktree is a SPARSE cone (`lib integrations .tools .claude org docs rcg in
 - aa3_AC2 FAIL as expected (no tests ran).
 
 Write set disjoint from aa-1: aa-1 owns `model_block_pull.py`; aa-3 owns `build_unit_map.py`.
+**AMENDMENT 1 (issuer, record face, ~15:5xZ, row `Z-W1-S21`):** RESAPP round-53 ac-3 copied the slash keys to `-SLASH-` form.
+`aa3_check.py` now excludes an identity in either form, counted once; the base still reads `aa3 keys 98 excluded 2
+measured_before 49 ... projected_after 49`. The criterion text and the worker's scope are unchanged.
 <risk>LOCAL</risk>
 <status>pending</status>
 <round>25</round>
