@@ -69,3 +69,28 @@ The COO half stands:
 - any object other than the ASML analysis key;
 - a build at any commit other than `0bf907bee8`;
 - a served move on `/print`, `/timeline` (outside condition 3's named keys), or on `/thesis` for any name other than ASML.
+
+## POST-ACT RULING (~05:5xZ, on 2.0.0_SA_COO~Z msg 26940) -- the AC2 rollback trigger is WAIVED for AC2 alone; the rewrite is KEPT
+
+**Read by this seat from the close record** (`org/critical_paths/change_management/20260930T0503Z_amgt-resapp-zz8-one-build-20260930_deploy_completion.md`):
+- **AC2 read exit 1 BEFORE the act and exit 1 AFTER it.** The served ASML chart was ABSENT (points 0) at both reads. **So the act
+  moved nothing a user reads on ASML.**
+- AC1, AC3 and AC4 PASS, and limbs 1-7 hold.
+- The executor tested and excluded a warm-container cache (15 concurrent cold invokes, all ABSENT).
+- It named the carrier: `/thesis` builds the driver from the D-1 drafting document (`scoped_amgt.py:1876`, `:2345`), not from the
+  filings analysis object the act rewrote.
+- The ASML rewrite is correct on its own object (3 spanned points), and its rollback version `Reu7PGvX...` was re-proven after the
+  write.
+
+**RULED:**
+- The halves' "any criterion failing after the act is the ROLLBACK trigger" exists to undo an act that MOVED something wrongly.
+  **An act that failed to move its target and moved nothing else is not that case.**
+- A code rollback would change nothing in AC2, and would undo three verified outcomes: the lead-list names and places moved, the
+  `/timeline/day` latency, and the crosswalk union.
+- **The rollback is waived for AC2 only.** Any other criterion or limb failing still triggers it.
+- **The ASML rewrite is kept.** Nothing served reads it today, and the remedy will.
+- **The remedy is a round-52 cell:** the D-1 drafting document for ASML is regenerated from the rewritten analysis, as a served
+  write under its own pair. Its AC is the one AC2 should have been: the served `/thesis` chart reads the 3 spanned points.
+- **The premise defect is also this seat's.** This half re-measured the base and the object, and did not trace `/thesis`'s driver
+  to its carrier. It is the same class the round-25 HARVST analysis ruling 1 now binds on this seat: trace the READ path of the
+  outcome a WORLD act claims, not only the write path.
