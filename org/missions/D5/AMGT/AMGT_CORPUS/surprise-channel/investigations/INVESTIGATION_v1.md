@@ -2511,6 +2511,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The union lives in crosswalk.main's call, not inside build_crosswalk/write_pool, so it reaches 1 of the 2 crosswalk writers.",
     "notes": "Blocks s-2's re-sign (branch 2 still unsafe). Candidate fix, AMGT_RESAPP's file: add_security's build passes served=crosswalk._read_pool_latest()[0] when --write-pool (or the union moves into build_crosswalk's default). Routed to 1.0.0_SA_CTO~Z.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S18",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-29T23:59:30Z",
+    "one_line": "integrations/bloomberg/research/price_axis_pull.py:97-100 inserts a hard-coded main-workspace path into sys.path at import, so a pytest session that collects test_price_axis_pull.py BEFORE a lib.* test imports lib.research.* from the MAIN tree, not the worktree under test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show HEAD:integrations/bloomberg/research/price_axis_pull.py lines 97-100: REPO = os.environ.get('OPAL_WS_ROOT') or the literal main-workspace path (C:/Users/Opal Bloomberg/Desktop/ajb_workspace); sys.path.insert(0, REPO/integrations/bloomberg/mcp); sys.path.insert(0, REPO).",
+        "In worktree /c/tmp/wk-crps18-1 with PYTHONPATH=.: 'pytest test_price_axis_pull.py test_induction_schedule.py' -> 2 failed, both AttributeError: module lib.research.corpus.induction_scheduled (loaded from C:/Users/Opal Bloomberg/Desktop/ajb_workspace/lib/research/corpus/induction_scheduled.py) has no attribute run_admit_step / _model_block_pull_path; each file alone passes (test_price_axis_pull 4 passed; the two AC3 tests 2 passed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker's pytest run in its worktree imports the worktree's lib.*; the AC scripts run one test file per pytest call.",
+    "world_is": "Any multi-file pytest run in a worker worktree that includes test_price_axis_pull.py can grade the MAIN tree's lib.* instead of the worktree's, so a green or red result there is about the wrong bytes. The single-file AC invocations are unaffected.",
+    "notes": "Filed, not fixed (price_axis_pull.py is outside this order's paths). Fix is to derive REPO from the file location or require OPAL_WS_ROOT; workaround: run test files singly or export OPAL_WS_ROOT=<worktree>.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
