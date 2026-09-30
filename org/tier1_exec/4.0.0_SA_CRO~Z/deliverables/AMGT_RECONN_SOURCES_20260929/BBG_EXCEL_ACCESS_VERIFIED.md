@@ -71,6 +71,6 @@ Reusable probe: `scripts/bbg_excel_holdings_probe.py`, accompanied by `scripts/b
 
 Local raw evidence is under `.runtime/amgt-reconn-bbg-access-20260929/`, including the two initialization probes, four query manifests/results/workbooks, `probe_summary.json`, `issuer_comparison.json` and `raw_bql_recheck.txt`. Raw Bloomberg responses and workbooks are not committed.
 
-Prepared, NOT SENT, support question:
+Prepared, NOT SENT, support question. **Andrew declined sending it (2026-09-30: "No we're not doing this, im fine with \"fragile\", just need to run the tests and see how it goes day over day").**
 
 > Excel BQL.Query returns holdings for WCMG, TSEL, BASG, ETFT and PCLG on this installation, while the same query through the local //blp/bqlsvc service returns "User not authorized to use BQL." GQGU US Equity resolves correctly to GQG US Equity ETF / US00775Y2569, but current and dated holdings queries return no results. Please confirm (1) GQGU holdings coverage or the correct identifier; (2) the source, reporting cadence, earliest available report dates and fill behavior for these six ETFs; (3) cash/quantity conventions, including differing BASG quantities versus the issuer for September 28; and (4) whether direct BLPAPI BQL can be enabled for this login and whether any additional licensing is required. We are not requesting a purchase or account change.

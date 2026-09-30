@@ -133,3 +133,17 @@ Recorded September 30, 2026, approximately 00:4x ET; Claude Code terminal, `4.0.
 > ok stick with 0.2%, send it to CTO when committed
 
 Already in force: rev 3 committed at 2a1f275a78 with the 0.2% floor, sent to 1.0.0_SA_CTO~Z (msg 26910), and the endpoint amended at 33c1d096a3 (msg 26913).
+
+## Five open calls answered, verbatim
+
+Recorded September 30, 2026, approximately 01:5x ET (05:5x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, answering this seat's `/open-calls` cards 1-5. Exact receipt timestamp not exposed.
+
+> 1.) Yes approved. 2.) Agreed . 3.) No we're not doing this, im fine with "fragile", just need to run the tests and see how it goes day over day. 4.) any signed in account. 5.) remove them
+
+The cards, as asked:
+
+1. Confirm the nine ETFS_RIVALS DONE WHEN lines as written (`ENDPOINT_FORWARD_RIVALFUNDS_20260930.md` @33c1d096a3): **APPROVED**.
+2. Bloomberg pulls for ETFS_RIVALS under (a) per-use word or (b) R-21 scripted grant; REC (b), scripted pulls only (backfill script, 8:03 fallback leg, dividend/price enrichment): **AGREED (b)**.
+3. Send the drafted Bloomberg support question (GQGU coverage, direct BQL): **NO**. The unattended-Excel route stays, proven by day-over-day tests.
+4. /rivalfunds viewers: **any signed-in account**.
+5. Remove the 09-29 crash dumps: **remove**. Applied 01:53 ET elevated: `C:\Windows\MEMORY.DMP` REMOVED (18,686,448,893 bytes). The Sentinel dump (`C:\ProgramData\Sentinel\CrashDumps\af142cfc-....dmp`) was REFUSED even elevated; its folder is owned by `NT SERVICE\SentinelHelperService` (SentinelOne tamper protection) and was not forced. `C:\dedicateddump.sys` is the live reserved capture target configured in `HKLM\...\CrashControl` (`DedicatedDumpFile`, `DumpFileSize=32768`), so it is held for Andrew's word on disabling crash capture.
