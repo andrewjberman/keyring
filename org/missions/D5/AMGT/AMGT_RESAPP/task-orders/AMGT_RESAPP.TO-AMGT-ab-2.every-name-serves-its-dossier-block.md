@@ -67,7 +67,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 **ISSUER NOTES:** round-51 analysis item 2 (CORPUS r20 rulings 2-3). Base: AC1 FAIL (READ_FAILED), AC2 FAIL (no pack_shape), AC3 PASS.
 Served in ab-6. The read preference to `/5` rides ab-6's closure (dossier.py METHOD_VERSION `/5` at HEAD, `/4` deployed).
 
-<status>pending</status>
+<status>complete</status>
 <round>52</round>
 <slot>~188</slot>
 <fabric>site-z</fabric>

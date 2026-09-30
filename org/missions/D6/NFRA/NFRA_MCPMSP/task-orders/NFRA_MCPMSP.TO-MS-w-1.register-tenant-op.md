@@ -50,6 +50,23 @@ Build, in the writer only:
    `test_register_tenant_records_each_outcome`. Use the fakes the existing tests use
    (`tests/test_grant_writer.py`, `tests/test_owner_key_and_record.py`).
 
+**AMENDMENT 1 (issuer, 2026-09-30, on your row NFRA_MCPMSP-Z-W3-S1; this order is REOPENED).** The adapter is being
+brought to its contract in another cell this round: `tenant_firm` joins `POLICY_RECORD_TYPES`, and the store's ONLY
+operator write path stays `operator_transact`, which requires one `operator_audit` put in the same partition.
+5. Write the tenant record through `operator_transact` as ONE transaction of exactly two puts in
+   `POLICY#TENANT#<tid>`: the `tenant_firm` item (sk `tenant_firm`, fields as you built: `tid`, `firm`,
+   `registered_at`, `registered_by`) and one `operator_audit` item (build it the way the writer's narrow/widen path
+   builds its audit through `schwab_entitlement_admin` / `data_entitlement.operator_audit_op`; read them, do not edit
+   them), conditioned so the tenant item is created only when absent. Keep the same-firm idempotent read and every
+   refusal. No direct single-item put.
+6. Add the named test `test_register_tenant_writes_through_operator_transact`: the fake store records ONE
+   `operator_transact` call whose ops are exactly a `tenant_firm` put and an `operator_audit` put, both keyed in
+   `POLICY#TENANT#<tid>`.
+7. The firm literals: keep your `tuple("inflection cottonwood".split())` for now; the reader reads the same firm
+   attribute `firm` (reconciled at the cut: reader pk `POLICY#TENANT#<tid>`, sk `tenant_firm`, attribute `firm`).
+Merge CLOUD into your branch first (pull-merge, never rebase): this order's file carries the amendment and the status
+`in_progress`; where it conflicts with your `complete` flip, take the issuer's text.
+
 ## 2. BOUNDS
 
 1. Write surface: `lambda_function.py` and the new test file. Do NOT touch narrow/widen/revoke, the owner check, the
@@ -75,7 +92,7 @@ Rows: `INVESTIGATION_v1.Z.md`, id `NFRA_MCPMSP-Z-W3-S<k>`, `disarm_owner` `2.0.0
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MS-w-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/w1.AC1.sh; echo "exit=$?"</invocation><expect>pytest: N passed; test_register_tenant_writes_tenant_firm=1 test_register_tenant_refused_firm_not_live=1 test_register_tenant_refused_other_firm_row=1 test_register_tenant_records_each_outcome=1 (each >=1, 0 failed) -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MS-w-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/w1.AC1.sh; echo "exit=$?"</invocation><expect>pytest: N passed; test_register_tenant_writes_tenant_firm=1 test_register_tenant_refused_firm_not_live=1 test_register_tenant_refused_other_firm_row=1 test_register_tenant_records_each_outcome=1 test_register_tenant_writes_through_operator_transact=1 (each >=1, 0 failed) -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MS-w-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/w1.AC2.sh; echo "exit=$?"</invocation><expect>existing writer tests: >=12 passed, 0 failed -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -91,7 +108,14 @@ for this op alone. Sibling surface at the cut: MP-a-2 complete; MP-c-1 and MP-v-
 dry-run at base: AC1 FAIL as expected (test file absent); AC2 PASS as expected (12 passed, the control). Slot `~3`
 continues to MS-t-5, then MS-a-2.
 
-<status>pending</status>
+**AMENDMENT 1 (issuer):** REOPENED on row Z-W3-S1 (the worker's own measurement: the live adapter would refuse a
+direct put and a `tenant_firm` key). AC1 gains `test_register_tenant_writes_through_operator_transact`; the write
+goes through `operator_transact`. The worker's first pass (4edff8d6cc, 09236b0d8a on wk-NFRA_MCPMSP-3) is kept and
+extended, never re-cut. Graded by: no gate limb grades a modification's criteria (GATE (viii) is `<placeholders>`
+only, NONE here). MS-a-2 now also waits on MS-t-1's AMENDMENT 1 merged (the package stages `app.access_state` from
+the gateway tree at build).
+
+<status>complete</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

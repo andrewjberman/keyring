@@ -408,6 +408,21 @@ async function walkTimelineDays(page, sec) {
   }
 }
 
+// ---- the picked name's and each tab's LOAD STATE, not a fixed sleep: a name with no dossier issues /overlay and a fixed 3 s settle
+// shot "Loading identity header". Panels mark data-panel-state = loading | error | empty | no-permission; wait until none loads.
+const LOAD_STATE_CEILING_MS = 45000
+async function waitForLoaded(page) {
+  const t0 = Date.now()
+  for (;;) {
+    const loading = await page.locator('[data-panel-state="loading"]').count().catch(() => 0)
+    const errored = await page.locator('[data-panel-state="error"]').count().catch(() => 0)
+    if (!loading) return { state: errored ? 'error' : 'loaded', waited_ms: Date.now() - t0 }
+    if (Date.now() - t0 >= LOAD_STATE_CEILING_MS) return { state: 'ceiling', waited_ms: Date.now() - t0 }
+    await page.waitForTimeout(250)
+  }
+}
+const loadStates = []
+
 async function walkSecurityAnalysis(page, route) {
   for (const movement of ['Trending', 'Breakout']) {
     for (const subject of ['Chatter', 'Price']) {
@@ -446,7 +461,9 @@ async function walkSecurityAnalysis(page, route) {
       await box.fill(sec).catch(() => {})
       await box.press('Enter').catch(() => {})
     }
-    await settle(page, 3000)
+    await page.waitForTimeout(400)
+    const pickWait = await waitForLoaded(page)
+    loadStates.push({ security: sec, step: 'overlay', state: pickWait.state, waited_ms: pickWait.waited_ms })
     await checks(page, `${sec}-overlay`)
     await walkTimelineDays(page, sec)
     await walkTimeline(page, sec)
@@ -454,7 +471,9 @@ async function walkSecurityAnalysis(page, route) {
       if (!timeLeft()) return
       step = `amgt ${sec} tab ${tab}`
       if (!(await clickLabel(page, tab))) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: `tab not found: ${tab}` })
-      await settle(page, 2500)
+      await page.waitForTimeout(400)
+      const tabWait = await waitForLoaded(page)
+      loadStates.push({ security: sec, step: tab, state: tabWait.state, waited_ms: tabWait.waited_ms })
       await checks(page, `${sec}-${tab}`)
       await exploreScope(page, 'body', `${sec}-${tab}`)
       if (opt.deep) await pressAll(page, 'body', `${sec}-${tab}`, 10)
@@ -720,6 +739,7 @@ try {
   for (const f of unique) counts[f.check] = (counts[f.check] || 0) + 1
   const doc = { schema_version: '1.1', tool: 'ui-walk', stamp, base: opt.base, routes: opt.routes, clients: opt.clients, minutes: +((Date.now() - t0) / 60000).toFixed(1), screenshots: shotN, raw_finding_count: findings.length, finding_count: unique.length, counts, guard_aborts: guard.length, telemetry_stubbed: stubbed, api_issues: apiIssues, console_errors: consoleErrors, drill_paths: drillPaths, findings: unique }
   writeFileSync(path.join(OUT, 'findings.json'), JSON.stringify(doc, null, 1))
+  if (loadStates.length) writeFileSync(path.join(OUT, 'load-states.json'), JSON.stringify(loadStates, null, 1))
   if (timelineDays.length) writeFileSync(path.join(OUT, 'timeline-days.json'), JSON.stringify(timelineDays, null, 1))
   writeFileSync(path.join(OUT, 'lead-lists.json'), JSON.stringify({ schema_version: '1.0', tool: 'ui-walk', stamp, lists: leadLists }, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')

@@ -7069,3 +7069,5 @@ fanout:
 
 - FWD-30's ACCEPT (Adam forwards the output without reformatting) is a person's act, not a cell (ruling 3). The versions/compare and
   ledger page surfaces (FWD-6, FWD-12) go to DSGN_AMGTV1 (ruling 1). The CTO's PRD addendum follows ab-3's mapping (ruling 4).
+- **AMENDMENT (issuer, ~07:3xZ, before any spawn; CTO msg 27014):** ab-1's splice records its provenance (analysis key + VersionId) in the
+  document; Z-S313's rebuild regression is a DEFECT (row Z-S314, ARMED) carried to round 53 as its own cell.

@@ -16091,6 +16091,69 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "CTO round-51 analysis item 1: ASML's D-1 drafting document is regenerated from the rewritten analysis.",
   "world_is": "A regeneration moves 3 more top-level keys and drops served sentences; round 52 cuts a driver-only splice instead (AMGT-ab-1, written at AMGT-ab-6). Measured on ASML only; how many stored D-1 documents a pool rebuild would shrink is UNMEASURED.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. No act: a --rebuild-pool live run would be the hazard, and none is ordered. Issuer ruling at the cut, stated in s.60b.1 and the issuance commit."
+},
+{
+  "id": "AMGT_RESAPP-Z-S314",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T07:40:00Z",
+  "one_line": "Correction of AMGT_RESAPP-Z-S313's standing (CTO msg 27014 condition 2): a D-1 regeneration that drops served sentences is a DEFECT, not an accepted limit -- carried to round 53 as its own cell. ARMED: any live --rebuild-pool run would regress served /thesis sentences until it is fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Z-S313's measurement (round52/checks/ab_1_preview.py): ASML rebuild serves company_description 1 of 6, investment_thesis 0 of 1, risks 0 of 2.",
+      "CTO msg 27014: 'Z-S313 ... is a DEFECT row carried to round 53 as its own cell, not accepted as a limit'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A D-1 rebuild from the stored analysis refreshes a document without shrinking what it serves.",
+  "world_is": "Under today's verbatim gate the rebuild drops served sentences (ASML measured; the pool's population unmeasured). Round 52 splices the driver only; the rebuild defect is round 53's cell.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Disarmed by: no live --rebuild-pool run is ordered in round 52 (ab-6 runs --splice-driver only); the round-53 cell fixes the rebuild. Cites AMGT_RESAPP-Z-S313."
+},
+{
+  "id": "AMGT_RESAPP-Z-W186-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~186",
+  "surfaced_at": "2026-09-30T08:00:00Z",
+  "one_line": "AMGT-ab-1 AC2's <expect> says the dry-run names the moved keys as ONLY thesis_driver, but AMENDMENT 1 (provenance recorded in the document) makes the spliced document differ in thesis_driver PLUS one provenance key; the dry-run line prints both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC1 (ab_1_splice.py, amended) exits 0 with differing top-level keys ['thesis_driver', 'thesis_driver_provenance'].",
+      "AC2 dry-run line: ASML_NA_Equity: moved_keys=['thesis_driver', 'thesis_driver_provenance'] (content key thesis_driver; provenance key thesis_driver_provenance) driver_points=3 spanned=3 ... served_validator=True ... [DRY-RUN: wrote nothing]; exit=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 expect: one ASML_NA_Equity line naming the moved keys as only thesis_driver.",
+  "world_is": "The line names thesis_driver plus the ONE added provenance key thesis_driver_provenance, as AMENDMENT 1 and AC1 require; AC2's expect text predates the amendment. The content key moved is only thesis_driver. Judgment on the wording is the issuer's; no code change follows either way."
+},
+{
+  "id": "AMGT_RESAPP-Z-S315",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T08:20:00Z",
+  "one_line": "After AMGT-ab-4 the docstring near scoped_amgt.py:2175 still carries one false closure claim: it says lib.research.harvest.store 'is unavailable in the deployed package', but store.py is packaged (zz-8's content diff listed it CHANGED) and /thesis imports it through corpus.dossier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scoped_amgt.py docstring at the ~188 drain (@5cdc4e1825): 'never lib.research.harvest.store (module-scope import pyarrow) and never lib.opal_naming (packaged, but not imported by this adapter itself): the first is unavailable in the deployed package.'",
+      "zz-8's build-only content diff at 0bf907bee8 listed lib/research/harvest/store.py CHANGED, i.e. packaged; scoped_amgt.py:3218 lazily imports corpus.dossier, which imports harvest.store."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-51 ruling 6: the adapter's text states its real closure.",
+  "world_is": "The opal_naming half is corrected; the store half of the same sentence is still false. Text only, no behaviour; outside ab-4's bounded scope (comments + the opal_naming wording).",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Carried to round 53 as a one-line text correction; not worth a second re-open of ab-4 before ab-6 (it moves no served byte)."
 }
 ]
 ```

@@ -40,6 +40,16 @@ at CLOUD HEAD after its merge -- and read the negative arms live.
 3. **Read the live arms** (AC2, AC3), then close each leg and the entry (`deploy_ledger.py close-leg` / `close`),
    committing the closed entry with the sentinel removed.
 
+**AMENDMENT 1 (issuer, 2026-09-30, following MS-t-2's AMENDMENT 1).** `mcpmsp_firm_roles.tf` now names through the
+local module `opal_name` and reads ONLY `opal-data-portal-v2/platinum/mdpf/inflection/*` in round 1 (no firm-bucket
+read; the firm buckets' own `DenyForeignFirmPrincipals` policies refuse foreign principals). Two consequences here:
+- **Use a PRIVATE Terraform data dir, never the main tree's:** copy `<main tree>/infra/aws/terraform/opal-gateway/.terraform/providers`
+  and its `terraform.tfstate` (the backend pointer) into a temp dir, `export TF_DATA_DIR=<it>`, run `terraform get`
+  (registers the LOCAL module; no network), then plan and `safe-apply` with the same `TF_DATA_DIR`. The state itself
+  stays in the remote backend; nothing is written to the main tree's `.terraform`.
+- AC2 no longer reads an own-bucket arm; it reads own prefix ALLOWED, the other firm's prefix and bucket NOT allowed.
+  The ledger's blast radius names the module-named role, its policy, and the gateway's one AssumeRole policy.
+
 ## 2. BOUNDS
 
 1. Blast radius: the addresses in `mcpmsp_firm_roles.tf` only. The writer, the gateway role's existing policies and
@@ -65,7 +75,7 @@ Rows: `INVESTIGATION_v1.Z.md`, id `NFRA_MCPMSP-Z-W2-S<k>`, `disarm_owner` `2.0.0
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="MS-a-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/a1.AC1.sh; echo "exit=$?"</invocation><expect>slug nfra-mcpmsp-r1-firm-role: entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR present -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MS-a-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/a1.AC2.sh; echo "exit=$?"</invocation><expect>role gateway-inf-firm-reader-role: own-prefix=allowed own-bucket=allowed cot-bucket=(implicitDeny|explicitDeny) cot-prefix=(implicitDeny|explicitDeny) -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MS-a-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/a1.AC2.sh; echo "exit=$?"</invocation><expect>role gateway-inf-firm-reader-role: own-prefix=allowed cot-prefix=(implicitDeny|explicitDeny) cot-bucket=(implicitDeny|explicitDeny) -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MS-a-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/a1.AC3.sh; echo "exit=$?"</invocation><expect>gateway role opal-gateway-role: AssumeRole(gateway-inf-firm-reader-role)=allowed; GetObject opal-data-inf=(implicitDeny|explicitDeny) opal-data-cot=(implicitDeny|explicitDeny) -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -82,6 +92,10 @@ entry); AC2 FAIL as expected (`NoSuchEntity`, no role); AC3 FAIL as expected (`A
 the two S3 arms already read `implicitDeny` at base -- A1n arm 3 holds today, so AC3's FAIL is carried by the grant
 arm, which is the build). The owner-key vars are read from live config so a mistargeted apply could not move the
 writer's environment. Spawn: the slot continues here after MS-t-2 is merged.
+
+**AMENDMENT 1 (issuer):** follows MS-t-2's AMENDMENT 1 (module names, portal-prefix-only read). The private TF data
+dir + `terraform get` procedure is added; AC2's own-bucket arm is removed (round 1 grants no firm-bucket read; row
+Z-S2). AC2 still FAILs at base (`NoSuchEntity`). Graded by: no gate limb grades a modification's criteria.
 
 <status>staged</status>
 <round>1</round>
