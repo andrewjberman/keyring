@@ -97,3 +97,11 @@ This approves the S9 trigger-chain proposal and pre-publish guardrails in `GOLD_
 > no that is ok , we can use etfs scope
 
 Landed accordingly: the `etfs` scope moves to GENERAL tenancy, and a `rivalfunds` system key is the source of the derived tiers (validate 0 refusals; generated targets content-identical).
+
+## Project name, verbatim
+
+Recorded September 30, 2026, approximately 00:2x ET (04:2x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9. Exact receipt timestamp not exposed.
+
+> I like it, lets call this ETFS_RIVALS
+
+The project code is `ETFS_RIVALS`. Registering it (L3) is 1.0.0_SA_CTO's; this seat records the name and relays it. The product and resource token stays `rivalfunds` (`etfs-rivalfunds-daily`, `/rivalfunds`); a project code is never a system token.

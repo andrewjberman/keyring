@@ -140,7 +140,7 @@ The research does not establish issuer publication times, AWS reachability of th
 ## References for the next consumer
 
 - **BRIEF PATH:** `docs/briefs/etf-holdings-research-20260929.md` (revision 2)
-- **PROJECT:** NONE-YET; product token `rivalfunds`, pipeline `etfs-rivalfunds-daily`, route `/rivalfunds`.
+- **PROJECT:** `ETFS_RIVALS` (named by Andrew 2026-09-30; not yet registered, L3 is the CTO's); product token `rivalfunds`, pipeline `etfs-rivalfunds-daily`, route `/rivalfunds`.
 - **EXISTING PRD:** NONE.
 - **SIBLING PROJECTS:** OPAL_BBGTML, LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON, ETFS_POSITIONING, AMGT_RESAPP, AMGT_HARVST (identity layer). ETFS_INGEST / `etfs-netassets-daily` is a separate pipeline, named here only so no one conflates them.
 - **PRIOR ART:** [supporting specification](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/GOLD_TABLES_AND_PROMPTS.md); [Bloomberg access evidence](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/BBG_EXCEL_ACCESS_VERIFIED.md); [daily census](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/DAILY_COVERAGE_CENSUS.md); [Andrew-direct record](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/ANDREW_DIRECT.md); /daily-sprint serving: `infra/aws/lambda/daily_sprint_generator/`, `infra/aws/ec2/opal-gateway/app/sprint_view.py`, `daily_reports/scripts/publish_daily_report.py`, `infra/aws/terraform/opal-gateway/daily-reports-iam.tf`; identity: `lib/research/identity/crosswalk.py`, `add_security.py`.
