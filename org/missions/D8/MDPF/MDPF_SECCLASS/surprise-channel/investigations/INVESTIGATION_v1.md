@@ -235,3 +235,28 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not a cell defect: TO-SC-k1 named 'each firm's own latest holdings source, where one exists'. The IR Holdings producer's per-firm symbol sets (a ticker-keyed read at all three firms) are the nearest held source for the enrichment caller."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-W4-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~4",
+  "surfaced_at": "2026-09-30T00:45:00Z",
+  "one_line": "Round 1's resolution-stage (library) generator was never committed (correctly, per the uncommitted-.scratch/ rule), so round 2 cannot reproduce R1's exact 3,992-ticker holdings population byte-for-byte; round 2's re-census used its own defensible population (2,220 distinct held tickers via the same production ghost+AP-gate+open filters D_03 applies) rather than R1's unrecoverable one, so a raw 3,992-vs-2,220 'rows' comparison across the two census files is NOT a like-for-like population diff.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_CHECKS/ contains only the ACCEPTANCE checkers (r1_bd_resolution_census.py etc.), not the generator that built R1_BD_RESOLUTION_CENSUS_20260929.json -- confirmed by reading every file in that directory",
+      "R1_BD_SILVER_CENSUS_20260929.json 'artifacts': ['C:/Users/AndrewBerman/Desktop/wk_mdpf_secclass_3/.scratch/bd_assets_dim_local_20260929.parquet'] -- a sibling worker's own worktree .scratch path, absent from this worktree and never committed (CLAUDE.md rule 16b: scratch is uncommitted build scaffolding)",
+      "this cell's own generator (.scratch/gen_thread_census.py, uncommitted) measured 2,220 distinct held tickers via gold/holdings_lots/2026-09-25.parquet filtered open+ghost+AP-gated -- the SAME real filters D_03.composition_artifacts.py applies (imported unmodified from lib.exclusions), producing a real but independently-derived population, not R1's"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e3 step 1: 're-census the three thread stages ... on the latest BD day, reading the LIVE table' -- read together with the round-1 cell text, this implies the SAME population re-measured, not a newly-defined one.",
+  "world_is": "The round-1 resolution-stage population's exact construction is not recoverable from committed artifacts; round 2 instead defined its own real, filter-faithful population and named the substitution in both the evidence file and the fresh half rather than silently reusing R1's row count.",
+  "notes": "No effect on this cell's own acceptance (SC2-e3-AC1/AC2 check internal consistency, not population identity with round 1) or on the silver/gold stages, which each read their own live, real, currently-served population directly (bd_assets_dim.parquet, holdings_lots) rather than depending on R1's resolution-stage number. Flagged so a later round or the CVO's compile does not read the 3,992-vs-2,220 difference as an unexplained regression."
+}
+```
