@@ -13237,3 +13237,113 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No cell is cut. If a future contract version routes either operation, the pin CONSUMER_SMOKE_ENTRIES and the operation-map coverage test fail loudly and the pair is added then."
 }
 ```
+
+
+## IRPT_BCKEND-W97-S1 -- The order's lambda invoke line uses --cli-binary-format, which the .tools/aws shim's CLI (v1) rejects
+
+```json
+{
+  "id": "IRPT_BCKEND-W97-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~97",
+  "surfaced_at": "2026-09-30T16:15:00Z",
+  "one_line": "The order's lambda invoke line uses --cli-binary-format, which the .tools/aws shim's CLI (v1) rejects",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`.tools/aws lambda invoke ... --cli-binary-format raw-in-base64-out ...` printed 'Unknown options: --cli-binary-format' and rc=255 (AWS CLI v1 usage banner) in worktree wk-irpt-p-97 at 2026-09-30T~14:52Z.",
+      "The same invoke without the flag (v1 takes the raw JSON payload as given) returned StatusCode 200 and the trigger body recorded in deliverables/0.9.0_WK_IRPT_BCKEND~97/trigger_invoke.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order names a v2-style invoke invocation as the way to fire the ONE ad-hoc full run.",
+  "world_is": "The shim resolves to AWS CLI v1, which has no --cli-binary-format flag; the payload argument is passed without it. The first attempt exited before any request, so no invoke was made; the run used exactly one invoke.",
+  "notes": "Later order text that copies this invocation will fail the same way; drop the flag."
+}
+```
+
+
+## IRPT_BCKEND-W97-S2 -- safe-deploy.sh refused the worker serial with a HALT-GATE on unacked inbox messages; the order's aws s3 cp fallback was used
+
+```json
+{
+  "id": "IRPT_BCKEND-W97-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~97",
+  "surfaced_at": "2026-09-30T16:15:00Z",
+  "one_line": "safe-deploy.sh refused the worker serial with a HALT-GATE on unacked inbox messages; the order's aws s3 cp fallback was used",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`bash .tools/safe-deploy.sh --author 0.9.0_WK_IRPT_BCKEND~97 data/inf/scripts/silver/_orion_api_silver_lib.py` -> 'HALT-GATE: blocked. Review the message(s) above, then re-run with HALT_ACK=1.' rc=1; message text and the fallback recorded in RESOLUTION_READINGS.json key safe_deploy_refusal.",
+      "Fallback aws s3 cp to s3://opal-data-inf/code/silver/_orion_api_silver_lib.py, then sha256 of the S3 body ed85e079a550... equals the committed file (P26-1-AC1 verifies)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order expects safe-deploy to deploy under the worker's serial (with aws s3 cp as the stated fallback if it refuses).",
+  "world_is": "safe-deploy halts on the ROSTER-level unacked messages (RED deploy-ledger notices for several other slugs and a 1.0.0_SA_CTO RE 103053) that a worker has no way to act on; HALT_ACK=1 was not used because overriding a gate is outside the grant. No comp-pipescript MATCH line was produced for the lib.",
+  "notes": "A worker deploy through safe-deploy will hit this gate whenever the fabric has unacked RED notices. The ledger leg D1 carries the sha256 proof instead of a TOOL-03 line."
+}
+```
+
+
+## IRPT_BCKEND-W97-S3 -- With the ship, the INF gold chain now passes the raw writers and dies at step 33 INF_C_01 on the NNA partition coverage guard
+
+```json
+{
+  "id": "IRPT_BCKEND-W97-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~97",
+  "surfaced_at": "2026-09-30T16:15:00Z",
+  "one_line": "With the ship, the INF gold chain now passes the raw writers and dies at step 33 INF_C_01 on the NNA partition coverage guard",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (route the NNA coverage excusal decision for accounts 866/769/1096 to its owner; the guard says an account losing its history is a DECISION recorded in lib/nna_coverage_excusals.json)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/telemetry/inf-gold-layer-runner/status.json run chain_full_20260930_145412 status=failed, errors: 'INF_C_01 failed with exit=1', steps_done at fail: 32 of 65 (INF_API_SILVER_REPS ok, INF_API_PULL_POSITIONS_DAILY ok, INF_B_00..INF_C_00 ok, INF_C_01 fail).",
+      "diagnostic/chain_logs/chain_full_20260930_145328.log: 'NNA PARTITION COVERAGE REGRESSION -- 3 account(s), 3 (partition, account) row(s), carrying $40,000.00 GROSS (signed net $0.00) of SERVED NNA are about to be DROPPED ... account 866 -20,000; 769 10,000; 1096 10,000 dropped from partition 2026-09-24' (nna_coverage_guard.py:385 raised from INF_C_01.canonical_nna.py:918).",
+      "The guard names its own remedy: record the excusal in lib/nna_coverage_excusals.json with a reason and who decided; 'Do not disable this guard.' This worker did not touch it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's premise: once the silver_ids import resolves, the chain reaches the raw writers (true) and the drain ends the chain-broken state.",
+  "world_is": "The chain is no longer dead at step 3, but the FULL chain still ends failed at step 33, so INF_C_02..INF_D_11 (the rest of the served gold) did not run this run and will not on the next scheduled run while the guard holds. The guard is protecting served NNA and is correct to refuse until a decision is recorded; that decision is not this cell's.",
+  "notes": "Chain steps after INF_C_01 are unreached today. P26-1-AC2 does not require them and passes."
+}
+```
+
+
+## IRPT_BCKEND-W97-S4 -- The run's raw writers landed only today's transactions and positions: PULL_PERF timed out at 600s and 09-28/09-29 positions did not backfill
+
+```json
+{
+  "id": "IRPT_BCKEND-W97-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~97",
+  "surfaced_at": "2026-09-30T16:15:00Z",
+  "one_line": "The run's raw writers landed only today's transactions and positions: PULL_PERF timed out at 600s and 09-28/09-29 positions did not backfill",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Same run chain_full_20260930_145412: 'INF_API_PULL_PERF pull tolerated (exit=124)' after 600s (status.json errors, steps_done INF_API_PULL_PERF warn 600); bronze/performance/2026-09-30.jsonl.gz HeadObject 404.",
+      "HeadObject 2026-09-30T~16:08Z: bronze/positions/2026-09-28.jsonl.gz 404, bronze/positions/2026-09-29.jsonl.gz 404; bronze/positions/2026-09-30.jsonl.gz 200 (2,309,545 bytes, 2026-09-30T15:18:55Z); bronze/transactions/2026-09-30.jsonl.gz 200 (41,420,455 bytes, 15:03:57Z); bronze/transactions/2026-09-28.jsonl.gz 404."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order expects the raw writers to reach today's files and asks whether 09-28/09-29 positions landed.",
+  "world_is": "The daily pull is a snapshot of the run day: the two missed days did not backfill (the order's predicted finding). Separately the performance pull hit its 600s cap and is tolerated by design, so no performance raw file exists for 09-28..09-30 from this path.",
+  "notes": "Recorded as the after_run finding the order asked for; not a failure of this cell. The perf endpoint hang is the known 'Orion perf endpoint' behaviour cited in the dispatch's own comment (orion-gold-dispatch.sh ~700-706)."
+}
+```
