@@ -2310,3 +2310,35 @@ The WORLD acts run one at a time, `ab-2` then `ab-3`. N = 3 slots; cap 8.
 **NOT cells:**
 - the ft credential re-harvest (superseded: the credentials are in AWS Secrets);
 - the NEVER-2 edit (Andrew asked to see the text; the CTO's).
+
+## 43. ROUND 30 -- L5 DECOMPOSITION v3.10, over the round-29 analysis (`ledger/ROUND_ANALYSIS.round29.md` @d0bc0a79f0)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~17:3xZ.
+- Round 29 is CLOSED, 2 of 9 FWDs REALIZED. PRD v0.10 adds the `bot_check` class; `prd-signoff` reads ADMITTED (the
+  ENDPOINT hash is unchanged).
+- Series **`ac`**; slots **`~84`..`~86`**. The round-29 addendum's refused files never landed, so these slots are unused.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 the `bot_check` attempt class (v0.10); the repair-failed path keeps its body | `HVST-ac-1` | LOCAL | `~84` | now |
+| 2 the sa probe on RESOLVED securities, the account read first | `HVST-ac-2` | WORLD, pair + R-21 | `~85` | after its halves; does not overlap `ac-3` |
+| 3 the paired daily rebuild carrying `ab-2`'s pairs | `HVST-ac-3` | WORLD, pair | `~86` | after its halves; does not overlap `ac-2` |
+
+**Fan-out: 3 of 3 cut, in 3 independent chains.** The WORLD acts run one at a time: `ac-3` first (its inputs are fixed now),
+then `ac-2`. N = 3 slots; cap 8.
+
+**Write sets:**
+
+| order | owns |
+|---|---|
+| `ac-1` | `transport.py`, `worker.py`, `verification.py`, a new `bot_check.py`, and its test |
+| `ac-2`, `ac-3` | their deliverables and the served objects their halves name |
+
+**Premise corrected at the cut:** the analysis's "four batch-1 kept bodies" are TWO (wsj, ft). bbg's and barrons' refusals were
+raised by `verification.py` ~:21 without the response, so `ac-1` change 3 keeps that body from now on.
+
+**NOT cells:**
+- the batch-1 retry for wsj, ft, bbg and barrons (Andrew's headed session refresh; analysis section 5);
+- any challenge handler (his 09-15 sequencing);
+- batches 2+;
+- a licensed-route probe.
