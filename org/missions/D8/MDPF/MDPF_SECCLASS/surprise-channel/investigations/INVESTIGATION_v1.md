@@ -646,3 +646,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Same class as W6-S1 (E_18's hop), which was fixed for the repo tree only. Fix-forward is a code cell plus a new half (a new file on the runner is a deviation the signed half does not name). E18 IAM+deploy half's acceptance (first 04:00Z scheduled run of E_18) is unreachable as written: E_18 is not in the gold chain."
 }
 ```
+
+
+## MDPF_SECCLASS-W11-S1 -- SC-e-14's attribute_exists(ticker) breaks four older tests that pin the condition string
+
+```json
+{
+  "id": "MDPF_SECCLASS-W11-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~11",
+  "surfaced_at": "2026-09-30T20:10:00Z",
+  "one_line": "Adding attribute_exists(ticker) to the two S4 update conditions (as SC-e-14 orders) makes four existing tests in test_classified_by_v2.py and test_set_instrument_kind.py fail: they pin the exact string attribute_not_exists(<attr>) and their stubs key the refusal on it; both files are outside SC-e-14's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest infra/aws/lambda/v2_portal/_shared/tests infra/aws/lambda/v2_portal/yang_pipeline/tests -q -p no:cacheprovider on wk-MDPF_SECCLASS-11 -> 7 failed, 78 passed. Four are caused by this cell: test_classified_by_v2.py::test_label_update_writes_only_classified_by (asserts ConditionExpression == 'attribute_not_exists(classified_by)', lines 201/216), ::test_label_update_refuses_an_already_labelled_row, test_set_instrument_kind.py::test_only_instrument_kind_changes (lines 54/73/94) and ::test_row_with_existing_kind_is_refused.",
+      "Three are NOT caused by this cell: test_classified_by_v2.py::test_contract_version_is_0_2_0 and ::test_contract_classified_by_has_four_values (contract is 0.3.0), and test_seed_etf_constituents.py::test_positioning_universe_plan_unchanged (expects table.batched but the script writes conditional puts) -- the last reproduced by running HEAD's unmodified seed-etf-constituents.py and test in a scratch copy: 1 failed, 7 passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-14 (c): add attribute_exists(ticker) to each S4 update condition, one clause each; the order's AC1 names only the two new test files, and its paths grant does not include the older tests that pin the condition string.",
+  "world_is": "The new condition reads 'attribute_exists(ticker) AND attribute_not_exists(<attr>)'. The two older test files compare the condition string for equality, so they fail until updated (their stub refusal keys on the old string); the new test_update_requires_existing_row.py covers the new behaviour with a clause-evaluating stub. Also: an update on an absent key now raises RowAlreadyLabelled / KindAlreadySet (the same ConditionalCheckFailedException), whose names say 'already' -- no skeleton row is created, but the message is imprecise. No test was weakened; no out-of-grant file was edited.",
+  "notes": "Owner of the fix: the issuer (extend <paths> with the two older test files, or an L10 cell); the required edit is to their expected string and their stub's condition match."
+}
+```
