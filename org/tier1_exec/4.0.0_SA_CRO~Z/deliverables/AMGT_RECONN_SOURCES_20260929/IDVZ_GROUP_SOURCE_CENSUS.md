@@ -93,3 +93,27 @@ Required in the trade schedule: cash and currency lines leave trade identificati
 (common among European dividend payers these funds hold); they need Bloomberg's per-holding dividend history
 (`DVD_HIST_ALL`) matched on ex-date. Income-funded buying stays a real trade, labelled as such when the cash line falls in
 the same window.
+
+## 5. Stock and scrip dividends, measured (Andrew: "run it, proceed")
+
+Scripted Bloomberg pull (R-21; `scripts/dividend_history_pull.py`, shared client `integrations/bloomberg/mcp/blp_client.py`):
+`DVD_HIST_ALL`, 2024-09-01 to 2026-09-30, for all 738 non-cash securities the group held in the census; 695 returned
+dividend rows, 43 answered `NOT_APPLICABLE_TO_REF_DATA`, 0 security errors. Share-changing types present: Stock Split 60,
+Stock Dividend 18, Spinoff 12, Bonus 6, Rights Issue 3. Bloomberg does not type scrip separately (it sits inside
+Final/Interim), so scrip was tested by clustering.
+
+Matcher (`scripts/dividend_trade_match.py`, local files only), security-only events at 0.2%:
+
+| Fund | Security events | Reclassified as corporate action | Small adds (<5%) | ...in a cash-dividend ex-date window | Lift vs base rate |
+|---|---:|---:|---:|---:|---:|
+| SCHY | 3,588 | 0 | 1,502 | 14 | 0.96 |
+| CGIC | 8,870 | 0 | 3,341 | 26 | 0.95 |
+| INEQ | 1,364 | 7 (splits) | 441 | 5 | 1.41 |
+| BIDD | 1,185 | 3 (2 splits, 1 bonus) | 599 | 3 | 0.58 |
+| TXUE | 640 | 3 (spinoff, split, bonus) | 57 | 1 | 2.08 |
+| IDVZ | 651 | 0 | 179 | 1 | 0.52 |
+
+Finding: share-changing corporate actions account for 13 events and must be applied; small adds do not cluster on
+dividend dates (lift near or below 1 for the four large sets; INEQ and TXUE rest on 5 and 1 events), so scrip take-up is
+not a material source of false trades in this group. The material contaminant was the cash and currency lines (section 4).
+The PFOE-group feasibility figures (`TRADE_INFERENCE_FEASIBILITY.md`) already excluded cash and currency rows.
