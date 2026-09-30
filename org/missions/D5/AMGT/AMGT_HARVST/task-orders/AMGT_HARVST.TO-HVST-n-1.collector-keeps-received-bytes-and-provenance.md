@@ -87,7 +87,7 @@ No live collection, no re-fetch of the 104 originals, no vendor call, no S3 writ
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>24</round>
 <slot>~56</slot>
 <fabric>site-z</fabric>
