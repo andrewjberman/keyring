@@ -13237,3 +13237,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No cell is cut. If a future contract version routes either operation, the pin CONSUMER_SMOKE_ENTRIES and the operation-map coverage test fail loudly and the pair is added then."
 }
 ```
+
+
+## IRPT_BCKEND-W93-S1 -- the build's literal "asset_class_basis CANONICAL" / "class source" node fields cannot be served: the published contract is additionalProperties:false with a fixed enum, and it sits outside this cell's write grant
+
+```json
+{
+  "id": "IRPT_BCKEND-W93-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~93",
+  "surfaced_at": "2026-09-30T06:10:00Z",
+  "one_line": "IB-mr-291's Build step 2 says a canonical-table hit is served with asset_class_basis CANONICAL and a class source of etf-classifications, but docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json is additionalProperties:false on every node and asset_class_basis's enum has no CANONICAL member -- serving either would make validate_snapshot refuse every canonically-classified node, and that contract file is outside this cell's <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json @571d032b98 -- properties.nodes.items.additionalProperties == False; properties.nodes.items.properties.asset_class_basis.enum == ['TABLE','NAME_ALIAS','NAME_PATTERN','TICKER_SHAPE','NONE'] (read via python json.load, no 'class_source' key present anywhere in the schema).",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:2698-2701 @571d032b98 -- validate_snapshot() loads this exact contract and runs jsonschema's validator over every node with no key filter beyond stripping '_'-prefixed keys, so an extra or out-of-enum node field fails a real build's own validation, not just a future one.",
+      "IRPT_BCKEND.TO-IB-m29-291.holdings-narrowed-canonical-release.md <paths> block lists data/assets/scripts/gold/investor_reporting/, .tools/safe_deploy_core.py, infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf, the two org/tier1_exec deliverable paths and this investigation file -- docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json is not named, and CLAUDE.md s.1 forbids widening a task order's write grant."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build step 2: 'A ticker the table holds: its asset_class and sub_asset_class are served exactly as the row holds them, with no fold, asset_class_basis CANONICAL and a class source of etf-classifications.'",
+  "world_is": "The published node schema this runner validates against forbids both: additionalProperties:false rejects a new 'class_source' key on any node, and asset_class_basis's enum has no 'CANONICAL' member to serve. Editing that schema is a real fix but is outside this cell's <paths> and would widen the order.",
+  "notes": "RESOLUTION TAKEN, not blocking: a canonical-table hit is served with the EXISTING contract-legal basis value TABLE (already the value a fallback ticker-table hit uses -- both are, definitionally, a direct ticker-table lookup), no fold, exactly as instructed otherwise. class_source (etf-classifications / bd-securities-fallback) is tracked ONLY in this runner's own census (annotate_classification's new by_class_source key and the R29_NARROWED_CENSUS_20260930.json deliverable's per-ticker 'placed' entries) -- never merged onto a served node. AC1 (whole suite green, including validate_snapshot calls) and AC2 (PHYS/GLD/VXX read from the table, class_source recorded) are both met under this resolution; AC3's half names this row so the issuer can choose to open a contract-widening PRD addendum for the literal CANONICAL enum member and node field if it wants one on the wire. Disarmed same-turn: hazard_standing INERT because the resolution is already built and the whole suite passes under it -- nothing is left broken for a later turn to trip on."
+}
+```
+
+
+## IRPT_BCKEND-W93-S2 -- the LGIC naming limb refuses the order's own 'bd' spellings in a NEW module
+
+```json
+{
+  "id": "IRPT_BCKEND-W93-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~93",
+  "surfaced_at": "2026-09-30T08:40:00Z",
+  "one_line": "The LGIC naming limb (ENFORCE) refused the first commit of IB-mr-291: the order's own names (the module file bd_securities_fallback.py, its 'bd-securities' table default, and the served label 'bd-securities-fallback') are NEW hand-kept carriers of the refused firm alias 'bd'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh at 571d032b98 + the staged set printed: NAMING REFUSE 4 graded -- .tools/safe_deploy_core.py:463 (the new closure path), bd_securities_fallback.py:72 and :77 (the two 'bd-securities' defaults), holdings_snapshot.py:834 ('bd-securities-fallback'); each 'hand-kept carrier of bd outside every permitted context: read it through lookup(49financial)'.",
+      "lib/opal_naming.py lookup('49financial') @571d032b98 -- aliases carries spelling 'bd' on planes serving-route and tree-token, so the alias is readable from the registry; .tools/naming-gate.py judge() @1312 refuses a NEW literal carrier and skips a literal that resolves to a tracked path at HEAD (a citation)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build step 1 and 2: a file named bd_securities_fallback.py that reads the table bd-securities, and a served class source bd-securities-fallback, all as literals.",
+  "world_is": "Every literal spelling of the alias 'bd' in a NEW file is refused at commit under LGIC_ENFORCE. The values are unchanged; only how they are spelled changed: LEGACY_TABLE in the module and FALLBACK_CLASS_SOURCE in holdings_snapshot.py are read from the naming registry (the 49financial scope's serving-route alias), which yields the byte-identical strings 'bd-securities' and 'bd-securities-fallback'. The module keeps the order's file name; it lands in its own first commit so the closure entry in .tools/safe_deploy_core.py (a path literal) resolves to a tracked path at HEAD and is graded as a citation in the second commit.",
+  "notes": "RESOLUTION TAKEN, not blocking: no test weakened; suite 319 passed and the census unchanged after the change. Cost: the fallback module now imports lib/opal_naming at load, which the Holdings closure already carries (holdings_snapshot imports it at module level)."
+}
+```
