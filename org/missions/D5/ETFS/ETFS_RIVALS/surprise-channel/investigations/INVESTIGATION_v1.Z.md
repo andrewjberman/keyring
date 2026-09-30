@@ -430,6 +430,31 @@
   "spec_asserts": "Amendment 3 W5-S4 act 1: add exactly the line (\"data/etfs/scripts/gold/etf_positioning_gold.py\", \"gold/etf_positioning_gold.py\") to STAGED.",
   "world_is": "The gate refuses that literal form on this tree; no waiver mechanism applies to a non-S3 path. The equivalent two-part literal passed the gate and produces the identical staged file. No gate was bypassed or overridden.",
   "notes": "A false positive of the gate on a Lambda-tree-relative destination; the gate's owner may want a non-S3 carve-out. Not acted on."
+},
+{
+  "id": "ETFS_RIVALS-Z-W5-S8",
+  "project": "ETFS_RIVALS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+  "surfaced_at": "2026-09-30T12:42Z",
+  "one_line": "LEG B STOP: the EC2_MANIFEST deployed_commit MOVED from 093fc247c6 to 288fa78c93 (NFRA_MCPMSP MS-d-1, deployed 2026-09-30T11:37:34Z) and the live host equals 288fa78c93 file for file (79 of 79), so a deploy ref on 093fc247c6 would REVERT 12 gateway files of another project's release; the gateway was NOT deployed and ledger legs L3, L4 and L6 stay OPEN.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~RV",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Amendment 2 LEG B step 1: 're-read the manifest and STOP if it moved'. infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway at this branch HEAD 89810aeef5 and at CLOUD reads deployed_commit 288fa78c93e1c57be0ad7b8d6371c69145a69856, deployed_at 2026-09-30T11:37:34Z, deployed_by 0.9.0_WK_NFRA_MCPMSP~1 (recorded by beba8eab85); previous_deployed_commit was 093fc247c6. The amendment names 093fc247c6 as the EC2_MANIFEST's deployed commit; it no longer is.",
+      "Host read, read-only SSM command 51d1ffd8-d4f5-444f-b4a1-c71190e0be2f on i-07dccb1615503ac99 (sha256 of /opt/opal-gateway app, deploy, requirements.txt, identity_tool_allowlist.txt) against git show 288fa78c93 of the same 79 files: only_commit [], only_host [], differ [] (79 of 79 equal). So the running gateway IS 288fa78c93.",
+      "git diff --stat 288fa78c93 093fc247c6 -- infra/aws/ec2/opal-gateway: 12 files, 20 insertions, 787 deletions (app/admin_tenants.py, firm_role.py, tenant_registry.py, tests/test_admin_tenants.py, tests/test_mcpmsp_asker_firm.py deleted; asker_scope.py, access_state.py, audit.py, config.py, admin_api.py, deploy-to-ec2.sh reverted). A deploy-only commit on 093fc247c6 plus the key-16 files would deploy those reverts to the live gateway; gate 1 (the deployed-vs-deploy-commit diff is exactly key-16) would fail against the live bytes.",
+      "Read-only, nothing deployed or built: git apply --cached --check --include=infra/aws/ec2/opal-gateway/app/server.py hookup_d2.patch against a temporary index of 288fa78c93 -> rc 0 (the server.py hunks apply cleanly to the new deployed commit). git diff --stat 288fa78c93 HEAD -- infra/aws/ec2/opal-gateway lists 44 files (other projects' undeployed changes, and a second release, rel-nfra-mcpindex-r5-schwab-enable-b, is in flight on CLOUD @37b1a21c71), so the deployed commit may move again before the issuer decides.",
+      "Worktree C:\tmp\\wk-rivals-5gw and branch deploy-rivalfunds-gw-r1 still sit at 093fc247c6 with no change; nothing copied, applied or committed there."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 2 LEG B step 1 and amendment 3: the deploy ref is cut at 093fc247c6, the EC2_MANIFEST's deployed commit; STOP if the manifest moved.",
+  "world_is": "The manifest moved to 288fa78c93 and the host matches it. The issuer's remedy is a decision, not this worker's: re-base the deploy ref on the CURRENT deployed commit (288fa78c93, which is itself an unmerged deploy-only branch rel-nfra-mcpmsp-r1-gateway) with the same key-16 files, or wait for the second in-flight release to land and re-read again.",
+  "notes": "LEG A is complete and closed (AC1 and AC3 PASS). Ledger legs L3, L4, L6 are OPEN pending this row. The gateway read policy is applied and inert until the routes deploy."
 }
 ]
 ```
