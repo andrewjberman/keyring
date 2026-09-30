@@ -151,3 +151,39 @@ and S151.
 named exclusions -- and it adds no arm, no login, no retry and no new reach. Both halves are asked to re-affirm on the
 new blob; the CTO's eight conditions and the CRO's six are untouched in substance, and the CRO's condition 1 is what
 this amendment answers.
+
+## W26-6 (amendment 2) -- CTO condition 9: the non-terminal enumeration, DERIVED and printed
+
+`1.0.0_SA_CTO` 103186 re-affirmed on blob `1c88bb49` and added condition 9: derive the non-terminal job states from
+the state machine's source and print the enumeration beside the gate. **Doing so found my own filter wrong twice.**
+
+**THE AUTHORITY is `ycharts/generate/durable_job.py:16`**, an 11-member frozenset:
+
+`RECEIVED, CLAIMED, SUBMITTING, SUBMITTED, UNCERTAIN, DOWNLOADING, EXTRACTING, CERTIFYING, READY, FAILED, ATTENTION`
+
+`job.py:64` carries a narrower 8-member tuple (no `RECEIVED`, `EXTRACTING`, `CERTIFYING`) and calls itself *"A CLOSED
+set: a state a reader has never seen is a state nobody wrote a recovery for."* **The gate uses the durable 11**, since
+a job row is what the scan reads.
+
+**BY SUBTRACTION from those 11, terminal first:** `READY`, `FAILED`, `ATTENTION` are terminal -> **the other 8 BLOCK**:
+
+`RECEIVED, CLAIMED, SUBMITTING, SUBMITTED, DOWNLOADING, EXTRACTING, CERTIFYING, UNCERTAIN`
+
+`UNCERTAIN` blocks deliberately, fail-closed: `owned_status.PHASES` maps it to
+`ANALYSIS_UNCERTAIN_REQUIRES_RECONCILIATION`, so whether that job could still touch the vendor is unknown, and unknown
+is not permission.
+
+**MY FILTER WAS WRONG TWICE, and this is why the condition exists.** W26-5's own text listed four states, and the scan
+I ran at 05:5xZ used `QUEUED, CLAIMED, SUBMITTING, SUBMITTED`. **`QUEUED` is not a durable state at all** -- it is a
+PUBLIC label from `owned_status.PHASES` (`RECEIVED` -> `QUEUED`) -- and the filter missed four real non-terminal states
+plus `UNCERTAIN`. The earlier count happened to be right; it was not right *by measurement*.
+
+**RE-MEASURED with the derived 8, denominator printed: 17 of 17 rows scanned, 2 matched** -- exactly
+`REQ-3a1b73a8dead02a17a09043b` and `REQ-86f1ce7062356bc5c109ce12`, both `SUBMITTING`, both excluded by exact id.
+**SOLO GATE: PASSES.**
+
+`RESOLVING`, which 103186 asked about, is **not** a job state: it is an UPLOAD state on the `irpt-requests`
+`NORMALIZATION#` row. It has no place in this scan, and saying so is part of answering the condition.
+
+**Standing to re-read:** this enumeration is derived, not remembered, and the scan is re-run immediately before each
+K5 -- a job entering any of the 8 between arms blocks the next arm.
