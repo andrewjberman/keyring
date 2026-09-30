@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-29T08:22:00.992739+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / bd-49f REST producer inputs: forwardfill_v2 realized+transactions land ~00:07Z daily (next 2026-09-30), unrealized+allocations weekly Sat ~00:1xZ (next 2026-10-03); the write arm of L5/L9 is proven only by a SCHEDULED fire that finds a new input (2026-09-30 21:46/21:53Z; 2026-10-05 21:38/22:00Z). Tonight's 4 fires: SSM Success on v3/v3/v3/v5, merge exit 0, 0 new files (inputs already merged by pre-publish runs 06:37Z/07:02Z or weekly). (held since 2026-09-29T22:24:52.714003+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / bd-49f REST producer inputs landed for 2026-09-30 (forwardfill_v2/realized/_complete/2026-09-30.json 00:08:33Z, transactions/_complete/2026-09-30.json 00:02:14Z); L5 write arm proven by the SCHEDULED 2026-09-30 21:46Z (realized) and 21:53Z (transaction) fires; unrealized L5 and allocation L9 by the 2026-10-05 21:38/22:00Z fires after the weekly Sat landing. No ad-hoc run (row Z-S61). (held since 2026-09-29T22:24:52.714003+00:00)
 **Deploy:** MX-s-14 PHASE B (amendment A3): publish the stripped opal-bd-unrealized/realized/transaction-download documents as the next version and DEFAULT (allocation carved out); acceptance = tonight's 21:38, 21:45, 21:53Z scheduled fires. Halves: CTO NEVER_WIDEN_CTO_HALF_MX-s-14_20260929.md, CVO cvoO_NEVER_WIDEN_MX-s-14_SECOND_HALF_20260929.md
 **Authored by:** 0.9.0_WK_NFRA_MCPINDEX~17
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -34,3 +34,4 @@
 - 20260929T091614Z LEG L8 closed: 2026-09-29T09:15Z opal-bd-allocation-download: repo file (CLOUD ec43dd0e33) sha256 first-16 66431932a7ad0f55 (== the ask
 - 20260929T181213Z LEG L6 closed: Worker branch wk-nfra_mcpindex-4-17 commits 4110fd3b0c (L1-L4), 138ed30f0a (L7), 3bc2dc3a78 (L8) are each an ancestor of
 - 20260929T222452Z HELD-SOVEREIGN-GATED gate=external/bd-49f REST producer inputs: forwardfill_v2 realized+transactions land ~00:07Z d
+- 20260930T002024Z HELD-SOVEREIGN-GATED gate=external/bd-49f REST producer inputs landed for 2026-09-30 (forwardfill_v2/realized/_comp
