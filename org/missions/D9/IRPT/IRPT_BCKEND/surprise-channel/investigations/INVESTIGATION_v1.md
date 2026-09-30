@@ -13144,3 +13144,35 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disarm = read GET .../analysis/RPT-2e21b52e.../sections after deploy and expect NOT_READY."
 }
 ```
+
+
+## IRPT_BCKEND-S232 -- Opal already has a first-class service-principal pattern (userType service, allowedFirmIds) and a live svc- account since July -- IRPT Analysis diverged to per-window day passes, which is S231's cause
+
+```json
+{
+  "id": "IRPT_BCKEND-S232",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T06:35:00Z",
+  "one_line": "Opal already has a first-class SERVICE-PRINCIPAL pattern -- a `service` userType with firmId null and an allowedFirmIds scope -- used by at least three services, plus a live svc- account since July. IRPT Analysis diverged to minting and deleting a principal PER WINDOW, which is the direct cause of S231's permanently unrunnable jobs.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (the identity model for job submission is an architecture call above this lane)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ANDREW-DIRECT 2026-09-30 ~06:3xZ, verbatim, BEFORE this measurement: 'in my opinion the whole failure here is trying to get clever with a day pass. We have a long-lived token, just use it. I don't understand why there are four resources and only 1 at best is doing their job correctly. The pattern we use is always the same. Its an EC2 crawler crawls for long lived trust token, and Lambda hits REST API using that trust token to do whatever the job is.' And: 'Was there an architectural choice backing the day pass idea? i dont understand why we'd diverge to that'.",
+      "THE PATTERN EXISTS AND IS FIRST-CLASS: infra/aws/lambda/ticket_center/tests/test_authz_matrix.py:74-77 carries a `userType: \"service\"` class with `firmId: \"null\"` and an `allowedFirmIds` scope that is either \"ALL\" or a single firm, for svc-ticket-form and svc-analyst-intake; :77 is a negative control proving the marker is what grants it. So service identity is a MODELLED class, not an improvisation.",
+      "AND A LIVE LONG-LIVED ACCOUNT ALREADY EXISTS: opal-users-v2 holds USER#svc-bbgtml@opalinvest.com, 'BBGTML Data Refresh Service' (ticket_center/tests/test_directory_resolution.py:39-40), firm opal-capital, status active, created 2026-07-15 by 0.7.0_AE_CloudOps. It has persisted 2.5 months.",
+      "A LONG-LIVED WALKER ALSO EXISTED AND WAS TURNED OFF: USER#usr_opal_ui_walker (opal-ui-walker@opal.test), opal-capital, admin, userType Dev, created 2026-09-26 by '4.0.0_SA_CRO ui-walker (Andrew-direct 20260926)' -- status DISABLED. So the estate had a durable walker and the per-window day pass grew up beside it.",
+      "USERS CENSUS, denominator printed and single-page (LastEvaluatedKey ABSENT): 80 rows scanned, 51 PROFILE rows; opal-capital holds 13 active user-role and 5 active admin/Dev accounts.",
+      "THE DECISION RECORD FOR THE DAY PASS covers a DIFFERENT job: IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_WALK_PRINCIPAL_20260926.md is authorised by Andrew's 'have an agent do those walks and record HAR' -- a BROWSER WALK, where a bounded throwaway login is a reasonable posture. I found NO record deciding that backend JOB SUBMISSION should use the same mechanism."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The W22-W26 window packets, which each mint and delete a ui-walk principal as the identity a submitted Analysis job is accepted under.",
+  "world_is": "A UI-walk credential's lifetime is a browser session; a queued job's lifetime is until it is terminal. Binding the second to the first is what strands jobs (S231: two of them, three days apart). MEASURED: the service-principal class, the live svc- account, the disabled durable walker, and the absence of any record deciding the reuse. NOT MEASURED, and not claimed: whether the `service` userType as ticket_center models it is accepted by the IRPT authorizer and by current_authority.decide() unchanged. That is the first thing the remedy must establish, and it is a code read plus one test, not a guess.",
+  "notes": "REMEDY, and it is Andrew's own pattern rather than an invention: ONE long-lived service principal for IRPT Analysis job submission -- created once, never deleted, scoped by allowedFirmIds -- following svc-bbgtml's precedent and ticket_center's `service` userType. Jobs then resolve their owner forever and S231's whole failure class disappears rather than being patched per window. THE DAY PASS KEEPS ITS REAL JOB: a bounded throwaway login is right for a UI walk, which is what it was signed for. This row does not retire it there. WHY THE CTO AND NOT THIS LANE: the identity a served job is accepted under is an architecture decision that reaches the authorizer, the edge and every window packet, so it is above a workstream issuer even though the symptom is mine. W26 IS HELD, NOT CANCELLED: both halves are signed and the solo gate passes, but opening it would mint exactly the day pass Andrew questioned, minutes after he questioned it. The three-variant proof he asked for is unchanged in value and should run under whichever identity the CTO rules for."
+}
+```
