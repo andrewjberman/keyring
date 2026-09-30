@@ -2662,6 +2662,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "TSM is an ADR: market cap is in USD, the fundamentals (enterprise value) are in TWD. Deciding it needs an FX rate or a TWD-denominated anchor the raw does not carry; the worker added a currency guard (CRNCY must equal EQY_FUND_CRNCY) and did not invent a rate. Also: REVENUE_PER_SH is unmeasured by classify_unit on 6501 and 8316 (2332, 2687 exceed its 2000 per-share band), so the per-share x shares read is skipped for those names and their SALES_REV_TURN resolves on the market-cap read alone.",
     "notes": "Filed, not fixed. An ADR name stays UNRESOLVED for the four large-number fields until the issuer supplies a same-currency anchor.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S68",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-30T08:48:00Z",
+    "one_line": "model_block_pull._resolved_sign returns a field's per-security SAMPLED sign (one label from one value) for EVERY figure of that field on that security, so a loss-year figure reads POSITIVE: over the 97 blocks re-derived by round-23 y-4 leg c, figures whose plain sign label contradicts their own value went 886 served-before -> 1568 served-now on 49 blocks (the rebuild created per-security sign entries for more fields; with no entry the reader fell back to the figure's own sign, which was correct).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "evidence/r23_y4_leg_c_verify.txt: 'SIGN-VS-VALUE over the 97 blocks: plain-sign-labelled figures 34447; label disagrees with own value: served-before 886, served-now 1568 on 49 blocks'; top PROF_MARGIN 96, RETURN_ON_ASSET 95, IS_OPER_INC 93, OPER_MARGIN 93, IS_EPS 93, NET_INCOME 85; worst SPOT 121, UBER 116, WDAY 113, BA 112, SHOP 102.",
+        "28 PROF_MARGIN figures on 992 HK/BA/CAT/CSL/HAL/NU flipped NEGATIVE -> POSITIVE with unit and value unchanged; the old label matched the value 28 of 28, the new 0 of 28; field_map PROF_MARGIN sign for 992 HK Equity: pre None (no entry), post 'POSITIVE' (value_sampled 2.3015)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A figure's sign label states that figure's own sign (or a stated real-world convention such as CAPITAL_EXPEND's cash-outflow reading); the round-23 y-4 pair expected 0 changes other than units.",
+    "world_is": "The reader resolves the sign per (field, security), not per figure; a sampled POSITIVE is served on every period of that field, including loss years. The round-23 map rebuild widened the reach by 682 figures.",
+    "notes": "Stop limb 2 of the y-4 pair fired; leg d held; escalated to 1.0.0_SA_CTO~Z @c68c2a6dfd (A revert per the limb, or B keep + reader fix + re-derive; issuer recommends B). Also unmodelled but value-free: cases.base.formula text changed on 67 blocks (case_rule code input).",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
