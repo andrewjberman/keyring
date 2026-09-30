@@ -12460,3 +12460,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT: nothing breaks, the degrade is the ruled behaviour. The wiring and the grant belong to the rebuild (2.0.0_SA_COO~P); this worker made no AWS call."
 }
 ```
+
+## IRPT_BCKEND-S219 -- re-minted by the issuer from worker row IRPT_BCKEND-W61-S2 (unmerged branch wk-IRPT_BCKEND-61 @b1cbe6a302); survives the supersession of IB-pr-192
+
+
+```json
+{
+  "id": "IRPT_BCKEND-S219",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~61",
+  "surfaced_at": "2026-09-28T21:10:00Z",
+  "one_line": "IB-pr-192 AC2 (live seam): a Since-inception read spans every twr_daily partition from the account's first day, and two of the live table's 559 partitions -- date=2024-07-08 (the engine's very first day) and date=2025-01-09 -- carry schema_version 1.2 like every neighbour but are entirely missing the bmv/emv/cf_net/cf_gross columns, so EngineSource._read's existing 'engine table schema changed' guard (f49_engine.py:134, unchanged by this order) fires on any full-history read that touches either date, including the control account's SI range (first OK 2024-11-07 through today, which spans 2025-01-09). AC2 FAILs as EnginePerformanceRefused against the live table for this reason; AC1's synthetic fixture (uniform columns) passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.4.0_DS_ClientPlatform",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/f49_engine.py:134 @c4599c3b8b -- `if not needed <= set(frame.columns): raise EnginePerformanceRefused(\"engine table schema changed\")`, needed = {account_id, business_date, r_net, status, bmv, emv, cf_net}, unmodified by this order",
+      "live read this session (boto3, read-only) of gold/advi/canonical/twr_daily/date=2024-07-08/data.parquet and date=2025-01-09/data.parquet via the registry address (opal_naming.lookup('49financial')): both frames carry schema_version=='1.2' and columns {_ingested_at, account_id, business_date, flow_boundary, flow_convention, gross_leg_vintage, r_gross, r_net, schema_version, source_pipeline, status} -- bmv/emv/cf_net/cf_gross entirely absent; the immediate neighbours date=2024-07-09, date=2025-01-08, date=2025-01-10 read in the same session carry the full column set at the same schema_version",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r19/p19_2_ac2_live_seam.py run this session against the control account (first OK 2024-11-07, independently read): 'FAIL: Since-inception refused as EnginePerformanceRefused (first OK 2024-11-07)'",
+      "the account's own SI range (2024-11-07..today) does not reach date=2024-07-08, but does reach date=2025-01-09 -- narrowing the read to the account's first-observed day instead of the engine's earliest partition would not avoid this failure"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-192 AC2: a Since-inception request for the control account answers period SI with a finite value above -1, read against the real engine table.",
+  "world_is": "Two specific partitions in the live twr_daily table are missing four columns the producer's own schema declares (schema_version 1.2, same as fully-populated neighbours) -- a producer-side data-quality gap outside this order's <paths> (data/assets/scripts/gold/runners_49f is the writer lane, owned per CLAUDE.md rule 13 by DS). Loosening f49_engine.py's schema guard to tolerate it would weaken a check built to catch exactly this shape of drift, which the refusal clause forbids; the guard is left as-is and AC2 is recorded FAIL against the live table.",
+  "notes": "Re-minted as IRPT_BCKEND-S219 by 2.0.0_SA_COO~P (a seat row on the main index carries no W); worker id was IRPT_BCKEND-W61-S2, the id the IB-pr-192 supersession cites. Un-parks when a 0.4.0_DS_ClientPlatform lane backfills or re-writes the two partitions with the full column set (or the producer confirms bmv/emv/cf_net were never populated by design for those two runs, in which case the remedy is a schema_version bump the guard can key on). Not fixed by this order: no path here reaches the writer lane. AC1 (fixture) is unaffected and PASSes."
+}
+```
