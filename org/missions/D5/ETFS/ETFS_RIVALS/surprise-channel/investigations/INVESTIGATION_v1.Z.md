@@ -523,6 +523,51 @@
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "Amendment 4 step 2-3: 'Initialise mcportal as deploy-to-ec2.sh needs' and (amendment 1) 'test_rivalfunds_view.py stays green'.",
   "world_is": "Initialising the gitlink yields a README-only mcportal; the working checkout must be the manifest's mcportal_commit a3bff71ffa. The gateway test is green only where the registry row exists (HEAD); at BASE it errors on the naming registry, not on the view."
-}
+},
+  {
+    "id": "ETFS_RIVALS-Z-W5-S12",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-09-30T14:05Z",
+    "one_line": "LEG B STOP 4 under amendment 4: step 4 PASSED (manifest 288fa78c93, host equals BASE 76 of 76 by SSM, three reads), but step 5's safe-ec2-deploy.sh from the deploy-only tree (ref 4ce794642699e78a718b8154664e1428737f996a) was refused by the HALTGT identity gate, rc=3, before any build or upload: a 0.9.0_WK worker is admitted only while a non-terminal order issued_to it is at HEAD of the tree the script runs in, and the ref carries no ETFS_RIVALS order; the gate names no override for this refusal. The gateway was NOT deployed and is unchanged.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Step 4, three reads: EC2_MANIFEST services.opal-gateway.deployed_commit on CLOUD HEAD (git show HEAD:) = 288fa78c93e1c57be0ad7b8d6371c69145a69856, deployed_at 2026-09-30T11:37:34Z, last manifest commit beba8eab85, unmoved across the three reads (~13:55Z, ~13:58Z, ~14:00Z). Read-only SSM commands on i-07dccb1615503ac99 (find app -type f, no __pycache__/.pyc, sha256sum) against git show 288fa78c93 of every file under app/ (76): c342d0ce-45be-410c-9421-c6013ddad1d2, 95d1accc-0a01-419e-abf8-cc00c91e47c9, bcd99cc2-7230-48d5-8c40-560c6c71b43c each read base-files 76, host-files 76, match 76, mismatch [], missing_on_host [], extra_on_host []. The deploy tree HEAD reads 4ce794642699e78a718b8154664e1428737f996a, `git diff --name-only 288fa78c93 HEAD` = exactly the five key-16 files, mcportal working checkout a3bff71ffa3f5c73aa0fb7ea1e7386434e233054.",
+        "Step 5 act (two runs, from C:/tmp/wk-rivals-5gw, logs in the worker's .scratch): run 1 rc=3 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)' (no org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial in the deploy tree). The worker provisioned the gitignored serial file there with its own serial (row W5-S2's remedy), and run 2 rc=3 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', resolved serial 0.9.0_WK_ETFS_RIVALS~5. Cause: .tools/halt-gate-check.sh halt_gate_validate_serial (:191-196) admits a 0.9.0_WK_*~N serial only if halt_gate_worker_issuer (:165-188) finds, by `git ls-files` + `git show HEAD:` in HALT_GATE_REPO_ROOT, a non-terminal order under org/missions/D*/*/<CODE>/task-orders/ issued_to it; safe-ec2-deploy.sh sets HALT_GATE_REPO_ROOT to the calling worktree's toplevel unconditionally, and the ref (BASE + key-16 files) carries no ETFS_RIVALS order. Same root as W5-S10 at the lane gate.",
+        "The gate's own text for this refusal is 'Do NOT override this'; HALT_OVERRIDE is read only at the STOP-class verdict (:430-450) and HALT_ACK only at the routine-message verdict, so neither applies. Both refusals came before Step 2 of safe-ec2-deploy.sh: the log holds no 'INFO: building mcportal' and no 'uploaded' line (0 matches), the deploy tree's git status reads only ' M mcportal', and the manifest in the deploy tree is unchanged (a temporary `git update-index --assume-unchanged` on it, set to keep the wrapper's manifest bookkeeping commit off the ref, was undone: `git status` clean of it).",
+        "Post-refusal: gateway host unchanged at BASE 288fa78c93 (last SSM read bcd99cc2, 76 of 76); no half-landed state, no rollback needed. AC1 PASS and AC3 PASS re-run ~14:04Z; AC2 FAIL because d2_live.json gateway_deploy_commit is null (no deploy happened)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 4 step 5: 'safe-ec2-deploy.sh from the deploy-only worktree. Then /healthz 200 and AC2' (worker face; the order says the worker may need the serial file and HALT_ACK=1, row W5-S2).",
+    "world_is": "The HALTGT identity gate reads the worker's grant from the HEAD of the tree the deploy script runs in. A deploy-only ref at BASE carries no order, so the worker is not a known principal there, the refusal is not overridable, and a worker may not impersonate another serial. The deploy tree is READY and unchanged: the ref, the mcportal checkout a3bff71ffa, and a provisioned (gitignored) serial file.",
+    "notes": "Any of these unblocks it; the choice is the issuer's: (a) the issuer runs `bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` itself from C:/tmp/wk-rivals-5gw at its own seat (BASE is verified 76 of 76 at ~14:00Z; re-verify before); (b) an amendment gives the ref a parent or a fifth-plus commit carrying the non-terminal ETFS_RIVALS.TO-RIV-d-2 file, which changes the deployed-vs-BASE diff from exactly key-16 and so needs the never-widen pair's word; (c) a ruling to change the gate so a worker resolves against the order-carrying tree (not the worker's lane). After the deploy the remaining acts are /healthz 200, AC2 with gateway_deploy_commit=4ce794642699e78a718b8154664e1428737f996a in d2_live.json, the manifest and ledger records, and the ledger close. ARMED only because the ledger blares RED at ~16:13Z with L3, L4, L6 open."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-09-30T14:10Z",
+    "one_line": "What a worker COULD read for CTO condition 5 while the gateway is undeployed: the newest platinum/page object is date=2026-09-30/index.html, 35812 B, sha256 87fb276390e589c5fc6a3eb5b17dae475ba187b24a0ce5f1343eaefcad762e6c; the ALB /healthz answers 302 (Entra); the gateway's own health route is /health, not /healthz (SSM localhost: /health 200, /healthz 404, /rivalfunds 404 before the deploy). The authenticated /rivalfunds read stays a human's and is OPEN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S3 list_objects_v2 opal-data-etfs/rivalfunds/etfs/platinum/page/ at ~14:08Z lists 6 objects (index.html and manifest.json for date=2026-09-30 at 12:33:17Z, and two revisions/ pairs); get_object of date=2026-09-30/index.html reads 35812 bytes, sha256 87fb276390e589c5fc6a3eb5b17dae475ba187b24a0ce5f1343eaefcad762e6c (AC1 PASS on the same object).",
+        "SSM read-only commands on i-07dccb1615503ac99 (unchanged gateway, BASE 288fa78c93): f08ff5eb-073b-45d4-8ffb-551ccaf41459 curl localhost:8080/healthz = 404 and /rivalfunds = 404 (the route is absent until the deploy: the negative control); 99fc29d2-09be-40fe-a981-1d56c87c8d70 curl localhost:8080/health = 200. server.py:298 defines async def health (the route name /health). curl https://mcp.opalinvest.dev/healthz from the worker box = 302."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 4 step 5: '/healthz 200 ... (or the health route the README names, or an SSM curl to localhost)'; amendment 3 CTO condition 5: record what the worker could read.",
+    "world_is": "The gateway's liveness route is /health; /healthz is not a route (404), so a literal /healthz 200 read is unreachable on this app even after the deploy, and the ALB path /healthz answers the Entra redirect. The order's alternative (the route the app names) is /health.",
+    "notes": "After the deploy, read /health (SSM localhost) for the L4 leg; /rivalfunds must read non-404 on localhost (redirect to login, 401 or 200) and the human's authenticated read compares to the sha256 above."
+  }
 ]
 ```
