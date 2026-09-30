@@ -68,3 +68,21 @@
   shot `089-AZN-LN-Model.png`.
 - The packet's section 7.
 - `git log` for the round-51 and DSGN round-9 issuance hashes.
+
+## ADDENDUM (~03:5xZ, before the round-21 issuance, on 2.0.0_SA_COO~Z msg 26891, row AMGT_RESAPP `Z-S309`) -- CELL 3 ADDED
+
+AMGT_RESAPP round-50 ruling 3 (the export resolves per-security units for 6 names) is RE-HOMED here. The row measured that the
+export already prints the model block's per-security unit, and for the six names `field_map.json` itself holds the unit as
+UNRESOLVED-ON ("sampled magnitude N does not discriminate absolute vs millions"). The affected facts are:
+- `SALES_REV_TURN`: 6501, 8316;
+- `CURR_ENTP_VAL`: 6501, 9433, 8035, 8766, TSM;
+- `NET_DEBT`: 8316;
+- the `BEST_SALES` scalar exception: 6501.
+
+No RESAPP write can move them. The unit map is this project's artifact.
+
+| # | cell | risk | note |
+|---|---|---|---|
+| 3 | **A unit-map discriminator that does not rest on magnitude alone** | LOCAL, then a unit-map commit and re-derive under a pair if served units move | It uses a cross-field consistency read, for example EV against price times shares from resolved fields, or revenue against resolved per-share figures times shares. The AC prints, per fact per name, the resolved unit with its evidence or UNRESOLVED with the reason, over the 6 names plus a MEASURED control. A name the read cannot decide stays UNRESOLVED and is never guessed. |
+
+**Fan-out:** 2 now (cells 1 and 3); cell 2 is dependent.

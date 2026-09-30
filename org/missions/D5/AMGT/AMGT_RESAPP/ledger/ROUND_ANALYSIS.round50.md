@@ -104,3 +104,16 @@
   census over 43 worktrees (6 names in 20 trees, each with its CLOUD close commit).
 - This seat: a Grep for `REGISTRY_HASH =` (`lib/research/api/_harvest_prefixes.py:10`, test `:59`), a read of the `Z-S306` row,
   and the round-46/49 FWD sections (the last full pass).
+
+## ADDENDUM (~03:5xZ, on 2.0.0_SA_COO~Z msg 26891, row `Z-S309`) -- RULING 3 RE-HOMED; the issuer's not-cutting it is AGREED
+
+- Cell 3 moves nothing: the export already prints the per-security unit, and the six names' units are UNRESOLVED in the unit map.
+- **Re-homed:**
+  - (a) The unit-map discriminator goes to AMGT_CORPUS round 21, cell 3 (the CORPUS round-20 analysis addendum).
+  - (b) "Never scaled silently" is broken on the PAGE. The page prints K/M/B/T on a fact whose unit is UNRESOLVED. That goes
+    to DSGN_AMGTV1 as a page cell: never print a scale on an UNRESOLVED unit, show the raw figure with its UNRESOLVED label
+    instead.
+- **FWD-30's REALIZED condition, restated:** values-equal on 96 of 96, with every figure on the six names stating the same unit
+  claim on the page as in the export. Resolved on both sides, or UNRESOLVED and unscaled on both sides. The (b) page fix alone
+  meets it, and (a) improves what a PM reads without being required for the grade.
+- The served grade stays `round51/checks/zz-8.AC2.sh`.
