@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.3",
+  "prd_version": "v0.4",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -746,6 +746,29 @@ key for research, Andrew 2026-09-22).
 
 **`C-HV-DESIGN-SPEC-FIRST`.** No `.tsx` for the timeline until its design spec is approved. This is `AMGT_RESAPP`'s rule,
 applied here.
+
+**`C-HV-RANK-DECLARED-SET` (v0.4, FWD-7's denominator).** The chatter rank is a partial rank over a DECLARED publisher set.
+- Each generation declares its publisher set. A publisher that refused for the whole universe in the window is not in the set,
+  and the page names it as not searched.
+- A name is ELIGIBLE only if every publisher in the declared set covered every day of the window. Any other name is EXCLUDED
+  with its reason (`PARTIAL_COVERAGE`, `NOT_SEARCHED`) and is never scored.
+- Eligibility is decided BEFORE the no-signal test. An unsearched name is never read as a quiet one.
+- The score counts only articles from publishers in the declared set. A found-only article (`C-HV-COVERED-VS-FOUND`) is
+  served on the timeline and never scored, so one name's incidental extra source cannot outrank another's.
+- Every generation prints its population: `{declared_publishers, universe, eligible, ranked, excluded: {reason: count}}` and
+  the excluded names, through the shared `generation_writer.py`. The footer reads "Ranked N of U names; M not ranked (coverage
+  incomplete)".
+- FLOOR: 10 eligible names. Below it the generation HOLDs with an `empty_reason`, and the prior generation stays served.
+- Grounds: `ledger/CTO_RULING_FWD7_DENOMINATOR_DECLARED_PUBLISHER_SET_20260930.md` (@`ddcc71fd2d`), on the research at
+  `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/RESEARCH_PARTIAL_COVERAGE_RANKING_20260930.md` (@`784068f4c0`).
+
+**`C-HV-COVERED-VS-FOUND` (v0.4).** A day row keeps two publisher sets, and neither stands in for the other.
+- `publishers_covered_codes` is the set of publishers whose listing for that name ran over that day (SEARCHED).
+- `publishers_found_codes` is the set of publishers whose articles that day serves, by whatever path found them (FWD-3 names
+  the path per article).
+- A publisher in the found set but not in the covered set reads as "found, listing not run", never as "not searched".
+- Coverage marks (`data_status`, FWD-7 eligibility) read the COVERED set only. A found-only article never makes a day
+  SEARCHED.
 
 ---
 
