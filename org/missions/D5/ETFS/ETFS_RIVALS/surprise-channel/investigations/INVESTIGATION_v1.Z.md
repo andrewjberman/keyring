@@ -937,6 +937,70 @@
       ]
     },
     "notes": "Not fixed here: it would need a revision scheme that orders by input-set completeness, which is a contract change for G1 and trade_schedule."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S12",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T20:40Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "G2 cannot witness a Bloomberg re-publication from G1 and the silvers: a DATE-MISMATCH capture never reaches silver, so G2 also reads the Bloomberg and issuer bronze sidecars.",
+    "spec_asserts": "RIV-h-1 step 1: G2 replays over G1 and both silvers; h-1.AC2 plants a real capture re-published under a later requested date and expects status repeat with the older date.",
+    "world_is": "collector_bloomberg.analyze marks a capture whose DATES differ from requested_date DATE-MISMATCH and silver_bloomberg skips every non-OK sidecar, so the planted re-publication has no silver row and no G1 row; only its sidecar (claimed_report_date, requested_date) and bronze bytes show it. The same holds for an issuer DATE-MISMATCH file. gold_holdings_coverage therefore reads bronze sidecars for the day list, and silver (else the bronze bytes, sha256-checked) for row_count and weight_sum.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py analyze()",
+        "data/etfs/scripts/rivalfunds/silver_bloomberg.py handler_entry (status != OK is skipped)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/h-1.AC2.py"
+      ]
+    },
+    "notes": "Read surface is wider than the face names (bronze prefixes of both sources); read-only, inside the stage's own tier chain. A live vendor re-publication would be OK-status when the vendor also restamps DATES (test_an_ok_capture_carrying_an_older_report_reads_repeat) and then silver carries it."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T20:40Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "`selected` is True on exactly one row per fund-day, and on a gap fund-day it is that day's only row (source null); h-1.AC1 filters on selected == True and expects the gap row in that set.",
+    "spec_asserts": "RIV-h-1: selected is the one source G1 used and selection_reason says why.",
+    "world_is": "A gap day has no source and G1 used none, so 'the source G1 used' is empty; the check reads the gap status from rows with selected == True, so the gap row must carry selected True. The rule used: one selected row per (fund, expected_date) -- the new row G1 used, else the new row the fund's policy prefers, else the same order over repeat/periodic rows, else the sole gap row. Non-selected rows carry a reason naming the chosen source.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py choose_selected()",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/checks/h-1.AC1.py (sub = df[... selected == True])"
+      ]
+    },
+    "notes": "A consumer counting selected rows as 'days with data' would count gap rows; it must read status."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S14",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T20:40Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The periodic rule is the worker's: at least 3 gaps between distinct report dates and a median gap >= 2 trading days; the face says 'measured, not assumed' and names no threshold.",
+    "spec_asserts": "RIV-h-1: periodic = the fund reports on a non-daily cadence, measured, not assumed.",
+    "world_is": "No cadence threshold is given in the cell or the PRD text the face carries. Measured on the 501 IDVZ-group census captures (IDVZ group, five rivals) every rival's median gap is 1.0 and none reads periodic, so the threshold is unexercised on real data; the PFOE-group captures were not replayed. Constants PERIODIC_MIN_GAPS=3, PERIODIC_MEDIAN_GAP=2; a fund below 3 gaps is never called periodic (cadence_gap_median NULL).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py measure_cadence()",
+        "data/etfs/scripts/rivalfunds/tests/test_g21_holdings_coverage.py test_a_periodic_fund_is_measured_not_assumed"
+      ]
+    },
+    "notes": "If a PFOE fund turns out to report weekly or monthly, the median rule reads it periodic; a fund with a cadence only visible over a longer history than the window reads repeat until it has 3 gaps."
   }
 ]
 ```
