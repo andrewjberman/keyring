@@ -120,3 +120,18 @@ Findings:
 Trial 2 (`scripts/harvest_botops_trial2.py`) is scheduled after a 70-minute cool-down (~19:35 UTC) for bbg, wsj and
 barrons. In one warm session it tests (A) REST calls issued from inside the tab, (C) a plain browser navigation to the
 search page, and last (B) the outside client with a self-consistent identity.
+
+## Live trials 2, 3 and 3b (2026-09-30 19:37-19:45 UTC, after a 70-minute cool-down)
+
+- **Trial 2** (one warm session each: in-tab fetch, then navigation, then a consistent curl client last). bbg: homepage
+  clean, search 403 PerimeterX on all three methods. wsj: homepage clean, search 401 DataDome on all three. barrons:
+  homepage itself challenged, stopped.
+- **Trial 3** (same, with the stored bot-manager cookies stripped so a fresh visitor is minted). bbg: homepage clean,
+  in-tab search 403. wsj and barrons: homepage challenged.
+- **Trial 3b** (a completely fresh anonymous browser, no cookies). bbg and wsj homepages challenged.
+
+Conclusion: by 19:4x UTC the flag sat on **this box's IP**, independent of cookies and login. The same IP passed every
+homepage at 18:10 and collected WSJ at 04:45, so it degraded during the day under refused automated requests (Phase A
+at 16:3x, trial 1's refused REST calls). Trial 2's in-tab result is therefore inconclusive for a clean IP; it becomes
+the first-light test in `HARVST_BOT_OPS_PLAYBOOK_20260930.md`. No further traffic was sent to these publishers from this
+box after 19:45 UTC.
