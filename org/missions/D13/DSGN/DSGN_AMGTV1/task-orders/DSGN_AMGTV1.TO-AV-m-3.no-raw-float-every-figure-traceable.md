@@ -107,7 +107,7 @@ portal and outer commit hashes, and any row.
 of 3; green r12-green-b @e19a38e2 3 of 3 (144+/15-: HeaderCards, StatTile, ModelTab, modelPattern harness). constants.ts granted
 defensively (the green arm did not need it).
 
-<status>pending</status>
+<status>complete</status>
 <round>12</round>
 <slot>~46</slot>
 <fabric>site-z</fabric>
