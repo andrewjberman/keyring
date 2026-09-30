@@ -10,7 +10,8 @@
   "datasets": [
     "dim_position",
     "dim_balance",
-    "dim_asset"
+    "dim_asset",
+    "dim_transaction"
   ],
   "operations": [
     "list",
@@ -184,6 +185,23 @@
       "maturity_date",
       "prod_code",
       "prodcatg_code"
+    ],
+    "dim_transaction": [
+      "account_ref",
+      "business_date",
+      "trade_date",
+      "settlmnt_date",
+      "tr_cd",
+      "sb_cd",
+      "transaction_category",
+      "tran_srcde",
+      "debit_credit",
+      "cusip",
+      "ticker_symbol",
+      "quantity",
+      "price",
+      "gross_amount",
+      "net_amount"
     ]
   },
   "additive_fields": {
@@ -203,7 +221,8 @@
       "bank_sweep_ibf",
       "bank_cash"
     ],
-    "dim_asset": []
+    "dim_asset": [],
+    "dim_transaction": []
   },
   "quantity_sum_required_groups": [
     "cusip",

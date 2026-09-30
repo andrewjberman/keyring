@@ -3599,6 +3599,47 @@ carries none.
     "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
     "world_is": "The hazard (a release shipping a declared-but-uncontracted dataset and a red acceptance suite) is removed by step 0 of the only cell that can ship it.",
     "notes": "The CTO is asked separately whether r6.J1's transaction question may use a grant naming dim_transaction; by default it is graded as a correct refusal."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 step 0: adding dim_transaction to the contract turned 4 gateway tests red outside the named acceptance file (test_schwab_catalog ac08/ac10/ac17, test_schwab_query ogq2_ac02); their pins were moved inside the granted infra/aws/ec2/opal-gateway/** paths.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run per file from infra/aws/ec2/opal-gateway: with the contract edit and no test edit, 4 failed 60 passed over wiring+semantics+transactions+catalog+query; with the pre-edit contract (git show HEAD: copy), test_schwab_catalog+test_schwab_query 43 passed.",
+        "test_schwab_catalog.py asserted snapshot files == world.contract.datasets, but the fixture world seeds and closes over the three dims only; now compares against _SEEDED_DIMS (contract datasets minus dim_transaction). test_schwab_query.py test_ogq2_ac02 used dim_transaction as its 'unknown dataset' probe (INVALID_REQUEST expected); now probes dim_unknown.",
+        "After: 64 passed over the five schwab test files; tests/acceptance/test_local_acceptance.py 14 passed (run in separate processes; one combined process errors 14 on 'StreamableHTTPSessionManager .run() can only be called once')."
+      ]
+    },
+    "spec_asserts": "AMENDED A1 step 0 names the contract edit and the acceptance harness default; it does not name test_schwab_catalog.py or test_schwab_query.py.",
+    "world_is": "Both files pinned the contract's three-dataset shape; the contract edit moves those pins, exactly as MX-s-15 moved test_schwab_wiring and test_schwab_semantics."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 step 0: the acceptance harness dataset default (tests/acceptance/conftest.py / test_local_acceptance.py, datasets=de.DATASETS) was NOT edited; adding dim_transaction to the contract alone takes the file 8 failed -> 14 passed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tests/acceptance/test_local_acceptance.py before: 8 failed, 6 passed (KeyError 'dim_transaction' at conftest.py _fields); after the contract edit only: 14 passed, 0 failed, rc=0.",
+        "The KeyError came from _fields(dataset) = contract.raw['fields'][dataset] on de.DATASETS' fourth member; once the contract carries it, the de.DATASETS default is correct and a wiring-style filter would be a no-op."
+      ]
+    },
+    "spec_asserts": "AMENDED A1 step 0: fix the acceptance harness's dataset default the way MX-s-15 fixed tests/test_schwab_wiring.py.",
+    "world_is": "That fix (filter de.DATASETS to the contract's fields) was a workaround for the contract lacking the dataset; with the contract amended it is unnecessary, so the harness is left as committed."
   }
 ]
 ```
