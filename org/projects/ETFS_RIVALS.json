@@ -4,10 +4,10 @@
  "directive": "D4",
  "macro_code": "ETFS",
  "fabric": "site-z",
- "dep_stage": "REGISTERED",
+ "dep_stage": "PRD",
  "status": "active",
  "name": "Rival funds (rivalfunds): six rival active ETFs' daily holdings collected, coalesced into one canonical shape, each fund's reverse-engineered trade schedule as the foundation, and a daily research page with AI analyses served at /rivalfunds and archived by day",
  "generated_from": "org/missions/D4/ETFS/ETFS_RIVALS/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-30T06:00:14Z"
+ "generated_at": "2026-09-30T06:10:34Z"
 }
