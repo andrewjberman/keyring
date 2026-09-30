@@ -45,5 +45,6 @@
         "reference_count": 3
       }
     }
-  ]
+  ],
+  "_r20_exception_kind": "A third read_context kind, r20_exception (landed by 1.0.0_SA_CTO 2026-09-30 on Andrew's 'yes thats fine on naming exception' at 1.0.0_SA_CTO~O, relay 103235): the gate HONOURS an R20 DECLARED EXCEPTION (infra/logic/02_DOCTRINE.md R20; the register row is a 06_CONFORMANCE_LEDGER.md section 6 row such as X11). Entry fields are the usual nine; read_context is exactly {kind: r20_exception, register_ref: <row id>, occurrences: <int>=1>}; as_of_cutoff is a YYYY-MM-DD date or the word PERMANENT; authority is a full pin plus a record that carries the entry id (Andrew's acknowledgement record). It is the ONLY kind that reaches a NEW literal, in any file type, and it grades naming only: the count must hold, and it advances no remediation and proves nothing about reads versus writes."
 }
