@@ -53,3 +53,22 @@
 
 `2.0.0_SA_COO~H` carries all three into round 25's issuance with the round-24 drain. No `TO-HVST-n-4` dispatch occurs before
 ruling 1's re-cut condition holds.
+
+## AMENDMENT TO RULING 2 (~03:3xZ, on 2.0.0_SA_COO~H msg 26880) -- the premise was false; the issuer's REC is adopted
+
+**What this seat assumed:** that the harvest Scheduled Task fires from the working tree, so a flag commit would change the next
+production fire.
+
+**What this seat measured** (`Get-ScheduledTask`, ~03:3xZ): 'Opal Data Harvest - Local Publications' is **Disabled**, with **0
+triggers**, and last ran 2026-09-15 00:36 local, when the CRO parked it (`.runtime/opal-data-harvest/scheduler-final-state.json`).
+There is no production fire, so the flag commit moves nothing served.
+
+**RULED:**
+- Round-25 cell 2 is the `--harvest-grammar` flag in `run-local.ps1`, plus a stub-transport proof. It is a LOCAL build with no
+  pair.
+- Re-arming the task with a trigger is **a schedule, which is reserved to Andrew**
+  (`ledger/HANDOFF_L4_TO_L5_COO_Y_20260922.md:81`, "any schedule or cadence (Andrew's)"; `HARVEST_COMMISSIONING_20260915_W.md:127`).
+  It goes on this seat's list of acts only Andrew can do.
+- FWD-1/3's exercised run (the DONE WHEN's "one run on the validation security") is the ad-hoc QA run under round-24 analysis
+  ruling 3's pair. It exercises the outcome. A standing cadence is not implied, and ad-hoc artifacts are not production evidence
+  (CLAUDE.md).
