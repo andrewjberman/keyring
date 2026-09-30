@@ -38,6 +38,24 @@ comp-adversary: RUN at L5 -- the adversary is a probe that never touches the acc
 
 Rollback is forward only.
 
+## 1a. THE PROBE, AS AMENDED (AMENDMENT 1) -- it replaces section 1's steps 2-3
+
+- **The probe is ONE script,** `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~85/scripts/ac2_probe.py`,
+  driving the collector's OWN client OUTSIDE the `Worker`:
+  - `sessions.TokenFirstSessions(...).get("sa")` gives the stored token, the newest one. It never calls `refresh`.
+  - It builds `publishers.Publisher("sa", envelope, record, ...)`.
+- **Step 1, the account read, FIRST and ALONE:** `Publisher.check_auth()` (the sa account check, `contracts.json` sa
+  `auth_check`). Record the status, the class and `authorized`.
+- **Step 2, only on an authorized 200:** ONE live listing page, `Publisher.seeking_alpha(<Lenovo>, limit)`, live mode, page 1.
+  - `<Lenovo>` is the collector's RESOLVED universe row: `universe(config)`, the row whose company is Lenovo, `sa_symbol`
+    `LNVGY`.
+  - Record the status, the class, hits, dated hits and pre-floor hits.
+- **Any refusal STOPS the probe:** a 402, 401, bot check or no body. There is no `Worker`, so no sign-in path exists. The body
+  is kept by the transport's own keeper, and the class is recorded.
+- **Output:** `~85/ac2_probe.json` as {"security": {...}, "token_source": ..., "account": {"seq", "status", "class", "authorized",
+  "body_kept"}, "listing": {"seq", "status", "class", "hits", "dated", "pre_floor"} or null, "sign_in_calls": 0, "refresh_calls": 0, "hosts": [...]}.
+- **NO S3 write, NO upload, NO run record.** Stored articles are round 31's, on the cloud route.
+
 ## 2. SURFACES
 
 <paths>
@@ -66,6 +84,18 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   precedes any listing row; the outbox is empty after the upload.
 - **AC2:** the account status and class; `Z-W37-S4`'s standing (402 PERSISTS / CLEARED); the one job's status, span,
   measured pages and stored articles, or its refusal class.
+
+**AMENDMENT 1 (issuer, 2026-09-30 ~18:0xZ, before the pair) -- the probe runs OUTSIDE the Worker (section 1a).**
+- **Measured at `0814b408e4`:** inside the `Worker`, an sa account check that fails raises `AuthExpired`, and `ab-1` A2
+  answers with a sign-in. A 402 raises `AccountUnavailable`, and `ab-3` A0 answers with a fresh sign-in. The analysis's condition
+  is "a 402, 401 or bot check stops the leg (no sign-in)". A collector `run` would therefore contradict it.
+- **Ruling:** the probe drives the collector's own `Publisher` on the stored token with no `Worker`, so no sign-in path exists.
+- **Scope narrowed:** the `run` and the upload are dropped. The cell MEASURES the account and one listing page; storing articles
+  is round 31's cloud collection (`CTO_RULING_CLOUD_COLLECTION_DESIGN_20260930.md`).
+- **The security:** Lenovo, from the collector's resolved universe (89 rows, all with `sa_symbol`; Lenovo is `LNVGY`, INFERRED).
+  The batch-1 names are absent there except Hon Hai and KDDI (ADR symbols).
+- **`<paths>`:** add the probe script under `~85/scripts/` (already inside `~85/`). **Criteria:** the same two invocations.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
