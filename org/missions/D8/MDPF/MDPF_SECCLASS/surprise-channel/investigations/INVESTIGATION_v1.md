@@ -133,3 +133,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "No effect on this cell's own output: PHYS's only input here is bd-securities' alternatives/Gold, which is a fold against the canonical vocabulary (alternatives only carries Real Estate) regardless of whether PHYS already has a row, so PHYS lands in 'unresolved' either way (see R1_BACKFILL_CENSUS_20260929.json, bd firm unresolved list) and the r1_backfill_census.py PINNED check (GLD/PHYS/VXX never would-write) passes without relying on the stale premise. Flagged because a DIFFERENT cell's half (e.g. SC-k-2's, or any thread half computing a 'before' snapshot that assumes PHYS is already classified) could read a false state if IB-mr-251 has not landed by the time it runs."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-09-30T00:25:00Z",
+  "one_line": "The FWD-7 backfill census (TO-SC-k1, drained @d0e5b687f3) covers cottonwood with ZERO held tickers ('no-ticker-keyed-source-live': opal-data-cot gold/positions_cube has no ticker column) and inflection from a 2026-08-07 holdings file, while the IR Holdings census (IB-mr-251) reads 1,324 cottonwood securities -- so the backfill as built cannot resolve cottonwood's tickers, and IRPT_BCKEND IB-mr-251's cottonwood refusals survive it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (cottonwood and inflection each need their own firm-tree caller of the scheduled classification, C-FIRM; carried to the round-1 analysis as enrichment; IB-mr-251's release waits on it for cottonwood)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "R1_BACKFILL_CENSUS_20260929.json cottonwood: as_of 'no-ticker-keyed-source-live', held 0, source 'opal-data-cot:gold/positions_cube (no ticker column)'",
+      "R1_BACKFILL_CENSUS_20260929.json inflection: as_of 2026-08-07, source opal-data-inf:gold/holdings/2026-08-07.parquet, held 285",
+      "R25_ETF_CLASS_CENSUS_20260929.json (IRPT_BCKEND IB-mr-251): cottonwood=151/1324 securities, a ticker-bearing build (holdings_snapshot build_cot)",
+      "every would-write row in the census (3,317 across bd/49financial/inflection) has input bd-securities; GICS and Schwab inputs resolved none; instrument_kind and industry absent on all of them"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-7: a security that newly appears in ANY firm's daily holdings gets its entry on a schedule; CTO 103036: backfill every held security.",
+  "world_is": "The census reads held tickers for bd, 49financial and inflection (stale), none for cottonwood; every planned row comes from bd-securities input, so Andrew's open question on bd-securities values in new rows decides whether the backfill writes anything.",
+  "notes": "Not a cell defect: TO-SC-k1 named 'each firm's own latest holdings source, where one exists'. The IR Holdings producer's per-firm symbol sets (a ticker-keyed read at all three firms) are the nearest held source for the enrichment caller."
+}
+```
