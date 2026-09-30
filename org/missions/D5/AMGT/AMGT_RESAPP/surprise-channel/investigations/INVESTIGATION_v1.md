@@ -15689,6 +15689,92 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   },
   "disarm_owner": "2.0.0_SA_COO~Z (issuer): either the export's owner resolves the unit for these six (the reader then compares scale too), or the grade's blind spot on their scale is accepted by the CTO at the round-50 analysis",
   "notes": "ARMED only in the sense that the scale of six figures is not graded; nothing is served or written by this order."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T23:00:00Z",
+  "one_line": "AMGT-yy-3: the proxy-derived M-1 object carries fields management.schema.json (additionalProperties false) does not declare, and officer source 'proxy' where the schema enum is filing|bloomberg; the schema is outside this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/management/management.schema.json: top-level additionalProperties false; officer.source enum ['filing','bloomberg']; roster_source enum ['FILING','BLOOMBERG_FALLBACK',null]. The planned object (proxy_officers --persist --dry-run) adds officer_set, officer_set_label, source_form, source_url, retrieved_at, document_sha256 and writes officers with source 'proxy'.",
+      "enrich.write_document (the pool writer the object goes through) does not call enrich.validate, so the write is not refused; only a validating reader (enrich.validate in the reproject commands, test_reproject_public_profile.py) would reject the object.",
+      "read_management serves the object because roster_status is RESOLVED and it takes the last branch; roster_source reads null (the officers' source is not 'filing')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order AMGT-yy-3 s.1: the object carries officer_set, officer_set_label, source_form, source_accession, source_url, retrieved_at, document_sha256 and is written through the roster batch's own pool writer.",
+  "world_is": "The schema would REFUSE that object if validated. The order's paths exclude the schema, so it is unchanged; a proxy object under management/v1/ fails any later enrich.validate on it (reproject commands) until the schema declares the new fields and the 'proxy' source.",
+  "notes": "The issuer/CTO decides whether yy-5 persists before or after a schema amendment; nothing is written by this order."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T23:01:00Z",
+  "one_line": "AMGT-yy-3: rk-77's pinned test test_resolved_block_gains_only_roster_source failed when read_management gained three null keys; its exclusion list was widened, and importing fetch.py prints a fitz line to stdout that broke the checker's one-JSON read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "api-suite.sh after the pass-through: '1 failed, 339 passed' -- lib/research/api/tests/test_fallback_roster_served.py::test_resolved_block_gains_only_roster_source, 'every other key equals the pinned pre-change block' (it excluded only roster_source and roster_source_basis). With _NEW_KEYS adding officer_set, officer_set_label, source_form and an assertion they read None on a filing roster: 340 passed, 0 failed.",
+      "yy_neo.py --plane plan first read 'plan stdout is not one JSON object': `python -c 'import lib.research.management.proxy_officers'` prints 'warning: The `fitz` API is deprecated ...' to STDOUT at import. The module's imports of fetch and roster now run under redirect_stdout(sys.stderr); after it AC1 reads YES."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order AMGT-yy-3 s.1 item 2: 'Nothing else in its output moves'; --dry-run prints ONE object on stdout.",
+  "world_is": "Three new null keys DO move the RESOLVED block's key set, so a test that pins the block against a pre-change copy had to name them; and the estate's import chain writes a non-JSON line to stdout.",
+  "notes": "Both edits are inside the order's paths; the new keys are the ones the order names."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T23:40:00Z",
+  "one_line": "AMGT-yy-3 AMENDMENT 1: after widening management.schema.json, the planned proxy object still failed enrich.validate on a second gap -- its ceo_profile block carried 7 of 13 required keys; proxy_officers.py now builds the full block via ceo_search.ceo_profile(None, None, None).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_the_planned_proxy_object_validates_against_management_schema after the schema widening: \"ceo_profile: 'search' is a required property\" (also triage, found_not_read, counts, cost, generated_at). The first-pass build_neo_document hand-wrote a partial ceo_profile block.",
+      "After the fix (proxy_officers.py builds the block with ceo_search.ceo_profile(None, None, None), which returns before any search when ceo is None, then sets status NOT_SEARCHED / reason_code STEP_NOT_CONFIGURED / the same reason string): lib/research/management/tests 117 passed; yy_neo.py --plane plan (the CLOUD 9d412c9e42 copy) prints 'validates against management.schema.json' for INTU_US_Equity and HAL_US_Equity."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 s.2 names the schema gap as the only one: 'the planned proxy object FAILS it' on the extra top-level fields and the officer source.",
+  "world_is": "A second, code-side gap sat behind the first: the planned object's ceo_profile block was schema-incomplete, visible only once the first was cleared. The fix is inside proxy_officers.py (in paths); ceo_profile's values (NOT_SEARCHED, STEP_NOT_CONFIGURED) are unchanged, only its missing keys are filled with the block's own defaults.",
+  "notes": "The worktree does not fast-forward to CLOUD (diverged), so the amended checker yy_neo.py was read from CLOUD 9d412c9e42 and run from .scratch/ (uncommitted); the worktree's own copy of the checker is the pre-amendment one."
+},
+{
+  "id": "AMGT_RESAPP-Z-W177-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~177",
+  "surfaced_at": "2026-09-29T23:55:00Z",
+  "one_line": "AMGT-yy-3 AMENDMENT 1: safe-commit REFUSED lib/research/management/management.schema.json (lane gate: no non-terminal order at the worktree's HEAD names it in <paths>); the worktree HEAD carries the pre-amendment order and does not fast-forward to CLOUD 9d412c9e42, so the schema widening is uncommitted in C:/tmp/r50-177.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/tmp/r50-177 merge --ff-only CLOUD: 'fatal: Not possible to fast-forward, aborting.' (merge-base 80432a6294); the order instructed no merge in that case.",
+      "bash .tools/safe-commit.sh ... -- lib/research/management/management.schema.json ...: 'VIOLATION: lib/research/management/management.schema.json -- lane=BASE_EXEC ... WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The amended order (schema in <paths>) exists only at CLOUD 9d412c9e42.",
+      "The widened schema is on disk in the worktree (git diff shows 13 lines) and management tests pass 117 with it; proxy_officers.py, the tests and this channel file are committed without it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1: management.schema.json joins <paths>; the worker widens it and commits with the order's own safe-commit.",
+  "world_is": "The lane gate reads the order at the worktree's HEAD, which is the pre-amendment order, so the one file the amendment adds cannot be committed from this worktree until the amended order reaches its HEAD.",
+  "notes": "The issuer merges CLOUD into wk-AMGT_RESAPP-177 (or grants the path another way); the worker then commits the already-written schema diff and re-pins the instance. Nothing else is outstanding."
 }
 ]
 ```
