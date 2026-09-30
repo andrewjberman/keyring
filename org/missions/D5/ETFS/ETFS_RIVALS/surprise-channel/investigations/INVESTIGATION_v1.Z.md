@@ -478,6 +478,51 @@
   "spec_asserts": "Amendment 4 step 2: `git reset --hard BASE` inside the deploy-only worktree re-points the deploy ref to the manifest's deployed commit, and the worker then brings in the key-16 files.",
   "world_is": "The permission system denied the reset. The worker rules also bar merge, rebase, checkout -- and clean, and an issuer's message cannot grant a permission the system withheld, so the worker did not re-shape the act (no fast-forward merge, no ref rewrite, no new branch under another name). The gateway serves 288fa78c93 unchanged; no ref, copy, apply or deploy happened.",
   "notes": "The path is ready and short: BASE is unchanged since 12:53Z as read, the server.py hunks applied cleanly to 288fa78c93 in the W5-S8 check, and the worktree is clean. To proceed, permit the reset (or the equivalent fast-forward, or a fresh branch/worktree at BASE) for a worker, or run steps 2-6 at the issuer's seat; then re-read the manifest immediately before the deploy (amendment 4 step 4). ARMED only because ledger etfs-rivalfunds-thread-r1 blares RED at ~16:13Z with L3, L4, L6 open; the gateway itself is unchanged."
+},
+{
+  "id": "ETFS_RIVALS-Z-W5-S10",
+  "project": "ETFS_RIVALS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+  "surfaced_at": "2026-09-30T13:39Z",
+  "one_line": "LEG B STOP 3 under amendment 4: steps 1-2 done (BASE 288fa78c93 re-verified, host 79 of 79; key-16 files and the server.py hunks staged in C:/tmp/wk-rivals-5gw on deploy-rivalfunds-gw-r1b), but the ref COMMIT was refused by the lane gate because it reads the worker's non-terminal order at the committing worktree's HEAD, and a deploy-only tree at BASE carries no ETFS_RIVALS order; the only escape is an audited author override, which a worker may not use. Nothing committed, built or deployed; ledger L3/L4/L6 stay OPEN.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~RV",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Step 1 re-run at ~13:2xZ: EC2_MANIFEST services.opal-gateway.deployed_commit = 288fa78c93e1c57be0ad7b8d6371c69145a69856 on the shared tree file, on CLOUD (last manifest commit beba8eab85), and on this branch; read-only SSM command dc1d125b-95b2-46c5-8645-6c724aa664a5 on i-07dccb1615503ac99 vs git show 288fa78c93: ref files 79, host 79, only_ref [], only_host [], differ [] -> EQUAL 79 of 79.",
+      "Step 2 done in C:/tmp/wk-rivals-5gw (clean at BASE before): four key-16 files byte-copied from wk-ETFS_RIVALS-5 HEAD (cmp identical); `git apply --check` then `git apply --include=infra/aws/ec2/opal-gateway/app/server.py hookup_d2.patch` applied clean (1 file, 7 insertions, 2 deletions); the three names at BASE present: audit.log_call(email, tool, args, outcome, detail='', tier='') at app/audit.py:129, get_config at app/config.py:377, Config.AWS_REGION at app/config.py:176. `git status --short` there: M server.py plus the four new files (and M mcportal, see W5-S11).",
+      "Step 3 act: `bash .tools/safe-commit.sh --author '0.9.0_WK_ETFS_RIVALS~5 <...>' -F msg_ref.txt -- <the five paths>` in the gw worktree. Result rc=1, commit-gate and naming-gate PASS, then owned-paths BLOCK: 5 violations, each 'no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. .tools/owned-paths-validate.py:116-120 states the grant is read from HEAD of the committing tree; the gw tree HEAD is 288fa78c93, which has no ETFS_RIVALS order. `git log -1` there still reads 288fa78c93 (nothing committed). org/git-author-override-audit.log line 2026-09-30T13:34:28Z BLOCK 0.9.0_WK_ETFS_RIVALS~5 5.",
+      "Precedent read only: the sibling deploy-only release 288fa78c93 was committed by 0.9.0_WK_NFRA_MCPMSP~1 under an OVERRIDE (audit log 2026-09-30T10:56:25Z and 10:56:34Z, 13 paths). Whether that override was ruled is the issuer's to read; this worker did not use one."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 4 step 3: 'Initialise mcportal and commit the ref on deploy-rivalfunds-gw-r1b. The diff to BASE must be exactly the key-16 files.'",
+  "world_is": "The commit is refused at the lane gate for a reason the order cannot fix from inside the deploy-only tree: the grant check needs the order at that tree's HEAD, and the ref must have BASE as its parent so the diff is exactly the key-16 files. A worker's rules bar the override that would pass it, so the worker stopped rather than re-shape the act.",
+  "notes": "The tree is READY: everything is in place uncommitted in C:/tmp/wk-rivals-5gw, so the commit is the one act left before re-reading the manifest and running safe-ec2-deploy.sh. Any of these unblocks it: (a) the issuer commits the five paths there at its seat (author line the worker's serial or its own); (b) the issuer rules in writing that this one commit may use the audited author override and a re-spawned worker does so, naming it in the row; (c) an amendment that gives the ref a parent carrying the order. If BASE moves before then, amendment 4 step 4 says go back to step 1 once. ARMED only because the ledger blares RED at ~16:13Z with L3, L4, L6 open."
+},
+{
+  "id": "ETFS_RIVALS-Z-W5-S11",
+  "project": "ETFS_RIVALS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+  "surfaced_at": "2026-09-30T13:39Z",
+  "one_line": "Two premises of the deploy-only tree differ from what amendment 4 assumes: the mcportal gitlink at BASE (fa1ff96) is README only, so `git submodule update --init` gives a tree deploy-to-ec2.sh refuses (no package.json); and the rivalfunds gateway test cannot pass inside a BASE tree because BASE's infra/logic registry has no 'rivalfunds' source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree of mcportal at 093fc247c6, 288fa78c93 and CLOUD all read gitlink fa1ff9693b0868c29c8ff421d403449db8a1ee39, whose log is 'init ... mcportal -- initial README only'. After `git submodule update --init --reference <shared modules/mcportal> mcportal` in the gw tree, mcportal/ holds README.md alone, and deploy-to-ec2.sh:80 requires mcportal/package.json.",
+      "The manifest's mcportal_commit is a3bff71ffa3f5c73aa0fb7ea1e7386434e233054 and the NFRA_MCPMSP ledger says its release built with 'mcportal a3bff71ffa' as PREV; that object is present in the shared modules store. The worker ran `git -C mcportal switch --detach a3bff71ffa3f5c73aa0fb7ea1e7386434e233054` inside the gw tree (working checkout only; the parent shows ' M mcportal', which the worker will NOT stage), so the dashboard bundle keeps the bytes already deployed and no mcportal change rides.",
+      "In the gw tree at BASE, `python -m pytest app/tests/test_rivalfunds_view.py -q` reads 3 failed, 1 passed, 7 errors, all 'ValueError: source rivalfunds is not a systems.json key' from lib/opal_naming.py address() inside gen_rivalfunds_location.py; the same test file and bytes read 11 passed at wk-ETFS_RIVALS-5 HEAD, which carries the registry row. The runtime view reads only the static rivalfunds_location.json and imports no lib/ module, so the deployed gateway is unaffected."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 4 step 2-3: 'Initialise mcportal as deploy-to-ec2.sh needs' and (amendment 1) 'test_rivalfunds_view.py stays green'.",
+  "world_is": "Initialising the gitlink yields a README-only mcportal; the working checkout must be the manifest's mcportal_commit a3bff71ffa. The gateway test is green only where the registry row exists (HEAD); at BASE it errors on the naming registry, not on the view."
 }
 ]
 ```
