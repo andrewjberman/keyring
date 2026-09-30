@@ -1,0 +1,12 @@
+{
+  "prd": "IRPT_DASHBD_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "2cb022f549fa1947c6b7eb53982f7c7e0707f515",
+  "half": "ratified-text",
+  "half_hash": "15dee59be554443d5d26f4527bf9a51dec32901ebe01de621d7b67d120be64d1",
+  "endpoint_hash": "f67287ce982d32da45acc49d85bc7c661501bd9fffce9d72f40878e5a52671a2",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_IRPT_DASHBD_v0.1_20260930.md@14d5546fb8",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-09-30T14:19:12Z"
+}

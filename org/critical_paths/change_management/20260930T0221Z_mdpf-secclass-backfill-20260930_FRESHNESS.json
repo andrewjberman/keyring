@@ -1,0 +1,16 @@
+{
+ "distinct_census_tickers": 1943,
+ "dropped_present": [
+  "BBY",
+  "BE",
+  "BX",
+  "CSCO",
+  "DG",
+  "ED",
+  "EXPD",
+  "GEV",
+  "META"
+ ],
+ "to_write": 1934,
+ "cross_firm_conflicts": []
+}

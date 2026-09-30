@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-09-30T00:00:00+00:00",
+  "generated_by": "0.9.0_WK_MDPF_SECCLASS~7",
+  "cell": "SC-e-6",
+  "table_rows_at_build": 2309,
+  "table_rows_source": "live DynamoDB etf-classifications, Select=COUNT full scan at build time",
+  "ticker": "VNQI",
+  "ticker_name": "Vanguard Global ex-U.S. Real Estate ETF",
+  "why_this_ticker": "Live scheduled row, direct-matched from the retiring per-firm fork's asset_class/sub_asset_class values into the canonical vocabulary with NO fold applied (etf_classification_scheduled.py classify_asset_class(), input label 'legacy-fork') -- 'equity' and 'International' are both valid members of the table's own vocabulary read from the live table (TableVocabulary.from_live_table), so the conditional put succeeded, but the value is wrong: VNQI is Vanguard's international real-estate-trust counterpart to VNQ, and the canonical table's own precedent for VNQ (below) treats that fund family as alternatives/Real Estate, not equity.",
+  "evidence": {
+    "current_live_item_read": {
+      "ticker": "VNQI",
+      "asset_class": "equity",
+      "sub_asset_class": "International",
+      "classified_by": "scheduled",
+      "last_updated": "2026-09-30T02:23:47.350920+00:00"
+    },
+    "read_method": "boto3 dynamodb.Table('etf-classifications').get_item(Key={'ticker':'VNQI'}), read-only, no write",
+    "precedent_row_read": {
+      "ticker": "VNQ",
+      "asset_class": "alternatives",
+      "sub_asset_class": "Real Estate",
+      "classified_by": "seed",
+      "instrument_kind": "fund",
+      "management_style": "passive",
+      "name": "Vanguard Real Estate ETF"
+    },
+    "precedent_source": "same live table, get_item(Key={'ticker':'VNQ'}) -- the seed source's own established treatment of a REIT-of-REITs fund (etf_classification.py :190, ETF_CLASSIFICATIONS['VNQ']='alternatives')",
+    "census_confirmation": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_BACKFILL_CENSUS_20260929.json firms[bd].rows and firms[49financial].rows both list {'ticker':'VNQI','asset_class':'equity','sub_asset_class':'International','classified_by':'scheduled','input':'bd-securities'} -- held by bd and 49financial, absent from cottonwood and inflection census rows"
+  },
+  "fork_value": {
+    "asset_class": "equity",
+    "sub_asset_class": "International"
+  },
+  "current_row": {
+    "ticker": "VNQI",
+    "asset_class": "equity",
+    "sub_asset_class": "International",
+    "classified_by": "scheduled",
+    "last_updated": "2026-09-30T02:23:47.350920+00:00"
+  },
+  "seed_value": {
+    "asset_class": "alternatives",
+    "sub_asset_class": "International Real Estate",
+    "instrument_kind": "fund",
+    "management_style": "passive",
+    "sector": "Real Estate",
+    "name": "Vanguard Global ex-U.S. Real Estate ETF"
+  },
+  "seed_source_edit": "infra/aws/lambda/v2_portal/_shared/etf_classification.py -- ETF_CLASSIFICATIONS['VNQI']='alternatives'; ETF_MANAGEMENT_STYLE['VNQI']='passive'; ETF_SUB_ASSET_CLASS['VNQI']='International Real Estate'; ETF_SECTOR_MAPPING['VNQI']='Real Estate'; ETF_NAME_OVERRIDES['VNQI']='Vanguard Global ex-U.S. Real Estate ETF'. instrument_kind resolves to 'fund' automatically (ETF_INSTRUMENT_KIND set-comprehension; VNQI is not in _SINGLE_SECURITY_TICKERS).",
+  "mechanism": "seed-etf-classifications.py's merge_item sets classified_by='seed' unconditionally (PRD C-WRITER: seed always wins). The next real seed run overwrites this ticker's row, replacing classified_by='scheduled' with classified_by='seed' and correcting asset_class/sub_asset_class -- no table write happens in this task order (LOCAL build + record bound); the correction lands the run described in the paired never-widen half.",
+  "surfaces": [
+    {
+      "surface": "S11 (FWD-4/FWD-2, 49F data)",
+      "file": "data/assets/scripts/gold/runners_49f/a07_dim_asset_classification.py",
+      "where_read": "classify() :220-255 reads item.get('asset_class','') at :230,:238 from the ticker_map built by _load_ddb() :198-217 (a live scan of etf-classifications keyed by ticker); a 49F position in VNQI resolves through this 4-layer classify() and is currently tagged equity via the scheduled row",
+      "next_ordinary_run": "the a07_dim_asset_classification runner's next scheduled 49F gold-layer build"
+    },
+    {
+      "surface": "S13 (FWD-4/FWD-2, Positioning)",
+      "file": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/etf_classifications_dynamodb.py",
+      "where_read": "ETFClassifier.get_asset_class() :86-94 and get_sub_asset_class() :96-104, each a direct dict-key read (classification.get('asset_class'|'sub_asset_class')) against the live etf-classifications item for the ticker",
+      "next_ordinary_run": "the yang-generate-positioning lambda's next scheduled/on-demand invocation for a client holding VNQI"
+    },
+    {
+      "surface": "S16 (FWD-2, portal)",
+      "file": "portal/src/components/holdings/HoldingsBreakdownTable.tsx",
+      "where_read": "line 368, const subBg = subAssetBg(holding.asset_class, holding.sub_asset_class) -- renders the row's tint/grouping directly from the served asset_class/sub_asset_class fields for each holding, VNQI included",
+      "next_ordinary_run": "the portal's next page render/API refresh for a client holdings view that includes VNQI"
+    }
+  ],
+  "bound": "LOCAL build + record: no seed run executed here, no table write, no deploy. The seed-source edit above is the only file change; the correction lands on the live table only when the never-widen half below is signed and the real seed run executes."
+}

@@ -19,7 +19,7 @@ become a tax on work it was never meant to touch:
   2. WORKFLOW-REGISTERED PROJECTS ONLY (a dep_stage key in org/projects/{CODE}.json --
      10 of 326 projects on 2026-08-24). dep_stage is OPTIONAL and FORWARD-ONLY by its own
      ratified design; a project that never opted in is not in this gate's scope.
-  3. FILES UNDER **/task_orders/ ONLY.
+  3. FILES UNDER **/task_orders/ OR **/task-orders/ (the tree spelling) ONLY.
 A file failing any of the three is NOT a pass -- it is OUT OF SCOPE, and the report says
 which, because "no findings" and "did not look" must never render identically.
 
@@ -91,7 +91,7 @@ def staged_added() -> list[str]:
 
 def is_task_order(rel: str) -> bool:
     p = Path(rel.replace("\\", "/"))
-    return "task_orders" in p.parts and p.suffix.lower() == ".md"
+    return ("task_orders" in p.parts or "task-orders" in p.parts) and p.suffix.lower() == ".md"
 
 
 def project_code(text: str, rel: str) -> tuple[str, str]:

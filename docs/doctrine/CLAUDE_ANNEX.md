@@ -458,6 +458,17 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     fixed; caught by `0.0.0_AB_MSTR` @96313 and corrected here. ⛔ The target's OWN text still says "superseded by
     D8" and "D8-1/D8-2" (:63, :249): the rename left stale references INSIDE it too, and that is
     the D10 PRD's to fix, not this law's.
+17c. **GOLD IS THE ONE OPAL SHAPE, AND THE ADAPTER LAYER (Andrew-direct 2026-09-30, "that should be in there
+    somewhere persistently").** Bronze holds each source's raw shape; silver holds it typed and de-duplicated in
+    parquet, still in that source's own shape (17: silver never slims fields); **gold is where every firm's or vendor's
+    shape is coalesced into ONE Opal shape.** A firm-specific column does not survive into gold; a field a firm lacks
+    is null with a coverage marker, never a firm-specific variant of the table. Mechanism: each gold table has ONE
+    schema contract file `org/standards/<TABLE>_GOLD_CONTRACT.json` (columns, types, nullability, coverage markers, the
+    Opal enum sets); every firm adapter writes exactly that schema, and a conformance check compares each written
+    partition's schema hash to the contract. Pointer: `org/tier1_exec/4.0.0_SA_CRO/deliverables/PROPOSED_RULE_GOLD_IS_THE_OPAL_SHAPE_ADAPTER_LAYER_20260930.md`
+    @d84a3ca192; `infra/logic/02_DOCTRINE.md` tier table and A5 FORMAT. Non-application: a gold table with a single
+    source and one shape; platinum, a per-consumer projection of gold that is not held to one shape. The first contract
+    instance (`REPORTING_GOLD_CONTRACT.json`) and the matching R-rule in `02_DOCTRINE.md` are follow-ups, not landed here.
 15. **Every gold/silver/bronze `.py` begins with `from __future__ import annotations`** (PEP-604 on py3.9 runners). **Gate-enforced ON EDIT** -- the gate fires on files you touch, NOT over the tree, so untouched legacy files are uncovered (measured 2026-08-25: 441 of 537 carry it, 82%; the residue is migration debt, not live violation).
 
 ---

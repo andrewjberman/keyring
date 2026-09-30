@@ -1,0 +1,1567 @@
+{
+ "act": "kind",
+ "plan": 156,
+ "read": 156,
+ "rows": {
+  "2602335D": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "TPG Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "2602335D",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AAPL": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Apple Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "AAPL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ABBV": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "AbbVie Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "ABBV",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ABT": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Abbott Laboratories",
+   "sub_asset_class": "Health Care",
+   "ticker": "ABT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ADM": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Archer-Daniels-Midland Co",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "ADM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AEP": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "American Electric Power Co Inc",
+   "sub_asset_class": "Utilities",
+   "ticker": "AEP",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AIG": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "American International Group Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "AIG",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AIZ": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Assurant Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "AIZ",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AMAT": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Applied Materials Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "AMAT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AMD": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Advanced Micro Devices Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "AMD",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AMP": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Ameriprise Financial Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "AMP",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AMX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "America Movil SAB de CV",
+   "sub_asset_class": "Communication Services",
+   "ticker": "AMX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AMZN": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Amazon.com Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "AMZN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ANET": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Arista Networks Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "ANET",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ASML": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "ASML Holding NV",
+   "sub_asset_class": "Information Technology",
+   "ticker": "ASML",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ATO": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Atmos Energy Corp",
+   "sub_asset_class": "Utilities",
+   "ticker": "ATO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AVGO": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Broadcom Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "AVGO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "AZN": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "AstraZeneca PLC",
+   "sub_asset_class": "Health Care",
+   "ticker": "AZN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BA": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Boeing Co",
+   "sub_asset_class": "Industrials",
+   "ticker": "BA",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BAC": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Bank of America Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "BAC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BBSEY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "BB Seguridade Participacoes SA",
+   "sub_asset_class": "Financials",
+   "ticker": "BBSEY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BEN": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Franklin Templeton Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "BEN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BIPC": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Brookfield Infrastructure Corp",
+   "sub_asset_class": "Utilities",
+   "ticker": "BIPC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BKNG": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Booking Holdings Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "BKNG",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BKRKY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Bank Rakyat Indonesia Persero",
+   "sub_asset_class": "Financials",
+   "ticker": "BKRKY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BN": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Brookfield Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "BN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BNPQY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "BNP Paribas SA",
+   "sub_asset_class": "Financials",
+   "ticker": "BNPQY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BNY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Bank of New York Mellon Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "BNY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BP": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "BP PLC",
+   "sub_asset_class": "Energy",
+   "ticker": "BP",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BTI": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "British American Tobacco PLC",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "BTI",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "BZLFY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Bunzl PLC",
+   "sub_asset_class": "Industrials",
+   "ticker": "BZLFY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "C": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Citigroup Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "C",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "CICHY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "China Construction Bank Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "CICHY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "CIEN": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Ciena Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "CIEN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "CINF": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Cincinnati Financial Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "CINF",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "CME": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "CME Group Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "CME",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "CMI": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Cummins Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "CMI",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "CNC": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Centene Corp",
+   "sub_asset_class": "Health Care",
+   "ticker": "CNC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "CNI": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Canadian National Railway Co",
+   "sub_asset_class": "Industrials",
+   "ticker": "CNI",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "CPA": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Copa Holdings SA",
+   "sub_asset_class": "Industrials",
+   "ticker": "CPA",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "CVX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Chevron Corp",
+   "sub_asset_class": "Energy",
+   "ticker": "CVX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "DAL": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Delta Air Lines Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "DAL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "DECK": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Deckers Outdoor Corp",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "DECK",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "DELL": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Dell Technologies Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "DELL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "EBAY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "eBay Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "EBAY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ECHO": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "EchoStar Corp",
+   "sub_asset_class": "Communication Services",
+   "ticker": "ECHO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "EL": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Estee Lauder Cos Inc",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "EL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ENB": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Enbridge Inc",
+   "sub_asset_class": "Energy",
+   "ticker": "ENB",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ENLAY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Enel SpA",
+   "sub_asset_class": "Utilities",
+   "ticker": "ENLAY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ES": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Eversource Energy",
+   "sub_asset_class": "Utilities",
+   "ticker": "ES",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ETR": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Entergy Corp",
+   "sub_asset_class": "Utilities",
+   "ticker": "ETR",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "F": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Ford Motor Co",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "F",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "FCX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Freeport-McMoRan Inc",
+   "sub_asset_class": "Materials",
+   "ticker": "FCX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "FDX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "FedEx Corp",
+   "sub_asset_class": "Industrials",
+   "ticker": "FDX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "FER": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Ferrovial NV",
+   "sub_asset_class": "Industrials",
+   "ticker": "FER",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "FIX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Comfort Systems USA Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "FIX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "FLEX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Flex Ltd",
+   "sub_asset_class": "Information Technology",
+   "ticker": "FLEX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "FTNT": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Fortinet Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "FTNT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "FXFXX": {
+   "asset_class": "fixed_income",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "First American Treasury Obligations Fund",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "FXFXX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "GL": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Globe Life Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "GL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "GLW": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Corning Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "GLW",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "GM": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "General Motors Co",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "GM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "GOOG": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Alphabet Inc",
+   "sub_asset_class": "Communication Services",
+   "ticker": "GOOG",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "GOOGL": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Alphabet Inc",
+   "sub_asset_class": "Communication Services",
+   "ticker": "GOOGL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "GS": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Goldman Sachs Group Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "GS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "GSK": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "GSK PLC",
+   "sub_asset_class": "Health Care",
+   "ticker": "GSK",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "HESAY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Hermes International SCA",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "HESAY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "HSBC": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "HSBC Holdings PLC",
+   "sub_asset_class": "Financials",
+   "ticker": "HSBC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "HWM": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Howmet Aerospace Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "HWM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "IBDRY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Iberdrola SA",
+   "sub_asset_class": "Utilities",
+   "ticker": "IBDRY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "IBN": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "ICICI Bank Ltd",
+   "sub_asset_class": "Financials",
+   "ticker": "IBN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ICT": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "International Container Terminal Services Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "ICT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "IDXX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "IDEXX Laboratories Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "IDXX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "IMBBY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Imperial Brands PLC",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "IMBBY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "INCY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Incyte Corp",
+   "sub_asset_class": "Health Care",
+   "ticker": "INCY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "INTC": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Intel Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "INTC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ISNPY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Intesa Sanpaolo SpA",
+   "sub_asset_class": "Financials",
+   "ticker": "ISNPY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ISRG": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Intuitive Surgical Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "ISRG",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "JBHT": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "JB Hunt Transport Services Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "JBHT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "JNJ": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Johnson & Johnson",
+   "sub_asset_class": "Health Care",
+   "ticker": "JNJ",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "JPM": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "JPMorgan Chase & Co.",
+   "sub_asset_class": "Financials",
+   "ticker": "JPM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "KCDMY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Kimberly-Clark de Mexico SAB de CV",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "KCDMY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "KEYS": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Keysight Technologies Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "KEYS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "KKPNY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Koninklijke KPN NV",
+   "sub_asset_class": "Communication Services",
+   "ticker": "KKPNY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "KO": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Coca-Cola Co",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "KO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "KOF": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Coca-Cola Femsa SAB de CV",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "KOF",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "LITE": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Lumentum Holdings Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "LITE",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "LLY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Eli Lilly & Co",
+   "sub_asset_class": "Health Care",
+   "ticker": "LLY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "LMT": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Lockheed Martin Corp",
+   "sub_asset_class": "Industrials",
+   "ticker": "LMT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "LRCX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Lam Research Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "LRCX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "LUV": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Southwest Airlines Co",
+   "sub_asset_class": "Industrials",
+   "ticker": "LUV",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MA": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Mastercard Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "MA",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MAR": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Marriott International Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "MAR",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MELI": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "MercadoLibre Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "MELI",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MNST": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Monster Beverage Corp",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "MNST",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MO": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Altria Group Inc",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "MO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MPLX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "MPLX LP",
+   "sub_asset_class": "Energy",
+   "ticker": "MPLX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MPWR": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Monolithic Power Systems Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "MPWR",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MRK": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Merck & Co Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "MRK",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MRVL": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Marvell Technology Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "MRVL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MSFT": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Microsoft Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "MSFT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "MU": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Micron Technology Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "MU",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "NEE": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "NextEra Energy Inc",
+   "sub_asset_class": "Utilities",
+   "ticker": "NEE",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "NEM": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Newmont Corp",
+   "sub_asset_class": "Materials",
+   "ticker": "NEM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "NOK": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Nokia Oyj",
+   "sub_asset_class": "Information Technology",
+   "ticker": "NOK",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "NOW": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "ServiceNow Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "NOW",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "NSRGY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Nestle SA",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "NSRGY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "NTRS": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Northern Trust Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "NTRS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "NU": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "NU Holdings Ltd",
+   "sub_asset_class": "Financials",
+   "ticker": "NU",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "NVDA": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "NVIDIA Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "NVDA",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "OMAB": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Grupo Aeroportuario del Centro Norte SAB de CV",
+   "sub_asset_class": "Industrials",
+   "ticker": "OMAB",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ORANY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Orange SA",
+   "sub_asset_class": "Communication Services",
+   "ticker": "ORANY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "PBR": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Petroleo Brasileiro SA",
+   "sub_asset_class": "Energy",
+   "ticker": "PBR",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "PCG": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "PG&E Corp",
+   "sub_asset_class": "Utilities",
+   "ticker": "PCG",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "PLTR": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Palantir Technologies Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "PLTR",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "PM": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Philip Morris International Inc",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "PM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "PWR": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-09-29T14:02:59Z",
+   "management_style": "unknown",
+   "sub_asset_class": "Industrials",
+   "ticker": "PWR",
+   "updated_by": "seed-etf-constituents --universe amgt-library (AMGT_RESAPP round 48, 2.0.0_SA_COO~Z)"
+  },
+  "QCOM": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "QUALCOMM Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "QCOM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "QXO": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "QXO Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "QXO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "RBGLD": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Reckitt Benckiser Group PLC",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "RBGLD",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "REGN": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Regeneron Pharmaceuticals Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "REGN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "RHHBY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Roche Holding AG",
+   "sub_asset_class": "Health Care",
+   "ticker": "RHHBY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "RIO": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Rio Tinto PLC",
+   "sub_asset_class": "Materials",
+   "ticker": "RIO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "ROST": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Ross Stores Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "ROST",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "RTX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Raytheon Technologies Corp",
+   "sub_asset_class": "Industrials",
+   "ticker": "RTX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "SALXX": {
+   "asset_class": "fixed_income",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "State Street U.S. Government MMKT",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "SALXX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "SNDK": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Sandisk Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "SNDK",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "SNY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Sanofi",
+   "sub_asset_class": "Health Care",
+   "ticker": "SNY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "SPOT": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Spotify Technology SA",
+   "sub_asset_class": "Communication Services",
+   "ticker": "SPOT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "STLD": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Steel Dynamics Inc",
+   "sub_asset_class": "Materials",
+   "ticker": "STLD",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "STT": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "State Street Corp",
+   "sub_asset_class": "Financials",
+   "ticker": "STT",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "STX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Seagate Technology Holdings PLC",
+   "sub_asset_class": "Information Technology",
+   "ticker": "STX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "T": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "AT&T Inc",
+   "sub_asset_class": "Communication Services",
+   "ticker": "T",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "TJX": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The TJX Cos Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "TJX",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "TKOMY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Tokio Marine Holdings Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "TKOMY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "TRV": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "The Travelers Cos Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "TRV",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "TSLA": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Tesla Inc",
+   "sub_asset_class": "Consumer Discretionary",
+   "ticker": "TSLA",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "TSM": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Taiwan Semiconductor Manufacturing Co Ltd ADR",
+   "sub_asset_class": "Information Technology",
+   "ticker": "TSM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "TTE": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "TotalEnergies SE",
+   "sub_asset_class": "Energy",
+   "ticker": "TTE",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "TXN": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Texas Instruments Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "TXN",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "UAL": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "United Airlines Holdings Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "UAL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "UBER": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Uber Technologies Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "UBER",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "UL": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Unilever PLC",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "UL",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "UNH": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "UnitedHealth Group Inc",
+   "sub_asset_class": "Health Care",
+   "ticker": "UNH",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "UNP": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Union Pacific Corp",
+   "sub_asset_class": "Industrials",
+   "ticker": "UNP",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "UNVGY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Universal Music Group NV",
+   "sub_asset_class": "Communication Services",
+   "ticker": "UNVGY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "UPS": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "United Parcel Service Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "UPS",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "V": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Visa Inc",
+   "sub_asset_class": "Financials",
+   "ticker": "V",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "VIV": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Telefonica Brasil SA",
+   "sub_asset_class": "Communication Services",
+   "ticker": "VIV",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "VLO": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Valero Energy Corp",
+   "sub_asset_class": "Energy",
+   "ticker": "VLO",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "VZ": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Verizon Communications Inc",
+   "sub_asset_class": "Communication Services",
+   "ticker": "VZ",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "WDAY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Workday Inc",
+   "sub_asset_class": "Information Technology",
+   "ticker": "WDAY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "WDC": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Western Digital Corp",
+   "sub_asset_class": "Information Technology",
+   "ticker": "WDC",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "WM": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Waste Management Inc",
+   "sub_asset_class": "Industrials",
+   "ticker": "WM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "WMMVY": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "Wal-Mart de Mexico SAB de CV",
+   "sub_asset_class": "Consumer Staples",
+   "ticker": "WMMVY",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  },
+  "XOM": {
+   "asset_class": "equity",
+   "classified_by": "legacy",
+   "last_updated": "2026-08-25T17:48:57Z",
+   "management_style": "unknown",
+   "name": "ExxonMobil Holdings Corp",
+   "sub_asset_class": "Energy",
+   "ticker": "XOM",
+   "updated_by": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  }
+ },
+ "table_rows": 2309
+}
