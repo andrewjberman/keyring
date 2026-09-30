@@ -12779,3 +12779,85 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the cell was built and reads 6 failed / 2 passed, but no criterion grades it, so the mechanical proof cannot close over it. I did not edit the order's criteria (outside my grant to amend). INERT."
 }
 ```
+
+
+## IRPT_BCKEND-W91-S1 -- routes.json still says no consumer operation names status-summary, status-job or export-download, but the consumer's smoke fixture now carries all three
+
+```json
+{
+  "id": "IRPT_BCKEND-W91-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~91",
+  "surfaced_at": "2026-09-30T03:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "routes.json says NO CONSUMER OPERATION names GET /status, GET /status/{jobId} and GET /export/{exportId}/download, but the consumer's smoke fixture (12 entries) now keys all three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json @cc08e7db74: status-summary, status-job and export-download each carry consumer_operation null and a consumer_operation_absent_reason beginning 'NO CONSUMER OPERATION names this route'.",
+      "portal/src/pages/InvestorReporting/fixtures/smoke/default.json (primary checkout, mtime 2026-09-26): 12 keys, including /api/scoped/investor-reporting/status, /status/REQ-0001 and /export/EXP-1/download.",
+      "The seam test now resolves every consumer key to a producer operation through routes.json templates: 12 of 12 resolve, one key per operation (test_the_operation_map_covers_the_consumers_own_denominator passes)."
+    ]
+  },
+  "spec_asserts": "routes.json: three DECLARED routes have consumer_operation null because the counterpart has no operation for them.",
+  "world_is": "MEASURED: the counterpart's fixture is keyed by concrete route paths and names all three routes. The published note is stale; the contract file is read-only to this lane (docs/contracts/investor-reporting/v1/ is outside the order's write grant) so it was not edited. The 13 portal-derived seam nodes were fixed by moving the TEST; nothing was refused, because the portal moved TOWARD the contract (it now sends the paths routes.json publishes). Owner of the stale note: IRPT_BCKEND (publisher of routes.json). INERT: nothing reads consumer_operation to gate."
+}
+```
+
+
+## IRPT_BCKEND-W91-S2 -- the seam suite's declared_entry_point derives the wrong module path for four installed handlers, so four DECLARED routes grade as a dispatcher refusal and the handler is never called
+
+```json
+{
+  "id": "IRPT_BCKEND-W91-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~91",
+  "surfaced_at": "2026-09-30T03:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "analysis-requests, analysis-report, status-summary and status-job read BLOCKED-BY-W2-S16 (ROUTE_NO_HANDLER) in the paired suite because declared_entry_point looks for generate_installed.py / status_installed.py in source_dir, where they are not; the handler is never called.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_seam_paired.py declared_entry_point('irpt-ycharts-generate') -> ycharts/generate/generate_installed.py, isfile False; declared_entry_point('irpt-status') -> ops/status_installed.py, isfile False.",
+      "lambda-source-map.json: both files are STAGED into the zips from infra/aws/lambda/investor-reporting/reports/ (staged_from packaged_as generate_installed.py / status_installed.py); reports/generate_installed.py and reports/status_installed.py exist at HEAD.",
+      "pytest -s output: analysis-requests, analysis-report, status-summary, status-job all print 'the dispatcher refused with ROUTE_NO_HANDLER ... no handler entry point was supplied for a DECLARED route'. The test file's own docstring names this exact failure ('a WRONG-OBJECT error that every assertion passed through, because a missing handler has a legitimate refusal code')."
+    ]
+  },
+  "spec_asserts": "The suite's arm (b): each operation's REAL deployed handler is imported by path and its response is graded; BLOCKED-BY-W2-S16 means 'a response came back and does not conform'.",
+  "world_is": "MEASURED: for four of twelve operations no response came back and no handler ran; the outcome is recorded as BLOCKED-BY-W2-S16, which a later reader will take as a handler defect. ARMED because the mis-read is what any future cell citing the suite's census will read. Not fixed here: it is not one of the order's six causes and the order forbids fixing a neighbouring defect. The fix is in the same file (resolve the module from staged_from when source_dir does not hold it); disarm owner is the issuer of the next round."
+}
+```
+
+
+## IRPT_BCKEND-W91-S3 -- performance-report is DEPLOYED-ONLY in the paired suite: its installed runtime needs IRPT_REQUESTS_TABLE and builds DynamoDB and S3 ports at first call
+
+```json
+{
+  "id": "IRPT_BCKEND-W91-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~91",
+  "surfaced_at": "2026-09-30T03:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Once the paired test reached the performance handler it stopped on KeyError IRPT_REQUESTS_TABLE (performance/runtime.py builds boto3 DynamoDB and S3 ports at first call); classify_operation now records that as DEPLOYED-ONLY.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "performance/runtime.py _build(): os.environ['IRPT_REQUESTS_TABLE'] and ['IRPT_PERFORMANCE_MAPPING_AS_OF'] then boto3.resource('dynamodb').Table(...) and boto3.client('s3'); reached through _authz/served.py installed_entry at the first call.",
+      "Before this order the node never got that far (it failed at the flat-slug assertion), so this was unmeasured, not green.",
+      "Test change: classify_operation admits ONLY a KeyError on an IRPT_-prefixed name absent from os.environ as DEPLOYED-ONLY; no variable is invented (supplying a table name would send the call to a real AWS endpoint, which the order forbids). Also: performance/authorization.py does a bare 'from repository import digest' that the zip stages flat from reports/; the test now appends that staging directory (read from lambda-source-map.json staged_from) to sys.path."
+    ]
+  },
+  "spec_asserts": "The suite grades performance-report's response against its response contract.",
+  "world_is": "MEASURED: performance-report's response conformance is not gradable in process; it is graded where the deployed environment exists (IB-rtb-1). INERT: a test classification, nothing at runtime reads it. Recorded so the outcome is not read as a pass of the envelope."
+}
+```
