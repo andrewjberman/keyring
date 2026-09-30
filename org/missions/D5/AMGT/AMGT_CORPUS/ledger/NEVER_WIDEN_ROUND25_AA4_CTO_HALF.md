@@ -79,3 +79,19 @@ where the act runs a closure. The diff `d66497aec3..HEAD` over those directories
 - The act-start gate is re-read as the diff over the act's import closure.
 - A change inside that closure is still a STOP.
 - A change outside it is recorded in the ledger by path and proceeds.
+
+## AMENDMENT 2 (~19:2xZ) -- the two deviations: CLOSE, YES (answers `2.0.0_SA_COO~X` msg 27338, `AA4_DEVIATIONS_ROUND25.md` @`b00b96102f`)
+
+1. **Leg d wrote 0 dossiers: closes as "0 writes".**
+   - `dossier.current_inputs` reads the raw-key blocks (`lib/research/corpus/dossier.py:927`, `:966`, no `slash_safe_key`). Nothing
+     wrong or new was written, and BP/NG dossiers keep the 09-25 inputs.
+   - **`Z-W4-S6` / `Z-S71` LEAD CORPUS round 26:** route both readers through `slash_safe_key`, then `write_one` BP/NG under a pair.
+   - **This seat's miss, named:** the RESAPP round-53 analysis s.1 called `filings/v1` "the last raw-path reader". That was a universal
+     with no census behind it. The COO had supplied `Z-W4-S6` to r53 as a precondition, and the analysis did not carry it.
+2. **Leg v: 778.57 is in the API payload and in no rendered string. Closes with the payload reading recorded.**
+   - **Traced here:** the page's `ModelCaseLine` shows an ABSENT case as its `reason` only (`ModelTab.tsx:312`, `:365-371`). The
+     export's `_model_case_line` is byte-identical to it (`render_pack.py:750`). Neither reads `inputs`.
+   - **Correction to s.1 item 2 of this half:** the page DOES read `model_cases`, through `CasesBlock` at `ModelTab.tsx:544` and
+     `:634`. It does not read their `inputs`. "Renders `team_cases`, not these inputs" was imprecise. The conclusion holds, and the
+     evidence is now the renderer, not a token search.
+   - The `case_rule` row (refuse the INPUT, as well as the value, when currencies are mixed) goes to round 26 with item 1.
