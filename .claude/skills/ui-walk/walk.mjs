@@ -332,6 +332,27 @@ async function walkThread(page, route, name) {
 }
 
 // ---- the company timeline: one day pressed, one event opened (or its absence recorded) ------------------------------
+// ---- the opened day's STATE, not a fixed sleep: /timeline/day answers in ~5.5 s for a day with articles, so a 1,500 ms settle shot
+// every opened day as a skeleton. The panel marks all three states under the opened day's container; the wait polls them and
+// returns the first seen, or 'ceiling' when none appears (a held route is its own result, never graded as rows).
+const DAY_STATE_CEILING_MS = 20000
+async function waitForDayState(page, date) {
+  const box = `[data-timeline-selected-day="${date}"]`
+  const states = [
+    ['rows', `${box} [data-timeline-dissection="SERVED"] [data-timeline-article]`],
+    ['empty', `${box} [data-timeline-day-empty]`],
+    ['failed', `${box} [data-timeline-dissection="FAILED"]`],
+  ]
+  const t0 = Date.now()
+  for (;;) {
+    for (const [state, sel] of states) {
+      if (await page.locator(sel).count().catch(() => 0)) return { state, waited_ms: Date.now() - t0 }
+    }
+    if (Date.now() - t0 >= DAY_STATE_CEILING_MS) return { state: 'ceiling', waited_ms: Date.now() - t0 }
+    await page.waitForTimeout(250)
+  }
+}
+
 // The timeline sits in the opened name's header. The newest day is the last bar the panel draws. The panel may build no
 // event layer, and then the walk says so as a finding rather than passing silently.
 async function walkTimeline(page, sec) {
@@ -343,13 +364,24 @@ async function walkTimeline(page, sec) {
     let pressed = await bar.click({ timeout: 4000, force: true }).then(() => true).catch(() => false)
     if (!pressed) pressed = await bar.dispatchEvent('click').then(() => true).catch(() => false)
     if (!pressed) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: `the newest of ${nBars} day bar(s) could not be pressed` })
-    await settle(page, 1500)
+    else {
+      const newestDate = await bar.getAttribute('data-day-bar').catch(() => null)
+      if (newestDate) {
+        const got = await waitForDayState(page, newestDate)
+        timelineDays.push({ via: 'newest', security: sec, date: newestDate, pressed, state: got.state, waited_ms: got.waited_ms })
+      }
+    }
   } else findings.push({ step, check: 'timeline:no-day-bar', claim: 'measured', observed: 'the company page carries no day bar to press', rule: 'FWD-5: a day-by-day line the PM can press' })
   await checks(page, `${sec}-timeline-day`)
   const ev = page.locator('[data-timeline-event]')
   if (await ev.count().catch(() => 0)) {
-    await ev.first().click({ timeout: 4000, force: true }).catch(() => {})
-    await settle(page, 1500)
+    const evPressed = await ev.first().click({ timeout: 4000, force: true }).then(() => true).catch(() => false)
+    const evSpan = await ev.first().getAttribute('data-timeline-event').catch(() => null)
+    const evDate = evSpan ? evSpan.split('..')[0] : null
+    if (evPressed && evDate) {
+      const got = await waitForDayState(page, evDate)
+      timelineDays.push({ via: 'event', security: sec, date: evDate, pressed: evPressed, state: got.state, waited_ms: got.waited_ms })
+    }
     await checks(page, `${sec}-timeline-event`)
   } else findings.push({ step, check: 'timeline:no-event-element', claim: 'measured', observed: `no [data-timeline-event] element on the ${sec} timeline (the panel builds no event layer, or none is served)`, rule: 'FWD-6: bursts of coverage appear as marked events with a headline' })
 }
@@ -369,10 +401,10 @@ async function walkTimelineDays(page, sec) {
     } else {
       findings.push({ step, check: 'timeline:day-not-found', claim: 'measured', observed: `no timeline bar for ${date} on ${sec}` })
     }
-    await settle(page, 1500)
+    const got = pressed ? await waitForDayState(page, date) : { state: 'ceiling', waited_ms: 0 }
     await checks(page, `${sec}-timeline-day-${date}`)
-    const rows = pressed ? await page.locator('[data-timeline-selected-day] li').allInnerTexts().catch(() => []) : []
-    timelineDays.push({ security: sec, date, pressed, article_rows_in_page_order: rows })
+    const rows = pressed && got.state === 'rows' ? await page.locator(`[data-timeline-selected-day="${date}"] li`).allInnerTexts().catch(() => []) : []
+    timelineDays.push({ via: 'day', security: sec, date, pressed, state: got.state, waited_ms: got.waited_ms, article_rows_in_page_order: rows })
   }
 }
 
@@ -688,7 +720,7 @@ try {
   for (const f of unique) counts[f.check] = (counts[f.check] || 0) + 1
   const doc = { schema_version: '1.1', tool: 'ui-walk', stamp, base: opt.base, routes: opt.routes, clients: opt.clients, minutes: +((Date.now() - t0) / 60000).toFixed(1), screenshots: shotN, raw_finding_count: findings.length, finding_count: unique.length, counts, guard_aborts: guard.length, telemetry_stubbed: stubbed, api_issues: apiIssues, console_errors: consoleErrors, drill_paths: drillPaths, findings: unique }
   writeFileSync(path.join(OUT, 'findings.json'), JSON.stringify(doc, null, 1))
-  if (opt.days.length) writeFileSync(path.join(OUT, 'timeline-days.json'), JSON.stringify(timelineDays, null, 1))
+  if (timelineDays.length) writeFileSync(path.join(OUT, 'timeline-days.json'), JSON.stringify(timelineDays, null, 1))
   writeFileSync(path.join(OUT, 'lead-lists.json'), JSON.stringify({ schema_version: '1.0', tool: 'ui-walk', stamp, lists: leadLists }, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')
   writeFileSync(path.join(OUT, 'guard.tsv'), guard.join('\n') + '\n')

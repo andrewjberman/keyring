@@ -73,6 +73,8 @@ The lead-panel walk also presses one legend button (`[data-series-ticker]`) per 
 
 `--day "<security>=<YYYY-MM-DD>"` (repeatable, with `--security <name>`) presses that name's timeline bar `[data-day-bar="<date>"]` (else records `timeline:day-not-found`), runs the checks step `<sec>-timeline-day-<date>`, and writes each day's article rows in the order the page lists them to `timeline-days.json` beside `findings.json`.
 
+Every opened timeline day (the `--day` step, the newest day and the first event) waits for the day's STATE, not for time: `waitForDayState(page, date)` polls the opened day's container `[data-timeline-selected-day="<date>"]` for article rows (`state: "rows"`), the designed empty day (`"empty"`) or the failed dissection (`"failed"`), every 250 ms, and shoots at the first state seen; if none appears within `DAY_STATE_CEILING_MS` (20,000 ms; the deployed `/timeline/day` answers in about 5.5 s for a day with articles) the result is `"ceiling"`, recorded as its own result and never graded as rows. `timeline-days.json` is written whenever any day was opened, one record per opened day with `via` (`day`, `newest` or `event`), `security`, `date`, `pressed`, `state` and `waited_ms`; the `--day` records also carry `article_rows_in_page_order`, read only when `state` is `rows`.
+
 The skill runs:
 
 ```

@@ -103,7 +103,7 @@ and any row.
 Base walk.mjs @4a0628755b: daystate.cjs 0 of 3; green (scratch walk.mjs, ceiling 20000) 3 of 3; walkerbound 3 of 3 at base and green;
 walkvoid YES at base (not run on the green arm: the green change touches no sign-in or void path).
 
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <slot>~29</slot>
 <fabric>site-z</fabric>
