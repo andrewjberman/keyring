@@ -1,0 +1,147 @@
+{
+  "contract": "NFRA_TRNSPT_COMMENTARY_GOLD",
+  "version": "1.0.0",
+  "table": "analysis_commentary",
+  "one_opal_shape": true,
+  "authored_by": "0.9.0_WK_NFRA_TRNSPT~4 (round 1 cell TR-k-1)",
+  "source": {
+    "pipeline": "data/transcripts/scripts/outlook",
+    "silver": "analysis_commentary (silver.py columns)",
+    "gold_builder": "data/transcripts/scripts/outlook/gold.py",
+    "partition": "date=<YYYY-MM-DD>",
+    "object": "analysis_commentary.parquet",
+    "address": "lib/opal_naming.py address(source, 'transcripts', 'gold', 'analysis_commentary', partition, object)",
+    "rule": "CLAUDE_ANNEX 17c: every firm adapter writes exactly this schema; a firm-specific column does not survive into gold",
+    "row_grain": "one row per distinct record_id that passes ingest and is not held out",
+    "not_a_field": [
+      "approved",
+      "finder_status",
+      "sent_external"
+    ],
+    "not_a_field_reason": "an external send is approved; approval is not a property of the commentary row"
+  },
+  "schema_hash_rule": "sha256 of the newline-joined lines name|type|nullable(1/0) over fields in order; the builder stamps it into the parquet metadata as opal_contract_schema_hash",
+  "schema_hash": "cd15cee0fc4ec2de28dba7c8a6df489d67769d78d69b76ce3fe46529caa322d0",
+  "enums": {
+    "yc_variant": [
+      1,
+      2,
+      3
+    ],
+    "account_type": [
+      "roth",
+      "ira",
+      "401k",
+      "brokerage",
+      "trust",
+      "household"
+    ],
+    "claim": [
+      "measured",
+      "inferred",
+      "held",
+      "absent"
+    ]
+  },
+  "coverage_markers": "claim per field: measured, inferred, held, absent; a nullable field is null where its claim is absent",
+  "fields": [
+    {
+      "name": "record_id",
+      "type": "string",
+      "nullable": false,
+      "derivation": "silver.record_id, carried unchanged (the message id digest; the dedup key)",
+      "claim": "measured"
+    },
+    {
+      "name": "sent_at",
+      "type": "string",
+      "nullable": false,
+      "derivation": "silver.received_at, carried as the ISO-8601 UTC text the bronze sidecar holds; sentDateTime is not returned by the read path, so this is the receive time",
+      "claim": "inferred"
+    },
+    {
+      "name": "recipient_firm",
+      "type": "string",
+      "nullable": false,
+      "derivation": "silver.recipient_firm, carried: the registry FIRM scope key whose tenant.email_domain matched the recipient",
+      "claim": "measured"
+    },
+    {
+      "name": "yc_variant",
+      "type": "int64",
+      "nullable": false,
+      "derivation": "1/2/3 from the count of distinct models_referenced: 0 -> 1, 1 -> 2, 2 or more -> 3",
+      "claim": "measured"
+    },
+    {
+      "name": "models_referenced",
+      "type": "list<string>",
+      "nullable": false,
+      "derivation": "model_aliases.json aliases matched in body_text (longest match wins, no overlap), each mapped to its IRPT comparison_key, or to its canonical name where the key is null; sorted, distinct",
+      "claim": "measured"
+    },
+    {
+      "name": "account_type",
+      "type": "string",
+      "nullable": false,
+      "derivation": "keyword rules over body_text, first hit in order roth, ira, 401k, brokerage, trust, else household",
+      "claim": "measured"
+    },
+    {
+      "name": "themes",
+      "type": "list<struct<theme: string, client_figure: string, model_figure: string>>",
+      "nullable": false,
+      "derivation": "one entry per heading block; client_figure and model_figure are the first 'X% versus Y%' / 'X% vs Y%' / 'X versus Y' pair in the first paragraph after the heading (first figure client, second model), else null inside the struct",
+      "claim": "measured"
+    },
+    {
+      "name": "body_text",
+      "type": "string",
+      "nullable": false,
+      "derivation": "silver.body_text (PII-wiped), carried unchanged",
+      "claim": "measured"
+    },
+    {
+      "name": "paragraph_hashes",
+      "type": "list<string>",
+      "nullable": false,
+      "derivation": "sha256 hex of each silver block's text, in block order",
+      "claim": "measured"
+    },
+    {
+      "name": "body_hash",
+      "type": "string",
+      "nullable": false,
+      "derivation": "sha256 hex of body_text (utf-8)",
+      "claim": "measured"
+    },
+    {
+      "name": "pdf_sha256",
+      "type": "string",
+      "nullable": false,
+      "derivation": "sha256 of the YCharts PDF attachment bytes; the empty string this round because attachment bytes ride S12 and are not in silver (coverage marker: claim absent)",
+      "claim": "absent"
+    },
+    {
+      "name": "has_pdf",
+      "type": "bool",
+      "nullable": false,
+      "derivation": "silver.ycharts_pdf, carried",
+      "claim": "measured"
+    },
+    {
+      "name": "holdings",
+      "type": "string",
+      "nullable": true,
+      "derivation": "JSON text of the holdings table parsed from the PDF; null until PDF bytes land",
+      "claim": "absent"
+    },
+    {
+      "name": "request_text",
+      "type": "string",
+      "nullable": true,
+      "derivation": "the client's request text when the PDF carries one; null until PDF bytes land",
+      "claim": "absent"
+    }
+  ]
+}
