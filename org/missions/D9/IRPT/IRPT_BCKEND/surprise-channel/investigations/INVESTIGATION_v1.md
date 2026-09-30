@@ -12779,3 +12779,109 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the cell was built and reads 6 failed / 2 passed, but no criterion grades it, so the mechanical proof cannot close over it. I did not edit the order's criteria (outside my grant to amend). INERT."
 }
 ```
+
+## IRPT_BCKEND-W92-S1 -- The order's premise that the served dict can take top-level `actions` and `public_reason_code` is refused by the published contract: AnalysisUploadResult is closed (additionalProperties false), so the correction vocabulary was placed on the finding items instead.
+
+```json
+{
+  "id": "IRPT_BCKEND-W92-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~92",
+  "surfaced_at": "2026-09-30T04:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order's premise that the served dict can take top-level `actions` and `public_reason_code` is refused by the published contract: AnalysisUploadResult is closed (additionalProperties false), so the correction vocabulary was placed on the finding items instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json is additionalProperties:false and lists no actions/public_reason_code; measured: a NEEDS_CORRECTION answer with those two keys added -> is_valid False, \"Additional properties are not allowed ('actions', 'public_reason_code' were unexpected)\"; the same answer without them -> True.",
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_upload_template_lane_contract.py validates the REAL served NEEDS_CORRECTION answer against that schema, so a top-level key would turn a neighbouring lane's test red; the contract file and that test are outside this order's <paths>.",
+      "The schema's own `findings` description already lists `actions` as a finding field and its items are open objects, so intake/uploads.py::_answer now shapes each finding whose code is in the words table: actions=[\"CORRECT\"] (was [\"REPLACE_FILE\"], which blames the file) and description=<the envelope's words>."
+    ]
+  },
+  "spec_asserts": "The order: the dict at intake/uploads.py:313-320 carries no `actions` and no `public_reason_code` key; make the correction vocabulary reach THAT dict.",
+  "world_is": "MEASURED: the vocabulary reaches the dict, on the finding items, not at its top level. ARMED because the portal reads these findings and was not checked here (no portal in this grant): if it renders only known action strings, RESOLVE_RETRY_EXHAUSTED now shows no action where it showed REPLACE_FILE. A top-level answer would need the contract, the wire type portal/src/pages/InvestorReporting/contracts/wire/AnalysisUploadResult.ts and their pinned hashes to move together.",
+  "notes": "Disarm = read how the portal renders a finding's `actions`/`description` for RESOLVE_RETRY_EXHAUSTED, or a CTO ruling to widen the contract."
+}
+```
+
+## IRPT_BCKEND-W92-S2 -- The envelope's CORRECTION_WORDS cannot be imported by intake/uploads.py: ops/status.py is not staged into irpt-ycharts-generate, the function that ships uploads.py, so the words are a literal copy locked by a test.
+
+```json
+{
+  "id": "IRPT_BCKEND-W92-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~92",
+  "surfaced_at": "2026-09-30T04:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The envelope's CORRECTION_WORDS cannot be imported by intake/uploads.py: ops/status.py is not staged into irpt-ycharts-generate, the function that ships uploads.py, so the words are a literal copy locked by a test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json: intake/uploads.py appears only under functions/irpt-ycharts-generate/staged_from[70]; no function's staged_from carries ops/status.py, and that function's staged ops members number one (owned_requests.py) of 79.",
+      "intake/tests/test_correction_words.py::test_correction_words_are_the_envelopes_words asserts uploads.CORRECTION_WORDS == status.CORRECTION_WORDS, so a drift in either copy turns a test red."
+    ]
+  },
+  "spec_asserts": "The order: the same words the envelope declares.",
+  "world_is": "MEASURED: same words by equality test, not by shared import. INERT while that test runs; the source map is outside this order's <paths>.",
+  "notes": "A shared home for the words (a module staged into both) would remove the copy."
+}
+```
+
+## IRPT_BCKEND-W92-S3 -- Y28-2-AC1's premise that `-k correction` currently selects nothing is wrong: it selects 7 tests at base, so the selected count does not evidence the added test.
+
+```json
+{
+  "id": "IRPT_BCKEND-W92-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~92",
+  "surfaced_at": "2026-09-30T04:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Y28-2-AC1's premise that `-k correction` currently selects nothing is wrong: it selects 7 tests at base, so the selected count does not evidence the added test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q -p no:cacheprovider intake/tests/ -k correction at this worktree with my four new tests: 11 passed, 243 deselected; --collect-only lists 7 from before (test_deferred_resolution::test_a_correction_supersedes_..., and six under test_parse.py::TestCorrections) plus my 4. Base = 11 - 4 = 7."
+    ]
+  },
+  "spec_asserts": "The order: at base `-k correction` selects nothing, so the added test is what makes the number real.",
+  "world_is": "MEASURED: base selects 7, now 11. The 4 new tests are in intake/tests/test_correction_words.py; the criterion cannot tell them from the 7 by count alone."
+}
+```
+
+## IRPT_BCKEND-W92-S4 -- The absent-bundle fix is proven against a doubled store error (NoSuchKey/NoSuchVersion) on the report blob read; the live cause of S213 (RPT-2e21b52e) was not read back.
+
+```json
+{
+  "id": "IRPT_BCKEND-W92-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~92",
+  "surfaced_at": "2026-09-30T04:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The absent-bundle fix is proven against a doubled store error (NoSuchKey/NoSuchVersion) on the report blob read; the live cause of S213 (RPT-2e21b52e) was not read back.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ops/owned_report.py: the retained-bytes read `self.reports.get(...)` -> repository.S3ReportBlobs.get -> client.get_object raises a botocore ClientError whose class name is in no table, so _authz/errors.py::reason_for returned the default UNEXPECTED; it now raises ReportBundleAbsent (AnalysisUnavailable subclass) carrying public_reason_code NOT_READY, which reason_for reads first and BOUNDARY_REASONS admits.",
+      "ops/tests/test_owned_report.py: the test fails the report blob alone (composition reads still work) and asserts the reason the boundary would serve is NOT_READY, not UNEXPECTED; against the unmodified owned_report.py the same two parametrized cases fail with the raw store error. 20 passed before, 23 after.",
+      "Not covered: an absent COMPOSITION artifact (read in requests._materialize, owned_requests.py, outside <paths>) and any store error whose code is not NoSuchKey/NoSuchVersion/404/NotFound."
+    ]
+  },
+  "spec_asserts": "The order: the absent-bundle case escapes the named refusals and lands on UNEXPECTED; name it.",
+  "world_is": "MEASURED offline only; no AWS call was allowed. If the live failure is another exception class, the answer stays UNEXPECTED. ARMED until the route is read back on RPT-2e21b52e.",
+  "notes": "Disarm = read GET .../analysis/RPT-2e21b52e.../sections after deploy and expect NOT_READY."
+}
+```
