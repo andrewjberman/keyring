@@ -47,4 +47,18 @@ Asked by CRO~O: "Do you want refused messages logged silently, or dropped with n
 Reading aid: a message refused by the sender-domain allowlist gets no response AND leaves a log record. Where the
 record lives and what it carries is not decided here. Still open from CRO~O's proposal (no answer yet): mapping each
 allowed domain to its Microsoft tenant ID and enforcing on the tenant ID, and enforcing at the gateway as well as the
-harness.
+harness. (Both answered in section 6.)
+
+## 6. Andrew, verbatim, same channel, 2026-09-30 ~03:26Z
+
+Asked by CRO~O: yes or no on (1) mapping each allowed domain to its Microsoft tenant ID and checking the tenant ID on
+every message (the one-time lookup being a Microsoft endpoint that needs his word), and (2) enforcing at the gateway
+as well.
+
+> "Yes Check tenant ID if its surfaced, i like tenant id and domain check. yes to enforce at gateway as well."
+
+Reading aid:
+- Both checks: the sender's domain AND the tenant ID, the tenant ID checked where the message surfaces one.
+- The check is enforced at the gateway as well as at the agent.
+- NOT read as given: authorization for the one-time domain-to-tenant lookup against a Microsoft endpoint. The quote
+  does not name it; vendor egress needs his explicit per-use word, so it stays unauthorized until he says so.
