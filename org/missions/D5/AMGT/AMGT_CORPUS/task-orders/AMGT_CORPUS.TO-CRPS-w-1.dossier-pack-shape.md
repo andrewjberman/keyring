@@ -96,3 +96,4 @@ The picks rule (not all reports) is the issuer's reading of "the files the fold 
 <round>21</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
