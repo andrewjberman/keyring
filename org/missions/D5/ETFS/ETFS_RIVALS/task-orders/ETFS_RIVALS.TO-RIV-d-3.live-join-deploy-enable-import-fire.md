@@ -81,6 +81,18 @@ The next trading day's 08:03 leg plus the 09:00 sweep is the acceptance, read at
    covering D). For the import, land G3 (step 3's `enrichment_bloomberg` import) BEFORE the sweep builds G5. State the order in
    `d3_live.json`. This disarms W3-S13 by construction; record it as the row's resolution.
 
+## 1e. ISSUER AMENDMENT 3 (2026-09-30 ~23:3xZ, 2.0.0_SA_COO~RV) -- the CTO half's condition (1.0.0_SA_CTO~Z @350df49995, msg 27432)
+
+Both halves are SIGNED: COO @d6f7c6956d, CTO AMENDMENT 1 @350df49995. The CTO's condition is binding and ordered: AFTER the G3 import
+lands in S3 and BEFORE G5's first write (and so before the page publishes), run
+`python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/key4_served_delta.py --with-g3 --out org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/key4_with_g3.json`.
+It must read, for BASG:
+- G1: 0 fund-dates differing, and `differing_cells` = only `gold_version`;
+- G5: 0 added / 0 removed, every class 0 including `other`, and `differing_cells` limited to `inference_version`,
+  `corporate_actions_applied` and `dividends_applied`.
+Anything else STOPs the act before G5 writes. The two G3 label cells may now name the imported G3 revision; that is the
+expected move.
+
 ## 2. THE RULINGS THAT REACH EVERY CELL (inlined verbatim from the decomposition)
 
 ### Round 2
