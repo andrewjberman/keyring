@@ -225,6 +225,11 @@ is cut against the path where the gateway lives at issuance.
   sent a partner request through the gateway identity against `opal-data-portal-v2` is NOT caught by AWS until the v0.3
   staging closes. That is the named residual above, and whether it is acceptable for live partner traffic is Andrew's
   (CVO~O finding F2, msg 26963).
+- **Andrew's answer to F2, verbatim: "Yes, rec approved"** (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_06xxZ_NFRA_MCPMSP_PORTAL_V2_RESIDUAL_ACCEPTED_FOR_INFLECTION_PILOT.md`).
+  - The residual is accepted while Inflection is the only live partner firm.
+  - The portal-v2 zero-read MUST land before Cottonwood, or any second partner firm, goes live.
+  - Until it has landed, FWD-2 is not graded and a second firm's G-FIRM is not taken.
 - Role names come from `lib/opal_naming.py name()` after a registry row lands in `infra/logic/registry/` (CLAUDE.md
   Rule 30). Each role and trust change is an IAM act under the change ledger (C12).
 
