@@ -679,6 +679,50 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "The criterion reads the author and domain tables from the versioned assets when present.",
     "world_is": "It reads them only as a pair; after the ruling the pair can never be complete, so the versioned authors table is dead data.",
     "notes": "Built on two branches that could not see each other; found at the union."
+  },
+  {
+    "id": "NFRA_TRNSPT-S11",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-30T22:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "S07 (the Research Meeting refusal, read-only): the Research Team Meeting's chat shows a transcript WAS produced on 2026-09-29 (callTranscriptEventMessageDetail, organizer user e44d429b) and a 57-minute recording saved to the organizer's OneDrive, yet the meeting is ABSENT from Andrew's calendar for the next 8 days while the Morning Meeting and OCIO IC appear there with him as an attendee; the likely cause of Graph's 3003 'User does not have access to lookup meeting' is that Andrew is a member of the meeting CHAT but not an invitee of the meeting SERIES.",
+    "disarm_owner": "1.0.0_SA_CTO (routing: the remedy is a person act -- the organizer adds andrew@opalinvest.com to the series invite -- or the application-permission route of the recon brief; both are outside this project's write surface)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gateway read_chat_messages(19:meeting_MjBkMmQ0ZDItMjY3My00NTAzLWExZTUtZTQxNTgyZGFkMDYy@thread.v2, top 8) at 2026-09-30 22:0xZ: callTranscriptEventMessageDetail 2026-09-29T12:56:59Z (callTranscriptICalUid present), callRecordingEventMessageDetail status success, duration PT56M38S, URL in the organizer's personal OneDrive; meetingOrganizer and initiator user id e44d429b-b629-4035-b09b-447e978322db (series.json organizer_oid for equity_research_call)",
+        "gateway list_calendar(days=8) at 2026-09-30 22:0xZ: 6 events; Morning Meeting 10-05 and OCIO IC 10-06 list andrew@opalinvest.com as an accepted attendee; no Research Team Meeting event, although research_transcripts/raw/ shows it ran about twice weekly (e.g. 04-07 Tue, 04-09 Thu) and it ran 09-29",
+        "TRANSCRIPTS_FIRST_PULL_20260929.md: the three meetings Andrew can read are all organized by another user of whom he is an invitee; the refused one is the only one organized by e44d429b"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD S07: the Research Meeting refusal investigated; cause named or a route found.",
+    "world_is": "Cause named as likely (not proven): invitee status. Proof needs one act: after the organizer adds Andrew to the series, list_meeting_transcripts on the meeting returns 200; the negative arm is today's 3003.",
+    "notes": "Read-only; nothing was changed. The calendar tool reads forward only, so the absence is measured over 8 days, not the series."
+  },
+  {
+    "id": "NFRA_TRNSPT-S12",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-30T22:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Off-task observation: the announce-mode seating lint (gate2, .tools/to-decomp-ref-lint.py) reads the per-project worker serial 0.9.0_WK_NFRA_TRNSPT~1 as the generic seat 0.9.0_WK_NFRA and reports all five round-2 orders as 'already holds open TOs on 6 OTHER pipeline projects' -- a false positive under the spine's worker-serial form 0.9.0_WK_<CODE>~<n>.",
+    "disarm_owner": "1.0.0_SA_CTO (the lint's owner decides; it is ANNOUNCE mode and blocked nothing)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of the round-2 issuance 35d912322e: '[gate2] SEATING: this NEW task order for NFRA_TRNSPT is addressed to 0.9.0_WK_NFRA, which already holds open TOs on 6 OTHER pipeline project(s): NFRA_IAMROLES202609 ...' x5; '[gate2] ANNOUNCE mode -- NOT blocking this commit'",
+        "spine L6: <issued_to> names the worker serial 0.9.0_WK_<CODE>~<n>; the project code here contains an underscore (NFRA_TRNSPT)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The seating lint counts a seat instance's open orders across projects.",
+    "world_is": "It truncates a project code containing an underscore, so every NFRA_* project's workers look like one seat; if the lint is armed to ENFORCE it will refuse every such issuance."
   }
 ]
 ```
