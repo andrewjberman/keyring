@@ -72,7 +72,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 (hold_unspanned ABSENT), AC3 PASS 134. Positive arms (ruling 1): AC1 PASS on a census written from the recount, FAIL with one BA sentence
 dropped; AC2 PASS on a reference transform, FAIL with one span-carrying sentence dropped.
 
-<status>pending</status>
+<status>complete</status>
 <round>54</round>
 <slot>~193</slot>
 <fabric>site-z</fabric>
