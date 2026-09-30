@@ -3185,6 +3185,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "The local run makes the same LIST and GET calls but from a laptop, so per-call latency is higher than in region; COLD is a fresh interpreter (rep 1) and WARM is reps 2-3 of the same process, where the fix keeps decoded silver parts and the newest gold snapshot per (key, ETag). A deployed container reaches the WARM figure after its first request per publisher part; the first hit on a day the container has not seen reads ~35-60 objects (~0.5-2.0 s locally). Only a post-redeploy Invoke measures the in-region figure.",
       "notes": "Measured only. The redeploy and its own before/after Invokes are the later paired act, not this cell.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W63-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~63",
+      "surfaced_at": "2026-09-30T04:05Z",
+      "one_line": "OBSERVATION: a fourth newest-wins reader over silver, silver_from_bronze.rows_by_company_mention (lib/opal_data_harvest/silver_from_bronze.py:404-407), still breaks a fetched_at tie toward the row seen first; it is outside HVST-o-3's paths and takes rows with no part name, so it cannot apply the run_stamp rule as it stands.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~63/o3_ac2_output.txt section (1): census over 345 .py files under lib/, 30 production hits, 4 distinct newest-wins readers; three (store.silver_latest, publication_gold._iter_latest_articles by delegation, publication_gold._latest_articles_for_keys) now share store.supersedes, the fourth is silver_from_bronze.py:406 `row[\"fetched_at\"] > held[\"fetched_at\"]`",
+          "git grep at 65aa9251bc: rows_by_company_mention has no production caller in lib/; its callers are lib/opal_data_harvest/test_silver_from_bronze.py:782,790 and the round-24 script org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~57/scripts/n2_ac3_query_by_company.py:62 (which passes `silver_all`)",
+          "served silver, all 8 (source, table) pairs read: 0 record keys with a tied newest fetched_at across parts, so no served answer differs today"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-o-3 ruling: 'in EVERY reader that picks the newest silver row per record key, ties on fetched_at go to the row from the part with the LATER run_stamp ... A reader outside your paths is a row, not an edit.'",
+      "world_is": "rows_by_company_mention is a pure function over silver rows already read; its `>` keeps the first row of a tie in the order the caller supplies. To apply the run_stamp rule its caller must pass each row's part key (or the rows sorted by run_stamp, ascending, with the comparison made `>=`). The function is not a reader of S3 and nothing served calls it today.",
+      "notes": "Form only. A later cell that wires the function into a served path should carry the part key with each row and call store.supersedes.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
