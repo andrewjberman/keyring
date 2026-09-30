@@ -1,0 +1,19 @@
+{
+    "Item": {
+        "asset_class": {
+            "S": "equity"
+        },
+        "last_updated": {
+            "S": "2026-09-30T02:23:47.350920+00:00"
+        },
+        "classified_by": {
+            "S": "scheduled"
+        },
+        "sub_asset_class": {
+            "S": "International"
+        },
+        "ticker": {
+            "S": "VNQI"
+        }
+    }
+}
