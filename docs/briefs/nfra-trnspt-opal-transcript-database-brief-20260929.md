@@ -203,3 +203,36 @@ PRIOR ART         docs/briefs/teams-meeting-transcripts-programmatic-pull-recon-
                   org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20260929_170xZ_TRANSCRIPTS_BUCKET_LANDING.md
 MEASURED AT       2026-09-29, 19:00Z to 21:15Z, per Part VI
 ```
+
+---
+
+## ADDENDUM 2026-09-29 (after Andrew's answers; record `ANDREW_DIRECT_20260929_2xxxZ_MARKET_UPDATE_IS_PPTX_COMMENTARY_IS_EMAIL_PUSH_CAN_WAIT.md`)
+
+These answers resolve the first open item of Part VII. Outcomes O6 and O7 keep their wording.
+
+**A1. Market update is a PowerPoint.** Andrew's word. Measured through the gateway as andrew@opalinvest.com on 2026-09-29:
+
+| Location | Finding |
+|---|---|
+| Andrew's OneDrive | 30 presentations named as a market update, all last modified 2025-12-01, about 4 MB in total. Names run from "Opal Market Update August 19 2024" to "Opal Market Update October 13 2025", plus one "49_Opal Mkt Update Sep 8 2025". Search returned exactly 200 hits, so the search may be capped and the true count may be higher. The folder each sits in was not resolved |
+| SharePoint site Opal Capital, Shared Documents, folder "Market Update" | 1 presentation: "Opal Market Update 7-27-2026 (from Manav).pptx", modified 2026-07-27 |
+| Opal OCIO site | 0 presentations matching |
+
+Two readings of that table are UNVERIFIED. (a) The OneDrive files look like a one-time copy of the archive on
+2025-12-01, since all 30 share a modified date. (b) The 2026 issues appear to be filed in the SharePoint folder, of
+which one was found. Neither was checked against the folder's full listing or the other sites. Sites not searched:
+Opal Trade Submissions, Opal Consulting, Opal CIO Office for 49 Financial, 49 Financial Internal.
+
+**A2. Analysis commentary is email supplied by Alyssa.** Andrew's word. The route he leans to is Alyssa's agents
+pulling through Microsoft Graph. This makes the source a different person's mailbox, so it is a delegated-or-
+application access question for Alyssa's identity, not Andrew's. It is not designed here. The gateway's per-user
+model means a pull from her mailbox needs her own sign-in or an application permission.
+
+**A3. New dependencies from these answers.**
+- A bronze table for presentations keeps the original .pptx byte for byte. Extracting slide text is a later tier.
+- A stable identity for a presentation, since a file can be re-saved. Its file hash is available through Graph.
+- Who owns the pull for commentary: Alyssa's agents, or this project. Andrew said "probably", so it is open.
+- A registry row for each new source, as before. Sources are SharePoint and Outlook mail, not yet registered.
+
+**A4. Push.** Andrew: "push can wait, no pressure for that." Nothing is pushed.
+
