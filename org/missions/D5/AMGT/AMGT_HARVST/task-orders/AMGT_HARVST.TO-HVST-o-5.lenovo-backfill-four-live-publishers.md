@@ -39,10 +39,12 @@ comp-adversary: RUN at L5 -- the adversary is a run that "succeeds" on a stale c
 3. **The run, ONCE:**
    `python -m lib.opal_data_harvest run --harvest-grammar --retrieval-mode backfill --floor 2026-01-01 --new-only --security-json <that file> --publishers barrons bbg ft wsj --runtime-root "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest"`.
    - Save stdout and stderr as `o5_run1.txt`.
-   - Record the run record's path and `run_id` in `o5_run_ids.json`.
-4. **The repeat, ONCE, the same command, the same day.** Save it as `o5_run2.txt`, and add its run record to
-   `o5_run_ids.json`.
-5. Run AC1 and AC2.
+   - Record the run record's path and `run_id` in `o5_run_ids.json`, shaped exactly
+     `{"runs": [{"run_id": "<id>", "path": "<absolute path of the run record json>"}]}`.
+   - The collector prints the path as a `run_record` event, and writes the record under the runtime root's `run_records/`.
+4. **Run AC1 now, BEFORE the repeat.** It writes the after-run-1 snapshot that AC2 compares against.
+5. **The repeat, ONCE, the same command, the same UTC day.** Save it as `o5_run2.txt`, and append its run record to
+   `runs` in `o5_run_ids.json`. Then run AC2.
 6. **A publisher that challenges, denies or fails is a RESULT, not a retry loop.** Record it and go on. Do not log in,
    solve a challenge, or repeat a batch to provoke one.
 7. **Rollback** (named in the halves): no overwrite is possible (never-overwrite). Removing a new object is a delete,
