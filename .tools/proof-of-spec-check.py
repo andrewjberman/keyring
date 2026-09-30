@@ -282,6 +282,22 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
                         f"parent of {where} -- not introduced here; the row pins a commit that did not make the change")
         return None
 
+    # PIN DRIFT (AMGT_CORPUS-Z-S70, 2026-09-30, 1.0.0_SA_CTO~Z on Andrew's "go"): a commit-ish pin resolves when
+    # `<pin>:<path>` merely EXISTS, so a row pinned to an OLDER version of an artifact the instance graded in a
+    # NEWER version reads resolved (CRPS-aa-3: the table pinned at a05ead8252, before_total 59; graded at
+    # e6bbc97527, before_total 49). The graded version is compared here with the pinned one, line by line. Lines
+    # the reference REMOVED or CHANGED make the row DRIFTED. This is ANNOUNCED in a frame, never a violation:
+    # measured on AMGT_CORPUS's surprise channel, 1 of 9 older pins had a line edited in place, so a hard
+    # refusal would refuse honest channel pins. Insertions alone (a channel's appended rows) are not drift.
+    pin_drift: list[str] = []
+
+    def _changed_lines(old: bytes, new: bytes) -> int:
+        import difflib
+        a = old.decode("utf-8", errors="replace").splitlines()
+        b = new.decode("utf-8", errors="replace").splitlines()
+        sm = difflib.SequenceMatcher(None, a, b, autojunk=False)
+        return sum(i2 - i1 for tag, i1, i2, _j1, _j2 in sm.get_opcodes() if tag in ("replace", "delete"))
+
     def _git_ok(*args: str) -> bool:
         try:
             return subprocess.run(["git", *args], cwd=str(_REPO_ROOT), capture_output=True,
@@ -436,6 +452,21 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
             continue
         if _git_ok("cat-file", "-e", f"{pin}:{path}"):
             n_resolved += 1
+            # PIN DRIFT: the reference is the version the instance graded -- the instance's own commit
+            # (POST-COMMIT), or the index/HEAD blob (PRE-COMMIT). UNKNOWN has no reference and is not read.
+            ref_blob, ref_name = None, ""
+            if ctx == "POST-COMMIT" and inst_commit:
+                ref_blob, ref_name = _blob(f"{inst_commit}:{path}"), inst_commit[:10]
+            elif ctx == "PRE-COMMIT":
+                if _git_out("diff", "--cached", "--name-only", "--", path).strip():
+                    ref_blob, ref_name = _blob(f":{path}"), "the index"
+                else:
+                    ref_blob, ref_name = _blob(f"HEAD:{path}"), "HEAD"
+            pin_blob = _blob(f"{pin}:{path}") if ref_blob is not None else None
+            if ref_blob is not None and pin_blob is not None and pin_blob != ref_blob:
+                n_changed = _changed_lines(pin_blob, ref_blob)
+                if n_changed:
+                    pin_drift.append(f"{path}@{pin[:10]} ({n_changed} line(s) removed/changed by {ref_name})")
             if tokens:
                 err = _content_rung(path, tokens, _blob(f"{pin}:{path}"), _blob(f"{pin}~1:{path}"), f"pin {pin}")
                 if err:
@@ -460,6 +491,12 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
               "ClientPlatform~V via 2.0.0_SA_COO 88511): CONTENT-resolved proves a TOKEN MOVED between <pin>~1 and "
               "<pin>; it does NOT prove the token means what the citing face assumes. It catches a STALE pin, never "
               "a pin cited for the wrong reason."]
+    # Inserted BEFORE the content frame: consumers read `frames[-1]` as the 88109 content frame.
+    frames.insert(len(frames) - 1, f"artifact-resolution/pin-drift: {len(pin_drift)} row(s) whose pinned version had lines REMOVED or "
+                  f"CHANGED in the version the instance graded ({ctx}"
+                  f"{'' if ctx != 'UNKNOWN' else '; no reference, not read'}) -- AMGT_CORPUS-Z-S70 class: the graded "
+                  "content may be newer than the pin. ANNOUNCED, not asserted: an in-place channel edit reads the same "
+                  "way. Rows: " + ("; ".join(pin_drift) if pin_drift else "none"))
     return v, frames
 
 
