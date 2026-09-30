@@ -16323,6 +16323,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "Z-S319: ARMED for the next build whose sha starts with '/'.",
   "world_is": "Reachable (about 1 build in 64), but what it reaches is source_code_hash, not served bytes. INFERRED, not measured: terraform then shows a perpetual code diff and re-applies the same version, which a never-widen pair reads as a code move. Round 54's repair cell gives the three scripts chatter-axis's shape (no-pathconv on the metadata segment + read-back refusal); until it lands, the COO half of any RESAPP build pair carries 'head-object content-sha256 equals the local sha' as an act-start limb.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Supersedes Z-S319's ARMED standing (Z-S319 text unchanged, append-only). build-and-upload.sh is the HARVST research-pull-enqueue artifact: carried in the round-53 packet for the HARVST issuer to read."
+},
+{
+ "id": "AMGT_RESAPP-Z-S322",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-09-30T19:30:00Z",
+ "one_line": "`.tools/deploy_ledger.py open` STAGES its two files into the shared index, so during a live multi-seat window a concurrent seat's merge commit absorbs the NEVER-2 entry under that seat's author line before the opening seat can run safe-commit -- measured here: the ad-2 entry landed in two peer drains (3ac5a8666e 2.0.0_SA_COO~RV 15:21:35, f3980a84ab 2.0.0_SA_COO~H 15:24:03), never under 0.7.0_AE_CloudOps~A.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "deploy_ledger.py open printed 'both are STAGED' and named the required commit pathspec; the files were left in the shared index by the tool, not by this seat (no git add was run -- CLAUDE.md 14a forbids it).",
+   "safe-commit.sh REFUSED on the follow-up commit: 'A MERGE IS IN PROGRESS IN THIS WORKTREE', MERGE_HEAD ead1db469b (0.9.0_WK_AMGT_HARVST~84), staged now 17 paths -- and it staged nothing itself. Its own refusal text names this exact class and cites merge b687429234 of 2026-09-04 carrying a foreign record.",
+   "git log --full-history -- org/critical_paths/.open_deploys/amgt-resapp-r54-ad2-hold-on-object.json returns TWO merge commits: 3ac5a8666e (2.0.0_SA_COO~RV) and f3980a84ab (2.0.0_SA_COO~H). Default history simplification HIDES both (--diff-filter=A returned empty), so a plain `git log -- <path>` reads as 'never committed' on a file that is in HEAD.",
+   "git ls-tree -r HEAD confirms both files are in HEAD (2 of 2); git status --porcelain on the same two paths prints NOTHING, because index, worktree and HEAD now agree -- the absorption is invisible to a status read."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CLAUDE.md 14a: every commit carries its lane's author line via safe-commit.sh, whose contamination guard exists so one seat's files never land under another's authorship; NEVER-2: the ledger entry is opened AND committed by the acting seat at deploy-start.",
+ "world_is": "The entry's CONTENT is correct and it IS committed, so ad-2's precondition is materially met and this is not a rollback trigger. What was lost is the author line and the lane check: the absorbing commits are merges, where the owned-paths merge exemption means no lane check sees the payload. The guard cannot fire, because the absorption happens BEFORE safe-commit runs -- the tool stages, a peer commits, and safe-commit is never reached. Reachable by ANY seat that runs `deploy_ledger.py open` while another seat is merging, which on this device is the normal condition, not the exception. INFERRED, not measured: the same shape applies to every tool that stages on the caller's behalf, not only deploy_ledger.py; the class is 'a tool that stages into a shared index', and its denominator was not swept here.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z. Not a blocker for ad-2: the act proceeds on the committed entry. Candidate repair for the issuer to weigh: have `deploy_ledger.py open` WRITE its two files and leave them UNSTAGED, so the opening seat's own safe-commit is the only path into the index. Surfaced, not adjudicated -- this seat does not amend another seat's tool."
 }
 ]
 ```
