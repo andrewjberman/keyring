@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -313,3 +313,34 @@ S09's table, S12's news tables, S14's union-find). Relied-on work has no row by 
 | Frontend Part V | one load, browser compute; the views; coverage states; loading; print and export | C-SEAM, C-HONESTY; backlog F; S15 |
 | Frontend Part VI-VIII | round structure; calls; not claimed | sections 2-3; rulings 6.7-6.8 |
 | Andrew messages 1-6 | the request; five answers; gold is the Opal shape; GIPS rulings; the rail; the two-methodology question | provenance; C-TIERS, C-METHOD, C-FEERAIL, ruling 6.1 |
+
+## ADDENDUM v0.2 -- the L4-R review's four items ruled (L4; outside the ENDPOINT section, so no half re-opens)
+
+**Source.** `3.0.0_SA_CVO`'s review `org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_IRPT_DASHBD_v0.1_20260930.md@14d5546fb8`
+(SIGN @9914eab4f4; W1, Q1-Q4). Ruled by `1.0.0_SA_CTO` 2026-09-30 ~14:3xZ under the self-drive rule (nothing waits on Andrew).
+
+11. **Q2, the tie-out tolerance (FWD-8 "a tolerance Andrew accepts") is NOT a wait.** The tie-out tolerance is a second number,
+    distinct from C-GUARD's daily guard tolerance. Round 1 of workstream B MEASURES the 49 Financial sample's agreement
+    distribution against Black Diamond's own return (per account and window: median, p90, max of the absolute difference, with
+    each disagreeing day's stated reason) and PROPOSES the tolerance from it; `1.0.0_SA_CTO` rules it on read of the measurement
+    and it lands in `dim_return_method` as `tieout_tolerance` with the ruling's record cited. Andrew's word, when he gives one,
+    is recorded and supersedes the ruling; the ENDPOINT text is unchanged (an ENDPOINT edit would re-open the half for a
+    wording gain of nothing), and its ACCEPT line is read with this ruling.
+12. **Q1, the coverage vocabulary is decided in the contract file, with its record.** `IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json`
+    (round 1, workstream B) carries the rule-24 four-postulate record and word-boundary census for every enum it declares. The
+    CVO's finding is accepted: C-COVERAGE's list mixes three intents. The contract splits them: `history_scope` (FULL,
+    PARTIAL_HISTORY, MISSING_HISTORY), `day_quality` (MEASURED, FLOW_UNRECONCILED, LARGE_FLOW, NOT_MEASURABLE, SOURCE_LAG) and a
+    per-column null reason (NO_LOTS, UNCLASSIFIED_HOLDINGS) as `<column>_reason`; `return_basis` is closed (TWR, HOLDINGS_INCOME_FALLBACK,
+    NOT_MEASURABLE); the fee-rail fact lives ONLY in `dim_return_method.fee_basis` and is not a row marker. C-COVERAGE's text is
+    read as superseded by the contract file once it lands; the frontend maps each member of each axis to one sentence (C-HONESTY).
+13. **Q3, the asset-class vocabulary's authority.** Until MDPF_SECCLASS lands a class value list in
+    `org/standards/MDPF_SECCLASS_CONTRACT.json`, the authority is the portal's `HoldingAssetClass` type in
+    `portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts` (eight values, the IV-e-115 order); the `account_class_daily`
+    contract cites that file and its pin, and a later MDPF_SECCLASS list supersedes it by addendum, never silently.
+14. **Q4, the general platinum home for `market_topic_daily`.** The round that builds FWD-6 applies `02_DOCTRINE.md` R6 (line 397,
+    `opal-data-portal-v2/platinum/` as general platinum) unless the topics source gains a general-tenancy scope row, in which case
+    line 409 applies; the cell prints which rule it applied and the builder's `address()` output beside it.
+15. **W1.** The endpoint's FWD-1 SOURCE line names "COO~P record"; the record path is
+    `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260930_052xZ_PRECOMPUTED_GZIP_JSON_REPORTING_UNDER_2S_AND_PUSH_MANAGED.md`
+    (cited in the PRD header); the ENDPOINT bytes are not edited for it.
+
