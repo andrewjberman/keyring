@@ -16278,6 +16278,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The build script asserts the metadata is a REQUIRED, faithful carrier of the artifact's base64(sha256) because modules/yang-lambda reads it as source_code_hash; CLAUDE.md's Git section separately warns that MSYS_NO_PATHCONV is needed for slashed arguments and that a mangle returns clean-empty rather than erroring.",
     "world_is": "The upload leg passes the base64 sha through a Git Bash argv where a leading slash is a path, so roughly 1.6% of builds silently publish a corrupted source_code_hash with rc=0 and a correct byte count. The hazard is ARMED for the NEXT build whose sha starts with a slash, on this script and on any sibling sharing the shape; it is not disarmed by this act's repair, which fixed one object and not the producer. The fix belongs in the script (pass the metadata through a non-shell writer, or set it with the same boto3 call that uploads) and the script is under infra/aws/terraform/harvest/, which IS in this order's paths -- but changing it is outside this order's BOUNDS (the act and nothing else), so it is surfaced rather than taken.",
     "notes": "disarm_owner 2.0.0_SA_COO~Z. Surfaced during AMGT-ac-3 leg (b); row filed and the act continued per CLAUDE.md section 2. Caught only because the metadata was read back -- rc=0 and ContentLength both looked correct."
-  }
+  },
+{
+  "id": "AMGT_RESAPP-Z-S320",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T16:05:00Z",
+  "one_line": "Issuer ruling on AMGT_RESAPP-Z-S318: ac-3 AC3 was the issuer's instrument defect (the check hashed whole served bodies across an act that moves the read path the body reports) -- AMENDMENT 2 re-scopes it to rewrite the encoded name back to raw INSIDE `*_read` provenance subtrees only; every other byte must equal the pre-act capture. Under it AC3 reads 6 of 6 equal, 12 read-path strings rewritten; a planted change outside `*_read` FAILS. No rollback: the act is accepted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round53/checks/ac_3_served.py --what bpng --dir .../0.7.0_AE_CloudOps~A/ac3-pre (amended), served plane at CodeSha256 /QP4upEV..., 16:0xZ: 'read-path strings rewritten encoded->raw inside *_read subtrees: 12; bodies 6; moved or empty vs the pre-act capture: 0' exit=0.",
+      "Negative control, same run shape: one key planted OUTSIDE `*_read` in NG/_LN peers -> 'moved 1 [NG/_LN_Equity peers]', exit=1.",
+      "Rejected first scope, measured: also rewriting citation report_key fields made BP thesis FAIL, because those dossier citations were already stored encoded before the act (AE~A's row, 19 such paths) -- so the rewrite is confined to `*_read`.",
+      "The other three criteria re-run by the issuer on the served plane: AC1 ac_3_copies 40 of 40 byte-equal, raw kept (15:20Z); AC2 /timeline AMZN 273 of 273 carry publishers_found_codes; AC4 CodeSha256 /QP4upEVzTjnHV2bAeIXIud0k0DgjDDGrlMgtm0uo7o= LastModified 15:22:01Z Successful."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ac-3 AC3 as cut: whole-body sha256 equal before and after; the COO half's EXPECTED OUTCOME said the bodies are 'byte-equal'.",
+  "world_is": "The act moves the read path by design and the body reports it, so whole-body equality was unreachable for a correct act. Same class as Z-S311 (my zz-8 check): an outcome met and an instrument that could not see it. Recorded as the issuer's third check defect of this class; the round-53 packet carries it for the gate proposal already agreed.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Resolves Z-S318 by amendment; Z-S318 text unchanged (append-only). The never-widen rollback trigger is not met: no served regression, every criterion passes under AMENDMENT 2."
+},
+{
+  "id": "AMGT_RESAPP-Z-S321",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T16:05:00Z",
+  "one_line": "Issuer ruling on AMGT_RESAPP-Z-S319 (MSYS mangles a content-sha256 that starts with '/'): the served-output hazard is INERT -- modules/yang-lambda deploys the S3 object VERSION (s3_object_version), so the served bytes are always the uploaded ones; a mangled metadata value only corrupts source_code_hash, i.e. a spurious plan diff. The producer repair (three scripts) is carried to round 54 as its repair cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/yang-lambda: s3_key = var.artifact_key; s3_object_version = data.aws_s3_object.artifact.version_id; source_code_hash = ...metadata[\"content-sha256\"] (read at HEAD 16:0xZ).",
+      "Shape census of the four scripts in infra/aws/terraform/harvest/: build-and-upload-chatter-axis.sh already passes the metadata under MSYS_NO_PATHCONV=1 and READS IT BACK and refuses on mismatch; build-and-upload-scoped-amgt.sh (:742), build-and-upload-print-deps-layer.sh (:79) and build-and-upload.sh (:29) pass it bare and only print the read-back.",
+      "This act's artifact was repaired pre-apply by the executor (VersionId C9brZ5Qd6_..., metadata equals the local sha; the plan carried the mangled string 0 times)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S319: ARMED for the next build whose sha starts with '/'.",
+  "world_is": "Reachable (about 1 build in 64), but what it reaches is source_code_hash, not served bytes. INFERRED, not measured: terraform then shows a perpetual code diff and re-applies the same version, which a never-widen pair reads as a code move. Round 54's repair cell gives the three scripts chatter-axis's shape (no-pathconv on the metadata segment + read-back refusal); until it lands, the COO half of any RESAPP build pair carries 'head-object content-sha256 equals the local sha' as an act-start limb.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Supersedes Z-S319's ARMED standing (Z-S319 text unchanged, append-only). build-and-upload.sh is the HARVST research-pull-enqueue artifact: carried in the round-53 packet for the HARVST issuer to read."
+}
 ]
 ```
