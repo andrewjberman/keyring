@@ -25,6 +25,11 @@ import subprocess
 import sys
 
 TERMINAL = {"complete", "superseded", "cancelled", "canceled", "withdrawn", "retired", "closed"}
+# The status vocabulary actually written in order files (census 2026-09-30 over 1473 orders: complete,
+# pending, superseded, staged, withdrawn, cancelled, open, parked, closed). Any other word after "<status>"
+# is prose quoting the tag ("tag", "word", "element", ...).
+STATUS_WORDS = TERMINAL | {"pending", "staged", "open", "parked", "active", "in_progress", "in-progress",
+                           "blocked", "held", "draft"}
 PRESENCE_GRACE = 30 * 60
 PATH_LINE = re.compile(r"^[A-Za-z0-9_.][A-Za-z0-9_./*?\-~{},\[\]]*$")  # a path or glob; prose never matches
 
@@ -148,11 +153,17 @@ def open_orders(skip_codes):
                 text = fh.read()
         except Exception:  # noqa: BLE001
             continue
-        # The TAG, not the word: an order's prose may quote "<status>" (NFRA_IAMROLES202609 IAM-t-3 line 32,
-        # "Carries NO <status> tag at all") and the old first-match read that as status "tag" -- a complete
-        # order then read OPEN and refused every lease under infra/aws/terraform/ (MDPF_TAXSMA, 2026-09-30).
-        st = re.search(r"<status>\s*([A-Za-z_-]+)\s*</status>", text)
-        if st and st.group(1).lower() in TERMINAL:
+        # The first <status> whose word IS a status: an order's prose may quote the tag ("Carries NO <status>
+        # tag at all", NFRA_IAMROLES202609 IAM-t-3:32) and a plain first-match read that as status "tag", so a
+        # complete order read OPEN. Requiring the closing tag right after the word (05f0a0b5af) was WRONG: most
+        # orders write "<status>complete -- <note>" and it read 435 of 1473 orders open (was 106). A word outside
+        # STATUS_WORDS is prose and is skipped; no status word at all still reads OPEN (fail closed).
+        status_word = None
+        for st in re.finditer(r"<status>\s*([A-Za-z_-]+)", text):
+            if st.group(1).lower() in STATUS_WORDS:
+                status_word = st.group(1).lower()
+                break
+        if status_word in TERMINAL:
             continue
         blk = re.search(r"^<paths>\s*$(.*?)^</paths>", text, re.M | re.S)
         lines = [ln.strip().lstrip("-").strip().strip("`") for ln in blk.group(1).splitlines()] if blk else []
@@ -288,6 +299,8 @@ def self_test():
             fh.write("<status>complete</status>\n<paths>\nportal/src/pages/Done/\n</paths>\n")
         with open(os.path.join(tod, "OTHER_P.TO-3.x.md"), "w") as fh:  # prose quoting the tag BEFORE the real one
             fh.write("It carries NO <status> tag in its draft.\n<status>complete</status>\n<paths>\nportal/src/pages/Prose/\n</paths>\n")
+        with open(os.path.join(tod, "OTHER_P.TO-4.x.md"), "w") as fh:  # the common shape: a note inside the tag
+            fh.write("<status>complete -- worker 2026-09-18: 6 of 6 PASS\n(proof @abc)</status>\n<paths>\nportal/src/pages/Noted/\n</paths>\n")
         check("absent lease reads FULL", load("A_X") is None)
         check("arm FAST on a free surface", arm("A_X", "FAST", ["portal/src/pages/Mine"], 2, "S~1", "t") == 0)
         check("live lease reads FAST", (load("A_X") or {}).get("mode") == "FAST")
@@ -298,6 +311,8 @@ def self_test():
         check("FAST over a COMPLETE order admitted", arm("D_X", "FAST", ["portal/src/pages/Done"], 2, "S~4", "t") == 0)
         check("a COMPLETE order whose prose quotes <status> first is still COMPLETE (admitted)",
               arm("E_X", "FAST", ["portal/src/pages/Prose"], 2, "S~5", "t") == 0)
+        check("a COMPLETE order whose tag carries a multi-line note is still COMPLETE (admitted)",
+              arm("F_X", "FAST", ["portal/src/pages/Noted"], 2, "S~6", "t") == 0)
         check("HOLD on the other project releases its orders",
               arm("OTHER_P", "HOLD", [], 2, "-", "t") == 0 and not conflicts("C_X", ["portal/src/pages/Other"]))
         check("prefix is component-bounded (mine vs mine-too)", not overlaps("portal/src/mine", "portal/src/mine-too"))

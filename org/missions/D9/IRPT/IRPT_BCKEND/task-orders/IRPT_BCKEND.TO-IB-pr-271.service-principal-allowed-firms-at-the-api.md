@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~98</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -40,6 +40,10 @@ profile row restricts `allowedFirmIds` is refused `FIRM_BINDING` for any selecte
   `infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py` `allowed_firm_ids` for the parsing it must mirror exactly.
   Returns `None` when the attribute is absent or `"ALL"` (unrestricted), the stripped list otherwise (string with commas or a list),
   and `[]` when the read raises (fail closed, which the caller turns into `FIRM_BINDING`).
+  **ISSUER AMENDMENT 1 (2026-09-30 ~21:3xZ, on the worker's row W98-S2; the order RE-OPENS):** a service subject whose profile row is
+  NOT FOUND (`get_user` returns `None`, or the injected loader returns `None`) is not a registered service principal and returns `[]`
+  (refused `FIRM_BINDING`), never `None` (unrestricted): FWD-3 CONSTRAINT, an account outside the permitted population is never silently
+  granted. "Unrestricted" stays only for a FOUND row whose `allowedFirmIds` is absent or `"ALL"`. P27-1-AC1 gains arm G for it.
 - **THE DEPLOYED-LAYOUT TRAP (why this order exists as written).** Seven Lambda bundles ship `served.py` (`infra/aws/lambda/ci/lambda-source-map.json`
   `files`): irpt-performance-adapter, irpt-directory-search, irpt-narrative, irpt-ycharts-generate, irpt-export-render, irpt-holdings,
   irpt-status. Only the first and the fourth ship `canonical_profile_reads.py` today. The lazy import is exempt from
@@ -55,8 +59,9 @@ profile row restricts `allowedFirmIds` is refused `FIRM_BINDING` for any selecte
 
 <criterion id="P27-1-AC1" cell_refs="IB-pr-271"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r27/p27_1_ac1_service_allowed_firms.py" .</invocation><expect>P27-1-AC1 PASS</expect></criterion>
 `P27-1-AC1` -- drives the real `Entry.handle` with `load_service_profile` injected: two harness controls (a non-internal subject is
-refused; an internal user subject reaches `deps(<selected>)`), then six arms: allowed firm admitted; foreign firm FIRM_BINDING;
-attribute absent admitted; `"ALL"` admitted; profile read raising FIRM_BINDING; a list admitting its second firm. "Admitted" means the
+refused; an internal user subject reaches `deps(<selected>)`), then seven arms: allowed firm admitted; foreign firm FIRM_BINDING;
+attribute absent admitted; `"ALL"` admitted; profile read raising FIRM_BINDING; a list admitting its second firm; NO profile row
+FIRM_BINDING (arm G, amendment 1; the code of commit c716489be8 fails it, measured). "Admitted" means the
 boundary called `deps(<selected>)`. Base: FAIL (Entry does not accept load_service_profile), controls passing; a scratch copy with a
 minimal patch PASSES (measured at the cut).
 

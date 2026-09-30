@@ -1,0 +1,256 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+  "authored_by": "0.4.0_DS_ClientPlatform~S",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-1 (round 1, workstream B)",
+  "table": "account_return_daily",
+  "grain": "account x trading day",
+  "partition": "date=YYYY-MM-DD",
+  "producer": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py",
+  "columns": [
+    {
+      "name": "firm",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the registry-derived firm scope this row belongs to; never a typed token"
+    },
+    {
+      "name": "account_id",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the custodian account id in the declaration's account form (10-char zero-padded)"
+    },
+    {
+      "name": "business_date",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the TRADING day (lib/trading_calendar.py), the performance axis"
+    },
+    {
+      "name": "market_value_eod",
+      "type": "double",
+      "nullable": false,
+      "meaning": "V_t -- the custodian's own WHOLE-ACCOUNT value at end of day, cash included (C-VALUE)"
+    },
+    {
+      "name": "external_flow",
+      "type": "double",
+      "nullable": false,
+      "meaning": "F_t -- net EXTERNAL flow, capital-in positive, summed over every custodian partition day strictly after t-1 up to and including t (the skipped-day rule, row IRPT_BCKEND-S237)"
+    },
+    {
+      "name": "income_received",
+      "type": "double",
+      "nullable": false,
+      "meaning": "income recognised on CASH RECEIPT over the same window as external_flow; a declared departure from GIPS accrual"
+    },
+    {
+      "name": "income_return",
+      "type": "double",
+      "nullable": true,
+      "meaning": "income_received / V_(t-1)"
+    },
+    {
+      "name": "total_return_daily",
+      "type": "double",
+      "nullable": true,
+      "meaning": "the served daily total return; null on NOT_MEASURABLE, where the geometric link BREAKS with a stated gap"
+    },
+    {
+      "name": "return_basis",
+      "type": "string",
+      "nullable": false,
+      "meaning": "which arithmetic produced total_return_daily"
+    },
+    {
+      "name": "holdings_price_return",
+      "type": "double",
+      "nullable": true,
+      "meaning": "IRPT_BCKEND's price-only daily return for the same (account, day), the C-GUARD cross-check; null with a reason where absent or not OK"
+    },
+    {
+      "name": "holdings_price_return_reason",
+      "type": "string",
+      "nullable": true,
+      "meaning": "why holdings_price_return is null; null when it is present"
+    },
+    {
+      "name": "fee_amount",
+      "type": "double",
+      "nullable": true,
+      "meaning": "reserved and unused (C-FEERAIL): always null in method_version 1"
+    },
+    {
+      "name": "fee_amount_reason",
+      "type": "string",
+      "nullable": false,
+      "meaning": "why fee_amount is null"
+    },
+    {
+      "name": "day_quality",
+      "type": "string",
+      "nullable": false,
+      "meaning": "what this day's number stands on"
+    },
+    {
+      "name": "history_scope",
+      "type": "string",
+      "nullable": false,
+      "meaning": "how much of this account's life the table holds"
+    },
+    {
+      "name": "carried_days",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "how many custodian partition days the flow window folded in; 1 on an ordinary day, more where a market closure was skipped by the calendar and its flows were carried forward"
+    },
+    {
+      "name": "method_version",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "the dim_return_method row this figure was produced under"
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the shape of this emission"
+    }
+  ],
+  "enums": {
+    "history_scope": [
+      "FULL",
+      "PARTIAL_HISTORY"
+    ],
+    "day_quality": [
+      "MEASURED",
+      "FLOW_UNRECONCILED",
+      "LARGE_FLOW",
+      "NOT_MEASURABLE",
+      "SOURCE_LAG"
+    ],
+    "return_basis": [
+      "TWR",
+      "HOLDINGS_INCOME_FALLBACK",
+      "NOT_MEASURABLE"
+    ],
+    "fee_amount_reason": [
+      "FEE_RAIL_UNUSED"
+    ],
+    "holdings_price_return_reason": [
+      "NO_HOLDINGS_ROW",
+      "HOLDINGS_NOT_OK"
+    ]
+  },
+  "rule24_record": {
+    "i_mece_over_a_declared_domain": {
+      "day_quality": "domain: 'what does this account-day's number stand on'. MEASURED (the form computed and the guard agreed) | FLOW_UNRECONCILED (the form and the holdings-plus-income cross-check disagree beyond the measured tolerance) | LARGE_FLOW (the flow is a large share of the base; the value still enters) | NOT_MEASURABLE (no return is computable INSIDE the book -- non-positive prior value, or outside the plausibility band) | SOURCE_LAG (the custodian has not delivered the day). Covered by subtraction: a day is either emitted or not; an emitted day either has a computable base or not (NOT_MEASURABLE); a computable day either reconciles (MEASURED / LARGE_FLOW) or not (FLOW_UNRECONCILED); a day the feed has not delivered is SOURCE_LAG. A day BEFORE the account's first positive value is emitted as NO ROW AT ALL, which is why the domain says 'account-day' and not 'trading day' -- that case is outside the domain rather than a sixth member (ISSUER AMENDMENT 1).",
+      "return_basis": "domain: 'which arithmetic produced total_return_daily'. TWR (the C-METHOD form) | HOLDINGS_INCOME_FALLBACK (price return plus income, served when the guard refuses the form) | NOT_MEASURABLE (no number is served). Exhaustive by construction: the column is null iff the value is NOT_MEASURABLE.",
+      "history_scope": "domain: 'how much of this account's life does the table hold'. FULL | PARTIAL_HISTORY. Every round-1 row carries PARTIAL_HISTORY because the emit is a QA thread over six accounts and the all-accounts run is round 2; FULL is declared now so the value exists when that run lands, rather than being added as a schema change then."
+    },
+    "ii_same_grain": "Every member of day_quality and return_basis is an ACCOUNT-DAY property; history_scope is an ACCOUNT property carried onto each of its rows. The two grains are separate columns and neither is folded into the other.",
+    "iii_intent_coherence": "day_quality answers HOW MUCH TO TRUST the day; return_basis answers WHAT THE NUMBER IS. They are deliberately not one axis: a FLOW_UNRECONCILED day still serves a number (the fallback), and a LARGE_FLOW day serves the form's own number. Collapsing them would make 'served a fallback' and 'flagged as large' the same kind of fact, which they are not.",
+    "iv_state_coherence": "Name which values one remedy does NOT move. Finding a missing flow or price moves FLOW_UNRECONCILED to MEASURED; it does NOT move LARGE_FLOW (nothing 'fixes' a genuinely large flow -- it is a reader's warning), and it does NOT move NOT_MEASURABLE where the base is non-positive (no amount of data gives an account a positive prior value it did not have). The feed landing moves SOURCE_LAG and nothing else. Three members, three disjoint remedies.",
+    "token_census": {
+      "_method": "comp-find '\\b<VALUE>\\b' data infra/aws/lambda portal/src, run 2026-09-30 ~18:1xZ. 'hits' is the total across the scope; 'def_band' is the number of matches on a DEFINITION line, which is the number that decides a collision -- a prose mention is not a competing definition.",
+      "_denominator": "12876 file(s) scanned in scope [corpus=all]; 4800 EPHEMERAL-FLOOR and 2011 BINARY files not searched, both printed by the tool.",
+      "FULL": {
+        "hits": 297,
+        "def_band": 2,
+        "foreign_definitions": [
+          "infra/aws/lambda/layers/pyiceberg-nessie-deps/python/pyiceberg/io/pyarrow.py:2045 FULL = \"full\""
+        ],
+        "collision": false,
+        "why": "the only other definition is a vendored pyiceberg constant whose VALUE is the lowercase string 'full'; it shares the identifier, not the served value, and it is a third-party dependency this estate does not author."
+      },
+      "PARTIAL_HISTORY": {
+        "hits": 1,
+        "def_band": 1,
+        "foreign_definitions": [],
+        "collision": false,
+        "why": "sole definition is this contract's producer."
+      },
+      "MEASURED": {
+        "hits": 1183,
+        "def_band": 6,
+        "foreign_definitions": [
+          "data/cot/scripts/bronze/cot_bronze_ingest.py:524 RN_MEASURED_COMPLETE = \"MEASURED-COMPLETE\"",
+          "portal/src/pages/SecurityAnalysis/__harness__/peersPattern.harness.cjs:175 status: 'MEASURED'",
+          "portal/src/pages/SecurityAnalysis/__harness__/peersReadFailed.harness.cjs:75 status: 'MEASURED'",
+          "data/assets/scripts/gold/cottonwood_aua.py:71 (comment only, not a definition of this token)"
+        ],
+        "collision": false,
+        "why": "THE NEAREST NEIGHBOUR, named rather than counted: the cot ingest defines a DIFFERENT string ('MEASURED-COMPLETE'), and the two portal harnesses carry status: 'MEASURED' on a SECURITY IDENTITY -- a different object, a different axis, and a different column. No consumer reads both through one field. The 1,183 total is dominated by the English word in prose across this estate's own documentation, which a word-boundary census cannot separate from a value and which no typed column confuses."
+      },
+      "FLOW_UNRECONCILED": {
+        "hits": 3,
+        "def_band": 1,
+        "foreign_definitions": [],
+        "collision": false,
+        "why": "sole definition is this contract's producer."
+      },
+      "LARGE_FLOW": {
+        "hits": 2,
+        "def_band": 1,
+        "foreign_definitions": [],
+        "collision": false,
+        "why": "sole definition is this contract's producer."
+      },
+      "NOT_MEASURABLE": {
+        "hits": 4,
+        "def_band": 1,
+        "foreign_definitions": [],
+        "collision": false,
+        "why": "sole definition is this contract's producer; it is declared on two axes (day_quality and return_basis) BY DESIGN, and those two uses agree -- the column is null exactly when both carry it."
+      },
+      "SOURCE_LAG": {
+        "hits": 4,
+        "def_band": 1,
+        "foreign_definitions": [],
+        "collision": false,
+        "why": "sole definition is this contract's producer; the value is also a C-COVERAGE member the PRD declares, which is the same meaning at the project grain."
+      },
+      "TWR": {
+        "hits": 126,
+        "def_band": 1,
+        "foreign_definitions": [],
+        "collision": false,
+        "why": "the sole DEFINITION is this contract's producer. The other 125 hits are prose plus the RETIRING engine's own names (twr_daily, c02_twr_engine, TRUE_TWR), which C-SHADOW retires and which are table and module names rather than a competing enum value. The overlap therefore shrinks over time rather than growing, and no consumer resolves a return_basis through a table name."
+      },
+      "HOLDINGS_INCOME_FALLBACK": {
+        "hits": 1,
+        "def_band": 1,
+        "foreign_definitions": [],
+        "collision": false,
+        "why": "sole definition is this contract's producer."
+      },
+      "FEE_RAIL_UNUSED": {
+        "hits": 4,
+        "def_band": 1,
+        "foreign_definitions": [],
+        "collision": false,
+        "why": "sole definition is this contract's producer; also a C-COVERAGE member and a C-FEERAIL term the PRD declares, the same meaning at the project grain."
+      },
+      "NO_HOLDINGS_ROW": {
+        "hits": 1,
+        "def_band": 1,
+        "foreign_definitions": [],
+        "collision": false,
+        "why": "sole definition is this contract's producer."
+      },
+      "HOLDINGS_NOT_OK": {
+        "hits": 1,
+        "def_band": 1,
+        "foreign_definitions": [],
+        "collision": false,
+        "why": "sole definition is this contract's producer."
+      }
+    },
+    "token_census_method": "comp-find '\\b<VALUE>\\b' over data, infra/aws/lambda, portal/src; word-boundary; denominator 12,876 files scanned in corpus=all (4,800 ephemeral-floor and 2,011 binary files not searched, both printed by the tool).",
+    "token_census_finding": "NO COMPETING ENUM DEFINITION EXISTS for any of the thirteen values: every value's DEF band resolves to this contract's own producer, with two exceptions that are not collisions -- FULL's other DEF is a vendored pyiceberg constant whose VALUE is lowercase 'full', and MEASURED's other DEFs are a different string ('MEASURED-COMPLETE' in the cot bronze ingest) and a portal SecurityAnalysis harness that carries status: 'MEASURED' on a SECURITY IDENTITY, a different axis and a different object. The three high-count tokens (MEASURED 1,183, FULL 297, TWR 126) are LEXICALLY common and SEMANTICALLY unique here; a consumer rejects on the typed column, not on the token. TWR's 126 hits are overwhelmingly the RETIRING engine's own names (twr_daily, c02_twr_engine) which C-SHADOW retires, so that overlap shrinks rather than grows."
+  },
+  "schema_hash": "b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058",
+  "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
+  "firm_specific_columns": "NONE. A firm-specific column is a contract violation (C-SHAPE); no sb_cd, tr_cd or any Schwab code survives into this table -- they live only in the adapter's sources.json."
+}

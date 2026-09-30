@@ -24,7 +24,13 @@ it; 1.0.0_SA_CTO rules it on read"); CTO 103264 | **Decomp cell:** `DB-b-3` (dec
 
 **The cell.** Measure how far Opal's daily-TWR total return (DB-b-1's gold) sits from Black Diamond's own time-weighted return for the
 same accounts and periods, using ONLY the vendor responses ALREADY LANDED in bronze; propose the tie-out tolerance and pick the
-flow-timing convention. NO vendor call: the per-use gate is not opened and Andrew's word is not asked.
+flow-timing convention. LANDED RESPONSES FIRST (ISSUER AMENDMENT 1, 2026-09-30 ~19:4xZ, on Andrew's egress grant to this seat,
+record `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/ANDREW_DIRECT_20260930_1855Z_EGRESS_FOR_WHATEVER_CALLS_YOU_NEED.md`
+@4c4989c800, verbatim "Ok Proceed, you have egress for whatever calls you need"): measure the overlap first -- the count of
+(account, period) pairs where a landed response's period lies inside the gold's history. Only if that count is below 5 may you make a
+fresh Black Diamond `performancePeriod` pull, for the sample accounts only, through the existing request builder
+(`infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py`), landing each raw response byte-for-byte under the
+same bronze prefix; record `overlap_before_pull` and the number of calls in `vendor_calls`. No other vendor act is read into the grant.
 
 **The oracle, landed.** `s3://opal-data-assets/blackdiamond/49f/bronze/reporting_performance/<pull date>/reporting_performance_<bd_internal_id>_<period end>.json`
 -- pull dates 2026-07-17 (relationship 22596361, period end 2026-06-30), 2026-08-30 (13477111, 18927251, 21089351, 22596361, 23221671; end
@@ -45,7 +51,7 @@ p90, max of `abs_diff`; `per_convention_summary` for the three; `flow_convention
 END); `proposed_tieout_tolerance` = the winner's p90 rounded up to the next 5 bp, with the sentence that defends it.
 
 **What you write.** `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.4.0_DS_ClientPlatform~S/tieout/TIEOUT_49F_BLACKDIAMOND_R1.json` (keys:
-`measured_at`, `vendor_calls: 0`, `oracle_keys`, `roster_key`, `periods`, `summary`, `per_convention_summary`, `flow_convention_winner`,
+`measured_at`, `vendor_calls` (0 unless the overlap forced a pull), `overlap_before_pull`, `oracle_keys`, `roster_key`, `periods`, `summary`, `per_convention_summary`, `flow_convention_winner`,
 `proposed_tieout_tolerance`, `sentence`) and `TIEOUT_49F_BLACKDIAMOND_R1.md` (one page for the CTO's ruling: the table, the sentence, what
 was NOT measured). Then write the winner and the proposal into the method: `org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json`
 `method_versions[0].flow_convention` and `.tieout_tolerance_proposed`, and re-emit `dim_return_method/method_version=1` with the same two
@@ -57,7 +63,7 @@ rules, and that a re-emit is a round-2 cell; the contract records the winner as 
 not END write `flow_convention_winner` in the record as the value you wrote to the row, and name the discrepancy in the md.
 
 <criterion id="DB-3-AC1" cell_refs="DB-b-3"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_3_ac1_tieout_record.py" .</invocation><expect>DB-3-AC1 PASS</expect></criterion>
-`DB-3-AC1` -- the record exists, `vendor_calls` is 0, every oracle key sits under the bronze prefix and reads, >= 5 periods with the named
+`DB-3-AC1` -- the record exists, `vendor_calls` is 0 or is non-zero only beside an `overlap_before_pull` below 5, every oracle key sits under the bronze prefix and reads, >= 5 periods with the named
 fields, the summary recomputes, a positive proposed tolerance and a named winner with all three conventions summarised. Base: FAIL.
 
 <criterion id="DB-3-AC2" cell_refs="DB-b-3"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_3_ac2_method_winner_written.py" .</invocation><expect>DB-3-AC2 PASS</expect></criterion>
@@ -69,7 +75,8 @@ Base: FAIL.
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below, plus your deliverables folder and this order's file.
-- **AWS writes admitted:** the one `dim_return_method/method_version=1` object. Reads of bronze and gold only otherwise. NO vendor call.
+- **AWS writes admitted:** the one `dim_return_method/method_version=1` object, and the raw responses of a conditional pull under the
+  bronze prefix above. Reads of bronze and gold only otherwise. No vendor call beyond the conditional pull (amendment 1).
 - **Refusal clause.** A relationship without a roster row, a period the gold does not cover, or a JSON shape you cannot parse is a row
   and a skipped row, never a guess.
 

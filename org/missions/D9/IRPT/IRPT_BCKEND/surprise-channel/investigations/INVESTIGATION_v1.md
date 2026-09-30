@@ -13673,6 +13673,36 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 ```
 
 
+## IRPT_BCKEND-S240 -- the seating lint reads two projects' worker serials as one seat: 0.9.0_WK_IRPT_BCKEND~n and 0.9.0_WK_IRPT_DASHBD~n both parse to 0.9.0_WK_IRPT
+
+```json
+{
+  "id": "IRPT_BCKEND-S240",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-30T20:25:00Z",
+  "one_line": "`.tools/to-decomp-ref-lint.py`'s seating check refused (ANNOUNCE mode) every new IRPT_BCKEND worker order of round 27 (TO-IB-pr-271/272/273, slots 98-100) as 'addressed to 0.9.0_WK_IRPT, which already holds open TOs on IRPT_DASHBD', and refused IRPT_DASHBD's round-1 worker orders the same way against IRPT_BCKEND: the worker serials 0.9.0_WK_IRPT_BCKEND~98 and 0.9.0_WK_IRPT_DASHBD~1 are distinct seats of distinct projects, but the lint truncates both to the class 0.9.0_WK_IRPT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO (the seating check's owner; the ONE-PROJECT-PER-TIER-2-SEAT rule it grades is Andrew-direct 2026-08-24)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "to-decomp-ref-lint run at the round-27 cut (2026-09-30 ~19:4xZ) on the four new IRPT_BCKEND orders: 'REFUSED ... SEATING: this NEW task order for IRPT_BCKEND is addressed to 0.9.0_WK_IRPT, which already holds open TOs on 1 OTHER pipeline project(s): IRPT_DASHBD (2 open: IRPT_DASHBD.TO-DB-b-2..., IRPT_DASHBD.TO-DB-b-4...)'; the parked AE order on 0.6.2_AE_PartnerETL~C read 'Legal target'",
+      "the same lint at IRPT_DASHBD's round-1 cut (@51c05d1530) refused TO-DB-b-2/DB-b-4 against IRPT_BCKEND's open worker orders",
+      ".tools/to-decomp-ref-lint.py:73 SERIAL_RE = r'\\b\\d+\\.\\d+\\.\\d+_[A-Z]{2}_[A-Za-z][A-Za-z0-9]*(?:~[A-Za-z0-9]+)?\\b' -- the name segment admits no underscore, so a worker serial whose project code carries one (IRPT_BCKEND, IRPT_DASHBD, MDPF_SECCLASS, NFRA_TRNSPT, ...) is read up to the first underscore",
+      "the lint prints 'mode=ANNOUNCE' and '[gate2] ANNOUNCE mode -- NOT blocking this commit. Arm by creating org\\mcp\\pipeline-gate2.enforce', so both issuances landed (22b99e32fd, 51c05d1530)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The seating check grades ONE PROJECT PER TIER-2 SEAT INSTANCE by the full serial of the addressed seat, so two projects' distinct worker slots never collide.",
+  "world_is": "It grades a truncated class: any two projects whose codes share a prefix before the first underscore (every IRPT_*, MDPF_*, NFRA_*, AMGT_* pair) and both hold open worker orders read as one seat. Today that is noise in ANNOUNCE mode. The day `org/mcp/pipeline-gate2.enforce` is created, every issuance of the second IRPT project with a live worker order in the first is REFUSED, and the lint's own FIX line ('address this TO to a FRESH LANE 0.9.0_WK_IRPT~<letter>') would mint a serial belonging to neither project.",
+  "notes": "Filed off-task at the round-27 cut and not worked. Not overridden and not relied on: both issuances stated the refusal as a parsing artifact in their commit messages. NOT MEASURED: whether other limbs that parse serials (the owned-paths resolver for worker grants, to-check's --assignee substring match) share the regex; the worker-grant resolver admitted WK~97's commits under 0.9.0_WK_IRPT_BCKEND~97 today, so at least that path reads the full serial."
+}
+```
+
+
 ## IRPT_BCKEND-W98-S1 -- _authz/tests/test_unguarded_census.py fails 6 tests at the issuance base (census over 18 published routes: 15 guarded, 3 declared by no entry, the export routes), independent of IB-pr-271.
 
 ```json
