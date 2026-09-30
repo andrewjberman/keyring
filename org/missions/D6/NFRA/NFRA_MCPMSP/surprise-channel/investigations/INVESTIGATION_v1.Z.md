@@ -220,6 +220,30 @@
     "spec_asserts": "Decomposition section 7 (iv): MS-t-2 builds and names; it creates no resource -- and by the cut's reading moves no other seat's workflow in the directory.",
     "world_is": "The directory's plans now need a one-time `terraform get` per .terraform. The failure is loud (a named Terraform error with an obvious one-command fix, no network), never silent, so INERT. Site-Z main tree: repaired.",
     "notes": "Remedy on any other checkout: run `terraform get` once in infra/aws/terraform/opal-gateway (local only). Carried to the drain-end read for the other fabric's seats that plan this directory (NFRA_OPLGTW, NFRA_MCPORTAL, NFRA_MCPINDEX)."
+  },
+  {
+    "id": "NFRA_MCPMSP-Z-W2-S3",
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~2",
+    "surfaced_at": "2026-09-30T09:20Z",
+    "one_line": "safe-apply.sh's naming-plan limb (ENFORCE) REFUSES the whole opal-gateway apply because the tree's UNTARGETED plan shows aws_iam_role_policy.gw_rivalfunds_read (rivalfunds-iam.tf, name opal-gateway-rivalfunds-read) as an ADDITION; the gate plans the full tree and ignores -target and a saved planfile, so MS-a-1's three targeted additions cannot pass it; nothing was applied.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Targeted plan (TF_DATA_DIR private copy, 2026-09-30): 'Plan: 3 to add, 0 to change, 0 to destroy.' for aws_iam_role.inf_firm_reader, aws_iam_role_policy.inf_firm_reader, aws_iam_role_policy.gw_assume_inf_firm_reader.",
+        "safe-apply run 3 (HALT_ACK=1, after the staged dir was supplied): '[naming-plan-gate] NAMING REFUSE aws_iam_role_policy.gw_rivalfunds_read opal-gateway-rivalfunds-read -> gateway-rivalfunds-read-policy ... (ADDITION)', 'NAMING-PLAN: REFUSE 59 graded', 'safe-apply: BLOCKED by the naming plan limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=1). Nothing was planned further or applied.' .tools/safe-apply.sh lines ~100-130 run 'terraform plan -input=false -lock=false' with no -target; org/mcp/naming-gate.enforce exists.",
+        "Live read after the block: iam get-role gateway-inf-firm-reader-role = NoSuchEntity (nothing landed). a1.AC2 simulate = NoSuchEntity; a1.AC3 AssumeRole = implicitDeny.",
+        "Two earlier safe-apply faults, both environment: (1) HALT-GATE 'blocked' on 208 pending ROUTINE messages about other seats' ledgers, cleared per its own protocol with HALT_ACK=1 (no STOP-class line, 0 matches); (2) the full-tree plan the gates run needs a SECOND gitignored build input beyond the layer zip the order named: infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged (archive_file source_dir); copied from the main tree, untracked and gitignored, outside this order's <paths>."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MS-a-1 section 1 item 2: 'Plan, then apply, targeted ... through bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply -target=...' with the plan reading only additions for the targets; the directory 'needs' the layer zip and the key vars.",
+    "world_is": "A targeted plan reads 3 to add / 0 / 0, but safe-apply's gates plan the WHOLE tree, and under ENFORCE the naming-plan limb refuses it on an unrelated pre-existing addition (gw_rivalfunds_read, rivalfunds-iam.tf, which this order may not touch). No override for that limb exists short of removing org/mcp/naming-gate.enforce or an R20 entry, both outside this order; bare terraform apply is barred. The apply did not run; the ledger entry nfra-mcpmsp-r1-firm-role stays OPEN (nothing landed, blast radius untouched). The saved plan and TF_DATA_DIR sit in this worktree's .scratch for a retry.",
+    "notes": "Ways through, issuer's call: (a) a different cell lands the rivalfunds policy name (or its state import) so the full plan has no refused addition; (b) the CTO rules a one-apply naming-gate exemption for these three additions; (c) apply from a tree whose full plan is clean. Fresh time cost: each safe-apply run spends ~4.5 min in three full-tree refreshes before it reaches the refusal."
   }
 ]
 ```
