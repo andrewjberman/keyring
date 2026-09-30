@@ -97,7 +97,7 @@ outer commit hashes, and any row.
 
 **ISSUER NOTES:** round 7 = the round-6 analysis s.4 item 2 with ruling 2. Base fd4deb75: footer.cjs 0 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~27</slot>
 <fabric>site-z</fabric>
