@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.9",
+  "prd_version": "v0.10",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -790,6 +790,17 @@ applied here.
   auth failure that persists after backoff (a 401, or a 403 whose kept body says the session is invalid) marks the token expired.
 - Every REST call retries with bounded exponential backoff plus jitter on rate-limit responses. Each attempt's status and wait is
   written to the run record, so a reader can tell throttling from expiry.
+- **(v0.10, round-29 analysis; CVO~Z ADJUDICATION_v38 s.2) A bot check is never token expiry.**
+  - Each attempt in the run record carries a class. `bot_check` is one of them.
+  - A refusal is `bot_check` when its kept body matches a named signature. The list:
+    - DataDome's `captcha-delivery.com` page;
+    - FT's "Security Verification" interstitial;
+    - bbg's press-and-hold challenge.
+  - The record writes the matched signature's name beside the class.
+  - A `bot_check` attempt never marks the token expired and never starts a sign-in or crawl.
+  - It stops that publisher's leg: no retry is made against a check.
+  - A new signature is added to the list when a kept body shows one, never inferred.
+  - Expiry still reads as above: an auth failure that persists after backoff whose kept body matches no bot-check signature.
 
 ---
 
