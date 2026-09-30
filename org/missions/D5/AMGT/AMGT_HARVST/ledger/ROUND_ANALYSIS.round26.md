@@ -121,3 +121,16 @@ NOT closed.** The PRD moves to v0.4 in this commit: two CONTRACTS are added, `C-
 - The FWD-7 ruling @`ddcc71fd2d`.
 
 This seat ran no new instrument for the analysis: every number above is the CVO's or the packet's, each cited.
+
+## AMENDMENT 1 -- cell 7 (the `gold` flip) WITHDRAWN from round 27 (2026-09-30 ~09:0xZ, msg 27056)
+
+- **Measured by the issuer:** `q-4`'s gold branch (declared bbg+wsj, as-of 09-30) puts **0 of 191** names in the eligible
+  population: NOT_SEARCHED 190, PARTIAL 1. The result is HOLD `BELOW_ELIGIBLE_FLOOR`.
+- **`q-1` was withdrawn.** bbg refused; wsj's cached listings recorded no span; the reach gap goes to round 28.
+- **RULED (driver, on the issuer's REC): WITHDRAW `q-7` this round.**
+  - A flip whose only reachable outcome is HOLD changes no served rank.
+  - It would stop the legacy rank refreshing, leaving the last generation served behind a HOLD marker. That is a freshness loss
+    for no gain.
+  - `q-7` is re-cut when an eligibility census reads at least 10 eligible names (`C-HV-RANK-DECLARED-SET`'s floor).
+- **What this says about FWD-7:** the binding constraint is now COLLECTION REACH (FWD-1 and FWD-9), not the rank rule.
+- **Also carried to the round-27 analysis:** why bbg refused a run that `o-5` completed on the same name.
