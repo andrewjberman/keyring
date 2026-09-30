@@ -26,3 +26,20 @@ Message 2 (answering this seat's data-gap table and its three decisions):
 
 Effect (this seat's reading): a standing rule for both dashboard briefs and the commentary work. Bronze holds each source's raw shape; silver holds it typed and de-duplicated in parquet, still in the source's own shape; GOLD is the adapter layer, where every firm's shape is coalesced into ONE Opal shape. Firm-specific columns do not survive into gold; where a firm lacks a field, gold carries it as null with a coverage marker, not as a firm-specific variant of the table.
 
+## Addendum 2 (~07:1xZ) -- Messages 4-5, total return: conservative GIPS methodology, cash-receipt income, gross of fees, a fee rail for later
+
+This seat had recommended: total return = price return plus income, external flows still ignored (per Andrew-direct 2026-09-28 "cash movements should not matter at all"). Rulings requested: 1 basis, 2 income timing, 3 fees and labels.
+
+Message 4:
+
+> 1.) I'd say External flows do matter insofar as they change the weighting of a portfolio. My issue with this is that Im trying to structure this in a way where we avoid flows having hyperexaggerated effects on performance. I want to use a conservative, GIPS methodology. I think you can probably fill in the rest, no need to reinvent the wheel here. 2.) Yes yor recommendation is right. 3.) Yes gross of fees is correct, we're not dealing with these fuckers fees because we don' tknow their fee methodology.
+
+Message 5:
+
+> There should be a "rail" for fees, which we can employ later once we have a proper field set up to manage that
+
+Effect (this seat's reading; scope not widened):
+1. The basis is TOTAL RETURN on a conservative GIPS methodology: external flows DO enter (they change the portfolio's weighting) but under GIPS-style rules that keep a flow from distorting the return; income counts. This supersedes this seat's "flows ignored" recommendation and narrows the 2026-09-28 holdings-only ruling: flows re-enter as a weighting input, not as a return. The detailed rules are this seat's to fill in from GIPS; the CTO records the change to the endpoint.
+2. Income is recognised when the cash is received (cash-receipt), as recommended.
+3. Returns are GROSS of fees, and labelled so. A fee RAIL is designed in now (a place and a field set for advisory fees) and left unused until a proper fee field exists, because the custodians' fee methodology is unknown.
+
