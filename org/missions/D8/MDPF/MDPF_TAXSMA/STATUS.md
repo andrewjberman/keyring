@@ -24,9 +24,9 @@ First failing hop: 1 (route undeployed) and 8 (publisher not wired).
 | ID | State | Evidence |
 |---|---|---|
 | TX-p-1, v-1, g-1, g-2, b-1, b-2, m-1, m-2, m-3, m-4, a-1, a-2 | COMPLETE (round 1, drained by COO~T) | position record @cbfeeef31f |
-| E1 engine: RIA firm axis + custodian-per-firm + workbook fallback + loaders | CANDIDATE (stage A + B pins) | 187 of 187; real run result `scratchpad/taxsma/prelude_run_20260928.json` (not committed: names) |
-| TX-k-1 gold package (+ `lib/opal_naming` member, S5) | NOT STARTED | next |
-| TX-u-1 / TX-u-2 publisher | NOT STARTED | |
+| E1 engine: RIA firm axis + custodian-per-firm + workbook fallback + loaders | CANDIDATE @62fa52fa6f + f4c4614f33 | 189 of 189; real run 2 on Yang's corrected sheet (Traded=Yes on rows 12-15): 49F expected 11 covered 11, 17,034,745.40 (measured 12,584,745.40 + workbook-stated 4,450,000.00); Cottonwood 2 of 2, 6,041,791.65 measured on Black Diamond |
+| TX-k-1 gold package (+ `lib/opal_naming` subpackage + registry + schema + contract, S5) | CANDIDATE (the commit after f4c4614f33) | 39 of 39 members hash-equal to pin; closure OK; layer deps 0 FAIL; cold-start smoke from the extracted zip; Terraform plan NOT run (root claimed) |
+| TX-u-1 / TX-u-2 publisher | NOT STARTED | next |
 | TX-i-3 / TX-i-1 / TX-i-2 IAM applies | BLOCKED (Terraform roots claimed by NFRA_IAMROLES202609 IAM-t-3) | |
 | TX-c-1 / TX-c-2 / TX-c-3 portal | NOT STARTED (c-2's component under DSGN_IRPTV1 lease) | |
 | TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED; v-1's expected cases for A02/A04 must be re-cut to 0.6.0 | |
@@ -40,7 +40,8 @@ Next claim: `infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py` +
 
 ## Next proof
 
-TX-k-1: the Gold Lambda package carries the six taxsma modules, the Silver module, `lib/opal_naming.py` (S5) and the contract; `check-lambda-layer-deps --function mdpf-gold-lambda` 0 FAIL; a plan-only Terraform run changes only the function's code (plan needs the Terraform root, currently claimed -- see Dependencies).
+TX-u-1: the publisher (`infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py`) reads the Tax operational control and the 49financial/Global category Gold with the status extension and writes the served category-views with the `tax` leaf's `coverage` (15 wire fields) -- contract fields only, never `aua_including_tax`; proved by a local publish over the real run's category document.
+Deferred inside TX-k-1: the plan-only Terraform pass on `infra/aws/terraform/mdpf-pipeline` (root claimed by IAM-t-3).
 
 ## Dependencies
 
@@ -57,7 +58,7 @@ TX-k-1: the Gold Lambda package carries the six taxsma modules, the Silver modul
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| TRADED-ONLY vs FUNDED: the pipeline counts Traded=Yes claims only (contract `membership.inclusion`), so 49F reads 12.85M; the figure given to Alongside this morning (21.33M) also counted the 3 workbook Traded=No accounts funded on 0833 (6.49M) and 2 labelled 0833 accounts not in the workbook (1.99M), which the pipeline reports as 5 UNCONFIRMED candidates | Andrew | his word on which population the served leaf shows |
+| TRADED-ONLY is the rule and Yang's sheet now reflects it (rows 12-15 flipped to Yes 2026-09-30 ~16:2xZ). Still outside 49F's 17.03M: row 9 (Traded=No, awaiting a transfer, 2.30M on 0833) and two 0833 accounts labelled Opal Tax SMA 145 with no workbook row (1.03M + 0.96M), reported as UNCONFIRMED candidates | Yang (workbook rows) / Andrew | two rows added with Traded=Yes; the transfer settling |
 | STRATEGY_CONFLICT valued (workbook SMA 145 vs custodian SMA 200 on 2 accounts): decision at `taxsma_assets.IDENTITY_STATUSES_VALUED` | Andrew (reverse by one tuple edit) | if he wants a label conflict to withhold value |
 | Black Diamond accounts whose Account Number is masked-only (937 of 984 on 09-28) can never match; a Cottonwood Tax claim on one falls to the workbook value | this lane | a BD field carrying the full number is found, or Andrew accepts the fallback for them |
 | TX-v-1 expected cases (A02 "additional candidates", A04 "workbook estimate rejected") contradict 0.6.0 | this lane | TX-v-2 item re-cuts them under the amended rule |
