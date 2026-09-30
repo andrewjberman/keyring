@@ -1,0 +1,47 @@
+{
+  "project_code": "IRPT_DASHBD",
+  "macro_code": "IRPT",
+  "directive": "D9",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-09-30",
+  "registered_under_tree": "2026-09-30",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "IRPT_BCKEND",
+    "IRPT_FNTEND",
+    "DSGN_IRPTV1",
+    "MDPF_SECCLASS",
+    "ADVI_FIRMBKTS",
+    "LGIC_NAMING",
+    "LGIC_CANON"
+  ],
+  "name": "The client reporting dashboard: Opal-shape reporting gold with total return on a conservative GIPS methodology, a precomputed served series per account, and the dashboard views that read it",
+  "description": "One product read from two sides. BACKEND (workstream B): eight account-grain gold tables in ONE Opal shape for every firm (49 Financial first, then Inflection and Cottonwood through adapters), a schema contract per table, total return on a conservative GIPS methodology (daily valuation, end-of-day external flows as a weighting input, income on cash receipt, gross of advisory fees and labelled so, a fee rail reserved and unused), a guard that stops a misdated flow from reading as a huge gain, and a platinum publisher that writes one gzipped series file per account so any window is answered in the browser with no server work. FRONTEND (workstream F): the Performance chart with custom bookends and the honest label, asset-class performance and allocation change, realized and unrealized gain with the activity summary, transactions, the topic snapshot at the deepest drawdown (the signature view), household and client as the same page over more accounts, and plain-English coverage states. Net worth, held-away accounts and liabilities are out (Andrew). FWD-1 is one advisor's one 49 Financial account end to end in about two seconds.",
+  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116; docs/briefs/reporting-dashboard-frontend-brief-20260930.md@0ee065b116",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_REPORTING_DASHBOARD_20260930.md@9a3afb2f9c",
+  "endpoint_approval_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_06xxZ_REPORTING_DASHBOARD_TWO_BRIEFS_SCOPE_ANSWERS.md (the request and five scope answers are his word for the outcomes; a separate DONE WHEN confirmation was not asked: /self-drive rule, nothing waits on Andrew, and he may amend any FWD by word)",
+  "andrew_direct_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_06xxZ_REPORTING_DASHBOARD_TWO_BRIEFS_SCOPE_ANSWERS.md; org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260930_052xZ_PRECOMPUTED_GZIP_JSON_REPORTING_UNDER_2S_AND_PUSH_MANAGED.md",
+  "placement_ref": "D9 is LAPTOP as a whole since 2026-09-10 (DIRECTIVES.yaml D9.placement); Andrew's seating names the laptop seats 2.0.0_SA_COO~P and 2.0.0_SA_COO~D",
+  "prds": [
+    "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md"
+  ],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO"
+  },
+  "coo_lane": "2.0.0_SA_COO~P",
+  "workstreams": {
+    "B_backend": "FWD-1 (hops up to the served file), FWD-2, FWD-8, FWD-9 and the data behind FWD-3..FWD-7; lane 2.0.0_SA_COO~P (Andrew: 'COO~P on the backend and bucketing'); write surface: the reporting gold tables and their contracts under org/standards/, the three adapters, the total-return method, the platinum publisher, and the series/manifest/transactions/topics served files",
+    "F_frontend": "FWD-1 (the page hop), FWD-3..FWD-7 views, FWD-10; lane 2.0.0_SA_COO~D (Andrew: 'COO~D on the frontend'); write surface: portal/src/pages/InvestorReporting/tabs/reporting/ and a new dashboard component tree, the coverage-state copy, the method label; it reads the served files and writes none"
+  },
+  "blocking": "Not blocked at L3. L4 PRD next. Seating: Andrew's word names 2.0.0_SA_COO~P (holds IRPT_BCKEND) and 2.0.0_SA_COO~D (holds DSGN_IRPTV1) for the two workstreams, so the one-project-per-Tier-2-instance seating check is overridden by that word for this project; the L4 PRD rules how F's rounds coexist with DSGN_IRPTV1's FAST lease on the same portal surface. Owned dependencies elsewhere: etf-classifications (MDPF_SECCLASS), the holdings-basis performance gold (IRPT_BCKEND, the guard rail), the trending-topics tables (the news pipeline), registry rows for the reporting table family (LGIC lane, this project's L3 policy step).",
+  "fabric_ruling": "laptop: D9 is LAPTOP as a whole (Andrew-direct 2026-09-10); both named seats are laptop lanes.",
+  "phase": "L3 registered 2026-09-30 on the L2 forward endpoint @9a3afb2f9c cut from the CRO's two briefs (msg 103215). L4 PRD in progress.",
+  "last_updated": "2026-09-30"
+}
