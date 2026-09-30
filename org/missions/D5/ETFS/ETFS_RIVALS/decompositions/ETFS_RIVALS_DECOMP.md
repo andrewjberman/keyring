@@ -11,6 +11,7 @@
  "chains": 4,
  "join_cells": 1,
  "frozen": true,
+ "revision": "2.1 at L5 before issuance: G4 security_market moved to round 3 with its consumer FWD-6",
  "round1_decomposition": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.round1.md (bytes of @7926f5194c)"
 }
 ```
@@ -33,7 +34,7 @@ round 3):
 - the peer-group map;
 - the multi-source master shape;
 - coverage per fund-day;
-- corporate actions and security market data;
+- corporate actions (G3);
 - the income-clean trade schedule with its flow reconciliation;
 - the page grouped by Opal fund.
 
@@ -90,9 +91,8 @@ NOT cut here; each needs a table this round builds.
   `<fund_or_batch>-<requested_date>-<ts>-<sha256[:12]>.<ext>`, for both the issuer and the Bloomberg collectors. The
   same-second collision becomes impossible by construction.
 - **No OpenAI this round.** No prompt is cut; P1-P4 need G7-G12, which are not built. No alert, monitor or notifier.
-- **Classification** keeps round 1's rule. The GICS hierarchy is populated from `security_market` (G4) with source
-  `bloomberg` and its as-of. `sub_asset_class` stays UNRESOLVED for equities until the CTO rules row `ETFS_RIVALS-Z-S1`
-  (still open).
+- **Classification** keeps round 1's rule. The GICS hierarchy stays UNRESOLVED, because its source G4 is round 3.
+  `sub_asset_class` stays UNRESOLVED for equities until the CTO rules row `ETFS_RIVALS-Z-S1` (still open).
 
 ## 1. THE DOMAIN, BY SUBTRACTION
 
@@ -111,6 +111,8 @@ cell and the round-1 rows ruled into this round. Printed denominator: **5 lineag
 | W1-S2 bronze key has no requested date | round-1 row | RIV-b-1 | 0 |
 
 **NOT this round, by subtraction:**
+- G4 `security_market` (prices, total return, GICS). Its only lineage consumer is FWD-6, and the census captures carry no
+  price or GICS field, so it could only be tested live. It belongs with its consumer. (Revision 2.1 at L5, before issuance.)
 - FWD-6 (G7, G8, G4 coverage), FWD-7 (G10, G12, G13, P3, P4), FWD-10 (G9), FWD-11 (G11): round 3, which reads this round's
   G1-G6.
 - FWD-8 (the rebuild) and FWD-9 (the guardrails exercised, thresholds from real data, row W1-S5).
@@ -127,7 +129,7 @@ Status is measured at the cut (2026-09-30 ~16:2xZ).
 | `RIV-m-1` | C-HOME-PRODUCER | NOT-EVALUATED (`etf_constituents_pull.py` lands `bbg/<as-of>/constituents/`; capture-forward only; `FUNDS = ["DIVZ","IDVZ","PFDE","PFOE"]`) | WORLD (reads S3) | worker-light |
 | `RIV-g0-1` | FWD-1, FWD-3, FWD-12 | ABSENT (no `peer_group_map`; round-1 gold filters `fund_ticker == 'BASG'`) | LOCAL | worker |
 | `RIV-b-1` | FWD-3 | ABSENT (no Bloomberg collector; `bloomberg/etfs/` has 0 objects) | LOCAL | worker |
-| `RIV-e-1` | FWD-5 (G3), FWD-4 (GICS in G1) | ABSENT (the method is proven in CRO~Z's `dividend_history_pull.py`; 738 securities, 0 errors) | LOCAL | worker |
+| `RIV-e-1` | FWD-5 (G3) | ABSENT (the method is proven in CRO~Z's `dividend_history_pull.py`; 738 securities, 0 errors) | LOCAL | worker |
 | `RIV-g1-2` | FWD-3, FWD-4 | PARTIAL (`gold_canonical_shape.py` serves BASG from issuer silver only) | LOCAL | worker |
 | `RIV-g2-1` | FWD-2, FWD-3 | ABSENT | LOCAL | worker |
 | `RIV-g5-2` | FWD-5 | PARTIAL (`gold_trade_schedule.py`: flow model, 0.2% floor, BASG only; cash lines not excluded; no corporate actions; no G6) | LOCAL | worker |
@@ -203,7 +205,7 @@ Nothing is written to S3 and no producer is changed.
   - the real IDVZ-group captures for 2026-09-29 and 2026-09-28 through `import`, to a local sink, then silver;
   - one planted malformed capture.
 
-### `RIV-e-1` -- Bloomberg enrichment: `corporate_actions` (G3) and `security_market` (G4)
+### `RIV-e-1` -- Bloomberg enrichment: `corporate_actions` (G3)
 
 - **`enrichment_bloomberg.py`:** `handler_entry` for stage `pull-enrichment`, on the terminal machine. It is scripted via
   `integrations/bloomberg/mcp/blp_client.py`, the shared client CRO~Z's `dividend_history_pull.py` used.
@@ -216,7 +218,6 @@ Nothing is written to S3 and no producer is changed.
     - Bonus -> `bonus`;
     - Rights Issue -> `rights`;
     - an unmapped type -> carried with `event_type = unmapped:<raw>`, never dropped.
-  - **Daily `PX_LAST`, the total-return index and `GICS_SECTOR_NAME` / `GICS_INDUSTRY_GROUP_NAME`** land G4 `security_market`.
   - `NOT_APPLICABLE_TO_REF_DATA` is recorded as a status row, not an error.
 - **An `import` mode** reads CRO~Z's existing `.runtime/etfs-rivals-idvz-20260930/dividends.json` (738 securities) as QA-class
   G3 input, with provenance.
@@ -235,7 +236,7 @@ Nothing is written to S3 and no producer is changed.
   - `is_cash_line`: the vocabulary's cash sentinel, plus Bloomberg `* Curncy` securities, plus TXUE's `9996651D`-class cash
     lines, as CRO~Z's census names them;
   - `corporate_action_adjusted`: false in G1. G5 applies the actions; G1 stays as published.
-- The GICS hierarchy is filled from G4 when present (source `bloomberg`, with its as-of), else UNRESOLVED.
+- The GICS hierarchy stays UNRESOLVED, as in round 1. G4 `security_market`, its only source, is round 3 with FWD-6.
 - A Bloomberg row's `position_id` is its Bloomberg security id; an issuer row's is as in round 1.
 - Round 1's BASG output is unchanged apart from the new columns.
 
@@ -282,7 +283,7 @@ Under a NEVER-2 ledger entry opened and committed first, and a never-widen pair 
 1. Update the five Lambdas' code in place (`safe-apply`; the plan is `source_code_hash` updates only). Wire new stages into
    the existing Lambdas and the sweep. A new function needs a builder name and its own plan line in the pair.
 2. Write G0 at `map_version` 1, with each home fund's `source_policy` set from RIV-m-1's verdict.
-3. Import both capture sets as Bloomberg bronze. Silver, G1, G2, G3/G4 (import), G5/G6 and the page follow by marker or
+3. Import both capture sets as Bloomberg bronze. Silver, G1, G2, G3 (import), G5/G6 and the page follow by marker or
    sweep.
 4. Enable the vehicle legs (`RIVALFUNDS_BBG_LEG=1` in the vehicle's environment, the one line the pair names).
 5. Read the day's page back.
@@ -321,8 +322,7 @@ The next trading day's 08:03 leg plus the 09:00 sweep is the acceptance, read at
   labels. The 08:03 vehicle's three legs are live. The new legs are gated off until d-3. The notifier moratorium binds.
 - **comp-iam** (RUN at L5): nothing changes IAM this round, except that a new stage writing a new gold prefix needs its
   Lambda role's PutObject widened.
-  - The round-1 policies grant only the round-1 prefixes, so RIV-d-3's plan carries the role-policy updates for G0, G2, G3,
-    G4 and G6.
+  - The round-1 policies grant only the round-1 prefixes, so RIV-d-3's plan carries the role-policy updates for G0, G2, G3 and G6.
   - The terminal machine's writer is its existing AWS identity. The `bbg/` legs already write `opal-data-etfs`, and
     `bloomberg/etfs/` is a NEW prefix under that bucket, so RIV-d-3 measures it with the IAM simulator before the first
     landing.
