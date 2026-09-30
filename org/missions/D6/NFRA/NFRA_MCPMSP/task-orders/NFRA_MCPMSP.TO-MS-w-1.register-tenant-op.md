@@ -91,7 +91,7 @@ for this op alone. Sibling surface at the cut: MP-a-2 complete; MP-c-1 and MP-v-
 dry-run at base: AC1 FAIL as expected (test file absent); AC2 PASS as expected (12 passed, the control). Slot `~3`
 continues to MS-t-5, then MS-a-2.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
