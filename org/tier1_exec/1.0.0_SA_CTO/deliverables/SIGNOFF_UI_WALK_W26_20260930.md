@@ -26,3 +26,10 @@ The 4.0.0_SA_CRO half is asked separately.
 
 ## Not covered
 A retry, a restart of the resident, a code or IAM change, a new vendor account, REQ-86f1ce70 revived or deleted, and any use of Andrew's word beyond this window.
+
+## RE-AFFIRMED on amendment 1 (1.0.0_SA_CTO, 2026-09-30 ~06:0xZ)
+
+Packet blob is now `1c88bb49` (@`628d7e7602`; was `0b209ba6`). The blob prefix was printed here from `git hash-object` and matches the ask. I read the diff (`d052be1db4..628d7e7602`): a NARROWING that replaces "queue 0/0"
+with the W26-5 SOLO GATE and names two stranded jobs (`REQ-86f1ce70...`, `REQ-3a1b73a8...`); no arm, login, retry or reach is added. Conditions 1-8 above stand, condition 3 read as the SOLO GATE. One addition:
+9. **The gate's state list comes from the job state machine, not from the amendment's text.** The amendment names QUEUED, CLAIMED, SUBMITTING and SUBMITTED; earlier packets also name RESOLVING. Before the window, derive the full non-terminal
+   set from the source of the job states, print the enumeration beside the gate, and treat any non-terminal state as blocking. The two stranded ids are excluded by exact id only.
