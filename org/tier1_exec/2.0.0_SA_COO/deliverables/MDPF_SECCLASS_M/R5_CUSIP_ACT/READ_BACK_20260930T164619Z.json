@@ -1,0 +1,3345 @@
+{
+ "table": "etf-classifications",
+ "planned": 349,
+ "equal": 348,
+ "missing": 0,
+ "differ": 1,
+ "diffs": [
+  {
+   "ticker": "CUSIP:786514AS8",
+   "delta": {
+    "sub_asset_class": [
+     "High Yield",
+     null
+    ],
+    "name": [
+     "SAFEWAY INC 7.45% 09/15/2027",
+     "SAFEWAY INC.     7.45%27"
+    ]
+   }
+  }
+ ],
+ "items": {
+  "CUSIP:733420HZ9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:733420HZ9",
+   "asset_class": "fixed_income",
+   "name": "PORT ANGELES WASH   4%39",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:59333AGU9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:59333AGU9",
+   "asset_class": "fixed_income",
+   "name": "MIAMI-DADE CNTY  5.25%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:60637AVY5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:60637AVY5",
+   "asset_class": "fixed_income",
+   "name": "MISSOURI ST HEALTH  5%33",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:949764SJ4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:949764SJ4",
+   "asset_class": "fixed_income",
+   "name": "WELLS FARGO BANK 3.75%26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:65829QEA8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:65829QEA8",
+   "asset_class": "fixed_income",
+   "name": "NORTH CAROLINA ST L 5%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:88213AKY0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:88213AKY0",
+   "asset_class": "fixed_income",
+   "name": "TEXAS A & M UNIV RE 5%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:34157REH9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:34157REH9",
+   "asset_class": "fixed_income",
+   "name": "FLORIDA ST BRD GO 3.5%35",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:3431362G1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:3431362G1",
+   "asset_class": "fixed_income",
+   "name": "FLORIDA ST TPK AU 3.5%42",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:34681XHN5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:34681XHN5",
+   "asset_class": "fixed_income",
+   "name": "FORT BEND CNTY TE 3.5%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:45204ELJ5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:45204ELJ5",
+   "asset_class": "fixed_income",
+   "name": "ILLINOIS FIN AUT 3.25%45",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:61075TQX9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:61075TQX9",
+   "asset_class": "fixed_income",
+   "name": "MONROE CNTY N Y  3.75%39",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:64972GEU4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:64972GEU4",
+   "asset_class": "fixed_income",
+   "name": "NEW YORK N Y CITY M 4%44",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:675561CL6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:675561CL6",
+   "asset_class": "fixed_income",
+   "name": "OCOEE FLA CAP IM 3.75%41",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:73412PBV4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:73412PBV4",
+   "asset_class": "fixed_income",
+   "name": "PORT FREEPORT TEX S 4%48",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:740614DX7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:740614DX7",
+   "asset_class": "fixed_income",
+   "name": "PREMONT TEX IND 3.625%47",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:976656CE6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:976656CE6",
+   "asset_class": "fixed_income",
+   "name": "WISCONSIN ELECTR 3.65%42",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:042735AK6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:042735AK6",
+   "asset_class": "fixed_income",
+   "name": "ARROW ELECTRONICS 7.5%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:912828U24": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:912828U24",
+   "asset_class": "fixed_income",
+   "name": "US TREASUR    NT 2%11/26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:075896AA8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:075896AA8",
+   "asset_class": "fixed_income",
+   "name": "BED BATH & BEYO 3.749XXX",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:075896AB6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:075896AB6",
+   "asset_class": "fixed_income",
+   "name": "20230930-DK-BUT 4.915%34",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:984121CL5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:984121CL5",
+   "asset_class": "fixed_income",
+   "name": "XEROX CORP        4.8%35",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:89602HGC5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:89602HGC5",
+   "asset_class": "fixed_income",
+   "name": "TRIBOROUGH BRDG & T 5%36",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:002824BS8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:002824BS8",
+   "asset_class": "fixed_income",
+   "name": "ABBOTT LABORATORIES 4%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:023135BZ8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:023135BZ8",
+   "asset_class": "fixed_income",
+   "name": "AMAZON.COM, INC.  2.1%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:110122EH7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:110122EH7",
+   "asset_class": "fixed_income",
+   "name": "BRISTOL-MYERS SQU 5.2%34",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:20030NCT6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:20030NCT6",
+   "asset_class": "fixed_income",
+   "name": "COMCAST CORP     4.15%28",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:20826FBJ4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:20826FBJ4",
+   "asset_class": "fixed_income",
+   "name": "CONOCOPHILLIPS CO 4.7%30",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:458140BH2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:458140BH2",
+   "asset_class": "fixed_income",
+   "name": "INTEL CORP       2.45%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:76720AAS5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:76720AAS5",
+   "asset_class": "fixed_income",
+   "name": "RIO TINTO FIN 4.875% 30F",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CEP2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CEP2",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 2.875%05/32",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CFV8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CFV8",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 4.125%11/32",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CHT1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CHT1",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 3.875%08/33",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CHW4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CHW4",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 4.125%08/30",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CJC6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CJC6",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 4.625%10/26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CJN2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CJN2",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 4.375%11/28",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CKZ3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CKZ3",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 4.375%07/27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CLF6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CLF6",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 3.875%08/34",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CLU3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CLU3",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 4.125%10/31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CNT4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CNT4",
+   "asset_class": "fixed_income",
+   "name": "US TREASUR NT 4.25%08/35",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:92343VHF4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:92343VHF4",
+   "asset_class": "fixed_income",
+   "name": "VERIZON COMMUNIC 4.75%33",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:06051YAM2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:06051YAM2",
+   "asset_class": "fixed_income",
+   "name": "BANK OF AMERICA,  3.9%26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:14042RVK4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:14042RVK4",
+   "asset_class": "fixed_income",
+   "name": "CAPITAL ONE, NTN 4.95%26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:227563QM8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:227563QM8",
+   "asset_class": "fixed_income",
+   "name": "CROSS RIVER BANK    4%26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:56065GDH8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:56065GDH8",
+   "asset_class": "fixed_income",
+   "name": "MAINSTREET BANK  3.95%26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:712303CK0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:712303CK0",
+   "asset_class": "fixed_income",
+   "name": "PEOPLES SECURITY 3.95%26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:435475SM1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:435475SM1",
+   "asset_class": "fixed_income",
+   "name": "HOLLIDAYSBURG PA 3.25%30",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:60534TLN3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:60534TLN3",
+   "asset_class": "fixed_income",
+   "name": "MISSISSIPPI DEV BK  3%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:60534WYU6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:60534WYU6",
+   "asset_class": "fixed_income",
+   "name": "MISSISSIPPI DEV BK  5%32",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:208422KW4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:208422KW4",
+   "asset_class": "fixed_income",
+   "name": "CONROE TEX MUN M 3.25%34",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:346905LN0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:346905LN0",
+   "asset_class": "fixed_income",
+   "name": "FORT BEND CNTY TE 3.5%35",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:521854CH0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:521854CH0",
+   "asset_class": "fixed_income",
+   "name": "LEANDER TODD MUN UT 2%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:61370NLG6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:61370NLG6",
+   "asset_class": "fixed_income",
+   "name": "MONTGOMERY CNTY TEX 2%30",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:61371AWR7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:61371AWR7",
+   "asset_class": "fixed_income",
+   "name": "MONTGOMERY CNTY TEX 2%32",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:61372GFX9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:61372GFX9",
+   "asset_class": "fixed_income",
+   "name": "MONTGOMERY CNTY TEX 2%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:867344AM5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:867344AM5",
+   "asset_class": "fixed_income",
+   "name": "SUNFIELD MUN UTIL D 3%34",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:932449CN9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:932449CN9",
+   "asset_class": "fixed_income",
+   "name": "WALLER CNTY TEX 3.375%34",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:97112AEA2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:97112AEA2",
+   "asset_class": "fixed_income",
+   "name": "WILLOW CREEK FARM 3.5%36",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CFZ9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CFZ9",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 3.875%11/27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CJK8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CJK8",
+   "asset_class": "fixed_income",
+   "name": "US TREASU NT 4.625%11/26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:65829QCZ5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:65829QCZ5",
+   "asset_class": "fixed_income",
+   "name": "NORTH CAROLINA ST L 5%30",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:38151PEN7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:38151PEN7",
+   "asset_class": "fixed_income",
+   "name": "GOLDMAN SACHS BA 3.75%26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:786514AS8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:786514AS8",
+   "asset_class": "fixed_income",
+   "name": "SAFEWAY INC.     7.45%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:61768EQQ9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:61768EQQ9",
+   "asset_class": "fixed_income",
+   "name": "MORGAN STANLEY PR 4.8%28",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:61768EQT3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:61768EQT3",
+   "asset_class": "fixed_income",
+   "name": "MORGAN STANLEY P 4.85%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:00130HCH6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:00130HCH6",
+   "asset_class": "fixed_income",
+   "name": "THE AES CORP     5.45%28",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:126408HM8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:126408HM8",
+   "asset_class": "fixed_income",
+   "name": "CSX CORP         4.25%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:443510AH5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:443510AH5",
+   "asset_class": "fixed_income",
+   "name": "HUBBELL INC      3.15%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:749685AX1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:749685AX1",
+   "asset_class": "fixed_income",
+   "name": "RPM INTERNTNL IN 4.55%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:88579EAC9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:88579EAC9",
+   "asset_class": "fixed_income",
+   "name": "3M CO             5.7%37",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:976656BW7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:976656BW7",
+   "asset_class": "fixed_income",
+   "name": "WISCONSIN ELECT 5.625%33",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:976826BQ9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:976826BQ9",
+   "asset_class": "fixed_income",
+   "name": "WISCONSIN POWER  3.95%32",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:98389BAV2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:98389BAV2",
+   "asset_class": "fixed_income",
+   "name": "XCEL ENERGY INC.    4%28",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:020039DC4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:020039DC4",
+   "asset_class": "fixed_income",
+   "name": "ALLTEL CORP     7.875%32",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:880591DX7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:880591DX7",
+   "asset_class": "fixed_income",
+   "name": "TVA              4.65%35",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:102853GQ5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:102853GQ5",
+   "asset_class": "fixed_income",
+   "name": "BOWLING GREEN OHIO  5%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:13376TBX2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:13376TBX2",
+   "asset_class": "fixed_income",
+   "name": "CAMINO REAL REGL MO 5%28",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:194469QX3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:194469QX3",
+   "asset_class": "fixed_income",
+   "name": "COLLEGE STATION TEX 5%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:240091LL0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:240091LL0",
+   "asset_class": "fixed_income",
+   "name": "DAYTON TEX INDPT SC 5%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:241064EM2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:241064EM2",
+   "asset_class": "fixed_income",
+   "name": "DEKALB PRIVATE HOSP 5%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:245505XY3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:245505XY3",
+   "asset_class": "fixed_income",
+   "name": "DEL VALLE TEX INDPT 5%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:450812Q96": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:450812Q96",
+   "asset_class": "fixed_income",
+   "name": "IBERIA PARISH LA PA 5%30",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:480256EB8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:480256EB8",
+   "asset_class": "fixed_income",
+   "name": "JONESBORO ARK CITY  5%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:54422NHH2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:54422NHH2",
+   "asset_class": "fixed_income",
+   "name": "LOS ALAMOS N MEX PU 5%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:54811BSM4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:54811BSM4",
+   "asset_class": "fixed_income",
+   "name": "LOWER COLO RIV AUTH 5%28",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:603827WS1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:603827WS1",
+   "asset_class": "fixed_income",
+   "name": "MINNEAPOLIS & ST PA 5%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:646039YQ4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:646039YQ4",
+   "asset_class": "fixed_income",
+   "name": "NEW JERSEY ST       4%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:67884GWN0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:67884GWN0",
+   "asset_class": "fixed_income",
+   "name": "OKLAHOMA DEV FIN AU 5%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:80586AAU5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:80586AAU5",
+   "asset_class": "fixed_income",
+   "name": "SCAGO PUB FACS CORP 5%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:809545WJ1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:809545WJ1",
+   "asset_class": "fixed_income",
+   "name": "SCOTT CNTY KY SCH D 4%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:833240HJ6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:833240HJ6",
+   "asset_class": "fixed_income",
+   "name": "SNOHOMISH CNTY WASH 5%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:845080JG6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:845080JG6",
+   "asset_class": "fixed_income",
+   "name": "SOUTHWEST LOC SCH D 4%26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:914354AC9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:914354AC9",
+   "asset_class": "fixed_income",
+   "name": "UNIVERSITY ILL UNIV 5%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:974433JM7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:974433JM7",
+   "asset_class": "fixed_income",
+   "name": "WINNEBAGO BOONE ETC 5%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:98851WBW2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:98851WBW2",
+   "asset_class": "fixed_income",
+   "name": "YUMA ARIZ PLEDGED R 5%31",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:912810QA9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:912810QA9",
+   "asset_class": "fixed_income",
+   "name": "US TREASURY    3.5%02/39",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:912810QT8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:912810QT8",
+   "asset_class": "fixed_income",
+   "name": "US TREASURY  3.125%11/41",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:337738AU2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:337738AU2",
+   "asset_class": "fixed_income",
+   "name": "FISERV, INC.      3.5%29",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:749685AV5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:749685AV5",
+   "asset_class": "fixed_income",
+   "name": "RPM INTERNTNL IN 3.75%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:376535803": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:376535803",
+   "asset_class": "fixed_income",
+   "name": "GLADSTONE CAP  6.25% PFD",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:05949QAY1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:05949QAY1",
+   "asset_class": "fixed_income",
+   "name": "BANC OF AMERICA  5.75%36",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:225470VM2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:225470VM2",
+   "asset_class": "fixed_income",
+   "name": "CREDIT SUISSE FI 5.75%36",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:32056CAE9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:32056CAE9",
+   "asset_class": "fixed_income",
+   "name": "FIRST HORIZON MOR 5.5%37",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:466247ZR7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:466247ZR7",
+   "asset_class": "fixed_income",
+   "name": "J P MORGAN MORTG 5.75%36",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:949797AA2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:949797AA2",
+   "asset_class": "fixed_income",
+   "name": "WELLS FARGO MORTGAG 6%37",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:02765UDX9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:02765UDX9",
+   "asset_class": "fixed_income",
+   "name": "AMERICAN MUN PW 6.849%28",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:74913G881": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:74913G881",
+   "asset_class": "fixed_income",
+   "name": "QWEST CORP 6.5%  6.5%PFD",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:66476QFV5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:66476QFV5",
+   "asset_class": "fixed_income",
+   "name": "NORTHERN BANK &  3.95%26",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:084538GV3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:084538GV3",
+   "asset_class": "fixed_income",
+   "name": "BERKS CNTY PA MUN A 5%40",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:57429NCH3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:57429NCH3",
+   "asset_class": "fixed_income",
+   "name": "MARYLAND ST TRANSN  4%34",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:61690U3L2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:61690U3L2",
+   "asset_class": "fixed_income",
+   "name": "MORGAN STANLEY BA 4.9%28",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:61768E7D9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:61768E7D9",
+   "asset_class": "fixed_income",
+   "name": "MORGAN STANLEY P 4.65%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:079860AK8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:079860AK8",
+   "asset_class": "fixed_income",
+   "name": "BELLSOUTH, LLC      6%34",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:14040HBN4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:14040HBN4",
+   "asset_class": "fixed_income",
+   "name": "CAPITAL ONE FINL 3.75%27",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:037833AT7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:037833AT7",
+   "asset_class": "fixed_income",
+   "name": "APPLE INC 4.45% 05/06/2044",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:196707XS7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:196707XS7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "COLORADO ST BRD GOVERNORS UNIV 4% 03/01/2047",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:052398HW7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:052398HW7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "AUSTIN TEX ARPT SYS REV 5% 11/15/2052",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:70879QTZ6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:70879QTZ6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "PENNSYLVANIA HSG FIN AGY SINGL 5% 10/01/2050",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:19648GZE5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:19648GZE5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "COLORADO HSG & FIN AUTH 4.9% 10/01/2055",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:19648GZD7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:19648GZD7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "COLORADO HSG & FIN AUTH 4.85% 10/01/2050",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:447290DM6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:447290DM6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HUNTSVILLE TEX WTR & WASTEWATE 4.25% 02/15/2054",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:92778UAZ3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:92778UAZ3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "VIRGINIA COMMLTH TRANSN BRD FE 5% 09/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:882806GR7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:882806GR7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXAS TECH UNIV REVS 5% 02/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:93974DX52": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:93974DX52",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "WASHINGTON ST 5% 08/01/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:46613P3G9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:46613P3G9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "JEA FLA WTR & SWR SYS REV 5% 10/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:88213AKW4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:88213AKW4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXAS A & M UNIV REV 5% 05/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:93974DY69": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:93974DY69",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "WASHINGTON ST 5% 08/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:41423PAQ0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:41423PAQ0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX TOLL RD REV 5% 08/15/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:014393YC0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:014393YC0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "ALDINE TEX INDPT SCH DIST 5% 02/15/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:64971XDK1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:64971XDK1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NEW YORK N Y CITY TRANSITIONAL 5% 05/01/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:343137ER2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:343137ER2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "FLORIDA ST TPK AUTH TPK REV 5% 07/01/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91514AJU0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91514AJU0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "UNIVERSITY TEX UNIV REVS 5% 08/15/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:662903WT6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:662903WT6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NORTH TEX MUN WTR DIST TEX WTR 4% 09/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:650036BW5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:650036BW5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NEW YORK ST URBAN DEV CORP REV 5% 03/15/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:088281M72": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:088281M72",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "BEXAR CNTY TEX 5% 06/15/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:79623PFN0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:79623PFN0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "SAN ANTONIO TEX 4% 08/01/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:34160KAN0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:34160KAN0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "FLORIDA ST DEPT TRANSN FING CO 5% 07/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:59334DKH6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:59334DKH6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "MIAMI-DADE CNTY FLA WTR & SWR 4% 10/01/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:052414TX7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:052414TX7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "AUSTIN TEX ELEC UTIL SYS REV 5% 11/15/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:527843BP0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:527843BP0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "LEWIS CNTY WASH PUB UTIL DIST 4% 12/01/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:64971XB98": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:64971XB98",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NEW YORK N Y CITY TRANSITIONAL 5% 11/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:406450H58": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:406450H58",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HALTOM CITY TEX 5% 02/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:18604TEB0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:18604TEB0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CLEVELAND CNTY OKLA EDL FACS A 4% 06/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:41423PAR8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:41423PAR8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX TOLL RD REV 5% 08/15/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:611530DC7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:611530DC7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "MONROEVILLE PA FIN AUTH UPMC R 5% 02/15/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:7170874Z0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:7170874Z0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "PFLUGERVILLE TEX 4% 08/01/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:574193VF2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:574193VF2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "MARYLAND ST 5% 06/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:64966QJ35": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:64966QJ35",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NEW YORK N Y 5% 10/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:159195ZA7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:159195ZA7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CHANNELVIEW TEX INDPT SCH DIST 5% 08/15/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:052477PH3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:052477PH3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "AUSTIN TEX WTR & WASTEWATER SY 5% 11/15/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:876387EP2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:876387EP2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TARRANT CNTY TEX HOSP DIST 5% 08/15/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:283822XR0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:283822XR0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "EL PASO TEX WTR & SWR REV 5% 03/01/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:181234N35": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:181234N35",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CLARK CNTY WASH SCH DIST NO 11 4% 12/01/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:881847VA2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:881847VA2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXARKANA TEX INDPT SCH DIST 5% 02/15/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:64990ASU0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:64990ASU0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NEW YORK ST DORM AUTH SALES TA 5% 09/15/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:4423315E0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:4423315E0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HOUSTON TEX 5% 03/01/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:2982635G5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:2982635G5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "EULESS TEX 5% 02/15/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:66285WM78": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:66285WM78",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NORTH TEX TWY AUTH REV 5% 01/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:83748CAZ9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:83748CAZ9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "SOUTH CORRECTIONAL ENTITY FAC 5% 12/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:436146EN0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:436146EN0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HOLLYWOOD FLA 5% 07/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:882830BR2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:882830BR2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXAS TRANSN COMMN 5% 04/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:116405XU0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:116405XU0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "BROWNSVILLE TEX 4% 02/15/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:220113LN2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:220113LN2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CORPUS CHRISTI TEX 5% 03/01/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:44244CS32": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:44244CS32",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HOUSTON TEX UTIL SYS REV 5% 11/15/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:8827242G1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:8827242G1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXAS ST 5% 10/01/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:3954604V7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:3954604V7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "GREENSBORO N C 4% 10/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:0882815C0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:0882815C0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "BEXAR CNTY TEX 5% 06/15/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:774286BA5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:774286BA5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "ROCKWALL TEX INDPT SCH DIST 4% 02/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:57587GZM0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:57587GZM0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "MASSACHUSETTS ST HSG FIN AGY H 4.6% 06/01/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:779699JH1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:779699JH1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "ROWLETT TEX 5% 02/15/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:3733846V3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:3733846V3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "GEORGIA ST 5% 12/01/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:92778VJG4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:92778VJG4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "VIRGINIA COLLEGE BLDG AUTH VA 5% 02/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:29270C3B9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:29270C3B9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "ENERGY NORTHWEST WASH ELEC REV 5% 07/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:34115PBQ7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:34115PBQ7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "FLORIDA ST 5% 07/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:574193TW8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:574193TW8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "MARYLAND ST 5% 03/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:4140052R8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:4140052R8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX 5% 09/15/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:97705MN27": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:97705MN27",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "WISCONSIN ST 5% 05/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:93974E6J0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:93974E6J0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "WASHINGTON ST 5% 02/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:4140055E4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:4140055E4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX 5% 09/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:232769QK8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:232769QK8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CYPRESS-FAIRBANKS TEX INDPT SC 5% 02/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:93974FEH2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:93974FEH2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "WASHINGTON ST 5% 07/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:073900X72": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:073900X72",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "BEAUFORT CNTY S C SCH DIST 5% 03/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:678514EP1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:678514EP1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "OKLAHOMA CAP IMP AUTH ST HWY C 5% 07/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:67765QTH9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:67765QTH9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "OHIO ST WTR DEV AUTH REV 5% 12/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:812643C77": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:812643C77",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "SEATTLE WASH MUN LT & PWR REV 5% 02/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:2077583E1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:2077583E1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CONNECTICUT ST SPL TAX OBLIG R 5% 07/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:03843TAX9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:03843TAX9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "AQUARION WTR AUTH CONN WTR SYS 5.25% 02/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:4860632S8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:4860632S8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "KATY TEX INDPT SCH DIST 5% 02/15/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:727199K26": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:727199K26",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "PLANO TEX INDPT SCH DIST 5% 02/15/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:93974D6H6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:93974D6H6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "WASHINGTON ST 5% 02/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:20772KFU8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:20772KFU8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CONNECTICUT ST 5% 04/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:30382AJM5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:30382AJM5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "FAIRFAX CNTY VA 5% 10/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:208418T37": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:208418T37",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CONROE TEX INDPT SCH DIST 5% 02/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:677523DJ8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:677523DJ8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "OHIO ST 5% 03/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:29270C6C4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:29270C6C4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "ENERGY NORTHWEST WASH ELEC REV 5% 07/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:346766T99": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:346766T99",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "FORT BEND CNTY TEX 5% 03/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:66285WT48": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:66285WT48",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NORTH TEX TWY AUTH REV 5% 01/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:414009UA6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:414009UA6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX CULTURAL ED FA 5% 12/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:592112YW0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:592112YW0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "METROPOLITAN GOVT NASHVILLE & 5% 01/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:68609UWD3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:68609UWD3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "OREGON ST 5% 05/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:9128334Y3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:9128334Y3",
+   "asset_class": "fixed_income",
+   "name": "U S TREAS SEC STRIPPED INT PMT 0% 08/15/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:93974DXD5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:93974DXD5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "WASHINGTON ST 5% 08/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:8827236V6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:8827236V6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXAS ST 5% 10/01/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:235241TH9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:235241TH9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "DALLAS TEX AREA RAPID TRAN SAL 5% 12/01/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:79623PKA2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:79623PKA2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "SAN ANTONIO TEX 4% 08/01/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:41423PAS6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:41423PAS6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX TOLL RD REV 5% 08/15/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:755791EK2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:755791EK2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "REAGAN CNTY TEX INDPT SCH DIST 5% 02/15/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:248415YU9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:248415YU9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "DENISON TEX INDPT SCH DIST 5% 08/01/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:833209LX5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:833209LX5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "SNOHOMISH CNTY WASH SCH DIST N 4% 12/01/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:521769DQ9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:521769DQ9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "LEAGUE CITY TEX 4% 02/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:774280W56": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:774280W56",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "ROCKWALL TEX 5% 08/01/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:58178CDN4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:58178CDN4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "MC KINNEY TEX 5% 08/15/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:734122CP7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:734122CP7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "PORT FREEPORT TEX 5% 08/01/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:208399W84": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:208399W84",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CONROE TEX 4% 11/15/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:9144025Z1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:9144025Z1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "UNIVERSITY MD SYS AUXILIARY FA 5% 04/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:29270C2H7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:29270C2H7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "ENERGY NORTHWEST WASH ELEC REV 5% 07/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91514AEL5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91514AEL5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "UNIVERSITY TEX UNIV REVS 5% 08/15/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:34153QXN1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:34153QXN1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "FLORIDA ST BRD ED PUB ED 5% 06/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:853207AN8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:853207AN8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "STANDARD CALIF SCH DIST 3.125% 08/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CME8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CME8",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4.25% 12/31/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CMY4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CMY4",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 3.75% 04/30/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:009CVR036": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:009CVR036",
+   "asset_class": "equity",
+   "name": "AKOUOS INC SHS",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:715ESC026": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:715ESC026",
+   "asset_class": "equity",
+   "name": "PERSHING SQUARE TONTINE HOLDINGS LTD CALL WTS/PROD OPEN()",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:17239YLP5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:17239YLP5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CINCO TEX MUN UTIL DIST NO 1 C 3.5% 12/01/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:41013MQP8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:41013MQP8",
+   "asset_class": "fixed_income",
+   "name": "JOHN HANCOCK LIFE INSURANCE CO 5% 06/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:052414RA9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:052414RA9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "AUSTIN TEX ELEC UTIL SYS REV 5% 11/15/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:7962535T5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:7962535T5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "SAN ANTONIO TEX ELEC & GAS REV 4% 02/01/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:858620Z83": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:858620Z83",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "STEPHEN F AUSTIN ST UNIV TEX U 4% 10/15/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:882669BG8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:882669BG8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXAS PUB FIN AUTH LEASE REV 4% 02/01/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:670386RC7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:670386RC7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NUECES CNTY TEX 4% 02/15/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:067167ZF6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:067167ZF6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "BARBERS HILL TEX INDPT SCH DIS 4% 02/15/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:812643UP7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:812643UP7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "SEATTLE WASH MUN LT & PWR REV 5% 07/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:421025DG9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:421025DG9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HAYS CNTY TEX DEV DIST NO 1 3% 04/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:920494FG1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:920494FG1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "VAN ALSTYNE TEX 5% 02/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:052397J31": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:052397J31",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "AUSTIN TEX 5% 09/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:516824NX3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:516824NX3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "LAREDO TEX 5% 02/15/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:59334DPD0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:59334DPD0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "MIAMI-DADE CNTY FLA WTR & SWR 5% 10/01/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:677523KD3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:677523KD3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "OHIO ST 5% 11/01/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:42211HGY9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:42211HGY9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HEADWATERS MUN UTIL DIST TEX H 4% 08/15/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:23503CFQ5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:23503CFQ5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "DALLAS FORT WORTH TEX INTL ARP 5% 11/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:881797AG9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:881797AG9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXARKANA COLLEGE TEX 4% 02/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:89439YDU0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:89439YDU0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TRAVIS CNTY TEX HEALTHCARE DIS 5% 03/01/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:938688ZM3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:938688ZM3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "WASHINGTON CNTY TEX JR COLLEGE 5% 10/01/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:067626KU4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:067626KU4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "BARKER CYPRESS MUN UTIL DIST T 4% 04/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:486053CM1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:486053CM1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "KATY TEX DEV AUTH REV 5% 06/01/2037",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:35880C7B4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:35880C7B4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "FRISCO TEX INDPT SCH DIST 4% 02/15/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:187720F44": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:187720F44",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CLINTON IOWA 5% 06/01/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:24880SJM6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:24880SJM6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "DENTON CNTY TEX MUN UTIL DIST 4% 09/01/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:380316AG4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:380316AG4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "GODLEY TEX 5% 08/15/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:414974FB6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:414974FB6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX MUN UTIL DIST 4% 04/01/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:57325VAM1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:57325VAM1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "MARTIN CNTY TEX HOSP DIST 4% 04/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:662832LX0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:662832LX0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NORTH TEX MUN WTR DIST TEX REG 5% 09/01/2037",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:666495AY2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:666495AY2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NORTHLAKE TEX 3.5% 08/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:882750NR9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:882750NR9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXAS ST DEPT HSG & CMNTY AFFA 5% 07/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CFM8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CFM8",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4.125% 09/30/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CKE0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CKE0",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4.25% 03/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:912797VH7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:912797VH7",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS BILLS 0% 12/17/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CLY5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CLY5",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4.25% 11/30/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:414962RD4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:414962RD4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX MUN UTIL DIST 3.5% 03/01/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:235241SN7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:235241SN7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "DALLAS TEX AREA RAPID TRAN SAL 4% 12/01/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:414009JS0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:414009JS0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX CULTURAL ED FA 5% 10/01/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:662842NA7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:662842NA7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NORTH TEX MUN WTR DIST UPPER E 3.25% 06/01/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:20772J3W0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:20772J3W0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CONNECTICUT ST 5% 10/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:645424AQ5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:645424AQ5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NEW HOPE CULTURAL ED FACS FIN 4% 08/15/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:969078TT1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:969078TT1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "WILL CNTY ILL CMNTY UNIT SCH D 4% 11/01/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:181059ZV1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:181059ZV1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CLARK CNTY NEV SCH DIST 4% 06/15/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:77316QE96": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:77316QE96",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "ROCKFORD ILL 4% 12/15/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:076059GK4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:076059GK4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "BEDFORD CNTY PA 3.125% 09/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:495242N54": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:495242N54",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "KING CNTY WASH SCH DIST NO 412 4% 12/01/2037",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:312432H34": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:312432H34",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "FAYETTE CNTY KY SCH DIST FIN C 4% 05/01/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:194469EA6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:194469EA6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "COLLEGE STATION TEX 2.625% 02/15/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:213291QW0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:213291QW0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "COOK CNTY ILL CMNTY CONS SCH D 4% 12/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:51166FFB0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:51166FFB0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "LAKELAND FLA ENERGY SYS REV 4% 10/01/2037",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:909218125": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:909218125",
+   "asset_class": "equity",
+   "name": "UNIT CORPORATION WT EXP 090327",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:386442WS2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:386442WS2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "GRAND RIVER DAM AUTH OKLA REV 5% 06/01/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:679111YY4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:679111YY4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "OKLAHOMA TRANSN AUTH OK F/K/A 5% 01/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:679111XT6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:679111XT6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "OKLAHOMA TRANSN AUTH OK F/K/A 5% 01/01/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:67919PPD9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:67919PPD9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "OKLAHOMA ST WTR RES BRD REVOLV 5% 04/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:112097S43": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:112097S43",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "BROKEN ARROW OKLA 4% 09/01/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:678688KX9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:678688KX9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "OKLAHOMA CNTY OKLA 3.75% 05/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:186072TK0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:186072TK0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CLEVELAND CNTY OKLA INDPT SCH 4% 03/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:899645G74": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:899645G74",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TULSA OKLA 4% 03/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:899656WA6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:899656WA6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TULSA OKLA MET UTIL AUTH UTIL 4% 04/01/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:18605QCU5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:18605QCU5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "CLEVELAND CNTY OKLA PUB FACS A 5% 05/01/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CMN8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CMN8",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4.25% 02/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:414009JT8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:414009JT8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX CULTURAL ED FA 5% 10/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:695114CD8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:695114CD8",
+   "asset_class": "fixed_income",
+   "name": "PACIFICORP 5.75% 04/01/2037",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:662832HM9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:662832HM9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "NORTH TEX MUN WTR DIST TEX REG 5% 09/01/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:358776PU0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:358776PU0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "FRISCO TEX 4% 02/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:8827567X1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:8827567X1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXAS ST PUB FIN AUTH REV 4% 12/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:87638QQG7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:87638QQG7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TARRANT CNTY TEX CULTURAL ED F 5% 12/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:2350365G1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:2350365G1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "DALLAS FORT WORTH TEX INTL ARP 5% 11/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:117569LK7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:117569LK7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "BRYAN TEX ELEC SYS REV 5% 07/01/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:736278KJ0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:736278KJ0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "PORTER MUN UTIL DIST TEX 3% 03/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:414205HV9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:414205HV9",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX UTIL DIST NO 6 4.125% 03/01/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:895272EZ1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:895272EZ1",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TRENTON TEX INDPT SCH DIST 5% 02/01/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:718172DB2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:718172DB2",
+   "asset_class": "fixed_income",
+   "name": "PHILIP MORRIS INTL INC 5.375% 02/15/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:767278JF2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:767278JF2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "RIO VISTA TEX INDPT SCH DIST 5% 08/15/2035",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:887772DF5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:887772DF5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TIOGA TEX 5% 08/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:756109CE2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:756109CE2",
+   "asset_class": "fixed_income",
+   "name": "REALTY INCOME CORP 2.7% 02/15/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:049560AG0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:049560AG0",
+   "asset_class": "fixed_income",
+   "name": "ATMOS ENERGY CORP 5.95% 10/15/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:696878EW3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:696878EW3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "PALMER PLANTATION MUN UTIL DIS 4% 09/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:194748CH0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:194748CH0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "COLLIN CNTY TEX MUN UTIL DIST 3.125% 02/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:52109HRX3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:52109HRX3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "LAZY NINE MUN UTIL DIST NO 1B 4% 03/01/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:892778UG4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:892778UG4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TRAIL OF THE LAKES MUN UTIL DI 4% 04/01/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:532457AZ1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:532457AZ1",
+   "asset_class": "fixed_income",
+   "name": "ELI LILLY & CO 5.5% 03/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:742718CB3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:742718CB3",
+   "asset_class": "fixed_income",
+   "name": "PROCTER & GAMBLE CO 5.5% 02/01/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:881685BB6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:881685BB6",
+   "asset_class": "fixed_income",
+   "name": "TEXACO CAP INC MTNS B E 8% 08/01/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:12189TAJ3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:12189TAJ3",
+   "asset_class": "fixed_income",
+   "name": "BURLINGTON NORTHN SANTA FE CP 6.7% 08/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:69349LAR9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:69349LAR9",
+   "asset_class": "fixed_income",
+   "name": "PNC BK N A PITTSBURGH PA DISC 4.05% 07/26/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:09290DAA9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:09290DAA9",
+   "asset_class": "fixed_income",
+   "name": "BLACKROCK INC 4.7% 03/14/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:30303M8T2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:30303M8T2",
+   "asset_class": "fixed_income",
+   "name": "META PLATFORMS INC 4.55% 08/15/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CJA0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CJA0",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4.625% 09/30/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CJT9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CJT9",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4% 01/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CRL7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CRL7",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4.375% 09/15/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:61746BCY0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:61746BCY0",
+   "asset_class": "fixed_income",
+   "name": "MORGAN STANLEY 6.25% 08/09/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CRF0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CRF0",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4.625% 08/15/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:89214A102": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:89214A102",
+   "asset_class": "equity",
+   "name": "TOWN SPORTS INTL HLDGS INC COM",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:4424366D8": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:4424366D8",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HOUSTON TEX WTR & SWR SYS REV 0% 12/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:799561JN6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:799561JN6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "SAN YSIDRO CALIF SCH DIST 0% 08/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:902307JL2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:902307JL2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TYLER TEX JR COLLEGE DIST REV 3.125% 08/15/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:41420QJH2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:41420QJH2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HARRIS CNTY TEX MUN UTIL DIST 3.25% 09/01/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:902307JM0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:902307JM0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TYLER TEX JR COLLEGE DIST REV 3.375% 08/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CMP3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CMP3",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4.125% 02/28/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CNL1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CNL1",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 3.75% 06/30/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:912797RG4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:912797RG4",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS BILLS 0% 08/06/2026",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:12189TAR5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:12189TAR5",
+   "asset_class": "fixed_income",
+   "name": "BURLINGTON NORTHN SANTA FE CP 7.95% 08/15/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:88278PYM0": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:88278PYM0",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "TEXAS ST UNIV SYS FING REV 5% 03/15/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:283497U45": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:283497U45",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "EL PASO CNTY TEX 5% 02/15/2031",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:442403KY6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:442403KY6",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HOUSTON TEX INDPT SCH DIST 5% 02/15/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:053015AJ2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:053015AJ2",
+   "asset_class": "fixed_income",
+   "name": "AUTOMATIC DATA PROCESSING INC 4.75% 05/08/2032",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:023551AM6": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:023551AM6",
+   "asset_class": "fixed_income",
+   "name": "HESS CORP 7.125% 03/15/2033",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:549271AF1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:549271AF1",
+   "asset_class": "fixed_income",
+   "name": "LUBRIZOL CORP 6.5% 10/01/2034",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:845437BR2": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:845437BR2",
+   "asset_class": "fixed_income",
+   "name": "SOUTHWESTERN ELEC PWR CO 4.1% 09/15/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:95000U2D4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:95000U2D4",
+   "asset_class": "fixed_income",
+   "name": "WELLS FARGO & CO 4.15% 01/24/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:754730AG4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:754730AG4",
+   "asset_class": "fixed_income",
+   "name": "RAYMOND JAMES FINL INC 4.65% 04/01/2030",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:842400HQ9": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:842400HQ9",
+   "asset_class": "fixed_income",
+   "name": "SOUTHERN CALIF EDISON CO 4.7% 06/01/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CMH1": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CMH1",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 4.125% 01/31/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:442368QB5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:442368QB5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "HOUSTON TEX CMNTY COLLEGE SYS 5% 04/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:953086NM3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:953086NM3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "WEST HARRIS CNTY TEX MUN UTIL 5.5% 06/01/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:51166FCK3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:51166FCK3",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "LAKELAND FLA ENERGY SYS REV 5.25% 10/01/2036",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:01179R4F7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:01179R4F7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "ALASKA MUN BD BK ALASKA MUN BD 5% 12/01/2037",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:73105VBL5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:73105VBL5",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "POLARIS CAREER CTR OHIO CTFS P 5% 11/01/2040",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:681725NC7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:681725NC7",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "OMAHA NEB ARPT AUTH ARPT REV 5.25% 12/15/2038",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:486053CP4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:486053CP4",
+   "asset_class": "fixed_income",
+   "sub_asset_class": "Municipal",
+   "name": "KATY TEX DEV AUTH REV 5% 06/01/2039",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CQH7": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CQH7",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 3.875% 03/31/2028",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:91282CQJ3": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:91282CQJ3",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS NTS 3.875% 04/15/2029",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:912797UE5": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:912797UE5",
+   "asset_class": "fixed_income",
+   "name": "UNITED STATES TREAS BILLS 0% 04/15/2027",
+   "identifier_namespace": "CUSIP"
+  },
+  "CUSIP:345370BP4": {
+   "last_updated": "2026-09-30T16:44:41.141657+00:00",
+   "classified_by": "scheduled",
+   "updated_by": "mdpf-secclass-scheduled",
+   "ticker": "CUSIP:345370BP4",
+   "asset_class": "fixed_income",
+   "name": "FORD MTR CO 7.5% 08/01/2026",
+   "identifier_namespace": "CUSIP"
+  }
+ }
+}
