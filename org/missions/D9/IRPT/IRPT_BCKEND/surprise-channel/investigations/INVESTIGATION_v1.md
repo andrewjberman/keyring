@@ -13730,3 +13730,60 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Filed on the channel rather than by message: off-task for ~Y, the drain and the fix are ~P's. No act is asked of anyone by this row; it does not block pr-271 or W27."
 }
 ```
+
+## IRPT_BCKEND-W100-S1 -- The named harness cannot answer the order as written (latest-partition key set, serial windows, 3Y named refusal); a same-composition variant in r27 does.
+
+```json
+{
+  "id": "IRPT_BCKEND-W100-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~100",
+  "surfaced_at": "2026-09-30T20:45:00Z",
+  "one_line": "The named harness r20/adapter_cold_periods.py could not produce the order's answers as written: it probes only accounts present in the LATEST gold partition (0063952925 is absent at 2026-09-28), asks five windows serially (3 parallel runs hit ReadTimeout; one run exceeded 550s), and the deployed code refuses the 3Y window by name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run of r20/adapter_cold_periods.py on the deployed zip (CodeSha256 +h/AH/RY7PK+MLuXyflt+YYzWg+jXHSXTOUBwr0EHbo=, matched by sha256 of the downloaded bytes): 'account ..0063952925: no raw key in 2026-09-28' and UNEXPECTED answers: 1; one four-account run hit timeout 550 (rc 124); three parallel single-account runs returned 'REFUSED UNEXPECTED (ReadTimeoutError ...)' on YTD/1Y/SI at 188-296 s each.",
+      "Variant org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r27/s237_cold_probe.py (same cold composition of the same extracted zip; finds accounts in the 2025-01-10 partition; asks 3Y, SI and a historical YTD 2025-01-01..2025-06-30 one account at a time): 0 UNEXPECTED answers for 0093614544, 0027256463 and 0036184450; output in deliverables/0.9.0_WK_IRPT_BCKEND~100/adapter_cold_probe_output.txt.",
+      "3Y is REFUSED UNSUPPORTED_OPERATION (HoldingsWindowNotRuled: requested window is not a ruled holdings period) for every account: the deployed adapter serves only YTD, QTD, 1Y and SI, so the order's '3Y' answer is this named refusal, recorded verbatim.",
+      "0036184450 SI is REFUSED OBJECT_NOT_COVERED (HoldingsGoldRefused: engine account mapping missing or duplicate) at the latest date; its historical YTD answers a figure."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the existing harness, run on the deployed zip, answers SI and 3Y for 0093614544 and two other S237 accounts.",
+  "world_is": "The harness as written yields a missing-key count for a closed account and read timeouts under load; the deployed code answers 3Y with a named refusal. The same composition, narrowed to the windows that can span 2025-01-10 and to the 2025-01-10 key set, answers every probed window with a figure or a named refusal.",
+  "notes": "No edit to the r20 harness; the variant is a new file in r27 (inside the order's paths)."
+}
+```
+
+
+## IRPT_BCKEND-W100-S2 -- The S237 error is on the serve origin: the perfrp performance leaf carries it in every Since-inception figure it publishes, against comments saying no perfrp key is served.
+
+```json
+{
+  "id": "IRPT_BCKEND-W100-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~100",
+  "surfaced_at": "2026-09-30T20:50:00Z",
+  "one_line": "The S237 error IS on the serve origin: s3://opal-data-portal-v2/platinum/advi/49financial/perfrp_performance_account.json (as_of 2026-09-01, published by d_publisher_port) carries Since-inception window_return figures that include the inflated 2025-01-10 day (0093614544 +69.80% vs +8.47% counterfactual), while the portal's own comments say no perfrp key is served today.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (issuer of the 49F cells; the choice of remedy or withdrawal of the leaf goes to 1.0.0_SA_CTO's ruling on the order's report). Not disarmed here: this worker holds a read-only grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object and get-object, opal-data-portal-v2 platinum/advi/49financial/perfrp_performance_account.json: 1,923,593 bytes, LastModified 2026-09-01T03:16:07Z, metadata written-by d_publisher_port, asof 2026-09-01; window.period SI 2024-07-08..2026-09-01; upstream_pins canonical/twr_daily n_partitions_read 538 of 540 requested, partitions_absent ['2026-08-31','2026-09-01'] (2025-01-09 is never requested: perfrp_emit_core._period_window enumerates lib.trading_calendar days, the CALENDAR_ENUMERATION shape S237's note left open).",
+      "figure_state census of the leaf: COMPUTED_PARTIAL 7,620 / NOT_COMPUTED_INPUTS_PRESENT 997 / NOT_COMPUTED_INPUTS_ABSENT 15 of 8,632 entries. Four S237 accounts, served window_return against the c02 counterfactual (2025-01-10 replaced by (EMV-CF)/BMV-1 with the 01-09 external CF; CF reproduced from flow_ledger date=2025-01-09 at 1,125,000 / 100,000 / -17,000 / -750,000): 0093614544 +69.81% vs +8.47%, 0063952925 +99.79% vs +4.54%, 0027256463 -83.34% vs +28.47%, 0036184450 -12.75% vs +28.06%. Record: deliverables/0.9.0_WK_IRPT_BCKEND~100/perfrp_si_counterfactual.json.",
+      "portal/src/api/endpoints/advisor-intelligence.ts:1647-1651 says 'No perfrp key is served today, so this 404s in every live environment'; cards.ts:15-18 says the Performance card is UNCOMPUTABLE for 100% of accounts at the frontier. The serve bucket holds four perfrp_* keys (performance_account, gainloss_account, gainloss_relationship, book_advisor); the shared advisor router serves platinum/advi/{firm}/ from opal-data-portal-v2 (infra/aws/lambda-edge/_shared/firm-config.mjs:46). NOT MEASURED: an authenticated HTTP fetch of the leaf, and whether the portal route is exposed to a person today."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "portal advisor-intelligence.ts:1647-1651 and cards.ts:15-18 assert the perfrp performance leaf is not served and renders not-computed for every account; S239 scopes the harm to the parity oracle.",
+  "world_is": "A perfrp performance leaf with 7,620 figures is present on the serve origin, and its Since-inception figures carry the S237 error by the calendar-enumeration path (the emitter never loads 2025-01-09, so neither c02's link refusal nor the parity module's neutral day is involved). The deployed Performance adapter does not carry it: it reads the holdings gold only.",
+  "notes": "The leaf is stale (as_of 2026-09-01) and no relationship-level performance leaf exists; whether a schedule republishes it was not read."
+}
+```
