@@ -59,6 +59,14 @@ the builder's addresses, and plan (not apply) its Lambda and daily schedule.
   `first_data_date`, `history_scope`, `coverage_summary`, `byte_sizes`, `built_at`, `publisher_version`], and one sentence per field
   (meaning, unit, null rule). `drawdown_episodes` is a list of `{peak_date, trough_date, recovery_date|null, depth}`; `coverage_summary`
   counts days per `day_quality` and per `return_basis`.
+- The platinum policy rows (ISSUER AMENDMENT 1, 2026-09-30 ~18:1xZ, on 1.0.0_SA_CTO RULING 103361 = PRD v0.3 addendum ruling 16
+  @c812be9885: "round-1 policy rows are for the platinum served files only (series.json.gz, manifest.json)"). In
+  `infra/logic/registry/reporting_policies.json` add, for firm `49financial`, the families the X10 register admits for the two served
+  files: tier `platinum`, table `reporting`, one family per file. READ `lib/opal_naming.py:_validate_reporting_policies` and
+  `reporting_policy` first and mirror the existing `irpt-private-reporting` policy's field set; the seat's matrix (row IRPT_DASHBD-S1)
+  measured tier `platinum` admitting extension `json`. If the validator refuses `series.json.gz` as an extension, record the refusal
+  text verbatim in a row and register the manifest family alone; never a typed workaround. `lib.opal_naming.load_registry()` must still
+  load after the edit.
 - Terraform root `infra/aws/terraform/investor-reporting/reporting-publish/` (its own state key
   `investor-reporting/reporting-publish/tfstate`; NEW resources only: the Lambda, its role reading the two gold prefixes and writing the
   platinum prefix in the firm bucket, the schedule at 08:15 America/New_York Mon-Fri with the reason stated beside it as
@@ -77,7 +85,8 @@ the builder's addresses, and plan (not apply) its Lambda and daily schedule.
 <criterion id="DB-2-AC1" cell_refs="DB-b-2"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_2_ac1_series_manifest.py" .</invocation><expect>DB-2-AC1 PASS</expect></criterion>
 `DB-2-AC1` -- the SERIES contract exists with the required lists; the thread account's `series.json.gz` and `manifest.json` exist at the
 builder's addresses with every required key, arrays of one length, dates strictly increasing, and the manifest's byte size equal to the
-object's. Base: FAIL (no contract, no objects).
+object's; `reporting_policies.json` carries a `platinum` / `reporting` family for `49financial` and the naming builder loads it
+(amendment 1). Base: FAIL (no contract, no objects).
 
 <criterion id="DB-2-AC2" cell_refs="DB-b-2"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_2_ac2_series_link_and_plan.py" .</invocation><expect>DB-2-AC2 PASS</expect></criterion>
 `DB-2-AC2` -- the seam with the real neighbour: three 20-day windows link identically from the series and from the gold rows, and the
@@ -107,6 +116,7 @@ infra/aws/lambda/investor-reporting/narrative/events.py
 infra/aws/lambda/ci/lambda-source-map.json
 infra/aws/lambda/ci/build-and-upload.sh
 org/standards/IRPT_DASHBD_SERIES_CONTRACT.json
+infra/logic/registry/reporting_policies.json
 org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json
 org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json
 lib/opal_naming.py

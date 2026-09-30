@@ -105,12 +105,10 @@ reporting gold, `account_return_daily`, for the round-1 sample over its full his
   `tolerance double`, `large_flow_share double`, `plausibility_band_low/high double`, `flow_convention string`, `income_basis string`,
   `fee_basis string`, `day_count string`, `tieout_tolerance_proposed double` nullable, `gips_alignment string`, `measured_at string`);
   `method_versions: [ {the version-1 values with the measured distribution figures} ]`; `schema_hash` likewise.
-- `infra/logic/registry/reporting_policies.json`: add the policy rows the LGIC validator admits for the two tables (read
-  `lib/opal_naming.py:_validate_reporting_policies` and `reporting_policy` first; mirror the existing `irpt-private-reporting` policy's
-  shape with a new `policy_id "irpt-reporting-gold"`, `source "irpt"`, `firms ["49financial"]`, families for `ACCOUNT_RETURN_DAILY`
-  (tier `gold`, table `account_return_daily`, extension `parquet`) and `DIM_RETURN_METHOD`). If the validator refuses a field you cannot
-  express, STOP on that limb, file the refusal text verbatim in a surprise row, and leave the policy file untouched: a builder refusal
-  is a registry row for the LGIC lane, never a typed workaround.
+- NO policy row for the gold tables (ISSUER AMENDMENT 2, 2026-09-30 ~18:1xZ, on 1.0.0_SA_CTO RULING 103361 = PRD v0.3 addendum
+  ruling 16 @c812be9885, answering the seat's row IRPT_DASHBD-S1 @85863e9b5a): `infra/logic/registry/reporting_policies.json` records
+  retention of client-facing state and platinum artifacts, not an internal parquet table; rule 30 holds for the gold tables on
+  `address()` and `name()` output alone. The policy file is NOT edited by this cell (the platinum rows are DB-b-2's).
 
 **The emit (ISSUER AMENDMENT 1, 2026-09-30 ~17:1xZ, on the seat's message 103331: the five roster accounts are 2026 TaxSMA books,
 first positive value 2026-03-16 .. 2026-07-08).** The sample is SIX accounts: the five roster accounts (from
@@ -125,14 +123,14 @@ the thread account from that file. Emit `--accounts <the six> --upload` over eve
 the manifest will carry `first_data_date`); `NOT_MEASURABLE` is for a day INSIDE the book that cannot be measured, never for a day before
 the book exists. The three guard numbers are measured over days that can carry a real return, denominators printed (the seat's default,
 accepted). No gate limb graded this modification (the L6 gate grades new orders); the CTO reads it at the round-1 analysis. Ledger BEFORE the first upload: `python .tools/deploy_ledger.py open --slug irpt-dashbd-account-return-daily-49f-r1-20260930
---title "<one line>" --author 0.4.0_DS_ClientPlatform~S --leg "C1|verify|contracts + policy rows|two contract files with schema_hash, validator loads"
+--title "<one line>" --author 0.4.0_DS_ClientPlatform~S --leg "C1|verify|the two contract files|both written with schema_hash and the rule-24 record"
 --leg "M1|verify|the three guard numbers measured|distribution figures recorded in dim_return_method"
---leg "W1|activation|gold written for 5 accounts, full history|partition count, first/last date, schema hash == contract"`;
+--leg "W1|activation|gold written for the 6 sample accounts, full history|partition count, first/last date, schema hash == contract"`;
 `close-leg` each with its proof; `close`. Commit the entry AND the sentinel `org/critical_paths/.open_deploys/irpt-dashbd-account-return-daily-49f-r1-20260930.json`.
 
 <criterion id="DB-1-AC1" cell_refs="DB-b-1"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_1_ac1_gold_under_contract.py" .</invocation><expect>DB-1-AC1 PASS</expect></criterion>
-`DB-1-AC1` -- both contract files exist with a recomputable `schema_hash` and the rule-24 record; the policy file names both tables and
-the naming builder still loads; >= 250 date partitions exist at the builder's address, five sampled partitions hash to the contract and
+`DB-1-AC1` -- both contract files exist with a recomputable `schema_hash` and the rule-24 record; the naming builder loads the registry
+(amendment 2 removed the gold policy-file half, ruling 16); >= 250 date partitions exist at the builder's address, five sampled partitions hash to the contract and
 carry the thread account; `dim_return_method/method_version=1` has one row with every method column non-null. Base: FAIL (no contract).
 
 <criterion id="DB-1-AC2" cell_refs="DB-b-1"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_1_ac2_guard_seam.py" .</invocation><expect>DB-1-AC2 PASS</expect></criterion>
@@ -163,7 +161,6 @@ data/assets/scripts/lib/stream_parquet.py
 org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json
 org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json
 org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json
-infra/logic/registry/reporting_policies.json
 lib/opal_naming.py
 lib/trading_calendar.py
 org/critical_paths/change_management/
