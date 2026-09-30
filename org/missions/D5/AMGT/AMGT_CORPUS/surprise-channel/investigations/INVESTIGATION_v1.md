@@ -2856,6 +2856,52 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "stage_derive has a tracked-file write side effect for an unmapped security (model_block_pull.py:854 via _ensure_unit_map); the test now stubs _ensure_unit_map, so the tree stays clean. S8's premise (that the existing suite mutates field_map.json) is withdrawn.",
     "notes": "S8 is not edited (a row is never edited); this row supersedes its attribution. Re-verified: after the fix the AC2 suites and the bloomberg suite leave git status clean for field_map.json.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S10",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-30T15:50:00Z",
+    "one_line": "CRPS-aa-3 AC1's expectation is the literal population 'keys 98 ... measured_before 49'; the live served population is 100 slash-free keys and 59 UNRESOLVED figures, because the RESAPP ac-3 copy leg (LastModified 2026-09-30T15:14:55Z) added BP-SLASH-_LN_Equity and NG-SLASH-_LN_Equity as slash-free keys, so AC1 cannot print its expected line while those copies stand.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash aa3_AC1.sh (run at HEAD of wk-crps25-3 with the table absent): 'aa3 keys 100 excluded 2 measured_before 59 table_total 0 classes 0 dispositions_complete False projected_after 31 table_remaining -1 consistent False'",
+        "S3 list_objects_v2 derived/model_block/BP-SLASH-_LN_Equity/ and NG-SLASH-_LN_Equity/: LastModified 2026-09-30T15:14:55Z..57Z; BP/_LN_Equity objects 2026-09-16..19",
+        "census of the newest block per slash-free key: 59 = 49 (6861 JP 26, 939 HK 10, BBSE3 10, BA 2, TSM 1) + 10 BP/ LN Equity PE_RATIO on BP-SLASH-_LN_Equity; NG-SLASH- adds 0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order and the issuer's dry-run (base CLOUD 98781013e0) state 98 keys / 49 UNRESOLVED, 2 EXCLUDED, and AC1's expect regex pins keys 98 and measured_before 49.",
+    "world_is": "100 keys / 59 UNRESOLVED / 2 EXCLUDED at 15:44Z. The table was written to the LIVE census (denominator_keys 100, before_total 59, a ninth class BP/ LN Equity PE_RATIO stays_unresolved) so the checker's own consistency test (table_total == measured, remaining == projected, denominator == keys) reads True; only the regex's literal 98 and 49 miss.",
+    "notes": "Filed, not fixed: the served population is the deploy's, not this order's. The order's 49 are the table's first eight classes. If the copies are removed or the regex amended to the live counts, AC1 prints its line with no change to the table beyond denominator_keys/before_total/the BP class.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S11",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-30T15:52:00Z",
+    "one_line": "aa3_check.py's projected_after counts every figure whose reader answer starts 'UNRESOLVED' OR 'SEE field_map', but measured_before counts only 'UNRESOLVED': the 375 pointer-unit figures on the two slash-copy keys make the two sides different populations (10 BP PROF_MARGIN figures are in projected_after 31 and in no before count).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aa3_check.py lines: measured = startswith('UNRESOLVED'); projected = startswith(('UNRESOLVED','SEE field_map'))",
+        "census of the two copy keys: 375 figures whose served unit reads 'SEE field_map.json ...'; after the temp rebuild BP/ LN Equity PROF_MARGIN x10 still reads 'UNRESOLVED-ON-BP/ LN Equity: disagrees with the shared MEASURED unit PERCENT: measured DECIMAL'",
+        "projection reproduced in .scratch/aa3/project.py: 59 census figures -> 21 remain, plus the 10 PROF_MARGIN -> 31, the checker's projected_after"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "remaining_after is the UNRESOLVED count the builder leaves out of before_total.",
+    "world_is": "table remaining_after is 31 = 21 stays_unresolved figures (BBSE3 10, BP PE_RATIO 10, TSM 1) + 10 BP PROF_MARGIN pointer figures listed under remaining_after_breakdown, because the checker requires remaining == projected; before_total (59) does not contain them.",
+    "notes": "Filed, not fixed (the check files are the issuer's). BP/NG is CRPS-aa-4's pass.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
