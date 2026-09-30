@@ -3387,6 +3387,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "Silver parts are named by fetch timestamp, one per article row and one per listing page with hits: 30 silver parts (bbg 15, wsj 15) beside 27 bronze objects (bbg 13, wsj 14). Bronze stays inside the 32 bound; the part count is a naming grain the half did not state. Listing pages fetched by run 2 re-used run 1's bronze (skipped, existing) and wrote new silver listing_hit parts.",
       "notes": "Measured from the upload receipt and AC1's tier/table counts. Read as a description gap, not an out-of-scope write.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S44",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-09-30T06:25Z",
+      "one_line": "The 11 bbg articles HVST-o-5 stored for Lenovo are EMPTY in silver (title '' and 0 text_blocks on 11 of 11 rows fetched 2026-09-30), so they yield NO mention pair: the p-1 mention rebuild adds 54 NEW pairs (sa 6, wsj 48, bbg 0) and bbg's Lenovo articles stay invisible to the timeline and uncounted.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "FWD-1/2: every received field is kept and typed in silver; HVST-o-5's upload builds each silver row from the SAME received bytes (uploads.HarvestUploader -> silver_from_bronze.article_rows, 'as_received').",
+      "world_is": "store.silver_latest('bloomberg','article') at CLOUD dd85531321: 11 of 30 rows fetched 2026-09-30, all 11 with title '' and text_blocks of length 0 and no 'lenovo' in title or text; the p-1 signing dry build (round26/p1_signing_expected.json) reads NEW pairs by publisher {sa: 6, wsj: 48} and no bbg. The silver article_key form also differs from the run record's (bbg:<hash> in silver vs bbg:<id> in run records).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "round26/checks/p-1.signing.py --signing output (2026-09-30 ~06:2xZ): KEPT 304, NEW 54, NEW by publisher {'sa': 6, 'wsj': 48}",
+          "issuer read of store.silver_latest('bloomberg','article'): 11 rows fetched 09-30, title '' and 0 text_blocks on 11 of 11"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Issuer row; surfaced while signing HVST-p-1. wsj's 11 articles parse (48 pairs incl. co-mentions). Disposition detail: not a hazard (nothing wrong is served; the rows are absent, not miscounted). Cause unmeasured: most likely silver_from_bronze.article_rows does not parse bbg's as-received response shape. Carried to 1.0.0_SA_CTO~Z in the round-26 packet as a repair cell; p-1 proceeds on what silver holds, and a second mention rebuild after the fix is cheap."
     }
   ]
 ```
