@@ -3409,6 +3409,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Issuer row; surfaced while signing HVST-p-1. wsj's 11 articles parse (48 pairs incl. co-mentions). Disposition detail: not a hazard (nothing wrong is served; the rows are absent, not miscounted). Cause unmeasured: most likely silver_from_bronze.article_rows does not parse bbg's as-received response shape. Carried to 1.0.0_SA_CTO~Z in the round-26 packet as a repair cell; p-1 proceeds on what silver holds, and a second mention rebuild after the fix is cheap."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W66-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~66",
+      "surfaced_at": "2026-09-30T06:40Z",
+      "one_line": "The deployed /timeline/day read for 992_HK_Equity 2026-02-13 (event shape of n6_common.invoke_deployed, x-firm-id bd) serves the new wsj article rows with mention_count but reports data_status DENIED and publishers_covered 0 beside them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO half condition 3: the deployed /timeline/day for Lenovo on a day of a NEW wsj pair shows that article with its count; no statement about data_status or publishers_covered.",
+      "world_is": "HTTP 200; articles list carries wsj:0ec5b5a0-f589-432f-beb3-e80e575a2cf6 (mention_count 1, tier D) and wsj:122be645-... (mention_count 3, tier C), but the envelope reads data_status 'DENIED', publishers_covered 0, publishers_covered_codes []. Cause unmeasured (possibly the helper's firm header/entitlement, not the data).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~66/p1_deployed_day_read.json: status 200, data_status DENIED, publishers_covered 0, articles 2+ incl. wsj:0ec5b5a0"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Observation only; nothing else was invoked. The article rows the CTO condition names are present with counts."
     }
   ]
 ```
