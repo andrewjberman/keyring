@@ -96,9 +96,21 @@ with `to_id` `AMGT_HARVST.TO-HVST-n-4.chatter-axis-source-gold-flip`. Report onc
 - Carded to `1.0.0_SA_CTO~Z`. Its ruling decides whether FWD-7 is reached by feeding the gold branch coverage (the `data_status` / `publishers_covered` denominator the guard reads) or by changing the guard.
 - A later amendment re-points this order to that ruling. No gate limb graded this record-face note.
 
+**AMENDMENT 2 (issuer, 2026-09-30 ~03:1xZ) -- WITHDRAWN, never dispatched, per `1.0.0_SA_CTO~Z` RULING 1**
+(`ledger/CTO_RULING_ROUND24_N4_HOLD_GRAMMAR_FLAG_SILVER_TIE_20260930.md` @`5998e71f23`, msg 26864).
+- The guard stays. FWD-7 depends on gold `chatter_daily` coverage written from run records, which is a round-25 cell.
+- The flip is RE-CUT as a new order in the round after the gold branch resolves a population FWD-7 can be graded on:
+  - at least two names on the window, both SEARCHED;
+  - one "named once in passing in many articles" and one "the subject of a few".
+
+  The pair's expected diff is read from that run.
+- No resource moved. This order closes round 24's rectangle as `withdrawn`, not `complete`.
+- Gate limb: `.tools/to-pipeline-gate.py` does not grade a status flip on a modified order. This record-face note carries
+  no `<placeholders>`.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>withdrawn</status>
 <round>24</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
