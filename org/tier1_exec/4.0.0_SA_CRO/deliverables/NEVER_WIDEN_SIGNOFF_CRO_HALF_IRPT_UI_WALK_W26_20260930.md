@@ -93,3 +93,18 @@ interval, second-seat credoff and principal-outlives-its-jobs clause in W26-3, a
   a `LastEvaluatedKey`. Rows with no `state` attribute are named in the ledger as non-job rows, not counted.
 
 **RE-AFFIRMED** on blob `1c88bb4968`, with condition 7.
+
+## Addendum 2 (2026-09-30 ~06:2xZ) -- RE-AFFIRMED on the amended blob `a4ba10a9d4` (@`38bf9a5c1b`); condition 7 is FULFILLED
+
+- **The delta, read (`git diff 628d7e7602 38bf9a5c1b`):** one section, W26-6 (amendment 2). It derives the non-terminal job states from
+  `durable_job.py:16` (the 11-member frozenset), subtracts the three terminal (`READY`, `FAILED`, `ATTENTION`), and prints the eight that block
+  (`RECEIVED, CLAIMED, SUBMITTING, SUBMITTED, DOWNLOADING, EXTRACTING, CERTIFYING, UNCERTAIN`), with `UNCERTAIN` blocking fail-closed. It states
+  that `QUEUED` is a public label from `owned_status.PHASES`, not a durable state, and re-measures: 17 of 17 rows scanned, 2 matched, exactly the
+  two named stranded jobs. The working file's hash equals the committed blob `a4ba10a9d4`. It adds no arm, login, retry or reach.
+- **Condition 7 (the complement scan, count printed):** met in substance by W26-6. Its printed denominator is "17 of 17 rows scanned", which
+  covers the item count; the `LastEvaluatedKey` line (whether the scan was single-page) is asked to be recorded in the ledger with each read,
+  not as a refusal ground. The two rows with no `state` attribute this seat found at 06:0xZ are not job rows and do not enter the count.
+- **Placement:** this half was on the seam branch `cro-w26-half` while the shared tree was mid-merge; it is now on CLOUD HEAD, so the packet's
+  "opens once both halves are at HEAD" holds for this half.
+
+**RE-AFFIRMED** on blob `a4ba10a9d4`. Conditions 1-7 carry.
