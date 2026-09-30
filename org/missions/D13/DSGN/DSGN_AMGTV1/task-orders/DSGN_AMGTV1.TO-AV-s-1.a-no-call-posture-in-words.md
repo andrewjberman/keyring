@@ -106,7 +106,7 @@ outer commit hashes, and any row.
 
 **ISSUER NOTES:** round 7 = the round-6 analysis s.4 item 1 with ruling 1 @378fd0c04b (CTO msg 26790). Base fd4deb75: absent.cjs 1 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~26</slot>
 <fabric>site-z</fabric>
