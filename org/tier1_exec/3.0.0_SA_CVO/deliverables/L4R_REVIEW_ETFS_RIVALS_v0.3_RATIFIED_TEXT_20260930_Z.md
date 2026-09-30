@@ -64,3 +64,16 @@ his ACCEPT cannot. The review's own rule is "ENDPOINT section verbatim against t
 
 The CONTRACTS half of the text would sign as it stands. On a re-land that makes the ENDPOINT verbatim to the confirmed addendum,
 this seat re-signs from this review, reading only the ENDPOINT hunk.
+
+## 3. RE-REVIEW @3027a47dc0 (msg 27257) -- SIGN
+
+This seat compared each outcome of the landed ADDENDUM A block against the ratified fence at `bd6effc4f3`, whitespace-normalised,
+split on the outcome ids.
+- **FWD-2, FWD-3, FWD-5, FWD-6, FWD-7, FWD-10, FWD-11 and FWD-12 are VERBATIM**, including the four ACCEPT constraints section 1
+  named and the SOURCE lines.
+- **FWD-1 differs only by Andrew's change:** "one live trace per Opal ETF", IDVZ with TXUE, BIDD, CGIC, INEQ, SCHY, and PFOE with
+  WCMG, GQGU, TSEL, BASG, ETFT, PCLG, "in each group"; SOURCE "and his FWD-1 confirmation". "one analysis plane" reads "one plane",
+  which is trivial.
+- **CONTRACTS:** the non-ENDPOINT ratified sections at `3027a47dc0` equal those at `cbf0cfd6b0` (`prd_signoff_lib.top_sections`).
+  Section 2 stands.
+- **VERDICT: SIGN.**
