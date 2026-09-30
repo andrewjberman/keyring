@@ -3274,6 +3274,51 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "A run record from a backfill collection (barrons/992_HK_Equity, request_rejected) exists in the main tree's local runtime root, written 2026-09-30 04:09Z. It predates the reached_span field and its only job is not successful, so BEFORE and AFTER are unchanged (0 name-days moved). The AC2 output therefore reports 1 local record, not 0; it is the only version committed.",
       "notes": "Measured only. Who started the collection is not known to this cell.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W65-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~65",
+      "surfaced_at": "2026-09-30T04:14Z",
+      "one_line": "The signed command runs ONE job per invocation (config.json jobs_per_run=1, no --max-jobs), so 'run 1' touched barrons only; bbg, ft, wsj got no job, o-5.AC1 FAILs on its jobs-set check, and a literal same-command 'repeat' would run the NEXT job (bbg), not repeat barrons.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/config.json:7 \"jobs_per_run\": 1; lib/opal_data_harvest/worker.py Worker.run: count = max_jobs if max_jobs is not None else config.get('jobs_per_run', 1); jobs = [(security, publisher)...] walked from a cursor persisted per plan (state key 'cursor:<hash>')",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_run1.txt: 1 job_finished event (barrons) and 1 run_record; run record jobs=1",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_AC1.txt: 'FAIL: run 1 jobs [(barrons, 992_HK_Equity)] != [barrons, bbg, ft, wsj]'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "NEVER_WIDEN_HALF_COO_O5.md s.1 and o-5.AC1.py: one run of the printed command covers barrons, bbg, ft and wsj for 992_HK_Equity, and the same command repeated the same day reads counts.fetched == 0.",
+      "world_is": "One invocation runs jobs_per_run=1 job. The catalog cursor for this plan now stands at 1, so the next literal invocation would run (bbg, 992_HK_Equity) and fetch, not repeat barrons; --max-jobs 4 would cover the four publishers but is not the signed command (the pair signed the literal command twice and names 'a third run' NOT COVERED). Run 2 was therefore NOT executed by this worker. No object moved, none was added on any of the five roots (AC1: moved=0 removed=0 new=0 on all five).",
+      "notes": "Decision needed from the issuer and a re-sign: whether the pair is re-cut with --max-jobs 4 (or jobs_per_run raised), and whether the barrons cooldown from S2 is honoured first.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W65-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~65",
+      "surfaced_at": "2026-09-30T04:14Z",
+      "one_line": "barrons answered run 1 with a publisher verification challenge: the collector's own scripted reauth succeeded, the retry was rejected, job status request_rejected, 0 articles, 900 s cooldown set; Branch B recorded, not retried.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/runs/20260930T040818Z-barrons-cfedbf8fb4.json: status request_rejected, detail 'Publisher verification challenge from www.barrons.com', auth_refreshes 1, retry_at 1790742262.886 (about 900 s after 04:09:22Z)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_run1.txt: reauth_started, reauth_succeeded (network_auth_corroborated true), retry_after_reauth, job_finished request_rejected"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "NEVER_WIDEN_HALF_COO_O5.md s.4 Branch B: a challenge, denial or failure is recorded in the job status, that publisher gets zero article objects, no retry loop and no login.",
+      "world_is": "Branch B fired on barrons as the pair describes. The 'reauth' events are the collector's own scripted session refresh inside its run (no agent login, no agent HTTP, no browser opened by this worker). Zero article objects, zero listing objects landed.",
+      "notes": "Measured only.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
