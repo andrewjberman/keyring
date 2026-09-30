@@ -112,7 +112,7 @@ Report once: what changed and where, the output line of every criterion, the por
 as this cell: placed here so the chains' write sets stay disjoint). Base 846ecc6c: publishers.cjs 0 of 3; green r12-green-c
 @1227560a 3 of 3 (shell RED in that form); the publisherNames.ts form measured by the helper with no harness change.
 
-<status>pending</status>
+<status>complete</status>
 <round>12</round>
 <slot>~47</slot>
 <fabric>site-z</fabric>
