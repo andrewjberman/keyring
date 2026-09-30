@@ -102,6 +102,8 @@
   signature rule. The expected class is printed per body from the rule and never predicted, so Barron's is read, not assumed.
 - **Not expiry:** no `bot_check` attempt marks a token expired, and no sign-in call is made.
 - **The expiry branch still fires:** a planted session-invalid 401 marks expiry. This is the positive arm.
+- **(v0.11, CVO~Z msg 27289) A refusal with no body is `unclassified`, never expiry.** The AC checks this with a planted body-less
+  persistent 403, as bbg's and barrons' were in round 29. Every refusal now keeps a bounded body.
 
 **Fan-out:** 1, 2 and 3 are independent. 2 and 3 are WORLD acts and run one at a time.
 
