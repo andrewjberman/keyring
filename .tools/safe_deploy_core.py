@@ -457,7 +457,11 @@ _IRPT_HOLDINGS_CLOSURE = (
     "data/assets/scripts/gold/investor_reporting/schwab_account_codes.json",
     "data/assets/scripts/gold/investor_reporting/source_inputs.py",
     "data/assets/scripts/silver/rebalancer_schemas.py",
-    "data/black_diamond/scripts/gold/lib/etf_classifier.py",
+    # IB-mr-291 (CTO RULING 103169): the narrowed classifier replaces the BD library with the
+    # canonical client (its ONE home) plus the declared FWD-6 fallback (bd_securities_fallback.py,
+    # this cell's own header). Neither imports another repo module at load.
+    "data/assets/scripts/gold/investor_reporting/bd_securities_fallback.py",
+    "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
     "data/inf/scripts/silver/_orion_api_silver_lib.py",
     "data/inf/scripts/silver/convert_eclipse_portfolios_to_silver.py",
     "data/mdpf/scripts/gold/dim_mdpf_account_distribution.py",
