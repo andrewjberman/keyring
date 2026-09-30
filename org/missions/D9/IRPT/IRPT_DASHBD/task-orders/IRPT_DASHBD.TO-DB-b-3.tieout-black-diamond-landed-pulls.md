@@ -116,5 +116,5 @@ comp-routes: DECLARED-NOT-APPLICABLE.
 comp-cache: DECLARED-NOT-APPLICABLE.
 comp-adversary: RUN -- DB-3-AC1 base FAIL (no record); DB-3-AC2 base FAIL (no record).
 sequencing: second in 0.4.0_DS_ClientPlatform~S's queue, after DB-b-1 reports.
-lane: the <paths> block IS the grant.
+lane: the <paths> block is the grant for everything EXCEPT `org/standards/` (lane ANY_EXEC, row IRPT_DASHBD-S2): the seat writes the method contract's update uncommitted and the issuer lands it (amendment 2, the same rule as TO-DB-b-1 amendment 4).
 </preflight>
