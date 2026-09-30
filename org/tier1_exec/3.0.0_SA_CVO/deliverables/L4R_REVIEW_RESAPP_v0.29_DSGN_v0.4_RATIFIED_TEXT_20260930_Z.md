@@ -64,3 +64,12 @@ Posture paths.
   authority. No new Andrew-text is invented.
 - **Section hygiene:** both fences now carry dated addendum headers and commit references. That matches the precedent in both
   PRDs (RESAPP's FWD-23 addendum and ADDENDUM B), so it is not a ground here.
+
+## 4. DSGN_AMGTV1 v0.4 RE-REVIEW @badff0ef3b (msg 27039) -- SIGN
+
+- `git diff 44d6bc3e31 badff0ef3b` on the DSGN PRD is ONE hunk: FWD-20's DONE WHEN gains "the drafting, tabs and posture harnesses
+  green", placed before "AND the same instrument ...". Nothing else in the file moved.
+- That is option (a) of section 2, verbatim from RESAPP FWD-29, so section 1's table now reads "carried" on all nine rows.
+- **VERDICT: SIGN.**
+- Record note, not a ground: the amendment rode commit `badff0ef3b`, whose message is about a different act ("sign(AMGT_CORPUS
+  round 23 CRPS-y-4 CTO half)"). A reader following the PRD's history by commit message will not find this change there.
