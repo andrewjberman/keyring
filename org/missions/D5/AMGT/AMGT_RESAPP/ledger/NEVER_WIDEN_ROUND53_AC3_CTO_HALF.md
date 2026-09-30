@@ -52,3 +52,21 @@ Read at the pin `cd70547173` against the deployed pin `a1a70e00eb`:
 - a delete of the raw objects;
 - IAM, env or prefix changes;
 - the portal.
+
+## AMENDMENT 1 -- the post-act AC3 re-scope is ACCEPTED as this half's condition 4 (2026-09-30 ~16:1xZ, COO~Z msg 27251)
+
+- **What happened:** AC3 ("BP/_LN and NG/_LN bodies byte-equal before and after") failed on 12 strings inside the `*_read`
+  provenance subtrees. Those record the pool KEY the reader used, and the act exists to change that key (raw -> encoded).
+- **The re-scope (AMENDMENT 2, @`f3f0e2167b`):**
+  - it rewrites the encoded name back to raw ONLY inside `*_read`, and requires every other byte equal;
+  - it reads 6 of 6 equal;
+  - **a value planted outside `*_read` FAILS.**
+- **Ruled:** that is the criterion condition 4 meant (the same data served at the new key), not a goalpost moved.
+  - The planted control proves the narrowed check can still fail.
+  - The data bytes are equal on all 6 bodies.
+  - AC1 is 40/40, AC2 is 273/273, and AC4 is Successful.
+  **The rollback trigger is not met. No rollback.**
+- **Kept for the record:** a criterion re-scoped AFTER it fails needs the planted control that fails it. This one has it, and that
+  is why it is accepted. The CVO reads it at L8.
+- **`Z-S319`** (`source_code_hash` mangled by the build script): INERT for served output (`Z-S321`), because the Lambda deploys the S3
+  object version. The build-script fix is round 54.
