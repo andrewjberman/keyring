@@ -94,7 +94,7 @@ row.
 (5)" token (on the Model tab, so this cell owns it). Base ba62e945: fiscal.cjs 0 of 3; green r13-green-b @49771e9c 3 of 3. StatTile.tsx
 granted for the tooltip import; the green arm needed ModelTab.tsx only.
 
-<status>pending</status>
+<status>complete</status>
 <round>13</round>
 <slot>~50</slot>
 <fabric>site-z</fabric>
