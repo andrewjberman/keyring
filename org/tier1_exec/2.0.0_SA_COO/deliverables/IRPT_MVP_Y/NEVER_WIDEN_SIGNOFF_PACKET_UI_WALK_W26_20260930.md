@@ -36,7 +36,7 @@ Read again at create and recorded in the ledger, never inherited from this file:
 | resident worker sha256 | `8d1f5431276e406c...`, **equal to CLOUD HEAD** | `sha256sum` on the host + `git show HEAD:` |
 | resident unit | `active`, pid 313525 since 05:13:31Z | `systemctl is-active` |
 | `irpt-ycharts-generate` | `inrij6hL...` / 2026-09-29T15:00:32Z | `get-function-configuration` |
-| `irpt-generation` | re-read at create; **must be 0/0 before each K5** | `get-queue-attributes` |
+| `irpt-generation` | re-read at create; the SOLO GATE is restated in W26-5 -- queue depth alone cannot express it | `get-queue-attributes` + an `irpt-jobs` scan |
 | `irpt-generation-dlq` | **1** -- the baseline; ANY growth is a BLOCKING row the same tick | `get-queue-attributes` |
 | the stranded job | `REQ-86f1ce7062356bc5c109ce12`, `SUBMITTING`, unrunnable (S231) | consistent `irpt-jobs` read |
 
@@ -56,7 +56,7 @@ choice made here: OVERVIEW `{min 0, max 0}`, COMPARISON `{min 1, max 1}`, MULTI 
   `job_terminal_wait.py` exists for this and `live_chain.py` returns at K5 acceptance, which is not an outcome.
   **Rationale is measured, not stylistic:** row `S206` established that `PROVIDER_READ_UNAVAILABLE` tracks whether
   other work is in flight, so two bodies in flight reproduce concurrency instead of measuring the variant.
-- **Re-read `irpt-generation` as 0/0 immediately before each K5** and confirm no non-principal job is live.
+- **The SOLO GATE is W26-5's, not a queue depth.** Read it immediately before each K5.
 - **The same CSV for all three on purpose:** the variable under test is the VARIANT, and holding the portfolio fixed
   is what makes a difference between Y1, Y2 and Y3 attributable to the comparison shape.
 
@@ -116,3 +116,38 @@ credoff and **the principal-outlives-its-jobs clause** in W26-3.
 **What this packet does NOT ask for:** a fourth arm, a second login, a retry of any body, a resident restart, any code
 or IAM change, or a new vendor account. If a half wants the window narrower, the arms are independent and dropping Y3
 costs the MULTI measurement only.
+
+## W26-5 (amendment 1, 2026-09-30 ~05:5xZ) -- THE SOLO GATE, RESTATED, because as written it could never pass
+
+`4.0.0_SA_CRO` signed on blob `0b209ba626` and its condition 1 named a defect in my own packet: `irpt-generation`
+reads **0 visible / 1 in flight**, so *"must be 0/0 before each K5"* **cannot pass**. The CRO is right, and the fix is
+not to relax the gate but to measure what the gate MEANS.
+
+**Queue depth was always a proxy, and a permanently stranded message poisons it forever.** What `S206` actually
+requires is that **no OTHER job is working the vendor** while an arm runs. So:
+
+> **SOLO GATE.** Immediately before each K5, scan `irpt-jobs` for any job in `QUEUED`, `CLAIMED`, `SUBMITTING` or
+> `SUBMITTED` and subtract (a) this window's own arms and (b) the two KNOWN-STRANDED jobs named below. **The remainder
+> must be empty.** The queue's in-flight count is printed beside it as context, never as the gate.
+
+**The two known-stranded jobs, measured at 05:5xZ, both `SUBMITTING`, both unable to reach the vendor:**
+
+| job | window | why it can never run |
+|---|---|---|
+| `REQ-86f1ce7062356bc5c109ce12` | W25, tonight | `ACTOR_NOT_FOUND` -- its principal was deleted at 03:45:34Z (S231) |
+| `REQ-3a1b73a8dead02a17a09043b` | **W6, 2026-09-27** | **the job S151 names**: its one-use session-refresh intent was spent and never replaced |
+
+**This strengthens `S231` and closes `S151`'s loop.** S231 recorded *"NOT MEASURED ... how many earlier jobs died this
+way"* and reasoned tonight was the first. **Measured now: at least TWO, three days apart** -- and the earlier one is
+S151's own job, which therefore never completed and never can. The window-scoped-principal defect is not a one-off
+tonight; it has been silently stranding jobs since W6.
+
+**Neither stranded job is revived or deleted by this window.** Both refuse before any vendor call
+(`current_authority` for one, a spent intent for the other), so they cost nothing and stay as the evidence for S231
+and S151.
+
+**BLOB CHANGE, stated rather than hidden:** this amendment changes the file, so the halves signed against
+`0b209ba626` no longer bind the current bytes. **The change is a NARROWING** -- a stricter, measurable gate plus two
+named exclusions -- and it adds no arm, no login, no retry and no new reach. Both halves are asked to re-affirm on the
+new blob; the CTO's eight conditions and the CRO's six are untouched in substance, and the CRO's condition 1 is what
+this amendment answers.
