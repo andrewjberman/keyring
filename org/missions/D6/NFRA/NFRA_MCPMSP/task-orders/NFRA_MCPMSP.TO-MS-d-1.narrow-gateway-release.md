@@ -57,6 +57,21 @@ from `MS-a-1`.
    The commits to carry, in order (issuer's census, non-merge, `git log --no-merges 7f71d150b5..CLOUD -- infra/aws/ec2/opal-gateway`):
    `c19f86c295`, `343534a883`, `2d15859595` (MS-t-1), `f137855422` (MS-t-5), then your own item-0 hookup and item-1
    deploy-script commits.
+2b. **AMENDMENT 3 (issuer, 2026-09-30, on your rows Z-W1-S4, S5, S6) -- REPLACES the census list in item 2 and the
+   conflict rule in 2a:**
+   - **Census:** the release tree's gateway difference from PREV names ONLY these 12 files: `app/tenant_registry.py`,
+     `app/firm_role.py`, `app/asker_scope.py`, `app/audit.py`, `app/config.py`, `app/access_state.py`,
+     `app/admin_tenants.py`, `app/admin_api.py`, `tests/test_mcpmsp_asker_firm.py`, `tests/test_access_state.py`,
+     `tests/test_admin_tenants.py`, `deploy-to-ec2.sh` (the two access_state files are MS-t-1's own amendments,
+     343534a883 and 2d15859595, already on your carry list). Any other gateway file: STOP.
+   - **The contract file (S5):** also carry `org/standards/NFRA_OPLGTW_CONTRACT.json` into the release tree at its CLOUD
+     bytes (this project's own contract commit @c2f5d5a071, the `tenant_firm` record type). It is a repo standard read
+     by `test_ogd1_ac03`, never packaged to the host (the deploy ships `infra/aws/ec2/opal-gateway/` only), so it is
+     outside the census and moves nothing served. With it, the 2a suites must read 0 failed (you measured 60 passed
+     with CLOUD's copy). Commit it on the release branch with the other files (the audited override covers it).
+   - **The `config.py` conflict (S6): accepted.** An adjacency-only conflict resolved by keeping exactly this project's
+     lines is not BLOCKING, provided the 2a suites read 0 failed on the result. Any conflict that changes another
+     project's line stays BLOCKING.
 3. **Before the act:** (i) render the `.env` locally: extract the release tree's `.env` `printf` line, run it with every
    `%s` replaced by a distinct marker, and print the `KEY=VALUE` lines -- every marker on ITS OWN key and
    `FIRM_ROLE_ARNS` present with valid JSON; any misalignment: STOP. (ii) Prove the rollback: rebuild PREV's artifact
@@ -139,6 +154,12 @@ preconditions measured at 2026-09-30 ~10:3xZ: MS-t-1 @a942e9b446, MS-t-5 @47e803
 role ARN arn:aws:iam::313476888478:role/gateway-inf-firm-reader-role; no gateway deploy sentinel open across 76
 worktrees (the one open sentinel is MCPINDEX's BD documents, HELD-SOVEREIGN-GATED); OG-t-2 staged (not mid-edit).
 Graded by: no gate limb grades a modification's criteria.
+
+**AMENDMENT 3 (issuer):** on the worker's STOP (rows Z-W1-S4 census omitted MS-t-1's two access_state files; Z-W1-S5
+`test_ogd1_ac03` reads the contract, whose PREV copy lacks `tenant_firm`; Z-W1-S6 adjacency conflict in config.py).
+Item 2b: census = 12 files; the contract file rides the release tree (test-only, never packaged); the adjacency
+conflict is accepted under a 0-failed suite. `d1.AC2.sh`'s allowed set gains the two access_state files. Nothing was
+deployed on the first pass (no ledger, no act). Graded by: no gate limb grades a modification's criteria.
 
 <status>staged</status>
 <round>1</round>

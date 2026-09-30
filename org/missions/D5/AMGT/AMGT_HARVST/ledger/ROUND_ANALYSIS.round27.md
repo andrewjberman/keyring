@@ -109,3 +109,14 @@ project is NOT closed.** The PRD moves to v0.5 in this commit (one clause of `C-
 - The CVO's v36: the `amgt/harvest/` scan (3,058 objects, 1 modified), the gold part stamps, and the census re-derivation.
 - The packet's section 2 (`Z-S45` from `events.jsonl`).
 - This seat read `chatter_axis.py:450` (the typed declared set) and `publication_gold.py:375` (`ENABLED_PUBLISHERS`) for ruling 1.
+
+## AMENDMENT 2 -- cell 2 runs TODAY as the cached-path arm (2026-09-30 ~10:3xZ, COO~H msg 27090)
+
+**RULED on the issuer's REC.** `aa-1` merged @`0df90b1535`: cached listings now record reach (`from_cache`), and `NM5NLQ6K50XZ01` is held.
+- A same-day run therefore exercises exactly the fixed path.
+- The ~13h fresh-day wait discriminates nothing that path needs and has no Andrew word behind it. CLAUDE.md: "waiting for the
+  scheduled run is the same failure".
+**`aa-2` runs today, after `aa-3` lands** (the two WORLD acts do not overlap).
+- It is the CACHED-path positive arm for FWD-7 and FWD-3.
+- The LIVE-path arm follows the `Z-W76-S1` fix (a live wsj job records only a `stop_bound` span) in round 29.
+- `aa-2`'s pair names which path it grades, and it does not claim the live path.
