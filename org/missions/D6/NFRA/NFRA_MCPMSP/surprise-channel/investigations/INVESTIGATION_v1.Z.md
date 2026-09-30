@@ -107,6 +107,30 @@
     "spec_asserts": "PRD v0.3 C5: the per-firm role reads its firm's bucket (opal-data-inf for Inflection, record s.10 card 5 'current buckets for now') AND its firm's prefixes in opal-data-portal-v2, with a bucket-scoped Deny on every other firm's bucket.",
     "world_is": "Round 1's role (MS-t-2 AMENDMENT 1) reads only opal-data-portal-v2/platinum/mdpf/inflection/*, named and addressed through module opal_name; no firm-bucket Allow and no literal cross-firm Deny (the buckets' own live fences deny foreign principals). FWD-1 is served; C5's firm-bucket read is not yet expressible through the builder.",
     "notes": "Not blocking round 1 (A1's figures live only under the portal prefix). Needed before any cell reads opal-data-inf: a registry route that yields the routed bucket for a firm (an LGIC act), or an R20 departure Andrew acknowledges. The CTO rules which."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:10Z",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "id": "NFRA_MCPMSP-Z-W1-S3",
+    "one_line": "MS-t-1 AC2 cannot reach 0 failed: tests/test_access_state.py::test_ogd1_ac03 also asserts the literal POLICY key count is 3 (counts == {'POLICY': 3, 'RUNTIME': 6}), stale since email_deny landed; with tenant_firm admitted the count is 5, and the test file is outside this order's paths.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/tests/test_access_state.py:293 `assert counts == {\"POLICY\": 3, \"RUNTIME\": 6}` where counts tallies every contract record type that is in acs.POLICY_RECORD_TYPES (:284-293).",
+        "Measured in wk-NFRA_MCPMSP-1 after AMENDMENT 1 items 7-8 (access_state.py adds tenant_firm): `pytest tests/test_access_state.py` -> 1 failed, 6 passed; E {'POLICY': 5} != {'POLICY': 3}. The first assert (sorted(types) == sorted(RECORD_TYPES)) now PASSES; this is the next assertion in the same test.",
+        "The literal 3 pre-dates email_deny (3e936f77bd, NFRA_OPLGTW OG-e-1, made the POLICY set 4): at CLOUD before this cell the set was 4 against a literal 3, so the test was red on its first assert AND would have been red here on this one; the amendment's 'test_ogd1_ac03 red at the amendment, the contract gap this cell closes' counted only the first.",
+        "t1.AC2.sh on the branch: 'asker + adapter suites: 1 failed, 40 passed' -> RESULT: FAIL, exit=1. AC1 (7 passed) and AC3 (verdict=OK) PASS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MS-t-1 AMENDMENT 1 / AC2: the asker suites and the adapter's own suites (incl. test_access_state.py) pass with 0 failed and at least 41 passed once tenant_firm is added to POLICY_RECORD_TYPES; test_ogd1_ac03 is 'the contract-vs-adapter gap this cell closes'.",
+    "world_is": "The gap this cell closes is two gaps: the contract-vs-adapter record-type set (closed: first assert passes) and a stale literal count in the test (3, now 5 with the contract's five POLICY types). tests/test_access_state.py is NFRA_OPLGTW's file and is not in this order's <paths>, so the worker cannot edit it.",
+    "notes": "Fails closed, INERT. Remedy for the issuer: grant tests/test_access_state.py (one literal, 3 -> 5) or amend AC2's floor to exclude test_ogd1_ac03 (40 passed + this one named red); the adapter change itself is complete and measured (7 passed in test_mcpmsp_asker_firm.py incl. test_tenant_firm_admitted_by_adapter; test_email_deny.py and the other three asker suites all pass)."
   }
 ]
 ```
