@@ -451,6 +451,28 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "AV-o-3 item 2: a served label that already starts \"Opal's\" is kept as served; AV-e-1 (round 1): a Bloomberg description source reads \"Company description from Bloomberg\".",
  "world_is": "Both regexes carry 0x08 instead of \b, so neither ever matches: the label is prefixed twice and the source never names Bloomberg. Ruled by the issuer: AV-o-3 AMENDMENT 1 re-opens that order to replace the three bytes and nothing else (a new order file in an issued round is refused by to-pipeline-gate LIMB 6)."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S6",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-09-30T06:35Z",
+ "one_line": "Resolves Z-S5: AV-o-3 AMENDMENT 1 (worker ~37, portal d11747a7, drained CLOUD 4813813e75 / site-Z DEV 2bb60cc3) replaced the three 0x08 bytes with a backslash-b word boundary and nothing else.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "round10/checks/bytes.cjs on the merged bytes: 3 of 3 (0 control bytes over 56 source files; AZN's rule label read once; a Bloomberg description source reads 'Company description from Bloomberg')",
+   "portal diff d11747a7: 2 files, 3 lines; cases.cjs 3 of 3; Q3 bound 3 of 3 (two issuer re-runs); portal tsc -b rc=0",
+   "1.0.0_SA_CTO~Z msg 26978: a census over all 991 portal src code files reads 0 files with 0x08 at 2bb60cc3 -- the class is gone portal-wide"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "Row DSGN_AMGTV1-Z-S5 (ARMED, disarm owner this seat): three literal backspace bytes broke two regexes on the page.",
+ "world_is": "Repaired and drained; bytes.cjs stays in round 10's checks so a reintroduced control byte in the page's source fails a check, not only a walk. Resolves Z-S5."
 }
 ]
 ```
