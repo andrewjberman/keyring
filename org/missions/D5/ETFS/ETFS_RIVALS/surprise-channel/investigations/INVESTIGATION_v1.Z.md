@@ -409,6 +409,27 @@
   "spec_asserts": "TO-RIV-d-2 amendment 2 LEG B step 2: if rivalfunds_view.py imports anything that differs between 093fc247c6 and HEAD, STOP with a row.",
   "world_is": "Two of the view's three in-package imports (audit, config) differ between the deployed commit and HEAD, on unrelated lines. The gateway serves its 093fc247c6 bytes unchanged; /rivalfunds is not routed; AC2 has no gateway_deploy_commit to compare and reads FAIL.",
   "notes": "The issuer decides before the ledger window ends (~16:13Z): (a) rule the audit/config differences immaterial (they are unrelated allowlist and tenancy lines) and re-issue LEG B steps 2-7 to a fresh worker, whose path is ready (patch applies, worktree at 093fc247c6 exists); or (b) ship audit.py and config.py from HEAD too, which enlarges the key-16 radius under a new pair; or (c) hold the gateway leg until the 23 rider files are deployed by their owners. Independent of this, LEG B cannot satisfy CTO condition 5 until row W5-S4 is fixed: no platinum/page object exists to read. ARMED only because ledger etfs-rivalfunds-thread-r1 blares RED at ~16:13Z with L3/L4 open; the gateway itself is unchanged."
+},
+{
+  "id": "ETFS_RIVALS-Z-W5-S7",
+  "project": "ETFS_RIVALS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+  "surfaced_at": "2026-09-30T12:30Z",
+  "one_line": "The naming commit gate REFUSED the order's exact STAGED line because its destination literal \"gold/etf_positioning_gold.py\" reads as a tier-first S3 key; the destination is a Lambda-tree relative path, so the line was committed as \"gold\" + \"/etf_positioning_gold.py\" (same built bytes) instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh on rivalfunds_package.py with the amendment-3 line verbatim: 'NAMING REFUSE infra/aws/lambda/etfs-pipeline/rivalfunds_package.py:39 gold/etf_positioning_gold.py -> {source}/{scope}/gold/etf_positioning_gold.py; why: NEW and OUT-OF-PATTERN as S3Key: REFUSE' (LGIC_ENFORCE DEC-6, ENFORCE); .tools/naming-gate.py classify(): a slashed literal whose first segment is a tier ('gold') with >= 2 segments is an S3Key.",
+      "Built-tree control: after the concatenated form was committed at 3eaa380467, python infra/aws/lambda/etfs-pipeline/rivalfunds_package.py was re-run and terraform plan of infra/aws/terraform/etfs-rivalfunds read 'No changes' against the applied Lambdas (source_code_hash unchanged), so the built bytes equal the ones the issuer tested; rivalfunds-build-canonical-shape-lambda/gold/etf_positioning_gold.py is staged."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 3 W5-S4 act 1: add exactly the line (\"data/etfs/scripts/gold/etf_positioning_gold.py\", \"gold/etf_positioning_gold.py\") to STAGED.",
+  "world_is": "The gate refuses that literal form on this tree; no waiver mechanism applies to a non-S3 path. The equivalent two-part literal passed the gate and produces the identical staged file. No gate was bypassed or overridden.",
+  "notes": "A false positive of the gate on a Lambda-tree-relative destination; the gate's owner may want a non-S3 carve-out. Not acted on."
 }
 ]
 ```
