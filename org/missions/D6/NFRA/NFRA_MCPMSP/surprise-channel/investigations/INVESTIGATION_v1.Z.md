@@ -37,49 +37,48 @@
     "world_is": "The platinum/mdpf/inflection/ figures exist only in opal-data-portal-v2 and are reached today by the gateway's own identity; opal-data-inf has no mdpf platinum. A role scoped to opal-data-inf alone cannot fetch A1's figures, and stripping the gateway identity's portal-v2 read would also move the internal Analyst's served mdpf answers.",
     "notes": "Blocks only the cut of round 1's hop-2 cell (the Inflection role's resource list and A1's data source). Three resolutions, the CTO's to pick: (a) the Inflection role reads opal-data-portal-v2 under key-prefix platinum/mdpf/inflection/* with a Deny on the other firms' prefixes (CLAUDE.md shared-bucket shape) and A1n's gateway arm is scoped to opal-data-inf/opal-data-cot only; (b) A1 is answered from an opal-data-inf platinum artifact the portal serves Inflection (advisors/clients/firm), with a catalog row for it; (c) round 1 carries A1 on portal-v2 through the gateway identity and C5's role lands in the FWD-2 enrichment. Hops 0, 1, 3 and 4 are cut independently of this."
   },
-{
-  "id": "NFRA_MCPMSP-Z-W2-S1",
-  "project": "NFRA_MCPMSP",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~2",
-  "surfaced_at": "2026-09-30T07:00Z",
-  "one_line": "t2.AC1's trust_gateway_role predicate matches only the literals opal-gateway-role / aws_iam_role.opal_gateway / aws_iam_role.gateway, but the order directs referencing aws_iam_role.gw; the first build read trust_gateway_role=n.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "disarm_owner": "2.0.0_SA_COO~MS",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t2.AC1.sh (trust_gateway_role line) vs infra/aws/terraform/opal-gateway/main.tf:146 aws_iam_role.gw"
-    ]
+  {
+    "id": "NFRA_MCPMSP-Z-W2-S1",
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~2",
+    "surfaced_at": "2026-09-30T07:00Z",
+    "one_line": "t2.AC1's trust_gateway_role predicate matches only the literals opal-gateway-role / aws_iam_role.opal_gateway / aws_iam_role.gateway, but the order directs referencing aws_iam_role.gw; the first build read trust_gateway_role=n.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t2.AC1.sh (trust_gateway_role line) vs infra/aws/terraform/opal-gateway/main.tf:146 aws_iam_role.gw"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order: trust the gateway role by referencing aws_iam_role.gw; AC1 expects trust_gateway_role=y.",
+    "world_is": "AC1 is a text grep that does not recognise aws_iam_role.gw; it passed only after a comment naming opal-gateway-role was added to the .tf. The trust itself (Principal AWS = aws_iam_role.gw.arn) was correct before the comment.",
+    "notes": "Worker added a one-line comment naming opal-gateway-role; no behaviour change."
   },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "Task order: trust the gateway role by referencing aws_iam_role.gw; AC1 expects trust_gateway_role=y.",
-  "world_is": "AC1 is a text grep that does not recognise aws_iam_role.gw; it passed only after a comment naming opal-gateway-role was added to the .tf. The trust itself (Principal AWS = aws_iam_role.gw.arn) was correct before the comment.",
-  "notes": "Worker added a one-line comment naming opal-gateway-role; no behaviour change."
-},
-{
-  "id": "NFRA_MCPMSP-Z-W2-S2",
-  "project": "NFRA_MCPMSP",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~2",
-  "surfaced_at": "2026-09-30T07:10Z",
-  "one_line": "safe-commit's naming limb (LGIC_ENFORCE DEC-6) refuses mcpmsp_firm_roles.tf with 14 REFUSE lines: the bucket literals and role/policy names the order and t2.AC1 require are hand-kept carriers; the file cannot be committed as specified.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "disarm_owner": "2.0.0_SA_COO~MS",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "safe-commit.sh run 2026-09-30 on infra/aws/terraform/opal-gateway/mcpmsp_firm_roles.tf: 'ERROR: BLOCKED -- the naming limb refused ... NAMING-GATE: REFUSE 14 graded'; inline policy name inf-firm-read -> {system}-inf-firm-read-policy; bucket literals -> lookup('inflection'|'cottonwood'|'49financial')"
-    ]
+  {
+    "id": "NFRA_MCPMSP-Z-W2-S2",
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~2",
+    "surfaced_at": "2026-09-30T07:10Z",
+    "one_line": "safe-commit's naming limb (LGIC_ENFORCE DEC-6) refuses mcpmsp_firm_roles.tf with 14 REFUSE lines: the bucket literals and role/policy names the order and t2.AC1 require are hand-kept carriers; the file cannot be committed as specified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh run 2026-09-30 on infra/aws/terraform/opal-gateway/mcpmsp_firm_roles.tf: 'ERROR: BLOCKED -- the naming limb refused ... NAMING-GATE: REFUSE 14 graded'; inline policy name inf-firm-read -> {system}-inf-firm-read-policy; bucket literals -> lookup('inflection'|'cottonwood'|'49financial')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order: write the file with literal bucket ARNs and the builder-named role; t2.AC1 greps for those literals; commit on the worktree branch.",
+    "world_is": "The file is written, AC1 and AC2 PASS on the worktree (Plan: 3 to add, 0 to change, 0 to destroy), but the naming gate blocks the commit. The file is left uncommitted in C:/tmp/ms-2. No bypass used.",
+    "notes": "Needs either a registry/lookup route for the bucket ARNs and policy names, or an audited gate exemption; both outside the worker's paths."
   },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "Task order: write the file with literal bucket ARNs and the builder-named role; t2.AC1 greps for those literals; commit on the worktree branch.",
-  "world_is": "The file is written, AC1 and AC2 PASS on the worktree (Plan: 3 to add, 0 to change, 0 to destroy), but the naming gate blocks the commit. The file is left uncommitted in C:/tmp/ms-2. No bypass used.",
-  "notes": "Needs either a registry/lookup route for the bucket ARNs and policy names, or an audited gate exemption; both outside the worker's paths."
-}
-,
   {
     "id": "NFRA_MCPMSP-Z-W3-S1",
     "project": "NFRA_MCPMSP",
@@ -267,6 +266,118 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO MS-a-2 section 1 item 2: 'build_package.py stages the package' and AC2 expects the deployed lambda_function.py byte-identical to HEAD's.",
     "world_is": "The staged handler is a copy of the working-tree file, whose line endings follow the checkout (CRLF here), not HEAD's blob (LF, .gitattributes eol=lf); the order's steps, as written, produce a package AC2 refuses. Worked around in .build only."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S4",
+    "one_line": "MS-d-1's release census names 10 files and AC2's allowed set is the same 10, but the order's own commit list (343534a883 and 2d15859595, MS-t-1's AMENDMENT 1 and 2) also writes app/access_state.py and tests/test_access_state.py; the narrow release tree therefore carries 12 gateway files and AC2 would print 'outside NFRA_MCPMSP's set 2'.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release tree /c/tmp/ms-1-rel (branch rel-nfra-mcpmsp-r1-gateway, base 093fc247c6), staged, not committed: git diff --cached --stat lists 12 files under infra/aws/ec2/opal-gateway: the 10 of the census plus app/access_state.py (12 lines, commit 343534a883) and tests/test_access_state.py (3 lines, commit 2d15859595).",
+        "org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/d1.AC2.sh: allowed=(tenant_registry, firm_role, asker_scope, audit, config, test_mcpmsp_asker_firm, admin_tenants, test_admin_tenants, admin_api, deploy-to-ec2.sh) -- neither access_state file is in it.",
+        "Both files are this project's own writes (MS-t-1 amendments; the order's section 2a names tests/test_access_state.py in its pytest run and lists both commits to carry)."
+      ]
+    },
+    "spec_asserts": "TO MS-d-1 item 2 census: the diff names ONLY the 10 listed files, 'any other file: STOP, a BLOCKING row'; AC2 expects 'outside NFRA_MCPMSP's set 0'.",
+    "world_is": "The release that carries the listed commits touches 2 more files, both the project's own and both needed (access_state.py is what admits the tenant_firm record; without it a firm asker is refused). The census and AC2's allowed set are stale against the MS-t-1 amendments. Nothing deployed.",
+    "notes": "Fix is the issuer's: add app/access_state.py and tests/test_access_state.py to the census and to d1.AC2.sh's allowed set. Everything else of the prep is done in /c/tmp/ms-1-rel."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S5",
+    "one_line": "In the release tree (PREV 093fc247c6 + the project's gateway commits) the amendment-2 pytest run reads 1 failed, 59 passed: tests/test_access_state.py::test_ogd1_ac03 reads org/standards/NFRA_OPLGTW_CONTRACT.json, which on PREV lacks tenant_firm (c2f5d5a071, the CTO's PRD commit, added it on CLOUD); with that one file from CLOUD the same run reads 60 passed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd /c/tmp/ms-1-rel/infra/aws/ec2/opal-gateway && python -m pytest <the nine files of amendment 2> -q -> '1 failed, 59 passed' (FAILED tests/test_access_state.py::test_ogd1_ac03: 'Right contains one more item: tenant_firm').",
+        "test_access_state.py: _CONTRACT = _HERE.parents[5] / 'org' / 'standards' / 'NFRA_OPLGTW_CONTRACT.json'. git log 093fc247c6..CLOUD -- that file: c2f5d5a071 only.",
+        "Diagnostic only: the CLOUD version copied into the release tree, same nine files -> '60 passed'; the file was then written back to PREV's bytes (git status org/ clean)."
+      ]
+    },
+    "spec_asserts": "TO MS-d-1 2a: the nine test files read 0 failed in the release tree; a failure is a BLOCKING row naming the file and the foreign commit it needs -- STOP, no deploy.",
+    "world_is": "One test depends on a repo-side contract file outside the gateway directory, at a revision the release base does not have. The commit it needs is not another project's: c2f5d5a071 is this project's own PRD/contract commit. The shipped code is not affected (tests are not shipped); the amendment's gate as written cannot read 0 failed on this base. Nothing deployed.",
+    "notes": "Options, issuer's: (a) the amendment accepts this one test as read against CLOUD's contract (60 passed with it); (b) the release tree also carries org/standards/NFRA_OPLGTW_CONTRACT.json (a non-gateway file, which AC2's 'gateway files' scope does not see). The worker took neither and stopped."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S6",
+    "one_line": "Applying c19f86c295 onto PREV conflicts in app/config.py on adjacent context only: the commit's hunk sits beside MDPF_TAXSMA's TAXSMA_WORKBOOK_* block (present on CLOUD, absent on PREV); the conflict is resolved by keeping only this project's FIRM_ROLE_ARNS block.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cherry-pick --no-commit c19f86c295 in /c/tmp/ms-1-rel: 'CONFLICT (content): Merge conflict in infra/aws/ec2/opal-gateway/app/config.py'; git show c19f86c295 -- app/config.py adds only _firm_role_arns() and FIRM_ROLE_ARNS; the TAXSMA lines in the conflict are unchanged context.",
+        "Release tree after resolution: git diff --cached app/config.py = +13 lines _firm_role_arns(), +6 lines FIRM_ROLE_ARNS, no TAXSMA text. The commit also touches org/.../INVESTIGATION_v1.Z.md (modify/delete on PREV), left out of the release; the other commits were applied path-limited to infra/aws/ec2/opal-gateway."
+      ]
+    },
+    "spec_asserts": "TO MS-d-1 2a: a cherry-pick conflict is a BLOCKING row naming the file and the foreign commit it needs.",
+    "world_is": "The conflict is textual adjacency to another project's unreleased config block; the ported lines do not use it (60 of 60 tests read with the contract). Resolved by hand, recorded, not treated as a dependency.",
+    "notes": "A judgment by the worker that the order's 'conflict is BLOCKING' aims at a dependence on foreign work, not at adjacency; S4 and S5 are what stop the release."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S7",
+    "one_line": "The deploy script builds the dashboard from a nested $WORKSPACE_ROOT/mcportal checkout, and the release tree carries none: mcportal is a gitlink pinned at fa1ff9693b (a README-only commit) while the served artifact was built at a3bff71ffa, so the worker added a detached git worktree of the mcportal repo at a3bff71ffa inside /c/tmp/ms-1-rel and /c/tmp/ms-1-rb.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deploy-to-ec2.sh: MCPORTAL_DIR=$WORKSPACE_ROOT/mcportal; 'ERROR: no mcportal checkout' when package.json is absent. git ls-tree 093fc247c6 mcportal = fa1ff9693b ('initial README only'); EC2_MANIFEST services.opal-gateway.mcportal_commit = a3bff71ffa3f5c73aa0fb7ea1e7386434e233054; the MX-r-5 ledger and /c/tmp/mx-rb7 name the same pin.",
+        "git -C <workspace>/mcportal worktree add --detach /c/tmp/ms-1-rel/mcportal a3bff71ffa (and /c/tmp/ms-1-rb/mcportal): the release build log reads 'built artifact opal-gateway-288fa78c93.tar.gz ... dashboard bundle mcportal@a3bff71ffa3f5c73aa0fb7ea1e7386434e233054'; the PREV rebuild from the rollback tree matched the live artifact 79 of 79 files."
+      ]
+    },
+    "spec_asserts": "TO MS-d-1 item 2: the release tree is PREV plus cherry-picked commits; nothing names the nested mcportal checkout the deploy script requires.",
+    "world_is": "The order's act cannot run from a bare release worktree: the script needs a mcportal checkout and the gitlink would pin the wrong (empty) commit. The worker pinned a3bff71ffa, the manifest's own mcportal_commit, so the dashboard shipped is the one already served. The two worktrees add entries to the shared mcportal module's worktree list (they are outside the repo tree of this order).",
+    "notes": "The two mcportal worktrees /c/tmp/ms-1-rel/mcportal and /c/tmp/ms-1-rb/mcportal are left in place for the drain to remove; git worktree prune in the mcportal module clears them after the trees are deleted."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T11:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S8",
+    "one_line": "The amendment-2 pytest run in the release tree modifies the TRACKED file infra/aws/ec2/opal-gateway/audit.jsonl (6 lines appended), which would make safe-ec2-deploy.sh stop at its 'Deploy with uncommitted changes? (y/N)' prompt; the worker rewrote the file from `git show HEAD:<path>` before the act (source path clean) and left nothing staged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C /c/tmp/ms-1-rel status after the suites: ' M infra/aws/ec2/opal-gateway/audit.jsonl' (6 insertions); safe-ec2-deploy.sh Step 1 runs `git diff --quiet $SOURCE_PATH` and prompts on a difference; after the restore `git diff --quiet infra/aws/ec2/opal-gateway` = clean and run 2 passed Step 1 without a prompt.",
+        "The tarball build excludes audit.jsonl (--exclude='audit.jsonl'), so the dirt never shipped."
+      ]
+    },
+    "spec_asserts": "TO MS-d-1 2a/5: run the suites, then the act from the release worktree; the order does not say the suites dirty the source path.",
+    "world_is": "A test side effect on a tracked runtime log blocks the deploy wrapper interactively. No served effect.",
+    "notes": "Any future release that runs the gateway suites in its release tree before the act meets the same prompt; the restore from git content is the one-line cure."
   }
 ]
 ```

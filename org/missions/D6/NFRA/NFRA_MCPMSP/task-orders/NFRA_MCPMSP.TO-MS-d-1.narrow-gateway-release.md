@@ -161,7 +161,7 @@ Item 2b: census = 12 files; the contract file rides the release tree (test-only,
 conflict is accepted under a 0-failed suite. `d1.AC2.sh`'s allowed set gains the two access_state files. Nothing was
 deployed on the first pass (no ledger, no act). Graded by: no gate limb grades a modification's criteria.
 
-<status>staged</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
