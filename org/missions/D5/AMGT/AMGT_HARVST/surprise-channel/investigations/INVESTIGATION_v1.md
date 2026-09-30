@@ -2852,6 +2852,94 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "The served list under CHATTER_AXIS_SOURCE=legacy carries 2 ranked names with as-of-day score 0 (legacy pool counts), against 36 names with graded window signal, so a served-vs-recomputed correlation has n=2. The worker printed NOT MEASURABLE HERE for it and added the raw-vs-graded correlation over all 36 as the measurable comparison; nothing is graded.",
       "notes": "Measured, not graded; the CTO reads it at L10. BREAKOUT x CHATTER read ABSENT for 2026-09-30 (no generation pointer) and is recorded in the same output.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W53-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~53",
+      "surfaced_at": "2026-09-30T01:30:00Z",
+      "one_line": "HVST-m-1 AC1 asks for the listing objects 'linked from the article's discovery record'; no article record (bronze or silver, any publisher) carries a listing object key, so the link was measured as a reader-built join on (search_query, search_page, search_rank).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~53/m1_ac1_output.txt: 'articles whose own record (silver row) names a listing object explicitly ... 0 of N silver rows' for all five publishers",
+          "lib/opal_data_harvest/publishers.py _discovery() (this branch): the dict carries retrieval_rung, search_query, search_rank, search_page, first_discovered_at, discovered_for and no listing key"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Order AC1 expect: 'the listing pages that found them (listing objects linked from the article's discovery record, and how many articles have no linked listing object)'.",
+      "world_is": "0 of 120 silver article rows (barrons 15, bbg 19, ft 14, sa 46, wsj 26) name a listing object. The discovery record holds rung, query, rank, page, first_discovered_at, discovered_for only. Store holds listing pages for wsj (2 objects) and sa (2) only; barrons, bbg, ft hold none (0 objects, 0 listing_hit rows). Derived join reaches wsj 11 of 26 articles (1 listing object) and sa 2 of 46 (1 listing object); its article_id cross-check agrees for sa 2 of 2 and cannot apply to wsj (listing article_id is null).",
+      "notes": "INERT: measurement only. The recorded-link basis is printed beside the derived one so neither reads as the other; per-publisher figures are in m1_ac1_output.txt."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W53-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~53",
+      "surfaced_at": "2026-09-30T01:30:00Z",
+      "one_line": "HVST-m-1 FWD-1 premise: 104 of 126 bronze article objects carry received-form 'normalised_record' (a record the collector rebuilt), 16 'as_received', 6 unlabelled; the byte-exact match is against the stored bytes, and the publisher's original response is not in the store for the 104.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~53/m1_ac1_output.txt: per-publisher 'by received-form label' lines and the two NOT MEASURABLE HERE lines",
+          "object metadata received-form read by HEAD/GET on s3://opal-data-harvest/ on 2026-09-30"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "FWD-1: every article can be re-opened and matches 'what was received, byte for byte'; the order compares against the hash recorded at ingest.",
+      "world_is": "All 126 article objects (barrons 15, bbg 19, ft 14, sa 52, wsj 26) match their recorded document-sha256 (126 of 126). By label: normalised_record barrons 15, bbg 19, ft 14, sa 41, wsj 15 (104); as_received sa 5, wsj 11 html (16); unlabelled sa 6. The recorded hash is of the normalised record's bytes, so a match shows the store is intact, not that it equals the publisher's response; response_sha256 inside the record is the only trace of the response.",
+      "notes": "INERT: the measurement is printed with the label split so the reader can weigh it. No grade."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W53-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~53",
+      "surfaced_at": "2026-09-30T01:30:00Z",
+      "one_line": "Six seeking-alpha bronze article objects (article_hash partitions dated 20260911T04xxxxZ) carry no received-form label and have no silver row pointing at them; they are JSON:API documents and hash-match.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~53/m1_ac2_output.txt (sa: '6 JSON bronze have NO silver row') and m1_ac3_output.txt (sa: '6 of 52')",
+          "m1_ac1_output.txt sa: 'unlabelled: matched = 6'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Order AC2/AC3 measure each bronze article against 'the silver row built from it' and its discovery record.",
+      "world_is": "sa bronze article objects 52; silver rows 46; the 6 unmatched are the legacy unlabelled objects. They re-read clean (recorded hash matches) but no silver row and no discovery record for them exists anywhere in the store, so the FWD-2 named fields read SENT-AND-LOST (no silver row) for them and FWD-3 has no LIST/SEARCH statement for them.",
+      "notes": "INERT: counted inside the denominators (sa bronze 52, silver 46) and printed, not excluded."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W53-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~53",
+      "surfaced_at": "2026-09-30T01:30:00Z",
+      "one_line": "Silver rows carry discovered_for = ['992_HK_Equity'] on seeking-alpha articles whose titles are not about Lenovo (for example the 2026-09-23 partition rows sa:4429803 'The AES (AES) Investor Presentation - Slideshow', sa:4411320 'Barrick Gold: A Solid Year ...').",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~53/m1_ac2_output.txt QUERY section lines for sa:4429803, sa:4411819, sa:4411320",
+          "silver sa part-20260923T002631Z: search_query LNVGY, search_rank 8, search_page 2, discovered_for ['992_HK_Equity']"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Order AC2 query: 'one query by company and date (the validation security, one date) returning its rows from silver'.",
+      "world_is": "The company query (partition date=2026-09-23, discovered_for contains 992_HK_Equity) returns 14 rows: wsj 11, sa 3, barrons/bbg/ft 0. The 3 sa rows are SA symbol-listing backfill hits from search_query LNVGY at ranks/pages recorded on the rows; their titles name other companies. The query returns them because discovered_for is the only company carrier in silver (no company column).",
+      "notes": "INERT: printed as returned; whether these belong to the security is not judged here."
     }
   ]
 ```

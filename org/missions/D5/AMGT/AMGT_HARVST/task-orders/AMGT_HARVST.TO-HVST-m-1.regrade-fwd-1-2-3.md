@@ -72,7 +72,7 @@ No grade, no fix, no write of any kind to S3, no vendor call, no re-collection.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>23</round>
 <slot>~53</slot>
 <fabric>site-z</fabric>
