@@ -34,7 +34,7 @@ First failing hop: 1 (route undeployed) and 8 (publisher not wired).
 | TX-c-1 portal accessor | CANDIDATE portal 4235e77c (branch wk-taxsma-c1, pull-merged origin/DEV 20f95f79 at 29bfec2d) | 6 bun arms; tsc clean on the branch; on the merged tree the only two tsc errors are in COO~D's iv-e-119 test (`.block` read without narrowing the union), pre-existing at 20f95f79 |
 | TX-c-3 page caption ("Total includes Tax-Managed SMA $X · valued <date>", "(last complete figure)" when carried) | CANDIDATE portal 370d2fe8 on origin/DEV | 10 bun arms; tsc 0; eslint 0 errors; no signed-in render (no served Tax until activation; walker disabled) |
 | TX-c-2 tree leaf | NOT STARTED (component under DSGN_IRPTV1 lease; the tree already renders the tax member's served amount) | |
-| TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED; v-1's expected cases for A02/A04 must be re-cut to 0.6.0 | |
+| TX-v-1 re-cut / TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED -- decision owed (Parked): independent author for the expected cases | expected_cases.json: 102 cases (A07 26, A03 18, A01 13, A05 12, A02 10, A04 10, A08 7, A06 6), written for 0.5.0 |
 | TX-r-1 / TX-r-2 / TX-r-3 | NOT STARTED (G-O grade, G-W, G-P ahead) | |
 
 ## Write claims
@@ -52,7 +52,7 @@ Deferred: the plan-only Terraform passes for TX-k-1 (mdpf-pipeline root) and TX-
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| Terraform roots `infra/aws/terraform/{mdpf-pipeline,opal-assets,opal-gateway}` free of another live claim | NFRA_IAMROLES202609 IAM-t-3 (`<paths>` infra/aws/terraform/) | lease `arm` refusal 14:2xZ | BLOCKED until IAM-t-3 closes or Andrew holds it |
+| Terraform roots for TX-i-3 / TX-i-1 / TX-i-2 | IRPT_BCKEND (TO-IB-rtc-6 names infra/aws/terraform/mdpf-pipeline/iam.tf; rtc-7, rtd-4..7 claim the mdpf-pipeline root) and NFRA_OUTSET (TO-OS-s-18 claims infra/aws/terraform/) | open orders with no status tag (lease tool reads them open, correctly); the IAM-t-3 claim was a misread, fixed @05f0a0b5af | BLOCKED until those orders close or narrow, or Andrew/CTO sequences the roots |
 | `portal/src/components/CategoryViewTree.tsx` | 2.0.0_SA_COO~D (DSGN_IRPTV1 FAST lease) | lease ends / component released | AWAITED |
 | G-O grade of OG-r-1 readback @e2f11d1e3d | issuer (this lane under Andrew's word) | TX-r-2 first line | AWAITED |
 | G-W never-widen halves | 1.0.0_SA_CTO + a COO | TX-r-3 | AWAITED |
@@ -63,6 +63,7 @@ Deferred: the plan-only Terraform passes for TX-k-1 (mdpf-pipeline root) and TX-
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
+| Who re-cuts the 102 expected cases to 0.6.0 and runs the journey harness: the decomposition bars the engine author (this seat now) from writing expectations it is graded against; /closer-drive bars subagents | Andrew | his word: an independent context (worker or CVO) re-cuts v-1 and builds v-2/v-3, or this seat does it with the CVO grading after the fact |
 | Cottonwood's Tax ($6.04M on 09-28) is not added to Global yet: it would double-count if those accounts also carry a Cottonwood model assignment | this lane | a read of bd-rebalancer model assignments for the two accounts shows none (then one line in apply_taxsma_overlay), or Andrew rules |
 | aum-metrics `non_model_assets_detail` (W-6) is built before the Tax step, so its enterprise_total stays pre-Tax | this lane | the page is shown to read it; else leave |
 | TRADED-ONLY is the rule and Yang's sheet now reflects it (rows 12-15 flipped to Yes 2026-09-30 ~16:2xZ). Still outside 49F's 17.03M: row 9 (Traded=No, awaiting a transfer, 2.30M on 0833) and two 0833 accounts labelled Opal Tax SMA 145 with no workbook row (1.03M + 0.96M), reported as UNCONFIRMED candidates | Yang (workbook rows) / Andrew | two rows added with Traded=Yes; the transfer settling |
