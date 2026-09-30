@@ -16154,6 +16154,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "CTO round-51 ruling 6: the adapter's text states its real closure.",
   "world_is": "The opal_naming half is corrected; the store half of the same sentence is still false. Text only, no behaviour; outside ab-4's bounded scope (comments + the opal_naming wording).",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Carried to round 53 as a one-line text correction; not worth a second re-open of ab-4 before ab-6 (it moves no served byte)."
+},
+{
+  "id": "AMGT_RESAPP-Z-S316",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T14:00:00Z",
+  "one_line": "Correction of AMGT_RESAPP-Z-S314 and Z-S313 (CTO msg 27185): a D-1 regeneration dropping ASML's 8 served sentences is C-VERBATIM-GATE HOLD working as designed, not a producer defect -- all 8 are stored with quoted_spans [] and are not verbatim in the excerpt; the 2 span-carrying sentences survive a rebuild. A live rebuild still REMOVES served sentences, so it runs only under a pair (the existing never-widen rule).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker ~191's STOP (row Z-W191-S1, branch 49b0940d5a): the 8 dropped sentences carry quote_method none-found; longest verbatim run 3-5 tokens against the 8-token floor.",
+      "round53/checks/ac_2_keep.py (re-scoped) on CLOUD: span-carrying stored 2, rebuilt keeps 2; 8 held by design."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S314: a regeneration that drops served sentences is a DEFECT to fix in the producer.",
+  "world_is": "The producer is right and the stored D-1 serves non-verbatim sentences; the hazard is governed by the pair rule for any live rebuild (INERT under it). Round 54 censuses stored D-1 documents serving sentences without a verbatim span, per name, and a WORLD act under a pair removes them (CTO msg 27185 items 2-3).",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Supersedes Z-S314's ARMED standing (Z-S314 row text unchanged, append-only)."
 }
 ]
 ```
