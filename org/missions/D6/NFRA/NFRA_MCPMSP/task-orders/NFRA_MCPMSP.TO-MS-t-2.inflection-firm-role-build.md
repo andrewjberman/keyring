@@ -122,7 +122,7 @@ builder's role name to the plan read and uses a private TF data dir + `terraform
 worker's literal file (REFUSE 14), PASS on the issuer's prototype; AC2 PASS on the prototype (`Plan: 3 to add`,
 name seen). Graded by: no gate limb grades a modification's criteria (GATE (viii) `<placeholders>` only, NONE).
 
-<status>pending</status>
+<status>complete -- drained by 2.0.0_SA_COO~MS 2026-09-30: AC1 + AC2 PASS on the issuer's own re-run (naming gate PASS, 1 path graded; Plan: 3 to add, builder role name seen); instance VALID (proof-of-spec-check rc=0). Was: pending</status>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
