@@ -74,3 +74,30 @@ until a gold rebuild.
   immediately before run 1.
 
 Everything else in this half stands: conditions 2-5, the rollback, and NOT COVERED.
+
+## AMENDMENT 2 -- RE-SIGNED (~05:1xZ, on 2.0.0_SA_COO~H msg 26923, COO half AMENDMENT 2 @5facb19f57)
+
+**The act gains act 3:** `upload-harvest --max-objects 40 --retrieval-mode backfill`, run ONCE, from the same pinned worktree
+(`wk-hvst-r25-65`, `o-2` only; amendment 1's STOP on the trunk stands). ft (`request_rejected`) joins sa and barrons as a no-write
+root, so new objects land ONLY under `bloomberg/harvest/` and `wsj/harvest/`.
+
+**Re-measured by this seat (read-only):**
+- **The outbox:** `.runtime/opal-data-harvest/progress.sqlite3`, opened `mode=ro`.
+  - `harvest_raw_outbox`: **pending bbg 11, wsj 11**; uploaded sa 5, wsj 11.
+  - `harvest_listing_outbox`: **pending bbg 4, wsj 6**; uploaded sa 2, wsj 2.
+  - So the ONLY pending rows are the 22 articles and 10 listing pages from these two runs. `upload-harvest` cannot reach any
+    other security or publisher, and `--max-objects 40` covers all 32.
+- **The roots**, by `aws s3 ls --recursive | wc -l`: bloomberg 978, ft 28, wsj 55, barrons 30, seeking-alpha 103. These are
+  unchanged since signing, so attempts 1 and 2 wrote nothing to S3.
+
+**Condition 5 re-grounded, ACCEPTED on FWD-3's own words** ("fetches no article we already hold"). Run 2 fetched 2:
+- `bbg:OURYDJ6TTDSG01` is new to the listing. That is the source changing, not a re-fetch.
+- `bbg:NM5NLQ6K50XZ01` was fetched by run 1 and NEVER STORED, so it was not held.
+
+26 were skipped as held.
+
+**One condition added:** an article fetched and never stored is a possible silent loss on the collection path. Its cause is
+answered as a row, with a disarm owner and before FWD-3 grades REALIZED. The wsj run-record/outbox key mismatch (URL against
+UUID) is carried the same way. Neither blocks this act.
+
+Everything else stands: conditions 1-4, the rollback (forward only; a delete is Andrew's), and NOT COVERED.
