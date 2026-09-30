@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>pending</status>
+<status>parked</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>lane</worker_class>
@@ -15,6 +15,11 @@
 
 **Directive:** D8 | **Fabric:** laptop | **Decomp cell:** `SC-e-12` (`decompositions/MDPF_SECCLASS_DECOMP_R5.md`) |
 **outcome_ref:** FWD-5 | **depends_on:** none
+
+**PARKED (CTO RULING 103327, 2026-09-30 ~16:5xZ).** Owner: `0.7.0_AE_CloudOps`. Un-park condition: the CloudOps seat is
+LIVE on the broker (`get_agent_status`). This order has LEFT round 5's rectangle (round 5 closed on chain A) and re-enters
+the round that is open when the seat returns, without a new ruling; criterion 1 stays the partners-lambda-role consumer
+census. The issuer's drive tick reads the condition each tick and delivers this file's path in one message when it holds.
 
 **PARKED at issuance.** `0.7.0_AE_CloudOps` is dark (not relaunched by the 2026-09-30 13:0xZ word). The order un-parks
 when that seat registers LIVE on the broker; the issuer then delivers this file's path in one message. Nothing waits on

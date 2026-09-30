@@ -20,7 +20,7 @@ from pathlib import Path
 
 import boto3
 
-ROOT = Path(__file__).resolve().parents[4]
+ROOT = Path(__file__).resolve().parents[6]  # R5_CHECKS -> MDPF_SECCLASS_M -> deliverables -> 2.0.0_SA_COO -> tier1_exec -> org -> root
 sys.path.insert(0, str(ROOT / "infra" / "aws" / "lambda" / "v2_portal" / "_shared"))
 import etf_classification_scheduled as sched  # noqa: E402
 
