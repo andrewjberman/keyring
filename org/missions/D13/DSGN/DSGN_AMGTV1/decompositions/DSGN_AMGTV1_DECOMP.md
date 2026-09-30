@@ -563,3 +563,101 @@ forward from round 5.
 - (iii) One intent per cell.
 - (iv) No cell moves a served value, a figure, a verdict, a count or an article order. q-1 moves only when the walker shoots and
   what it records; q-2 moves only the line's date format; q-3 moves only the words that name three columns.
+
+## v9 -- ROUND 9 (issuer, 2026-09-30 ~03:xZ), over PRD v0.3 @abfad1355c (ADMITTED)
+
+**Rectangle:** the round-8 analysis's enrichment list, plus one Andrew-direct item.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round8.md` @2c63f69a09 section 4, items 1-3, with rulings 1 (the heading follows
+  the grain, "Sector"; display case; no truncation), 2 (the day's rows show their strength) and 3 (the FWD-11 residuals).
+- **Andrew-direct**, to 2.0.0_SA_COO~D on 2026-09-30 ~03:1xZ, verbatim: *"By the way, for your referece, the Security Analysis
+  icon in the portal sidebar is in the wrong location. It is a tool, so it shoudl actually sit beneath the Security Scanner icon
+  in the tools section."* It becomes cell `AV-p-4`, on the DIRECT-ACT path (one line moved, LOCAL). The scope is verbatim: the
+  entry moves, and nothing else about the sidebar changes.
+- **Cell ids:** `AV-p-1`..`AV-p-4`. Letters e, q, r, s, t, u, v, w are on disk, so round 9 takes `p`.
+- **The issuer's mapping differs from the analysis's in one place.** Ruling 3's first residual, the article time's raw ISO and
+  "(instant)", is placed in `AV-p-2`, not in the residuals cell. The time and the strength words sit in the one article-row
+  component (`TimelinePanel.tsx` `ArticleRow`), so one cell owns that row, and the write sets stay disjoint (fan-out 4, no chain).
+  The residuals cell `AV-p-3` keeps "Dated" and the system-voice line (`LeadPanel.tsx`).
+- **NOT cells:**
+  - the Positioning model window's missing source (ruling 3: the reference page's gap);
+  - names on 22 of 22 rows and the driver series (AMGT_RESAPP r51 cells 5-6);
+  - the `/timeline/day` latency (AMGT_HARVST).
+- **Seen at the cut, NOT cut (round-10 inputs):**
+  - the Thesis window source for VLO reads "machine draft from VLO US's 10-K, filed 2026-02-25", an ISO date inside a source;
+  - `HeaderCards.tsx` `footerTime` and `ThesisCards.tsx` `thesisWindowStamp` still print "Dated <long date>" for a bare-date
+    vintage. No served fixture reaches that path, and the census reads 18 of 18 in the one form on the served payloads.
+- **Portal base:** site-Z local DEV `29c8226a` (clean). **Walker base:** `.claude/skills/ui-walk/walk.mjs` @ac0fdbfc16 (unchanged
+  this round).
+- **Fixtures:** `deliverables/2.0.0_SA_COO~D/round9/fixtures/` = the round-8 set, carried unchanged (25 files; each keeps its
+  `_capture` note). No new capture: `mention_count` and `published_precision` are already in the served
+  `timelineDay.992_HK_Equity.2026-08-13.json`. ISSUER VARIANTS are built in memory inside the checks, each labelled there.
+- **Frozen at the cut.**
+
+| cell | item | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-p-1` | 1 + ruling 1 | `sub_asset_class` headed "Sector"; `sector` "Industry group (finer than Sector)" in its header and the unserved note; the asset-class value in display case ("Equity"), its data attribute unchanged; no truncating class on a classification value | FWD-2 | `SA/components/RankedList.tsx` | ~32 | LOCAL |
+| `AV-p-2` | 2 + ruling 2, ruling 3's first residual | each article row shows "named N times" from `mention_count` ("named once", "not counted"), and its time through `formatPanelTimestamp` ("instant") or as the long date (any other precision), with no ISO and no precision word; the served order untouched | HARVST FWD-5, FWD-11 | `SA/components/TimelinePanel.tsx`, harness `timelineFourStates` (one loader line) | ~33 | LOCAL |
+| `AV-p-3` | 3 + ruling 3 | the lead source line drops "Dated" ("<long date> \| Source: ..."); the older-list line reads "This list is from <long date>, the newest available." | FWD-11 | `SA/components/LeadPanel.tsx`, harness `leadPanelPattern` (re-anchor source_footer, stale_dated_said) | ~34 | LOCAL |
+| `AV-p-4` | Andrew-direct | the `/security-analysis` sidebar entry moves from Analysis to Tools, directly beneath Security Scanner; its label, icon, gate and comment are kept | Andrew's word (no FWD) | `portal/src/App.tsx` | ~35 | LOCAL, DIRECT-ACT |
+
+**Edges and chains:**
+- There is no data edge.
+- Write sets are disjoint: p-1 `RankedList.tsx`; p-2 `TimelinePanel.tsx` + `timelineFourStates`; p-3 `LeadPanel.tsx` +
+  `leadPanelPattern`; p-4 `App.tsx`.
+- M = 4 chains, N = 4, K = 0 queued, cap 8.
+- The surprise channel is shared append-only.
+
+**Checks (`round9/checks/`, dry-run at base 29c8226a; `_load.cjs`, `bound.cjs`, `census.cjs`, `walkvoid.sh` copied forward):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| grain.cjs | 0 of 3 ("Sub Asset" over sector names; "Industry group (finer than Sub Asset)"; "equity" and `truncate`) | 3 of 3 |
+| strength.cjs | 1 of 3 (no "named N times"; raw ISO + "(instant)"; the order arm passes at base by design) | 3 of 3 |
+| oneform.cjs | 0 of 3 ("Dated" leads 4 lead lines; the system-voice line; census 14 of 18) | 3 of 3 (census 18 of 18) |
+| sidebar.cjs | 1 of 3 (the entry in Analysis; the gate arm passes at base by design) | 3 of 3 |
+
+- **Bounds:** all 18 SecurityAnalysis harnesses were run at base and on the green arm.
+  - 16 are green at base. `assembled` and `exportCompare` are RED at base (rc=2) and stay out of the bound.
+  - On the green arm without re-anchors, exactly two turn red:
+    - `timelineFourStates`: its loader cannot resolve p-2's new `../../../lib/dateUtils` import;
+    - `leadPanelPattern`: `source_footer` and `stale_dated_said` are anchored on "Dated" and on the old line.
+  - With the named re-anchors, 16 of 16 are green.
+  - `admin-gate.test.ts` (bun; reads `App.tsx`) is 10 of 10 at base. On the green scratch root it is 9 of 10, and its F49-AC8
+    App.tsx gate-hunk test passes. The one fail is F49-AC10's `git rev-parse` at the outer root, which the scratch root does not
+    have (named, environmental); p-4's worker runs it in a real worktree.
+  - Portal `tsc -b --noEmit` rc=0 on the green arm (all four cells). A planted type error in `RankedList.tsx` is caught (rc=2).
+- **Earlier checks this round supersedes by ruling (not bounds):**
+  - round-8 `labels.cjs` ("Sub Asset" is replaced by "Sector", ruling 1);
+  - round-8 `sourceline.cjs` arm 1 (it expects "Dated");
+  - round-7 `columns.cjs` arm 1, value for value on asset_class. The display case is ruling 1; grain.cjs arm 3 checks the served
+    attribute unchanged and the shown value by the case rule.
+  - Round-7 `timeline7.cjs` and `footer.cjs` read 3 of 3 on the green arm.
+
+**Cut rules applied:**
+- **(a) Queue-aware bases.** No check compares against a base snapshot, count or diff; there is no queue.
+- **(b) Bounds run against a green build.** A scratch detached portal worktree at 29c8226a (`C:/tmp/cood-r9-root/portal`)
+  with all four cells built found every harness a required change NECESSARILY breaks. Each is granted in that cell's `<paths>`
+  with the exact re-anchor named on the face and proven green.
+
+**Battery:**
+- comp-schedule and comp-iam: DECLARED-NOT-APPLICABLE.
+- comp-adversary: the checks above.
+- Blind spots:
+  - static markup with the estate chrome stubbed, so column widths, wrap and the sidebar's drawn position are the walk's;
+  - `precision` values other than "instant" are reached only by the labelled variant (the served day carries "instant" only).
+- The issuer's close walk:
+  - signed-out control first;
+  - then a lead list beside the Positioning breakdown (FWD-2) and `--day "992 HK=2026-08-13"` plus one event (the strength and
+    time on each row);
+  - the lead panel footer beside a header card window (FWD-11);
+  - the sidebar in any shot (p-4).
+
+**Rule 24:**
+- (i) MECE over the analysis's three items plus Andrew's one item by subtraction: 4 placed; the NOT-cells named with their reasons.
+- (ii) One cell per write set; no shared file.
+- (iii) One intent per cell.
+- (iv) No cell moves a served value, a figure, a verdict, a count or an order:
+  - p-1 moves the words that head two columns and the case of one shown value;
+  - p-2 adds a served count's words and changes a time's format;
+  - p-3 changes two lines' words;
+  - p-4 moves one sidebar entry.
