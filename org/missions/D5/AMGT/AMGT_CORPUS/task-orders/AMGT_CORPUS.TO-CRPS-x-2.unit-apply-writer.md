@@ -114,3 +114,4 @@ count be STATED, not a value.
 <round>22</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
