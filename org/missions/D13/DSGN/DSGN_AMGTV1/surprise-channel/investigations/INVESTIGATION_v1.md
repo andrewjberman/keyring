@@ -558,6 +558,27 @@
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "AV-m-1 item 3: tabPanelsWhite: the tab panel is white with a hairline border (N/A in list).",
  "world_is": "Reading used: the tab panel's surface is the nearest painted ancestor below <main> (>300px wide, >=40px tall), else the top-level painted surfaces inside it (table rows and skeleton bars excluded); PASS iff at least one exists, every one is opaque white (255,255,255) and carries a light (luminance >= 0.4) 1px+ border. Zero surfaces grades FAIL, never PASS. A different reading is a change to ui-measure.mjs section 8 only. Separately: the issuer's clean page grades bandIsIdentityHeader FAIL (a static page carries no data-starred-toggle Lead Panel marker); AV-m-1's arm 2 asks only the eight style clauses, so nothing is affected."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W51-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~51",
+ "surfaced_at": "2026-09-30T17:18Z",
+ "one_line": "AV-l-6's fwd14 names a sentence's PASS face and its passage and accession line; on DEV a PASS sentence paints no face and the page never prints an accession, so I graded the attribute and the citation line in words.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/ThesisCards.tsx SentenceBlock (lines 276-280 at DEV ba62e945): the sentence carries data-verbatim-check and renders a CheckFaceBadge only when the verdict is not PASS; ThesisTab.tsx header comment: the face 'never' prints the accession number",
+   "DEV run (C:/tmp/dsgn-r13-dist/dev, three windows opened): 17 sentences, 17 read data-verbatim-check=PASS with no badge; 18 citation lines [data-citation-document] name the document in words (10-K, filing date, section path)",
+   "reading used in ui-contract-check.mjs gradeFwd14: the FACE is the data-verbatim-check attribute (a non-PASS verdict must also show its badge) and the ACCESSION LINE is the [data-citation-document] line; a page whose PASS sentences must paint a visible face would need that reading changed in gradeFwd14 only"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-l-6 fwd14: in the Thesis windows each sentence shows its PASS face and passage count; opening it reveals the passage and accession line from the DOM.",
+ "world_is": "DEV paints no visible face on a PASS sentence (attribute only) and prints no accession number (the citation line names the filing in words), so the clause as worded has no literal DOM referent; the reading above grades what the page actually renders."
 }
 ]
 ```
