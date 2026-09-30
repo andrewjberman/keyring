@@ -3832,6 +3832,49 @@ carries none.
     },
     "spec_asserts": "A3 allows the contract file into the artifact 'or onto the host by the deploy script'.",
     "world_is": "Shipped as a copy in deploy/, byte-equal to the release tree's contract. The test that pins the copy to org/standards lives on the never-merged rel-/dep- branches and would fail against CLOUD's newer contract, which is the signal to refresh the copy at the next release cut."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+      "surfaced_at": "2026-09-30T13:05Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "id": "NFRA_MCPINDEX-Z-W19-S14",
+      "one_line": "MX-r-6 PHASE A re-cut on the moved live base (A4): two more audited overrides on the never-merged rel-b/dep-b branches, and the deploy-only tree still drops 37 gateway-dir files of other projects' unreleased work relative to CLOUD.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "Live gateway read BY CONTENT 2026-09-30T12:27Z and again 13:00Z: S3 key opal-gateway-288fa78c93.tar.gz == -latest (ETag be161c825e92471afe31c9f6ba4f3758, 415525 bytes), host file hashes 82 of 82 equal to it (SSM e29a6f89-425b-4e34-bc30-caea722ea8b2, e6782853-9cfc-4515-b75e-341fbf3151fa), CLOUD manifest deployed_commit 288fa78c93e1c57be0ad7b8d6371c69145a69856 (11:37:34Z).",
+              "Release 63d6094823 (branch rel-nfra-mcpindex-r5-schwab-enable-b, /c/tmp/mx-rel8) and deploy-only 2e2254156e (dep-nfra-mcpindex-r5-schwab-enable-b, /c/tmp/mx-dep8, on CLOUD 6caac02338) were committed under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~19 (Z-W14-S8 precedent; uses 5 and 6 counting Z-W19-S10's two and S12's A3 pair).",
+              "The deploy-only commit differs from CLOUD 6caac02338 in 37 files, 0 outside infra/aws/ec2/opal-gateway: 12 deleted (rivalfunds x4 + its test, taxsma_workbook + test, onhost_bench x2, test_auth_hardening, test_dcr_idle_lifetime, test_login_retire, test_tier_principal), 23 modified (app/config.py, guard.py, integrations/base.py, schwab/aws_roles.py, schwab/integration.py, oauth_as.py, ratelimit.py, server.py, tier.py, token_broker.py, tools.py, refs/DATA_CATALOG.yaml [2-line provenance stamp], deploy-to-ec2.sh, runbook, tests), 2 added (the contract copy, test_schwab_host_inputs.py). Each is another project's unreleased gateway work (NFRA_OPLGTW OG-t-1/u-1/u-2/x-2/i-3, ETFS_RIVALS RIV-w-1, MDPF_TAXSMA TX-g-1) or NFRA_MCPMSP's already-live files being equal to live rather than to CLOUD; none is shipped by this release.",
+              "Every one of the 13 files NFRA_MCPMSP changed from 093fc247c6 to 288fa78c93 is byte-equal to live in the release tree except deploy-to-ec2.sh (MCPMSP's printf line kept, ours added) and org/standards/NFRA_OPLGTW_CONTRACT.json (MCPMSP's tenant_firm lines kept, step 0 added)."
+          ]
+      },
+      "spec_asserts": "A4 asks for a release re-cut on the live commit read by content, with MCPMSP's lines kept and ours added.",
+      "world_is": "Done as ordered; the only off-order acts are the audited overrides and the 37-file gap, recorded for the L8 reading."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+      "surfaced_at": "2026-09-30T13:05Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "id": "NFRA_MCPINDEX-Z-W19-S15",
+      "one_line": "A3's host-input edits (aws_roles.py, schwab/integration.py, deploy/NFRA_OPLGTW_CONTRACT.json) are written against the live-base copies; CLOUD's copies of the first two carry unreleased NFRA_OPLGTW work, so a later CLOUD release of this delta merges against them.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "git diff --name-status 6caac02338 2e2254156e lists app/integrations/schwab/aws_roles.py and app/integrations/schwab/integration.py as modified; git log 6caac02338 for those paths names NFRA_OPLGTW.TO-OG-i-3 (0.9.0_WK_NFRA_OPLGTW~1, the person-named Schwab role rename) and NFRA_OPLGTW OG-x-2 (0.9.0_WK_NFRA_OPLGTW~11, the streaming Schwab CSV export) as the last commits, neither in the live tree.",
+              "The A3 edits to those two files applied cleanly on the live base (git apply --3way, 0 conflicts); on CLOUD they will conflict or need a re-merge when OG-i-3 and OG-x-2 are released.",
+              "deploy/NFRA_OPLGTW_CONTRACT.json was regenerated as a byte copy of THIS release tree's org/standards contract (MCPMSP's tenant_firm text plus step 0); CLOUD's org/standards contract still lacks step 0 (it drains later), so test_schwab_host_inputs.py::test_shipped_contract_equals_the_standard passes in the release tree and would fail in the deploy-only tree, whose org/standards is CLOUD's (the Z-W19-S13 signal, unchanged)."
+          ]
+      },
+      "spec_asserts": "A3/A4 ask the release to carry the Schwab host inputs and the deploy-only tree to ship the gateway dir only.",
+      "world_is": "Shipped as ordered; the merge cost lands on whoever releases OG-i-3/OG-x-2 or drains this branch, recorded so it is not a surprise then."
   }
 ]
 ```
