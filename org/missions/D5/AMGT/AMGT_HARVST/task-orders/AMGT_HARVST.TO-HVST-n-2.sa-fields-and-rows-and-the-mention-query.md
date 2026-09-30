@@ -75,7 +75,7 @@ No served silver rebuild, no gold rebuild, no vendor call, no S3 write, no chang
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>24</round>
 <slot>~57</slot>
 <fabric>site-z</fabric>
