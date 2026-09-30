@@ -3276,6 +3276,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "Run 2 skipped 26 keys as held (run 1 fetched 22, and 5 of run 1's skips were known_urls); the decomposition of the 26 was not measured. Two keys were fetched: one that run 1 counted fetched but did not store, one first seen on run 2's newer listing pass. Not a re-fetch of a stored article. Zero S3 objects moved in either run.",
       "notes": "Measured only; the two-key reading is from the run record and outbox, not from a code read of why NM5NLQ6K50XZ01 was not stored.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W65-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~65",
+      "surfaced_at": "2026-09-30T05:30Z",
+      "one_line": "upload-harvest wrote one silver part per queued row (silver/article 11 parts per publisher for 11 articles), not one part per fetch date as the COO half AMENDMENT 2 describes; 57 new S3 objects in all, none outside the bbg and wsj harvest roots.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_upload.txt: each article result carries its own silver part path (e.g. bbg:TKPBVYKK3NY800 -> silver/article/date=2026-09-30/part-20260930T044146Z.parquet, written_rows 1); remaining_pending 0; 22 article + 10 listing results all 'uploaded'",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~65/o5_AC1.txt: new by tier/table bbg {bronze/article 11, bronze/news_listing 2, silver/article 11, silver/listing_hit 4}, wsj {11, 3, 11, 4}; barrons/ft/sa new=0; moved=0 removed=0 on 5 of 5 roots"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "NEVER_WIDEN_HALF_COO_O5.md AMENDMENT 2: each article's silver row is written by silver_append, one part per fetch date; new objects at most 32 bronze plus silver parts for the 2026-09-30 fetch date.",
+      "world_is": "Silver parts are named by fetch timestamp, one per article row and one per listing page with hits: 30 silver parts (bbg 15, wsj 15) beside 27 bronze objects (bbg 13, wsj 14). Bronze stays inside the 32 bound; the part count is a naming grain the half did not state. Listing pages fetched by run 2 re-used run 1's bronze (skipped, existing) and wrote new silver listing_hit parts.",
+      "notes": "Measured from the upload receipt and AC1's tier/table counts. Read as a description gap, not an out-of-scope write.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
