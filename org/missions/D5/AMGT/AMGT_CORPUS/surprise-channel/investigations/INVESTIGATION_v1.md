@@ -2768,6 +2768,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "At least one test in integrations/bloomberg/research/tests writes the tracked field_map.json as a side effect, so a drain that runs the suite before its commit gate carries an unowned 1123-line diff.",
     "notes": "Filed, not fixed (outside paths). The AC2 suites named by z4_AC2.sh do not trigger it.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W4-S9",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~4",
+    "surfaced_at": "2026-09-30T12:50:00Z",
+    "one_line": "CORRECTION to AMGT_CORPUS-Z-W4-S8: the writer of integrations/bloomberg/research/field_map.json was this worker's own new test (test_model_block_pull_stage_derive_key), not the pre-existing integrations/bloomberg/research suite; model_block_pull.stage_derive calls _ensure_unit_map, which WRITES the tracked field_map.json for any security the map does not list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test_slash_safe_key_sites.py -k 'not stage_derive': git status clean; -k stage_derive: field_map.json modified; the pre-existing suite alone: 170 passed with no field_map.json change once the new test was not in the run"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A unit test of stage_derive's derived key leaves the tree clean.",
+    "world_is": "stage_derive has a tracked-file write side effect for an unmapped security (model_block_pull.py:854 via _ensure_unit_map); the test now stubs _ensure_unit_map, so the tree stays clean. S8's premise (that the existing suite mutates field_map.json) is withdrawn.",
+    "notes": "S8 is not edited (a row is never edited); this row supersedes its attribution. Re-verified: after the fix the AC2 suites and the bloomberg suite leave git status clean for field_map.json.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
