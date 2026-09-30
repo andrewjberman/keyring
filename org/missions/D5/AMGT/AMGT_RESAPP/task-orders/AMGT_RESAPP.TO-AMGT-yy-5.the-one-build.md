@@ -69,6 +69,8 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 code and the then-live base.
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-30 ~02:3xZ):** landed; entry `amgt-resapp-yy5-one-build-20260930` CLOSED 3 of 3 02:04:25Z (committed @67becd1b9f). The issuer re-measured all four on the served plane at `pVa+sgzj8XNZ9uvJqCOwRNCJn0IZhUklnWZh6JbO7B0=` (01:46:54Z): AC1 PASS; AC2 pillars 13 of 13 YES; AC3 owner label YES; AC4 INTU + HAL 5 NEOs each, DEF 14A 000089687825000057 / 000004501226000033, YES. Two M-1 first mints validate against management.schema.json; the 09-18 objects untouched. Instance graded VALID rc=0. Built at 50cc86edd6 (a HEAD build REFUSED at the REGISTRY_HASH guard, row Z-S306), so only the signed nine files shipped. **CORRECTION, the issuer's (row Z-S307):** the COO half's 'lib/opal_naming.py is not packaged' was read from code comments, not the build manifest; it IS packaged (with six registry JSONs and NAMING_SCHEMA.json). No wrong file shipped only because the build commit predated it. Row Z-S308: the issuer's 'no AMGT sentinel open' reads were shared-tree only; four sit on undrained worker branches.
+<status>complete</status>
 <round>50</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
