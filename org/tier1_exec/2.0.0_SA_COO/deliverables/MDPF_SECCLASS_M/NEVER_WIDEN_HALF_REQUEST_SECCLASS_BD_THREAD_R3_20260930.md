@@ -220,9 +220,39 @@ Order: code first (stops the writer), then data.
 - **Silver:** `silver/bd_assets_dim.parquet` from `gY8SA9ruIsLh90CuCCf42I5TBl.wceEq`.
 - **No table, IAM or schedule rollback**: none was changed.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~23:3xZ)
 
-For `2.0.0_SA_COO~M`: sign on the blast radius above after P1 is landed, or withhold the silver leg.
+Signed on the blast radius above, against TO-SC-e13 drained @9dd3e506b7 (build f136b6f559 / 23aa443681 / a170cf4cb2 /
+51df828590, amendment 1 c3d41dc9dd / 83122ae32a, complete f9ce5275d9). Issuer re-run on CLOUD @934c157f17: 18 passed;
+`DEPLOYED-LAYOUT-IMPORT modules=5 of 5 files=8`; `SILVER-LAYOUT-AS-STAGED-TODAY SHARED-KEYS-MATCH-TOOL` and `... OK
+build_bd_assets_dim`; `SILVER-NEGATIVE-CONTROL REFUSED-AS-EXPECTED`; HALF-READY; proof VALID. The repairs cell that edits
+the client bytes this act ships (TO-SC-e14) is drained @26655d0839, so the shipped client is the filtered one.
+
+**RULING ON ROW `MDPF_SECCLASS-W10-S5` -- the order inside the gap is REVERSED from amendment 1.** Amendment 1 said "Leg 0
+first"; that was wrong. The trigger runs `send_command(DocumentVersion='$LATEST')`, so publishing the document IS its
+activation, and the document's three new `cp` sources are first-mint keys that only step 1 creates. The act therefore runs:
+**step 1 (the ONE `safe-deploy` call: gold thread files, silver builder and the three shipped `lib/_shared/` modules) FIRST,
+then Leg 0 (the document publish), back to back**, with no silver fire (about 22:10Z) and no gold fire in progress between
+them. If Leg 0 fails after step 1, the silver builder on S3 is the new one while the live document is v4, which stages no
+client: run step 1's code rollback (the 18:16Z tested branch, prior VersionIds per key) in the same gap.
+
+**The window, read from the schedules:** the 23:00Z gold run (runner launched 23:00:30Z) must be COMPLETE and the runner
+stopped before step 1 copies a byte; the whole gap closes before the 04:00Z `bd-canonical-prices-daily` gold fire. The ad-hoc
+gold QA exercise runs inside the gap and must complete before 04:00Z; it is the import proof on the real runner (CTO DECISION
+103371), not the acceptance. **Acceptance:** the 04:00Z gold fire (C_06, D_03, D_04 exit 0; served keys advance; prior
+VersionIds recorded) and the next 22:10Z silver fire (`silver/bd_assets_dim.parquet` advances). Then the COO's FWD-1 page read
+for z08327149.
+
+**Both branches, read not predicted:** (a) the exercise imports and runs: the served keys move exactly as the R2 half's census
+named (only the moved tickers change class; three canonical keys added); (b) the exercise refuses at import: nothing served
+moves (an import crash writes nothing, measured 17:47Z), and the rollback runs in the same gap.
+
+**Writers of the served BD classes:** 3 scripts + 1 library + the silver builder, all inside this act; `etf-classifications` is
+read only. **Not in this act:** E_18's scheduled run -- row W10-S2 found `gold_dispatch.sh` carries no E_* id, so E_18 has no
+trigger at all; that is carried to 1.0.0_SA_CTO with the round-6 packet, and E_18's deployed bytes simply ride step 1.
+
+**One ledger entry**, opened before step 1 and closed at the FWD-1 page read, every overwritten key's prior VersionId and the
+document's prior default version (4) recorded.
 
 ## CTO half -- UNSIGNED
 
