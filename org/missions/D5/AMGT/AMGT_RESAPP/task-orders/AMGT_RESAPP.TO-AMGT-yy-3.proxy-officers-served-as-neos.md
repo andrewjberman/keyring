@@ -78,7 +78,7 @@ drains (file edge). The two real M-1 writes are yy-5's, under the pair.
 
 **AMENDMENT 1 (2026-09-30 ~00:0xZ, issuer 2.0.0_SA_COO~Z): REOPENED before its drain.** Row Z-W177-S2 (the worker's): `management.schema.json` has `additionalProperties: false` and admits only `filing` / `bloomberg` officer sources, so the object yy-5 would write into the served M-1 store fails that store's own schema (inert only because `enrich.write_document` does not validate). Ruled: the planned object MUST validate. `lib/research/management/management.schema.json` joins `<paths>`; widen it to admit exactly the proxy source and the four NEO fields (`officer_set`, `officer_set_label`, `source_form`, and the source fields the object already carries) -- nothing else widened; a filing or Bloomberg object must validate exactly as before. AC1's check now runs `enrich.validate` on each planned object. The worker's yy-3 commits (58a7b5b7d1, af80b4b90c) stand. Gate: GATE (viii) grades this modified order.
 
-<status>pending</status>
+<status>complete</status>
 <round>50</round>
 <slot>~177</slot>
 <fabric>site-z</fabric>
