@@ -473,6 +473,28 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "Row DSGN_AMGTV1-Z-S5 (ARMED, disarm owner this seat): three literal backspace bytes broke two regexes on the page.",
  "world_is": "Repaired and drained; bytes.cjs stays in round 10's checks so a reintroduced control byte in the page's source fails a check, not only a walk. Resolves Z-S5."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W47-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~47",
+ "surfaced_at": "2026-09-30T11:38Z",
+ "one_line": "AV-m-4 AC2: portal/src/pages/SecurityAnalysis/__harness__/timelineFourStates.harness.cjs cannot load TimelinePanel.tsx once it imports ./publisherNames; the harness is outside <paths>.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "bound.cjs Q3 at worktree wk-DSGN_AMGTV1-47: 'HARNESS RED timelineFourStates.harness.cjs :: rc=1', 3 of 4 green; shell 10/10, posture 32/32, tabs 20/20 green",
+   "node timelineFourStates.harness.cjs: 'Error: Cannot find module ./publisherNames' raised from its own source() loader (lines 106-113), which resolves only STUBS, ../../../lib/dateUtils, ../../lib/dateUtils and ../dateWords, else falls to require()",
+   "publishers.cjs 3 of 3, bytes.cjs 3 of 3, portal tsc -b rc=0 on the same bytes"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "The cut: with an import-free shared module 'the issuer's helper measured no harness change' and Q3 stays green; a bound harness may be re-anchored only if named in <paths>.",
+ "world_is": "timelineFourStates.harness.cjs loads TimelinePanel through its own loader with no './publisherNames' branch, so the required import fails it (the issuer's own _load.cjs resolves it, which is why the helper read green). Fix needs one line in that harness (a './publisherNames' branch returning source('src/pages/SecurityAnalysis/components/publisherNames.ts')), which <paths> does not grant. Worker did not duplicate the map inside TimelinePanel.tsx to dodge it."
 }
 ]
 ```
