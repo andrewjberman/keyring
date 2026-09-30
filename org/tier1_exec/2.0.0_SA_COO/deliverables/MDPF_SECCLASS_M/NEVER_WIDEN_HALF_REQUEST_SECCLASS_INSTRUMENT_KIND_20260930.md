@@ -107,3 +107,25 @@ real, read-only `--dry-run` scan against the live table (2,309 rows, matching `d
   is taken as-is from the same `instrument_kind_for()` logic the constituents seeder already uses for its own new
   rows (SC-e-1), not re-derived by this act.
 - The `identifier_namespace` field (round-3, E9, CUSIP-keyed rows) is untouched by this act.
+
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~07:1xZ)
+
+Signed on the blast radius above, against TO-SC-e2 drained @d8b716a044. The issuer re-ran the criteria on CLOUD at
+@bc13447e97: 7 passed, KIND-CENSUS would_set=156 of 2163 absent, HALF-READY, proof VALID.
+
+**The act, exactly (the issuer runs it):**
+- **Write set.** The 156 tickers of `R2_KIND_CENSUS_20260930.json` `rows[]`, one conditional update each:
+  `SET instrument_kind = :v` on `attribute_not_exists(instrument_kind)`, with :v from the census row (154
+  single_security, 2 fund). No other attribute is named. The 1,970 rows a bd-securities value could fill are NOT
+  written: Andrew-direct 2026-09-30 ~02:2xZ, "bd-securities values can seed new rows. THey just don't overwrite
+  existing rows."
+- **Writers of the property: 2** exist (the seed path writes `instrument_kind` on seed rows; this update script).
+  Only the update script runs in this act. Two rules were read: this update's condition, and the seed path's
+  replacement of a whole seed row. None of the 156 is a seed row: a live batch read at signing (156 of 156 read)
+  shows every one carrying no `classified_by` (the LEGACY_LABEL act's candidates) and 0 already carrying a kind. The
+  two acts touch disjoint attributes on the same rows, in either order.
+- **Both branches.** An absent-kind row gains its kind. A row that gained a kind since the census refuses and is
+  counted, never overwritten. No reader branches on `instrument_kind` today, so no served value moves.
+- **Ledger.** Opened before the first write with a PRE-READ of the 156 rows; closed at the read-back (set, refused,
+  denominator).
+- **Rollback.** `REMOVE instrument_kind` per written key, from the read-back's written list, never a scan.
