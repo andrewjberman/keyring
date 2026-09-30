@@ -83,7 +83,7 @@ portal and outer commit hashes, and any row.
 `compare.BA_US_Equity.oldest-latest.json` (the page's default pair: 212 added, 7 changed), not the named compare capture (a different
 pair, 0 changes). Base 118cd005: modelhistory.cjs 2 of 3; green r14-green-e @2a9ef6a4 3 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~54</slot>
 <fabric>site-z</fabric>
