@@ -72,3 +72,4 @@ READ-ONLY: every other file, every S3 object. Scratch `.scratch/t3/`.
 <round>18</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
