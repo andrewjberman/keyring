@@ -49,6 +49,31 @@ correct, honest refusal, and the proof names the principal and its grant. The CT
 grant to dim_transaction through the grant admin tool" to Andrew's list. Graded by: no gate limb graded this
 modification.
 
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-09-30 ~12:0xZ) -- on PHASE A rows Z-W19-S7 and Z-W19-S8 (BLOCKING, ARMED, issuer-owned), ruled by row Z-S66.**
+- **Z-W19-S7: the Schwab service needs its host inputs, and the release must ship them.** Adding `schwab` alone
+  registers 5 tools that all fail closed (`ContractUnavailable` / `RoleConfigError`). The release therefore also ships:
+  - the contract file, into the artifact at the path `load_contract` reads, or onto the host by the deploy script;
+  - the host `.env` keys the service's own loaders name: the contract path, the two reader-role ARNs, the ExternalId
+    source and the account_ref secret id. Take the key names from the code (`load_contract`, `role_configs`), never
+    from memory.
+  - No secret VALUE is written into the repo, the artifact or `.env`. The ExternalIds and the account_ref key stay in
+    Secrets Manager (`opal/mcp/opal-gateway-schwab-reader-external-ids`, `opal/mcp/opal-gateway-schwab-account-ref-key`),
+    which the gateway role reads by resource policy. `.env` carries only their ids and the non-secret role ARNs.
+  - Prove it before the ANNOUNCE is final: an in-process call of `schwab_get_access` / `schwab_list_files` in the
+    DEPLOY-ONLY tree, with the release's `.env` shape and the operator's read credentials, no longer raises either
+    error. Record which env keys were added and the census delta.
+- **Z-W19-S8: the apply is the SAVED TARGETED PLAN, and only it.** It is
+  `-target=aws_iam_role_policy.schwab_data_read_policy`: 0 add, 1 change, 0 destroy, 8 added `dim_transaction` elements.
+  At PHASE B, re-plan targeted at the GO. Apply only if it is byte-equal in effect (the same one change), through
+  `safe-apply`. Never an untargeted apply. `gateway-rivalfunds-read-policy` and the grant-writer Lambda hash are other
+  seats' pending acts and are not touched.
+- **Paths granted in addition:** the gateway's artifact build/tar-roots file(s) (inside `infra/aws/ec2/opal-gateway/**`,
+  already granted) and `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` beyond line 197, for the `.env` keys only.
+- Row Z-W19-S9 (the grant-writer Lambda's own contract copy) is INERT for this round: no grant is changed (B2). It
+  rides with the CTO's "widen one grant" item on Andrew's list.
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
+  finds `<placeholders>NONE</placeholders>`).
+
 ### PHASE A -- no deploy, no apply
 1. Read the deployed commit from the host's artifact, by content (MX-r-5 left 093fc247c6). Cut the release there and
    cherry-pick MX-s-15's and MX-q-3's gateway commits. The issuer's GO names whether MX-t-10 rides too.
