@@ -15867,6 +15867,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "CTO round-50 ruling 3: the export resolves each header figure's unit from the model block's per-security unit (after CORPUS u-1), and FWD-30 is REALIZED when the six read values-equal with units resolved.",
   "world_is": "The export already reads the per-security unit and prints UNRESOLVED where it is unresolved; nothing inside RESAPP's export surface can resolve it. Resolution needs a unit-map discriminator that does not rest on magnitude alone (a cross-field consistency read, e.g. an EV or revenue figure against a resolved per-share figure times shares), which is build_unit_map.py / field_map.json, AMGT_CORPUS's artifact; and 'never scaled silently' is broken on the PAGE (DSGN_AMGTV1), not the export.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Ruled at the cut: cell 3 is NOT cut in RESAPP round 51 (no RESAPP-owned write moves the six); the re-home (CORPUS unit-map discriminator; DSGN page scale) is asked of 1.0.0_SA_CTO~Z as one decision, since it moves where FWD-30's last hold is served. Cell 8 carries cells 5 and 6 only."
+},
+{
+  "id": "AMGT_RESAPP-Z-W180-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~180",
+  "surfaced_at": "2026-09-30T04:20:00Z",
+  "one_line": "AMGT-zz-1 AC1 cannot pass inside its <paths>: crosswalk.schema.json denominators has additionalProperties:false and does not admit `carried` or `retired_from_served`, so ANY write_pool that carries a served record (the cell's own required counter) is refused at write-time validation; the schema is not in the order's <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.schema.json@77712167dc properties.denominators: additionalProperties false; properties listed are input_names, records, MEASURED, UNRESOLVED, with_association_keys, association_conventions, registered, enriched, resolved_folders, retired_unresolved_by_enrich, superseded_unresolved_registrations, folders_in_records, research_folders_live, universe_*; no `carried`, no `retired_from_served`; last touched 856cc1f005 (CRPS-f-1).",
+      "crosswalk.py build_crosswalk (round 50 yy-6, ~:929-930) already writes denominators['carried'] and ['retired_from_served'] when served= carries or retires, so the crosswalk CLI's own `--write-pool` was already refused whenever it carried a record -- the union has been unreachable behind the write-time validator since yy-6.",
+      "AC1 as issued, real schema: both writers print 'REFUSED: crosswalk document fails lib/research/identity/crosswalk.schema.json at $['denominators']: Additional propertie...', 'planted kept: False', 'EVERY CROSSWALK WRITER KEEPS A SERVED RECORD: NO', exit=1.",
+      "Same check with AMGT_CROSSWALK_SCHEMA_PATH pointed at a scratch copy of the schema that adds ONLY those two optional integer denominators: both writers 'planted kept: True; served+planted records dropped: 0', 'EVERY CROSSWALK WRITER KEEPS A SERVED RECORD: YES', exit=0. So the only missing piece is the two schema properties."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-zz-1: carried records are counted in the written document's denominators as carried, the payload is the serialised document including them, and the write validates -- AC1 expects YES/exit=0 with the repo's schema.",
+  "world_is": "The schema refuses the counter the cell requires. write_pool, add_security and the tests are done and pass (135 -> 141 with six new arms that validate against a temp schema copy); AC1 stays FAIL until crosswalk.schema.json admits denominators.carried and denominators.retired_from_served (optional integer, minimum 1, present only when n > 0, matching the schema's own pattern) -- a two-property, CRLF-preserving edit to a file outside this order's <paths>.",
+  "notes": "Not rescued: no schema edit, no validator loosening, no dropping of the counter. Ask of the issuer: add the schema file to zz-1's <paths> (or cut a follow-on order) and re-run AC1. Until then any real write_pool that carries a record refuses loudly (nothing put) rather than writing an unvalidated document."
 }
 ]
 ```
