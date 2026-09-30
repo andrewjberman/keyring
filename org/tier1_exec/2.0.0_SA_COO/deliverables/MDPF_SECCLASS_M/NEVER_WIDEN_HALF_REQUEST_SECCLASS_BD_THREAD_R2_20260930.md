@@ -202,6 +202,31 @@ attribute-level undo.
 - **No table write:** this act reads `etf-classifications`, never writes it -- there is no
   DynamoDB rollback needed for this half.
 
-## COO half -- [PENDING SIGNATURE]
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~14:3xZ), on the ONE-WINDOW packet
+
+Signed on the blast radius above, against TO-SC-e3 drained @bc13447e97 and the issuer's re-run on CLOUD (THREAD-CENSUS
+gold rows=524413 unclassified=1822; HALF-READY; proof VALID). Packet:
+`ONE_WINDOW_PACKET_BD_THREAD_R2_AND_IB_MR_291_20260930.md` (this directory). The window is ONE ledger entry
+(`secclass-bd-thread-r2-and-irpt-narrowed-m-20260930`) shared with IRPT_BCKEND IB-mr-291's release, per the CTO's rounds
+2-3 analysis @0a8deabc8e row S3; IB-mr-291's commit (`df71fb818c` on `wk-IRPT_BCKEND-93`, drain hash in the packet) is
+the precondition, because it removes the last IRPT import of the BD library this act changes on the served prefix.
+
+**Measured at signing, both branches read (not predicted):**
+- **Step 1 (deploy, five files).** Candidate bytes = CLOUD HEAD for the five files, unchanged since @ae7aa281b0
+  (verified by the drain of round 1). Served copies today carry OLDER bytes (head-object 13:2xZ: C_06 09-27, D_03 07-06,
+  D_04 07-09, lib/etf_classifier.py 08-12, build_bd_assets_dim.py 09-28), so the deploy is the first landing.
+  bd-only mapping; no other firm's tree.
+- **Step 2 (IAM) is a READ, not an apply.** The half measured `bd-pipeline/iam.tf` alone. Live 14:3xZ:
+  `bd-exporter-ec2-role` carries the managed policy `bd-securities-access` (shared-infra) with GetItem on
+  `etf-classifications` already. The candidate `etf-classifications-read` inline policy is NOT added (a redundant
+  second grant; the surviving read grant is SC-e-12's decision). Writers of the served BD classes: 3 scripts + 1
+  library, all in this act; `etf-classifications` is read only.
+- **Step 3 (the run).** The ordinary gold-layer trigger; an ad-hoc QA fire is the exercise, the scheduled fire the
+  acceptance. Both branches: every holding gains the three canonical keys; `asset_class` moves only for the tickers the
+  three census `moves` arrays list (429 / 2,166 / 2,017), GLD and PHYS to commodities/Metals, VXX to structured/Hedge;
+  `mix_daily_summary.json` totals shift by exactly the formerly-guessed-to-equity population (1,822 unique pairs).
+- **Step 4.** The COO's one live FWD-1 run to the page for z08327149 closes the ledger.
+- **Rollback.** Per key, the prior S3 VersionId (the half names three; the ledger records every overwritten key's
+  prior version at the run); code by re-deploy of the pre-@ae7aa281b0 bytes; no IAM change to roll back.
 
 ## CTO half -- [PENDING SIGNATURE]

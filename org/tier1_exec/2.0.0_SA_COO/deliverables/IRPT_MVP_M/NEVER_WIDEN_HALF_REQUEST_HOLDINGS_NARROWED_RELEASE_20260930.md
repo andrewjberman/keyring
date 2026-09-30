@@ -146,3 +146,27 @@ non-Holdings consumer of `bd-securities` or `etf-classifications`.
 
 This act is separate from IB-mr-251..272's still-HELD halves (condition 3): those cover the full
 canonical migration and are not reopened, touched or gated by this release.
+
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~14:4xZ), on the ONE-WINDOW packet
+
+Signed on the blast radius above, against TO-IB-m29-291 drained @9fef6a7e9c (build c5f8b8ddd5, complete df71fb818c on
+`wk-IRPT_BCKEND-93`). Packet: `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/ONE_WINDOW_PACKET_BD_THREAD_R2_AND_IB_MR_291_20260930.md`;
+one ledger entry `secclass-bd-thread-r2-and-irpt-narrowed-m-20260930` shared with MDPF_SECCLASS BD_THREAD_R2 (CTO
+103245, analysis @0a8deabc8e row S3).
+
+**CTO 103169's four conditions, each read at signing:** (1) the fallback is declared FWD-6 (owner this seat, reason and
+sunset E8+E9) in `bd_securities_fallback.py`'s header and above; (2) the pre-release census lists every class-changing
+ticker with weight and `to_unclassified` reads 0 / 120,944, 0 / 34,347, 0 / 15,355; (3) this half and the CTO's are
+new and separate from IB-mr-251..272 (still HELD); (4) PHYS, GLD and VXX read from the TABLE at every firm that holds
+them (`class_source` `etf-classifications`; inflection holds no PHYS).
+
+**Measured at signing, both branches (the worker's re-run after the crash, 14:0xZ):** SUITE-WHOLE 319 passed;
+NARROWED-CENSUS as the table above; HALF-READY; proof VALID. Writers of `asset_class_basis`: 1 (holdings_snapshot.py),
+one rule read. **Two deviations the packet carries to the CTO:** the fallback module's two `'bd-securities'` defaults
+and the served label are read from the naming registry rather than typed (row W93-S2, LGIC naming limb; identical
+strings, logic unchanged); a canonical hit is served with basis `TABLE`, not `CANONICAL`, because the published contract
+forbids the new member (row W93-S1). **The act, exactly, in the window's order:** H1 plan read (in-place policy updates
+for the Holdings principals only) -> H2 safe-apply + read-back of Sid `CanonicalClassifierLookup` -> H3 re-mint of the
+three bundles from CLOUD 9fef6a7e9c -> H4 QA fire and `holdings_qa` read (PHYS/GLD commodities/Metals, VXX
+structured/Hedge; served manifests unchanged) -> H5 the served publication, read on the page. **Rollback per key** as
+above. Nothing runs before the CTO half is at HEAD.
