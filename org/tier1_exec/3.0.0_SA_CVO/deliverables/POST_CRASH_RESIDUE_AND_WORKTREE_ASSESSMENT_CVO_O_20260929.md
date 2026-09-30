@@ -103,3 +103,15 @@ and needs no verdict. In-scope KEEP is now 3 (wk-mcpindex-r4-15, mp3-1, wk-repor
 - For this seat's next NFRA_OPLGTW L8 compile: REMEDIATION_v1 carries S45 (no EIP) ARMED OPEN; row Z-S19 @18badb8d01
   records its disarm (EIP 3.214.118.242 on i-07dccb1615503ac99, read live by 1.0.0_SA_CTO~O).
 - In-scope KEEP is back to 2 (wk-mcpindex-r4-15, wk-report-4-4). Removal set put to Andrew: 34.
+
+## 8. Andrew-direct 2026-09-30 ~02:00Z (22:00 ET), this seat's Claude Code session -- and the measured outcome
+
+Verbatim: "go ahead with the 34 worktree removals"
+
+Measured at 02:00Z, before any act: all 34 paths are ALREADY absent from disk and from `git worktree list` (34 of 34;
+33 linked worktrees remain, none in the set). Executed earlier by the project COOs on Andrew's word (e.g. 2.0.0_SA_COO~O
+700e9df7fd, "11 checkouts removed on Andrew's word"). This seat removed nothing; there was nothing left to remove.
+Conditions re-read: 28 rel-/dep-/rb-nfra-* branches present, incl. rel-nfra-mcpindex-r4-gateway-b a7e15b2220 and
+rel-nfra-oplgtw-export-flat 63264dfb22 (the live gateway's rollback); live gateway still 093fc247c6; worker branches
+wk-NFRA_OPALAI-10/-18, wk-NFRA_OPLGTW-14, wk-NFRA_MCPORTAL-1 and cto-o-tflocal all kept. Remaining in-scope KEEP:
+wk-mcpindex-r4-15 (present), wk-report-4-4 (present).
