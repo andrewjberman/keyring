@@ -98,7 +98,7 @@ outer commit hashes, and any row.
 **ISSUER NOTES:** round 9 = the round-8 analysis s.4 item 1 with ruling 1. Base 29c8226a: grain.cjs 0 of 3; green 3 of 3; Q1 5 of 5
 at base and on the green arm (the green arm carried all four cells -- the drain state).
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <slot>~32</slot>
 <fabric>site-z</fabric>
