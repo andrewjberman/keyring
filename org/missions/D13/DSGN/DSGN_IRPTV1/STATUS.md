@@ -44,7 +44,7 @@ live press stays Andrew's (walk-2 write guard).
 
 ## Next (in order; the enrichment backlog from the walk-2 state table @f80d019a6c, front-end-only and unblocked first)
 
-0. **IRPT_DASHBD workstream F, round-1 cell** (CTO 103252, PRD v0.1 @2cb022f549, C-LEASE + ruling 6.7): under this live FAST
+0. **IRPT_DASHBD workstream F, round-1 cell = FWD-1 hop 5, CUT HERE as a closer-drive item** (CTO 103252 + 103261: L4-R ADMITTED, CVO half @9914eab4f4, review `org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_IRPT_DASHBD_v0.1_20260930.md`; PRD v0.1 @2cb022f549, C-LEASE + ruling 6.7). Review condition carried: today's lease surface covers the whole `portal/src/pages/InvestorReporting` tree, so the NEXT DSGN_IRPTV1 lease arm (the CTO's) excludes `tabs/reporting/` + `dashboard/` or holds; under FAST this seat builds F's items itself either way. Under this live FAST
    lease the Performance chart reading `series` (honest label "Total return, before advisory fees" + method version, C-HONESTY
    coverage sentences) is built HERE as a closer-drive item reading FWD-1 and C-SEAM. PARKED until workstream B
    (`2.0.0_SA_COO~P`) lands `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` and a served `series.json.gz` (measured 14:1xZ:
