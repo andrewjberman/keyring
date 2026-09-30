@@ -289,7 +289,8 @@
    "COMPLETE",
    "INCOMPLETE",
    "UNAVAILABLE",
-   "KNOWN_ZERO"
+   "KNOWN_ZERO",
+   "NOT_OBSERVED"
   ],
   "freshness": [
    "CURRENT",
@@ -309,6 +310,11 @@
   "value_basis": [
    "CUSTODIAN_MEASURED",
    "WORKBOOK_STATED"
+  ],
+  "tax_value_basis": [
+   "MEASURED",
+   "CARRIED_LAST_COMPLETE",
+   "NOT_OBSERVED"
   ]
  },
  "membership": {
@@ -426,7 +432,8 @@
    "last_complete_date",
    "measured_aua",
    "workbook_stated_aua",
-   "workbook_stated_accounts"
+   "workbook_stated_accounts",
+   "tax_value_basis"
   ],
   "wire_privacy": "Aggregate counts/status/date only. No account identifiers, names or row-level evidence in ordinary category JSON or the portal.",
   "member_id": "tax",
@@ -455,6 +462,13 @@
   "source_basis_by_firm": {
    "49financial": "ADDITIVE (the 0833 reporting master sits outside the 0824 Model Portfolios envelope the firm total is built from)",
    "cottonwood": "INCLUDED (fact_holdings already sums every account, Tax accounts included; the Tax leaf is a member of the firm total, never added again)"
+  },
+  "incomplete_rule_served_totals_0_6_0": "Andrew-direct 2026-09-30 (org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_183xZ_TAXSMA_E2B_CARRY_LAST_COMPLETE_AND_NO_BACKFILL.md): on a valuation date on/after Tax's first COMPLETE observation where Tax is not complete, the served 49financial and Global totals carry the most recent complete Tax figure; the coverage names it (tax_value_basis CARRIED_LAST_COMPLETE, last_complete_date) and value_status stays the day's own status. Before the first complete observation the series carries the pre-Tax base (no backfill): tax_value_basis NOT_OBSERVED, reason BEFORE_FIRST_OBSERVATION.",
+  "aggregate_basis_by_scope_0_6_0": {
+   "49financial": "INCLUDES_ADDITIVE",
+   "global": "INCLUDES_ADDITIVE (49financial's Tax only; Cottonwood's parked)",
+   "cottonwood": "INCLUDED_IN_BASE",
+   "inflection": "NOT_APPLICABLE"
   }
  },
  "operations": {
@@ -712,7 +726,8 @@
   "TRADED_HISTORY_UNVERIFIED",
   "TRADED_EVENT_ORDER_CONFLICT",
   "FIRM_UNRESOLVED",
-  "WORKBOOK_VALUE_INVALID"
+  "WORKBOOK_VALUE_INVALID",
+  "BEFORE_FIRST_OBSERVATION"
  ],
  "field_types": {
   "account_key": "string; validated full canonical form; protected only",
@@ -776,7 +791,7 @@
    "version": "0.6.0",
    "when": "2026-09-30",
    "by": "4.0.0_SA_CRO under the FAST lease",
-   "what": "RIA column routes the firm; AUM (Mn) projected; workbook fallback for MISSING_CUSTODIAN; per-firm value basis and category source basis; canonical_valuation phantom replaced by fact_rps_s2; E2a: workbook Bronze/Silver at the global scope, dispositions and taxsma_assets per firm, production S3 stores and live loaders wired",
+   "what": "RIA column routes the firm; AUM (Mn) projected; workbook fallback for MISSING_CUSTODIAN; per-firm value basis and category source basis; canonical_valuation phantom replaced by fact_rps_s2; E2a: workbook Bronze/Silver at the global scope, dispositions and taxsma_assets per firm, production S3 stores and live loaders wired; E2b: served fold (carry last complete, no backfill), extension keys on every scope, tax member in by_model, history from partitions, Tax in aum-metrics totals and the Global fee-basis reconcile",
    "authority": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_142xZ_TAXSMA_CLOSER_DRIVE_GO_RIA_COLUMN_WORKBOOK_FALLBACK.md"
   }
  ]
