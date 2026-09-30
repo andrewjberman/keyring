@@ -2946,6 +2946,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The wired rule also supersedes those two pins in arm 3, which uses the same 992 HK fixture with EQY_FUND_CRNCY absent. Only the CUR_MKT_CAP and NET_DEBT assertions of arm 3 were changed; every other arm-3 assertion is unchanged.",
     "notes": "The change is the minimum the same wired rule forces; the issuer may read it as inside the amendment's intent or ask for it to be reverted.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S70",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-30T16:30Z",
+    "one_line": "proof-of-spec-check's artifact-resolution limb accepts a pin to ANY earlier commit that carries the path, not the commit that carried the GRADED content: CRPS-aa-3's instance pinned UNRESOLVED_CLASSES_ROUND25.json to a05ead8252 (before_total 59, the pre-amendment table) while the graded table (before_total 49) came from e6bbc97527, and the checker read VALID (rc=0).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-crps25-3 @d7220c0b25: `git show a05ead8252:<table>` reads before_total 59 remaining_after 31; `git show e6bbc97527:<table>` and HEAD read before_total 49 remaining_after 11; the instance row reads commit_or_etag a05ead8252; `proof-of-spec-check.py <instance> AC1,AC2 --governing-order <order>` reads VALID (rc=0).",
+        "The first post-commit run at e6bbc97527 had flagged the same rows as PENDING-THIS-COMMIT that PREDATE the instance's commit; its remedy text ('pin the row to the commit that carried it') admits any commit that carried the path."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An instance's artifact pin names the commit whose bytes were graded, so a VALID instance cannot point a reader at a superseded version.",
+    "world_is": "The limb resolves a pin by path presence at the commit (present, not touched later is flagged; present at an older commit is accepted), so an older version with different content passes. A content check (`git show <pin>:<path>` equal to the bytes at the instance's commit) would refuse it.",
+    "notes": "Caught at the issuer's re-grade by reading the pinned bytes, not by the checker. The aa-3 instance is being re-pinned to e6bbc97527 by a continuation. The limb's owner decides the fix; the issuer re-grades every pin by content meanwhile.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
