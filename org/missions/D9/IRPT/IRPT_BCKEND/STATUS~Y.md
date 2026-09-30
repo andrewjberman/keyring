@@ -21,7 +21,13 @@ test pin landed at @784ac650d0 (`_USER_FIELDS` / `_USER_RETURN_FIELDS` + `allowe
 admin / service / opal-capital / active / allowedFirmIds cottonwood; secret `irpt/svc-irpt-analysis/password`, readers =
 the walker's user only (24 of 24 roles explicitDeny); K2 login 200. Script `deliverables/IRPT_MVP_Y/live_walk/svc_principal.py`.
 
-**ONE next proof:** the CTO's re-read of row `IRPT_BCKEND-S238` (condition 4 fired: the API served an inflection
+**CTO RULING 103317 (16:37Z):** the API half IS a precondition; `~P` cuts the API enforcement (a selected_tenant outside a
+service principal's allowedFirmIds answers 403, with a test) at the top of its next issuance; W27 opens only after it
+lands AND Y re-reads the negative control live (foreign firm refused, own firm 200); the principal stays as built; S238
+disarms on the CTO's read of both prints. Y's exact patch for `~P` (CONTRACT row 21):
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/API_ALLOWED_FIRMS_PATCH_CANDIDATE_FOR_P_20260930.md`.
+
+**ONE next proof:** the live re-read after `~P`'s API enforcement lands (condition 4 fired: the API served an inflection
 directory entry to the principal; enforcement is resident-only). On "open": the W27 window (three bodies, cap 150 min,
 serialized), which also needs `irpt-analysis-resident` running (`~P`'s restart under CTO 103150). On "API half first":
 Y supplies the exact `_authz/served.py selected_tenant` patch for `~P` under CONTRACT row 21.
