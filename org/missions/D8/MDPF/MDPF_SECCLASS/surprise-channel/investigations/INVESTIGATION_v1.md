@@ -391,6 +391,51 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not executed here: TO-SC-e1's BOUNDS name LOCAL build + record and a specific <paths> write grant; reconciling a 1,245-commit cross-fabric divergence is a branch-integration act, not this cell's. This worker's own contract and test edits (identifier_namespace, classified_by='constituents') stand on the verified, in-branch amendment @1302fa149e and are unaffected by this row."
 },
 {
+  "id": "MDPF_SECCLASS-W8-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~8",
+  "surfaced_at": "2026-09-30T07:10:00Z",
+  "one_line": "kimi-k3 spends a large, variable HIDDEN reasoning-token budget before emitting the visible JSON content; a naive max_tokens (e.g. 300, comparable to a short structured-JSON call elsewhere in the estate) makes EVERY call finish_reason=length with ZERO content tokens, which this module's own refusal rule turns into a legitimate-looking 'asset_class null, reason KIMI_LENGTH_STARVED' result -- a systematic starvation would have silently produced a 100%-refused census that still passes SC4-e10-AC2's own shape checks (a reason is present on every null row).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live probe 2026-09-30 ~07:0xZ, etf_classification_model.classify_one('JPMORGAN INCOME ETF', None, vocab, send=default_send, api_key=<live secret>) at max_tokens=300: result {'asset_class': None, 'confidence': None, 'reason': 'refused: KIMI_LENGTH_STARVED'}",
+      "Same input, max_tokens=4000: real Chat Completions body returned finish_reason='stop', usage.completion_tokens_details.reasoning_tokens=391, message.content a full parseable JSON classification with confidence 0.8",
+      "estate_report_runner.py's own history comment (this file, ~line 66-98) already documents an unrelated instance of the identical class of mistake for a different call (a 120s timeout inherited from a captcha-solve workload applied to a richer prompt, causing KIMI_TIMEOUT) -- this row is the same failure MODE (inheriting a budget/ceiling tuned for a different-shaped call) recurring on a THIRD dimension (max_tokens, for a reasoning-heavy model) that estate_report_runner's own call_kimi_sub/KIMI_BUDGETS pattern does not surface as a generic warning"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e10 Build step 1: 'Reuse the estate's Chat Completions JSON pattern: call_kimi_sub ... and the bounded client resolution_kimi.py (model kimi-k3). Do not add a dependency.'",
+  "world_is": "Reusing the JSON REQUEST/RESPONSE SHAPE from those two references is safe and was done; reusing either reference's own numeric max_tokens BUDGET value (call_kimi_sub's per-kind KIMI_BUDGETS, or resolution_kimi.py's BUDGETS of 16000/32000 for a check/swap call) is a separate decision this order does not make for this NEW call shape, and the naive choice (a small budget appropriate to a short structured reply) fails 100% of calls silently rather than loudly, because a starved call still produces a spec-shaped null-with-reason result.",
+  "notes": "Not a defect in either reused reference -- call_kimi_sub's KIMI_BUDGETS are correctly sized for THEIR OWN call kinds, and this module never imported or altered them. Fixed here by measuring live rather than guessing (CLAUDE.md Rule 4 build ladder does not reach 'guess a constant'); the module's own comment above MAX_TOKENS records the exact probe so a future reader does not have to re-derive it."
+},
+{
+  "id": "MDPF_SECCLASS-W8-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~8",
+  "surfaced_at": "2026-09-30T07:15:00Z",
+  "one_line": "This worker's Grep/Glob tool calls default to the base ajb_workspace checkout (branch CLOUD) rather than this worker's own worktree (wk-MDPF_SECCLASS-8) unless a worktree-scoped path is explicitly passed -- measured: a Grep for a filename with no explicit path surfaced infra/aws/lambda/v2_portal/_shared/tests/test_etf_classification_cusip.py, a file that does not exist in this worktree at all (ls of the real directory: 5 files, no such name).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep (no path argument) surfaced infra\\aws\\lambda\\v2_portal\\_shared\\tests\\test_etf_classification_cusip.py among 96 hits for 'classified_by', 2026-09-30 ~07:0xZ",
+      "ls C:/Users/AndrewBerman/Desktop/wk_mdpf_secclass_8/infra/aws/lambda/v2_portal/_shared/tests/ (this worktree, same timestamp): __pycache__, test_classified_by_v2.py, test_etf_classification_scheduled.py, test_model_classifier.py, test_seed_fields.py, test_set_instrument_kind.py -- no test_etf_classification_cusip.py",
+      "git -C <worktree> log -1 --format=%H -> a29da4ac98..., branch wk-MDPF_SECCLASS-8 -- a different tip than the base checkout's CLOUD, confirming the two trees can genuinely diverge (this file is presumably a later SC-e-9 (slot ~4) commit on CLOUD not yet in this worker's branch)",
+      "Every fact this cell's build actually relied on (org/standards/MDPF_SECCLASS_CONTRACT.json, the decomp cell text, R2_UNRESOLVED_REVIEW_20260930.json, infra/aws/terraform/estate-report/instance.tf's three ESTATE_KIMI_* lines, etf_classification_scheduled.py) was independently re-read via an explicit worktree-rooted path (Read tool absolute path, or a bash cd into the worktree) and confirmed identical/consistent -- this row records the TOOL-DEFAULT trap, not a defect in this cell's own deliverables"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker rules: 'You execute ONE task order at a time in your own git worktree' and '<paths> IS your write grant' -- implicitly, everything this worker reads to build against should be read FROM that worktree.",
+  "world_is": "The Grep/Glob tools' default search root is the base ajb_workspace directory, not the calling worker's own worktree, so an un-pathed search can surface a file (or a version of a file) that does not exist on the worker's own branch -- a silent cross-tree read that looks identical to a same-tree one in the tool's own output.",
+  "notes": "No effect on this cell's own artifacts (verified above); flagged because a future worker relying on an un-pathed Grep/Glob result to WRITE code (rather than merely to orient) could silently build against the wrong tree's shape. Not fixed here: the tool's default search root is outside this order's <paths> write grant and outside any repo file this worker could edit."
+},
+{
   "id": "MDPF_SECCLASS-W5-S4",
   "project": "MDPF_SECCLASS",
   "fabric": "laptop",
