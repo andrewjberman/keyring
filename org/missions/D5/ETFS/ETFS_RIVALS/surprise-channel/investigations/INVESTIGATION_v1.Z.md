@@ -852,6 +852,91 @@
       ]
     },
     "notes": "Also: homes.py has no peer_group_map address function and is outside this order's paths, so gold_peer_group_map.py calls homes.address('rivalfunds','etfs','gold','peer_group_map',...) directly (builder output, rule 30)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S8",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T19:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "G1 has no home-producer reader: the cell says G1 reads the home producer when m-1's verdict is READ, but no silver address or schema for it exists in this round.",
+    "spec_asserts": "RIV-g-3 step 1: gold_canonical_shape.py replays over the issuer and Bloomberg silvers, and the home producer only when universe.policy(fund) == 'home_producer'.",
+    "world_is": "The home producer lands bbg/<as-of>/constituents/ (etf_constituents_pull.py, capture-forward), a different schema with no builder address and no silver stage in the decomposition. select_sources() counts a home_producer fund in detail.home_producer_unread and reads nothing for it; no fund carries that policy today (IDVZ and PFOE are home_producer_pending), so AC1 never exercises it. Unit test test_home_producer_policy_is_counted_unread_and_pending_is_not_read covers the skip.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py select_sources() and handler_entry detail at this worker's commit",
+        "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md:132 (RIV-m-1 row: etf_constituents_pull.py lands bbg/<as-of>/constituents/)"
+      ]
+    },
+    "notes": "When RIV-m-1's verdict is READ, a cell must name the home producer's silver address and columns before G1 can read it; until then a home_producer fund would produce no G1 rows."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S9",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T19:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Bloomberg captures repeat the same security id within one fund-day, so position_id = the Bloomberg security id is not unique on its own; a repeat becomes '<id>:<k>'.",
+    "spec_asserts": "RIV-g-3: a Bloomberg row's position_id is its Bloomberg security id; G1 is unique on (fund_id, snapshot_id, position_id).",
+    "world_is": "93 (fund, ID) pairs repeat across a sample of 75 of the 503 IDVZ-group census captures (every 7th plus the last 3). The first occurrence keeps position_id = id; a later one is '<id>:<k>' (k >= 1), mirroring the issuer's own repeat rule, so the grain stays unique and no row is dropped.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Python count over .runtime/etfs-rivals-idvz-20260930/daily/ 75 files: 93 repeated (ORIG_IDS, ID) pairs",
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py build_bloomberg_rows pos_id"
+      ]
+    },
+    "notes": "A consumer joining on position_id alone sees the suffixed ids; security_bloomberg carries the bare id for every row."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S10",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T19:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "is_cash_line for a Bloomberg row is the ' Curncy' suffix plus the placeholder-id class '^[0-9]{7}[A-Z]? US Equity$'; CRO~Z's CASH|MONEY|MMF substring test is not applied, and this answers row Z-W3-S7's open question for G1 only.",
+    "spec_asserts": "RIV-g-3: is_cash_line = the vocabulary's cash sentinel, plus Bloomberg * Curncy securities, plus TXUE's 9996651D-class cash lines as CRO~Z's census names them.",
+    "world_is": "The census names three lingering placeholder lines (TXUE 9996651D, INEQ SUNB, SCHY CCH LN) but only 9996651D has an id shape; the pull script's CASHLIKE regex already treats '^[0-9]{7}[A-Z]? US Equity$' as cash. G1 marks that class is_cash_line and position_type 'cash' (so trade_schedule and enrichment_bloomberg._g1_securities, which drop position_type cash, skip it, closing the plan-vs-import gap). The class also matches INEQ '0758519D US Equity' (quantity 0). SUNB and CCH LN are not id-shaped cash and stay non-cash.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/IDVZ_GROUP_SOURCE_CENSUS.md:30",
+        "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/dividend_history_pull.py:23 CASHLIKE",
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py BBG_CASH"
+      ]
+    },
+    "notes": "A delisted-security id like BIDD '6475395Z GR Equity' is NOT in the class (it requires 'US Equity'); the rule is exercised in test_cash_line_rule."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S11",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T19:55Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A report date's G1 object carries several funds from several silver captures, so its revision is composite and two revisions of one date can tie on the capture timestamp.",
+    "spec_asserts": "G1 module contract: the latest revision of a partition is the greatest revision id, and a consumer selects that one.",
+    "world_is": "Round 1's revision was the single issuer capture id. v2 uses that id unchanged when every selected fund came from one capture, else '<greatest capture ts>-<sha256[:12] of the sorted fund:source:capture_id set>'. If a later input set adds a capture OLDER than the greatest one already in the object, the new object has the same timestamp and a different hash, so 'greatest revision' between the two is decided by hash order, not by completeness. Census imports carry capture times after the issuer archive, so AC1 and the round-2 backfill do not hit it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py _revision_of()",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py _canonical_by_date (selects the greatest revision per date)"
+      ]
+    },
+    "notes": "Not fixed here: it would need a revision scheme that orders by input-set completeness, which is a contract change for G1 and trade_schedule."
   }
 ]
 ```
