@@ -199,7 +199,8 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     bandContainersTopLevel == 1, fonts == {Lato}, weights within
                     {400,700}, no size below 11, radii within {2,3,4,pill},
                     shadows == 0 outside the focus ring, lowContrastChars == 0,
-                    purpleFills per FWD-18 and the four states present; AND the
+                    purpleFills per FWD-18 and the four states present; the
+                    drafting, tabs and posture harnesses green; AND the
                     same instrument read against the pre-redesign page FAILS
                     each clause; AND the six PNGs are read by a person, a
                     rejection citing its clause

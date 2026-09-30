@@ -37,6 +37,72 @@
     "world_is": "The platinum/mdpf/inflection/ figures exist only in opal-data-portal-v2 and are reached today by the gateway's own identity; opal-data-inf has no mdpf platinum. A role scoped to opal-data-inf alone cannot fetch A1's figures, and stripping the gateway identity's portal-v2 read would also move the internal Analyst's served mdpf answers.",
     "notes": "Blocks only the cut of round 1's hop-2 cell (the Inflection role's resource list and A1's data source). Three resolutions, the CTO's to pick: (a) the Inflection role reads opal-data-portal-v2 under key-prefix platinum/mdpf/inflection/* with a Deny on the other firms' prefixes (CLAUDE.md shared-bucket shape) and A1n's gateway arm is scoped to opal-data-inf/opal-data-cot only; (b) A1 is answered from an opal-data-inf platinum artifact the portal serves Inflection (advisors/clients/firm), with a catalog row for it; (c) round 1 carries A1 on portal-v2 through the gateway identity and C5's role lands in the FWD-2 enrichment. Hops 0, 1, 3 and 4 are cut independently of this."
   },
+{
+  "id": "NFRA_MCPMSP-Z-W2-S1",
+  "project": "NFRA_MCPMSP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~2",
+  "surfaced_at": "2026-09-30T07:00Z",
+  "one_line": "t2.AC1's trust_gateway_role predicate matches only the literals opal-gateway-role / aws_iam_role.opal_gateway / aws_iam_role.gateway, but the order directs referencing aws_iam_role.gw; the first build read trust_gateway_role=n.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MS",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round1/checks/t2.AC1.sh (trust_gateway_role line) vs infra/aws/terraform/opal-gateway/main.tf:146 aws_iam_role.gw"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order: trust the gateway role by referencing aws_iam_role.gw; AC1 expects trust_gateway_role=y.",
+  "world_is": "AC1 is a text grep that does not recognise aws_iam_role.gw; it passed only after a comment naming opal-gateway-role was added to the .tf. The trust itself (Principal AWS = aws_iam_role.gw.arn) was correct before the comment.",
+  "notes": "Worker added a one-line comment naming opal-gateway-role; no behaviour change."
+},
+{
+  "id": "NFRA_MCPMSP-Z-W2-S2",
+  "project": "NFRA_MCPMSP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~2",
+  "surfaced_at": "2026-09-30T07:10Z",
+  "one_line": "safe-commit's naming limb (LGIC_ENFORCE DEC-6) refuses mcpmsp_firm_roles.tf with 14 REFUSE lines: the bucket literals and role/policy names the order and t2.AC1 require are hand-kept carriers; the file cannot be committed as specified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MS",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run 2026-09-30 on infra/aws/terraform/opal-gateway/mcpmsp_firm_roles.tf: 'ERROR: BLOCKED -- the naming limb refused ... NAMING-GATE: REFUSE 14 graded'; inline policy name inf-firm-read -> {system}-inf-firm-read-policy; bucket literals -> lookup('inflection'|'cottonwood'|'49financial')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order: write the file with literal bucket ARNs and the builder-named role; t2.AC1 greps for those literals; commit on the worktree branch.",
+  "world_is": "The file is written, AC1 and AC2 PASS on the worktree (Plan: 3 to add, 0 to change, 0 to destroy), but the naming gate blocks the commit. The file is left uncommitted in C:/tmp/ms-2. No bypass used.",
+  "notes": "Needs either a registry/lookup route for the bucket ARNs and policy names, or an audited gate exemption; both outside the worker's paths."
+}
+,
+  {
+    "id": "NFRA_MCPMSP-Z-W3-S1",
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "surfaced_at": "2026-09-30T08:00Z",
+    "one_line": "The gateway's access_state.py in this tree does not know the tenant_firm record type, so the real store refuses the register_tenant write MS-w-1 builds; the offline tests (fake store) cannot see it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/access_state.py@c5dc123f42 POLICY_RECORD_TYPES = (principal_profile, data_entitlement, operator_audit, email_deny); _expected_type/_as_key refuse a POLICY key whose record_type is not in it, so Key('POLICY#TENANT#<tid>','tenant_firm','tenant_firm') raises AccessStateRefused in get() and operator_transact().",
+        "access_state.py operator_transact: requires an operator_audit put in the same transaction and exactly one non-email_deny principal partition; a lone tenant_firm put is refused, and the audit record (POLICY#<tid>#<oid>) would be a second partition.",
+        "org/standards/NFRA_OPLGTW_CONTRACT.json v1.3 record_types already lists tenant_firm and key_namespaces.POLICY names POLICY#TENANT#<tid>; the contract was amended, the adapter was not."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MS-w-1: the writer writes the tenant_firm record at POLICY#TENANT#<tid> 'through the store's conditional write' with no IAM change; the contract declares the record type.",
+    "world_is": "Writer code builds acs.Key(pk, 'tenant_firm', 'tenant_firm') and calls store.get / store.operator_transact(one put with attribute_not_exists(pk)); against the real AccessState both calls refuse until access_state.py adds tenant_firm to POLICY_RECORD_TYPES and lets operator_transact carry a tenant_firm put without an operator_audit (the writer's changes-table item is the audit). access_state.py is read-only for this cell.",
+    "notes": "Op is not deployed; tests pass on fakes (AC1 7 passed, AC2 12 passed). The gateway-reader cell's own access_state change, or a follow-on cell, must land this before MS-a-2 makes the op live. Exact shape written: pk POLICY#TENANT#<lowercased tid>, sk tenant_firm, record_type tenant_firm, fields tid, firm, registered_at, registered_by."
+  },
   {
     "project": "NFRA_MCPMSP",
     "fabric": "site-z",

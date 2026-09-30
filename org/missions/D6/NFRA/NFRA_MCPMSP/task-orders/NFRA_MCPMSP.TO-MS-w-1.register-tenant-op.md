@@ -115,7 +115,7 @@ extended, never re-cut. Graded by: no gate limb grades a modification's criteria
 only, NONE here). MS-a-2 now also waits on MS-t-1's AMENDMENT 1 merged (the package stages `app.access_state` from
 the gateway tree at build).
 
-<status>in_progress -- REOPENED by the issuer, AMENDMENT 1 (row Z-W3-S1); the same worker continues</status>
+<status>complete</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
