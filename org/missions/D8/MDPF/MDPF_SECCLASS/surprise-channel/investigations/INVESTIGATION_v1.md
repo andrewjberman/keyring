@@ -700,3 +700,87 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Owner of the remaining failure: whoever owns seed-etf-constituents.py and its test (a separate cell). W11-S1's S4 and contract assertions are resolved by amendment 1."
 }
 ```
+
+## MDPF_SECCLASS-W12-S1 -- seed-etf-classifications.py merge_item() carries classification_confidence and low_confidence onto a classifie
+
+```json
+{
+  "id": "MDPF_SECCLASS-W12-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~12",
+  "surfaced_at": "2026-09-30T22:15:00Z",
+  "one_line": "seed-etf-classifications.py merge_item() carries classification_confidence and low_confidence onto a classified_by='seed' row when a model row's ticker is added to the seed source, which contradicts MDPF_SECCLASS_CONTRACT 0.3.0 (a seed correction 'drops low_confidence entirely'; both fields present ONLY on a model row).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (issue a code cell in the seed script's owner lane: merge_item() must drop classification_confidence and low_confidence, or the contract sentence must be corrected, BEFORE any model row's ticker enters etf_classification.py; r6_model_reader_census.py re-grades this reader on the same exercise)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_model_reader_census.py -> reader infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py FAILS-CONTRACT: merge_item(ACSG, <model row with classification_confidence=Decimal('0.62'), low_confidence=True>) returns classified_by='seed' together with both model attributes (R6_MODEL_READER_CENSUS_20260930.json, readers[].evidence).",
+      "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py:113-117 '# Carry forward any attribute a curator added that this script does not derive' copies every existing attribute not already in item and not in PROVENANCE_FIELDS (line 45: last_updated, updated_by, classified_by); the two model fields are in neither.",
+      "org/standards/MDPF_SECCLASS_CONTRACT.json fields.low_confidence.rule24_record.state_coherence: 'a later seed correction of a model row replaces classified_by = seed and drops low_confidence entirely, same as classification_confidence'; fields.classification_confidence.absent: present ONLY on a model row.",
+      "Population today: the 260 classified R4 tickers overlap the seed source (etf_classification.ETF_CLASSIFICATIONS) by 0; live table read 2026-09-30 (2657 rows) holds classified_by scheduled 2281, legacy 238, seed 138, model 0, so no live row is wrong; the defect fires on the contract's own documented correction path."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order SC-e-15 step 2/3 and the CTO's ruling 2: every reader of etf-classifications tolerates a model row with no crash, no refusal and no strict-contract failure; MDPF_SECCLASS_CONTRACT 0.3.0 promises a seed correction drops both model attributes.",
+  "world_is": "The seed reader/merger runs without error on a model row but its merge loop preserves classification_confidence and low_confidence onto the rewritten seed row, leaving a seed row that claims a model confidence. The census reports FAILS-CONTRACT for this reader, so MODEL-READER-TOLERATED is not printed and the MODEL_ROWS act stays refused.",
+  "notes": "I did not change the reader (outside the order's paths). Independent of the classify_holdings row (W12-S2). Same grain as the contract's state_coherence statement for both fields."
+}
+```
+
+## MDPF_SECCLASS-W12-S2 -- ETFClassifier.classify_holdings (static) raises KeyError on any asset_class outside fixed_income/equity/hedge/
+
+```json
+{
+  "id": "MDPF_SECCLASS-W12-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~12",
+  "surfaced_at": "2026-09-30T22:15:00Z",
+  "one_line": "ETFClassifier.classify_holdings (static) raises KeyError on any asset_class outside fixed_income/equity/hedge/unknown, so it crashes on a model row classed alternatives, commodities or structured, and already on live rows of those classes (live: alternatives 4, commodities 8, structured 5); zero functional call sites, three byte-identical copies.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_model_reader_census.py -> 3 readers CRASHES: ETFClassifier.classify_holdings in _shared/etf_classifications_dynamodb.py and the two positioning Lambda copies (md5 e62906eff240a853029181715fc9b451 on all three): KeyError('alternatives') on model row MDLX009; the control seed row ALTSEED (alternatives, classified_by=seed) raises the same KeyError.",
+      "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py:165-200 result = {fixed_income, equity, hedge, unknown, unknown_tickers}; `result[asset_class] += weight` with no default.",
+      "comp-find 'classify_holdings(' --all (2026-09-30, 46476 files scanned, 8 hits): 7 definitions (3 copies of this method, 3 copies of a different static-module function, 1 unrelated INF _classify_holdings) and 1 call of the INF function; no caller of ETFClassifier.classify_holdings.",
+      "Live read of etf-classifications 2026-09-30: 2657 rows, asset_class equity 2054, fixed_income 586, commodities 8, structured 5, alternatives 4, so the crash is not new with the model rows."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order SC-e-15: find every reader of the table and exercise each reader's real function on a model row; a reader that crashes is the finding.",
+  "world_is": "The one client's static classify_holdings would crash on a model row of three of the five classes the model produces (alternatives/commodities/structured), but it has no caller and crashes identically on rows already live. The census grades it CRASHES because the order says do not weaken the check.",
+  "notes": "Whether a zero-caller method belongs in the reader set is the issuer's or CTO's ruling; I did not exclude it. Fix shape if kept: seed the result dict from the ratified class list and use setdefault, in three byte-identical copies (packaged into Lambdas, so a change is a deploy act). INERT because nothing calls it."
+}
+```
+
+## MDPF_SECCLASS-W12-S3 -- The census universe is the tracked tree at the worktree pin: the shared checkout holds untracked files (data/a
+
+```json
+{
+  "id": "MDPF_SECCLASS-W12-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~12",
+  "surfaced_at": "2026-09-30T22:15:00Z",
+  "one_line": "The census universe is the tracked tree at the worktree pin: the shared checkout holds untracked files (data/assets/scripts/gold/irpt_reporting/, data/black_diamond/scripts/silver/lib/config.py and __init__.py, data/etfs/scripts/dedup/) this census cannot see, and the portal submodule is not checked out in the worktree, so the portal rows are READ-ONLY at the gitlink pin 3e2233de92.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status at session start lists `?? data/assets/scripts/gold/irpt_reporting/`, `?? data/black_diamond/scripts/silver/lib/__init__.py`, `?? data/black_diamond/scripts/silver/lib/config.py`, `?? data/etfs/scripts/dedup/` in the shared checkout; none is in the worktree at 05f0a0b5af.",
+      "ls C:/Users/AndrewBerman/Desktop/wk_mdpf_secclass_12/portal is empty (git ls-tree HEAD portal = 160000 commit 3e2233de920b19e47bd37adad81d599ec7ffd12f); portal files were read with git show at that pin from the shared checkout's portal object store.",
+      "r6_model_reader_census.py completeness guard: code files naming the table outside org/docs/archive, tracked, are all in READERS/NOT_READERS or are tests; 0 UNCENSUSED at build."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order SC-e-15 step 1: find every reader of the table by re-running the comp-find searches; the half's census section binds a fresh census immediately before the act.",
+  "world_is": "Readers that exist only as untracked files in the shared checkout, or that arrive on the integrated tree after this cut, are outside this run. The check prints UNCENSUSED for any tracked code file naming the table that is in neither READERS nor NOT_READERS, so the act-time re-run on the integrated tree closes this; the portal rows re-verify their deciding lines automatically when portal/ is checked out.",
+  "notes": "Not a defect in the census; a stated bound. No untracked file was read."
+}
+```

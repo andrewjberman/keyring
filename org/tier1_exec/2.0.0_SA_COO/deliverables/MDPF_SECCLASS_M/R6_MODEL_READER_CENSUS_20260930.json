@@ -1,0 +1,278 @@
+{
+  "what": "SC-e-15 model-row reader census: every reader of etf-classifications exercised on classified_by=model rows",
+  "model_rows": {
+    "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R4_MODEL_CLASSIFY_CENSUS_20260930.json",
+    "count": 260,
+    "by_asset_class": {
+      "alternatives": 14,
+      "commodities": 14,
+      "equity": 155,
+      "fixed_income": 73,
+      "structured": 4
+    },
+    "low_confidence_true": 130,
+    "keyed_tickers": 26,
+    "confidence_type": "Decimal (what boto3 returns for a DynamoDB number)"
+  },
+  "readers": [
+    {
+      "path": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.get_*/find_by_* (the one client)",
+      "verdict": "TOLERATES",
+      "evidence": "260 model rows through get_classification/get_asset_class/get_sub_asset_class/get_management_style/get_sector verbatim (Decimal confidence and bool flag intact); find_by_asset_class over 5 classes returned all 260 model rows; find_by_sub_asset_class over 28 sub classes matched"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.get_*/find_by_* (Lambda copy, yang-generate-positioning)",
+      "verdict": "TOLERATES",
+      "evidence": "260 model rows through get_classification/get_asset_class/get_sub_asset_class/get_management_style/get_sector verbatim (Decimal confidence and bool flag intact); find_by_asset_class over 5 classes returned all 260 model rows; find_by_sub_asset_class over 28 sub classes matched"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.get_*/find_by_* (Lambda copy, yang-generate-holdings-attribution)",
+      "verdict": "TOLERATES",
+      "evidence": "260 model rows through get_classification/get_asset_class/get_sub_asset_class/get_management_style/get_sector verbatim (Decimal confidence and bool flag intact); find_by_asset_class over 5 classes returned all 260 model rows; find_by_sub_asset_class over 28 sub classes matched"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.classify_holdings (static, no call site)",
+      "verdict": "CRASHES",
+      "evidence": "KeyError('alternatives') on model row MDLX009 (asset_class=alternatives): result[asset_class] += weight over a dict seeded with fixed_income/equity/hedge/unknown only. PRE-EXISTING, not caused by the model row: the control seed row ALTSEED (alternatives, classified_by=seed) raises KeyError('alternatives') the same way, and a live read of the table at build (2026-09-30, 2657 rows) already holds alternatives 4, commodities 8, structured 5. Zero functional call sites (comp-find 'classify_holdings(' regex' = 8 hits at build: 7 definitions plus one unrelated INF function)."
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.classify_holdings (static, no call site; Lambda copy)",
+      "verdict": "CRASHES",
+      "evidence": "KeyError('alternatives') on model row MDLX009 (asset_class=alternatives): result[asset_class] += weight over a dict seeded with fixed_income/equity/hedge/unknown only. PRE-EXISTING, not caused by the model row: the control seed row ALTSEED (alternatives, classified_by=seed) raises KeyError('alternatives') the same way, and a live read of the table at build (2026-09-30, 2657 rows) already holds alternatives 4, commodities 8, structured 5. Zero functional call sites (comp-find 'classify_holdings(' regex' = 8 hits at build: 7 definitions plus one unrelated INF function)."
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.classify_holdings (static, no call site; Lambda copy)",
+      "verdict": "CRASHES",
+      "evidence": "KeyError('alternatives') on model row MDLX009 (asset_class=alternatives): result[asset_class] += weight over a dict seeded with fixed_income/equity/hedge/unknown only. PRE-EXISTING, not caused by the model row: the control seed row ALTSEED (alternatives, classified_by=seed) raises KeyError('alternatives') the same way, and a live read of the table at build (2026-09-30, 2657 rows) already holds alternatives 4, commodities 8, structured 5. Zero functional call sites (comp-find 'classify_holdings(' regex' = 8 hits at build: 7 definitions plus one unrelated INF function)."
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py",
+      "function": "resolve_display_name/classify_etf/calculate_allocations/calculate_segment_breakdown",
+      "verdict": "TOLERATES",
+      "evidence": "260 model rows through resolve_display_name/classify_etf/classify_management_style; calculate_allocations over all 5 classes summed to 100.0 with every class present; calculate_segment_breakdown ok; served dicts json.dumps strictly"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/lambda_function.py",
+      "function": "resolve_display_name/extract_holdings_for_portfolio",
+      "verdict": "TOLERATES",
+      "evidence": "260 model rows through resolve_display_name; extract_holdings_for_portfolio over a synthetic attribution sheet of 60 model tickers kept 60 of 60 holdings (none dropped), classes ['Equity', 'Fixed Income', 'alternatives', 'commodities', 'structured'], result json.dumps strictly"
+    },
+    {
+      "path": "data/etfs/scripts/gold/etf_positioning_publisher.py",
+      "function": "_display_name",
+      "verdict": "TOLERATES",
+      "evidence": "260 model rows through _display_name (registry name wins, classifier cached per ticker)"
+    },
+    {
+      "path": "data/assets/scripts/gold/build_satellites_registry.py",
+      "function": "load_classifier/classify",
+      "verdict": "TOLERATES",
+      "evidence": "260 model rows through load_classifier()+classify() -> (asset_class, sub_asset_class) strings, json-safe"
+    },
+    {
+      "path": "data/assets/scripts/gold/build_satellites_characteristics.py",
+      "function": "load_identity",
+      "verdict": "TOLERATES",
+      "evidence": "load_identity over 260 model tickers -> name served, management_style None (absent, not guessed), missing=0, json-safe"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/lib/etf_classifier.py",
+      "function": "ETFClassifier.classify/get_sub_asset_class (BD library)",
+      "verdict": "TOLERATES",
+      "evidence": "260 model rows through classify()/get_sub_asset_class() verbatim; a miss still reads unknown"
+    },
+    {
+      "path": "data/black_diamond/scripts/silver/build_bd_assets_dim.py",
+      "function": "apply_blend (BD assets dim)",
+      "verdict": "TOLERATES",
+      "evidence": "apply_blend over 260 model-row assets (all coarse BD super class) kept every row, canonical columns ['asset_class_canonical', 'sub_asset_class_canonical']"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py",
+      "function": "_classify_with_canonical",
+      "verdict": "TOLERATES",
+      "evidence": "_classify_with_canonical over 260 model rows -> (class, class, sub, 'etf-classifications'), json-safe"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py",
+      "function": "BD library consumer (classify/get_sub_asset_class)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Consumes only the two strings the BD library returns (exercised above). Deciding line(s): `canonical_class = classifier.classify(ticker, name)` | `canonical_subs.append(classifier.get_sub_asset_class(ticker, name))`"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/D_03.composition_artifacts.py",
+      "function": "BD library consumer (classify/get_sub_asset_class)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Consumes only the two strings the BD library returns (exercised above). Deciding line(s): `canonical_class = classifier.classify(ticker, asset_name)` | `canonical_sub = classifier.get_sub_asset_class(ticker, asset_name)`"
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "function": "annotate_classification/classify_security -> HoldingsSnapshot contract",
+      "verdict": "TOLERATES",
+      "evidence": "annotate_classification over 260 SECURITY nodes from model rows (classify_security -> canonical row -> asset_class/sub_asset_class, basis TABLE, by_class_source {'etf-classifications': 260}); every served node validates against docs\\contracts\\investor-reporting\\v1\\HoldingsSnapshot.schema.json (additionalProperties false); no model attribute reaches a node; negative control (a leaked classification_confidence) IS refused by the same validator"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py",
+      "function": "TableVocabulary.from_live_table/existing_tickers/plan_rows",
+      "verdict": "TOLERATES",
+      "evidence": "TableVocabulary.from_live_table saw all 5 model classes (paginated projected scan of 263 rows); existing_tickers held all 260 model tickers; plan_rows over 261 held securities planned only the 1 new one(s) and never a model ticker (the conditional-absence half). E_18 bd/cot call exactly this sequence."
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/E_18.detect_new_securities.py",
+      "function": "E_18 scheduled caller (BD)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Calls only TableVocabulary.from_live_table, existing_tickers and plan_rows, exercised in etf_classification_scheduled.py in this order. Deciding line(s): `vocab = TableVocabulary.from_live_table(classifier)` | `existing = existing_tickers(classifier)`"
+    },
+    {
+      "path": "data/cot/scripts/gold/E_18.detect_new_securities.py",
+      "function": "E_18 scheduled caller (COT)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Calls only TableVocabulary.from_live_table, existing_tickers and plan_rows, exercised in etf_classification_scheduled.py in this order. Deciding line(s): `vocab = TableVocabulary.from_live_table(classifier)` | `existing = existing_tickers(classifier)`"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/label-legacy-classified-by.py",
+      "function": "scan_all/plan_unlabelled/label_row_if_unlabelled",
+      "verdict": "TOLERATES",
+      "evidence": "scan_all paginated 263 rows; plan_unlabelled excluded all 260 model rows (classified_by present) and kept only the unlabelled control; label_row_if_unlabelled on a model row raises RowAlreadyLabelled (additive-only, designed) and leaves classified_by=model"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/set-instrument-kind.py",
+      "function": "scan_all/plan_absent_kind/set_kind_if_absent",
+      "verdict": "TOLERATES",
+      "evidence": "scan_all+plan_absent_kind offered all 260 model rows (no instrument_kind yet); set_kind_if_absent set instrument_kind on one and touched no other attribute (classified_by/confidence/low_confidence unchanged); a repeat raises KindAlreadySet (designed)"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py",
+      "function": "read_existing/merge_item (seed correction of a model row)",
+      "verdict": "FAILS-CONTRACT",
+      "evidence": "no crash and no refusal (read_existing paged 263 rows; the 260 model tickers overlap the seed source by 0, so today's population is unaffected), BUT the seed CORRECTION path carries model attributes onto a seed row: merge_item(ACSG, <model row>) returns classified_by='seed' WITH ['classification_confidence', 'low_confidence'] (the 'carry forward any attribute a curator added' loop, seed-etf-classifications.py:113-117, keeps every attribute the module does not derive and PROVENANCE_FIELDS omits both). MDPF_SECCLASS_CONTRACT 0.3.0 low_confidence.state_coherence says: 'a later seed correction of a model row replaces classified_by = seed and drops low_confidence entirely'; both fields' `absent` rule: present ONLY on a model row."
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py",
+      "function": "main (--dry-run, --kind-only)/put_row_if_unclassified",
+      "verdict": "TOLERATES",
+      "evidence": "paginated scan of 263 rows read; --dry-run plan KEEPs the model ticker (preserve-existing) and plans CREATE for the new one; --kind-only dry-run ok; put_row_if_unclassified on a model row raises RowProtected (attribute_not_exists(classified_by), designed) and leaves the row"
+    },
+    {
+      "path": "data/black_diamond/scripts/classification/seed_canonical_securities.py",
+      "function": "_yang_conflicts",
+      "verdict": "TOLERATES",
+      "evidence": "_yang_conflicts over 80 model rows read the row via get_item and returned 177 field conflict(s) (table wins, PRESERVED; designed guard), no crash; an absent ticker is still a clean first mint"
+    },
+    {
+      "path": "data/black_diamond/scripts/classification/seed_bd_securities.py",
+      "function": "seed (one-time copy into bd-securities)",
+      "verdict": "TOLERATES",
+      "evidence": "one-time seed scanned 263 rows and copied all 260 model rows into bd-securities without error. NOTE (recorded, not graded): the copy overwrites classified_by ('model' -> 'seed_from_yang'), stamps confidence=1.0 and needs_review=False, and passes classification_confidence/low_confidence through, so model provenance does not survive into the retiring per-firm table; the script is a documented one-time seed, not scheduled."
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py",
+      "function": "table_rows_at_build/existing_tickers",
+      "verdict": "TOLERATES",
+      "evidence": "table_rows_at_build counted 263 (Select=COUNT, paginated) and existing_tickers returned all 260 model tickers: the runner's own census sees a model row as a live row, so it is never re-planned"
+    },
+    {
+      "path": "lib/research/api/scoped_amgt.py",
+      "function": "_join_classification/_classification_for_ticker",
+      "verdict": "TOLERATES",
+      "evidence": "_join_classification over 260 model tickers (GetItem by bare ticker) -> name SERVED, classification {asset_class, sub_asset_class, sector} from the row, json.dumps strictly (only three named fields leave the reader)"
+    },
+    {
+      "path": "lib/research/identity/positioning_chain.py",
+      "function": "read_etf_classifications/resolve_one",
+      "verdict": "TOLERATES",
+      "evidence": "read_etf_classifications (client scan + TypeDeserializer, paginated) returned 263 rows incl. all 260 model rows; resolve_one carried classifier_asset_class/sub/name, json.dumps strictly"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py",
+      "function": "build_catalogue (injected port, unwired)",
+      "verdict": "TOLERATES",
+      "evidence": "build_catalogue with the injected port returning 260 model rows -> 264 entries, all model tickers named (name_source etf_classifications), validates against ComparisonCatalogue.schema.json (closed), entry keys limited to key/label/ticker/name_source. The port is UNWIRED in the deployed function (entry.py:165 passes read_classifications through; ENTRY installs none), so no row reaches it today"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py",
+      "function": "read_comparison_catalogue (delegates to build_catalogue)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Delegates to comparison_catalogue.build_catalogue (exercised above); no classifications port is installed on ENTRY. Deciding line(s): `return _catalogue.build_catalogue(tenant=ctx.tenant, read_classifications=read_classifications)`"
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_shared/lib/composition.ts",
+      "function": "CANONICAL_CLASSES / normalizeMixTo4Class (portal asset-class mapping)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (TypeScript). Deciding line composition.ts:38: `export const CANONICAL_CLASSES = ['equity', 'fixed_income', 'alternatives', 'structured', 'commodities'] as const`; normalizeMixTo4Class keeps an item only when `classes.includes(item.asset_class)`. All 5 model asset classes ['alternatives', 'commodities', 'equity', 'fixed_income', 'structured'] are members. The portal never reads classified_by/classification_confidence/low_confidence from the table (it reads served artifacts); a git grep of those tokens in portal/src at the pin returns only an unrelated sentiment enum. portal submodule not checked out here; deciding line read at the gitlink pin 3e2233de920b19e47bd37adad81d599ec7ffd12f via git show <pin>:src/pages/AdvisorIntelligence/_shared/lib/composition.ts:38 (build-time read, not re-run)."
+    },
+    {
+      "path": "portal/src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts",
+      "function": "asset_class wire type",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (TypeScript). Deciding line HoldingsSnapshot.ts:104 `readonly asset_class?: 'equity' | 'fixed_income' | 'alternatives' | 'structured' | 'commodities' | 'cash' | 'other' | 'unclassified'`: the model's five classes are members and the wire type carries no classified_by/confidence member, matching the Python contract. read at the gitlink pin 3e2233de920b19e47bd37adad81d599ec7ffd12f via git show <pin>:src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts:104 (build-time read)."
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+      "function": "IRPT_DASHBD C-CLASSES consumer (PRD only, no code yet)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (no consumer code exists in the tree). Deciding line IRPT_DASHBD_PRD.md C-CLASSES row: 'Each holding maps through `etf-classifications` (DynamoDB, key `ticker`): fixed_income, equity, commodities, structured, alternatives; the portal adds cash, unclassified, other. No row means UNCLASSIFIED' -- the model's 5 classes ['alternatives', 'commodities', 'equity', 'fixed_income', 'structured'] are all inside that vocabulary; it names no classified_by or confidence field. Code under org/missions/D9/IRPT/IRPT_DASHBD naming the table or asset_class: 0 of the .py files there (class_return_daily has no code hit anywhere in the tracked tree)."
+    }
+  ],
+  "denominator": {
+    "readers_exercised_or_read": 34,
+    "round3_reader_census_entries": 18,
+    "code_files_naming_the_table_outside_org_docs_archive": 60,
+    "of_which_tests": 21,
+    "of_which_declared_not_readers": 12,
+    "uncensused": []
+  },
+  "search": [
+    {
+      "pattern": "etf-classifications",
+      "hits": 213,
+      "files": 68
+    },
+    {
+      "pattern": "classified_by",
+      "hits": 109,
+      "files": 23
+    },
+    {
+      "pattern": "etf_classifications_dynamodb",
+      "hits": 62,
+      "files": 31
+    }
+  ],
+  "search_scope": "tracked files outside org/, docs/, archive/ with a code, config or shell extension (py ts tsx js mjs cjs tf sh json yaml yml): org/ and docs/ are prose and records that change with every commit, including this cell's own outputs, so they are not counted",
+  "comp_find_at_build": {
+    "measured_by": "comp-find <pattern> --files --all, corpus=all, worktree root, 2026-09-30 (a one-time record, not re-run by this check)",
+    "etf-classifications": {
+      "hits": 5962,
+      "files_scanned": 46462
+    },
+    "classified_by": {
+      "hits": 4908,
+      "files_scanned": 46466
+    },
+    "etf_classifications_dynamodb": {
+      "hits": 440,
+      "files_scanned": 46467
+    }
+  },
+  "not_readers": {
+    "infra/aws/lambda/v2_portal/_shared/etf_classification.py": "the static seed SOURCE module (dicts), not a table reader; the seeders above read it",
+    "data/assets/scripts/gold/investor_reporting/bd_securities_fallback.py": "reads the LEGACY per-firm table (LEGACY_TABLE = _legacy_table_name()), not etf-classifications",
+    "data/black_diamond/scripts/classification/classify_bd_securities.py": "WRITES classified_by to bd-securities (gpt-4o-mini); not a reader of the table",
+    "data/black_diamond/scripts/gold/B_01b.classify_new_securities.py": "WRITES classified_by to bd-securities; not a reader of the table",
+    "data/cot/scripts/gold/B_01b.classify_new_securities.py": "WRITES classified_by to the cot securities table; not a reader of the table",
+    "data/inf/scripts/classification/classify_assets.py": "reads/writes the INF assets table (BD_SECURITIES_TABLE = 'bd-securities'), not etf-classifications",
+    "data/black_diamond/scripts/gold/tests/thread_trace.py": "a LOCAL trace harness that drives apply_blend/BD library (both exercised above), not itself a reader",
+    ".tools/safe_deploy_core.py": "deploy tool: names the client file in a package member list",
+    "infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py": "docstring mention only; its derivation is build_satellites_registry (exercised above)",
+    "infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/build_package.py": "packaging member list",
+    "infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/build_package.py": "packaging member list",
+    "infra/aws/lambda/etfs-pipeline/etf-positioning-producer/build_package.py": "packaging member list"
+  }
+}

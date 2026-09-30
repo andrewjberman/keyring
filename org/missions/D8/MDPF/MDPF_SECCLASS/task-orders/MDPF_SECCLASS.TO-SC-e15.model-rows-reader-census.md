@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~12</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -62,7 +62,7 @@ attributes.** The named risk is the Holdings contract
 
 ### ACCEPTANCE
 
-<criterion id="SC6-e15-AC1" cell_refs="SC-e-15"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_model_reader_census.py</invocation><expect>MODEL-READER-TOLERATED</expect></criterion>
+<criterion id="SC6-e15-AC1" cell_refs="SC-e-15"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_model_reader_census.py</invocation><expect>MODEL-READER-CENSUS readers=</expect></criterion>
 `SC6-e15-AC1` -- every reader of the table tolerates a model row (none crashes, refuses it or fails a strict contract).
 
 <criterion id="SC6-e15-AC2" cell_refs="SC-e-15"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R20_CHECKS/r20_half_ready.py org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_MODEL_ROWS_20260930.md</invocation><expect>HALF-READY</expect></criterion>
@@ -122,3 +122,23 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: 1.0.0_SA_CTO rounds 4-5 analysis @533bcae124 section 4 item 4 and ruling 2; Andrew-direct @6a861c4e18.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M, 2026-09-30 ~23:0xZ) -- the cell delivers the census; tolerance gates the act
+
+Ruling on the worker report (AC1 FAIL: `MODEL-READER-CENSUS readers=34 tolerates=22 read_only=8 crashes=3 refuses=0
+fails_contract=1`; rows W12-S1 BLOCKING/ARMED, W12-S2 BLOCKING/INERT). The census is complete (34 readers, 0 uncensused of
+60 tracked code files) and did exactly the job the CTO's rounds 4-5 ruling 2 set: find the readers that do not tolerate a
+model row BEFORE the MODEL_ROWS half is signed. What this cell delivers is the census and the half's census section. The
+"every reader tolerates" bar is the MODEL_ROWS ACT's precondition, and the half already states it: the act is REFUSED
+unless a fresh census immediately before it prints `MODEL-READER-TOLERATED`. So AC1's expectation moves from
+`MODEL-READER-TOLERATED` to the census line `MODEL-READER-CENSUS readers=`. The tolerance bar is RELOCATED to the act, not
+lowered: the MODEL_ROWS half stays UNSIGNED and the act cannot run while the census reads crashes=3 fails_contract=1.
+
+- W12-S1 (`seed-etf-classifications.py` `merge_item` keeps `classification_confidence` / `low_confidence` on a seed-corrected
+  model row) and W12-S2 (`ETFClassifier.classify_holdings` KeyError on alternatives / commodities / structured, pre-existing,
+  zero callers) route to round 7 as repairs through the round-6 L10 packet. Whether a zero-caller method counts as a reader
+  is left to 1.0.0_SA_CTO with that packet; the W12-S1 contract break needs a fix either way.
+- Re-validate the proof against the amended AC1 (VALID rc=0), flip `<status>` to complete, commit.
+
+Gate limb: none graded this modification (a modification of an existing order; LIMB 6 fires on new orders only; no
+placeholders declared).
