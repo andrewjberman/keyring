@@ -91,6 +91,11 @@ W2-07's other half (why a job needs attention, IRPT_BCKEND); row S40's portal ha
 
 ## Limits
 
+- CTO 103373 (issuer rule, all laptop issuers): a cell whose diff changes an import in a script run from a deployed code
+  prefix (S3 code prefix, flat runner dir, Lambda bundle) carries one criterion importing the module from the deployed
+  layout itself, printed. This lane's next ISSUANCE commit (under FULL) states the rule; FAST items touch only the Vite-built
+  portal bundle, which the rule does not name.
+
 - The Generate press was exercised on the FIXTURE plane only (the walk-2 write guard); Andrew's live press is the
   acceptance. The history re-list after a press is one bounded read; a producer list that lags the issue shows the
   row on the next read.
