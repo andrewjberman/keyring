@@ -15867,6 +15867,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "CTO round-50 ruling 3: the export resolves each header figure's unit from the model block's per-security unit (after CORPUS u-1), and FWD-30 is REALIZED when the six read values-equal with units resolved.",
   "world_is": "The export already reads the per-security unit and prints UNRESOLVED where it is unresolved; nothing inside RESAPP's export surface can resolve it. Resolution needs a unit-map discriminator that does not rest on magnitude alone (a cross-field consistency read, e.g. an EV or revenue figure against a resolved per-share figure times shares), which is build_unit_map.py / field_map.json, AMGT_CORPUS's artifact; and 'never scaled silently' is broken on the PAGE (DSGN_AMGTV1), not the export.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Ruled at the cut: cell 3 is NOT cut in RESAPP round 51 (no RESAPP-owned write moves the six); the re-home (CORPUS unit-map discriminator; DSGN page scale) is asked of 1.0.0_SA_CTO~Z as one decision, since it moves where FWD-30's last hold is served. Cell 8 carries cells 5 and 6 only."
+},
+{
+  "id": "AMGT_RESAPP-Z-W184-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~184",
+  "surfaced_at": "2026-09-30T04:00:00Z",
+  "one_line": "AC3's api-suite reads 1 failed / 349 passed on a tree where zz-5 is complete: test_harvest_prefixes.py::test_ii_registry_hash_matches fails because the generated lib/research/api/_harvest_prefixes.py carries REGISTRY_HASH 54d1865c8a65 while naming.registry_hash() now reads 3118e82e9c47 (registry moved after the last regeneration); the fix is a regeneration outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "api-suite.sh at wk-AMGT_RESAPP-184 (base 6c61d0ce73 plus zz-5 edits): '1 failed, 349 passed in 44.86s', exit=1; FAILED lib/research/api/tests/test_harvest_prefixes.py::test_ii_registry_hash_matches -- assert '3118e82e9c47...' == '54d1865c8a65...' (hp.REGISTRY_HASH vs naming.registry_hash()).",
+      "test_ii compares hp.REGISTRY_HASH with naming.registry_hash() only -- neither reads scoped_amgt.py or any file zz-5 edited (read at test_harvest_prefixes.py:58-59), so the failure is independent of zz-5 by construction (not re-measured on an unedited tree); the other 4 tests of that file pass (the four constants match fresh opal_naming output, arm i).",
+      "git log on infra/logic/registry: 73896b6c42 regenerated 'the 11 CLOUD targets at registry@54d1865c8a65cfb2'; later registry commits 6dcd6df254 and de56cfd02f moved the registry hash, so _harvest_prefixes.py (a GENERATED module, outside this order's <paths>) is stale by design of its drift test."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC3: pytest reports N passed and 0 failed over lib/research/api/tests and lib/research/print/tests.",
+  "world_is": "0 failed is unreachable from this order's write grant: the failing test's remedy is regenerating lib/research/api/_harvest_prefixes.py against the current registry hash, a path this order does not name. zz-5's own 10 new tests and the 293+ existing api tests pass; AC3 is recorded FAIL, not rescued.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z (the fix is a regeneration by whoever owns _harvest_prefixes.py, then AC3 re-runs green). Also noted: read_rankings now walks up to 14 calendar days of pointer GetItems per axis for the prior generation (zz_5_rows --what moved took 66s of the 120s bound over four axes)."
 }
 ]
 ```
