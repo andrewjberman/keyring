@@ -3498,6 +3498,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "Three readings fit (aged session, edge rule on this client's UA/TLS pairing, blocked egress) and the record separates none of them; the only ft refresh path (auth.py:87 -> ft_harvest_session.py) needs AuthExpired, which a 403 never raises, and that harvester logs in with stored credentials and calls a vendor captcha solver (ft_harvest_session.py:132,213).",
       "notes": "Routes F1 (keep the rejection's classification), F2 (re-harvest, Andrew's word), F3 (no route) are in p4_ac2_output.txt. Nothing was requested from ft.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W66-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~66",
+      "surfaced_at": "2026-09-30T06:40Z",
+      "one_line": "The deployed /timeline/day read for 992_HK_Equity 2026-02-13 (event shape of n6_common.invoke_deployed, x-firm-id bd) serves the new wsj article rows with mention_count but reports data_status DENIED and publishers_covered 0 beside them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO half condition 3: the deployed /timeline/day for Lenovo on a day of a NEW wsj pair shows that article with its count; no statement about data_status or publishers_covered.",
+      "world_is": "HTTP 200; articles list carries wsj:0ec5b5a0-f589-432f-beb3-e80e575a2cf6 (mention_count 1, tier D) and wsj:122be645-... (mention_count 3, tier C), but the envelope reads data_status 'DENIED', publishers_covered 0, publishers_covered_codes []. Cause unmeasured (possibly the helper's firm header/entitlement, not the data).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~66/p1_deployed_day_read.json: status 200, data_status DENIED, publishers_covered 0, articles 2+ incl. wsj:0ec5b5a0"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Observation only; nothing else was invoked. The article rows the CTO condition names are present with counts."
     }
   ]
 ```
