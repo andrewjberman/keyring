@@ -2984,6 +2984,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "The checker treats the instance expect as a regex; the prose contains unescaped parentheses and cannot match, so the worker's instance carries its own regex on the printed deciding line (AC1 'INVENTORY ARTICLES NOT IN THE STORE ...: n of N'; AC2 'SHORT OF THE FLOOR ...: n of N'); the criterion_verbatim field carries the TO's text unchanged.",
       "notes": "Form only. The deciding lines are printed by the scripts, not synthesised.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W59-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~59",
+      "surfaced_at": "2026-09-30T02:30Z",
+      "one_line": "OBSERVATION: the collector's plan command takes no listing size as input, and only 3 of 955 (name, publisher) page figures could be MEASURED from a stored listing.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/__main__.py:104-135: planned_listing_pages = max_listing_pages[publisher] (fallback 25), no listing-size term",
+          "S3 LIST of <source>/harvest/bronze/news_listing/: sa 2 objects (page 1 of LNVGY and ASML, meta.page.totalPages 9 and 26), wsj 2 objects (Lenovo Group pages 1-2, no total in the HTML), bbg 0, ft 0, barrons 0",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~59/n5_backfill_plan.json: figures_measured 3, figures_default 952"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-5 section 1: pages per publisher per name 'from the listing sizes the collector already knows'.",
+      "world_is": "The collector plans a flat cap of 25 pages per publisher. Stored listing sizes exist only for Seeking Alpha Lenovo (9 pages) and ASML (26 pages, capped to 25); the plan refines to min(cap, stored totalPages) for those 3 rows (Lenovo, ASML NA, ASML US matched by the shared SA symbol) and prints the 25-page DEFAULT for the other 952, each marked DEFAULT.",
+      "notes": "Form only. The cap-only grand total (23875) is printed beside the refined one (23859); the refinement is worker-written in the script, not collector code.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W59-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~59",
+      "surfaced_at": "2026-09-30T02:30Z",
+      "one_line": "OBSERVATION: 190 of 191 covered names carry no sa_symbol, so the Seeking Alpha leg the plan prices at 25 pages each would refuse at run time.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py:366-369: seeking_alpha raises ContractUnavailable('Security lacks a resolved Seeking Alpha symbol') when sa_symbol is absent",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~46/securities.universe.json: 191 records, keys aliases/company/composite_figi/key/security_key/ticker/ticker_aliases, no sa_symbol; only ~10's lenovo.security.json adds LNVGY",
+          "n5_backfill_plan.json: sa_symbol_resolved true for 1 of 191"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-5 section 1: the plan covers all 191 names with the Seeking Alpha leg waiting on renewal.",
+      "world_is": "The plan command prints sa pages for names whose SA leg cannot start until a symbol is resolved; the SA subtotal (4759 pages) is a ceiling for 1 resolvable name, and the plan marks sa_symbol_resolved per name.",
+      "notes": "Measured only. No symbol resolution was attempted by this cell.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```

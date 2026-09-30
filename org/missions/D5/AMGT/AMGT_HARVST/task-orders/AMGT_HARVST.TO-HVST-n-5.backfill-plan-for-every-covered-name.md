@@ -65,7 +65,7 @@ this plan is read (analysis NOT-cells).
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>24</round>
 <slot>~59</slot>
 <fabric>site-z</fabric>
