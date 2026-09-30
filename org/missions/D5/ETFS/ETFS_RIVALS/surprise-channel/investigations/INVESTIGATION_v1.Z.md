@@ -143,6 +143,28 @@
     "spec_asserts": "RIV-g-1: identity through lib/research/identity/crosswalk.resolve() tried on CUSIP, then ISIN, then SEDOL, then ticker; a miss keeps the position UNRESOLVED with the raw identifier, never a guessed key.",
     "world_is": "The crosswalk indexes only Bloomberg-form identifiers (ticker plus exchange code, and that form plus ' Equity'); it holds no CUSIP, ISIN or SEDOL forms and a bare issuer ticker never matches. So the four tried forms miss for every BASG position and the gold shape has security_id null throughout. The cell follows its spec (no suffix appended, no guessed key), so nothing is wrong in gold; the identity join is empty until a crosswalk carries CUSIP/ISIN/SEDOL forms or an exchange-aware adapter is authorised.",
     "notes": "Not fixable inside RIV-g-1: appending ' US' would be the guessed key the cell forbids, and the crosswalk is not in this order's paths. The trade_schedule and page cells key on security_id at their peril: on real BASG data they see 0 resolved securities and must fall back to raw_identifier."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S5",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-09-30T09:35Z",
+    "one_line": "RIV-p-1: a page whose guardrail fails returns status PARTIAL with no batch marker (the contract names no status for a published not-updated page), and identity_coverage's resolved-fraction floor is 0.0 because the crosswalk resolves 0 of 35.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py handler_entry: failed checks -> out('PARTIAL', [index, manifest], None, detail) and write_marker only on OK",
+        "data/etfs/scripts/rivalfunds/guardrails_config.json: min_resolved_fraction 0.0 PROVISIONAL; min_identified_fraction 0.9 PROVISIONAL",
+        "p-1.AC1 run 2026-09-30: identity_coverage PASS '34 of 34 non-cash lines identified (min 0.9); 0 of 34 resolved by the crosswalk (min 0.0)'; p-1.AC2 run: planted completeness returns status PARTIAL, marker None, page not-updated"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-p-1: a failed check publishes the page with BASG data-status=not-updated; the stage contract returns status OK|PARTIAL|FAILED|SKIPPED and writes a batch marker only when its batch is whole; identity coverage is one of the six checks with PROVISIONAL thresholds.",
+    "world_is": "The order and the contract name no status or marker rule for a stage that publishes a deliberately not-updated page, and no identity threshold that a 0-of-35 crosswalk can meet. The cell chose PARTIAL with no marker (a rerun of the same batch re-evaluates, and a wrapper reading the status sees the day was not fully published) and graded identity on 'has a resolved id or a raw identifier' (>= 0.9) with a 0.0 resolved floor, so the round-1 real days pass while the crosswalk is empty (row ETFS_RIVALS-Z-W1-S4).",
+    "notes": "RIV-d-1 (Lambda wrapper) and RIV-d-2 (fire) read the stage status: PARTIAL here means the page IS published as not-updated, not that nothing was written. The real thresholds, including a resolved floor above 0.0 once the crosswalk carries CUSIP/ISIN/SEDOL forms, belong to the named enrichment cell."
   }
 ]
 ```
