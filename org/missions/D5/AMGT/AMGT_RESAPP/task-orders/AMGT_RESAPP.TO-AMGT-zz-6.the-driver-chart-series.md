@@ -66,7 +66,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 111. The other 10 driver names hold 0 points (a fresh extraction, AMGT_CORPUS's producer; carried). zz_6_driver.py (95 s, a census,
 PASS at base) is not a criterion. Served in zz-8 (ASML's real rewrite, under the pair).
 
-<status>pending</status>
+<status>complete</status>
 <round>51</round>
 <slot>~185</slot>
 <fabric>site-z</fabric>

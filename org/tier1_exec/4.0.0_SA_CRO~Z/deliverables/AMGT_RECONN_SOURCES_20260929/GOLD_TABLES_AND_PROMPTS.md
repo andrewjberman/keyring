@@ -19,7 +19,9 @@ These are concrete design proposals for the brief's consumer, not deployed table
 
 For each expected trading report date, the issuer collector records fresh/complete, stale, missing, invalid or unresolved-date status. Publication windows and bounded retries should follow measured provider behavior and the shared calendar; an HTTP 200 alone is insufficient. A source outage for one fund must not suppress other captures. Overwriting current endpoints makes capture-forward valuable even if historical gaps remain.
 
-The added Bloomberg morning script reads that coverage before issuing holdings requests. A fresh, complete issuer snapshot produces a `skipped_issuer_satisfied` outcome. It requests only eligible uncovered dates/funds after the issuer retry window, or explicitly configured backfill/enrichment. Record request reason, attempted fund/date set, actual report dates and result; a Bloomberg stale reply cannot close a fresh-report gap. GQGU is not a working Bloomberg fallback based on the present census. A late issuer correction can supersede selected Bloomberg content with explicit lineage, preserving both observations.
+**Daily timing (Andrew, revision 2):** the issuer collector (`etfs-rivalfunds-daily`, a separate pipeline from `etfs-netassets-daily`) fires at **7:00 AM ET** from AWS. The Bloomberg morning run at **8:03 AM ET** is the fallback opportunity for funds still uncovered that Bloomberg carries (WCMG, TSEL, BASG, ETFT, PCLG; never GQGU). The 7:00 time is provisional until a few days of publication observations confirm each issuer has posted the prior trading day by then.
+
+The added Bloomberg morning script reads that coverage before issuing holdings requests. A fresh, complete issuer snapshot produces a `skipped_issuer_satisfied` outcome. It requests only eligible uncovered dates/funds after the issuer run, or explicitly configured backfill/enrichment. Record request reason, attempted fund/date set, actual report dates and result; a Bloomberg stale reply cannot close a fresh-report gap. GQGU is not a working Bloomberg fallback based on the present census. A late issuer correction can supersede selected Bloomberg content with explicit lineage, preserving both observations.
 
 The proven Bloomberg route is Windows Excel BQL, with add-ins explicitly initialized and asynchronous completion handled. Historical requests must preserve both `DATES` (requested date) and `REPORT_DATE` (actual source date); the current-query column layout differs. Integrate as an isolated leg of `integrations/bloomberg/pipeline/scheduled_daily_pull.cmd`, reusing its run-class and calendar conventions. Do not assume raw `//blp/bqlsvc` works or that this Excel process can run inside the issuer Lambda. No second morning schedule is proposed.
 
@@ -31,30 +33,31 @@ Optional daily security-price/reference enrichment can still require Bloomberg. 
 
 Naming authority: `org/standards/NAMING_SCHEMA.json` v1.12, `infra/logic/registry/`, `lib/opal_naming.py`. Placement authority: `infra/logic/02_DOCTRINE.md` R4, reaffirmed by Andrew September 29. **Only client/partner custodial assets take the shared `opal-data-assets` route. Outside research, public information and other general/product data live in their own buckets.** This ETF research therefore uses **`opal-data-etfs` for bronze, silver and gold** under the existing policy, just as outside research products use homes such as `opal-data-harvest` and `opal-data-transcript`. Keys follow `{source}/{scope}/{tier}/{table}/{partition}/{object}`. Tables are snake_case; actual ETF tickers and provider names are data/leaf identities, not invented scope or system tokens.
 
-Use the registered vendor source `issuer-site` for issuer feeds and `bloomberg` for Bloomberg. Store precise issuer identity and URL in the capture metadata. Their product scope is `etfs`. Derived multi-source tables use product source `etfs` and audience scope `global`; `etfs/etfs/` is refused by the builder. Here `global` names shared product data, not a permission grant or an instruction to serve it publicly.
+**Revision 2 -- registry change, LANDED.** The fix Andrew recalled was live: the GENERAL tenancy in `infra/logic/registry/tiers.json` (`1675a8f631`) homes every tier, platinum included, in the scope's own bucket, as it does for `harvest` and `transcripts`. A separate `rivalfunds` scope on `opal-data-etfs` was refused by the validator (a scope's bucket is `opal-data-{scope}`), so on Andrew's word (*"we can use etfs scope"*) the change is: the `etfs` scope moves to GENERAL tenancy, and a new `systems.json` key `rivalfunds` (class PRODUCT, owner D5 inferred) is the source of the derived tiers. `validate` reads 0 refusals; all 12 generated targets are content-identical before and after (only their registry-hash stamps differ, not re-stamped here); existing `etfs/global/` addresses do not move (R4). Every key below is live builder output and graded CONFORMANT on September 30 ~04:1x UTC.
 
-| Layer or artifact | Proposed key beneath `opal-data-etfs` | Meaning |
+Use the registered vendor source `issuer-site` for issuer feeds and `bloomberg` for Bloomberg, with scope `etfs`. Store precise issuer identity and URL in the capture metadata. Derived tables and the served page use source `rivalfunds` and scope `etfs`, which also keeps them in their own key prefix, apart from the bucket's other products.
+
+| Layer or artifact | Builder key beneath `opal-data-etfs` | Meaning |
 |---|---|---|
 | Issuer bronze | `issuer-site/etfs/bronze/holdings/date=2026-09-29/basg-20260929T213852Z-<hash>.txt` | Original bytes, with acquisition date as the partition's `date`; effective report date lives in metadata |
 | Bloomberg bronze | `bloomberg/etfs/bronze/holdings/date=2026-09-29/wcmg-20260423-<capture_id>.json` | Complete returned columns, query, requested/report dates, errors and timing |
-| Issuer silver | `issuer-site/etfs/silver/holdings/date=2026-09-28/basg-<capture_id>.parquet` | Typed, source-preserving rows; `date` equals report date |
+| Issuer silver | `issuer-site/etfs/silver/holdings/date=2026-09-28/basg-<capture_id>.parquet` | Typed, source-preserving rows, one shape per issuer source; `date` equals report date |
 | Bloomberg silver | `bloomberg/etfs/silver/holdings/date=2026-09-28/wcmg-<capture_id>.parquet` | Same date convention, source semantics and original units retained |
-| Canonical gold | `etfs/global/gold/canonical_shape/date=2026-09-28/holdings-<revision>.parquet` | Selected, enriched, denormalized base; `date` equals actual report date |
-| Other gold tables | `etfs/global/gold/<snake_case_table>/date=2026-09-28/<revision>.parquet` | S5 tables; table-specific date convention explicitly declared |
-| Run state | `etfs/global/state/collection_runs/date=2026-09-29/<run_id>.json` | Attempts, skips, pending dates, status and capture references |
-| Canonical builder code home | `etfs/global/code/gold/<bundle>.zip` | LGIC code-tier form, if cloud deployment artifacts are needed |
+| Canonical gold | `rivalfunds/etfs/gold/canonical_shape/date=2026-09-28/holdings-<revision>.parquet` | The accrual table coalescing every silver shape into one master shape; `date` equals actual report date |
+| Other gold tables | `rivalfunds/etfs/gold/<snake_case_table>/date=2026-09-28/<revision>.parquet` | S5 tables; table-specific date convention explicitly declared |
+| Served page (platinum) | `rivalfunds/etfs/platinum/page/date=2026-09-29/<file>` | The day's rendered page and its data, archived by day (S9) |
+| Run state and markers | `rivalfunds/etfs/state/<stage>/date=2026-09-29/<batch_id>.json` | Attempts, skips, pending dates, batch-complete markers (S9) |
+| Code home | `rivalfunds/etfs/code/<stage>/<bundle>.zip` | LGIC code-tier form for cloud deployment artifacts |
 
 Bronze CSV/HTML/JSON/text remains in the obtained format; a metadata sidecar records HTTP/query context, hash, capture time, claimed report date, date evidence and original filename. If a file contains multiple funds, preserve it once and link each fund's rows to that capture. Invalid or undated payloads remain bronze with a status; they do not acquire a guessed report date to enter report-date silver. Append immutable observations/revisions and maintain a manifest for selection; do not overwrite the only historical evidence. A retry of identical content remains idempotent in selected silver/gold, while attempt records remain auditable.
 
-Resource examples, graded CONFORMANT against concrete names on September 29:
+Resource names (Andrew named the pipeline `etfs-rivalfunds-daily`, revision 2), graded September 30 ~03:5x UTC:
 
-- `issuer-site-etfs-fetch-holdings-lambda` — issuer vendor integration for the ETF product.
-- `issuer-site-etfs-fetch-holdings-daily` — cadence-last EventBridge rule; exact trigger time remains an operational decision based on publication observations.
-- `etfs-build-canonical-shape-lambda` — shared derived-product builder, with no tenant scope placeholder.
+- `etfs-rivalfunds-daily` — the daily schedule, CONFORMANT as EVENT_RULE and as SCHEDULE.
+- `etfs-rivalfunds-daily-lambda` and `etfs-rivalfunds-fetch-holdings-lambda` — CONFORMANT as LAMBDA.
+- `rivalfunds-etfs-build-canonical-shape-lambda` and `rivalfunds-etfs-publish-page-lambda` -- CONFORMANT as LAMBDA (September 30 ~04:1x UTC). Further stage resources are graded when named.
 
-The corresponding concrete S3 key examples for issuer bronze, Bloomberg silver and canonical gold also graded CONFORMANT. Runtime templates shown above are documentation, not deployable names; expand and grade actual values. Local script filenames follow repository language conventions; LGIC's resource grammar is not silently treated as a Python filename rule. Deployed bundles and resources do use the canonical grammar and code home.
-
-**Implementation alignment with existing policy:** `address()` currently derives `opal-data-assets` for product-scoped issuer bronze/silver, while gold `etfs/global` correctly derives `opal-data-etfs`. That result reflects placement metadata that has not caught up with R4 for this research use; it does not make research a client asset or require an exception to LGIC. Align the affected research placement with the established own-bucket policy before production writes. Existing client-ownership products in the ETF bucket retain their own classification and contracts. R4's no-automatic-migration clause preserves existing addresses pending their own migration; this research specification mandates no broad rename. Existing tier-first keys are legacy dependencies, not naming examples for new writes.
+Runtime templates shown above are documentation, not deployable names; expand and grade actual values. Local script filenames follow repository language conventions. Existing tier-first keys in the bucket (`bronze/`, `silver/`, `gold/`, `daily/`, `platinum/`) belong to other pipelines and are neither read nor moved here.
 
 ## S3 — Observation, selection, dates and typed silver (O2, O4, O8)
 
@@ -174,4 +177,37 @@ Prompt quality is evaluated by whether Andrew can verify the claims against the 
 
 Primary measured findings: `BBG_EXCEL_ACCESS_VERIFIED.md` and `DAILY_COVERAGE_CENSUS.md`. Original source captures and Bloomberg payloads stay local under `.runtime/`; committed documents contain methods, counts and references rather than complete licensed portfolios.
 
-The repeat issuer and deployed-code metadata capture is `.runtime/amgt-reconn-brief-20260929/`; `probe.py` there is a research probe, not the proposed production collector. Current candidate names were exercised through `lib/opal_naming.py grade()`; `address()` independently exposed the bronze/silver placement discrepancy. New final resource names and instantiated storage keys must pass the same canonical grade, and placement must match the directed bucket. No existing live name was changed.
+The repeat issuer and deployed-code metadata capture is `.runtime/amgt-reconn-brief-20260929/`; `probe.py` there is a research probe, not the proposed production collector. Current candidate names were exercised through `lib/opal_naming.py grade()`; `address()` independently exposed the bronze/silver placement discrepancy, which revision 2 resolves in the landed registry change (S2: etfs to GENERAL, system key rivalfunds). New final resource names and instantiated storage keys must pass the same canonical grade, and placement must match the directed bucket. No existing live name was changed.
+
+## S9 — Served page, trigger chain and pre-publish guardrails (revision 2; O1, O3, H3-H7)
+
+### Serving: the /sprint pattern, homed in opal-data-etfs
+
+Precedent, read September 30: `daily_reports/scripts/publish_daily_report.py` writes each day's pages to `s3://opal-data-portal-v2/daily-reports/<DAY>/` with a size-and-ETag read-back; the gateway's `infra/aws/ec2/opal-gateway/app/sprint_view.py` serves `/sprint` (latest), `/sprint/<day>` and `/sprint/archive` (a `list_objects_v2` delimiter listing of the day prefixes) behind Entra sign-in and an optional roster; `infra/aws/terraform/opal-gateway/daily-reports-iam.tf` grants the gateway `GetObject` on that prefix and `ListBucket` on the bucket. The generator is a scheduled container Lambda that authors with an OpenAI call and renders through the repository's own renderer.
+
+For rivalfunds (Andrew, item 4): the publisher writes the day's page and its data to `rivalfunds/etfs/platinum/page/date=<DAY>/` in `opal-data-etfs`, read back before it reports success; a day is never overwritten silently. The gateway gets a `/rivalfunds` route module modelled on `sprint_view.py` (`/rivalfunds`, `/rivalfunds/<day>`, `/rivalfunds/archive`) and a grant scoped to that platinum prefix. The viewer wall defaults to the /sprint tenant wall; a narrower roster is Andrew's to name. R12 reads platinum as JSON: the PRD settles whether the page is stored rendered (as /sprint does) or rendered by the route from the stored JSON.
+
+The analyses are OpenAI calls (authorized, item 4) over the S5 tables through the S7 prompt contracts. The model and prompt versions and the input manifest are stored beside the page.
+
+### Trigger chain (proposal for Andrew's review, item 3)
+
+1. **Batch-complete markers.** Each stage writes one marker when its batch is whole: `rivalfunds/etfs/state/<stage>/date=<D>/<batch_id>.json`, listing the objects it wrote and their hashes. The `batch_id` is derived from the input marker, so a re-run is a no-op when the output marker exists.
+2. **Event hops.** An S3 notification on `opal-data-etfs`, filtered to the marker prefixes, fires the next stage: bronze marker to silver (R10, silver always event-triggered), silver marker to gold, gold marker to the publisher. The bucket has no notification configuration today; because a bucket carries one notification configuration, it gets one owner.
+3. **Coalescing.** Gold consumes every pending silver marker for the day in one run, so a backfill of about 1,300 responses produces one gold rebuild per batch window, not one per file.
+4. **Scheduled sweep.** A daily schedule after the Bloomberg window (proposed 9:00 AM ET, trading days by `lib/trading_calendar.py`) runs any stage whose input marker has no output marker, then publishes the day's page even when nothing new arrived (the page says so). This makes the chain scheduled rather than success-of-upstream alone; the scheduled fire is the acceptance run.
+5. **Backfill replay.** Bronze that landed before the silver stage existed is processed by writing markers over it (replay), with no source re-fetch.
+
+### Pre-publish guardrails (Andrew, item 10)
+
+The publisher runs these before writing the served file. A failed check either publishes the page with the affected fund marked "not updated" and the reason, or publishes nothing; it never publishes a quietly wrong page.
+
+| Check | Fails when |
+|---|---|
+| Report-date freshness | A fund's selected snapshot has a `REPORT_DATE` older than its requested date and is presented as a new disclosure (the Bloomberg carry-forward case) |
+| Content repeat | A new report date carries a payload identical to the prior date's, without a genuine dated-unchanged disclosure |
+| Completeness | Fund filter, row count or weight sum falls outside the source's band (S3) |
+| Identity coverage | Unresolved identifiers exceed a stated share of weight |
+| Analysis grounding | A number in the AI text does not match its cited table row, or a cited row does not exist |
+| Render and read-back | The page fails its schema/render gates, or the stored bytes do not read back equal |
+
+Thresholds are set in the PRD from the first days of real data, not guessed here.

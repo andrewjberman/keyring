@@ -101,3 +101,31 @@ onboarding queue, and one approval turns an entry into a grant. Recommendation: 
 Reading aid: pilot grants are Opal-administered per advisor; production is an Opal-set firm ceiling with the partner's
 admin assigning within it; the refusal log doubles as the onboarding queue. Who at Opal approves an entry is not
 decided here.
+
+## 10. Andrew, verbatim, same channel, 2026-09-30 ~04:04Z -- answers to CRO~O's /open-calls (6 cards)
+
+The six cards as put (call; REC):
+1. Scope: new project, or an extension of NFRA_OPALAI / NFRA_OPLGTW? REC: (a) new project; CRO~O writes the L1 brief
+   from this record.
+2. Go-live bar: replay (every run's transcript + tool calls + gateway audit, tagged firm/asker, stored on Opal's side)
+   + CVO graded samples + a daily per-firm report; supervised interactive session for the pilot, a fresh background
+   session per message in production. REC: yes, no live-tail requirement.
+3. Tenant ID per firm: (a) one-time Microsoft lookup, or (b) learn it with no outside call? REC: (b) -- the first real
+   message from each firm is refused and logged with its tenant ID; approving that entry records it; partner IT can
+   confirm.
+4. Credentials: per-firm API key with its own spend cap, or one pooled key? REC: per-firm key with a cap.
+5. Firm data home: current buckets (`opal-data-inf` / `opal-data-cot`) now, or wait for the successors? REC: current
+   buckets now; the per-firm role re-points when each migration lands.
+6. Governance: firm onboarding stays Andrew's word; CVO grades samples; no partner-facing SLA during the pilot. REC: yes.
+
+> "1.) New Project, NFRA_MCPMSP. 2.) Rec approved. 3.) Rec approved. 4.) Rec approved. Should have a clear structure
+> in AWS Secrets Manager. 5.) Current buckets for now. 6.) Yes."
+
+Reading aid:
+- A new project, code `NFRA_MCPMSP` (Andrew's code). Registration (L3) is the CTO's act; the L1 brief is CRO's.
+- Go-live bar as card 2; tenant IDs learned with no Microsoft call (card 3), so the lookup is NOT needed and NOT
+  authorized.
+- Per-firm API keys with spend caps, held in AWS Secrets Manager under "a clear structure". The structure's names are
+  not decided here; they come from the LGIC builders (CLAUDE.md rule 30).
+- Current buckets for now.
+- Governance as card 6.

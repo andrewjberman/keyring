@@ -75,3 +75,33 @@ Recorded September 29, 2026, approximately 23:2x ET (September 30, 03:2x UTC); C
 > Let's just do a pass on the current state of the brief and any associated evidence and make sure that there are no holes in any processes here. The way I see it, there are the following steps that have to be executed essentially in this order. 1.) Bucket structure createdin opal-data-etfs with bronze/silver folders for bloomberg and issuers respectively, as I expect they will be in different shapes. Gold folder will be unified shape that can accrue from either channel. 2.) Backfill from Bloomberg pulled ad hoc per ETF into bronze. 3.) lambda designed to activate on bronze ingestion completion to type/dedup silver parquets. 4.) lambda designed to activate on silver completion that runs gold foundational shape + any other gold tables. 5.) Lambda runs at completion to generate presentation worksheet with relevant chart views and AI analyses, probably hosted on mcp.opalinvest.dev/activefunds (can borrow a lot for this from /daily-sprint cloud process). 6.) Schedules set up for daily csv ingestion and parsing that goes to the issuer bronze/silver folder path. Bloomberg exists as backup retry if issuer fails. These run daily.
 
 Step 5 (a hosted presentation page with AI analyses) is new relative to the brief, whose O1 said a dashboard was not required. The gap pass is reported in-session; no brief text, build or dispatch was changed by this record.
+
+## Rulings on the 14-item gap pass, verbatim
+
+Recorded September 29, 2026, approximately 23:4x ET (September 30, 03:4x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9. Exact receipt timestamp not exposed. Numbers answer the gap-pass items in order.
+
+> 1.) This is a separate function, the lambda you list is for a different purpose; conflating the two would be messy. this should be etfs-rivalfunds-daily, that makes it extra clear what it is. 2.) That naming tool needs to be adjusted, that should only apply for client assets and this is not a client assets issue. I believe that fix is already in production in the cloud; it should be how buckets like opal-data-harvest have been allowed to operate. 3.) That's fine, you can propose a solution to that which I will review. 4.) No that is not how it would work. What would be more logical is a platinum folder in opal-data-etfs that has the served files archived by day. Look at how mcp.opalinvest.dev/sprint/archive does it, where are those stored? I would use a similar pattern. Lastly, regarding the new gateway route, that's fine, let's use /rivalfunds though to keep up with the lambda title as i think its a more unique and specific token. We definitely can use OpenAI on this; OpenAI relationship with BBG is entirely out of our scope. Moving onto 5.) Ok go with your recommendation on how to structure this, i was not being 100% literal, just largely being chronological in terms of getting this off the ground in short time without a ton of process overhead and bullshit. 6.) Trigger on batch complete works. 7.) Great point, have to ad hoc those then from the outset. 8.) That is a good point, I am ok with using canonical flow process instead, I just made these comments to be very explicit about nonnegotiable steps that need to happen so that the agents responsible dont have a giant hole and forget that there needs to be a served output, or forget to bridge silver and gold, etc. as this happens when one is not specific in planning sometimes. 9.) Ok then we do the issuer at 7a ET and BBG has a fallback opportunity for ETFs that do appear on BBG at that 8:03 time. 10.) There should be guardrails to check on that pre-publishing. 11.) Yes that has to be done. 12.) This will require some testing over a few days, not a big deal. 13.) I am fine with using BBG for this. May be a good time to look into AMGT_HARVST and how all the resolutions worked there. 14.) Didnt think it would, we expect them to be different in bronze/silver, thats why there is a gold accrual table that coalesces the various shapes into one master shape.
+
+OpenAI use for the analyses is authorized by this word. The ruling on item 3 asks for a proposal Andrew reviews; it is not a ruling on the trigger design itself.
+
+## S9 approved, registry row, CTO handoff, verbatim
+
+Recorded September 30, 2026, approximately 00:0x ET (04:0x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9. Exact receipt timestamp not exposed.
+
+> S9 looks fine, add the registry row and send to CTO
+
+This approves the S9 trigger-chain proposal and pre-publish guardrails in `GOLD_TABLES_AND_PROMPTS.md` revision 2, authorizes the `rivalfunds` scope row in `infra/logic/registry/scopes.json`, and directs the brief to 1.0.0_SA_CTO for L2.
+
+`python lib/opal_naming.py validate` refused the `rivalfunds` scope row (*"'opal-data-etfs': a data bucket is opal-data-{scope}, LONG form"*); the row was reverted uncommitted. Andrew's answer, same session, verbatim:
+
+> no that is ok , we can use etfs scope
+
+Landed accordingly: the `etfs` scope moves to GENERAL tenancy, and a `rivalfunds` system key is the source of the derived tiers (validate 0 refusals; generated targets content-identical).
+
+## Project name, verbatim
+
+Recorded September 30, 2026, approximately 00:2x ET (04:2x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9. Exact receipt timestamp not exposed.
+
+> I like it, lets call this ETFS_RIVALS
+
+The project code is `ETFS_RIVALS`. Registering it (L3) is 1.0.0_SA_CTO's; this seat records the name and relays it. The product and resource token stays `rivalfunds` (`etfs-rivalfunds-daily`, `/rivalfunds`); a project code is never a system token.

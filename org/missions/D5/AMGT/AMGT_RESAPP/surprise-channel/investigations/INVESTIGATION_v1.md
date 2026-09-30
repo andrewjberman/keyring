@@ -15869,6 +15869,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Ruled at the cut: cell 3 is NOT cut in RESAPP round 51 (no RESAPP-owned write moves the six); the re-home (CORPUS unit-map discriminator; DSGN page scale) is asked of 1.0.0_SA_CTO~Z as one decision, since it moves where FWD-30's last hold is served. Cell 8 carries cells 5 and 6 only."
 },
 {
+ "id": "AMGT_RESAPP-Z-W185-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~185",
+ "surfaced_at": "2026-09-30T04:00:00Z",
+ "one_line": "The shared point-verification gate (verify_points_against_excerpt, ADDENDUM 2 A2.3) lets the LAST-located period's block run to the excerpt's end, so in a columnar table the last column verifies ANY equal whole number below its header, including a value from a different column.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/filings/analyze.py _period_blocks (:1029): the last located label's block ends at text_len; test lib/research/filings/tests/test_reverify_dry_run.py::test_a_header_run_the_points_do_not_cover_is_still_column_aligned: a lone '2024' point (the only located label) with value 1111 (the 2022 column's number) verified with span [27,32].",
+   "My columnar fallback (_columnar_verify) is ordinal-aligned and rejects a wrong-column value, but it runs only for points the standard gate HELD; the standard gate's acceptance of the last block is unchanged (not in cell zz-6's scope, ruled A2.3 text)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Cell AMGT-zz-6: a point whose value is NOT found in the excerpt must stay unspanned; ADDENDUM 2 A2.3: a point verifies only inside the block carrying ITS OWN period label.",
+ "world_is": "For the last-located period the block is the rest of the excerpt, so 'its own block' is not bounded; a wrong-column value present anywhere below the header still verifies. ASML_NA_Equity's three points are correct (each equals its own column, checked by hand against the excerpt), so zz-6's result is unaffected; the cause of the ORIGINAL missing spans was the columnar shape (earlier years' blocks are just their header line), fixed in _columnar_verify.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z. Not fixed here: tightening _period_blocks or verify_points_against_excerpt changes a ruled gate other filings' stored objects rest on."
+},
+{
   "id": "AMGT_RESAPP-Z-W184-S1",
   "project": "AMGT_RESAPP",
   "fabric": "site-z",
