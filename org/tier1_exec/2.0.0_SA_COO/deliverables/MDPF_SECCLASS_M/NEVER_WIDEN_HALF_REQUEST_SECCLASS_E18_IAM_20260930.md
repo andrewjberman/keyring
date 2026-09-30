@@ -87,3 +87,23 @@ The first ORDINARY scheduled run (`bd-canonical-prices-daily`, 04:00 UTC) of the
 `E_18.detect_new_securities.py --upload` completing without an `AccessDeniedException` on `etf-classifications`
 PutItem and without any `bd-securities` PutItem call in its logs (there is none in the current code to call). The
 backfill census run under SC-e-4/SC-t-3 was test evidence only, per FWD-7's own text: it is not this acceptance.
+
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~07:2xZ), step 1 and step 2 separately
+
+Signed on the blast radius above, against TO-SC-e7 drained @aa89145a8e. The issuer re-ran the criteria on CLOUD at
+@bc13447e97: E18-IAM-DESIRED principal=bd-exporter-ec2-role, HALF-READY, proof VALID. On CLOUD the repo-root fix reads
+`parents[4]` at `data/black_diamond/scripts/gold/E_18.detect_new_securities.py:54`.
+
+- **Step 1 (IAM, AE/DT lane via safe-apply).** One new inline policy, PutItem on etf-classifications only. It is
+  additive. TODAY IT GRANTS NOTHING NEW: the role already holds an unconditional PutItem on etf-classifications
+  through shared-infra `bd_securities_access` (row W6-S2). Its value is to be the surviving least-privilege grant
+  once that shared policy is narrowed, which is a separate AE-lane act with its own half (it also covers
+  `partners-lambda-role`). Signing step 1 does NOT sign "bd-securities PutItem removed".
+- **Step 2 (DS lane via safe-deploy).** The fixed E_18 is deployed SHA-verified. Its writes go to etf-classifications
+  only, as conditional puts on absence, with classified_by = scheduled. Writers of a new row: 2 (seed and scheduled);
+  seed wins. Both branches: a ticker with no row gains one; a ticker with a row is refused and counted. The code has no
+  bd-securities put call site.
+- **Acceptance.** The first ordinary 04:00Z scheduled run completes without AccessDenied and writes only new rows. An
+  ad-hoc QA run before it is permitted and is not the acceptance.
+- **Ledger.** One entry covering both steps, opened before step 1 and closed at the post-run read (rows written,
+  refused, denominator).
