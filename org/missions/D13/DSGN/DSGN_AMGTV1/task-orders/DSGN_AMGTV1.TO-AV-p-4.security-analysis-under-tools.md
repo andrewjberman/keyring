@@ -70,7 +70,7 @@ Report once: what changed and where, the output line of every criterion, the por
 L4-R / L8-L10). Base 29c8226a: sidebar.cjs 1 of 3; green 3 of 3; admin-gate 10 / 0 at base.
 
 <direct_act>true</direct_act>
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <slot>~35</slot>
 <fabric>site-z</fabric>

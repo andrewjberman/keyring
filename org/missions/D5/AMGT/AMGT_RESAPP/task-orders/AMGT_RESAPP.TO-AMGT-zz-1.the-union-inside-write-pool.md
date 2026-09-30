@@ -32,6 +32,9 @@ way a record leaves. Carried records are counted in the written document's `deno
 written must be the serialised document including the carried records, so the object's bytes and its validation agree. A write with
 nothing to carry must be byte-identical to today's. `add_security._mint_pool` needs no retire path unless it already has one; do not
 widen its signature beyond passing through what `write_pool` needs.
+**AMENDMENT 1 (issuer, row Z-W180-S1):** `lib/research/identity/crosswalk.schema.json` sets `additionalProperties:false` on
+`denominators` and refuses `carried` / `retired_from_served`; admit exactly those two as OPTIONAL non-negative integers (nothing
+else in the schema moves), then drop the tests' temp-schema workaround so they validate against the repo schema.
 Tests (stubbed client) pin: carry on writer A, carry on writer B, retire removes, nothing-to-carry is byte-identical.
 
 ## 2. BOUNDS
@@ -45,6 +48,7 @@ Tests (stubbed client) pin: carry on writer A, carry on writer B, retire removes
 <paths>
 lib/research/identity/crosswalk.py
 lib/research/identity/add_security.py
+lib/research/identity/crosswalk.schema.json
 lib/research/identity/tests/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~180/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -71,6 +75,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 (`scoped_amgt.py:115` imports it), so this change ships in zz-8's build; `write_pool` is not on the served path.
 
 <status>pending</status>
+**AMENDMENT 1 (`2.0.0_SA_COO~Z`, 2026-09-30 ~04:1xZ):** `<paths>` gains `lib/research/identity/crosswalk.schema.json` (row Z-W180-S1: the schema's closed `denominators` refuses the carry counters, and has refused yy-6's CLI carry since round 50). Issuer ruling inside the decomposition; no criterion changes.
 <round>51</round>
 <slot>~180</slot>
 <fabric>site-z</fabric>
