@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~10</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -118,6 +118,7 @@ data/black_diamond/scripts/gold/tests/test_etf_classifier_deployed_resolution.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_deployed_layout_import.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_BD_THREAD_R3_20260930.md
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/ssm/opal-bd-asset-dim-download.json
 </paths>
 
 The block is your WRITE grant. Everything else named here you READ and never edit.
@@ -147,3 +148,29 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: 1.0.0_SA_CTO rounds 4-5 analysis @533bcae124 section 4 item 1; RULING 103369; DECISION 103371; row MDPF_SECCLASS-S5.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M, 2026-09-30 ~22:1xZ) -- the silver runner stages the shared modules too
+
+Ruling on row `MDPF_SECCLASS-W10-S1` (BLOCKING, disarm owner this seat; the issuer rules inside its own decomposition).
+The silver bootstrap document `infra/aws/ssm/opal-bd-asset-dim-download.json` copies `code/gold/lib/etf_classifier.py`
+but not `code/gold/lib/_shared/*`, and the served silver builder depends on internals the new library drops, so the gold
+redeploy cannot land without the silver leg. The document is not Terraform-managed (only `bd-pipeline/iam.tf:97` names
+it). It is now in `<paths>`.
+
+- Add the copy lines that stage the three shipped modules (`code/gold/lib/_shared/etf_classifications_dynamodb.py`,
+  `etf_classification_scheduled.py`, `etf_classification.py`) into the RUNROOT at the path the library resolves
+  (`data/black_diamond/scripts/gold/lib/_shared/`), in the same style as the document's existing copy lines. Derive the
+  list from `safe_deploy_core.shipped_artifacts_for()` if the document format allows; otherwise type the three names and
+  let the check prove they match the tool.
+- The deployed-layout check: its `SILVER-LAYOUT-AS-STAGED-TODAY` line must now read the document from the repo and import
+  OK. The check exits non-zero when the silver as-staged import is refused, so AC2 fails on a silver gap from now on.
+- Find how this SSM document reaches AWS (a deploy script, a runbook, or `aws ssm update-document` by hand; read the
+  estate, and read the live document version with `aws ssm describe-document`, read only). In the BD_THREAD_R3 half, add
+  the document update as its own leg BEFORE the silver builder's redeploy: the act, the live version before, and the
+  rollback (restore the prior default version). Remove precondition P1 as satisfied by that leg, citing this amendment.
+- Re-run the three criteria, re-validate the proof (VALID rc=0), flip `<status>` back to complete, commit.
+- Rows W10-S2 (E_18 has no trigger in `gold_dispatch.sh`) and W10-S3 (`.tools/test_safe_deploy.py` fails 7 of 14
+  before and after) are NOT in scope here; leave them as filed.
+
+Gate limb: none graded this modification (a modification of an existing order; `.tools/to-pipeline-gate.py` LIMB 6 fires
+on new orders only, and this order declares no placeholders).

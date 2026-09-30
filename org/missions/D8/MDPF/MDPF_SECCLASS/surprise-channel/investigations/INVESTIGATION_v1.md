@@ -784,3 +784,136 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not a defect in the census; a stated bound. No untracked file was read."
 }
 ```
+
+## MDPF_SECCLASS-W10-S1 -- the BD silver runner's bootstrap document does not fetch the shared client, so the silver builder would REFUSE on its runner after the gold redeploy (and the rolled-back builder breaks on the new library)
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T21:25:00Z",
+  "one_line": "infra/aws/ssm/opal-bd-asset-dim-download.json stages the silver runner's tree with two gold-lib cp lines (etf_classifier.py, __init__.py) and no cp of code/gold/lib/_shared/*, so build_bd_assets_dim.py reaches gold/lib but the shared client is absent there: ETFClassifier.instance() refuses (BLOCKED, ImportError) until three cp lines and one mkdir are added to that document, which is outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (cut a cell that adds the three code/gold/lib/_shared cp lines to infra/aws/ssm/opal-bd-asset-dim-download.json and lands the document before the BD_THREAD_R3 redeploy; or hold the redeploy's silver leg)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ssm/opal-bd-asset-dim-download.json runCommand lines 'aws s3 cp s3://opal-data-bd/code/gold/lib/etf_classifier.py ...' and '.../code/gold/lib/__init__.py ...' only; python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_deployed_layout_import.py (wk-MDPF_SECCLASS-10 @a170cf4cb2) prints 'SILVER-LAYOUT-AS-STAGED-TODAY REFUSED build_bd_assets_dim import=OK client=UNRESOLVED ImportError: BLOCKED: the shared ETFClassifier client ...' and, with the three shipped modules added to the staged tree, 'SILVER-LAYOUT-WITH-SHIPPED-ARTIFACTS OK ... client=<staged>/gold/lib/_shared/etf_classifications_dynamodb.py'.",
+      "live S3 code/silver/build_bd_assets_dim.py VersionId rfdhSeghulhB_Y1.qra.xVBUCFBU_35y (18:16:33Z, 16184 bytes, ETag 662ef035..) still calls ETFClassifier.instance() and reads the private _ticker_map/_name_map (1 match), which the SC-t-1 library drops (live code/gold/lib/etf_classifier.py after the 18:16Z rollback is the OLD one, VersionId yk0qwnF4Dyur2rUn1alS5Nt2_EtsR5Kx, 6605 bytes): redeploying lib/etf_classifier.py without the new builder breaks the silver job too, so the builder must ride the same act."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e13 step 3: find how the silver runner lays out code/silver/ and whether code/gold/ sits beside it; if the silver runner cannot reach the gold lib, make build_bd_assets_dim.py resolve it the same way, inside the grant.",
+  "world_is": "The silver runner DOES reach gold/lib (a repo-shaped RUNROOT built by cp lines; the builder's own ../gold sys.path insert resolves) so build_bd_assets_dim.py needed no change; what it cannot reach is the shared client, because the document that stages the runner is outside the grant (infra/aws/ssm is not in the paths block). The silver leg of the BD_THREAD_R3 redeploy is therefore stated in the half as gated on that document landing.",
+  "notes": "The daily asset-dim job fires about 22:10Z (bd_assets_dim.parquet LastModified 22:11Z on 09-28 and 09-29). The half (NEVER_WIDEN_HALF_REQUEST_SECCLASS_BD_THREAD_R3_20260930.md) names this as precondition P1 and does not authorise the silver leg without it."
+}
+```
+
+## MDPF_SECCLASS-W10-S2 -- E_18 has no trigger: gold_dispatch.sh lists no E_* id in its catalog or chains, so the 'first scheduled run' acceptance the order moves to cannot fire
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T21:26:00Z",
+  "one_line": "data/black_diamond/scripts/gold/gold_dispatch.sh CATALOG (S_00, A_*, B_*, C_*, D_*) and every CHAIN_* exclude E_18, so no scheduled fire runs E_18.detect_new_securities.py; the live S3 copy (VersionId NVNguz8v2wHJW_KSsDx9S8MGpeMElqSE, 14:11:20Z, 13120 bytes) still carries the parents[4] hop and has not crashed only because nothing runs it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gold_dispatch.sh CATALOG (lines ~92-117) and CHAIN_SILVER_PREP / CHAIN_DIMENSIONS / CHAIN_CANONICAL / CHAIN_DOWNSTREAM / CHAIN_FULL hold no E_ id; a Grep of data/black_diamond/scripts/gold/*.sh|yaml|md for E_18 finds only REGISTRY.md:128 and README_BUILD_SEQUENCE.md:79 (documentation).",
+      "infra/aws/terraform/bd-pipeline/iam.tf:729 comment says E_18 is run by the bd-gold-layer-runner 'via bd-gold-trigger -> gold_dispatch.sh, script 12+'; the dispatcher's own catalog does not carry it (same conclusion as row MDPF_SECCLASS-S5 notes)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e13 step 6: the half covers 'E_18's moved acceptance: its first scheduled run after the redeploy'.",
+  "world_is": "No schedule reaches E_18, so that acceptance has no event to wait on. The half states it as written and names the gap; the only proof of E_18's import on a runner this order can give is the deployed-layout check's extract. A trigger (a catalog entry or a named ad-hoc dry-run) is a decision for the signers, not this cell.",
+  "notes": "E_18's --upload writes only new etf-classifications rows (attribute_not_exists), cited from the E18 IAM half; a dry-run (no --upload) reads only."
+}
+```
+
+## MDPF_SECCLASS-W10-S3 -- the deploy tool's own test file .tools/test_safe_deploy.py fails 7 of 14 before and after this order's edit
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T21:27:00Z",
+  "one_line": ".tools/test_safe_deploy.py reports 7 failed / 7 passed (INDEX_MISSING in four deploy_file cases; 'Strings must be encoded before hashing' in three) both with and without the SC-e-13 edit to .tools/safe_deploy_core.py, so the file cannot stand as a regression guard for a change to that tool.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest .tools/test_safe_deploy.py -q -p no:cacheprovider on wk-MDPF_SECCLASS-10 with the edit -> '7 failed, 7 passed'; the same file run against git show HEAD:.tools/safe_deploy_core.py copied to .scratch/headtools/ -> '7 failed, 7 passed'.",
+      ".tools/tests/test_safe_deploy_distribution_member.py, test_safe_deploy_receipt_names_both_legs.py and test_deploy_ledger_held.py: 3 passed with the edit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e13 step 1 edits safe_deploy_core.py; the constraint 'read .tools/safe_deploy_core.py before designing the mapping' assumes the tool is guarded by its tests.",
+  "world_is": "Half of the tool's own test file already fails at the base (a test-side hashing TypeError and index-blob lookups in a worktree where the fixture files are not staged); the order's mapping is exercised by its own test (test_deploy_tool_ships_the_shared_modules_beside_the_gold_files) and the deployed-layout check, not by that file.",
+  "notes": "Not widened: fixing the test file is outside the order's paths."
+}
+```
+
+## MDPF_SECCLASS-W10-S4 -- Amendment 1 of TO-SC-e13 (c3d41dc9dd) disarms row MDPF_SECCLASS-W10-S1 in the repo: infra/aws/ssm/opal-bd-asset-dim-download.json now stages the three
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T23:00:00Z",
+  "one_line": "Amendment 1 of TO-SC-e13 (c3d41dc9dd) disarms row MDPF_SECCLASS-W10-S1 in the repo: infra/aws/ssm/opal-bd-asset-dim-download.json now stages the three shipped shared modules, the deployed-layout check imports the silver builder from that document (SILVER-LAYOUT-AS-STAGED-TODAY OK) and exits non-zero on a silver gap; the live document (DefaultVersion 4) is unchanged until Leg 0 of the BD_THREAD_R3 half runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_deployed_layout_import.py (wk-MDPF_SECCLASS-10) prints 'SILVER-LAYOUT-AS-STAGED-TODAY SHARED-KEYS-MATCH-TOOL document names 3 _shared keys, safe_deploy_core.shipped_artifacts_for names 3, sets equal', 'SILVER-LAYOUT-AS-STAGED-TODAY OK build_bd_assets_dim import=OK', 'SILVER-NEGATIVE-CONTROL REFUSED-AS-EXPECTED', exit 0; run against the pre-amendment document (git show c3d41dc9dd:infra/aws/ssm/opal-bd-asset-dim-download.json) it prints SHARED-KEYS-MISMATCH document=[] and REFUSED and exits 1.",
+      "Live document read only: .tools/aws ssm describe-document -> DefaultVersion=4 LatestVersion=4, Hash 294a7036...ae95e == sha256 of git show c3d41dc9dd:<file>; the repo edit is not live. The BD_THREAD_R3 half carries Leg 0 (the update-document act, the live version before, the rollback) and marks P1 satisfied by it per amendment 1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row MDPF_SECCLASS-W10-S1 (BLOCKING, ARMED): the silver bootstrap document does not fetch the shared client, so the silver builder refuses after the gold redeploy; disarm owner 2.0.0_SA_COO~M.",
+  "world_is": "Amendment 1 put the document in this order's paths; the document, the check and the half are edited and proven locally. The disarm is complete only when Leg 0 runs live (not done here: no SSM update). W10-S1 itself is not edited.",
+  "notes": "Cites MDPF_SECCLASS-W10-S1. See MDPF_SECCLASS-W10-S5 for the ordering hazard inside Leg 0."
+}
+```
+
+## MDPF_SECCLASS-W10-S5 -- The silver trigger Lambda reads the SSM document at DocumentVersion '$LATEST', so update-document takes effect at the very next 22:10Z fire and restor
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T23:00:30Z",
+  "one_line": "The silver trigger Lambda reads the SSM document at DocumentVersion '$LATEST', so update-document takes effect at the very next 22:10Z fire and restoring the default version does not roll it back; and the three new cp sources are first-mint keys that the gold redeploy creates, so a fire between Leg 0 and step 1 exits at the first missing key (set -eo pipefail) BEFORE shutdown is armed and strands the runner.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (sign the half with Leg 0 and step 1 as ONE gap between 22:10Z fires, or reorder so the shared keys exist before the document changes; and treat the rollback as republish-the-v4-bytes, not restore-default alone)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger/lambda_function.py:55-58 ssm.send_command(DocumentName=SSM_DOCUMENT, DocumentVersion='$LATEST'); rule bd-asset-dim-pipeline-trigger cron(10 22 ? * MON-FRI *) ENABLED (aws events describe-rule, read only); live Lambda code not byte-read, repo source cited.",
+      "infra/aws/ssm/opal-bd-asset-dim-download.json: 'set -eo pipefail' at the top of runCommand; each cp line ends '2>&1 | tee -a $LOG'; 'shutdown -h +2 &' comes after the dim rebuild, so an early exit leaves the instance running. The three _shared keys are head-object 404 today (R3 half, change 4); step 1 of the half creates them.",
+      "org/critical_paths/change_management/20260928T2032Z_nfra-mcpindex-bd-asset-dim-rest-schedule_deploy_completion.md leg L2 states 'Rollback = update-document-default-version 3' while the same trigger read $LATEST: that rollback form would not have moved the scheduled fire."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1: add the document update as its own leg BEFORE the silver builder's redeploy, with the live default version before and the rollback 'restore the prior default version'.",
+  "world_is": "Both halves of that instruction are unsafe as worded: the default version is not what the trigger runs ($LATEST is), and a document that changes before the shared keys exist fails the next fire without arming shutdown. Leg 0 in the half states the same-gap constraint and a two-part rollback (default to 4, then republish the v4 bytes as a new $LATEST); the order inside the gap stays the issuer's.",
+  "notes": "Nothing was updated or run; the act is unsigned. Cites MDPF_SECCLASS-W10-S1 and -S4."
+}
+```
