@@ -3540,6 +3540,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Instance expect field differs from the TO text only by regex escaping; the check scripts were not edited."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W70-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~70",
+      "surfaced_at": "2026-09-30T09:00Z",
+      "one_line": "The wsj job ended no_new_articles (a SUCCESSFUL status) with reached_span null, because its listing pages 1-3 were served from today's held listing bronze (dedupe cache), which records no listing capture and so no reach; AC1 FAIL and build-daily was not run.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "COO half s.2 Branch A / o-1: a job whose status is in SUCCESSFUL_RUN_STATUSES, including no_new_articles, carries a reached_span; AC1 requires a reached_span on every successful job.",
+      "world_is": "Run 20260930T084110Z-run-4ee47491 persisted (1 object). Jobs: bbg request_rejected reached_span null; wsj no_new_articles reached_span null, 16 keys skipped known_urls, fetched 0, ~6s. Measured after the run: wsj news_listing pages p1,p2,p3 for the Lenovo query hash exist in date=2026-09-30 with LastModified 05:12Z (before the run), and NO new bbg/wsj object was created (AC1 diff new 0). worker.fold_listing_reach folds only client.listings, which Publisher._record_listing fills from session.captured; the get_listing_bronze cache branch (publishers.py ~:650) sets listing_ref from the bucket object and never calls _record_listing. Inference (not separately traced): the wsj job read cached pages, so no reach was accumulated. AC1 printed 'FAIL: successful job wsj carries no reached_span'. Per CTO condition 3 (each after-read passing before the next) the upload was a no-op (remaining_pending 0) and build-daily was NOT run; chatter_daily stays 9 parts. Both AC1 and AC2 would need a wsj span that this code cannot write on a same-day dedupe-served walk.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~70/q1_AC1.txt: AC1 RESULT: FAIL (1 failure(s)); successful job wsj carries no reached_span",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~70/q1_persisted_run_record.json: jobs[1] wsj no_new_articles reached_span null",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~70/q1_run.stdout.txt: job_finished wsj no_new_articles; run_record_persisted put_performed true",
+          "lib/opal_data_harvest/publishers.py:650-661 cached_listing branch; lib/opal_data_harvest/worker.py:56-85 fold_listing_reach"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Forward only; nothing retried. The only S3 put by this act is the run record (amgt/harvest/bronze/run_record/date=2026-09-30/20260930T084110Z-run-4ee47491.json). Code cells q-2/q-4..q-6 may be the place the span for a cache-served walk is decided; not this order's."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W70-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~70",
+      "surfaced_at": "2026-09-30T09:00Z",
+      "one_line": "The bbg job ended request_rejected (Branch B) after the adaptive press-and-hold verification found no checkmark in 12s; one bbg article key (NM5NLQ6K50XZ01) was fetched and recorded not stored / no_outcome_recorded.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "COO half s.2 Branch B: a job that refuses is recorded and not retried, contributes no span, and the record still persists.",
+      "world_is": "events.jsonl: verification_started bbg 08:41:34Z, press-and-hold 'no checkmark or peak detected within 12s ... releasing anyway', job_finished bbg request_rejected 08:42:22Z. Persisted run record: bbg reached_span null, keys_fetched_not_stored [bbg:NM5NLQ6K50XZ01 no_outcome_recorded], keys_stored_join [], 10 bbg keys skipped known_ids. No retry made; no agent HTTP or browser call.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~70/q1_run.stdout.txt: verification_action and job_finished bbg request_rejected",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~70/q1_run_record_outcomes.txt: keys_fetched_not_stored bbg:NM5NLQ6K50XZ01 no_outcome_recorded"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Served /timeline read taken with no rebuild: ['bbg'] 265 days and ['bbg','wsj'] 8, equal to baseline (q1_served_read.txt)."
     }
   ]
 ```
