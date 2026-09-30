@@ -1,54 +1,51 @@
-# AMGT_CORPUS -- L5 decomposition v18.0 -- ROUND 18 (three independent cells now; the r-1 re-sign sequenced)
+# AMGT_CORPUS -- L5 decomposition v19.0 -- ROUND 19 (two independent cells now; the r-1 re-sign sequenced)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-09-30 ~01:1xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-17 analysis
-`ledger/ROUND_ANALYSIS.round17.md` @`50a4593cba` (msg 26826, READ-acked), s.4 ENRICHMENT LIST (four items) and s.2 rulings 1-4.
-Round 17's decomposition is kept as `AMGT_CORPUS_DECOMP.round17.md`. Base of the cut: CLOUD `9dc713f359`.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-09-30 ~02:2xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-18 analysis
+`ledger/ROUND_ANALYSIS.round18.md` @`62ccfcb8d2` (msg 26846, READ-acked), s.4 ENRICHMENT LIST (three items) and s.2 rulings 1-4.
+Round 18's decomposition is kept as `AMGT_CORPUS_DECOMP.round18.md`. Base of the cut: CLOUD `d357a9e247`.
 
 ## 0. What this round IS
 
 | # | item (analysis s.4) | cell | slot |
 |---|---|---|---|
-| 1 | registered names with no block get pulled: a population mode on `model_block_pull.py`, a step of the scheduled induction | `CRPS-t-1` | `~1` |
-| 2 | `Z-S65`: per-security exceptions in `build_unit_map` | `CRPS-t-2` | `~2` |
-| 3 | `Z-S64`: the key form each model-block reader uses (read-only) | `CRPS-t-3` | `~3` |
-| 4 | re-sign `r-1` (with t-1's step) once AMGT_RESAPP r51's `write_pool` union drains | `CRPS-t-4` | the issuer's WORLD act under a pair; no order |
+| 1 | `Z-W2-S13`: `_resolved_unit` / `_resolved_sign` honour a scalar field's per-security exception; print Hitachi's BEST_SALES served unit against the fixed reader | `CRPS-u-1` | `~1` |
+| 2 | `Z-W2-S14`: the `build_unit_map` CLI uses the producer's header preparation (replay 214 of 214) | `CRPS-u-2` | `~2` |
+| 3 | re-sign `r-1` (with the `admit` step) once AMGT_RESAPP r51 cell 1 drains | `CRPS-u-3` | the issuer's WORLD act under a pair; no order |
 
-**NOT cells** (the analysis): re-keying the model block; widening the evidence rule.
+**Routed, NOT cells** (the analysis): `Z-W1-S18` to AMGT_RESAPP (ruling 3); `Z-S64`, the migration.
 
 ## 1. The rectangle
 
 | cell | `<risk>` | write set | the build |
 |---|---|---|---|
-| `CRPS-t-1` | LOCAL (the fire goes under t-4's pair) | `integrations/bloomberg/research/model_block_pull.py`, `.../tests/test_model_block_admit.py` (new), `lib/research/corpus/induction_scheduled.py`, `lib/research/corpus/tests/test_induction_schedule.py` | the `admit` stage (the population prints first; a loud refusal if not signed in; batches of at most 3), run after registration on the scheduled path |
-| `CRPS-t-2` | LOCAL | `integrations/bloomberg/research/build_unit_map.py`, `.../tests/test_build_unit_map_exceptions.py` (new), `.../tests/test_build_unit_map_classification_split.py` | an exception per security; never a shared status or type change |
-| `CRPS-t-3` | LOCAL, read-only | `deliverables/0.9.0_WK_AMGT_CORPUS~3/MODEL_BLOCK_READERS_ROUND18.{json,md}` | the reader census, with BP/NG measured |
+| `CRPS-u-1` | LOCAL | `integrations/bloomberg/research/model_block_pull.py` (the two readers only), `.../tests/test_model_block_resolved_exception.py` (new) | under a SCALAR shared unit/sign, a security whose `per_security_detail` entry carries an `exception`, or a unit/sign status that is not `MEASURED`, reads its own UNRESOLVED text, never the shared value |
+| `CRPS-u-2` | LOCAL | `integrations/bloomberg/research/build_unit_map.py`, `.../tests/test_build_unit_map_cli_header.py` (new), `.../tests/test_build_unit_map_exceptions.py` | one header-preparation function (the CIE_DES_BULK join and the bestdata FY1 merge) that the CLI uses |
 
-Write sets are disjoint. `t-1` and `t-2` both sit under `integrations/bloomberg/research/`, but in different files.
+Write sets are disjoint. `test_build_unit_map_classification_split.py` is read-only to both and graded by both.
+**The one hookup belongs to no cell:** `model_block_pull._ensure_unit_map` calling u-2's function in place of its inline
+preparation is added by the issuer at the merge, in one commit, after both cells drain.
 
-## 1a. Re-groundings at L5
+## 1a. Re-groundings at L5 (measured at base `d357a9e247`)
 
-- **t-1:** `model_block_pull.main` requires `--securities` on every stage. `admit` is the one stage without it. The population
-  matches the round-17 census (the live library through the served crosswalk, 96), and today reads 0 without a block.
-- **t-2:** the replay instrument (`checks/round18/t2_replay.py`) runs `build_unit_map.main(["--securities", "6501 JP
-  Equity"])` against the pre-Hitachi map (`ead621d685^1`) in a temp file. It reads S3 raw only.
-  - List elements are matched by identity. A positional diff read 2918 "changed", because the CLI inserts in sorted order.
-  - At base: `shared_changed 23 type_changed 4 hitachi_reproduced 209 of 214`.
-  - The CTO's "byte-equal" is graded as 0 shared or type change, with the reproduction count reported. An exception entry is
-    a 6501-scoped addition by construction.
-- **t-3:** the writer's form is measured (`BP/_LN_Equity` raw, 6 objects). The census measures every reader against it.
-- **t-4: dependency as data.**
-  - It fires when AMGT_RESAPP round 51's cell 1 merges on CLOUD. That cell moves the union into `write_pool` itself, so
-    `add_security` is covered (row `Z-S66`). Until then, `add_security` builds without `served=`.
-  - It also waits on `t-1`'s merge.
-  - The re-sign's fork test runs through `add_security` on both sides, and the CTO half re-grades branch 2, including t-1's
-    step.
+- **u-1, the committed map's form.** `field_map.json` BEST_SALES is the only scalar-unit field with a non-MEASURED 6501 entry
+  (census over 66 fields). Its 6501 entry was hand-landed by ruling (b) before t-2, so it carries UNRESOLVED statuses and
+  **no `exception` key**. A reader honouring only `exception` would still serve `MILLIONS` on the committed map. The issuer
+  rules, inside this decomposition: the reader also honours a per-security status that is not `MEASURED`.
+- **u-1, ruling 1's measurement, taken at the cut.** The served block `derived/model_block/6501_JP_Equity/20260929T232834Z`
+  already reads BEST_SALES FY1 (value 11962163.4) with an UNRESOLVED unit: it was derived under the pre-t-2 map, where the
+  field was a per-security dict. The reader at base returns MEASURED `MILLIONS` for 6501 on the committed map. So the hazard
+  is on the NEXT derive, not the served block. After the fix the two agree, and by ruling 1 **the served block stands**. No
+  served re-derive is owed. The raw bestdata carries values only, with no unit field.
+- **u-2:** the base replay reads `shared_changed 0 type_changed 0 hitachi_reproduced 209 of 214 non6501_added 0`. The five
+  missing are the `measured_on` appends that depend on the producer's header (row `Z-W2-S14`).
+- **u-3: dependency as data.** `lib/research/identity/crosswalk.py`'s newest commit is still `6a940b02b8`; AMGT_RESAPP r51
+  cell 1 has not merged. It fires when it does.
 
 ## 5. The round -- one issuance, fan-out as data
 
-- `fanout: 3 of 4 chains, cap 8, reason: t-1/t-2/t-3 independent now; t-4 is the issuer's act sequenced behind AMGT_RESAPP
-  r51 cell 1 and t-1.`
+- `fanout: 2 of 3 chains, cap 8, reason: u-1/u-2 independent now; u-3 is the issuer's act sequenced behind AMGT_RESAPP r51 cell 1.`
 - **Drain:**
-  - Each tip is re-graded, then merged.
-  - The one real run: `admit --dry-run` on the live population, the t-2 replay at HEAD, and the t-3 table re-read for BP.
-  - The L8 packet then goes to `3.0.0_SA_CVO~Z`. If t-4 is still blocked, the packet states it.
-- Surprise rows from `Z-S67`. Worker rows are `AMGT_CORPUS-Z-W<n>-S<k>`, with `disarm_owner 2.0.0_SA_COO~X`.
+  - Each tip is re-graded, then merged; then the one hookup commit.
+  - The one real run: the u-1 probe on the merged tree (both lines) and the u-2 replay at HEAD after the hookup.
+  - The L8 packet then goes to `3.0.0_SA_CVO~Z`. If u-3 is still blocked, the packet states it.
+- Surprise rows from `Z-S68`. Worker rows are `AMGT_CORPUS-Z-W<n>-S<k>`, with `disarm_owner 2.0.0_SA_COO~X`.
