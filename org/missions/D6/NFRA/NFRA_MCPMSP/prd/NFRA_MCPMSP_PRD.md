@@ -3,7 +3,7 @@
   "project": "NFRA_MCPMSP",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.1",
+  "prd_version": "v0.2",
   "step": 4,
   "brief_ref": "docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md@77ddde1d13",
   "endpoint_outcomes": [
@@ -195,9 +195,19 @@ is cut against the path where the gateway lives at issuance.
 
 **C5 -- Per-firm AWS role, assumed per request; the gateway holds no firm read.**
 - The gateway's own identity carries no read on any firm's data (record s.8).
-- For each served request it assumes the role of the firm the router selected. That role reads ONLY its firm's bucket:
-  `opal-data-inf` for Inflection, `opal-data-cot` for Cottonwood (record s.10, card 5, current buckets). Every other
-  firm's bucket carries a bucket-scoped Deny.
+- For each served request it assumes the role of the firm the router selected. That role reads ONLY its own firm's
+  data, in both shapes the estate holds it (CLAUDE.md's cross-firm rule: "shared bucket -> key-prefix + IAM condition;
+  per-firm buckets -> bucket-scoped Deny"):
+  - its firm's bucket, `opal-data-inf` for Inflection and `opal-data-cot` for Cottonwood (record s.10, card 5, current
+    buckets), with a bucket-scoped Deny on every other firm's bucket;
+  - its firm's key prefixes in the shared served bucket the catalog declares, `opal-data-portal-v2`
+    (`app/query_v0.py:58`), for example `platinum/mdpf/inflection/`, allowed by an IAM prefix condition, with an
+    explicit Deny on every other firm's prefixes.
+- **v0.2 amendment** (2026-09-30, on 2.0.0_SA_COO~MS row NFRA_MCPMSP-Z-S1 @110d6e6398, msg 26947, option (a)). v0.1 named
+  the firm bucket only, but the figures FWD-1 answers from are served only under `opal-data-portal-v2`.
+  - Option (b), a copy of those figures in `opal-data-inf`, would be a duplicate output path (CLAUDE.md's no-shadow
+    rule).
+  - Option (c), serving through the gateway identity, breaks record s.8.
 - A scoping bug therefore surfaces as an AWS refusal, not as a leak (brief Part III).
 - Role names come from `lib/opal_naming.py name()` after a registry row lands in `infra/logic/registry/` (CLAUDE.md
   Rule 30). Each role and trust change is an IAM act under the change ledger (C12).
@@ -318,7 +328,7 @@ Sum: 1+1+11+4+1+7+1+1+1+1 = **29**.
 |---|---|---|
 | A0 | one cross-organization one-to-one chat to the Opal Analyst user is visible to the gateway's Teams reader, sender tenant ID and user ID read from the message | FWD-1 (hop 0) |
 | A1 | one named Inflection advisor's question answered in the chat from Inflection's model-portfolio figures that the portal already serves (`platinum/mdpf/inflection/`), matching the portal for the same item and stating the data's date; every hop real | FWD-1 |
-| A1n | NEGATIVE ARMS: the Inflection role reading `opal-data-cot` refused by AWS; the gateway identity reading either firm bucket refused; an unregistered tenant refused and logged | FWD-1, FWD-2 |
+| A1n | NEGATIVE ARMS: the Inflection role reading `opal-data-cot` refused by AWS; the Inflection role reading another firm's prefix in `opal-data-portal-v2` (e.g. `platinum/mdpf/cottonwood/`) refused by AWS; the gateway identity reading either firm's data refused; an unregistered tenant refused and logged | FWD-1, FWD-2 |
 | A2 | one Cottonwood conversation answered; one cross-firm question each way yields nothing about the other firm, with the refusal traced to the access controls | FWD-2 |
 | A3 | one message from a non-allowed domain, one from an allowed domain in an unregistered tenant, one guest-form address: no reply to any, three log entries with sender and time | FWD-3 |
 | A4 | one ungranted advisor refused and listed; one approval; their next question answered; the firm's tenant row created by that approval | FWD-4 |
