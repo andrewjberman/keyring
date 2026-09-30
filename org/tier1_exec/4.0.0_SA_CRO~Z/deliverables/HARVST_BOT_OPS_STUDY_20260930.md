@@ -87,3 +87,36 @@ this study possible. The warm-up step is where the headful browser belongs. The 
 That warming alone clears every challenge: FT's interstitial and the Dow Jones 401s (which may be login expiry rather
 than DataDome) are not separated here. The DataDome cookie lifetimes are not measured. No live test was run: the next
 step is one bounded warm-then-pull trial per publisher, recorded in the same ledger.
+
+## Live trial 1 (Andrew: "Yes do it"), 2026-09-30 18:10-18:23 UTC, this box's own connection
+
+Script `scripts/harvest_botops_trial.py`, one process per publisher. Log `.runtime/harvest-botops-trial-20260930/<pub>.jsonl`
+(statuses, signatures, hit counts, trust-cookie minutes-to-expiry; no article text, no cookie values). Steps: warm-up in
+headed Google Chrome with the stored session, then REST with the production client (curl_cffi, Chrome impersonation) on
+the warm cookies, re-tested at +6 and +12 minutes.
+
+| Step | bbg | wsj | barrons | ft |
+|---|---|---|---|---|
+| Warm-up homepage in Chrome | loaded, **no challenge**; fresh `_px3` with **5.2 min** life | loaded, no challenge; fresh `datadome`, `cf_clearance` | loaded, no challenge; fresh `datadome` | loaded, no challenge |
+| Auth check (REST) | 200 | 200 | 200 | (none defined) |
+| Search (REST, warm cookies) | **403 PerimeterX** | **401 DataDome** | **401 DataDome** | **200, 26 hits** |
+| Article (REST) | not reached | not reached | not reached | **200** |
+| +6 min search, stale / live cookies | 403 / connection reset | 401 / 401 | 401 / 401 | 200 / 200 |
+| +12 min: browser reload | **challenged (PerimeterX)** | **challenged (DataDome)** | **challenged (DataDome)** | no challenge; search 200 |
+
+Findings:
+1. **FT is fixed by the warm-up alone.** Its REST pulls pass for at least 12 minutes after one warm start, with stale or
+   fresh cookies. FT uses only Cloudflare's `__cf_bm`.
+2. **bbg, wsj and barrons recognise the outside client itself**, not just stale cookies. Seconds-old trust cookies did
+   not help. The production client impersonates Chrome 146 on macOS while this trial sent the browser's Chrome 154
+   Windows user agent. That mismatch is one candidate cause; trial 2 separates it.
+3. **A refused outside call poisons the browser session behind it.** The same browser that loaded unchallenged at +0 was
+   challenged on a plain reload at +12 minutes, after two or three refused REST calls. For bbg the next REST call had its
+   TCP connection reset. Mixing a browser session with an outside client on these three publishers is worse than doing
+   nothing, and retry loops (the 09-27 pattern) compound it.
+4. The PerimeterX trust cookie (`_px3`) lives about 5 minutes and is re-minted by page activity (5.4 min after the
+   +12 reload).
+
+Trial 2 (`scripts/harvest_botops_trial2.py`) is scheduled after a 70-minute cool-down (~19:35 UTC) for bbg, wsj and
+barrons. In one warm session it tests (A) REST calls issued from inside the tab, (C) a plain browser navigation to the
+search page, and last (B) the outside client with a self-consistent identity.
