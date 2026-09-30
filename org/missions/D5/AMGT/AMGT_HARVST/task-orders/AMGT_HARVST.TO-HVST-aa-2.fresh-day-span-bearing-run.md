@@ -64,6 +64,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   the template, extended with the `from_cache` / held-key reads and the `publishers_found_codes` served read.
 - **The fresh day:** today (09-30) carries cached Lenovo listings, so the act runs on 2026-10-01 UTC or later.
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~12:0xZ):**
+- **Timing and arm:** per the CTO ruling @`cb107ff848`, this runs TODAY after `aa-3`, as the CACHED-PATH arm. Section 0's
+  item 3 (a fresh UTC day) is lifted.
+- **wsj ONLY:** bbg is excluded, and its root joins the no-write set.
+  - `aa-1`'s hold table is populated only by rejections made under the new code, and `NM5NLQ6K50XZ01`'s rejection predates it.
+  - A bbg job would therefore re-fetch that key into the 403 and the challenge, which is `q-1`'s failure.
+- **The act:** `--publishers wsj --max-jobs 1`, exactly as in the COO half `round28/NEVER_WIDEN_HALF_COO_AA2.md`.
+- **The checks:** `aa2_common.WRITE = ("wsj",)`. AC1 requires that `NM5NLQ6K50XZ01` is not fetched.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
