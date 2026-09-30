@@ -3717,6 +3717,98 @@ carries none.
     "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
     "world_is": "Nothing is deployed or applied before PHASE B, which needs the issuer's GO after the CTO's G-A delta and both never-widen halves; the fail-closed release and the untargeted apply are both excluded by A3.",
     "notes": "S10 and S11 (INERT) ride the ANNOUNCE for the halves."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W20-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~20",
+    "surfaced_at": "2026-09-30T13:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT",
+    "class": "BLOCKING",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "one_line": "BLOCKING: the dry run of the naming limb (python .tools/naming-gate.py --diff <emitter diff> --enforce, rc=1) REFUSES the advi key at the first emitter change -- platinum/advi/49financial/mix_summary.json (emit_catalog_v02.py:71) and the allowlist prefix platinum/advi/49financial/ (:55) are NEW and OUT-OF-PATTERN S3 literals, as platinum/etfs was (row Z-W15-S5); per order A1 the cell stops there, with nothing built beyond the emitter edit and nothing committed in a gated path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Dry run on the worktree diff of workflows/atom_decomposition/emit_catalog_v02.py (144 lines, the authored advisor_intelligence channel + its one row + ALLOWED_PREFIXES + the v0.4 header): NAMING-GATE: REFUSE 5 graded, rc=1 with --enforce. Verbatim lines: NAMING REFUSE workflows/atom_decomposition/emit_catalog_v02.py:55 platinum/advi/49financial/ -> advi/49financial/platinum/ | why: NEW and OUT-OF-PATTERN as S3Key: REFUSE; hand-kept carrier of '49financial' outside every permitted context: read it through lookup('49financial') | NAMING REFUSE workflows/atom_decomposition/emit_catalog_v02.py:55 platinum/mdpf/ -> mdpf/{scope}/platinum/ | why: EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it | NAMING OUT-OF-PATTERN workflows/atom_decomposition/emit_catalog_v02.py:65 49financial -> lookup('49financial') | why: EXISTING hand-kept carrier (context rule): WARN; hand-kept carrier of '49financial' outside every permitted context: read it through lookup('49financial') | NAMING REFUSE workflows/atom_decomposition/emit_catalog_v02.py:71 platinum/advi/49financial/mix_summary.json -> advi/49financial/platinum/mix-summary.json | why: NEW and OUT-OF-PATTERN as S3Key: REFUSE; hand-kept carrier of '49financial' outside every permitted context: read it through lookup('49financial') | NAMING OUT-OF-PATTERN workflows/atom_decomposition/emit_catalog_v02.py:73 49financial -> lookup('49financial') | why: EXISTING hand-kept carrier (context rule): WARN; hand-kept carrier of '49financial' outside every permitted context: read it through lookup('49financial') | NAMING-GATE: REFUSE 5 graded",
+        "The catalog must name the served key (catalog_gate indexes rows by it) and the only spelling the grader prints, advi/49financial/platinum/mix-summary.json, is not where the object is served (opal-data-portal-v2 platinum/advi/49financial/mix_summary.json, VersionId KNCXZL68gRU_LR2eIwxIXGoBb_bWEB_a, read by get-object 2026-09-30), so there is no conformant spelling.",
+        "Andrew's R20 acknowledgement @1eba868308 covers platinum/etfs and opal-data-bd silver/fees only, item 3 lifts the advi hold but grants no naming exception, and the same record says the gate reads no R20 entry today (.tools/naming-gate.py:1413, :1444-1446). Order A1: 'Andrew's R20 acknowledgement covers etfs and BD fees only, not advi, so do not work around it.' No assembled string, comment marker, registry edit or gate edit was used.",
+        "Also graded REFUSE on the same edit: the EXISTING platinum/mdpf/ prefix on :55, because the widening edits that line (live remediation MDPF_CANON), exactly as in row Z-W15-S5.",
+        "Preserved, not committed to a gated path: MX-t-12.emitter-candidate.uncommitted.patch and MX-t-12.naming-gate-dryrun.txt in deliverables/0.9.0_WK_NFRA_MCPINDEX~20/; the emitter edit is also still uncommitted in the worktree."
+      ]
+    },
+    "spec_asserts": "TO MX-t-12 A1: 'If the naming limb refuses the served key as it refused platinum/etfs (row Z-W15-S5), file a BLOCKING row and stop', and item 5: 'Run AC1 and AC2, and commit'.",
+    "world_is": "The advi widening Andrew gave cannot be written into the catalog under the naming limb as it stands: the catalog exists to carry the legacy key literal, and the limb refuses any commit that adds the first literal of an out-of-pattern legacy key. Ways forward are the issuer's or the CTO's: an R20 register entry for platinum/advi/49financial/ that Andrew acknowledges AND the gate honouring it, or a registry row that makes the key conformant. The tool, the catalog row, the tests and INDEX_TOOLS were NOT built (order stop), so nothing in the gateway changed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W20-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~20",
+    "surfaced_at": "2026-09-30T13:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT",
+    "class": "OBSERVATION",
+    "one_line": "AC1 as written needs >=6 portal rows but the tree holds 4 (ROWS 4 of 4 placed) and this cell adds 1, so it reaches 5 at most: the order's 'MX-t-10 makes 5' premise fails because MX-t-10 is uncommitted and held behind Z-W15-S5; AC1 cannot reach N>=6 on this branch even if the naming limb passed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .../round5/checks/t12.AC1.sh at 8522f36154: 'portal_index ROWS entries read: 4 / placed and naming their reader 4 of 4 / minimum rows required: 6 / RESULT: FAIL / exit=1' (the order's dry run at base says the same).",
+        "git log --all for MX-t-10: no commit of its cell; the candidate is 03a19ac282 (a snapshot, not for merge) and the patch in deliverables/0.9.0_WK_NFRA_MCPINDEX~15/; row Z-W15-S5."
+      ]
+    },
+    "spec_asserts": "TO MX-t-12 AC1 (comment in t12.AC1.sh): 'this cell adds one; MX-t-10 makes 5' -> >= 6 rows.",
+    "world_is": "The 6th row exists only if MX-t-10's ETF row is merged first. Until then this cell can at best report 5 of 5 and the criterion FAILs on its minimum, not on any defect in the advi row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W20-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~20",
+    "surfaced_at": "2026-09-30T13:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT",
+    "class": "OBSERVATION",
+    "one_line": "The platinum/advi/49financial/ objects are the FROZEN never-widen twin, not the advisor-intelligence page's source: the portal's twin read is 'held' for mix_summary (adviKeyRepoint.ts ADVI_REPOINT), the publisher advi-49f-publisher is a disabled schedule, and every object is unchanged since 2026-08-21T15:03Z, so a tool over them cannot answer with the same bytes the page shows (FWD-2 parity) and its as-of is 41 days behind.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/api/endpoints/adviKeyRepoint.ts (pinned gitlink 3e2233de92, read via git archive): 'NOTHING CURRENTLY PREFERS ITS TWIN ... Andrew-direct 2026-08-21 19:18Z holds the 49F flip ... advi-49f-publisher is a DISABLED EventBridge Scheduler entry'; registry row `mix_summary: { leaf: 'mix_summary.json', state: 'held' ...}`.",
+        "s3api get-object opal-data-portal-v2 platinum/advi/49financial/mix_summary.json: LastModified 2026-08-21T15:03:17Z, metadata asof 2026-08-20, VersionId KNCXZL68gRU_LR2eIwxIXGoBb_bWEB_a, 11129 bytes; list-objects-v2 of the prefix: newest non-manifest object 2026-09-01T07:27:05Z (perfrp_book_advisor.json).",
+        "The row this cell drafted (in the preserved patch) carries this as its serve_verdict_with_caveats so any answer says it is the twin's vintage."
+      ]
+    },
+    "spec_asserts": "TO MX-t-12 item 4 and the portal_index module doc: 'a tool's figure and the page's figure are the same bytes (FWD-2 parity)'.",
+    "world_is": "Parity with the served object holds (tool vs the object by VersionId); parity with what the page displays does not, because the page reads the legacy opal-data-bd platinum/firm/ leaf while the twin is held. A reader of the tool must be told which it is; that is carried as a row caveat, not hidden."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S67",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T14:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W20-S3",
+      "NFRA_MCPINDEX-Z-W20-S4",
+      "NFRA_MCPINDEX-Z-W20-S5"
+    ],
+    "one_line": "RULES Z-W20-S3/S4/S5 at the MX-t-12 record drain (@2a10e3c247): MX-t-12 is HELD and carried to the round-5 L10 slug (A2 @0b0a6f8157) -- the naming limb refuses the NEW advi key (Andrew's R20 names etfs + BD fees only), and the platinum/advi/49financial/ objects are a frozen twin unchanged since 2026-08-21 (publisher disabled, the page's twin read held), so no tool over them can meet FWD-2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~20/MX-t-12.naming-gate-dryrun.txt: NAMING-GATE REFUSE 5 graded.",
+        "task-orders/NFRA_MCPINDEX.TO-MX-t-12.portal-tool-advi.md AMENDED A2 @0b0a6f8157.",
+        "row Z-W20-S5 evidence: every platinum/advi/49financial/ object unchanged since 2026-08-21T15:03Z; advi-49f-publisher schedule disabled; adviKeyRepoint.ts twin read held."
+      ]
+    },
+    "spec_asserts": "Every BLOCKING row carries an issuer disposition before the round closes.",
+    "world_is": "Nothing was committed on a gated path and nothing is served; the questions (which source the advi page reads; an R20 or registry row for that key) go to the CTO at L10.",
+    "notes": "AC1's floor (6 rows) also needed MX-t-10's row, which is held on the same gate (Z-W20-S4)."
   }
 ]
 ```
