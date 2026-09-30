@@ -746,6 +746,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "CTO analysis ruling 3b: a real run lands ONE message the criterion admits, its silver read by the two named readers.",
     "world_is": "The admitted message exists and is identified, but the only byte-exact path to it from this laptop is the unbuilt headless mail route; bronze must not receive a model-relayed copy.",
     "notes": "The round-1 near-miss pair stays the only byte-exact real input."
+  },
+  {
+    "id": "NFRA_TRNSPT-W1-S6",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-09-30T20:30:00Z",
+    "one_line": "Round 1's data/transcripts/scripts/tests/test_outlook_bronze.py::test_tables_source_recorded asserts the retired table label (inline-default or an assets: prefix) and now fails on the ruled label assets+registry; the file is outside TO-TR-f2's <paths>.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_outlook_bronze.py:53-54: assert criterion.load_tables()[2] in ('inline-default',) or criterion.load_tables()[2].startswith('assets:')",
+        "python -m pytest data/transcripts/scripts/tests/test_outlook_bronze.py: 1 failed (test_tables_source_recorded), 48 passed with the four outlook/wipe test files; the same 48 pass after the change",
+        "also failing before and independent of this cell: test_assets_lock.py::test_every_pinned_sha_matches (allowlist.json) and the teams land_bronze name collision when the whole tests directory runs in one process (transcript_id_for)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-f2 build item 2: load_tables returns the label assets+registry; the order's <paths> omit test_outlook_bronze.py.",
+    "world_is": "The one round-1 assertion on the label was not updated, so it fails on the required label. The order forbids weakening a test to pass and does not grant the file; the new test_outlook_envelope.py asserts the ruled label (7 passed).",
+    "notes": "One-line fix for whoever holds that file: accept label == 'assets+registry'. Left unedited by this worker."
   }
 ]
 ```
