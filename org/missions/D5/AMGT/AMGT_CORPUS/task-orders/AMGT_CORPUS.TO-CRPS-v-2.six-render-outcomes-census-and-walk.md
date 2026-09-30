@@ -157,3 +157,4 @@ CTO grades the page half from it.
 <round>20</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
