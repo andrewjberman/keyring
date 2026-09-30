@@ -3185,6 +3185,72 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "The local run makes the same LIST and GET calls but from a laptop, so per-call latency is higher than in region; COLD is a fresh interpreter (rep 1) and WARM is reps 2-3 of the same process, where the fix keeps decoded silver parts and the newest gold snapshot per (key, ETag). A deployed container reaches the WARM figure after its first request per publisher part; the first hit on a day the container has not seen reads ~35-60 objects (~0.5-2.0 s locally). Only a post-redeploy Invoke measures the in-region figure.",
       "notes": "Measured only. The redeploy and its own before/after Invokes are the later paired act, not this cell.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W61-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~61",
+      "surfaced_at": "2026-09-30T04:20Z",
+      "one_line": "OBSERVATION: fixing coverage does not by itself lift the producer's gold-branch guard -- a name resolves only when ALL FIVE publishers have a successful job reaching EVERY day of its 30-day window; PARTIAL days never resolve.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~61/o1_ac2_output.txt (PLANTED CONTROL block)",
+          "lib/research/coverage/pool_reader.py gold_window_read + _GOLD_DAY_STATE_MAP @65aa9251bc; lib/research/metrics/chatter_axis.py compute_chatter_axis 'unresolved = [key for key in identities'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-o-1 ruling: 'The guard is right and is NOT changed; the fix is in the coverage the gold table records' -- read as the route by which the gold branch stops failing INCOMPLETE_GOLD_INPUT.",
+      "world_is": "chatter_axis.compute_chatter_axis counts a name unresolved when pool_reader.gold_window_read reports any nonzero state, and gold_window_read maps PARTIAL to 'partial' and DENIED to 'no_coverage'. In the o1_ac2 planted control (synthetic run records, in memory) five publishers reaching all 30 days give RESOLVED 191 of 191 and TRENDING COMPLETE, while the SAME records from 'sa' alone give 5730 PARTIAL name-days and RESOLVED 0 of 191 (FAILED / INCOMPLETE_GOLD_INPUT).",
+      "notes": "Measured only, on a labelled synthetic control. The real run records found are zero (S3 and local), so the estate itself is unchanged by this cell.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W61-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~61",
+      "surfaced_at": "2026-09-30T04:20Z",
+      "one_line": "OBSERVATION: a listing with no parseable published date records a reached span of the fetch date only (basis stop_bound), so a live single-page run covers one day per such publisher.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_o1_run_record_reach.py test_an_undated_listing_records_the_stop_bound_and_says_so and test_a_dated_listing_records_the_oldest_hit_through_the_fetch_date (fixtures only)",
+          "lib/opal_data_harvest/worker.py reach_span @this branch"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-o-1 ruling: 'when no dated listing is reached, the span is the bound the job stopped at, recorded as such.'",
+      "world_is": "In the recorded n-1 fixtures the bbg listing hits carry no published field, so worker.reach_span returns start == end == the fetch date with basis 'stop_bound'; sa fixtures carry publishOn and return the oldest hit date through the fetch date (basis 'listing_dates'). A live-mode job stops after page 1 and a backfill job has no such bound recorded unless its listing hits are dated. I did not read the live bbg/ft/wsj/barrons hit fields.",
+      "notes": "Fixture-only observation; whether live listings for each publisher carry a date field is for the o-5 run to show.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W61-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~61",
+      "surfaced_at": "2026-09-30T04:30Z",
+      "one_line": "OBSERVATION: a collection ran on the main tree at 04:08Z while this cell was executing, so AC2's local-runtime-root count moved from 0 to 1 between two runs; the one record is pre-change and adds no coverage.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/run_records/20260930T040818Z-run-25c129af.json: retrieval_mode backfill, one job (barrons, 992_HK_Equity, status request_rejected, keys_fetched 0), no reached_span key; file mtime Sep 30 00:09 local",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~61/o1_ac2_output.txt (final run: local run records=1, with_reached_span=0) against the first run (directory absent)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-o-1 issuer note: 'No collection has run since n-1 merged: the Scheduled Task is Disabled, and run records are local-only until this cell persists them.'",
+      "world_is": "A run record from a backfill collection (barrons/992_HK_Equity, request_rejected) exists in the main tree's local runtime root, written 2026-09-30 04:09Z. It predates the reached_span field and its only job is not successful, so BEFORE and AFTER are unchanged (0 name-days moved). The AC2 output therefore reports 1 local record, not 0; it is the only version committed.",
+      "notes": "Measured only. Who started the collection is not known to this cell.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
