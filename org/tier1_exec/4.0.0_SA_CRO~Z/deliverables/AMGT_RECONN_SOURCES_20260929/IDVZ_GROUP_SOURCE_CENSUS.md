@@ -72,3 +72,24 @@ Capital Group's multi-manager sleeve structure, an inference) and INEQ's 657 ent
 
 Legal inception dates; issuer publication times; identifier-level reconciliation; the causes of the CGIC and INEQ
 patterns; any production readiness.
+
+## 4. Dividend and interest income in the trade count (measured after Andrew's question)
+
+The preview above counted every line with a quantity, including cash and currency lines. Dividend and interest income,
+and FX conversion of it, land on those lines, so they read as trades. Share of add/trim events on cash- or currency-like
+lines (`* Curncy`, TXUE's `9996651D` cash line), 0.2% floor:
+
+| Fund | Add/trim events | On cash/currency lines | Security-only events |
+|---|---:|---:|---:|
+| SCHY | 8,673 | 5,138 (59.2%) | 3,535 |
+| BIDD | 1,516 | 331 (21.8%) | 1,185 |
+| INEQ | 1,736 | 370 (21.3%) | 1,366 |
+| CGIC | 10,419 | 1,549 (14.9%) | 8,870 |
+| TXUE | 691 | 51 (7.4%) | 640 |
+| IDVZ | 683 | 32 (4.7%) | 651 |
+
+Required in the trade schedule: cash and currency lines leave trade identification and become the cash cross-check
+(dividends in, trades funded out). Still unmeasured: stock and scrip dividends, which raise share counts without a trade
+(common among European dividend payers these funds hold); they need Bloomberg's per-holding dividend history
+(`DVD_HIST_ALL`) matched on ex-date. Income-funded buying stays a real trade, labelled as such when the cash line falls in
+the same window.
