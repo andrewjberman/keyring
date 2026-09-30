@@ -2984,6 +2984,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "world_is": "The checker treats the instance expect as a regex; the prose contains unescaped parentheses and cannot match, so the worker's instance carries its own regex on the printed deciding line (AC1 'INVENTORY ARTICLES NOT IN THE STORE ...: n of N'; AC2 'SHORT OF THE FLOOR ...: n of N'); the criterion_verbatim field carries the TO's text unchanged.",
       "notes": "Form only. The deciding lines are printed by the scripts, not synthesised.",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W60-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~60",
+      "surfaced_at": "2026-09-30T02:32Z",
+      "one_line": "OBSERVATION: the named AC1 day 992_HK_Equity 2026-09-23 is not a day with articles now (0 articles served, ~1.3 s, no silver read); the profile adds 992_HK_Equity 2026-08-13 (2 articles) as an extra day.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~60/n6_ac1_profile.json: deployed opal-amgt-scoped-api /timeline/day/2026-09-23 for 992_HK_Equity, 3 invokes, REPORT Duration 1349/1204/1315 ms, articles=[] (body sha256 32b5257d...), while AMZN 2026-09-07 and HD 2026-08-18 (3 articles each) took 5309-6489 ms and 4996-5012 ms",
+          "newest article_security_mention snapshot (304 rows): 992_HK_Equity has 32 rows, latest UTC day 2026-09-15, none on 2026-09-23 (the round-22 span end); the empty-day path returns before any silver read (scoped_amgt._timeline_article_loader: if not mine: return [])"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-6 AC1 expect: 'the deployed /timeline/day timed for 3 days with articles (992_HK_Equity 2026-09-23, AMZN_US_Equity 2026-09-07, HD_US_Equity 2026-08-18)'.",
+      "world_is": "992_HK_Equity 2026-09-23 has a chatter_daily row (PARTIAL, publishers_covered_codes [wsj]) and zero mention rows, so it is the no-article path: two gold reads and no silver. AC1 and AC2 time it as named AND add 992_HK_Equity 2026-08-13 (2 articles, keys sa:4632421 and wsj:6d60459e-...) as a fourth day, labelled EXTRA in every output.",
+      "notes": "Measured only. The empty day is itself a data point: about 1.3 s deployed is the price of the two gold reads alone.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W60-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~60",
+      "surfaced_at": "2026-09-30T02:33Z",
+      "one_line": "OBSERVATION: the local COLD figure is bounded by ~2 s of process and client start-up that OLD and NEW share, and by the laptop-to-S3 distance the Lambda does not have, so the cold ratio (1.8x-2.9x over two runs) understates the in-region gain; the warm figure is the one the fix moves most (46x-61x over two runs).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~60/n6_ac2_new_path_timing.json: NEW cold on AMZN 2026-09-07 is 3.78 s of which the chatter_daily step is ~2.2 s (first boto3 client, TLS, first parquet decode) in BOTH paths (OLD cold 1.9 s in the same step); OLD silver step 7.7-8.1 s for 109 GETs / 4.9 MB, NEW silver step ~2.1 s cold for 47-63 GETs / 3.0-3.5 MB and 0.05 s warm for 0 GETs",
+          "opal-amgt-scoped-api REPORT durations 5.0-6.5 s deployed for 3-article days against 8.2-9.3 s OLD locally: the same 109 GETs cost less in region, so the local silver step overstates the Lambda's"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "HVST-n-6 preflight (comp-adversary): 'AC2 times the new code path against the same S3 reads the function makes, cold and warm.'",
+      "world_is": "The local run makes the same LIST and GET calls but from a laptop, so per-call latency is higher than in region; COLD is a fresh interpreter (rep 1) and WARM is reps 2-3 of the same process, where the fix keeps decoded silver parts and the newest gold snapshot per (key, ETag). A deployed container reaches the WARM figure after its first request per publisher part; the first hit on a day the container has not seen reads ~35-60 objects (~0.5-2.0 s locally). Only a post-redeploy Invoke measures the in-region figure.",
+      "notes": "Measured only. The redeploy and its own before/after Invokes are the later paired act, not this cell.",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
