@@ -4204,6 +4204,51 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "INERT, not ARMED: ab-3 phase A0 keeps a 402's body and makes one in-job fresh-session retry, and a persisting 402 sets a 1 h sa cooldown that skips the later sa jobs -- so the guard the probe was for still holds, per job. Issuer ruling: the act continues inside the pair; the account check is read from the first sa job that makes a request (AC2 prints it). Next time the probe name is chosen by a resolved sa symbol."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~83",
+      "surfaced_at": "2026-09-30T16:35Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W83-S1",
+      "one_line": "The ab-3 step-1 sa 'account-check probe' on 2317_TT_Equity ended contract_unavailable ('Security lacks a resolved Seeking Alpha symbol') with request_attempts [] : it made no sa request, so it did not test the account and says nothing about a persisting 402.",
+      "spec_asserts": "NEVER_WIDEN_HALF_COO_AB3.md step 1: the sa probe on 2317_TT_Equity is the account check; a job ending account_or_harvester_unavailable is a persisting 402, and sa leaves steps 2-3.",
+      "world_is": "Probe run 20260930T162824Z-run-8accfbd1 (rc 2), job 20260930T162824Z-sa-36443886fb: status contract_unavailable, request_attempts [], token stored_token_used (sa.dpapi, signed_in false), detail 'Security lacks a resolved Seeking Alpha symbol'. The security file carries only ticker '2317 TT'. The account question is therefore untested by the probe; this worker followed the table as written (the probe did not end account_or_harvester_unavailable, so sa stays in step 3 for the other 9 names) and each of those sa jobs is now the first real account read. sa_402_persisted is recorded false with this caveat.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "runtime runs/20260930T162824Z-sa-36443886fb.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~83/ab3_01_probe_sa_2317.stdout"
+        ]
+      },
+      "notes": "The probe target was a non-US listing; a US name (e.g. AAPL) would have been the account check. Not acted on by this worker."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~83",
+      "surfaced_at": "2026-09-30T16:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "id": "AMGT_HARVST-Z-W83-S2",
+      "one_line": "Phase A batch 1 reached 0 names: bbg, wsj, barrons and ft each ended request_rejected on a publisher verification challenge or 401/403, and all 10 sa jobs ended contract_unavailable (no resolved SA symbol); AC1 fails jobs != owed (14 of 32), AC2 passes with 0 names reached.",
+      "spec_asserts": "NEVER_WIDEN_HALF_COO_AB3.md section 2: branch A (publishers answer, reached_span, pages measured) or branch B (recorded refusal); table step 3 runs bbg wsj sa for each of 9 names.",
+      "world_is": "Step 2 (2317_TT): bbg 403 then the collector's coded press-and-hold repair did not restore access; wsj 401 'Publisher verification challenge' (body kept). Under CTO half condition ii (interactive challenge stops that publisher's leg) this worker ran NO further bbg or wsj invocation, so step 3 ran as '--publishers sa --max-jobs 1' per name (a narrowing of the table, inside the pair) and all 9 returned contract_unavailable at 0 requests; 992_HK barrons 401 after 1 coded repair, ft 403 (body kept, 65536 of 270934 bytes). Result: 12 run records, 14 jobs of 32 owed, 0 articles, 0 pages, outbox pending 0, upload-harvest --max-objects 0 refused by the uploader (limit<1, no put), sa_402_persisted false (no sa request made). Whether challenge-stopping bbg/wsj on the first 403/401 was the intended reading of condition ii, versus running bbg/wsj for the 9 names, is the issuer's call.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~83/ab3_AC1.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~83/ab3_runs.json",
+          "runtime runs/20260930T163302Z-bbg-eb455c9468.json, 20260930T163418Z-wsj-241953e39e.json, 20260930T164017Z-ft-feffdb1b13.json"
+        ]
+      },
+      "notes": "Two distinct causes: publisher-side challenges (bbg, wsj, barrons, ft) and a universe-side gap (security rows carry no Seeking Alpha symbol, incl. US names such as AAPL). Not acted on by this worker."
     }
   ]
 ```
