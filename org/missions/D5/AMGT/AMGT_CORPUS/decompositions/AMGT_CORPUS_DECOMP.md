@@ -1,50 +1,61 @@
-# AMGT_CORPUS -- L5 decomposition v20.0 -- ROUND 20 (two independent cells now; the r-1 re-sign sequenced)
+# AMGT_CORPUS -- L5 decomposition v21.0 -- ROUND 21 (two independent cells now; the r-1 re-sign sequenced)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-09-30 ~03:1xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-19 analysis
-`ledger/ROUND_ANALYSIS.round19.md` @`d5d806bc2e`, s.4 ENRICHMENT LIST (three items) and s.2 rulings 1-3.
-Round 19's decomposition is kept as `AMGT_CORPUS_DECOMP.round19.md`. Base of the cut: CLOUD `be851f21d2`.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-09-30 ~04:1xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-20 analysis
+`ledger/ROUND_ANALYSIS.round20.md` @`609100db54` (msg 26888, READ-acked), s.4 ENRICHMENT LIST, and its ADDENDUM @`7708a8506f`
+(msg 26893, READ-acked), which adds cell 3. Round 20's decomposition is kept as `AMGT_CORPUS_DECOMP.round20.md`. Base of the
+cut: CLOUD `f17ca57280`.
 
 ## 0. What this round IS
 
-| # | item (analysis s.4) | cell | slot |
+| # | item (analysis s.4 + addendum) | cell | slot |
 |---|---|---|---|
-| 1 | the 3.9 floor: no `Path.write_text` / `read_text` call passes `newline=` | `CRPS-v-1` | `~1` |
-| 2 | the six render outcomes (FWD-10, 11, 12, 15, 16, 18): a served census over 96 names plus a 5174 walk per outcome | `CRPS-v-2` | `~2` |
-| 3 | re-sign `r-1` (with the `admit` step) once AMGT_RESAPP r51 cell 1 drains | `CRPS-v-3` | the issuer's WORLD act under a pair; no order |
+| 1 | `pack_shape` in the dossier (ruling 3; FWD-16's floor) | `CRPS-w-1` | `~1` |
+| 2 | re-sign `r-1` (with the `admit` step) once AMGT_RESAPP r51 `zz-1` drains | `CRPS-w-2` | the issuer's WORLD act under a pair; no order |
+| 3 | a unit-map discriminator that does not rest on magnitude alone (the addendum; the nine UNRESOLVED facts) | `CRPS-w-3` | `~2` |
+
+**Routed, NOT cells** (the analysis): the page render of the six outcomes, to DSGN_AMGTV1; 6501's empty-block reasons and the
+`pack_shape` pass-through, to AMGT_RESAPP.
 
 ## 1. The rectangle
 
 | cell | `<risk>` | write set | the build |
 |---|---|---|---|
-| `CRPS-v-1` | LOCAL | `integrations/bloomberg/research/model_block_pull.py`, `.../tests/test_model_block_admit.py`, `.../tests/test_model_block_unit_map_write.py` (new), `lib/research/corpus/tests/test_induction_planted_drive.py`, `lib/research/corpus/tests/test_induction_schedule.py` | every `newline=` on a `Path` text call becomes `open(path, mode, encoding=..., newline=...)`; an LF test on `_ensure_unit_map`'s write |
-| `CRPS-v-2` | LOCAL (read-only served invocations and a local-build walk) | `deliverables/0.9.0_WK_AMGT_CORPUS~2/FWD_EVIDENCE_ROUND20.{json,md}` | per outcome: the served census over the 96 names with its denominator, and the named page on 5174 read and written down |
+| `CRPS-w-1` | LOCAL (a served dossier rewrite, if it moves served bytes, is the issuer's act under a pair at the drain) | `lib/research/corpus/dossier.py`, `lib/research/corpus/tests/test_dossier_pack_shape.py` (new) | `dossier.pack_shape(security_key, client=None)` and `build()`'s `fields["pack_shape"]`, from the reports the fold picks |
+| `CRPS-w-3` | LOCAL (a unit-map commit and re-derive, if served units move, is the issuer's act under a pair at the drain) | `integrations/bloomberg/research/build_unit_map.py`, `.../tests/test_build_unit_map_discriminate.py` (new) | `build_unit_map.discriminate_facts(facts, s3=None)`: a cross-field consistency read that resolves a unit with its evidence or leaves it UNRESOLVED with the reason; never a guess |
 
 Write sets are disjoint.
 
-## 1a. Re-groundings at L5 (measured at base `be851f21d2`)
+## 1a. Re-groundings at L5 (measured at base `f17ca57280`)
 
-- **v-1, the census.** No 3.9 interpreter is installed (`py -0` lists 3.14 and 3.11), so ruling 1's AST branch applies. The
-  ruling names `lib/research/corpus/`, and its defect (`_ensure_unit_map`) lives in `integrations/bloomberg/research/`. The
-  issuer rules the census over BOTH roots: the named root alone would pass with the named defect in place. The base reads
-  10 calls over 95 files: `model_block_pull.py:846` (the defect), 2 in `test_model_block_admit.py`, and 7 in the two corpus
-  induction tests. They all go, so the tests hold the floor the code states.
-- **v-2, the pages per outcome** (chosen from round 14's served measurements, `FWD_EVIDENCE_ROUND14_SERVED.json`):
-  - `IMB LN`: the docx pack, carrying pillars, management, posture and terms.
-  - `AMD US`: the ABSENT arm.
-  - `AZN LN`: the team's cases are served.
-  - `ADBE US`: a PDF-only pack; `IMB LN` is its docx control.
-  - The population is the 96 names of the round-17 census (`MODEL_BLOCK_CENSUS_ROUND17.json`, `denominator 96`).
-  - At the cut, the local build answers on 5174 (HTTP 200) from portal DEV `29c8226a`, and the walker account reads
-    `status=disabled armed=no; SSM ABSENT`.
-- **v-3: dependency as data.** `lib/research/identity/crosswalk.py`'s newest commit is still `6a940b02b8`.
+- **w-1, "the files the fold actually read"**, the ruling's words, is read as the class-A and class-B reports the dossier picks
+  (`_picked_reports`, from `continuation._read_reports_with_bytes`). Measured through `_most_recent_of_class`:
+  - `IMB_LN_Equity`: A `2026-07-17` docx.
+  - `ADBE_US_Equity`: A `2026-07-13` pdf.
+  - `AZN_LN_Equity`: A `2026-06-17` pdf, B `2026-Q2` pdf.
+  - `6501_JP_Equity`: 0 report rows.
+
+  Those four are the census's controls. All reports, rather than the picks, would call IMB "mixed" (10 pdf, 1 docx, 2 xlsx,
+  2 png), which is not the shape the fold read. The census runs over the 96 keys of the round-17 census; the dossier's own
+  resolved list reads 95.
+- **w-3, the nine facts** (addendum), all read UNRESOLVED-ON in the committed map:
+  - `SALES_REV_TURN`: 6501, 8316;
+  - `CURR_ENTP_VAL`: 6501, 9433, 8035, 8766, TSM;
+  - `NET_DEBT`: 8316;
+  - `BEST_SALES` (the scalar exception): 6501.
+
+  The MEASURED control is `SAP GY Equity` `CURR_ENTP_VAL` (MILLIONS; 86 names MEASURED on that field). Anchors the map holds as
+  MEASURED: `CUR_MKT_CAP` (ABSOLUTE, scalar), `PX_LAST`, `IS_SH_FOR_DILUTED_EPS` (per security).
+- **w-2: dependency as data.** `lib/research/identity/crosswalk.py`'s newest commit is still `6a940b02b8`; AMGT_RESAPP r51 is
+  issued with `zz-1` first.
 
 ## 5. The round -- one issuance, fan-out as data
 
-- `fanout: 2 of 3 chains, cap 8, reason: v-1/v-2 independent now (disjoint write sets); v-3 is the issuer's WORLD act sequenced
-  behind AMGT_RESAPP r51 cell 1.`
+- `fanout: 2 of 3 chains, cap 8, reason: w-1/w-3 independent now (disjoint write sets); w-2 is the issuer's WORLD act sequenced
+  behind AMGT_RESAPP r51 zz-1.`
 - **Drain:**
   - Each tip is re-graded, then merged.
-  - The one real run: the v-1 census and the suites on the merged tree, and the v-2 file re-read with the walker account read
-    at rest.
-  - The L8 packet then goes to `3.0.0_SA_CVO~Z`. If v-3 is still blocked, the packet states it.
+  - The one real run: the w-1 census and the w-3 discrimination on the merged tree.
+  - If w-3 resolves any fact, the unit-map commit and the re-derive of the moved blocks go under a pair (NEVER-2 entry). If w-1's
+    field moves served dossier bytes, the rewrite goes under a pair.
+  - The L8 packet then goes to `3.0.0_SA_CVO~Z`.
 - Surprise rows from `Z-S68`. Worker rows are `AMGT_CORPUS-Z-W<n>-S<k>`, with `disarm_owner 2.0.0_SA_COO~X`.
