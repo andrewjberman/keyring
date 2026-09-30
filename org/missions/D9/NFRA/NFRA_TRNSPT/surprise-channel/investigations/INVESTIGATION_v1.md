@@ -611,6 +611,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "A worker commits its owned paths through safe-commit.sh and the naming limb grades the commit's own files.",
     "world_is": "The limb validates the whole registry, and the registry on CLOUD is invalid on two rows the NFRA_TRNSPT chain C added, so no .py/.json commit passes on any branch that carries them. Adding a display_name to those two rows is one edit in infra/logic/registry/systems.json, which is not in this order's grant.",
     "notes": "Criteria were run on the uncommitted files: AC1 20 passed; AC2 SLICER-REPLAY client_identifiers=0 requests=6 with_candidates=6 fallback=2 no_precedent=0. The issuer or the registry's owner lands the two display_name values (owner claim for the rows: D9); then the files commit unchanged."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S12",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T20:10:00Z",
+    "one_line": "W4-S11's naming-limb block cleared: the CTO validator fix b5dc2e63d1 and 4.0.0_SA_CRO's registry display names 224058ea3f reached this branch by an issuer fast-forward to 81244a2bf3, and python lib/opal_naming.py validate reads OK.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~T",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git rev-parse --short HEAD in wk_nfra_trnspt_4, 2026-09-30: 81244a2bf3 (branch wk-NFRA_TRNSPT-4, fast-forwarded by the issuer)",
+        "python lib/opal_naming.py validate read OK per the issuer's state note, 2026-09-30; W4-S11 cited the validate refusal on systems.json[48].display_name"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker commits its owned paths through safe-commit.sh and the naming limb grades the commit's own files.",
+    "world_is": "With the registry fix landed on this branch, the q1 files commit unchanged; row W4-S11 is unedited and its block no longer stands.",
+    "notes": "Append-only: W4-S11 and every other row untouched."
   }
 ]
 ```
