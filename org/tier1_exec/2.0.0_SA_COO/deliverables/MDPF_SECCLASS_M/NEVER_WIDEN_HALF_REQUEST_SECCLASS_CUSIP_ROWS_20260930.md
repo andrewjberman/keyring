@@ -132,3 +132,22 @@ named here for Andrew's decision.
 ## COO half -- [PENDING SIGNATURE]
 
 ## CTO half -- [PENDING SIGNATURE]
+
+## Guard (SC-e-11)
+
+Live dry-run against the real `etf-classifications` and `bd-securities` tables (read only; Scan only), 2026-09-30, by
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R5_CHECKS/r5_cusip_guard_dryrun.py`:
+
+```
+CUSIP-GUARD etf_rows=2309 cusip_rows=0 bd_rows=10929 bd_delta_from_cusip=0
+CUSIP-GUARD-PLANNED planned=349 would_copy_to_bd=0
+```
+
+- **The guard:** `data/black_diamond/scripts/classification/seed_bd_securities.py` -- `is_cusip_row` at lines 43-45
+  (prefix constant at line 40) and the skip in the copy loop at lines 75-78, before the `put_item` write path; the skip is
+  counted and printed as `skipped_cusip=<n>`. Negative control: with the guard removed, all 349 planned `CUSIP:` rows
+  would copy (the dry-run prints this on stderr as `control: unguarded planned copy would be 349`).
+- **The test:** `data/black_diamond/scripts/classification/tests/test_seed_bd_securities_cusip_guard.py` (stub DynamoDB,
+  no network).
+- **Standing condition:** the CUSIP_ROWS act is REFUSED unless a fresh dry-run immediately before it prints both counts
+  (`bd_delta_from_cusip` and `would_copy_to_bd`) as 0.
