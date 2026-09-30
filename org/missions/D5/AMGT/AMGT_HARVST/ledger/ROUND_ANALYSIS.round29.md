@@ -42,7 +42,14 @@
    - v0.10 adds a `bot_check` attempt class, decided from the kept body's signature. It writes the signature name, never marks a token
      expired, never starts a sign-in, and stops the leg.
    - The change moves the CONTRACTS section, so the CVO's ratified-text half re-signs.
-2. **The route past the checks: THE DESIGN FORK, RULED on the CRO's research.**
+2. **SUPERSEDED IN PLACE (~17:2xZ) by Andrew-direct
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_172xZ_HARVST_CLOUD_HEADFUL_NOPECHA_REST_API_LONG_LIVED_TOKENS_TO_CRO.md`.**
+   - The route is a production-ready cloud solution, sent whole to `4.0.0_SA_CRO~Z`, to be solved immediately. It includes the NopeCHA
+     all-captcha-types investigation.
+   - The batch-1 retry un-parks when that route lands. His manual refresh is no longer the named route.
+   - The ruling text below is kept only as the record of what it said.
+
+   *Superseded:* **The route past the checks: THE DESIGN FORK, RULED on the CRO's research.**
    - **What the record holds** (CRO @`c7e4748a07`): one route family was ever used, a stored session reused over HTTP. Of the ways past a
      challenge:
      - the only one that was not automated is Andrew in a headed, signed-in browser (Barron's, 09-15);
@@ -106,8 +113,8 @@
 
 ## 5. ACTS ONLY ANDREW CAN DO (cited)
 
-- **Refresh the wsj, ft, bbg and barrons sessions in a headed, signed-in browser** [his login; `C-HV-TRUST-TOKEN`; ab-3 phase A half,
-  condition (ii)]. This un-parks the batch-1 retry.
+- ~~Refresh the wsj, ft, bbg and barrons sessions in a headed, signed-in browser~~. WITHDRAWN (~17:2xZ): superseded by his cloud-solution
+  word (ruling 2).
 - **A per-use word for any licensed-route probe** [CLAUDE.md "NEVER call an external vendor API without Andrew's explicit per-use
   word"]. Examples: Bloomberg Terminal news entitlement, a publisher feed. The CRO found none ever exercised.
 - **Portal PROD promotion** (FWD-5/6) [CLAUDE.md Portal].
