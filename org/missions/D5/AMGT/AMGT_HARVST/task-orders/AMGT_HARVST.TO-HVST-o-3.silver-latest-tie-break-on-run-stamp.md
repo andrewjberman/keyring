@@ -80,7 +80,7 @@ cell drains.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <slot>~63</slot>
 <fabric>site-z</fabric>
