@@ -235,3 +235,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not a cell defect: TO-SC-k1 named 'each firm's own latest holdings source, where one exists'. The IR Holdings producer's per-firm symbol sets (a ticker-keyed read at all three firms) are the nearest held source for the enrichment caller."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-W6-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~6",
+  "surfaced_at": "2026-09-30T03:40:00Z",
+  "one_line": "BD's own round-1 E_18 caller (data/black_diamond/scripts/gold/E_18.detect_new_securities.py) computes _REPO_ROOT via Path(__file__).resolve().parents[3], one hop short of repo root for a 4-deep nesting (gold/scripts/black_diamond/data) -- its own comment says '4 levels up' but the index used is 3, not 4 -- so _SHARED resolves to <repo>/data/infra/aws/lambda/v2_portal/_shared, which does not exist, and the deferred `from etf_classification_scheduled import (...)` inside detect_new_securities() raises ModuleNotFoundError whenever this file is invoked from the real repo layout (not just under test).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (a one-line fix in BD's own file, parents[3] -> parents[4]; outside this cell's <paths> write grant, which names only COT's own E_18.detect_new_securities.py)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python: Path('data/black_diamond/scripts/gold/E_18.detect_new_securities.py').resolve().parents[3] == '<repo>/data'; parents[4] == '<repo>' (measured 2026-09-30 in this worktree)",
+      "(root/'infra'/'aws'/'lambda'/'v2_portal'/'_shared').is_dir() is False via parents[3], True via parents[4] -- the same check performed against this cell's own (now-fixed) copy of the file, data/cot/scripts/gold/E_18.detect_new_securities.py, before its correction",
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py:47-52 (HEAD): comment 'four levels up (gold -> scripts -> black_diamond -> data -> repo root)', code 'Path(__file__).resolve().parents[3]' -- comment names 4 hops, index used is 3",
+      "No existing test imports and calls BD's E_18.detect_new_securities() end-to-end (infra/aws/lambda/v2_portal/_shared/tests/test_etf_classification_scheduled.py tests the shared module directly, never the BD caller file), so this path was never exercised by SC1-k1-AC1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC1-k1's Build item 2: BD's E_18 'feeds its new tickers to the module instead of writing stubs to bd-securities' on the BD gold-layer's existing schedule -- FWD-7's first live scheduled caller.",
+  "world_is": "Run from the real repo layout (not a test harness that pre-inserts the _shared directory onto sys.path some other way), BD's detect_new_securities(upload=True) raises ModuleNotFoundError at the deferred import and never reaches plan_rows/scheduled_write; the daily gold-layer invocation is wrapped '|| true' (per this file's own usage comment), so the failure is silent and FWD-7's BD backfill/schedule has not actually been running live since SC1-k1 landed.",
+  "notes": "Found while wiring this cell's own analogous COT caller (SC-e-4) with the identical pattern copied from BD's file; caught only because this cell's own copy failed loudly under its own new test (test_e18_scheduled_caller.py) before the index was corrected to parents[4] here. Not fixed in BD's file: data/black_diamond/scripts/gold/E_18.detect_new_securities.py is outside this order's <paths> write grant."
+}
+```
