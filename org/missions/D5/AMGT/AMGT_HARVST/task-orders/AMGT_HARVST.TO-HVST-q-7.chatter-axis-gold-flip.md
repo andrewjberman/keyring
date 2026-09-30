@@ -75,9 +75,16 @@ with `to_id` `AMGT_HARVST.TO-HVST-q-7.chatter-axis-gold-flip`. Report once, with
     legacy rank stays visible. The pair says so for both branches (ruling, s.4 item 7).
 - **The seat** is `0.7.0_AE_CloudOps~A`, as for `a-2`, `i-4` and `ww-1` on the same root.
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~09:1xZ) -- WITHDRAWN, never dispatched, per the `1.0.0_SA_CTO~Z` ruling (msg 27057; `ROUND_ANALYSIS.round26.md` AMENDMENT 1).**
+- `HVST-q-4`'s in-memory gold branch over the served gold reads `POPULATION` eligible 0 of 191 (`NOT_SEARCHED` 190,
+  `PARTIAL_COVERAGE` 1), which gives a HOLD, `BELOW_ELIGIBLE_FLOOR`.
+- A flip that can only HOLD would freeze the served legacy rank behind a HOLD marker.
+- It is re-cut when a census reads at least 10 eligible names. FWD-7 is now bound by collection reach.
+- Gate limb: `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>withdrawn</status>
 <round>27</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
