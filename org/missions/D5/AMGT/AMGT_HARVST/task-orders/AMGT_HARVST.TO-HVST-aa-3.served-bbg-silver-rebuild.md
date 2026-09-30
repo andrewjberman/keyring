@@ -59,6 +59,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   exclusion.
 - The checks and halves are issuer-written on that ruling.
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~10:2xZ) -- the 11 rows ruled (@`803ea38a9e`, msg 27079); checks and COO half written.**
+- **The ruling:** KEEP the 11 hash-keyed empty rows (no delete, no reader filter) and prove them inert. Any empty row reachable
+  from a served list is a STOP.
+- **COO half:** `round28/NEVER_WIDEN_HALF_COO_AA3.md`. The expected write is 11 NEW rows (`bbg:<story id>`) in 1 part, and keys go
+  from 30 to 41.
+- **Checks:** `aa-3.signing.py`, `aa-3.AC1.py` and `aa-3.AC2.py` FAIL at the base for the right reasons. The inert reads already
+  hold at the base: 0 mention pairs on an empty row, and 32 of 32 bbg pairs are backed.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>

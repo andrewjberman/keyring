@@ -67,6 +67,13 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 
 **ISSUER NOTES:** `ROUND_ANALYSIS.round27.md` s.4 item 4. Eligibility stays 0 either way; adding a publisher only tightens it.
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~10:2xZ) -- PRD v0.6 (@`803ea38a9e`, msg 27079): the exit rule is "refused OR ran no job", and an EMPTY set HOLDs.**
+- **AC1 gains two plants:**
+  - (e) an enabled publisher with NO job in the window leaves the set;
+  - (f) an empty derived set HOLDs with `empty_reason` `NO_DECLARED_PUBLISHER`.
+- The worker in flight receives this amendment as a continuation of its order before its drain.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
