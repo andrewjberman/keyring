@@ -104,6 +104,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
   "spec_asserts": "A worker commits its proof instance and the TO complete flip under its own grant.",
   "world_is": "Any commit staging an org/missions/ path is refused while org/projects/NFRA_TRNSPT.json carries dep_stage PRD against the tree's EXECUTING; all three TR-g1 close-out files stay uncommitted in the worktree until the index is regenerated.",
   "notes": "Every later NFRA_TRNSPT worker order will hit the same refusal on its own proof commit."
+},
+{
+  "id": "NFRA_TRNSPT-W3-S2",
+  "project": "NFRA_TRNSPT",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~3",
+  "surfaced_at": "2026-09-30T15:35:00Z",
+  "one_line": "TO-TR-b1 says the inline default carries the three client domains with firm keys 49f / inflection / cottonwood; the commit-time naming gate REFUSED hand-kept firm identifiers in criterion.py, so the default is read from the registry and the first firm key is 49financial, not 49f.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh (build commit, 2026-09-30 ~15:25Z): 'NAMING-GATE: REFUSE 6 graded' at data/transcripts/scripts/outlook/criterion.py:17,19,20,21,85 -- hand-kept carriers of 49financial, 49f, inflection, cottonwood; 'read it through lookup(...)'",
+      "infra/logic/registry/scopes.json carries tenant.email_domain for exactly three client scopes: 49financial -> 49financial.com, inflection -> inflectionwealth.com, cottonwood -> cottonwoodmail.com (python: load_registry()['scopes']['scopes'], kind client, 3 of 13 scope rows)",
+      "criterion.py now builds DEFAULT_CLIENT_DOMAINS from that read (firm key = the scope key) and the author address manav.shah@<registry domain of the 49financial scope>; recipient_firm for the 49financial domain is '49financial' (scope key), the order named '49f' (that scope's short form). assets/client_domains.json, when present, overrides via its firm_key field."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The inline default carries the three domains 49financial.com (firm key 49f), inflectionwealth.com (inflection), cottonwoodmail.com (cottonwood).",
+  "world_is": "Hand-typed firm identifiers in a new data/ file are refused by the naming gate; the registry carries the same three domains, so the default is registry-derived with the scope key as the firm key. Downstream cells that expect the literal '49f' in recipient_firm (TR-w-1, TR-k-1) see '49financial' from the default table; TR-a-1's client_domains.json firm_key value governs when that file lands.",
+  "notes": "The order's mixed key forms (49f is a short form; inflection and cottonwood are long keys) are the reason to prefer the registry's single key form."
 }
 ]
 ```
