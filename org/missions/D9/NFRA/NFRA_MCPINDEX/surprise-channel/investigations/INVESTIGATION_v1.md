@@ -3680,6 +3680,114 @@ carries none.
     },
     "spec_asserts": "AMENDED A1 step 0: fix the acceptance harness's dataset default the way MX-s-15 fixed tests/test_schwab_wiring.py.",
     "world_is": "That fix (filter de.DATASETS to the contract's fields) was a workaround for the contract lacking the dataset; with the contract amended it is unnecessary, so the harness is left as committed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "one_line": "MX-r-6 PHASE A: adding `schwab` to ENABLED_INTEGRATIONS registers 5 tools, but the host has NONE of the six inputs the Schwab service needs at its first call (contract path and file, two role ARNs, two ExternalIds, the account_ref secret id) and the deploy path ships none of them; every schwab call would fail closed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Host read, SSM 28a12bb3-2fa0-4da0-9aca-04f50b71f144 (read-only, key NAMES only): /opt/opal-gateway/.env carries 27 keys, 0 begin SCHWAB_ and 0 begin NFRA_OPLGTW; find over /opt /home /tmp for NFRA_OPLGTW_CONTRACT* returns nothing; /opt/opal-gateway/org does not exist. Deliverable probes/ host read in deliverables/0.9.0_WK_NFRA_MCPINDEX~19.",
+        "Code path: integration.py:1040-1041 build_default_service() (first Schwab call) -> catalog.load_contract() reads NFRA_OPLGTW_CONTRACT_PATH, else default_contract_path() = Path(catalog.py).parents[7]/org/standards/... which is None when the file has fewer than 8 parents (the host path /opt/opal-gateway/app/integrations/schwab/catalog.py has 6) ; then aws_roles.role_configs() needs SCHWAB_READER_ROLE_ARN, SCHWAB_CATALOG_ROLE_ARN, SCHWAB_READER_EXTERNAL_ID, SCHWAB_CATALOG_EXTERNAL_ID (aws_roles.py:78-79); account_ref.py:56 needs SCHWAB_ACCOUNT_REF_SECRET_ID.",
+        "Measured in-process on the release artifact extracted at host-like depth (C:/tmp/hs-rel/opal-gateway, 7 parents): load_contract(environ={}) -> ContractUnavailable 'no contract path: set NFRA_OPLGTW_CONTRACT_PATH'; role_configs(..., {}) -> RoleConfigError 'SCHWAB_READER_ROLE_ARN is not set to an IAM role ARN'. Same on the live artifact. Files: deliverables/0.9.0_WK_NFRA_MCPINDEX~19/probes/tools_release_6ids_MX-r-6.json.",
+        "Shipping: the artifact's tar roots are app deploy requirements.txt identity_tool_allowlist.txt dashboard (deploy-to-ec2.sh:86-90), so org/standards/NFRA_OPLGTW_CONTRACT.json is NOT in it (79 of 79 live files, none under org/standards). The .env is rewritten wholesale by the printf at deploy-to-ec2.sh:197 and names none of the six. The only prior host use of the contract was a hand-staged copy in s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/bench/ (OG-x-4's bench)."
+      ]
+    },
+    "spec_asserts": "The order's step 2 changes exactly one value on line 197 (`schwab` added, 6 ids) and step 8/AC2 expect the enable to land with the reader role allowed; A1 asks the census to establish how the contract ships.",
+    "world_is": "Enabling as written registers schwab_get_access, schwab_list_files, schwab_describe_dataset, schwab_query and schwab_prepare_download, and every call by an admitted principal errors (ContractUnavailable / RoleConfigError); r6.J1's Schwab position question could not be answered. Making it work needs a deploy-script change beyond line 197 (the contract file into the artifact or onto the host, plus the five env values: the ExternalIds are in secret opal/mcp/opal-gateway-schwab-reader-external-ids, which the gateway role reads by resource policy) that the order does not grant. NOT done here; the release is cut exactly as ordered.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "one_line": "MX-r-6 PHASE A step 3: a whole-directory terraform plan of infra/aws/terraform/opal-gateway cannot be confined to gateway-schwab-read-role's policy: from CLOUD's TF it also creates another project's policy and changes another seat's Lambda hash; from the live-base tree it destroys 5 resources. The saved plan is a targeted one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Plan A, run from the release tree (base 093fc247c6 TF + MX-s-15's schwab_reader_iam.tf), /c/tmp/mx-r6-plan.txt: 'Plan: 0 to add, 2 to change, 5 to destroy' -- destroys aws_eip.gw, aws_eip_association.gw, aws_iam_role.inf_firm_reader, aws_iam_role_policy.gw_assume_inf_firm_reader, aws_iam_role_policy.inf_firm_reader (state holds resources whose .tf landed on CLOUD after 093fc247c6: 062e036d54 eip.tf, a2c8413931 mcpmsp_firm_roles.tf); so a plan from the release tree is not the apply tree.",
+        "Plan B, run from the worker tree whose TF dir equals CLOUD's (git diff HEAD CLOUD -- infra/aws/terraform/opal-gateway is empty), /c/tmp/mx-r6-plan-cloudtf.txt: 'Plan: 1 to add, 2 to change, 0 to destroy' -- adds aws_iam_role_policy.gw_rivalfunds_read (gateway-rivalfunds-read-policy; ETFS_RIVALS d70267f372 / b9447adc2f, not applied), changes schwab_data_read_policy (the wanted change) and aws_lambda_function.mcportal_grant_writer source_code_hash.",
+        "The Lambda's state hash MOVED between my two plans (Plan A read OiLZPOdS..., Plan B read s+PDoMXp...; last_modified 2026-09-30T10:44:58Z): another seat applied that function during this cell. Its planned hash comes from the untracked .build/staged directory (mcportal_grant_writer.tf:39-43) which this worktree copied from the shared tree, so the delta is a build-input artifact, not a change this release makes.",
+        "Plan C, targeted: terraform plan -target=aws_iam_role_policy.schwab_data_read_policy, saved /c/tmp/mx-r6-schwab-read-targeted.tfplan, render deliverables/0.9.0_WK_NFRA_MCPINDEX~19/PLAN_MX-r-6_targeted.txt: 'Plan: 0 to add, 1 to change, 0 to destroy'; the only diff lines are 8 added list elements, every one a dim_transaction prefix or ARN for masters 08242234 and 08335338 (NotResource, StringNotLike s3:prefix, Resource, StringLike s3:prefix), 0 removed."
+      ]
+    },
+    "spec_asserts": "The order: the plan must change ONLY gateway-schwab-read-role's policy; any other planned change is a BLOCKING row and the worker does not proceed.",
+    "world_is": "Only the targeted plan meets that; an untargeted apply from CLOUD would also create gateway-rivalfunds-read-policy (another project's act) and re-point another seat's Lambda. The release, rollback and deploy-only trees are built; no apply was made. The apply-form is the issuer's and the CTO's call (targeted saved plan vs waiting on the other two changes).",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The mcportal grant-writer Lambda bundles its own copy of NFRA_OPLGTW_CONTRACT.json, which does not list dim_transaction; step 0's contract edit widens what a grant may name only once that package is rebuilt and applied.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mcportal_grant_writer.tf:20-33 (PACKAGING): build_package.py stages lambda_function.py plus the import closure of app.access_state and ops.schwab_entitlement_admin and 'the data file those modules load at its repo-relative path (org/standards/...)' into .build/staged, which archive_file zips.",
+        "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged/org/standards/NFRA_OPLGTW_CONTRACT.json exists in the staged build copied at this cell and holds 0 occurrences of dim_transaction.",
+        "ops/schwab_entitlement_admin.py:166-169 approves a requested column only if it is in the contract's fields[dataset]."
+      ]
+    },
+    "spec_asserts": "A2 carries 'widen one existing Schwab grant to dim_transaction through the grant admin tool' to Andrew's list.",
+    "world_is": "That future act needs the grant-writer package rebuilt from the amended contract and applied, in addition to this release; not done here and not in this order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 PHASE A record: two audited overrides of the commit author lane on the never-merged rel-/dep- branches, two trees carry files beyond the gateway dir, and the worker branch carries the identical line-197 edit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release commit ac77acf9e8 (branch rel-nfra-mcpindex-r5-schwab-enable, /c/tmp/mx-rel7) and deploy-only commit abee4587f7 (dep-nfra-mcpindex-r5-schwab-enable, /c/tmp/mx-dep7) were made under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~19, the MX-r-4 A1/A2 and MX-r-5 A2 precedent (Z-W14-S8); two uses.",
+        "The release commit also carries infra/aws/terraform/opal-gateway/schwab_reader_iam.tf (MX-s-15's two lines) and org/standards/NFRA_OPLGTW_CONTRACT.json (step 0), because the gateway tests read the contract at parents[5] and the plan needs the .tf; the census of the gateway dir is 17 files, 505 insertions, 41 deletions; the deploy-only commit changes only the gateway dir.",
+        "The identical one-line edit of deploy-to-ec2.sh:197 is committed on the worker branch (blob bb6c19ef04 in all three trees), so a later CLOUD release does not revert the enable (MX-r-4 A1)."
+      ]
+    },
+    "spec_asserts": "The order grants the audited override for rel-/dep- branches by reference to the MX-r-4/MX-r-5 precedent.",
+    "world_is": "Used exactly there and nowhere else; recorded for the L8 reading."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The deploy-only tree (CLOUD 0440cd4e4d with the gateway dir replaced) drops 42 files of other projects' unreleased gateway work that CLOUD carries; none ships, and each rides that project's own release.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --name-status 0440cd4e4d abee4587f7 in /c/tmp/mx-dep7: 42 files, all under infra/aws/ec2/opal-gateway, 17 deleted (for example app/admin_tenants.py, app/firm_role.py, app/rivalfunds_view.py, app/tenant_registry.py, app/taxsma_workbook.py) and 25 modified (for example app/server.py, app/tools.py, app/config.py, app/tier.py, app/oauth_as.py, app/refs/DATA_CATALOG.yaml).",
+        "Release vs LIVE artifact: 72 of 79 identical; the 7 that differ are app/data_entitlement.py, app/destructive_ops.py, app/integrations/opal_discover/integration.py, app/integrations/portal_index/integration.py, app/integrations/schwab/datasets.json, app/integrations/schwab/query.py, app/schwab_audit.py."
+      ]
+    },
+    "spec_asserts": "R-8: every gateway release is NARROW, cut at the deployed commit plus this project's own changes.",
+    "world_is": "The narrow cut holds; a release cut from CLOUD instead would also ship the MCPMSP, ETFS_RIVALS and NFRA_OPALAI gateway commits."
   }
 ]
 ```
