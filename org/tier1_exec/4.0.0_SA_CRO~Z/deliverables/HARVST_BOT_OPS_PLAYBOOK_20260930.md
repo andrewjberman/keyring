@@ -80,3 +80,17 @@ publisher. The job:
 
 The flag sits on this box's public IP, which may be the office's shared connection. A person browsing bbg, wsj or
 barrons from the same network may see these challenges until the reputation recovers.
+
+## Andrew-direct on the 05:00 first-light task, verbatim
+
+Recorded 2026-09-30 ~17:1x ET (21:1x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, answering `/next-calls` CALL 1. Exact receipt timestamp not exposed.
+
+> yeah we can set that up regarding the 5a pull, but it feels like we need to figure out how to actually nail it first smoothly before just blindly scheduling and see how it goes.
+
+Means: the one-time 05:00 ET task is authorized, and only after its full chain has been rehearsed to run cleanly (script, scheduler, headed browser, log, self-removal), without touching the flagged publishers beforehand.
+
+## Andrew-direct: work with COO~H, verbatim
+
+Recorded 2026-09-30 ~17:2x ET; same session.
+
+> what i need you to do is sync up and work synergistically with COO~H on this. Check out what they're doing and figure out where they are lacking or how we can bring in more information/analysis to facilirate their development efforts. I think it is a very low bar to be able to pull all the news from these sites, so it is paramount this gets figured out methodically and robustly
