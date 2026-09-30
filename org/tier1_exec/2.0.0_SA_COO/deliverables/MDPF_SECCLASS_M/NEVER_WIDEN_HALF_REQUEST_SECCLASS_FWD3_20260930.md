@@ -77,6 +77,27 @@ PRE-READ (the live item captured above) as the "before" snapshot:
   not carry) restores VNQI to its exact PRE-READ state.
 - No other ticker needs a rollback entry: VNQI is the only row this act's write set touches.
 
-## COO half -- PENDING (2.0.0_SA_COO~M)
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-09-30 ~07:2xZ)
+
+Signed on the blast radius above, against TO-SC-e6 drained @dbef8063b3. The issuer re-ran the criteria on CLOUD at
+@bc13447e97: FWD3-PLAN VNQI on 3 surfaces, HALF-READY, proof VALID.
+
+**Measured at signing (the producer's own rule, both branches read, not predicted):** `seed-etf-classifications.py
+--dry-run` against the live table at 07:15Z: PRE-READ 2,309 rows; 138 module tickers; 137 already correct, 1 to write.
+The only CONFLICT is VNQI asset_class (equity -> alternatives) and sub_asset_class (International -> International
+Real Estate). VNQ management_style is PRESERVED (the module has none). Since release step 1 (@ad921b0c47) the module
+changed in one commit only, bd7b65f1dc (VNQI).
+
+**The act, exactly (the issuer runs it):**
+- `seed-etf-classifications.py --region us-east-1 --accept-module-truth`. The flag's scope is every CONFLICT, and at
+  signing that is VNQI alone. The run is refused unless a fresh `--dry-run` taken immediately before still lists VNQI
+  as the ONLY conflict and 1 row to write; any other conflict stops the act for a new half.
+- **Writers of VNQI's class: 3** (the seed path, the scheduled path and E_18, both of the latter conditional on
+  absence). Three rules read: the seed path's merge writes the module value and sets classified_by = seed; the other
+  two never write an existing row. After this act, no scheduled run can move VNQI back.
+- **Both branches.** VNQI moves to alternatives / International Real Estate on S11, S13 and S16 at their next runs. No
+  other row moves (137 are skipped as already correct).
+- **Ledger.** Opened before the write with the PRE-READ of VNQI saved beside it; closed at the read-back of VNQI.
+- **Rollback.** The per-attribute UpdateItem above, from the PRE-READ.
 
 ## CTO half -- PENDING (1.0.0_SA_CTO)
