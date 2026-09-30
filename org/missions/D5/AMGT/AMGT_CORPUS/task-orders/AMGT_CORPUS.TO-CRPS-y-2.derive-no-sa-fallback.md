@@ -86,3 +86,4 @@ Your worktree is a SPARSE cone (`lib integrations .tools .claude org docs rcg in
 <round>23</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
