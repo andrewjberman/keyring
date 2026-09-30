@@ -3058,6 +3058,50 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The provenance suffix is inside _figure_currency, outside my grant, so BP's held figures carry '(CRPS-aa-1 round-25 census)' though their measurement is DENOMINATION_CENSUS_ROUND26.json; the currency (None) and the UNMEASURED: prefix are right, only the suffix is stale.",
     "notes": "Filed, not fixed. A one-line edit to the suffix (or a per-census reason table) is the issuer's to cut.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S18",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T20:10:00Z",
+    "one_line": "CRPS-ab-2 could not turn BP/ LN Equity PROF_MARGIN to PERCENT through the series median alone: build_entries skips any per-security entry whose unit_status and sign_status read MEASURED, and BP's PROF_MARGIN entry is MEASURED-with-an-exception (the reader refuses it), so the crosswalk run never re-reads it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ab2_AC1 after the series rule alone: 'ab2 bp_pe_ratio RATIO bp_prof_margin UNRESOLVED keys 100 unresolved_before 31 unresolved_after 21 bands_unchanged True'; committed field_map.json BP/ LN Equity PROF_MARGIN detail: unit_status MEASURED, value_sampled 0.029, exception.unit 'disagrees with the shared MEASURED unit PERCENT: measured DECIMAL'.",
+        "build_unit_map.py build_entries: already_measured = prior unit_status == MEASURED and sign_status == MEASURED (no exception test), while the same function's measured_on list and model_block_pull._resolved_unit both treat an exception as not measured."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's cell changes only the classifier's input (series median for one sample) and leaves the stated paths to the builder's existing flow; AC1 expects bp_prof_margin PERCENT from a crosswalk run without --remeasure.",
+    "world_is": "Without a further edit that run leaves a MEASURED-with-exception entry untouched, so the new input never reaches it. The edit made (in build_entries, in the classifier's file, with its ground in a comment): an entry carrying an exception is not already_measured and is re-read; a cleanly MEASURED entry is still never overwritten.",
+    "notes": "Consequence for the issuer's later map commit: every exception entry in the committed map (not only BP) is re-read on a crosswalk run and may be rewritten, either clearing its exception or recording a new one.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S19",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-09-30T20:12:00Z",
+    "one_line": "The ruling says the median of |value| over the measured fiscal years and is silent on exact zeros; BBSE3 CAPITAL_EXPEND carries 6 zeros in 10 years, so counting them would put the median at 0 and read mostly-zero series as 'does not discriminate'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BBSE3 BZ Equity CAPITAL_EXPEND FY series (stored raw): 0.0, 0.0, 0.0, -0.052, -0.357, -0.286, 0.0, 0.0, 0.0, -0.058 -- ten years, six exact zeros.",
+        "build_unit_map.py ZERO_VALUE_UNIT_FROM_BASIS note: a zero has no scale, so the magnitude test has nothing to test."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A key's unit is decided from the median of |value| over its measured fiscal years.",
+    "world_is": "series_median_abs leaves exact zeros out of the median (a series of only zeros keeps median 0, read as before); the test test_the_median_is_of_absolute_values_ignores_non_finite_and_leaves_zeros_out pins it. BBSE3 CAPITAL_EXPEND then reads median 0.172 (4 non-zero years), out of the 1 < av < 1e7 band, and stays UNRESOLVED; counting the zeros would read the same class UNRESOLVED (median 0) on that key.",
+    "notes": "If the issuer wants zeros counted, the change is one line in series_median_abs; AC1 and the BP outcomes do not depend on it (BP's series carries no zero).",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
