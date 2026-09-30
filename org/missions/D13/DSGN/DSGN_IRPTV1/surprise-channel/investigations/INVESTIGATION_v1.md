@@ -3067,3 +3067,31 @@
   "notes": "Ruling 102453 read through 8d12987e's commit body, not its own record. 3.0.0_SA_CVO dispositions S34/S35/S36 and this row together at L9."
 }
 ```
+
+
+## DSGN_IRPTV1-S40 -- the IR suite's contract checks fail 13 tests on workspace @53bbae9c4f: GET /analysis/comparisons is in routes.json, the portal half is absent
+
+```json
+{
+  "id": "DSGN_IRPTV1-S40",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-09-30T02:15:00Z",
+  "one_line": "Workspace @53bbae9c4f (IRPT_BCKEND TO-IB-yr-261) added GET /api/scoped/investor-reporting/analysis/comparisons to docs/contracts/investor-reporting/v1/routes.json; the portal's operation table, wire types and ComparisonCatalogue fixture do not carry it, so 13 IR tests fail beyond the known five.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test ./src/pages/InvestorReporting at portal 5c7eead8 (DEV): 917 pass / 18 fail = the known five + 13: the content pin (x3), the operation table is routes.json (x4), F14-AC13, F57-AC2, IVE17-AC3, IVE26-AC3, producer fixtures, retained selection from the actual guarded producer",
+      "the operation-table test prints: MISSING FROM THE TABLE: GET /api/scoped/investor-reporting/analysis/comparisons; OPERATION NAME DISAGREEMENTS: ... no table entry",
+      "the same suite at portal b66c31d3 before @53bbae9c4f landed (~00:5xZ): the known five only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The portal's operation table is routes.json (the IR contract suite); a route added to the workspace contract lands with its portal half.",
+  "world_is": "The workspace contract carries the comparison-catalogue GET; the portal carries no table entry, wire type or fixture for it. Not a served defect: the portal calls no such route yet.",
+  "notes": "Found while landing Andrew-direct design feedback on DEV 5c7eead8; that change touches no contract file. The portal half is the comparison-catalogue cell's own (IRPT_BCKEND ~Y, IB-yr-261 / its successor); DSGN_IRPTV1 does not take it without a grant. Every later DSGN_IRPTV1 suite run reads 18 = known five + these 13 until it lands."
+}
+```
