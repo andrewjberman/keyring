@@ -623,6 +623,28 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "The page addresses every scoped security route by the security key the list served (BA_US_Equity).",
  "world_is": "One Posture call keys on the display ticker 'BA US' and the route answers 500 (a 404 or a named refusal would be the honest miss). Round-14 input: find the call site at DEV and key it on the security key; the route's 500 on an unknown key goes to AMGT_RESAPP."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S9",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-01T00:05Z",
+ "one_line": "On the signed-in close walk (5174 @e5ae0063 = DEV a3f94ad3) 6501 JP's Exec reads \"No officer list is in this name's pack yet: no M-1 management object has landed for this name, and no other source was used.\" -- an interface code (\"M-1\") and producer words on the face after AV-k-4.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20260930T235353Z/shots/072-6501-JP-Exec-Management.png (site Z, not committed): the empty-state sentence above, read by the issuer",
+   "AV-k-4's helper green arm (r14-green-d @d7d29dd5) stripped one-letter interface codes locally; on chain ~52 the worker worded the reason through AV-k-1's shared reasonWords mapping, which does not drop a letter-dash-digit code",
+   "the round-13 capture round14/fixtures/thesisBundle.6501_JP_Equity.json serves management_read.reason as an S3 path (\"no object under s3://opal-data-harvest/management/v1/6501_JP_Equity/\"), not the live wording -- the live reason moved after the capture, so execfooter.cjs (on the fixture) could not see the M-1 sentence"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "AV-k-4 / ruling 5 with ruling 1: Exec's empty sentence reads the served reason in words; no code on the face (portal DESIGN.md design law; FWD-11).",
+ "world_is": "The live served management reason carries an interface code (M-1) and producer vocabulary (\"management object has landed\"); reasonWords drops code lists in parentheses and lowercases ALL-CAPS names but keeps a letter-dash-digit code. Round-15 input: the shared mapping drops interface codes of that shape (and the fixtures are refreshed from the live reasons), or the producer serves a reader sentence -- the CTO's call at the round-14 analysis."
 }
 ]
 ```
