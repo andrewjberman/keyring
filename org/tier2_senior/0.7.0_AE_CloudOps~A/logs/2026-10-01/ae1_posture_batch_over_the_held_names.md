@@ -376,3 +376,84 @@ number, and fixed by reading the path out of the grader instead of guessing a se
 
 None. Three orders complete this session (`ae-1`, `ag-1`, `ah-2`); nothing owed by this lane. All `<status>`
 flips are the issuer's.
+
+---
+
+# FOURTH ORDER OF THIS SESSION -- AMGT_RESAPP.TO-AMGT-ai-2, the price identity join redeploy (DEMO-BLOCKING)
+
+**archetype:** DEPLOY
+
+**Order:** `org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ai-2.the-price-identity-redeploy.md`
+**Risk:** WORLD | **Round:** 59 | **GO:** msg 27804, READ-acked | **Deadline:** 22:00Z, landed **12:34Z**
+**Commits:** `01e5b6fbfc` (ledger OPEN), `a30a3443fc` (proof)
+**Push state:** LOCAL @`a30a3443fc`; `origin/CLOUD` at `0abf99fcd4` (ls-remote read 12:4xZ).
+
+## What landed
+
+One artifact upload, one code-only `safe-apply`. Base re-read live and **unmoved** at `g9H0TW2g...` with
+artifact `hj5ITKr5...` -- exactly what `ah-2` produced, so the chain across rounds 57/58/59 is continuous and
+that continuity is itself evidence nothing else redeployed this function between them.
+
+- Artifact -> `q0Vf.FzuGpVovbH.xb2dumggs4k5kMKB`, sha `E6PdHVFB9z1xUcvCRtNIALjgAaCzNtolAdzaKmCssvM=`, 41,116,522 B.
+- CONTENT-DIFF **exactly one file** -- `lib/research/api/scoped_amgt.py` -- 350 / 349 / 1 / 0 / 0. The two
+  peer-drifted `lib/opal_data_harvest` files were **measured** not-packaged, not assumed.
+- Plan `0 add, 1 change, 0 destroy`; saved plan applied; live CodeSha256 equals the uploaded sha.
+- **AC1 PASS**, **AC2 PASS**, both exit=0. Entry CLOSED, 4 legs proven.
+- Both axes: 94 rows SERVED, **unkeyed 0 of 94** (base 62), display_name 94 of 94, company name 70 of 94 --
+  the 70 matching the COO half's local figure exactly. `score_pct` survived the join (0 missing), so FWD-34
+  is intact.
+
+## The one worth keeping: my own control broke, and the fix was already in the spec
+
+The CTO's condition 3 asks for "a 200 on `/security/<key>/overlay`" as proof that AMD's and TSM's bars
+**open** their security. I got those 200s. Then I probed a fabricated key, `ZZZZ_XX_Equity`, expecting it not
+to open -- **it returned 200 as well.** So the status code cannot distinguish a covered key from an
+impossible one, and my AMD/TSM 200s were weak evidence standing alone.
+
+Rather than report the green and move on, I went looking for a test that *could* fail. It was one document
+away: the COO half describes the join as setting `identity_status MEASURED`. On the live bodies —
+**AMD MEASURED, TSM MEASURED, fabricated key UNRESOLVED**, with 73,327 / 32,242 / **3,427** B and 12 / 12 /
+**6** populated top-level keys of 13. So "the bar opens" *is* soundly established — as a populated overlay
+with `identity_status MEASURED`, never as a status code. Condition 3 is met as written **and** on the
+stronger reading. Filed as `Z-S332` (INERT; the wording is the issuer's to change).
+
+This is the fourth instance this session of the same shape: a check that passes for a reason other than the
+one it names (`Z-S324` AC1 silent on `generated_at`; `Z-S325` a limb testing an undeployed route; `Z-S330` a
+census whose "4 routes" came from a constant; now `Z-S332` a 200 that any key earns). The common tell is a
+clause whose oracle is cheaper than the claim it supports.
+
+## Figures that moved, named so they are not read as regressions
+
+Since my `ag-1`/`ah-2` runs: the month range now reaches **2026-10** with `as_of 2026-10-01`;
+`stale_trading_days` fell **1 -> 0** because the served day is now T-1 itself; BA's 2026-09 count rose
+**20 -> 43**; per-axis rows rose **32 -> 94**. All world changes from a new gold day landing, not effects of
+this act. Every clause passes on the new values because the graders recompute their oracle each run -- which
+is exactly why they track the world instead of breaking against it.
+
+## One record correction
+
+My content-diff grader was derived from `ah-2`'s and two of its **static headings** were not re-worded: it
+prints "must equal exactly monthly_chatter.py" and "the 4 peer-touched files" where this round's values are
+`scoped_amgt.py` and 2 files. The measured lines beneath are correct and are what L1 rests on. Recorded in
+the proof instance so the committed artifact is not misread.
+
+## Compiler Tools
+
+| tool | invocation | result |
+|---|---|---|
+| `comp-schedule` | not run | Preflight declares NOT-APPLICABLE (one redeploy by hand). |
+| `comp-iam` | not re-run; issuer ran it, 0 new actions, declared BLIND | Gating clause is the PLAN's no-IAM change, and it holds. The reads this act needs were already exercised live in earlier rounds -- the `research_dossier` listing by `ag-1`'s monthly route, the classifications GetItem measured ALLOWED by me at `ah-2` -- so "0 new actions" is corroborated, not assumed. A denied listing would have left 62 rows unkeyed and failed C2; C2 reads 0 of 94. |
+| `comp-adversary` | not re-run | Base arm (62 of 94 unkeyed, no `display_name`) answered specifically: 0 of 94 and 94 of 94, both axes. |
+| `comp-pipescript` | not run -- not applicable | A Lambda redeploy, not a data script; BOUNDS 1 also forbids rewriting the 09-30 generation. |
+
+## Files modified
+
+- `org/critical_paths/change_management/20261001T1225Z_...ai2...md` + sentinel -- OPENED `01e5b6fbfc`,
+  CLOSED 12:42:26Z, 4 legs proven.
+- `.../surprise-channel/investigations/INVESTIGATION_v1.md` -- row `Z-S332` (704 -> 705 rows, 0 lost).
+- `.../deliverables/0.7.0_AE_CloudOps~A/` -- the proof instance, `ai2-pre.json`, `ai2-evidence/` (7 files).
+- NOT touched: the order's `<status>` (the issuer's); `ai2.tfplan` left in place, outside this order's `<paths>`.
+
+## Blockers
+
+None. Four orders complete this session (`ae-1`, `ag-1`, `ah-2`, `ai-2`); nothing owed by this lane.

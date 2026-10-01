@@ -2089,6 +2089,47 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "OA-e-6 step 1: the operator arms are the control; bbcomm.exe is running and 8194 is OPEN for the operator, so a closed Opal_Agent arm means the account's reach.",
     "world_is": "bbcomm.exe is not running on this box at measurement time and nothing listens on 8194, so the operator control is REFUSED and the 8194 verdict component is non-discriminating. The 8790 arm is a sound control (operator OPEN) and Opal_Agent reached it. Re-measurement of 8194 needs the terminal up (the cell forbids the worker starting it); disarm owner n/a (INERT)."
-  }
+  },
+{
+    "id": "NFRA_OPALAI-Z-W25-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~25",
+    "surfaced_at": "2026-10-01T12:30Z",
+    "one_line": "OA-f-10 AC1 REFUSED: no non-elevated invocation of `codex sandbox` runs under the CodexSandboxOffline identity (SID -1005), so the falsifier cannot measure whether a per-user Firewall rule blocks loopback; mechanism recorded INCONCLUSIVE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "~/.codex/config.toml (operator profile) carries [windows] sandbox = \"unelevated\"; every `codex sandbox` form that launched (`-P :read-only`, `-P :workspace`, `--sandbox-state-json` with a managed restricted-filesystem profile + --sandbox-state-disable-network) printed whoami = opal_bloomberg/opal bloomberg (the operator) and the 8194 probe read OPEN, i.e. a restricted token of the operator, not the offline identity.",
+            "The profile that demands the elevated backend (managed, file_system restricted, entries []) refused: 'windows sandbox failed: Restricted read-only access requires the elevated Windows sandbox backend'. `-c windows.sandbox=\"elevated\"` (a per-invocation override, no file edited) failed: 'helper_sandbox_lock_failed: lock sandbox bin dir .codex/.sandbox-bin failed: SetNamedSecurityInfoW sandbox dir failed: 5' (access denied; needs an Administrator token).",
+            "Control arm outside: whoami Opal Bloomberg, 127.0.0.1:8194 OPEN (3 s TcpClient). Live rules codex_sandbox_offline_block_loopback_tcp/_udp name LocalUser SID ...-1005 = CodexSandboxOffline (Get-LocalUser). No other identity was tried: the CodexSandboxOffline credential is DPAPI-held in .codex/.sandbox-secrets and is not ours to read."
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-f-10 step 1: some `codex sandbox` invocation prints a whoami different from the operator's, giving an inside-the-offline-sandbox arm.",
+    "world_is": "With windows.sandbox=unelevated the sandbox is the operator's own restricted token; the offline identity exists only on the elevated backend, which a non-elevated session cannot set up. F10_FALSIFIER.json records mechanism INCONCLUSIVE; AC1 is refused and the order stays open. The question needs an Administrator-run `codex sandbox` (elevated backend), or the CTO to accept the live codex_sandbox_offline_block_loopback_* rules (setup log 2026-09-11: 'firewall rule configured ... LocalUserAuthorizedList ...-1005') as the per-user-loopback evidence. Disarm owner n/a (INERT)."
+},
+{
+    "id": "NFRA_OPALAI-Z-W25-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~25",
+    "surfaced_at": "2026-10-01T12:30Z",
+    "one_line": "The `codex sandbox -c windows.sandbox=\"elevated\"` attempt, tried once to reach the offline identity, made codex itself run a read-ACL refresh over the operator's home before failing; a side effect the order's bound (no ACL change) did not anticipate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "~/.codex/.sandbox/sandbox.2026-10-01.log 2026-10-01T12:19:54Z: many 'granting read ACE to <path> for sandbox users' lines then 'read ACL run completed'; setup_error.json and deny_read_acl_state.json both stamped 08:19 local, the minute of the one elevated-override call. The same call returned helper_sandbox_lock_failed (access denied) at the .sandbox-bin lock.",
+            "No firewall rule, account or config.toml byte was changed by this worker (config.toml unchanged; Get-NetFirewallRule listing was read-only). The grants are codex's own refresh toward its own sandbox accounts and are not reverted here (reverting would itself be an ACL change)."
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-f-10 BOUNDS 2: never create, change or delete a firewall rule, account, ACL or codex config.",
+    "world_is": "A `codex sandbox` call with the elevated override is not read-only: it triggers codex's setup refresh, which wrote read ACEs for the sandbox users on files under the operator's profile before the elevated lock step failed. Not repeated. Disarm owner n/a (INERT)."
+}
 ]
 ```

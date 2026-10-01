@@ -88,7 +88,17 @@ and `_udp`, whose `LocalUser` reads `O:LSD:(A;;CC;;;<SID>)`. You do three things
 3. **`opal_ai` is a nested repository** at `<worktree>/opal_ai`, on its own branch off `e69acf7`. Commit with
    `git -C opal_ai commit --author "0.9.0_WK_NFRA_OPALAI~25 <0.9.0_WK_NFRA_OPALAI~25@opal.agent>" -F <msgfile> -- <nested paths>`,
    the msgfile written with the Write tool. The parent `opal_ai` gitlink is NOT yours.
-4. **Status flip:** flip `<status>` IN PLACE, by replacing the existing tag. Never append a second tag; the row gate
+4. **Status flip:** flip `
+**ISSUER AMENDMENT 1 (2.0.0_SA_COO~AI, 2026-10-01 ~12:4xZ; `1.0.0_SA_CTO~O` msg 27829 amends ruling R2.1):** AC1 is retired
+from the proof of spec, and AC3's Opal_Agent -> 8194 arm IS the falsifier (apply, then measure). The worker's AC1
+stays recorded as REFUSED/INCONCLUSIVE (rows Z-W25-S1 and S2): `codex sandbox` here is unelevated and runs as the operator,
+and an elevated run re-ACLs. Readings:
+- REFUSED on Opal_Agent -> 8194, with 8790 and the operator arm OPEN: the wall stands.
+- OPEN: loopback is exempt; the rule is removed or left inert, and the CTO re-rules to a raw WFP filter.
+The item-0 close run stays held until the 8194 arm reads REFUSED. Gate: LIMB 6 does not fire on a modification, and
+GATE (viii) graded it (<placeholders>NONE).
+
+<status>` IN PLACE, by replacing the existing tag. Never append a second tag; the row gate
    reads the FIRST tag. Standing rules also apply: no push, no install, no vendor call. REFUSE a criterion you cannot
    meet as written, and report the refusal with its measurement.
 
@@ -108,7 +118,6 @@ Read-only: `integrations/bloomberg/mcp/server.py`; the live firewall (`Get-NetFi
 ## 4. PROOF OF SPEC (literal; run from your worktree root, after the nested commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OA-f-10"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f10.AC1.sh; echo "exit=$?"</invocation><expect>inside whoami differs from outside; outside result=OPEN; mechanism equals implied (FIREWALL-RULE or LOOPBACK-EXEMPT) -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OA-f-10"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f10.AC2.sh; echo "exit=$?"</invocation><expect>plan rc=0 PLAN: RULE lines=2 well-formed=2 Opal_Agent SID named=1 Opal_MSP SID named=1 lines naming 8790=0; unknown 'WALL: REFUSE UNKNOWN-ACCOUNT' rc=2; real-mode 'ELEVATION REQUIRED' rc=3; S-1-5-21 literals=0; parse errors=0; other files changed vs e69acf7=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OA-f-10"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f10.AC3.sh; echo "exit=$?"</invocation><expect>live 8194 block rules matching an account SID: 2 of 2; agent 8194=REFUSED|TIMEOUT 8790=OPEN; msp 8194=REFUSED|TIMEOUT 8790=OPEN; operator 8194=OPEN; arms ok=yes -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
