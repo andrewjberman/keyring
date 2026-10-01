@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-30T13:45:55.234696+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / CTO RULING 103369: E_18 stays deployed; the 2026-10-01 04:00Z run is the EXPECTED NEGATIVE CONTROL (E_18.detect_new_securities.py:54 parents[4] import crash on the flat runner, row MDPF_SECCLASS-S5; an import crash writes nothing); leg A1's acceptance MOVES to the first scheduled run after the round-6 cell-1 fix-forward lands under its new half (held since 2026-09-30T18:37:58.408104+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / E_18 has NO scheduled trigger (row MDPF_SECCLASS-W10-S2: gold_dispatch.sh lists no E_ id), so leg A1 has nothing to fire it. The fix-forward this hold waited on is deployed (ledger secclass-bd-thread-r3-m-20261001 leg S1, 2026-10-01 06:13Z: E_18 at md5 a7820a205692444dadb59e526200bff6). A1 now waits on MDPF_SECCLASS STATUS.md next-list item 4, the E_18 trigger, which takes both halves (held since 2026-09-30T18:37:58.408104+00:00)
 **Deploy:** MDPF_SECCLASS SC-e-7 E_18: step 1 IAM additive inline policy E18ScheduledEtfClassificationsPut on bd-exporter-ec2-role (safe-apply, plan 1/0/0); step 2 BD E_18.detect_new_securities.py deploy SHA-verified; acceptance = first ordinary 04:00Z scheduled run (halves COO c4019eacd2 / CTO a7a6d286f2)
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -26,3 +26,4 @@
 - 20260930T140036Z LEG I3 closed: get-role-policy bd-exporter-ec2-role mdpf-secclass-scheduled-put-policy at 13:5xZ: one statement, Sid E18ScheduledEtfCla
 - 20260930T141300Z LEG C1 closed: HALT_ACK=1 safe-deploy 14:1xZ: DEPLOYED [bd] data/black_diamond/scripts/gold/E_18.detect_new_securities.py -> code/gold/
 - 20260930T183758Z HELD-SOVEREIGN-GATED gate=external/CTO RULING 103369: E_18 stays deployed; the 2026-10-01 04:00Z run is the EXPECTE
+- 20261001T065552Z HELD-SOVEREIGN-GATED gate=external/E_18 has NO scheduled trigger (row MDPF_SECCLASS-W10-S2: gold_dispatch.sh lists 
