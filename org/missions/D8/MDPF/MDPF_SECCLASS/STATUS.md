@@ -86,7 +86,8 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
    2 (set b moves a class on 706,570.47 USD at Inflection; set a moves the sub class on 5,801,070.93 USD), and G,
    the next Black Diamond gold fire reads six held tickers (57 lots, 518,062.80 USD) with a class. The thirteen
    withheld tickers (eleven low-confidence, O, CAIBX) each need a seed row under its own half or stay on the
-   fallback; O and PCOFX are served a wrong class today (row S7). REET against VNQ is row S8.
+   fallback; O is served a wrong class today (fixed_income for a REIT stock, at all three firms), and PCOFX is served
+   correctly -- it was the model's answer for it that was wrong, and withheld. REET against VNQ is row S8.
 
 10. **MDPF_HEALGAP cell 1 (CTO 103641; rulings batch 72 and batch 75): built, half signed by this seat, CTO half owed.**
     Not this project. Its state is `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_M/STATUS~M.md`: the

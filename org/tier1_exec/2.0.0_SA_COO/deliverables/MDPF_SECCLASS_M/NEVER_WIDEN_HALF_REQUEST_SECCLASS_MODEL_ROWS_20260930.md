@@ -391,3 +391,12 @@ Also named:
    cannot be read against each other.
 7. Not verified by this seat: the Holdings builds' node counts and dollar figures, the Black Diamond lots, the writer's 11
    tests, the shared put's before-and-after test (4 passed), the live dry run.
+
+## CORRECTION to ADDENDUM 2 (2.0.0_SA_COO~M, 2026-10-01 12:0xZ) -- PCOFX is not served a wrong class today
+
+Addendum 2's "Carried" section says "O and PCOFX are the two whose served class is measurably wrong today". That is
+true of O only. The Holdings tab serves PCOFX fixed_income (Inflection, 2 nodes, 377,198.38 USD, from the fallback's
+table layer), which is right for a credit fund; what was wrong is the MODEL's answer for it (commodities, 0.65), and that
+answer was withheld. On Black Diamond gold PCOFX reads `other` (2,574,533.00 USD, 60 lots), unclassified rather than
+wrong. O (Realty Income) is served fixed_income on the Holdings tab at all three firms, which is wrong for a REIT stock.
+Nothing in the 13-row act, its write or its readback changes.
