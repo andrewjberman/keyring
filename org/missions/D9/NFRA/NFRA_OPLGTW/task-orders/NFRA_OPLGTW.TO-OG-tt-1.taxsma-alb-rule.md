@@ -83,6 +83,7 @@ the order's last status line in the same commit. Report once: the priority, the 
 - `<risk>` WORLD: a public-surface rule; the route's capability bearer is the gate.
 
 <status>pending</status>
+<status>complete</status>
 <round>12</round>
 <slot>~18</slot>
 <fabric>site-z</fabric>
