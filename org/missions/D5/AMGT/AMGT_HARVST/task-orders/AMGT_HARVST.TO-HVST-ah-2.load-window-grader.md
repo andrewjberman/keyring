@@ -87,7 +87,7 @@ issuer's driver runs under the monitor.
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>35</round>
 <slot>~90</slot>
 <fabric>site-z</fabric>
