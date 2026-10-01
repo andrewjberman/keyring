@@ -2560,6 +2560,47 @@
       ]
     },
     "notes": "Resolves ETFS_RIVALS-Z-W4-S12 (an existing row is never edited; this row carries the resolution). The deploy of gold_holdings_coverage to the QA Lambda is the issuer's act and is due before the 07:00 ET fetch; this worker deployed nothing and touched no S3. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T22:25Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W4-S12: with the RIV-q-1 G2 fix deployed (addendum 1, A1) a full-window G2 replay serves 307 GQGU coverage days and the 2026-10-01 page shows GQGU's calendar (status ok, 20 days).",
+    "spec_asserts": "Row Z-W4-S12 (BLOCKING): G2 has no GQGU path; 0 GQGU rows in 307 days; the served GQGU block read 'the history calendar is unavailable'.",
+    "world_is": "After A1 (safe-apply 21:54Z, 0 added 5 changed 0 destroyed) and A2 (request e83248aa-b484-401c-a48d-a8cdbfed971e, d5-g2-a1-full, 354.5 s, written_new 307): the 502 coverage objects hold 307 GQGU rows (one per report day, 305 naming a gqgu- capture) and every other fund equals the addendum table's rows (BASG 645, BIDD 471, CGIC 502, ETFT 208, IDVZ 28, INEQ 502, PCLG 240, PFOE 27, SCHY 502, TSEL 438, TXUE 420, WCMG 111; evidence/g2_readback_a1.txt). Page d5-publish-a1 (request 8a6012e1-a017-40d4-a673-5fc06dec76e4): GQGU block data-calendar status ok, data-days 20, data-source issuer; d-5.AC1 reads PASS 0 failures.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/evidence/g2_readback_a1.txt and d-5.AC1.a1.output.txt (this worktree)",
+        "s3://opal-data-etfs/rivalfunds/etfs/state/publish_page/date=2026-10-01/d5-publish-a1.json"
+      ]
+    },
+    "notes": "Resolves ETFS_RIVALS-Z-W4-S12 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T22:26Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W4-S13 on the deployed bytes: the five Lambdas carry the G2 own-capture fix before the 2026-10-02 07:00 ET fetch, and the served G2 reads each fund from its own capture (0 of 645 BASG rows name a gqgu- capture); the live both-funds fetch is still the acceptance test.",
+    "spec_asserts": "Row Z-W4-S13 (BLOCKING, ARMED): G2's issuer reader attributes every issuer sidecar to BASG, so the next GQGU capture can displace BASG's observation.",
+    "world_is": "A1 deployed the package at CLOUD 25f4ac5418 + the ledger commit to all five functions (CodeSha256 after in evidence/lambda_after_apply_a1.txt; each zip carries gold_holdings_coverage.py with the fix and the d-5 floors). The G2 replay A2 rebuilt every day under it: BASG's 645 rows name 0 gqgu- captures; GQGU's 307 rows name 305 gqgu- captures (2 rows have no capture). The served-delta instrument (served_delta_g2_act.json) showed 0 issuer rows reading another fund's capture under the fix. NOT yet observed: the 07:00 ET 2026-10-02 fetch landing BASG then GQGU 5 s apart and the next G2 daily; the issuer reads that at the acceptance.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/evidence/lambda_after_apply_a1.txt, g2_readback_a1.txt and served_delta_g2_act.json (this worktree)"
+      ]
+    },
+    "notes": "Resolves ETFS_RIVALS-Z-W4-S13 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV; the hazard is disarmed on the deployed bytes, the acceptance read confirms it live."
   }
 ]
 ```
