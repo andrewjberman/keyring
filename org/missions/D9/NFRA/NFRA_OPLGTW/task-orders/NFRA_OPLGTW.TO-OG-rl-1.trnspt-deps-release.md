@@ -144,7 +144,8 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 
 **ISSUER NOTES:**
 - Slot ~15, queue position 3. PHASE A handed once `OG-tx-1`, `OG-ml-1`, `OG-hr-1` and `OG-hr-2` are drained (A2).
-  PHASE B GO only after `OG-pr-1` is complete and MX-r-7 has landed (train R1; it swaps with MS-d-2 if ready first). G-SENDERS is NOT a gate
+  PHASE B GO only after `OG-pr-1` and `OG-al-1` are complete and MX-r-7 has landed (train R1; it swaps with MS-d-2
+  if ready first). `OG-al-1` (decomposition addendum R3-T.2) gives `/hx/*` its public reach; the ALB stays untouched here. G-SENDERS is NOT a gate
   (ruling (d)). The halves also cover the cot OTP bearer rotation and the host-side roster read.
 - The halves' blast radius: the shipped file set, the two secrets, the `.env` delta and the negative arms. Rollback is the prebuilt live artifact plus the old `.env`; the secrets can be deleted with a recovery window.
 - Risk WORLD: a deploy that adds a content surface.
