@@ -118,6 +118,36 @@ def _sim(a: bytes, b: bytes) -> float:
         return 0.0
 
 
+# MEMBER COMPARISON (ESTATE_GOVERNANCE-S30, re-filed from ETFS_INGEST-Z-S17; the defect named in .tools/comp-closure's
+# header since 2026-08-24). The byte compare was RAW: a CRLF-deployed member against LF committed bytes read
+# eq_head False on a CORRECT deploy. The settled order is kept: (a) DISCLOSURE FIRST -- every member row says which
+# comparison established each equality (`*_basis`) and still carries the raw result (`raw_eq_*`), and those are row
+# properties, so they survive the equivalence=UNMEASURED short-circuit; (b) NORMALISATION SECOND -- a TEXT member
+# (no NUL byte) that differs from the repo bytes ONLY in CRLF versus LF is equal under EOL_NORMALIZED. A normalised
+# equality is never silent: the bundle's basis sentence counts the members it rests on.
+CMP_RAW, CMP_EOL = "RAW_BYTES", "EOL_NORMALIZED"
+
+
+def _eol_norm(b):
+    """CRLF folded to LF for a TEXT member; None for a binary one (a NUL byte) or an absent side."""
+    if b is None or b"\0" in b:
+        return None
+    return b.replace(b"\r\n", b"\n")
+
+
+def _member_eq(deployed: bytes, repo):
+    """(equal, basis): (True, CMP_RAW) on identical bytes; (True, CMP_EOL) when two text members differ only in
+    line endings; (False, None) otherwise, including an absent repo side."""
+    if repo is None:
+        return False, None
+    if repo == deployed:
+        return True, CMP_RAW
+    nd, nr = _eol_norm(deployed), _eol_norm(repo)
+    if nd is not None and nr is not None and nd == nr:
+        return True, CMP_EOL
+    return False, None
+
+
 def closure_reach(member_reach: dict) -> str:
     """The AGGREGATION LAYER: closure reach = MIN over members (weakest link). No members -> NONE."""
     if not member_reach:
@@ -360,12 +390,18 @@ def compile_closure(name, smap, reader, repo, env, execution_reads=None):
         other_homes = repo.plausible_homes(mb, os.path.basename(rel), repo_path)
         homes_seen.update(other_homes)
         member_reach[rel] = "PRESENCE_ONLY"
+        eq_dep, dep_basis = _member_eq(mb, at_dep)
+        eq_hd, head_basis = _member_eq(mb, at_head)
         per_member.append({"member": rel, "repo_path": repo_path, "reach": "PRESENCE_ONLY", "shape": shape,
                            "deployed_sha256": _sha256(mb),
                            "repo_at_deployed_commit_sha256": _sha256(at_dep) if at_dep else None,
                            "repo_at_head_sha256": _sha256(at_head) if at_head else None,
-                           "eq_deployed_commit": (at_dep is not None and at_dep == mb),
-                           "eq_head": (at_head is not None and at_head == mb),
+                           "eq_deployed_commit": eq_dep, "eq_deployed_commit_basis": dep_basis,
+                           "eq_head": eq_hd, "eq_head_basis": head_basis,
+                           "raw_eq_deployed_commit": (at_dep is not None and at_dep == mb),
+                           "raw_eq_head": (at_head is not None and at_head == mb),
+                           "comparison": "raw bytes first; a text member equal only after CRLF is folded to LF is "
+                                         "equal under %s and its *_basis says so" % CMP_EOL,
                            "other_plausible_homes": other_homes})
     compared = sum(1 for m in per_member if m.get("reach") != "NONE")
     o4 = _obs(env, request={"op": "repo_bytes_compare", "fn": name, "commit": dep_commit, "head": head},
@@ -440,11 +476,17 @@ def _finish(name, hops, standing, reasons, ambiguity, vintage, obs, *, members, 
         cmp_ = [m for m in members if m.get("reach") != "NONE"]
         all_eq_head = bool(cmp_) and all(m.get("eq_head") for m in cmp_)
         all_eq_dep = bool(cmp_) and all(m.get("eq_deployed_commit") for m in cmp_)
+        # WHICH comparison the verdict rests on, counted (never a silent normalise): see _member_eq.
+        n_eol_head = sum(1 for m in cmp_ if m.get("eq_head_basis") == CMP_EOL)
+        n_eol_dep = sum(1 for m in cmp_ if m.get("eq_deployed_commit_basis") == CMP_EOL)
         if shape_d and all_eq_head:
             eq = {"state": "UNMEASURED", "basis": "shape D (directory+basename) resolution is declared weaker and cannot yield EQUIVALENT alone"}
         elif all_eq_head:
-            eq = {"state": "EQUIVALENT", "basis": "every compared member byte-equal to repo@HEAD at its build-input path; single home%s"
-                  % ("; live digest == artifact pointer" if digest_match else
+            eq = {"state": "EQUIVALENT", "basis": "every compared member %s to repo@HEAD at its build-input path; single home%s"
+                  % ("byte-equal" if not n_eol_head else
+                     "equal (%d of %d by %s -- the bytes differ only in CRLF versus LF -- the rest %s)"
+                     % (n_eol_head, len(cmp_), CMP_EOL, CMP_RAW),
+                     "; live digest == artifact pointer" if digest_match else
                      ("; live digest != artifact pointer (the map's pointer is older than the live deploy)" if pointer else
                       "; provenance hop UNKNOWN (no artifact pointer) -- identity established on bytes alone"))}
         elif any(m.get("eq_head") is False for m in cmp_):
@@ -454,8 +496,9 @@ def _finish(name, hops, standing, reasons, ambiguity, vintage, obs, *, members, 
                          "the build input, so stale-vs-HEAD and provenance mismatch CANNOT be told apart -- UNDETERMINED which"
                          % (sum(1 for m in cmp_ if m.get("eq_head") is False), len(cmp_)))
             elif all_eq_dep:
-                basis = ("deployed == repo@last_deployed_commit for every compared member, HEAD has moved since "
-                         "(stale-vs-HEAD; the build-input source at the deploy commit is intact -- not a provenance mismatch)")
+                basis = ("deployed == repo@last_deployed_commit for every compared member%s, HEAD has moved since "
+                         "(stale-vs-HEAD; the build-input source at the deploy commit is intact -- not a provenance mismatch)"
+                         % ("" if not n_eol_dep else " (%d of %d by %s)" % (n_eol_dep, len(cmp_), CMP_EOL)))
             else:
                 basis = ("deployed bytes differ from the build-input source at the recorded deploy commit for %d of %d member(s) "
                          "(provenance mismatch; see members[])" % (sum(1 for m in cmp_ if not m.get("eq_deployed_commit")), len(cmp_)))
@@ -683,6 +726,41 @@ def self_test() -> int:
         len(obs) >= 4 and all(env.validate_record(o) == [] for o in obs))
     chk("1c the instance SAYS presence-only-by-construction (a clean run never reads as behavior)",
         any("PRESENCE_ONLY BY CONSTRUCTION" in n for n in c["notes"]) and "PRESENCE verified, BEHAVIOR not" in b["last_hop_honesty"])
+    # --- 15: LINE ENDINGS (ESTATE_GOVERNANCE-S30). A CRLF-deployed text member against LF committed bytes is a CORRECT
+    # deploy; a real change under CRLF is still a change; a binary member is never normalised; a raw-equal member says RAW.
+    E_LF = b"def eol():\n    return 'same'\n"
+    E_CRLF = E_LF.replace(b"\n", b"\r\n")
+    E_CRLF_CHANGED = E_CRLF.replace(b"same", b"other")
+    BIN_LF, BIN_CRLF = b"\x00\x01head\nbody\n", b"\x00\x01head\r\nbody\r\n"
+    pkgE, pkgEx, pkgBin = _zip({"eolmod.py": E_CRLF}), _zip({"eolchg.py": E_CRLF_CHANGED}), _zip({"blob.bin": BIN_CRLF})
+    smapE = {"_updated": "fixture-eol", "functions": {
+        "fn-eol": {"source_dir": "src/eol", "files": ["eolmod.py"], "artifact_s3_key": "k", "artifact_sha256": _sha256(pkgE), "last_deployed_commit": "c1"},
+        "fn-eolchg": {"source_dir": "src/eolchg", "files": ["eolchg.py"], "artifact_s3_key": "k", "artifact_sha256": _sha256(pkgEx), "last_deployed_commit": "c1"},
+        "fn-bin": {"source_dir": "src/bin", "files": ["blob.bin"], "artifact_s3_key": "k", "artifact_sha256": _sha256(pkgBin), "last_deployed_commit": "c1"}}}
+    treeE = {"src/eol/eolmod.py": E_LF, "src/eolchg/eolchg.py": E_LF, "src/bin/blob.bin": BIN_LF}
+    repoE = FixtureRepo("HEADFIX", treeE, {("c1", p): v for p, v in treeE.items()})
+    readerE = FixtureReader({"fn-eol": {"CodeSha256": b64(pkgE), "package": pkgE},
+                             "fn-eolchg": {"CodeSha256": b64(pkgEx), "package": pkgEx},
+                             "fn-bin": {"CodeSha256": b64(pkgBin), "package": pkgBin}})
+    cE, bE, _ = compile_closure("fn-eol", smapE, readerE, repoE, env)
+    mE = bE["members"][0] if bE.get("members") else {}
+    chk("15 CRLF-deployed text member vs LF committed bytes -> CURRENT + EQUIVALENT, and the member row and the basis sentence both "
+        "NAME the comparison (eq_head true by %s, raw_eq_head false)" % CMP_EOL,
+        cE["standing"]["value"] == "CURRENT" and bE["equivalence_claim"]["state"] == "EQUIVALENT"
+        and mE.get("eq_head") is True and mE.get("eq_head_basis") == CMP_EOL and mE.get("raw_eq_head") is False
+        and CMP_EOL in bE["equivalence_claim"]["basis"])
+    cX, bX, _ = compile_closure("fn-eolchg", smapE, readerE, repoE, env)
+    mX = bX["members"][0] if bX.get("members") else {}
+    chk("15b a REAL content change under CRLF is NOT absorbed by the normalise -> DIVERGENT, eq_head false, basis None",
+        bX["equivalence_claim"]["state"] == "DIVERGENT" and mX.get("eq_head") is False and mX.get("eq_head_basis") is None)
+    cN, bN, _ = compile_closure("fn-bin", smapE, readerE, repoE, env)
+    mN = bN["members"][0] if bN.get("members") else {}
+    chk("15c a BINARY member (a NUL byte) that differs only by CR bytes is never normalised -> DIVERGENT on raw bytes",
+        bN["equivalence_claim"]["state"] == "DIVERGENT" and mN.get("eq_head") is False)
+    m1row = b["members"][0] if b.get("members") else {}
+    chk("15d the clean closure's member says its equality is %s and the basis sentence still reads byte-equal" % CMP_RAW,
+        m1row.get("eq_head_basis") == CMP_RAW and m1row.get("raw_eq_head") is True
+        and "byte-equal" in b["equivalence_claim"]["basis"] and CMP_EOL not in b["equivalence_claim"]["basis"])
     c2, b2, _ = compile_closure("fn-twohomes", smap, reader, repo, env)
     chk("m1 TWO HOMES (byte-identical copy at a second path) -> standing AMBIGUOUS, bundle UNMEASURED -- never CLEAN, never DRIFT",
         c2["standing"]["value"] == "AMBIGUOUS" and "src/other/handler.py" in c2["ambiguity"]["candidate_homes"]
