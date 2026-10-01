@@ -2214,6 +2214,27 @@
       ]
     },
     "notes": "RESOLVED at 9ee33a86d4; resolves ETFS_RIVALS-Z-W1-S31 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S34",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T16:10Z",
+    "one_line": "RIV-i-2 needed a G1 revision rule the cell does not state: an alias changes a G1's rows without changing its inputs, so under the v-2 revision (a function of the silver/Bloomberg/G4 inputs) a replay over an already-served issuer-only date would find the old object and write nothing; the stage now folds the applied alias set into the revision digest and builds the rows before the already-gold check.",
+    "spec_asserts": "RIV-i-2 cell: 'a CUSIP joined to a Bloomberg key on an earlier co-held date keeps that key on a later issuer-only date' (resolution_method 'issuer-alias'); it says nothing of how a G1 that gains aliases is revised or served.",
+    "world_is": "data/etfs/scripts/rivalfunds/gold_canonical_shape.py@eead544924 handler_entry: rows are built with the provisional revision, then if any row is `issuer-alias` the revision becomes `<ts16>-<sha12 of the input digest + the CUSIP=key@measured set>` (then the `-b<NN>` build sequence at a taken capture time), and the already-gold check runs on that. Effects: (1) the served 2026-09-29/30 G1 objects (0 of 33 BASG resolved) are superseded by a NEW newest object on the next replay, the old ones kept; (2) a second replay writes nothing (tests/test_i2_issuer_alias.py::test_a_g1_that_carries_an_alias_is_its_own_revision_and_a_replay_adds_nothing); (3) the check is now after the row build, so a replay that adds nothing still builds the rows in memory. The G5/G6 objects of those dates are built from the older G1 revision until the trade schedule is re-run (its object name follows the G1 revision).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py@eead544924",
+        "data/etfs/scripts/rivalfunds/tests/test_i2_issuer_alias.py@eead544924"
+      ]
+    },
+    "notes": "The serve is the issuer's act (a replay of canonical_shape, then build-trade-schedule and publish_page over the dates), not this worker's. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
