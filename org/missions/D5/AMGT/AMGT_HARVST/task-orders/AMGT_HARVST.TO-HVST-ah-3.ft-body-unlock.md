@@ -84,7 +84,7 @@ re-points it from relevance to access: 324 of 357 rejections are locked bodies. 
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>35</round>
 <slot>~92</slot>
 <fabric>site-z</fabric>
