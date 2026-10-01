@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
@@ -219,7 +219,8 @@ approved it.
          system, and why
          DONE WHEN  EXERCISED -- Andrew reads each fund's style read with its
                     evidence (timing concentration, breadth of the book touched,
-                    trade size), and the group's index fund (SCHY) reads as
+                    trade size), and each group's index control (v0.8: ACWI
+                    for the IDVZ group, IWM for the PFOE group) reads as
                     systematic on that same evidence
          ACCEPT     a count of trades alone is never the evidence; a label is
                     shown only after the control reads correctly
@@ -372,6 +373,17 @@ page itself.
 - **Source policy is per fund**, a field of the mapping (supersedes C-SOURCE-POLICY's single rule):
   - `bloomberg_primary`: the IDVZ group;
   - `issuer_first`: the PFOE group, as C-SOURCE-POLICY states.
+- **Index controls (v0.8, Andrew-direct 2026-10-01 ~18:2xZ, record @`19c5277a57`: "Use Russel 2000 for PFOE, ACWI for IDVZ";
+  "Dont need peer selection criteria, those are pre-decided by the asset management team").**
+  - Each group carries ONE `index_control` entry in `peer_group_map`:
+    - the IDVZ group: **ACWI** (iShares MSCI ACWI ETF);
+    - the PFOE group: **IWM** (iShares Russell 2000 ETF). Andrew named the Russell 2000 index, and the style control reads a
+      listed fund's published holdings, so the instrument is the index's largest listed tracker.
+  - **Both controls are `bloomberg_primary`.**
+  - **SCHY stays a member of the IDVZ group**, because the asset management team set the group, but it is no longer that
+    group's `index_control`.
+  - Every control is a mapping entry, never code (FWD-12).
+  - The peer sets are the asset management team's and are not re-derived. No selection criterion is written.
 
 **C-HOME-PRODUCER (one writer per fund's holdings).** IDVZ and PFOE are already pulled by
 `integrations/bloomberg/pipeline/etf_constituents_pull.py`.
@@ -386,6 +398,25 @@ page itself.
   - IDVZ and PFOE leave this pipeline's Bloomberg request.
 - **Never two producers of one fund's holdings** (CLAUDE.md, no duplicate output path). This stands; v0.4's striking of it is
   withdrawn.
+- **SUPERSEDED IN PART by v0.8 (Andrew-direct 2026-10-01 ~18:2xZ, record @`19c5277a57`, VERBATIM: "We should be able to pull all
+  this through the same bloomberg methodology that we do for all the other bbg-data pulls for the rivalfunds. Just add them to
+  the same queue on the job that does that.").**
+  - IDVZ and PFOE JOIN this pipeline's Bloomberg request (`rivalfunds.collector_bloomberg`, the box task's
+    `:rivalfunds_bbg_leg`). They join on the daily queue AND its history backfill to each fund's launch, because "the same
+    queue on the job" is the daily job.
+  - **One producer per fund inside this pipeline.** The Bloomberg leg becomes IDVZ's and PFOE's ONE producer here, and this
+    pipeline stops reading the Positioning landing for them.
+    - The read of `positioning-landing:constituents_issuer_fill` retires, and the `home_producer` source with it.
+    - The RIV-m-1 grain limit lifts, along with its "capture-forward from 2026-08-21" bound.
+    - Rows already served keep their `source_channel`, because history is never rewritten in place. The replay writes new
+      revisions under a pair.
+  - **The Positioning pull is still not modified** (Andrew 2026-09-30, "leave the existing pull alone"; "Anything ... additive").
+    This pipeline neither reads it nor writes it.
+  - Both the Positioning pull and this leg now request the two funds from Bloomberg, each for its own product. That is
+    Andrew's explicit word above. It is recorded as his, and it is not a precedent.
+  - **Bloomberg budget:** before the first scheduled fire with the four new names (IDVZ, PFOE, ACWI, IWM), the issuer
+    measures the leg's request cost per `integrations/bloomberg/READ_HERE.md`. A measured breach STOPs and is rowed, and no
+    name is silently dropped.
 
 **C-INCOME-CLEAN (Addendum A FWD-5; Andrew: "did we already account for dividend/interest income? That should be covered").**
 - Before any residual reads as a trade, trade inference:
@@ -419,7 +450,7 @@ builder at v0.3. Every table:
 | G6 | `flow_reconciliation` | fund x trade window | (fund_id, window_end) | flow_factor_f, cash_line_delta_base, income_received_base, fx_conversion_base, corporate_action_count, income_funded_trade_count, unexplained_residual_base | MEASURED inputs, INFERRED residual | with G5 |
 | G7 | `trade_outcomes` | trade x horizon | (fund_id, security_id, window_end, horizon_td) | horizon_td {21, 63, 126}, fwd_security_tr, fwd_benchmark_tr (the fund's own holdings-weighted book), excess_tr, outcome {helped, hurt, flat}, price_coverage {full, partial, missing} | MEASURED returns, INFERRED attribution | after G5 and G4 |
 | G8 | `outcome_rollup` | fund x period x axis x bucket | (fund_id, period, axis {sector, security}, bucket) | n_trades, n_missing, hit_rate, mean_excess, sum_notional_base, window, denominator | INFERRED | after G7 |
-| G9 | `style_read` | fund x research window | (fund_id, window_end) | **the gate (v0.6, `4.0.0_SA_CRO~Z` style-read preview @9fc7430875):** peak_book_share_days (every report pair touching at least 50% of the book, with dates) and recurrence (those days fall on a quarterly or monthly calendar grid, at least 3 occurrences across at least 2 years); label systematic when recurrence holds, discretionary when trading is present without it, undetermined below the minimum history. Descriptive context, not the gate: timing_concentration (share of trade notional in the top 4 weeks), reconstitution_share, breadth, median_trade_size_pct, trade_count. label {discretionary, systematic, undetermined}, control_passed (SCHY must read systematic) | INFERRED | after G5; the label shows only when control_passed |
+| G9 | `style_read` | fund x research window | (fund_id, window_end) | **the gate (v0.6, `4.0.0_SA_CRO~Z` style-read preview @9fc7430875):** peak_book_share_days (every report pair touching at least 50% of the book, with dates) and recurrence (those days fall on a quarterly or monthly calendar grid, at least 3 occurrences across at least 2 years); label systematic when recurrence holds, discretionary when trading is present without it, undetermined below the minimum history. Descriptive context, not the gate: timing_concentration (share of trade notional in the top 4 weeks), reconstitution_share, breadth, median_trade_size_pct, trade_count. label {discretionary, systematic, undetermined}, control_passed (the group's `index_control` must read systematic: ACWI for IDVZ, IWM for PFOE, v0.8) | INFERRED | after G5; the label shows only when control_passed |
 | G10 | `trend_projection` | fund x axis x bucket x horizon | (fund_id, axis, bucket, horizon) | trailing_net_flow_base (3 windows), direction {accumulating, reducing, flat}, persistence, projected_direction, falsifier (deterministic template), confidence | INFERRED | after G5 |
 | G11 | `peer_comparison` | group x fund x measure x period | (group_id, fund_id, measure, period) | value, rank_in_group, group_median, is_home | INFERRED (from G8-G10) | after G8-G10 |
 | G12 | `research_hypotheses` | fund x analysis run x item | (fund_id, run_id, item_id) | kind {projection_note, wildcard, process_account}, text, cited_rows (table, key, revision), invalidation, model_version, prompt_version | INFERRED (AI) | the analysis step, after G8-G11 |
@@ -509,6 +540,18 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.8 (2026-10-01, `1.0.0_SA_CTO~Z`), on Andrew's three answers to `4.0.0_SA_CRO~RV`'s closer trace (record @`19c5277a57`, brief
+  @`381bec5549`):
+  - C-HOME-PRODUCER is superseded in part: IDVZ and PFOE join the Bloomberg leg, daily and backfill, as the one producer
+    inside this pipeline, and the Positioning pull is untouched.
+  - C-PEER-GROUPS gains the index controls (ACWI for IDVZ, IWM for PFOE), with SCHY a member but no longer the control.
+    No selection criterion is written.
+  - FWD-10's control and G9's `control_passed` follow.
+  - The hop-9 method rulings are recorded separately (`ledger/CTO_RULING_20261001_HOP9_METHOD_DEFECTS.md` @`4baf852611`).
+  - This is an ENDPOINT (FWD-10) and CONTRACTS change. Andrew's word names the controls, so the ratified half re-opens to
+    `3.0.0_SA_CVO~Z`.
+  - Round 4 (d-5) finishes as cut. These are round-5 cells.
 
 - v0.7 (2026-10-01, `1.0.0_SA_CTO~Z`), the round-2 analysis ruling 5 on row ETFS_RIVALS-Z-S1:
   - the C-SHAPES classification bullet now follows the ratified vocabulary the PRD names. For an equity row,
