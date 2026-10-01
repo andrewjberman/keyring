@@ -27,7 +27,7 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, login: true, settleExtraMs: 0, periodsPerAccount: false, days: [], thread: null }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, login: true, settleExtraMs: 0, periodsPerAccount: false, days: [], thread: null, expectTexts: [], reloadReopen: false }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
@@ -47,6 +47,8 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--open-request') opt.openRequest = argv[++i]
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
   else if (a === '--performance-state') opt.performanceState = true
+  else if (a === '--expect-text') opt.expectTexts.push(String(argv[++i] || ''))
+  else if (a === '--reload-reopen') opt.reloadReopen = true
   else if (a === '--no-login') opt.login = false
   // Extra wait after every settle, for a read whose answer lands after networkidle (a retained Performance
   // reopen fires after the account switch, so a 1200 ms settle screenshots "Loading"). Default 0: unchanged.
@@ -691,7 +693,7 @@ function noteHopResponse(req, res, json, headers) {
   }
   requestHops.rows.push(row)
 }
-async function openRequest(page, label, requestId) {
+async function openRequest(page, label, requestId, afterReload = false) {
   const rows = page.locator('[data-row="owned-analysis-request"]')
   for (let w = 0; w < 40 && !(await rows.count().catch(() => 0)); w++) await page.waitForTimeout(500)
   const listed = await page.evaluate(() => [...document.querySelectorAll('[data-row="owned-analysis-request"]')].map((r) => ({
@@ -754,6 +756,18 @@ async function openRequest(page, label, requestId) {
   rec.hops = requestHops.rows.slice().sort((a, b) => a.sent_ms - b.sent_ms)
   rec.hops_sent_by_kind = requestHops.sent || {}
   requestHops = null
+  // --expect-text "<words>" (repeatable): how many times the opened dialog's own text carries each string, counted
+  // case-sensitively, with where it stands: on the dialog's face, or only inside a closed <details>.
+  if (opt.expectTexts.length) {
+    rec.expect_text = await page.evaluate((wanted) => {
+      const d = document.querySelector('[data-slot="owned-request-detail"]')
+      if (!d) return null
+      const count = (hay, needle) => needle ? hay.split(needle).length - 1 : 0
+      const all = d.textContent || ''
+      const closed = [...d.querySelectorAll('details:not([open])')].map((x) => x.textContent || '').join('\n')
+      return wanted.map((w) => ({ text: w, in_dialog: count(all, w), inside_closed_details: count(closed, w) }))
+    }, opt.expectTexts).catch(() => null)
+  }
   await checks(page, `${label}-request-open`)
   await page.locator('[data-slot="owned-request-detail"]').evaluate((d) => { d.scrollTop = d.scrollHeight }).catch(() => {})
   await page.waitForTimeout(400)
@@ -761,6 +775,29 @@ async function openRequest(page, label, requestId) {
   openedRequests.push(rec)
   await page.keyboard.press('Escape').catch(() => {})
   await page.waitForTimeout(400)
+  // --reload-reopen: reload the page and open the SAME request again, so "it is still there after a reload" is a
+  // read and not a belief. A reload may drop the client selection; that is recorded as its own fact, and the request
+  // is re-opened only if its row is listed again. One reload per request (the second open never reloads).
+  if (opt.reloadReopen && !afterReload) {
+    const reload = { reloaded: false, client_kept: null, analysis_tab_pressed: false, rows_listed: 0 }
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: 30000 }).then(() => { reload.reloaded = true }).catch(() => {})
+    await settle(page, 4000)
+    const who = ((await page.locator('[data-slot="identity-card"]').first().innerText().catch(() => '')) || '').replace(/\s+/g, ' ')
+    reload.client_kept = who.length > 0 && !/No client selected/.test(who)
+    const tab = page.locator('[data-slot="tab-shell"] .overflow-x-auto button', { hasText: /^analysis$/i }).first()
+    if (await tab.count().catch(() => 0)) {
+      requestHops = { t0: Date.now(), rows: [] }
+      await tab.click().catch(() => {})
+      reload.analysis_tab_pressed = true
+      const rows2 = page.locator('[data-row="owned-analysis-request"]')
+      for (let w = 0; w < 120 && !(await rows2.count().catch(() => 0)); w++) await page.waitForTimeout(500)
+      reload.rows_listed = await rows2.count().catch(() => 0)
+    }
+    await checks(page, `${label}-after-reload`)
+    rec.reload = reload
+    if (reload.rows_listed > 0) await openRequest(page, `${label}-after-reload`, requestId, true)
+    else requestHops = null
+  }
 }
 
 const SEARCH_ANSWER_CEILING_MS = 30000
