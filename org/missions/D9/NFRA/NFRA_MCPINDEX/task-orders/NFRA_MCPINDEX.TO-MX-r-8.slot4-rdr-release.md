@@ -106,7 +106,7 @@ base:
 - r8.AC1 FAIL as expected (no entry; 22 of 22 sentinels);
 - r8.AC2 FAIL as expected (live host: BD ask next_tools=[]; ETF control routed etfs_get_positioning; /health 200).
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
