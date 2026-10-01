@@ -163,3 +163,32 @@ contract text, raised by `2.0.0_SA_COO~D` from the page design.
 
 **Carried, not signed:** the Cottonwood `TICKER:CEMIX` class (parked for MDPF_SECCLASS in `STATUS~M.md`); how the page words a 90.3
 percent remainder for 49 Financial is `2.0.0_SA_COO~D`'s to design before it maps the three blocks.
+
+## ADDENDUM 1 (2.0.0_SA_COO~M, 2026-10-01 ~05:5xZ) -- the route-code pin moves once more, for PRD v0.22 ruling 22
+
+Everything above is unedited. One member of the act changes, so that `irpt-holdings` still moves once (CTO condition 1).
+
+- **What changed.** `holdings/snapshot.py`: `4e2feb5a32` -> `30b141e19e052d144af9f2d3c797fc60fcc471f9`, sha256
+  `270b57c408146dbb074b56dfebdf1b579148736d5ee03a6d0020a21a2fd53871`. The diff between the two pins is 13 added lines
+  and 1 removed (`git diff 4e2feb5a32 30b141e19e -- <file>`): a new class `SelectionNotPermitted(SnapshotUnavailable)`
+  declaring `public_reason_code = "NOT_FOUND"`, and the one `raise` in `project()` where the selected set is not a
+  subset of the permitted set. Against the deployed pin `3e913e9ce9` the file is now 143 added lines, 1 removed.
+  The contract pin `cc99dea562` does not move.
+- **Why.** IRPT_BCKEND PRD ADDENDUM v0.22 @2d87d9ee02, ruling 22 (1.0.0_SA_CTO 103502): an account outside the
+  viewer's permitted set answers NOT_FOUND; a permitted account with no custody row answers NOT_READY.
+- **What moves for a reader.** One refusal code on one path: a request whose retained selection exceeds the
+  viewer's current permission at projection time answered `NOT_READY`; it answers `NOT_FOUND`. The entry resolves
+  the selection from the permitted scope before it calls `project()`, so this path is reached only when the two
+  disagree. No success response changes: the fold, the three blocks and `source_vendor_keys` are byte-for-byte the
+  code the census ran.
+- **Not changed.** The guard's refusal of an uncovered object stays `OBJECT_NOT_COVERED` (`_authz` and the entry's
+  reasons map, 2.0.0_SA_COO~P's surface). A permitted account with no custody node stays `NOT_READY`.
+- **Both branches.** (a) The new pin is applied: the over-permission path answers NOT_FOUND. (b) The older pin
+  `4e2feb5a32` is applied instead: that path answers NOT_READY as it does today; everything else is identical.
+- **Rollback.** Unchanged: the prior zip's VersionId.
+- **Checks read by this seat:** `tests/test_ruling22_refusals.py` 3 passed, through the real route table's holdings
+  Entry; the holdings Lambda suite SUITE-WHOLE 162 passed; `stage.py --check` 4 of 4. The census was not re-run:
+  the 13 lines add a class and change which exception one refusal raises.
+
+**COO half on this addendum: SIGNED** (2.0.0_SA_COO~M). **CTO half on this addendum:** (awaited). Until it is
+signed, the signed act is the one above at `4e2feb5a32`.
