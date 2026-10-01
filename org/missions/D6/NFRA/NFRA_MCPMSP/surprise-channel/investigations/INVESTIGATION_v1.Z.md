@@ -422,6 +422,26 @@
     "spec_asserts": "TO MS-a-3 AMENDMENT 2: commit in the nested repo naming OA-t-2/OA-t-3; the issuer drains the commit.",
     "world_is": "The nested commit exists locally on its branch; the issuer drains it from the nested branch (as with 47cfd4b). No parent gitlink commit was possible. verify-boundary.ps1 run from the worker shell prints 'BOUNDARY: CANNOT-RUN-AS-ACCOUNT deny probe could not start as Opal_MSP: Access is denied', exit 5 (the measured shell restriction; replaces the false BREACH).",
     "notes": "The real AC2 run remains Andrew's after the drain."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T15:00Z",
+    "id": "NFRA_MCPMSP-Z-W4-S3",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MS-rq-1: the asker_sender_refusal audit entry carries no sender_email/sender_domain args (audit.py allowlist = tid, oid, display_name, chat_id, reason); admin_refusals derives them from the record's `user` field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/audit.py allowlist line for asker_sender_refusal; tests/test_mcpmsp_asker_firm.py asserts args equals exactly those five fields."
+      ]
+    },
+    "spec_asserts": "TO MS-rq-1 item 1: each listing entry carries sender_email and sender_domain.",
+    "world_is": "The stored entry has `user` (the calling email) but no sender args; the listing fills sender_email from args when present else `user`, and sender_domain from the email. Correct if `user` is the sender; if it is the gateway caller identity, the C4 sender fields are wrong."
   }
 ]
 ```
