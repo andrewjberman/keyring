@@ -532,3 +532,12 @@ J1 PASS (CVO @c180d84b36) met G-SCOPE's condition.
 
 Chain: alone, slot `~23`, direct act, nested base the local round-2 DEV @dcececf53c. G-ACCT step 4 measured the install
 at C:\Users\Opal_Agent\.local\bin\claude.exe, not on Opal_Agent's PATH (0.0.0_AB_MSTR~Z report 02:16Z).
+
+## ADDENDUM R2-A7 -- a usable Analyst window, its refs readable, jq provisioned (row Z-S50; `1.0.0_SA_CTO~O` ruling @2b8f3151c6, msg 27482)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-9` | `launcher.ps1`: refuses an elevated parent (exit 6); fetch tolerant of git's stderr; the gate and the Analyst started by `[System.Diagnostics.Process]::Start` (no `Start-Process -Credential`), the gate's output on a pipe; the Analyst gets `--add-dir <checkout>\opal\agent\refs` (derived) and `OPAL_RUNTIME_CONFIG`. The fence finds jq on PATH, else in `$HOME/.local/bin`. `provision-account.ps1` copies an optional `jq_exe` there | LOCAL |
+
+Chain: alone, slot `~24`, direct act, nested base the local round-2 DEV @0a5c7c2. The write set is unchanged (fence G1).
+Gates OA-t-1, OA-t-3 and OA-e-6's launch path. It reaches the runtime at the cutover push (G-PUSH).
