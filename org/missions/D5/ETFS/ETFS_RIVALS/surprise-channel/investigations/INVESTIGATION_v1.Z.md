@@ -2132,6 +2132,48 @@
       ]
     },
     "notes": "Resolves ETFS_RIVALS-Z-W1-S28 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S30",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T14:40Z",
+    "one_line": "test_hp1_home_producer.py::test_the_revision_with_home_rows_sorts_after_the_other_sources_revision_at_the_same_ts asserts the retired `-h` G1 revision form and now FAILS (1 failed, 278 passed, 2 skipped); the file is outside RIV-v-2's <paths>, so the issuer's drain will see the suite red.",
+    "spec_asserts": "RIV-v-2 cell: 'The G1 revision forms of W1-S19 and W1-S25 (the h/j letter suffixes) are replaced by the contract.' The face's <paths> name test_g1_*, test_g12_*, test_g6_*, test_p2_*, test_s4_* but not test_hp1_*.",
+    "world_is": "At e0248bed24 `python -m pytest rivalfunds/tests -q` from data/etfs/scripts: the one failure is tests/test_hp1_home_producer.py:186 `assert rev_new > rev_old and rev_new.startswith('20260930T110000Z-h') and len(rev_new) == len(rev_old)` (got '20260930T110000Z-7dc1e84a5da4' vs '...-ffffffffffff': the home revision is now `<ts>-<sha12>`, ordered over a same-capture-time sibling by the `-b<NN>` build sequence the stage assigns at write, which tests/test_g6_gics_join.py::test_the_g4_revision_carries_the_g4_capture_time_and_orders_by_it_never_by_hash and tests/test_v2_revision_contract.py cover). Line 187 asserts the same `-h` form.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_hp1_home_producer.py:182-187",
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py@e0248bed24 _revision_of"
+      ]
+    },
+    "notes": "The two assertions are the retired form, not a regression: the fix is to drop them (the contract's ordering is in the two files above) or to widen RIV-v-2's paths to test_hp1_*. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S31",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T14:41Z",
+    "one_line": "A G1 reader outside RIV-v-2's paths still picks the newest canonical_shape object by NAME: gold_holdings_coverage.g1_sources takes `max(objs, key=name)`, which mis-orders a `-b<NN>` rebuild against a same-capture-time object whose sha starts c-f, or against a legacy `-j`/`-h` name.",
+    "spec_asserts": "RIV-v-2 cell: 'Every multi-object reader uses it' -- the face's list names gold_canonical_shape, gold_trade_schedule, publish_page and enrichment_bloomberg; gold_holdings_coverage (G2) is not on it and is not in <paths>.",
+    "world_is": "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py:246-249 (`latest = max(objs, key=lambda u: u.rsplit('/', 1)[-1])`). Today the object it takes is the newest in practice, because a G1 rebuilt after a G4 lands now carries the G4's later capture time in the leading 16 characters, so the name order agrees with the contract; it diverges only when two G1 objects share a capture time (a `-b02` rebuild, or a legacy `-j`/`-h` name beside a new one). Also enrichment_bloomberg._g1_securities (the G3 pull, line ~440) reads the UNION of every G1 object at a date, not the newest; left as is (G3 is not named by the cell).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py@e0248bed24 g1_sources",
+        "data/etfs/scripts/rivalfunds/revision.py@e0248bed24 order_key"
+      ]
+    },
+    "notes": "One line to fix: `latest = revision.newest(objs)`. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
