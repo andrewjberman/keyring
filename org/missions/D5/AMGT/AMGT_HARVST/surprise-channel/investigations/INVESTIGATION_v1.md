@@ -5245,6 +5245,95 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Recorded so the issuer reads any sa-run difference after that commit against this commit."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T12:55Z",
+      "one_line": "Z-W90-S4 disarmed: gold rebuilt over 212 securities @e0d3a13ef1; depth_census now takes gold's key set from the newest chatter_daily part and maps 89 of 89.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-af-3 AMENDMENT 1: the census's gold key set is what gold carries (newest chatter_daily part); AC2 needs MAPPED >= 80 of 89.",
+      "world_is": "depth_census on mention part date=2026-10-01/part-20261001T122711Z.parquet, daily part date=2026-10-01/part-20261001T123001Z.parquet: GOLD KEYS 212, MAPPED 89 of 89, 0 UNMAPPED, AT 50+ 6 of 89, AT 100+ 3 of 89, S3 WRITES 0; AC2 RESULT: PASS. The 21 names row Z-W90-S4 listed now map; no key was synthesized. 11 of the 21 newly mapped names read total=0 (gold rows exist, no 2026 mentions yet).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_census2.out and af3_census2.json",
+          "deliverables/2.0.0_SA_COO_H/round32/gold_rebuild_act_20261001T122401Z.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Supersedes the BLOCKING state of Z-W90-S4 (row not edited; append-only).",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:55Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W91-S14",
+      "one_line": "af-2 amendment 1: the main runtime's worker.lock is held by the issuer's ft backfill, so the bbg job ran from this worktree's runtime root.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Amendment 1 item 1: run ONE bbg collector job for BA with --runtime-root the MAIN tree's .runtime/opal-data-harvest.",
+      "world_is": "The first attempt failed 'Another local harvest worker owns the lock' (storage.WorkerLock, worker.lock under the runtime root): ft backfill pid 31976 and its child job pid 46664 run on the main runtime root since 2026-10-01 12:34Z. The job was run with --runtime-root <this worktree>/.runtime/opal-data-harvest instead, with the main bbg browser profile reached by a directory junction (removed after; the profile untouched) and ONLY secrets/bbg.dpapi copied into that root (deleted after). The run record, events and progress state are therefore the worktree's, not the main runtime's; bbg in the main runtime has no record of this job's articles (S3 run_record put_performed true). No ft/sa profile or traffic was touched.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_driver.py",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_job_run_record.json",
+          "lib/opal_data_harvest/storage.py WorkerLock",
+          "powershell Get-CimInstance Win32_Process: pids 31976, 46664 at 2026-10-01T12:43Z"
+        ]
+      },
+      "notes": "The one-worker lock is per runtime root, so a bbg job and an ft backfill cannot share the main root; the issuer reads the job's articles from the worktree root."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:55Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W91-S15",
+      "one_line": "af-2: on the collector path solve() is called without the monitor, so the outcome carries no solved_at; the record's solved_at is the challenge_passed event time.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order phase A item 2: solve() accepts an optional monitor and stamps solved_at; amendment 1: solved_at from the job's own events.",
+      "world_is": "verification.route_bot_check calls solve(tab_session, publisher, signature, route=route) with no monitor, so a collector-path solve carries no solved_at. The challenge_passed event's `at` (2026-10-01T12:47:34.317801+00:00, inside the monitor window 12:45:56.68 .. 12:50:00.94) was used as solved_at, and the record says so (solved_at_source). The 'Frame was detached' of Z-W91-S12 did not recur in this job (re-locate path exercised by test_v only).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/verification.py route_bot_check",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_challenged_pass.json"
+        ]
+      },
+      "notes": "Outside this order's reach: threading a monitor through PacedSession is a separate cell if the issuer wants solve()'s own stamp in collector records."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S53",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T13:10Z",
+      "one_line": "Round-33 disposition record (rows are append-only): the four round-33 rows the file still reads ARMED are disarmed by landed commits -- W90-S4, W91-S11, W91-S12, W92-S9.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Spine L10: the slug goes only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "W90-S4 (21 universe names absent from the gold securities file): gold universe widened 191 -> 212 under the CTO-signed ADDENDUM 1 (@78aac97ada, CTO @e24ca120a2), gold rebuilt @e0d3a13ef1, census re-run maps 89 of 89 (@8e5a41ed67, recorded W90-S5). W91-S11 (no challenged pass earned): af-2 AMENDMENT 1 @c6e376360e; the recut passed bbg's press-and-hold through the real collector path under InputSourceMonitor, hardware input 0 (@12fee81398). W91-S12 (solve raised on a detached frame): re-locate once, planted (@640483677d, merged @12fee81398). W92-S9 (sitemap-XML listing not parsed by the reach and listing silver): fixed @ce17235845 with a negative control.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits 78aac97ada, e24ca120a2, e0d3a13ef1, 8e5a41ed67, c6e376360e, 12fee81398, 640483677d, ce17235845",
+          "deliverables/0.9.0_WK_AMGT_HARVST~91/af2_challenged_pass.json",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_census2.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Every disarm is by a landed commit; none is a ruling that limits a FWD claim."
     }
   ]
 ```

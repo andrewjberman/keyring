@@ -16648,6 +16648,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "display_name falls back to the security key for 32 of 95 rows because the route's name source (the ranking crosswalk) covers 63.",
     "disarm_owner": "2.0.0_SA_COO~Z",
     "notes": "Round-58 enrichment candidate: one name source for all 95 covered names (dossier / model block / series-name join), with display_ticker as the stated fallback, never the raw key. Not a mid-round act (round 57 frozen)."
-  }
+  },
+{
+ "id": "AMGT_RESAPP-Z-S332",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-01T12:50:00Z",
+ "one_line": "ai-2's CTO condition 3 names 'a 200 on /security/<key>/overlay' as the proof that a price bar OPENS its security -- but a FABRICATED key (ZZZZ_XX_Equity) also returns 200, so the status code cannot tell a covered key from an impossible one. The sound discriminator is a field the COO half already names: identity_status (MEASURED vs UNRESOLVED).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Measured post-act on the deployed function: /api/scoped/amgt/security/AMD_US_Equity/overlay -> 200, 73,327 B; TSM_US_Equity -> 200, 32,242 B; ZZZZ_XX_Equity, a key that cannot exist -> ALSO 200, 3,427 B. Status is 200/200/200, so it is not discriminating. Evidence deliverables/0.7.0_AE_CloudOps~A/ai2-evidence/ai2_condition3.txt (where the control is printed as BROKEN) and ai2_condition3_control.txt (the repair).",
+   "THE DISCRIMINATOR THAT DOES WORK, found by comparing the bodies rather than the codes: identity_status reads MEASURED for AMD and TSM and UNRESOLVED for the fabricated key. Populated top-level keys 12 / 12 / 6 of 13; the fabricated body is an unpopulated shell carrying axis_reads, bloomberg_session_state, description, feed, identity and posture only.",
+   "The field was already in the spec: the COO half @e52b6d1bb5 describes the join as setting 'identity_basis: covered_universe_bloomberg_join, identity_status MEASURED'. So the better oracle was named one document away from the condition that asked for a status code.",
+   "NOT a defect of the act and NOT a regression: AC1's C2/C5 independently prove 0 of 94 rows unkeyed and 0 foreign keys on both axes, so every served bar does carry a covered key. The gap is in the CONDITION'S INSTRUMENT, not in the deployed behaviour.",
+   "Condition 3 is met AS WRITTEN -- AMD 200 and TSM 200 were obtained -- and also met on the stronger reading, since both are identity_status MEASURED with populated bodies. Closed on that basis in ledger leg L3."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO half @45e3aefae0 condition 3: 'It also confirms that AMD's and TSM's bars open their overlay (a 200 on /security/<key>/overlay).'",
+ "world_is": "A 200 on that route is returned for any key, including a fabricated one, so the named test cannot distinguish 'the bar opens a covered security' from 'the route answered'. Read literally the condition is satisfiable by a key that does not exist, which makes it a weak guard for a DEMO-BLOCKING identity fix -- precisely the class where a green check should not be able to come from nothing. The deployed behaviour is correct on every other measure. INFERRED, not measured: whether other per-name routes (thesis, peers, coverage, print) behave the same way for an unresolved key -- only overlay was probed here, and that denominator is not established.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z (the issuer). INERT: both criteria passed, the deploy stands, the round can close, and nothing is blocked. Surfaced, not adjudicated -- this seat does not amend another seat's half. Candidate repair for the issuer to weigh: state the condition as 'identity_status MEASURED on a populated overlay body' rather than 'a 200', which is a one-word change that makes the clause fail when it should. Sibling rows from this seat on the same class -- a check that passes for a reason other than the one it names: AMGT_RESAPP-Z-S324, AMGT_RESAPP-Z-S325, AMGT_RESAPP-Z-S330."
+}
 ]
 ```
