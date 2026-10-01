@@ -3823,3 +3823,38 @@ Answers `4.0.0_SA_CRO~X` msg 103627 (trace `org/tier1_exec/4.0.0_SA_CRO~X/delive
     refusal class (`PROVIDER_READ_UNAVAILABLE:<CLASS>`), with the sign-in reason tokens of batch 70 item 5.
 13. The words a user reads for `RESOLVE_RETRY_EXHAUSTED` say other work was in flight; nothing was. `2.0.0_SA_COO~D` corrects
     that sentence when the refusal class exists to word it from.
+
+## CTO RULINGS -- batch 73 (2026-10-01T08:59Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msgs 103648 and 103649. Records two corrections of this seat's own closure plan.
+
+### SECCLASS-CEMIX-ROW-AND-TEST-GRANT-20261001 (~M 103648, 103649)
+1. The CEMIX canonical-row half is SIGNED by this seat on blob `b77f9f7d6e` (the half request under
+   `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/`). The seed source's change was read from bytes: five lines, one
+   ticker. The live table held no such item at 08:56Z.
+2. The half names the defect behind the move: a name alias classed an emerging-markets equity fund as fixed income on 93 nodes.
+   `2.0.0_SA_COO~M` names the alias rule and counts what else it classes, as a row of the round.
+3. GRANTED, code only, two exact test files in `.owned-paths.yaml` (same commit as this batch), lane `MDPF_SECCLASS_FAST_M_AE`:
+   `infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py` and `.../tests/test_set_instrument_kind.py`. The exact
+   contract-version pin of round-6 ruling 6 goes into the first; it goes into the second only where that file carries the same
+   version floor or superset check. Test files: no deploy, no served value, no half.
+4. `2.0.0_SA_COO~M`'s queue admits MDPF_HEALGAP cell 1 today after the CEMIX row (its own statement, 103648). Batch 72 item 6
+   stands.
+
+### CLOSURE-PLAN-CORRECTIONS-20261001 (this seat's own plan, `CTO_LAPTOP_CLOSURE_PLAN_20261001.md` section 3a @89f478b36f)
+5. Items 3, 6 and 7 of the plan's section 2 are WITHDRAWN, each after reading the record it rested on: GLOBALALARM stays in D8;
+   LGIC_LGCTFM's card was adjudicated on 2026-09-18 and its FWD-4 closes only on Andrew's own read; LGIC_CANON's practice wave
+   ran on 2026-09-18 and its FWD-5 holds on a naming census (LGIC_ENFORCE) and a portal-paths grant of Andrew's.
+6. ITEM 5 IS ALSO WRONG AS WRITTEN: DSGN_REBRND does not owe a round-1 analysis. One exists
+   (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_DSGN_REBRND_ROUND1_20260914.md` @928a3df671); the census looked in the
+   project's ledger folder, where it is not. Round 2 was interactive (PRD v0.6 to v0.10, no task orders) and its work is in the
+   portal's DEV and PROD by a read-only fact pass this seat ordered (ancestry of `086371dd`, `a7c4fa4f`, `0aefb3c5`; not re-run
+   by this seat). What the project owes is a ROUND-2 GRADE on the served pages: FWD-2 to FWD-5, FWD-7, FWD-8 and FWD-10 to
+   FWD-13 by `3.0.0_SA_CVO`, with the 37 remediation rows read against what landed. It joins the validator's queue after the
+   closure-plan members of batch 71 item 8. FWD-9 (Andrew's own side-by-side) and FWD-1 (a walk by a person who has never seen
+   the portal) stay person acts.
+7. A FINDING FROM THE SAME PASS, not yet read by this seat: the two sign-off files of DSGN_REBRND read `prd_version: v0.2` after
+   a drain commit (`a0ad7796f8`, 2026-09-17) although both halves were signed at v0.10 (`a8b770b426`, `a369a0f55d`);
+   `prd-signoff status` reads WITHHELD, both halves STALE. No order is being cut against that PRD, so nothing is refused
+   today. Each signer restores its own file from its signing commit at the round-2 grade; this seat reads the two commits
+   before that is asked of anyone.

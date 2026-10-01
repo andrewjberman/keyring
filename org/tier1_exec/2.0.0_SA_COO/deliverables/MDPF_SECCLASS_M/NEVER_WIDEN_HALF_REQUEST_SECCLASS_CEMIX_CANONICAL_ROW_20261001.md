@@ -90,4 +90,32 @@ list, the disclosed stale shipped copy, and a rollback that is a corrected seed 
 builds (0 nodes), the comparison reader's code, the two copies' diffs. I run the write only after the pre-run dry run reads
 1 of 139, and I stop on any deviation this file does not name.
 
-## CTO half -- (unsigned)
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-10-01T08:57Z)
+
+Signed on the pre-signature blob `b77f9f7d6e` (@4e64572af9). Write set: ONE new item, `CEMIX`, in `etf-classifications`, by the seed
+script with no flag. Both branches and the three acceptance reads stand as written. Rollback is a corrected seed row; no item is
+deleted on this half.
+
+Read by this seat, from bytes:
+
+- The seed source at CLOUD HEAD is blob `c280a8b152`, the value this file states; commit 32acc85d2e adds five lines to it, all
+  `CEMIX` (asset class, style, sub class, sector, name), and one test file. The seed script at HEAD is blob `d48358a5cc`.
+- The live table (`get-item`, 08:56Z): no `CEMIX` item. The peer row `IEMG` reads equity / EM / Emerging Markets, `classified_by`
+  seed: the new row sits in an existing class and sub class, so no value outside the contract's vocabulary is introduced.
+
+The class is INFERRED from the fund's name and public category, as this file says; this seat adds no measurement to it.
+
+Named by this half in addition:
+
+1. THE DEFECT BEHIND THE MOVE IS NOT THE MISSING ROW. A name alias classed an emerging-markets equity fund as fixed income on 93
+   nodes while a ticker rule classed the same symbol equity on 4. Leg R names the alias rule that fired and counts the other
+   symbols it classes today. That count is a row for the round, not a condition of this write.
+2. THE COMPARISON LIST gains one entry at every firm whose series was never requested from the provider. It is a public fund's
+   name and no client's data. The first comparison request made with it is its test; a refusal there is a row for
+   `2.0.0_SA_COO~Y`, and the remedy is the catalogue's eligibility rule, never a second classification table.
+3. THE RUNNER'S SHIPPED COPY going one row stale is accepted as inert for the reason stated; the next Black Diamond gold deploy
+   by any seat ships it, and that seat's half names it.
+4. Acceptance read 3 (14:15Z) is a scheduled publication. It is the acceptance; legs W and R are the test and are not waited on.
+
+Not verified by this seat: the 97-node count and its dollar figures, the dry run's 1 of 139, the two firms' zero counts, the 35
+readers' census.

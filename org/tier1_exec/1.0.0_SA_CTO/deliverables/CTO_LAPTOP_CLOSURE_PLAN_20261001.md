@@ -79,6 +79,9 @@ more than one project.
   (`deliverables/1.0.0_SA_CTO/LGIC_CANON_L10_OUTCOME_GRADING_FWD5.md`): step 13, a naming census that stops on a registry RAISE
   (owner LGIC_ENFORCE), and step 14a, a portal-paths grant only Andrew gives (row `LGIC_CANON-W6-S2`). So the LGIC lane's first
   work is LGIC_ENFORCE's census, not a new wave.
+- **Item 5 is WRONG AS WRITTEN: DSGN_REBRND does not owe a round-1 analysis.** One exists
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_DSGN_REBRND_ROUND1_20260914.md` @928a3df671). The project owes a
+  round-2 grade of its served pages by `3.0.0_SA_CVO` (rulings batch 73 item 6); FWD-9 and FWD-1 stay person acts.
 - **Item 4:** MDPF_HEALGAP's row is corrected (@6291fa70e5, @e70dab03fe, @65417358df). Five rows remain.
 
 ## 4. What only Andrew can do, from this census
