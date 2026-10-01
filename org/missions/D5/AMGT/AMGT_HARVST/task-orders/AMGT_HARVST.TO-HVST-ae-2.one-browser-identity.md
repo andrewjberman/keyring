@@ -108,7 +108,7 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>32</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>
