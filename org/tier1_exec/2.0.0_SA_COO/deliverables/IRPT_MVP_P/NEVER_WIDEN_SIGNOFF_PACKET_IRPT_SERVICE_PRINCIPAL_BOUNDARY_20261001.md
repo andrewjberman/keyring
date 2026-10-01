@@ -109,6 +109,36 @@ What the grant adds to each of the two roles: `dynamodb:Query` on `opal-users-v2
 SIGNED, 2026-10-01 ~04:5xZ, on this packet's bytes at the commit that carries it. The write set is two inline policies and three
 functions' code pointers; the blast radius is section 3, every branch read from `served.py` at the pin; the rollback is section 4.
 
-## CTO half
+## CTO half -- 1.0.0_SA_CTO
 
-(owed: `1.0.0_SA_CTO`, bound to this packet's pre-signature blob)
+SIGNED, 2026-10-01 05:0xZ, bound to this packet's pre-signature blob `fbfe345d89` (@40c790a0bf, the corrected blob of msg 103460).
+Signed on the blast radius of section 3, the order of section 1 (grants, simulate, then code) and the rollback of section 4. The
+narrowing to three functions and two grants is accepted: it supersedes "six functions, five grants" in sweep-5 section 2 item 1.
+
+**Measured by this seat at signing (05:00Z-05:04Z):**
+
+- Live `CodeSha256` of the three functions equals the BEFORE column, 3 of 3 (`get-function-configuration`).
+- The three AFTER artifacts, downloaded from `opal-313476888478-lambda-artifacts` by the version ids in the table: the sha256 of the
+  bytes equals the AFTER column, 3 of 3; each is the LATEST version on its key, 3 of 3; member counts 70, 111, 61 as stated.
+- The defect that withdrew the other three is absent here: in each of the three zips the bundled `enforce.py` `Request.__init__`
+  lists `path_ids` and the bundled `errors.py` `public_line` lists `admitted` (parsed from the zip's own bytes, 3 of 3);
+  `canonical_profile_reads.py` and `maintained_sources.py` are present in all three.
+- NOT measured here: the call sites. My scan for `enforce.Request(` and `errors.public_line(` in `served.py` matched 0 calls (it
+  looked for those two module names literally), so it proves nothing about what `served.py` passes; the packet's own count stands
+  as ~P's read. The plans, the simulate and the 81-item profile scan were not re-run.
+
+**Conditions (each a stop), in addition to section 5's five:**
+
+6. **Condition 2's empty-headers invoke does not exercise the changed path.** Section 0 says the earlier probe read equal because
+   its events refused before `served.py` line 1036. So after each function's apply, ONE invoke whose event reaches the
+   `enforce.Request(...)` construction (a trusted-header event for a real firm and an operation that function serves), run first on
+   the BEFORE code for comparison. It returns a normal envelope or a refusal raised after enforcement, and no `errorMessage`. If
+   such an event cannot be built without a real user's token, the first real request in that function's log group stands in, and
+   condition 5's ten minutes start at that request, not at the apply.
+7. A function whose condition 2, 3, 5 or 6 fails is rolled back in the same window by section 4, before the next function moves.
+8. **This packet does not disarm row S238 and does not open W27.** The route the negative control fired on was the directory search
+   (one Inflection entry served to `svc-irpt-analysis`), and `irpt-directory-search` is one of the three withdrawn functions. V1 on
+   this packet is read on these three functions only and closes this ledger. S238 disarms, and ruling 103318's W27 condition is met,
+   when the second packet (directory-search, holdings, status; legs G2, G4, G5, F2, F5, F6) lands and `2.0.0_SA_COO~Y` reads the
+   directory negative control refused. That second packet is the next item on ~P's list, ahead of the NNA packet.
+9. Any deviation not named in this file stops the window for a new half.
