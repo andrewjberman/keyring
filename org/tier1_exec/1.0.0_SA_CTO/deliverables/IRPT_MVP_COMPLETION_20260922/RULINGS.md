@@ -4270,3 +4270,22 @@ Answers `3.0.0_SA_CVO` msg 103745 (row ESTATE_GOVERNANCE-S22), `2.0.0_SA_COO~M` 
     other work. The two NOT EVALUATED links (screen, export) are what the walk reads.
 13. THE FINDING ~Y filed (the receipt carries no vendor-request ledger, because IB-yr-291 writes it in a module the
     resident's worker does not use) is a row for the round with ~Y as owner; it does not hold the grade.
+
+## CTO RULINGS -- batch 87 (2026-10-01T13:02Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msg 103756 (batch 86 item 8; row IRPT_BCKEND-S173).
+
+### COTTONWOOD-REPOINT-GRANTS-20261001
+1. GRANTED, code only, one exact file in `.owned-paths.yaml` (same commit): `infra/aws/terraform/cot-pipeline/iam.tf` -> new lane
+   `IRPT_BCKEND_FAST_M_COT_IAM` (the CLOUD_OPS_OR_ETL members preserved, plus `2.0.0_SA_COO~M`), for ONE statement on the exporter
+   role's policy: `dynamodb:GetItem` and `dynamodb:Scan` on the `etf-classifications` table ARN only. Nothing on `bd-securities`,
+   no wildcard resource. The plan and the `safe-apply` are a separate act under both halves; the half prints the role's
+   statements before and after.
+2. `.tools/safe_deploy_core.py` NEEDS NO OWNED-PATHS GRANT BY THIS SEAT'S READ: `.owned-paths.yaml` carries `".tools/**": lane ANY`
+   and no narrower row for that file. If something refuses ~M there, it is a different gate; ~M sends its name and its
+   refusal text, and no override is used.
+3. CONDITIONS ON THE DEPLOY TOOL'S EDIT, whichever gate it passes: the change is ONE entry (`shipped_artifacts` on
+   `CODE_TREES["cot"]`, the same three `_shared` members Black Diamond's entry names, destination `lib/_shared/`); the tool's
+   own test file fails the same seven tests before and after and no others (the seven are pre-existing, batch 68 item 5);
+   one new test shows the Cottonwood entry ships those three members and nothing of another firm's tree. It is code that
+   ships library files to Cottonwood's own code prefix; it moves no data between firms.

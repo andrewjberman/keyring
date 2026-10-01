@@ -619,6 +619,22 @@ lanes:
       - 2.0.0_SA_COO~P
     description: "CTO grantor, IRPT RULINGS batch 79, 2026-10-01 (msg 103683): the POD4 members preserved verbatim plus exact COO~P, for one file: the Inflection net-new-assets coverage excusals (row W97-S3, Branch A). Code only: the put of the runner's copy keeps both never-widen halves. Struck when IRPT_BCKEND closes."
 
+  IRPT_BCKEND_FAST_M_COT_IAM:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~M
+    description: "CTO grantor, IRPT RULINGS batch 87, 2026-10-01 (msg 103756): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~M, for one file: the Cottonwood pipeline's IAM file, for ONE statement (dynamodb:GetItem and dynamodb:Scan on the etf-classifications table only; nothing on bd-securities) on the exporter role's policy (row IRPT_BCKEND-S173). Code only: the plan and safe-apply are a separate act under both never-widen halves. Struck when IRPT_BCKEND closes."
+
   DATA_REFRESH_DEPLOY:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -2385,6 +2401,10 @@ paths:
   "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js":
     lane: IRPT_BCKEND_FAST_Y_HOST
     note: "IRPT_BCKEND~Y FAST lease, exact file; CTO grantor batch 74 (2026-10-01)."
+
+  "infra/aws/terraform/cot-pipeline/iam.tf":
+    lane: IRPT_BCKEND_FAST_M_COT_IAM
+    note: "IRPT_BCKEND~M FAST lease, exact file, ONE statement; CTO grantor batch 87 (2026-10-01)."
 
   "infra/aws/lambda/v2_portal/01_market_overview/**":
     lane: POD1_OR_AE
