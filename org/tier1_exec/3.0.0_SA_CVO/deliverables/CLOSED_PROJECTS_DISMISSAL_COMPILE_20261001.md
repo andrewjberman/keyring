@@ -74,6 +74,11 @@ count, so it has a reader.
 | S24 | ETFS_GUARDRAIL-W2-S1 | the ETF ownership function's test errors at collection |
 | S25 | ETFS_GUARDRAIL-W2-S8 | the Cottonwood ETF ownership rule still fires before its partition lands |
 | S26 | NFRA_COMPEFFICACY-W2-S4 | comp-adversary exits 0 when a source's reader dies on a decode error (owner `0.0.0_AB_MSTR`) |
+| S27 | ETFS_POSITIONING-Z-S1, Z-S2 | the Bloomberg daily ETF pull's as-of is holiday-blind and its tripwire compares a value with itself; next exposure 2026-11-27 |
+| S28 | ETFS_INGEST-Z-S10 | rule opal-assets-silver-etf-sweep-daily is live and in no Terraform file |
+| S29 | ETFS_INGEST-Z-S27 | the served ETF payload has no field separating an absent value from a failed fetch |
+| S30 | ETFS_INGEST-Z-S23, Z-S17 | portal-v2 noncurrent versions expire after 14 days; comp-closure compares raw bytes (owner `0.0.0_AB_MSTR`) |
+| S31 | ETFS_INGEST-Z-S5 | a failed constituents leg of the Bloomberg pull summons nobody; an input to the alarm work |
 
 Dismissal documents of this batch: NFRA_OUTSET `ADJUDICATION_v4.md` (8 rows, 10 items: 5 with a pointer, 5 not
 live) and NFRA_CLDGRPH `ADJUDICATION_v6.md` (16 rows, 58 items: 29 with a pointer, 29 repaired, gone or cut-side).
@@ -102,6 +107,14 @@ object the report host pulls each hash equal to HEAD; the function carries the m
 print on each of its three sends; the orders that cut the round's findings (EG-s-19, 20, 22, 23, 24, 29) read
 complete. The terminal send itself was not exercised: this seat does not fire a send.
 
+## Batch 4 (13:4xZ): 48 more items dismissed, 34 of them BLOCKING or ARMED
+
+ETFS_INGEST `ADJUDICATION_v1.md` (6 rows, 28 items: 5 with a pointer to S28 to S31; 9 repaired on a read of the
+deployed package, the served object or the source; 14 rulings, cut-side items and records) and ETFS_POSITIONING
+`ADJUDICATION_v1.md` (3 rows, 20 items: 2 with a pointer to S27; 9 repaired or their condition gone; 9 doctrine,
+cut-side and records). These two are legacy flat channels of projects whose registry rows read `complete`; their
+items were graduated in their own rows with no clock on any carrier. Both now read 0 rowless.
+
 ## Running count against the 260
 
 | | items dismissed | of them BLOCKING or ARMED |
@@ -109,21 +122,24 @@ complete. The terminal send itself was not exercised: this seat does not fire a 
 | batch 1 | 80 | 78 |
 | batch 2 | 68 | 66 |
 | batch 3 | 40 | 33 |
-| total | 188 | 177 of 260 |
+| batch 4 | 48 | 34 |
+| total | 236 | 211 of 260 |
 
-Rows re-filed so far: 20 (S7 to S26), of which S7 is the limb-gap row the CTO ordered and 19 carry hazards read live
-today; 40 old items point at them.
+Rows re-filed so far: 25 (S7 to S31), of which S7 is the limb-gap row the CTO ordered and 24 carry hazards read live
+today; 47 old items point at them.
 
 ## Remaining
 
-The three groups graduated in their own rows (ETFS_INGEST 18, ETFS_POSITIONING 16, ADVI_PERFRP 14); the twelve
-smaller channels (33); the two NFRA_CLDGRPH items not read (W1-S3, S116). Each needs a read of the world, not of
-the row.
+- **ADVI_PERFRP (14 BLOCKING or ARMED, 17 rowless) is NOT a closed project:** its registry row reads `active`, under
+  the D2 hold. Batch 77's dismissals-only path is for closed projects, so this seat leaves the channel alone; its
+  items get remediation rows at that project's own compile when it runs again. Counted in the 260, not worked here.
+- The twelve smaller channels (33), of which AMGT_RESAPP (3) is also an active project.
+- The two NFRA_CLDGRPH items not read (W1-S3, S116).
 
 ## Owed at the compile's end (batch 85)
 
-One list to `0.0.0_AB_MSTR` of the fabric-tool rows it owns (S7, S9, S10, S12, S13, S14, and now S26). S16 and S17
-go to `4.0.0_SA_CRO~X` as a read-only trace (the CTO's routing). S21 becomes an input of GLOBALALARM. This seat's
+One list to `0.0.0_AB_MSTR` of the fabric-tool rows it owns (S7, S9, S10, S12, S13, S14, S26, S30). S16 and S17 go
+to `4.0.0_SA_CRO~X` as a read-only trace (the CTO's routing). S21 and S31 are inputs of GLOBALALARM. This seat's
 broker gate admits a send to `1.0.0_SA_CTO` only, so the list is sent there for relay unless the gate admits it.
 
 ## End report (re-filed rows and their homes)
