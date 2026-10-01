@@ -40,10 +40,13 @@ is deployed (18:03Z). Own work resumes until that word arrives.
   regression; 100.73 M a correction) and the reader census `MDPF_SECCLASS_M/COT_REPOINT_READER_CENSUS_20261001.md` @a1298b33c9.
   Built on branch `coo-m-cot-carrier` @68bb14d2f2 ONLY (not merged, not deployed; Cottonwood gold tests 22 passed): B_00 carries
   `cusip` and `cash_equivalent`; `lib/etf_classifier.classify_position` (the ruled rule) used by C_06, D_03, D_04; C_06's mix and
-  D_03's labels carry the new classes; `lib/mix_views.py` and D_04's firm snapshot publish every class. **Still to build:** the
-  seven portal readers of the census (worst `PartnerAnalytics.tsx:633-644`, every Cottonwood user; `composition.ts:117-118`;
-  ClientsTab :356/:457; AdvisorBookView; ConsolidatedOverviewPanel :391; AdvisorAnalytics :399/:657) on a portal DEV branch. They
-  are under no live lease and outside this seat's lease surface (widen the lease first). Then the packet (both halves), the
+  D_03's labels carry the new classes; `lib/mix_views.py` and D_04's firm snapshot publish every class. **Portal readers BUILT, not pushed:** portal branch `coo-m-cot-mix-readers` @35cd4be5 in worktree
+  `C:/Users/AndrewBerman/Desktop/portal_coo_m` (from origin/DEV 2bb367ef): PartnerAnalytics maps every served class,
+  composition.ts keeps `unclassified`, ClientsTab passes includeOther, the donut legend and AdvisorAnalytics carry every class,
+  Cottonwood's layout lists `unclassified`. tsc clean, eslint 0 errors, new test fails on the old helper, class-reader census OK;
+  IVE49-AC1 (colour distance) fails identically on DEV (not this change). chartColors.ts is 2.0.0_SA_COO~D's, not changed.
+  Next: one page look, then push DEV (`git -C portal log origin/DEV..HEAD` must list only this seat's commit). Lease
+  MDPF_SECCLASS re-armed 18:1xZ to cover these files (same expiry). Then the packet (both halves), the
   IAM statement's plan and safe-apply, the shipped-artifacts deploy, and a Cottonwood page walk.
 - **Done today, closed:** CEMIX entry; model-rows leg H; classifier-release leg H5 (the 14:18Z Holdings publication read at three
   firms, two page walks).
