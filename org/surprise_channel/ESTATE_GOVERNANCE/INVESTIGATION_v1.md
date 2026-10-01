@@ -670,3 +670,36 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+## S22 -- re-filed from ETFS_GUARDRAIL-W1-S19: today's 14:00Z monthly ETF report is expected to publish without the logo
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S22",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:45Z",
+    "one_line": "RE-FILED from ETFS_GUARDRAIL-W1-S19, with a clock: the monthly ETF report fires today at 14:00Z (cron(0 10 1 * ? *) America/New_York) and the renderer the report host pulls still resolves the Opal logo from a path that does not exist on that host, so the scheduled September report is expected to publish, and to be emailed, with an empty brand bar.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "data/etfs/scripts/presentation/render_month_end.py:134-145 `opal_logo_svg()` inlines the white Opal logo into the report's navy brand bar.",
+    "world_is": "The function reads <renderer dir>/../../../../portal/public/logos/opal-logo-white.svg and returns an empty string on any error. The orchestrator runs the renderer on the report host from /opt/etfs-reports after copying it from s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/render_month_end.py; that object hashes equal to CLOUD HEAD's file (77,130 bytes), so the host will run this resolver, and from /opt/etfs-reports the path resolves outside any portal checkout. The old row measured the effect on the served August report: five inlined logo SVGs gone, 62,420 to 43,376 characters, every number identical; the served August HTML today is 43,376 bytes. The adjudication (ETFS_GUARDRAIL-C-S14) armed it at the CTO: 'until it lands the 10-01 fire publishes a brand-less report, which is a disclosure the CTO should make deliberately rather than discover'. The project closed without it landing. Schedule etfs-reports-monthly-run is ENABLED.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "scheduler get-schedule etfs-reports-monthly-run (this seat, 2026-10-01 12:37Z): cron(0 10 1 * ? *), America/New_York, ENABLED",
+        "s3 cp of the renderer object and sha256 against HEAD (this seat, 2026-10-01 12:43Z): equal; the Lambda's REPORTS_ARTIFACT_PREFIX is set to that same prefix",
+        "the deployed etfs-reports-orchestrator lambda_function.py hashes equal to HEAD (this seat's download, LastModified 2026-09-10T17:44:50Z)",
+        "s3api list of platinum/reports/2026-08/: etf_ownership.html 43,376 bytes",
+        "old row ETFS_GUARDRAIL-W1-S19, graduated at ETFS_GUARDRAIL-C-S14 with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not read: whether the logo file exists at the resolved path on the host (the old row says it does not). This seat changes nothing: the choices (let it publish as is and say so, or land a fix before 14:00Z, or hold the fire) are the CTO's and, for a hold of a scheduled delivery, Andrew's. Cosmetic: every figure in the report is unaffected."
+  }
+]
+```
