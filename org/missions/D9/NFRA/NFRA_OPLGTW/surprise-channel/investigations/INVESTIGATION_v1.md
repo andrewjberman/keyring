@@ -6074,3 +6074,29 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S15",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T10:40Z",
+  "one_line": "safe-ec2-deploy.sh's halt gate refuses (rc 3, NOT bypassable by HALT_ACK) from the sparse release tree /c/tmp/og-rel4: its serial validation looks for the issuer's home folder under org/tier1_exec/ of the calling tree, which the cone did not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: halt_gate_check sourced in /c/tmp/og-rel4 with the wrapper's own HALT_GATE_* env, before the fix -> 'SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED', resolved serial 2.0.0_SA_COO~O (session serial file), rc=3.",
+      "READ: .tools/halt-gate-check.sh halt_gate_validate_serial lines 189-217 loops ${HALT_GATE_REPO_ROOT}/org/{tier0_exec,...,tier1_exec,...}/*/ and og-rel4's sparse cone listed only org/tier0 among tier dirs.",
+      "ACT (environment only, no gate edit or override): git sparse-checkout add 'org/tier1_exec/2.0.0_SA_COO~O' in /c/tmp/og-rel4; git status unchanged (HEAD daa56d81ac, only ' M mcportal'); the same probe then returns rc=0 with an empty pending list (0 STOP lines, 0 routine), which satisfies CVO guard K4 before HALT_ACK=1 is spent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The act runs 'from /c/tmp/og-rel4' through safe-ec2-deploy.sh with HALT_ACK=1.",
+  "world_is": "A release tree cut sparse without the issuer's tier-home folder cannot pass the halt gate at all; HALT_ACK does not help (rc 3 is the identity limb). Nothing tracked changed; the cone gained one directory.",
+  "notes": "Candidate for the release-tree recipe in the next enrichment: add org/tier1_exec/<issuer> to the sparse cone at cut.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
