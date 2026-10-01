@@ -23,8 +23,9 @@ A class is one earlier adjudication row and the items it graduated. By the text 
 | NFRA_COMPEFFICACY | 11 | 2 | 0 (both rows read ARMED, remedy open) |
 | twelve smaller channels | 33 | not yet read | -- |
 
-So the largest single population is not a set of forgotten hazards: 60 of the 260 were closed inside their round and
-sit on the limb only because the convention of the time put a worker-form item's clocks on the adjudication row.
+So the largest single population is not a set of forgotten hazards: 60 of the 260 by this first table (74 when
+measured at the end, below) were closed inside their round and sit on the limb only because the convention of the
+time put a worker-form item's clocks on the adjudication row.
 
 ## Batch 1 (this commit): 80 items dismissed, 78 of them BLOCKING or ARMED
 
@@ -115,6 +116,62 @@ deployed package, the served object or the source; 14 rulings, cut-side items an
 cut-side and records). These two are legacy flat channels of projects whose registry rows read `complete`; their
 items were graduated in their own rows with no clock on any carrier. Both now read 0 rowless.
 
+## Batch 5 (13:5xZ): 7 more items dismissed, 3 of them BLOCKING or ARMED
+
+NFRA_COMPRAIL `ADJUDICATION_v1.md` (2 rows, 6 items: 2 repaired, 4 method observations whose lesson is law) and
+POSN_TENANCY `ADJUDICATION_v1.md` (1 item: the cross-firm NEVER rule was rewritten for both substrates). No re-file.
+
+## END REPORT (the once-at-the-end report of batch 77 item 5)
+
+**Against the 260 BLOCKING or ARMED items the gate reads as graduated with no remediation row:**
+
+| disposition | BLOCKING or ARMED items | all items |
+|---|---|---|
+| dismissed as closed inside their own round | 74 | 78 |
+| dismissed as repaired, gone, doctrine, cut-side or a record | 93 | 118 |
+| dismissed with a pointer to a row re-filed today | 47 | 47 |
+| **worked, total** | **214** | **243** |
+| in a project that is NOT closed, so this path does not apply | 44 | -- |
+| not read | 2 | -- |
+| **denominator** | **260** | |
+
+The split by kind is counted from the eleven adjudication documents written today (0 items adjudicated twice).
+By batch: 78 + 66 + 33 + 34 + 3 = 214 BLOCKING or ARMED (80 + 68 + 40 + 48 + 7 = 243 items). Eight channels now read
+0 rowless or only the named leftovers: NFRA_CLDGRPH (2 left, below), NFRA_OUTSET (1 non-hot left), ETFS_GUARDRAIL,
+NFRA_COMPEFFICACY, ETFS_INGEST, ETFS_POSITIONING, NFRA_COMPRAIL, POSN_TENANCY.
+
+**Re-filed rows: 25, all in ONE home, `org/surprise_channel/ESTATE_GOVERNANCE/INVESTIGATION_v1.md` (S7 to S31),**
+accepted as the home at batch 85. S7 is the limb-gap row of batch 77 item 4 (INERT). The other 24 each carry a
+hazard read live today and cite the old ids; the table earlier in this file lists them. By owner on the row:
+`0.0.0_AB_MSTR` S7, S26, S30; `1.0.0_SA_CTO` the other 22. Batch 85 reads S9, S10, S12, S13 and S14 as
+`0.0.0_AB_MSTR`'s too; their `disarm_owner` field still says `1.0.0_SA_CTO` because a row is not edited in place.
+
+**The 44 in projects that are not closed** (registry status `active`, or an active directive's own channel):
+ADVI_PERFRP 14, D7_TICKETING 7, D1_CATVIEWS 5, WSE_COTMDL 4, OPAL_KIMIPIPELINE 3, AMGT_RESAPP 3,
+OPAL_ADVIPOINTERS 2, D3_MODELOVERLAY 2, ADVI_STITCH 2, ADVI_INSURE 2. Their items get remediation rows at their own
+compile. None was read here.
+
+**The 2 not read:** NFRA_CLDGRPH-W1-S3 (seven residue outputs in the globgrph Terraform state; needs a plan) and
+NFRA_CLDGRPH-S116 (a terminal worker could not be continued in the harness; needs a spawn).
+
+**What the reads found, in one paragraph.** Most of the population was never a live hazard: 74 of the 214 were
+closed inside their own round and sat on the limb for a clerical reason, and 93 more were repaired since (many with
+the repair visible in deployed bytes or served objects), or were cut-side items and records. The live remainder is small and specific. Four rows
+describe something that will act on its own schedule: S16 (the served graph has no STORED_IN edge while its producer
+emits them), S17 (last night's stitch build failed), S22 (today's 14:00Z monthly ETF report, ruled to publish as
+is), S27 (the Bloomberg ETF pull's as-of on the day after Thanksgiving). Two are Andrew's or alarm-work inputs (S21,
+S31). The rest are tool and doctrine gaps.
+
+**Limits of this compile.** One read per class, as ruled: a class dismissed as repaired was read at one site, not
+at every site. Dismissals marked cut-side or record were not re-read against the world. Where a row says a fix is
+deployed, the bytes were hashed against HEAD; the behaviour was not exercised unless the row says so.
+
+## Owed after this report (batch 85)
+
+One list to `0.0.0_AB_MSTR` of the fabric-tool rows (S7, S9, S10, S12, S13, S14, S26, S30). S16 and S17 go to
+`4.0.0_SA_CRO~X` as a read-only trace and S21 and S31 to the alarm work: both are the CTO's routing. This seat's
+broker gate admits a send to `1.0.0_SA_CTO` only, so the list goes there for relay.
+
 ## Running count against the 260
 
 | | items dismissed | of them BLOCKING or ARMED |
@@ -123,27 +180,7 @@ items were graduated in their own rows with no clock on any carrier. Both now re
 | batch 2 | 68 | 66 |
 | batch 3 | 40 | 33 |
 | batch 4 | 48 | 34 |
-| total | 236 | 211 of 260 |
-
-Rows re-filed so far: 25 (S7 to S31), of which S7 is the limb-gap row the CTO ordered and 24 carry hazards read live
-today; 47 old items point at them.
-
-## Remaining
-
-- **ADVI_PERFRP (14 BLOCKING or ARMED, 17 rowless) is NOT a closed project:** its registry row reads `active`, under
-  the D2 hold. Batch 77's dismissals-only path is for closed projects, so this seat leaves the channel alone; its
-  items get remediation rows at that project's own compile when it runs again. Counted in the 260, not worked here.
-- The twelve smaller channels (33), of which AMGT_RESAPP (3) is also an active project.
-- The two NFRA_CLDGRPH items not read (W1-S3, S116).
-
-## Owed at the compile's end (batch 85)
-
-One list to `0.0.0_AB_MSTR` of the fabric-tool rows it owns (S7, S9, S10, S12, S13, S14, S26, S30). S16 and S17 go
-to `4.0.0_SA_CRO~X` as a read-only trace (the CTO's routing). S21 and S31 are inputs of GLOBALALARM. This seat's
-broker gate admits a send to `1.0.0_SA_CTO` only, so the list is sent there for relay unless the gate admits it.
-
-## End report (re-filed rows and their homes)
-
-Not yet written; the table above is its running form.
+| batch 5 | 7 | 3 |
+| total | 243 | 214 of 260 |
 
 -- 3.0.0_SA_CVO
