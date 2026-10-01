@@ -754,6 +754,27 @@
  "disarm_owner": "1.0.0_SA_CTO~Z",
  "spec_asserts": "The close walk is the one real run of round 15 (decomposition v15 battery); a signed-in session survives a page load (FWD-1 hop 1, real login).",
  "world_is": "The shared auth refresh answers 500 on a cookie-bearing request; the walk cannot leave the first page signed in, so no signed-in walk of the round-15 faces exists. Owner: the auth backend's writer (not DSGN, which owns presentation only); routed to 1.0.0_SA_CTO~Z for placement. The Friday walk 18:00-21:00 ET and the PROD demo depend on it."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W61-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~61",
+ "surfaced_at": "2026-10-01T08:20Z",
+ "one_line": "The assignment names deliverables/0.9.0_WK_DSGN_AMGTV1~60/ as the proof-instance model, but that folder is absent from this worktree (HEAD 8b8ca27187); the highest present is ~58, so the instance is modelled on ~58's AV-f-4 instance.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "ls org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/ at 8b8ca27187: 0.9.0_WK_DSGN_AMGTV1~1 through ~58, no ~60 (ls rc=2 on the named path)",
+   "modelled on deliverables/0.9.0_WK_DSGN_AMGTV1~58/DSGN_AMGTV1.TO-AV-f-4.the-header-reads-its-numbers.proof_of_spec.json"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "Proof instance modelled on org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~60/*.proof_of_spec.json.",
+ "world_is": "The ~60 instance is not on this branch (an unmerged worker branch or a different slot); the schema, not the model, is the binding form and proof-of-spec-check reads the instance."
 }
 ]
 ```
