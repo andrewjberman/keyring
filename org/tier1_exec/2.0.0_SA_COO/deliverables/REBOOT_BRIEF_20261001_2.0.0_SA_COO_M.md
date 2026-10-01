@@ -21,8 +21,15 @@ says Tax is served (after site Z's Gateway release, the activation and two ad-ho
 is deployed (18:03Z). Own work resumes until that word arrives.
 
 ## 3. Where the work stands
-- **Inflection split accounts (IRPT_BCKEND row S259; 91 of 884 accounts listed no positions, 49.98 M USD).** SIGNED BOTH HALVES,
-  TO DEPLOY AFTER THE REBOOT. Packet `IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` on branch
+- **Inflection split accounts -- ACT IN FLIGHT 2026-10-01 ~20:0xZ, BLOCKED AT LEG R.** Ledger `irpt-inf-split-positions-m-20261001`
+  OPEN @0d52746cfa. Leg M CLOSED: `coo-m-r30` merged to CLOUD @b4d4548d5a (326 + 165 tests pass). Leg R (route FIRST) needs the
+  `irpt-holdings` staged_from row in `infra/aws/lambda/ci/lambda-source-map.json` re-pinned (snapshot.py 21eca74f40 -> b26847ea04,
+  sha256 9f07f1b4..); the owned-paths gate refuses this seat (row is 2.0.0_SA_COO~P's). Grant asked of 1.0.0_SA_CTO 20:03Z.
+  Patch kept at `$TEMP/tf_split/repin.patch`; the shared tree is clean. The pin also carries 38b72bf469 (-0.0 -> 0.0), named in
+  the packet's addendum 1 @5d4a1b60fe. NOTHING DEPLOYED; the route and the three bundles are at their prior bytes. HAZARD: any
+  `safe-deploy --mint-bundle irpt_holdings_*` from CLOUD now carries the producer change ahead of the route. Then: build-and-upload
+  irpt-holdings, plan (code hash only), safe-apply, QA projection unchanged; then P, Q, S below.
+  (Original state:) SIGNED BOTH HALVES. Packet `IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` on branch
   `coo-m-r30` @cab9bf875d (blob b645c6a3fa; the branch head 1c1d2a02c2 differs from it in 0 files); CTO half
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` @07e4769540 (msg 103916). Local build:
   security rows 156.12 -> 206.10 M USD = custody, 91 of 91 accounts carry 5,074 positions, 793 others unchanged. Steps: merge

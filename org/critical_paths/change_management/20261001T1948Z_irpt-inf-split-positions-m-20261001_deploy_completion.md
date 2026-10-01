@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| M | git | merge coo-m-r30 (b26847ea04+07ee87653e) into CLOUD via safe-merge; tests pass on CLOUD | merge hash + test counts |  | OPEN |
+| M | git | merge coo-m-r30 (b26847ea04+07ee87653e) into CLOUD via safe-merge; tests pass on CLOUD | merge hash + test counts | safe-merge coo-m-r30 -> CLOUD b4d4548d5a (19:5xZ): 7 paths, dropped 0, foreign 0 (branch commits b26847ea04, 07ee87653e, the packet, and dda373cbd3 + its revert 1c1d2a02c2, net zero). On CLOUD after the merge: data/assets/scripts/gold/investor_reporting/tests 326 passed; infra/aws/lambda/investor-reporting/holdings/tests 165 passed (incl. test_holdings_inf + test_l0_categories 17 passed, test_aggregates 15 passed). LOCAL, not pushed (this seat never pushes). | CLOSED 20261001T195138Z |
 | R | activation | route irpt-holdings by safe-apply infra/aws/terraform/investor-reporting/holdings, FIRST | plan + apply + CodeSha256 read-back + QA projection of today's publication unchanged |  | OPEN |
 | P | s3-prefix | safe-deploy --mint-bundle irpt_holdings_inf (+49f, cot re-minted with the shared guard) | md5 + members-sha256 per firm; closure diff = only this change |  | OPEN |
 | Q | verify | QA fire irpt-holdings-refresh-lambda {qa:true}: Inflection 91 split accounts carry positions, security rows sum to account total, reconcile accepted; 49 Financial and Cottonwood reconciles QUOTED (CTO condition 1) | SSM status + QA publication reads |  | OPEN |
@@ -21,3 +21,4 @@
 ## Log
 
 - 20261001T194802Z OPENED by 2.0.0_SA_COO~M with 5 leg(s)
+- 20261001T195138Z LEG M closed: safe-merge coo-m-r30 -> CLOUD b4d4548d5a (19:5xZ): 7 paths, dropped 0, foreign 0 (branch commits b26847ea04, 07ee87653e,
