@@ -5026,6 +5026,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "The disarming commits each carry a negative control (a test failing on the pre-fix code). W91-S8 is the one ruling that limits a FWD claim; it goes to the CTO in the L8 packet."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T11:55Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "one_line": "HVST-af-3 AC2 FAILS honestly: 68 of 89 universe rows map to a gold security_key; 21 do not, because the gold securities file (191 rows) has no row for them under any key the resolvers produce.",
+      "spec_asserts": "TO HVST-af-3 / AC2: the crosswalk then the ~46 securities file maps the 89 universe rows to gold keys; PASS needs MAPPED >= 80 of 89.",
+      "world_is": "depth_census on gold part-20261001T114722Z.parquet: MAPPED 68 of 89 (49 via crosswalk key present in the file, 19 via file company/alias/sa_symbol/ticker match, e.g. AstraZeneca -> AZN_US_Equity, BNP Paribas -> BNPQY_US_Equity). 21 UNMAPPED, each because crosswalk.resolve gives a canonical key (shown) that the ~46 securities file lacks and no company/alias/sa_symbol/ticker form matches: Adobe (ADBE_US_Equity); Air Liquide (AI_FP_Equity); Cadence (CDNS_US_Equity); Celsius (CELH_US_Equity); Clorox (CLX_US_Equity); Global Payments (GPN_US_Equity); HEICO Corporation (HEI_US_Equity); International Container Terminals (ICT_PM_Equity; the file's ICT_US_Equity is 'International Container Termin' with ticker 'ICT US Equity', not matched on any form, so not taken); JD.com (JD_US_Equity); MSCI Inc (MSCI_US_Equity); Manila Electric (MER_PM_Equity); Michelin (ML_FP_Equity); Mitsubishi UFJ Financial Group (8306_JP_Equity); Nike (NKE_US_Equity); Schlumberger (SLB_US_Equity); Shopify (SHOP_CN_Equity); Sumitomo Mitsui Financial Group (8316_JP_Equity); Synopsys (SNPS_US_Equity); Tokyo Electron (8035_JP_Equity); Tokyo Marine (8766_JP_Equity); Zoetis (ZTS_US_Equity). Gold is built over the securities file, so these 21 names cannot carry gold mentions until the file gains them. AT 50+: 5 of 89, AT 100+: 3 of 89. No key was synthesized.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_census.out and af3_census.json",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_AC2.out (AC2 RESULT: FAIL, only 68 of 89 mapped)",
+          "lib/opal_data_harvest/depth_census.py map_universe"
+        ]
+      },
+      "notes": "Fix is the issuer's: add the 21 names to the gold securities file (crosswalk-resolved keys) and rebuild gold; the census then maps them with no code change. Also: the census writes LF-only bytes, because AC2's `$`-anchored regexes fail on Windows CRLF."
     }
   ]
 ```
