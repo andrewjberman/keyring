@@ -6308,3 +6308,29 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S18",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T15:40Z",
+  "one_line": "Step 10's 90 s verify window was missed: the host verify read at 15:37:31Z, about 3 minutes after the 15:34:2xZ restart, and the first verify's L1 hash step died on a quoting error in my own script, so L1 MATCH was read at 15:38:25Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: deploy log act_rl2.log: ACT START 15:33:12Z, upload 15:33:56Z, manifest stamp Time 2026-10-01T15:34:29Z, DEPLOY RC=0 15:34:56Z; the verify SSM a25dbdb3-82e3-44c7-bb04-82e8998c2c25 printed HOST TIME 2026-10-01T15:37:31Z.",
+      "RUN: the L1-after step in that script raised SyntaxError (a backslash escape lost to the harness heredoc); SSM 49fa771c-7556-4a53-a615-6ef5ae01d2ba re-ran it with chr(13)/chr(10) at 15:38:25Z: process-env items 3 MATCH, shipped-file items 3 MATCH.",
+      "RUN: every verify reading (md5 92 of 92, tool list byte-equal to BEFORE, .env 46 keys same set, ENABLED_INTEGRATIONS unchanged, probes, rl2.AC1.sh 9 of 9 at 15:38:53Z) passed; no rollback was needed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: VERIFY from the host within 90 s of the deploy; L1: hash-compare the sender set before and after the deploy.",
+  "world_is": "The verify script was authored after the deploy returned (it needed the 92-file release md5 list), so the first host read came about 3 minutes after the restart; the new listing route was therefore serving unverified for that interval. Nothing failed, so no rollback decision turned on the lateness. The L1 comparison itself ran twice on the host (the failed run changed nothing).",
+  "notes": "For a future release the verify script (md5 list, tool-list diff, L1 after, probes) can be prepared at PHASE A so the post-deploy read is one SSM call; a 90 s bound is not reachable when the script is written after the act.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
