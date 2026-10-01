@@ -2516,3 +2516,21 @@ Each cell has its own test file.
 
 **Checks dry-run at the base (all FAIL as expected):** `round36/checks/ai-1.AC2.py` (the grader carries no
 per-minute fields), `ai-2.AC2.py` (no record), `ai-3.AC2.py` (no all-five status).
+
+### 49.1 ROUND 36 AMENDMENT 1 -- the bbg silver repair cell (CTO ruling msg 28084), 2026-10-01 ~23:3xZ
+
+Row Z-S57 (@548ecf1e1c): 772 of 779 stored bbg articles are pending in the upload outbox on `JSONDecodeError`, with 0
+uploaded. The in-tab bbg bodies are HTML and `silver_from_bronze` parses bbg as JSON. The CTO ruled YES to ONE
+mid-round repair cell, bounded:
+- a bbg HTML branch, with no change to the other publishers' JSON paths;
+- plants on a real stored bbg body plus a JSON control;
+- the drain printed before and after.
+
+Gold #4 (the last under the signed pair) runs only after the drain, with a census of 0 gone and 0 changed outside the
+new bbg rows. If the cell is not drained by 10:00Z, #4 runs without it, before 13:00Z.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-ai-4` bbg HTML silver branch | `ai-4` | SERVED (code LOCAL; the drain is the live driver's upload) | `~91` |
+
+Base check `round36/checks/ai-4.AC2.py` before the cut: FAIL (772 stranded, 0 uploaded).
