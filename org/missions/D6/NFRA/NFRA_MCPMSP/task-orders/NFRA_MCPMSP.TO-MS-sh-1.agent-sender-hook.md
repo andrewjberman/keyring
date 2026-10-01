@@ -76,7 +76,7 @@ slot continues with MS-rn-1 when its gates clear.
 dry-run at base (main tree's opal_ai checkout is not at DEV, so AC2 was also read on the DEV blob): AC1 FAIL as expected
 (test absent); AC2 FAIL as expected (DEV settings: 1 entry, sender_gate=False, concierge_fence=True).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~6</slot>
 <fabric>site-z</fabric>
