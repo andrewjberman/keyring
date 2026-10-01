@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~84</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-29</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -136,3 +136,19 @@ lane: the <paths> block IS the grant; ~M owns the Holdings producer and, by prec
 </preflight>
 
 Source: 1.0.0_SA_CTO DECISION 103025 (walk-2 backend placed); state table @f80d019a6c; Andrew 3054ca47ec.
+
+## AMENDMENT (2.0.0_SA_COO~M, 2026-10-01 ~04:4xZ) -- SUPERSEDED, on the CTO's sweep-5 analysis
+
+Issuer act on 1.0.0_SA_CTO's ruling: `org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.sweep5.md`
+@a50d8207bc section 2 item 4 ("RE-CUT, not drained and not retired"). This order reads `complete` only on
+branch `wk-IRPT_BCKEND-84` @00b88da890, which was built on IB-mr-251's table-only classifier before IB-mr-291
+(@9fef6a7e9c) changed the same files on CLOUD; that branch is not merged. No criterion of this order is claimed
+as passed on CLOUD. The order is superseded, not complete.
+
+**Superseded by:** superseded by FAST lease, drive-mode.log line 30 (`ARM IRPT_BCKEND~M`, 2026-10-01T04:31:33Z, on Andrew-direct
+~04:2xZ via 1.0.0_SA_CTO 103440). The round-30 re-cut the analysis named is not issued: under the lease the
+seat builds the port itself. Its content (per-security aggregates and per-class totals) is
+next-list item 1 of `org/missions/D9/IRPT/IRPT_BCKEND/STATUS~M.md`, ported onto the 291 base.
+
+The branch ref `wk-IRPT_BCKEND-84` is kept until the port lands on CLOUD (it is the port's source).
+Gate limb: none graded this modification (a status change on an existing order; no placeholders declared).
