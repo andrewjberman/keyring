@@ -98,9 +98,33 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
 - **Upload once, and AC1/AC2 over the COMBINED record:** the first pass plus A2, in one `ad2_runs.json`.
 - **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
 
+**AMENDMENT 2 (issuer, 2026-10-01 ~01:2xZ) -- the A2 result, and rulings on `Z-W88-S3` and `Z-W88-S4`.**
+- **A2 ran** (drained @`46469b1acf`):
+  - ASML: 1 listing page OK and 8 articles fetched, then a ProxyError on its 9th article. The job ended `error`, with a
+    collector cooldown.
+  - Adobe: 2 listing pages and 20 articles, then a 502. The job ended `upstream_unavailable`, a STOP.
+  - Names 3-9 did not start.
+  - 31 objects were uploaded. 0 sign-ins, sa only.
+- **`Z-W88-S3`, ACCEPTED:** the worker waited out the collector's own cooldown before Adobe, which honours the
+  check-before-each-name rule. `error` is NOT added to the STOP set: it was a transport (proxy) failure on one article, after
+  the listing completed.
+- **`Z-W88-S4`, the issuer's check bug, FIXED:**
+  - `ad-2.AC2.py`'s STOP print formatted a 2-tuple with one `%s`;
+  - and pages were MEASURED only on concluded jobs, though a job whose listing reached a span has measured its pages whatever a
+    late article error did.
+
+  On the trunk, AC2 then PASSES:
+  - measured mean **1.33 pages per name** over 3 jobs (BA 1, ASML 1, Adobe 2);
+  - the re-based sa ceiling for the other 79 names is **105 listing pages** (DEFAULT 1,975);
+  - names REACHED (concluded): 0.
+- **The finding for the round:** sa REST serves listings and articles. Each job's terminal failure is a late article-level
+  transport or 5xx error (a ProxyError; a 502), not a challenge and not the account. The sa egress is the collector's
+  `existing-residential-proxy` (`contracts.json`), so the ProxyError sits on that hop.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>31</round>
 <slot>~88</slot>
 <fabric>site-z</fabric>

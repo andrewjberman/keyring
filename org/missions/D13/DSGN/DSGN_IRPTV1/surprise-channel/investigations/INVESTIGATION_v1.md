@@ -3122,3 +3122,30 @@
   "notes": "Owner of the remediation: DSGN_AMGTV1's seat (site-Z 2.0.0_SA_COO~D) -- replace the two 0x08 bytes with the intended `\b` escape (or drop the boundary) under its own pin; the fix is two bytes. Until it lands, every DEV push's CI reads FAILURE at ESLint whatever the push carries, and the lease seat's 'CI running' landing carries no green oracle. Found by the lease seat reading CI for a20b5a60."
 }
 ```
+
+## DSGN_IRPTV1-S42 -- the 5174 dev server's dependency cache directory was absent under the running server: a page not visited since start fails to load (Market Performance); cause of the removal not identified
+
+```json
+{
+  "id": "DSGN_IRPTV1-S42",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-01T00:10:00Z",
+  "one_line": "The 5174 dev server's on-disk dependency cache (portal/.vite/deps) was absent under the running server, so a page whose packages had not been loaded since the server's start (Market Performance: @visx/text, @visx/wordcloud) failed with 'Failed to fetch dynamically imported module'; 34 deps_temp_* directories sit beside it. What removed the directory is not identified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fresh headless load of http://localhost:5174/market (.runtmp/mp-fresh-load.mjs, 2026-10-01 00:0xZ): 504 /.vite/deps/@visx_text.js?v=0dfe6f92 and 504 /.vite/deps/@visx_wordcloud.js?v=0dfe6f92; ErrorBoundary: Failed to fetch dynamically imported module .../src/pages/MarketPerformance/index.ts; all 76 /src modules behind the page answered 200",
+      "ls portal/.vite: no deps directory, 34 deps_temp_* directories dated 2026-09-29..30 (newest 13:09 local), no _metadata.json carrying browser hash 0dfe6f92; /.vite/deps/react.js?v=0dfe6f92 still answered 200 (already transformed in memory)",
+      "server pid 27592 started 2026-09-30 09:33 local; after stop + `bun run dev:live --port 5174` (pid 18500) portal/.vite/deps exists with both @visx files and two fresh loads of /market render 'Market Overview' with 0 module failures"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "vite.config.ts cacheDir gives each checkout its own .vite cache so one server's optimizer never disturbs another's; a page not yet visited loads its packages from that cache on first visit.",
+  "world_is": "The cache directory of the main checkout was gone while its server ran, and 34 orphaned temp directories show repeated optimizer runs in the same cacheDir. Every page first visited after the removal fails to load until the server restarts. Restarted 2026-10-01 00:1xZ; the symptom is cleared, the cause is not.",
+  "notes": "Candidate cause, not measured: a second Vite process started from the main portal checkout (a build, a preview, a smoke script or another seat's dev server) re-optimizing into the same cacheDir. The 34 deps_temp_* directories were left in place (a recursive delete is Andrew's call). Remedy when it recurs: restart 5174. Found answering Andrew's 2026-09-30 report of the Market Performance import error."
+}
+```

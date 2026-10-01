@@ -4,37 +4,42 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE), `/canonical-drive 10m` standard form (lease FULL
 re-authorised by the post-crash relaunch brief 2026-09-30 13:0xZ). As of 2026-09-30T14:4xZ. Older sections below are
 kept for pins and the served-artifact map; this section supersedes their next-lists.
 
-## 0. ROUND 29 DRAINED 3 of 3; svc-irpt-analysis EXISTS; the W27 window WAITS on the CTO's re-read (row S238)
+## 0. ROUND 29 CLOSED at this lane (3 of 3 drained); svc-irpt-analysis EXISTS; W27 WAITS on ~P's API cut (CTO 103317)
 
-As of 2026-09-30T16:4xZ. Authority: W27 packet @00f9ef2df8 (blob 4c1dbb545f), CTO half @dbbac713fc, CRO half @2ab90bf162.
+As of 2026-09-30T18:4xZ. Drain-end packet: `deliverables/2.0.0_SA_COO~Y/R29_Y_DRAIN_END_PACKET_20260930.md` (the CVO's L8 input).
 
-| cell | landed | what |
+| cell | on CLOUD | what |
 |---|---|---|
-| IB-yr-291 | worker b21aacec70; drain on the index | receipt.json carries `vendor_requests` (ten-key shapes, refused off-shape); replay conforms (amendment 1 @641dc0411c) |
+| IB-yr-291 | @1561789a42 | receipt.json carries `vendor_requests` (ten-key shapes, refused off-shape); the replay conforms (amendment 1) |
 | IB-yr-292 | @f39c3b0617 | `contextOptions()` records a HAR only behind `YC_RECORD_HAR=1`; `har_scrub.py` proven by a planted value |
-| IB-yr-293 | @784ac650d0 | projection carries `allowedFirmIds`; `decide()` refuses `ACTOR_FIRM_NOT_ALLOWED` (5 of 5 on CLOUD; 94 passed) |
+| IB-yr-293 | @784ac650d0 | the projection carries `allowedFirmIds`; `decide()` refuses `ACTOR_FIRM_NOT_ALLOWED` |
 
-**Shared-surface hash for `~P` (CONTRACT.md row 21):** the one-field `_scope/canonical_profile_reads.py` patch and its
-test pin landed at @784ac650d0 (`_USER_FIELDS` / `_USER_RETURN_FIELDS` + `allowedFirmIds`).
+Real runs on CLOUD: 9 of 9 criteria at their stated reading. Hygiene: 25 of 27 generate test files green alone; the 2
+reds are red at the base too (pre-existing).
 
-**The principal (ledger `irpt-svc-analysis-principal-20260930` CLOSED @4303ef0b2e):** `svc-irpt-analysis@opalinvest.com`,
-admin / service / opal-capital / active / allowedFirmIds cottonwood; secret `irpt/svc-irpt-analysis/password`, readers =
-the walker's user only (24 of 24 roles explicitDeny); K2 login 200. Script `deliverables/IRPT_MVP_Y/live_walk/svc_principal.py`.
+**Shared-surface hash for `~P` (CONTRACT row 21):** `_scope/canonical_profile_reads.py` one-field patch at @784ac650d0.
 
-**CTO RULING 103317 (16:37Z):** the API half IS a precondition; `~P` cuts the API enforcement (a selected_tenant outside a
-service principal's allowedFirmIds answers 403, with a test) at the top of its next issuance; W27 opens only after it
-lands AND Y re-reads the negative control live (foreign firm refused, own firm 200); the principal stays as built; S238
-disarms on the CTO's read of both prints. Y's exact patch for `~P` (CONTRACT row 21):
-`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/API_ALLOWED_FIRMS_PATCH_CANDIDATE_FOR_P_20260930.md`.
+**The principal (ledger CLOSED @4303ef0b2e):** `svc-irpt-analysis@opalinvest.com`, admin / service / opal-capital /
+active / allowedFirmIds cottonwood; secret readers = the walker's user only (24 of 24 roles explicitDeny).
 
-**ONE next proof:** the live re-read after `~P`'s API enforcement lands (condition 4 fired: the API served an inflection
-directory entry to the principal; enforcement is resident-only). On "open": the W27 window (three bodies, cap 150 min,
-serialized), which also needs `irpt-analysis-resident` running (`~P`'s restart under CTO 103150). On "API half first":
-Y supplies the exact `_authz/served.py selected_tenant` patch for `~P` under CONTRACT row 21.
+**CTO RULING 103317:** the API half IS a precondition. `~P` cuts API enforcement of `allowedFirmIds` for service
+principals with a test; Y's exact patch is `deliverables/IRPT_MVP_Y/API_ALLOWED_FIRMS_PATCH_CANDIDATE_FOR_P_20260930.md`
+@4a3cabe67d. **ONE next proof:** once it lands, Y's live re-read (`svc_principal.py negcontrol`: inflection refused,
+cottonwood 200) -> both prints to the CTO -> S238 disarms -> the W27 window (also needs the resident, `~P`'s under CTO 103150).
 
-**Round 30 list:** the certifier data path (`certify()` handed the chosen comparisons; the body-field candidate is
-refuted on Andrew's HAR); S231's remedy (a terminal state for a permanent authority refusal); W94-S2 hygiene (the
-`fixtures` module-name collision when the whole test directory is collected).
+**Round 30 list:** the certifier data path; S231's terminal state for a permanent authority refusal; ONE hygiene cell
+(W94-S2 + the two base-red generate test files); the issuance commit states CTO 103159 and CTO 103372.
+
+**Pre-cut measurement for the certifier cell (tick 74, 19:4xZ):** the data path EXISTS without a contract change.
+`ycharts/generate/publisher.py` `publish()` already loads and hash-checks the retained composition (`_promote_sources`,
+`json.loads(retained["data"])["resolved"]`), and `RequestComposition.schema.json` carries `resolved.comparison_catalog`
+(object, maxProperties 5, one `$defs/comparison` per chosen key). Today `publish()` calls
+`build_publication(data, census, ...)` (publisher.py:115) and `build_publication` -> `verify_extraction` calls
+`certify.certify(eligible, pdf_bytes, census=census)` (publication.py:151) and `certify(charts, ...)` (:192) with no
+comparisons. The cell threads the catalogue's chosen names publisher -> build_publication -> certify, and certify refuses
+a COMPARISON/MULTI report whose PDF prints none of them. Paths: publisher.py (IRPT_Y_ACCESS_INTEGRATION_P, Y semantic
+writer), extract/publication.py, extract/certify.py and their tests. No import-line change is implied (CTO 103372 not
+engaged unless one is added).
 
 ## 0-prior. Round 19 ~Y CLOSED (2 of 2 orders drained); round 20 list
 

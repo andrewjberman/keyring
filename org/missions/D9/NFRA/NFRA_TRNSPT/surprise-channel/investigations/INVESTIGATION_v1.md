@@ -373,6 +373,445 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TR-t-1: with_silver imports parse_silver lazily and types SILVER-SKIPPED when it is absent.",
     "world_is": "It is present now, so the hop runs; the seam is real and untested with a listing fake.",
     "notes": "The seam the round built by construction; its first exercise is the next real scheduled pull."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S1",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T15:15:00Z",
+    "one_line": "Both public name-list fetches Andrew's word covers were refused by the hosts' bot protection, so names/given_names.txt and names/surnames.txt do not exist and TR1-a1-AC1/AC2 cannot pass.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2026-09-30T15:00:59Z curl -L -A Mozilla/5.0 https://www.ssa.gov/oact/babynames/names.zip -> HTTP 403 'Access Denied' (399-byte HTML, Akamai reference #18.e537c517.1790780459.2aa1f01); python requests retry at ~15:01Z -> 403 again",
+        "2026-09-30T15:01:00Z same client https://www2.census.gov/topics/genealogy/2010surnames/names.zip -> HTTP 200 with a 247-byte 'Request Rejected ... support ID 13427891564882941819' HTML page, not a zip (starts b'<htm'); python requests retry -> same body",
+        "sha256 of the SSA refusal body 4903db40d959d09244de08efa4c5004cc1306b46d9b9b6c2af3f9f896ee71091; of the Census refusal body adcd2c1213a905d5c1481b523a3f0f1c789c1f9885d1f31f410d86ec5cdb91d0 (neither is committed; no archive was obtained)",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R1_CHECKS/r1_assets_check.py -> ASSETS-BAD name dictionary entries=0 (< 50000)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ONE fetch each of the SSA names.zip and Census 2010 surnames names.zip yields the archives to distil into the name dictionary (>= 50,000 entries); 'if a fetch fails, stop on that file and file a surprise row: never substitute a hand-typed list'.",
+    "world_is": "Both hosts refuse a non-browser client (SSA 403, Census a 200 rejection page); the worker used its one bounded retry per host and stopped; no name file was written and none was hand-typed. The other five assets, README, lock (name_dictionary_entries 0) and tests are committed; the size and Will/Grant tests fail honestly.",
+    "notes": "Unblock is the issuer's or Andrew's: a browser-mediated download placed for the worker, a different public mirror Andrew names (egress word is per-use), or an operator-run fetch; then the worker re-runs pin.py-style pinning and AC1/AC2. The tests were not weakened."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S2",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T15:16:00Z",
+    "one_line": "The task order asks for a null-address row for Yang's unmeasured 49financial address inside authors.json's authors list, but the issuer's r1_assets_check.py calls a['address'].lower() on every authors row and would raise on null.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R1_CHECKS/r1_assets_check.py: addrs = {a[\"address\"].lower() for a in authors[\"authors\"]}",
+        "task order build item 1 and 'Measured at the cut': carry a null row with claim: absent"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "authors.json {\"authors\":[{name,address,role,claim,basis}]} carries Yang's unmeasured 49financial row with address null and claim absent, and the issuer's check accepts the file.",
+    "world_is": "A null address inside authors[] makes the issuer's check raise AttributeError; the worker put the null/absent row under a separate top-level key 'unmeasured' in authors.json so the checker and the wipe's read of authors[] stay total.",
+    "notes": "If the issuer prefers the row inside authors[], the checker needs a None guard; the wipe (TR-w-1) should read both keys."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S3",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T15:35:00Z",
+    "one_line": "The commit-time naming gate (LGIC_ENFORCE) REFUSES the two ordered data assets authors.json and client_domains.json as NEW hand-kept carriers of the firm tokens 49financial, 49f, inflection and cottonwood, so they cannot be committed within this order's grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... at 2026-09-30 ~15:2xZ: 'NAMING-GATE: REFUSE 5 graded' -- data/transcripts/assets/authors.json:12 manav.shah@49financial.com -> lookup('49financial'); client_domains.json:4 49financial.com, :5 49f -> lookup('49financial'); :12 inflection -> lookup('inflection'); :19 cottonwood -> lookup('cottonwood'); commit aborted",
+        ".tools/naming-gate.py header: a firm token outside registry files, builder-call arguments and generated blocks is a hand-kept carrier and a NEW one is refused; the waiver kind is an R20 declared exception (a register entry outside this order's paths)",
+        "infra/logic/registry/scopes.json:44 already carries email_domain '49financial.com' on the 49financial scope, so the domain table overlaps the registry"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Build items 1-2: authors.json and client_domains.json carry the measured addresses, domains and firm keys (49f, inflection, cottonwood) as versioned data assets committed under data/transcripts/assets/.",
+    "world_is": "The gate grades JSON string values; the two files hold exactly those tokens by design. The worker did NOT obfuscate the strings to slip past the gate. Committed subset: allowlist, model_aliases, README, lock (pinning only what is committed), tests, rows, proof. authors.json and client_domains.json sit UNCOMMITTED in the worktree (copies in .scratch/held); the lock on disk is re-pinned over all six for the release.",
+    "notes": "Unblock is the CTO's/issuer's: an R20 declared exception for the two files (register row plus a read_context entry), or a ruling that the client-domain and firm-key data are read from the registry (lookup) so the file carries none. Either way the order's paths may need to widen."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T15:50:00Z",
+    "one_line": "safe-commit's missions-tree check refuses every org/missions commit from this worktree with INDEX-DRIFT org/projects/NFRA_TRNSPT.json (index PRD vs tree EXECUTING) because the worktree branch predates CLOUD 17ad3ea043, the issuer's index fix.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... (2026-09-30 ~15:4xZ): 'BLOCKED: missions-tree-check ... [INDEX-DRIFT] org/projects/NFRA_TRNSPT.json: dep_stage: index=PRD tree=EXECUTING'; all other gates (commit-gate, naming-gate PASS 0 graded, surprise-row-gate, to-pipeline-gate) passed on the subset",
+        "git merge-base --is-ancestor 17ad3ea043 HEAD -> rc 1 (HEAD daee98b79f); git show --stat 17ad3ea043: org/projects/NFRA_TRNSPT.json only, 2 insertions 2 deletions, authored by 2.0.0_SA_COO~T"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker commits its deliverables on its worktree branch with safe-commit.sh (order notes and standing worker rules: never merge, never widen the grant).",
+    "world_is": "The order's own base lacks the issuer's index fix, org/projects/NFRA_TRNSPT.json is outside this order's grant and merging CLOUD is forbidden to a worker, so nothing could be committed; all work sits uncommitted in the worktree and the ROW ITSELF is uncommitted.",
+    "notes": "Unblock: the issuer/integrator merges CLOUD 17ad3ea043 into wk-NFRA_TRNSPT-4 (sibling ~3 records the same remedy in its row W3-S1) or tells the worker to; then the worker commits the prepared set (msg in .scratch/msg.txt) after re-checking naming-gate on the two firm-token assets (W4-S3)."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S5",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T16:40:00Z",
+    "one_line": "The issuer's three rulings on W4-S1, W4-S3 and W4-S4 were applied as amended: CLOUD merged (17ad3ea043 in), client_domains.json retired with the table read from registry email_domain, authors.json reshaped with no firm token, name lists vendored from the PyPI sdist names 0.3.0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~T",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer message to 0.9.0_WK_NFRA_TRNSPT~4 (amended order face, 2026-09-30): RULING 1 merge CLOUD; RULING 2 retire client_domains.json, authors.json shape with firm_domain_rule; RULING 3 pip download names, one fetch",
+        "git merge --no-edit CLOUD twice: 17ad3ea043 in HEAD; infra/logic/registry/scopes.json already carries email_domain on the three FIRM rows (49financial.com, inflectionwealth.com, cottonwoodmail.com) plus demo.test; issuer's recut r1_assets_check.py printed 'ASSETS-PINNED n=5 names=93962 registry_domains=4' rc=0",
+        "pip download names --no-deps --no-binary :all: -> names-0.3.0.tar.gz sha256 726e46254f2ed03f1ffb5d941dae3bc67c35123941c29becd02d48d0caa2a671; surnames.txt 88799 lines + given_names.txt 5163 lines = 93962 (dist.all.last, dist.female.first, dist.male.first)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The original order face named authors.json and client_domains.json as carriers of firm tokens and a SSA/Census name-list fetch.",
+    "world_is": "The amended face replaced all three; W4-S1, W4-S3 and W4-S4 stand as written and are superseded by these applied rulings. W4-S2 is moot (Yang's second address is covered by firm_domain_rule)."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S6",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T17:30:00Z",
+    "one_line": "lib.opal_naming.address() refuses object=\"\", so the order's bronze prefix call address('outlook','transcripts','bronze','analysis_commentary','date=<d>','') cannot run as written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_naming.py address() at HEAD 4ef97cc7dd: `if not isinstance(object, str) or not object ...: raise ValueError`",
+        "python call address('teams','transcripts','bronze','analysis_commentary','date=2026-09-30','') -> ValueError; object=None -> s3://opal-data-transcripts/teams/transcripts/bronze/analysis_commentary/date=2026-09-30"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-w1 build item 2: the bronze partition prefix is address(source, scope, 'bronze', 'analysis_commentary', 'date=<d>', '') (a trailing empty object).",
+    "world_is": "address() raises ValueError \"object must be a non-empty ASCII string not starting with '/'\" for object=''; object=None returns the partition address without a trailing slash. silver.py builds the prefix as address(..., partition) + '/' instead; the output key still uses the object argument."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S7",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T17:30:00Z",
+    "one_line": "This branch's registry has no `outlook` source row (it is TR-g-1's, on wk-NFRA_TRNSPT-3 @8e9ed1b539), so address('outlook',...) raises here; the silver test borrows a registered source until that row drains.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python: opal_naming.address('outlook','transcripts','bronze','analysis_commentary','date=2026-09-30') -> ValueError source 'outlook' is not a systems.json key (worktree wk_nfra_trnspt_4 HEAD 4ef97cc7dd)",
+        "git show 8e9ed1b539 -- infra/logic/registry/systems.json: adds rows outlook and sharepoint; git branch --contains 8e9ed1b539 -> wk-NFRA_TRNSPT-3 only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-w1 build item 2: silver reads and writes under address('outlook','transcripts', ...) built by lib.opal_naming.",
+    "world_is": "On this base the registry's systems.json has no key `outlook` (ValueError: source 'outlook' is not a systems.json key). silver.py takes the source from its own directory name; the test test_outlook_silver.py monkeypatches silver.SOURCE to the first registered source that resolves a bronze address ONLY when 'outlook' does not resolve, and uses the real one once TR-g-1 has drained. The real run at the drain must resolve address('outlook',...) for real; the issuer's run at the drain is that proof."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S8",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T17:30:00Z",
+    "one_line": "Wipe limits found while building: a name is matched in another case only with same-message evidence (or ALL-CAPS in the dictionary); capitalised surnames that are also English words (Ask, Mail, Reach) are wiped at sentence start; capitalised non-stopword words (headings, labels) go to residual flags, so real messages will hold out often.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/outlook/wipe.py wipe_blocks (commit e555ef8ac9): pass 1 learns names per message, pass 2 applies; STOPWORDS list",
+        "python: wipe_blocks('we asked ottoline today') with ottoline in the given-name set leaves it unchanged; 'Ask' and 'Mail' are members of surnames.txt"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-WIPE: names applied case-sensitively behind an allowlist; anything capitalised and unknown goes to pii_residual_flags and is held out; C-WIPE-GATE plants a name 'in a different case'.",
+    "world_is": "Case-sensitive dictionary matching means a standalone lower-case name (e.g. 'we asked ottoline') is NOT wiped unless the same message showed the name capitalised or ALL-CAPS; matching lower-case case-insensitively would wipe ordinary words (will, grant, mark, rate). The surnames list holds ordinary English words, so sentence-initial 'Ask'/'Mail' are wiped unless in the stopword list (a small one is in wipe.py). The planted-token test plants the lower-case name beside its ALL-CAPS form. The held-out rate on the real sample is unmeasured here; the issuer's real silver run prints held_out=<h>."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S9",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T18:10:00Z",
+    "one_line": "The TR-k-1 face asks for pdf_sha256 null this round while the issuer's AC1 check requires nullable true ONLY on holdings and request_text; the contract marks pdf_sha256 non-nullable and gold emits the empty string with claim absent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R1_CHECKS/r1_gold_contract_check.py: NULLABLE = {holdings, request_text}; the check prints GOLD-CONTRACT-BAD if any other field is nullable",
+        "TO-TR-k1 worker face build item 2: 'pdf_sha256 null this round' and build item 1 'claim pdf_sha256 absent'; the contract validation refuses a null in a non-nullable field, so both cannot hold",
+        "org/standards/NFRA_TRNSPT_COMMENTARY_GOLD_CONTRACT.json pdf_sha256: nullable false, claim absent; data/transcripts/scripts/outlook/gold.py derive_row emits '' and test_hashes_and_carried_fields asserts it",
+        "Also decided without a face line: gold.derive drops silver rows with held_out true or ingest false (C-WIPE holds them out); models_referenced matches single-token aliases case-sensitively (so a capitalised 'Short' at a sentence start matches the Short Term alias); 'Dividend Income' alone is not in model_aliases.json (only 'Dividend Income Strategy/Portfolio'), so it does not match",
+        "after git merge CLOUD, address('outlook','transcripts','gold',...) still raises ValueError: source 'outlook' is not a systems.json key (infra/logic/registry/systems.json has no outlook row); the gold test borrows a registered source as W4-S7 does"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "pdf_sha256 is null this round AND is non-nullable per the issuer's check (nullable true only on holdings, request_text).",
+    "world_is": "One of the two must give: the contract carries pdf_sha256 as a non-nullable string with the empty-string coverage value and claim absent; when attachment bytes land (S12) the real sha256 replaces it with no schema change. If the issuer wants a true null, the check's NULLABLE set and the contract change together (a version bump).",
+    "notes": "Residue: the registry still lacks the outlook source row after the CLOUD merge, so the issuer's gold run needs chain C's row before gold.py resolves its address."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S10",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T19:00:00Z",
+    "one_line": "The irpt-requests table holds no request composition (variant, comparison_keys, account type, holdings): a full read-only scan of 1102 items found 0 carrying them, so the replay set is the six invented fixture requests.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "boto3 dynamodb scan of irpt-requests (us-east-1), read-only, 2026-09-30: 1102 items scanned; request_revision prefixes: RETENTION 447, ARTIFACT 188, SELECTION 146, REPORT 117, PERFORMANCE_ACCEPTED 112, UPLOAD 25, NORMALIZATION 25, INPUT 21, analysis 15, PERFORMANCE_USE 6",
+        "REPORT# items (117) carry only ref{sha256,report_id,revision,immutable,report_kind}, tenant, blob{version_id,bucket,key}, owner{...}, retention_ref, request_revision (attribute-name census; values not printed); SELECTION items (146) and 'analysis' items (15) carry a JSON string of owner/account_set and identity/composition_ref fields; no item has variant, comparison_keys, account_type or holdings",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/report_index.py publish(): the REPORT# item is ref/owner/blob/retention only; the Generate composition sits behind analysis.record composition_ref (an artifact blob), which this order's read-only table scan does not open",
+        "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/0.9.0_WK_NFRA_TRNSPT~4/R1_REPLAY_REQUESTS.json: source fixture, items_scanned 1102, composition_items 0, count 6 (invented requests from replay.FIXTURE_REQUESTS)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-q1 build item 2: a read-only scan of irpt-requests for REPORT#/request items yields variant, comparison_keys, an account-type field and holdings category weights for the replay set.",
+    "world_is": "The table projects none of those fields; replay.py --extract-irpt scanned 1102 items, found 0 compositions and wrote the six invented fixture requests as the order directs. A real replay set needs the composition blobs (analysis.record composition_ref), an S3 read of client-bearing artifacts this order does not grant.",
+    "notes": "project_item() in replay.py is tested on a synthetic item only; it has never met a real composition, so its field names (variant, comparison_keys, account_type, holdings[].category/weight) are the face's, unverified against real data."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S11",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T19:10:00Z",
+    "one_line": "The naming limb of safe-commit refuses every commit that stages a .py/.json file because systems.json rows outlook (index 48) and sharepoint (index 49) are VENDOR rows with no display_name; the fix is outside this order's paths, so the slicer, replay, tests and proof instance are uncommitted.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh ... on the q1 paths, 2026-09-30 ~19:05Z: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' naming-gate: 'the registry is refused by validate (2 refusal(s)): systems.json[48].display_name: a VENDOR row carries the words a served face prints; missing or empty'",
+        "python read of infra/logic/registry/systems.json at this worktree HEAD fb2d56e333 (the merge of CLOUD 13337dbd4e): VENDOR rows with no display_name = 2 of the VENDOR rows: outlook (48), sharepoint (49); the same two rows are in CLOUD (git log CLOUD -- infra/logic/registry/systems.json: 8e9ed1b539 added them from ~3, cd2ffcca99 added display_name to the 23 VENDOR rows that then existed)",
+        ".tools/safe-commit.sh:736-745: the limb runs whenever the staged set holds a *.py/*.json/*.yaml/*.tf/*.js file; an .md-only commit is not refused"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker commits its owned paths through safe-commit.sh and the naming limb grades the commit's own files.",
+    "world_is": "The limb validates the whole registry, and the registry on CLOUD is invalid on two rows the NFRA_TRNSPT chain C added, so no .py/.json commit passes on any branch that carries them. Adding a display_name to those two rows is one edit in infra/logic/registry/systems.json, which is not in this order's grant.",
+    "notes": "Criteria were run on the uncommitted files: AC1 20 passed; AC2 SLICER-REPLAY client_identifiers=0 requests=6 with_candidates=6 fallback=2 no_precedent=0. The issuer or the registry's owner lands the two display_name values (owner claim for the rows: D9); then the files commit unchanged."
+  },
+  {
+    "id": "NFRA_TRNSPT-W4-S12",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~4",
+    "surfaced_at": "2026-09-30T20:10:00Z",
+    "one_line": "W4-S11's naming-limb block cleared: the CTO validator fix b5dc2e63d1 and 4.0.0_SA_CRO's registry display names 224058ea3f reached this branch by an issuer fast-forward to 81244a2bf3, and python lib/opal_naming.py validate reads OK.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~T",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git rev-parse --short HEAD in wk_nfra_trnspt_4, 2026-09-30: 81244a2bf3 (branch wk-NFRA_TRNSPT-4, fast-forwarded by the issuer)",
+        "python lib/opal_naming.py validate read OK per the issuer's state note, 2026-09-30; W4-S11 cited the validate refusal on systems.json[48].display_name"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker commits its owned paths through safe-commit.sh and the naming limb grades the commit's own files.",
+    "world_is": "With the registry fix landed on this branch, the q1 files commit unchanged; row W4-S11 is unedited and its block no longer stands.",
+    "notes": "Append-only: W4-S11 and every other row untouched."
+  },
+  {
+    "id": "NFRA_TRNSPT-S9",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-30T19:15:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "FWD-7's round-1 real run broke at its first real input: list_email_attachments returns the Graph envelope {\"@odata.context\", \"value\": [...]}, but the decomposition's BRONZE CONTRACT (issuer text) told TR-b-1 it returns a bare list, so outlook/pull.py --replay crashes in criterion.classify ('str' object has no attribute 'get') on both real messages; nothing was landed.",
+    "disarm_owner": "2.0.0_SA_COO~T (issuer contract error; first item of the round-2 repair cell: unwrap value when present, and a fixture in the real envelope shape)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python data/transcripts/scripts/outlook/pull.py --replay C:/Users/AndrewBerman/Desktop/NFRA_TRNSPT_SAMPLE_LOCAL/r1 --dry-run at 0225e80b2f: AttributeError: 'str' object has no attribute 'get' in criterion.classify",
+        "the replay directory (outside the repo, client PII): 2 messages copied byte-identical from the harness-persisted raw read_email outputs idx_25_rawtool.json / idx_36_rawtool.json, and the 2 list_email_attachments results as the tool returned them (envelope with value)",
+        "decompositions/NFRA_TRNSPT_DECOMP.md BRONZE CONTRACT: 'list_email_attachments(id) returns {id, name, size, contentType, isInline} per attachment' -- read as a bare list by the worker; the fixture (outlook_replay/) is a bare list"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 1's real run lands the recorded sample to bronze through pull.py --replay --apply.",
+    "world_is": "The real tool envelope is not what the contract described; the lander raises before any write. Measured read-only with the envelope unwrapped: both real messages classify sender_ok=true, client_recipient=true, recipient_firm=49financial, ycharts_pdf=false, near_miss=true, ingest=false (their only non-inline attachments are application/octet-stream images of 6,866 and 197,768 bytes).",
+    "notes": "The defect is the issuer's face, not the worker's: the worker built exactly the shape it was given. This is the value of a real run over a fixture."
+  },
+  {
+    "id": "NFRA_TRNSPT-S10",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-30T19:15:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Chain C x chain D seam: outlook/criterion.py load_tables() reads data/transcripts/assets/authors.json only when client_domains.json ALSO exists; TR-a-1's ruled shape retired client_domains.json (the domains are registry tenant.email_domain), so the criterion always falls back to its inline default tables and never reads the ruled authors.json (addresses list + firm_domain_rule).",
+    "disarm_owner": "2.0.0_SA_COO~T (round-2 repair cell: load_tables reads authors.json alone and the registry domains, honours firm_domain_rule)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/outlook/criterion.py:48-54 load_tables: 'if os.path.isfile(ap) and os.path.isfile(dp): ... return ... \"inline-default\"'",
+        "data/transcripts/assets/ at 0225e80b2f carries authors.json and no client_domains.json (issuer ruling on W4-S3)",
+        "the read-only measurement above ran with load_tables() -> the inline-default tables"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The criterion reads the author and domain tables from the versioned assets when present.",
+    "world_is": "It reads them only as a pair; after the ruling the pair can never be complete, so the versioned authors table is dead data.",
+    "notes": "Built on two branches that could not see each other; found at the union."
+  },
+  {
+    "id": "NFRA_TRNSPT-S11",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-30T22:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "S07 (the Research Meeting refusal, read-only): the Research Team Meeting's chat shows a transcript WAS produced on 2026-09-29 (callTranscriptEventMessageDetail, organizer user e44d429b) and a 57-minute recording saved to the organizer's OneDrive, yet the meeting is ABSENT from Andrew's calendar for the next 8 days while the Morning Meeting and OCIO IC appear there with him as an attendee; the likely cause of Graph's 3003 'User does not have access to lookup meeting' is that Andrew is a member of the meeting CHAT but not an invitee of the meeting SERIES.",
+    "disarm_owner": "1.0.0_SA_CTO (routing: the remedy is a person act -- the organizer adds andrew@opalinvest.com to the series invite -- or the application-permission route of the recon brief; both are outside this project's write surface)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gateway read_chat_messages(19:meeting_MjBkMmQ0ZDItMjY3My00NTAzLWExZTUtZTQxNTgyZGFkMDYy@thread.v2, top 8) at 2026-09-30 22:0xZ: callTranscriptEventMessageDetail 2026-09-29T12:56:59Z (callTranscriptICalUid present), callRecordingEventMessageDetail status success, duration PT56M38S, URL in the organizer's personal OneDrive; meetingOrganizer and initiator user id e44d429b-b629-4035-b09b-447e978322db (series.json organizer_oid for equity_research_call)",
+        "gateway list_calendar(days=8) at 2026-09-30 22:0xZ: 6 events; Morning Meeting 10-05 and OCIO IC 10-06 list andrew@opalinvest.com as an accepted attendee; no Research Team Meeting event, although research_transcripts/raw/ shows it ran about twice weekly (e.g. 04-07 Tue, 04-09 Thu) and it ran 09-29",
+        "TRANSCRIPTS_FIRST_PULL_20260929.md: the three meetings Andrew can read are all organized by another user of whom he is an invitee; the refused one is the only one organized by e44d429b"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD S07: the Research Meeting refusal investigated; cause named or a route found.",
+    "world_is": "Cause named as likely (not proven): invitee status. Proof needs one act: after the organizer adds Andrew to the series, list_meeting_transcripts on the meeting returns 200; the negative arm is today's 3003.",
+    "notes": "Read-only; nothing was changed. The calendar tool reads forward only, so the absence is measured over 8 days, not the series."
+  },
+  {
+    "id": "NFRA_TRNSPT-S12",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-30T22:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Off-task observation: the announce-mode seating lint (gate2, .tools/to-decomp-ref-lint.py) reads the per-project worker serial 0.9.0_WK_NFRA_TRNSPT~1 as the generic seat 0.9.0_WK_NFRA and reports all five round-2 orders as 'already holds open TOs on 6 OTHER pipeline projects' -- a false positive under the spine's worker-serial form 0.9.0_WK_<CODE>~<n>.",
+    "disarm_owner": "1.0.0_SA_CTO (the lint's owner decides; it is ANNOUNCE mode and blocked nothing)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of the round-2 issuance 35d912322e: '[gate2] SEATING: this NEW task order for NFRA_TRNSPT is addressed to 0.9.0_WK_NFRA, which already holds open TOs on 6 OTHER pipeline project(s): NFRA_IAMROLES202609 ...' x5; '[gate2] ANNOUNCE mode -- NOT blocking this commit'",
+        "spine L6: <issued_to> names the worker serial 0.9.0_WK_<CODE>~<n>; the project code here contains an underscore (NFRA_TRNSPT)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The seating lint counts a seat instance's open orders across projects.",
+    "world_is": "It truncates a project code containing an underscore, so every NFRA_* project's workers look like one seat; if the lint is armed to ENFORCE it will refuse every such issuance."
+  },
+  {
+    "id": "NFRA_TRNSPT-S13",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-09-30T22:20:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "A byte-exact recording of a real message is not reliably available to this seat: the harness persists a gateway read_email result to a file only when it is very large (the two saved samples were 55,763 and 72,569 bytes), and the two admissible candidates read this round came back INLINE (about 40 KB and 22 KB), so they reach this seat only as model context, which is not 'exactly as received'.",
+    "disarm_owner": "1.0.0_SA_CTO (routing: the byte-exact bronze landing of a real admitted message rides site Z's headless mail route, item 5 of the relay; until then FWD-7's real run is a LOCAL measurement, never a bronze write)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gateway read_email on candidate n=74 (2026-08-11, admitted: author sender, client recipients, application/pdf 585,757 bytes, body 'Attached is the YC report') and n=14 (2025-11-06, PDF 586,762 bytes): both returned inline at 2026-09-30 21:3xZ-22:1xZ",
+        "C:/Users/AndrewBerman/Desktop/NFRA_TRNSPT_SAMPLE_LOCAL/idx_25_rawtool.json (72,569 bytes) and idx_36_rawtool.json (55,763 bytes): the only harness-persisted read_email outputs; both are near-misses (no PDF)",
+        "decomposition round 2, 'The issuer's real runs at close' item 1 foresaw this branch: 'or states that the byte-exact recording waits on site Z's headless mail route'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO analysis ruling 3b: a real run lands ONE message the criterion admits, its silver read by the two named readers.",
+    "world_is": "The admitted message exists and is identified, but the only byte-exact path to it from this laptop is the unbuilt headless mail route; bronze must not receive a model-relayed copy.",
+    "notes": "The round-1 near-miss pair stays the only byte-exact real input."
+  },
+  {
+    "id": "NFRA_TRNSPT-W1-S6",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-09-30T20:30:00Z",
+    "one_line": "Round 1's data/transcripts/scripts/tests/test_outlook_bronze.py::test_tables_source_recorded asserts the retired table label (inline-default or an assets: prefix) and now fails on the ruled label assets+registry; the file is outside TO-TR-f2's <paths>.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_outlook_bronze.py:53-54: assert criterion.load_tables()[2] in ('inline-default',) or criterion.load_tables()[2].startswith('assets:')",
+        "python -m pytest data/transcripts/scripts/tests/test_outlook_bronze.py: 1 failed (test_tables_source_recorded), 48 passed with the four outlook/wipe test files; the same 48 pass after the change",
+        "also failing before and independent of this cell: test_assets_lock.py::test_every_pinned_sha_matches (allowlist.json) and the teams land_bronze name collision when the whole tests directory runs in one process (transcript_id_for)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-f2 build item 2: load_tables returns the label assets+registry; the order's <paths> omit test_outlook_bronze.py.",
+    "world_is": "The one round-1 assertion on the label was not updated, so it fails on the required label. The order forbids weakening a test to pass and does not grant the file; the new test_outlook_envelope.py asserts the ruled label (7 passed).",
+    "notes": "One-line fix for whoever holds that file: accept label == 'assets+registry'. Left unedited by this worker."
+  },
+  {
+    "id": "NFRA_TRNSPT-W1-S7",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-09-30T23:30:00Z",
+    "one_line": "TO-TR-x2 build item 3's re-materialise command (git rm -r --cached then git checkout --) cannot restore files from an index it just emptied, and the pull handler's fixture fake _MemS3 lives in teams/pull.py, not in a test file; both were handled inside the grant with different acts than the order names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-files --eol data/transcripts/assets data/transcripts/scripts/tests/fixtures before: 29 files i/lf w/crlf; after 'git ls-files -z <the two dirs> | xargs -0 rm -f' then 'git ls-files -z <the two dirs> | xargs -0 git checkout-index -f --': 39 i/lf w/lf (1 i/-text w/-text unchanged); checkout-index -f alone without the rm left all 29 CRLF",
+        "infra/aws/lambda/transcripts-pull/handler.py builds pull._MemS3() (data/transcripts/scripts/teams/pull.py), so test_pull_handler.py has no fake of its own; list_objects_v2 (Prefix, ContinuationToken, MaxKeys, IsTruncated, NextContinuationToken) was added to pull._MemS3 and to tests/test_teams_land_bronze.py FakeS3",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R2_CHECKS/r2_suite_check.py: SUITE-GREEN passed=133 failed=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-x2 build item 3: re-materialise the two directories with git rm -r --cached + git checkout --; build item 4: both test fakes (FakeS3 and test_pull_handler.py's _MemS3) gain list_objects_v2.",
+    "world_is": "git rm --cached leaves nothing for checkout -- to restore from, so checkout-index after deleting the files was used (no destructive git, bytes come from the index); the handler test's fake is production fixture-mode code in teams/pull.py (inside the grant), so the listing method landed there.",
+    "notes": "_MemS3 now carries a listing method in the Lambda's fixture arm; no behaviour change for any caller that did not list."
+  },
+  {
+    "id": "NFRA_TRNSPT-S14",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-10-01T00:40:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Running the transcripts test suite rewrites two TRACKED record files (deliverables/0.9.0_WK_NFRA_TRNSPT~4/WIPE_GATE_RECORD.json and ~2/WIPE_GATE_RECORD_R2.json): test_wipe_planted.py writes its gate record into the committed deliverables path on every run, so any tree that runs the suite shows those two files modified (line endings only here), and a seat's later commit or merge can trip on them.",
+    "disarm_owner": "2.0.0_SA_COO~T (round-3 repair item: the test writes its record to a temp path, and the committed record is produced by one explicit command)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "after python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R2_CHECKS/r2_suite_check.py at CLOUD 94d7d74a41 (SUITE-GREEN passed=133): git status shows both record files ' M'; git diff --numstat on each is empty (line endings only); restored with git restore",
+        "worker reports of TR-w-2, TR-f-2 and TR-x-2 each name the same leftover in their worktrees"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A test run leaves the tree as it found it.",
+    "world_is": "Two committed records are rewritten by every suite run.",
+    "notes": "Found at the issuer's drain hygiene; restored each time; not a content change."
   }
 ]
 ```

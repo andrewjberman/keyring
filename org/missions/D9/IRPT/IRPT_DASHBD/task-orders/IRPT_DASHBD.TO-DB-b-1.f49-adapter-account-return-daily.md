@@ -89,7 +89,11 @@ reporting gold, `account_return_daily`, for the round-1 sample over its full his
   `income_basis cash_when_received`, `fee_basis GROSS_ONLY`, `tolerance`, `large_flow_share`, `plausibility_band_low/high`,
   `day_count Account365`, `tieout_tolerance_proposed` null (DB-b-3 fills it), `gips_alignment "GIPS-aligned, not GIPS-compliant"`.
 
-**The contract files (C-SHAPE, annex 17c, ADDENDUM ruling 12), written BEFORE the first upload:**
+**The contract files (C-SHAPE, annex 17c, ADDENDUM ruling 12), written BEFORE the first upload.** ISSUER AMENDMENT 4 (2026-09-30
+~21:4xZ, row IRPT_DASHBD-S2 @ae1d5ffb6a, remedy 1): `org/standards/` is lane ANY_EXEC and this seat is not a permitted agent, so the
+seat WRITES the contract files and leaves them uncommitted, excludes them from its own commits, and names them in its report; the issuer
+(an exec seat) lands them unchanged with the seat credited (the account-return contract landed so @10939bbfa4). A criterion that reads
+a contract reads the working copy, so the grading is unaffected.
 - `org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json`: `contract_version "0.1.0"`, `project`, `prd`, `table`,
   `grain "account x trading day"`, `partition "date=YYYY-MM-DD"`, `columns` (list of `{name, type, nullable, meaning}` with the pyarrow
   type name exactly as written -- e.g. `string`, `date32[day]`, `double`, `int64`): `firm`, `account_id`, `business_date`,
@@ -148,7 +152,8 @@ FLOW_UNRECONCILED days carry `HOLDINGS_INCOME_FALLBACK`. Base: FAIL (no gold).
 - **Grant.** The `<paths>` block below, plus your deliverables folder and this order's file.
 - **AWS writes admitted:** objects under `irpt/49financial/gold/account_return_daily/` and `irpt/49financial/gold/dim_return_method/`
   in `opal-data-49financial` only. No other prefix, no other bucket, no Terraform, no Lambda.
-- **No vendor call of any kind** (C-TIEOUT; Andrew's per-use word is absent and not asked here).
+- **No vendor call.** The adapter reads Opal silver only (amendment 3: Andrew's egress grant to this seat, record @4c4989c800, covers
+  calls the work needs; this cell needs none, and the conditional tie-out pull belongs to DB-b-3).
 - **Refusal clause.** A method question the PRD does not answer is a surprise row (`IRPT_DASHBD-S<k>`, the project's channel), with the
   default you took stated; a builder or validator refusal stops that limb only. Never weaken a check.
 
@@ -195,5 +200,5 @@ comp-routes: DECLARED-NOT-APPLICABLE -- no route.
 comp-cache: DECLARED-NOT-APPLICABLE.
 comp-adversary: RUN -- DB-1-AC1 base FAIL (no contract); DB-1-AC2 base FAIL (no gold); DB-1-AC3 base FAIL (no entry); the ledger checker's positive control on the CLOSED W24 entry PASS.
 seating: 0.4.0_DS_ClientPlatform~S holds no other project (TO-IB-pr-263 superseded @ed0be5b557); Andrew's seating of 2.0.0_SA_COO~P on this backend is PRD section 5.
-lane: the <paths> block IS the grant; the policy file is named so a refusal there is a row, not a wall.
+lane: the <paths> block is the grant for everything EXCEPT `org/standards/` (lane ANY_EXEC; a seat's commit there is refused whatever the order names -- row IRPT_DASHBD-S2): those files are landed by the issuer (amendment 4).
 </preflight>

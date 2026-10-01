@@ -71,6 +71,10 @@ Read, never write: `infra/aws/terraform/opal-gateway/*.tf`, `infra/aws/terraform
 Write the instance at `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~1/NFRA_MCPMSP.TO-MS-ir-1.internal-reader-tf.proof_of_spec.json`.
 Report once, with: the resource addresses in each file; the Deny's key list; the plan line; the commit hash; any row.
 
+**From MS-c-1's census (merged at 4da9321aa8, `r2_c1_census.json`):** the firm segments are exactly
+`platinum/mdpf/{49financial|inflection|cottonwood}/*` -- the Deny's keys are those three prefixes of the builder bucket.
+`daily-reports/*` (read by `app/sprint_view.py`) and every `json/*` key carry no firm token and stay readable.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-2 issuance (E1; CTO ruling 27414: MCPMSP owns the role). Checks dry-run at base: AC1 FAIL as
@@ -82,3 +86,4 @@ expected; AC2 FAIL as expected (files absent). Builder names measured at the cut
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
+<status>complete</status>

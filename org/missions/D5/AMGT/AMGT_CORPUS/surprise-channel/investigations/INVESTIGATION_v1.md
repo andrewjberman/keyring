@@ -3102,6 +3102,73 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "series_median_abs leaves exact zeros out of the median (a series of only zeros keeps median 0, read as before); the test test_the_median_is_of_absolute_values_ignores_non_finite_and_leaves_zeros_out pins it. BBSE3 CAPITAL_EXPEND then reads median 0.172 (4 non-zero years), out of the 1 < av < 1e7 band, and stays UNRESOLVED; counting the zeros would read the same class UNRESOLVED (median 0) on that key.",
     "notes": "If the issuer wants zeros counted, the change is one line in series_median_abs; AC1 and the BP outcomes do not depend on it (BP's series carries no zero).",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S72",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-01T01:05:00Z",
+    "one_line": "lib/research/corpus/tests/test_readonly_proof_bound.py::test_code_census_arm_leaves_no_amgt_corpus_entry fails (rc 1 at :87) because readonly_proof's code census now finds 2 UNRESOLVED write sites it cannot classify: induction_scheduled.py:109 os.makedirs and :111 open (the scheduled induction task's own log writer, added with r-1 after the census was written).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "readonly_proof.main(['--code-census']) at CLOUD 2026-10-01 ~01:0xZ: files_scanned 65 write_like_calls 79 library_write_calls 0; tristate library 0 unresolved 2 clear 77; unresolved_site induction_scheduled.py:109 os.makedirs origins ['unknown']; unresolved_site induction_scheduled.py:111 open origins ['unknown']; rc 1.",
+        "The same test fails at the round-26 base f40d29ede1 (pre-existing); last author of the test 0.9.0_WK_AMGT_CORPUS~1 (CRPS-p-1, 83ca76edc8)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The code-census arm resolves every write-like call in the corpus package to library / clear / test, so its rc is 0 (CRPS-p-1).",
+    "world_is": "Two write sites added later by the scheduled induction entry point (a local log file under %LOCALAPPDATA%) carry an origin the census cannot resolve; the arm reads them UNRESOLVED and returns 1.",
+    "notes": "OWNER: AMGT_CORPUS, lane 2.0.0_SA_COO~X (round-26 analysis ruling 4; the test is CRPS-p-1's, the sites are r-1's). The fix (classify the operator-log write as clear with its ground, or move it out of the census scope) is a round-28 candidate cell; filed by the round-27 direct act CRPS-ac-3.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S73",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-01T01:05:00Z",
+    "one_line": "lib/research/api/tests/test_harvest_prefixes.py::test_ii_registry_hash_matches fails at :68: the committed _harvest_prefixes.REGISTRY_HASH (a095d4e0ef2b...) differs from the generator's scoped_registry_hash() (0b67ab695620...); last author 0.9.0_WK_AMGT_RESAPP~183 (AMGT-zz-4, b71bf46c74, 'restamp of _harvest_prefixes.py').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest at CLOUD 2026-10-01 ~01:0xZ: AssertionError assert 'a095d4e0ef2b...ecb96159bd7a8' == '0b67ab695620...e39f05cbebf99' (lib/research/api/tests/test_harvest_prefixes.py:68).",
+        "Failing at CLOUD before CORPUS ab-3 merged (round-26 drain hygiene); the file's last two authors are AMGT_RESAPP workers (~183 on 2026-09-30, ~92 on 2026-09-22)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The generated _harvest_prefixes.py carries the registry hash of the generator's current scoped registry.",
+    "world_is": "The stamped hash is stale against the generator's scoped registry (a registry change landed after the restamp, or the restamp read a different scope).",
+    "notes": "OWNER: AMGT_RESAPP, lane 2.0.0_SA_COO~Z (the file is RESAPP's AMGT-zz-4 / rk-92 surface; round-26 analysis ruling 4). Routed by this row and one message; not a CORPUS cell. Filed by the round-27 direct act CRPS-ac-3.",
+    "disarm_owner": "2.0.0_SA_COO~Z"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S25",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T17:00:00Z",
+    "one_line": "The ruled ZERO-DOMINATED rule (strictly more than half exact zeros, any key) moves 334 other figures (EQY_DPS 167, IS_DIV_PER_SHR 167: PER SHARE -> ZERO-DOMINATED) and breaks test_a_mostly_zero_dividend_yield_still_reads_percent (4 of 5 zeros pinned PERCENT); I exempted the dividend fields, which AC1 and AC2 forced.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ac1_check.py with the rule unexempted: TRANS EQY_DPS PER -> ZERO-DOMINATED 167; TRANS IS_DIV_PER_SHR PER -> ZERO-DOMINATED 167; other_unit_changes 334",
+        "ac1_AC2.sh with the rule unexempted: 1 failed, 63 passed (test_build_unit_map_series_round26.py::test_a_mostly_zero_dividend_yield_still_reads_percent: ZERO-DOMINATED 4 of 5 vs PERCENT)",
+        "after the exemption: ac1 other_unit_changes 0 bands_unchanged True; ac1_AC2 64 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling item 1: any key with strictly more than half exact-zero fiscal years reads ZERO-DOMINATED; item 2: every other key byte-unchanged; the round-26 suites stay green.",
+    "world_is": "The dividend keys are mostly zero legitimately (a zero payout, whose unit ZERO_VALUE_UNIT_FROM_BASIS defines from FIELD_BASIS), so the literal rule reclassifies them. build_unit_map.py zero_dominated_counts therefore skips ZERO_DOMINATED_EXEMPT = the ZERO_VALUE_UNIT_FROM_BASIS keys (EQY_DPS, IS_DIV_PER_SHR, BEST_DPS, BEST_DIV_YLD) plus EQY_DVD_YLD_IND (pinned by the round-26 test).",
+    "notes": "The exemption set is my reading, not ruled; the issuer may widen, narrow or drop it (one frozenset in build_unit_map.py).",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

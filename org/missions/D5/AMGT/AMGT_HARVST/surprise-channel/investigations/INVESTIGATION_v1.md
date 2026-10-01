@@ -4539,6 +4539,54 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Likely the checks' WK path resolves from ROOT = git toplevel of the CWD; a worker invoking a check from the shared tree path writes there. The A2 dispatch names the worktree as the ONLY write location and runs every check from the worktree root."
+    },
+    {
+        "project": "AMGT_HARVST",
+        "fabric": "site-z",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~88",
+        "surfaced_at": "2026-10-01T01:05Z",
+        "disposition": "UNDER_INVESTIGATION",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "disarm_owner": "2.0.0_SA_COO~H",
+        "id": "AMGT_HARVST-Z-W88-S3",
+        "one_line": "A job status 'error' (ProxyError) is not a listed STOP status but sets a 15-min collector cooldown; the A2 batch waited it out, ran the next name, and that one ended upstream_unavailable (502) and stopped the batch at 2 of 9.",
+        "spec_asserts": "Addendum 1 / the order: STOP after bot_check, unclassified, account_or_harvester_unavailable, sign_in_refused, throttled, upstream_unavailable or cooldown; re-check no sa cooldown before each name; never re-run.",
+        "world_is": "Name 1 (ASML) ended status 'error' rc=2 (error_type ProxyError on its 9th article fetch, listing 1 page OK, 8 articles stored, reached_span 2026-07-15..2026-10-01), with the collector cooldown transport_or_runtime_error until 2026-10-01T00:49:16Z (runs/20261001T003038Z-sa-37769fbee6.json retry_at 1790815756.3). 'error' is not in the STOP list and the order does not say what to do when the per-name cooldown check (a) finds an active cooldown. The driver waited for the collector's own cooldown to expire (sleep 694 s), then ran name 2 (Adobe) once at 00:49:21Z: 2 listing pages OK, 20 articles fetched, a 502 on the 22nd article, status upstream_unavailable (retry_at 1790817250.9) -> listed STOP, batch stopped, names 3-9 not started. No name was run twice.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "deliverables/0.9.0_WK_AMGT_HARVST~88/ad2_A2_inv_01_security-81a74ed057551e58.out",
+                "deliverables/0.9.0_WK_AMGT_HARVST~88/ad2_A2_inv_02_security-37dddff4d4357038.out",
+                "deliverables/0.9.0_WK_AMGT_HARVST~88/ad2_A2_drive_part2.log",
+                "runs/20261001T003038Z-sa-37769fbee6.json (error_type ProxyError, retry_at)",
+                "runs/20261001T004923Z-sa-61f00e640c.json (502 on /api/v3/articles/4636389)"
+            ]
+        },
+        "notes": "The worker's reading was the check-before-each-name clause: wait out the collector's own cooldown rather than start into a 'cooldown' status. Whether 'error'/ProxyError belongs on the STOP list, and whether waiting is allowed, is the issuer's call. Two upstream_unavailable (502 on a deep article) in two passes suggests sa serves 502s on some article ids; not measured."
+    },
+    {
+        "project": "AMGT_HARVST",
+        "fabric": "site-z",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~88",
+        "surfaced_at": "2026-10-01T01:05Z",
+        "disposition": "UNDER_INVESTIGATION",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "disarm_owner": "2.0.0_SA_COO~H",
+        "id": "AMGT_HARVST-Z-W88-S4",
+        "one_line": "ad-2.AC2.py crashes (TypeError) whenever a STOP-status job exists, because its STOP line formats a 2-tuple with a single %s.",
+        "spec_asserts": "The order: run ad-2.AC2.py literally, expect 'AC2 RESULT: PASS' (an honest stop passes when recorded).",
+        "world_is": "round31/checks/ad-2.AC2.py line 55: print('STOP: %s' % (stop or ...)) where stop = (security_key, status) is a 2-tuple; on the combined record (STOP_STATUSES now include cooldown and upstream_unavailable) the run printed its per-job lines then raised 'TypeError: not all arguments converted during string formatting', rc=1, with no AC2 RESULT line (ad2_A2_AC2.out). Pass 1 printed 'STOP: none (ran all 10)' only because the then STOP_STATUSES omitted cooldown. A copy with the one-line fix str(stop) (.scratch/ac2copy, outside the check's own folder; diff in the output header of ad2_A2_AC2_derived_stopfmt.out is the line below) printed STOP: ('security-37dddff4d4357038', 'upstream_unavailable'), MEASURED mean None over 0 concluded, ceiling 1975 DEFAULT, NAMES REACHED 0, AC2 RESULT: PASS (0 failure(s)). The derived run is not the check.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "deliverables/0.9.0_WK_AMGT_HARVST~88/ad2_A2_AC2.out (traceback)",
+                "deliverables/0.9.0_WK_AMGT_HARVST~88/ad2_A2_AC2_derived_stopfmt.out",
+                "round31/checks/ad-2.AC2.py line 55"
+            ]
+        },
+        "notes": "The worker did not edit the check (outside the order's paths). Its own AC2 verdict line is absent; the issuer fixes the formatting or accepts the derived run."
     }
   ]
 ```

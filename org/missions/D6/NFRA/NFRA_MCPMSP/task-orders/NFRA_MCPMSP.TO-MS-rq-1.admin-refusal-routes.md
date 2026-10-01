@@ -81,6 +81,7 @@ required `widen` field (your note) stands; state it in the module docstring.
 expected (12 passed, control).
 
 <status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

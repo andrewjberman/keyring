@@ -13671,3 +13671,273 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "An owner of the ycharts tests may want per-file invocation recorded as the suite's convention."
 }
 ```
+
+
+## IRPT_BCKEND-S240 -- the seating lint reads two projects' worker serials as one seat: 0.9.0_WK_IRPT_BCKEND~n and 0.9.0_WK_IRPT_DASHBD~n both parse to 0.9.0_WK_IRPT
+
+```json
+{
+  "id": "IRPT_BCKEND-S240",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-09-30T20:25:00Z",
+  "one_line": "`.tools/to-decomp-ref-lint.py`'s seating check refused (ANNOUNCE mode) every new IRPT_BCKEND worker order of round 27 (TO-IB-pr-271/272/273, slots 98-100) as 'addressed to 0.9.0_WK_IRPT, which already holds open TOs on IRPT_DASHBD', and refused IRPT_DASHBD's round-1 worker orders the same way against IRPT_BCKEND: the worker serials 0.9.0_WK_IRPT_BCKEND~98 and 0.9.0_WK_IRPT_DASHBD~1 are distinct seats of distinct projects, but the lint truncates both to the class 0.9.0_WK_IRPT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO (the seating check's owner; the ONE-PROJECT-PER-TIER-2-SEAT rule it grades is Andrew-direct 2026-08-24)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "to-decomp-ref-lint run at the round-27 cut (2026-09-30 ~19:4xZ) on the four new IRPT_BCKEND orders: 'REFUSED ... SEATING: this NEW task order for IRPT_BCKEND is addressed to 0.9.0_WK_IRPT, which already holds open TOs on 1 OTHER pipeline project(s): IRPT_DASHBD (2 open: IRPT_DASHBD.TO-DB-b-2..., IRPT_DASHBD.TO-DB-b-4...)'; the parked AE order on 0.6.2_AE_PartnerETL~C read 'Legal target'",
+      "the same lint at IRPT_DASHBD's round-1 cut (@51c05d1530) refused TO-DB-b-2/DB-b-4 against IRPT_BCKEND's open worker orders",
+      ".tools/to-decomp-ref-lint.py:73 SERIAL_RE = r'\\b\\d+\\.\\d+\\.\\d+_[A-Z]{2}_[A-Za-z][A-Za-z0-9]*(?:~[A-Za-z0-9]+)?\\b' -- the name segment admits no underscore, so a worker serial whose project code carries one (IRPT_BCKEND, IRPT_DASHBD, MDPF_SECCLASS, NFRA_TRNSPT, ...) is read up to the first underscore",
+      "the lint prints 'mode=ANNOUNCE' and '[gate2] ANNOUNCE mode -- NOT blocking this commit. Arm by creating org\\mcp\\pipeline-gate2.enforce', so both issuances landed (22b99e32fd, 51c05d1530)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The seating check grades ONE PROJECT PER TIER-2 SEAT INSTANCE by the full serial of the addressed seat, so two projects' distinct worker slots never collide.",
+  "world_is": "It grades a truncated class: any two projects whose codes share a prefix before the first underscore (every IRPT_*, MDPF_*, NFRA_*, AMGT_* pair) and both hold open worker orders read as one seat. Today that is noise in ANNOUNCE mode. The day `org/mcp/pipeline-gate2.enforce` is created, every issuance of the second IRPT project with a live worker order in the first is REFUSED, and the lint's own FIX line ('address this TO to a FRESH LANE 0.9.0_WK_IRPT~<letter>') would mint a serial belonging to neither project.",
+  "notes": "Filed off-task at the round-27 cut and not worked. Not overridden and not relied on: both issuances stated the refusal as a parsing artifact in their commit messages. NOT MEASURED: whether other limbs that parse serials (the owned-paths resolver for worker grants, to-check's --assignee substring match) share the regex; the worker-grant resolver admitted WK~97's commits under 0.9.0_WK_IRPT_BCKEND~97 today, so at least that path reads the full serial."
+}
+```
+
+
+## IRPT_BCKEND-S241 -- pr-271's served-boundary reader still reads a missing module as 'allowed nowhere' at runtime; only the build-time per-bundle import check guards it
+
+```json
+{
+  "id": "IRPT_BCKEND-S241",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-09-30T21:30Z",
+  "one_line": "TO-IB-pr-271's served-boundary reader (worker ~98 @c716489be8, served.py _service_allowed_firms) still wraps the lazy `from canonical_profile_reads import` in `except Exception: return []`, so at RUNTIME a missing module reads as 'allowed nowhere' for every service principal, silently. The build-time guard (P27-1-AC2, the import proven in each of the 7 deployed layouts) is the only thing that catches a bundle without the module.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (the issuer of TO-IB-pr-271; disarmed by narrowing the handler so an ImportError propagates or is logged by name, or by recording why AC2 alone suffices)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show c716489be8:infra/aws/lambda/investor-reporting/_authz/served.py lines 920-945: the import at :928 sits inside the try that ends `except Exception:  # noqa: BLE001 -- any failure to read the row restricts everything` / `return []` at :944-945; the caller turns [] into FIRM_BINDING.",
+      "The same shape was the defect ~P caught in Y's own candidate at the cut (103391: served.py in 7 bundles, the reader in 2; correction @de7719d376). pr-271 removes the TRIGGER by carrying the reader and its closure into all 7 bundles (lambda-source-map.json +80) and proving the import per bundle (P27-1-AC2 in checks/r27/p27_1_ac2_deployed_layout.py) -- it does not remove the silent runtime reading.",
+      "Scope of the failure if it ever fires: SERVICE subjects only (x-user-type service), so failing closed is the safe direction for an authorization check; the cost is observability, not exposure."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Y's correction on the candidate (@de7719d376): 'a fail-closed branch never catches an ImportError; a missing dependency is a build defect to surface, not an authorization answer.'",
+  "world_is": "The shipped cut keeps the catch-all over the import and relies on the per-bundle build check. Safe today (the module is in all 7 bundles); a future bundle that drops it would refuse every service principal with FIRM_BINDING and no log line naming the missing module.",
+  "notes": "Filed on the channel rather than by message: off-task for ~Y, the drain and the fix are ~P's. No act is asked of anyone by this row; it does not block pr-271 or W27."
+}
+```
+
+## IRPT_BCKEND-W100-S1 -- The named harness cannot answer the order as written (latest-partition key set, serial windows, 3Y named refusal); a same-composition variant in r27 does.
+
+```json
+{
+  "id": "IRPT_BCKEND-W100-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~100",
+  "surfaced_at": "2026-09-30T20:45:00Z",
+  "one_line": "The named harness r20/adapter_cold_periods.py could not produce the order's answers as written: it probes only accounts present in the LATEST gold partition (0063952925 is absent at 2026-09-28), asks five windows serially (3 parallel runs hit ReadTimeout; one run exceeded 550s), and the deployed code refuses the 3Y window by name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run of r20/adapter_cold_periods.py on the deployed zip (CodeSha256 +h/AH/RY7PK+MLuXyflt+YYzWg+jXHSXTOUBwr0EHbo=, matched by sha256 of the downloaded bytes): 'account ..0063952925: no raw key in 2026-09-28' and UNEXPECTED answers: 1; one four-account run hit timeout 550 (rc 124); three parallel single-account runs returned 'REFUSED UNEXPECTED (ReadTimeoutError ...)' on YTD/1Y/SI at 188-296 s each.",
+      "Variant org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r27/s237_cold_probe.py (same cold composition of the same extracted zip; finds accounts in the 2025-01-10 partition; asks 3Y, SI and a historical YTD 2025-01-01..2025-06-30 one account at a time): 0 UNEXPECTED answers for 0093614544, 0027256463 and 0036184450; output in deliverables/0.9.0_WK_IRPT_BCKEND~100/adapter_cold_probe_output.txt.",
+      "3Y is REFUSED UNSUPPORTED_OPERATION (HoldingsWindowNotRuled: requested window is not a ruled holdings period) for every account: the deployed adapter serves only YTD, QTD, 1Y and SI, so the order's '3Y' answer is this named refusal, recorded verbatim.",
+      "0036184450 SI is REFUSED OBJECT_NOT_COVERED (HoldingsGoldRefused: engine account mapping missing or duplicate) at the latest date; its historical YTD answers a figure."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the existing harness, run on the deployed zip, answers SI and 3Y for 0093614544 and two other S237 accounts.",
+  "world_is": "The harness as written yields a missing-key count for a closed account and read timeouts under load; the deployed code answers 3Y with a named refusal. The same composition, narrowed to the windows that can span 2025-01-10 and to the 2025-01-10 key set, answers every probed window with a figure or a named refusal.",
+  "notes": "No edit to the r20 harness; the variant is a new file in r27 (inside the order's paths)."
+}
+```
+
+
+## IRPT_BCKEND-W100-S2 -- The S237 error is on the serve origin: the perfrp performance leaf carries it in every Since-inception figure it publishes, against comments saying no perfrp key is served.
+
+```json
+{
+  "id": "IRPT_BCKEND-W100-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~100",
+  "surfaced_at": "2026-09-30T20:50:00Z",
+  "one_line": "The S237 error IS on the serve origin: s3://opal-data-portal-v2/platinum/advi/49financial/perfrp_performance_account.json (as_of 2026-09-01, published by d_publisher_port) carries Since-inception window_return figures that include the inflated 2025-01-10 day (0093614544 +69.80% vs +8.47% counterfactual), while the portal's own comments say no perfrp key is served today.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (issuer of the 49F cells; the choice of remedy or withdrawal of the leaf goes to 1.0.0_SA_CTO's ruling on the order's report). Not disarmed here: this worker holds a read-only grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object and get-object, opal-data-portal-v2 platinum/advi/49financial/perfrp_performance_account.json: 1,923,593 bytes, LastModified 2026-09-01T03:16:07Z, metadata written-by d_publisher_port, asof 2026-09-01; window.period SI 2024-07-08..2026-09-01; upstream_pins canonical/twr_daily n_partitions_read 538 of 540 requested, partitions_absent ['2026-08-31','2026-09-01'] (2025-01-09 is never requested: perfrp_emit_core._period_window enumerates lib.trading_calendar days, the CALENDAR_ENUMERATION shape S237's note left open).",
+      "figure_state census of the leaf: COMPUTED_PARTIAL 7,620 / NOT_COMPUTED_INPUTS_PRESENT 997 / NOT_COMPUTED_INPUTS_ABSENT 15 of 8,632 entries. Four S237 accounts, served window_return against the c02 counterfactual (2025-01-10 replaced by (EMV-CF)/BMV-1 with the 01-09 external CF; CF reproduced from flow_ledger date=2025-01-09 at 1,125,000 / 100,000 / -17,000 / -750,000): 0093614544 +69.81% vs +8.47%, 0063952925 +99.79% vs +4.54%, 0027256463 -83.34% vs +28.47%, 0036184450 -12.75% vs +28.06%. Record: deliverables/0.9.0_WK_IRPT_BCKEND~100/perfrp_si_counterfactual.json.",
+      "portal/src/api/endpoints/advisor-intelligence.ts:1647-1651 says 'No perfrp key is served today, so this 404s in every live environment'; cards.ts:15-18 says the Performance card is UNCOMPUTABLE for 100% of accounts at the frontier. The serve bucket holds four perfrp_* keys (performance_account, gainloss_account, gainloss_relationship, book_advisor); the shared advisor router serves platinum/advi/{firm}/ from opal-data-portal-v2 (infra/aws/lambda-edge/_shared/firm-config.mjs:46). NOT MEASURED: an authenticated HTTP fetch of the leaf, and whether the portal route is exposed to a person today."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "portal advisor-intelligence.ts:1647-1651 and cards.ts:15-18 assert the perfrp performance leaf is not served and renders not-computed for every account; S239 scopes the harm to the parity oracle.",
+  "world_is": "A perfrp performance leaf with 7,620 figures is present on the serve origin, and its Since-inception figures carry the S237 error by the calendar-enumeration path (the emitter never loads 2025-01-09, so neither c02's link refusal nor the parity module's neutral day is involved). The deployed Performance adapter does not carry it: it reads the holdings gold only.",
+  "notes": "The leaf is stale (as_of 2026-09-01) and no relationship-level performance leaf exists; whether a schedule republishes it was not read."
+}
+```
+
+## IRPT_BCKEND-W99 -- IB-pr-272 diagnosis rows (NNA partition basis, accounts_v2 client_id, mirror eclipse raise, silver sweep alien)
+
+### IRPT_BCKEND-W99-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-W99-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~99",
+  "surfaced_at": "2026-09-30T20:30:00Z",
+  "one_line": "The served 09-24 NNA partition was built from the 09-25 raw, not the 09-27 run's raw: the last good full run did not rewrite it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/gold/canonical/canonical_nna_2026-09-24.parquet HeadObject LastModified 2026-09-25T12:39:26Z; silver/transactions/2026-09-24.parquet has 0 rows for accounts 866/769/1096 on 2026-09-24; bronze/transactions/2026-09-25,26,27,30.jsonl.gz rows for ids 5885260, 5885261, 5885276, 5885298 read as in the nna section"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the last good full run was chain_full_20260927_113304 with raw bronze/transactions/2026-09-27.jsonl.gz and asks for the raw that produced the served rows.",
+  "world_is": "MEASURED: s3://opal-data-inf/gold/canonical/canonical_nna_2026-09-24.parquet has LastModified 2026-09-25T12:39:26Z (one version), and the 09-24 transactions for the three accounts first appear in the 09-25 silver/raw (createdDate 2026-09-25 04:11). The 09-27 raw already carries the reclassified rows, yet the partition was not rewritten, so the coverage guard first fired on the 09-30 run. The diagnosis compares the 09-25 raw (before) with the 09-30 raw (after); the 09-26 and 09-27 raw equal the 09-30 raw for these ids.",
+  "notes": "ROUND27_DIAGNOSIS.json nna section."
+}
+```
+
+### IRPT_BCKEND-W99-S2
+
+```json
+{
+  "id": "IRPT_BCKEND-W99-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~99",
+  "surfaced_at": "2026-09-30T20:30:00Z",
+  "one_line": "silver/api_dims/accounts_v2 has no client_id column; the order's client_id source is household-only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/silver/api_dims/accounts_v2/snapshot_date=2026-09-30/data.parquet column list printed; accounts 866/769/1096 household_id=63, account_name Carol O Holden"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says to take household_id and client_id from opal-data-inf/silver/api_dims/accounts_v2/.",
+  "world_is": "MEASURED: the 2026-09-30 snapshot's columns carry household_id but no client_id (columns: account_id ... household_id, registration_id, custodian ... rep_id, advisor_of_record_raw). client_id 63 was read from the clientId column of silver/transactions and bronze/transactions for the same accounts (household 63 equals client 63). The record says so in the nna answer."
+}
+```
+
+### IRPT_BCKEND-W99-S3
+
+```json
+{
+  "id": "IRPT_BCKEND-W99-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~99",
+  "surfaced_at": "2026-09-30T20:30:00Z",
+  "one_line": "opal-assets-ingest-mirror raises MirrorRaise ALIEN SURPLUS on its eclipse row on every INF invocation (12 of 12, 09-27 to 09-30), after the orion row has copied",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (route the eclipse_membership_map alien class to the CTO; no worker act in this cell disarms it)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/opal-assets-ingest-mirror streams 2026/09/27-2026/09/30 13:05Z; lambda_function.py:221-268 (_assert_landed_membership alien check); s3://opal-data-assets/eclipse/inflection/bronze/eclipse_membership_map/date=2026-09-24/manifest.json LastModified 2026-09-25T15:40:03Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order asks why fact_positions did not move and expects a failed component in the mirror or silver-orion path.",
+  "world_is": "MEASURED: each daily INF fire (13:05Z plus two async retries) ends [ERROR] MirrorRaise: ALIEN SURPLUS on eclipse/inflection: 2 unexpected key(s) under eclipse/inflection/bronze/ (eclipse_membership_map/date=2026-09-24/manifest.json and membership_map.json, written 2026-09-25T15:40:03Z by a writer other than the mirror). The orion row is processed first and lands its keys, so positions are not blocked, but the function reports failure every day, so a real orion-row failure would be indistinguishable from this standing one.",
+  "notes": "Repair option (c) in ROUND27_DIAGNOSIS.json mirror.repair; the mirror map is 'born with three rows and never grows', so a class for this prefix is a CTO ruling."
+}
+```
+
+### IRPT_BCKEND-W99-S4
+
+```json
+{
+  "id": "IRPT_BCKEND-W99-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~99",
+  "surfaced_at": "2026-09-30T20:30:00Z",
+  "one_line": "The silver-orion sweep verdict is FAIL every day on one alien key, orion/inflection/silver/fact_assets/date=2026-08-06/data.parquet (landed 4941 vs expected 4940)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/meta/conversions/20260930T160043Z-bcc6c8dc.json set_identity_post: expected 4940, landed 4941, matched 4940, alien 1, verdict FAIL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order reads the silver-orion function's logs expecting a failure or a no-op explanation.",
+  "world_is": "MEASURED: the sweep manifests for 09-28, 09-29 and 09-30 (meta/conversions/20260928T160043Z-cb627fe5.json, 20260929T160043Z-6d4e0012.json, 20260930T160043Z-bcc6c8dc.json) each carry set_identity verdict FAIL with missing=0 and one alien fact_assets key; the verdict does not stop conversion and is not the cause of the positions stall. The function's CloudWatch logs carry only START/END/REPORT because the happy path prints nothing; the manifests are the real evidence."
+}
+```
+
+## IRPT_BCKEND-W98-S1 -- _authz/tests/test_unguarded_census.py fails 6 tests at the issuance base (census over 18 published routes: 15 guarded, 3 declared by no entry, the export routes), independent of IB-pr-271.
+
+```json
+{
+  "id": "IRPT_BCKEND-W98-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~98",
+  "surfaced_at": "2026-09-30T18:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "_authz/tests/test_unguarded_census.py fails 6 tests at the issuance base (census over 18 published routes: 15 guarded, 3 declared by no entry, the export routes), independent of IB-pr-271.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cd infra/aws/lambda/investor-reporting && python -m pytest -q _authz/tests -> 6 failed, 138 passed without test_service_allowed_firms.py; with served.py swapped back to HEAD (git show HEAD:...served.py) test_unguarded_census.py alone -> 6 failed, 2 passed. Same 6 with and without the IB-pr-271 edit.",
+      "Deciding assertion: test_every_entry_carries_the_published_route_table_it_serves '3 of 18 in-lane published route(s) are declared by NO entry' (GET /api/sc.../export among them)."
+    ]
+  },
+  "spec_asserts": "The order's criteria run two named scripts; it does not claim the _authz tests directory is green.",
+  "world_is": "MEASURED: 6 pre-existing failures in test_unguarded_census.py at 22b99e32fd, unrelated to the service-principal branch. Not fixed (outside the grant).",
+  "notes": "The new test_service_allowed_firms.py passes alone (7 passed) and inside the whole directory run."
+}
+```
+
+
+## IRPT_BCKEND-W98-S2 -- After IB-pr-271 the served.py `staged_from` pin/sha256 in all 7 bundles no longer describe the worktree bytes; the served move (IB-pr-275) must re-pin them. A service subject whose profile row is NOT FOUND (get_user returns None) is treated as unrestricted, as in ~Y's candidate.
+
+```json
+{
+  "id": "IRPT_BCKEND-W98-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~98",
+  "surfaced_at": "2026-09-30T18:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After IB-pr-271 the served.py `staged_from` pin/sha256 in all 7 bundles no longer describe the worktree bytes; the served move (IB-pr-275) must re-pin them. A service subject whose profile row is NOT FOUND (get_user returns None) is treated as unrestricted, as in ~Y's candidate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json: served.py staged_from rows carry older pins (e.g. irpt-directory-search 9cf6a63d6f, sha cb134acd...), not the edited bytes; the order adds only the canonical_profile_reads/maintained_sources rows.",
+      "served.py _service_allowed_firms: `row = row or {}` then `'allowedFirmIds' not in row` -> None (unrestricted) for a missing row; only a RAISING read fails closed (arm E), as the order specifies."
+    ]
+  },
+  "spec_asserts": "The order says nothing else changes and mirrors ~Y's candidate, which treats an absent row like an absent attribute.",
+  "world_is": "MEASURED on the code: a verified service principal with no profile row keeps today's reach (any registry firm). The stricter reading (missing row -> refuse, as current_authority ACTOR_NOT_FOUND) was not applied.",
+  "notes": "Issuer/CTO may want the missing-row case decided before the served move; the change is one line in _service_allowed_firms."
+}
+```

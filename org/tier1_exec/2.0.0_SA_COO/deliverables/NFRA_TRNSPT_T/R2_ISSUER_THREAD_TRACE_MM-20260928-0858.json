@@ -1,0 +1,54 @@
+{
+  "transcript_id": "MM-20260928-0858",
+  "series": "monday_meeting",
+  "date": "2026-09-28",
+  "no_person": true,
+  "started_utc": "2026-10-01T00:21:22Z",
+  "ended_utc": "2026-10-01T00:21:30Z",
+  "hops": [
+    {
+      "hop": "land-probe",
+      "ran_by": "data/transcripts/scripts/teams/thread_trace.py",
+      "cmd": "boto3 get_object x3 + sha256 vs sidecar",
+      "started_utc": "2026-10-01T00:21:22Z",
+      "ended_utc": "2026-10-01T00:21:24Z",
+      "exit": 0,
+      "s3_keys": [
+        "s3://opal-data-transcripts/teams/transcripts/bronze/monday_meeting/date=2026-09-28/MM-20260928-0858.graph.json",
+        "s3://opal-data-transcripts/teams/transcripts/bronze/monday_meeting/date=2026-09-28/MM-20260928-0858.vtt",
+        "s3://opal-data-transcripts/teams/transcripts/bronze/monday_meeting/date=2026-09-28/MM-20260928-0858.metadata.vtt"
+      ],
+      "summary_line": "LAND-HELD byte-true objects=3 MM-20260928-0858.vtt bytes=59266 sha256=03b2fcb3828d; MM-20260928-0858.metadata.vtt bytes=103636 sha256=8debc1655d4a"
+    },
+    {
+      "hop": "parse",
+      "ran_by": "data/transcripts/scripts/teams/thread_trace.py",
+      "cmd": "python data/transcripts/scripts/teams/parse_silver.py --series monday_meeting --transcript MM-20260928-0858 --apply",
+      "started_utc": "2026-10-01T00:21:24Z",
+      "ended_utc": "2026-10-01T00:21:27Z",
+      "exit": 0,
+      "s3_keys": [
+        "s3://opal-data-transcripts/teams/transcripts/silver/monday_meeting/date=2026-09-28/MM-20260928-0858.parquet"
+      ],
+      "summary_line": "SILVER-WRITTEN unparsed=0 rows=290 speakers=7 key=s3://opal-data-transcripts/teams/transcripts/silver/monday_meeting/date=2026-09-28/MM-20260928-0858.parquet"
+    },
+    {
+      "hop": "read",
+      "ran_by": "data/transcripts/scripts/teams/thread_trace.py",
+      "cmd": "python data/transcripts/scripts/teams/read_meeting.py --series monday_meeting --date 2026-09-28",
+      "started_utc": "2026-10-01T00:21:27Z",
+      "ended_utc": "2026-10-01T00:21:29Z",
+      "exit": 0,
+      "s3_keys": [
+        "s3://opal-data-transcripts/teams/transcripts/silver/monday_meeting/date=2026-09-28/MM-20260928-0858.parquet"
+      ],
+      "summary_line": "MEETING monday_meeting 2026-09-28 turns=290 speakers=7 transcripts=1 [turn_lines=290]"
+    }
+  ],
+  "negative_arm": {
+    "date": "2026-09-27",
+    "result": "NOT-HELD",
+    "cause": "not_in_bronze",
+    "exit": 4
+  }
+}
