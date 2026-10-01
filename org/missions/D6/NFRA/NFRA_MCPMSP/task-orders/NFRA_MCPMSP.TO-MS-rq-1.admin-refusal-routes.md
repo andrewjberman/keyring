@@ -64,6 +64,17 @@ Rows: `INVESTIGATION_v1.Z.md`, id `NFRA_MCPMSP-Z-W4-S<k>`, `disarm_owner` `2.0.0
 Write the instance at `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~4/NFRA_MCPMSP.TO-MS-rq-1.admin-refusal-routes.proof_of_spec.json`.
 Report once, with: the hookup line MS-d-2 must add to `admin_api.py`; the two check lines; the commit hash; any row.
 
+## AMENDMENT 1 (issuer, 2026-10-01 ~00:5xZ, on your row NFRA_MCPMSP-Z-W4-S3)
+
+Your row is right: the entry's `user` is the CALLING identity (the gateway user), never the sender. MS-sg-1 (same round)
+writes `sender_email` and `sender_domain` into the `asker_sender_refusal` entry's `args`. Change the listing to read
+both from `args` ONLY (an entry without them lists `sender_email`/`sender_domain` as null -- never derived from `user`).
+Add a test `test_sender_fields_read_from_entry_args` (an entry whose `user` is the caller and whose args carry a
+different sender: the listing shows the args' sender, and an entry without the args shows null). First `git merge CLOUD`
+in your worktree to pick up this amendment (AC1's check now names the sixth test). Re-run AC1 and AC2, rewrite the
+proof instance, and append the status flip to complete as the LAST status tag only when both pass. The approve body's
+required `widen` field (your note) stands; state it in the module docstring.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-2 issuance (E3). Checks dry-run at base: AC1 FAIL as expected (test absent); AC2 PASS as
