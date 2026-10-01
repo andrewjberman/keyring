@@ -45,7 +45,9 @@ solo_gate() {
 echo "=== hop 7: ONE attempt, one login, the durable identity ==="
 echo "  principal : $WALK_EMAIL"
 echo "  pw source : Secrets Manager $WALK_PW_NAME -> WALK_PW in this process only; never printed"
-echo "  tenant    : $WALK_TENANT   variant: overview (no comparison key)"
+# The variant is live_chain.py's own rule on WALK_COMPARISON_KEYS (none: overview; one: comparison; two or more:
+# multicomp). A later arm's wrapper exports the keys; unset, this is the Overview every window so far ran.
+echo "  tenant    : $WALK_TENANT   comparison keys: [${WALK_COMPARISON_KEYS:-}] (none = overview)"
 echo "  upload    : aapl-vnq-12.03.csv sha256 $(sha256sum "$HERE/../aapl-vnq-12.03.csv" | cut -c1-16)"
 solo_gate || exit 3
 if [ "$PLAN" -eq 1 ]; then
