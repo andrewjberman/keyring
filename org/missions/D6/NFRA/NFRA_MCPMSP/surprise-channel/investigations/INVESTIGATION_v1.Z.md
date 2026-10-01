@@ -666,6 +666,28 @@
     "spec_asserts": "Order item 4 / A1: every gateway suite the release touches plus the asker/admin suites are green; the tool count and the 'ac08 pin' are unchanged.",
     "world_is": "'ac08' names several tests (test_ogz1_ac08 fails at base already); the worker read 'ac08 pin unchanged' as: tool counts and the three failing node ids are identical at base and release. The order does not say which ac08 it means.",
     "notes": "Issuer to say which ac08 the announce must pin if it is not the registered-tool count."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-10-01T14:30Z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~5",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "id": "NFRA_MCPMSP-Z-W5-S4",
+    "one_line": "MS-dn-1 step 3 names 'safe-apply ... apply -target=<Deny resources>'; terraform refuses -target together with a saved plan file, so the apply was run on the saved targeted plan (same -target at plan time) instead. The applied change is the plan the worker read: 1 add, 0 change, 0 destroy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "plan: terraform plan -target=aws_iam_role_policy.gw_firm_deny -out=.scratch/dn1.tfplan (worker worktree): 'Plan: 1 to add, 0 to change, 0 to destroy', one Deny s3:GetObject statement, three platinum/mdpf/<firm>/* resources.",
+        "apply: bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply -no-color -input=false <saved plan>: HALT-GATE passed, 'Apply complete! Resources: 1 added, 0 changed, 0 destroyed.'"
+      ]
+    },
+    "spec_asserts": "Order step 3 / the signed halves: a targeted safe-apply reading exactly 1 add, 0 change, 0 destroy on aws_iam_role_policy.gw_firm_deny.",
+    "world_is": "The apply consumed a saved plan (stricter than -target at apply time: it cannot apply anything the read plan did not show). Private TF data dir at a /tmp mktemp path, writer variables read from the live function environment into TF_VAR_ shell variables and never printed or written.",
+    "notes": "No action needed unless the issuer wants the order text to say 'apply the saved targeted plan'."
   }
 ]
 ```
