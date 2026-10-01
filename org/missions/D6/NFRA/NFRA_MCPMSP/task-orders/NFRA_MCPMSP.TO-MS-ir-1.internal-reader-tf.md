@@ -86,4 +86,4 @@ expected; AC2 FAIL as expected (files absent). Builder names measured at the cut
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
