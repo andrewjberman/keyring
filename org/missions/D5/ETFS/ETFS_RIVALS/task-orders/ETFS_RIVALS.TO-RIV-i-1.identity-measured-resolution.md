@@ -116,7 +116,8 @@ as expected. Handed to slot ~1 after RIV-hp-1 merges (same file, gold_canonical_
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~1 @19b0e3889f (build 2dff1d32c1); proof instance VALID; i-1.AC1 PASS (BASG 33/33 by the measured join, ABNB ambiguity refused, PFOE rivals 100% in key grammar); i1_identity.json fractions 1.0 for BASG/WCMG/TSEL/ETFT/PCLG; W1-S17 disarmed (row S21). Drain suite 225 passed / 2 FAILED: the two RIV-hp-1 tests asserting the removed runtime read (row W1-S22) -- repaired under RIV-g-6 amendment 1.</completion_note>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

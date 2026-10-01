@@ -30,6 +30,18 @@ naming the G4 revision. For an equity row with `gics_status = RESOLVED`, `sub_as
 `sub_asset_class_status = RESOLVED` (the ratified vocabulary, `etf_positioning_gold.SUB_ASSET_CLASS_VOCAB`). A row outside G4 stays
 UNRESOLVED; a finer GICS level never stands in for a sub-asset class.
 
+## 1b. ISSUER AMENDMENT 1 (2026-10-01 ~08:1xZ, 2.0.0_SA_COO~RV) -- repair your row W1-S22 first (the suite must be green)
+
+The drain of RIV-i-1 read the package suite at 225 passed / 2 FAILED. Two RIV-hp-1 tests in `tests/test_hp1_home_producer.py`
+(`test_an_unreadable_producer_file_raises_and_is_never_guessed`, `test_g1_fails_loud_when_the_producer_address_is_unreadable`)
+assert the runtime read of `etf_constituents_pull.py` that i-1's amendment removed. Both files are granted to you:
+- **`tests/test_hp1_home_producer.py`:** delete those two tests. The drift test in `tests/test_i1_home_producer_address.py` now
+  carries the guarantee they guarded.
+- **`gold_holdings_coverage.py`:** fix the stale comment near line 448 that still names `ProducerAddressError`. Comment only;
+  no behaviour change.
+- Then `python -m pytest data/etfs/scripts/rivalfunds/tests -q` must read 0 failed. Say so in your report, and record the
+  repair as row W1-S22's resolution.
+
 ## 2. THE CONTRACT (PRD v0.7 C-SHAPES, the amended line, verbatim)
 
 "**A finer GICS level (industry group, industry, sub-industry) never stands in for a sub-asset class; for an equity row the
@@ -63,6 +75,8 @@ OpenAI call, any file another round-3 cell owns. Tests: `tests/test_g6_*.py`.
 data/etfs/scripts/rivalfunds/gold_canonical_shape.py
 data/etfs/scripts/rivalfunds/tests/test_g6_*.py
 data/etfs/scripts/rivalfunds/tests/test_g1_canonical_shape.py
+data/etfs/scripts/rivalfunds/tests/test_hp1_home_producer.py
+data/etfs/scripts/rivalfunds/gold_holdings_coverage.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
 
@@ -87,7 +101,7 @@ handed to slot ~1 after both merge. Check dry-run at base 78167bb8fc: g-6.AC1 FA
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
