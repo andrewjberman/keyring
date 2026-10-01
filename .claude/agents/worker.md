@@ -68,6 +68,12 @@ row leaves the order open -- a VALID instance is not a met order -- and is your 
 **Scratch:** `<your worktree>/.scratch/` only -- sibling workers share the parent session's scratchpad and overwrite
 each other there (v3's first drain).
 
+**Two traps you cannot see from the call site** (ESTATE_GOVERNANCE-S10; annex rule 22a). (1) `cd X && A & B; C`
+backgrounds the whole `cd X && A` list, so `B` and `C` run in the MAIN workspace, not your worktree: never put `&`
+after a `cd ... &&` chain whose later commands depend on the `cd`. (2) A COPY of a comp-tool run from a scratch
+directory, or exec-ed in-process, fail-softs on `__file__` and returns clean-looking false results: run the tool
+at its own path in your worktree.
+
 **Never:** edit outside the task order's `<paths>` and your deliverables folder -- `<paths>` IS your write grant
 (the lane gate admits a worker to exactly the paths its order names; a path you need that it lacks is a BLOCKING
 row on that criterion, never an override); widen the order or fix a neighbouring defect; report mid-task-order.
