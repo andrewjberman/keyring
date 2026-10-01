@@ -1524,6 +1524,27 @@
     "spec_asserts": "Row Z-S5: GQGU has no reader; Bloomberg coverage UNMEASURED.",
     "world_is": "An issuer adapter for GQGU (a second entry in collector_issuer's adapter table, the same parser) plus an import of the 305 archived days would put GQGU on the page with history back to 2025-07-14. Bloomberg's coverage of GQGU remains UNMEASURED.",
     "notes": "Not on the round-2 analysis's enrichment list, so not cut by the issuer; carried to 1.0.0_SA_CTO~Z for placement (a small cell)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-01T07:10Z",
+    "one_line": "G4 px_close/total_return_index come from a BDP reference pull (PX_LAST, DAY_TO_DAY_TOT_RETURN_GROSS_DVDS) that Bloomberg answers as of the pull moment, not as of the partition `date`; the cell names no override, so the producer stamps as_of = date and is correct only when the vehicle leg runs on the trading day itself.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py `_market_pull` calls `_blp_reference_data(batch, MARKET_FIELDS)` with no overrides; integrations/bloomberg/mcp/blp_client.py `reference_data` is the BDP-equivalent (current static/reference values).",
+        "Not exercised live (the Terminal is signed out); a pull for a past `date` would label current values with that date. Nothing in this cell backfills G4."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-s-4: G4 carries `px_close` and `total_return_index` per `date`, written by `market` wired into `daily` after the dividends pull.",
+    "world_is": "Correct when the daily leg runs after the close of `date`; a late or replayed run (or a historical `date`) would write today's PX_LAST under the older partition. A historical-price request (HistoricalDataRequest, or a PX_LAST/DAY_TO_DAY_TOT_RETURN overrides set to the date) is the other shape and is not in this cell.",
+    "notes": "For RIV-d-4's first live run (check the run date equals `date`) and the round-3 analysis (whether G5 or the page ever reads G4 price for a past date). disarm_owner 2.0.0_SA_COO~RV if it arms."
   }
 ]
 ```
