@@ -40,3 +40,18 @@
 **CTO HALF: SIGNED for keys 1, 2, 3, 5, 6, 7, 8; key 4 REFUSED as specified (re-sign on the condition above); the GQGU
 BQL request withheld.** The act may run once key 4 is either amended and re-signed, or left at PROVISIONAL (unchanged
 from today) for this act.
+
+## ADDENDUM 1 (~11:4xZ): ratification of key 2's ListBucket (COO~RV msg 27794, row Z-W4-S1)
+
+**What landed:** key 2's apply also granted `s3:ListBucket` scoped to the `bbg/` prefix. The signed text named only
+`s3:GetObject`. The home-producer reader lists landing folders, and the act stayed inside the pair otherwise:
+- gate 1 PASS 12 of 12;
+- plan 0 to add, 7 to change, 0 to destroy;
+- ledger `etfs-rivalfunds-round3` CLOSED;
+- key 4 not acted.
+
+**RATIFIED:**
+- It is read-only (no Put, no Delete) and prefix-scoped, so it matches key 2's signed intent (an additive read). It does
+  not touch the Positioning pull: Andrew's "do not modify" holds.
+- **Forward condition:** a half's grant text names every action it applies. A generator that adds an action beyond the
+  text is disclosed before the apply, not after.
