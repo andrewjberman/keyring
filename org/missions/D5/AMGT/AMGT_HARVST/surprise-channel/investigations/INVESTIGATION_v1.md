@@ -5049,6 +5049,73 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Fix is the issuer's: add the 21 names to the gold securities file (crosswalk-resolved keys) and rebuild gold; the census then maps them with no code change. Also: the census writes LF-only bytes, because AC2's `$`-anchored regexes fail on Windows CRLF."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S11",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:05Z",
+      "one_line": "HVST-af-2 AC2 not met: no challenge was met AND passed under the input-source monitor inside the 10-request-per-publisher cap (bbg met a PerimeterX press-and-hold 403 once, unhandled by the run-1 driver, then none in 4 more attempts; wsj and barrons met no DataDome slider in 2 runs each).",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Face s2: drive bbg's blocked route until its press-and-hold appears and solve it; <=10 requests per publisher; AC2 needs one publisher with challenge_met != none, passed true, a path, solved_at inside a window whose hardware_input_events is 0.",
+      "world_is": "Five runs, each under its own InputSourceMonitor, hardware_input_events 0 in all five (run 1: 11:51:33Z-11:53:54Z, injected 12; runs 2-5 injected 0). bbg: run 1 in-tab GET /sitemaps/news/2026-10.xml = 403 bloomberg_press_and_hold (driver had no solve step for it); run 2 sitemap 2026-10 = 200, 0 boeing slugs; run 3 raised 'Locator.count: Frame was detached' (see W91-S12); runs 4 and 5 navigated sitemaps 2026-9 and 2026-10, no control, 200-shaped XML. bbg requests: 2+2+3+2+1 = 10, the cap, so the budget is spent. wsj/barrons: run 1 and run 2 each homepage + sign-in route + account check (logged in, 200): no slider; 3+3 = 6 of 10 used each. af2_challenged_pass.json carries bbg passed false with the 403 signature; AC2 reads 'CHALLENGED PASSES: 0' and FAIL.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run1_detail.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run3_detail.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run5_detail.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The press-and-hold is intermittent, not deterministic on a given route: it appeared on the first bbg fetch after idle (run 1) and not on later ones. A cut that needs a met challenge needs either a budget for a retry loop across time or a way to provoke it that is not a search. The instrument itself is proven (seam: injected 1, hardware 0; AC1 passes)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S12",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:05Z",
+      "one_line": "verification.solve() against a live bbg page raised 'Locator.count: Frame was detached' once (run 3, 11:58:38Z-11:59:02Z): the control lookup in _press_and_hold_box / _control_visible iterates page.frames and calls count() with no guard against a frame that detaches mid-iteration.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "solve() locates the press-and-hold control from the page's DOM and holds it (round 32 passed it live).",
+      "world_is": "Run 3's driver reached a 403 on the bbg sitemap fetch and called V.solve(ts,'bbg',sig,route=...,monitor=mon): solve's first attempt found no control, navigated this page to the route, and the next _press_and_hold_box read raised playwright Error 'Locator.count: Frame was detached' while the navigation was settling. The traceback was not kept (my driver caught and recorded only the message); the line is INFERRED from the message and from solve's call order. Runs 4 and 5 guarded the check with a retry and did not reproduce it.",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run3_detail.json",
+          "lib/opal_data_harvest/verification.py _press_and_hold_box/_control_visible/solve"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not fixed here: the face limits verification.py to the optional monitor and solved_at. A guard around the frame walk (catch the Error, wait, retry once) is the candidate."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S13",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:05Z",
+      "one_line": "The hook counted 12 injected OS input events in one 140 s window (run 1) and 0 in four others; hardware stayed 0 in all five. Source of the 12 is unidentified (harness input, another seat's tool, or the browser), and Playwright/CDP input is invisible to the hook by design.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "W91-S8: the last-input clock ticks with no human present, so it cannot tell a human from injected input.",
+      "world_is": "Run 1 window 2026-10-01T11:51:33Z..11:53:54Z: hardware_input_events 0, injected_input_events 12 (the seam run proved the hook counts a SendInput move as injected 1, hardware 0). Runs 2-5: injected 0. 'hardware 0' is a claim about OS input devices only; it says nothing about CDP events the browser dispatches internally.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run1_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_seam.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Confirms W91-S8's premise that injected input occurs on this box; the instrument separates it from a hand."
     }
   ]
 ```
