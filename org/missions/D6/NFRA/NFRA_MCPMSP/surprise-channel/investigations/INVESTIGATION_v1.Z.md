@@ -488,6 +488,26 @@
     "spec_asserts": "TO MS-c-1 item 1: call_sites_scanned counts boto3.client('s3'...) and .get_object( sites; known readers are three.",
     "world_is": "A narrower count would omit the HEAD and list reads that the same IAM grants permit. The sprint_view reader reads daily-reports/, which is not firm data, so it falls outside the Deny's keys.",
     "notes": "The Deny keys platinum/mdpf/{firm}/* do not touch daily-reports/*."
-  }
+  },
+{
+  "project": "NFRA_MCPMSP",
+  "fabric": "site-z",
+  "surfaced_at": "2026-09-30T15:00Z",
+  "id": "NFRA_MCPMSP-Z-W4-S3",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~4",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "MS-rq-1: the asker_sender_refusal audit entry carries no sender_email/sender_domain args (audit.py allowlist = tid, oid, display_name, chat_id, reason); admin_refusals derives them from the record's `user` field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~MS",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/audit.py allowlist line for asker_sender_refusal; tests/test_mcpmsp_asker_firm.py asserts args equals exactly those five fields."
+    ]
+  },
+  "spec_asserts": "TO MS-rq-1 item 1: each listing entry carries sender_email and sender_domain.",
+  "world_is": "The stored entry has `user` (the calling email) but no sender args; the listing fills sender_email from args when present else `user`, and sender_domain from the email. Correct if `user` is the sender; if it is the gateway caller identity, the C4 sender fields are wrong."
+}
 ]
 ```
