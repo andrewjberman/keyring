@@ -81,14 +81,18 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
    Inflection caller; W6-S2 on the parked AE order).
 8. **Ruling 6, row W11-S1: BLOCKED on a file grant (asked 08:56Z).** The exact contract-version pin replaces the
    version floor and the superset check in `_shared/tests/test_classified_by_v2.py`, outside this seat's grant.
-9. **The MODEL_ROWS half: NOT signed; BLOCKED on a writer (asked of the CTO 09:0xZ).** Ruling 1's two conditions are
-   met (filter @89c304eaeb; census `R7_MODEL_READER_CENSUS_20261001_0730Z.json` reads `MODEL-READER-TOLERATED`).
-   Addendum 1 of the half records three things the worker's half did not: the act has NO writer (the model runner
-   has no write path); the rows REPLACE a class the bd-securities fallback serves today on 25 of 26 tickers, and
-   the class changes on 252,658.31 USD at 49 Financial, -58,227.84 USD at Cottonwood and 1,112,344.36 USD at
-   Inflection (Holdings builds; Black Diamond gold not measured); and the rollback by 26 deletes needs Andrew's
-   word. Next: the writer with a dry run, the dry run naming exactly the 26, a census immediately before, sign,
-   then the CTO's half.
+9. **The MODEL_ROWS half: addendum 2 SIGNED by this seat; the CTO half is OWED; nothing written.** Ruled in three
+   sets (CTO batch 75): 14 rows are written -- nine whose class stays (set a) and five whose class moves with a
+   named peer row (set b: USRT, CSRSX, VCMDX, PFUNX, CAIBX) -- and twelve are withheld (the eleven low-confidence
+   ones and O). The writer is `yang_pipeline/write-model-rows.py` @2c2358e104 (dry run by default, conditional put
+   only, no overwrite, no delete; 11 tests) and the shared put now carries the two model fields (batch 78; a
+   scheduled item is identical before and after, 4 tests). Live dry run 10:04Z: `named=14 plan=14 refused=0`.
+   Served moves: set (b) moves a class on 325,021.86 USD at 49 Financial and 706,570.47 USD at Inflection; set (a)
+   changes the SUB class to the canonical word on 5,801,070.93 USD; Black Diamond gold gains a class on 7 held
+   tickers (976,963.75 USD). Next: the CTO's half, then ledger `secclass-model-rows-m-20261001`, a census
+   immediately before, the write, acceptance at the next Holdings publication and the next gold fire.
+   The twelve withheld tickers each need a seed row under its own half or stay on the fallback (O and PCOFX are
+   served a wrong class today, row S7).
 
 10. **Queued by 1.0.0_SA_CTO 103641 (rulings batch 72 items 1-7 @65417358df): MDPF_HEALGAP cell 1, the gold catch-up
     step.** Not this project; it follows the round-6 items above. A served move with both halves, under its own FAST
