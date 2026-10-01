@@ -5489,6 +5489,93 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Fix is the issuer's: strip ANSI in the check, or pass --color=no / -p no:colour. The drain's AC2 re-run should run without FORCE_COLOR until then."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S11",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: the ft driver's per-job invocation (--no-sign-in) refuses a dead stored session, so a restarted ft driver makes 1 fetch and stops.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order step 2: run the collector as backfill_driver.py invokes it (run --harvest-grammar --retrieval-mode backfill --floor --new-only --no-sign-in --security-json --publishers ft --max-jobs 1).",
+      "world_is": "At 2026-10-01T18:37:53Z that exact invocation on ASML ended status sign_in_refused after 1 fetch (detail '401 under --no-sign-in: no refresh'; the saved session file from 17:26Z was already dead). The same job without --no-sign-in read astn/ft/credentials, renewed once through ft_harvest_session.py (reauth_succeeded 18:42:18Z, network_auth_corroborated true) and ran. The ASML job in ah3_ft_runs.json therefore ran WITHOUT --no-sign-in, by the lead's word 'credentials only via the existing renewal path'.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/runs/20261001T183753Z-ft-a8cddb0534.json",
+          "lib/opal_data_harvest/backfill_driver.py:178-179"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "When the ft driver is restarted every ft job begins on the same dead saved session and will refuse at fetch 1; the driver needs either a pre-job renewal or a first-job sign-in allowance. Not changed here (backfill_driver.py is outside the face's paths)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S12",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: an ft session dies again about 20-30 minutes after each renewal; the worker renews once per job, so the job ends auth_failed_after_refresh and ft cools down 60 minutes.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Fix 1: barrier on a logged-out page raises AuthExpired and the worker renews once; the renewed session then serves the rest of the job.",
+      "world_is": "ASML job 20261001T183929Z-ft-da3e1ebf4a: renewal at 18:42:18Z, 63 fetches (23 stored, 1 locked), then auth_failed_after_refresh at 19:03:20Z (~21 min after the renewal) with the cooldown set to 20:03:20Z (60 min; the prior 17:37Z cooldown was 15 min). The prior seat's 17:04Z job did the same after ~33 min (48 stored of 77). The cause of the second death (server-side session lifetime, a concurrent login, or the bundle cookie replaced into a jar that then re-expires) is NOT diagnosed here: the barrier is read correctly, the session is not kept alive.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/runs/20261001T183929Z-ft-da3e1ebf4a.json",
+          "runs/20261001T170405Z-ft-fd5eb3cc00.json (status auth_failed_after_refresh)",
+          "sqlite cooldown row ft until 1790885000 reason auth_failed_after_refresh"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Each ft job yields about 20-30 minutes of fetches per renewal, then ft is dark for an hour; the ASML name is not finished (144 previously stored, 129 skipped, more unfetched listing hits remain). A depth round for ft needs the renewal cadence or the session lifetime measured; it is a different root from the two fixed here."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S13",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: only ONE ft job ran: job 2 would start after the 60-minute cooldown (20:03Z) and breach the 90-minute cap; 'most ft listing hits' is not a stored number.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order step 3: run the collector on 2 ft names chosen by the most ft listing hits; the lead's cap is 90 minutes for the two jobs, stop after job 1 if job 2 would exceed it.",
+      "world_is": "Job 1 (ASML, from 18:37Z) ended 19:03Z in cooldown to 20:03:20Z; a job 2 started then needs ~20+ minutes and would end past 20:08Z, so it was not run (the waiting launcher was killed, 0 ft processes and no Chrome left). Per-name ft listing-hit counts are not persisted anywhere readable offline (listing rows are per query page, not per hit); ASML was chosen as the name with 522 held keys and 416+ fetches, the next name in driver order (Adobe) was the planned job 2. ah3_ft_runs.json carries one job, 63 fetches, which clears AC2's own floor of 40.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/wk-hvst-r32-92/.scratch/job2.out ('COOLDOWN wait 3351 s')",
+          "progress.sqlite3 cooldown ft"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Recorded so the issuer reads the run as 1 of 2 names; a second name is owed when the cooldown clears."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S14",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: the post-fix locked share (1 of 63) is measured over fetches AFTER 49 Premium teasers were skipped; AC2 cannot see the skips, so it grades the unlocked share of what was fetched, not coverage.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AC2: locked = fetch outcomes carrying publisher_did_not_unlock_body, over at least 40 body fetches.",
+      "world_is": "Job da3e1ebf4a: 63 fetches, 23 stored, 39 rejected (34 company_not_mentioned), 1 publisher_did_not_unlock_body; skipped_keys 129 = 80 known_urls + 49 premium_tier. The Premium skips are persisted only as skipped_keys[].why inside the job record (the run_records counts carry skipped_as_held 129 with no split). So the locked share falling from 77% to 2% is the logged-in session (cause 1) plus not fetching Premium (cause 2, a coverage limit the TO names); the 49 Premium articles stay unreachable.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "runs/20261001T183929Z-ft-da3e1ebf4a.json skipped_keys",
+          "ah3_diagnosis.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Stated plainly in the diagnosis; the issuer's preflight adversary ('a fix that just stops fetching locked pages') applies to cause 2 by the TO's own design."
     }
   ]
 ```
