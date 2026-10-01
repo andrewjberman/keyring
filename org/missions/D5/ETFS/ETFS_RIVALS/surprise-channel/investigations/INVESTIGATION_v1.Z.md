@@ -1502,6 +1502,28 @@
     "spec_asserts": "C-PEER-GROUPS: the PFOE group includes GQGU; FWD-1 shows each group's funds.",
     "world_is": "GQGU has no source in the pipeline. The NO-BLOOMBERG-ROUTE constant is an INFERENCE from a census that never names its request; a single scripted BQL holdings request for GQGU at the next Terminal sign-in measures it.",
     "notes": "Filed at the round-3 cut per the round-2 analysis ruling 10. Not cut this round (not on the analysis's enrichment list); the measurement rides RIV-d-4's signed-in run if the Terminal is up."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T06:18Z",
+    "one_line": "Correction to row Z-S5: GQGU HAS a measured issuer route -- the same SEI filepoint format as BASG (gqg.filepoint.live SEI_GQG_Tradedate_Holdings_<MMDDYYYY>.txt) -- with 305 archived daily captures in the PFOE census; its absence is only the missing collector_issuer adapter, not a missing source.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".runtime/amgt-reconn-daily-census-20260929/gqgu/: 305 dated *.json sidecars + 305 *.txt captures (2025-07-14 .. 2026-09-28); 2025-07-14.json http_status 200, rows 35, weight_sum 100.02, date_matches true, url https://gqg.filepoint.live/assets/data/SEI_GQG_Tradedate_Holdings_07142025.txt.",
+        "2025-07-14.txt header date|fund_id|fund_name|fund_cusip|fund_ticker|security_group|...|percent_of_net_assets -- the column set silver_issuer.STRING_COLS / SOURCE_COLS already type for BASG.",
+        "Z-S5 read only the census root *.json (Bloomberg BQL) and missed the gqgu/ issuer folder."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-S5: GQGU has no reader; Bloomberg coverage UNMEASURED.",
+    "world_is": "An issuer adapter for GQGU (a second entry in collector_issuer's adapter table, the same parser) plus an import of the 305 archived days would put GQGU on the page with history back to 2025-07-14. Bloomberg's coverage of GQGU remains UNMEASURED.",
+    "notes": "Not on the round-2 analysis's enrichment list, so not cut by the issuer; carried to 1.0.0_SA_CTO~Z for placement (a small cell)."
   }
 ]
 ```
