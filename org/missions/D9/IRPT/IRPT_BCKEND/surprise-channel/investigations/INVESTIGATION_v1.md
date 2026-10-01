@@ -14186,3 +14186,86 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not closed by this act (CTO half item 7): a fresh Cottonwood request made while a one-use vendor plan is ARMED still computes a BLACK_DIAMOND figure once; arming is its own act under Andrew's vendor word. The docstring of RetainedVendorFigureRefused still names DEPENDENCY_UNAVAILABLE (CTO half item 8), corrected at the file's next change. The Performance tab's wording of OBJECT_NOT_COVERED is 2.0.0_SA_COO~D's."
 }
 ```
+
+## IRPT_BCKEND-S250 -- The coerced Inflection positions file for 2026-07-02 is NOT equal to its raw file: 4 of 59 columns differ in 9 of 33,618 rows (isRebalance and modelName on 7 rows, productType and productSubType on 2). Every other compared date is equal on all 59. Nobody has read why.
+
+```json
+{
+  "id": "IRPT_BCKEND-S250",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T12:22:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The coerced Inflection positions file for 2026-07-02 is NOT equal to its raw file: 4 of 59 columns differ in 9 of 33,618 rows (isRebalance and modelName on 7 rows, productType and productSubType on 2). Every other compared date is equal on all 59. Nobody has read why.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO (placement: the coercing producer in opal-data-inf bronze/positions is not owned in this channel; the INF raw producers are the AE ingest's)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/coerced_positions_equality.py @2a3c7e0feb, run 2026-10-01 11:3xZ on 2026-06-29, 2026-06-30, 2026-07-02 (rows matched on id): 06-29 and 06-30 equal on 59 of 59 columns; 07-02 unequal on 4 -- e.g. id 13523 raw isRebalance True, modelName 'Opal Ultra Short Term' against coerced False and ''; id 36414 raw productType 'Stock/ETF' against coerced 'Mutual Fund'.",
+      "the same instrument on 2026-08-04, 08-05, 08-07, 09-26, 09-27, 09-30: equal on 59 of 59 columns, 35,219 to 36,110 rows each.",
+      "opal-data-inf bronze/positions/: 2,344 dates carry both forms, 7 only the coerced one (listed 10:57Z)."
+    ]
+  },
+  "spec_asserts": "CTO rulings batch 81 item 2: a coerced date is admitted only if the coerced and raw forms are equal row for row on its own neighbouring dates. Batch 81 half item 7 on the admission packet: the four differing columns are one row for the round.",
+  "world_is": "MEASURED: one of nine compared dates differs, in attribute columns only (no price, share or value column differs). NOT MEASURED: why -- two pulls at different times against a vendor that edited the rows in between, or a different coercing step in early July. Consequence taken: 2026-07-01 is not admitted and stays a gap the producer links across.",
+  "notes": "Read-only finding; no act. If the cause is two pulls minutes apart, the coerced form is a different READ of the vendor, not a coercion of the same bytes, and equality on other dates is a coincidence of quiet days."
+}
+```
+
+## IRPT_BCKEND-S251 -- The ETF ownership producer's source says it writes a per-date staleness determination to orion/inflection/meta/dedup/ on every run; that prefix holds 0 objects, and the live function's code is dated 2026-08-11.
+
+```json
+{
+  "id": "IRPT_BCKEND-S251",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T12:22:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The ETF ownership producer's source says it writes a per-date staleness determination to orion/inflection/meta/dedup/ on every run; that prefix holds 0 objects, and the live function's code is dated 2026-08-11.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO (placement: inf-etf-ownership-daily and the ETFS daily series are the ETFS directive's, which the register places at site Z; not this workstream's)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/lambda_function.py lines 22-46 at HEAD: 'the determination is WRITTEN ... to opal-data-assets/orion/inflection/meta/dedup/date={date}.json on every run'.",
+      "s3 list of opal-data-assets orion/inflection/meta/dedup at 2026-10-01 12:0xZ (paginated): 0 objects; orion/inflection/meta/ holds only conversions/ and backfill-status.json.",
+      "lambda get-function-configuration inf-etf-ownership-daily at 12:0xZ: CodeSha256 Sibchin3yNut..., LastModified 2026-08-11T10:29:39; its environment carries both the legacy keys (INF_BUCKET, HOLDINGS_PREFIX) and the new ones (ASSETS_BUCKET, FACT_POSITIONS_PREFIX, META_DEDUP_PREFIX); opal-data-etfs daily/inflection/ carries a slice per day through 2026-09-27."
+    ]
+  },
+  "spec_asserts": "The producer's own docstring: every processed date gets a DUPLICATE / SUSPECT / CLEAN determination written beside the source, 'extending the same historical ledger the retroactive sweep populated'.",
+  "world_is": "MEASURED: no determination object exists under the declared prefix. NOT MEASURED: whether the deployed bytes are the dedup-aware version (the deployed zip was not compared with the source), whether determinations are written somewhere else, and whether the daily slices carry a verdict.",
+  "notes": "Found while naming the second reader of fact_positions for the coerced-positions admission packet. This workstream's own every-day grading (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/HOLDINGS_SOURCE_DATE_BASIS_READ_20261001.md) found three partitions that hold no single close (2026-05-12, 2026-07-16, 2026-08-11), which is the SUSPECT class that ledger was meant to record."
+}
+```
+
+## IRPT_BCKEND-S252 -- Cottonwood's Black Diamond holdings partitions hold their own date's close for most securities but a minority, up to 6 percent of the securities that moved, carry the PRIOR day's close; the minority is not explained and the declared basis is one value per partition.
+
+```json
+{
+  "id": "IRPT_BCKEND-S252",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T12:22:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Cottonwood's Black Diamond holdings partitions hold their own date's close for most securities but a minority, up to 6 percent of the securities that moved, carry the PRIOR day's close; the minority is not explained and the declared basis is one value per partition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (this workstream's declaration; un-parks when Cottonwood's holdings gold is to be served)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/partition_close_anchor.py on 10 partitions 2026-06-10..2026-09-25 against the Schwab own-date anchor: own-date 326 of 351 to 540 of 543 of the securities whose close moved; prior-day 0, 1, 0, 22, 1, 21, 19, 18, 1, 19 per day; neither 2 to 25.",
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json @de3d423dce: blackdiamond_z09 partition_close is one OWN_DATE segment, basis inferred (10 of 81 partitions read)."
+    ]
+  },
+  "spec_asserts": "sources.json 1.2: a partition holds one close. PRD v0.19 ruling 4: the Cottonwood price is Market Value over Units.",
+  "world_is": "MEASURED on 10 of 81 partitions: on five of the ten days 3.4 to 5.9 percent of the moved securities (18 of 526 to 22 of 371) are priced at the prior day's close. For those securities the holdings return is dated one day late on those days. NOT MEASURED: which securities (a class that prices late, such as funds whose value posts after the vendor's cut, is the likely one) and the other 71 partitions.",
+  "notes": "Nothing serves the Cottonwood holdings gold. Before it is served: grade every partition with partition_close_anchor_sweep.py --source blackdiamond and name the lagged class."
+}
+```
