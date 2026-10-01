@@ -81,6 +81,8 @@ Every opened timeline day (the `--day` step, the newest day and the first event)
 
 `--holdings-aggregates` reads every holdings answer the walk receives and writes `holdings-aggregates.json`: per selection, how many served `security_aggregates` items equal the sum of their ACTUAL member nodes (basis OBSERVED or ASSIGNED), how many equal the page's own fold (every security node of that id, a model's TARGET nodes included), how many page identities have no served aggregate, and whether `class_totals` plus the remainder equals the custody total. Counts only: no client name and no figure is written.
 
+`--performance-state` (with `--client`) waits on the Performance tab for the tab's STATE rather than for time: a worded refusal (`[data-slot="reporting-refusal-words"]`, state `refusal`), an answer (`[data-slot="reporting-body"]`, state `body`), or neither within `PERFORMANCE_STATE_CEILING_MS` (45,000 ms; state `ceiling`, its own result). It shoots the state as step `<client>-performance-answered` and writes `performance-state.json` with the state, the wait in ms, the refusal's own sentence and whether the code disclosure stands open. No client figure is written. It issues no request of its own.
+
 Every `--client` search also records when the typed search ANSWERS (the box stops reading "Loading"), up to `SEARCH_ANSWER_CEILING_MS` (30,000 ms), in `search-timings.json`; the 2.5 s screenshot stays what a person sees first, and a slower answer gets its own `search-<client>-answered` step.
 
 The skill runs:

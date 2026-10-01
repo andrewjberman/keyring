@@ -46,6 +46,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--model-scope') opt.modelScope = true
   else if (a === '--open-request') opt.openRequest = argv[++i]
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
+  else if (a === '--performance-state') opt.performanceState = true
   else if (a === '--no-login') opt.login = false
   // Extra wait after every settle, for a read whose answer lands after networkidle (a retained Performance
   // reopen fires after the account switch, so a 1200 ms settle screenshots "Loading"). Default 0: unchanged.
@@ -568,6 +569,28 @@ const modelScopes = []
 // nodes included. Counts only; no name and no figure of any client is written. `class_totals` plus the remainder is
 // checked against the custody total. One record per distinct selection path.
 const holdingsAggregates = []
+// ---- --performance-state: the Performance tab's STATE, not a fixed sleep (DSGN_IRPTV1 FAST item 57) ----------------
+// A performance answer can land after the 2,500 ms settle, so the tab's first shot reads "Loading" (walk
+// 20261001T083028Z: three of three). The tab marks its two finished states: `[data-slot=reporting-refusal-words]` (a
+// worded refusal) and `[data-slot=reporting-body]` (an answer). The wait polls them every 250 ms and returns the first
+// seen, or 'ceiling' -- its own result, never graded as an answer. Recorded: the state, the wait, the refusal's own
+// sentence (page copy, no client data) and whether the code disclosure stands open. No figure of any client is written.
+const PERFORMANCE_STATE_CEILING_MS = 45000
+const performanceStates = []
+async function waitForPerformanceState(page) {
+  const tab = '[data-slot="reporting-tab"]'
+  const t0 = Date.now()
+  for (;;) {
+    if (await page.locator(`${tab} [data-slot="reporting-refusal-words"]`).count().catch(() => 0)) {
+      const message = ((await page.locator(`${tab} [data-slot="reporting-refusal-message"]`).first().innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim()
+      const codeOpen = await page.locator(`${tab} [data-slot="reporting-refusal-code-disclosure"][open]`).count().catch(() => 0)
+      return { state: 'refusal', waited_ms: Date.now() - t0, message, code_disclosure_open: codeOpen > 0 }
+    }
+    if (await page.locator(`${tab} [data-slot="reporting-body"]`).count().catch(() => 0)) return { state: 'body', waited_ms: Date.now() - t0 }
+    if (Date.now() - t0 >= PERFORMANCE_STATE_CEILING_MS) return { state: 'ceiling', waited_ms: Date.now() - t0 }
+    await page.waitForTimeout(250)
+  }
+}
 const seenHoldingsPaths = new Set()
 function readHoldingsAggregates(p, j) {
   const d = j && j.data
@@ -912,6 +935,12 @@ try {
             await tabs.nth(i).click().catch(() => {})
             await settle(page, 2500)
             await checks(page, `${client}-${name}`)
+            if (opt.performanceState && /performance/.test(name)) {
+              const got = await waitForPerformanceState(page)
+              performanceStates.push({ client_chars: client.length, ceiling_ms: PERFORMANCE_STATE_CEILING_MS, ...got })
+              log('PERFORMANCE STATE', JSON.stringify(performanceStates[performanceStates.length - 1]).slice(0, 600))
+              await checks(page, `${client}-performance-answered`)
+            }
             // Drill FIRST, on the tab's default view: the explore step below changes selects and opens popups.
             if (/holdings/.test(name)) {
               const p = await drill(page, '[data-slot="holdings-tab"]', `${client}-holdings`)
@@ -969,6 +998,7 @@ try {
   if (searchTimings.length) writeFileSync(path.join(OUT, 'search-timings.json'), JSON.stringify(searchTimings, null, 1))
   if (openedRequests.length) writeFileSync(path.join(OUT, 'analysis-request.json'), JSON.stringify(openedRequests, null, 1))
   if (holdingsAggregates.length) writeFileSync(path.join(OUT, 'holdings-aggregates.json'), JSON.stringify(holdingsAggregates, null, 1))
+  if (performanceStates.length) writeFileSync(path.join(OUT, 'performance-state.json'), JSON.stringify(performanceStates, null, 1))
   writeFileSync(path.join(OUT, 'lead-lists.json'), JSON.stringify({ schema_version: '1.0', tool: 'ui-walk', stamp, lists: leadLists }, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')
   writeFileSync(path.join(OUT, 'guard.tsv'), guard.join('\n') + '\n')
