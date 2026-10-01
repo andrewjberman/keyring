@@ -43,7 +43,7 @@ Trace: `org/tier1_exec/4.0.0_SA_CRO/deliverables/TAXSMA_MODEL_PORTFOLIOS_END_TO_
 | TX-c-1 / TX-c-3 portal accessor + page caption | CANDIDATE portal 370d2fe8 on origin/DEV | 10 bun arms; tsc 0; no signed-in render (no served Tax yet) |
 | TX-c-2 tree leaf | NOT STARTED (component under the DSGN_IRPTV1 lease; the tree already renders the tax member's served amount) | |
 | TX-r-1 backend release, Tax off | APPLIED 2026-10-01T02:15:52Z (Gold) and 02:20:56Z (publisher); ledger `mdpf_taxsma-tx-r-1` OPEN, 5 of 6 legs closed | both re-plans No changes; DEPLOYED before/after `qa_local` invokes both green 16 of 16, body diff 16 of 16 process-time only, 0 business-different; leg V2 = the 13:50Z publisher run, read by `deliverables/4.0.0_SA_CRO/probes/tx_r_1_served_delta.py compare deliverables/4.0.0_SA_CRO/tx_r_1_served_baseline.json` |
-| TX-r-2 Gateway release, capability off | REQUESTED OF SITE Z (Andrew-direct 02:0xZ: gateway releases are site Z's) | request file above; includes the two `.env` lines the deploy script lacks (row S11) |
+| TX-r-2 Gateway release, capability off | **NO OWNER since 04:00Z, Andrew's call.** Site Z will not act on the request (relay 103435: Andrew to `1.0.0_SA_CTO~O` ~03:4xZ, "do not touch any MDPF_TAXSMA, that is out of your scope"); his 02:0xZ word keeps gateway releases at site Z | the route and its module are on origin/CLOUD, so any ordinary Gateway deploy carries them capability-off; the deploy script still lacks the two `.env` lines (row S11), and activation needs one more deploy after the bearer has a value |
 | TX-r-3 activation | NOT STARTED, held on G-W and G-P | see Dependencies |
 | TX-v-1 re-cut / TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED (this seat builds, the CVO grades each changed case) | 102 expected cases written for 0.5.0 |
 
@@ -62,7 +62,8 @@ The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
    (16 of 16 expected: shapes unchanged, baseline history dates unchanged, the Tax member still null, each file rewritten);
    then `deploy_ledger.py close-leg --slug mdpf_taxsma-tx-r-1 --leg-id V2`, `close`, commit both ledger paths.
    A FAIL there is the next item: roll back per the Pins row.
-2. Site Z's reply on the Gateway release (request file in `deliverables/4.0.0_SA_CRO/`).
+2. Andrew's word on who runs the Gateway deploy (see Dependencies). This seat's recommendation: it writes the two
+   `.env` lines into `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` here, and site Z runs its ordinary Gateway deploy.
 3. Activation (TX-r-3) once Andrew's items exist: the opalbloomberg sign-in at the Gateway and the never-widen sign-off.
 4. Unblocked meanwhile, this seat: the 0.6.0 re-cut of the expected cases (TX-v-1) and the journey harness
    (TX-v-2); the Cottonwood supervised-population read (see Parked).
@@ -73,7 +74,7 @@ The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| The Gateway release carrying the Tax route, capability off | site Z NFRA_OPLGTW (`1.0.0_SA_CTO~O` / `2.0.0_SA_COO~O`), relayed by `0.0.0_AB_MSTR` | the request file; reply = release commit + host sha256 + four acceptance results | REQUESTED 02:0xZ |
+| A Gateway deploy carrying the Tax route capability-off, then a second one at activation (the bearer is read into `.env` at deploy time) | **Andrew: who runs it.** Site Z was told ~03:4xZ not to touch MDPF_TAXSMA; the laptop was told 02:0xZ that gateway releases are site Z's | the request file's four acceptance results; relay `org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAY_20261001_0400Z_SITEZ_CTO_O_TX_R_2_NOT_ACTED_ON_NO_TAXSMA_AT_SITEZ_FOR_CRO.md` | BLOCKED on Andrew since 04:00Z |
 | The opalbloomberg@opalinvest.com account signed in at the Gateway, so its tid/oid resolves and the first controlled read can run (G-A) | Andrew | TX-r-3 AC2, AC5, AC6 | AWAITED -- access is believed, UNMEASURED |
 | G-W never-widen halves naming both served keys | `1.0.0_SA_CTO` + a COO (the CTO seat died 23:2xZ; relaunch pending) | TX-r-3 AC3 | AWAITED |
 | G-P consumer promotion (portal DEV to PROD) | Andrew | TX-r-3 AC4 | AWAITED |
