@@ -3284,6 +3284,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Applying the ruling literally to a row whose E columns are served on a different unit (a fraction, not a percent) prints a figure that may be 100 times too small beside its history (if the served DECIMAL is a fraction); converting it (x100) would be deriving a figure, which the order bars, so the worker left it as the ruling reads.",
     "notes": "Needs a ruling: either the E cells of a DECIMAL-unit forecast print as a percent (a unit conversion the CTO would have to grant) or the row prints them unconverted with their own unit word. Same class likely for BEST_PE_RATIO (served unit UNRESOLVED on BA) on names whose P/E row is not refused.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S76",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-01T09:25:25Z",
+    "one_line": "DISARMS AMGT_CORPUS-Z-W1-S28 (issuer ruling): BEST_DIV_YLD's served values ARE percent -- BA's consensus DPS over its price reproduces them exactly -- so printing 0.0% / 0.1% / 0.6% at the percent row type is correct and no conversion is needed; the defect is only the producer's unit LABEL 'DECIMAL' on that field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BA thesis fixture: BEST_DPS FY1-FY3 = 0.005, 0.286, 1.187; BEST_DIV_YLD FY1-FY3 = 0.002540650406504065, 0.14532520325203252, 0.603150406504065; BA price USD 196.80 (header PX_LAST, the walk's face).",
+        "0.005 / 196.8 x 100 = 0.00254; 0.286 / 196.8 x 100 = 0.14533; 1.187 / 196.8 x 100 = 0.60315 -- equal to the served BEST_DIV_YLD to the digits served: the field is a PERCENT of price.",
+        "History EQY_DVD_YLD_IND on the same row prints 3.6%, 2.3%, 2.5% (percent); the E cells 0.0% / 0.1% / 0.6% sit on the same scale."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A figure's served unit label names the scale its value is on.",
+    "world_is": "BEST_DIV_YLD values are on the percent scale while the block labels the unit DECIMAL. The page prints them correctly as percent; a reader of the unit label alone would be misled.",
+    "notes": "Ruled at the round-29 drain: no page change. The label is the producer's (build_unit_map / model_block_pull forecast units) -- a candidate enrichment item for the round-29 analysis; FWD-22 untouched.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
