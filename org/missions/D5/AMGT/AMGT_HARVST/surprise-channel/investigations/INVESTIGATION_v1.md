@@ -4720,6 +4720,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Reader: treat Z-W90-S2 as disarmed (INERT) from 03457e5899. If the issuer wants the S2 row itself edited, that needs the audited '# surprise-row-override' on the commit, which is the issuer's or CTO's call."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T07:00Z",
+      "one_line": "No date-ordered (newest-first, date-filtered) listing route for bbg or wsj is measured anywhere in the harvester or the CRO scripts; lib/opal_data_harvest/discovery.py implements the two routes UNMEASURED.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-ae-5 phase A item 3: find the route in the existing harvester and CRO scripts; if none is measured, implement against the route the TabSession can open in-tab, name it, and say it is unmeasured.",
+      "world_is": "publishers.py bloomberg() issues /nemo-next/api/search/query?query=&page= and DowJones.discover() issues /search?query=&page= (relevance search); bloomberg_rest_fetch.py search() and wsj_rest_fetch.py carry no sort or date parameter; PAGE_PARAM entries are all verified False. discovery.py therefore uses bbg /nemo-next/api/search/query?query=\"<company>\"&sort=time:desc&page=N and wsj /search?query=&isToggleOn=true&operator=AND&sort=date-desc&startDate=2026/01/01&endDate=<today>&page=N, the date-sort parameters those publishers' own search pages expose (from the UI, not measured in this repo). discover() raises if a walked listing's dates ever rise, so a route that does not honour the sort fails loud rather than walking relevance order. Phase B first light measures both and overrides discovery.ROUTES / _params.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py bloomberg() and DowJones.discover() at bd29533457",
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/bloomberg_rest_fetch.py search() at bd29533457",
+          "lib/opal_data_harvest/discovery.py (this branch)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T07:00Z",
+      "one_line": "bbg's existing sign-in (bloomberg_harvest_session.py, Google OAuth) is a module-level script that launches its own browser, so renew() has no in-profile sign-in for bbg; wsj and barrons have one (a port of dowjones_harvest_session steps).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-ae-5 phase A item 4: when the profile's session is stale, the harvester's existing sign-in runs INSIDE the persistent profile, unattended.",
+      "world_is": "dowjones_harvest_session.harvest() launches its own non-persistent browser; bloomberg_harvest_session.py runs its whole flow at import time (module level sync_playwright, no function to hand a page to). verification.dowjones_signin(page, publisher, credentials) re-states the Dow Jones SSO steps against the TabSession's own page (the call is renew's default for wsj and barrons; credentials read from dowjones/credentials only when a stale session is found). For bbg renew() raises RequestRejected unless a signin(page, publisher, credentials) callable is passed; the bbg account check (ACCOUNT_CHECKS['bbg'], login.bloomberg.com/user-info, another origin from the tab) is also unmeasured in-tab. FWD-11's renewal half names one stale session, so wsj or barrons carries AC3; bbg renewal is open.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/dowjones_harvest_session.py harvest() at bd29533457",
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/bloomberg_harvest_session.py lines 1-70 and 603-823 at bd29533457",
+          "lib/opal_data_harvest/verification.py renew, dowjones_signin (this branch)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
