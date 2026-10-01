@@ -5624,3 +5624,29 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T05:12Z",
+  "one_line": "ml1.AC2.sh counts the four C7 read_email fields with a single-line grep over '$select' lines, which scores 0 of 4 on the adopted code because 5ec089b9a1 splits the $select string across three source lines; the worker joined it to one line (behaviour identical).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/ml1.AC2.sh: grep -E '\\$select' tools.py | grep -q $fld, per field -- line-bound.",
+      "CODE: gw-f1-read-email-fields 5ec089b9a1 infra/aws/ec2/opal-gateway/app/tools.py read_email: the $select string continues on two further lines, so ccRecipients/internetMessageId/conversationId/sentDateTime are not on a line containing '$select'.",
+      "RUN: first AC2 run on the adopted code printed 'read_email $select fields present 0 of 4' with test_ogz2_ac08 rc=0 and REG 2 of 2; the worker's one-line join makes it 4 of 4 with no change to the Graph request."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2: read_email's $select carries the 4 C7 fields, counted by a line-bound grep; the adopted branch code is taken as reviewed.",
+  "world_is": "The adopted code carries all four fields (plus bcc, hasAttachments) but on continuation lines; the check could not see them. The worker joined the string to one 150-character line in app/tools.py (inside paths) rather than edit the issuer's check.",
+  "notes": "INERT: layout only. The issuer may instead make the check read the whole read_email function; either is valid.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
