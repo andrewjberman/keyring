@@ -88,7 +88,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** analysis s.4 row 1 (ruling 1). Chain ~59 leads (g-1 -> g-5; file-disjoint, g-5 queued here for throughput). The walker-steps item is the issuer's addition (round-15 close walk 20261001T073050Z: walker:control-missing x4). Base 1 of 3 / 2 of 3; green r16-green-f @49bf677ac4 3 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~59</slot>
 <fabric>site-z</fabric>
