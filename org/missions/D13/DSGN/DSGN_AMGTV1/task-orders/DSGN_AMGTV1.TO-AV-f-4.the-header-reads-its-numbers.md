@@ -91,7 +91,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** analysis s.3 row 4 + row Z-S9 (repairs batched into one cell). Leads chain ~58 (f-4 -> f-5; both may write reasonWords.ts). Base: headerread 2 of 3; green 3 of 3. Field names per AMGT_RESAPP af-2 (COO~Z 27543); fixtures renamed by the issuer.
 
-<status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~58</slot>
 <fabric>site-z</fabric>
