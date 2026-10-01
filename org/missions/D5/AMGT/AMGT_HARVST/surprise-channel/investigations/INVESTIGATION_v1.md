@@ -5003,6 +5003,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "A listing that parses to zero hits on a 200 is silent in the collector; a retained body would tell a soft block from an empty page."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S52",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T11:08Z",
+      "one_line": "Round-32 disposition record (rows are append-only): every round-32 row the file still reads ARMED is disarmed by a landed commit or ruled here -- W90-S2, W92-S1, W92-S4, W91-S4, W91-S5 disarmed; W91-S8 and W91-S10 ruled.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Spine L10: the slug goes only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "W90-S2 (four base tests asserted the article GET): disarmed by ae-1 AMENDMENT 1 @cec6fb0ba6 + worker @03457e5899, recorded W90-S3. W92-S1 (sa silver empty struct themes): fixed @254ea37cf6. W92-S4 (no-response exceptions ended every sa job error): fixed @3669bd0f0a (+ @6039cefc48 once-per-job account check, bounded transport-class auto-resume). W91-S4 (repair() could post a page screenshot to an external vision API): disarmed @220a74350a, local DOM locator only. W91-S5 (TabSession.seed could never seed): fixed @791616d9b6 then @3cdb41b7e2 (adds only the bundle cookies the profile lacks). W91-S8 RULED: the box's last-input clock ticks every 2-3 min with no human present (the agent harness is a candidate source), so operator_input_detected cannot discriminate a human hand from harness input; ae-5 AC2 holds only for the short leg windows it records, and FWD-11's 'no human hand' is carried as INFERRED until a discriminating instrument (input-source attribution) exists -- a round-33 input to the CTO. W91-S10 RULED INERT: one barrons search 200 with 0 parseable hits and one wsj homepage timeout, both single INFERRED transients with no repeat.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits cec6fb0ba6, 03457e5899, 254ea37cf6, 3669bd0f0a, 6039cefc48, 791616d9b6, 3cdb41b7e2, 220a74350a",
+          "deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_unattended_run.json (operator-input windows)",
+          "lib/opal_data_harvest suite at the trunk after 220a74350a: 442 passed, 1 skipped"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The disarming commits each carry a negative control (a test failing on the pre-fix code). W91-S8 is the one ruling that limits a FWD claim; it goes to the CTO in the L8 packet."
     }
   ]
 ```
