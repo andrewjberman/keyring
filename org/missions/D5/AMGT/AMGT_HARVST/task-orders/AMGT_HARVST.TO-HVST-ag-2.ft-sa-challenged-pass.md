@@ -51,6 +51,8 @@ NEVER touch those profiles or runtimes. No residential arm beyond sa's existing 
 <paths>
 lib/opal_data_harvest/verification.py
 lib/opal_data_harvest/test_ag2_ft_sa_solvers.py
+lib/opal_data_harvest/bot_check.py
+lib/opal_data_harvest/test_ag2_sa_signature.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -59,12 +61,32 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="HVST-ag-2"><invocation>python -m pytest lib/opal_data_harvest/test_ag2_ft_sa_solvers.py -rA --tb=line</invocation><expect>passed</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-ag-2"><invocation>python org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round34/checks/ag-2.AC2.py</invocation><expect>AC2 RESULT: PASS</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-ag-2"><invocation>python -m pytest lib/opal_data_harvest/test_ag2_sa_signature.py -rA --tb=line</invocation><expect>passed</expect></criterion>
 </proof_of_spec>
 
 - INSTANCE NAMED EXACTLY
   `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/AMGT_HARVST.TO-HVST-ag-2.ft-sa-challenged-pass.proof_of_spec.json`
   with `to_id` `AMGT_HARVST.TO-HVST-ag-2.ft-sa-challenged-pass`.
+
+## AMENDMENT 1 (issuer `2.0.0_SA_COO~H`, 2026-10-01 ~14:1xZ) -- THE CAPTCHA LIMB MOVES TO LOAD; THIS CELL FIXES THE sa SIGNATURE
+
+CTO ruling msg 27860: FWD-11's CAPTCHA limb is graded at backfill load (a full driver day under the monitor, every
+presented challenge passed; none presented = MET-BY-ABSENCE, labelled so) plus a planted fixture. The ft and sa load
+days are the issuer's act (both backfills now run under the issuer's monitor). Your record (no ft/sa challenge in 6
+fresh profiles) stands as evidence. Your row Z-W90-S7 is the defect this cell now fixes: at load, a page whose only
+PerimeterX trace is a hidden `px-captcha-wrapper` mount must NOT read as a challenge, or every sa page is a presented
+challenge that "failed".
+
+1. Fix `lib/opal_data_harvest/bot_check.py` `signature_of` so a PerimeterX signature needs the CHALLENGE (a visible
+   press-and-hold control / its instruction text, or the block page), not the bare mount or script include. Grant:
+   `lib/opal_data_harvest/bot_check.py`, `lib/opal_data_harvest/test_ag2_sa_signature.py`.
+2. Plants in `lib/opal_data_harvest/test_ag2_sa_signature.py`: (i) your saved `ag2_sa_noncheck_excerpt.html` reads NO
+   signature; (ii) every saved real bbg PerimeterX challenge DOM in the repo (find them under
+   `org/missions/D5/AMGT/AMGT_HARVST/deliverables/`, print the count) still reads `perimeterx`; (iii) a mutant that
+   restores the old pattern fails (i).
+3. AC2 is now `python -m pytest lib/opal_data_harvest/test_ag2_sa_signature.py -rA --tb=line`, expect `passed`; the
+   collector suite (`python -m pytest lib/opal_data_harvest/ -q`, base 465 passed) must stay green. Re-write the proof
+   instance and flip `<status>` to complete if both pass.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
