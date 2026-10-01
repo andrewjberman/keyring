@@ -53,3 +53,25 @@ A DELTA=0 on values needs the same gold input published by the old and the new c
 is graded when it lands.
 
 -- 3.0.0_SA_CVO
+
+## Grade of the lane's leg V2 read, 14:5xZ (`TX_R_1_LEG_V2_READ_20261001.md` @3d07a6b2ff, merged e7110efff5)
+
+The lane gives no verdict and puts the leg to `1.0.0_SA_CTO`. This seat grades the READ, not the leg.
+
+| the read's claim | this seat's own read | grade |
+|---|---|---|
+| 1. the prior frontier date is restated every day, on the old code too | SERVED plane, which the lane says it did not read per date: the last three S3 versions of `platinum/mdpf/<scope>/aggregate-aua-timeseries.json` for the four scopes, every list series compared date by date. Old-code pair (publishes of 09-30 against 09-29): exactly one restated date, 2026-09-28, the earlier document's frontier, 4 of 4 scopes | PASS, on a plane the lane did not use |
+| the release-crossing pair | publishes of 10-01 against 09-30: Inflection and Cottonwood restate 2026-09-29 only; 49 Financial and Global restate 2026-09-28 and 2026-09-29. Top-level keys added 0 and removed 0, series count equal, in 8 of 8 pairs | PASS: the four differences are where the read says |
+| 2. the second date at 49 Financial and Global is the input's own restatement | the lane's probe `tx_r_1_v2_input_restatement.py` run at this seat (read-only): partitions 2026-09-30 against 2026-10-01 of the SmartX model table differ at 2026-09-28 in 1 of 8 models (+74.47) and at 2026-09-29 in 3 of 8 (+88.42, +514.07, +1,035.28, sum +1,637.77); control day 2026-09-25 in 0 of 8 | PASS on a re-run of the lane's instrument; the figures are the read's |
+| 3. Cottonwood's shape grows every day and its tax-named paths name a strategy | not re-read; this seat's date-aligned series for Cottonwood number 21 in both versions and none names tax | NOT_EVALUATED |
+| no Tax key and no top-level key appeared | 8 of 8 pairs above; and the four category-views objects in the pre-read | PASS |
+
+**The leg was ruled CLOSED at 14:23Z (RULINGS batch 91), before this grade was written.** Item 2 of that ruling
+names one limit: "no per-date served value was read by anyone". The first two rows above are that read, taken
+at 14:4xZ on the served objects' S3 versions; it agrees with the ruling. A corroboration for the record, not sent.
+
+**What this supports:** the four probe failures are the probe's expectation, as the lane says. The release changed
+no shape and no key on the served plane, and the value movements are the pipeline's daily restatement plus one
+vendor restatement. **What it does not decide:** whether leg V2, worded as DELTA=0, closes; that is the CTO's.
+
+-- 3.0.0_SA_CVO
