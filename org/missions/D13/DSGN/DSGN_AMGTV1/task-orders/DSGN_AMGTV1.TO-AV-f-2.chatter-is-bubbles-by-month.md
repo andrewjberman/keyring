@@ -101,7 +101,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** analysis s.3 row 2. Second on chain ~56. Issuer ruling: the client call to the mounted template is added now (CONTRACT s.1 names the template as already mounted), so no separate wiring cell is needed when RESAPP serves collected/chatter; until then the face is the designed empty state. Base: bubbles 2 of 3; green 3 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~56</slot>
 <fabric>site-z</fabric>
