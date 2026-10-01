@@ -25,7 +25,7 @@ names only what to read.
 | 1 | `0.0.0_AB_MSTR` | `org/tier0_exec/0.0.0_AB_MSTR/deliverables/REBOOT_BRIEF_20261001_0.0.0_AB_MSTR.md` @a5b57cac89 | integrator and the bus to site Z; spawns the rest | post on the bus that the laptop is back; then seat rows 3-10 by `/mstr-spawn` with the hints below | -- |
 | 2 | `1.0.0_SA_CTO` | `org/tier1_exec/1.0.0_SA_CTO/deliverables/REBOOT_20261001/REBOOT_BRIEF_20261001_1.0.0_SA_CTO.md` @fcfc0263d0 | rulings and every CTO half | re-arm `/self-drive 60m laptop directives` from its arming record (tick 79) | sign or refuse the 19 seed rows before 23:00Z if not overtaken |
 | 3 | `2.0.0_SA_COO~M` | `org/tier1_exec/2.0.0_SA_COO/deliverables/REBOOT_BRIEF_20261001_2.0.0_SA_COO_M.md` @6cd972d8ff | three ledgers close on tonight's runs; two packets owed (split accounts, seed rows) | read the 22:10Z and 23:00Z runs against its open legs | 22:10Z and 23:00Z today |
-| 4 | `2.0.0_SA_COO~Y` | `org/tier1_exec/2.0.0_SA_COO~Y/deliverables/REBOOT_BRIEF_20261001_2.0.0_SA_COO_Y.md` @07d17ac44f | the st10 packet (900 s release, built and merged) | cut the st10 packet | lease to 19:52Z |
+| 4 | `2.0.0_SA_COO~Y` | `org/tier1_exec/2.0.0_SA_COO~Y/deliverables/REBOOT_BRIEF_20261001_2.0.0_SA_COO_Y.md` @ed4c337870 | E7 (the Multi-Comp's comparison names on a served route, batch 98), then the st10 release (900 s, built and merged) | E7: serve the chosen comparisons' names | lease to 19:52Z |
 | 5 | `2.0.0_SA_COO~P` | `org/tier1_exec/2.0.0_SA_COO/deliverables/REBOOT_BRIEF_20261001_2.0.0_SA_COO_P.md` @9a1eb08bab | Inflection serving packet; dashboard drain | re-spawn the DB-b-2 worker in its existing worktree; check for Andrew's delete word | -- |
 | 6 | `2.0.0_SA_COO~D` | `org/tier1_exec/2.0.0_SA_COO~D/REBOOT_BRIEF_20261001_2.0.0_SA_COO_D.md` @b15b042e69 | three FAST leases; the Multi-Comp page walk | re-arm lapsed leases; restart the dev server on 5174 | leases to 19:02Z and 20:28Z |
 | 7 | `3.0.0_SA_CVO` | `org/tier1_exec/3.0.0_SA_CVO/deliverables/REBOOT_BRIEF_20261001_3.0.0_SA_CVO.md` @79b8a2c5f0 | grades every pin the lanes land | grade new pins since 16:3xZ; compile MDPF_SECCLASS | -- |
@@ -38,6 +38,12 @@ Owed to row 10 by row 2: the tie-out tolerance ruling (rows S9, S10, S11), named
 Rows 3 to 6 are four COO lanes: Andrew's IRPT exception to the cap of three stands; no fifth lane.
 
 `--say` for each row: "Read <its brief path>, then your inbox." (Row 4 adds `org/missions/D9/IRPT/IRPT_BCKEND/STATUS~Y.md`.)
+
+## Signed after the briefs (deploy after the reboot)
+
+- `2.0.0_SA_COO~M`'s split-account packet (row S259): CTO half @07e4769540; route first.
+- `4.0.0_SA_CRO`'s Tax SMA activation TX-r-3, on Andrew's 17:0xZ word to activate now: CTO half @1b43d6f201; the HEALGAP
+  hookup's leg V2 trigger is amended to admit exactly the activation-day Tax fields. The COO half is `2.0.0_SA_COO~M`'s.
 
 ## Left as found
 
