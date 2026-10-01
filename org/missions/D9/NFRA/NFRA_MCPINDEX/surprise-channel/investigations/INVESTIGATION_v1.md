@@ -4417,6 +4417,30 @@ carries none.
       ]
     },
     "notes": "INERT: the drain merge of this branch onto CLOUD is expected to conflict in data_entitlement.py, DATA_CATALOG.yaml and emit_catalog_v02.py; the resolution is both sides plus a re-emit of DATA_CATALOG.yaml through emit_catalog_v02.py and the pins moved."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S69",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-01T04:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "RESOLVES NFRA_MCPINDEX-Z-S61. The MX-s-14 strip ledger closes: unrealized v3's scheduled 09-30 21:39Z fire wrote 6 silver partitions (write arm EXERCISED), and realized/transaction/allocation can never write on their fire because their silver writer of record is the S3-triggered Lambda bd-silver-merge, which merges each input ~5 minutes after it lands (~00:1xZ). The issuer rules L5/L9 satisfied by fire Success on the new version + merge exit 0; MX-s-14 complete.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm list-commands since 2026-09-29T21:00Z: unrealized/realized/transaction/allocation Success x2 each on $LATEST; describe-document Default==Latest 3/3/3/5 (read 2026-10-01T04:3xZ).",
+        "logs/unrealized-download-2026-09-30.log: 'Found 6 new unrealized files', 'Merge exit code: 0'; silver/unrealized/2026-07-03..07-09 (6 objects, 8016 bytes, 0 rows each) LastModified 2026-09-30T21:39:18-27Z.",
+        "logs/{realized,transaction,allocation}-download-2026-09-30.log: 'No new ... files', 'Merge exit code: 0'.",
+        "/aws/lambda/bd-silver-merge 2026-10-01T00:11:07Z 'sentinel run_date=2026-10-01 (merge --all)': NEW TRANSACTIONS_DAILY_2026-10-01.xlsx -> silver/transactions/2026-10-01.parquet (110,685 rows), head-object LastModified 00:13:44Z; allocation merge new=0 skip=131. get-policy principal s3.amazonaws.com, SourceArn arn:aws:s3:::opal-data-bd.",
+        "s14.AC1/AC2/AC3 re-run by the issuer 2026-10-01T04:2xZ: RESULT: PASS each (AC3 slot 2026-09-29T21:53Z, runs 2, success 2)."
+      ]
+    },
+    "spec_asserts": "Ledger L5/L9 proof_required includes 'silver partition written' by the scheduled fire (Z-S61 notes: expect 'Found 1 new' on realized/transaction at the 09-30 fires).",
+    "world_is": "Realized/transaction/allocation inputs are merged into silver by bd-silver-merge on S3 landing, about 21 hours before the document's fire, so the fire's merge is a correct no-op every night. Unrealized has new inputs the document itself merges (6 found 09-30).",
+    "notes": "Issuer ruling inside the decomposition (amends no order; ledger proofs written at close-leg). Carry to the round-5 analysis: (1) the realized/transaction/allocation document merges are a second merge path beside bd-silver-merge, a retire-or-keep question for the CTO, not a cell here; (2) the 6 unrealized July partitions written with 0 rows from newly found July files, unattributed. No ad-hoc run was fired."
   }
 ]
 ```
