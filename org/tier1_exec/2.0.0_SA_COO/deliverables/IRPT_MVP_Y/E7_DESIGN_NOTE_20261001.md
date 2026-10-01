@@ -37,7 +37,10 @@ request's frozen keys and the catalogue's labels, never read back from the PDF; 
 
 ## Not known yet
 
-- Whether the `irpt-status` role may GET a `REQUEST_COMPOSITION` blob in a tenant partition (the sections route
-  reads report blobs; the composition family's grant is not read here). That is the first read after the reboot.
+- ~~Whether `irpt-status` may GET a composition blob~~ -- READ 17:5xZ: DESIRED yes. `infra/aws/terraform/investor-reporting/ops/iam.tf:72-87`,
+  sid `ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly`, grants `s3:GetObject` and `s3:GetObjectVersion` on
+  `irpt/<firm>/state/request_compositions/*` in the irpt product bucket, per enabled client firm. APPLIED is inferred,
+  not read: the served status route's dates read (`ops/prospect_dates.py`) already reaches retained families under the
+  same statement and answered READY for this lane's jobs today. One live read of the applied policy settles it.
 - The served change rides a never-widen packet for `irpt-status` (whole bundle, both halves), separate from the
   resident's st10.
