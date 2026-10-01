@@ -422,6 +422,51 @@
     "spec_asserts": "TO MS-a-3 AMENDMENT 2: commit in the nested repo naming OA-t-2/OA-t-3; the issuer drains the commit.",
     "world_is": "The nested commit exists locally on its branch; the issuer drains it from the nested branch (as with 47cfd4b). No parent gitlink commit was possible. verify-boundary.ps1 run from the worker shell prints 'BOUNDARY: CANNOT-RUN-AS-ACCOUNT deny probe could not start as Opal_MSP: Access is denied', exit 5 (the measured shell restriction; replaces the false BREACH).",
     "notes": "The real AC2 run remains Andrew's after the drain."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T15:30Z",
+    "id": "NFRA_MCPMSP-Z-W3-S3",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MS-sg-1 AC2 cannot be met as written: the gate refuses an absent sender address (asker_sender_domain, per the TO), and every existing asker/adapter test fake returns chat members with no `email`, so 17 of 48 existing tests fail; the existing tests are outside this order's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "e2g.AC2.sh at df4d410b66: 'asker + adapter + round-1 suites: 17 failed, 31 passed' RESULT: FAIL exit=1; at parent 0e3760b480 the same script read 48 passed, RESULT: PASS.",
+        "Cause isolated: the same six suites run with sender_gate.check patched to return None (scratch plugin, not committed) read '48 passed'; the failures are all code asker_sender_domain.",
+        "infra/aws/ec2/opal-gateway/tests/test_asker_binding.py:89-90 members fake returns {userId, tenantId} only; test_asker_scope.py, test_asker_nochannels.py and test_mcpmsp_asker_firm.py return no /members value at all (their default branch is {'chatType': 'oneOnOne'}), so sender_address() is None."
+      ]
+    },
+    "spec_asserts": "TO MS-sg-1 BOUNDS 2 / AC2: the existing asker/adapter suites stay green (>=48 passed, 0 failed) while an absent sender address is refused asker_sender_domain.",
+    "world_is": "Both cannot hold: a gate that refuses an absent address fails every existing test whose fake carries no member email. Not made to pass: treating an absent address as a pass would fail OPEN for any sender whose member record hides its email. Remedy for the issuer: amend those suites' fakes to carry an `email` per member (opalinvest.com for the Opal tenant, the firm's domain for a firm tenant) in a TO whose <paths> include them, or amend AC2.",
+    "notes": "AC1 and AC3 pass. Nothing is deployed; the branch is local."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T15:30Z",
+    "id": "NFRA_MCPMSP-Z-W3-S4",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The commit-time naming gate (ENFORCE) refused app/sender_gate.py as written to the TO: the firm ids 49financial / inflection / cottonwood and the domain 49financial.com are 'hand-kept carriers'; sender_gate.py now reads the firm ids from catalog_gate.KNOWN_FIRMS and builds each domain as id + tail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh first attempt: 'naming-gate NAMING REFUSE app/sender_gate.py:23 49financial -> lookup(49financial)' (also :24, :25, :27), NAMING-GATE: REFUSE 5 graded; commit aborted, files unstaged.",
+        "app/sender_gate.py at df4d410b66: ALLOWED_DOMAINS built from catalog_gate.KNOWN_FIRMS zipped with tails (.com, wealth.com, mail.com); tests/test_mcpmsp_sender_gate.py::test_allowed_domain_matching_tenant_served pins the exact four domain->firm pairs."
+      ]
+    },
+    "spec_asserts": "TO MS-sg-1 build item 1: ALLOWED_DOMAINS written as the four domains mapped to firm.",
+    "world_is": "The mapping is derived by KNOWN_FIRMS position, so a reordered or extended KNOWN_FIRMS moves which domain maps to which firm; the pinned test fails first. A tidier carrier (an R20 exception or a registry row for the four domains) is outside this order's paths.",
+    "notes": "The gateway app cannot import lib/opal_naming (not in the deployed tree), so lookup() was not an option."
   }
 ]
 ```
