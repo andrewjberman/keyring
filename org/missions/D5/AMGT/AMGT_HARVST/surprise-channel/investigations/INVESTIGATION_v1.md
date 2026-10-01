@@ -4677,6 +4677,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Disarm: an issuer amendment adding the four test files to <paths> (their sa arms to assert the listing-body behaviour), or a ruling on whether sa run records should still count the listing item as a fetched key."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T06:00Z",
+      "one_line": "HVST-ae-2 changes persist_http_cookies on purpose; base test lib/opal_data_harvest/test_worker.py::Tests::test_rotated_http_cookies_survive_next_job_without_new_login_timestamp asserts the write-back and now fails, and test_worker.py is outside the order's <paths>.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-ae-2 section 1 item 2 and the closing instruction: a base test whose behaviour the cookie write-back removal changes is named in the report with the update made; the full collector suite is reported against the base 363 passed, 1 skipped.",
+      "world_is": "At worktree wk-hvst-r32-91 on base d152231e55 plus the ae-2 change: python -m pytest lib/opal_data_harvest/ -q reads 1 failed, 370 passed, 1 skipped (base 363 passed + 8 new plants = 371; the 1 failure is the base test). The test calls manager.persist_http_cookies('barrons', envelope, session) then manager.get('barrons') and expects all_cookies[0].value == TEST-ROTATED-VALUE and http_updated_at in saved; with no write-back the vault holds nothing, so get() falls through to SessionManager.refresh, which the HVST-r-4 conftest poison refuses (HarvestPoisonError). Not edited: test_worker.py is not a path this order grants. Proposed update for the issuer or a later cell: replace the test body with the inverse assertion (vault bytes SHA-256 before == after persist_http_cookies); test_ae2_one_identity.py::test_ii already asserts that inverse.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_worker.py:324-337 at d152231e55",
+          "lib/opal_data_harvest/auth.py persist_http_cookies (this branch)",
+          "pytest -q run in wk-hvst-r32-91: 1 failed, 370 passed, 1 skipped"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```

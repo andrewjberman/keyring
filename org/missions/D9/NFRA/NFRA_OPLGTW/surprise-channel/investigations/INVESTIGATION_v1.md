@@ -5624,3 +5624,57 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T05:12Z",
+  "one_line": "ml1.AC2.sh counts the four C7 read_email fields with a single-line grep over '$select' lines, which scores 0 of 4 on the adopted code because 5ec089b9a1 splits the $select string across three source lines; the worker joined it to one line (behaviour identical).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/ml1.AC2.sh: grep -E '\\$select' tools.py | grep -q $fld, per field -- line-bound.",
+      "CODE: gw-f1-read-email-fields 5ec089b9a1 infra/aws/ec2/opal-gateway/app/tools.py read_email: the $select string continues on two further lines, so ccRecipients/internetMessageId/conversationId/sentDateTime are not on a line containing '$select'.",
+      "RUN: first AC2 run on the adopted code printed 'read_email $select fields present 0 of 4' with test_ogz2_ac08 rc=0 and REG 2 of 2; the worker's one-line join makes it 4 of 4 with no change to the Graph request."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2: read_email's $select carries the 4 C7 fields, counted by a line-bound grep; the adopted branch code is taken as reviewed.",
+  "world_is": "The adopted code carries all four fields (plus bcc, hasAttachments) but on continuation lines; the check could not see them. The worker joined the string to one 150-character line in app/tools.py (inside paths) rather than edit the issuer's check.",
+  "notes": "INERT: layout only. The issuer may instead make the check read the whole read_email function; either is valid.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S28",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T05:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-W15-S8: the worker joined read_email's $select string onto one source line so the issuer's line-based ml1.AC2 grep could read it; the Graph request is byte-identical and ml1.AC2 PASSES on CLOUD after the drain (@4ca87da779). OG-ml-1 is complete; the grep's line-shape limit is recorded here and the check is not re-cut. Separately, the issuer's own hr1/hr2.AC2 cut base read the merge-base with CLOUD, which after a drain contains the cell's own route and read a false collision on CLOUD; fixed in this commit to the parent of the commit that added the route module (hr1.AC2 PASS on CLOUD and on the worker branch).",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S8"
+  ],
+  "one_line": "OG-ml-1's one-line $select reformat (W15-S8) is behaviour-identical and its AC2 passes on CLOUD; the issuer's hr AC2 cut base is fixed to grade the same before and after a drain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ml1.AC2.sh on CLOUD @4ca87da779: REG 2 of 2; SCOPES same; ac08 1 passed; $select fields present 4 of 4; pypdf pins 1; LD-0613 changed 0; RESULT: PASS.",
+      "hr1.AC2.sh on CLOUD @43f34bae73 before the fix: prefix occurrences in server.py at base 43f34bae73: 1 (the drain commit itself) -> NAMES FAIL; after the fix: at base 6903868aa7: 0 -> RESULT: PASS."
+    ]
+  },
+  "spec_asserts": "TO-OG-ml-1 AC2 and TO-OG-hr-1 AC2 read the same verdict on the worker branch and on CLOUD.",
+  "world_is": "Both checks read source shape (one grep line; one merge-base); both are now graded consistently.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
