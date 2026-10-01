@@ -85,7 +85,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** analysis s.4 row 5 (ruling 5). Second on chain ~59 (after g-1, file-disjoint). Issuer ruling on row AMGT_RESAPP-Z-W200-S1 (pillars wording kept; nolabel.cjs PILLARS_GRADED off). Green r16-green-h @2f48ad29 3 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~59</slot>
 <fabric>site-z</fabric>
