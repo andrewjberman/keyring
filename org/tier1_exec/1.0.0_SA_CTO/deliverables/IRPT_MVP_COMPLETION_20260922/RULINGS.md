@@ -3550,3 +3550,46 @@ Cottonwood) and its read of the three non-49F objects; row IRPT_BCKEND-S247.
    which report.
 5. IB-pr-221 (batch 63 item 3e) is unaffected: when Inflection's rebuilt gold is served, its Performance figure is OPAL_HOLDINGS
    and the retained ORION report stays a comparison point.
+
+## 2026-10-01 07:23 UTC - Claude CTO batch 67: S238 disarmed and the hop-7 job released inside a window packet; a refused vendor use is not "dependency unavailable" (CVO F-2); the promote candidate after item 42
+
+Instruments: `2.0.0_SA_COO~Y` msg 103568 and `WHOLE_BUNDLE/APPLY_LOG_20261001.txt` @7153ec83fd; row IRPT_BCKEND-S248 @22d701426e;
+`3.0.0_SA_CVO` msg 103575 and `IRPT_BCKEND_FAST_PIN_GRADES_20261001.md` "Second wave" @d40f2568d8 (six live bundles downloaded, 0 of
+63 closure members differ from CLOUD HEAD, 0 import or type errors over 321 invocations); `2.0.0_SA_COO~D` msg 103577 and
+`REAL_RUNS_20261001.md` @8b7d294a2a.
+
+### IRPT-S238-DISARMED-AND-HOP7-RELEASED-20261001
+1. Row S238 and the API half of row S244 are DISARMED (row S248): six of six tenant-selecting functions refuse the service
+   principal on a foreign firm and serve its own, read live. Ruling 103318's condition for W27 is met.
+2. The hop-7 diagnostic is released as ONE Analysis attempt under Andrew's word of 2026-09-27 ("as many analysis attempts as
+   needed": one upload and one Overview submission per attempt, no retry). That word keeps each attempt inside a window packet with
+   both halves, so ~Y writes one page (the upload body, the write set, the principal, library `0fec0ca9` and its three added
+   `ctx.close()` sites, the ledger leg) and this seat signs on read. The standing authorization for the host's own YCharts calls is
+   his word of 2026-09-23 (the always-on host). No other vendor use is covered by either.
+3. Hop 10 is done: `2.0.0_SA_COO~D` walked a READY request on the page within the hour of the `irpt-status` apply
+   (`REAL_RUNS_20261001.md` section 2). The Analysis thread now lacks only hop 7.
+
+### IRPT-VENDOR-REFUSAL-PUBLIC-CODE-20261001 (CVO F-2)
+4. A request the adapter refuses because it would need a vendor's calculated return does NOT answer `DEPENDENCY_UNAVAILABLE`.
+   That code says a dependency is down and will come back; the page words it as missing days (DSGN_IRPTV1 item 40) and a client
+   may retry it. The true state is that the firm's Performance is not yet computed on Opal's holdings basis. It answers
+   `OBJECT_NOT_COVERED`, the existing code the holdings source already uses for an account its gold does not cover, with
+   `retryable` false. No new public reason is added. The retained-report refusal of batch 66 item 2 answers the same code.
+   Owner `2.0.0_SA_COO~P`, in the adapter packet batch 66 already orders; `2.0.0_SA_COO~D` words `OBJECT_NOT_COVERED` on the
+   Performance tab as "not available for this client yet", not as missing days.
+5. WHO IS POLLING: 55 refusals in 38 minutes (CVO), 114 since 2026-09-29 (~P). `2.0.0_SA_COO~D` reads whether the Performance
+   tab re-requests on `DEPENDENCY_UNAVAILABLE` (a retry policy on a retryable answer is the likely cause, not proven);
+   `2.0.0_SA_COO~P` attributes the 55 by client and referer from the distribution's access logs if ~D's read does not explain
+   them. Item 4 removes the retryable answer either way.
+
+### DSGN-ITEM-42-PROMOTE-CANDIDATE-20261001 (~D 103577)
+6. Item 42 failed its real run on a client-directed holding row and passes after portal `486b07fd`. The PROD promote candidate is
+   `486b07fd` or later, never `c63553cf`. The promote stays Andrew's word after his re-smoke; `0.0.0_AB_MSTR` reads the candidate
+   from DSGN_IRPTV1's STATUS at that time.
+7. The client search took 9.4 s to answer a typed name on that walk; ~D builds the page-side remedy. If the remaining time is the
+   directory function's, it is a row for `2.0.0_SA_COO~P`, not a page workaround.
+
+### ACCEPTED WITHOUT A RULING
+The CVO's correction 103574: row MDPF_SECCLASS-W12-S2 is fixed in source and not deployed; "W12-S2 first" in the round-6 answer reads
+as its deploy. Site Z accepted the NFRA_TRNSPT order into NFRA_OPLGTW OG-rl-1 slot 3; its one question is answered NO (row S13 needs
+the route's response bytes fetched by a script, not the message's MIME form).
