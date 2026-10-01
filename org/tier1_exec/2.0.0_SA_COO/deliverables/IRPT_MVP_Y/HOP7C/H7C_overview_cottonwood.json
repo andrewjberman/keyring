@@ -1,0 +1,150 @@
+{
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "tenant": "cottonwood",
+ "authority": "hop-7 third window leg J; Andrew-direct 2026-09-27 124xZ; ledger irpt-hop7c-probe-then-job-20261001",
+ "upload_file": "aapl-vnq-12.03.csv",
+ "upload_sha256": "bb079cbf53aaa2be7ce3fb6beb44e55eaeb0695cd168661d5fb78488a0960ddc",
+ "reference_notional": null,
+ "k4_status": 200,
+ "upload_id": "UP-9d49f69c9f352cf426aeccdc3f4eeac90233bda348b91a6318d4456797d78e89",
+ "k4_state": "NORMALIZED",
+ "input_id": "portfolio_99963e5de1662542ed3edb26f2963a0bca053a527e40150a417cc65036cb1522",
+ "k5_variant": "overview",
+ "k5_comparison_keys": [],
+ "k5_status": 200,
+ "k5_state": "QUEUED",
+ "request_ref": "{\"tenant_firm_id\": \"cottonwood\", \"request_id\": \"REQ-602834fd3317160722ab489d\", \"revision\": 1, \"immutable\": true, \"ingestion_gate_revision\": \"schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8\", \"destination_policy_revision\": \"e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f",
+ "calls": [
+  {
+   "at": "2026-10-01T08:57:04.593666Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/login",
+   "request_headers": {
+    "Content-Type": "application/json"
+   },
+   "request_body": {
+    "email": "svc-irpt-analysis@opalinvest.com",
+    "password": "<redacted>"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "Ejn_ejHqoAMEZxA=",
+    "set-cookie": "<redacted>"
+   },
+   "response_body": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "svc-irpt-analysis@opalinvest.com",
+     "name": "IRPT Analysis Service",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   }
+  },
+  {
+   "at": "2026-10-01T08:57:10.960799Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis/inputs?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "upload_token": "y-live-1203-20261001T085710",
+    "filename": "aapl-vnq-12.03.csv",
+    "file_base64": "<35 bytes base64>",
+    "file_type": "csv",
+    "declared_currency": "USD"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EjoA6iv8IAMEaoQ="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-input-upload",
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+    "data": {
+     "upload_id": "UP-9d49f69c9f352cf426aeccdc3f4eeac90233bda348b91a6318d4456797d78e89",
+     "input_id": null,
+     "state": "RESOLVING"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    }
+   }
+  },
+  {
+   "at": "2026-10-01T08:57:24.543771Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "request_id": "y-live-1203-overview-20261001T085724",
+    "client_id": null,
+    "account_ids": [],
+    "snapshot_id": null,
+    "variant": "overview",
+    "comparison_keys": [],
+    "report_title": null,
+    "prepared_for": "IRPT live walk 12.03",
+    "input_id": "portfolio_99963e5de1662542ed3edb26f2963a0bca053a527e40150a417cc65036cb1522"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EjoClhBiIAMEcyQ="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-requests",
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+    "data": {
+     "identity": {
+      "tenant_firm_id": "cottonwood",
+      "request_id": "REQ-602834fd3317160722ab489d",
+      "revision": 1,
+      "immutable": true,
+      "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+      "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85"
+     },
+     "stage": "RECEIVED"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    },
+    "status": {
+     "operation": {
+      "operation_id": "analysis-requests",
+      "operation_kind": "write",
+      "revision": "v1"
+     },
+     "state": "QUEUED",
+     "source_dates": {
+      "source_completion_date": null
+     },
+     "actions": [
+      {
+       "action": "WAIT",
+       "safe": true,
+       "description": "accepted work is queued for processing"
+      }
+     ],
+     "public_reason_code": "NOT_READY",
+     "internal_correlation_id": "corr-82d016c9a6d5"
+    }
+   }
+  }
+ ]
+}
