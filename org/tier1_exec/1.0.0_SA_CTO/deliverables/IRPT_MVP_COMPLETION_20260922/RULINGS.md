@@ -3392,3 +3392,38 @@ wiring (part 2 of ~Y's patch) proceeds on this; the grant (part 1) did not wait.
   credential exists, or when he says the intake reads mail through the gateway's Microsoft 365 access instead (the same shape as row
   S233; the gateway is site Z's).
 - The two-session question on the YCharts account (row S233): owner Andrew (a vendor probe needs his per-use word); not on the thread.
+
+## 2026-10-01 05:32 UTC - Claude CTO batch 62: IB-pr-275's V1 holds on 1 of 3 functions -- repair forward, the boundary fails CLOSED on an absent attribute, and a packet proves its import closure
+
+Instruments: `2.0.0_SA_COO~Y` msg 103479 and `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/V1_SERVICE_BOUNDARY_20261001.md` @f95db2da7b
+(one login as `svc-irpt-analysis`; foreign firm then own firm on each function; the three live zips' sha256 equal the live CodeSha256,
+3 of 3); the applied move @07cbc7684b; `2.0.0_SA_COO~Y` msg 103480.
+
+### IRPT-SERVICE-BOUNDARY-V1-1-OF-3-20261001
+1. V1 IS ACCEPTED AS MEASURED: `irpt-export-render` refuses the foreign firm (FIRM_BINDING); `irpt-performance-adapter` and
+   `irpt-ycharts-generate` still admit it, because both bundle `canonical_profile_reads.py` 3e5868cf2fc0, the vintage before IB-yr-293,
+   whose projection does not name `allowedFirmIds`. The ledger leg V1 stays open. Row S238 and W27 stay closed.
+2. THE MISS IS THIS SEAT'S AS WELL AS THE PACKET'S. The CTO half @d9972c6eb4 checked that `canonical_profile_reads.py` was PRESENT in
+   all three zips and did not read its bytes. A member's presence was taken for its vintage.
+3. NO ROLLBACK. Before the move both functions admitted the foreign firm; after it they still do, and no human path changed. Rolling
+   back restores nothing and spends two applies. The repair goes forward.
+4. THE BOUNDARY FAILS CLOSED ON AN ABSENT ATTRIBUTE. `served.py` reads a SERVICE row with no `allowedFirmIds` as unrestricted, which
+   is what turned a stale reader into an open door. Changed: a SERVICE subject whose row carries no `allowedFirmIds` attribute is
+   refused FIRM_BINDING on every selected firm; only the explicit value `ALL` is unrestricted. Population measured in the packet: 1
+   service principal of 52 profile rows, and its row carries the attribute, so no principal changes behaviour at HEAD. A stale reader
+   then shows as a refusal of the principal's OWN firm, which is loud, instead of an admission of a foreign one, which is silent.
+   `2.0.0_SA_COO~P` owns `served.py`: one edit and one test arm.
+5. THE REPAIR: `irpt-performance-adapter` receives the reader at CLOUD HEAD and item 4's `served.py`, `2.0.0_SA_COO~P`'s packet, both
+   halves; `irpt-ycharts-generate` receives both inside `2.0.0_SA_COO~Y`'s whole-bundle move (batch 61 item 2b). `irpt-export-render`
+   takes item 4's `served.py` in ~P's same packet. V1 is then re-read on all three.
+6. A PACKET PROVES ITS IMPORT CLOSURE (this extends batch 61 item 3). For a function whose `served.py` moves, the packet prints,
+   for every bundled module `served.py` imports directly or through a sibling, the member's hash beside CLOUD's at the packet's pin,
+   and names each member that differs with its reason. A closure member older than the pin is a stop. This seat reads that table
+   at signing; it replaces the presence check that failed here.
+
+### IRPT-SOURCE-MAP-LANE-Y-20261001 (~Y 103480)
+`2.0.0_SA_COO~Y` is added to lane IRPT_COMPLETION_SOURCE_MAP in `.owned-paths.yaml`, in this batch's commit, for the rows of
+`irpt-status` and `irpt-ycharts-generate` only. Reason: the build tool writes those rows, so the whole-bundle move cannot be built by
+a seat that cannot commit them; a hand-off of each build's pins to `2.0.0_SA_COO~P` would put a second seat inside every build. The
+gate is file-granular, so the row scope binds by reading: every other row stays ~P's, and the two seats do not build in the same
+minute (the later one merges forward).
