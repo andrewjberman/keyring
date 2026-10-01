@@ -83,7 +83,7 @@ re-imports the main tree, so phase A ships with the suite green.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>35</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>

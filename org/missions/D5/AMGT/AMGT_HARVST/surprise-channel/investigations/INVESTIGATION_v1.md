@@ -5467,6 +5467,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Nothing armed; the issuer re-runs AC2 on the merged tree."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S17",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T16:50Z",
+      "one_line": "ah-1 AC2 greps for lines that START with PASSED; a colourised pytest run (FORCE_COLOR set) prefixes an ESC sequence and the check FAILs a passing test.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AC2 prints a PASSED line containing the publisher name; its check is line.startswith(\"PASSED\") on the subprocess output of pytest -rA.",
+      "world_is": "In this worker shell FORCE_COLOR=3 is set, so pytest -rA writes ESC[32mPASSED ESC[0m lib/...::test_fixture_solve[bbg] even into a pipe; AC2 then prints 'AC2 RESULT: FAIL ... bbg: no PASSED fixture-solve test' although the test passed (1 passed). With FORCE_COLOR unset (env -u FORCE_COLOR) the same AC2 prints 'AC2 RESULT: PASS (0 failure(s))'. The check file and pytest.ini lie outside this order's paths, so nothing here can make the line colour-proof.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round35/checks/ah-1.AC2.py (the startswith test)",
+          "AC2 run with FORCE_COLOR=3 (FAIL) and with env -u FORCE_COLOR (PASS), both in worker ~91's phase B turn"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Fix is the issuer's: strip ANSI in the check, or pass --color=no / -p no:colour. The drain's AC2 re-run should run without FORCE_COLOR until then."
     }
   ]
 ```
