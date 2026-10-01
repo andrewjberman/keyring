@@ -79,6 +79,8 @@ Every opened timeline day (the `--day` step, the newest day and the first event)
 
 `--open-request <REQ-id>` (with `--client`) opens ONE listed analysis request on the Analysis tab, by `data-request-id`, else the first row whose state reads Ready, and writes `analysis-request.json` with what the dialog shows (status words, section blocks, the correction sentence) and the wait in ms, up to `REQUEST_DETAIL_CEILING_MS` (45,000). Opening a request issues GETs only.
 
+`--holdings-aggregates` reads every holdings answer the walk receives and writes `holdings-aggregates.json`: per selection, how many served `security_aggregates` items equal the sum of their ACTUAL member nodes (basis OBSERVED or ASSIGNED), how many equal the page's own fold (every security node of that id, a model's TARGET nodes included), how many page identities have no served aggregate, and whether `class_totals` plus the remainder equals the custody total. Counts only: no client name and no figure is written.
+
 Every `--client` search also records when the typed search ANSWERS (the box stops reading "Loading"), up to `SEARCH_ANSWER_CEILING_MS` (30,000 ms), in `search-timings.json`; the 2.5 s screenshot stays what a person sees first, and a slower answer gets its own `search-<client>-answered` step.
 
 The skill runs:

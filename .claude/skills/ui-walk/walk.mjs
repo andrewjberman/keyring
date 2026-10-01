@@ -45,6 +45,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--deep') opt.deep = true
   else if (a === '--model-scope') opt.modelScope = true
   else if (a === '--open-request') opt.openRequest = argv[++i]
+  else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
   else if (a === '--no-login') opt.login = false
   // Extra wait after every settle, for a read whose answer lands after networkidle (a retained Performance
   // reopen fires after the account switch, so a 1200 ms settle screenshots "Loading"). Default 0: unchanged.
@@ -560,6 +561,56 @@ async function pressAll(page, scopeSel, label, maxPresses = 18) {
 // the buttons are re-read each round) until a pick control appears, presses the first one, and records the scope
 // line, the map's chips, the Sleeve select and the table's row count. A pick is page state only: it sends nothing.
 const modelScopes = []
+// ---- --holdings-aggregates: the served per-security fold beside the page's own fold, per holdings answer ----------
+// (DSGN_IRPTV1 next-list 0c, walk-2 W2-11.) For every holdings response the walk receives, compare each served
+// `security_aggregates` item with (a) the sum of its ACTUAL member nodes (basis OBSERVED or ASSIGNED) -- what the
+// route says it folded -- and (b) the page's own fold, which sums EVERY security node of that id, a model's TARGET
+// nodes included. Counts only; no name and no figure of any client is written. `class_totals` plus the remainder is
+// checked against the custody total. One record per distinct selection path.
+const holdingsAggregates = []
+const seenHoldingsPaths = new Set()
+function readHoldingsAggregates(p, j) {
+  const d = j && j.data
+  if (!d || !Array.isArray(d.nodes) || seenHoldingsPaths.has(p)) return
+  seenHoldingsPaths.add(p)
+  const idOf = (n) => (n.security_id ? `${n.security_id.namespace}:${n.security_id.value}` : null)
+  const securities = d.nodes.filter((n) => n.node_kind === 'SECURITY' || n.node_kind === 'CASH')
+  const actual = securities.filter((n) => n.basis === 'OBSERVED' || n.basis === 'ASSIGNED')
+  const sum = (rows, f) => rows.reduce((t, n) => t + (typeof f(n) === 'number' ? f(n) : 0), 0)
+  const near = (a, b, tol) => typeof a === 'number' && typeof b === 'number' && Math.abs(a - b) <= tol
+  const rec = {
+    selection: p.split('/').pop().slice(0, 16),
+    security_nodes: securities.length, actual_nodes: actual.length, target_nodes: securities.filter((n) => n.basis === 'TARGET').length,
+    aggregates_served: Array.isArray(d.security_aggregates) ? d.security_aggregates.length : null,
+  }
+  if (Array.isArray(d.security_aggregates)) {
+    let amountEqActual = 0; let weightEqActual = 0; let amountEqPageFold = 0; let weightEqPageFold = 0
+    for (const a of d.security_aggregates) {
+      const id = `${a.security_id.namespace}:${a.security_id.value}`
+      const mine = actual.filter((n) => idOf(n) === id)
+      const all = securities.filter((n) => idOf(n) === id)
+      if (near(sum(mine, (n) => n.amount && n.amount.value), a.amount.value, 0.005)) amountEqActual += 1
+      if (a.weight === null || near(sum(mine, (n) => n.percentages && n.percentages.of_total), a.weight, 1e-6)) weightEqActual += 1
+      if (near(sum(all, (n) => n.amount && n.amount.value), a.amount.value, 0.005)) amountEqPageFold += 1
+      if (a.weight === null || near(sum(all, (n) => n.percentages && n.percentages.of_total), a.weight, 1e-6)) weightEqPageFold += 1
+    }
+    const servedIds = new Set(d.security_aggregates.map((a) => `${a.security_id.namespace}:${a.security_id.value}`))
+    const pageIds = new Set(securities.map(idOf).filter(Boolean))
+    Object.assign(rec, {
+      amount_equals_actual_sum: amountEqActual, weight_equals_actual_of_total_sum: weightEqActual,
+      amount_equals_page_fold: amountEqPageFold, weight_equals_page_fold: weightEqPageFold,
+      page_identities: pageIds.size, page_identities_with_no_served_aggregate: [...pageIds].filter((id) => !servedIds.has(id)).length,
+    })
+  }
+  if (Array.isArray(d.class_totals) && d.custody_totals && d.custody_totals.total_market_value) {
+    const classes = sum(d.class_totals, (c) => c.amount && c.amount.value)
+    const rest = d.class_totals_remainder && d.class_totals_remainder.amount ? d.class_totals_remainder.amount.value : null
+    rec.class_lines = d.class_totals.length
+    rec.remainder_weight = d.class_totals_remainder ? d.class_totals_remainder.weight : null
+    rec.classes_plus_remainder_equals_custody = rest === null ? null : near(classes + rest, d.custody_totals.total_market_value.value, 0.01)
+  }
+  holdingsAggregates.push(rec)
+}
 // ---- --open-request <REQ-id>: open ONE listed analysis request and read what its dialog shows -------------------
 // (IRPT RULINGS batch 61 item 6 / CTO condition 9: one READY request walked on the local build against the real
 // backend, sections on screen.) The row is found by `data-request-id`; when that id is not listed, the first row whose
@@ -745,7 +796,10 @@ try {
     netlog.push([req.method(), res.status(), p].join('\t'))
     if (!/\/api\//.test(p)) return
     let reason = null; let state = null; let ok = null
-    try { const j = await res.json(); ok = j.ok ?? null; state = j.status?.state ?? null; reason = j.status?.public_reason_code ?? null } catch { /* not json */ }
+    try {
+      const j = await res.json(); ok = j.ok ?? null; state = j.status?.state ?? null; reason = j.status?.public_reason_code ?? null
+      if (opt.holdingsAggregates && /\/investor-reporting\/holdings\//.test(p)) readHoldingsAggregates(p, j)
+    } catch { /* not json */ }
     if (res.status() >= 400 || ok === false || (reason && !/READY$/.test(reason))) apiIssues.push({ step, method: req.method(), path: p, http: res.status(), ok, state, reason })
   })
   await page.route('**/*', (route) => {
@@ -914,6 +968,7 @@ try {
   if (modelScopes.length) writeFileSync(path.join(OUT, 'model-scope.json'), JSON.stringify(modelScopes, null, 1))
   if (searchTimings.length) writeFileSync(path.join(OUT, 'search-timings.json'), JSON.stringify(searchTimings, null, 1))
   if (openedRequests.length) writeFileSync(path.join(OUT, 'analysis-request.json'), JSON.stringify(openedRequests, null, 1))
+  if (holdingsAggregates.length) writeFileSync(path.join(OUT, 'holdings-aggregates.json'), JSON.stringify(holdingsAggregates, null, 1))
   writeFileSync(path.join(OUT, 'lead-lists.json'), JSON.stringify({ schema_version: '1.0', tool: 'ui-walk', stamp, lists: leadLists }, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')
   writeFileSync(path.join(OUT, 'guard.tsv'), guard.join('\n') + '\n')
