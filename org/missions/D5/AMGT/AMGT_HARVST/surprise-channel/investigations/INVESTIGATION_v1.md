@@ -5245,6 +5245,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Recorded so the issuer reads any sa-run difference after that commit against this commit."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T12:55Z",
+      "one_line": "Z-W90-S4 disarmed: gold rebuilt over 212 securities @e0d3a13ef1; depth_census now takes gold's key set from the newest chatter_daily part and maps 89 of 89.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-af-3 AMENDMENT 1: the census's gold key set is what gold carries (newest chatter_daily part); AC2 needs MAPPED >= 80 of 89.",
+      "world_is": "depth_census on mention part date=2026-10-01/part-20261001T122711Z.parquet, daily part date=2026-10-01/part-20261001T123001Z.parquet: GOLD KEYS 212, MAPPED 89 of 89, 0 UNMAPPED, AT 50+ 6 of 89, AT 100+ 3 of 89, S3 WRITES 0; AC2 RESULT: PASS. The 21 names row Z-W90-S4 listed now map; no key was synthesized. 11 of the 21 newly mapped names read total=0 (gold rows exist, no 2026 mentions yet).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_census2.out and af3_census2.json",
+          "deliverables/2.0.0_SA_COO_H/round32/gold_rebuild_act_20261001T122401Z.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Supersedes the BLOCKING state of Z-W90-S4 (row not edited; append-only).",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
   ]
 ```
