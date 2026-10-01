@@ -101,6 +101,7 @@ Checker arms were exercised with a synthetic file, then removed:
 slot continues here after OA-e-5.
 
 <status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~14</slot>
 <fabric>site-z</fabric>
