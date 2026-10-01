@@ -1,7 +1,7 @@
 # MDPF_SECCLASS -- one canonical security classification -- status
 
 Seat `2.0.0_SA_COO~M` (CLAUDE). Contract `org/standards/MDPF_SECCLASS_CONTRACT.json`. Reviewer `3.0.0_SA_CVO` (not
-seated; its seating is asked of `0.0.0_AB_MSTR` by the CTO). As of 2026-10-01T05:5xZ.
+seated at the boundary; a CVO deliverable appeared on CLOUD at ~06:2xZ). As of 2026-10-01T06:5xZ.
 
 Mode: FAST. Lease `MDPF_SECCLASS`, `org/mcp/drive-mode.log` line 36, until 2026-10-01T13:39Z, on 1.0.0_SA_CTO
 DECISION 103498 (a) under Andrew-direct 2026-10-01 ~04:2xZ (record @c48af273cc). No round-6 analysis is written; the
@@ -40,13 +40,17 @@ scheduled gold fire and the first 22:10Z silver fire accept it, then the page re
 
 ## Next-list, in order
 
-1. **BD_THREAD_R3 window** (thread-breaking; both halves signed). Opens when no BD gold run is in progress and the
-   runner is stopped; it must leave the 22:10Z silver fire more than 30 minutes away and finish before the 23:00Z
-   gold fire. One ledger entry, opened first. Order: the ONE `safe-deploy` call, then the document publish.
-2. **W12-S2: BUILT @a96e00c279, HELD on branch `coo-m-r30`.** `ETFClassifier.classify_holdings` no longer raises
-   KeyError on a class beyond the four it seeds (the client and its two copies, identical at blob 4cbbb67ae5; 7
-   tests). It merges to CLOUD after item 1's deploy step: the client is one of the nine signed candidate files
-   (signed at blob d7195edf5a), and item 1 ships the signed bytes. The Black Diamond copy then trails CLOUD by this
+1. **BD_THREAD_R3 window: IN FLIGHT.** Ledger `secclass-bd-thread-r3-m-20261001` (opened 06:09Z @8fc4150c9f).
+   Legs P, S1, L0 CLOSED @4f10007bde: the six thread files and three shared modules are on
+   `s3://opal-data-bd/code/` (ETag equals the signed md5 on 9 of 9, deployed 06:11-06:13Z) and silver document
+   version 5 is live (06:16Z). Leg X: the exercise run was fired 06:33:00Z through `bd-gold-trigger`
+   (`mode incremental`); it reaches C_06 about 70 minutes in and ends about 08:40Z. Restore targets:
+   `MDPF_SECCLASS_M/BD_THREAD_R3_PRIOR_VERSIONS_20261001.json.gz` @c6c769bb3d (53,927 keys) and the six code
+   VersionIds in leg P. If C_06, D_03 or D_04 refuses at import, the code rollback runs in the same gap. Then
+   A2 (22:10Z silver fire), A1 (23:00Z gold fire), B4 (the page read for z08327149).
+2. **W12-S2: DONE on CLOUD @a96e00c279** (merged 0b7b794514, after item 1's deploy step shipped the signed
+   bytes). `ETFClassifier.classify_holdings` no longer raises KeyError on a class beyond the four it seeds (the
+   client and its two copies, identical at blob 4cbbb67ae5; 7 tests). The Black Diamond copy trails CLOUD by this
    one line in a method with no caller; it catches up at item 4's deploy.
 3. **The MODEL_ROWS half.** With items W12-S1 and W12-S2 the census reads
    `MODEL-READER-CENSUS readers=34 tolerates=26 read_only=8 crashes=0 refuses=0 fails_contract=0` on the branch.
@@ -63,7 +67,7 @@ scheduled gold fire and the first 22:10Z silver fire accept it, then the page re
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| The BD gold runner stopped | the 04:00Z scheduled run | EC2 state of `i-01003b035d2988dfb` | AWAITED: a watch is armed; running at 05:37Z |
+| The exercise run ends | the run fired 06:33:00Z | EC2 state of `i-01003b035d2988dfb` and its log on `s3://opal-data-bd/logs/gold-layer/` | AWAITED: a watch is armed |
 | Andrew's call: may a per-firm value FILL an absent `instrument_kind` on an existing row | Andrew (CTO 103218 routed it) | -- | AWAITED; no item above depends on it |
 
 ## Parked
