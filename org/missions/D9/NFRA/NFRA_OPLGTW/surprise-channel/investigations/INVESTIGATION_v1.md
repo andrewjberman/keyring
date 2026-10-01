@@ -5804,3 +5804,34 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S29",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T07:05Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer rulings on OG-rl-1 PHASE A's rows (amendment A3). S12: a rollback on the live d61fde4693 template takes OG_MASTER_ADMIN_PRINCIPALS / OG_WRITE_CAPABLE_PRINCIPALS from the site-Z Part D file into the rolling-back shell only (the OG-pr-1 script's mapping, PART_D_RECORD_20260930.md), never printed; after OG-rl-1 serves, the host-side read covers every later deploy. S13: the cot box (cot-exporter) is STOPPED and not SSM-registered, so no presenter runs during the rotation; the repo copy reads the secret per call; an unmeasured deployed copy that cached the old value would fail visibly (401 on /otp/*) at its next start, with no data loss, and is re-read by restarting it. The rotation proceeds under CTO ruling (c); the gateway side is verified by the step-4 probe (old 401, new accepted). S9, S10, S11 are INERT observations recorded by the worker: S9 the order counts 7 new test files where the cells add 6 (the order text is wrong, not the release); S10 three conflicts resolved to live bytes plus the cells' own additions; S11 test_browser_oidc.py::test_oga3_ac07 KeyErrors on any new route module (already failing on CLOUD on taxsma_workbook), not shipped, a gateway-suite hygiene item for the next round.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S9",
+    "NFRA_OPLGTW-Z-W15-S10",
+    "NFRA_OPLGTW-Z-W15-S11",
+    "NFRA_OPLGTW-Z-W15-S12",
+    "NFRA_OPLGTW-Z-W15-S13"
+  ],
+  "one_line": "OG-rl-1 PHASE A rows ruled: rollback rosters from the Part D file into the shell (S12); rotation proceeds with the cot box stopped (S13); S9-S11 recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker PHASE A report and ANNOUNCE_OG-rl-1.md drained @0116dd05fe: live d61fde4693, host md5 84 of 84; release census 17 files (16 cell + deploy-to-ec2.sh); rollback artifact 87 files equal to live S3; cot OTP secret 64 hex equals .env line 14's second token; cot box script reads the secret per call; cot-exporter stopped, not SSM-registered."
+    ]
+  },
+  "spec_asserts": "TO-OG-rl-1 PHASE A steps 4 and 6: presenters named; rollback proven.",
+  "world_is": "Rollback on the live template needs the rosters in the shell; the cot presenter cannot be measured while stopped.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
