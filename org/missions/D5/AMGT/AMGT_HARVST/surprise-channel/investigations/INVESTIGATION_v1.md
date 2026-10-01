@@ -5334,6 +5334,74 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Every disarm is by a landed commit; none is a ruling that limits a FWD claim."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T13:45Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W91-S16",
+      "one_line": "ag-1: 6 of 6 fresh-profile in-profile Dow Jones sign-ins (3 wsj, 3 barrons) met NO DataDome challenge and renewed 200; no wsj/barrons challenged pass was earned, AC2 FAIL.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order ag-1 section 0: the sign-in route is where DataDome meets a new browser, so a fresh profile's renew() meets the DataDome slider and solve() passes it (AC2 needs one wsj/barrons met-and-passed challenge).",
+      "world_is": "Under one InputSourceMonitor window (13:34:33Z..13:40:08Z, hardware 0, injected 24) each of wsj a1/a2/a3 and barrons a1/a2/a3 (fresh profile folders under deliverables/0.9.0_WK_AMGT_HARVST~91/r34-profiles/<pub>/aN) ran verification.renew(): wsj a1 and a3 and barrons a1-a3 read stale, signed in inside the profile and renewed true (account check 200), no DataDome control visible, solve() never called (solves=[] in every attempt); wsj a2 raised TimeoutError Page.goto 30000 ms before sign-in (no challenge, no sign-in). Requests used: wsj 9 of 15, barrons 12 of 15 (a request = a TabSession open, an in-tab fetch, or a goto). The record ag1_challenged_pass.json says challenge_met none for both; AC2 prints 'CHALLENGED PASSES: 0' and FAIL. The round-32 'Access is temporarily restricted' block was not reproduced by a clean sign-in; no challenge was forced. AC1 5 passed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ag1_detail.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ag1_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ag1_ac2_output.txt"
+        ]
+      },
+      "notes": "The unproven arm for wsj/barrons is a challenge met on the harvest path (the issuer's wsj driver run) rather than at sign-in; the issuer decides whether a challenged pass can be earned there under a monitor. No solver defect observed (the solver was never reached)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S6",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T13:45Z",
+      "one_line": "ag-2: neither ft's Security Verification nor sa's PerimeterX press-and-hold was MET in six fresh anonymous profiles, so AC2 (a challenged pass) cannot be earned and no ft solver was built.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order cell 0 / round-33 item 2: ft shows a Security Verification interstitial to browsers it does not trust; sa's web origin can show a PerimeterX press-and-hold; AC2 needs a publisher of (ft, sa) with a challenge met and passed under a hardware-0 monitor window.",
+      "world_is": "Phase A (fresh profile each, monitor hardware 0 / injected 0): ft home, ft search?q=Boeing, an ft article (4 requests), sa home, sa /symbol/BA, sa /market-news (3 requests) -- every page rendered normally, no bot-check signature on ft, no visible control on sa. Phase B (3 fresh profiles per publisher, 9 requests each, collector-shaped in-tab fetches of ft search and sa api/v3/symbols/ba/news included, monitor window 13:38:40Z..13:39:39Z, hardware 0, injected 12): every response 200 with no signature on ft and sa's APIs, no slider/press-and-hold control on any page. ag2_challenged_pass.json records both publishers challenge_met none. No ft solver was written: no Security Verification DOM was ever seen to build one from. The order's own wording ('if met') is the case taken.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_explore_1.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_explore_2.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_phaseB_raw.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_AC2.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "What would pass it: a profile/route ft actually challenges (the issuer's backfill sessions, or a higher request rate than 9 per profile -- both outside this order's bounds), or sa's REST route under its residential arm refused by PerimeterX; the challenge must appear before a solver can be written from its DOM."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S7",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T13:45Z",
+      "one_line": "bot_check.signature_of reads a normal sa page as 'perimeterx': the page carries a hidden px-captcha mount, so a page-text signature check on sa is a false positive.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "bot_check SIGNATURES: perimeterx = px-captcha|perimeterx|/_px../ over the body marks a bot check.",
+      "world_is": "seekingalpha.com home (1.07 MB) and /symbol/BA and /market-news rendered normally (real titles) yet signature_of returns 'perimeterx' on all three, from <div id=\"px-captcha-wrapper\" class=\"... hidden ...\"> plus an inline .px-captcha-visible CSS rule; no visible #px-captcha, no hold-control text. In-tab fetches of sa's REST news API returned 200 with no signature. Any future sa wiring that confirms by page text (confirm=control_gone or signature_of on a page body) would read a passed page as challenged.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_sa_noncheck_excerpt.html",
+          "lib/opal_data_harvest/test_ag2_ft_sa_solvers.py::test_plant_ii_sa_hidden_perimeterx_mount_is_not_a_press_and_hold_control",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_explore_2.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not touched (lib/opal_data_harvest/bot_check.py is outside this order's paths)."
     }
   ]
 ```

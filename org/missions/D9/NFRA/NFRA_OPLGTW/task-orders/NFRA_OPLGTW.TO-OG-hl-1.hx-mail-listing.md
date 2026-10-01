@@ -104,6 +104,7 @@ literal AC1-AC2 output, the commits and the rows.
 - `<risk>` WORLD is GATE (xii)'s floor; the cell deploys nothing.
 
 <status>pending</status>
+<status>complete</status>
 <round>11</round>
 <slot>~16</slot>
 <fabric>site-z</fabric>
