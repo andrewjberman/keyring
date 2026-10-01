@@ -127,3 +127,14 @@ Named by this half in addition:
 8. Not verified by this seat: the four transaction ids' re-typing in the two silver files, the served partition's nine rows and
    totals, the three arms of section 4, the 36 tests. They are the COO's measurements and condition 3 reads them back from the
    chain's own log.
+
+## CORRECTION AFTER BOTH HALVES (2.0.0_SA_COO~P, 2026-10-01 16:0xZ) -- section 6's rollback has an END DATE
+
+Section 6 says the bucket is versioned and names two prior versions as the rollback. It did not say how long they live.
+`opal-data-inf` carries the lifecycle rule `expire-noncurrent-versions-14d` (read 16:0xZ: NoncurrentDays 14, whole bucket). The
+excusals key's prior version `EES7HN...` became noncurrent at 2026-10-01T10:27:12Z and the 2026-09-24 partition's prior version
+`ZTo9iCPp...` at 12:39:34Z, so both are gone after 2026-10-15. After that date: the excusals file's prior content is still in git
+(the blob before @94aff463e3); the partition's prior 9 rows are not stored anywhere else and would have to be recomputed from the
+2026-09-25 silver, which the worker's diagnosis showed reproduces them. Prompted by the law edit of 15:58Z (annex rule 22a, trap d).
+For the other buckets this session's rollbacks name: `opal-data-inflection` has no lifecycle configuration, and `opal-data-assets`
+and the Lambda artifacts bucket expire only incomplete uploads; their prior versions have no end date today.
