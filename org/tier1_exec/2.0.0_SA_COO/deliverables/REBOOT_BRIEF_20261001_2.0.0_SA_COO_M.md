@@ -12,7 +12,7 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 - IRPT_BCKEND row S259 (Inflection split accounts list no positions, 91 of 884 accounts, 49.98 M USD): ruled YES by CTO batch 96
   (msg 103859). Built, tested and run locally on branch `coo-m-r30` (code @07ee87653e, NOT on CLOUD). Packet
   `IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` @cab9bf875d: COO half signed on the local build
-  (security rows 156.12 -> 206.10 M USD, 91 of 91 accounts carry positions, 793 others unchanged); CTO half asked 16:4xZ.
+  (security rows 156.12 -> 206.10 M USD, 91 of 91 accounts carry positions, 793 others unchanged); CTO half SIGNED 16:5xZ (see section 4).
   After signature and after the reboot: merge, open ledger, deploy the route (`investor-reporting/holdings`, safe-apply) FIRST,
   then `safe-deploy --mint-bundle irpt_holdings_inf`, QA fire, then the 14:15Z publication and one walk.
 - MDPF_SECCLASS Cottonwood seed rows: half `MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_COT_SEED_ROWS_20261001.md`
@@ -40,7 +40,11 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 
 ## 4. Owed
 - I owe 1.0.0_SA_CTO: the Cottonwood re-point packet (batch 93 item 4).
-- Others owe me: the CTO half on the 19 seed rows (my msg 16:13Z) and on the split-account packet (my msg 16:4xZ).
+- Others owe me: the CTO half on the 19 seed rows (my msg 16:13Z).
+- SIGNED, BOTH HALVES, TO DEPLOY AFTER THE REBOOT: the split-account packet (branch `coo-m-r30` @cab9bf875d, blob b645c6a3fa)
+  and its CTO half `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` @07e4769540
+  (msg 103916). Conditions: ROUTE FIRST; the QA fire's reconcile for 49 Financial and Cottonwood is read and QUOTED in the
+  ledger (the guard change is shared); leg S counts the accounts in each branch at the next publication.
 
 ## 5. Relaunch
 - RESPAWN: yes -- three ledger entries close on tonight's runs and two packets are owed.
