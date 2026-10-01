@@ -6227,3 +6227,32 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S37",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T13:50Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-hl-1 complete (drained @9c62463b78; issuer re-grade AC1 12 of 12, AC2 HL ok PASS on CLOUD). W16-S2: the listing path got its own allowlist tuple selected only by the listing handler, so the by-id routes still refuse a bare /me/messages (test_mail_route's fail-closed test stays green) -- stricter than one shared tuple and inside v1.4's 'the allowlist gains ^/me/messages$'; accepted. W16-S3: a worktree-only sparse-cone addition (data/transcripts/scripts/outlook), no tracked change; recorded.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W16-S2",
+    "NFRA_OPLGTW-Z-W16-S3"
+  ],
+  "one_line": "OG-hl-1's two INERT rows accepted: a per-route listing allowlist (stricter) and a worktree-only sparse cone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "hl1.AC1/AC2 re-run on CLOUD after the drain @9c62463b78: 12 of 12; HL ok; ms_ingest 0."
+    ]
+  },
+  "spec_asserts": "TO-OG-hl-1 step 3: the allowlist gains exactly ^/me/messages$.",
+  "world_is": "It does, on its own tuple used only by the listing handler.",
+  "notes": "The listing's Graph $filter/$orderby shape and $skiptoken continuation are tested against stubs only; OG-rl-2 AC1 (live) is their first real test.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
