@@ -1,0 +1,162 @@
+{
+ "function": "irpt-ycharts-generate",
+ "ref": "21eca74f402c99d5db10e59529a86f8dc03e6659",
+ "closure": [
+  {
+   "member": "served.py",
+   "verdict": "EQUAL",
+   "bundled": "455cd77ea46e71ca20ed9383abfbba782694e2dabf7823713fa0e9459e0be4de",
+   "at_ref": "455cd77ea46e71ca20ed9383abfbba782694e2dabf7823713fa0e9459e0be4de",
+   "repo_path": "infra/aws/lambda/investor-reporting/_authz/served.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "verdict": "EQUAL",
+   "bundled": "0ec4a717f2aa2c127df62f5bf0f0f3f56164359875b992620b2006e3d4af9557",
+   "at_ref": "0ec4a717f2aa2c127df62f5bf0f0f3f56164359875b992620b2006e3d4af9557",
+   "repo_path": "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "enforce.py",
+   "verdict": "EQUAL",
+   "bundled": "4245b5f8aded61b62ca595d4332da307684090a1a395c4f66bf0fa236ac16b3b",
+   "at_ref": "4245b5f8aded61b62ca595d4332da307684090a1a395c4f66bf0fa236ac16b3b",
+   "repo_path": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "errors.py",
+   "verdict": "EQUAL",
+   "bundled": "b60f25ccaa706b7abd54305339d5e39a3e4c2e01e151f79359404d16bc19177b",
+   "at_ref": "b60f25ccaa706b7abd54305339d5e39a3e4c2e01e151f79359404d16bc19177b",
+   "repo_path": "infra/aws/lambda/investor-reporting/_authz/errors.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "grant.py",
+   "verdict": "EQUAL",
+   "bundled": "2756be537b165b18ff4e384d0f4936faf6f63c5d4cb5a0faac98e2b430568146",
+   "at_ref": "2756be537b165b18ff4e384d0f4936faf6f63c5d4cb5a0faac98e2b430568146",
+   "repo_path": "infra/aws/lambda/investor-reporting/_render_identity/grant.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "ids.py",
+   "verdict": "EQUAL",
+   "bundled": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6",
+   "at_ref": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6",
+   "repo_path": "infra/aws/lambda/investor-reporting/_ids/ids.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "interactive_access.py",
+   "verdict": "EQUAL",
+   "bundled": "bba07a3f4eeb947bf33845653bde95d47bbb8037d65db4059f4f8b70ebabdf56",
+   "at_ref": "bba07a3f4eeb947bf33845653bde95d47bbb8037d65db4059f4f8b70ebabdf56",
+   "repo_path": "infra/aws/lambda/investor-reporting/_scope/interactive_access.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "loaders.py",
+   "verdict": "EQUAL",
+   "bundled": "763f0a0d4445481c99999dcada44eaab5a8eedc314e2599b4859e4fff06415be",
+   "at_ref": "763f0a0d4445481c99999dcada44eaab5a8eedc314e2599b4859e4fff06415be",
+   "repo_path": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "owner_reads.py",
+   "verdict": "EQUAL",
+   "bundled": "f21d26dcce7c46bf401dce38a2198c7b68e8e9c9c4192f99325b6f446d0da0b6",
+   "at_ref": "f21d26dcce7c46bf401dce38a2198c7b68e8e9c9c4192f99325b6f446d0da0b6",
+   "repo_path": "infra/aws/lambda/investor-reporting/_scope/owner_reads.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "prospect.py",
+   "verdict": "EQUAL",
+   "bundled": "f556b0997dfa73109532abfb1d038c5ea0d9242f3a8c8ea25478f70bc1e5e06e",
+   "at_ref": "f556b0997dfa73109532abfb1d038c5ea0d9242f3a8c8ea25478f70bc1e5e06e",
+   "repo_path": "infra/aws/lambda/investor-reporting/_scope/prospect.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "resolve.py",
+   "verdict": "EQUAL",
+   "bundled": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb",
+   "at_ref": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb",
+   "repo_path": "infra/aws/lambda/investor-reporting/_scope/resolve.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "routetable.py",
+   "verdict": "EQUAL",
+   "bundled": "fbd20fb97a64c84c71083d5b35509098a4ecd3d6f9e609d831a13a38a700bfba",
+   "at_ref": "fbd20fb97a64c84c71083d5b35509098a4ecd3d6f9e609d831a13a38a700bfba",
+   "repo_path": "infra/aws/lambda/investor-reporting/_authz/routetable.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "maintained_sources.py",
+   "verdict": "EQUAL",
+   "bundled": "774eca9bde60a1dd4e9c1aaffc73b3b9ae41fbe85914a28cc4b506d3c9edba61",
+   "at_ref": "774eca9bde60a1dd4e9c1aaffc73b3b9ae41fbe85914a28cc4b506d3c9edba61",
+   "repo_path": "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "keys.py",
+   "verdict": "EQUAL",
+   "bundled": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a",
+   "at_ref": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a",
+   "repo_path": "infra/aws/lambda/investor-reporting/_keys/keys.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "custody.py",
+   "verdict": "EQUAL",
+   "bundled": "23cda6b0e3dd88df3b837545f94efacf600db857a5509ddd458ff40cc7870394",
+   "at_ref": "23cda6b0e3dd88df3b837545f94efacf600db857a5509ddd458ff40cc7870394",
+   "repo_path": "infra/aws/lambda/investor-reporting/_scope/custody.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "selection.py",
+   "verdict": "EQUAL",
+   "bundled": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af",
+   "at_ref": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af",
+   "repo_path": "infra/aws/lambda/investor-reporting/_scope/selection.py",
+   "pin": "21eca74f40"
+  },
+  {
+   "member": "selection_store.py",
+   "verdict": "EQUAL",
+   "bundled": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c",
+   "at_ref": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c",
+   "repo_path": "infra/aws/lambda/investor-reporting/_scope/selection_store.py",
+   "pin": "21eca74f40"
+  }
+ ],
+ "outside_bundle": [
+  "__future__",
+  "base64",
+  "boto3",
+  "copy",
+  "dataclasses",
+  "datetime",
+  "functools",
+  "hashlib",
+  "importlib",
+  "json",
+  "opal_naming",
+  "os",
+  "pathlib",
+  "re",
+  "sys",
+  "threading",
+  "time",
+  "uuid"
+ ]
+}

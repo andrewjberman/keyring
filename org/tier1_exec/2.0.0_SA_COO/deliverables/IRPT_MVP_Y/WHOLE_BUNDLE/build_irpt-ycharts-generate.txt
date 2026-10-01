@@ -1,0 +1,37 @@
+
+Lambda Build-and-Upload
+  Pipeline:  investor-reporting
+  Bucket:    s3://opal-313476888478-lambda-artifacts/investor-reporting/
+  JSON tool: node
+  Function:  irpt-ycharts-generate (single-function mode)
+
+Found 1 function(s) to build
+
+-> irpt-ycharts-generate
+  Source:  infra/aws/lambda/investor-reporting/ycharts/generate
+  Files:   job.py recipe.py transport.py templates.json enforce.py errors.py gate.py keys.py resolve.py ids.py firm_destination_policy.json firm_registry.json settings.json fixtures/har/FIXTURE_MANIFEST.json fixtures/har/collection.json fix
+  OK: import-closure -- 61 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer. (Nested lazy imports exempt by design.)
+  SKIP: manifest-index gate -- this BUILD_MANIFEST declares no declared_blobs,
+        so there is no index reference to check against (not a pass).
+  SHA256:  arC65KbDPPssn2UXFzAP/U+zzXgIiS/fIddCFR28a6M=
+  Size:    552K
+  ✓ s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-ycharts-generate.zip (write VERIFIED: size=563636, sha256 metadata match)
+
+================================================
+Complete — 1 function(s) built and uploaded
+
+Source map updated with artifact_s3_key + artifact_sha256.
+
+Next steps:
+  git add infra/aws/lambda/ci/lambda-source-map.json
+  git commit -m 'ci: upload artifacts for investor-reporting'
+  cd infra/aws/terraform/investor-reporting
+  .tools/terraform.exe plan    # should show Lambda updates
+  .tools/terraform.exe apply
+  .tools/terraform.exe plan    # must show No changes
+  bash infra/aws/lambda/ci/record-terraform-deploy.sh investor-reporting --version investor-reporting-vX.Y.Z \
+       --author "{your-serial} <{your-serial}@opal.agent>"
+  # --author is REQUIRED for correct attribution: record-terraform-deploy
+  # commits, and its commit must be authored by a permitted agent serial.
+  # Omitting it derives the serial from .comp-graph/.agent_context (shared,
+  # best-effort) -- pass it explicitly to be sure.

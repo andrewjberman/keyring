@@ -1,0 +1,183 @@
+{
+ "label": "BEFORE",
+ "at": "2026-10-01T06:20:46.249928Z",
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "rows": [
+  {
+   "function": "irpt-status",
+   "probe": "status-summary",
+   "http": 200,
+   "ok": false,
+   "operation": "status-summary",
+   "state": "UNAVAILABLE",
+   "reason": "NOT_FOUND",
+   "business_date": "2026-09-22",
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "firm_id",
+    "ok",
+    "operation",
+    "status"
+   ]
+  },
+  {
+   "function": "irpt-status",
+   "probe": "status-job",
+   "http": 200,
+   "ok": null,
+   "operation": "status-job",
+   "state": "UNAVAILABLE",
+   "reason": "ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE",
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "actions",
+    "operation",
+    "public_reason_code",
+    "source_dates",
+    "state"
+   ]
+  },
+  {
+   "function": "irpt-status",
+   "probe": "request-history",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-history",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "items",
+    "next_cursor"
+   ],
+   "count_items": 13
+  },
+  {
+   "function": "irpt-status",
+   "probe": "request-read",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "identity"
+   ]
+  },
+  {
+   "function": "irpt-status",
+   "probe": "sections-by-request",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-report",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "extraction_coverage",
+    "extraction_validation",
+    "request_ref",
+    "sections",
+    "undated_sections"
+   ],
+   "count_sections": 76
+  },
+  {
+   "function": "irpt-status",
+   "probe": "sections-by-report",
+   "http": 200,
+   "ok": false,
+   "operation": "analysis-report",
+   "state": "UNAVAILABLE",
+   "reason": "INVALID_INPUT",
+   "business_date": null,
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "firm_id",
+    "ok",
+    "operation",
+    "status"
+   ]
+  },
+  {
+   "function": "irpt-ycharts-generate",
+   "probe": "analysis-own-firm",
+   "http": 200,
+   "ok": false,
+   "operation": "analysis-requests",
+   "state": "UNAVAILABLE",
+   "reason": "INVALID_INPUT",
+   "business_date": "2026-09-22",
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "firm_id",
+    "ok",
+    "operation",
+    "status"
+   ]
+  },
+  {
+   "function": "irpt-ycharts-generate",
+   "probe": "analysis-foreign-firm",
+   "http": 200,
+   "ok": false,
+   "operation": "analysis-requests",
+   "state": "UNAVAILABLE",
+   "reason": "INVALID_INPUT",
+   "business_date": "2026-09-25",
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "firm_id",
+    "ok",
+    "operation",
+    "status"
+   ]
+  }
+ ]
+}

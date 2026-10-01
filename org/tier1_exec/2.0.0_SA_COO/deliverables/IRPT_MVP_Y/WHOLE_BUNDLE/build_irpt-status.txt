@@ -1,0 +1,35 @@
+
+Lambda Build-and-Upload
+  Pipeline:  investor-reporting
+  Bucket:    s3://opal-313476888478-lambda-artifacts/investor-reporting/
+  JSON tool: node
+  Function:  irpt-status (single-function mode)
+
+Found 1 function(s) to build
+
+-> irpt-status
+  Source:  infra/aws/lambda/investor-reporting/ops
+  Files:   status.py status_loader.py manifests.py enforce.py errors.py resolve.py ids.py keys.py handler.py checkpoint.py entry.py served.py loaders.py data/custodian_key_seam.json raw_keys.json firm_registry.json selection.py selection_st
+  OK: import-closure -- 34 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer. (Nested lazy imports exempt by design.)
+  SHA256:  2V7xV1+zII4+g6tV722Tk5M9LWJFMzLShyjq6Q+v/J4=
+  Size:    320K
+  ✓ s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-status.zip (write VERIFIED: size=326708, sha256 metadata match)
+
+================================================
+Complete — 1 function(s) built and uploaded
+
+Source map updated with artifact_s3_key + artifact_sha256.
+
+Next steps:
+  git add infra/aws/lambda/ci/lambda-source-map.json
+  git commit -m 'ci: upload artifacts for investor-reporting'
+  cd infra/aws/terraform/investor-reporting
+  .tools/terraform.exe plan    # should show Lambda updates
+  .tools/terraform.exe apply
+  .tools/terraform.exe plan    # must show No changes
+  bash infra/aws/lambda/ci/record-terraform-deploy.sh investor-reporting --version investor-reporting-vX.Y.Z \
+       --author "{your-serial} <{your-serial}@opal.agent>"
+  # --author is REQUIRED for correct attribution: record-terraform-deploy
+  # commits, and its commit must be authored by a permitted agent serial.
+  # Omitting it derives the serial from .comp-graph/.agent_context (shared,
+  # best-effort) -- pass it explicitly to be sure.

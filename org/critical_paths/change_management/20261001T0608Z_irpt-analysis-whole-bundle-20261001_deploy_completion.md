@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| B1 | verify | both bundles built at one commit, gated and uploaded | every member equals the pin; served.py import closure 0 stale; the four standing gates on the built zips; S3 versions read back |  | OPEN |
+| B1 | verify | both bundles built at one commit, gated and uploaded | every member equals the pin; served.py import closure 0 stale; the four standing gates on the built zips; S3 versions read back | Both built by build-and-upload.sh from a private worktree at 0e9cfbf9ff (tree 21eca74f40 plus the re-pinned source map; no skip flag). irpt-ycharts-generate: sha256 arC65KbDPPssn2UXFzAP/U+zzXgIiS/fIddCFR28a6M=, 563636 bytes, S3 version J52XmUEjOQihij3Zam1B.EAeW3GXA7yr, downloaded by version hash equal; 112 members, 111 the pin's bytes (the other is the replay fixture report.pdf); served.py closure 0 of 17 differ; sibling interface 108 calls 0 findings; module census FAIL none; cold start PASS on two routes; offline submit proof ACCEPTED, 9 writes captured. irpt-status: sha256 2V7xV1+zII4+g6tV722Tk5M9LWJFMzLShyjq6Q+v/J4=, 326708 bytes, S3 version m1LolBKFxtfUUbodMML8ZuM.Wfo6Op.C, hash equal; 45 of 45 members the pin's bytes; closure 0 of 15 differ; 104 calls 0 findings; module census FAIL none; cold start and owner-refusal arm PASS. Suites at the pin: generate 314, intake 253, _scope 207, _contracts 184, ops 185 passed; reports 88 passed 1 failed (test-path defect); _authz 6 failed (row W98-S1, not this move). Source map @3617b1001d. Nothing applied. | CLOSED 20261001T063159Z |
 | G1 | activation | dynamodb Scan on etf-classifications for irpt-ycharts-generate-role, grant first | targeted safe-apply on the inline policy alone; simulate-principal-policy allowed |  | OPEN |
 | F1 | activation | irpt-ycharts-generate code pointer | both halves at HEAD; targeted safe-apply 0 add 1 change 0 destroy; CodeSha256 equals the built artifact |  | OPEN |
 | F2 | activation | irpt-status code pointer | both halves at HEAD; targeted safe-apply 0 add 1 change 0 destroy; CodeSha256 equals the built artifact |  | OPEN |
@@ -22,3 +22,4 @@
 ## Log
 
 - 20261001T060817Z OPENED by 2.0.0_SA_COO~Y with 6 leg(s)
+- 20261001T063159Z LEG B1 closed: Both built by build-and-upload.sh from a private worktree at 0e9cfbf9ff (tree 21eca74f40 plus the re-pinned source map; 

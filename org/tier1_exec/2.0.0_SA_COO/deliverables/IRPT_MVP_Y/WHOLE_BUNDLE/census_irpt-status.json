@@ -1,0 +1,410 @@
+{
+ "function": "irpt-status",
+ "pin": "21eca74f402c99d5db10e59529a86f8dc03e6659",
+ "live_code_sha256": "ZYr+IDMpN0vtwnpxz+kOXKDMcjNpLrbbHdRm4TZerkY=",
+ "live_zip_hashes_to_it": true,
+ "live_members": 43,
+ "pin_members": 45,
+ "identical": 28,
+ "eol_only": [],
+ "changed": [
+  "enforce.py",
+  "entry.py",
+  "errors.py",
+  "firm_registry.json",
+  "handler.py",
+  "infra/logic/registry/exemptions.json",
+  "infra/logic/registry/remediations.json",
+  "infra/logic/registry/scopes.json",
+  "infra/logic/registry/systems.json",
+  "lib/opal_naming.py",
+  "loaders.py",
+  "owned_report.py",
+  "served.py",
+  "status.py",
+  "status_installed.py"
+ ],
+ "added": [
+  "canonical_profile_reads.py",
+  "maintained_sources.py"
+ ],
+ "removed": [],
+ "history": [
+  {
+   "member": "enforce.py",
+   "source": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+   "live_equals": "e9311289b1",
+   "ahead": [
+    [
+     "755c13bc19",
+     "fix(IRPT_BCKEND export B1, 2.0.0_SA_COO~P): an Opal user (OPAL_GLOBAL, no advisor id) can export and"
+    ],
+    [
+     "fe854ce6f1",
+     "fix(IRPT_BCKEND C-S219, 2.0.0_SA_COO~P): a RENDER_DELEGATE reads only the path ids its bundle pins, "
+    ]
+   ]
+  },
+  {
+   "member": "entry.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/entry.py",
+   "live_equals": "e0f52fa041",
+   "ahead": [
+    [
+     "bd52efb246",
+     "feat(IRPT_BCKEND export B0 part 2, 2.0.0_SA_COO~P): two of the three read functions (performance, st"
+    ]
+   ]
+  },
+  {
+   "member": "errors.py",
+   "source": "infra/aws/lambda/investor-reporting/_authz/errors.py",
+   "live_equals": "48313e9c0e",
+   "ahead": [
+    [
+     "4fffe13f01",
+     "fix(2.0.0_SA_COO~P): _authz public log line prints the code the answer carries (CTO 100681/100696; c"
+    ]
+   ]
+  },
+  {
+   "member": "firm_registry.json",
+   "source": "data/firm_registry.json",
+   "live_equals": "39cbad4214",
+   "ahead": [
+    [
+     "8e9ed1b539",
+     "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VE"
+    ],
+    [
+     "f13d9e9222",
+     "integrate(0.0.0_AB_MSTR): transcripts STEP 3 -- scopes.json transcripts bucket_provisioned -> true +"
+    ],
+    [
+     "73896b6c42",
+     "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system tea"
+    ]
+   ]
+  },
+  {
+   "member": "handler.py",
+   "source": "infra/aws/lambda/investor-reporting/directory/handler.py",
+   "live_equals": "48313e9c0e",
+   "ahead": [
+    [
+     "49b935c213",
+     "fix(DSGN_IRPTV1 UIR-07, 2.0.0_SA_COO~P): the page's header search is browse(q) -- an exact full-name"
+    ],
+    [
+     "1068a4b5a5",
+     "fix(DSGN_IRPTV1 UIR-07, 2.0.0_SA_COO~P): directory search ranks an exact full-name match first, in e"
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/exemptions.json",
+   "source": "infra/logic/registry/exemptions.json",
+   "live_equals": "845343f925",
+   "ahead": [
+    [
+     "8b4c15c6ba",
+     "registry(4.0.0_SA_CRO): admit irpt-holdings-role by exact name on the three firm buckets' fence"
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/remediations.json",
+   "source": "infra/logic/registry/remediations.json",
+   "live_equals": "3ea3fec204",
+   "ahead": [
+    [
+     "fd3b3b7bf2",
+     "registry(4.0.0_SA_CRO): ETFS_CANON remediation row + tension map item 8, applying the CTO relay patc"
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/scopes.json",
+   "source": "infra/logic/registry/scopes.json",
+   "live_equals": "14b52ca13a",
+   "ahead": [
+    [
+     "0146e0c954",
+     "merge(0.0.0_AB_MSTR): origin/CLOUD 33c1d096a3 (site Z pushes, 1460 commits) into laptop CLOUD -- And"
+    ],
+    [
+     "d451070fb1",
+     "registry(4.0.0_SA_CRO~Z, rivalfunds): etfs scope to GENERAL tenancy + system key rivalfunds -- ETF r"
+    ],
+    [
+     "f13d9e9222",
+     "integrate(0.0.0_AB_MSTR): transcripts STEP 3 -- scopes.json transcripts bucket_provisioned -> true +"
+    ],
+    [
+     "73896b6c42",
+     "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system tea"
+    ],
+    [
+     "6dcd6df254",
+     "registry(4.0.0_SA_CRO, PLATFORM_LOGIC_DOCS): the cottonwood alias note reads the measured bucket sta"
+    ],
+    [
+     "de56cfd02f",
+     "registry(4.0.0_SA_CRO, PLATFORM_LOGIC_DOCS): scopes.json MASTER row z09 -> cottonwood, parallel to 0"
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/systems.json",
+   "source": "infra/logic/registry/systems.json",
+   "live_equals": "6c07797a9c",
+   "ahead": [
+    [
+     "224058ea3f",
+     "registry(NFRA_TRNSPT, 2.0.0_SA_COO~T): display_name on the outlook and sharepoint VENDOR rows -- the"
+    ],
+    [
+     "fed423d013",
+     "drain: merge wk-NFRA_TRNSPT-3 (row gate clean on the merged index)"
+    ],
+    [
+     "cd2ffcca99",
+     "register(PLATFORM_LOGIC_DOCS, 4.0.0_SA_CRO): systems.json -- display_name on the 23 VENDOR rows plus"
+    ],
+    [
+     "8e9ed1b539",
+     "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VE"
+    ],
+    [
+     "d451070fb1",
+     "registry(4.0.0_SA_CRO~Z, rivalfunds): etfs scope to GENERAL tenancy + system key rivalfunds -- ETF r"
+    ],
+    [
+     "73896b6c42",
+     "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system tea"
+    ],
+    [
+     "03c7f7f593",
+     "build(NFRA_MCPORTAL MP-t-2, 0.9.0_WK_NFRA_MCPORTAL~3): the grant-writer Lambda -- name('mcportal', N"
+    ],
+    [
+     "ec4e000709",
+     "Merge remote-tracking branch 'origin/CLOUD' into SITEZ"
+    ]
+   ]
+  },
+  {
+   "member": "lib/opal_naming.py",
+   "source": "lib/opal_naming.py",
+   "live_equals": "14b52ca13a",
+   "ahead": [
+    [
+     "b5dc2e63d1",
+     "fix(1.0.0_SA_CTO): a VENDOR row without display_name is a WARN, not a registry refusal -- the refusa"
+    ],
+    [
+     "70c4aa2e1a",
+     "naming(1.0.0_SA_CTO): VENDOR_DISPLAY_NAMES generated view in lib/opal_naming.py -- a whole-file port"
+    ],
+    [
+     "01646908e1",
+     "lib(1.0.0_SA_CTO): FIRM_DISPLAY_NAMES view target for the Investor Reporting portal (DSGN_IRPTV1 IV-"
+    ],
+    [
+     "e8abdf8d81",
+     "lib(NFRA_MCPINDEX.TO-MX-s-11, 1.0.0_SA_CTO~O): the ASSET_DIM_REST_PIN target -- VIEWS row, TARGET_RE"
+    ]
+   ]
+  },
+  {
+   "member": "loaders.py",
+   "source": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+   "live_equals": "7925afb870",
+   "ahead": [
+    [
+     "8e9ed1b539",
+     "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VE"
+    ],
+    [
+     "f13d9e9222",
+     "integrate(0.0.0_AB_MSTR): transcripts STEP 3 -- scopes.json transcripts bucket_provisioned -> true +"
+    ],
+    [
+     "73896b6c42",
+     "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system tea"
+    ]
+   ]
+  },
+  {
+   "member": "owned_report.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/owned_report.py",
+   "live_equals": "03de809d50",
+   "ahead": [
+    [
+     "6b96d460f6",
+     "fix(0.9.0_WK_IRPT_BCKEND~92): TO-IB-yr-282 -- NEEDS_CORRECTION answer carries the envelope's correct"
+    ]
+   ]
+  },
+  {
+   "member": "served.py",
+   "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+   "live_equals": "7a8d2a4ca3",
+   "ahead": [
+    [
+     "f9a00f732c",
+     "fix(IRPT_BCKEND~P served boundary, 2.0.0_SA_COO~P): a SERVICE row with no allowedFirmIds attribute i"
+    ],
+    [
+     "f6c6b56f40",
+     "amend-fix(IRPT_BCKEND TO-IB-pr-271 amendment 1, 0.9.0_WK_IRPT_BCKEND~98): a service subject with NO "
+    ],
+    [
+     "c716489be8",
+     "feat(IRPT_BCKEND TO-IB-pr-271, 0.9.0_WK_IRPT_BCKEND~98): served boundary refuses a SERVICE subject's"
+    ],
+    [
+     "83673d731c",
+     "feat(IRPT_BCKEND export B1 service, 2.0.0_SA_COO~P): the served submit-export flow -- a retained Per"
+    ],
+    [
+     "bd52efb246",
+     "feat(IRPT_BCKEND export B0 part 2, 2.0.0_SA_COO~P): two of the three read functions (performance, st"
+    ],
+    [
+     "fe854ce6f1",
+     "fix(IRPT_BCKEND C-S219, 2.0.0_SA_COO~P): a RENDER_DELEGATE reads only the path ids its bundle pins, "
+    ],
+    [
+     "1fcefdad74",
+     "fix(IRPT_BCKEND~P, 2.0.0_SA_COO~P): the bypass census resolves and guards all 17 published routes --"
+    ],
+    [
+     "4fffe13f01",
+     "fix(2.0.0_SA_COO~P): _authz public log line prints the code the answer carries (CTO 100681/100696; c"
+    ]
+   ]
+  },
+  {
+   "member": "status.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/status.py",
+   "live_equals": "f4f16b283f",
+   "ahead": [
+    [
+     "57ebb7ac6c",
+     "feat(IRPT_BCKEND.TO-IB-yr-241, 0.9.0_WK_IRPT_BCKEND~87): correction words on the status wire -- an e"
+    ]
+   ]
+  },
+  {
+   "member": "status_installed.py",
+   "source": "infra/aws/lambda/investor-reporting/reports/status_installed.py",
+   "live_equals": "896680c2de",
+   "ahead": [
+    [
+     "1fcefdad74",
+     "fix(IRPT_BCKEND~P, 2.0.0_SA_COO~P): the bypass census resolves and guards all 17 published routes --"
+    ]
+   ]
+  }
+ ],
+ "served_closure": [
+  {
+   "member": "served.py",
+   "pin_sha256": "455cd77ea46e71ca",
+   "live_sha256": "41fbd6b5f3624288",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "enforce.py",
+   "pin_sha256": "4245b5f8aded61b6",
+   "live_sha256": "18f04af84b9c5e87",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "errors.py",
+   "pin_sha256": "b60f25ccaa706b7a",
+   "live_sha256": "784ee313ed7013e6",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "resolve.py",
+   "pin_sha256": "24b407fa00ff0fc3",
+   "live_sha256": "24b407fa00ff0fc3",
+   "state": "identical to live"
+  },
+  {
+   "member": "owner_reads.py",
+   "pin_sha256": "f21d26dcce7c46bf",
+   "live_sha256": "f21d26dcce7c46bf",
+   "state": "identical to live"
+  },
+  {
+   "member": "prospect.py",
+   "pin_sha256": "f556b0997dfa7310",
+   "live_sha256": "f556b0997dfa7310",
+   "state": "identical to live"
+  },
+  {
+   "member": "ids.py",
+   "pin_sha256": "f1659861d469c25d",
+   "live_sha256": "f1659861d469c25d",
+   "state": "identical to live"
+  },
+  {
+   "member": "loaders.py",
+   "pin_sha256": "763f0a0d4445481c",
+   "live_sha256": "4ffd0e37f665a848",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "interactive_access.py",
+   "pin_sha256": "bba07a3f4eeb947b",
+   "live_sha256": "bba07a3f4eeb947b",
+   "state": "identical to live"
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "pin_sha256": "0ec4a717f2aa2c12",
+   "live_sha256": null,
+   "state": "ADDED"
+  },
+  {
+   "member": "keys.py",
+   "pin_sha256": "56ee3cc22e802579",
+   "live_sha256": "56ee3cc22e802579",
+   "state": "identical to live"
+  },
+  {
+   "member": "maintained_sources.py",
+   "pin_sha256": "774eca9bde60a1dd",
+   "live_sha256": null,
+   "state": "ADDED"
+  },
+  {
+   "member": "custody.py",
+   "pin_sha256": "23cda6b0e3dd88df",
+   "live_sha256": "23cda6b0e3dd88df",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection.py",
+   "pin_sha256": "7ba910b85e2fce4f",
+   "live_sha256": "7ba910b85e2fce4f",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection_store.py",
+   "pin_sha256": "583507a70e3a0074",
+   "live_sha256": "583507a70e3a0074",
+   "state": "identical to live"
+  }
+ ],
+ "built": {
+  "members": 45,
+  "differ_from_pin": [],
+  "closure_stale": [],
+  "crlf_members": [],
+  "zip_sha256_b64": "2V7xV1+zII4+g6tV722Tk5M9LWJFMzLShyjq6Q+v/J4="
+ }
+}
