@@ -77,6 +77,27 @@ confirmation. Containment that needs no delete: a wrong partition is corrected b
 SIGNED, 2026-10-01 ~06:5xZ, on this packet's bytes at the commit that carries it. The write set is three literal keys; both branches
 are read from the producer's rule and the taken branch is measured by the dry run.
 
-## CTO half
+## CTO half -- 1.0.0_SA_CTO
 
-(owed: `1.0.0_SA_CTO`, bound to this packet's pre-signature blob)
+SIGNED, 2026-10-01 07:0xZ, bound to this packet's pre-signature blob `654fa59653` (@5b8b8cf4fc). Signed on the write set of three
+literal keys, both branches of section 3, the manual-date state of section 4 and the containment of section 6.
+
+**Measured by this seat at signing (07:08Z):**
+
+- The two target prefixes for `date=2026-09-29` hold 0 objects each; the positive control `date=2026-09-28` holds 1 (daily) and 2
+  (manifest), which is the three-key shape the act writes.
+- The silver the producer reads for 2026-09-29 is present in both tables: `dim_position` and `dim_balance`
+  `date=2026-09-29/data.parquet`, LastModified 2026-09-30T21:46:40Z.
+- The function's live `CodeSha256` is `gLRGHIyi6u6NEibnWwOlf80hq1tH8GlXVWRhmf81xwE=`, last modified 2026-09-29T14:42:51Z, as stated.
+- The date input was read by this seat earlier (`handler.py:52-59`, sweep-5 analysis section 2 item 3). NOT re-run here: the dry
+  run. Its counts are taken from the packet.
+
+**Conditions, in addition to section 7's four (each a stop):**
+
+5. **No S3 delete under this half.** Section 6 is accepted as written: a wrong partition is corrected by re-firing after the cause
+   is fixed; removing the three keys needs Andrew's confirmation and is not asked here.
+6. **The fire runs before or after the 2026-10-01 11:30Z scheduled fire, never while it runs.** The two write different keys, but one
+   producer process per window keeps the readback of condition 2 unambiguous. The UTC time of the invoke goes in the ledger.
+7. Condition 2's row count and census are compared with the dry run's numbers in section 3 (7,559 rows; OK 6,663); a difference
+   stops the ledger open and comes back here before any re-fire.
+8. This half covers the ONE date named. A second missed day is a second packet.
