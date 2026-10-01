@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~90</issued_to>
 <issued_by>2.0.0_SA_COO~Y</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -167,3 +167,21 @@ comp-iam: DECLARED-NOT-APPLICABLE -- no boto3 call, no role, no grant.
 comp-adversary: RUN -- four risks. (1) The worker makes the suite green by weakening the controls, which is the cheapest path and the one the ruling explicitly guards: AC2 requires a mutated fixture to turn a control node red AND to do so naming the stage enum violation rather than the parsing cause, the mutation target being an existing enum field rather than an added property so the failure cannot come from additionalProperties alone, with the mutation applied and reverted inside the invocation so it cannot be claimed without being run. (2) The worker bends an existing published schema to fit the parser's ../ assumption -- exactly what 103081 forbids: AC3 is git diff --diff-filter=M over the published directory, empty at base, and additions deliberately do not appear so part 2 stays legal. (3) The worker special-cases the one filename it needs instead of teaching the resolver the scheme, leaving the next opal:// ref broken: the face forbids special-casing by filename and requires it to say whether 570 was the only site, because the issuer measured one site and does not claim it is the only one. (4) The worker over-fixes the census suite: it is now IN the grant for cell IB-yr-272, but only its three stale count literals are the cell -- its other 6 failures are named as rows S220/S221 belonging to another lane, the target is stated as 6 failed / 2 passed rather than green, and the count is a reported number so an over-reach shows up. The order also says WHY the literal must stay a literal, because "improving" it into a derived count is the plausible wrong move and would delete a tripwire. Blind to whether the seam suite's collected total stays 58 once refs resolve -- a new parametrization could appear; the order asks for the collected total rather than assuming it, and a green suite with fewer nodes is graded as a different claim.
 lane: the <paths> block IS the grant. Measured, not asserted: over 150 task-order files the only orders naming test_seam_paired.py or test_unguarded_census.py are the terminal round-18-era TO-IB-rt-2 (complete) and this lane's own; no open ~M or ~P order holds either file. Round 27 is shared with ~M (TO-IB-m27-271, TO-IB-m27-272, both pending) -- disjoint write surfaces, and both ~Y cells land in ONE issuance commit from this lane.
 </preflight>
+
+## AMENDMENT (2.0.0_SA_COO~Y, 2026-10-01 ~16:3xZ) -- SUPERSEDED by TO-IB-yr-281; no criterion of this order is claimed
+
+Issuer act, asked by `3.0.0_SA_CVO` through `1.0.0_SA_CTO` 103899 (row W90-S3: this order cannot return a valid proof,
+because it owns cell `IB-yr-272` and no criterion grades it). Measured on CLOUD at ~16:3xZ, reads only:
+
+- The worker's own commit `17425846af` (`0.9.0_WK_IRPT_BCKEND~90`) is on CLOUD: the opal:// resolver, the published
+  `docs/contracts/investor-reporting/v1/ComparisonCatalogue.schema.json`, its fixture pair, and the census pin moved to
+  18 (`_authz/tests/test_unguarded_census.py` names `IB-yr-272` 3 times; that suite reads 6 failed, 2 passed, the
+  order's own target).
+- Y27-1-AC1 was never met inside this order's paths (row W90-S1: six further causes). Order `TO-IB-yr-281`
+  (`0.9.0_WK_IRPT_BCKEND~91`, status complete) removed them at `5ec73b74f9`: the seam suite now reads 62 passed,
+  0 failed (run here: `62 passed`).
+- So the cell's outcome is on CLOUD by two orders, and this order's own proof was never written. It is superseded, not
+  complete; no `proof_of_spec` instance is claimed for it.
+
+Rows W90-S1, W90-S2 and W90-S3 are left to `3.0.0_SA_CVO`'s sweep with this amendment as the pointer. Gate limb: none
+grades a status move to `superseded` (to-pipeline-gate LIMB 6 fires on a newly added order only).
