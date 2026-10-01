@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
 tick here; post-crash relaunch 2026-09-30 13:0xZ (`org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAUNCH_BRIEF_20260930_130xZ_POST_CRASH.md`).
-**As of 2026-10-01T08:2xZ.** Mode FAST on Andrew's word of ~04:2xZ (record
+**As of 2026-10-01T08:3xZ.** Mode FAST on Andrew's word of ~04:2xZ (record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
 @c48af273cc, CTO 103442): this seat armed its own 8-hour leases at 04:31Z and 04:32Z (below). Relaunch on Andrew-direct 2026-10-01 ~04:0xZ (record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_040xZ_GO_WITH_RECOMMENDATION_BRING_ON_COOS_VIA_MSTR_SPAWN.md`);
@@ -35,7 +35,7 @@ live press stays Andrew's (walk-2 write guard).
 
 - `2.0.0_SA_COO~D`: `portal/src/pages/InvestorReporting/tabs/analysis/*` (W2 analysis items), `tabs/holdings/*`,
   `tabs/reporting/*` (W2-01 residue), `src/components/holdings`, `src/components/CategoryViewTree.tsx`, `src/lib/chartColors.ts`.
-- Items 50 through 58 LANDED (claims released). Next claim: IRPT_DASHBD hop-5 plan item 5 (`tabs/reporting/ReportingTab.tsx`, the per-account switch) the tick the served file and the read route exist; and the Analysis thread's hop 10 walk (CTO batch 61 item 6) the tick 2.0.0_SA_COO~Y's build-window step (b) is in.
+- Items 50 through 58 LANDED (claims released). No claim is open: nothing front-end-only is unblocked at 08:3xZ. Next claim: IRPT_DASHBD hop-5 plan item 5 (`tabs/reporting/ReportingTab.tsx`, the per-account switch) the tick the served file and the read route exist; and the Analysis thread's hop 10 walk (CTO batch 61 item 6) the tick 2.0.0_SA_COO~Y's build-window step (b) is in.
 
 ## Landed under FAST since STATUS @a7a6d286f2 (items 1-35 recorded there; graded by the CVO after the fact)
 
@@ -92,12 +92,15 @@ live press stays Andrew's (walk-2 write guard).
 1. ~~W2-16~~ (probe item 43: not reproduced at 390-1440 px; closes unless Andrew's capture recurs)
 2. **W2-20 front residue**: retire the 'Rebalancer strategy:' label path (`slices.ts:473-475`) once ~M's re-mint is
    the served shape (parked until then; retiring it early would blank a still-served node).
-0c. **W2-11's number swap -- UN-PARKED 06:31Z (the route serves `security_aggregates`); NEXT CLAIM.** Its first act needs one
-   signed-in read (the served aggregate beside the page's fold, one selection per firm), so it waits for a free walker
-   window under the one-device rule. Original text: **W2-11's number swap** (the Securities table printing the SERVED per-security aggregate where a view's rows are all
-   actual positions, instead of the page's own fold): PARKED, owner this seat; un-parks when the route serves
-   `security_aggregates` (2.0.0_SA_COO~M's release inside 2.0.0_SA_COO~P's holdings packet). First act then: read one
-   selection per firm and compare the served weight with the page's fold; equal figures make the swap a formality.
+0c. ~~W2-11's number swap~~ CLOSED WITHOUT A CHANGE on a measured read (walk `20261001T083028Z`, 08:30Z-08:32Z, portal
+   437bef28, the walker's `--holdings-aggregates` step): at a client with actual positions the route's served per-security
+   aggregate EQUALS the page's own fold on every item -- 62 of 62 on the all-accounts selection and 29 of 29 on a one-account
+   selection, amount and weight both; 0 target nodes; 0 page identities with no served aggregate; class totals plus the
+   remainder equal to the custody total. So printing the served figure would change no number on the table, and the page's
+   fold stands on Andrew's 2026-09-30 exception. Where a sleeve carries only a model's target mix (49 Financial) the route
+   serves no aggregate at all (ruled: no target fold, CTO 103493) and the table keeps listing the target rows. RE-OPENS only
+   if a served figure and the page's fold are ever measured to differ. NOT read: a 49 Financial selection with this step
+   (its served remainder of 100 percent was read on the page at 06:33Z).
 0d. ~~Words for a holdings NOT_READY~~ LANDED (item 54).
 
 Blocked on another seat (not cut here): W2-04 / W2-05 (a served catalog read, `2.0.0_SA_COO~Y`); W2-13 industry
