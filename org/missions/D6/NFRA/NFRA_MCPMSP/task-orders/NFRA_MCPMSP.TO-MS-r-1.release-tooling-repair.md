@@ -68,7 +68,7 @@ Report once, with: the two check lines; the commit hash; any row. Then STOP: thi
 order of another project names `deploy-to-ec2.sh` or `tests/run_release_suites.sh`. Checks dry-run at base: AC1 FAIL
 as expected (script absent); AC2 FAIL as expected (flag undeclared, NOT executed -- the guard held).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>

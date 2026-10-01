@@ -4448,6 +4448,97 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "At phase B the halves' names must be passed to the writer and set in AD1_SECRET_WSJ / AD1_SECRET_BARRONS before AC1, or AC1 reads the default names."
+    },
+    {
+        "project": "AMGT_HARVST",
+        "fabric": "site-z",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~88",
+        "surfaced_at": "2026-09-30T23:35Z",
+        "disposition": "UNDER_INVESTIGATION",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "disarm_owner": "2.0.0_SA_COO~H",
+        "id": "AMGT_HARVST-Z-W88-S1",
+        "one_line": "The batch ran in plan-key order, not universe order.",
+        "spec_asserts": "TO section 1 step 2: collection is ONE invocation per name IN ORDER over the first 10 universe rows (ASML first, Boeing tenth); the worker face says 'the plan's name order'.",
+        "world_is": "ad2_plan.json holds its keys sorted (BA, security-2674..., security-37dd..., ...), not in universe order; BA (Boeing, the TENTH universe row, with a prior watermark 2026-09-12) therefore ran FIRST and ASML ran fifth. The worker followed the face's 'keys of ad2_plan.json' order.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "ad2_plan.json key order, deliverables/0.9.0_WK_AMGT_HARVST~88/ad2_plan.json",
+                "ad2_status.log order in the same folder"
+            ]
+        },
+        "notes": "The face resolved 'plan order' to the dict's key order; the order the TO names is universe order. Whether the order changed the outcome: the first job (BA) ended upstream_unavailable and set a cooldown, so any first name would have met the same cooldown only if its own first article also failed; not measured."
+    },
+    {
+        "project": "AMGT_HARVST",
+        "fabric": "site-z",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~88",
+        "surfaced_at": "2026-09-30T23:35Z",
+        "disposition": "UNDER_INVESTIGATION",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "disarm_owner": "2.0.0_SA_COO~H",
+        "id": "AMGT_HARVST-Z-W88-S2",
+        "one_line": "A 502 upstream_unavailable set a cooldown that consumed 9 of 10 names with no request.",
+        "spec_asserts": "Step 10 invocations: the batch stops only at bot_check, unclassified, account_or_harvester_unavailable, sign_in_refused or throttled; AC2 expects concluded jobs with a reached_span and a measured page count.",
+        "world_is": "BA's article 4648803 answered 502 (class other): job status upstream_unavailable, a worker-side cooldown (retry_at 2026-09-30T23:25:12Z, about 15 min) was set, and each of the next 9 invocations ended status 'cooldown' with 0 request attempts, rc=2, in 2 to 3 seconds each (23:12:28Z to 23:13:04Z). Neither status is a stop status, so the driver ran all 10 and 'never re-run an invocation' consumed the 9 names with no listing request. AC1 PASS, AC2 PASS with 0 concluded jobs: measured pages per name None, re-based ceiling stays DEFAULT 1975 pages, names reached 0. One listing (BA, 20 hits) uploaded: pending 1, upload-harvest --max-objects 1 -> uploaded, remaining_pending 0.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "deliverables/0.9.0_WK_AMGT_HARVST~88/ad2_runs.json",
+                "ad2_inv_02_*.out .. ad2_inv_10_*.out (status cooldown)",
+                "run record 20260930T230833Z-run-fbb72e11 request_attempts: article 502",
+                "runs/20260930T231230Z-sa-7d6211566c.json retry_at 1790810712.47 = 2026-09-30T23:25:12Z",
+                "ad2_AC2.out"
+            ]
+        },
+        "notes": "The batch is unmeasured for 9 names. The window to 07:45Z is open and the cooldown has expired at 23:25Z, but the act's table is one invocation per name and the worker did not re-run. Re-run, re-cut or accept is the issuer's call."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S48",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T00:15Z",
+      "one_line": "ISSUER DEFECT: the ad-2 checks dumped the plan with sort_keys=True, so the act ran names in alphabetical key order (BA first) instead of the collector's universe order the order named; BA's article 502 then set a 15-min cooldown that skipped the other 9 with 0 requests.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-ad-2 section 1: the 10 names run 'in order' -- the collector's universe order, ASML first.",
+      "world_is": "round31/checks/ad2_common.py dump() used json.dump(..., sort_keys=True); ~88/ad2_plan.json therefore listed keys alphabetically (BA, security-...); the worker ran the plan's key order. Fixed @ed40d75777 (no sort_keys); A2's order is the order's own explicit list (CTO @288a4b254c: read the run order from the plan's own list, never a re-sort).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "round31/checks/ad2_common.py dump() before @ed40d75777",
+          "~88/ad2_runs.json invocations order (BA first) on the merged record @87661b48c6"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The issuer's own row per the CTO re-sign @288a4b254c. Pairs with the worker's Z-W88-S1. Disarmed by @ed40d75777 and A2's explicit order."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S49",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T00:15Z",
+      "one_line": "The ad-2 worker (~88) also wrote its 49 deliverables and its two channel rows into the SHARED tree (untracked / uncommitted), which refused the drain ('local changes would be overwritten'); every file was byte-identical to its branch and the rows equal, so the issuer removed the duplicates and the drain landed @87661b48c6.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "The worker prompt: work, run and commit ONLY in the worktree.",
+      "world_is": "49 untracked files under deliverables/0.9.0_WK_AMGT_HARVST~88/ plus INVESTIGATION_v1.md +47 lines (rows Z-W88-S1/S2) in the shared tree; cmp per file vs wk-AMGT_HARVST-88 = 0 differing; the two rows equal by value.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "scratchpad m88d.out: git merge refused (local changes / untracked would be overwritten)",
+          "per-file cmp against git show wk-AMGT_HARVST-88:<path>: 49 of 49 identical"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Likely the checks' WK path resolves from ROOT = git toplevel of the CWD; a worker invoking a check from the shared tree path writes there. The A2 dispatch names the worktree as the ONLY write location and runs every check from the worktree root."
     }
   ]
 ```

@@ -88,7 +88,7 @@ refuse / planfile / untargeted unchanged / unrenderable refuses). Stated as a su
 compare at the laptop push. No open sibling order names `.tools/safe-apply.sh` (LGIC_ENFORCE EN-t-2 and EN-t-2-r2 both
 complete). Check dry-run at base: AC1 FAIL as expected (test absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~7</slot>
 <fabric>site-z</fabric>

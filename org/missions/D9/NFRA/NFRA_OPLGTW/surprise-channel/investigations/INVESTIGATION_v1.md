@@ -5241,3 +5241,29 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S23",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-30T23:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A drain run by safe-merge.sh in the shared tree committed a peer's uncommitted project.json edit (1.0.0_SA_CTO~O's v1.2 lineage line) into the merge commit, and the same window lost that peer's PRD edit and this seat's own A2 edits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat 5345674e9d...wk-NFRA_OPLGTW-12-t2: 2 files changed; git show --stat 0a5cc3c093: 3 files, the third org/missions/D9/NFRA/NFRA_OPLGTW/project.json (+1 line, the v1.2 lineage entry by 1.0.0_SA_CTO~O).",
+      "725230b531 commit body (1.0.0_SA_CTO~O): the drain merge swept this seat's uncommitted working-tree edit and reverted the PRD edit, so this commit carries the PRD only.",
+      "The first attempt of the same drain was refused: 'safe-merge: REFUSED -- the index carries STAGED changes (possibly another seat's)'; the retry minutes later passed with an empty staged set while the peer's working-tree edit was still present."
+    ]
+  },
+  "spec_asserts": "CLAUDE.md 14b: a drain is graded against the shared index; safe-merge refuses when the index carries staged changes, so a drain carries only the branch.",
+  "world_is": "The staged-set refusal does not cover an UNSTAGED peer edit to a path the merge touches or auto-stages; a merge commit in the shared tree can absorb it, and the peer's later edits to the same area can be lost.",
+  "notes": "Net damage recovered by the peer: the lineage line is on CLOUD via 0a5cc3c093 and the PRD via 725230b531. For this seat: drain in a gap, and read `git status --short` on the branch's paths plus any peer-edited path before a shared-tree drain. The safe-merge limb (refuse when a merge would commit a path outside the branch's diff) belongs to the tool's owner.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

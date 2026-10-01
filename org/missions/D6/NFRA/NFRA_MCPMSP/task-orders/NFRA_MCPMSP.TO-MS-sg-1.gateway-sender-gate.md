@@ -64,6 +64,10 @@ infra/aws/ec2/opal-gateway/app/sender_gate.py
 infra/aws/ec2/opal-gateway/app/asker_scope.py
 infra/aws/ec2/opal-gateway/app/audit.py
 infra/aws/ec2/opal-gateway/tests/test_mcpmsp_sender_gate.py
+infra/aws/ec2/opal-gateway/tests/test_asker_binding.py
+infra/aws/ec2/opal-gateway/tests/test_asker_nochannels.py
+infra/aws/ec2/opal-gateway/tests/test_asker_scope.py
+infra/aws/ec2/opal-gateway/tests/test_mcpmsp_asker_firm.py
 org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~3/**
 org/missions/D6/NFRA/NFRA_MCPMSP/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
@@ -84,6 +88,18 @@ Read, never write: `infra/aws/ec2/opal-gateway/app/**` (others), `infra/aws/ec2/
 
 Write the instance at `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~3/NFRA_MCPMSP.TO-MS-sg-1.gateway-sender-gate.proof_of_spec.json`.
 Report once, with: the refusal codes; the three check lines; the commit hash; any row.
+
+## AMENDMENT 1 (issuer, 2026-10-01 ~01:0xZ, on your row NFRA_MCPMSP-Z-W3-S3)
+
+Your refusal of AC2 is upheld: an absent sender address stays REFUSED (`asker_sender_domain`) -- the gate never fails
+open. The defect is the four suites' Graph fakes, which return chat members with no `email` (real Graph
+`GET /chats/{id}/members` carries it). Your write surface grows by exactly those four test files (added to `<paths>`
+below); in each, give every faked member an `email` in the allowed domain that matches its tenant (Opal's tenant ->
+`...@opalinvest.com`; a registered partner tenant -> that firm's domain; an unregistered-tenant member -> any address),
+and change NO assertion. AC2 is unchanged (>= 48 passed, 0 failed). Your row Z-W3-S4 (firm ids derived from
+`catalog_gate.KNOWN_FIRMS`, pinned by `test_allowed_domain_matching_tenant_served`) is accepted as built. First
+`git merge CLOUD` in your worktree to pick up this amendment; then re-run AC1-AC3, rewrite the proof instance, and append
+the status flip to complete as the LAST status tag only when all three pass.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
