@@ -5026,3 +5026,56 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "1.0.0_SA_CTO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S20",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-30T17:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Part D as written cannot supply OG-t-2's <tid>/<oid> inputs: the owner-gate header carries sub but no oid or tid, so ADMIN_PRINCIPAL and the two WRITE_CAPABLE_PRINCIPALS are read at call 3 from the Entra admin center by Andrew, kept off-repo.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/round3/E1_G-HDR_READ.md@c8b42c8913 line 22: OWNER-HEADER-CLAIMS keys=email,exp,family_name,given_name,iss,name,picture,sub (1 line of 552671 journal lines); oid ABSENT.",
+      "infra/aws/ec2/opal-gateway/app/admin_api.py:34-37 (HEAD 3103954a36): /api/admin/whoami returns oid ABSENT when the header lacks it, and has no tid field.",
+      "infra/aws/ec2/opal-gateway/app/config.py:274-281: MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS exact-match principal.key <tid>/<oid>.",
+      "1.0.0_SA_CTO~O msg 27304: call 3 = Part D only, reading ADMIN_PRINCIPAL for OG-t-2 with the value kept out of the repo."
+    ]
+  },
+  "spec_asserts": "ledger/ROUND_ANALYSIS.round1.md R-1 and R-3(c): Part D records which identity claims the owner's sign-in carries (oid, or sub), and the admin principal's value comes from the Part D record; TO-OG-t-2:25-28 requires ADMIN_PRINCIPAL and WRITE_CAPABLE_PRINCIPALS as <tid>/<oid> pairs.",
+  "world_is": "The header branch gives sub only, which is not an Entra object id and cannot key principal.key. The Part D record for OG-t-2 is therefore Andrew's read of Tenant ID and three Object IDs (andrew@ admin; alyssa@ and opalbloomberg@ write-capable, the same three people as today's email rosters, so no roster widens) in the Entra admin center at call 3, written outside the repository.",
+  "notes": "Issuer disposition: the Part D record lands at deliverables/2.0.0_SA_COO~O/PART_D_RECORD_20260930.md carrying the source, the UTC read time and the sha256 of the off-repo value file, never a value. OG-t-2's PHASE A blast-radius pre-read still grades every delta. MX-r-6 v3 holds its GO for this read-back (msg 27304).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S21",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-30T21:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "On opal-gateway, git ancestry does not mean shipped: live 42c52ed4d9 has OG-t-2's four build commits in its history but not in its bytes, so OG-t-2's release-order and cherry-pick steps are graded by content (amendment A1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor <c> 42c52ed4d9 = yes for b5a585cf2f, 344cca64a1, c4d2274c6d, 0906bf01e5 (4 of 4).",
+      "git show 42c52ed4d9:infra/aws/ec2/opal-gateway/app/tier.py: MASTER_ADMIN_PRINCIPALS 0 hits, email rosters 4 hits; positive control HEAD and b5a585cf2f: 2 hits each.",
+      "git merge-base --is-ancestor 4248b70b39 42c52ed4d9 = no, yet 0c3d545002's gateway added lines are present in live 460 of 490; the 27 absent engine.py lines are OG-x-4's rewrite (d1ba79742c, 132a07ee11, both in 4248b70b39..42c52ed4d9)."
+    ]
+  },
+  "spec_asserts": "TO-OG-t-2 step 1: the live commit must be OG-x-3's release commit or descend from it; step 2 cherry-picks the build cells' commits onto live.",
+  "world_is": "Release refs are deploy-only commits whose history includes CLOUD but whose bytes are pinned to the previous live tree, so ancestry reads 'no' where the content is present and 'yes' where it is absent.",
+  "notes": "Issuer disposition: amendment A1 on TO-OG-t-2 grades both by content (CLAUDE.md 22a). Same trap applies to every gateway releaser's AC that reads 'descends'.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

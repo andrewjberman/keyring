@@ -15977,6 +15977,375 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "zz-5 AC3: the api suite reads N passed and 0 failed.",
   "world_is": "It does, once the tree carries zz-4's restamp; the one failure was the stamp, not zz-5's code.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Also measured: read_rankings per axis in-process, zz-5 tree vs CLOUD: 4.9 vs 2.6 s, 27.1 vs 22.7 s, 10.0 vs 10.6 s, 23.8 vs 24.3 s -- the prior-generation walk adds no material latency beyond noise; the served timing is read at zz-8."
+},
+{
+  "id": "AMGT_RESAPP-Z-W182-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~182",
+  "surfaced_at": "2026-09-30T04:40:00Z",
+  "one_line": "portal exportCompare.harness.cjs (DEV 29c8226a) reads EXPORT-COMPARE NOT OK on 96 of 96 names against the deployed export while the COO's data-attribute grader sweep.py --served reads 96 of 96 equal: the harness's case-line pattern predates the served base-case label and its absence read does not scan the thesis windows or the header posture line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "exportCompare.harness.cjs as shipped over 96 served captures (.scratch/runexport.py, 0 of 96 OK): CASES page 288 rich 192 missing 96; ABSENCES page 2408 rich 2478 extra 70; FIGURES missing 1.",
+      "portal/src/pages/SecurityAnalysis/__harness__/exportCompare.harness.cjs artifactCases() matches '(Upside|Base|Downside) case|Historical-multiple reference'; the served and printed base-case line is \"Opal's historical-multiple reference: ABSENT|SERVED -- ...\" (yy-4, CodeSha pVa+sgzj); 96 of 96 rich exports carry that label and 0 carry a line starting 'Base case'. Widening the pattern in a scratch copy moves CASES to 288 == 288 and the harness to OK on 63 of 96.",
+      "The residual 33 names are exactly the 33 with a SERVED posture: on ZURN_SW_Equity the rich prints 'ABSENT -- no call was made: <reason>' while the page carries the reason on data-header-posture / data-posture-reason of a <p>, which pageAbsences() reads only on a <div>; on BA_US_Equity the rich's 'Description: ABSENT' line has its page carrier in the thesis window (data-header-description=ABSENT), and combinedHtml holds the five tab renders only.",
+      "sweep.py --live --served --require-cases over the same 96 keys: OK 96, NOT_OK 0; FWD-30 GRADE equal 96 of 96, values equal 96 of 96; 19125 value facts compared, 0 differ."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order names the round-45 sweep.py --served as the FWD-30 grader and round 46 graded FWD-30 with exportCompare.harness.cjs (EXPORT-COMPARE OK 95 of 95).",
+  "world_is": "At portal DEV 29c8226a exportCompare.harness.cjs cannot read the current served export or the current page as the same facts (a label it does not know, an absence carrier it does not scan), so it reports a divergence that the data-attribute grader does not find. This pass graded FWD-30 on sweep.py and reports the harness reading as a second reading.",
+  "notes": "The harness is DSGN_AMGTV1's re-anchored artifact (AV-v-4, AV-v-7, AV-s-1 comments); this worker did not edit it. Not a served-surface defect. Owner of any re-anchor: the seat that owns the portal harness; the FWD-30 grade does not depend on it."
+},
+{
+  "id": "AMGT_RESAPP-Z-W182-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~182",
+  "surfaced_at": "2026-09-30T04:41:00Z",
+  "one_line": "PRD FWD-22 (Stat tiles with a tooltip carrying mnemonic and full-precision value) and FWD-23 (a 'cites N passages' affordance) describe interfaces the portal DEV page no longer has: DSGN_AMGTV1 replaced the seven Stat tiles with four header cards and moved each sentence's evidence into card windows, so both clauses read unmet as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Round-51 FWD evidence at portal 29c8226a over 96 renders: data-stat-tile 0, tooltip carriers (data-stat-tooltip or title=) 0, 4 header cards per page; 'cites N passage' text 0 and <details> 0 across the thesis renders and windows, with 210 sentences and 268 inline passage nodes on the 12 drafted names.",
+      "portal/src/pages/SecurityAnalysis/components/HeaderCards.tsx lines 1-10: 'the identity header's FOUR CARDS (DSGN_AMGTV1 AV-t-2), replacing the seven Stat tiles. Andrew: \"never more than four cards\" ... A vendor mnemonic sits in code and never on the face.'",
+      "Round 46 (0.9.0_WK_AMGT_RESAPP~167, portal 8fa7abde) graded FWD-22 met and FWD-23 unmeasurable; the served route is unchanged for both (header_figures and drafted passages still served on the same names)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD ENDPOINT FWD-22 DONE WHEN: price, market cap, net debt, enterprise value, beta and short interest render as Stat tiles with units and tabular numerals, and each tile's tooltip carries the mnemonic and full-precision value verbatim; FWD-23 DONE WHEN: a sentence shows its PASS face and a 'cites N passages' affordance.",
+  "world_is": "The page renders four cards whose windows list the figures as label and value rows (no tile, no tooltip, mnemonic on a data attribute only); each drafted sentence sits with its passage list inline in a card window (no 'cites N passages' text, no disclosure). The clause text and the page design disagree; this pass graded the clause as written and recorded FWD-22 met -> unmet and FWD-23 unmeasurable -> unmet.",
+  "notes": "The choice between amending the two clauses to the page Andrew directed (cards, windows) and restoring the tile and disclosure forms is the CTO's at the round-51 analysis; this worker states the disagreement and does not adjudicate it. FWD-21, FWD-27 and FWD-29 (computed-DOM counts) remain unmeasurable without a browser capture."
+},
+{
+  "id": "AMGT_RESAPP-Z-S311",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-09-30T05:45:00Z",
+  "one_line": "AMGT-zz-8 AC2 CANNOT PASS BY THE SPECIFIED ACT: the served /thesis `thesis_driver` rides on the D-1 DRAFTING_SERVED document (scoped_amgt.py:1876), NOT on filings/v1/<key>/<accession>.analysis.json. The ASML rewrite landed correctly (3 of 3 points now spanned) and the served chart is still ABSENT, because rewriting the filings object does not regenerate the document the chart's driver is read from. zz-6's AC1 could not see this: it handed thesis_driver_chart the re-verified driver IN PROCESS and never exercised the join.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE WRITE IS CORRECT. Leg A2 verified on the world: filings/v1/ASML_NA_Equity/000162828026011378.analysis.json now VersionId WIU.oSeIh8NKMhy2DfqsJmRwGOusYTxs, 93,121 B, thesis_driver resolution 'cited' with 3 points EACH carrying a span -- {2023, 393421721, span [49888,49899], P0086}, {2024, 393283720, [49900,49911]}, {2025, 385417665, [49912,49923]} -- plus a new held_uncited key. The receipt named that key and no other, and a list-objects sweep of filings/v1/ since 05:00Z returns exactly that one object.",
+      "THE SERVED DRIVER IS A DIFFERENT SHAPE. GET /api/scoped/amgt/security/ASML_NA_Equity/thesis returns thesis_driver with the same 3 period/value pairs but NO span on any point, NO held_uncited key, and source_passage_id P0059 -- while the rewritten object's points carry passage_id P0086. thesis_driver_chart reads status ABSENT, points 0, with its own reason: 'the filing's own verified points do not clear the second branch's bar ... needing at least 2 points each carrying a verified span and a resolved driver'.",
+      "IT IS THE PRE-REWRITE STATE, BYTE FOR BYTE in these fields. The before-body downloaded and hashed at leg A2 (VersionId Reu7PGvX, 92,524 B, sha256 3d8f480f4af622b6...) has exactly that shape: no span, no held_uncited, source_passage_id P0059.",
+      "NOT A WARM-CONTAINER CACHE -- TESTED, NOT ASSUMED. 15 CONCURRENT invokes were issued to force containers cold-starting after the 05:27:33Z rewrite: all 15 returned chart ABSENT, points_count 0, driver_points 3, spanned 0, held_uncited absent. 0 of 15 SERVED. A per-container cache would have produced at least one fresh container reading the new object.",
+      "NOT THE DOSSIER EITHER. read_dossier('ASML_NA_Equity') holds 0 occurrences of thesis_driver at any depth (its fields are cases, thesis_pillars, model_rows and the rest).",
+      "THE CARRIER IS NAMED IN THE CODE. lib/research/api/scoped_amgt.py:1876 builds the served block with `thesis_driver=document.get(\"thesis_driver\")` inside _drafting_block(DRAFTING_SERVED, ...), and :2345 passes exactly that value to thesis_driver_chart. The chart grades the driver embedded in the served D-1 document, which the filings-object rewrite does not regenerate.",
+      "WHY THE CUT MISSED IT. zz_6_reverify.py validates the premise by calling scoped_amgt.thesis_driver_chart(<the re-verified driver>, []) in process, handing the chart the driver DIRECTLY. That proves the chart's arithmetic accepts spanned points; it never exercises the JOIN between the filings analysis object and the document the served path loads from. The COO half's AC2 expectation ('3 points, dry run at zz-6's drain: 3 of 3 spanned') inherited that blind spot.",
+      "EVERYTHING ELSE IN THE ACT IS SOUND: AC1 PASS (66 rows, named 18, places_moved int 66 -- the half's exact prediction), AC3 PASS 4 of 4 byte-equal with the rider's latency moving 5248 -> 190 ms on HD, AC4 PASS, and all seven limbs hold, limb 7 graded on a generation-matched field-scoped projection whose four hashes are identical across the act."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The COO half's EXPECTED OUTCOME: \"/thesis for ASML_NA_Equity: thesis_driver_chart reads SERVED, source 'filing', 3 points\"; the order's act (3) is the rewrite through analyze.reverify_stored_thesis_driver; and both halves make any criterion failing after the act the ROLLBACK trigger.",
+  "world_is": "The rewrite reaches the filings analysis object and the served chart reads the D-1 document. They are two different objects holding two copies of thesis_driver, and only the first was written. AC2 was therefore unreachable by the specified act from the moment it was written -- a PREMISE defect, not a deploy defect. No act inside this order's <paths> and BOUNDS can close it: reaching the D-1 document is a code or producer change beyond the function's code, which BOUNDS 1 makes a REFUSAL.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. ROLLBACK WAS NOT EXECUTED, deliberately, and the reason is on the record in the NEVER-2 entry's V1 leg: the trigger is written for an act that went wrong, and this act did not. A code rollback to pVa+sgzj would destroy three verified outcomes (zz-5's names, zz-4's restamp, zz-1's write-path union and n-6's measured speed-up) and would not move AC2 one step, because AC2 does not depend on the code that would be rolled back. BOTH rollback routes are proven available and ready on the issuer's word: the code by re-applying VersionId lEaSg8QQxUuyYkDUCtNUElsfr5mbj83l, and the ASML object by copying VersionId Reu7PGvXpjg29Zm7npyvl2BrriBQDe06 back over the key (re-verified present at 92,524 B AFTER the write, so the copy-back is available right now). The transferable lesson for the next cut: a control that hands a function its input directly cannot certify that the served path will load that input -- the join is the claim."
+},
+{
+  "id": "AMGT_RESAPP-Z-S312",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T05:58:00Z",
+  "one_line": "Issuer attribution for AMGT_RESAPP-Z-S311: zz-8 AC2's false premise was the issuer's cut -- zz-6's AC1 handed thesis_driver_chart the re-verified driver in process and the zz-8 COO half predicted a SERVED chart from it, neither exercising the join to the D-1 drafting document the served /thesis reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer re-measure at CodeSha zHpr7FhS: zz_8_served.py --what chart -> 'ASML chart ABSENT source None points 0' (AC2 NO before and after the act).",
+      "round51/checks/zz_6_reverify.py calls scoped_amgt.thesis_driver_chart(driver, []) with the dry-run driver; NEVER_WIDEN_HALF_COO_ZZ8.md 'EXPECTED OUTCOME' names the chart SERVED on that basis."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "zz-8 COO half: /thesis for ASML reads thesis_driver_chart SERVED, source filing, 3 points after the rewrite.",
+  "world_is": "The chart reads ABSENT; the served driver is the D-1 drafting document's embedded copy (row Z-S311). A check that hands a component its input directly validates the component, never the served join.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. CTO msg 26943 (@fdd0074be3): rollback WAIVED for AC2 only; the ASML rewrite kept; round 52 cuts the D-1 drafting regeneration under its own pair, AC = the SERVED /thesis chart reads the 3 spanned points (a served-route read, never an in-process call with a handed input)."
+},
+{
+  "id": "AMGT_RESAPP-Z-S313",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T07:40:00Z",
+  "one_line": "A D-1 drafting rebuild from the stored analysis DROPS served sentences under today's verbatim gate: for ASML_NA_Equity the in-memory rebuild (the --rebuild-pool transform) carries the spanned driver but serves company_description 1 (stored 6), investment_thesis 0 (1), risks 0 (2); a pool rebuild is therefore not a safe way to refresh any embedded field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round52/checks/ab_1_preview.py at the cut: top-level keys 15, differing 4 (denominators, held_no_span, sections, thesis_driver); stored sections {company_description 6, investment_thesis 1, risks 2, ceo_bio 0, recommendation 1}, rebuilt {1, 0, 0, 0, 1}; driver spans stored 0 of 3, rebuilt 3 of 3.",
+      "drafting_build.build_drafting_document carries thesis_driver from the analysis (:365); the verbatim gate (C-VERBATIM-GATE HOLD) moves HELD-NO-SPAN sentences out of sections."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-51 analysis item 1: ASML's D-1 drafting document is regenerated from the rewritten analysis.",
+  "world_is": "A regeneration moves 3 more top-level keys and drops served sentences; round 52 cuts a driver-only splice instead (AMGT-ab-1, written at AMGT-ab-6). Measured on ASML only; how many stored D-1 documents a pool rebuild would shrink is UNMEASURED.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. No act: a --rebuild-pool live run would be the hazard, and none is ordered. Issuer ruling at the cut, stated in s.60b.1 and the issuance commit."
+},
+{
+  "id": "AMGT_RESAPP-Z-S314",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T07:40:00Z",
+  "one_line": "Correction of AMGT_RESAPP-Z-S313's standing (CTO msg 27014 condition 2): a D-1 regeneration that drops served sentences is a DEFECT, not an accepted limit -- carried to round 53 as its own cell. ARMED: any live --rebuild-pool run would regress served /thesis sentences until it is fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Z-S313's measurement (round52/checks/ab_1_preview.py): ASML rebuild serves company_description 1 of 6, investment_thesis 0 of 1, risks 0 of 2.",
+      "CTO msg 27014: 'Z-S313 ... is a DEFECT row carried to round 53 as its own cell, not accepted as a limit'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A D-1 rebuild from the stored analysis refreshes a document without shrinking what it serves.",
+  "world_is": "Under today's verbatim gate the rebuild drops served sentences (ASML measured; the pool's population unmeasured). Round 52 splices the driver only; the rebuild defect is round 53's cell.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Disarmed by: no live --rebuild-pool run is ordered in round 52 (ab-6 runs --splice-driver only); the round-53 cell fixes the rebuild. Cites AMGT_RESAPP-Z-S313."
+},
+{
+  "id": "AMGT_RESAPP-Z-W186-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~186",
+  "surfaced_at": "2026-09-30T08:00:00Z",
+  "one_line": "AMGT-ab-1 AC2's <expect> says the dry-run names the moved keys as ONLY thesis_driver, but AMENDMENT 1 (provenance recorded in the document) makes the spliced document differ in thesis_driver PLUS one provenance key; the dry-run line prints both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC1 (ab_1_splice.py, amended) exits 0 with differing top-level keys ['thesis_driver', 'thesis_driver_provenance'].",
+      "AC2 dry-run line: ASML_NA_Equity: moved_keys=['thesis_driver', 'thesis_driver_provenance'] (content key thesis_driver; provenance key thesis_driver_provenance) driver_points=3 spanned=3 ... served_validator=True ... [DRY-RUN: wrote nothing]; exit=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 expect: one ASML_NA_Equity line naming the moved keys as only thesis_driver.",
+  "world_is": "The line names thesis_driver plus the ONE added provenance key thesis_driver_provenance, as AMENDMENT 1 and AC1 require; AC2's expect text predates the amendment. The content key moved is only thesis_driver. Judgment on the wording is the issuer's; no code change follows either way."
+},
+{
+  "id": "AMGT_RESAPP-Z-S315",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T08:20:00Z",
+  "one_line": "After AMGT-ab-4 the docstring near scoped_amgt.py:2175 still carries one false closure claim: it says lib.research.harvest.store 'is unavailable in the deployed package', but store.py is packaged (zz-8's content diff listed it CHANGED) and /thesis imports it through corpus.dossier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scoped_amgt.py docstring at the ~188 drain (@5cdc4e1825): 'never lib.research.harvest.store (module-scope import pyarrow) and never lib.opal_naming (packaged, but not imported by this adapter itself): the first is unavailable in the deployed package.'",
+      "zz-8's build-only content diff at 0bf907bee8 listed lib/research/harvest/store.py CHANGED, i.e. packaged; scoped_amgt.py:3218 lazily imports corpus.dossier, which imports harvest.store."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-51 ruling 6: the adapter's text states its real closure.",
+  "world_is": "The opal_naming half is corrected; the store half of the same sentence is still false. Text only, no behaviour; outside ab-4's bounded scope (comments + the opal_naming wording).",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Carried to round 53 as a one-line text correction; not worth a second re-open of ab-4 before ab-6 (it moves no served byte)."
+},
+{
+  "id": "AMGT_RESAPP-Z-S316",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T14:00:00Z",
+  "one_line": "Correction of AMGT_RESAPP-Z-S314 and Z-S313 (CTO msg 27185): a D-1 regeneration dropping ASML's 8 served sentences is C-VERBATIM-GATE HOLD working as designed, not a producer defect -- all 8 are stored with quoted_spans [] and are not verbatim in the excerpt; the 2 span-carrying sentences survive a rebuild. A live rebuild still REMOVES served sentences, so it runs only under a pair (the existing never-widen rule).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker ~191's STOP (row Z-W191-S1, branch 49b0940d5a): the 8 dropped sentences carry quote_method none-found; longest verbatim run 3-5 tokens against the 8-token floor.",
+      "round53/checks/ac_2_keep.py (re-scoped) on CLOUD: span-carrying stored 2, rebuilt keeps 2; 8 held by design."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S314: a regeneration that drops served sentences is a DEFECT to fix in the producer.",
+  "world_is": "The producer is right and the stored D-1 serves non-verbatim sentences; the hazard is governed by the pair rule for any live rebuild (INERT under it). Round 54 censuses stored D-1 documents serving sentences without a verbatim span, per name, and a WORLD act under a pair removes them (CTO msg 27185 items 2-3).",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Supersedes Z-S314's ARMED standing (Z-S314 row text unchanged, append-only)."
+},
+  {
+    "id": "AMGT_RESAPP-Z-W191-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~191",
+    "surfaced_at": "2026-09-30T13:40:00Z",
+    "one_line": "AMGT-ac-2's premise fails: the 8 ASML_NA_Equity sentences a rebuild drops (company_description 5, investment_thesis 1, risks 2) were served under the pre-HOLD vacuous rule with quoted_spans [] and no verbatim run in the excerpt, so they genuinely fail today's gate -- a ruling, not a build; nothing was changed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ac_2_keep.py at e1b5fd6d8c (S3 read-only): stored {company_description 6, investment_thesis 1, risks 2, ceo_bio 0, recommendation 1}; rebuilt {1, 0, 0, 0, 1}; exit=1. Same accession 000162828026011378, same document_sha256 and excerpt_sha256 in the analysis and the stored document; analyzer_version identical (opal-filings-analyze/1.0.0).",
+        "Rebuild denominators: sentences_drafted 13 = served_on_span 2 + held_no_span 8 + refused 3. The 2 served are stored sentences kept (company_description 'Board holdings: ...' span 'members of ASML's current Board of Management and Supervisory Board (8 persons)'; recommendation 'The updated Dutch Corporate Governance Code 2025 ...' span 'financial years starting on or after January 1, 2025,'). The 3 refused are not stored sentences (stored dropped was also 3).",
+        "The 8 lost sentences, each in the STORED document: quote_method none-found, quoted_spans [] (served vacuously by the pre-HOLD rule, pipeline.py docstring, 304111122c). Per sentence, whole-text-in-excerpt False and whole-text-in-cited-passages False for all 8; longest verbatim run at the production floor (8 tokens) None for all 8; at a 3-token floor: 'Authorized share capital...' none, 'Issued ordinary shares...' 4 tokens, 'Treasury shares...' none, 'Major holders...' 5 tokens (a company name), 'Reported diversity metrics...' (in company_description AND investment_thesis) none, risk 'US executive order 14173...' 4 tokens, risk 'The Supervisory Board must focus...' 3 tokens.",
+        "The sentences are the analyzer's own paraphrase or table summary, not the filing's words: e.g. evidence P0059 reads \"ASML's authorized share capital amounts to EUR126.0 million and is divided into:\" against the sentence 'Authorized share capital: total EUR126.0 million, split into 700,000,000 cumulative preference shares ...'; P0060 reads 'The issued and fully paid-up ordinary shares with a nominal value of EUR0.09 each were as follows:'; risks P0009 reads 'to our business activities; the financial reporting process;'.",
+        "verbatim.py and the producer's run search were read: no normalisation or run-search defect drops a sentence whose text is verbatim on span -- the 2 span-carrying stored sentences survive the rebuild unchanged. Scratch (uncommitted): C:/tmp/r53-191/.scratch/diag.py, diag2.py."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-ac-2 cell: a sentence the stored document serves verbatim-on-span is still served on rebuild; if the cause is that the stored sentences were served under an older, looser rule and genuinely fail today's gate, STOP and file a row -- that is a ruling, not a build.",
+    "world_is": "The stored sentences that were served verbatim-on-span (2 of 10) all survive a rebuild. The 8 that drop were never on-span: they were served with no span under the pre-HOLD vacuous rule and are HELD-NO-SPAN under C-VERBATIM-GATE = HOLD. Keeping them would require loosening the gate (serving a sentence with no verbatim text), which the cell forbids; no producer or pipeline change at the cause can make them verbatim. AC1 (ac_2_keep.py) compares ALL stored served sentences, so it cannot exit 0 under HOLD for this name; the ruling needed is either (a) accept the drop as HOLD working (the stored /thesis document is then regenerated smaller by design) and re-scope AC1 to span-carrying stored sentences, or (b) a CTO/Andrew ruling to change what HOLD serves. Disarm_owner 2.0.0_SA_COO~Z; the hazard is Z-S314's, unchanged: a live --rebuild-pool regresses these 8 served /thesis sentences until ruled. No file changed; AC1 stays exit=1; the order stays open.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Cites AMGT_RESAPP-Z-S313 and AMGT_RESAPP-Z-S314."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S317",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-30T14:36:00Z",
+    "one_line": "ack_messages returned 'broker call FAILED. Nothing acked (reported, not swallowed)' on a call that HAD written the ack -- the one delivery primitive whose purpose is to be the clock an orphan cannot forge reported a false negative about its own write.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ack_messages('27196') called three times in one turn (~14:33-14:36Z). Calls 1 and 2 each returned verbatim: 'ack_messages: broker call FAILED. Nothing acked (reported, not swallowed).' Call 3 returned: 'READ ack recorded by 0.7.0_AE_CloudOps~A for 0 message(s): [27196]  (1 already carried an ACK -- an ACK is write-once, so the FIRST reader's timestamp is preserved rather than overwritten.)'",
+        "Only this seat can ack its own mail, and no other ack path ran, so the ACK that call 3 found already present was written by call 1 or call 2 -- each of which reported 'Nothing acked'.",
+        "The broker was NOT down in that window: heartbeat() returned 'Heartbeat OK' twice, get_agent_status('0.7.0_AE_CloudOps~A') returned 'LIVE (last seen 0s ago, PID 33812)', and netstat read TCP 127.0.0.1:7800 LISTENING pid 4696. So this is a per-primitive failure, not an outage.",
+        "get_delivery_state('0.7.0_AE_CloudOps~A') in the same window returned 'get_delivery_state: broker call FAILED (reported, not swallowed).' while heartbeat succeeded seconds later. org/XXX.md step B.0 makes get_delivery_state the seat's delivery-ledger read at startup, so while it fails a seat cannot enumerate its unread rows.",
+        "Not measured by this seat, and NOT claimed: whether the write happens before or after the point that raises; whether send_message or other primitives share the path; how often it reproduces. One occurrence, one message id."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The broker's own wording is the contract: 'Nothing acked (reported, not swallowed)' asserts that a FAILED ack_messages call performed no write, and ack_messages is documented as 'the ONLY delivery signal an orphan cannot forge, and the only one that claims an AGENT saw a message'.",
+    "world_is": "At least one ack_messages call that reported 'Nothing acked' DID write the ACK. The instrument the fabric designates as its one trustworthy delivery clock misreported its own effect, in the SAFE direction here (the ack landed) but in the direction that teaches a seat to distrust a true positive. The reachable consequences are two, and neither is exercised here: a seat that believes the report may loop on retries, or may conclude it is deaf and escalate a reachability incident that does not exist; and with get_delivery_state failing in the same window, the org/XXX.md step B.0 backstop that would settle the question independently is unavailable at the same moment. This seat's own broker summary briefly carried the false claim 'msg 27196 acked' -- written before the first result returned -- and was corrected in the next heartbeat. No AMGT_RESAPP artifact is affected and AMGT-ac-3 proceeded; the ack is recorded and 27196 reads READ.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Surfaced off-task during AMGT-ac-3 startup; row filed and work continued per CLAUDE.md section 2. The mechanism lives in org/mcp/server.py, which is 0.0.0_AB_MSTR's lane, not this seat's write surface -- routing is the disarm_owner's call."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S318",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-30T15:40:00Z",
+    "one_line": "AC3 CANNOT PASS BY THE SPECIFIED ACT: ac_3_served.py --what bpng compares WHOLE served bodies before and after an act whose entire purpose is to MOVE THE READ PATH, and the body reports that path in its object_key / report_key / extract_key provenance fields. The data is unchanged; only the provenance strings moved.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC3 post-act: 'bodies 6; moved or empty vs the pre-act capture: 6' exit=1, all six of BP/_LN and NG/_LN overlay/peers/thesis.",
+        "NO DATA IS MISSING, measured two ways. (i) AC1 reads 40 of 40 copied byte-equal with the raw kept, exit=0. (ii) A FULL-BUCKET sweep of s3://opal-data-harvest, DENOMINATOR 7,111 objects auto-paginated and counted client-side, finds exactly 40 keys carrying a raw slash name for these two securities, and all 40 are in SLASH_OBJECTS.json -- 0 raw-slash keys outside the list. So the 40-object scope is COMPLETE for these names and no reader can be pointed at an absent encoded key.",
+        "NO DEGRADATION in the served bodies: 0 READ_FAILED across all six; 0 fields present only before or only after.",
+        "THE CONTROLLED DIFF, the decisive read: the two code versions were run IN PROCESS on the SAME PLANE against the SAME S3 data (lib/ extracted at a1a70e00eb and at cd70547173 via git archive; the raw objects are kept so the old code reads exactly what it read before). BP/_LN thesis: old 13,621 leaf fields, new 13,621, DIFFERING 3 -- and all 3 differ ONLY by the -SLASH- path encoding (management.management_read, posture.posture_read.object_key, scores.scores_read.object_key). 0 present only in old, 0 present only in new.",
+        "On the SERVED plane, rewriting the encoded path back to raw reproduces the pre-act hash EXACTLY for 5 of the 6 bodies (BP overlay/peers, NG overlay/peers/thesis).",
+        "THE 6TH WAS THIS SEAT'S OWN INSTRUMENT ERROR, NOT A SIXTH DEFECT, and is recorded so it is not mistaken for one: the normalisation rewrote -SLASH- to / EVERYWHERE, including dossier_fields citation paths (19 of them in BP thesis) that were ALREADY stored in security_key=BP-SLASH-_LN_Equity form BEFORE this act, on the bronze research-report prefix. Over-normalising those turned correct pre-act values into wrong ones. BP thesis is the only one of the six carrying a large dossier_fields citation set, which is why it alone failed to match. The same-plane controlled diff above settles it independently of that normalisation.",
+        "NOT CLAIMED: that AC3 would pass under any particular re-scoping. Naming the fix is the issuer's, not this seat's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3: 'bodies 6; moved or empty vs the pre-act capture: 0; BP AND NG READ THE SAME DATA AT THE ENCODED KEYS: YES -- and exit=0', where the comparand is a sha256 over the whole served body with only generated_at / read_at / served_at / request_id stripped.",
+    "world_is": "BP/_LN and NG/_LN DO read the same data at the encoded keys -- that outcome is met -- but the criterion cannot observe it, because the body carries its own read path and the act moves that path by design. The COO half's own EXPECTED OUTCOME says the bodies must be 'byte-equal', which is the same premise. This is the same class as Z-S311 (zz-8 AC2): the cell's outcome is achieved and its instrument cannot see it. The act is NOT rolled back on this finding: the halves make a failing criterion the rollback trigger, but the trigger exists to catch a served regression and there is none -- 13,618 of 13,621 fields identical and the 3 that move are path strings. Rolling back would revert AC2 (which the CTO half section 3 condition 4 says unblocks DSGN round-13's found-codes wording) and AC4 on the strength of an instrument this row shows cannot pass. The entry is therefore HELD-SOVEREIGN-GATED, not closed and not rolled back, and the code-only rollback to prior VersionId irPpBAFU39AwsExU2Fzw2OvSZzw.O4c9 stays available on the issuer's word. AC1, AC2 and AC4 PASS; never-widen limbs 6 and 7 are clean.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Cites AMGT_RESAPP-Z-S311. The executor does not adjudicate the criterion -- this row surfaces, the issuer rules."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S319",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~A",
+    "surfaced_at": "2026-09-30T15:41:00Z",
+    "one_line": "build-and-upload-scoped-amgt.sh's upload leg CORRUPTS the artifact's content-sha256 metadata whenever the base64 sha begins with a forward slash: MSYS path conversion rewrites the --metadata argument to the Git installation root plus the rest, and modules/yang-lambda reads that metadata AS source_code_hash.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured live this act. Local base64(sha256) of the ac-3 zip = /QP4upEVzTjnHV2bAeIXIud0k0DgjDDGrlMgtm0uo7o=. After the script's own upload shape (aws s3 cp ... --metadata content-sha256=$SHA_B64), head-object returned Metadata content-sha256 = C:/Program Files/Git/QP4upEVzTjnHV2bAeIXIud0k0DgjDDGrlMgtm0uo7o= -- the leading slash consumed and replaced by the Git installation root.",
+        "cp returned rc=0 and ContentLength was correct at 40,117,280, so BYTES were never at risk and no exit code or size check can detect this. Only reading the metadata back catches it.",
+        "Reachability is real, not theoretical: the script's own comment states the metadata is REQUIRED because modules/yang-lambda reads it as source_code_hash. The mangled value would have entered the terraform plan as the new source_code_hash.",
+        "FREQUENCY, stated as arithmetic and not as a measurement: a base64 sha begins with a forward slash for 1 of 64 possible leading characters, so roughly 1.6% of builds. This seat's prior builds today (pVa+sgzj, zHpr7FhS, nKWCfQRQ) all began with a safe character, which is why the script has run for months without surfacing it.",
+        "Repaired in place server-side with boto3 copy_object MetadataDirective=REPLACE -- new VersionId C9brZ5Qd6_.iSbxw3NKZOxHuDByQScll, bytes unchanged, metadata correct, and a fresh get_object of the served body hashes to exactly the metadata value. The mangled version OBn_YIRRfbT02ROX8ODG0woNxxifIZMn is superseded and was never applied; the plan was then checked to contain the mangled string 0 times.",
+        "NOT MEASURED: whether the sibling build-and-upload scripts in the same directory share the shape, and whether any artifact already in S3 carries a mangled content-sha256 from an earlier run. Both are worth a sweep and neither is this order's scope."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The build script asserts the metadata is a REQUIRED, faithful carrier of the artifact's base64(sha256) because modules/yang-lambda reads it as source_code_hash; CLAUDE.md's Git section separately warns that MSYS_NO_PATHCONV is needed for slashed arguments and that a mangle returns clean-empty rather than erroring.",
+    "world_is": "The upload leg passes the base64 sha through a Git Bash argv where a leading slash is a path, so roughly 1.6% of builds silently publish a corrupted source_code_hash with rc=0 and a correct byte count. The hazard is ARMED for the NEXT build whose sha starts with a slash, on this script and on any sibling sharing the shape; it is not disarmed by this act's repair, which fixed one object and not the producer. The fix belongs in the script (pass the metadata through a non-shell writer, or set it with the same boto3 call that uploads) and the script is under infra/aws/terraform/harvest/, which IS in this order's paths -- but changing it is outside this order's BOUNDS (the act and nothing else), so it is surfaced rather than taken.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Surfaced during AMGT-ac-3 leg (b); row filed and the act continued per CLAUDE.md section 2. Caught only because the metadata was read back -- rc=0 and ContentLength both looked correct."
+  },
+{
+  "id": "AMGT_RESAPP-Z-S320",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T16:05:00Z",
+  "one_line": "Issuer ruling on AMGT_RESAPP-Z-S318: ac-3 AC3 was the issuer's instrument defect (the check hashed whole served bodies across an act that moves the read path the body reports) -- AMENDMENT 2 re-scopes it to rewrite the encoded name back to raw INSIDE `*_read` provenance subtrees only; every other byte must equal the pre-act capture. Under it AC3 reads 6 of 6 equal, 12 read-path strings rewritten; a planted change outside `*_read` FAILS. No rollback: the act is accepted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round53/checks/ac_3_served.py --what bpng --dir .../0.7.0_AE_CloudOps~A/ac3-pre (amended), served plane at CodeSha256 /QP4upEV..., 16:0xZ: 'read-path strings rewritten encoded->raw inside *_read subtrees: 12; bodies 6; moved or empty vs the pre-act capture: 0' exit=0.",
+      "Negative control, same run shape: one key planted OUTSIDE `*_read` in NG/_LN peers -> 'moved 1 [NG/_LN_Equity peers]', exit=1.",
+      "Rejected first scope, measured: also rewriting citation report_key fields made BP thesis FAIL, because those dossier citations were already stored encoded before the act (AE~A's row, 19 such paths) -- so the rewrite is confined to `*_read`.",
+      "The other three criteria re-run by the issuer on the served plane: AC1 ac_3_copies 40 of 40 byte-equal, raw kept (15:20Z); AC2 /timeline AMZN 273 of 273 carry publishers_found_codes; AC4 CodeSha256 /QP4upEVzTjnHV2bAeIXIud0k0DgjDDGrlMgtm0uo7o= LastModified 15:22:01Z Successful."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ac-3 AC3 as cut: whole-body sha256 equal before and after; the COO half's EXPECTED OUTCOME said the bodies are 'byte-equal'.",
+  "world_is": "The act moves the read path by design and the body reports it, so whole-body equality was unreachable for a correct act. Same class as Z-S311 (my zz-8 check): an outcome met and an instrument that could not see it. Recorded as the issuer's third check defect of this class; the round-53 packet carries it for the gate proposal already agreed.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Resolves Z-S318 by amendment; Z-S318 text unchanged (append-only). The never-widen rollback trigger is not met: no served regression, every criterion passes under AMENDMENT 2."
+},
+{
+  "id": "AMGT_RESAPP-Z-S321",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T16:05:00Z",
+  "one_line": "Issuer ruling on AMGT_RESAPP-Z-S319 (MSYS mangles a content-sha256 that starts with '/'): the served-output hazard is INERT -- modules/yang-lambda deploys the S3 object VERSION (s3_object_version), so the served bytes are always the uploaded ones; a mangled metadata value only corrupts source_code_hash, i.e. a spurious plan diff. The producer repair (three scripts) is carried to round 54 as its repair cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/yang-lambda: s3_key = var.artifact_key; s3_object_version = data.aws_s3_object.artifact.version_id; source_code_hash = ...metadata[\"content-sha256\"] (read at HEAD 16:0xZ).",
+      "Shape census of the four scripts in infra/aws/terraform/harvest/: build-and-upload-chatter-axis.sh already passes the metadata under MSYS_NO_PATHCONV=1 and READS IT BACK and refuses on mismatch; build-and-upload-scoped-amgt.sh (:742), build-and-upload-print-deps-layer.sh (:79) and build-and-upload.sh (:29) pass it bare and only print the read-back.",
+      "This act's artifact was repaired pre-apply by the executor (VersionId C9brZ5Qd6_..., metadata equals the local sha; the plan carried the mangled string 0 times)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S319: ARMED for the next build whose sha starts with '/'.",
+  "world_is": "Reachable (about 1 build in 64), but what it reaches is source_code_hash, not served bytes. INFERRED, not measured: terraform then shows a perpetual code diff and re-applies the same version, which a never-widen pair reads as a code move. Round 54's repair cell gives the three scripts chatter-axis's shape (no-pathconv on the metadata segment + read-back refusal); until it lands, the COO half of any RESAPP build pair carries 'head-object content-sha256 equals the local sha' as an act-start limb.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Supersedes Z-S319's ARMED standing (Z-S319 text unchanged, append-only). build-and-upload.sh is the HARVST research-pull-enqueue artifact: carried in the round-53 packet for the HARVST issuer to read."
+},
+{
+ "id": "AMGT_RESAPP-Z-S322",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-09-30T19:30:00Z",
+ "one_line": "`.tools/deploy_ledger.py open` STAGES its two files into the shared index, so during a live multi-seat window a concurrent seat's merge commit absorbs the NEVER-2 entry under that seat's author line before the opening seat can run safe-commit -- measured here: the ad-2 entry landed in two peer drains (3ac5a8666e 2.0.0_SA_COO~RV 15:21:35, f3980a84ab 2.0.0_SA_COO~H 15:24:03), never under 0.7.0_AE_CloudOps~A.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "deploy_ledger.py open printed 'both are STAGED' and named the required commit pathspec; the files were left in the shared index by the tool, not by this seat (no git add was run -- CLAUDE.md 14a forbids it).",
+   "safe-commit.sh REFUSED on the follow-up commit: 'A MERGE IS IN PROGRESS IN THIS WORKTREE', MERGE_HEAD ead1db469b (0.9.0_WK_AMGT_HARVST~84), staged now 17 paths -- and it staged nothing itself. Its own refusal text names this exact class and cites merge b687429234 of 2026-09-04 carrying a foreign record.",
+   "git log --full-history -- org/critical_paths/.open_deploys/amgt-resapp-r54-ad2-hold-on-object.json returns TWO merge commits: 3ac5a8666e (2.0.0_SA_COO~RV) and f3980a84ab (2.0.0_SA_COO~H). Default history simplification HIDES both (--diff-filter=A returned empty), so a plain `git log -- <path>` reads as 'never committed' on a file that is in HEAD.",
+   "git ls-tree -r HEAD confirms both files are in HEAD (2 of 2); git status --porcelain on the same two paths prints NOTHING, because index, worktree and HEAD now agree -- the absorption is invisible to a status read."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CLAUDE.md 14a: every commit carries its lane's author line via safe-commit.sh, whose contamination guard exists so one seat's files never land under another's authorship; NEVER-2: the ledger entry is opened AND committed by the acting seat at deploy-start.",
+ "world_is": "The entry's CONTENT is correct and it IS committed, so ad-2's precondition is materially met and this is not a rollback trigger. What was lost is the author line and the lane check: the absorbing commits are merges, where the owned-paths merge exemption means no lane check sees the payload. The guard cannot fire, because the absorption happens BEFORE safe-commit runs -- the tool stages, a peer commits, and safe-commit is never reached. Reachable by ANY seat that runs `deploy_ledger.py open` while another seat is merging, which on this device is the normal condition, not the exception. INFERRED, not measured: the same shape applies to every tool that stages on the caller's behalf, not only deploy_ledger.py; the class is 'a tool that stages into a shared index', and its denominator was not swept here.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z. Not a blocker for ad-2: the act proceeds on the committed entry. Candidate repair for the issuer to weigh: have `deploy_ledger.py open` WRITE its two files and leave them UNSTAGED, so the opening seat's own safe-commit is the only path into the index. Surfaced, not adjudicated -- this seat does not amend another seat's tool."
 }
 ]
 ```

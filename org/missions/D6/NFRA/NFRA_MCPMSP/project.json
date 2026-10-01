@@ -1,0 +1,66 @@
+{
+  "project_code": "NFRA_MCPMSP",
+  "macro_code": "NFRA",
+  "directive": "D6",
+  "fabric": "site-z",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "created": "2026-09-30",
+  "registered_under_tree": "2026-09-30",
+  "placement": "SITEZ",
+  "pods": [],
+  "related": [
+    "NFRA_OPALAI",
+    "NFRA_MCPORTAL",
+    "NFRA_OPLGTW",
+    "NFRA_MCPINDEX"
+  ],
+  "name": "The Opal MSP Analyst -- one Opal-hosted Teams agent serving partner firms (Inflection and Cottonwood first) from each firm's own data, through one central gateway that assumes the asking firm's AWS role per request",
+  "description": "Brief docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md (4.0.0_SA_CRO~O @77ddde1d13), from Andrew's discussion with 4.0.0_SA_CRO~O recorded in org/tier1_exec/4.0.0_SA_CRO~O/deliverables/ANDREW_DIRECT_20260930_0315Z_MSP_ANALYST_CHANNEL_PILOT_FEDERATED_PROD_BOT_SENDER_DOMAIN_ALLOWLIST.md (sections 1-10). Andrew named the project: '1.) New Project, NFRA_MCPMSP.' Primer: org/tier1_exec/1.0.0_SA_CTO/deliverables/PRIMER_MSP_ANALYST_FOR_CRO_O_20260930.md.",
+  "phase": "L4 PRD v0.4 2026-09-30 by 1.0.0_SA_CTO~O on Andrew-direct ~17:45Z (record cooMS_ANDREW_DIRECT_20260930_1745Z_NFRA_MCPMSP_A0_STRUCK_LIVE_CONVERSATION_NOT_A_GATE.md @3103954a36): hop 0 (A0/S1/G-OUTSIDE) struck; FWD-1's live conversation (A1) PARKED, owner Andrew, gates no round; ENDPOINT/CONTRACTS unchanged, ratified-text half not re-opened. || L7 round 1 DRAINED 10/10 terminal @1fe1ef07b3 (2.0.0_SA_COO~MS drain-end read msg 27219); L8 slug owed by 3.0.0_SA_CVO~O. || L6 ISSUANCE round 1 2026-09-30 by 2.0.0_SA_COO~MS on Andrew's \"go ahead and dispatch round 1\" (CTO msg 26985): 10 task orders, fanout 4 of 4 chains + 1 join; slots ~1/~2/~3 spawn at the cut, ~4 after NFRA_OPALAI OA-t-3 r2 is terminal. || L5 DECOMP v1 2026-09-30 by 2.0.0_SA_COO~MS: round 1 = the FWD-1 thread, 10 cells on 4 chains + 1 join; hop 0 (A0 federated-chat probe) is the issuer's act before the cut, on G-OUTSIDE. || L4 PRD v0.3 2026-09-30: C2 names the tenant_firm record and its sole writer (MCPORTAL register_tenant; N1); C5 stages the gateway identity's portal-v2 zero-read to an enrichment round (msg 26951). || L4 PRD v0.2 2026-09-30: C5 amended (per-firm role also reads its own firm prefixes in opal-data-portal-v2 with a Deny on other firms' prefixes; option (a) on COO~MS row Z-S1 @110d6e6398, msg 26947); CONTRACTS changed, so the ratified-text half re-opens for 3.0.0_SA_CVO~O. || L4-R ADMITTED 2026-09-30: ratified-text half SIGNED by 3.0.0_SA_CVO~O (@8647b72584, review @8d6851f97c, msg 26939: ENDPOINT 33 of 33 verbatim, C1-C12 agree, none of the four L4 rulings contested); brief half auto-admitted (CRO wrote the brief). || L4 PRD v0.1 DRAFT 2026-09-30 by 1.0.0_SA_CTO~O (C1-C12, S1-S14, A0-A11; five L2 open items ruled at C3/C4/A1 and one carried to L5). || L3 REGISTERED 2026-09-30 by 1.0.0_SA_CTO~O under D6/NFRA. || L2 ENDPOINT FWD-1..FWD-11 CONFIRMED by Andrew ('yes aggreed for all of these', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_05xxZ_NFRA_MCPMSP_ENDPOINT_CONFIRMED.md; endpoint org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_NFRA_MCPMSP_20260930.md @64617f8afa). || L1 BRIEF docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md (4.0.0_SA_CRO~O).",
+  "blocking": "Round 1 drained (10/10). Next: 3.0.0_SA_CVO~O's round-1 slug (L8/L9; watermark 0 of 18 at the drain), then 1.0.0_SA_CTO~O's round-1 analysis with round 2's enrichment list, first item the portal-v2 zero-read (C5 v0.3). Not gates (v0.4, Andrew-direct): hop 0 struck; A1 live conversation PARKED on G-USER, G-IT-INF, G-ADVISOR, G-FIRM (owner Andrew). G-PUSH (opal_ai PROD, site-Z CLOUD) on Andrew's word.",
+  "brief_ref": "docs/briefs/nfra-mcpmsp-msp-analyst-brief-20260930.md",
+  "prds": [
+    {
+      "path": "org/missions/D6/NFRA/NFRA_MCPMSP/prd/NFRA_MCPMSP_PRD.md",
+      "version": "v0.4",
+      "status": "DRAFT"
+    }
+  ],
+  "prd_lineage": [
+    "v0.1 @b90b97652f (ratified-text signed @8647b72584)",
+    "v0.2 @82fddba4ff (C5 portal-v2 firm prefixes)",
+    "v0.3 @743bfa866f (A0 hop 0 live)"
+  ],
+  "decompositions": [
+    {
+      "path": "org/missions/D6/NFRA/NFRA_MCPMSP/decompositions/NFRA_MCPMSP_DECOMP.md",
+      "version": "v1",
+      "round": 1,
+      "prd_ref": "prd/NFRA_MCPMSP_PRD.md@c2f5d5a071"
+    }
+  ],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO~O",
+    "coo": "2.0.0_SA_COO~MS",
+    "cvo": "3.0.0_SA_CVO~O",
+    "cro": "4.0.0_SA_CRO~O",
+    "workers": "the worker subagents the COO's L6 issuance names (0.9.0_WK_NFRA_MCPMSP~<n>)"
+  },
+  "coo_lane": "2.0.0_SA_COO~MS",
+  "fabric_ruling": "site-z -- INHERITED FROM THE DIRECTIVE. D6's placement reads SITEZ; placement attaches to the directive, never to a member (LD-0498, LD-0502).",
+  "rulings": [
+    "CHANNEL -- Andrew 2026-09-30: 'I agree with 1 pilot, 3 prod.' (pilot federated chat, production multi-tenant bot; CRO~O record s.2).",
+    "SENDER ALLOWLIST -- Andrew 2026-09-30: 'If there is ever a sender to the agent that is not @opalinvest.com, @49financial.com, @inflectionwealth.com, or @cottonwoodmail.com, then the agent should not even respond.' (record s.2).",
+    "REFUSALS LOGGED -- Andrew 2026-09-30: 'Refused messages absolutely should be logged.' (record s.5).",
+    "ONE SERVER, TENANT + DOMAIN CHECK AT THE GATEWAY -- record s.6-s.7.",
+    "PER-FIRM ROLE -- Andrew 2026-09-30: 'yes to per-firm role' (record s.8).",
+    "GRANTS -- pilot Opal-administered per advisor; production firm ceiling with partner-admin assignment; the refusal log is the onboarding queue (record s.9).",
+    "CARDS 2-6 -- Andrew 2026-09-30: '2.) Rec approved. 3.) Rec approved. 4.) Rec approved. Should have a clear structure in AWS Secrets Manager. 5.) Current buckets for now. 6.) Yes.' (record s.10).",
+    "DONE WHEN -- Andrew 2026-09-30: 'yes aggreed for all of these' (FWD-1..FWD-11)."
+  ],
+  "thread_counter": 0,
+  "threads": []
+}

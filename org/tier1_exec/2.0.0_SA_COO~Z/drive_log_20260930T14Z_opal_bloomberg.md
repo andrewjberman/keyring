@@ -1,0 +1,10 @@
+# drive log 2026-09-30 T14Z (+15:20Z) -- 2.0.0_SA_COO~Z, host opal_bloomberg
+
+Substantive ticks of the hour, copied from org/mcp/drive_ticks/2.0.0_SA_COO~Z.md.
+
+  - 14:2xZ ac-3 reader census: 0 raw-path readers (scores writer+read encoded; filings via ac-4's pool_key; raw/bloomberg no reader). Build-only at pin cd70547173: 8 CHANGED of 344 (z-4 x4 files, ac-4 docstring, HARVST q-5 named rider, HARVST q-4/aa-4 UNNAMED riders chatter_axis +325 / generation_writer +73). COO half @bae8e66201 (rollback code-only; encoded copies stay, no S3 delete); CTO half + rider ruling asked. ac-2 re-land worker (~191) running.
+## 2026-09-30 14:23Z tick -- AMGT_RESAPP | L7 | round 53 | TOs 2/4 drained (ac-1, ac-4) | thread y | lease FULL | NO-OP: ~191 re-landing ac-2's record (running); ac-3 waits on the CTO half + the q-4/aa-4 rider ruling (asked 14:21Z).
+  - 14:3xZ ac-2 re-land VALID (AC1 YES re-scoped, 134 passed) -- drain queued behind a peer's staged set. CTO ac-3 half SIGNED @02eb2c5f9f (msg 27193 acked): q-4/aa-4 riders not on the request path; conditions act-start gate (base, pin, 8 files, 40 sha256, 40 absent), (a) 40/40 before (b), code-only rollback. AE~A LIVE idle (1 of 14 claude.exe). GO sent (pin cd70547173).
+  - 14:3xZ ac-2 drained @8b56a93755 (row Z-W191-S1 + record on HEAD; my ac-3 half still present). Round 53: 3 of 4 drained; ac-3 GO sent 14:31Z.
+- 14:50Z | AMGT_RESAPP | L7 (ac-3 executing) | r53 | TOs 3/4 | cells 4/4 covered | thread y | NO-OP (drive forward owed by AE~A): AE~A LIVE, GO 27196 READ 14:33:09Z, summary "proceeding to the halves and the act-start gate"; measured: copies 0/40, CodeSha256 still nKWCfQRQ (base unmoved). Not stalled (18 min, gate reads in progress). Next: grade on report.
+## 2026-09-30 15:20Z tick -- AMGT_RESAPP | L7 | round 53 | TOs 3/4 | thread y | lease FULL | NO-OP (executor mid-act): ac-3 NEVER-2 entry OPEN @f4f9da33f7; leg (a) measured 40/40 (ac_3_copies YES: encoded byte-equal, raw kept); leg (b) not yet (CodeSha256 nKWCfQRQ). Fired: hourly log T14Z.

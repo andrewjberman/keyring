@@ -151,3 +151,28 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-09-30 ~21:2xZ; row `NFRA_OPLGTW-Z-S21`)
+
+Graded by: no gate limb (LIMB 6 fires on a newly-added order only; GATE (viii) reads `<placeholders>NONE</placeholders>`).
+Released by: Part D, `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/PART_D_RECORD_20260930.md` @205c2e7f6c.
+
+1. **Ancestry is not evidence on this gateway; content is.** Deploy-only refs carry history without bytes. Measured by
+   the issuer: live `42c52ed4d9` has `b5a585cf2f`, `344cca64a1`, `c4d2274c6d` and `0906bf01e5` in its history, yet its
+   `app/tier.py` reads `MASTER_ADMIN_PRINCIPALS` 0 times (CLOUD HEAD and `b5a585cf2f`: 2). So:
+   - Step 1's release-order check passes BY CONTENT. OG-x-2's gateway lines (`0c3d545002`) are present in live
+     460 of 490. The 27 absent `engine.py` lines are OG-x-4's rewrite (`d1ba79742c`, `132a07ee11`); the 3 absent
+     `tests/test_schwab_export_stream.py` lines were not attributed. Re-read both numbers yourself; a different
+     number is a BLOCKING row.
+   - Step 1's live commit is `42c52ed4d9e834b0f1cf4f96eb83f9b0f7a183df` (MX-r-6 v3, live 18:33:41Z; CLOUD's
+     `EC2_MANIFEST.json` may still read `4ce7946426`, because that ledger closed on a worker branch). The 13-file md5
+     read on the host is the authority.
+   - Step 2 cherry-picks the four build commits by diff even though git calls them ancestors. Never skip one on
+     `--is-ancestor`, and never let `git cherry-pick` report "empty" without checking the file bytes.
+2. **Values.** The hand-off carries `ADMIN_PRINCIPAL` and the two `WRITE_CAPABLE_PRINCIPALS` pairs, citing the Part D
+   record above. `.env` gets exactly the pairs as handed. Never print or commit a value.
+3. **PHASE B step 10.** If the release tree's `safe-ec2-deploy.sh` honours `DEPLOY_BASE_REF`, set it to the live full
+   sha read at act time, for the act and for any rollback. If it does not, repeat step 1's 13-file content read
+   immediately before the upload and STOP on any drift.
+
+<status>pending</status>

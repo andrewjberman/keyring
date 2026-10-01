@@ -3,7 +3,7 @@
   "project": "NFRA_MCPORTAL",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.3",
+  "prd_version": "v0.4",
   "step": 4,
   "brief_ref": "docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md@8d1f5c362b",
   "endpoint_outcomes": [
@@ -212,6 +212,15 @@ the `mcportal` commit, recorded in the deploy manifest beside the `opal_ai` comm
   gateway role cannot write, and the dashboard's history reads the writer's record. A replay is therefore visible,
   though not prevented.
 - Every grant write keeps the store's optimistic revision check. A revoked record stays a tombstone, never a delete.
+- **Addendum 2026-09-30 (for NFRA_MCPMSP C2; CVO~O note N1, 2.0.0_SA_COO~MS msg 26948):**
+  - The writer gains one op, `register_tenant {tid, firm}`. It writes the `tenant_firm` record at
+    `POLICY#TENANT#<tid>`, which sits inside the existing `POLICY#` LeadingKeys guard, so no IAM change is needed.
+    The precedent is `POLICY#EMAILDENY#<sha>` (`app/access_state.py:62`), and the record type is added to NFRA_OPLGTW's
+    contract in the same commit.
+  - The op is owner-verified exactly as narrow and widen are. It is refused for a firm Andrew has not brought live
+    (NFRA_MCPMSP C11), and it leaves one audit item in the writer's own record.
+  - This writer is the ONLY writer of that record; the gateway only reads it. The MCPMSP cell that builds the op is
+    granted this project's writer paths for that op alone.
 
 **C5 -- Every dashboard write is audited and revertible.** Each write records who, when, what, before and after in the
 grant store's `operator_audit` record type, or in an equivalent record for non-grant tables. The Recent Changes view

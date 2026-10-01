@@ -1,11 +1,12 @@
 {
   "prd": "AMGT_HARVST_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "3659741074c603724fd3615c8c24bb4ae3ac7d7d",
+  "prd_version": "v0.10",
+  "prd_pin": "d0bc0a79f056d3d9fda2d9c2e0fd6639d06b17e7",
   "half": "ratified-text",
-  "half_hash": "fa4257b65ca7862ee7d7b910d95f8faa06e67e8a979ddcb3ec2aee4923959fde",
+  "half_hash": "d2622dd025dfb2520948d08720ea9c62f48f8ef3da9648369f43544fc8a30a98",
+  "endpoint_hash": "974dada544a2ee6979cfc4a18c3fc9bf6581ecfbba14d60d4862dc6e516e181e",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_AMD4b_L4R_RATIFIED_TEXT_SIGNED_20260923_Z.md@c9d862dd9c",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_HARVST_v0.10_RATIFIED_TEXT_20260930_Z.md@c61fac537f",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-09-23T22:18:31Z"
+  "signed_at": "2026-09-30T17:19:00Z"
 }

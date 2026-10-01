@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.28",
+  "prd_version": "v0.30",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -818,6 +818,29 @@ disputable, by rule, and carry no technical language.*
                     ⚠ If branch (a) needs a field no route serves, that is a
                     ROUTE change and returns to 1.0.0_SA_CTO~Z before it is
                     built (C-PRESENTATION-ONLY names this exception).
+
+  ===== ADDENDUM C, v0.29, 2026-09-30 -- FWD-21..FWD-29 RE-HOMED ============
+  FWD-21..FWD-29 are PAGE PRESENTATION, which DSGN_AMGTV1 owns (fork F5,
+  @ac5433b35b). Each is RE-HOMED: its obligation moves to the DSGN_AMGTV1
+  outcome named below and is graded there, never here. Rationale: s.C.1.
+  Where DSGN's ratified endpoint names a DIFFERENT FORM, this fence's form is
+  no longer promised; every PROPERTY is carried. Nothing else is dropped.
+
+  FWD-21 -> DSGN FWD-12 (beside DSGN FWD-6). NO LONGER PROMISED: the Thesis as
+         a recommendation line, a summary paragraph and headed sections
+         (DSGN FWD-6's three cards under the main chart replace that form).
+  FWD-22 -> DSGN FWD-13 (beside DSGN FWD-4). NO LONGER PROMISED: six Stat
+         tiles (DSGN FWD-4's four header cards replace them).
+  FWD-23 -> DSGN FWD-14 (beside DSGN FWD-6). NO LONGER PROMISED: nothing; the
+         affordance takes DSGN's window form.
+  FWD-24 -> DSGN FWD-15 (beside DSGN FWD-9). NO LONGER PROMISED: nothing.
+  FWD-25 -> DSGN FWD-16 (beside DSGN FWD-8). NO LONGER PROMISED: nothing.
+  FWD-26 -> DSGN FWD-17 (beside DSGN FWD-10). NO LONGER PROMISED: the verdict
+         as a Stat tile (DSGN FWD-10's verdict card replaces it).
+  FWD-27 -> DSGN FWD-18 (no DSGN owner before v0.4). NO LONGER PROMISED: nothing.
+  FWD-28 -> DSGN FWD-19 (beside DSGN FWD-11). NO LONGER PROMISED: nothing.
+  FWD-29 -> DSGN FWD-20 (no DSGN owner before this addendum). NO LONGER
+         PROMISED: nothing; the mechanical check becomes DSGN's instrument.
 ```
 
 **BAR DISTRIBUTION: 19 of 20 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
@@ -2433,3 +2456,32 @@ ADDENDUM B adds ENDPOINT lines and CONTRACTS, so the RATIFIED half re-opens to `
 L1 brief, so the BRIEF half re-opens to `4.0.0_SA_CRO~Z`, its author. ⚠ **Per R-10 Andrew suspended the L4-R
 signature as a BAR for AMGT -- the review is kept, the ritual is not** -- so both halves are routed and the round is
 not held on a stamp. `FWD-1`..`FWD-20` and every existing contract are unchanged.
+
+## C.1 -- ADDENDUM v0.29: FWD-21..FWD-29 RE-HOMED TO DSGN_AMGTV1 (round-51 ruling 4)
+
+**Cut 2026-09-30 by `1.0.0_SA_CTO~Z`** under `ledger/ROUND_ANALYSIS.round51.md` ruling 4, from the round-52 read-only map
+`deliverables/0.9.0_WK_AMGT_RESAPP~187/PAGE_FWD_MAP_ROUND52.json` (@`8aa352afc4`, drained @`0640ed5a0c`, COO~Z msg 27019).
+The map reads 9 rows: 8 `partly-covers`, and 1 `none` (FWD-29).
+
+**The rule applied to every row, so the split is not decided one row at a time:**
+- Where DSGN_AMGTV1's ratified endpoint (confirmed by Andrew on 2026-09-29) names a DIFFERENT FORM, the RESAPP form is no
+  longer promised. Three forms qualify: FWD-21's three-part Thesis layout, FWD-22's six Stat tiles, and FWD-26's verdict Stat.
+- Every other clause is a PROPERTY. It is carried whole to a new DSGN outcome, `FWD-12`..`FWD-20`, one per row, in the
+  DSGN_AMGTV1 PRD v0.4. Examples: the one band, evidence per sentence, units and tooltips, the four states, and the render
+  check. Andrew's F1 word (the identity header is the ONE band) is one of those properties, so it moves intact.
+- **FWD-29 (map: `none`) becomes DSGN FWD-20.** DSGN FWD-11 is a person's side-by-side read. `C-RENDER-IS-THE-ORACLE` needs
+  the mechanical JSON AND the person's read, so retiring the instrument would leave DSGN with one arm and no control.
+
+**Grading effect:**
+- This project's completion test reads FWD-21..FWD-29 as `RE-HOMED`, which is neither REALIZED nor dropped.
+- A CROSS-PROJECT DEPENDENCY TRANSFERS THE OBLIGATION, NEVER THE SATISFACTION (`3.0.0_SA_CVO~Z` @`dbcf788466`), so nothing
+  DSGN builds is ever credited here.
+- A field one of those outcomes needs that no payload carries remains a SERVED-RUNTIME ASK of this project
+  (`C-PRESENTATION-ONLY`).
+
+**Conditions:**
+- Re-homing takes effect only in the commit that also lands DSGN_AMGTV1 PRD v0.4.
+- If the CVO's L9 grade of the map's AC2 changes a row's relation, this section is amended at the round-52 L10.
+
+**L4-R:** this changes ENDPOINT text (the fence block), so the ratified half re-opens to `3.0.0_SA_CVO~Z`. Under R-10 it
+is reviewed, not held on a stamp. FWD-1..FWD-20, FWD-30, FWD-31 and every contract are unchanged.

@@ -1,12 +1,12 @@
 {
   "prd": "AMGT_RESAPP_PRD.md",
-  "prd_version": "v0.28",
-  "prd_pin": "496b42d7258cc761d8469706dd16de9cace4a7da",
+  "prd_version": "v0.30",
+  "prd_pin": "5d3052d8d730a926a4a28c711d2d6a30e973dbd4",
   "half": "ratified-text",
-  "half_hash": "fa3df6dbbf4ffad317489c41288d145187d8911c995e7870210bbae3bedb7411",
-  "endpoint_hash": "b34f9346d6ddd2bbf7d22f67a49559c47b87568b7ba06de888344e8c3a2a40d8",
+  "half_hash": "51c10ab3d7a2fa947feadc41971bc6d6c97a892b3d7ba96665e127b25ecf34a5",
+  "endpoint_hash": "d26db6d7563ee7ecc402932c5aa74836e6d9366d3133f8e63103cf0cd6d8a8e0",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_L4R_RATIFIED_TEXT_REVIEW_20260926_Z_V028.md@fd8432d6dc",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_RESAPP_v0.29_DSGN_v0.4_RATIFIED_TEXT_20260930_Z.md@499df3b894",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-09-26T13:42:57Z"
+  "signed_at": "2026-09-30T12:56:40Z"
 }

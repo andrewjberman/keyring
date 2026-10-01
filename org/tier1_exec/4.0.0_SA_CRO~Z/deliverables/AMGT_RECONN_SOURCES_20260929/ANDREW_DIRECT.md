@@ -125,3 +125,59 @@ Recorded September 30, 2026, approximately 00:2x-00:3x ET; Claude Code terminal,
 > bbg should have dividend calendar for the holdings
 
 Applied: the trade floor is 0.2% of prior shares (probe re-run; `TRADE_INFERENCE_FEASIBILITY.md`), and dividends enter the method from Bloomberg's per-holding dividend calendar (S6).
+
+## 0.2% confirmed, verbatim
+
+Recorded September 30, 2026, approximately 00:4x ET; Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, after the 0.2% / 0.5% comparison. Exact receipt timestamp not exposed.
+
+> ok stick with 0.2%, send it to CTO when committed
+
+Already in force: rev 3 committed at 2a1f275a78 with the 0.2% floor, sent to 1.0.0_SA_CTO~Z (msg 26910), and the endpoint amended at 33c1d096a3 (msg 26913).
+
+## Five open calls answered, verbatim
+
+Recorded September 30, 2026, approximately 01:5x ET (05:5x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, answering this seat's `/open-calls` cards 1-5. Exact receipt timestamp not exposed.
+
+> 1.) Yes approved. 2.) Agreed . 3.) No we're not doing this, im fine with "fragile", just need to run the tests and see how it goes day over day. 4.) any signed in account. 5.) remove them
+
+The cards, as asked:
+
+1. Confirm the nine ETFS_RIVALS DONE WHEN lines as written (`ENDPOINT_FORWARD_RIVALFUNDS_20260930.md` @33c1d096a3): **APPROVED**.
+2. Bloomberg pulls for ETFS_RIVALS under (a) per-use word or (b) R-21 scripted grant; REC (b), scripted pulls only (backfill script, 8:03 fallback leg, dividend/price enrichment): **AGREED (b)**.
+3. Send the drafted Bloomberg support question (GQGU coverage, direct BQL): **NO**. The unattended-Excel route stays, proven by day-over-day tests.
+4. /rivalfunds viewers: **any signed-in account**.
+5. Remove the 09-29 crash dumps: **remove**. Applied 01:53 ET elevated: `C:\Windows\MEMORY.DMP` REMOVED (18,686,448,893 bytes). The Sentinel dump (`C:\ProgramData\Sentinel\CrashDumps\af142cfc-....dmp`) was REFUSED even elevated; its folder is owned by `NT SERVICE\SentinelHelperService` (SentinelOne tamper protection) and was not forced. `C:\dedicateddump.sys` is the live reserved capture target configured in `HKLM\...\CrashControl` (`DedicatedDumpFile`, `DumpFileSize=32768`), so it is held for Andrew's word on disabling crash capture.
+
+## Dedicated dump file, verbatim
+
+Recorded September 30, 2026, approximately 03:2x ET; Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, answering whether to switch off crash capture and delete `C:\dedicateddump.sys`. Exact receipt timestamp not exposed.
+
+> keep crash capture, but delete the 32gb .sys
+
+Means: `CrashDumpEnabled` (kernel dump) and `DumpFile` stay; the `DedicatedDumpFile` and `DumpFileSize` values are removed so the dump goes through the system-managed page file; `C:\dedicateddump.sys` is deleted (at reboot if the system holds it).
+
+Applied 2026-09-30 03:33-03:35 ET, elevated (log `.runtime/crash-investigation-20260929/remove-dedicated-dump-elevated.log`; key backup `CrashControl-backup-before-dedicated-removal.reg` beside it): `DedicatedDumpFile` and `DumpFileSize` removed; `CrashDumpEnabled=2` (kernel dump) and `DumpFile=C:\windows\MEMORY.DMP` unchanged, through the system-managed page file. `C:\dedicateddump.sys` (34,359,738,368 bytes) is held open by the system, so its deletion is scheduled for the next reboot (MoveFileEx delay-until-reboot returned true; PendingFileRenameOperations names it).
+
+## IDVZ rival group, verbatim
+
+Recorded September 30, 2026, approximately 11:0x ET; Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9. Exact receipt timestamp not exposed. Andrew's instruction to this seat, quoting the message he sent 2.0.0_SA_COO~RV:
+
+> Below is a message I just sent to COO~RV. I want you to check out the email as well, however on your side you are going to have to actually check the various pipes and identify if we can run the same BBG strategy for these or if we need to find their issuer pages and run it down that way. The premise is that this is simply an expansion on the initial tracked group. However, if you read my response in the thread, there is clarity on the insights i believe should be presented. Accordingly, that will inform how we structure the gold tables and AI sysprompt that will provide analyses on those tables. Please review, analyze, and when ready to write the brief, ping me on high level findings and let's discuss; Please check my email from Adam, adam@opalinvest.com writing me to my email andrew@opalinvest.com. He gave us a list of tickers for IDVZ which we are going to want to incorporate into this pipeline. The structure could be flat if youve already designed buckets and etc. to be flat, but if not, we should group these rivaletfs in folders based on what opal etf they are rivals to. The ones we've been working on thus far are all for PFOE, these will be for IDVZ. I am going to have CRO~Z go do some digging and bring you a brief but keep this in mind..
+
+Source thread (Opal mailbox, read via the Opal gateway): Adam Muller to Andrew, 2026-09-29 23:19 UTC, "right comp funds for IDVZ": IDVZ, TXUE, BIDD, CGIC, INEQ, SCHY. Andrew's reply of 2026-09-30 14:42 UTC names the summary views: trading outperformance/underperformance by sector and security; forward projected trading activity based on observable trends across sectors/securities; a "hand-on-the-door wildcard analysis from the AI"; and notes that at a 20bps tolerance "it's immediately clear who is discretionary and who is systematic". Findings: `IDVZ_GROUP_SOURCE_CENSUS.md`.
+
+## IDVZ group: three decisions and the dividend question, verbatim
+
+Recorded September 30, 2026, approximately 11:5x ET; Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, answering this seat's three discussion points. Exact receipt timestamp not exposed.
+
+> It sounds like bbg is better for this group if the issuers are not as hq, so yes, agreed with point 1. On point 2, yes agreed. On point 3, yeah it might be helpful to include the Opal Funds like IDVZ and PFOE into this list so we have them on the same analysis plane, that is a good idea. Regarding the threshold for trading, did we already account for dividend/interest income? That should be covered if we want to tighten up trade identification.
+
+Decisions: (1) Bloomberg is the primary daily source for the IDVZ group; (2) flat storage keyed by fund plus an Opal-fund-to-rivals mapping, not folders; (3) each Opal fund (IDVZ, PFOE) joins its own group as the home member. On dividends: not yet accounted for; measured the same hour, cash and currency lines are 4.7-59.2% of the preview's add/trim events (see `IDVZ_GROUP_SOURCE_CENSUS.md` section 4).
+
+## Addendum A DONE WHEN lines, verbatim
+
+Recorded September 30, 2026, approximately 12:0x ET (16:0x UTC); Claude Code terminal, `4.0.0_SA_CRO~Z` session a3a51db9, answering whether the DONE WHEN lines of `ENDPOINT_FORWARD_RIVALFUNDS_ADDENDUM_A_PEER_GROUPS_IDVZ_20260930.md` @bd6effc4f3 are confirmed as written. Exact receipt timestamp not exposed.
+
+> fwd 1 should include idvz and pfoe right as the two opal etfs, with their respective peer groups. otherwise, yes, all of these are fine.
+
+Means: FWD-1's live trace covers both Opal ETFs, IDVZ and PFOE, each with its own peer group; every other DONE WHEN line of Addendum A is approved as written.

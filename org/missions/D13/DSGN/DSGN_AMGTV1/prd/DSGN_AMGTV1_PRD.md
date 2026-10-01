@@ -5,10 +5,10 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.3",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
  "status": "DRAFT"
 }
 ```
@@ -122,6 +122,93 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     every footer reads as a time and a source; and no raw code, id or
                     storage path shows anywhere on the page.
          SOURCE     brief O11 (:119-124); M4, M13, M14
+
+  ===== v0.4, 2026-09-30 -- FWD-12..FWD-20 RE-HOMED FROM AMGT_RESAPP ========
+  Each outcome is AMGT_RESAPP's FWD-21..FWD-29 carried whole, minus only the
+  forms this endpoint replaces. Where the two differ, this endpoint's form
+  (FWD-4's four cards, FWD-6's three cards, FWD-10's verdict card) wins.
+
+  FWD-12 The page has ONE dark band and every other container is a white
+         hairline panel
+         DONE WHEN  EXERCISED -- the rendered Security state reads
+                    bandContainersTopLevel == 1, the identity header is that
+                    band, and the tab panels are white hairline panels
+         ACCEPT     A PM reads the thesis without scrolling past more dark bands.
+         SOURCE     AMGT_RESAPP FWD-21; Andrew's F1 word (Security mode: the
+                    identity header is the ONE band)
+  FWD-13 A PM never parses a raw float and can still dispute any headline
+         figure
+         DONE WHEN  EXERCISED -- every figure on the four header cards carries
+                    its units and tabular numerals, its tooltip carries the
+                    mnemonic and the full-precision value verbatim, and price,
+                    market cap, net debt, enterprise value, beta and short
+                    interest each sit on one named card
+         ACCEPT     No 161867780096.00003 anywhere; every figure traceable to
+                    its field.
+         SOURCE     AMGT_RESAPP FWD-22
+  FWD-14 Every drafted sentence keeps its evidence, folded until asked for
+         DONE WHEN  EXERCISED -- in the Thesis windows each sentence shows its
+                    PASS face and its passage count; opening it reveals the
+                    passage and accession line FROM THE DOM; and a census of
+                    passages carried in a native title= tooltip reads ZERO in
+                    the same capture as its positive control (the application
+                    route, the tab's label present, a NON-ZERO count of nodes
+                    scanned)
+         ACCEPT     The verbatim gate (AMGT-rj-2) is preserved BY CONSTRUCTION.
+         SOURCE     AMGT_RESAPP FWD-23 and its addendum
+  FWD-15 The Model sheet reads as a table and a refusal as ONE line per row
+         DONE WHEN  EXERCISED -- the fiscal table renders as a white heatmap
+                    panel with tabular numerals; a REFUSED row renders one status
+                    icon and one navy sentence spanning the row; ABSENT rows
+                    fold into a single footnote naming them
+         ACCEPT     A refusal is readable once, not ten times.
+         SOURCE     AMGT_RESAPP FWD-24
+  FWD-16 The comparable set shows the columns that EXIST, and the absent ones
+         are openable
+         DONE WHEN  EXERCISED -- the table renders the PRESENT columns only; an
+                    "Absent columns (N)" disclosure lists each with its registry
+                    reason; the basis is a status chip with the test statement
+                    one hover away
+         ACCEPT     A PM reads the real columns instead of scanning ABSENT ones.
+         SOURCE     AMGT_RESAPP FWD-25
+  FWD-17 The Posture verdict card carries its comparable, and status colour
+         never carries meaning as text
+         DONE WHEN  EXERCISED -- the verdict card shows the comparable beside
+                    the verdict; each numbered reason has its cites folded; an
+                    UNRESOLVED cite renders a status.warning ICON beside navy
+                    text and NOT amber text
+         ACCEPT     C6 holds on a light ground.
+         SOURCE     AMGT_RESAPP FWD-26
+  FWD-18 The Lead Panel's controls read as the Dashboard's controls do
+         DONE WHEN  EXERCISED -- Movement and Subject render as segmented
+                    controls whose active state is WEIGHT AND RULE, the
+                    generation and resolution lines sit in a "Source:" footer,
+                    and the rendered state reads purpleFills == 0 in Universe
+                    mode and == 1 (Refresh) in Security mode
+         ACCEPT     One purple action per view (C8).
+         SOURCE     AMGT_RESAPP FWD-27
+  FWD-19 Every panel renders one of the four DESIGNED states when empty
+         DONE WHEN  EXERCISED -- PanelEmpty, PanelLoading, PanelError and
+                    PanelNoPermission from src/ui/components/states each captured
+                    at least once across the six states, on every panel
+         ACCEPT     An empty panel looks designed, as /market's already does.
+         SOURCE     AMGT_RESAPP FWD-28; C12
+  FWD-20 The contract's render check PASSES, and CAN FAIL
+         DONE WHEN  EXERCISED -- portal/scripts/ui-smoke.mjs writes, for each of
+                    the six states, a PNG at 1440 and a DOM JSON reading
+                    bandContainersTopLevel == 1, fonts == {Lato}, weights within
+                    {400,700}, no size below 11, radii within {2,3,4,pill},
+                    shadows == 0 outside the focus ring, lowContrastChars == 0,
+                    purpleFills per FWD-18 and the four states present; the
+                    drafting, tabs and posture harnesses green; AND the
+                    same instrument FAILS a planted page on each clause (one
+                    violation per clause, each beside a clean control), and
+                    FAILS the real pre-redesign page (portal 8fa7abde) on the
+                    band clause; AND the six PNGs are read by a person, a
+                    rejection citing its clause
+         ACCEPT     A JSON PASS WITHOUT THE PNG READ BY A PERSON IS CARE, NOT A
+                    CONTROL; FWD-11's side-by-side read is the person's arm.
+         SOURCE     AMGT_RESAPP FWD-29 (no DSGN owner before v0.4)
 ```
 
 ## CONTRACTS
@@ -192,7 +279,8 @@ four cards and their modals, currency per figure), FWD-5 (the timeline spine and
 modals with evidence), FWD-7 (exec roster with source), FWD-8 (peers table), FWD-9 (plain line names, missing-line
 reasons), FWD-10 (posture verdict card / empty state), FWD-11 (the side-by-side review). The register
 `docs/briefs/dsgn-amgtv1-findings-20260928.json` (42 findings, AMV-01..42) is the decomposition's input; each finding is
-graded against its own acceptance line.
+graded against its own acceptance line. FWD-12..FWD-20 (v0.4) enter at round 12; FWD-20 is the instrument
+the others are graded by, so it leads.
 
 ## PATHS (the write surface)
 
@@ -212,6 +300,16 @@ criteria at L9 on the PNGs, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
 
+- v0.5 (2026-09-30, `1.0.0_SA_CTO~Z`): FWD-20's control clause re-stated. COO~D measured at the round-12 cut (msg 27092) that the
+  pre-redesign build already passes every style clause except the band (AMGT_RESAPP rounds 37-38 fixed that chrome first), so "the
+  pre-redesign page FAILS each clause" could not be met. The clause's purpose is CAN-FAIL: a planted page fails each clause beside a
+  clean control, and the real pre-redesign page fails the band clause. This is an ENDPOINT change, so the ratified half re-opens to
+  `3.0.0_SA_CVO~Z`.
+- v0.4 (2026-09-30, `1.0.0_SA_CTO~Z`): FWD-12..FWD-20 appended, re-homed from AMGT_RESAPP FWD-21..FWD-29 under that
+  project's round-51 ruling 4, from the round-52 map `PAGE_FWD_MAP_ROUND52.json` @`8aa352afc4`. The outcomes are carried whole,
+  minus only the forms this endpoint replaces (AMGT_RESAPP PRD v0.29, s.C.1). ENDPOINT change: the ratified half re-opens to
+  `3.0.0_SA_CVO~Z`. They enter the enrichment backlog at round 12, because round 11 is already cut and mid-round the spec is
+  frozen.
 - v0.2 (2026-09-29, `1.0.0_SA_CTO~Z`): two wording conditions from `3.0.0_SA_CVO~Z`'s ratified-text SIGN @`5a222f83d6`
   (review `DSGN_AMGTV1_L4R_RATIFIED_TEXT_REVIEW_20260929_Z_SIGN.md` @`82fb40d877`): the ENDPOINT header states FWD-3's dropped
   fork sentence; C-PRESENTATION-ONLY names an empty state's owner in words. No ENDPOINT change; no half re-opens.

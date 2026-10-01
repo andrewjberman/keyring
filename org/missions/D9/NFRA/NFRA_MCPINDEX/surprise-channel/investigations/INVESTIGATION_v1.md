@@ -3393,6 +3393,826 @@ carries none.
     "spec_asserts": "Ledger L5/L9 proof = SSM Success on the new version, the merge log line, and the silver partition written by tonight's scheduled fires.",
     "world_is": "Today's realized/transactions inputs had already been merged at 06:37Z and 07:02Z, before the 08:25Z publish -- by timing, worker ~17's pre-publish runs (INFERRED, not attributed by a log); unrealized/allocations inputs are weekly. So tonight's fires had nothing to write. ABSENT is not EXERCISED: the write arm on the stripped documents is unproven.",
     "notes": "Issuer ruling: do NOT fire an ad-hoc run -- it would consume the next input and destroy the scheduled discriminator, which is how tonight's was lost. Re-read 2026-09-30 after the 21:46/21:53Z fires (realized, transaction: expect 'Found 1 new' and a silver/<leg>/2026-09-30 partition written by the fire); unrealized L5 and allocation L9 at the 2026-10-05 21:38/22:00Z fires. MX-s-14 is ruled at the round-4 close: complete once written, or its residual legs carried into round 5."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T09:10Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S1",
+    "hazard_standing": "ARMED",
+    "one_line": "MX-a-8 asks for a C3-valid tool name starting bd_, and no such name exists: bd is not a systems.json key and scopes.json records it as refused in every naming slot. The record names blackdiamond_list_fees instead.",
+    "spec_asserts": "MX-a-8 act item 4: give the first tool 'a C3-valid name starting bd_'; J1 asks for 'one bd_* tool'.",
+    "world_is": "C3 (PRD) requires {system}_{function}[_{qualifier}] with system a key of infra/logic/registry/systems.json. systems.json has 49 keys (read 2026-09-30) and none is bd (blackdiamond is the vendor key). scopes.json firm 49financial carries the alias bd with refused: 'NAMING_SCHEMA.json refused_tokens: refused in every slot; the vendor is blackdiamond, the firm is 49financial'. A bd_* name fails MX-n-1's registration validator. The record names blackdiamond_list_fees (C3-valid).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/systems.json read at worktree HEAD (CLOUD @3ce0240861): 49 system keys, none equal to bd; key blackdiamond class VENDOR.",
+        "infra/logic/registry/scopes.json scopes[0].aliases[0]: spelling bd, refused text as quoted in world_is.",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md:236-244 (C3 text).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~21/analysis-blackdiamond.r5.result.md section Question to tool."
+      ]
+    },
+    "notes": "ARMED because MX-t-13 is cut from this record's name; if its worker face carries bd_ from the order text, registration is refused by MX-n-1. Disarm: cut MX-t-13's face from the record's name, or rule bd_ and accept the refusal."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T09:10Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S2",
+    "hazard_standing": "INERT",
+    "one_line": "MX-a-8 act item 3 asks for the key segment that separates firms in opal-data-bd silver, and there is none: every silver key is silver/<table>/<date>.parquet. Firm separation rests on the bucket and on the z08 account-id prefix, both recorded in the analysis.",
+    "spec_asserts": "MX-a-8 act item 3: 'Name the key segment that separates firms and state that a principal resolves only its own firm.'",
+    "world_is": "No firm or master token appears in any silver key under s3://opal-data-bd/silver/ (key shapes read 2026-09-30 on all 6 dated prefixes: 1 to 3 shapes each). scopes.json lists opal-data-bd as a graded alias of firm 49financial's bucket; account_id carries z08 on 100 percent of rows read (fees 60 newest partitions 47,464 of 47,464; transactions 7,643; realized 10,242; allocations 7,257; unrealized 111,527). The record states the tool's scope rule as the scope argument, the single-prefix read role and a fail-closed z08 assertion, not a key segment.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ListObjectsV2 of s3://opal-data-bd/silver/ read 2026-09-30T08:50Z, 8,061 objects; key shapes tallied per prefix.",
+        "infra/logic/registry/scopes.json scopes[0] (49financial) aliases and scopes[7] (z09 note: 49 Financial ids carry z08, zero overlap).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~21/analysis-blackdiamond.r5.result.md section Scope rule."
+      ]
+    },
+    "notes": "INERT: nothing breaks. Full history of the other tables was not scanned for z09 rows; only the listed objects were."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T09:10Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S3",
+    "hazard_standing": "ARMED",
+    "one_line": "The first tool rests on silver/fees, whose writer cannot be named: the scheduled Playwright fees document last logged a login failure on 2026-09-25, yet bronze/fees lands at 22:20Z and silver/fees at 22:21Z every weekday through 2026-09-29.",
+    "spec_asserts": "MX-a-8 act item 1 and 5: state the producer per leg; a leg stale or dead today never feeds the first tool.",
+    "world_is": "logs/fees-download-2026-09-25.log (read 2026-09-30) ends Download exit code 1 and SKIP: silver conversion skipped; it is the newest fees log (121 logs listed). Yet bronze/fees/Fees_OpalCapital_Daily_2026-09-15_to_2026-09-29.xlsx landed 2026-09-29T22:20Z (also 09-28, 09-25, 09-24 ... at 22:20Z) and silver/fees partitions were last-modified 2026-09-29T22:21Z with data through trade_date 2026-09-28. So a writer outside that document's logged path lands the data. The analysis treats fees as LIVE on the measured data and leaves the writer INFERRED (possibly the BD REST vehicle).",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "s3://opal-data-bd/logs/fees-download-2026-09-25.log read 2026-09-30 (login TimeoutError, exit code 1).",
+        "s3://opal-data-bd/bronze/fees/ listing read 2026-09-30: 133 objects, newest 2026-09-29T22:20Z.",
+        "org/critical_paths/change_management/20260714T1124Z_d1a-bd-rest-vehicle-a_deploy_completion.md names Fees_OpalCapital_Daily in its REST tenancy probe (attribution not verified)."
+      ]
+    },
+    "notes": "ARMED: if the unnamed writer stops, silver/fees goes stale while nothing pages (no monitor by moratorium) and blackdiamond_list_fees would serve an old as_of; its answer envelope states as_of so the staleness is visible to the caller, not to an operator. Disarm: name the writer before the MX-r-7 release, or accept the fees leg as unattributed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S62",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T09:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W21-S1",
+      "NFRA_MCPINDEX-Z-W21-S3"
+    ],
+    "one_line": "RULES worker ~21's two ARMED rows at the MX-a-8 drain (@2f81e5aa77): Z-W21-S1 is DISARMED by MX-t-13 A1 and MX-r-7 A1 -- the integration id is blackdiamond, the tool prefix blackdiamond_, the first tool blackdiamond_list_fees (C3-valid; bd is refused in every slot); Z-W21-S3 is DISARMED by MX-r-7 A1 -- no BD tool is served before r-7's PHASE A names the silver/fees writer from a read-only trace or states it unattributed for the never-widen halves.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/registry/systems.json read 2026-09-30: key blackdiamond, class VENDOR; no key bd.",
+        "task-orders/NFRA_MCPINDEX.TO-MX-t-13.bd-first-tool.md AMENDED A1 and NFRA_MCPINDEX.TO-MX-r-7.bd-release.md AMENDED A1, this commit.",
+        "round5/checks/r5_probe.py t13, t13.AC1.sh, t13.AC2.sh, r7.AC2.sh amended to blackdiamond in this commit; t13.AC1 re-dry-run at base FAIL (registry names blackdiamond=False)."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "S1's hazard (a bd_ name refused at registration) cannot occur once the order names blackdiamond_. S3's hazard (a stale fees leg served) cannot reach a caller before MX-r-7, which now carries the writer's attribution into the halves; the tool's as_of also shows staleness to the caller.",
+    "notes": "The analysis record's other findings (empty 09-28/09-29 transaction workbooks, no proceeds/gain column in silver/realized, bd_assets_dim last_seen_trade_date 2026-04-13) do not touch the first tool's fence and go to the round-5 L10 slug."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "dim_transaction has no unique grain: the producer declares it a per-partition APPEND with no row-unique key, so DATASET_GRAINS is None and cursor paging refuses for this dataset.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/silver/schwab_projections.py:52-54: 'per-partition APPEND, NO row-unique key (refuted from bytes v1.2.1; row identity downstream = (partition, row_position) provenance)'.",
+        "Live objects s3://opal-data-assets/schwab/{08242234,08335338}/silver/dim_transaction/date=2026-09-28/data.parquet: the 4-column key (account_id,tr_cd,cusip,tran_srcde) has 32 and 34 duplicate groups (max 2) over 1271 and 1983 rows; a 10-column key was unique on those two objects only.",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/query.py DATASET_GRAINS['dim_transaction'] = None; tests/test_schwab_transactions.py::test_mx_s15_grain_declared."
+      ]
+    },
+    "spec_asserts": "MX-s-15 step 2: 'Declare the unique grain in DATASET_GRAINS. If the data has no unique grain, declare None so paging refuses, and file a row.'",
+    "world_is": "The data has no unique grain, so None was declared; a rows-mode query returns one page and cannot be paged by cursor for dim_transaction. A caller needing more rows than one page must narrow by filter (account_ref, tr_cd, cusip).",
+    "notes": "Declared None rather than the 10-column key that held on two objects, because one partition does not prove a rule across 679 and 560 partitions."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "one_line": "dim_transaction is declared on the 6 surfaces but NOT on org/standards/NFRA_OPLGTW_CONTRACT.json (datasets, fields), outside this cell's paths: the running gateway still names it dataset_invalid, no grant can carry its columns, and tests/acceptance regresses 8 of 14 because data_entitlement.DATASETS now includes it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/NFRA_OPLGTW_CONTRACT.json @2cae2db258: datasets = [dim_position, dim_balance, dim_asset] (:10-14); fields has no dim_transaction key (:152-187); the IAM prefix list at :253-257 names the three dims only.",
+        "integration.py:427,470 `_enum(dataset, self.rules.datasets, ...)` and catalog.py:601,882 `contract.datasets` read the contract list; ops/schwab_entitlement_admin.py:166-169 approves a column only from contract fields[dataset].",
+        "infra/aws/ec2/opal-gateway: `python -m pytest tests/acceptance/test_local_acceptance.py` -> 14 passed at the cut's base, 8 failed 6 passed with this cell (KeyError 'dim_transaction' at tests/acceptance/conftest.py:289 _fields(), default datasets=de.DATASETS at :260). tests/test_schwab_wiring.py had the same default and was fixed in this cell's own paths."
+      ]
+    },
+    "spec_asserts": "MX-s-15 names 6 surfaces and its <paths> omit org/standards and tests/acceptance; AC1 reads the 6 surfaces only.",
+    "world_is": "A 7th surface (the contract) gates whether the dataset is reachable at runtime, and the acceptance conftest seeds grants from data_entitlement.DATASETS. Shipping this cell without a contract amendment (datasets + fields + additive_fields entry for dim_transaction, and the acceptance conftest default) leaves the gateway unable to serve the table and its acceptance suite red at MX-r-6.",
+    "notes": "Not widened: the contract and tests/acceptance are outside <paths>. The fix is a contract amendment by its owner plus one line in tests/acceptance/conftest.py and test_local_acceptance.py (datasets default), or limiting de.DATASETS default in those harnesses to the contract's datasets as tests/test_schwab_wiring.py now does."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The recorded object name {master}_dim_transaction.parquet (analysis-schwab.result.md:343) is not the live key form: dim_transaction objects are date=<YYYY-MM-DD>/data.parquet, like the dims; newest partition is date=2026-09-28 on both masters.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3 ls s3://opal-data-assets/schwab/08242234/silver/dim_transaction/date=2026-09-28/ -> 59293 bytes data.parquet; 08335338 -> 107339 bytes data.parquet; 679 and 560 date partitions, oldest 2024-01-16 and 2024-07-08; date=2026-09-29 absent.",
+        "data/assets/scripts/silver/schwab_projections.py:93-96 dim_key() builds schwab/<scope>/silver/<dim>/date=<date>/data.parquet.",
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~19/SCHEMA_MX-s-15.md."
+      ]
+    },
+    "spec_asserts": "MX-s-15 facts: the earlier record saw object names {master}_dim_transaction.parquet (:343); the dims read date=.../data.parquet.",
+    "world_is": "The live key form is the dims' form; the object carries 44 columns (39 pinned + 5 provenance), of which 15 are served."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T09:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Four gateway tests outside this cell's files fail identically with and without this cell: test_data_entitlement_guard.py (2), test_entitlement_admin.py::test_ogz2_ac06 (1), test_schwab_export_stream.py::test_ogx4_ac03 (1).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run per file from infra/aws/ec2/opal-gateway against a git-archive copy of HEAD (2cae2db258, no cell edits): test_data_entitlement_guard 2 failed 10 passed; test_entitlement_admin 1 failed 8 passed; test_schwab_export_stream 1 failed 2 passed. Same counts with this cell.",
+        "Failure texts: route-table set mismatch (extra '/api/admin', '/', '/assets/{path:path}'); 'expected profile + grant + operator_audit puts, got 4'; ServiceError: memory."
+      ]
+    },
+    "spec_asserts": "AC2 names only tests/test_schwab_transactions.py; the cell moves only the pins its dataset moves.",
+    "world_is": "These failures pre-exist the cell and are unrelated to dim_transaction; not touched."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S63",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T10:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W19-S2"
+    ],
+    "one_line": "RULES Z-W19-S2 (BLOCKING, ARMED) at the MX-s-15 drain (@46587d5134): DISARMED by MX-r-6 AMENDED A1 -- step 0 adds dim_transaction and its 15 served fields to org/standards/NFRA_OPLGTW_CONTRACT.json and fixes the acceptance harness default before the release cut; the ANNOUNCE names the contract change for the CTO's G-A and the never-widen halves; no grant is created or changed (B2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/NFRA_MCPINDEX.TO-MX-r-6.schwab-enable-release.md AMENDED A1, this commit.",
+        "Nothing is deployed before MX-r-6 PHASE B, so the red acceptance suite and the dataset_invalid answer cannot reach the served host first."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "The hazard (a release shipping a declared-but-uncontracted dataset and a red acceptance suite) is removed by step 0 of the only cell that can ship it.",
+    "notes": "The CTO is asked separately whether r6.J1's transaction question may use a grant naming dim_transaction; by default it is graded as a correct refusal."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W20-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~20",
+    "surfaced_at": "2026-09-30T09:54Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Changing discover's fallback next_tool moved six test expectations in tests/test_opal_discover.py beyond the :283 the order names (lines 104-105, 124, 127, 285, 301 at CLOUD 4e1b871ba7); all six were updated to the new tool in the same file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tests/test_opal_discover.py at 4e1b871ba7 asserts name == query_v0 / kind == http_route / 'not an MCP tool' at lines 104-105, 124, 127, 283-285 and 301; all of them follow from cell step 3 (a row with no purpose-built tool names the new tool, kind mcp_tool).",
+        "After the edit: tests/test_opal_discover.py passes in full (run with test_portal_index, test_entitlement_admin, test_tool_classification_composition, test_min_tier_gate, test_query_v0_tool: 58 passed, 3 failed, the 3 being pre-existing, row Z-W20-S2)."
+      ]
+    },
+    "spec_asserts": "Step 3: update the expectation at tests/test_opal_discover.py:283.",
+    "world_is": "The same fallback is asserted at six further places in that file (one also asserts the answer sentence 'HTTP route (POST /query/v0)', which the change removes); leaving them would have failed the file. All are inside the order's <paths>."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W20-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~20",
+    "surfaced_at": "2026-09-30T09:54Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Three gateway tests fail with and without this cell, where the order names one: test_entitlement_admin.py::test_ogz2_ac06 (named) plus test_data_entitlement_guard.py::test_ogz1_ac05 and ::test_ogz1_ac08 (not named); the same two guard failures are recorded in row Z-W19-S4.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run from infra/aws/ec2/opal-gateway against a git-archive copy of HEAD 4e1b871ba7 (no cell edits): tests/test_data_entitlement_guard.py 2 failed 10 passed (test_ogz1_ac05, test_ogz1_ac08); with the cell the same two fail and nothing else in that file.",
+        "Failure texts: test_ogz1_ac05 KeyError: 'unclassified' at :627 (registry report); test_ogz1_ac08 route-table set mismatch (extra '/', '/api/admin', '/assets/{path:path}'). test_entitlement_admin.py::test_ogz2_ac06 fails in the scratch copy on a FileNotFoundError in the archive (sparse) and in the worktree as the order says; it is not moved by this cell."
+      ]
+    },
+    "spec_asserts": "Bounds 3: the pre-existing failure at the cut is tests/test_entitlement_admin.py::test_ogz2_ac06.",
+    "world_is": "Two more pre-existing failures in tests/test_data_entitlement_guard.py, outside this cell's paths, unchanged by it; test_ogz2_ac08 (the tool-count pin this cell moves) passes at 53."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S64",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T11:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W21-S9"
+    ],
+    "one_line": "RULES Z-W21-S9 (BLOCKING): the naming limb's refusal of opal-data-bd / silver/fees/ / 49financial is ROUTED for authority and RE-SHAPED here -- MX-t-13 A2 restructures the literals to the LEGACY-READ waiver's syntax (one read-helper site, one tf_local) and drafts the carrier entries; the ruling record that authorizes them is asked of 1.0.0_SA_CTO~O (the IRPT-M-LEGACY-READ-02 authority pattern). No bypass, no hand-typed workaround.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py:99-110 (carrier org/standards/NAMING_LEGACY_READS.json, 9 fields), :942-1180 (syntax allowlist, authority pin check, tf_local kind).",
+        "infra/logic/registry/remediations.json: ADVI_FIRMBKTS surfaces include bucket-alias 49financial->opal-data-bd and s3-prefix opal-data-bd silver/.",
+        "org/standards/NAMING_LEGACY_READS.json at HEAD: 0 entries.",
+        "Message to 1.0.0_SA_CTO~O 20260930T105757Z asking for the ruling."
+      ]
+    },
+    "spec_asserts": "Every BLOCKING row carries an issuer disposition; a builder refusal is never worked around by hand.",
+    "world_is": "The cell is built and passes AC1/AC2 uncommitted; it cannot land until the waiver's authority exists. MX-r-7 waits on MX-t-13.",
+    "notes": "If the CTO declines, MX-t-13 and MX-r-7 carry to the round-5 L10 slug as unserved FWD-4 work."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S65",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T11:25Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W21-S9",
+      "NFRA_MCPINDEX-Z-W21-S10"
+    ],
+    "one_line": "RULES Z-W21-S9 and Z-W21-S10 (BLOCKING): the LEGACY-READ waiver cannot admit a NEW literal (naming-gate.py:1413, :1444-1449), so MX-t-13's five literals go with B3 to Andrew as ONE R20 acknowledgement (1.0.0_SA_CTO~O msg 27114). MX-t-13 and MX-r-7 are HELD; the built cell stays uncommitted and frozen in wk-mcpindex-r5-21; no two-commit route, no gate edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py:1413 `new = pre_text is None or not _in_pre(lit, pre_text)`; :1444-1445 NEW OUT-OF-PATTERN/ALIAS -> REFUSE; :1447-1449 comment: 'a NEW or CHANGED literal can never reach it'.",
+        "worker ~21 report: gate dry run REFUSE on 5 literals with all 5 draft entries passing legacy_read_ok/tf_local_ok (wk-nfra_mcpindex-5-21 @4a9462b79a).",
+        "1.0.0_SA_CTO~O msg 27114 ruling."
+      ]
+    },
+    "spec_asserts": "A builder refusal is resolved by a registry row or an R20 entry Andrew acknowledges, never by a workaround.",
+    "world_is": "Nothing is committed or served; the hazard cannot reach the host before Andrew's word.",
+    "notes": "Superseded rows' draft carrier (LEGACY_READS_DRAFT_MX-t-13.json) is kept for the record only."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S66",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T12:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W19-S7",
+      "NFRA_MCPINDEX-Z-W19-S8",
+      "NFRA_MCPINDEX-Z-W19-S9"
+    ],
+    "one_line": "RULES MX-r-6 PHASE A rows: Z-W19-S7 DISARMED by MX-r-6 A3 -- the release ships the contract file and the Schwab service's host .env keys (ids and ARNs only, no secret value), proven in-process before the ANNOUNCE; Z-W19-S8 DISARMED -- the apply is the saved targeted plan on aws_iam_role_policy.schwab_data_read_policy only, re-planned and equal at the GO, via safe-apply; Z-W19-S9 INERT this round (no grant changes, B2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/NFRA_MCPINDEX.TO-MX-r-6.schwab-enable-release.md AMENDED A3, this commit.",
+        "worker ~19 PHASE A report: live 093fc247c6 (79 of 79 by content); release ac77acf9e8 / deploy-only abee4587f7, gateway tree a1e8533891; targeted plan 0/1/0; host .env 27 keys, none SCHWAB_*; artifact tar roots exclude org/standards."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "Nothing is deployed or applied before PHASE B, which needs the issuer's GO after the CTO's G-A delta and both never-widen halves; the fail-closed release and the untargeted apply are both excluded by A3.",
+    "notes": "S10 and S11 (INERT) ride the ANNOUNCE for the halves."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W20-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~20",
+    "surfaced_at": "2026-09-30T13:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT",
+    "class": "BLOCKING",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "one_line": "BLOCKING: the dry run of the naming limb (python .tools/naming-gate.py --diff <emitter diff> --enforce, rc=1) REFUSES the advi key at the first emitter change -- platinum/advi/49financial/mix_summary.json (emit_catalog_v02.py:71) and the allowlist prefix platinum/advi/49financial/ (:55) are NEW and OUT-OF-PATTERN S3 literals, as platinum/etfs was (row Z-W15-S5); per order A1 the cell stops there, with nothing built beyond the emitter edit and nothing committed in a gated path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Dry run on the worktree diff of workflows/atom_decomposition/emit_catalog_v02.py (144 lines, the authored advisor_intelligence channel + its one row + ALLOWED_PREFIXES + the v0.4 header): NAMING-GATE: REFUSE 5 graded, rc=1 with --enforce. Verbatim lines: NAMING REFUSE workflows/atom_decomposition/emit_catalog_v02.py:55 platinum/advi/49financial/ -> advi/49financial/platinum/ | why: NEW and OUT-OF-PATTERN as S3Key: REFUSE; hand-kept carrier of '49financial' outside every permitted context: read it through lookup('49financial') | NAMING REFUSE workflows/atom_decomposition/emit_catalog_v02.py:55 platinum/mdpf/ -> mdpf/{scope}/platinum/ | why: EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation MDPF_CANON: REFUSE unless the diff removes it | NAMING OUT-OF-PATTERN workflows/atom_decomposition/emit_catalog_v02.py:65 49financial -> lookup('49financial') | why: EXISTING hand-kept carrier (context rule): WARN; hand-kept carrier of '49financial' outside every permitted context: read it through lookup('49financial') | NAMING REFUSE workflows/atom_decomposition/emit_catalog_v02.py:71 platinum/advi/49financial/mix_summary.json -> advi/49financial/platinum/mix-summary.json | why: NEW and OUT-OF-PATTERN as S3Key: REFUSE; hand-kept carrier of '49financial' outside every permitted context: read it through lookup('49financial') | NAMING OUT-OF-PATTERN workflows/atom_decomposition/emit_catalog_v02.py:73 49financial -> lookup('49financial') | why: EXISTING hand-kept carrier (context rule): WARN; hand-kept carrier of '49financial' outside every permitted context: read it through lookup('49financial') | NAMING-GATE: REFUSE 5 graded",
+        "The catalog must name the served key (catalog_gate indexes rows by it) and the only spelling the grader prints, advi/49financial/platinum/mix-summary.json, is not where the object is served (opal-data-portal-v2 platinum/advi/49financial/mix_summary.json, VersionId KNCXZL68gRU_LR2eIwxIXGoBb_bWEB_a, read by get-object 2026-09-30), so there is no conformant spelling.",
+        "Andrew's R20 acknowledgement @1eba868308 covers platinum/etfs and opal-data-bd silver/fees only, item 3 lifts the advi hold but grants no naming exception, and the same record says the gate reads no R20 entry today (.tools/naming-gate.py:1413, :1444-1446). Order A1: 'Andrew's R20 acknowledgement covers etfs and BD fees only, not advi, so do not work around it.' No assembled string, comment marker, registry edit or gate edit was used.",
+        "Also graded REFUSE on the same edit: the EXISTING platinum/mdpf/ prefix on :55, because the widening edits that line (live remediation MDPF_CANON), exactly as in row Z-W15-S5.",
+        "Preserved, not committed to a gated path: MX-t-12.emitter-candidate.uncommitted.patch and MX-t-12.naming-gate-dryrun.txt in deliverables/0.9.0_WK_NFRA_MCPINDEX~20/; the emitter edit is also still uncommitted in the worktree."
+      ]
+    },
+    "spec_asserts": "TO MX-t-12 A1: 'If the naming limb refuses the served key as it refused platinum/etfs (row Z-W15-S5), file a BLOCKING row and stop', and item 5: 'Run AC1 and AC2, and commit'.",
+    "world_is": "The advi widening Andrew gave cannot be written into the catalog under the naming limb as it stands: the catalog exists to carry the legacy key literal, and the limb refuses any commit that adds the first literal of an out-of-pattern legacy key. Ways forward are the issuer's or the CTO's: an R20 register entry for platinum/advi/49financial/ that Andrew acknowledges AND the gate honouring it, or a registry row that makes the key conformant. The tool, the catalog row, the tests and INDEX_TOOLS were NOT built (order stop), so nothing in the gateway changed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W20-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~20",
+    "surfaced_at": "2026-09-30T13:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT",
+    "class": "OBSERVATION",
+    "one_line": "AC1 as written needs >=6 portal rows but the tree holds 4 (ROWS 4 of 4 placed) and this cell adds 1, so it reaches 5 at most: the order's 'MX-t-10 makes 5' premise fails because MX-t-10 is uncommitted and held behind Z-W15-S5; AC1 cannot reach N>=6 on this branch even if the naming limb passed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .../round5/checks/t12.AC1.sh at 8522f36154: 'portal_index ROWS entries read: 4 / placed and naming their reader 4 of 4 / minimum rows required: 6 / RESULT: FAIL / exit=1' (the order's dry run at base says the same).",
+        "git log --all for MX-t-10: no commit of its cell; the candidate is 03a19ac282 (a snapshot, not for merge) and the patch in deliverables/0.9.0_WK_NFRA_MCPINDEX~15/; row Z-W15-S5."
+      ]
+    },
+    "spec_asserts": "TO MX-t-12 AC1 (comment in t12.AC1.sh): 'this cell adds one; MX-t-10 makes 5' -> >= 6 rows.",
+    "world_is": "The 6th row exists only if MX-t-10's ETF row is merged first. Until then this cell can at best report 5 of 5 and the criterion FAILs on its minimum, not on any defect in the advi row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W20-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~20",
+    "surfaced_at": "2026-09-30T13:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT",
+    "class": "OBSERVATION",
+    "one_line": "The platinum/advi/49financial/ objects are the FROZEN never-widen twin, not the advisor-intelligence page's source: the portal's twin read is 'held' for mix_summary (adviKeyRepoint.ts ADVI_REPOINT), the publisher advi-49f-publisher is a disabled schedule, and every object is unchanged since 2026-08-21T15:03Z, so a tool over them cannot answer with the same bytes the page shows (FWD-2 parity) and its as-of is 41 days behind.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/api/endpoints/adviKeyRepoint.ts (pinned gitlink 3e2233de92, read via git archive): 'NOTHING CURRENTLY PREFERS ITS TWIN ... Andrew-direct 2026-08-21 19:18Z holds the 49F flip ... advi-49f-publisher is a DISABLED EventBridge Scheduler entry'; registry row `mix_summary: { leaf: 'mix_summary.json', state: 'held' ...}`.",
+        "s3api get-object opal-data-portal-v2 platinum/advi/49financial/mix_summary.json: LastModified 2026-08-21T15:03:17Z, metadata asof 2026-08-20, VersionId KNCXZL68gRU_LR2eIwxIXGoBb_bWEB_a, 11129 bytes; list-objects-v2 of the prefix: newest non-manifest object 2026-09-01T07:27:05Z (perfrp_book_advisor.json).",
+        "The row this cell drafted (in the preserved patch) carries this as its serve_verdict_with_caveats so any answer says it is the twin's vintage."
+      ]
+    },
+    "spec_asserts": "TO MX-t-12 item 4 and the portal_index module doc: 'a tool's figure and the page's figure are the same bytes (FWD-2 parity)'.",
+    "world_is": "Parity with the served object holds (tool vs the object by VersionId); parity with what the page displays does not, because the page reads the legacy opal-data-bd platinum/firm/ leaf while the twin is held. A reader of the tool must be told which it is; that is carried as a row caveat, not hidden."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S67",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T14:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W20-S3",
+      "NFRA_MCPINDEX-Z-W20-S4",
+      "NFRA_MCPINDEX-Z-W20-S5"
+    ],
+    "one_line": "RULES Z-W20-S3/S4/S5 at the MX-t-12 record drain (@2a10e3c247): MX-t-12 is HELD and carried to the round-5 L10 slug (A2 @0b0a6f8157) -- the naming limb refuses the NEW advi key (Andrew's R20 names etfs + BD fees only), and the platinum/advi/49financial/ objects are a frozen twin unchanged since 2026-08-21 (publisher disabled, the page's twin read held), so no tool over them can meet FWD-2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~20/MX-t-12.naming-gate-dryrun.txt: NAMING-GATE REFUSE 5 graded.",
+        "task-orders/NFRA_MCPINDEX.TO-MX-t-12.portal-tool-advi.md AMENDED A2 @0b0a6f8157.",
+        "row Z-W20-S5 evidence: every platinum/advi/49financial/ object unchanged since 2026-08-21T15:03Z; advi-49f-publisher schedule disabled; adviKeyRepoint.ts twin read held."
+      ]
+    },
+    "spec_asserts": "Every BLOCKING row carries an issuer disposition before the round closes.",
+    "world_is": "Nothing was committed on a gated path and nothing is served; the questions (which source the advi page reads; an R20 or registry row for that key) go to the CTO at L10.",
+    "notes": "AC1's floor (6 rows) also needed MX-t-10's row, which is held on the same gate (Z-W20-S4)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S68",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-09-30T15:22Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-r-6 v2 was deployed at 14:41:23Z (2e2254156e, built on 288fa78c93) over 2.0.0_SA_COO~RV's 4ce7946426 deployed 14:36:48Z: the GO's base guard (G1) was read at the worker's PHASE B start (~13:58Z), not immediately before the upload, and two issuers were releasing one host with no cross-seat lock. The /rivalfunds routes were removed and the schwab reader-policy apply landed; all halves VOID; restore is plan A (CTO msg 27224).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S3 opal-313476888478-lambda-artifacts/ec2/opal-gateway/: opal-gateway-4ce7946426.tar.gz 14:36:48Z, opal-gateway-2e2254156e.tar.gz 14:41:23Z, -latest ETag b8f52544 = 2e2254156e (read 14:43:49Z, 15:21Z).",
+        "SSM host read ~14:44Z: ENABLED_INTEGRATIONS includes schwab; server.py 'rivalfunds' count 0; app/rivalfunds_view.py present.",
+        "simulate-principal-policy gateway-schwab-read-role on dim_transaction: allowed both masters (~15:00Z).",
+        "2.0.0_SA_COO~RV msg 27202 (4ce7946426 deployed ~14:37Z); 1.0.0_SA_CTO~O msgs 27207, 27224."
+      ]
+    },
+    "spec_asserts": "MX-r-6 v2's halves (COO @17259505a2 s.0/s.4, CTO @16998169d5, CVO @5ac4f48aea G1): VOID if the live artifact is not 288fa78c93 at the GO; the GO re-reads it.",
+    "world_is": "The worker read the base once, ~43 minutes before its upload; another seat deployed in between. Nothing in the deploy path compares the live -latest to a declared base at upload time.",
+    "notes": "DISARM: (1) plan A -- ~RV redeploys 4ce7946426, then this seat re-applies the targeted IAM rollback (planned 0/1/0, 8 dim_transaction elements removed) and closes both ledgers ROLLED-BACK; (2) the stale-base guard in deploy-to-ec2.sh (CTO ruling on CVO~O 27209) ships in MX-r-6 v3 with a planted-stale negative test."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 step 0: adding dim_transaction to the contract turned 4 gateway tests red outside the named acceptance file (test_schwab_catalog ac08/ac10/ac17, test_schwab_query ogq2_ac02); their pins were moved inside the granted infra/aws/ec2/opal-gateway/** paths.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run per file from infra/aws/ec2/opal-gateway: with the contract edit and no test edit, 4 failed 60 passed over wiring+semantics+transactions+catalog+query; with the pre-edit contract (git show HEAD: copy), test_schwab_catalog+test_schwab_query 43 passed.",
+        "test_schwab_catalog.py asserted snapshot files == world.contract.datasets, but the fixture world seeds and closes over the three dims only; now compares against _SEEDED_DIMS (contract datasets minus dim_transaction). test_schwab_query.py test_ogq2_ac02 used dim_transaction as its 'unknown dataset' probe (INVALID_REQUEST expected); now probes dim_unknown.",
+        "After: 64 passed over the five schwab test files; tests/acceptance/test_local_acceptance.py 14 passed (run in separate processes; one combined process errors 14 on 'StreamableHTTPSessionManager .run() can only be called once')."
+      ]
+    },
+    "spec_asserts": "AMENDED A1 step 0 names the contract edit and the acceptance harness default; it does not name test_schwab_catalog.py or test_schwab_query.py.",
+    "world_is": "Both files pinned the contract's three-dataset shape; the contract edit moves those pins, exactly as MX-s-15 moved test_schwab_wiring and test_schwab_semantics."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 step 0: the acceptance harness dataset default (tests/acceptance/conftest.py / test_local_acceptance.py, datasets=de.DATASETS) was NOT edited; adding dim_transaction to the contract alone takes the file 8 failed -> 14 passed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tests/acceptance/test_local_acceptance.py before: 8 failed, 6 passed (KeyError 'dim_transaction' at conftest.py _fields); after the contract edit only: 14 passed, 0 failed, rc=0.",
+        "The KeyError came from _fields(dataset) = contract.raw['fields'][dataset] on de.DATASETS' fourth member; once the contract carries it, the de.DATASETS default is correct and a wiring-style filter would be a no-op."
+      ]
+    },
+    "spec_asserts": "AMENDED A1 step 0: fix the acceptance harness's dataset default the way MX-s-15 fixed tests/test_schwab_wiring.py.",
+    "world_is": "That fix (filter de.DATASETS to the contract's fields) was a workaround for the contract lacking the dataset; with the contract amended it is unnecessary, so the harness is left as committed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "one_line": "MX-r-6 PHASE A: adding `schwab` to ENABLED_INTEGRATIONS registers 5 tools, but the host has NONE of the six inputs the Schwab service needs at its first call (contract path and file, two role ARNs, two ExternalIds, the account_ref secret id) and the deploy path ships none of them; every schwab call would fail closed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Host read, SSM 28a12bb3-2fa0-4da0-9aca-04f50b71f144 (read-only, key NAMES only): /opt/opal-gateway/.env carries 27 keys, 0 begin SCHWAB_ and 0 begin NFRA_OPLGTW; find over /opt /home /tmp for NFRA_OPLGTW_CONTRACT* returns nothing; /opt/opal-gateway/org does not exist. Deliverable probes/ host read in deliverables/0.9.0_WK_NFRA_MCPINDEX~19.",
+        "Code path: integration.py:1040-1041 build_default_service() (first Schwab call) -> catalog.load_contract() reads NFRA_OPLGTW_CONTRACT_PATH, else default_contract_path() = Path(catalog.py).parents[7]/org/standards/... which is None when the file has fewer than 8 parents (the host path /opt/opal-gateway/app/integrations/schwab/catalog.py has 6) ; then aws_roles.role_configs() needs SCHWAB_READER_ROLE_ARN, SCHWAB_CATALOG_ROLE_ARN, SCHWAB_READER_EXTERNAL_ID, SCHWAB_CATALOG_EXTERNAL_ID (aws_roles.py:78-79); account_ref.py:56 needs SCHWAB_ACCOUNT_REF_SECRET_ID.",
+        "Measured in-process on the release artifact extracted at host-like depth (C:/tmp/hs-rel/opal-gateway, 7 parents): load_contract(environ={}) -> ContractUnavailable 'no contract path: set NFRA_OPLGTW_CONTRACT_PATH'; role_configs(..., {}) -> RoleConfigError 'SCHWAB_READER_ROLE_ARN is not set to an IAM role ARN'. Same on the live artifact. Files: deliverables/0.9.0_WK_NFRA_MCPINDEX~19/probes/tools_release_6ids_MX-r-6.json.",
+        "Shipping: the artifact's tar roots are app deploy requirements.txt identity_tool_allowlist.txt dashboard (deploy-to-ec2.sh:86-90), so org/standards/NFRA_OPLGTW_CONTRACT.json is NOT in it (79 of 79 live files, none under org/standards). The .env is rewritten wholesale by the printf at deploy-to-ec2.sh:197 and names none of the six. The only prior host use of the contract was a hand-staged copy in s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/bench/ (OG-x-4's bench)."
+      ]
+    },
+    "spec_asserts": "The order's step 2 changes exactly one value on line 197 (`schwab` added, 6 ids) and step 8/AC2 expect the enable to land with the reader role allowed; A1 asks the census to establish how the contract ships.",
+    "world_is": "Enabling as written registers schwab_get_access, schwab_list_files, schwab_describe_dataset, schwab_query and schwab_prepare_download, and every call by an admitted principal errors (ContractUnavailable / RoleConfigError); r6.J1's Schwab position question could not be answered. Making it work needs a deploy-script change beyond line 197 (the contract file into the artifact or onto the host, plus the five env values: the ExternalIds are in secret opal/mcp/opal-gateway-schwab-reader-external-ids, which the gateway role reads by resource policy) that the order does not grant. NOT done here; the release is cut exactly as ordered.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "one_line": "MX-r-6 PHASE A step 3: a whole-directory terraform plan of infra/aws/terraform/opal-gateway cannot be confined to gateway-schwab-read-role's policy: from CLOUD's TF it also creates another project's policy and changes another seat's Lambda hash; from the live-base tree it destroys 5 resources. The saved plan is a targeted one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Plan A, run from the release tree (base 093fc247c6 TF + MX-s-15's schwab_reader_iam.tf), /c/tmp/mx-r6-plan.txt: 'Plan: 0 to add, 2 to change, 5 to destroy' -- destroys aws_eip.gw, aws_eip_association.gw, aws_iam_role.inf_firm_reader, aws_iam_role_policy.gw_assume_inf_firm_reader, aws_iam_role_policy.inf_firm_reader (state holds resources whose .tf landed on CLOUD after 093fc247c6: 062e036d54 eip.tf, a2c8413931 mcpmsp_firm_roles.tf); so a plan from the release tree is not the apply tree.",
+        "Plan B, run from the worker tree whose TF dir equals CLOUD's (git diff HEAD CLOUD -- infra/aws/terraform/opal-gateway is empty), /c/tmp/mx-r6-plan-cloudtf.txt: 'Plan: 1 to add, 2 to change, 0 to destroy' -- adds aws_iam_role_policy.gw_rivalfunds_read (gateway-rivalfunds-read-policy; ETFS_RIVALS d70267f372 / b9447adc2f, not applied), changes schwab_data_read_policy (the wanted change) and aws_lambda_function.mcportal_grant_writer source_code_hash.",
+        "The Lambda's state hash MOVED between my two plans (Plan A read OiLZPOdS..., Plan B read s+PDoMXp...; last_modified 2026-09-30T10:44:58Z): another seat applied that function during this cell. Its planned hash comes from the untracked .build/staged directory (mcportal_grant_writer.tf:39-43) which this worktree copied from the shared tree, so the delta is a build-input artifact, not a change this release makes.",
+        "Plan C, targeted: terraform plan -target=aws_iam_role_policy.schwab_data_read_policy, saved /c/tmp/mx-r6-schwab-read-targeted.tfplan, render deliverables/0.9.0_WK_NFRA_MCPINDEX~19/PLAN_MX-r-6_targeted.txt: 'Plan: 0 to add, 1 to change, 0 to destroy'; the only diff lines are 8 added list elements, every one a dim_transaction prefix or ARN for masters 08242234 and 08335338 (NotResource, StringNotLike s3:prefix, Resource, StringLike s3:prefix), 0 removed."
+      ]
+    },
+    "spec_asserts": "The order: the plan must change ONLY gateway-schwab-read-role's policy; any other planned change is a BLOCKING row and the worker does not proceed.",
+    "world_is": "Only the targeted plan meets that; an untargeted apply from CLOUD would also create gateway-rivalfunds-read-policy (another project's act) and re-point another seat's Lambda. The release, rollback and deploy-only trees are built; no apply was made. The apply-form is the issuer's and the CTO's call (targeted saved plan vs waiting on the other two changes).",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S9",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The mcportal grant-writer Lambda bundles its own copy of NFRA_OPLGTW_CONTRACT.json, which does not list dim_transaction; step 0's contract edit widens what a grant may name only once that package is rebuilt and applied.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mcportal_grant_writer.tf:20-33 (PACKAGING): build_package.py stages lambda_function.py plus the import closure of app.access_state and ops.schwab_entitlement_admin and 'the data file those modules load at its repo-relative path (org/standards/...)' into .build/staged, which archive_file zips.",
+        "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged/org/standards/NFRA_OPLGTW_CONTRACT.json exists in the staged build copied at this cell and holds 0 occurrences of dim_transaction.",
+        "ops/schwab_entitlement_admin.py:166-169 approves a requested column only if it is in the contract's fields[dataset]."
+      ]
+    },
+    "spec_asserts": "A2 carries 'widen one existing Schwab grant to dim_transaction through the grant admin tool' to Andrew's list.",
+    "world_is": "That future act needs the grant-writer package rebuilt from the amended contract and applied, in addition to this release; not done here and not in this order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S10",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 PHASE A record: two audited overrides of the commit author lane on the never-merged rel-/dep- branches, two trees carry files beyond the gateway dir, and the worker branch carries the identical line-197 edit.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release commit ac77acf9e8 (branch rel-nfra-mcpindex-r5-schwab-enable, /c/tmp/mx-rel7) and deploy-only commit abee4587f7 (dep-nfra-mcpindex-r5-schwab-enable, /c/tmp/mx-dep7) were made under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~19, the MX-r-4 A1/A2 and MX-r-5 A2 precedent (Z-W14-S8); two uses.",
+        "The release commit also carries infra/aws/terraform/opal-gateway/schwab_reader_iam.tf (MX-s-15's two lines) and org/standards/NFRA_OPLGTW_CONTRACT.json (step 0), because the gateway tests read the contract at parents[5] and the plan needs the .tf; the census of the gateway dir is 17 files, 505 insertions, 41 deletions; the deploy-only commit changes only the gateway dir.",
+        "The identical one-line edit of deploy-to-ec2.sh:197 is committed on the worker branch (blob bb6c19ef04 in all three trees), so a later CLOUD release does not revert the enable (MX-r-4 A1)."
+      ]
+    },
+    "spec_asserts": "The order grants the audited override for rel-/dep- branches by reference to the MX-r-4/MX-r-5 precedent.",
+    "world_is": "Used exactly there and nowhere else; recorded for the L8 reading."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S11",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T11:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The deploy-only tree (CLOUD 0440cd4e4d with the gateway dir replaced) drops 42 files of other projects' unreleased gateway work that CLOUD carries; none ships, and each rides that project's own release.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --name-status 0440cd4e4d abee4587f7 in /c/tmp/mx-dep7: 42 files, all under infra/aws/ec2/opal-gateway, 17 deleted (for example app/admin_tenants.py, app/firm_role.py, app/rivalfunds_view.py, app/tenant_registry.py, app/taxsma_workbook.py) and 25 modified (for example app/server.py, app/tools.py, app/config.py, app/tier.py, app/oauth_as.py, app/refs/DATA_CATALOG.yaml).",
+        "Release vs LIVE artifact: 72 of 79 identical; the 7 that differ are app/data_entitlement.py, app/destructive_ops.py, app/integrations/opal_discover/integration.py, app/integrations/portal_index/integration.py, app/integrations/schwab/datasets.json, app/integrations/schwab/query.py, app/schwab_audit.py."
+      ]
+    },
+    "spec_asserts": "R-8: every gateway release is NARROW, cut at the deployed commit plus this project's own changes.",
+    "world_is": "The narrow cut holds; a release cut from CLOUD instead would also ship the MCPMSP, ETFS_RIVALS and NFRA_OPALAI gateway commits."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S12",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T12:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 A3 (S7 delta): the Schwab loaders read each ExternalId as an env VALUE and name no ExternalId-source key, so A3's 'no secret value in .env' needed a small code addition: aws_roles.environ_with_external_ids resolves an unset SCHWAB_*_EXTERNAL_ID from the secret named by the new env key SCHWAB_EXTERNAL_IDS_SECRET_ID.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Code at the live base 093fc247c6 and in the release: aws_roles.py:78-79 ROLE_ARN_VAR / EXTERNAL_ID_VAR name SCHWAB_READER_EXTERNAL_ID and SCHWAB_CATALOG_EXTERNAL_ID; role_config() (aws_roles.py:132-134) refuses a missing or malformed value; no loader reads a secret for them. Only SCHWAB_ACCOUNT_REF_SECRET_ID (account_ref.py:56) is a secret-id key.",
+        "The alternative the deploy script's own pattern allows (fetch the secret on the box and printf the VALUE into .env, as FERNET_KEY and the bearers are) puts an ExternalId VALUE in .env, which A3 bars; it was not taken.",
+        "Change, release 9def06ff2f (deploy-only 0d3e953c76): aws_roles.py +40 lines (constants EXTERNAL_IDS_SECRET_VAR / EXTERNAL_ID_FIELD = data_read, catalog_read; environ_with_external_ids, a COPY of the environment, env value wins, nothing written to os.environ, error text carries no value) and integration.py build_default_service passes that copy to role_configs (1 line). The secret is read once at service construction through base.SecretsCredential, the Gateway role's resource-policy grant (schwab_reader_iam.tf:112-126). tests/test_schwab_host_inputs.py: 7 passed.",
+        "Proof: probes/inprocess_schwab_host_inputs_MX-r-6_A3.txt in deliverables/0.9.0_WK_NFRA_MCPINDEX~19: with the release's .env shape and the operator's read credentials build_default_service() returns a SchwabService; without the keys it raises ContractUnavailable."
+      ]
+    },
+    "spec_asserts": "A3: the release also ships the host .env keys the service's own loaders name (contract path, two reader-role ARNs, the ExternalId source, the account_ref secret id), taking the key names from the code; no secret VALUE in the repo, artifact or .env.",
+    "world_is": "The code names no ExternalId-source key, so one was added (SCHWAB_EXTERNAL_IDS_SECRET_ID) with the 40-line resolver above, on the never-merged rel-/dep- branches only. If the issuer would rather have the on-box value route, the .env printf line and aws_roles.py are the two places to change; nothing is deployed.",
+    "disarm_owner": "2.0.0_SA_COO~MI"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W19-S13",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T12:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-6 A3 record: the contract ships as a byte copy in the gateway's own deploy/ root (artifact 79 -> 80 files), cut from the release tree's contract (base 093fc247c6 + dim_transaction), which is OLDER than CLOUD's org/standards copy; a later release cut from CLOUD must refresh the copy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Why a copy inside infra/aws/ec2/opal-gateway: the deploy-only tree is CLOUD with only the gateway dir replaced, and CLOUD's org/standards/NFRA_OPLGTW_CONTRACT.json lacks step 0's dim_transaction (it drains later); the gateway tree object (c8e4449bcf57e3357371dbf9bb41c3b6b1cb45ad, release = deploy-only) then fully determines the artifact, and the tar roots need no change.",
+        "git diff CLOUD 093fc247c6 -- org/standards/NFRA_OPLGTW_CONTRACT.json: 2 insertions, 3 deletions (CLOUD carries the tenant_firm POLICY row text of NFRA_MCPMSP C2, absent at the live base). The shipped copy equals the release tree's org/standards file (cmp, tests/test_schwab_host_inputs.py::test_shipped_contract_equals_the_standard).",
+        "Also observed (no cause found, not caused by this delta): tests/test_portal_index.py::test_portal_tools_catalog_refs_resolve failed in the release tree and on the live tree in PHASE A and passes in this run; the other 3 of the PHASE A 4 still fail (test_ogz2_ac06, test_ogz1_ac05, test_ogz1_ac08), on the live tree too."
+      ]
+    },
+    "spec_asserts": "A3 allows the contract file into the artifact 'or onto the host by the deploy script'.",
+    "world_is": "Shipped as a copy in deploy/, byte-equal to the release tree's contract. The test that pins the copy to org/standards lives on the never-merged rel-/dep- branches and would fail against CLOUD's newer contract, which is the signal to refresh the copy at the next release cut."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T13:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S14",
+    "one_line": "MX-r-6 PHASE A re-cut on the moved live base (A4): two more audited overrides on the never-merged rel-b/dep-b branches, and the deploy-only tree still drops 37 gateway-dir files of other projects' unreleased work relative to CLOUD.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live gateway read BY CONTENT 2026-09-30T12:27Z and again 13:00Z: S3 key opal-gateway-288fa78c93.tar.gz == -latest (ETag be161c825e92471afe31c9f6ba4f3758, 415525 bytes), host file hashes 82 of 82 equal to it (SSM e29a6f89-425b-4e34-bc30-caea722ea8b2, e6782853-9cfc-4515-b75e-341fbf3151fa), CLOUD manifest deployed_commit 288fa78c93e1c57be0ad7b8d6371c69145a69856 (11:37:34Z).",
+        "Release 63d6094823 (branch rel-nfra-mcpindex-r5-schwab-enable-b, /c/tmp/mx-rel8) and deploy-only 2e2254156e (dep-nfra-mcpindex-r5-schwab-enable-b, /c/tmp/mx-dep8, on CLOUD 6caac02338) were committed under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~19 (Z-W14-S8 precedent; uses 5 and 6 counting Z-W19-S10's two and S12's A3 pair).",
+        "The deploy-only commit differs from CLOUD 6caac02338 in 37 files, 0 outside infra/aws/ec2/opal-gateway: 12 deleted (rivalfunds x4 + its test, taxsma_workbook + test, onhost_bench x2, test_auth_hardening, test_dcr_idle_lifetime, test_login_retire, test_tier_principal), 23 modified (app/config.py, guard.py, integrations/base.py, schwab/aws_roles.py, schwab/integration.py, oauth_as.py, ratelimit.py, server.py, tier.py, token_broker.py, tools.py, refs/DATA_CATALOG.yaml [2-line provenance stamp], deploy-to-ec2.sh, runbook, tests), 2 added (the contract copy, test_schwab_host_inputs.py). Each is another project's unreleased gateway work (NFRA_OPLGTW OG-t-1/u-1/u-2/x-2/i-3, ETFS_RIVALS RIV-w-1, MDPF_TAXSMA TX-g-1) or NFRA_MCPMSP's already-live files being equal to live rather than to CLOUD; none is shipped by this release.",
+        "Every one of the 13 files NFRA_MCPMSP changed from 093fc247c6 to 288fa78c93 is byte-equal to live in the release tree except deploy-to-ec2.sh (MCPMSP's printf line kept, ours added) and org/standards/NFRA_OPLGTW_CONTRACT.json (MCPMSP's tenant_firm lines kept, step 0 added)."
+      ]
+    },
+    "spec_asserts": "A4 asks for a release re-cut on the live commit read by content, with MCPMSP's lines kept and ours added.",
+    "world_is": "Done as ordered; the only off-order acts are the audited overrides and the 37-file gap, recorded for the L8 reading."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T13:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S15",
+    "one_line": "A3's host-input edits (aws_roles.py, schwab/integration.py, deploy/NFRA_OPLGTW_CONTRACT.json) are written against the live-base copies; CLOUD's copies of the first two carry unreleased NFRA_OPLGTW work, so a later CLOUD release of this delta merges against them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff --name-status 6caac02338 2e2254156e lists app/integrations/schwab/aws_roles.py and app/integrations/schwab/integration.py as modified; git log 6caac02338 for those paths names NFRA_OPLGTW.TO-OG-i-3 (0.9.0_WK_NFRA_OPLGTW~1, the person-named Schwab role rename) and NFRA_OPLGTW OG-x-2 (0.9.0_WK_NFRA_OPLGTW~11, the streaming Schwab CSV export) as the last commits, neither in the live tree.",
+        "The A3 edits to those two files applied cleanly on the live base (git apply --3way, 0 conflicts); on CLOUD they will conflict or need a re-merge when OG-i-3 and OG-x-2 are released.",
+        "deploy/NFRA_OPLGTW_CONTRACT.json was regenerated as a byte copy of THIS release tree's org/standards contract (MCPMSP's tenant_firm text plus step 0); CLOUD's org/standards contract still lacks step 0 (it drains later), so test_schwab_host_inputs.py::test_shipped_contract_equals_the_standard passes in the release tree and would fail in the deploy-only tree, whose org/standards is CLOUD's (the Z-W19-S13 signal, unchanged)."
+      ]
+    },
+    "spec_asserts": "A3/A4 ask the release to carry the Schwab host inputs and the deploy-only tree to ship the gateway dir only.",
+    "world_is": "Shipped as ordered; the merge cost lands on whoever releases OG-i-3/OG-x-2 or drains this branch, recorded so it is not a surprise then."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S16",
+    "one_line": "The live host carries one file the live artifact does not: deploy/NFRA_OPLGTW_CONTRACT.json, left by the rolled-back v2 deploy (a tar extract never deletes), byte-equal to the v3 release's copy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM ab7a521f-2a22-48e2-a960-21c5f90dc392 (2026-09-30T16:14:59Z) on i-07dccb1615503ac99: 87 hashed host files against the 86 of the downloaded -latest artifact (421088 bytes); 86 of 86 identical, 0 differ, 1 only-host = deploy/NFRA_OPLGTW_CONTRACT.json (sha256 a86f7e667cfc3ec8b0eebfe155a02e11e94e52ddb39fcfa82d3505fddd4fa4ad).",
+        "The v3 deploy-only artifact's copy of that file has the same sha256, so a v3 deploy overwrites it with identical bytes; PHASE B's host-equals-artifact read should expect 87 host files now (86 + this one) and 87 of 87 after.",
+        "It is inert today: the live .env names no NFRA_OPLGTW_CONTRACT_PATH (0 of 28 key names) and schwab is not enabled."
+      ]
+    },
+    "spec_asserts": "A6 says the rollback restored 4ce7946426 (the host 80/80 at RV's read).",
+    "world_is": "The host runs 4ce7946426's code; the artifact-vs-host comparison is 86 of 86 plus one stale contract copy that the rollback could not remove."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S17",
+    "one_line": "ETFS_RIVALS' app/tests/test_rivalfunds_view.py fails at the live ref itself: it needs infra/logic/registry/systems.json to carry a 'rivalfunds' key, which the tree at 4ce7946426 does not.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In the release tree /c/tmp/mx-rel9 (a5e73b6e72) `python -m pytest app/tests/test_rivalfunds_view.py` (MOCK_GRAPH=1): 3 failed, 1 passed, 7 errors, each `ValueError: source 'rivalfunds' is not a systems.json key`.",
+        "The same command in the rollback tree /c/tmp/mx-rb9 (4ce7946426, a sparse tree without infra/logic): 3 failed, 1 passed, 7 errors, `FileNotFoundError ... infra/logic/registry/systems.json`; the release's copy of the test and of app/rivalfunds_view.py are byte-equal to 4ce7946426 (preservation proof), so this release adds no failing test.",
+        "The test ships inside the artifact (app/tests/) but is never run on the host; it is another project's suite."
+      ]
+    },
+    "spec_asserts": "The release's test list names the Schwab, portal_index, discover, MCPMSP and acceptance suites.",
+    "world_is": "ETFS_RIVALS' own test is red against the registry at its own deployed ref; not run for criteria and not ours to fix."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S18",
+    "one_line": "The stale-base guard protects only a deploy that runs a deploy-to-ec2.sh carrying it: a seat deploying from a tree cut before this release runs the old script and is unguarded, and the first read after this release has no git-ref metadata to read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (f1c302fbd3 on wk-nfra_mcpindex-5-19, a5e73b6e72 on the release) reads the live ref from S3: the git-ref object metadata on -latest, else the one opal-gateway-<sha>.tar.gz key sharing -latest's ETag, else it refuses. The live -latest (15:22:18Z, written by the pre-guard script) has no git-ref metadata, so the first read is the key-match fallback and resolves to 4ce7946426 (the 4ce7946426 key and -latest share ETag and size 421088, list-objects-v2 at 2026-09-30T16:13Z).",
+        "An older tree's script (the one v2 used) uploads without the metadata and without the check; nothing on the S3 plane refuses its PutObject, and infra/aws/ec2/safe-ec2-deploy.sh (outside this order's <paths>) passes its environment through but does not itself require DEPLOY_BASE_REF.",
+        "tests/test_deploy_base_guard.py: 6 of 6 pass; removing the upload-time call fails 2 of 6 (mutation run), so the upload-time read is what the tests grade."
+      ]
+    },
+    "spec_asserts": "A6: the guard ships in this release and refuses on a live-ref mismatch with no upload.",
+    "world_is": "The guard is in place for every deploy made from this release forward; coverage of older trees needs either the wrapper to require DEPLOY_BASE_REF or an S3-side condition, both outside this order."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T17:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S19",
+    "one_line": "A6 re-cut record: three more audited overrides (rel-c, dep-c) and the deploy-only tree on CLOUD d4fe6127ee drops 8 gateway files of other projects' unreleased work and changes 23 more relative to CLOUD.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Release a5e73b6e72 (rel-nfra-mcpindex-r5-schwab-enable-c, /c/tmp/mx-rel9) and deploy-only 42c52ed4d9 (dep-nfra-mcpindex-r5-schwab-enable-c, /c/tmp/mx-dep9) were committed under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~19 (Z-W14-S8 precedent).",
+        "git diff --name-status d4fe6127ee 42c52ed4d9: 34 files, 0 outside infra/aws/ec2/opal-gateway: 8 D (app/taxsma_workbook.py, tests/test_taxsma_workbook.py, tests/test_tier_principal.py, tests/test_auth_hardening.py, tests/test_dcr_idle_lifetime.py, tests/test_login_retire.py, tests/acceptance/onhost_bench.py, tests/acceptance/test_onhost_bench_grader.py), 23 M, 3 A (the contract copy, test_schwab_host_inputs.py, test_deploy_base_guard.py). Each D and M is other projects' unreleased gateway work that CLOUD holds and the live ref does not; none is shipped.",
+        "Gateway tree object: a3893da22ad839edb26e9537ac13d7347b02396d in both the release and the deploy-only commit."
+      ]
+    },
+    "spec_asserts": "A6 asks for a release on the live ref and a deploy-only tree whose gateway tree object equals the release's.",
+    "world_is": "Done as ordered; the overrides and the dropped-file set are recorded for the L8 reading."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T18:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S20",
+    "one_line": "r6.AC1 reads slug nfra-mcpindex-r5-schwab-enable, so at v3 it passes on v2's CLOSED ROLLED-BACK entry file and never reads the v3 ledger (nfra-mcpindex-r5-schwab-enable-v3).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round5/checks/r6.AC1.sh: SLUG=nfra-mcpindex-r5-schwab-enable; entry count = ls-tree of change_management grepped for '_${SLUG}_deploy_completion.md$'; the v3 file is 20260930T1815Z_nfra-mcpindex-r5-schwab-enable-v3_deploy_completion.md and does not match that anchor.",
+        "Measured at 9a9bccc871 (18:5xZ): 'entry files at HEAD=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR: 16 of 16 sentinel(s) scanned -- RESULT: PASS -- exit=0'. The 1 entry is v2's 20260930T1358Z file. The v3 ledger is closed and its sentinel is absent at HEAD (git ls-tree .open_deploys/ | grep -c schwab-enable = 0), read directly."
+      ]
+    },
+    "spec_asserts": "r6.AC1 grades the deploy's NEVER-2 entry (slug nfra-mcpindex-r5-schwab-enable) as committed, sentinel gone, not listed OPEN/HELD.",
+    "world_is": "AC1 PASSes, but on the v2 entry; the v3 slug's closure is proven by the direct reads named here, not by the script."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T18:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S21",
+    "one_line": "safe-ec2-deploy.sh's own manifest rewrite (jq | tr) re-encoded the non-ASCII characters of 10 EC2_MANIFEST.json lines as mojibake in its commit e159e023f0 on the deploy-only branch, so that commit was not ported.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C /c/tmp/mx-dep9 diff HEAD~1 HEAD -- infra/aws/ec2/EC2_MANIFEST.json (e159e023f0): 10 insertions, 10 deletions; 4 of the 10 changed lines are _last_updated and the opal-gateway deployed_commit/deployed_at/deployed_by, the rest are _ec2_host_note, notes and purpose lines whose em dash changed from the JSON escape â€” to the literal mojibake 'â€”'.",
+        "The manifest commit on wk-nfra_mcpindex-5-19 (3a67e6fcf2) edits only the opal-gateway block fields and _last_updated against CLOUD's file: git diff CLOUD -- infra/aws/ec2/EC2_MANIFEST.json shows 6 lines changed. The deploy-only tree is throwaway."
+      ]
+    },
+    "spec_asserts": "The wrapper records the deploy in EC2_MANIFEST.json by a bookkeeping commit.",
+    "world_is": "The wrapper's manifest commit carries an encoding side effect on unrelated rows; the branch's commit records only the gateway fields."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+    "surfaced_at": "2026-09-30T18:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W19-S22",
+    "one_line": "The v3 NEVER-2 sentinel org/critical_paths/.open_deploys/nfra-mcpindex-r5-schwab-enable-v3.json is not among the order's <paths> (only ...-schwab-enable.json), and the commit that opened and the commit that closed it were admitted.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Order <paths> (read at CLOUD): org/critical_paths/.open_deploys/nfra-mcpindex-r5-schwab-enable.json and org/critical_paths/change_management/; the v3 slug was named by the issuer's GO (binding item 1).",
+        "safe-commit b26fc665ef (open) and 9a9bccc871 (close) staged the -v3.json sentinel and the ledger .md and were accepted with no refusal."
+      ]
+    },
+    "spec_asserts": "<paths> IS the write grant; the lane gate admits exactly the paths the order names.",
+    "world_is": "The v3 sentinel path was written outside the named grant and admitted; the ledger and sentinel for the slug the GO named are committed and closed."
   }
 ]
 ```

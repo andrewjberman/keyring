@@ -163,7 +163,20 @@ directives:
       production pipeline MUST have a schedule, and 'no schedule at all' is the mdpf-class defect that
       froze a client-facing product for six days with fresh inputs sitting unused. This is a FINDING
       for the D4 PRD's owner (1.0.0_SA_CTO~Z is drafting it), NOT a warrant for anyone to build a
-      trigger off this line -- naming it here is disclosure, not authorization."
+      trigger off this line -- naming it here is disclosure, not authorization.
+      ETFS_RIVALS ADDED 2026-09-30 by 1.0.0_SA_CTO~Z at L3 (Rule 27 L3: the CTO writes every carrier itself):
+      rival active ETFs' holdings research (rivalfunds; pipeline etfs-rivalfunds-daily; route /rivalfunds), named by
+      Andrew-direct 2026-09-30 ~00:2x ET at the 4.0.0_SA_CRO~Z terminal, VERBATIM: 'I like it, lets call this
+      ETFS_RIVALS' (record org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/ANDREW_DIRECT.md
+      @1ad807ce0e). Brief docs/briefs/etf-holdings-research-20260929.md (rev 3); endpoint
+      org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_RIVALFUNDS_20260930.md, DONE WHEN APPROVED by Andrew
+      ('1.) Yes approved.', @77c891c869). First tree member of D4 under the ETFS macro (org/missions/D4/ETFS/);
+      MACROS.yaml unchanged: ETFS is already D4's ratified macro. A SEPARATE pipeline from etfs-netassets-daily
+      (Andrew, gap-pass item 1). COO lane unseated at registration; seating is 0.0.0_AB_MSTR~Z's.
+      ETFS_RIVALS MOVED TO D5 2026-09-30 ~06:3xZ by 1.0.0_SA_CTO~Z at L3, on Andrew's word ('ok yeah RIVALS should be on D5
+      Asset Management', relayed @e6de2392c2; 'yes it can, ETFS can also be included in D5 as one of the macros', record
+      org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_063xZ_ETFS_INCLUDED_IN_D5_MACROS_ETFS_RIVALS_TO_D5.md).
+      It is no longer a D4 member; the lines above are its registration history."
     stance: "EVENT-REFRESH 2026-08-21 ~20:0xZ -- ETFS-g-1, the register cell (COO's stage-3 decomp
       assigns it to MSTR as SOLE WRITER and to no round-1 seat; stated in the decomp so nobody
       writes it 'helpfully'). STAGE 3 IS DELIVERED AND ROUND 1 IS EXECUTING: decomp
@@ -253,7 +266,13 @@ directives:
     placement: "SITEZ -- MOVED 2026-09-10 from LAPTOP by Andrew-direct at the 4.0.0_SA_CRO~Z terminal, VERBATIM: 'We're going to take D5 to this device.' Relayed by 4.0.0_SA_CRO~Z (msg 20967), register act by 0.0.0_AB_MSTR~Z. SUPERSEDES the 2026-08-27 LAPTOP hold preserved verbatim below. THIS IS THE SECOND PLACEMENT ON THIS ROW, BOTH HIS; a reader takes the latest and must not read this flip as reopening the one beneath it. ⛔ THIS IS THE 'OTHERWISE' THE HOLD BENEATH WAS WAITING FOR, AND NOTHING WIDER. The superseded text says 'until I say otherwise' is a duration clause, his to lift and nobody else's. He has lifted it FOR D5. SCOPE -- READ THIS BEFORE MOVING ANYTHING ELSE: the 2026-08-27 word named SIX rows (D0 D2 D3 D5 D10 D11); this word names ONE. D0, D2, D3, D10 and D11 DO NOT MOVE WITH IT and remain LAPTOP under the identical standing clause, which is untouched on each of those five rows. Reading the bundle forwards out of a single-directive sentence would be adjudicating wider, which a relay may not do in either direction -- the same discipline the D8 row records for reading a bundle BACKWARDS. NO SEQUENCING RULING IS CARRIED HERE: unlike the D8 move there is nothing in flight to strand -- this row's member set was empty at the moment of the move, so 'nothing serving moves mid-serve' has no subject and is not restated as though it had been ruled for this one. 1.0.0_SA_CTO~Z sequences if that changes. CREATES ZERO SPAWNS. Placement attaches to the DIRECTIVE, never to a member. --- PRIOR PLACEMENT, PRESERVED VERBATIM AND UNMODIFIED --- LAPTOP -- RULED (ingest = operator-located as standing; activation builds laptop). ⛔ STANDING, ANDREW-DIRECT 2026-08-27 ~00:0xZ, VERBATIM: 'D0 D2 D3 D5 D10 D11 stay here until I say otherwise. the rest is all on sitez.' This row is one of the SIX NAMED LAPTOP HOLDS. 'UNTIL I SAY OTHERWISE' IS A DURATION CLAUSE, NOT A PERMANENT RULING -- it is his to lift and nobody else's, and no seat may move this directive off laptop on any other basis."
     members:
       subgroups: []
-      projects: [AMGT_RESAPP, AMGT_HARVST, AMGT_CORPUS]
+      projects: [AMGT_RESAPP, AMGT_HARVST, AMGT_CORPUS, ETFS_RIVALS]
+      members_note: "ETFS_RIVALS joined 2026-09-30 ~06:3xZ, MOVED FROM D4 by 1.0.0_SA_CTO~Z at L3 on Andrew-direct: 'ok yeah RIVALS
+        should be on D5 Asset Management' (relayed by 0.0.0_AB_MSTR~Z @e6de2392c2), then at the 1.0.0_SA_CTO~Z terminal 'yes it can,
+        ETFS can also be included in D5 as one of the macros' (record
+        org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_063xZ_ETFS_INCLUDED_IN_D5_MACROS_ETFS_RIVALS_TO_D5.md).
+        MACROS.yaml D5 widened to [AMGT, ETFS] in the same commit. Tree home org/missions/D5/ETFS/ETFS_RIVALS; lead 2.0.0_SA_COO~RV;
+        PRD v0.2 ADMITTED (CVO @87321c4243)."
     stance: "ACTIVATED 2026-09-10. The empty member set this row carried is now populated by its FIRST
       registered project, AMGT_RESAPP, minted on Andrew-direct at the 4.0.0_SA_CRO~Z terminal, VERBATIM:
       'this will be a new project under D5, call it AMGT_RESAPP' / 'This is going to be a dashboard portal
@@ -275,7 +294,7 @@ directives:
     placement: "SITEZ -- RULED (Andrew): TO-C SharePoint binding + TO-D BBG standing read (sitez-only identity opal-gateway-bbg); LAPTOP: the GraphQL query layer. Kickoff ferries on CVO clearance."
     members:
       subgroups: [EXTERNAL.49FINANCIAL]
-      projects: [NFRA_OPALAI, NFRA_MCPORTAL]
+      projects: [NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPMSP]
       members_note: "NFRA_OPALAI REGISTERED 2026-09-24 by 1.0.0_SA_CTO~O on Andrew-direct 'yes to both' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_202xZ_OPAL_AI_ENDPOINT_CONFIRMED_D6_NFRA_RATIFIED.md). PRIOR TEXT, when the list was empty: DELIBERATELY EMPTY. ANDREW-DIRECT 2026-09-01 ~15:2xZ at the 0.0.0_AB_MSTR terminal, answering a three-card /open-calls, VERBATIM: \"All your recs are correct.\" The /open-calls card asked what belongs under this workstream now, and offered \"nothing yet\" as an honest answer; he took the recommendation. PRIOR MEMBER, RECORDED RATHER THAN DELETED: OPAL_ANALYST, whose original goal closed 2026-08-20 and which he re-pointed at how the agent interfaces with tooling without the member list ever being updated to match. It remains closed and is NOT reopened by this edit. AN EXPLICITLY EMPTY WORKSTREAM IS HONEST; A SILENTLY EMPTY ONE IS NOT -- the row previously declared one member that reads `closed`, so the register showed a LIVE directive whose only listed project was finished, and any count built off it was wrong in the same direction. This is the defect /integrate directives surfaced unprompted on its first live run."
     stance: "RE-SCOPED per Andrew-direct 08-20 ~2100Z (CTO terminal, VERBATIM): 'the D6 item is simply
       proceeding past partner GraphQL, the current initiative has developed into the mechanics of the
