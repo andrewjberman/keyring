@@ -183,4 +183,12 @@ Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</
 rolling-back shell only, with the `OG-pr-1` script's mapping, never printed. ROTATION (S13): proceeds with the cot box
 stopped; the gateway side is verified by the step-4 probe. Step 3's "3 adopted" test files read as the cells' 6 new
 test files in all (S9). Criteria unchanged.
+
+## AMENDMENT A4 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~07:1xZ; the sender table's source)
+
+Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`). Step 5's sender
+table is NFRA_TRNSPT's own data asset, read at GO from HEAD: `data/transcripts/scripts/outlook/criterion.py`
+`DEFAULT_AUTHORS` (Manav's two addresses, the 49 one built from the registry's email domain, and Yang's), evaluated by
+importing that module, never retyped. The render carries it in `MAIL_SENDER_TABLE`; the template commits no address.
+No off-repo input is needed for it at GO. Criteria unchanged.
 <status>pending</status>
