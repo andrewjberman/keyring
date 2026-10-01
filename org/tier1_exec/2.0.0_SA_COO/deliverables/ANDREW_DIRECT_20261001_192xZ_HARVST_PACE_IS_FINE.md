@@ -8,10 +8,11 @@ Recorded by `2.0.0_SA_COO~H` on the CTO's round-35 ruling 5 (`ledger/ROUND_ANALY
 2. "no just keep going as youre going, this pace is fine"
 3. "jsut explain to me the logic with retrieval, i wanted to get data back to jan 1, what mechanism is being employed to handle lookback when its 4 different platforms with different shapes and pagination and etc?"
 
-## The question message 2 answered (COO~H's reply to message 1, closing lines, verbatim)
+## The question message 2 answered (COO~H's reply to message 1 -- SUMMARISED, not verbatim)
 
-"Honestly: all 89 names will not reach 50+ by Friday at this pace. The levers are faster pacing (block risk), fixing
-the slow Seeking Alpha upload, or the residential-proxy option (needs your word). Want me to push any of those?"
+COO~H's reply said that, at this pace, all 89 names would not reach 50+ by Friday. It named three levers: faster
+pacing (with block risk), a faster Seeking Alpha upload, and a residential proxy (which needs Andrew's word). It
+asked whether to push any of them. Only Andrew's words above are verbatim.
 
 ## Correction
 
