@@ -2325,6 +2325,28 @@
       ]
     },
     "notes": "Resolves ETFS_RIVALS-Z-S10 (an existing row is never edited). If the issuer wants the date left to the caller, drop the default in main(); the vehicle would then need to pass --date. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S37",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T18:30Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W4-S8: the page tests no longer read the committed identity floors -- an autouse fixture in test_p1 (imported by test_p2 and test_r3) pins min_resolved_fraction to one bare 0.0 through RIVALFUNDS_GUARDRAILS_OVERRIDE; f-3.AC2 reads PASS (0 failed under the committed floors and under zero floors).",
+    "spec_asserts": "Row Z-W4-S8 (ARMED): RIV-d-5 committed issuer 0.23 / bloomberg 0.99 / home_producer 0.0 and 19 package tests went red (test_p1 12, test_p2 6, test_r3 1) because their fixtures carry unresolved lines and the page reads the live guardrails_config.json. Amendment 1 @aab188b5d3: make the suite independent of the committed floor values; do not edit guardrails_config.json; weaken no assertion about a page.",
+    "world_is": "At cbf9bba38a: python -m pytest rivalfunds/tests -q from data/etfs/scripts reads 302 passed, 2 skipped, 0 failed under (a) the committed floors via the override (the 19 red at 1ceff05060 reproduced first), (b) zero floors, (c) no override, and (d) a temporary copy of guardrails_config.json carrying 0.23/0.99/0.0 (restored byte-identical; it is not in the diff). f-3.AC2 prints 'AC2 RESULT: PASS 0 failures' and f-3.AC1 'AC1 RESULT: PASS 0 failures'. Edits: one autouse fixture (test_p1, imported with noqa F401 by test_p2 and test_r3) and one line in test_f3_identity_floors.py (the home-fund test now names PFOE's 0.0 in its own override instead of inheriting the file's home_funds entry); no page assertion touched, guardrails.py unchanged. Why a bare 0.0: load_config's merge replaces a dict value with a non-dict override, so one number pins every source and every home fund by name, whatever d-5's home_funds keys become.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_p1_page_and_guardrails.py@cbf9bba38a _pin_identity_floors",
+        "data/etfs/scripts/rivalfunds/tests/test_f3_identity_floors.py@cbf9bba38a",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/f-3.AC2.py"
+      ]
+    },
+    "notes": "Resolves ETFS_RIVALS-Z-W4-S8 (an existing row is never edited). Any future page test that reads the live config and is not about the floor takes this fixture by import. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
