@@ -101,7 +101,8 @@ handed to slot ~1 after both merge. Check dry-run at base 78167bb8fc: g-6.AC1 FA
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~1 @16f0e97741 (builds 0dce4474db S22 repair, b789e6ae5a G4 join); proof instance VALID; g-6.AC1 PASS (66 rows keyed into G4, all GICS RESOLVED and sourced, sub_asset_class == sector on 66/66, 102 outside G4 UNRESOLVED); package 241 passed 2 skipped 0 failed; rows W1-S24 (S22 resolved), W1-S25 (revision letter-suffix ordering, carried to round 4's revision contract W1-S11).</completion_note>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

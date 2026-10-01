@@ -92,7 +92,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** analysis s.4 row 3 (ruling 2). Chain ~61 alone. Helper G's green arm was in progress at the cut; the issuer reads it 3 of 3 before the hand-over (or amends the contract with the gate limb named).
+**ISSUER NOTES:** AMENDED before hand-over: instrument.cjs arm 3 tightened by its helper (missing face captures no longer count as catches); re-run base 1 of 3 (279 s), green r16-green-g @3c64bf13 3 of 3 (297 s: 32 bars, 18 bubbles, '18 of 95 covered names', 5 of 5 planted caught). GATE viii only.  analysis s.4 row 3 (ruling 2). Chain ~61 alone. Helper G's green arm was in progress at the cut; the issuer reads it 3 of 3 before the hand-over (or amends the contract with the gate limb named).
 
 <status>pending</status>
 <round>16</round>
