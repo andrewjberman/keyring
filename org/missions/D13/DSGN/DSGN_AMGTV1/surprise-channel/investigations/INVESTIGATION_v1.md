@@ -775,6 +775,28 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "Proof instance modelled on org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~60/*.proof_of_spec.json.",
  "world_is": "The ~60 instance is not on this branch (an unmerged worker branch or a different slot); the schema, not the model, is the binding form and proof-of-spec-check reads the instance."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W65-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~65",
+ "surfaced_at": "2026-10-01T10:30Z",
+ "one_line": "AV-i-2 could not be built as specified alone: round15 _load.cjs wraps a stubbed hook's return in {data}, so headerline.cjs only sees the monthly set through data.data, and tabs.harness.cjs counts >=2 data-generation-caption per header (chatter + price), which the removed legacy chatter caption supplied.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "round15/checks/_load.cjs:91-92 hookState.impl[key] result is wrapped as { data: <result> }; headerline.cjs:70 returns the wrapper itself as the set",
+   "tabs.harness.cjs:324,586 tally.captionsSecurityMode >= 2 * n; first run after the edit: CHECKS-WRONG-WAY generation_captions_present, I2 BOUND 3 of 4",
+   "resolved in portal f049ec3c: collectedChatterWords reads through a wrapped { data }; the chatter span keeps data-generation-caption/-detail of the chatter axis (data attributes only, no visible legacy text)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "Replace the chatter GenerationCaption with the monthly read; no harness may change; AC1 3 of 3 and AC3 4 of 4 green.",
+ "world_is": "A plain k-of-n span fails headerline arm 1 (wrapper shape) and tabs.harness (caption count); the span carries the chatter generation as data attributes and unwraps a stub-shaped data."
 }
 ]
 ```
