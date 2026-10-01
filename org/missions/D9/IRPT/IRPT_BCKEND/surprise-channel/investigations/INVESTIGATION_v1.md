@@ -14388,3 +14388,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "A re-typing that arrives later for another account will stop the chain at step 33 again; that is the guard working, and it is a new row and a new read, never an extension of these excusals."
 }
 ```
+
+## IRPT_BCKEND-S257 -- The Inflection holdings-producer function and schedule declared in Terraform (IB-er-501, unapplied) fire at 07:30 America/New_York, before the partition that holds the prior day's close lands (13:05Z): under the measured close basis the day they target is not computable at fire time.
+
+```json
+{
+  "id": "IRPT_BCKEND-S257",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T15:02:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The Inflection holdings-producer function and schedule declared in Terraform (IB-er-501, unapplied) fire at 07:30 America/New_York, before the partition that holds the prior day's close lands (13:05Z): under the measured close basis the day they target is not computable at fire time.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the serving packet of batch 63 items 3e and 7 re-times the entry before anything applies it)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf @357f39fdf4 (0.9.0_WK_IRPT_BCKEND~80, 2026-09-29): module.irpt_holdings_performance_inf and aws_scheduler_schedule.irpt_holdings_performance_inf, state ENABLED, cron(30 7 ? * MON-FRI *) America/New_York, input source orion. Its comment reasons from 'the silver for day D lands on day D', which is true of the PARTITION DATE and not of the close it holds.",
+      "live, read 2026-10-01 14:59Z: 224 functions listed, 1 matches holdings-performance (irpt-holdings-performance-lambda, the 49 Financial one); 26 schedules listed, 1 matches (irpt-holdings-performance-daily, source schwab_08335338). The Inflection function and schedule are DESIRED, not APPLIED.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/HOLDINGS_SOURCE_DATE_BASIS_READ_20261001.md: from the partition dated 2026-05-05 a partition dated D holds the close of the trading day before D; today's date=2026-10-01 landed at 13:07:39Z.",
+      "the handler (holdings-performance/handler.py _target_day) computes prev_trading_day(expected_last_trading_day(now)): fired at 11:30Z on trading day T it asks for T-1, whose close is in the partition dated T, not yet landed."
+    ]
+  },
+  "spec_asserts": "IB-er-501's comment: 07:30 America/New_York remains SAFE for Inflection, an enormous margin over the true worst case.",
+  "world_is": "MEASURED: under sources.json 1.2 the fire would find the day-t close absent every trading day and, with link_across_gaps, the NEXT day's fire would link across a close that exists by then -- every Inflection row would become a two-day linked row dated one day late. NOT APPLIED, so nothing does this today. An untargeted apply in the holdings-performance root would create the function and the schedule as declared.",
+  "notes": "The entry belongs after the mirror's fire (13:05Z), or after its second fire once that is released. It is re-timed in the serving packet; until then nobody applies that root untargeted."
+}
+```
