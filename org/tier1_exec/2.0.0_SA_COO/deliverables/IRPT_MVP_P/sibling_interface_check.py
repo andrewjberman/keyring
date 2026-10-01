@@ -45,21 +45,57 @@ class Bundle:
 def _defs(tree):
     """module-level name -> (params, has_varargs, has_kwargs, max_positional) for functions and classes."""
     out = {}
-    for node in tree.body:
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            out[node.name] = _sig(node, drop_self=False)
-        elif isinstance(node, ast.ClassDef):
-            init = next((n for n in node.body if isinstance(n, ast.FunctionDef) and n.name == "__init__"), None)
-            # A class with its OWN __init__ is checked against it, whatever its bases. A class with no own
-            # __init__ inherits one this check cannot see: accept anything.
-            out[node.name] = _sig(init, drop_self=True) if init is not None else None
-        elif isinstance(node, ast.Assign):
-            for target in node.targets:
-                if isinstance(target, ast.Name):
-                    out.setdefault(target.id, None)
-        elif isinstance(node, (ast.Import, ast.ImportFrom)):
-            for alias in node.names:
-                out.setdefault((alias.asname or alias.name).split(".")[0], None)
+
+    def bind(target):
+        # `a = ...`, `a, b = ...`, `[a, b] = ...`, `a: T = ...`, `for a in ...`, `with ... as a`
+        if isinstance(target, ast.Name):
+            out.setdefault(target.id, None)
+        elif isinstance(target, (ast.Tuple, ast.List)):
+            for element in target.elts:
+                bind(element)
+        elif isinstance(target, ast.Starred):
+            bind(target.value)
+
+    def walk(body):
+        # Module-level statements, INCLUDING those nested in if / try / with / for blocks (a name defined under
+        # `if TYPE_CHECKING:` or in a `try:` import fallback is still a module-level name), but never inside a
+        # function or a class body.
+        for node in body:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                out[node.name] = _sig(node, drop_self=False)
+            elif isinstance(node, ast.ClassDef):
+                init = next((n for n in node.body if isinstance(n, ast.FunctionDef) and n.name == "__init__"), None)
+                # A class with its OWN __init__ is checked against it, whatever its bases. A class with no own
+                # __init__ inherits one this check cannot see: accept anything.
+                out[node.name] = _sig(init, drop_self=True) if init is not None else None
+            elif isinstance(node, ast.Assign):
+                for target in node.targets:
+                    bind(target)
+            elif isinstance(node, (ast.AnnAssign, ast.AugAssign)):
+                bind(node.target)
+            elif isinstance(node, (ast.Import, ast.ImportFrom)):
+                for alias in node.names:
+                    out.setdefault((alias.asname or alias.name).split(".")[0], None)
+            elif isinstance(node, (ast.For, ast.AsyncFor)):
+                bind(node.target)
+                walk(node.body)
+                walk(node.orelse)
+            elif isinstance(node, (ast.With, ast.AsyncWith)):
+                for item in node.items:
+                    if item.optional_vars is not None:
+                        bind(item.optional_vars)
+                walk(node.body)
+            elif isinstance(node, ast.If):
+                walk(node.body)
+                walk(node.orelse)
+            elif isinstance(node, ast.Try):
+                walk(node.body)
+                for handler in node.handlers:
+                    walk(handler.body)
+                walk(node.orelse)
+                walk(node.finalbody)
+
+    walk(tree.body)
     return out
 
 
