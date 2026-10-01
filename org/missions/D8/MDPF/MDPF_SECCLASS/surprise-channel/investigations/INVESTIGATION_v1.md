@@ -976,3 +976,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not measured: the Black Diamond gold readers (C_06, D_03, D_04), which read the same table through their own library. The counts are from builds made before the CEMIX row; the post-row build is leg R of ledger secclass-cemix-canonical-row-m-20261001."
 }
 ```
+
+
+## MDPF_SECCLASS-S8 -- two real-estate funds of one kind sit in two classes: VNQ (seed) alternatives, REET (scheduled) equity
+
+```json
+{
+  "id": "MDPF_SECCLASS-S8",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-01T11:10:00Z",
+  "one_line": "The canonical table classes real-estate funds two ways: VNQ and VNQI are seed rows reading alternatives / Real Estate (and International Real Estate), while REET, the iShares Global REIT ETF, is a scheduled row reading equity / Global. The two model rows written today, USRT and CSRSX, follow the seed row (alternatives / Real Estate), so REET is now the one REIT fund in the table that reads equity.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "batch-get-item on etf-classifications, 2026-10-01 09:5xZ: VNQ alternatives / Real Estate (seed, fund); VNQI alternatives / International Real Estate (seed, fund); REET equity / Global (scheduled, no instrument_kind, no name). 1.0.0_SA_CTO re-read the same rows at 10:29Z (CTO half on MODEL_ROWS addendum 2 @000b55fc4b).",
+      "The scheduled row's class comes from the bd-securities input the scheduled path copies; the seed rows are the product decision recorded in the seed source (etf_classification.py: 'VNQ': 'alternatives').",
+      "The same split holds for single REIT stocks: AMT and PLD are scheduled rows reading equity / US Large Cap, which is why the model's answer for O (Realty Income, alternatives) was withheld (addendum 2, set c).",
+      "CTO half, item 3: 'REET's scheduled row disagrees with the seed row for its own kind of fund; that is one row for the round (owner 2.0.0_SA_COO~M), not part of this act.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C-WRITER: seed always wins; a scheduled row lands only where no row exists and copies a class that is already in the canonical vocabulary. Nothing in the contract says two funds of one kind must share a class.",
+  "world_is": "A person reading the Holdings tab sees a US REIT ETF under Alternatives and a global REIT ETF under Equity. The remedy is one seed row for REET (seed always wins), which moves a served class and so needs its own half; whether single REIT stocks (AMT, PLD, O) are equity or alternatives is a product decision the seed source does not record.",
+  "notes": "Not measured: who holds REET and for how much. A census of scheduled rows whose fund kind has a seed peer in another class would bound the whole set; this row names the one pair found."
+}
+```
