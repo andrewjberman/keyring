@@ -95,3 +95,4 @@ FAIL (no tests).
 <round>27</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
