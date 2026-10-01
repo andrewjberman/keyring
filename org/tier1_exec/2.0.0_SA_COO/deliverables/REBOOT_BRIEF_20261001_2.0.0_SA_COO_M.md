@@ -22,8 +22,8 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 - Cottonwood re-point, the carrier: `B_00` now copies silver's `cusip` and `cash_equivalent` into Cottonwood's gold positions
   (they carry neither today; silver has both). Branch `coo-m-cot-carrier` @dda373cbd3 ONLY, with its test (fails on the old
   B_00). It is reverted on `coo-m-r30` (@1c1d2a02c2) so it cannot ride the split-account merge; `coo-m-r30` equals the signed
-  head cab9bf875d (0 files differ). Today-by-tomorrow table measured: `MDPF_SECCLASS_M/COT_REPOINT_TODAY_BY_TOMORROW_20261001.md` @e0f8d95bd8. ONE CALL to the CTO
-  (16:59Z): C_06's five-class mix cannot hold commodities, structured or unclassified. The callers' rule waits on that ruling.
+  head cab9bf875d (0 files differ). Today-by-tomorrow table measured: `MDPF_SECCLASS_M/COT_REPOINT_TODAY_BY_TOMORROW_20261001.md` @e0f8d95bd8. RULED (CTO batch 99,
+  msg 103919): C_06's mix carries commodities, structured and unclassified as their own classes; nothing folded, no client skipped.
 - Cottonwood re-point: ruled by CTO batch 93 (cash from the feed's flag as class `cash`; a no-ticker CUSIP is a table row;
   no CUSIP is unclassified). Packet not started; it needs the "today's rule by tomorrow's class" table (batch 93 item 4).
 - Holdings publication of 14:18Z read: CEMIX ledger CLOSED; model-rows leg H closed; classifier-release leg H5 closed.
@@ -47,6 +47,11 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 ## 4. Owed
 - I owe 1.0.0_SA_CTO: the Cottonwood re-point packet (batch 93 item 4).
 - Others owe me: the CTO half on the 19 seed rows (my msg 16:13Z).
+- OWED BY THIS SEAT AFTER THE REBOOT (CTO batch 99 item 3, msg 103919): the Cottonwood re-point packet lists EVERY reader of
+  C_06's output and shows each renders a class it has not seen before (commodities, structured, unclassified), or changes it
+  in the same act; a reader that would silently drop a class blocks the re-point. Build: the callers' rule (cash flag -> cash;
+  ticker row; CUSIP row; else unclassified) on branch coo-m-cot-carrier, C_06 MIX_ASSET_CLASSES gains the three. Black
+  Diamond's C_06 is aligned separately (item 4), not by this packet.
 - SIGNED, BOTH HALVES, TO DEPLOY AFTER THE REBOOT: the split-account packet (branch `coo-m-r30` @cab9bf875d, blob b645c6a3fa)
   and its CTO half `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` @07e4769540
   (msg 103916). Conditions: ROUTE FIRST; the QA fire's reconcile for 49 Financial and Cottonwood is read and QUOTED in the
