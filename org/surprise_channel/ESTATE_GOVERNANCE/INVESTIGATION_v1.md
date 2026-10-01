@@ -823,3 +823,154 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+## S27 -- re-filed from ETFS_POSITIONING-Z-S1 and Z-S2: the Bloomberg daily ETF pull's as-of is holiday-blind and its tripwire cannot fire
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S27",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T13:32Z",
+    "one_line": "RE-FILED from ETFS_POSITIONING-Z-S1 and Z-S2: integrations/bloomberg/pipeline/etf_daily_pull.py still takes its as-of from pandas BDay(-1), which knows weekends and no market holiday, and its tripwire compares that value with the same expression computed again.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CLAUDE.md section 5: one frontier, lib/trading_calendar.py; the pull's exit 60 is documented as 'TRIPWIRE REFUSED -- as-of != BDay(-1)'.",
+    "world_is": "Lines 122-125 at HEAD: `asof = today + BDay(-1)`, `expected = Timestamp.today().normalize() + BDay(-1)`, refuse if they differ. The control can differ from the value only if `today` is not today; it cannot catch a wrong as-of. The file imports no trading calendar. On the first fire after a market holiday the as-of is the closed day. The next exposure is the fire of Friday 2026-11-27 (Thanksgiving, 2026-11-26).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/etf_daily_pull.py:117-125 at HEAD (this seat, 2026-10-01): five BDay lines, no trading_calendar reference",
+        "old rows ETFS_POSITIONING-Z-S1 and Z-S2 (org/surprise_channel/ETFS_POSITIONING/INVESTIGATION_v1.Z.md), graduated in their own rows with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a finished project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not exercised: a run on a post-holiday date. What a closed-day as-of does downstream (a prefix dated on a closed day, a gold step keyed on it) was not traced."
+  }
+]
+```
+
+## S28 -- re-filed from ETFS_INGEST-Z-S10: a live scheduled rule with no Terraform
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S28",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T13:32Z",
+    "one_line": "RE-FILED from ETFS_INGEST-Z-S10: rule opal-assets-silver-etf-sweep-daily is ENABLED at cron(30 23 * * ? *) and the name appears in no .tf file under infra/aws.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "Schedules are declared in Terraform; a live resource with no declaration is drift nobody's plan can see.",
+    "world_is": "`events list-rules` returns the rule ENABLED today. A search of every tracked .tf file under infra/aws for the rule's name returns 0 files.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "events list-rules filtered on 'etf' (this seat, 2026-10-01 12:36Z); a token read of the rule name over tracked .tf files (0 hits)",
+        "old row ETFS_INGEST-Z-S10 (org/surprise_channel/ETFS_INGEST/INVESTIGATION_v1.Z.md), graduated in its own row with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a finished project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The search is by literal name; a rule built from an interpolated name would be missed. Not read: the rule's target."
+  }
+]
+```
+
+## S29 -- re-filed from ETFS_INGEST-Z-S27: the served ETF payload cannot say whether a missing value is absent or failed
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S29",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T13:32Z",
+    "one_line": "RE-FILED from ETFS_INGEST-Z-S27: platinum/etfs/positioning_data.json still carries no field that distinguishes 'this security has no such value' from 'the fetch failed', so a correct null and a failure render the same.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CLAUDE.md section 4: a value must carry its claim in a field a consumer can reject on (measured, inferred, held, absent).",
+    "world_is": "The served object (147,629 bytes, written 2026-10-01T13:01:31Z) has top-level keys data_as_of, data_as_of_spread, data_date, generated_at, note and portfolios; its text holds 0 occurrences of a claim, fetch-status or unavailable token. The old row records that this cost a false defect report on the first smoke test.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3 cp of the served object and a token census (this seat, 2026-10-01 13:3xZ)",
+        "old row ETFS_INGEST-Z-S27, graduated in its own row with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a finished project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not measured: how many nulls the payload carries today."
+  }
+]
+```
+
+## S30 -- re-filed from ETFS_INGEST-Z-S23 and Z-S17: two instrument facts a seat cannot re-derive
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S30",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T13:32Z",
+    "one_line": "RE-FILED from ETFS_INGEST-Z-S23 and Z-S17: (1) opal-data-portal-v2 expires noncurrent object versions after 14 days, so 'the overwritten bytes are recoverable' is true for two weeks only; (2) comp-closure compares package members by raw bytes, so a correct deploy with different line endings reads as divergent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "spec_asserts": "CLAUDE.md rule 22a carries the instrument traps a seat cannot re-derive at the call site; comp-closure is the estate's code-layer instrument for deployed-versus-built.",
+    "world_is": "(1) `get-bucket-lifecycle-configuration` on opal-data-portal-v2 today: rule expire-noncurrent-versions-14d, Enabled, 14 days. No doctrine line states it. (2) .tools/comp-closure's own header (lines 17-29) says the byte compare is RAW and names the fix (normalise per member and state which comparison was used); the fix is not in the tool.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api get-bucket-lifecycle-configuration (this seat, 2026-10-01 13:3xZ)",
+        ".tools/comp-closure:17-29 at HEAD",
+        "old rows ETFS_INGEST-Z-S23 and Z-S17, graduated in their own rows with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a finished project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 0.0.0_AB_MSTR per batch 85's reading that fabric-tool rows are that seat's. Two remedies that do not move together: one doctrine line, one tool change."
+  }
+]
+```
+
+## S31 -- re-filed from ETFS_INGEST-Z-S5: a failed constituents leg of the Bloomberg pull summons nobody
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S31",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T13:32Z",
+    "one_line": "RE-FILED from ETFS_INGEST-Z-S5: the old row found the morning freshness check reading only the Models artifact, so a failure of the ETF constituents leg is seen by nobody, and that leg's source is current-day-only, which makes a missed day permanent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "integrations/bloomberg/READ_HERE.md: the derived layer is current-day-only.",
+    "world_is": "Not re-measured today beyond this: the Bloomberg landing prefixes under opal-data-etfs/bbg/ run to 2026-09-30 (29 dated prefixes), so no day is missing at the frontier now. Whether any check reads the constituents leg was not read. Under the standing moratorium nothing is built here; this is an input to the alarm work the CTO named (GLOBALALARM), like row S21.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-objects-v2 with a delimiter on bbg/ (this seat, 2026-10-01 13:3xZ): 29 prefixes, last 2026-09-30",
+        "old row ETFS_INGEST-Z-S5, graduated in its own row with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a finished project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Carried on the old row's measurement. Standing ARMED because a single missed day cannot be recovered."
+  }
+]
+```
