@@ -1,0 +1,574 @@
+[
+ {
+  "member": "_authz/enforce.py",
+  "running_equals": "e9311289b1",
+  "commits_ahead": [
+   [
+    "755c13bc19",
+    "fix(IRPT_BCKEND export B1, 2.0.0_SA_COO~P): an Opal user (OPAL_GLOBAL, no advisor id) can export and be render"
+   ],
+   [
+    "fe854ce6f1",
+    "fix(IRPT_BCKEND C-S219, 2.0.0_SA_COO~P): a RENDER_DELEGATE reads only the path ids its bundle pins, and the se"
+   ]
+  ]
+ },
+ {
+  "member": "_authz/loaders.py",
+  "running_equals": "7925afb870",
+  "commits_ahead": [
+   [
+    "8e9ed1b539",
+    "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VENDOR, D9) "
+   ],
+   [
+    "f13d9e9222",
+    "integrate(0.0.0_AB_MSTR): transcripts STEP 3 -- scopes.json transcripts bucket_provisioned -> true + 11 CLOUD "
+   ],
+   [
+    "73896b6c42",
+    "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system teams) from c"
+   ]
+  ]
+ },
+ {
+  "member": "_authz/routetable.py",
+  "running_equals": "4356085122",
+  "commits_ahead": [
+   [
+    "dd2ae95233",
+    "fix(IRPT_BCKEND, 2.0.0_SA_COO~P): the route census no longer leaves other functions' zip directories on sys.pa"
+   ],
+   [
+    "1fcefdad74",
+    "fix(IRPT_BCKEND~P, 2.0.0_SA_COO~P): the bypass census resolves and guards all 17 published routes -- installed"
+   ]
+  ]
+ },
+ {
+  "member": "_authz/served.py",
+  "running_equals": "4fffe13f01",
+  "commits_ahead": [
+   [
+    "f6c6b56f40",
+    "amend-fix(IRPT_BCKEND TO-IB-pr-271 amendment 1, 0.9.0_WK_IRPT_BCKEND~98): a service subject with NO profile ro"
+   ],
+   [
+    "c716489be8",
+    "feat(IRPT_BCKEND TO-IB-pr-271, 0.9.0_WK_IRPT_BCKEND~98): served boundary refuses a SERVICE subject's selected "
+   ],
+   [
+    "83673d731c",
+    "feat(IRPT_BCKEND export B1 service, 2.0.0_SA_COO~P): the served submit-export flow -- a retained Performance r"
+   ],
+   [
+    "bd52efb246",
+    "feat(IRPT_BCKEND export B0 part 2, 2.0.0_SA_COO~P): two of the three read functions (performance, status) inst"
+   ],
+   [
+    "fe854ce6f1",
+    "fix(IRPT_BCKEND C-S219, 2.0.0_SA_COO~P): a RENDER_DELEGATE reads only the path ids its bundle pins, and the se"
+   ],
+   [
+    "1fcefdad74",
+    "fix(IRPT_BCKEND~P, 2.0.0_SA_COO~P): the bypass census resolves and guards all 17 published routes -- installed"
+   ]
+  ]
+ },
+ {
+  "member": "_contracts/DirectoryEntry.schema.json",
+  "running_equals": "33351469c2",
+  "commits_ahead": [
+   [
+    "01b2b72366",
+    "issue(IRPT_BCKEND round 23 ~P, 0.9.0_WK_IRPT_BCKEND~79): TO-IB-pr-231 -- the lambda-tree DirectoryEntry contra"
+   ]
+  ]
+ },
+ {
+  "member": "_contracts/HoldingsSnapshot.schema.json",
+  "running_equals": "71329fd469",
+  "commits_ahead": [
+   [
+    "a4af3989c7",
+    "build(IRPT_BCKEND.TO-IB-pr-212, 0.9.0_WK_IRPT_BCKEND~68): re-pin HoldingsSnapshot.schema.json to a69fe8e33e (C"
+   ],
+   [
+    "31f4eafc05",
+    "contract(2.0.0_SA_COO~P, irpt v1 HoldingsSnapshot): asset_class admits `structured` and `commodities` (1 of 2:"
+   ],
+   [
+    "7a0384de18",
+    "contract(2.0.0_SA_COO~P, irpt v1 HoldingsSnapshot): asset_class admits `other` -- held-away and personal asset"
+   ],
+   [
+    "d91cc57e77",
+    "contract(2.0.0_SA_COO~P, irpt HoldingsSnapshot): asset_class also admits `cash` in both schema copies (M 10091"
+   ],
+   [
+    "767ac83009",
+    "contract(2.0.0_SA_COO~P, irpt HoldingsSnapshot): both schema copies admit M's four optional members -- asset_c"
+   ]
+  ]
+ },
+ {
+  "member": "_contracts/PerformanceReport.schema.json",
+  "running_equals": "cf11337d2e",
+  "commits_ahead": [
+   [
+    "78eeb223f8",
+    "contract(2.0.0_SA_COO~P, irpt performance): PerformanceReport lineage.provider gains OPAL_HOLDINGS in both cop"
+   ],
+   [
+    "94cf4cd61e",
+    "feat(2.0.0_SA_COO~P, irpt performance): 49 Financial Performance from Opal's own GIPS engine (twr_daily) shape"
+   ]
+  ]
+ },
+ {
+  "member": "_scope/canonical_profile_reads.py",
+  "running_equals": "185dfb3e7f",
+  "commits_ahead": [
+   [
+    "2704705672",
+    "feat(IRPT_BCKEND TO-IB-yr-293, 0.9.0_WK_IRPT_BCKEND~96): decide() enforces allowedFirmIds -- ACTOR_FIRM_NOT_AL"
+   ]
+  ]
+ },
+ {
+  "member": "data/firm_registry.json",
+  "running_equals": "39cbad4214",
+  "commits_ahead": [
+   [
+    "8e9ed1b539",
+    "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VENDOR, D9) "
+   ],
+   [
+    "f13d9e9222",
+    "integrate(0.0.0_AB_MSTR): transcripts STEP 3 -- scopes.json transcripts bucket_provisioned -> true + 11 CLOUD "
+   ],
+   [
+    "73896b6c42",
+    "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system teams) from c"
+   ]
+  ]
+ },
+ {
+  "member": "docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json",
+  "running_equals": "5add22ca9f",
+  "commits_ahead": [
+   [
+    "aa21133b67",
+    "contract(2.0.0_SA_COO~P, irpt v1 upload, onto CLOUD): AnalysisUploadRequest admits the template lane and Analy"
+   ]
+  ]
+ },
+ {
+  "member": "docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json",
+  "running_equals": "5add22ca9f",
+  "commits_ahead": [
+   [
+    "aa21133b67",
+    "contract(2.0.0_SA_COO~P, irpt v1 upload, onto CLOUD): AnalysisUploadRequest admits the template lane and Analy"
+   ]
+  ]
+ },
+ {
+  "member": "docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json",
+  "running_equals": "173349a652",
+  "commits_ahead": [
+   [
+    "4ecbaca410",
+    "build(IRPT_BCKEND.TO-IB-m22-221, 0.9.0_WK_IRPT_BCKEND~75): AD-10 -- every DirectoryEntry carries each account'"
+   ]
+  ]
+ },
+ {
+  "member": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+  "running_equals": "56887e81f1",
+  "commits_ahead": [
+   [
+    "cc99dea562",
+    "contract(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): HoldingsSnapshot -- the served blocks cover ACTUAL posit"
+   ],
+   [
+    "a72904d984",
+    "fix(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): the aggregates leave the producer -- a firm-wide fold cannot "
+   ],
+   [
+    "1f5d1049c3",
+    "feat(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): Holdings serves per-security aggregates and per-class totals"
+   ],
+   [
+    "1206612f63",
+    "build(IRPT_BCKEND.TO-IB-m20-203, 0.9.0_WK_IRPT_BCKEND~44): Holdings source vendor keys (UIC-14) + amendment 1 "
+   ],
+   [
+    "e705775791",
+    "build(IRPT_BCKEND.TO-IB-m20-202, 0.9.0_WK_IRPT_BCKEND~44): Holdings L0 CATEGORY node shape -- one node per acc"
+   ],
+   [
+    "31f4eafc05",
+    "contract(2.0.0_SA_COO~P, irpt v1 HoldingsSnapshot): asset_class admits `structured` and `commodities` (1 of 2:"
+   ],
+   [
+    "3d5a590ad0",
+    "contract(2.0.0_SA_COO~P, irpt v1 HoldingsSnapshot): asset_class admits `other` -- held-away and personal asset"
+   ],
+   [
+    "a73241ef66",
+    "contract(2.0.0_SA_COO~P, irpt v1 HoldingsSnapshot, onto CLOUD): asset_class also admits `cash` in both schema "
+   ],
+   [
+    "7251000daa",
+    "contract(2.0.0_SA_COO~P, irpt v1 HoldingsSnapshot, onto CLOUD): M's four optional members admitted (asset_clas"
+   ]
+  ]
+ },
+ {
+  "member": "docs/contracts/investor-reporting/v1/PerformanceReport.schema.json",
+  "running_equals": "9e1bc3a751",
+  "commits_ahead": [
+   [
+    "78eeb223f8",
+    "contract(2.0.0_SA_COO~P, irpt performance): PerformanceReport lineage.provider gains OPAL_HOLDINGS in both cop"
+   ],
+   [
+    "69cac32dce",
+    "contract(2.0.0_SA_COO~P, irpt v1 performance, onto CLOUD): PerformanceReport lineage.provider gains OPAL_ENGIN"
+   ]
+  ]
+ },
+ {
+  "member": "docs/contracts/investor-reporting/v1/responses/export-receipt.response.schema.json",
+  "running_equals": "7915bc9b2c",
+  "commits_ahead": [
+   [
+    "6169bb59b6",
+    "contract(irpt v1, 1.0.0_SA_CTO): R11 wording owed by the CVO's signed half (@ab453f59ed) -- export-receipt's t"
+   ],
+   [
+    "dd78bb155f",
+    "contract(irpt v1, 1.0.0_SA_CTO): ruling R11 -- export-receipt.response: data optional while status.state is QU"
+   ]
+  ]
+ },
+ {
+  "member": "docs/contracts/investor-reporting/v1/responses/submit-export.response.schema.json",
+  "running_equals": "7915bc9b2c",
+  "commits_ahead": [
+   [
+    "f6fd60f4fd",
+    "contract(irpt v1, 2.0.0_SA_COO~P): submit-export's response may omit `data` while the export is QUEUED or RUNN"
+   ]
+  ]
+ },
+ {
+  "member": "docs/contracts/investor-reporting/v1/routes.json",
+  "running_equals": "64f05e3424",
+  "commits_ahead": [
+   [
+    "3a16cc442b",
+    "reland(IRPT_BCKEND ~Y FAST items 2 and 3, 2.0.0_SA_COO~Y): merge 1ee1c56e9b carried 1 of the branch's 15 files"
+   ],
+   [
+    "53bbae9c4f",
+    "IRPT_BCKEND TO-IB-yr-261: register and serve the comparison-catalogue GET (AC1, AC2 pass; AC3 refused, W89-S1)"
+   ]
+  ]
+ },
+ {
+  "member": "infra/logic/registry/exemptions.json",
+  "running_equals": "845343f925",
+  "commits_ahead": [
+   [
+    "8b4c15c6ba",
+    "registry(4.0.0_SA_CRO): admit irpt-holdings-role by exact name on the three firm buckets' fence"
+   ]
+  ]
+ },
+ {
+  "member": "infra/logic/registry/remediations.json",
+  "running_equals": "3ea3fec204",
+  "commits_ahead": [
+   [
+    "fd3b3b7bf2",
+    "registry(4.0.0_SA_CRO): ETFS_CANON remediation row + tension map item 8, applying the CTO relay patch unmodifi"
+   ]
+  ]
+ },
+ {
+  "member": "infra/logic/registry/scopes.json",
+  "running_equals": "14b52ca13a",
+  "commits_ahead": [
+   [
+    "0146e0c954",
+    "merge(0.0.0_AB_MSTR): origin/CLOUD 33c1d096a3 (site Z pushes, 1460 commits) into laptop CLOUD -- Andrew-direct"
+   ],
+   [
+    "d451070fb1",
+    "registry(4.0.0_SA_CRO~Z, rivalfunds): etfs scope to GENERAL tenancy + system key rivalfunds -- ETF research ho"
+   ],
+   [
+    "f13d9e9222",
+    "integrate(0.0.0_AB_MSTR): transcripts STEP 3 -- scopes.json transcripts bucket_provisioned -> true + 11 CLOUD "
+   ],
+   [
+    "73896b6c42",
+    "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system teams) from c"
+   ],
+   [
+    "6dcd6df254",
+    "registry(4.0.0_SA_CRO, PLATFORM_LOGIC_DOCS): the cottonwood alias note reads the measured bucket state -- opal"
+   ],
+   [
+    "de56cfd02f",
+    "registry(4.0.0_SA_CRO, PLATFORM_LOGIC_DOCS): scopes.json MASTER row z09 -> cottonwood, parallel to 08335338 ->"
+   ]
+  ]
+ },
+ {
+  "member": "infra/logic/registry/systems.json",
+  "running_equals": "6c07797a9c",
+  "commits_ahead": [
+   [
+    "224058ea3f",
+    "registry(NFRA_TRNSPT, 2.0.0_SA_COO~T): display_name on the outlook and sharepoint VENDOR rows -- they landed w"
+   ],
+   [
+    "fed423d013",
+    "drain: merge wk-NFRA_TRNSPT-3 (row gate clean on the merged index)"
+   ],
+   [
+    "cd2ffcca99",
+    "register(PLATFORM_LOGIC_DOCS, 4.0.0_SA_CRO): systems.json -- display_name on the 23 VENDOR rows plus the _abou"
+   ],
+   [
+    "8e9ed1b539",
+    "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VENDOR, D9) "
+   ],
+   [
+    "d451070fb1",
+    "registry(4.0.0_SA_CRO~Z, rivalfunds): etfs scope to GENERAL tenancy + system key rivalfunds -- ETF research ho"
+   ],
+   [
+    "73896b6c42",
+    "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system teams) from c"
+   ],
+   [
+    "03c7f7f593",
+    "build(NFRA_MCPORTAL MP-t-2, 0.9.0_WK_NFRA_MCPORTAL~3): the grant-writer Lambda -- name('mcportal', None, 'gran"
+   ],
+   [
+    "ec4e000709",
+    "Merge remote-tracking branch 'origin/CLOUD' into SITEZ"
+   ]
+  ]
+ },
+ {
+  "member": "intake/uploads.py",
+  "running_equals": "9efaf2850e",
+  "commits_ahead": [
+   [
+    "6b96d460f6",
+    "fix(0.9.0_WK_IRPT_BCKEND~92): TO-IB-yr-282 -- NEEDS_CORRECTION answer carries the envelope's correction words;"
+   ]
+  ]
+ },
+ {
+  "member": "lib/opal_naming.py",
+  "running_equals": "14b52ca13a",
+  "commits_ahead": [
+   [
+    "b5dc2e63d1",
+    "fix(1.0.0_SA_CTO): a VENDOR row without display_name is a WARN, not a registry refusal -- the refusal from 70c"
+   ],
+   [
+    "70c4aa2e1a",
+    "naming(1.0.0_SA_CTO): VENDOR_DISPLAY_NAMES generated view in lib/opal_naming.py -- a whole-file portal target "
+   ],
+   [
+    "01646908e1",
+    "lib(1.0.0_SA_CTO): FIRM_DISPLAY_NAMES view target for the Investor Reporting portal (DSGN_IRPTV1 IV-e-76, rows"
+   ],
+   [
+    "e8abdf8d81",
+    "lib(NFRA_MCPINDEX.TO-MX-s-11, 1.0.0_SA_CTO~O): the ASSET_DIM_REST_PIN target -- VIEWS row, TARGET_REGISTRY_KEY"
+   ]
+  ]
+ },
+ {
+  "member": "ops/entry.py",
+  "running_equals": "e0f52fa041",
+  "commits_ahead": [
+   [
+    "bd52efb246",
+    "feat(IRPT_BCKEND export B0 part 2, 2.0.0_SA_COO~P): two of the three read functions (performance, status) inst"
+   ]
+  ]
+ },
+ {
+  "member": "ops/owned_report.py",
+  "running_equals": "03de809d50",
+  "commits_ahead": [
+   [
+    "6b96d460f6",
+    "fix(0.9.0_WK_IRPT_BCKEND~92): TO-IB-yr-282 -- NEEDS_CORRECTION answer carries the envelope's correction words;"
+   ]
+  ]
+ },
+ {
+  "member": "ops/prospect_dates.py",
+  "running_equals": "b56b99c06f",
+  "commits_ahead": [
+   [
+    "c296cdff9c",
+    "fix(2.0.0_SA_COO~P, irpt status): prospect status dates read the CSV and one-sheet A/B XLSX templates -- READY"
+   ]
+  ]
+ },
+ {
+  "member": "ops/status.py",
+  "running_equals": "f4f16b283f",
+  "commits_ahead": [
+   [
+    "57ebb7ac6c",
+    "feat(IRPT_BCKEND.TO-IB-yr-241, 0.9.0_WK_IRPT_BCKEND~87): correction words on the status wire -- an enumerated "
+   ]
+  ]
+ },
+ {
+  "member": "reports/generate_installed.py",
+  "running_equals": "a58859baa7",
+  "commits_ahead": [
+   [
+    "4f43b48050",
+    "fast(IRPT_BCKEND~P, 2.0.0_SA_COO~P): land 2.0.0_SA_COO~Y's exact patch for row W88-S2 -- the etf-classificatio"
+   ],
+   [
+    "53bbae9c4f",
+    "IRPT_BCKEND TO-IB-yr-261: register and serve the comparison-catalogue GET (AC1, AC2 pass; AC3 refused, W89-S1)"
+   ],
+   [
+    "2e3d50caac",
+    "fix(2.0.0_SA_COO~P, irpt generate): wire the comparison catalogue port to the packaged templates.json (generat"
+   ],
+   [
+    "19d8f3038c",
+    "feat(IRPT_BCKEND, 2.0.0_SA_COO~P): irpt-ycharts-generate answers an IAM-only import census -- {\"irpt_import_ce"
+   ],
+   [
+    "1fcefdad74",
+    "fix(IRPT_BCKEND~P, 2.0.0_SA_COO~P): the bypass census resolves and guards all 17 published routes -- installed"
+   ]
+  ]
+ },
+ {
+  "member": "reports/status_installed.py",
+  "running_equals": "896680c2de",
+  "commits_ahead": [
+   [
+    "1fcefdad74",
+    "fix(IRPT_BCKEND~P, 2.0.0_SA_COO~P): the bypass census resolves and guards all 17 published routes -- installed"
+   ]
+  ]
+ },
+ {
+  "member": "ycharts-host/ycharts_session.js",
+  "running_equals": "b9d36bc34e",
+  "commits_ahead": [
+   [
+    "4467f36184",
+    "IB-yr-292 (0.9.0_WK_IRPT_BCKEND~95): opt-in HAR recording (contextOptions, YC_RECORD_HAR) and har_scrub.py wit"
+   ]
+  ]
+ },
+ {
+  "member": "ycharts/extract/certify.py",
+  "running_equals": "ad817b55ea",
+  "commits_ahead": [
+   [
+    "b75e571a74",
+    "fast(IRPT_BCKEND ~Y item 2, 2.0.0_SA_COO~Y): certification is handed the request's chosen comparisons and refu"
+   ]
+  ]
+ },
+ {
+  "member": "ycharts/extract/publication.py",
+  "running_equals": "c1fd6c5e52",
+  "commits_ahead": [
+   [
+    "3a16cc442b",
+    "reland(IRPT_BCKEND ~Y FAST items 2 and 3, 2.0.0_SA_COO~Y): merge 1ee1c56e9b carried 1 of the branch's 15 files"
+   ]
+  ]
+ },
+ {
+  "member": "ycharts/generate/current_authority.py",
+  "running_equals": "d3f612d94d",
+  "commits_ahead": [
+   [
+    "2704705672",
+    "feat(IRPT_BCKEND TO-IB-yr-293, 0.9.0_WK_IRPT_BCKEND~96): decide() enforces allowedFirmIds -- ACTOR_FIRM_NOT_AL"
+   ]
+  ]
+ },
+ {
+  "member": "ycharts/generate/entry.py",
+  "running_equals": "b357e0ba8f",
+  "commits_ahead": [
+   [
+    "0ad0e6867d",
+    "fast(IRPT_BCKEND ~Y item 4, 2.0.0_SA_COO~Y): the comparison catalogue gains a real etf-classifications reader;"
+   ],
+   [
+    "53bbae9c4f",
+    "IRPT_BCKEND TO-IB-yr-261: register and serve the comparison-catalogue GET (AC1, AC2 pass; AC3 refused, W89-S1)"
+   ],
+   [
+    "f7ae621369",
+    "feat(IRPT_BCKEND, 0.9.0_WK_IRPT_BCKEND~88): comparison catalogue read module + closed v1 contract; route regis"
+   ]
+  ]
+ },
+ {
+  "member": "ycharts/generate/job.py",
+  "running_equals": "b3fc529601",
+  "commits_ahead": [
+   [
+    "b21aacec70",
+    "IRPT_BCKEND.TO-IB-yr-291: the READY receipt carries the vendor endpoint ledger"
+   ]
+  ]
+ },
+ {
+  "member": "ycharts/generate/publisher.py",
+  "running_equals": "c1fd6c5e52",
+  "commits_ahead": [
+   [
+    "3a16cc442b",
+    "reland(IRPT_BCKEND ~Y FAST items 2 and 3, 2.0.0_SA_COO~Y): merge 1ee1c56e9b carried 1 of the branch's 15 files"
+   ]
+  ]
+ },
+ {
+  "member": "ycharts/generate/resident_worker.py",
+  "running_equals": "7fc1a123f0",
+  "commits_ahead": [
+   [
+    "62535e0fdc",
+    "fast(IRPT_BCKEND ~Y item 1, 2.0.0_SA_COO~Y): a permanent authority refusal ends the job ATTENTION with its own"
+   ]
+  ]
+ },
+ {
+  "member": "ycharts/generate/transport.py",
+  "running_equals": "8576bec142",
+  "commits_ahead": [
+   [
+    "b21aacec70",
+    "IRPT_BCKEND.TO-IB-yr-291: the READY receipt carries the vendor endpoint ledger"
+   ]
+  ]
+ }
+]
