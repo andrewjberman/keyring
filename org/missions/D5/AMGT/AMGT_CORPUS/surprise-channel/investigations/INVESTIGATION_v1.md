@@ -3169,6 +3169,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The dividend keys are mostly zero legitimately (a zero payout, whose unit ZERO_VALUE_UNIT_FROM_BASIS defines from FIELD_BASIS), so the literal rule reclassifies them. build_unit_map.py zero_dominated_counts therefore skips ZERO_DOMINATED_EXEMPT = the ZERO_VALUE_UNIT_FROM_BASIS keys (EQY_DPS, IS_DIV_PER_SHR, BEST_DPS, BEST_DIV_YLD) plus EQY_DVD_YLD_IND (pinned by the round-26 test).",
     "notes": "The exemption set is my reading, not ruled; the issuer may widen, narrow or drop it (one frozenset in build_unit_map.py).",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S74",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-01T04:55:17Z",
+    "one_line": "provenance/validate.py:32 derive_unit_status and render_print.py:208/:289 mark a figure's unit unmeasured only on the prefix 'SEE field_map.json'; the served blocks now carry 'UNRESOLVED-ON-<sec>: ...' (and, after ac-2, 'ZERO-DOMINATED: ...'), which both read as MEASURED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "validate.py:23 and render_print.py:83: UNRESOLVED_UNIT_PREFIX = \"SEE field_map.json\"; validate.py:32 returns MEASURED for any other non-empty unit.",
+        "S3 derived/model_block/BBSE3_BZ_Equity/20260930T231715Z/model_block.json CAPITAL_EXPEND unit 'UNRESOLVED-ON-BBSE3 BZ Equity: sampled magnitude 0.172 does not discriminate absolute vs millions' (read 2026-10-01).",
+        "scoped_amgt.py:1261 imports only apply_corrected_price_overlay / load_corrected_price_overlay from render_print, so the served /thesis path does not call either predicate (INERT on the served path)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A unit the producer did not measure (UNRESOLVED, ZERO-DOMINATED) is classified unmeasured by every reader that classifies units.",
+    "world_is": "The print/provenance predicates key on a retired pointer prefix, so the producer's current not-measured labels classify as MEASURED there. ac-2 does not move this: the BBSE3 unit reads MEASURED there before and after.",
+    "notes": "Found while reading ac-2's served reach (NEVER_WIDEN_ROUND27_AC2_SERVED_ACT.md). Not a round-27 cell; a candidate enrichment item for the round-27 analysis.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
