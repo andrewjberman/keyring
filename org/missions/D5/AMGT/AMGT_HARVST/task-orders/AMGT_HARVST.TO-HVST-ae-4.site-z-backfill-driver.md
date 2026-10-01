@@ -119,6 +119,31 @@ interface). **Never in phase A:** a collector run, a publisher request, an S3 wr
 4. **The full 89-name run is the issuer's** direct act, continued from the SAME checkpoint as a long-running process
    after this order closes (it runs for hours; a worker does not hold it).
 
+## AMENDMENT 2 -- 2026-10-01 ~08:1xZ, the issuer, on the phase-B report (rows Z-W92-S1, S2, S3)
+
+1. **Z-W92-S1 FIXED by the issuer** @`254ea37cf6`: the sa silver extractor prunes empty structs (`themes: {}`), so the
+   229 ASML rows pending in the collector's outbox now serialize.
+2. **Z-W92-S3 RULED:** Ctrl-C cannot reach the driver from a tool shell. Add `--stop-file PATH`: checked BETWEEN jobs;
+   when the file exists the driver ends after the current job, records `"stopped_by_operator": true` with the time in
+   the checkpoint, and deletes nothing. Plant test: a stop file present after job 2 ends the run with exactly 2 done.
+3. **Z-W92-S2 RULED:** `error` stays a STOP status for the RUN (round-31 analysis ruling 2): within one invocation the
+   leg ends. Add `--clear-stop PUB`: on a NEW invocation, when the collector's own cooldown for PUB has expired (read the
+   cooldown table; if still cooling, print it and exit 0 without a job), the recorded stop is cleared, appended to the
+   checkpoint as `"cleared_stops": [{"publisher", "status", "at"}]`, and the leg resumes from its next undone pair.
+   Never a retry inside the run that stopped. Plant test: a stopped publisher under cooldown is not resumed; after the
+   cooldown it resumes from the next undone pair and the clearing is recorded.
+4. **First, re-land your phase-B record.** Merge `68c5e452b3` committed without the 9 files of `a6c83d4256`
+   (safe-merge exit 5), and rows W92-S1..S3 can land only from your own index. In your worktree: create branch
+   `wk-AMGT_HARVST-92b` from CLOUD, `git checkout a6c83d4256 -- <the 9 files>`, commit them unchanged under your serial.
+   Then continue on that branch.
+5. **Then phase B, in order:**
+   1. `upload-harvest` for the pending sa rows from the SAME runtime root your run used (cap = the printed pending
+      count); every pending row must reach silver (0 left pending, 0 errors).
+   2. `--clear-stop sa` run over the first 6 names (same checkpoint), with `--stop-file` created after the 3rd done pair
+      (your own watcher may create it); then re-run the same command without the stop file: it skips the done pairs and
+      runs the rest (FWD-15 b).
+   3. AC1, AC2, AC3; update the instance; flip `<status>` to `complete` when all three pass.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:**
