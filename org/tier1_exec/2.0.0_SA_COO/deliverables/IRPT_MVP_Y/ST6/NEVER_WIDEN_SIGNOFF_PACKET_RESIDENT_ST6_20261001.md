@@ -157,4 +157,38 @@ The blast radius is section 4, each branch read from `resident_worker.py`, `curr
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01 05:5xZ, bound to this packet's pre-signature blob `5414968301` (@0eef7da885). Signed on the blast radius of
+section 4, the apply protocol of section 5 and the rollback of section 6. The three things the ruling did not name are accepted:
+the capture library moves with the package (1); REQ-3a1b73a8 is redriven only if its actor's row is absent (2); the install may
+precede batch 61 item 2(b), since no job is queued and the hop-7 job still waits on (a), (b) and (c) (3).
+
+**Measured by this seat at signing (05:54Z-05:56Z), from BYTES (rulings batch 62 item 6):**
+
+- The tar, downloaded by S3 version `G6ZEskNLZl_v7QG_aZ9IfxOPrFVmDd3J`: 753,160 bytes, sha256 equal to `3eb86dd9...864b2`. 244 file
+  members counted here against the packet's 243; the difference was not chased (the packet's G1 counts the lines of SHA256SUMS,
+  which is itself a member).
+- The authority closure and the library, 6 of 6 byte-equal to `git show 36dfa80058:<path>` and carrying the named markers:
+  `current_authority.py` (`211e1c15af68bdb4..`, `allowedFirmIds` 5, `ACTOR_FIRM_NOT_ALLOWED` 2); `_scope/canonical_profile_reads.py`
+  (`0ec4a717f2aa..`, `allowedFirmIds` 2 -- the reader vintage whose absence broke IB-pr-275); `resident_worker.py`
+  (`PERMANENT_AUTHORITY_REFUSALS` 2); `_scope/maintained_sources.py`; `reports/resident_installed.py`;
+  `ycharts-host/ycharts_session.js` (`0fec0ca910ee5fb1..`).
+- The library's one commit, 4467f36184, read as a diff: `contextOptions()` returns the same two options unless `YC_RECORD_HAR=1`.
+  ONE THING THE PACKET UNDERSTATES: the default path also gains an explicit `ctx.close()` before the browser closes, at three
+  sites. That is a lifecycle change on the hop that is failing, small and best-effort, and it is unproven live like the rest.
+- `36dfa80058` is an ancestor of CLOUD HEAD. NOT re-run here: the gate tool, the four suites, the host reads, the profile scan.
+
+**Conditions (each a stop):**
+
+1. Section 5 as written, in its order; the script's own refusals and rollbacks are the act's stops.
+2. The V1 read-back prints the running `current_authority.py` digest `211e1c15af68bdb4..` and the host library `0fec0ca9..`; this
+   seat reads both prints. Row S244's resident half disarms on that read. Row S238 does not: the API half holds on 1 of 3.
+3. R1 is one message at a time, the branch written down before each move. REQ-3a1b73a8 stays in the dead-letter queue if its actor's
+   row exists, and the question returns here.
+4. No vendor call in this act. The first capture on library `0fec0ca9` is the hop-7 job; its ledger leg names the library and the
+   three added `ctx.close()` sites, so a changed failure signature is not read as the old one.
+5. Any deviation not named in this file stops the window for a new half.
+
+**Carried to the next resident build, not a stop here:** PRD v0.22 ruling 21. At this pin `decide()` treats an absent
+`allowedFirmIds` as unrestricted for every actor. That is right for a human (51 of 52 profile rows carry none) and wrong for a
+SERVICE actor. The one service principal carries the attribute, and a whole tree at one commit cannot ship a stale reader, so st6 is
+safe to install; the next build refuses a `service` actor whose row has no `allowedFirmIds`.
