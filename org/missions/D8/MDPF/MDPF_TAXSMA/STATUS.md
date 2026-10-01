@@ -1,8 +1,8 @@
 # MDPF_TAXSMA -- status (FAST lease, /closer-drive)
 
 Seat `4.0.0_SA_CRO` (CLAUDE). Contract `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` version 0.6.0 (amendment 3). Reviewer `3.0.0_SA_CVO`.
-As of 2026-10-01T09:4xZ. **The Tax-off backend release (TX-r-1) is applied; its ledger is OPEN with one leg left (V2, the 13:50Z publisher run). Both functions re-read 09:2xZ: code hashes unchanged, Tax DISABLED, switch OFF.** Lease: FAST MDPF_TAXSMA seat 4.0.0_SA_CRO, re-armed 09:19Z on NAMED FILES instead of all of `data/mdpf` (CTO batch 75 item 6; `org/mcp/drive-mode.log`), laptop-only surfaces (the Gateway surfaces are site Z's).
-Order faces: 8 brought terminal at 09:3xZ (`superseded`, each with its artifact and a read: TX-i-1, i-2, i-3, k-1, u-1, u-2, c-1, c-3; CTO batch 74 item 4). TX-r-1 follows when leg V2 closes. Still open: TX-c-2, o-1, r-2, r-3, v-2, v-3. The five BLOCKING or ARMED rows are read in `deliverables/4.0.0_SA_CRO/ARMED_ROWS_READ_20261001.md`.
+As of 2026-10-01T15:1xZ. **TX-r-1 is CLOSED (ledger @62301c017b, leg V2 closed on the CTO's batch 91). The Gold function has since moved to pin 8ade880fad (15:00Z): it now carries the three Tax candidates (Tax still DISABLED) and MDPF_HEALGAP's Cottonwood catch-up. That deploy's ledger `mdpf-gold-healgap-hookup-20261001` is OPEN on its leg V2, the 2026-10-02 13:30Z run. The publisher still runs e8994f23af, switch OFF.** Lease: FAST MDPF_TAXSMA seat 4.0.0_SA_CRO, re-armed 09:19Z on NAMED FILES instead of all of `data/mdpf` (CTO batch 75 item 6; `org/mcp/drive-mode.log`), laptop-only surfaces (the Gateway surfaces are site Z's).
+Order faces: 9 of the 9 world-done orders are terminal (`superseded`, each with its artifact and a read: TX-i-1, i-2, i-3, k-1, u-1, u-2, c-1, c-3, r-1; CTO batch 74 item 4). Still open: TX-c-2, o-1, r-2, r-3, v-2, v-3. The five BLOCKING or ARMED rows are read in `deliverables/4.0.0_SA_CRO/ARMED_ROWS_READ_20261001.md`.
 Authority: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_142xZ_TAXSMA_CLOSER_DRIVE_GO_RIA_COLUMN_WORKBOOK_FALLBACK.md` @d55b7066ba;
 priority `ANDREW_DIRECT_20260930_202xZ_TAXSMA_PRIORITY_THROUGH_MDPF_ALONGSIDE_DROPPED.md` @733b28e890 (Tax SMA through MDPF to every relevant surface);
 placement `ANDREW_DIRECT_20261001_033xZ_TAXSMA_TAX_PORTFOLIOS_ARE_SMAS_NOT_MODELS_SMA_CATEGORY.md` @fc06bf47d6 (the Tax portfolios are SMAs, not models; SMA category).
@@ -12,11 +12,11 @@ placement `ANDREW_DIRECT_20261001_033xZ_TAXSMA_TAX_PORTFOLIOS_ARE_SMAS_NOT_MODEL
 | What | Value |
 |---|---|
 | Working branch / worktree | `wk-mdpf_taxsma-cro` at `C:/Users/AndrewBerman/Desktop/wk-taxsma-cro`, fully merged, nothing uncommitted |
-| Workspace candidate pin | e8994f23af is what is DEPLOYED (both packages are built from it). Three later candidates: 1e5e13d223 (Cottonwood's Tax into Global), 46d04eb7b6 (Cottonwood's tree shows the Tax leaf under SMA), dfe374adfb (the valuation-date defect fixed). None is in either deployed package |
+| Workspace candidate pin | The Gold function is DEPLOYED at 8ade880fad, which contains 1e5e13d223 (Cottonwood's Tax into Global), 46d04eb7b6 (Cottonwood's tree shows the Tax leaf under SMA) and dfe374adfb (the valuation-date defect fixed). The publisher is deployed at e8994f23af; its code has not changed since |
 | Portal candidate pin | 370d2fe8 on origin/DEV (accessor + page caption); origin/DEV head 970d5c75 at 01:01Z; PROD untouched |
-| Deployed artifact pin | mdpf-gold-lambda CodeSha256 7hI4flW5.. (S3 version U4JsC9gYCgaK.., deployed 2026-10-01T02:17Z, 39 modules, Tax code present, Tax DISABLED: no TAXSMA_ env); publisher CodeSha256 pj+Jat96.. (S3 version Deg26fXt.., deployed 02:21Z, `TAXSMA_ROLLOUT_SWITCH = OFF`). Both built from e8994f23af |
-| Rollback | Gold artifact prior S3 version 8eu2ppmBW1z1j2MOwTQc3G27uo9SbDXD (code 5aKNH5WB..); publisher prior version ZLaQC2nGuQ2hP72JpdTA4RWfciYhFoql (code 7X50uR1H..): copy that version onto the key with its `content-sha256`, restore the two commit pins, plan, `safe-apply` |
-| Push state | origin/CLOUD 0abf99fcd4 (ls-remote read 03:29Z) carries this seat's work through the 02:45Z session log 171bcc4da8; everything after it is LOCAL |
+| Deployed artifact pin | mdpf-gold-lambda CodeSha256 eZ6Rtm+2.. (S3 version O09x_Btrx4EEuu_fI2uwz5Jkf8YlV8xL, zip sha256 799e91b6.., deployed 2026-10-01T15:00:26Z from pin 8ade880fad, 41 entries, Tax DISABLED: no TAXSMA_ env); publisher CodeSha256 pj+Jat96.. (S3 version Deg26fXt.., deployed 02:21Z from e8994f23af, `TAXSMA_ROLLOUT_SWITCH = OFF`) |
+| Rollback | Gold artifact prior S3 version U4JsC9gYCgaKgm8kRbF1dL.2JgIPESxk (code 7hI4flW5.., pin e8994f23af); publisher prior version ZLaQC2nGuQ2hP72JpdTA4RWfciYhFoql (code 7X50uR1H..): copy that version onto the key with its `content-sha256`, restore the commit pin, plan, `safe-apply`. If the catch-up has already run, its five objects are restored first (`2.0.0_SA_COO~M`'s ledger) |
+| Push state | origin/CLOUD 0abf99fcd4 (ls-remote read 15:07Z) carries this seat's work through the 02:45Z session log 171bcc4da8; everything after it is LOCAL, including the Terraform pin of an APPLIED deploy (@dae8267e31). The push is `0.0.0_AB_MSTR`'s on Andrew's word |
 
 ## Live thread
 
@@ -36,7 +36,7 @@ Trace: `org/tier1_exec/4.0.0_SA_CRO/deliverables/TAXSMA_MODEL_PORTFOLIOS_END_TO_
 | E2b served fold | CANDIDATE @faf88511b9 + 3f03d42024 | real served spines 09-29: 49F 1,761,000,294.98 on timeseries, category tree and aum-metrics alike; Global 2,083,972,030.82 to the cent |
 | E2c Cottonwood's Tax added to Global once, with an overlap control on Cottonwood's model-assigned accounts | CANDIDATE @1e5e13d223; NOT deployed | 223 of 223; real run on 09-29 data, zero writes: Global 2,066,937,285.42 base + 24,817,481.13 Tax (49F 18,768,112.35 + Cottonwood 6,049,368.78) = 2,091,754,766.55, fee-basis components sum to the cent, category tree SMA > ALT Strategies 24,817,481.13, frontier cell 13 of 13 covered; control: the assignment reader returns 0 keys, and 47 (both Tax accounts inside) with the `--` filter lifted |
 | E2d Cottonwood's own tree shows the Tax leaf under SMA, as a carve-out of Client; the SMA basis is declared per firm where it differs | CANDIDATE @46d04eb7b6; NOT deployed | 226 of 226; Gold suite 94 passed, 3 failed (the S1 baseline three); real run on 09-29 data: Cottonwood SMA 0.00 -> 6,049,368.78, Client 362,884,540.60 -> 356,835,171.82, total 541,913,026.79 both ways; Rule 24 record `deliverables/4.0.0_SA_CRO/RULE24_SMA_BASIS_BY_SCOPE.md` |
-| E2e DEFECT FIXED: the prelude's default valuation date was TODAY (`expected_last_trading_day`), but a custodian partition for business date D lands on D+1, so the 13:30Z run would have read SOURCE_UNAVAILABLE on every trading day. Now the prior completed session (`prev_trading_day`) | CANDIDATE @dfe374adfb; the DEPLOYED code still has the defect (harmless while Tax is DISABLED) | found by running the prelude on the real clock; landing times measured for 09-25, 09-28, 09-29 (Schwab 0833 at 09:46Z, Black Diamond at 11:46Z, the next day); test first, 227 of 227 |
+| E2e DEFECT FIXED: the prelude's default valuation date was TODAY (`expected_last_trading_day`), but a custodian partition for business date D lands on D+1, so the 13:30Z run would have read SOURCE_UNAVAILABLE on every trading day. Now the prior completed session (`prev_trading_day`) | DEPLOYED in the Gold function since 2026-10-01T15:00Z (pin 8ade880fad contains dfe374adfb) | found by running the prelude on the real clock; landing times measured for 09-25, 09-28, 09-29 (Schwab 0833 at 09:46Z, Black Diamond at 11:46Z, the next day); test first, 227 of 227 |
 | TX-r-3 never-widen request (the blast radius, measured) | WRITTEN, awaiting the CTO and a COO: `deliverables/4.0.0_SA_CRO/NEVER_WIDEN_REQUEST_TX-r-3.md` | Tax on moves 9 of the 16 Gold documents, not the two the order names; probe `deliverables/4.0.0_SA_CRO/probes/tx_r_3_blast_radius.py` |
 | TX-i-1 scoped prelude roles | APPLIED 2026-10-01T00:03:55Z, ledger CLOSED @14670cf66c | 5 added; re-plan No changes; SIMULATION 30 of 30; exercise owed at TX-r-3. TWO roles (49f, cot), not one: each firm bucket admits only its own short token |
 | TX-i-2 publisher control read | APPLIED 2026-10-01T00:16:59Z, ledger CLOSED @73ef80ab94 | 1 added; re-plan No changes; SIMULATION 10 of 10; exercise owed at TX-r-3 |
@@ -45,7 +45,8 @@ Trace: `org/tier1_exec/4.0.0_SA_CRO/deliverables/TAXSMA_MODEL_PORTFOLIOS_END_TO_
 | TX-u-1 / TX-u-2 publisher extension + package | DEPLOYED 2026-10-01T02:21Z (built at e8994f23af, sidecar @75a4076b90) | deployed CodeSha256 equals the built zip; switch OFF on the applied plane |
 | TX-c-1 / TX-c-3 portal accessor + page caption | CANDIDATE portal 370d2fe8 on origin/DEV | 10 bun arms; tsc 0; no signed-in render (no served Tax yet) |
 | TX-c-2 tree leaf | NOT STARTED (component under the DSGN_IRPTV1 lease; the tree already renders the tax member's served amount) | |
-| TX-r-1 backend release, Tax off | APPLIED 2026-10-01T02:15:52Z (Gold) and 02:20:56Z (publisher); ledger `mdpf_taxsma-tx-r-1` OPEN, 5 of 6 legs closed | both re-plans No changes; DEPLOYED before/after `qa_local` invokes both green 16 of 16, body diff 16 of 16 process-time only, 0 business-different; leg V2 = the 13:50Z publisher run, read by `deliverables/4.0.0_SA_CRO/probes/tx_r_1_served_delta.py compare deliverables/4.0.0_SA_CRO/tx_r_1_served_baseline.json` |
+| TX-r-1 backend release, Tax off | CLOSED 2026-10-01T14:32Z, ledger `mdpf_taxsma-tx-r-1` 6 of 6 legs (@62301c017b); the order face is superseded | leg V2: both scheduled runs clean, 16 of 16; the probe read 12 of 16 and the four differing time-series documents were traced outside the release (`deliverables/4.0.0_SA_CRO/TX_R_1_LEG_V2_READ_20261001.md`); `1.0.0_SA_CTO` closed the leg (batch 91) |
+| Gold function at 8ade880fad (E2c + E2d + E2e, Tax off, plus the HEALGAP catch-up hookup) | APPLIED 2026-10-01T15:00:26Z; ledger `mdpf-gold-healgap-hookup-20261001` OPEN, 4 of 5 legs closed (@c469f61a65); packet signed by `1.0.0_SA_CTO` with four conditions | CodeSha256 equals the built zip; re-plan No changes; the deployed dry run before (14:15Z) and after (15:02Z) both green 16 of 16, 16 documents compared, process-time only 16, other 0. Leg V2 = the 2026-10-02 13:30Z run. The catch-up itself is exercised by no leg yet |
 | TX-r-2 Gateway release, capability off | **NO OWNER since 04:00Z, Andrew's call.** Site Z will not act on the request (relay 103435: Andrew to `1.0.0_SA_CTO~O` ~03:4xZ, "do not touch any MDPF_TAXSMA, that is out of your scope"); his 02:0xZ word keeps gateway releases at site Z | the route and its module are on origin/CLOUD, so any ordinary Gateway deploy carries them capability-off; the deploy script still lacks the two `.env` lines (row S11), and activation needs one more deploy after the bearer has a value |
 | TX-r-3 activation | NOT STARTED, held on G-W and G-P | see Dependencies |
 | TX-v-1 re-cut / TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED (this seat builds, the CVO grades each changed case) | 102 expected cases written for 0.5.0 |
@@ -56,23 +57,25 @@ Trace: `org/tier1_exec/4.0.0_SA_CRO/deliverables/TAXSMA_MODEL_PORTFOLIOS_END_TO_
 `data/mdpf/tests/taxsma/*`, `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json`,
 `infra/aws/terraform/mdpf-pipeline/iam.tf` (the TX-i-1 block), `infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf` (the TX-i-2 block),
 the two package sidecars.
-The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
+The ledger entry `mdpf-gold-healgap-hookup-20261001` and its sentinel (OPEN until its leg V2, 2026-10-02 13:30Z).
 
 ## Next proof
 
-1. **TX-r-1 leg V2, after the 13:50Z publisher run:** from the workspace root,
-   `py -3.12 org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/probes/tx_r_1_served_delta.py compare org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/tx_r_1_served_baseline.json`
-   (16 of 16 expected: shapes unchanged, baseline history dates unchanged, the Tax member still null, each file rewritten);
-   then `deploy_ledger.py close-leg --slug mdpf_taxsma-tx-r-1 --leg-id V2`, `close`, commit both ledger paths.
-   A FAIL there is the next item: roll back per the Pins row.
+1. **Leg V2 of `mdpf-gold-healgap-hookup-20261001`, after the 2026-10-02 13:30Z run:** every scope green; the
+   Cottonwood family report carries a `catchup` block; no served change outside the five Cottonwood dates
+   (2026-08-18, 08-20, 08-21, 09-23, 09-24) and Global's same five. Anything else is a SAME-DAY ROLLBACK (CTO
+   condition 3): the five objects first (`2.0.0_SA_COO~M`'s ledger), then this function per the Pins row. The five
+   builds themselves are read by `2.0.0_SA_COO~M`.
+   Before then, if it can be had: Global's fold exercised offline on the five restored points, result reported.
+1a. **The V2 probe restated before the next release's V2** (CTO batch 91 item 3): its history assertion allows the
+   prior frontier date and an input restatement shown in the input; its shape assertion ignores date-keyed maps.
 2. Andrew's word on who runs the Gateway deploy (see Dependencies). This seat's recommendation: it writes the two
    `.env` lines into `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` here, and site Z runs its ordinary Gateway deploy.
 3. Activation (TX-r-3) once Andrew's items exist: the opalbloomberg sign-in at the Gateway and the never-widen sign-off.
 4. Unblocked meanwhile, this seat: the 0.6.0 re-cut of the expected cases (TX-v-1) and the journey harness
    (TX-v-2); per-firm isolation of the source loader (see Parked).
-5. After leg V2 closes, and never before it (a second release would erase what V2 measures): rebuild both
-   packages at the E2e candidate (it contains E2c and E2d) and release them Tax-off under a new ledger entry.
-   This release is REQUIRED before activation: the deployed code carries the valuation-date defect.
+5. DONE for the Gold function at 15:00Z (pin 8ade880fad carries E2c, E2d and E2e, so the valuation-date defect
+   is no longer deployed). The publisher's code is unchanged since e8994f23af and needs no release for these.
 
 ## Dependencies
 
@@ -80,7 +83,7 @@ The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
 |---|---|---|---|
 | A Gateway deploy carrying the Tax route capability-off, then a second one at activation (the bearer is read into `.env` at deploy time) | **Andrew: who runs it.** Site Z was told ~03:4xZ not to touch MDPF_TAXSMA; the laptop was told 02:0xZ that gateway releases are site Z's | the request file's four acceptance results; relay `org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAY_20261001_0400Z_SITEZ_CTO_O_TX_R_2_NOT_ACTED_ON_NO_TAXSMA_AT_SITEZ_FOR_CRO.md` | BLOCKED on Andrew since 04:00Z |
 | The opalbloomberg@opalinvest.com account signed in at the Gateway, so its tid/oid resolves and the first controlled read can run (G-A) | Andrew | TX-r-3 AC2, AC5, AC6 | AWAITED -- access is believed, UNMEASURED |
-| G-W never-widen halves naming both served keys | `1.0.0_SA_CTO` + a COO (the CTO seat died 23:2xZ; relaunch pending) | TX-r-3 AC3 | AWAITED |
+| G-W never-widen halves for activation | `1.0.0_SA_CTO` + a COO | the request is written: `deliverables/4.0.0_SA_CRO/NEVER_WIDEN_REQUEST_TX-r-3.md` (9 of 16 documents move, not the two the order names) | AWAITED; not yet sent to either seat |
 | G-P consumer promotion (portal DEV to PROD) | Andrew | TX-r-3 AC4 | AWAITED |
 | G-O grade of OG-r-1 readback @e2f11d1e3d | this lane under Andrew's word | TX-r-2 first line | AWAITED |
 | `portal/src/components/CategoryViewTree.tsx` | `2.0.0_SA_COO~D` (DSGN_IRPTV1 FAST lease) | lease ends / component released | AWAITED |
@@ -98,7 +101,7 @@ The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
 | CORRECTED 03:5xZ: the 937 of 984 Black Diamond accounts that form no key are NOT masked; their numbers are in other custodian formats (nine digits, eleven digits, hyphenated). Only the 47 eight-digit numbers form a key, which is the format every Tax claim has. A Cottonwood Tax claim outside those 47 falls to the workbook value | this lane | a Cottonwood Tax account appears at a custodian whose numbers are not eight digits |
 | The contract's N+1 category Gold copies are not written (surprise S9) | `1.0.0_SA_CTO` at the round analysis | strike the two artifacts, or re-point the publisher to them as one migration |
 | S5 EC2 Stage 6 import (`lib.opal_naming` not on the runner tree): NOT a live hazard today (Stage 6 was red before the Tax import and is not the writer of any key read today); this seat recommends AGAINST the `lib/` sync, which could make the runner a second writer of the staged spines | `1.0.0_SA_CTO` (placement) | Stage 6 is retired, or what still needs it is named |
-| One consolidator call line to `data/mdpf/scripts/gold/mdpf_gold_catchup.py` (MDPF_HEALGAP, built by `2.0.0_SA_COO~M`) is this seat's to add at its next merge (CTO batch 75 item 5) | this lane | ~M's module and its fixture test are on CLOUD |
+| The probe `tx_r_1_served_delta.py` asserts two things this pipeline never satisfies (history unchanged at a baseline date; shape unchanged). It read 12 of 16 on a clean release | this lane | restated before the next release's V2 (CTO batch 91 item 3; Next proof 1a) |
 | S6 Gateway deploy ships four projects | this lane | TX-r-2 cut NARROW at 1764e54a16 + TX-g-1's three commits + 030cef41b5 |
 | A traded row with a blank Account Number | Andrew | stays INVALID_ACCOUNT (no fallback) unless he says the workbook value counts |
 | The Gateway `.env` wiring for the Tax bearer and identity (row S11) | site Z, inside the release requested above | the release reply shows both `TAXSMA_WORKBOOK_` keys in `.env` |
