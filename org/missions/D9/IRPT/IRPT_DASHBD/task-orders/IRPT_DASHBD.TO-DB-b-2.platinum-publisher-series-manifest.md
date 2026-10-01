@@ -51,6 +51,12 @@ the builder's addresses, and plan (not apply) its Lambda and daily schedule.
   write both objects at the builder's addresses; a `--local --accounts ... --upload` CLI for this round's run). Print size and build time
   per account. Include unit tests beside them (`tests/`) with a synthetic gold frame for the pure functions (the real run below is the
   criterion, the tests are hygiene).
+- ISSUER AMENDMENT 4 (2026-10-01 ~16:1xZ, at the spawn): the gold LANDED today and its contracts moved after this face was cut.
+  READ THE CONTRACT FILES, not the column list in "Where things are": `IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json` is at 0.2.0
+  with 19 columns (the list above plus `guard_state` and `carried_days`; `return_basis` is now `TWR` or `NOT_MEASURABLE` only) and
+  `IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json` is at 0.2.0. The gold holds 559 date partitions, 2024-07-08..2026-09-28, 1,105 rows
+  (0.4.0_DS_ClientPlatform~S, msg 103740). "The five sample accounts" below means every `account_id` in the newest partition,
+  however many that is. A gold column the SERIES contract does not name is NOT added to the series: that is a row, not an edit.
 - ISSUER AMENDMENT 3 (2026-10-01 ~15:5xZ): two entries are REMOVED from `<paths>`: `infra/aws/terraform/investor-reporting/holdings-performance/`
   and `infra/aws/lambda/investor-reporting/holdings-performance/handler.py`. This order cites them as the PATTERN to mirror and never
   writes them; a read needs no grant, and as a write surface they collided with the IRPT_BCKEND lane that owns that root (the lease
