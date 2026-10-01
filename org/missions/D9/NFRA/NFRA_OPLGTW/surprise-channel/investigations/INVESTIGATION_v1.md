@@ -5371,3 +5371,33 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W16-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~16",
+  "surfaced_at": "2026-10-01T02:10Z",
+  "one_line": "BLOCKING OG-hr-1 step 1: lib/opal_naming.py name() refuses every name the transcripts route needs -- no route kind, no secret kind, and the transcripts scope is a PRODUCT scope the scope slot will not take; no code written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "name('gateway','transcripts','headless','route') -> ValueError: scope 'transcripts' is a PRODUCT scope; this slot takes FIRM/GLOBAL/MASTER (same refusal for kind 'secret' and kind 'api' with scope 'transcripts').",
+      "name('gateway',None,'transcripts','route') -> ValueError: kind 'route' is neither a NAMING_SCHEMA.json kind nor a cadence.",
+      "name('gateway',None,'transcripts-bearer','secret') -> ValueError: kind 'secret' is neither a NAMING_SCHEMA.json kind nor a cadence.",
+      "org/standards/NAMING_SCHEMA.json kind.values (20): lambda role policy profile sg api table queue dlq topic alerts alarm layer runner build document task sfn lb cluster; closed_at_l4 says 'secret was DROPPED: secrets keep their own slash-path grammar'; secret.grammar is '{system}/{scope}/{purpose}'; API_ROUTE is NOT GRADED (a served route contract).",
+      "lib/opal_naming.py grade('gateway/transcripts/bearer','SECRET') -> ('CONFORMANT', ...), but grade() is the grader, not a builder; there is no name()-class builder for the slash-path secret grammar.",
+      "The cell checks (checks/_names.py, hr1.AC2.sh) require secret_name == name(**secret_builder) and prefix == '/' + name(**prefix_builder), so no committed value can pass; hr1.AC2 cannot be met as written. Decomposition line 1148-1149 anticipated this refusal as a BLOCKING row.",
+      "Evidence: lib/opal_naming.py and infra/logic/registry/{systems,scopes}.json at f22e8677ab; run on branch wk-NFRA_OPLGTW-16-r8."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-hr-1 step 1: the prefix and secret names are lib/opal_naming.py name() output; a refusal is a missing registry row (rule 30), a BLOCKING row, and the worker stops.",
+  "world_is": "name() has no route kind and no secret kind, and refuses scope 'transcripts' in the scope slot. Missing registry pieces: (a) a route kind or a route/secret builder in NAMING_SCHEMA.json and lib/opal_naming.py (a ruling on whether a headless route name is the graded API_ROUTE class or a new kind), and (b) a secret-grammar builder, or a ruling that the checks use grade(). Cells hr-1, hr-2 (same slot) and rl-1 (bearer secrets) all bind to the answer. ROUTE_NAMES.json, transcript_route.py, server.py, config.py and the tests were NOT written.",
+  "notes": "Owner of the registry rows: the registry owner (1.0.0_SA_CTO / the LGIC naming seat), routed by 2.0.0_SA_COO~O. The worker made no AWS or Graph call and no commit other than this row."
+}
+```
